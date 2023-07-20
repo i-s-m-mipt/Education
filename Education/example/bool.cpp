@@ -5,11 +5,11 @@ int main()
 	auto x = true;
 	auto y = false;
 
-	auto z = (x || y) && !y;
+	auto result = (x || y) && !y;
 
-	if (x)
+	if (x || y)
 	{
-		std::cout << std::boolalpha << z << std::endl;
+		std::cout << std::boolalpha << result << std::endl;
 	}
 
 	system("pause");
