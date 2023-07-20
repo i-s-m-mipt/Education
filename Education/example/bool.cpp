@@ -12,6 +12,8 @@ int main()
 		std::cout << std::boolalpha << result << std::endl;
 	}
 
+	std::cout << sizeof(x) << std::endl;
+
 	system("pause");
 
 	return 0;
