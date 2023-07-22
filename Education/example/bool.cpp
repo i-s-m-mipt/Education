@@ -9,7 +9,8 @@ int main()
 
 	if (x || y)
 	{
-		std::cout << std::boolalpha << result << std::endl;
+		std::cout << std::boolalpha   << x << ' ' << y << std::endl;
+		std::cout << std::noboolalpha << x << ' ' << y << std::endl;
 	}
 
 	std::cout << sizeof(x) << std::endl;
