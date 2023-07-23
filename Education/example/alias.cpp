@@ -10,10 +10,7 @@ int main()
 
 	const std::size_t size = 42;
 
-	for (std::size_t i = 0; i < size; ++i)
-	{
-		// ...
-	}
+	for (std::size_t i = 0; i < size; ++i) {}
 
 	std::int16_t x = 0;
 
