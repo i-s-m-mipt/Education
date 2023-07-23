@@ -4,9 +4,9 @@
 
 int main()
 {
-	using my_int = unsigned long;
+	using integer_t = unsigned long;
 
-	my_int value = 0;
+	integer_t value = 0;
 
 	const std::size_t size = 42;
 
