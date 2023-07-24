@@ -46,6 +46,11 @@ int main()
 
 	std::cout << std::log(-1) << std::endl;
 
+	auto x = 0.0;
+	auto y = 1.0;
+
+	std::cout << -x / y << std::endl;
+
 	system("pause");
 
 	return 0;
