@@ -8,7 +8,7 @@ int main()
 
 	integer_t value = 0;
 
-	const std::size_t size = 42;
+	const std::size_t size = 1'000'000;
 
 	for (std::size_t i = 0; i < size; ++i) {}
 
