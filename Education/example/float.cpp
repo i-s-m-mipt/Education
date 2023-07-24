@@ -29,7 +29,7 @@ int main()
 		std::cout << std::setw(2) << p << " - " << std::setprecision(p) << std::fixed << pi << '\n';
 	}
 
-	std::cout << std::setprecision(default_precision); // restore defaults
+	std::cout << std::setprecision(default_precision);
 
 	std::cout << std::numeric_limits < int > ::min() << std::endl;
 	std::cout << std::numeric_limits < int > ::max() << std::endl;
