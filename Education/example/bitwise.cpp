@@ -25,6 +25,14 @@ int main()
         << ( value ^  mask) << '\n' 
         << (~value        ) << std::endl;
 
+    auto v1 = 0x123;
+
+    std::cout << (v1 << 1) << std::endl;
+
+    auto v2 = -1000;
+
+    std::cout << std::dec << (v2 >> 2) << std::endl;
+
     system("pause");
 
     return 0;
