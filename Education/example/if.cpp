@@ -6,11 +6,17 @@ int main()
     auto y = 1;
 
     if (x > y)
-    { /*...*/ }
+    {
+        std::cout << "path 1\n";
+    }
     else if (x < y)
-    { /*...*/ }
+    {
+        std::cout << "path 2\n";
+    }
     else
-    { /*...*/ }
+    {
+        std::cout << "path 3\n";
+    }
 
     if (x < y)
     {
