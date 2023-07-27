@@ -8,6 +8,8 @@ int main()
 		{
 			continue;
 		}
+
+		// ...
 	}
 
 	for (std::size_t i = 0, j = 100; i <= j; i += 3, --j)
@@ -19,6 +21,8 @@ int main()
 				break;
 			}
 		}
+
+		// ...
 	}
 
 	for (std::size_t i = 0; i < 10; ++i)
@@ -31,6 +35,8 @@ int main()
 				{
 					goto exit;
 				}
+
+				// ...
 			}
 		}
 	}
@@ -38,11 +44,13 @@ int main()
 	exit:
 
 	for(;;)
-	{ /*...*/ }
+	{
+		// ...
+	}
 
 	while (true)
 	{
-		/*...*/
+		// ...
 	}
 
 	auto x = 0;
