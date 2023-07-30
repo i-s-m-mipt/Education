@@ -31,7 +31,7 @@ int main()
 
     auto z = (x < y ? x : 0);
 
-	system("pause");
+    system("pause");
 
-	return 0;
+    return 0;
 }
