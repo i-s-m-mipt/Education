@@ -4,6 +4,11 @@
 #include <limits>
 #include <numbers>
 
+auto are_equal(double lhs, double rhs)
+{
+	return (std::abs(lhs - rhs) <= std::numeric_limits < double > ::epsilon());
+}
+
 int main()
 {
 	std::cout << 3.14    << std::endl;
@@ -50,6 +55,8 @@ int main()
 	auto y = 1.0;
 
 	std::cout << -x / y << std::endl;
+
+	std::cout << std::boolalpha << are_equal(1.0, 0.1 * 10) << std::endl;
 
 	system("pause");
 
