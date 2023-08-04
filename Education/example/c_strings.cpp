@@ -14,6 +14,10 @@ int main()
     const char  string_2[] = "Hello";
     const char* string_3   = "Hello";
 
+    char string_4[] = "Hello";
+
+    string_4[4] = '!';
+
     std::cout << sizeof(string_1)      << std::endl;
     std::cout << std::size(string_1)   << std::endl;
     std::cout << std::strlen(string_1) << std::endl;
