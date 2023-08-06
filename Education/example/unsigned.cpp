@@ -7,7 +7,5 @@ int main()
 		std::cout << i << std::endl;
 	}
 
-	system("pause");
-
 	return 0;
 }

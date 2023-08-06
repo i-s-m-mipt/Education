@@ -33,7 +33,5 @@ int main()
 
     std::cout << std::dec << (v2 >> 2) << std::endl;
 
-    system("pause");
-
     return 0;
 }

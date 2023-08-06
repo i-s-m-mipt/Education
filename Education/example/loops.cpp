@@ -66,7 +66,5 @@ int main()
 	} 
 	while (x != 42);
 
-	system("pause");
-
 	return 0;
 }

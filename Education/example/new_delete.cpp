@@ -21,7 +21,5 @@ int main()
 	delete   ptr_int;
 	delete[] ptr_int_array;
 
-	system("pause");
-
 	return 0;
 }

@@ -15,7 +15,5 @@ int main()
 
 	std::cout << sizeof(x) << std::endl;
 
-	system("pause");
-
 	return 0;
 }

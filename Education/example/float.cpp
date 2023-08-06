@@ -58,7 +58,5 @@ int main()
 
 	std::cout << std::boolalpha << are_equal(1.0, 0.1 * 10) << std::endl;
 
-	system("pause");
-
 	return 0;
 }

@@ -24,7 +24,5 @@ int main()
 
 	std::cout << c - '0' << std::endl;
 
-	system("pause");
-
 	return 0;
 }

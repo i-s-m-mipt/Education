@@ -18,7 +18,5 @@ int main()
 
 	std::cout << sizeof(std::uint64_t) << std::endl;
 
-	system("pause");
-
 	return 0;
 }
