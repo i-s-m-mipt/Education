@@ -9,7 +9,5 @@ int main()
 
 	std::cout << x + y << std::endl;
 
-	system("pause");
-
 	return 0;
 }
