@@ -18,5 +18,10 @@ int main()
 		std::cout << *ptr_z << std::endl;
 	}
 
+	auto c = 0;
+
+	const int* ptr_c_1 = &c;
+	int* const ptrc_c_2 = &c;
+
 	return 0;
 }
