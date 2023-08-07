@@ -24,6 +24,11 @@ struct alignas(alignof(double)) S3
 	short s;
 };
 
+struct alignas(32) S4
+{
+	double data[4];
+};
+
 int main()
 {
 	std::cout << alignof(char) << ' ' << sizeof(char) << std::endl;
@@ -32,6 +37,7 @@ int main()
 	std::cout << alignof(S1) << ' ' << sizeof(S1) << std::endl;
 	std::cout << alignof(S2) << ' ' << sizeof(S2) << std::endl;
 	std::cout << alignof(S3) << ' ' << sizeof(S3) << std::endl;
+	std::cout << alignof(S4) << ' ' << sizeof(S4) << std::endl;
 
 	static_assert(std::alignment_of_v < double > == 8, "invalid double alignment");
 
