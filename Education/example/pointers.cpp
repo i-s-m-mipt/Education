@@ -20,8 +20,10 @@ int main()
 
 	auto c = 0;
 
-	const int* ptr_c_1 = &c;
-	int* const ptrc_c_2 = &c;
+	const int * ptr_c = &c;
+	int * const c_ptr = &c;
+
+	const int * const c_ptr_c = &c;
 
 	return 0;
 }
