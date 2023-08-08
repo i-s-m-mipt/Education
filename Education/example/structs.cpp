@@ -34,7 +34,7 @@ struct Point
 int main()
 {
 	Person p_1;
-	Person p_2 = { "Matthias", 27 };
+	Person p_2{ "Matthias", 27 };
 
 	p_1.name = "Matthias";
 
