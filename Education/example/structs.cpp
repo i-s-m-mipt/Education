@@ -20,6 +20,8 @@ struct Link
 
 struct Node
 {
+	std::vector < Link > links;
+
 	// ...
 };
 
