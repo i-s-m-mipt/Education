@@ -87,9 +87,7 @@ int main()
 
     std::cout << "========================================" << std::endl;
 
-    const char * cstring_from_string = s_3.c_str();
-
-    printf("%s", cstring_from_string);
+    auto cstring_from_string = s_3.c_str();
 
     return 0;
 }
