@@ -21,5 +21,14 @@ int main()
 	delete   ptr_int;
 	delete[] ptr_int_array;
 
+	if (auto ptr_char = new(std::nothrow) char[size] {}; ptr_char)
+	{
+		ptr_char[0] = 'a';
+
+		// ...
+
+		delete[] ptr_char;
+	}
+
 	return 0;
 }
