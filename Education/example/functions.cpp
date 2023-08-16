@@ -5,7 +5,7 @@ unsigned int f(unsigned int n)
 	return (n < 2 ? 1 : n * f(n - 1));
 }
 
-int g(int x);
+[[nodiscard]] int g(int x);
 
 [[noreturn]] void h()
 {
@@ -15,6 +15,8 @@ int g(int x);
 int main()
 {
 	std::cout << f(5) << std::endl;
+
+	g(1);
 
 	return 0;
 }
