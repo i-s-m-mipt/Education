@@ -75,10 +75,10 @@ int main()
 		f(static_cast < Color > (c));
 	}
 
-	State s1 = alpha;
-	State s2 = gamma;
+	State s_1 = alpha;
+	State s_2 = gamma;
 
-	g(s1 | s2);
+	g(s_1 | s_2);
 	
 	return 0;
 }
