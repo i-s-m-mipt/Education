@@ -49,7 +49,7 @@ int main()
 
 	std::cout << functions.at(f_subtraction)(x, y) << std::endl;
 
-	std::vector v({2, 5, 4, 1, 3});
+	std::vector < int > v({2, 5, 4, 1, 3});
 
 	std::for_each(std::begin(v), std::end(v), [b](auto & x) { x += b; });
 	std::for_each(std::begin(v), std::end(v), [](auto x) { std::cout << x << std::endl; });
