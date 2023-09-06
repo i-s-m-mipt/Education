@@ -15,21 +15,21 @@ int main()
 
 	int b = ++a;
 	
-	std::cout << a << ' ' << b << std::endl;
+	std::cout << a << ' ' << b << '\n';
 
 	int c = a++;
 
-	std::cout << a << ' ' << c << std::endl;
+	std::cout << a << ' ' << c << '\n';
 
 	a = 1 + 2 + 3;
 
 	a = b = c;
 
-	std::cout << 7 / 4 << std::endl;
+	std::cout << 7 / 4 << '\n';
 
-	std::cout << 7.0 / 4.0 << std::endl;
+	std::cout << 7.0 / 4.0 << '\n';
 
-	std::cout << 1.0 * b / c << std::endl;
+	std::cout << 1.0 * b / c << '\n';
 
 	bool b_1 = (b == c);
 	bool b_2 = (b <= c);
