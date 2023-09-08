@@ -2,8 +2,8 @@
 
 int main()
 {
-	int x = 0;
-	int y = 0;
+	int x{};
+	int y{};
 
 	std::cout << "Enter two numbers separated by a space symbol: ";
 
