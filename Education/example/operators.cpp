@@ -2,37 +2,66 @@
 
 int main()
 {
-	bool x = true;
-	bool y = false;
+	auto a = true;
+	auto b = true;
 
-	bool z = (x || y) && !y;
+	std::cout << !a << ' ' << not a << '\n';
 
-	int a = -42;
+	std::cout << (a || b) << ' ' << (a  or b) << '\n';
+	std::cout << (a && b) << ' ' << (a and b) << '\n';
 
-	a = a + 42;
+	std::cout << (true or a and b) << '\n';
 
-	a += 42;
+	auto x = 7;
+	auto y = 4;
 
-	int b = ++a;
-	
-	std::cout << a << ' ' << b << '\n';
+	std::cout << -x << '\n';
+	std::cout << +x << '\n';
 
-	int c = a++;
+	std::cout << x + y << '\n';
+	std::cout << x - y << '\n';
+	std::cout << x * y << '\n';
+	std::cout << x / y << '\n';
+	std::cout << x % y << '\n';
 
-	std::cout << a << ' ' << c << '\n';
-
-	a = 1 + 2 + 3;
-
-	a = b = c;
-
-	std::cout << 7 / 4 << '\n';
-
+	std::cout << 7   / 4   << '\n';
 	std::cout << 7.0 / 4.0 << '\n';
 
-	std::cout << 1.0 * b / c << '\n';
+	std::cout << 1.0 * x / y << '\n';
 
-	bool b_1 = (b == c);
-	bool b_2 = (b <= c);
+	std::cout << +7 % +4 << '\n';
+	std::cout << +7 % -4 << '\n';
+	std::cout << -7 % +4 << '\n';
+	std::cout << -7 % -4 << '\n';
+
+	std::cout << (x += y) << '\n';
+	std::cout << (x -= y) << '\n';
+	std::cout << (x *= y) << '\n';
+	std::cout << (x /= y) << '\n';
+	std::cout << (x %= y) << '\n';
+
+	std::cout << (x < y) << '\n';
+	std::cout << (x > y) << '\n';
+
+	std::cout << (x <= y) << '\n';
+	std::cout << (x >= y) << '\n';
+
+	std::cout << (x == y) << '\n';
+	std::cout << (x != y) << '\n';
+
+	std::cout << x++ << ' ' << x << '\n';
+	std::cout << x-- << ' ' << x << '\n';
+	std::cout << ++x << ' ' << x << '\n';
+	std::cout << --x << ' ' << x << '\n';
+
+	auto z = (1 + 4) / (2 + 3);
+
+	std::cout << (z + ++z) << '\n';
+
+	auto m = 1 + 2 + 3;
+	auto n = x = y = z;
+
+	std::cout << (++m, ++n) << '\n';
 
 	return 0;
 }
