@@ -40,6 +40,8 @@ int main()
 	int z4{static_cast < int > (d)};
 	int z5{c};
 
+//	int z6{static_cast < int > ("Hello")}; // error
+
 	b = m;
 
 	std::cout << b << '\n';
