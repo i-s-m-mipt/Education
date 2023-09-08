@@ -19,7 +19,7 @@ int main()
 		std::cout << "for 3: " << i << '\n';
 	}
 
-	for (auto i = 0; i < size; ++i)
+	for (auto i = size; i >= 0; --i)
 	{
 		if (i % 2 == 0)
 		{
