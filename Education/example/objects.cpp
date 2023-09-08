@@ -6,12 +6,12 @@ int main()
 
 //	int u = x; // error
 
-	bool   b = true;
-	char   c =  'a';
-	int    i =   42;
+	bool b = true;
+	char c = 'a';
+	int i = 42;
 	double d = 3.14;
 
-	int m = 0, n = 0;
+	int m = 0, n = 42;
 
 	int x0;
 	int x1{};
@@ -38,8 +38,15 @@ int main()
 	int z2{(int)d};
 	int z3{int(d)};
 	int z4{static_cast < int > (d)};
+	int z5{c};
 
-	b = false;
+	b = m;
+
+	std::cout << b << '\n';
+
+	b = static_cast < bool > (n);
+
+	std::cout << b << '\n';
 
 	const double pi = 3.14;
 
@@ -49,7 +56,7 @@ int main()
 
 	typedef double old_type;
 
-	x, c, m, n, x0, x1, x2, x3, x4, x5, y2, y3, y4, y5, z2, z3, z4, pi, e;
+	x, x0, x1, x2, x3, x4, x5, y2, y3, y4, y5, z2, z3, z4, z5, pi, e;
 
 	[[maybe_unused]] auto z = 42;
 
