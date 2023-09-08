@@ -1,27 +1,45 @@
 #include <iostream>
 
-unsigned int f(unsigned int n)
+int factorial(int n)
 {
-	return (n < 2 ? 1 : n * f(n - 1));
+	return (n < 2 ? 1 : n * factorial(n - 1));
 }
 
-[[nodiscard]] int g(int x);
-
-[[noreturn]] void h()
+void print(int x)
 {
-	exit(1);
+	std::cout << x << '\n';
+
+	return;
+}
+
+[[nodiscard]] int f(int x);
+
+int max(int x, int y)
+{
+	return (x > y ? x : y);
+}
+
+void g(int x)
+{
+	int y = 42;
 }
 
 int main()
 {
-	std::cout << f(5) << std::endl;
+	std::cout << factorial(5) << '\n';
 
-	g(1);
+	print(42);
+
+	f(1); // warning
+
+	std::cout << max(13, 19) << '\n';
+
+	std::cout << max(2 + 5, 3 + 6) << '\n';
 
 	return 0;
 }
 
-int g(int x)
+int f(int x)
 {
 	return x + 42;
 }
