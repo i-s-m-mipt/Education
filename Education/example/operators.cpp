@@ -12,6 +12,9 @@ int main()
 
 	std::cout << (true or a and b) << '\n';
 
+	[[maybe_unused]] auto law_1 = (!(a && b) == !a || !b);
+	[[maybe_unused]] auto law_2 = (!(a || b) == !a && !b);
+
 	auto x = 7;
 	auto y = 4;
 
