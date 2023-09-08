@@ -2,7 +2,7 @@
 
 int main()
 {
-    auto x = 0;
+    int x{};
 
     std::cin >> x;
 
