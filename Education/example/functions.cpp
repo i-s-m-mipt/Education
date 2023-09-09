@@ -37,16 +37,26 @@ void test_references(int & x, const int & y)
 	[[maybe_unused]] auto local_code = (code ? *code : 1234);
 }
 
+void test_array(int * a, int size)
+{
+	for (auto i = 0; i < size; ++i)
+	{
+		std::cout << a[i];
+
+		std::cout << (i + 1 == size ? '\n' : ' ');
+	}
+}
+
 int * get_dangling_ptr()
 {
-	/*static*/ int d = 42;
+	/*static const*/ int d = 42;
 
 	return &d; // warning
 }
 
 int & get_dangling_ref()
 {
-	/*static*/ int d = 42;
+	/*static const*/ int d = 42;
 
 	return d; // warning
 }
@@ -96,6 +106,18 @@ int main()
 	test_references(x, y);
 
 	std::cout << x << ' ' << y << '\n';
+
+	int array_1[]{ 1, 2, 3, 4, 5 };
+
+	test_array(array_1, sizeof(array_1) / sizeof(int));
+
+	const auto size = 5;
+
+	auto array_2 = new int[size]{ 1, 2, 3, 4, 5 };
+
+	test_array(array_2, size);
+
+	delete[] array_2;
 
 	auto bad_ptr = get_dangling_ptr();
 	auto bad_ref = get_dangling_ref();
