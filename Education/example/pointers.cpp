@@ -15,7 +15,7 @@ int main()
 
 	if (ptr_z)
 	{
-		std::cout << *ptr_z << std::endl;
+		std::cout << *ptr_z << '\n';
 	}
 
 	auto c = 0;
