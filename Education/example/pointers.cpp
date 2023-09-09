@@ -11,6 +11,9 @@ int main()
 	*ptr_x = 42;
 	++(*ptr_y);
 
+	std::cout << ptr_x << ' ' << *ptr_x << '\n';
+	std::cout << ptr_y << ' ' << *ptr_y << '\n';
+
 	int * ptr_z = nullptr;
 
 	if (ptr_z)
