@@ -109,7 +109,7 @@ int main()
 
 	int array_1[]{ 1, 2, 3, 4, 5 };
 
-	test_array(array_1, sizeof(array_1) / sizeof(int));
+	test_array(array_1, sizeof(array_1) / sizeof(array_1[0]));
 
 	const auto size = 5;
 
