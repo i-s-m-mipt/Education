@@ -7,6 +7,26 @@
 	return (x + y + z);
 }
 
+void test_pointers(int * x, const int * y)
+{
+	std::cout << *x << ' ' << *y << '\n';
+
+	++(*x);
+//	++(*y); // error
+
+	std::cout << *x << ' ' << *y << '\n';
+}
+
+void test_references(int & x, const int & y)
+{
+	std::cout << x << ' ' << y << '\n';
+
+	++x;
+//	++y; // error
+
+	std::cout << x << ' ' << y << '\n';
+}
+
 void h()
 {
 	auto x = 0;
@@ -41,6 +61,17 @@ inline auto max(int x, int y)
 int main()
 {
 	[[maybe_unused]] auto result = g(f(4), f(7));
+
+	auto x = 0;
+	auto y = 0;
+
+	test_pointers(&x, &y);
+
+	std::cout << x << ' ' << y << '\n';
+
+	test_references(x, y);
+
+	std::cout << x << ' ' << y << '\n';
 
 	h(); 
 	h(); 
