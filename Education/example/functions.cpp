@@ -9,6 +9,11 @@
 
 void test_pointers(int * x, const int * y)
 {
+	if (!x || !y)
+	{
+		return;
+	}
+
 	std::cout << *x << ' ' << *y << '\n';
 
 	++(*x);
@@ -25,6 +30,25 @@ void test_references(int & x, const int & y)
 //	++y; // error
 
 	std::cout << x << ' ' << y << '\n';
+}
+
+[[maybe_unused]] void set_code(int * code = nullptr)
+{
+	[[maybe_unused]] auto local_code = (code ? *code : 1234);
+}
+
+int * get_dangling_ptr()
+{
+	/*static*/ int d = 42;
+
+	return &d; // warning
+}
+
+int & get_dangling_ref()
+{
+	/*static*/ int d = 42;
+
+	return d; // warning
 }
 
 void h()
@@ -73,9 +97,16 @@ int main()
 
 	std::cout << x << ' ' << y << '\n';
 
+	auto bad_ptr = get_dangling_ptr();
+	auto bad_ref = get_dangling_ref();
+
+	std::cout << *bad_ptr << ' ' << bad_ref << '\n';
+
 	h(); 
 	h(); 
 	h();
+
+	std::cout << *bad_ptr << ' ' << bad_ref << '\n';
 
 	print(true);
 	print(3.14);
