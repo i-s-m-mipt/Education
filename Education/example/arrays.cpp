@@ -22,6 +22,13 @@ int main()
 
 	std::cout << (a + m + 1) - (a + m - 1) << '\n';
 
+	for (int * p = a; p != (a + size); ++p)
+	{
+		std::cout << *p;
+
+		std::cout << (p + 1 == a + size ? '\n' : ' ');
+	}
+
 	auto ptr_int = new int(42);
 
 	std::cout << *ptr_int << '\n';
