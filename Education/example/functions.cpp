@@ -1,6 +1,6 @@
 #include <iostream>
 
-[[nodiscard]] int f(int x);
+[[nodiscard]] int f(int x); // note: forward declaration
 
 [[nodiscard]] int g(int x, int y, int z = 1)
 {
@@ -17,7 +17,7 @@ void test_pointers(int * x, const int * y)
 	std::cout << *x << ' ' << *y << '\n';
 
 	++(*x);
-//	++(*y); // error
+//	++(*y); // error: pointer to constant value
 
 	std::cout << *x << ' ' << *y << '\n';
 }
@@ -27,17 +27,17 @@ void test_references(int & x, const int & y)
 	std::cout << x << ' ' << y << '\n';
 
 	++x;
-//	++y; // error
+//	++y; // error: constant reference
 
 	std::cout << x << ' ' << y << '\n';
 }
 
-[[maybe_unused]] void set_code(int * code = nullptr)
+[[maybe_unused]] void set_code(int * code = nullptr) // good: nullptr as default argument
 {
 	[[maybe_unused]] auto local_code = (code ? *code : 1234);
 }
 
-void test_array(int * a, int size)
+void test_array(int * a, int size) // note: array size as additional argument
 {
 	for (auto i = 0; i < size; ++i)
 	{
@@ -47,25 +47,29 @@ void test_array(int * a, int size)
 	}
 }
 
-int * get_dangling_ptr()
+/*
+int * get_dangling_pointer()
 {
-	/*static const*/ int d = 42;
+	int d = 42; // good: static const int d = 42;
 
-	return &d; // warning
+	return &d; // warning: dangling pointer to non-static local variable
 }
+*/
 
-int & get_dangling_ref()
+/*
+int & get_dangling_reference()
 {
-	/*static const*/ int d = 42;
+	int d = 42; // good: static const int d = 42;
 
-	return d; // warning
+	return d; // warning: dangling reference to non-static local variable
 }
+*/
 
 void h()
 {
 	auto x = 0;
 
-	static auto y = 0;
+	static auto y = 0; // note: once initialized static variable
 
 	std::cout << x++ << ' ' << y++ << '\n';
 
@@ -84,17 +88,19 @@ void print(double x)
 
 int factorial(int n)
 {
-	return (n < 2 ? 1 : n * factorial(n - 1));
+	return (n < 2 ? 1 : n * factorial(n - 1)); // good: compact recursion
 }
 
-inline auto max(int x, int y)
+inline auto max(int x, int y) // good: return type deduction in small function
 {
 	return (x > y ? x : y);
 }
 
 int main()
 {
-	[[maybe_unused]] auto result = g(f(4), f(7));
+//	f(42); // warning: nodiscard function
+
+	[[maybe_unused]] auto s = g(f(4), f(7)); // note: unspecified arguments evaluation order
 
 	auto x = 0;
 	auto y = 0;
@@ -107,11 +113,11 @@ int main()
 
 	std::cout << x << ' ' << y << '\n';
 
-	int array_1[]{ 1, 2, 3, 4, 5 };
-
-	test_array(array_1, sizeof(array_1) / sizeof(array_1[0]));
-
 	const auto size = 5;
+
+	int array_1[size]{ 1, 2, 3, 4, 5 };
+
+	test_array(array_1, size); // note: uniform syntax
 
 	auto array_2 = new int[size]{ 1, 2, 3, 4, 5 };
 
@@ -119,24 +125,21 @@ int main()
 
 	delete[] array_2;
 
-	auto bad_ptr = get_dangling_ptr();
-	auto bad_ref = get_dangling_ref();
+//	std::cout << *get_dangling_pointer() << '\n'; // bad: undefined behavior
 
-	std::cout << *bad_ptr << ' ' << bad_ref << '\n';
+//	std::cout << get_dangling_reference() << '\n'; // bad: undefined behavior
 
-	h(); 
-	h(); 
 	h();
-
-	std::cout << *bad_ptr << ' ' << bad_ref << '\n';
+	h();
+	h();
 
 	print(true);
 	print(3.14);
-//	print(1234); // error
+//	print(1234); // error: ambiguous function overloading
 
 	std::cout << factorial(5) << '\n';
 
-	std::cout << max(4, 7) << '\n';
+	std::cout << max(4, 7) << '\n'; // note: possible inlining
 
 	return 0;
 }
