@@ -2,43 +2,43 @@
 
 int main()
 {
-	const auto size = 10; // attention: compile-time constant variable
+	const auto size = 10; // note: compile-time constant variable
 
 	int a[size]{}; // good: zero initialized array
 
-	int b[size]{ 1, 2, 3 }; // attention: elements: { 1, 2, 3, 0, 0, 0, 0, 0, 0, 0 }
+	int b[size]{ 1, 2, 3 }; // note: elements: { 1, 2, 3, 0, 0, 0, 0, 0, 0, 0 }
 
-	int c[]{ 1, 2, 3 }; // attention: elements: { 1, 2, 3 }, size = 3 deduction
+	int c[]{ 1, 2, 3 }; // note: elements: { 1, 2, 3 }, size deduction -> 3
 
-	*a = 42; // attention: array name is a pointer to the first element
+	*a = 42; // note: array name is a pointer to the first element
 
 	const auto m = size / 2;
 
-	*(a + m) = 42; // attention: pointer arithmetic
+	*(a + m) = 42; // note: pointer arithmetic
 
-	std::cout << a[m] << '\n'; // good: standard syntax
+	std::cout << a[m] << '\n'; // good: standard index access operator syntax
 
 //	std::cout << *(&a[0] + m) << '\n'; // bad: redundant syntax
 
 	std::cout << *(a + m) << '\n';
 	std::cout << *(m + a) << '\n';
 
-//	std::cout << m[a] << '\n'; // bad: irregular syntax
+//	std::cout << m[a] << '\n'; // bad: inconvenient index access operator syntax
 
-	std::cout << (a + m + 1) - (a + m - 1) << '\n'; // attention: distance between elements
+	std::cout << (a + m + 1) - (a + m - 1) << '\n'; // note: distance between elements
 
 	for (int * p = a; p != (a + size); ++p)
 	{
 		std::cout << *p;
 
-		std::cout << (p + 1 == a + size ? '\n' : ' '); // attention: formatting
+		std::cout << (p + 1 == a + size ? '\n' : ' '); // good: compact formatting
 	}
 
 	auto ptr_int = new int(42); // good: initialized dynamic variable
 
 	std::cout << *ptr_int << '\n';
 
-	delete ptr_int; // attention: freeing dynamic variable memory
+	delete ptr_int; // good: no dynamic variable memory leak
 
 	auto ptr_array = new int[size]{}; // good: zero initialized dynamic array
 
@@ -51,9 +51,9 @@ int main()
 		std::cout << (i + 1 == size ? '\n' : ' ');
 	}
 
-	delete[] ptr_array; // attention: freeing dynamic array memory
+	delete[] ptr_array; // good: no dynamic array memory leak
 
-	int n{}; // attention: runtime non-constant variable
+	int n{}; // note: runtime non-constant variable
 
 	std::cin >> n;
 
@@ -64,7 +64,7 @@ int main()
 		std::cin >> s[i];
 	}
 
-	for (auto i = 0; i < n - 1; ++i) // attention: bubble sort
+	for (auto i = 0; i < n - 1; ++i) // note: bubble sort
 	{
 		for (auto j = i + 1; j < n; ++j)
 		{

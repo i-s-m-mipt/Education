@@ -30,7 +30,7 @@ int main()
 
     switch (auto y = x / 4 - 1; y)
     {
-    [[likely]] case 0: // good: effective machine code
+    [[likely]] case 0: // good: optimally generated machine code
     [[likely]] case 1:
     [[likely]] case 2:
     {
@@ -42,7 +42,7 @@ int main()
         std::cout << "path 2" << std::endl;
         break;
     }
-    [[unlikely]] case 4: // good: effective machine code
+    [[unlikely]] case 4: // good: optimally generated machine code
     {
         std::cout << "path 3" << std::endl;
         break;

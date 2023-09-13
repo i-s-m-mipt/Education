@@ -35,13 +35,13 @@ int main()
 
 	d = i = c = b; // good: wide conversions
 
-	b = 0; // attention: allowed narrow conversion
+	b = 0; // note: allowed narrow conversion
 
-	std::cout << b << '\n'; // attention: false outputs as 0
+	std::cout << b << '\n'; // note: false outputs as 0
 
 	b = static_cast < bool > (42);
 
-	std::cout << b << '\n'; // attention: true outputs as 1
+	std::cout << b << '\n'; // note: true outputs as 1
 
 	[[maybe_unused]] const auto pi = 3.14; // good: constant variable
 

@@ -4,7 +4,7 @@ int main()
 {
 	const auto size = 5;
 
-	for (auto i = 0; i < size; ++i) // attention: clear counter
+	for (auto i = 0; i < size; ++i) // note: clear counter
 	{
 		std::cout << "for 1: " << i << '\n';
 	}
@@ -53,7 +53,7 @@ int main()
 
 				if (auto stop = size / 2; i == stop && j == stop && k == stop)
 				{
-					goto exit; // good: useful only for such purposes
+					goto exit; // note: use goto only to exit nested loops
 				}
 			}
 		}
@@ -63,7 +63,7 @@ int main()
 
 	char c{};
 
-	while (c != 'n') // attention: no clear counter
+	while (c != 'n') // note: undefined counter
 	{
 		std::cout << "Continue (y/n) ? ";
 
@@ -78,7 +78,7 @@ int main()
 	} 
 	while (c != 'n');
 
-	for (;;) // attention: unusual infinite loop
+	for (;;) // note: unusual infinite loop
 	{
 		std::cout << "Continue (y/n) ? ";
 

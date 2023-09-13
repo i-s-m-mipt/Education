@@ -6,17 +6,17 @@ int main()
 	
 //	int & ri; // error: uninitialized reference
 
-	auto & rx = x; // attention: non-constant reference
+	auto & rx = x; // note: non-constant reference
 
 	rx = 42;
 
 	auto y = 1;
 
-	rx = y; // attention: rx refers to x, not y
+	rx = y; // note: rx refers to x, not y
 
-	const auto & rcx = x; // attention: constant reference
+	const auto & rcx = x; // note: constant reference
 
-	const auto & rcv = 42; // attention: lifetime extension 
+	const auto & rcv = 42; // note: temporary object lifetime extension 
 
 	return 0;
 }
