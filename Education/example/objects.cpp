@@ -49,7 +49,7 @@ int main()
 
 	[[maybe_unused]] my_type e = 2.72;
 
-	typedef double my_old_type; // bad: old style type alias
+ //	typedef double my_old_type; // bad: old style type alias
 
 	return 0;
 }
