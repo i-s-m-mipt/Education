@@ -53,9 +53,13 @@ int main()
 
 	delete[] ptr_array; // good: no dynamic array memory leak
 
+	std::cout << "Enter array size: ";
+
 	int n{}; // note: runtime non-constant variable
 
 	std::cin >> n;
+
+	std::cout << "Enter " << n << " integer values: ";
 
 	auto s = new int[n];
 

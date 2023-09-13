@@ -2,6 +2,8 @@
 
 int main()
 {
+    std::cout << "Enter integer value: ";
+
     int x{}; // good: zero initialized variable for input
 
     std::cin >> x;
