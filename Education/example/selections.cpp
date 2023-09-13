@@ -2,11 +2,11 @@
 
 int main()
 {
-    int x{};
+    int x{}; // good: zero initialized variable for input
 
     std::cin >> x;
 
-    if (auto y = x * 4 + 10; 42 == y)
+    if (auto y = x * 4 + 10; 42 == y) // good: 42 == y prevents error 42 = y
     {
         std::cout << "path 1\n";
     }
@@ -26,28 +26,28 @@ int main()
         }
     }
 
-    std::cout << (x > 0 ? x : 42) << '\n';
+    std::cout << (x > 0 ? x : 42) << '\n'; // good: compact selection
 
     switch (auto y = x / 4 - 1; y)
     {
-    [[likely]] case 0:
+    [[likely]] case 0: // good: effective machine code
     [[likely]] case 1:
     [[likely]] case 2:
     {
         std::cout << "path 1" << std::endl;
-        [[fallthrough]];
+        [[fallthrough]]; // good: suppressed warning, clear intentions
     }
     case 3:
     {
         std::cout << "path 2" << std::endl;
         break;
     }
-    [[unlikely]] case 4:
+    [[unlikely]] case 4: // good: effective machine code
     {
         std::cout << "path 3" << std::endl;
         break;
     }
-    default:
+    default: // good: secure code
     {
         std::cout << "path 4" << std::endl;
         break;

@@ -2,72 +2,54 @@
 
 int main()
 {
-	int x;
-
-//	int u = x; // error
-
 	bool   b = true;
 	char   c =  'a';
 	int    i =   42;
 	double d = 3.14;
 
-	int m = 0, n = 42;
+	[[maybe_unused]] int variable = 0; // good: suppressed warning
 
-	int x0;
-	int x1{};
-	int x2 = int();
-	int x3 = int{};
-	int x4 = i;
-	int x5(i);
-	int x6{i};
-	int x7 = {i};
+//	int m = 0, n = 42; // bad: inconvenient comma separator syntax
 
-	auto y = i;
+//	int x; // bad: uninitialized variable, indeterminate value
 
-//	auto y0; // error
+//	int z = x; // error: undefined behavior
 
-//	auto y1{}; // error
+	[[maybe_unused]] int x1{};   // good: initialized variable, zero value
+	[[maybe_unused]] int x2 = i; // good: initialized variable
 
-	auto y2 = int(); // auto -> int
-	auto y3 = int{}; // auto -> int
-	auto y4 = i;     // auto -> int
-	auto y5(i);      // auto -> int
-	auto y6{i};      // auto -> int 
-	auto y7 = {i};   // auto -> std::initilizer_list < int > 
+	[[maybe_unused]] auto y = i; // good: type deduction
 
-//	int z0 = d; // warning
+//	auto y0;   // error: invalid type deduction
+//	auto y1{}; // error: invalid type deduction
 
-//	int z1{d}; // error
+//	int z0 = d; // warning: narrow conversion
+//	int z1{d};  // error: prohibited narrow conversion
 
-	int z2{(int)d};
-	int z3{int(d)};
-	int z4{static_cast < int > (d)};
-	int z5{c};
+//	auto z2{(int)d}; // bad: old style conversion
+//	auto z3{int(d)}; // bad: old style conversion
 
-//	int z6{static_cast < int > ("Hello")}; // error
+	[[maybe_unused]] auto z4{static_cast < int > (d)}; // good: new style conversion
 
-	b = m;
+//	auto z6{static_cast < int > ("Hello")}; // error: invalid conversion
 
-	std::cout << b << '\n';
+	d = i = c = b; // attention: wide conversions
 
-	b = static_cast < bool > (n);
+	b = 0; // attention: allowed narrow conversion
 
-	std::cout << b << '\n';
+	std::cout << b << '\n'; // attention: false outputs as 0
 
-	const double pi = 3.14;
+	b = static_cast < bool > (42);
 
-	using type = const double;
+	std::cout << b << '\n'; // attention: true outputs as 1
 
-	type e = 2.72;
+	[[maybe_unused]] const auto pi = 3.14; // good: constant variable
 
-	typedef double old_type;
+	using my_type = const double; // good: new style type alias
 
-	x, x0, x1, x2, x3, x4, x5, x6, x7;
-	y,         y2, y3, y4, y5, y6, y7; 
-			   z2, z3, z4, z5;
-	pi, e;
+	[[maybe_unused]] my_type e = 2.72;
 
-	[[maybe_unused]] auto z = 42;
+	typedef double my_old_type; // bad: old style type alias
 
 	return 0;
 }

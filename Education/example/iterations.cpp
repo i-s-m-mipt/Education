@@ -4,20 +4,17 @@ int main()
 {
 	const auto size = 5;
 
-	for (auto i = 0; i < size; ++i)
+	for (auto i = 0; i < size; ++i) // attention: clear counter
 	{
 		std::cout << "for 1: " << i << '\n';
 	}
 
-	for (auto i = 0, j = 0; i < size; ++i, j += 2)
+	for (auto i = 0, j = 0; i < size; ++i, j += 2) // good: convenient comma separator syntax
 	{
 		std::cout << "for 2: " << i << ' ' << j << '\n';
 	}
 
-	for (auto i = 0; auto x = (i + 1) % size; ++i)
-	{
-		std::cout << "for 3: " << i << '\n';
-	}
+//	for (auto i = 0; auto x = (i + 1) % size; ++i) {} // bad: declaration instead of condition
 
 	for (auto i = size; i >= 0; --i)
 	{
@@ -56,7 +53,7 @@ int main()
 
 				if (auto stop = size / 2; i == stop && j == stop && k == stop)
 				{
-					goto exit;
+					goto exit; // good: but only for such purposes
 				}
 			}
 		}
@@ -66,7 +63,7 @@ int main()
 
 	char c{};
 
-	while (c != 'n')
+	while (c != 'n') // attention: unclear counter
 	{
 		std::cout << "Continue (y/n) ? ";
 
@@ -81,7 +78,7 @@ int main()
 	} 
 	while (c != 'n');
 
-	for (;;)
+	for (;;) // attention: unusual infinite loop
 	{
 		std::cout << "Continue (y/n) ? ";
 
