@@ -2,40 +2,45 @@
 
 int main()
 {
-	const auto size = 10;
+	const auto size = 10; // attention: compile-time constant variable
 
-	int a[size]{};
-	int b[size]{ 1, 2, 3 };
-	int c[]    { 1, 2, 3 };
+	int a[size]{}; // good: zero initialized array
 
-	*a = 42;
+	int b[size]{ 1, 2, 3 }; // attention: elements: { 1, 2, 3, 0, 0, 0, 0, 0, 0, 0 }
+
+	int c[]{ 1, 2, 3 }; // attention: elements: { 1, 2, 3 }, size = 3 deduction
+
+	*a = 42; // attention: array name is a pointer to the first element
 
 	const auto m = size / 2;
 
-	*(a + m) = 42;
+	*(a + m) = 42; // attention: pointer arithmetic
 
-	std::cout <<    a[m]      << '\n';
-	std::cout << *(&a[0] + m) << '\n';
-	std::cout << *( a    + m) << '\n';
-	std::cout << *( m +    a) << '\n';
-	std::cout <<    m[a]      << '\n';
+	std::cout << a[m] << '\n'; // good: standard syntax
 
-	std::cout << (a + m + 1) - (a + m - 1) << '\n';
+//	std::cout << *(&a[0] + m) << '\n'; // bad: redundant syntax
+
+	std::cout << *(a + m) << '\n';
+	std::cout << *(m + a) << '\n';
+
+//	std::cout << m[a] << '\n'; // bad: irregular syntax
+
+	std::cout << (a + m + 1) - (a + m - 1) << '\n'; // attention: distance between elements
 
 	for (int * p = a; p != (a + size); ++p)
 	{
 		std::cout << *p;
 
-		std::cout << (p + 1 == a + size ? '\n' : ' ');
+		std::cout << (p + 1 == a + size ? '\n' : ' '); // attention: formatting
 	}
 
-	auto ptr_int = new int(42);
+	auto ptr_int = new int(42); // good: initialized dynamic variable
 
 	std::cout << *ptr_int << '\n';
 
-	delete ptr_int;
+	delete ptr_int; // attention: freeing dynamic variable memory
 
-	auto ptr_array = new int[size]{};
+	auto ptr_array = new int[size]{}; // good: zero initialized dynamic array
 
 	ptr_array[m] = 42;
 
@@ -46,9 +51,9 @@ int main()
 		std::cout << (i + 1 == size ? '\n' : ' ');
 	}
 
-	delete[] ptr_array;
+	delete[] ptr_array; // attention: freeing dynamic array memory
 
-	int n{};
+	int n{}; // attention: runtime non-constant variable
 
 	std::cin >> n;
 
@@ -59,7 +64,7 @@ int main()
 		std::cin >> s[i];
 	}
 
-	for (auto i = 0; i < n - 1; ++i)
+	for (auto i = 0; i < n - 1; ++i) // attention: bubble sort
 	{
 		for (auto j = i + 1; j < n; ++j)
 		{

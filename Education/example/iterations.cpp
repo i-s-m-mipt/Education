@@ -9,7 +9,7 @@ int main()
 		std::cout << "for 1: " << i << '\n';
 	}
 
-	for (auto i = 0, j = 0; i < size; ++i, j += 2) // good: convenient comma separator syntax
+	for (auto i = 0, j = 0; i < size; ++i, j += 2) // good: useful comma separator syntax
 	{
 		std::cout << "for 2: " << i << ' ' << j << '\n';
 	}
@@ -53,7 +53,7 @@ int main()
 
 				if (auto stop = size / 2; i == stop && j == stop && k == stop)
 				{
-					goto exit; // good: but only for such purposes
+					goto exit; // good: useful only for such purposes
 				}
 			}
 		}
@@ -63,7 +63,7 @@ int main()
 
 	char c{};
 
-	while (c != 'n') // attention: unclear counter
+	while (c != 'n') // attention: no clear counter
 	{
 		std::cout << "Continue (y/n) ? ";
 

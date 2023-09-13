@@ -14,9 +14,9 @@ int main()
 	std::cout << ptr_x << ' ' << *ptr_x << '\n';
 	std::cout << ptr_y << ' ' << *ptr_y << '\n';
 
-	int * ptr_z = nullptr;
+	int * ptr_z = nullptr; // good: nullptr instead of 0
 
-	if (ptr_z)
+	if (ptr_z) // good: check pointer before dereferencing
 	{
 		std::cout << *ptr_z << '\n';
 	}

@@ -33,7 +33,7 @@ int main()
 
 //	auto z6{static_cast < int > ("Hello")}; // error: invalid conversion
 
-	d = i = c = b; // attention: wide conversions
+	d = i = c = b; // good: wide conversions
 
 	b = 0; // attention: allowed narrow conversion
 
