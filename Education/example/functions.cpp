@@ -2,7 +2,7 @@
 
 [[nodiscard]] int f(int x); // note: forward declaration
 
-[[nodiscard]] int g(int x, int y, int z = 1)
+[[nodiscard]] int g(int x, int y, int z = 1) // note: trailing default arguments
 {
 	return (x + y + z);
 }
