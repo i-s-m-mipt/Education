@@ -1,6 +1,6 @@
 #include <iostream>
 
-struct Object // good: capital letter for user-defined types
+struct S // good: capital letter for user-defined types
 {
 	int a{};
 	int b{};
@@ -13,14 +13,14 @@ struct Point
 	double y = 0.0;
 };
 
-struct Big_Object
+struct Data
 {
 	double a[100]{}; // note: big data
 };
 
-[[maybe_unused]] void f(const Big_Object & big_object) // good: pass big data by constant reference
+[[maybe_unused]] void f(const Data & data) // good: pass big data by constant reference
 {
-	std::cout << big_object.a[0] << '\n';
+	std::cout << data.a[0] << '\n';
 }
 
 [[maybe_unused]] Point make_point(double x, double y)
@@ -50,16 +50,16 @@ struct Node
 
 int main()
 {
-	Object object_1; // good: compact syntax, a = 0, b = 0, c = 4
+	S s1; // good: compact syntax, a = 0, b = 0, c = 4
 
-	[[maybe_unused]] Object object_2{};          // note: a = 0, b = 0, c = 4, unnecessary {}
-	[[maybe_unused]] Object object_3{ 1, 2, 3 }; // note: a = 1, b = 2, c = 3
-	[[maybe_unused]] Object object_4{ 1, 2 };    // note: a = 1, b = 2, c = 4
+	[[maybe_unused]] S s2{};          // note: a = 0, b = 0, c = 4, unnecessary {}
+	[[maybe_unused]] S s3{ 1, 2, 3 }; // note: a = 1, b = 2, c = 3
+	[[maybe_unused]] S s4{ 1, 2 };    // note: a = 1, b = 2, c = 4
 
-	[[maybe_unused]] Object object_5{ .a{ 1 }, .c{ 3 } }; // note: a = 1, b = 0, c = 3
-	[[maybe_unused]] Object object_6{ .a = 1, .c = 3 };   // note: a = 1, b = 0, c = 3
+	[[maybe_unused]] S s5{ .a{ 1 }, .c{ 3 } }; // note: a = 1, b = 0, c = 3
+	[[maybe_unused]] S s6{ .a = 1, .c = 3 };   // note: a = 1, b = 0, c = 3
 
-//	Object object_7{ .b{ 2 }, .a{ 1 } }; // error: invalid initialization order
+//	S s7{ .b{ 2 }, .a{ 1 } }; // error: invalid initialization order
 
 	Point points[] =
 	{
@@ -68,31 +68,31 @@ int main()
 		{3.0, 3.0}
 	};
 
-	object_1.a = 42;
+	s1.a = 42;
 
-	std::cout << object_1.a << '\n';
+	std::cout << s1.a << '\n';
 
-	auto ptr = &object_1;
+	auto ptr = &s1;
 
 //	(*ptr).b = 42; // bad: redundant syntax
 
 	ptr->b = 42;
 
-	std::cout << object_1.b << '\n';
+	std::cout << s1.b << '\n';
 
-	auto & ref = object_1.c;
+	auto & ref = s1.c;
 
 	ref = 42;
 
-	std::cout << object_1.c << '\n';
+	std::cout << s1.c << '\n';
 
-	object_1 = { 10, 20, 30 };
+	s1 = { 10, 20, 30 };
 
-	object_1 = { .a = 100, .c = 300 };
+	s1 = { .a = 100, .c = 300 };
 
-	[[maybe_unused]] const Object object_8{ 1, 2, 3 };
+	[[maybe_unused]] const S s8{ 1, 2, 3 };
 
-//	object_8.a = 42; // error: constant object
+//	s8.a = 42; // error: constant object
 
 	return 0;
 }
