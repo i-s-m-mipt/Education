@@ -40,7 +40,7 @@ public:
 		initialize();
 	}
 
-	~Date()
+	~Date() // note: don't call destructor explicitly
 	{
 		uninitialize();
 	}
