@@ -216,7 +216,11 @@ int main()
 
 	std::cout << Date::get_counter() << '\n';
 
-	print(A(), B());
+	print(A());
+
+	B().print(A());
+
+	C().print(B());
 
 	return 0;
 }
