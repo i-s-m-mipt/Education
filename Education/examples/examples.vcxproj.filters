@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="examples">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="examples\section_01">
+      <UniqueIdentifier>{1e1d801d-468f-476d-a17f-69b827217d0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_02">
+      <UniqueIdentifier>{696396e5-7dde-490f-96c0-fc6cc7fe174f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_03">
+      <UniqueIdentifier>{5c4ef79a-d2a8-4eee-acc5-b60a04550280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_04">
+      <UniqueIdentifier>{3ffb0dd6-53b7-4aea-ab51-908d3dc9d8a8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="section_01\hello_world.cpp">
+      <Filter>examples\section_01</Filter>
+    </ClCompile>
+    <ClCompile Include="section_01\input_output_basics.cpp">
+      <Filter>examples\section_01</Filter>
+    </ClCompile>
+    <ClCompile Include="section_01\main_example.cpp">
+      <Filter>examples\section_01</Filter>
+    </ClCompile>
+    <ClCompile Include="section_02\arrays_basics.cpp">
+      <Filter>examples\section_02</Filter>
+    </ClCompile>
+    <ClCompile Include="section_02\functions_basics.cpp">
+      <Filter>examples\section_02</Filter>
+    </ClCompile>
+    <ClCompile Include="section_02\objects_creation.cpp">
+      <Filter>examples\section_02</Filter>
+    </ClCompile>
+    <ClCompile Include="section_02\arithmetic_operators.cpp">
+      <Filter>examples\section_02</Filter>
+    </ClCompile>
+    <ClCompile Include="section_02\pointers_basics.cpp">
+      <Filter>examples\section_02</Filter>
+    </ClCompile>
+    <ClCompile Include="section_02\lvalue_references.cpp">
+      <Filter>examples\section_02</Filter>
+    </ClCompile>
+    <ClCompile Include="section_02\control_flow_statements.cpp">
+      <Filter>examples\section_02</Filter>
+    </ClCompile>
+    <ClCompile Include="section_03\classes_basics.cpp">
+      <Filter>examples\section_03</Filter>
+    </ClCompile>
+    <ClCompile Include="section_03\classes_hierarchies.cpp">
+      <Filter>examples\section_03</Filter>
+    </ClCompile>
+    <ClCompile Include="section_03\structures_basics.cpp">
+      <Filter>examples\section_03</Filter>
+    </ClCompile>
+    <ClCompile Include="section_03\virtual_functions.cpp">
+      <Filter>examples\section_03</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
