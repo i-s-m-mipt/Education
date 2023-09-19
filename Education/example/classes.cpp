@@ -12,7 +12,7 @@ public:
 	{
 	public:
 
-		void print(const Date & date)
+		void print(const Date & date) const
 		{
 			std::cout << date.m_year << '/' << date.m_month << '/' << date.m_day << '\n';
 		}
