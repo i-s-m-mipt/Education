@@ -1,20 +1,23 @@
 #include <iostream>
 
-void f(int x)
+int main()
 {
+	auto x = 0;
+
+	std::cin >> x;
+
 	switch (x)
 	{
-	[[unlikely]] case 0:
+	case 0:
 	{
 		std::cout << "case 0" << std::endl;
-		[[fallthrough]];
 	}
 	case 1:
 	{
 		std::cout << "case 1" << std::endl;
 		break;
 	}
-	[[likely]] case 2:
+	case 2:
 	{
 		std::cout << "case 2" << std::endl;
 		break;
@@ -25,14 +28,6 @@ void f(int x)
 		break;
 	}
 	}
-}
-
-int main()
-{
-	f(0);
-	f(1);
-	f(2);
-	f(3);
 
 	return 0;
 }
