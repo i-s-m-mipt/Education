@@ -18,14 +18,9 @@ public:
 
 public:
 
-	void f([[maybe_unused]] int x) const
-	{}
-
-	void f([[maybe_unused]] char x) const
-	{}
-
-	void f([[maybe_unused]] double x) const
-	{}
+	void f([[maybe_unused]] int    x) const {}
+	void f([[maybe_unused]] char   x) const {}
+	void f([[maybe_unused]] double x) const {}
 
 public:
 	int m_public_data    = 0;
@@ -178,14 +173,11 @@ public:
 	int m_data = 0;
 };
 
-class Left : public /*virtual*/ Base // good: virtual inheritance
-{};
+class Left : public /*virtual*/ Base {}; // good: virtual inheritance
 
-class Right : public /*virtual*/ Base // good: virtual inheritance
-{};
+class Right : public /*virtual*/ Base {}; // good: virtual inheritance
 
-class Central : public Left, public Right // note: avoid multiple inheritance
-{};
+class Central : public Left, public Right {}; // note: avoid multiple inheritance
 
 int main()
 {
