@@ -19,28 +19,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="section_01\hello_world.cpp">
+    <ClCompile Include="section_01\basic_hello_world.cpp">
       <Filter>examples\section_01</Filter>
     </ClCompile>
     <ClCompile Include="section_01\input_output_basics.cpp">
       <Filter>examples\section_01</Filter>
     </ClCompile>
-    <ClCompile Include="section_01\main_example.cpp">
+    <ClCompile Include="section_01\commercial_main.cpp">
       <Filter>examples\section_01</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\arrays_basics.cpp">
+    <ClCompile Include="section_02\static_dynamic_arrays.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\functions_basics.cpp">
+    <ClCompile Include="section_02\free_functions_basics.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\objects_creation.cpp">
+    <ClCompile Include="section_02\objects_introduction.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
     <ClCompile Include="section_02\arithmetic_operators.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\pointers_basics.cpp">
+    <ClCompile Include="section_02\plain_pointers_basics.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
     <ClCompile Include="section_02\lvalue_references.cpp">
