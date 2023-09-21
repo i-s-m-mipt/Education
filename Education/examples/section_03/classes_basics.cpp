@@ -196,7 +196,7 @@ int main()
 
 	date.set_year(2023);
 
-	const Date c_date;
+	[[maybe_unused]] const Date c_date;
 
 //	c_date.set_year(2023); // error: non-constant member function
 

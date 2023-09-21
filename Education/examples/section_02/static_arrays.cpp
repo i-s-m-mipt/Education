@@ -34,34 +34,17 @@ int main()
 		std::cout << (p + 1 == a + size ? '\n' : ' '); // good: compact formatting
 	}
 
-	auto ptr_int = new int(42); // good: initialized dynamic variable
-
-	std::cout << *ptr_int << '\n';
-
-	delete ptr_int; // good: no dynamic variable memory leak
-
-	auto ptr_array = new int[size]{}; // good: zero initialized dynamic array
-
-	ptr_array[m] = 42;
-
-	for (auto i = 0; i < size; ++i)
-	{
-		std::cout << ptr_array[i];
-
-		std::cout << (i + 1 == size ? '\n' : ' ');
-	}
-
-	delete[] ptr_array; // good: no dynamic array memory leak
-
 	std::cout << "Enter array size: ";
 
-	int n{}; // note: runtime non-constant variable
+	int n{};
 
 	std::cin >> n;
 
 	std::cout << "Enter " << n << " integer values: ";
 
-	auto s = new int[n];
+	const auto buffer_size = 1024; // note: enough size
+
+	int s[buffer_size]{};
 
 	for (auto i = 0; i < n; ++i)
 	{
@@ -74,9 +57,7 @@ int main()
 		{
 			if (s[i] > s[j])
 			{
-				auto tmp = s[i]; 
-				s[i] = s[j];
-				s[j] = tmp;
+				auto tmp = s[i]; s[i] = s[j]; s[j] = tmp;
 			}
 		}
 	}
