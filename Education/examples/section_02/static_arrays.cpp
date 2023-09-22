@@ -10,11 +10,15 @@ int main()
 
 	int c[]{ 1, 2, 3 }; // note: elements: { 1, 2, 3 }, size deduction -> 3
 
+//	int d[1'000'000'000]{}; // bad: array is too large, use dynamic array
+
 	*a = 42; // note: array name is a pointer to the first element
 
 	const auto m = size / 2;
 
 	*(a + m) = 42; // note: pointer arithmetic
+
+//	*(a + 100) = 42; // bad: undefined behavior
 
 	std::cout << a[m] << '\n'; // good: standard index access operator syntax
 
@@ -26,6 +30,8 @@ int main()
 //	std::cout << m[a] << '\n'; // bad: inconvenient index access operator syntax
 
 	std::cout << (a + m + 1) - (a + m - 1) << '\n'; // note: distance between elements
+
+//	auto delta = b - a; // bad: pointers to different arrays
 
 	for (int * p = a; p != (a + size); ++p)
 	{

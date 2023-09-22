@@ -16,6 +16,8 @@ int main()
 
 	int * ptr_z = nullptr; // good: nullptr instead of 0
 
+//	*ptr_z = 42; // bad: dereferencing nullptr
+
 	if (ptr_z) // good: check pointer before dereferencing
 	{
 		std::cout << *ptr_z << '\n';

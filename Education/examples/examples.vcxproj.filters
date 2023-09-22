@@ -17,6 +17,24 @@
     <Filter Include="examples\section_04">
       <UniqueIdentifier>{3ffb0dd6-53b7-4aea-ab51-908d3dc9d8a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="examples\section_05">
+      <UniqueIdentifier>{3b43cf1e-2406-447d-b554-eed535a41930}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_06">
+      <UniqueIdentifier>{809f060e-68ef-47c0-9781-925bd589a81e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_07">
+      <UniqueIdentifier>{826aa6a4-432e-4512-8241-0ac27ea01bfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_08">
+      <UniqueIdentifier>{d2198753-21e4-4ee9-a3dc-e1e22f64b99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_10">
+      <UniqueIdentifier>{e966f5d7-273c-4167-bd09-a216b22c9007}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_09">
+      <UniqueIdentifier>{706333f9-28ee-4304-bd5b-568a6281800e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="section_01\basic_hello_world.cpp">
@@ -28,25 +46,25 @@
     <ClCompile Include="section_01\commercial_main.cpp">
       <Filter>examples\section_01</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\static_dynamic_arrays.cpp">
+    <ClCompile Include="section_02\static_arrays.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\free_functions_basics.cpp">
+    <ClCompile Include="section_02\functions_basics.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\objects_introduction.cpp">
+    <ClCompile Include="section_02\variables_basics.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\arithmetic_operators.cpp">
+    <ClCompile Include="section_02\operators_basics.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\plain_pointers_basics.cpp">
+    <ClCompile Include="section_02\pointers_basics.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
     <ClCompile Include="section_02\lvalue_references.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\control_flow_statements.cpp">
+    <ClCompile Include="section_02\selections_basics.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
     <ClCompile Include="section_03\classes_basics.cpp">
@@ -60,6 +78,33 @@
     </ClCompile>
     <ClCompile Include="section_03\virtual_functions.cpp">
       <Filter>examples\section_03</Filter>
+    </ClCompile>
+    <ClCompile Include="section_03\exceptions_basics.cpp">
+      <Filter>examples\section_03</Filter>
+    </ClCompile>
+    <ClCompile Include="section_03\operators_overloading.cpp">
+      <Filter>examples\section_03</Filter>
+    </ClCompile>
+    <ClCompile Include="section_02\iterations_basics.cpp">
+      <Filter>examples\section_02</Filter>
+    </ClCompile>
+    <ClCompile Include="section_02\dynamic_arrays.cpp">
+      <Filter>examples\section_02</Filter>
+    </ClCompile>
+    <ClCompile Include="section_07\errors_handling.cpp">
+      <Filter>examples\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="section_10\character_types.cpp">
+      <Filter>examples\section_10</Filter>
+    </ClCompile>
+    <ClCompile Include="section_08\bitwise_operators.cpp">
+      <Filter>examples\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="section_08\integer_types.cpp">
+      <Filter>examples\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="section_08\floating_point_types.cpp">
+      <Filter>examples\section_08</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -25,6 +25,8 @@ int main()
 
 	delete[] ptr_array; // good: no dynamic array memory leak
 
+//	delete ptr_array; // bad: wrong delete
+
 	std::cout << "Enter array size: ";
 
 	int n{}; // note: runtime non-constant variable

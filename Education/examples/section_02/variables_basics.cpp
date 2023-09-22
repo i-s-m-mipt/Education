@@ -43,6 +43,8 @@ int main()
 
 	std::cout << b << '\n'; // note: true outputs as 1
 
+	[[maybe_unused]] bool b1{ i != 0 }; // note: possible conversion
+
 	[[maybe_unused]] const auto pi = 3.14; // good: constant variable
 
 	using my_type = const double; // good: new style type alias
