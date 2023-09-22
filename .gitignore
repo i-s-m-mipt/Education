@@ -353,3 +353,5 @@ service/
 *.ipynb_checkpoints
 clients.json
 *.db
+
+solutions/
