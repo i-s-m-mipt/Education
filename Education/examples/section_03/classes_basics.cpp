@@ -61,6 +61,8 @@ public:
 
 	void print_v1() const // note: small function is defined in the class as inline
 	{
+//		m_year = 2023; // error: const function
+
 		std::cout << m_year << '/' << m_month << '/' << m_day << '\n';
 	}
 
@@ -74,7 +76,7 @@ public:
 	}
 
 /*
-	void set_year(int year) // bad: trivial getter and setter pair
+	void set_year(integer_t year) // bad: trivial getter and setter pair
 	{
 		m_year = year;
 	}

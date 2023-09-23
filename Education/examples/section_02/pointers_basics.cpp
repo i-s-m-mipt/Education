@@ -25,15 +25,15 @@ int main()
 
 	auto c = 0;
 
-	const int * ptr_c = &c;
+	[[maybe_unused]] const int * ptr_c = &c;
 
 //	*ptr_c = 42; // error: constant value
 
-	int * const c_ptr = &c;
+	[[maybe_unused]] int * const c_ptr = &c;
 
 //	c_ptr = nullptr; // error: constant pointer
 
-	const int * const c_ptr_c = &c;
+	[[maybe_unused]] const int * const c_ptr_c = &c;
 
 	return 0;
 }

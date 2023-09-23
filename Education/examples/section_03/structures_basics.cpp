@@ -39,6 +39,8 @@ struct Node; // note: forward declaration, cyclic dependence
 
 struct Link
 {
+//	Node nodes[2]; // error: no visible definition 
+
 	Node * left;  // note: declaration is enough
 	Node * right; // note: declaration is enough
 };
