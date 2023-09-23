@@ -106,5 +106,11 @@
     <ClCompile Include="section_08\floating_point_types.cpp">
       <Filter>examples\section_08</Filter>
     </ClCompile>
+    <ClCompile Include="section_07\processor_usage.cpp">
+      <Filter>examples\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="section_07\memory_usage.cpp">
+      <Filter>examples\section_07</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
