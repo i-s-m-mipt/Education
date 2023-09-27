@@ -10,13 +10,15 @@ int main()
 
 	int c[]{ 1, 2, 3 }; // note: elements: { 1, 2, 3 }, size deduction -> 3
 
-//	int d[1'000'000'000]{}; // bad: array is too large, use dynamic array
+//	int d[2]{ 1, 2, 3 }; // error: too many initializers
+
+//	int e[1'000'000'000]{}; // bad: array is too large, use dynamic array
 
 	*a = 42; // note: array name is a pointer to the first element
 
 	const auto m = size / 2;
 
-	*(a + m) = 42; // note: pointer arithmetic
+	*(a + m) = 42; // note: pointers arithmetic
 
 //	*(a + 100) = 42; // bad: undefined behavior
 
