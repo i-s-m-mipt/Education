@@ -15,23 +15,21 @@ int main()
 
 	std::cout << "You entered " << x << " and " << y << std::endl;
 
-	std::string string_1 = "Hello, ";
+	std::string prompt = "Hello";
 
-	std::string string_2{};
+	std::string name{};
 
 	std::cout << "Enter your name in english: ";
 
-	std::cin >> string_2;
+	std::cin >> name;
 
-	std::cout << string_1 + string_2 << std::endl;
+	std::cout << prompt << ", " << name << std::endl;
 
 	std::cout << std::abs(-1.0) << std::endl;
 
-	std::cout << std::sin(2.0) << std::endl;
+	std::cout << std::sqrt(4.0) << std::endl;
 
 	std::cout << std::pow(2.0, 3.0) << std::endl;
-
-	std::cout << std::sqrt(4.0) << std::endl;
 
 	return 0;
 }
