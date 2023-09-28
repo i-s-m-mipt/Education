@@ -2,10 +2,10 @@
 #include <iostream>
 #include <string>
 
-//using namespace std; // bad: dangerous in big projects
-
 int main()
 {
+//	using namespace std; // bad: dangerous in big projects
+	
 	int x{};
 	int y{};
 
