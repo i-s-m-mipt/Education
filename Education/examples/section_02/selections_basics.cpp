@@ -10,25 +10,25 @@ int main()
 
     if (auto y = x * 4 + 10; 42 == y) // good: 42 == y prevents error 42 = y
     {
-        std::cout << "path 1\n";
+        std::cout << "path 1" << std::endl;
     }
     else if (y > 0)
     {
-        std::cout << "path 2\n";
+        std::cout << "path 2" << std::endl;
     }
     else
     {
         if (x < 0)
         {
-            std::cout << "path 3\n";
+            std::cout << "path 3" << std::endl;
         }
         else
         { 
-            std::cout << "path 4\n";
+            std::cout << "path 4" << std::endl;
         }
     }
 
-    std::cout << (x > 0 ? x : 42) << '\n'; // good: compact selection
+    std::cout << (x > 0 ? x : 42) << std::endl; // good: compact selection
 
     switch (auto y = x / 4 - 1; y)
     {

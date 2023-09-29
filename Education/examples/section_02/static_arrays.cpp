@@ -22,16 +22,16 @@ int main()
 
 //	*(a + 100) = 42; // bad: undefined behavior
 
-	std::cout << a[m] << '\n'; // good: standard index access operator syntax
+	std::cout << a[m] << std::endl; // good: standard index access operator syntax
 
-//	std::cout << *(&a[0] + m) << '\n'; // bad: redundant syntax
+//	std::cout << *(&a[0] + m) << std::endl; // bad: redundant syntax
 
-	std::cout << *(a + m) << '\n';
-	std::cout << *(m + a) << '\n';
+	std::cout << *(a + m) << std::endl;
+	std::cout << *(m + a) << std::endl;
 
-//	std::cout << m[a] << '\n'; // bad: inconvenient index access operator syntax
+//	std::cout << m[a] << std::endl; // bad: inconvenient index access operator syntax
 
-	std::cout << (a + m + 1) - (a + m - 1) << '\n'; // note: distance between elements
+	std::cout << (a + m + 1) - (a + m - 1) << std::endl; // note: distance between elements
 
 //	auto delta = b - a; // bad: pointers to different arrays
 
@@ -76,8 +76,6 @@ int main()
 
 		std::cout << (i + 1 == size ? '\n' : ' ');
 	}
-
-	delete[] s;
 
 	return 0;
 }

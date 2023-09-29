@@ -11,8 +11,8 @@ int main()
 	*ptr_x = 42;
 	++(*ptr_y);
 
-	std::cout << ptr_x << ' ' << *ptr_x << '\n';
-	std::cout << ptr_y << ' ' << *ptr_y << '\n';
+	std::cout << ptr_x << ' ' << *ptr_x << std::endl;
+	std::cout << ptr_y << ' ' << *ptr_y << std::endl;
 
 	int * ptr_z = nullptr; // good: nullptr instead of 0
 
@@ -20,7 +20,7 @@ int main()
 
 	if (ptr_z) // good: check pointer before dereferencing
 	{
-		std::cout << *ptr_z << '\n';
+		std::cout << *ptr_z << std::endl;
 	}
 
 	auto c = 0;

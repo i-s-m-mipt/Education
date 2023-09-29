@@ -4,7 +4,7 @@ int main()
 {
 	auto ptr_int = new int(42); // good: initialized dynamic variable
 
-	std::cout << *ptr_int << '\n';
+	std::cout << *ptr_int << std::endl;
 
 	delete ptr_int; // good: no dynamic variable memory leak
 

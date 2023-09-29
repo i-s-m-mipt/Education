@@ -14,22 +14,22 @@ void test_pointers(int * x, const int * y)
 		return;
 	}
 
-	std::cout << *x << ' ' << *y << '\n';
+	std::cout << *x << ' ' << *y << std::endl;
 
 	++(*x);
 //	++(*y); // error: pointer to constant value
 
-	std::cout << *x << ' ' << *y << '\n';
+	std::cout << *x << ' ' << *y << std::endl;
 }
 
 void test_references(int & x, const int & y)
 {
-	std::cout << x << ' ' << y << '\n';
+	std::cout << x << ' ' << y << std::endl;
 
 	++x;
 //	++y; // error: constant reference
 
-	std::cout << x << ' ' << y << '\n';
+	std::cout << x << ' ' << y << std::endl;
 }
 
 [[maybe_unused]] void set_code(int * code = nullptr) // good: nullptr as default argument
@@ -71,19 +71,19 @@ void h()
 
 	static auto y = 0; // note: once initialized static variable
 
-	std::cout << x++ << ' ' << y++ << '\n';
+	std::cout << x++ << ' ' << y++ << std::endl;
 
 	return;
 }
 
 void print(bool x)
 {
-	std::cout << x << '\n';
+	std::cout << x << std::endl;
 }
 
 void print(double x)
 {
-	std::cout << x << '\n';
+	std::cout << x << std::endl;
 }
 
 int factorial(int n)
@@ -107,11 +107,11 @@ int main()
 
 	test_pointers(&x, &y);
 
-	std::cout << x << ' ' << y << '\n';
+	std::cout << x << ' ' << y << std::endl;
 
 	test_references(x, y);
 
-	std::cout << x << ' ' << y << '\n';
+	std::cout << x << ' ' << y << std::endl;
 
 	const auto size = 5;
 
@@ -125,9 +125,9 @@ int main()
 
 	delete[] array_2;
 
-//	std::cout << *get_dangling_pointer() << '\n'; // bad: undefined behavior
+//	std::cout << *get_dangling_pointer() << std::endl; // bad: undefined behavior
 
-//	std::cout << get_dangling_reference() << '\n'; // bad: undefined behavior
+//	std::cout << get_dangling_reference() << std::endl; // bad: undefined behavior
 
 	h();
 	h();
@@ -137,9 +137,9 @@ int main()
 	print(3.14);
 //	print(1234); // error: ambiguous function overloading
 
-	std::cout << factorial(5) << '\n';
+	std::cout << factorial(5) << std::endl;
 
-	std::cout << max(4, 7) << '\n'; // note: possible inlining
+	std::cout << max(4, 7) << std::endl; // note: possible inlining
 
 	return 0;
 }

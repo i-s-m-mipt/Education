@@ -6,12 +6,12 @@ int main()
 
 	for (auto i = 0; i < size; ++i) // note: clear counter
 	{
-		std::cout << "for 1: " << i << '\n';
+		std::cout << "for 1: " << i << std::endl;
 	}
 
 	for (auto i = 0, j = 0; i < size; ++i, j += 2) // good: useful comma separator syntax
 	{
-		std::cout << "for 2: " << i << ' ' << j << '\n';
+		std::cout << "for 2: " << i << ' ' << j << std::endl;
 	}
 
 	//	for (auto i = 0; auto x = (i + 1) % size; ++i) {} // bad: declaration instead of condition
@@ -23,7 +23,7 @@ int main()
 			continue;
 		}
 
-		std::cout << "for 4: " << i << '\n';
+		std::cout << "for 4: " << i << std::endl;
 	}
 
 	for (auto i = 0; i < size; ++i)
@@ -40,7 +40,7 @@ int main()
 			std::cout << j << ' ';
 		}
 
-		std::cout << '\n';
+		std::cout << std::endl;
 	}
 
 	for (auto i = 0; i < size; ++i)
@@ -49,7 +49,7 @@ int main()
 		{
 			for (auto k = 0; k < size; ++k)
 			{
-				std::cout << "for 6: " << i << ' ' << j << ' ' << k << '\n';
+				std::cout << "for 6: " << i << ' ' << j << ' ' << k << std::endl;
 
 				if (auto stop = size / 2; i == stop && j == stop && k == stop)
 				{

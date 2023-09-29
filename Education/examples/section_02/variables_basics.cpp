@@ -37,11 +37,11 @@ int main()
 
 	b = 0; // note: allowed narrow conversion
 
-	std::cout << b << '\n'; // note: false outputs as 0
+	std::cout << b << std::endl; // note: false outputs as 0
 
 	b = static_cast < bool > (42);
 
-	std::cout << b << '\n'; // note: true outputs as 1
+	std::cout << b << std::endl; // note: true outputs as 1
 
 	[[maybe_unused]] bool b1{ i != 0 }; // note: possible conversion
 
