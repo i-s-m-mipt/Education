@@ -20,7 +20,7 @@ struct Data
 
 [[maybe_unused]] void f(const Data & data) // good: pass big data by constant reference
 {
-	std::cout << data.a[0] << '\n';
+	std::cout << data.a[0] << std::endl;
 }
 
 [[maybe_unused]] Point make_point(double x, double y)
@@ -72,7 +72,7 @@ int main()
 
 	s1.a = 42;
 
-	std::cout << s1.a << '\n';
+	std::cout << s1.a << std::endl;
 
 	auto ptr = &s1;
 
@@ -80,13 +80,17 @@ int main()
 
 	ptr->b = 42;
 
-	std::cout << s1.b << '\n';
+	std::cout << s1.b << std::endl;
 
 	auto & ref = s1.c;
 
 	ref = 42;
 
-	std::cout << s1.c << '\n';
+	std::cout << s1.c << std::endl;
+
+	std::cout << &s1 << std::endl;
+
+	std::cout << &s1.a << std::endl; // note: same address as previous
 
 	s1 = { 10, 20, 30 };
 
