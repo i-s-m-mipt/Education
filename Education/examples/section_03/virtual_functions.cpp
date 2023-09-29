@@ -18,11 +18,11 @@ public:
 
 	virtual void print() const // note: can be redefined in derived classes
 	{
-		std::cout << "A\n";
+		std::cout << "A" << std::endl;
 	}
 };
 
-class B final : public A
+class B final : public A // note: final class in hierarchy
 {
 public:
 
@@ -30,9 +30,9 @@ public:
 
 public:
 
-	void print() const override final
+	void print() const override final // note: final function in hierarchy
 	{
-		std::cout << "B " << m_number << '\n';
+		std::cout << "B " << m_number << std::endl;
 	}
 
 	auto number() const
@@ -46,13 +46,13 @@ private:
 };
 
 /*
-class C final : public B // error: declared final
+class C final : public B // error: class B declared final
 {
 public:
 
-	void print() const override // error: declared final
+	void print() const override // error: print declared final in class B
 	{
-		std::cout << "C\n";
+		std::cout << "C" << std::endl;
 	}
 };
 */
@@ -70,24 +70,24 @@ public:
 
 protected:
 
-//	virtual_table * __vptr; // note: implicit member of base class
+//	virtual_table * __vptr; // note: implicit data member of base class
 };
 
-class Derived_1 : public Base // note: static Derived_1 virtual table
+class Derived_1 : public Base // note: static Derived_1 virtual table, inherited __vptr
 {
 public:
 
 	void f() const override {};
 };
 
-class Derived_2 : public Base // note: static Derived_2 virtual table
+class Derived_2 : public Base // note: static Derived_2 virtual table, inherited __vptr
 {
 public:
 
 	void g() const override {};
 };
 
-class Abstract_Base // note: interface class
+class Abstract_Base // note: interface class like in Java
 {
 public:
 
@@ -100,7 +100,7 @@ public:
 
 void Abstract_Base::print() const // note: definition must be provided separately
 {
-	std::cout << "abstract_base\n";
+	std::cout << "default implementation" << std::endl;
 }
 
 class Derived : public Abstract_Base
@@ -109,7 +109,7 @@ public:
 
 	void print() const override
 	{
-		std::cout << "derived\n";
+		std::cout << "derived implementation" << std::endl;
 
 		Abstract_Base::print(); // note: possible default implementation
 	}
@@ -158,8 +158,8 @@ int main()
 
 	auto b2_ptr = static_cast < B * > (a_ptr); // note: faster, possible undefined behavior 
 
-	std::cout << b1_ptr->number() << '\n';
-	std::cout << b2_ptr->number() << '\n';
+	std::cout << b1_ptr->number() << std::endl;
+	std::cout << b2_ptr->number() << std::endl;
 
 	delete a_ptr;
 
@@ -169,7 +169,7 @@ int main()
 
 	if (!b3_ptr)
 	{
-		std::cout << "bad dynamic cast\n";
+		std::cout << "invalid dynamic cast" << std::endl;
 	}
 
 	delete a_ptr;
