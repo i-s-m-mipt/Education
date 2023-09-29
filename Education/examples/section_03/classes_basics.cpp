@@ -14,7 +14,7 @@ public:
 
 		void print(const Date & date) const
 		{
-			std::cout << date.m_year << '/' << date.m_month << '/' << date.m_day << '\n';
+			std::cout << date.m_year << '/' << date.m_month << '/' << date.m_day << std::endl;
 		}
 	};
 
@@ -63,7 +63,7 @@ public:
 	{
 //		m_year = 2023; // error: const function
 
-		std::cout << m_year << '/' << m_month << '/' << m_day << '\n';
+		std::cout << m_year << '/' << m_month << '/' << m_day << std::endl;
 	}
 
 	void print_v2() const;
@@ -130,59 +130,7 @@ void Date::print_v2() const // good: large function is defined outside the class
 
 	if (m_day < 10) std::cout << '0';
 
-	std::cout << m_day << '\n';
-}
-
-class A
-{
-public:
-
-	friend void print(const A & a); 
-
-	friend class B;
-
-private:
-
-	int m_data = 42;
-};
-
-void print(const A & a)
-{
-	std::cout << a.m_data << '\n';
-}
-
-class B; // note: forward declaration required
-
-class C
-{
-public:
-
-	void print(const B & b) const;
-
-private:
-
-	int m_data = 42;
-};
-
-class B
-{
-public:
-
-	void print(const A & a) const
-	{
-		std::cout << a.m_data << '\n';
-	}
-
-	friend void C::print(const B & b) const; // note: friendship is not transitive
-
-private:
-
-	int m_data = 42;
-};
-
-void C::print(const B & b) const
-{
-	std::cout << b.m_data << '\n';
+	std::cout << m_day << std::endl;
 }
 
 int main()
@@ -211,18 +159,12 @@ int main()
 
 	printer.print(date_2);
 
-	std::cout << date_1.max_year << '\n';
-	std::cout << date_2.max_year << '\n';
+	std::cout << date_1.max_year << std::endl;
+	std::cout << date_2.max_year << std::endl;
 
-	std::cout << Date::max_year << '\n'; // good: preferred syntax
+	std::cout << Date::max_year << std::endl; // good: preferred syntax
 
-	std::cout << Date::get_counter() << '\n';
-
-	print(A());
-
-	B().print(A());
-
-	C().print(B());
+	std::cout << Date::get_counter() << std::endl;
 
 	return 0;
 }

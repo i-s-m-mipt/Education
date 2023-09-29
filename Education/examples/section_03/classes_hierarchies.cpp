@@ -4,16 +4,16 @@ class Person
 {
 public:
 
-	Person(int age) : m_age(age)
+	Person(const std::string & name) : m_name(name)
 	{
-		std::cout << "person constructed\n";
+		std::cout << "person " << name << " constructed" << std::endl;
 	}
 
 public:
 
 	void print() const
 	{
-		std::cout << "person\n";
+		std::cout << "person" << std::endl;
 	}
 
 public:
@@ -22,51 +22,35 @@ public:
 	void f([[maybe_unused]] char   x) const {}
 	void f([[maybe_unused]] double x) const {}
 
-public:
-	int m_public_data    = 0;
-protected:
-	int m_protected_data = 0;
-private:
-	int m_private_data   = 0; // good: prefer private data in hierarchies
-
 protected:
 
-	auto age() const
+	const auto & name() const // good: return big object by constant reference
 	{
-		return m_age;
+		return m_name;
 	}
 
 private:
 
-	int m_age = 0;
+	std::string m_name;
 };
 
 class Student : public Person
 {
 public:
 
-	Student(int age, int grade) : Person(age), m_grade(grade) // good: base class constructor
+	Student(const std::string & name, int grade) : Person(name), m_grade(grade) // good: base class constructor
 	{
-		std::cout << "student constructed\n";
-
-		m_public_data    = 42;
-		m_protected_data = 42;
-//		m_private_data   = 42; // error: private data member
+		std::cout << "student " << name << " constructed" << std::endl;
 	}
 
 public:
 
 	void print() const
 	{
-		std::cout << "student\n";
+		std::cout << "student" << std::endl;
 	}
 
-	auto data() const // note: extending an interface in a derived class
-	{
-		return m_protected_data;
-	}
-
-	using Person::age; // note: change access specifier to public
+	using Person::name; // note: change access specifier to public
 
 private:
 
@@ -81,16 +65,16 @@ class Employee : public Person
 {
 public:
 
-	Employee(int age, int salary) : Person(age), m_salary(salary)
+	Employee(const std::string & name, int salary) : Person(name), m_salary(salary)
 	{
-		std::cout << "employee constructed\n";
+		std::cout << "employee " << name << " constructed" << std::endl;
 	}
 
 public:
 
 	void print() const
 	{
-		std::cout << "employee\n";
+		std::cout << "employee" << std::endl;
 
 //		print(); // error: infinite recursion
 
@@ -106,16 +90,16 @@ class Manager : public Employee
 {
 public:
 
-	Manager(int age, int salary, int level) : Employee(age, salary), m_level(level)
+	Manager(const std::string & name, int salary, int level) : Employee(name, salary), m_level(level)
 	{
-		std::cout << "manager constructed\n";
+		std::cout << "manager " << name << " constructed" << std::endl;
 	}
 
 public:
 
 	void print() const
 	{
-		std::cout << "manager\n";
+		std::cout << "manager" << std::endl;
 	}
 
 private:
@@ -126,88 +110,66 @@ private:
 class B
 {
 public:
-	int m_public_data    = 0;
+	int m_data_1{}; // note: avoid public data mostly
 protected:
-	int m_protected_data = 0;
+	int m_data_2{}; // note: use protected data by situation
 private:
-	int m_private_data   = 0;
+	int m_data_3{}; // good: prefer private data in hierarchies
 };
 
 class D1 : public B // note: useful inheritance
 {
-public:
 	void f()
 	{
-		m_public_data    = 42;
-		m_protected_data = 42;
-//		m_private_data   = 42; // error: private data member
+		m_data_1 = 42;
+		m_data_2 = 42;
+//		m_data_3 = 42; // error: private data member
 	}
 };
 
 class D2 : protected B // note: useless inheritance
 {
-public:
 	void f()
 	{
-		m_public_data    = 42;
-		m_protected_data = 42;
-//		m_private_data   = 42; // error: private data member
+		m_data_1 = 42;
+		m_data_2 = 42;
+//		m_data_3 = 42; // error: private data member
 	}
 };
 
-class D3 : private B // note: default inheritance, prefer composition
+class D3 : /*private*/ B // note: default inheritance, prefer composition
 {
 	void f()
 	{
-		m_public_data    = 42;
-		m_protected_data = 42;
-//		m_private_data   = 42; // error: private data member
+		m_data_1 = 42;
+		m_data_2 = 42;
+//		m_data_3 = 42; // error: private data member
 	}
 };
-
-class Base
-{
-public:
-	static inline int m_common_data = 0; // note: no problems here
-public:
-	int m_data = 0;
-};
-
-class Left : public /*virtual*/ Base {}; // good: virtual inheritance
-
-class Right : public /*virtual*/ Base {}; // good: virtual inheritance
-
-class Central : public Left, public Right {}; // note: avoid multiple inheritance
 
 int main()
 {
-	Manager manager(26, 100000, 5);
+	Manager manager("Jenssen", 100000, 5);
 
 	manager.print();
 
 	D1 d1;
 
-	d1.m_public_data    = 42;
-//	d1.m_protected_data = 42; // error: protected data member
-//	d1.m_private_data   = 42; // error: private   data member
+	d1.m_data_1 = 42;
+//	d1.m_data_2 = 42; // error: protected data member
+//	d1.m_data_3 = 42; // error: private   data member
 
 	[[maybe_unused]] D2 d2;
 
-//	d2.m_public_data    = 42; // error: protected data member
-//	d2.m_protected_data = 42; // error: protected data member
-//	d2.m_private_data   = 42; // error: private   data member
+//	d2.m_data_1 = 42; // error: protected data member
+//	d2.m_data_2 = 42; // error: protected data member
+//	d2.m_data_3 = 42; // error: private   data member
 
 	[[maybe_unused]] D3 d3;
 
-//	d3.m_public_data    = 42; // error: private   data member
-//	d3.m_protected_data = 42; // error: private   data member
-//	d3.m_private_data   = 42; // error: private   data member
-
-	Central central;
-
-	central.m_common_data = 42;
-
-//	central.m_data = 42; // error: ambiguous data member selection
+//	d3.m_data_1 = 42; // error: private   data member
+//	d3.m_data_2 = 42; // error: private   data member
+//	d3.m_data_3 = 42; // error: private   data member
 
 	return 0;
 }
