@@ -32,6 +32,11 @@ void test_references(int & x, const int & y)
 	std::cout << x << ' ' << y << std::endl;
 }
 
+[[maybe_unused]] void pass_big_object(const std::string & s) // good: constant reference
+{
+	std::cout << s << std::endl;
+}
+
 [[maybe_unused]] void set_code(int * code = nullptr) // good: nullptr as default argument
 {
 	[[maybe_unused]] auto local_code = (code ? *code : 1234);
