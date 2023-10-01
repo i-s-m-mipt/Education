@@ -35,33 +35,6 @@ private:
 	std::string m_name;
 };
 
-class Student : public Person
-{
-public:
-
-	Student(const std::string & name, int grade) : Person(name), m_grade(grade) // good: base class constructor
-	{
-		std::cout << "student " << name << " constructed" << std::endl;
-	}
-
-public:
-
-	void print() const
-	{
-		std::cout << "student" << std::endl;
-	}
-
-	using Person::name; // note: change access specifier to public
-
-private:
-
-	using Person::f; // note: change access specifier for all overloaded functions to private
-
-private:
-
-	int m_grade = 0;
-};
-
 class Employee : public Person
 {
 public:
@@ -81,6 +54,12 @@ public:
 
 		Person::print();
 	}
+
+	using Person::name; // note: change access specifier to public
+
+private:
+
+	using Person::f; // note: change access specifier for all overloaded functions to private
 
 private:
 
@@ -108,7 +87,7 @@ private:
 	int m_level = 0;
 };
 
-class B
+class Base
 {
 public:
 	int m_data_1{}; // note: avoid public data mostly
@@ -118,7 +97,7 @@ private:
 	int m_data_3{}; // good: prefer private data in hierarchies
 };
 
-class D1 : public B // note: useful inheritance
+class Derived_1 : public Base // note: useful inheritance
 {
 	void f()
 	{
@@ -128,7 +107,7 @@ class D1 : public B // note: useful inheritance
 	}
 };
 
-class D2 : protected B // note: useless inheritance
+class Derived_2 : protected Base // note: useless inheritance
 {
 	void f()
 	{
@@ -138,7 +117,7 @@ class D2 : protected B // note: useless inheritance
 	}
 };
 
-class D3 : /*private*/ B // note: default inheritance, prefer composition
+class Derived_3 : /*private*/ Base // note: default inheritance, prefer composition
 {
 	void f()
 	{
@@ -150,23 +129,23 @@ class D3 : /*private*/ B // note: default inheritance, prefer composition
 
 int main()
 {
-	Manager manager("Jenssen", 100000, 5);
+	Manager manager("Ivan", 100000, 10);
 
 	manager.print();
 
-	D1 d1;
+	Derived_1 d1;
 
 	d1.m_data_1 = 42;
 //	d1.m_data_2 = 42; // error: protected data member
 //	d1.m_data_3 = 42; // error: private   data member
 
-	[[maybe_unused]] D2 d2;
+	[[maybe_unused]] Derived_2 d2;
 
 //	d2.m_data_1 = 42; // error: protected data member
 //	d2.m_data_2 = 42; // error: protected data member
 //	d2.m_data_3 = 42; // error: private   data member
 
-	[[maybe_unused]] D3 d3;
+	[[maybe_unused]] Derived_3 d3;
 
 //	d3.m_data_1 = 42; // error: private   data member
 //	d3.m_data_2 = 42; // error: private   data member

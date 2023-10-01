@@ -67,9 +67,6 @@
     <ClCompile Include="section_03\virtual_functions.cpp">
       <Filter>examples\section_03</Filter>
     </ClCompile>
-    <ClCompile Include="section_03\exceptions_basics.cpp">
-      <Filter>examples\section_03</Filter>
-    </ClCompile>
     <ClCompile Include="section_03\operators_overloading.cpp">
       <Filter>examples\section_03</Filter>
     </ClCompile>
@@ -140,6 +137,9 @@
       <Filter>examples\section_XX</Filter>
     </ClCompile>
     <ClCompile Include="section_XX\enumerations_basics.cpp">
+      <Filter>examples\section_XX</Filter>
+    </ClCompile>
+    <ClCompile Include="section_XX\exceptions_basics.cpp">
       <Filter>examples\section_XX</Filter>
     </ClCompile>
   </ItemGroup>
