@@ -109,7 +109,7 @@ int main()
 	Container c2(10);
 
 	[[maybe_unused]] Container c3(c2);
-	[[maybe_unused]] Container c4(static_cast < Container && > (c2));
+	[[maybe_unused]] Container c4(static_cast < Container && > (c2)); // note: xvalue
 
 	c1 = c3;
 	c1 = Container(10);

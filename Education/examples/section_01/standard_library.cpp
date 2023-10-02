@@ -1,5 +1,6 @@
 #include <cmath>
 #include <iostream>
+#include <numeric>
 #include <string>
 
 int main()
@@ -25,11 +26,12 @@ int main()
 
 	std::cout << prompt << ", " << name << std::endl;
 
-	std::cout << std::abs(-1.0) << std::endl;
-
-	std::cout << std::sqrt(4.0) << std::endl;
-
+	std::cout << std::abs(-1.0)     << std::endl;
+	std::cout << std::sin(2.0)      << std::endl;
+	std::cout << std::sqrt(4.0)     << std::endl;
 	std::cout << std::pow(2.0, 3.0) << std::endl;
+	std::cout << std::gcd(128, 360) << std::endl;
+	std::cout << std::lcm(14, 21)   << std::endl;
 
 	return 0;
 }
