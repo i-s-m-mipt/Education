@@ -18,7 +18,7 @@ int main()
 
 	const auto m = size / 2;
 
-	*(a + m) = 42; // note: pointers arithmetic
+	*(a + m) = 42; // note: pointer arithmetic
 
 //	*(a + 100) = 42; // bad: undefined behavior
 
