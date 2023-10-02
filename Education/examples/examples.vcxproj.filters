@@ -25,52 +25,52 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="section_01\basic_hello_world.cpp">
+    <ClCompile Include="section_01\minimal_program.cpp">
       <Filter>examples\section_01</Filter>
     </ClCompile>
     <ClCompile Include="section_01\standard_library.cpp">
       <Filter>examples\section_01</Filter>
     </ClCompile>
-    <ClCompile Include="section_01\commercial_main.cpp">
+    <ClCompile Include="section_01\industrial_main.cpp">
       <Filter>examples\section_01</Filter>
     </ClCompile>
     <ClCompile Include="section_02\static_arrays.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\functions_basics.cpp">
+    <ClCompile Include="section_02\function_basics.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\variables_basics.cpp">
+    <ClCompile Include="section_02\variable_basics.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\operators_basics.cpp">
+    <ClCompile Include="section_02\operator_basics.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\pointers_basics.cpp">
+    <ClCompile Include="section_02\pointer_basics.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
     <ClCompile Include="section_02\lvalue_references.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\selections_basics.cpp">
+    <ClCompile Include="section_02\selection_basics.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_03\classes_basics.cpp">
+    <ClCompile Include="section_03\class_basics.cpp">
       <Filter>examples\section_03</Filter>
     </ClCompile>
-    <ClCompile Include="section_03\classes_hierarchies.cpp">
+    <ClCompile Include="section_03\class_hierarchies.cpp">
       <Filter>examples\section_03</Filter>
     </ClCompile>
-    <ClCompile Include="section_03\structures_basics.cpp">
+    <ClCompile Include="section_03\structure_basics.cpp">
       <Filter>examples\section_03</Filter>
     </ClCompile>
     <ClCompile Include="section_03\virtual_functions.cpp">
       <Filter>examples\section_03</Filter>
     </ClCompile>
-    <ClCompile Include="section_03\operators_overloading.cpp">
+    <ClCompile Include="section_03\operator_overloading.cpp">
       <Filter>examples\section_03</Filter>
     </ClCompile>
-    <ClCompile Include="section_02\iterations_basics.cpp">
+    <ClCompile Include="section_02\iteration_basics.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
     <ClCompile Include="section_02\dynamic_arrays.cpp">
@@ -141,6 +141,12 @@
     </ClCompile>
     <ClCompile Include="section_XX\exceptions_basics.cpp">
       <Filter>examples\section_XX</Filter>
+    </ClCompile>
+    <ClCompile Include="section_03\special_functions.cpp">
+      <Filter>examples\section_03</Filter>
+    </ClCompile>
+    <ClCompile Include="section_03\rvalue_references.cpp">
+      <Filter>examples\section_03</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
