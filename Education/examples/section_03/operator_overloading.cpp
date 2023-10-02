@@ -192,26 +192,27 @@ int main()
 {
 	Ratio r1;
 	Ratio r2(2);
-	Ratio r3 = 3; // good: no explicit constructor
+	Ratio r3 = 3;
 	Ratio r4(-5, 10);
+
+	std::cout << static_cast < double > (r4) << std::endl;
 
 	(r4 += 10).print();
 	(r4 -= r1).print();
 	(r4 *= r2).print();
 	(r4 /= r3).print();
+//	(10 += r4).print(); // error: += not defined for int
+
+	(++r4).print();
+	(--r4).print();
+	(r4++).print();
+	(r4--).print();
 
 	(10 + r4).print();
 	(r4 - 10).print();
 	(r4 * r3).print();
 	(r4 / r2).print();
 //	(10 / 10).print(); // error: print not defined for int
-
-	std::cout << static_cast < double > (r4) << std::endl;
-
-	(++r4).print();
-	(--r4).print();
-	(r4++).print();
-	(r4--).print();
 
 	std::cout << (r3 < r4) << std::endl;
 	std::cout << (r3 > r4) << std::endl;
