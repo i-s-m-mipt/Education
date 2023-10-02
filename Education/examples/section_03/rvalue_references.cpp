@@ -62,13 +62,13 @@ int main()
 	
 	[[maybe_unused]] const int && const_rvalue_1 = get_prvalue();
 
-//	const int && const_rvalue_3 = get_lvalue(); // error: constant rvalue reference cannot be bound to lvalue
+//	const int && const_rvalue_2 = get_lvalue(); // error: constant rvalue reference cannot be bound to lvalue
 	
-	[[maybe_unused]] const int && const_rvalue_4 = 0;
+	[[maybe_unused]] const int && const_rvalue_3 = 0;
 
-//	const int && const_rvalue_5 = d; // warning: dangerous double to int conversion
+//	const int && const_rvalue_4 = d; // warning: dangerous double to int conversion
 
-//	const int && const_rvalue_6 = i; // error: constant rvalue reference cannot be bound to lvalue
+//	const int && const_rvalue_5 = i; // error: constant rvalue reference cannot be bound to lvalue
 
 	// ============================================================================
 
