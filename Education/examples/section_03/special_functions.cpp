@@ -108,9 +108,9 @@ public:
 		return *this;
 	}
 
-	void swap(Container & other)
+	void swap(Container & other) // good: useful member function
 	{
-		using std::swap;
+		using std::swap; // good: enable argument-dependent lookup
 
 		swap(m_data, other.m_data);
 		swap(m_size, other.m_size);
@@ -132,7 +132,7 @@ private:
 	size_t   m_size;
 };
 
-void swap(Container & x, Container & y)
+void swap(Container & x, Container & y) // good: useful free function
 {
 	x.swap(y);
 }
