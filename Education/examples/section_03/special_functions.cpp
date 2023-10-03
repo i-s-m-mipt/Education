@@ -51,7 +51,7 @@ public:
 	}
 
 	/*
-	Container & operator=(const Container & other)
+	Container & operator=(const Container & other) // bad: ineffective and duplication
 	{
 		std::cout << "copy assignment operator" << std::endl;
 
@@ -77,7 +77,7 @@ public:
 	*/
 
 	/*
-	Container & operator=(Container && other)
+	Container & operator=(Container && other) // bad: ineffective and duplication
 	{
 		std::cout << "move assignment operator" << std::endl;
 
@@ -154,7 +154,8 @@ int main()
 	Container c1;
 	Container c2(10);
 
-	[[maybe_unused]] Container c3(c2);
+	Container c3(c2);
+	
 	[[maybe_unused]] Container c4(static_cast < Container && > (c2)); // note: xvalue
 
 	c1 = c3;
