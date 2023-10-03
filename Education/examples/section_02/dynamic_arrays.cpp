@@ -48,7 +48,7 @@ int main()
 		{
 			if (s[i] > s[j])
 			{
-				auto tmp = s[i]; s[i] = s[j]; s[j] = tmp;
+				std::swap(s[i], s[j]);
 			}
 		}
 	}

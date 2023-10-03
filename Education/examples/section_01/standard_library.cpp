@@ -2,6 +2,7 @@
 #include <iostream>
 #include <numeric>
 #include <string>
+#include <utility>
 
 int main()
 {
@@ -32,6 +33,10 @@ int main()
 	std::cout << std::pow(2.0, 3.0) << std::endl;
 	std::cout << std::gcd(128, 360) << std::endl;
 	std::cout << std::lcm(14, 21)   << std::endl;
+
+	std::swap(x, y);
+
+	std::cout << "Now x = " << x << " and y = " << y << std::endl;
 
 	return 0;
 }
