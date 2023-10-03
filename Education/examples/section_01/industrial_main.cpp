@@ -17,7 +17,7 @@ int main(int argc, char ** argv)
 
 		return EXIT_SUCCESS;
 	}
-	catch (const std::exception& exception)
+	catch (const std::exception & exception)
 	{
 		LOGGER_WRITE_FATAL(logger, exception.what());
 

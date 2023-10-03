@@ -24,6 +24,7 @@ int main()
 //	auto y1{}; // error: invalid type deduction
 
 //	int z0 = d; // warning: narrow conversion
+
 //	int z1{d};  // error: prohibited narrow conversion
 
 //	auto z2{(int)d}; // bad: old style conversion
@@ -42,8 +43,6 @@ int main()
 	b = static_cast < bool > (42);
 
 	std::cout << b << std::endl; // note: true outputs as 1
-
-	[[maybe_unused]] bool b1{ i != 0 }; // note: possible conversion
 
 	[[maybe_unused]] const auto pi = 3.14; // good: constant variable
 
