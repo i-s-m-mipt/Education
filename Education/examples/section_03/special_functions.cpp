@@ -33,39 +33,50 @@ public:
 		}
 	}
 
-	Container(Container && other) :
-		m_data(other.m_data), m_size(other.m_size) // note: shallow copy
+	/*
+	Container(Container && other) : m_data(other.m_data), m_size(other.m_size) // note: shallow copy
 	{
 		std::cout << "move constructor" << std::endl;
 
 		other.m_data = nullptr; // note: valid state for other object
 		other.m_size = 0;       // note: valid state for other object
 	}
+	*/
 
+	Container(Container && other) : Container()
+	{
+		std::cout << "move constructor" << std::endl;
+
+		swap(other);
+	}
+
+	/*
 	Container & operator=(const Container & other)
 	{
 		std::cout << "copy assignment operator" << std::endl;
 
 		if (this != &other) // note: copy self-assignment check
 		{
-			m_size = other.m_size;
+			auto new_size = other.m_size;
 
-			if (m_data)
+			auto new_data = (new_size ? new data_t[new_size]{} : nullptr);
+
+			for (size_t i = 0; i < new_size; ++i)
 			{
-				delete[] m_data;
+				new_data[i] = other.m_data[i]; // note: deep copy
 			}
 
-			m_data = new data_t[m_size];
+			delete[] m_data;
 
-			for (size_t i = 0; i < m_size; ++i) 
-			{
-				m_data[i] = other.m_data[i]; // note: deep copy
-			}
+			m_data = new_data;
+			m_size = new_size;
 		}
 
 		return *this;
 	}
+	*/
 
+	/*
 	Container & operator=(Container && other)
 	{
 		std::cout << "move assignment operator" << std::endl;
@@ -86,6 +97,24 @@ public:
 
 		return *this;
 	}
+	*/
+
+	Container & operator=(Container other) // good: copy and swap idiom
+	{
+		std::cout << "copy and swap" << std::endl;
+
+		swap(other);
+
+		return *this;
+	}
+
+	void swap(Container & other)
+	{
+		using std::swap;
+
+		swap(m_data, other.m_data);
+		swap(m_size, other.m_size);
+	}
 
 	~Container()
 	{
@@ -102,6 +131,11 @@ private:
 	data_t * m_data;
 	size_t   m_size;
 };
+
+void swap(Container & x, Container & y)
+{
+	x.swap(y);
+}
 
 Container f()
 {
