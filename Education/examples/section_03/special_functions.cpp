@@ -103,6 +103,18 @@ private:
 	size_t   m_size;
 };
 
+Container f()
+{
+	return Container(); // note: copy elision, return value optimization
+}
+
+Container g()
+{
+	Container c = Container(); // note: guaranteed copy elision
+
+	return c; // note: copy elision, named return value optimization
+}
+
 int main()
 {
 	Container c1;
@@ -113,6 +125,9 @@ int main()
 
 	c1 = c3;
 	c1 = Container(10);
+
+	[[maybe_unused]] auto c5 = f(); // note: guaranteed copy elision
+	[[maybe_unused]] auto c6 = g(); // note: guaranteed copy elision
 
 	return 0;
 }
