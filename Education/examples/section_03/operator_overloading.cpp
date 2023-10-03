@@ -137,22 +137,22 @@ private:
 	int_t m_denominator;
 };
 
-Ratio operator+(Ratio lhs, Ratio rhs)
+Ratio operator+(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs += rhs);
 }
 
-Ratio operator-(Ratio lhs, Ratio rhs)
+Ratio operator-(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs -= rhs);
 }
 
-Ratio operator*(Ratio lhs, Ratio rhs)
+Ratio operator*(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs *= rhs);
 }
 
-Ratio operator/(Ratio lhs, Ratio rhs)
+Ratio operator/(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs /= rhs);
 }
@@ -208,7 +208,7 @@ int main()
 	(r4++).print();
 	(r4--).print();
 
-	(10 + r4).print();
+	(10 + r4).print(); // note: 10.operator+(r4) do not work
 	(r4 - 10).print();
 	(r4 * r3).print();
 	(r4 / r2).print();
