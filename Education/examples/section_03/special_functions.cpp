@@ -66,7 +66,7 @@ public:
 				new_data[i] = other.m_data[i]; // note: deep copy
 			}
 
-			delete[] m_data;
+			delete[] m_data; // good: delete after creating new data
 
 			m_data = new_data;
 			m_size = new_size;
