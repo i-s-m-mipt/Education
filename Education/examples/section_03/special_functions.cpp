@@ -135,6 +135,10 @@ private:
 void swap(Container & x, Container & y) // good: useful free function
 {
 	x.swap(y);
+
+//	auto t = static_cast < Container && > (x); // note: effective swap
+//	     x = static_cast < Container && > (y);
+//	     y = static_cast < Container && > (t);
 }
 
 Container f()
