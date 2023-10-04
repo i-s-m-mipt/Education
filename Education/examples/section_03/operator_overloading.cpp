@@ -164,7 +164,7 @@ bool operator<(Ratio lhs, Ratio rhs)
 
 bool operator>(Ratio lhs, Ratio rhs)
 {
-	return static_cast < double > (lhs) > static_cast < double > (rhs);
+	return (rhs < lhs);
 }
 
 bool operator>=(Ratio lhs, Ratio rhs)
