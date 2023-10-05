@@ -25,7 +25,7 @@ int main()
 
 //	int z0 = d; // warning: narrow conversion
 
-//	int z1{d};  // error: prohibited narrow conversion
+//	int z1{d}; // error: prohibited narrow conversion
 
 //	auto z2{(int)d}; // bad: old style conversion
 //	auto z3{int(d)}; // bad: old style conversion
