@@ -87,7 +87,7 @@ void test_asm_v1()
 	}
 }
 
-auto test_cpp_v2()
+[[nodiscard]] auto test_cpp_v2()
 {
 	auto c = 0;
 
@@ -114,7 +114,7 @@ auto test_cpp_v2()
 	return c;
 }
 
-auto test_asm_v2()
+[[nodiscard]] auto test_asm_v2()
 {
 	auto c = 0;
 	
@@ -155,7 +155,7 @@ auto test_asm_v2()
 	return c;
 }
 
-auto test_cpp_v3(double * a, double * b, std::size_t size)
+[[nodiscard]] auto test_cpp_v3(double * a, double * b, std::size_t size)
 {
 	auto result = 0.0;
 
@@ -171,7 +171,7 @@ auto test_cpp_v3(double * a, double * b, std::size_t size)
 	return result;
 }
 
-auto test_asm_v3(double * a, double * b, std::size_t size)
+[[nodiscard]] auto test_asm_v3(double * a, double * b, std::size_t size)
 {
 	auto result = 0.0;
 
@@ -230,7 +230,7 @@ auto test_asm_v3(double * a, double * b, std::size_t size)
 	return result;
 }
 
-auto test_cpp_v4(double * a, std::size_t size)
+[[nodiscard]] auto test_cpp_v4(double * a, std::size_t size)
 {
 	auto result = 0.0;
 
@@ -253,7 +253,7 @@ auto test_cpp_v4(double * a, std::size_t size)
 	return result;
 }
 
-auto test_asm_v4(double * a, std::size_t size)
+[[nodiscard]] auto test_asm_v4(double * a, std::size_t size)
 {
 	auto result = 0.0;
 
