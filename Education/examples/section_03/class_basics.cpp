@@ -1,6 +1,6 @@
 #include <iostream>
 
-class Date
+class Date // note: pay attention to the order of class members
 {
 public: // good: public members first
 
