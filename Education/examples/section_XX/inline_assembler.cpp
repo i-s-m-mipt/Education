@@ -197,6 +197,9 @@ void test_asm_v1()
 		loop_1:
 			
 			fld qword ptr [eax + 8 * edx]
+			fld qword ptr [ebx + 8 * edx]
+
+			fmul
 
 			mov esi, 3
 
@@ -208,19 +211,6 @@ void test_asm_v1()
 			dec esi
 			jnz loop_pow_1
 
-			fld qword ptr [ebx + 8 * edx]
-
-			mov edi, 3
-
-		loop_pow_2:
-
-			fld st(0)
-			fmul
-
-			dec edi
-			jnz loop_pow_2
-
-			fmul
 			fadd
 
 			inc edx
