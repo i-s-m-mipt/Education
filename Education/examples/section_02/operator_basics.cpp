@@ -22,11 +22,11 @@ int main()
 	std::cout << x + y << std::endl;
 	std::cout << x - y << std::endl;
 	std::cout << x * y << std::endl;
-	std::cout << x / y << std::endl; // note: integer division
+	std::cout << x / y << std::endl; 
 	std::cout << x % y << std::endl;
 
-	std::cout << 7   / 4   << std::endl;
-	std::cout << 7.0 / 4.0 << std::endl;
+	std::cout << 7   / 4   << std::endl; // note: integer  division
+	std::cout << 7.0 / 4.0 << std::endl; // note: floating division
 
 	std::cout << 1.0 * x / y << std::endl; // good: 1.0 instead of static_cast
 
@@ -41,8 +41,8 @@ int main()
 	std::cout << (x /= y) << std::endl; // good: x /= y instead of x = x / y
 	std::cout << (x %= y) << std::endl; // good: x %= y instead of x = x % y
 
-	std::cout << (x < y) << std::endl;
-	std::cout << (x > y) << std::endl;
+	std::cout << (x <  y) << std::endl;
+	std::cout << (x >  y) << std::endl;
 
 	std::cout << (x <= y) << std::endl;
 	std::cout << (x >= y) << std::endl;
