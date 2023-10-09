@@ -46,6 +46,8 @@ int main()
 
 	[[maybe_unused]] const auto pi = 3.14; // good: constant variable
 
+//	pi = 1.0; // error: constant variable
+
 	using my_type = const double; // good: new style type alias
 
 	[[maybe_unused]] my_type e = 2.72;
