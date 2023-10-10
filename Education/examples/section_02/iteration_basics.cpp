@@ -14,7 +14,7 @@ int main()
 		std::cout << "for 2: " << i << ' ' << j << std::endl;
 	}
 
-	//	for (auto i = 0; auto x = (i + 1) % size; ++i) {} // bad: declaration instead of condition
+//	for (auto i = 0; auto x = (i + 1) % size; ++i) {} // bad: declaration instead of condition
 
 	for (auto i = size; i >= 0; --i)
 	{
@@ -65,21 +65,21 @@ exit:
 
 	while (c != 'n') // note: undefined counter
 	{
-		std::cout << "Continue (y/n) ? ";
+		std::cout << "Continue while (y/n) ? ";
 
 		std::cin >> c;
 	}
 
 	do
 	{
-		std::cout << "Continue (y/n) ? ";
+		std::cout << "Continue do while (y/n) ? ";
 
 		std::cin >> c;
 	} while (c != 'n');
 
 	for (;;) // note: unusual infinite loop
 	{
-		std::cout << "Continue (y/n) ? ";
+		std::cout << "Continue infinite for (y/n) ? ";
 
 		std::cin >> c;
 
@@ -91,7 +91,7 @@ exit:
 
 	while (true)
 	{
-		std::cout << "Continue (y/n) ? ";
+		std::cout << "Continue infinite while (y/n) ? ";
 
 		std::cin >> c;
 
