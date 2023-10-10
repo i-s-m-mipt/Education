@@ -8,7 +8,7 @@ int main()
 	std::cout <<    !a << ' ' << (a || b) << ' ' << (a  && b) << std::endl;
 	std::cout << not a << ' ' << (a or b) << ' ' << (a and b) << std::endl;
 
-	std::cout << (true or a and b) << std::endl; // note: short-circuit evaluation
+	std::cout << (true || a && b) << std::endl; // note: short-circuit evaluation
 
 	[[maybe_unused]] auto law_1 = (!(a && b) == !a || !b);
 	[[maybe_unused]] auto law_2 = (!(a || b) == !a && !b);
