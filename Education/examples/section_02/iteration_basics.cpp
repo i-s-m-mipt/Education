@@ -51,7 +51,7 @@ int main()
 			{
 				std::cout << "for 6: " << i << ' ' << j << ' ' << k << std::endl;
 
-				if (auto stop = size / 2; i == stop && j == stop && k == stop)
+				if (auto stop = 1; i == stop && j == stop && k == stop)
 				{
 					goto exit; // note: use goto only to exit nested loops
 				}
