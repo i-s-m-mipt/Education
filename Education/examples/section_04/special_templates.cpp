@@ -1,7 +1,7 @@
 #include <iostream>
 
-template < typename T, int N >
-class basic_stack{};
+template < typename T, auto N >
+class basic_stack {};
 
 template < typename T >
 using Stack = basic_stack < T, 1024 > ; // note: alias template
