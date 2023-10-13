@@ -130,7 +130,8 @@ private:
 
 	data_t * m_data;
 	size_t   m_size;
-};
+
+}; // class Container
 
 void swap(Container & x, Container & y) // good: useful free function
 {

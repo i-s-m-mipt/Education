@@ -16,7 +16,8 @@ public:
 		{
 			std::cout << date.m_year << '/' << date.m_month << '/' << date.m_day << std::endl;
 		}
-	};
+
+	}; // class Printer
 
 public:
 
@@ -112,7 +113,8 @@ private: // good: private members last
 	integer_t m_year  = 0; // good: name begins with m_ prefix
 	integer_t m_month = 0;
 	integer_t m_day   = 0;
-};
+
+}; // class Date
 
 void Date::print_v2() const // good: large function is defined outside the class
 {

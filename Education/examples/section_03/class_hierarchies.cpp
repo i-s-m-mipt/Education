@@ -33,7 +33,8 @@ protected:
 private:
 
 	std::string m_name;
-};
+
+}; // class Person
 
 class Employee : public Person
 {
@@ -64,7 +65,8 @@ private:
 private:
 
 	int m_salary = 0;
-};
+
+}; // class Employee : public Person
 
 class Manager : public Employee
 {
@@ -85,7 +87,8 @@ public:
 private:
 
 	int m_level = 0;
-};
+
+}; // class Manager : public Employee
 
 class Base
 {
@@ -95,7 +98,8 @@ protected:
 	int m_data_2{}; // note: use protected data by situation
 private:
 	int m_data_3{}; // good: prefer private data in hierarchies
-};
+
+}; // class Base
 
 class Derived_1 : public Base // note: useful inheritance
 {
@@ -105,7 +109,8 @@ class Derived_1 : public Base // note: useful inheritance
 		m_data_2 = 42;
 //		m_data_3 = 42; // error: private data member
 	}
-};
+
+}; // class Derived_1 : public Base
 
 class Derived_2 : protected Base // note: useless inheritance
 {
@@ -115,7 +120,8 @@ class Derived_2 : protected Base // note: useless inheritance
 		m_data_2 = 42;
 //		m_data_3 = 42; // error: private data member
 	}
-};
+
+}; // class Derived_2 : protected Base
 
 class Derived_3 : /*private*/ Base // note: default inheritance, prefer composition
 {
@@ -125,7 +131,8 @@ class Derived_3 : /*private*/ Base // note: default inheritance, prefer composit
 		m_data_2 = 42;
 //		m_data_3 = 42; // error: private data member
 	}
-};
+
+}; // class Derived_3 : private Base
 
 int main()
 {

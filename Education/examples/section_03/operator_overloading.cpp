@@ -135,7 +135,8 @@ private:
 
 	int_t m_numerator;
 	int_t m_denominator;
-};
+
+}; // class Ratio
 
 Ratio operator+(Ratio lhs, Ratio rhs) // good: free function
 {
