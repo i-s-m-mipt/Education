@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 int get_prvalue()
 {
@@ -51,6 +52,28 @@ void f([[maybe_unused]] const int && arg)
 	std::cout << "const int &&" << std::endl;
 }
 
+class Person
+{
+public:
+
+	Person(const std::string & name) : m_name(name) {}
+
+	const auto & name() const &  { return m_name; } // note: only for lvalue instances
+	      auto   name() const && { return m_name; } // note: only for rvalue instances
+
+private:
+
+	std::string m_name;
+
+}; // class Person
+
+Person create_person(const std::string & name)
+{
+	Person p(name);
+
+	return p;
+}
+
 int main()
 {
 	[[maybe_unused]] double d = 0.0;
@@ -65,6 +88,12 @@ int main()
 	f(0);
 //	f(d); // error: ambiguous function overloading 
 	f(i);
+
+	Person p("Ivan");
+
+	std::cout << p.name() << std::endl; // note: lvalue version
+
+	std::cout << create_person("Ivan").name() << std::endl; // note: rvalue version
 	
 	return 0;
 }

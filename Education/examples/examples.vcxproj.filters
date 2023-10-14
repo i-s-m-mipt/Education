@@ -151,5 +151,26 @@
     <ClCompile Include="section_03\overload_resolution.cpp">
       <Filter>examples\section_03</Filter>
     </ClCompile>
+    <ClCompile Include="section_XX\inline_assembler.cpp">
+      <Filter>examples\section_XX</Filter>
+    </ClCompile>
+    <ClCompile Include="section_XX\vector.cpp">
+      <Filter>examples\section_XX</Filter>
+    </ClCompile>
+    <ClCompile Include="section_04\function_templates.cpp">
+      <Filter>examples\section_04</Filter>
+    </ClCompile>
+    <ClCompile Include="section_04\class_templates.cpp">
+      <Filter>examples\section_04</Filter>
+    </ClCompile>
+    <ClCompile Include="section_04\special_templates.cpp">
+      <Filter>examples\section_04</Filter>
+    </ClCompile>
+    <ClCompile Include="section_04\variadic_templates.cpp">
+      <Filter>examples\section_04</Filter>
+    </ClCompile>
+    <ClCompile Include="section_04\types_deduction.cpp">
+      <Filter>examples\section_04</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
