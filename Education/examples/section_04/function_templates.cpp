@@ -31,7 +31,12 @@ RT max_v5(T1 x, T2 y)
 }
 
 template < typename T1, typename T2 >
-auto max_v6(T1 x, T2 y) // good: compact solution
+auto max_v6(T1 x, T2 y)
+{
+	return (x < y ? y : x);
+}
+
+auto max_v7(auto x, auto y) // good: compact solution
 {
 	return (x < y ? y : x);
 }
@@ -100,6 +105,8 @@ int main()
 	std::cout << max_v5(100, 2.0) << std::endl;
 
 	std::cout << max_v6(100, 2.0) << std::endl;
+
+	std::cout << max_v7(100, 2.0) << std::endl;
 
 	f            ('a'); // note: overload for char
 	f            (100); // note: overload for int
