@@ -142,6 +142,20 @@ void swap(Container & x, Container & y) // good: useful free function
 //	     y = static_cast < Container && > (t);
 }
 
+class X
+{
+public:
+
+	X() = default; // note: explicit default implementation
+
+	X(int data) : m_data(data) {}
+
+private:
+
+	int m_data;
+
+}; // class X
+
 Container f()
 {
 	return Container(); // note: copy elision, return value optimization
