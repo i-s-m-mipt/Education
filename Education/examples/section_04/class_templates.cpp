@@ -45,6 +45,23 @@ void Stack < T, N > ::push(T value)
 }
 
 template < typename T1, typename T2 >
+struct Pair
+{
+	T1 first {};
+	T2 second{};
+
+}; // struct Pair
+
+template < typename T >
+class Container
+{
+public:
+
+	Container([[maybe_unused]] int count, [[maybe_unused]] const T & value) {}
+
+}; // class Container
+
+template < typename T1, typename T2 >
 class X // note: basic template
 {
 public:
@@ -116,7 +133,11 @@ int main()
 
 	std::cout << stack.top() << std::endl;
 
-	Stack new_stack = stack;
+	[[maybe_unused]] Stack new_stack = stack;
+
+	[[maybe_unused]] Pair p{ 1.0, 100 }; // note: generated deduction guide for aggregate
+
+	[[maybe_unused]] Container c(10, 1.0); // note: generated deduction guide for aggregate
 
 	X < char,   double > ().f(); // note: template for T1, T2
 	X < char,   char   > ().f(); // note: partial specialization for T, T
