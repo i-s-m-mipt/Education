@@ -20,8 +20,50 @@
     <Filter Include="examples\section_05">
       <UniqueIdentifier>{3b43cf1e-2406-447d-b554-eed535a41930}</UniqueIdentifier>
     </Filter>
-    <Filter Include="examples\section_XX">
-      <UniqueIdentifier>{105f0230-22f7-4436-9d0f-b85a5c0fcddf}</UniqueIdentifier>
+    <Filter Include="examples\section_06">
+      <UniqueIdentifier>{ae16bbe4-bda7-4e34-a1d7-e85c87a9fa83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_07">
+      <UniqueIdentifier>{7b53d4f1-e958-4293-a5ab-e0fa94febe31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_08">
+      <UniqueIdentifier>{d00ad444-020f-427a-b155-8a09885556ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_09">
+      <UniqueIdentifier>{f2af76d1-c18f-47d5-8a1e-461785711d09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_10">
+      <UniqueIdentifier>{389c8303-d865-4645-b944-69cb2b22d4f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_11">
+      <UniqueIdentifier>{d7a68503-b1c1-494a-a5b8-d19de6a62a5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_12">
+      <UniqueIdentifier>{0b9e01d5-9f39-4ab8-8ee3-c52b98b37470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_13">
+      <UniqueIdentifier>{0dba9182-c0f0-4774-b77a-f820ec5155c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_14">
+      <UniqueIdentifier>{7db1a3bd-9e1c-430c-9e2f-320c01c3b57e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_15">
+      <UniqueIdentifier>{8d5d1abc-6e51-4f47-9832-475f04df49a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_16">
+      <UniqueIdentifier>{36be1887-c170-4e7f-a542-3b11485a62a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_17">
+      <UniqueIdentifier>{2ea666c0-4c93-4c40-9f21-4d8d171e7476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_18">
+      <UniqueIdentifier>{955badff-084b-43c5-9304-39cb36df585c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_19">
+      <UniqueIdentifier>{3218670e-90f6-488e-bd97-1f6a065a3242}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\section_20">
+      <UniqueIdentifier>{574b9950-23d1-4f25-8fd5-f3592b2fd924}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -76,72 +118,6 @@
     <ClCompile Include="section_02\dynamic_arrays.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
-    <ClCompile Include="section_XX\bitwise_operators.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\character_types.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\data_alignment.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\errors_handling.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\floating_point_types.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\integer_types.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\memory_usage.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\pointers_void.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\processor_usage.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\multiple_inheritance.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\regular_expressions.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\strings_variants.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\reinterpret_cast.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\classes_friends.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\multidimensional_arrays.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\streams_manipulators.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\heterogeneous_data.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\smart_pointers.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\callable_arguments.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\placement_new.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\enumerations_basics.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\exceptions_basics.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
     <ClCompile Include="section_03\special_functions.cpp">
       <Filter>examples\section_03</Filter>
     </ClCompile>
@@ -150,12 +126,6 @@
     </ClCompile>
     <ClCompile Include="section_03\overload_resolution.cpp">
       <Filter>examples\section_03</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\inline_assembler.cpp">
-      <Filter>examples\section_XX</Filter>
-    </ClCompile>
-    <ClCompile Include="section_XX\vector.cpp">
-      <Filter>examples\section_XX</Filter>
     </ClCompile>
     <ClCompile Include="section_04\function_templates.cpp">
       <Filter>examples\section_04</Filter>
@@ -169,8 +139,11 @@
     <ClCompile Include="section_04\variadic_templates.cpp">
       <Filter>examples\section_04</Filter>
     </ClCompile>
-    <ClCompile Include="section_04\types_deduction.cpp">
-      <Filter>examples\section_04</Filter>
+    <ClCompile Include="section_18\inline_assembler.cpp">
+      <Filter>examples\section_18</Filter>
+    </ClCompile>
+    <ClCompile Include="section_19\types_deduction.cpp">
+      <Filter>examples\section_19</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
