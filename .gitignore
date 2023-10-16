@@ -348,7 +348,6 @@ service/
 *.csv
 *.data
 *.png
-*.pdf
 !assets.data
 *.ipynb_checkpoints
 clients.json
