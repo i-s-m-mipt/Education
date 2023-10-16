@@ -51,7 +51,7 @@ int main()
 			{
 				std::cout << "for 6: " << i << ' ' << j << ' ' << k << std::endl;
 
-				if (auto stop = 1; i == stop && j == stop && k == stop)
+				if (i == 1 && j == 1 && k == 1)
 				{
 					goto exit; // note: use goto only to exit nested loops
 				}
@@ -75,15 +75,14 @@ exit:
 		std::cout << "Continue do while (y/n) ? ";
 
 		std::cin >> c;
-	} while (c != 'n');
+	} 
+	while (c != 'n');
 
 	for (;;) // note: unusual infinite loop
 	{
 		std::cout << "Continue infinite for (y/n) ? ";
 
-		std::cin >> c;
-
-		if (c == 'n')
+		if (std::cin >> c; c == 'n')
 		{
 			break;
 		}
@@ -93,9 +92,7 @@ exit:
 	{
 		std::cout << "Continue infinite while (y/n) ? ";
 
-		std::cin >> c;
-
-		if (c == 'n')
+		if (std::cin >> c; c == 'n')
 		{
 			break;
 		}
