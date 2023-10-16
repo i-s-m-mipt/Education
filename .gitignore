@@ -347,7 +347,6 @@ service/
 *.lib
 *.csv
 *.data
-*.png
 !assets.data
 *.ipynb_checkpoints
 clients.json
