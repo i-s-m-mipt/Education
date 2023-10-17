@@ -11,7 +11,7 @@ int main()
 
 	const auto size = 10;
 
-	auto ptr_array = new int[size] {}; // good: zero initialized dynamic array
+	auto ptr_array = new int[size]{}; // good: zero initialized dynamic array
 
 	const auto m = size / 2;
 
