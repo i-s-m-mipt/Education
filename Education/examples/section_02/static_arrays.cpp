@@ -43,7 +43,7 @@ int main()
 		std::cout << (p + 1 == a + size ? '\n' : ' '); // good: compact formatting
 	}
 
-	std::cout << "Enter array size < 1024: ";
+	std::cout << "Enter array size <= 1024: ";
 
 	int n{};
 

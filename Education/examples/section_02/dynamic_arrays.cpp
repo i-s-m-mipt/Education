@@ -9,7 +9,7 @@ int main()
 
 	delete ptr_int; // good: no dynamic variable memory leak
 
-	const auto size = 10;
+	auto size = 10;
 
 	auto ptr_array = new int[size]{}; // good: zero initialized dynamic array
 

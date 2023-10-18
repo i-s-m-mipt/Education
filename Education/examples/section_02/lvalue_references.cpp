@@ -16,7 +16,11 @@ int main()
 
 	const auto & rcx = x; // note: constant reference
 
+//	rcx = 42; // error: constant reference
+
 	const auto & rcv = 42; // note: temporary object lifetime extension 
+
+//	auto & rv = 42; // error: cannot bind to temporary object
 
 	return 0;
 }
