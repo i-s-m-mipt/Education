@@ -142,19 +142,19 @@ void swap(Container & x, Container & y) // good: useful free function
 //	     y = static_cast < Container && > (t);
 }
 
-class X
+class C
 {
 public:
 
-	X() = default; // note: explicit default implementation
+	C() = default; // note: explicit default implementation
 
-	X(int data) : m_data(data) {}
+	C(int data) : m_data(data) {}
 
 private:
 
 	int m_data;
 
-}; // class X
+}; // class C
 
 Container f()
 {

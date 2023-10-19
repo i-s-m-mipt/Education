@@ -13,17 +13,7 @@ struct Point
 	double y = 0.0;
 };
 
-struct Data
-{
-	double a[100]{}; // note: big data
-};
-
-[[maybe_unused]] void f(const Data & data) // good: pass big data by constant reference
-{
-	std::cout << data.a[0] << std::endl;
-}
-
-[[maybe_unused]] Point make_point(double x, double y)
+Point make_point(double x, double y)
 {
 	if (x > 0.0 && y > 0.0)
 	{

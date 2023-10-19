@@ -47,39 +47,6 @@ public:
 }; // class Rectangle : public Polygon
 */
 
-class Base // note: static Base virtual table
-{
-public:
-
-	virtual ~Base() {};
-
-public:
-
-	virtual void f() const {};
-	virtual void g() const {};
-
-protected:
-
-//	virtual_table * __vptr; // note: implicit data member of base class
-
-}; // class Base
-
-class Derived_1 : public Base // note: static Derived_1 virtual table, inherited __vptr
-{
-public:
-
-	void f() const override {};
-
-}; // class Derived_1 : public Base
-
-class Derived_2 : public Base // note: static Derived_2 virtual table, inherited __vptr
-{
-public:
-
-	void g() const override {};
-
-}; // class Derived_2 : public Base
-
 class Abstract_Base // note: interface class like in Java
 {
 public:

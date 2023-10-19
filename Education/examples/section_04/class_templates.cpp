@@ -62,7 +62,7 @@ public:
 }; // class Container
 
 template < typename T1, typename T2 >
-class X // note: basic template
+class C // note: basic template
 {
 public:
 
@@ -71,10 +71,10 @@ public:
 		std::cout << "template for T1, T2" << std::endl;
 	}
 
-}; // class X
+}; // class C
 
 template < typename T >
-class X < T, T > // note: partial specialization for T, T
+class C < T, T > // note: partial specialization for T, T
 {
 public:
 
@@ -83,10 +83,10 @@ public:
 		std::cout << "partial specialization for T, T" << std::endl;
 	}
 
-}; // class X < T, T >
+}; // class C < T, T >
 
 template < typename T >
-class X < T, int > // note: partial specialization for T, int
+class C < T, int > // note: partial specialization for T, int
 {
 public:
 
@@ -95,10 +95,10 @@ public:
 		std::cout << "partial specialization for T, int" << std::endl;
 	}
 
-}; // class X < T, int >
+}; // class C < T, int >
 
 template < typename T1, typename T2 >
-class X < T1*, T2* > // note: partial specialization for T1*, T2*
+class C < T1*, T2* > // note: partial specialization for T1*, T2*
 {
 public:
 
@@ -107,10 +107,10 @@ public:
 		std::cout << "partial specialization for T1*, T2*" << std::endl;
 	}
 
-}; // class X < T1*, T2* >
+}; // class C < T1*, T2* >
 
 template <>
-class X < int, double > // note: full specialization for int, double
+class C < int, double > // note: full specialization for int, double
 {
 public:
 
@@ -119,7 +119,7 @@ public:
 		std::cout << "full specialization for int, double" << std::endl;
 	}
 
-}; // class X < int, double >
+}; // class C < int, double >
 
 int main()
 {
@@ -139,14 +139,14 @@ int main()
 
 	[[maybe_unused]] Container c(10, 1.0); // note: generated deduction guide for aggregate
 
-	X < char,   double > ().f(); // note: template for T1, T2
-	X < char,   char   > ().f(); // note: partial specialization for T, T
-	X < double, int    > ().f(); // note: partial specialization for T, int
-	X < int * , char * > ().f(); // note: partial specialization for T1*, T2*
-	X < int,    double > ().f(); // note: full specialization for int, double
+	C < char,   double > ().f(); // note: template for T1, T2
+	C < char,   char   > ().f(); // note: partial specialization for T, T
+	C < double, int    > ().f(); // note: partial specialization for T, int
+	C < int * , char * > ().f(); // note: partial specialization for T1*, T2*
+	C < int,    double > ().f(); // note: full specialization for int, double
 
-//	X < int,    int    > ().f(); // error: unresolved partial specialization
-//	X < int * , int *  > ().f(); // error: unresolved partial specialization
+//	C < int,    int    > ().f(); // error: unresolved partial specialization
+//	C < int * , int *  > ().f(); // error: unresolved partial specialization
 
 	return 0;
 }

@@ -145,5 +145,21 @@
     <ClCompile Include="section_19\types_deduction.cpp">
       <Filter>examples\section_19</Filter>
     </ClCompile>
+    <ClCompile Include="section_09\bitwise_operators.cpp">
+      <Filter>examples\section_09</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="section_01\general_overview.pdf">
+      <Filter>examples\section_01</Filter>
+    </None>
+    <None Include="section_03\virtual_tables.drawio">
+      <Filter>examples\section_03</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="section_03\virtual_tables.png">
+      <Filter>examples\section_03</Filter>
+    </Image>
   </ItemGroup>
 </Project>
