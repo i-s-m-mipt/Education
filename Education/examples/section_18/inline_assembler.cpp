@@ -5,10 +5,6 @@
 #include <iostream>
 #include <string>
 
-//import std;
-
-//#include <cstdio>
-
 #include <windows.h>
 
 class Timer
