@@ -82,6 +82,18 @@ void g < int, T > ([[maybe_unused]] int x, [[maybe_unused]] T y) // error: prohi
 }
 */
 
+template < typename T, int N, int M >
+auto less(T(&a)[N], T(&b)[M]) // note: prefer pointers
+{
+	for (auto i = 0; i < N && i < M; ++i)
+	{
+		if (a[i] < b[i]) return true;
+		if (b[i] < a[i]) return false;
+	}
+
+	return (N < M);
+}
+
 int main()
 {
 	std::cout << max_v1('a', 'b') << std::endl;
@@ -115,6 +127,11 @@ int main()
 	f < int >    (100); // note: full specialization for int
 	f <>         (1.0); // note: template for T
 	f < double > (1.0); // note: template for T
+
+	int x[]{ 1, 2, 3 };
+	int y[]{ 1, 2, 3, 4, 5 };
+
+	std::cout << less(x, y) << std::endl;
 
 	return 0;
 }
