@@ -2,6 +2,8 @@
 
 #include "project_header.hpp" // note: user defined header file
 
+import math;
+
 /*
 void f() // error: multiple defined symbol
 {
@@ -47,6 +49,12 @@ int main()
 //	using namespace std; // bad: dangerous in big projects
 
 	using std::cout; // note: possible in local scope
+
+	hello_module();
+
+	std::cout << call(math::f, 0.0) << std::endl; // note: no problems here
+	std::cout << call(math::g, 0.0) << std::endl; // note: no problems here
+	std::cout << call(math::h, 0.0) << std::endl; // note: no problems here
 
 	return 0;
 }
