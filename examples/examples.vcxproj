@@ -281,12 +281,14 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>true</EnableModules>
       <BuildStlModules>true</BuildStlModules>
+      <AdditionalIncludeDirectories>C:\Libraries\boost\1.83.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Libraries\boost\1.83.0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
