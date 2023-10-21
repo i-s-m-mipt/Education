@@ -171,10 +171,16 @@
     <None Include="section_03\virtual_tables.drawio">
       <Filter>examples\section_03</Filter>
     </None>
+    <None Include="section_05\build_stages.drawio">
+      <Filter>examples\section_05</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="section_03\virtual_tables.png">
       <Filter>examples\section_03</Filter>
+    </Image>
+    <Image Include="section_05\build_stages.png">
+      <Filter>examples\section_05</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
