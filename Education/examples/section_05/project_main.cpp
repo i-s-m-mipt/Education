@@ -56,5 +56,5 @@ int main()
 	std::cout << call(math::g, 0.0) << std::endl; // note: no problems here
 	std::cout << call(math::h, 0.0) << std::endl; // note: no problems here
 
-	return 0;
+	return EXIT_SUCCESS;
 }
