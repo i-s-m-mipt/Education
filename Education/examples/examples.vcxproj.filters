@@ -148,6 +148,21 @@
     <ClCompile Include="section_09\bitwise_operators.cpp">
       <Filter>examples\section_09</Filter>
     </ClCompile>
+    <ClCompile Include="section_05\project_source.cpp">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
+    <ClCompile Include="section_05\project_main.cpp">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
+    <ClCompile Include="section_05\project_module.ixx">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
+    <ClCompile Include="section_05\project_module.cpp">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
+    <ClCompile Include="section_05\libraries_test.cpp">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
@@ -161,5 +176,10 @@
     <Image Include="section_03\virtual_tables.png">
       <Filter>examples\section_03</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="section_05\project_header.hpp">
+      <Filter>examples\section_05</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
