@@ -14,8 +14,6 @@ int main()
 
 	const auto path = "library_v2.dll"s;
 
-	const auto name = "run"s;
-
 	try 
 	{
 		auto f = boost::dll::import_symbol < int(int) > (path, "f");
@@ -26,9 +24,9 @@ int main()
 
 		std::cout << *variable << std::endl;
 
-		auto g = boost::dll::import_alias < int(int) > (path, name);
+		auto run = boost::dll::import_alias < int(int) > (path, "run");
 
-		std::cout << g(42) << std::endl;
+		std::cout << run(42) << std::endl;
 	}
 	catch (const std::exception & exception)
 	{
