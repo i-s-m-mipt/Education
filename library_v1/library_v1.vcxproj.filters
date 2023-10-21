@@ -5,4 +5,14 @@
       <UniqueIdentifier>{87eb7c22-ced6-4595-b1e2-54aea783b8fa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="library.cpp">
+      <Filter>library</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="library.hpp">
+      <Filter>library</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
