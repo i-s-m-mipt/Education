@@ -17,7 +17,6 @@ namespace library_v2
 
 	int g(int x) { return x; }
 
-
 } // namespace library_v2
 
 int library_v2::global_variable = 42;
