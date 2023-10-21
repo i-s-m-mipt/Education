@@ -1,12 +1,12 @@
-module;
+module; // note: global module fragment
 
 #include <cmath>
 
-export module math;
+export module math; // note: interface unit
 
 export void hello_module();
 
-export namespace math
+export namespace math // good: exporting namesapce
 {
 	auto f(double x) { return std::sin(x); }
 	auto g(double x) { return std::cos(x); }
