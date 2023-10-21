@@ -54,7 +54,7 @@ void test_macros()
 
 	[[maybe_unused]] auto x = 1;
 
-//	std::cout << BAD_SQUARE(x + 1, x + 1) << std::endl; // bad: incorrect macro
+//	std::cout << BAD_SQUARE(x + 1) << std::endl; // bad: incorrect macro
 
 //	std::cout << SQUARE(x++) << ' ' << x << std::endl; // bad: dangerous side effect
 //	std::cout << SQUARE(++x) << ' ' << x << std::endl; // bad: dangerous side effect
