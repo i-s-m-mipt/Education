@@ -2,7 +2,7 @@
 
 #include "project_header.hpp" // note: user defined header file
 
-import math;
+import math; // note: importing module
 
 /*
 void f() // error: multiple defined symbol
