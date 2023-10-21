@@ -5,8 +5,8 @@ void print_v1()
 	std::cout << std::endl; 
 }
 
-template < typename T, typename ... Types >
-void print_v1(T arg, Types ... args)
+template < typename T, typename ... Ts >
+void print_v1(T arg, Ts ... args)
 {
 	std::cout << arg << ' ';
 
@@ -19,8 +19,8 @@ void print_v2(T arg)
 	std::cout << arg << ' ';
 }
 
-template < typename T, typename ... Types >
-void print_v2(T arg, Types ... args)
+template < typename T, typename ... Ts >
+void print_v2(T arg, Ts ... args)
 {
 	print_v2(arg);
 
@@ -36,48 +36,48 @@ struct Point
 
 }; // struct Point
 
-template < typename T, typename ... Types >
-auto make_object(Types ... args)
+template < typename T, typename ... Ts >
+auto make_object(Ts ... args)
 {
 	std::cout << sizeof...(args) << std::endl;
 
 	return new T(args...);
 }
 
-template < typename ... Types >
-auto sum_v1(Types ... args)
+template < typename ... Ts >
+auto sum_v1(Ts ... args)
 {
 	return (... + args); // note: (... + args) -> (((arg_1 + arg_2) + arg_3) + ...)
 }
 
-template < typename ... Types >
-auto sum_v2(Types ... args)
+template < typename ... Ts >
+auto sum_v2(Ts ... args)
 {
 	return (args + ...); // note: (args + ...) -> (... + (arg_n-2 + (arg_n-1 + arg_n)))
 }
 
-template < typename ... Types >
-auto sum_v3(Types ... args)
+template < typename ... Ts >
+auto sum_v3(Ts ... args)
 {
 	return (42 + ... + args); // note: (42 + ... + args) -> (((42 + arg_1) + arg_2) + ...)
 }
 
-template < typename ... Types >
-auto sum_v4(Types ... args)
+template < typename ... Ts >
+auto sum_v4(Ts ... args)
 {
 	return (args + ... + 42); // note: (args + ... + 42) -> (... + (arg_n-1 + (arg_n + 42)))
 }
 
-template < typename ... Types >
-void f(Types ... args)
+template < typename ... Ts >
+void f(Ts ... args)
 {
 //	print_v1(args + 1...); // error: invalid syntax
 
 	print_v1((args + 1)...); // note: or args + 1 ...
 }
 
-template < typename ... Types >
-void g(Types ... args)
+template < typename ... Ts >
+void g(Ts ... args)
 {
 	print_v1(args + args...);
 }
