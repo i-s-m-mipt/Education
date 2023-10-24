@@ -55,7 +55,7 @@ void test_array(int * a, int size) // note: array size as additional argument
 /*
 int * get_dangling_pointer()
 {
-	int d = 42; // good: static const int d = 42;
+	auto d = 42; // good: static const auto d = 42;
 
 	return &d; // warning: dangling pointer to non-static local variable
 }
@@ -64,7 +64,7 @@ int * get_dangling_pointer()
 /*
 int & get_dangling_reference()
 {
-	int d = 42; // good: static const int d = 42;
+	auto d = 42; // good: static const auto d = 42;
 
 	return d; // warning: dangling reference to non-static local variable
 }
