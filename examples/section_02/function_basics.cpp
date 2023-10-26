@@ -7,7 +7,7 @@
 	return (x + y + z);
 }
 
-void test_pointers(int * x, const int * y)
+void test_pointers(int * x, const int * y) // note: demo only
 {
 	if (!x || !y)
 	{
@@ -22,7 +22,7 @@ void test_pointers(int * x, const int * y)
 	std::cout << *x << ' ' << *y << std::endl;
 }
 
-void test_references(int & x, const int & y)
+void test_references(int & x, const int & y) // note: demo only
 {
 	std::cout << x << ' ' << y << std::endl;
 
