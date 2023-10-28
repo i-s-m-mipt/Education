@@ -88,7 +88,8 @@ private:
     int m_counter = 0;
 
     Computer * m_computers[max_computers]{};
-};
+
+}; // class Cluster : public Computer
 
 [[nodiscard]] auto make_cluster(int size)
 {
