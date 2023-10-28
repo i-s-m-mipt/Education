@@ -16,7 +16,10 @@ class ZIP_Compression : public Compression
 {
 public:
 
-    void compress() const override { std::cout << "ZIP compression" << std::endl; }
+    void compress() const override 
+    { 
+        std::cout << "ZIP compression" << std::endl; 
+    }
 
 }; // class ZIP_Compression : public Compression
 
@@ -24,7 +27,10 @@ class RAR_Compression : public Compression
 {
 public:
 
-    void compress() const override { std::cout << "RAR compression" << std::endl; }
+    void compress() const override 
+    { 
+        std::cout << "RAR compression" << std::endl; 
+    }
 
 }; // class RAR_Compression : public Compression
 
@@ -32,7 +38,10 @@ class ARJ_Compression : public Compression
 {
 public:
 
-    void compress() const override { std::cout << "ARJ compression" << std::endl; }
+    void compress() const override 
+    { 
+        std::cout << "ARJ compression" << std::endl; 
+    }
 
 }; // class ARJ_Compression : public Compression
 

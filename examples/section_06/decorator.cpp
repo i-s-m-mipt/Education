@@ -17,7 +17,10 @@ class Polygon : public Shape
 {
 public:
 
-    std::string description() const override { return "Polygon"; }
+    std::string description() const override 
+    { 
+        return "Polygon"; 
+    }
 
 }; // class Polygon
 
@@ -37,7 +40,10 @@ public:
 
     auto shape() const { return m_shape; }
 
-    std::string description() const override { return m_shape->description(); }
+    std::string description() const override 
+    { 
+        return m_shape->description(); 
+    }
 
 private:
 
@@ -53,7 +59,10 @@ public:
 
 public:
 
-    std::string description() const override { return shape()->description() + " with Color"; }
+    std::string description() const override 
+    { 
+        return shape()->description() + " with Color"; 
+    }
 
 }; // class Colored_Shape : public Decorator
 
