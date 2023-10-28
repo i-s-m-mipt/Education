@@ -68,17 +68,16 @@ public:
 
 int main()
 {
-    Shape * shape = new Polygon();
+    Shape * shape_1 = new Polygon();
 
-    std::cout << shape->description() << std::endl;
+    std::cout << shape_1->description() << std::endl;
 
-    Shape * colored_shape = new Colored_Shape(shape);
+    Shape * shape_2 = new Colored_Shape(shape_1);
 
-    std::cout << colored_shape->description() << std::endl;
+    std::cout << shape_2->description() << std::endl;
 
-    delete shape; // good: no memory leak
-
-    delete colored_shape; // good: no memory leak
+    delete shape_1; // good: no memory leak
+    delete shape_2; // good: no memory leak
 
     return 0;
 }
