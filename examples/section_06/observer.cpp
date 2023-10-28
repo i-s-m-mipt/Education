@@ -12,12 +12,13 @@ class Weather_Station
 {
 public:
 
-    explicit Weather_Station(Observer * observer) : 
-        m_temperature(0.0), m_observer(observer)
+    explicit Weather_Station() : m_temperature(0.0) {}
+
+    ~Weather_Station()
     {
-        if (!m_observer) // good: verify if nullptr
+        for (auto i = 0; i < m_counter; ++i)
         {
-            std::cout << "invalid observer" << std::endl;
+            delete m_observers[i]; // good: no memory leak
         }
     }
 
@@ -30,37 +31,86 @@ public:
         notify();
     }
 
-    void notify() const { m_observer->update(m_temperature); }
+    void notify() const 
+    { 
+        for (auto i = 0; i < m_counter; ++i)
+        {
+            if (m_observers[i]) // good: verify if nullptr
+            {
+                m_observers[i]->update(m_temperature);
+            }
+        }
+    }
+
+    [[nodiscard]] bool add_observer(Observer * observer)
+    {
+        if (m_counter < max_observers)
+        {
+            m_observers[m_counter++] = observer;
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+private:
+
+    static inline const int max_observers = 100;
 
 private:
 
     double m_temperature;
 
-    Observer * m_observer;
+    int m_counter = 0;
+
+    Observer * m_observers[max_observers]{};
 
 }; // class Weather_Station 
 
-class Display : public Observer 
+class Display_1 : public Observer 
 {
 public:
 
     void update(double temperature) const
     {
-        std::cout << "Temperature: " << temperature << std::endl;
+        std::cout << "Display_1: temperature = " << temperature << std::endl;
     }
 
-}; // class Display : public Observer 
+}; // class Display_1 : public Observer 
+
+class Display_2 : public Observer
+{
+public:
+
+    void update(double temperature) const
+    {
+        std::cout << "Display_2: temperature = " << temperature << std::endl;
+    }
+
+}; // class Display_2 : public Observer 
 
 int main() 
 {
-    Observer * observer = new Display;
+    Observer * observer_1 = new Display_1;
+    Observer * observer_2 = new Display_2;
 
-    Weather_Station weather_station(observer);
+    Weather_Station weather_station;
+
+    if (!weather_station.add_observer(observer_1)) 
+    {
+        delete observer_1; // good: no memory leak
+    }
+
+    if (!weather_station.add_observer(observer_2))
+    {
+        delete observer_2; // good: no memory leak
+    }
 
     weather_station.set_temperature(25.5);
     weather_station.set_temperature(24.8);
-
-    delete observer; // good: no memory leak
 
     return 0;
 }
