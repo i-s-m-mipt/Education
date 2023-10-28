@@ -163,6 +163,33 @@
     <ClCompile Include="section_05\libraries_test.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
+    <ClCompile Include="section_06\builder.cpp">
+      <Filter>examples\section_06</Filter>
+    </ClCompile>
+    <ClCompile Include="section_06\factory.cpp">
+      <Filter>examples\section_06</Filter>
+    </ClCompile>
+    <ClCompile Include="section_06\prototype.cpp">
+      <Filter>examples\section_06</Filter>
+    </ClCompile>
+    <ClCompile Include="section_06\adapter.cpp">
+      <Filter>examples\section_06</Filter>
+    </ClCompile>
+    <ClCompile Include="section_06\composite.cpp">
+      <Filter>examples\section_06</Filter>
+    </ClCompile>
+    <ClCompile Include="section_06\decorator.cpp">
+      <Filter>examples\section_06</Filter>
+    </ClCompile>
+    <ClCompile Include="section_06\template.cpp">
+      <Filter>examples\section_06</Filter>
+    </ClCompile>
+    <ClCompile Include="section_06\strategy.cpp">
+      <Filter>examples\section_06</Filter>
+    </ClCompile>
+    <ClCompile Include="section_06\observer.cpp">
+      <Filter>examples\section_06</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
