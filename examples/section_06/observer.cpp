@@ -12,7 +12,8 @@ class Weather_Station
 {
 public:
 
-    explicit Weather_Station(Observer * observer) : m_observer(observer) 
+    explicit Weather_Station(Observer * observer) : 
+        m_temperature(0.0), m_observer(observer)
     {
         if (!m_observer) // good: verify if nullptr
         {
