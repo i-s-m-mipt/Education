@@ -28,10 +28,10 @@ public:
     {
         m_temperature = temperature;
         
-        notify();
+        notify_all();
     }
 
-    void notify() const 
+    void notify_all() const 
     { 
         for (auto i = 0; i < m_counter; ++i)
         {
