@@ -6,14 +6,14 @@ public:
 
 public:
 
-	int m_data = 0; // note: problem in case of multiple inheritance
+	int m_data = 0; // note: possible problem with multiple inheritance
 
 }; // class Base
 
 class L : public /*virtual*/ Base {}; // good: virtual inheritance
 class R : public /*virtual*/ Base {}; // good: virtual inheritance
 
-class C : public L, public R {}; // note: avoid multiple inheritance
+class C : public L, public R {}; // note: possible diamond problem
 
 int main()
 {
