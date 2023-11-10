@@ -62,7 +62,7 @@ public:
 
 public:
 
-	Ratio & operator+=(Ratio other)
+	auto & operator+=(Ratio other)
 	{
 		auto lcm = std::lcm(m_denominator, other.m_denominator);
 
@@ -76,12 +76,12 @@ public:
 		return *this;
 	}
 
-	Ratio & operator-=(Ratio other)
+	auto & operator-=(Ratio other)
 	{
 		return (*this += (other.m_numerator *= -1));
 	}
 		
-	Ratio & operator*=(Ratio other)
+	auto & operator*=(Ratio other)
 	{
 		m_numerator   *= other.m_numerator;
 		m_denominator *= other.m_denominator;
@@ -91,28 +91,28 @@ public:
 		return *this;
 	}
 	
-	Ratio & operator/=(Ratio other)
+	auto & operator/=(Ratio other)
 	{
 		return (*this *= Ratio(other.m_denominator, other.m_numerator));
 	}
 
 public:
 
-	Ratio & operator++()
+	auto & operator++()
 	{
 		m_numerator += m_denominator;
 
 		return *this;
 	}
 
-	Ratio & operator--()
+	auto & operator--()
 	{
 		m_numerator -= m_denominator;
 
 		return *this;
 	}
 
-	Ratio operator++(int)
+	auto operator++(int)
 	{
 		Ratio tmp(*this);
 
@@ -122,7 +122,7 @@ public:
 
 	}
 
-	Ratio operator--(int)
+	auto operator--(int)
 	{
 		Ratio tmp(*this);
 
@@ -138,52 +138,52 @@ private:
 
 }; // class Ratio
 
-Ratio operator+(Ratio lhs, Ratio rhs) // good: free function
+auto operator+(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs += rhs);
 }
 
-Ratio operator-(Ratio lhs, Ratio rhs) // good: free function
+auto operator-(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs -= rhs);
 }
 
-Ratio operator*(Ratio lhs, Ratio rhs) // good: free function
+auto operator*(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs *= rhs);
 }
 
-Ratio operator/(Ratio lhs, Ratio rhs) // good: free function
+auto operator/(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs /= rhs);
 }
 
-bool operator<(Ratio lhs, Ratio rhs)
+auto operator<(Ratio lhs, Ratio rhs)
 {
 	return static_cast < double > (lhs) < static_cast < double > (rhs);
 }
 
-bool operator>(Ratio lhs, Ratio rhs)
+auto operator>(Ratio lhs, Ratio rhs)
 {
 	return (rhs < lhs);
 }
 
-bool operator>=(Ratio lhs, Ratio rhs)
-{
-	return !(lhs < rhs);
-}
-
-bool operator<=(Ratio lhs, Ratio rhs)
+auto operator<=(Ratio lhs, Ratio rhs)
 {
 	return !(lhs > rhs);
 }
 
-bool operator==(Ratio lhs, Ratio rhs)
+auto operator>=(Ratio lhs, Ratio rhs)
+{
+	return !(lhs < rhs);
+}
+
+auto operator==(Ratio lhs, Ratio rhs)
 {
 	return (!(lhs < rhs) && !(rhs < lhs));
 }
 
-bool operator!=(Ratio lhs, Ratio rhs)
+auto operator!=(Ratio lhs, Ratio rhs)
 {
 	return !(lhs == rhs);
 }
