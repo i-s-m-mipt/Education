@@ -180,8 +180,7 @@ bool operator<=(Ratio lhs, Ratio rhs)
 
 bool operator==(Ratio lhs, Ratio rhs)
 {
-	return (lhs.numerator  () == rhs.numerator  () &&
-		    lhs.denominator() == lhs.denominator());
+	return (!(lhs < rhs) && !(rhs < lhs));
 }
 
 bool operator!=(Ratio lhs, Ratio rhs)
