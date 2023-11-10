@@ -148,56 +148,59 @@
     <ClCompile Include="section_09\bitwise_operators.cpp">
       <Filter>examples\section_09</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\project_source.cpp">
+    <ClCompile Include="section_05\adapter.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\project_main.cpp">
+    <ClCompile Include="section_05\bridge.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\project_module.ixx">
+    <ClCompile Include="section_05\builder.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\project_module.cpp">
+    <ClCompile Include="section_05\composite.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\libraries_test.cpp">
+    <ClCompile Include="section_05\decorator.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_06\builder.cpp">
+    <ClCompile Include="section_05\factory.cpp">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
+    <ClCompile Include="section_05\observer.cpp">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
+    <ClCompile Include="section_05\polymorphism.cpp">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
+    <ClCompile Include="section_05\prototype.cpp">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
+    <ClCompile Include="section_05\singleton.cpp">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
+    <ClCompile Include="section_05\strategy.cpp">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
+    <ClCompile Include="section_05\template.cpp">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
+    <ClCompile Include="section_06\libraries_test.cpp">
       <Filter>examples\section_06</Filter>
     </ClCompile>
-    <ClCompile Include="section_06\factory.cpp">
+    <ClCompile Include="section_06\project_main.cpp">
       <Filter>examples\section_06</Filter>
     </ClCompile>
-    <ClCompile Include="section_06\prototype.cpp">
+    <ClCompile Include="section_06\project_module.cpp">
       <Filter>examples\section_06</Filter>
     </ClCompile>
-    <ClCompile Include="section_06\adapter.cpp">
+    <ClCompile Include="section_06\project_module.ixx">
       <Filter>examples\section_06</Filter>
     </ClCompile>
-    <ClCompile Include="section_06\composite.cpp">
+    <ClCompile Include="section_06\project_source.cpp">
       <Filter>examples\section_06</Filter>
     </ClCompile>
-    <ClCompile Include="section_06\decorator.cpp">
-      <Filter>examples\section_06</Filter>
-    </ClCompile>
-    <ClCompile Include="section_06\template.cpp">
-      <Filter>examples\section_06</Filter>
-    </ClCompile>
-    <ClCompile Include="section_06\strategy.cpp">
-      <Filter>examples\section_06</Filter>
-    </ClCompile>
-    <ClCompile Include="section_06\observer.cpp">
-      <Filter>examples\section_06</Filter>
-    </ClCompile>
-    <ClCompile Include="section_06\singleton.cpp">
-      <Filter>examples\section_06</Filter>
-    </ClCompile>
-    <ClCompile Include="polymorphism.cpp">
-      <Filter>examples\section_06</Filter>
-    </ClCompile>
-    <ClCompile Include="bridge.cpp">
-      <Filter>examples\section_06</Filter>
+    <ClCompile Include="class_optimizations.cpp">
+      <Filter>examples\section_03</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -207,21 +210,21 @@
     <None Include="section_03\virtual_tables.drawio">
       <Filter>examples\section_03</Filter>
     </None>
-    <None Include="section_05\build_stages.drawio">
-      <Filter>examples\section_05</Filter>
+    <None Include="section_06\build_stages.drawio">
+      <Filter>examples\section_06</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="section_03\virtual_tables.png">
       <Filter>examples\section_03</Filter>
     </Image>
-    <Image Include="section_05\build_stages.png">
-      <Filter>examples\section_05</Filter>
+    <Image Include="section_06\build_stages.png">
+      <Filter>examples\section_06</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="section_05\project_header.hpp">
-      <Filter>examples\section_05</Filter>
+    <ClInclude Include="section_06\project_header.hpp">
+      <Filter>examples\section_06</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
