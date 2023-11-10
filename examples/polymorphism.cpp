@@ -10,30 +10,36 @@ public:
 
 }; // class Shape
 
-class Triangle : public Shape
+class Triangle_v1 : public Shape
 {
 public:
 
-	void draw() const override { std::cout << "Triangle" << std::endl; }
+	void draw() const override { std::cout << "Triangle_v1" << std::endl; }
 
-}; // class Triangle
+}; // class Triangle_v1 : public Shape
 
-class Rectangle : public Shape
+void handle_v1(const Shape & shape) 
+{
+	shape.draw(); // note: slower in runtime, but clear hierarchy
+}
+
+class Triangle_v2
 {
 public:
 
-	void draw() const override { std::cout << "Rectangle" << std::endl; }
+	void draw() const { std::cout << "Triangle_v2" << std::endl; }
 
-}; // class Rectangle
+}; // class Triangle_v2
 
-void handle(const Shape & shape)
+template < typename T > void handle_v2(const T & t)
 {
-	shape.draw();
+	t.draw(); // note: faster in runtime, but independent classes
 }
 
 int main()
 {
-	handle(Triangle());
+	handle_v1(Triangle_v1());
+	handle_v2(Triangle_v2());
 
 	return 0;
 }
