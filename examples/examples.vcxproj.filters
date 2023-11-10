@@ -193,6 +193,12 @@
     <ClCompile Include="section_06\singleton.cpp">
       <Filter>examples\section_06</Filter>
     </ClCompile>
+    <ClCompile Include="polymorphism.cpp">
+      <Filter>examples\section_06</Filter>
+    </ClCompile>
+    <ClCompile Include="bridge.cpp">
+      <Filter>examples\section_06</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
