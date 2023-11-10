@@ -199,7 +199,7 @@
     <ClCompile Include="section_06\project_source.cpp">
       <Filter>examples\section_06</Filter>
     </ClCompile>
-    <ClCompile Include="class_optimizations.cpp">
+    <ClCompile Include="section_03\class_optimizations.cpp">
       <Filter>examples\section_03</Filter>
     </ClCompile>
   </ItemGroup>

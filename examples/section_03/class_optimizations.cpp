@@ -1,5 +1,7 @@
 #include <iostream>
 
+class Empty {};
+
 class A {}; // note: empty base class optimization
 
 class B : public A {};
@@ -33,6 +35,8 @@ auto g()
 
 int main()
 {
+	std::cout << sizeof(Empty) << std::endl; // note: non-zero size
+
 	std::cout << sizeof(A) << std::endl;
 	std::cout << sizeof(B) << std::endl;
 	std::cout << sizeof(C) << std::endl;
