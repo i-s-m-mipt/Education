@@ -205,6 +205,12 @@
     <ClCompile Include="section_03\multiple_inheritance.cpp">
       <Filter>examples\section_03</Filter>
     </ClCompile>
+    <ClCompile Include="section_05\crtp_concept.cpp">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
+    <ClCompile Include="section_05\crtp_counter.cpp">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
