@@ -217,6 +217,9 @@
     <ClCompile Include="section_05\mixin_basics.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
+    <ClCompile Include="section_05\mixin_initializer.cpp">
+      <Filter>examples\section_05</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
