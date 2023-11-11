@@ -24,9 +24,7 @@ template < typename T > class Initializer : public T
 {
 public:
 
-    template < typename ... Types > 
-    explicit Initializer(Types && ... args) : // note: forwarding reference
-        T(std::forward < Types > (args)...)
+    template < typename ... Types > explicit Initializer(Types ... args) : T(args...)
     {
         this->initialize(); // good: mandatory function call
     }
