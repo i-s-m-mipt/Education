@@ -4,6 +4,10 @@ template < class Derived > class Shape
 {
 public:
 
+	virtual ~Shape() = default;
+
+public:
+
 	void draw() const
 	{
 		static_cast < const Derived * > (this)->draw_implementation();
