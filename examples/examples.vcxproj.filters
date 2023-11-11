@@ -148,40 +148,40 @@
     <ClCompile Include="section_09\bitwise_operators.cpp">
       <Filter>examples\section_09</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\adapter.cpp">
+    <ClCompile Include="section_05\pattern_adapter.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\bridge.cpp">
+    <ClCompile Include="section_05\pattern_bridge.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\builder.cpp">
+    <ClCompile Include="section_05\pattern_builder.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\composite.cpp">
+    <ClCompile Include="section_05\pattern_composite.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\decorator.cpp">
+    <ClCompile Include="section_05\pattern_decorator.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\factory.cpp">
+    <ClCompile Include="section_05\pattern_factory.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\observer.cpp">
+    <ClCompile Include="section_05\pattern_observer.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
     <ClCompile Include="section_05\polymorphism.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\prototype.cpp">
+    <ClCompile Include="section_05\pattern_prototype.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\singleton.cpp">
+    <ClCompile Include="section_05\pattern_singleton.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\strategy.cpp">
+    <ClCompile Include="section_05\pattern_strategy.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\template.cpp">
+    <ClCompile Include="section_05\pattern_template.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
     <ClCompile Include="section_06\libraries_test.cpp">
