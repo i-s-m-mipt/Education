@@ -6,7 +6,7 @@ struct Number
 
     auto get() const { return value; }
     
-    void set(value_type new_value) 
+    void set(value_type new_value) // note: trivial setter demo only
     { 
         value = new_value; 
     }
