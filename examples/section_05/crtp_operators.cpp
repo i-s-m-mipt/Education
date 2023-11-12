@@ -38,7 +38,7 @@ auto operator!=(const Relational < T > & lhs, const Relational < T > & rhs)
     return !(lhs == rhs);
 }
 
-class Apple : public Relational < Apple > 
+class Apple : public Relational < Apple > // note: see Boost.Operators
 {
 public:
 
@@ -59,7 +59,7 @@ auto operator<(const Apple & lhs, const Apple & rhs)
     return (lhs.weight() < rhs.weight());
 }
 
-class Human : public Relational < Human >
+class Human : public Relational < Human > // note: see Boost.Operators
 {
 public:
 
