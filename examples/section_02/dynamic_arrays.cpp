@@ -56,9 +56,7 @@ int main()
 
 	for (auto i = 0; i < n; ++i)
 	{
-		std::cout << s[i];
-
-		std::cout << (i + 1 == size ? '\n' : ' ');
+		std::cout << s[i] << (i + 1 == n ? '\n' : ' ');
 	}
 
 	delete[] s;
