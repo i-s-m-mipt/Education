@@ -55,8 +55,9 @@ int main()
 
 //	std::variant < char, double > v5(42); // error: ambiguous selection
 
-	[[maybe_unused]] std::variant < char, double > v6(std::in_place_type < double > , 42);
-	[[maybe_unused]] std::variant < char, double > v7(std::in_place_index < 1 > ,     42);
+	[[maybe_unused]] std::variant < char, double > v6(std::in_place_type < double >, 42);
+
+	[[maybe_unused]] std::variant < char, double > v7(std::in_place_index < 1 >, 42);
 
 	std::variant < int, int > v8(std::in_place_index < 0 >, 42);
 
