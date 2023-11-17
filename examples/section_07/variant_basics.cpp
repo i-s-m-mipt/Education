@@ -1,3 +1,4 @@
+#include <cmath>
 #include <iostream>
 #include <string>
 #include <variant>
@@ -15,15 +16,19 @@ public:
 
 class B {};
 
-std::variant < int, std::string > verify_argument(int x)
+std::variant < std::monostate, int, double > handle(int x)
 {
-	if (x > 0)
+	if (x < 0)
+	{
+		return std::monostate();
+	}
+	else if (x == 0)
 	{
 		return x;
 	}
 	else
 	{
-		return "error: invalid argument";
+		return std::sqrt(x);
 	}
 }
 
@@ -61,9 +66,9 @@ int main()
 
 	v9 = B(); // good: no memory leaks, destructor called
 
-	if (auto result = verify_argument(42); std::holds_alternative < int > (result))
+	if (auto result = handle(42); std::holds_alternative < double > (result))
 	{
-		std::cout << std::get < int > (result) << std::endl;
+		std::cout << std::get < double > (result) << std::endl;
 	}
 
 	return 0;

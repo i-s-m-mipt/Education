@@ -235,7 +235,13 @@
     <ClCompile Include="section_07\processor_usage.cpp">
       <Filter>examples\section_07</Filter>
     </ClCompile>
+    <ClCompile Include="section_07\union_basics.cpp">
+      <Filter>examples\section_07</Filter>
+    </ClCompile>
     <ClCompile Include="section_07\variant_basics.cpp">
+      <Filter>examples\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="section_07\optional_basics.cpp">
       <Filter>examples\section_07</Filter>
     </ClCompile>
   </ItemGroup>
