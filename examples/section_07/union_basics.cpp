@@ -1,7 +1,5 @@
 #include <cmath>
 #include <iostream>
-#include <string>
-#include <variant>
 
 union U // note: the whole union occupies 4 bytes
 {
@@ -19,7 +17,7 @@ struct Result
 
 	union // note: anonymous union
 	{ 
-		int error_code; double result; 
+		int error_code; double result; // note: consider enumerations
 	};
 
 }; // struct Result
