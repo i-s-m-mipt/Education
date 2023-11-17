@@ -223,6 +223,18 @@
     <ClCompile Include="variadic_bases.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
+    <ClCompile Include="section_07\errors_handling.cpp">
+      <Filter>examples\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="section_07\exceptions_basics.cpp">
+      <Filter>examples\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="section_07\memory_leaks.cpp">
+      <Filter>examples\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="section_07\processor_usage.cpp">
+      <Filter>examples\section_07</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">

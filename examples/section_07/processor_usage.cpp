@@ -1,12 +1,14 @@
-import std;
+#include <cmath>
+#include <cstdlib>
+#include <iostream>
 
 double f(std::size_t size) // note: complex calculations
 {
 	auto result = 0.0;
 
-	for (std::size_t i = 1; i < size + 1; ++i)
+	for (std::size_t i = 0; i < size; ++i)
 	{
-		for (std::size_t j = 1; j < size + 1; ++j)
+		for (std::size_t j = 0; j < size; ++j)
 		{
 			auto argument = 1.0 * i / size;
 

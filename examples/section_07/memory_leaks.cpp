@@ -1,4 +1,9 @@
-import std;
+#include <chrono>
+#include <cstdlib>
+#include <iostream>
+#include <thread>
+
+using namespace std::literals;
 
 void f(std::size_t size)
 {
@@ -9,9 +14,9 @@ void f(std::size_t size)
 		a[i] = static_cast < int > (i + 1);
 	}
 
-	std::this_thread::sleep_for(std::chrono::seconds(1)); // note: delay
+	std::this_thread::sleep_for(1s); // note: delay
 
-	// delete[] a; // bad: memory leak
+//  delete[] a; // bad: memory leak if skipped
 }
 
 int main()
