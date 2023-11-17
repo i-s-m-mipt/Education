@@ -226,13 +226,16 @@
     <ClCompile Include="section_07\errors_handling.cpp">
       <Filter>examples\section_07</Filter>
     </ClCompile>
-    <ClCompile Include="section_07\exceptions_basics.cpp">
+    <ClCompile Include="section_07\exception_basics.cpp">
       <Filter>examples\section_07</Filter>
     </ClCompile>
-    <ClCompile Include="section_07\memory_leaks.cpp">
+    <ClCompile Include="section_07\heap_snapshots.cpp">
       <Filter>examples\section_07</Filter>
     </ClCompile>
     <ClCompile Include="section_07\processor_usage.cpp">
+      <Filter>examples\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="section_07\unions_variant.cpp">
       <Filter>examples\section_07</Filter>
     </ClCompile>
   </ItemGroup>
