@@ -247,6 +247,12 @@
     <ClCompile Include="section_07\stack_interface.cpp">
       <Filter>examples\section_07</Filter>
     </ClCompile>
+    <ClCompile Include="section_07\custom_logger.cpp">
+      <Filter>examples\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="section_07\logger_examples.cpp">
+      <Filter>examples\section_07</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
@@ -270,6 +276,9 @@
   <ItemGroup>
     <ClInclude Include="section_06\project_header.hpp">
       <Filter>examples\section_06</Filter>
+    </ClInclude>
+    <ClInclude Include="section_07\custom_logger.hpp">
+      <Filter>examples\section_07</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
