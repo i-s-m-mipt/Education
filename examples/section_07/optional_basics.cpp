@@ -20,7 +20,7 @@ int main()
 
     std::optional < std::string > o3(std::in_place, 5, 'a'); // note: in-place construction
 
-    std::cout << *o3 << ' ' << o3->length() << std::endl;
+    std::cout << *o3 << ' ' << o3->front() << std::endl;
 
     std::cout << create(false).value_or("empty") << std::endl;
 
