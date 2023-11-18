@@ -244,6 +244,9 @@
     <ClCompile Include="section_07\optional_basics.cpp">
       <Filter>examples\section_07</Filter>
     </ClCompile>
+    <ClCompile Include="section_07\stack_interface.cpp">
+      <Filter>examples\section_07</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
