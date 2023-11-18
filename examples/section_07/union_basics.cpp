@@ -17,14 +17,14 @@ struct Result
 
 	union // note: anonymous union
 	{ 
-		int error_code; double result; // note: consider enumerations
+		int error_code; double result = 0.0; // note: consider enumerations
 	};
 
 }; // struct Result
 
 Result try_log(double x)
 {
-	Result result = { true, 0 }; // note: error code 0 by default
+	Result result = { true, -1 }; // note: error code 0 by default
 
 	if (x > 0.0)
 	{
