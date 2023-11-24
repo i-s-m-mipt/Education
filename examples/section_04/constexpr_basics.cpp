@@ -23,6 +23,29 @@ constexpr auto is_prime(int p) // note: can be evaluated at compile-time
 	return (p > 1);
 }
 
+consteval auto fibonacci(int n) // note: must be evaluated at compile-time
+{
+	if (n < 2)
+	{
+		return 1;
+	}
+	else
+	{
+		auto a = new int[n] { 1, 1 }; // note: dynamic allocation allowed
+
+		for (auto i = 2; i < n; ++i)
+		{
+			a[i] = a[i - 1] + a[i - 2];
+		}
+
+		auto result = a[n - 1];
+
+		delete[] a; // good: no memory leak required at compile-time
+
+		return result;
+	}
+}
+
 class C
 {
 	static constexpr auto c = 42; // note: same as inline const
@@ -65,6 +88,8 @@ int main()
 	[[maybe_unused]] auto is_prime_5 = is_prime(x); // note: can be evaluated at compile-time
 
 	[[maybe_unused]] auto is_prime_6 = is_prime(y); // note: runtime only
+
+	std::cout << fibonacci(5) << std::endl;
 
 	constexpr auto result = f(x);
 
