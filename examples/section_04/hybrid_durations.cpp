@@ -1,0 +1,53 @@
+#include <iostream>
+
+template < int N, int D = 1 > class Ratio
+{
+public:
+
+	static constexpr auto num = N;
+	static constexpr auto den = D;
+
+	using type = Ratio < num, den > ; // note: num and den must be visible
+
+}; // template < int N, int D = 1 > class Ratio
+
+template < typename R1, typename R2 > class Sum
+{
+private:
+
+	static constexpr auto num = R1::num * R2::den + R2::num * R1::den;
+	static constexpr auto den = R1::den * R2::den;
+
+public:
+
+	using type = Ratio < num, den > ; // note: num and den must be visible
+
+}; // template < typename R1, typename R2 > class Sum
+
+template < typename R1, typename R2 > using sum_t = typename Sum < R1, R2 > ::type;
+
+template < typename T, typename R = Ratio < 1 > > struct Duration { T value; };
+
+template < typename T1, typename R1, typename T2, typename R2 > 
+constexpr auto operator+(Duration < T1, R1 > lhs, Duration < T2, R2 > rhs)
+{
+	using unit_t = Ratio < 1, sum_t < R1, R2 > ::den > ; // note: compile-time
+
+	const auto value = 
+		lhs.value * unit_t::den / R1::den * R1::num +
+		rhs.value * unit_t::den / R2::den * R2::num; // note: runtime
+
+	return Duration < decltype(value), unit_t > { value };
+}
+
+int main()
+{
+	auto x = 3;
+	auto y = 6;
+
+	std::cout << (
+		Duration < int, Ratio < 2, 5 > > (x) +
+		Duration < int, Ratio < 1, 7 > > (y)).value << std::endl;
+
+	return 0;
+}
