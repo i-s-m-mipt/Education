@@ -1,5 +1,4 @@
 #include <iostream>
-#include <type_traits>
 
 constexpr int factorial(int n) // note: can bebe evaluated at compile-time
 {
@@ -29,6 +28,8 @@ class C
 	static constexpr auto c = 42; // note: same as inline const
 
 }; // class C
+
+#include <type_traits>
 
 constexpr auto f([[maybe_unused]] int x)
 {
