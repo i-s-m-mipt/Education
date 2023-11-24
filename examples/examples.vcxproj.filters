@@ -253,6 +253,9 @@
     <ClCompile Include="section_04\metaprogramming.cpp">
       <Filter>examples\section_04</Filter>
     </ClCompile>
+    <ClCompile Include="section_04\constexpr_basics.cpp">
+      <Filter>examples\section_04</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
