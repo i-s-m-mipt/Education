@@ -145,9 +145,6 @@
     <ClCompile Include="section_19\types_deduction.cpp">
       <Filter>examples\section_19</Filter>
     </ClCompile>
-    <ClCompile Include="section_09\bitwise_operators.cpp">
-      <Filter>examples\section_09</Filter>
-    </ClCompile>
     <ClCompile Include="section_05\pattern_adapter.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
@@ -252,6 +249,9 @@
     </ClCompile>
     <ClCompile Include="section_07\logger_examples.cpp">
       <Filter>examples\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="section_04\metaprogramming.cpp">
+      <Filter>examples\section_04</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
