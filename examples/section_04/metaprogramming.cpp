@@ -1,5 +1,15 @@
 #include <iostream>
 
+template < int N > struct Factorial
+{
+	static const int value = N * Factorial < N - 1 > ::value;
+
+}; // template < int N > struct Factorial
+
+template <> struct Factorial < 0 > { static const int value = 1; };
+
+template < int N > const int factorial_v = Factorial < N > ::value; // good: variable template
+
 template < int p, int d > struct Check_Is_Prime
 {
 	static const bool value = (p % d != 0) && Check_Is_Prime < p, d - 1 > ::value;
@@ -27,6 +37,8 @@ template < int p > const bool is_prime_v = Is_Prime < p > ::value; // good: vari
 
 int main()
 {
+	std::cout << factorial_v < 5 > << std::endl;
+
 	std::cout << is_prime_v < 42 > << std::endl;
 	std::cout << is_prime_v < 43 > << std::endl;
 
