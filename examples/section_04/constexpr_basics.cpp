@@ -1,6 +1,6 @@
 #include <iostream>
 
-constexpr int factorial(int n) // note: can bebe evaluated at compile-time
+constexpr int factorial(int n) // note: can be evaluated at compile-time
 {
 	return (n < 2 ? 1 : n * factorial(n - 1));
 }
