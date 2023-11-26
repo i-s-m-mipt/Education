@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 class Computer
 {
@@ -42,7 +43,7 @@ public:
 
     ~Cluster()
     {
-        for (auto i = 0; i < m_counter; ++i)
+        for (std::size_t i = 0; i < m_computers.size(); ++i)
         {
             delete m_computers[i]; // good: no memory leak
         }
@@ -54,7 +55,7 @@ public:
     {
         auto total_performance = 0.0;
 
-        for (auto i = 0; i < m_counter; ++i)
+        for (std::size_t i = 0; i < m_computers.size(); ++i)
         {
             if (m_computers[i]) // good: verify if nullptr
             {
@@ -65,29 +66,14 @@ public:
         return total_performance;
     }
 
-    [[nodiscard]] bool add_computer(Computer * computer)
+    void add_computer(Computer * computer)
     {
-        if (m_counter < max_computers)
-        {
-            m_computers[m_counter++] = computer;
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        m_computers.push_back(computer);
     }
 
 private:
-
-    static inline const int max_computers = 100;
-
-private:
-
-    int m_counter = 0;
-
-    Computer * m_computers[max_computers]{};
+    
+    std::vector < Computer * > m_computers;
 
 }; // class Cluster : public Computer
 
@@ -97,12 +83,7 @@ private:
 
     for (auto i = 0; i < size; ++i)
     {
-        Computer * computer = new Server;
-
-        if (!cluster->add_computer(computer)) 
-        { 
-            delete computer; // good: no memory leak
-        } 
+        cluster->add_computer(new Server);
     }
 
     return cluster;
@@ -116,12 +97,7 @@ int main()
 
     for (auto i = 0; i < size; ++i)
     {
-        Computer * computer = make_cluster(size * 2);
-
-        if (!super_cluster->add_computer(computer)) 
-        { 
-            delete computer; // good: no memory leak
-        } 
+        super_cluster->add_computer(make_cluster(size * 2));
     }
 
     Computer * computer = super_cluster;
