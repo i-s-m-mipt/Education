@@ -110,6 +110,8 @@ int main()
 	stack.push(2);
 	stack.push(3);
 
+	std::cout << stack.top() << std::endl;
+
 	stack.pop();
 
 	std::cout << stack.top() << std::endl;
