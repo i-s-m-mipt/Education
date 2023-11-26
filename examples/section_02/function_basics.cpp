@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <vector>
 
 [[nodiscard]] int f(int x); // note: forward declaration
 
@@ -37,6 +39,16 @@ void pass_big_object(const std::string & s) // good: constant reference
 	std::cout << s << std::endl;
 }
 
+void print_vector(const std::vector < int > & v) // good: no size required
+{
+	for (auto e : v)
+	{
+		std::cout << e << ' ';
+	}
+
+	std::cout << std::endl;
+}
+
 void set_code(int * code = nullptr) // good: nullptr as default argument
 {
 	[[maybe_unused]] auto local_code = (code ? *code : 1234);
@@ -46,9 +58,7 @@ void test_array(int * a, int size) // note: array size as additional argument
 {
 	for (auto i = 0; i < size; ++i)
 	{
-		std::cout << a[i];
-
-		std::cout << (i + 1 == size ? '\n' : ' ');
+		std::cout << a[i] << (i + 1 == size ? '\n' : ' ');
 	}
 }
 
@@ -117,6 +127,10 @@ int main()
 	test_references(x, y);
 
 	std::cout << x << ' ' << y << std::endl;
+
+	std::vector < int > v = { 1, 2, 3, 4, 5 };
+
+	print_vector(v); // good: no copy
 
 	const auto size = 5;
 
