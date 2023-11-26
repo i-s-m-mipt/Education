@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 class Shape
 {
@@ -87,17 +88,15 @@ int main()
 
 	s_ptr->print();
 
-	const auto size = 3;
-
 	Polygon p1;
 	Polygon p2;
 	Polygon p3;
 
-	Shape * pointers[size]{ &p1, &p2, &p3 };
+	std::vector < Shape * > shapes = { &p1, &p2, &p3 };
 
-	for (auto i = 0; i < size; ++i)
+	for (auto shape : shapes)
 	{
-		pointers[i]->print();
+		shape->print();
 	}
 
 	s_ptr = new Polygon;
@@ -125,7 +124,7 @@ int main()
 
 	Derived d;
 
-	Abstract_Base* ab_ptr = &d; // good: interface class
+	Abstract_Base * ab_ptr = &d; // good: interface class
 
 	ab_ptr->print();
 
