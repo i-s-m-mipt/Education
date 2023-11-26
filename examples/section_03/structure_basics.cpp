@@ -1,17 +1,20 @@
 #include <iostream>
+#include <vector>
 
 struct S // good: capital letter for user-defined types
 {
 	int a{};
 	int b{};
 	int c{ 4 };
-}; // note: semicolon is necessary
+
+}; // struct S
 
 struct Point
 {
 	double x = 0.0;
 	double y = 0.0;
-};
+
+}; // struct Point
 
 Point make_point(double x, double y)
 {
@@ -24,21 +27,6 @@ Point make_point(double x, double y)
 		return {}; // good: compact syntax, type deduction
 	}
 }
-
-struct Node; // note: forward declaration, cyclic dependence
-
-struct Link
-{
-//	Node nodes[2]; // error: no visible definition 
-
-	Node * left;  // note: declaration is enough
-	Node * right; // note: declaration is enough
-};
-
-struct Node
-{
-	Link links[2]; // note: definition required
-};
 
 int main()
 {
@@ -53,12 +41,7 @@ int main()
 
 //	S s7{ .b{ 2 }, .a{ 1 } }; // error: invalid initialization order
 
-	Point points[] =
-	{
-		{1.0, 1.0},
-		{2.0, 2.0},
-		{3.0, 3.0}
-	};
+	[[maybe_unused]] std::vector < Point > points = { {1.0, 2.0}, {3.0, 4.0} };
 
 	s1.a = 42;
 
