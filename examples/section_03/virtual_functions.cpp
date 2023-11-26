@@ -94,9 +94,9 @@ int main()
 
 	std::vector < Shape * > shapes = { &p1, &p2, &p3 };
 
-	for (auto shape : shapes)
+	for (std::size_t i = 0; i < shapes.size(); ++i)
 	{
-		shape->print();
+		shapes[i]->print();
 	}
 
 	s_ptr = new Polygon;
