@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <variant>
-#include <vector>
 
 struct S { explicit S([[maybe_unused]] int x) {} };
 
