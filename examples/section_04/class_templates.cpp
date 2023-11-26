@@ -1,68 +1,53 @@
 #include <iostream>
+#include <vector>
 
-template < typename T, auto N >
-class Stack
+template < typename T, typename C = std::vector < T > > class Stack
 {
 public:
-
-	using size_t = decltype(N);
-
-public:
-
-	T top() const;
-
-	void pop();
 
 	void push(T value);
 
-public:
+	[[nodiscard]] T top() const;
 
-	auto size() const { return m_size; }
+	void pop();
 
 private:
 
-	T m_array[N]{};
-	size_t m_size = 0;
+	C m_container; // note: internal storage
 
-}; // class Stack
+}; // template < typename T, typename C = std::vector < T > > class Stack
 
-template < typename T, auto N >
-T Stack < T, N > ::top() const
+template < typename T, typename C > void Stack < T, C > ::push(T value)
 {
-	return (m_size == 0 ? T() : m_array[m_size - 1]); // note: no errors handling
+	m_container.push_back(std::move(value));
 }
 
-template < typename T, auto N >
-void Stack < T, N > ::pop()
+template < typename T, typename C > [[nodiscard]] T Stack < T, C > ::top() const
 {
-	if (m_size > 0) --m_size; // note: no errors handling
+	return m_container.back(); // note: undefined behavior if empty
 }
 
-template < typename T, auto N >
-void Stack < T, N > ::push(T value)
+template < typename T, typename C > void Stack < T, C > ::pop()
 {
-	if (m_size < N) m_array[m_size++] = value; // note: no errors handling
+	m_container.pop_back(); // note: undefined behavior if empty
 }
 
-template < typename T1, typename T2 >
-struct Pair
+template < typename T1, typename T2 > struct Pair // note: see std::pair
 {
-	T1 first {};
-	T2 second{};
+	T1 x{};
+	T2 y{};
 
-}; // struct Pair
+}; // template < typename T1, typename T2 > struct Pair
 
-template < typename T >
-class Container
+template < typename T > class Container
 {
 public:
 
 	Container([[maybe_unused]] int count, [[maybe_unused]] const T & value) {}
 
-}; // class Container
+}; // template < typename T > class Container
 
-template < typename T1, typename T2 >
-class C // note: basic template
+template < typename T1, typename T2 > class C // note: basic template
 {
 public:
 
@@ -71,10 +56,9 @@ public:
 		std::cout << "template for T1, T2" << std::endl;
 	}
 
-}; // class C
+}; // template < typename T1, typename T2 > class C
 
-template < typename T >
-class C < T, T > // note: partial specialization for T, T
+template < typename T > class C < T, T > // note: partial specialization for T, T
 {
 public:
 
@@ -83,10 +67,9 @@ public:
 		std::cout << "partial specialization for T, T" << std::endl;
 	}
 
-}; // class C < T, T >
+}; // template < typename T > class C < T, T >
 
-template < typename T >
-class C < T, int > // note: partial specialization for T, int
+template < typename T > class C < T, int > // note: partial specialization for T, int
 {
 public:
 
@@ -95,10 +78,9 @@ public:
 		std::cout << "partial specialization for T, int" << std::endl;
 	}
 
-}; // class C < T, int >
+}; // template < typename T > class C < T, int >
 
-template < typename T1, typename T2 >
-class C < T1*, T2* > // note: partial specialization for T1*, T2*
+template < typename T1, typename T2 > class C < T1*, T2* > // note: partial specialization for T1*, T2*
 {
 public:
 
@@ -107,10 +89,9 @@ public:
 		std::cout << "partial specialization for T1*, T2*" << std::endl;
 	}
 
-}; // class C < T1*, T2* >
+}; // template < typename T1, typename T2 > class C < T1*, T2* >
 
-template <>
-class C < int, double > // note: full specialization for int, double
+template <> class C < int, double > // note: full specialization for int, double
 {
 public:
 
@@ -119,11 +100,11 @@ public:
 		std::cout << "full specialization for int, double" << std::endl;
 	}
 
-}; // class C < int, double >
+}; // template <> class C < int, double >
 
 int main()
 {
-	Stack < int, 10 > stack;
+	Stack < int > stack; // note: std::vector is used by default as an internal storage
 
 	stack.push(1);
 	stack.push(2);
