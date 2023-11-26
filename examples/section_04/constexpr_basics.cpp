@@ -1,4 +1,6 @@
 #include <iostream>
+#include <type_traits>
+#include <vector>
 
 constexpr int factorial(int n) // note: can be evaluated at compile-time
 {
@@ -31,18 +33,14 @@ consteval auto fibonacci(int n) // note: must be evaluated at compile-time
 	}
 	else
 	{
-		auto a = new int[n] { 1, 1 }; // note: dynamic allocation allowed
+		std::vector < int > v(n, 1); // note: dynamic allocation allowed
 
 		for (auto i = 2; i < n; ++i)
 		{
-			a[i] = a[i - 1] + a[i - 2];
+			v[i] = v[i - 1] + v[i - 2];
 		}
 
-		auto result = a[n - 1];
-
-		delete[] a; // good: no memory leak required at compile-time
-
-		return result;
+		return v.back();
 	}
 }
 
@@ -51,8 +49,6 @@ class C
 	static constexpr auto c = 42; // note: same as inline const
 
 }; // class C
-
-#include <type_traits>
 
 constexpr auto f([[maybe_unused]] int x)
 {
