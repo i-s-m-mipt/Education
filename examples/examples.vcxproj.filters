@@ -217,9 +217,6 @@
     <ClCompile Include="section_05\mixin_initializer.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="variadic_bases.cpp">
-      <Filter>examples\section_05</Filter>
-    </ClCompile>
     <ClCompile Include="section_07\errors_handling.cpp">
       <Filter>examples\section_07</Filter>
     </ClCompile>
@@ -258,6 +255,9 @@
     </ClCompile>
     <ClCompile Include="section_04\hybrid_durations.cpp">
       <Filter>examples\section_04</Filter>
+    </ClCompile>
+    <ClCompile Include="section_05\variadic_bases.cpp">
+      <Filter>examples\section_05</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
