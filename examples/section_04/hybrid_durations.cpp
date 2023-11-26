@@ -49,5 +49,14 @@ int main()
 		Duration < int, Ratio < 2, 5 > > (x) +
 		Duration < int, Ratio < 1, 7 > > (y)).value << std::endl;
 
+	[[maybe_unused]] decltype (x)  v = x;
+
+	[[maybe_unused]] decltype((x)) r = x; // note: reference type
+
+	const auto & rcx = x;
+
+	[[maybe_unused]]          auto  z1 = rcx;
+	[[maybe_unused]] decltype(auto) z2 = rcx; // note: no decay conversions
+
 	return 0;
 }
