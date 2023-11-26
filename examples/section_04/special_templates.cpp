@@ -1,16 +1,13 @@
 #include <iostream>
+#include <vector>
 
-template < typename T, auto N >
-class basic_stack {};
+template < typename T, typename C > class basic_stack {};
 
-template < typename T >
-using Stack = basic_stack < T, 1024 > ; // note: alias template
+template < typename T > using Stack = basic_stack < T, std::vector < T > > ;
 
-template < typename T >
-const T pi = T(3.141592); // note: variable template
+template < typename T > const T pi = T(3.141592);
 
-template < typename T >
-T area(T r)
+template < typename T > T area(T r)
 {
 	return pi < T > * r * r;
 }
