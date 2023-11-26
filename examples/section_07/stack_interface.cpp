@@ -2,23 +2,18 @@
 #include <vector>
 #include <stack>
 
-template < typename T, typename Container = std::vector < T > > class Stack
+template < typename T, typename C = std::vector < T > > class Stack
 {
 public:
 
-	[[nodiscard]]       T & top()       noexcept(noexcept(m_container.back()))
-	{ 
-		return m_container.back(); // note: undefined behavior if empty
-	}
-
-	[[nodiscard]] const T & top() const noexcept(noexcept(m_container.back()))
-	{
-		return m_container.back(); // note: undefined behavior if empty
-	}
-
-	void push(T value) 
+	void push(T value)
 	{
 		m_container.push_back(std::move(value));
+	}
+
+	[[nodiscard]] T top() noexcept(noexcept(m_container.back()))
+	{ 
+		return m_container.back(); // note: undefined behavior if empty
 	}
 
 	void pop() noexcept(noexcept(m_container.pop_back()))
@@ -30,9 +25,9 @@ public:
 
 private:
 
-	Container m_container;
+	C m_container;
 
-}; // template < typename T, typename Container = std::vector < T > > class Stack
+}; // template < typename T, typename C = std::vector < T > > class Stack
 
 int main()
 {
