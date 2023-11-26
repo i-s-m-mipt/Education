@@ -41,17 +41,14 @@ void pass_big_object(const std::string & s) // good: constant reference
 
 void print_vector(const std::vector < int > & v) // good: no size required
 {
-	for (auto e : v)
+	const auto size = v.size();
+
+	for (std::size_t i = 0; i < size; ++i)
 	{
-		std::cout << e << ' ';
+		std::cout << v[i] << (i + 1 == size ? '\n' : ' ');
 	}
 
 	std::cout << std::endl;
-}
-
-void set_code(int * code = nullptr) // good: nullptr as default argument
-{
-	[[maybe_unused]] auto local_code = (code ? *code : 1234);
 }
 
 void test_array(int * a, int size) // note: array size as additional argument
@@ -60,6 +57,11 @@ void test_array(int * a, int size) // note: array size as additional argument
 	{
 		std::cout << a[i] << (i + 1 == size ? '\n' : ' ');
 	}
+}
+
+void set_code(int * code = nullptr) // good: nullptr as default argument
+{
+	[[maybe_unused]] auto local_code = (code ? *code : 1234);
 }
 
 /*
