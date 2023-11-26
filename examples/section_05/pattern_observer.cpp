@@ -1,8 +1,11 @@
 #include <iostream>
+#include <vector>
 
 class Observer 
 {
 public:
+
+    virtual ~Observer() = default;
 
     virtual void update(double temperature) const = 0;
 
@@ -16,7 +19,7 @@ public:
 
     ~Weather_Station()
     {
-        for (auto i = 0; i < m_counter; ++i)
+        for (std::size_t i = 0; i < m_observers.size(); ++i)
         {
             delete m_observers[i]; // good: no memory leak
         }
@@ -33,7 +36,7 @@ public:
 
     void notify_all() const 
     { 
-        for (auto i = 0; i < m_counter; ++i)
+        for (std::size_t i = 0; i < m_observers.size(); ++i)
         {
             if (m_observers[i]) // good: verify if nullptr
             {
@@ -42,31 +45,16 @@ public:
         }
     }
 
-    [[nodiscard]] bool add_observer(Observer * observer)
+    void add_observer(Observer * observer)
     {
-        if (m_counter < max_observers)
-        {
-            m_observers[m_counter++] = observer;
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        m_observers.push_back(observer);
     }
-
-private:
-
-    static inline const int max_observers = 100;
 
 private:
 
     double m_temperature;
 
-    int m_counter = 0;
-
-    Observer * m_observers[max_observers]{};
+    std::vector < Observer * > m_observers;
 
 }; // class Weather_Station 
 
@@ -94,20 +82,13 @@ public:
 
 int main() 
 {
+    Weather_Station weather_station;
+
     Observer * observer_1 = new Display_1;
     Observer * observer_2 = new Display_2;
 
-    Weather_Station weather_station;
-
-    if (!weather_station.add_observer(observer_1)) 
-    {
-        delete observer_1; // good: no memory leak
-    }
-
-    if (!weather_station.add_observer(observer_2))
-    {
-        delete observer_2; // good: no memory leak
-    }
+    weather_station.add_observer(observer_1);
+    weather_station.add_observer(observer_2);
 
     weather_station.set_temperature(25.5);
     weather_station.set_temperature(24.8);
