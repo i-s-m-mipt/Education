@@ -1,43 +1,38 @@
 #include <cmath>
 #include <iostream>
-#include <numeric>
 #include <string>
 #include <utility>
+#include <vector>
 
 int main()
 {
-//	using namespace std; // bad: dangerous in big projects
-		
-	int x{};
-	int y{};
+//	using namespace std; // bad: dangerous in big projects, avoid
+	
+	std::cout << "Enter two integers separated by a space symbol: ";
 
-	std::cout << "Enter two numbers separated by a space symbol: ";
+	int x{}, y{}; // good: zero value initialized variables
 
-	std::cin >> x >> y;
+	std::cin >> x >> y; // note: chaining operators
 
 	std::cout << "You have entered " << x << " and " << y << std::endl;
 
-	std::string prompt = "Hello";
+	std::cout << "Enter string with your name: ";
 
-	std::string name{};
-
-	std::cout << "Enter your name in english: ";
+	std::string name; // note: comfortable for complex operations
 
 	std::cin >> name;
 
-	std::cout << prompt << ", " << name << std::endl;
+	std::cout << "Hello, " << name << std::endl;
 
-	std::cout << std::abs(-1.0)     << std::endl;
-	std::cout << std::sin(2.0)      << std::endl;
-	std::cout << std::sqrt(4.0)     << std::endl;
-	std::cout << std::pow(2.0, 3.0) << std::endl;
+	std::vector < int > v = { 1, 2, 3 }; // note: default container
 
-	std::cout << std::gcd(128, 360) << std::endl;
-	std::cout << std::lcm(14, 21)   << std::endl;
+	std::cout << "Vector size is " << v.size() << std::endl;
 
-	std::swap(x, y);
+	std::cout << "Square root of 4 is " << std::sqrt(4) << std::endl;
 
-	std::cout << "Now x = " << x << " and y = " << y << std::endl;
+	std::swap(x, y); // note: std::swap will be used in sorts
+
+	std::cout << "Now x is " << x << " and y is " << y << std::endl;
 
 	return 0;
 }

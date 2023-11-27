@@ -259,6 +259,9 @@
     <ClCompile Include="section_05\variadic_bases.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
+    <ClCompile Include="section_02\container_vector.cpp">
+      <Filter>examples\section_02</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
