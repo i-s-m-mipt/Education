@@ -7,7 +7,7 @@ constexpr int factorial(int n) // note: can be evaluated at compile-time
 	return (n < 2 ? 1 : n * factorial(n - 1));
 }
 
-consteval int combination(int m, int n) // note: must be evaluated at compile-time
+consteval auto combination(int m, int n) // note: must be evaluated at compile-time
 {
 	return factorial(n) / factorial(m) / factorial(n - m);
 }

@@ -1,6 +1,6 @@
 #include <iostream>
 
-template < int N, int D = 1 > class Ratio
+template < auto N, auto D = 1 > class Ratio
 {
 public:
 
@@ -9,7 +9,7 @@ public:
 
 	using type = Ratio < num, den > ; // note: num and den must be visible
 
-}; // template < int N, int D = 1 > class Ratio
+}; // template < auto N, auto D = 1 > class Ratio
 
 template < typename R1, typename R2 > class Add
 {
