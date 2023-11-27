@@ -3,7 +3,7 @@
 
 int main()
 {
-	const auto size = 10; // note: compile-time constant variable
+	const std::size_t size = 10; // note: compile-time constant variable
 
 	int a[size]{}; // good: zero initialized array
 
@@ -45,24 +45,24 @@ int main()
 
 	std::cout << "Enter array size <= 1024: ";
 
-	int n{};
+	std::size_t n{};
 
 	std::cin >> n;
 
 	std::cout << "Enter " << n << " integer values: ";
 
-	const auto buffer_size = 1024; // note: enough size
+	const std::size_t buffer_size = 1024; // note: enough size
 
 	int s[buffer_size]{};
 
-	for (auto i = 0; i < n; ++i)
+	for (std::size_t i = 0; i < n; ++i)
 	{
 		std::cin >> s[i];
 	}
 
-	for (auto i = 0; i < n - 1; ++i) // note: bubble sort
+	for (std::size_t i = 0; i < n - 1; ++i) // note: bubble sort
 	{
-		for (auto j = i + 1; j < n; ++j)
+		for (std::size_t j = i + 1; j < n; ++j)
 		{
 			if (s[i] > s[j])
 			{
@@ -71,7 +71,7 @@ int main()
 		}
 	}
 
-	for (auto i = 0; i < n; ++i)
+	for (std::size_t i = 0; i < n; ++i)
 	{
 		std::cout << s[i] << (i + 1 == n ? '\n' : ' ');
 	}

@@ -2,21 +2,21 @@
 
 int main()
 {
-	const auto size = 5;
+	const std::size_t size = 5;
 
-	for (auto i = 0; i < size; ++i) // note: clear counter
+	for (std::size_t i = 0; i < size; ++i) // note: clear counter
 	{
 		std::cout << "for 1: " << i << std::endl;
 	}
 
-	for (auto i = 0, j = 0; i < size; ++i, j += 2) // good: useful comma separator syntax
+	for (std::size_t i = 0, j = 0; i < size; ++i, j += 2) // good: useful comma separator syntax
 	{
 		std::cout << "for 2: " << i << ' ' << j << std::endl;
 	}
 
-//	for (auto i = 0; auto x = (i + 1) % size; ++i) {} // bad: declaration instead of condition
+//	for (std::size_t i = 0; auto x = (i + 1) % size; ++i) {} // bad: declaration instead of condition
 
-	for (auto i = size; i >= 0; --i)
+	for (std::size_t i = size; i >= 0; --i)
 	{
 		if (i % 2 == 0)
 		{
@@ -26,11 +26,11 @@ int main()
 		std::cout << "for 4: " << i << std::endl;
 	}
 
-	for (auto i = 0; i < size; ++i)
+	for (std::size_t i = 0; i < size; ++i)
 	{
 		std::cout << "for 5: ";
 
-		for (auto j = 0; j < size; ++j)
+		for (std::size_t j = 0; j < size; ++j)
 		{
 			if (j > i)
 			{
@@ -43,11 +43,11 @@ int main()
 		std::cout << std::endl;
 	}
 
-	for (auto i = 0; i < size; ++i)
+	for (std::size_t i = 0; i < size; ++i)
 	{
-		for (auto j = 0; j < size; ++j)
+		for (std::size_t j = 0; j < size; ++j)
 		{
-			for (auto k = 0; k < size; ++k)
+			for (std::size_t k = 0; k < size; ++k)
 			{
 				std::cout << "for 6: " << i << ' ' << j << ' ' << k << std::endl;
 

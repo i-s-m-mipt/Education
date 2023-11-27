@@ -4,9 +4,9 @@ template < typename T > class Counter
 {
 protected:
 
-	Counter()                             { ++m_counter; }
-	Counter(const Counter < T > &  other) { ++m_counter; }
-	Counter(      Counter < T > && other) { ++m_counter; }
+	Counter()                                              { ++m_counter; }
+	Counter([[maybe_unused]] const Counter < T > &  other) { ++m_counter; }
+	Counter([[maybe_unused]]       Counter < T > && other) { ++m_counter; }
 
 	~Counter() { --m_counter; }
 
@@ -19,7 +19,7 @@ public:
 
 private:
 
-	static inline auto m_counter = 0;
+	static inline std::size_t m_counter = 0;
 
 }; // template < typename T > class Counter
 

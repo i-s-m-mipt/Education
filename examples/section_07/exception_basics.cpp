@@ -9,14 +9,14 @@ class Error : public std::exception // good: inherited from std::exception
 {
 public:
 
-	explicit Error(const std::string & message, int code) : 
-		std::exception(message.c_str()), m_code(code) {}
+	explicit Error(const std::string & message, int error_code) : 
+		std::exception(message.c_str()), m_error_code(error_code) {}
 
 	const char * what() const override { return "error"; }
 
 private:
 
-	int m_code;
+	int m_error_code;
 
 }; // class Error : public std::exception
 

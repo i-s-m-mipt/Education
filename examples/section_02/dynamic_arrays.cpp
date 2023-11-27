@@ -9,7 +9,7 @@ int main()
 
 	delete ptr_int; // good: no dynamic variable memory leak
 
-	auto size = 10;
+	std::size_t size = 10;
 
 	auto ptr_array = new int[size]{}; // good: zero initialized dynamic array
 
@@ -17,11 +17,9 @@ int main()
 
 	ptr_array[m] = 42;
 
-	for (auto i = 0; i < size; ++i)
+	for (std::size_t i = 0; i < size; ++i)
 	{
-		std::cout << ptr_array[i];
-
-		std::cout << (i + 1 == size ? '\n' : ' ');
+		std::cout << ptr_array[i] << (i + 1 == size ? '\n' : ' ');
 	}
 
 	delete[] ptr_array; // good: no dynamic array memory leak
@@ -30,7 +28,7 @@ int main()
 
 	std::cout << "Enter array size: ";
 
-	int n{}; // note: runtime non-constant variable
+	std::size_t n{}; // note: runtime non-constant variable
 
 	std::cin >> n;
 
@@ -38,14 +36,14 @@ int main()
 
 	auto s = new int[n];
 
-	for (auto i = 0; i < n; ++i)
+	for (std::size_t i = 0; i < n; ++i)
 	{
 		std::cin >> s[i];
 	}
 
-	for (auto i = 0; i < n - 1; ++i) // note: bubble sort
+	for (std::size_t i = 0; i < n - 1; ++i) // note: bubble sort
 	{
-		for (auto j = i + 1; j < n; ++j)
+		for (std::size_t j = i + 1; j < n; ++j)
 		{
 			if (s[i] > s[j])
 			{
@@ -54,7 +52,7 @@ int main()
 		}
 	}
 
-	for (auto i = 0; i < n; ++i)
+	for (std::size_t i = 0; i < n; ++i)
 	{
 		std::cout << s[i] << (i + 1 == n ? '\n' : ' ');
 	}

@@ -77,11 +77,11 @@ private:
 
 }; // class Cluster : public Computer
 
-[[nodiscard]] auto make_cluster(int size)
+[[nodiscard]] auto make_cluster(std::size_t size)
 {
     auto cluster = new Cluster;
 
-    for (auto i = 0; i < size; ++i)
+    for (std::size_t i = 0; i < size; ++i)
     {
         cluster->add_computer(new Server);
     }
@@ -91,11 +91,11 @@ private:
 
 int main()
 {
-    const auto size = 4;
+    const std::size_t size = 4;
 
     auto super_cluster = new Cluster;
 
-    for (auto i = 0; i < size; ++i)
+    for (std::size_t i = 0; i < size; ++i)
     {
         super_cluster->add_computer(make_cluster(size * 2));
     }

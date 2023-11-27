@@ -5,7 +5,6 @@ class Container
 public:
 
 	using data_t = int;
-	using size_t = int;
 
 public:
 
@@ -14,7 +13,7 @@ public:
 		std::cout << "default constructor" << std::endl;
 	}
 
-	Container(size_t size) : m_size(size)
+	Container(std::size_t size) : m_size(size)
 	{
 		std::cout << "main constructor" << std::endl;
 
@@ -27,7 +26,7 @@ public:
 
 		m_data = new data_t[m_size];
 
-		for (size_t i = 0; i < m_size; ++i) 
+		for (std::size_t i = 0; i < m_size; ++i)
 		{
 			m_data[i] = other.m_data[i]; // note: deep copy
 		}
@@ -128,8 +127,7 @@ public:
 
 private:
 
-	data_t * m_data;
-	size_t   m_size;
+	data_t * m_data; std::size_t m_size;
 
 }; // class Container
 

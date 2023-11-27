@@ -17,8 +17,8 @@ private:
 
 public: // good: deleted special member functions are public
 
-    Singleton            (const Singleton & other) = delete;
-    Singleton & operator=(const Singleton & other) = delete;
+    Singleton            ([[maybe_unused]] const Singleton & other) = delete;
+    Singleton & operator=([[maybe_unused]] const Singleton & other) = delete;
 
 public:
 

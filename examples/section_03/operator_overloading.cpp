@@ -5,11 +5,7 @@ class Ratio
 {
 public:
 
-	using int_t = int;
-
-public:
-
-	/*explicit*/ Ratio(int_t n = 0, int_t d = 1) : // good: no explicit constructor
+	/*explicit*/ Ratio(int n = 0, int d = 1) : // good: no explicit constructor
 		m_numerator(n), m_denominator(d) 
 	{
 		if (m_denominator == 0) // note: primitive error handling
@@ -133,8 +129,8 @@ public:
 
 private:
 
-	int_t m_numerator;
-	int_t m_denominator;
+	int m_numerator;
+	int m_denominator;
 
 }; // class Ratio
 

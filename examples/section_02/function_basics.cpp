@@ -51,9 +51,9 @@ void print_vector(const std::vector < int > & v) // good: no size required
 	std::cout << std::endl;
 }
 
-void test_array(int * a, int size) // note: array size as additional argument
+void test_array(int * a, std::size_t size) // note: array size as additional argument
 {
-	for (auto i = 0; i < size; ++i)
+	for (std::size_t i = 0; i < size; ++i)
 	{
 		std::cout << a[i] << (i + 1 == size ? '\n' : ' ');
 	}
@@ -134,7 +134,7 @@ int main()
 
 	print_vector(v); // good: no copy
 
-	const auto size = 5;
+	const std::size_t size = 5;
 
 	int array_1[size]{ 1, 2, 3, 4, 5 };
 
