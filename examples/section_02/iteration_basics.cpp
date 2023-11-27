@@ -16,7 +16,9 @@ int main()
 
 //	for (std::size_t i = 0; auto x = (i + 1) % size; ++i) {} // bad: declaration instead of condition
 
-	for (std::size_t i = size; i >= 0; --i)
+//	for (std::size_t i = size; i >= 0; --i); // error: infinite loop, two's complement
+
+	for (std::size_t i = size; i >= 1; --i)
 	{
 		if (i % 2 == 0)
 		{
