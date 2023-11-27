@@ -2,10 +2,19 @@
 
 int main()
 {
-	bool   b = true;
-	char   c =  'a';
-	int    i =   42;
-	double d = 3.14;
+	bool   b = true; std::cout << sizeof(b) << std::endl; // note: 1 byte(s) usually
+	char   c =  'a'; std::cout << sizeof(c) << std::endl; // note: 1 byte(s) exactly
+	short  s =   42; std::cout << sizeof(s) << std::endl; // note: 2 byte(s) at least
+	int    i =   42; std::cout << sizeof(i) << std::endl; // note: 2 byte(s) at least, 4 byte(s) usually
+	long   l =   42; std::cout << sizeof(l) << std::endl; // note: 4 byte(s) at least
+	float  f = 3.1f; std::cout << sizeof(f) << std::endl; // note: 4 byte(s) usually, single precision
+	double d = 3.14; std::cout << sizeof(d) << std::endl; // note: 8 byte(s) usually, double precision
+
+	long long   ll =   42; std::cout << sizeof(ll) << std::endl; // note: 8 byte(s) at least
+	long double ld = 3.14; std::cout << sizeof(ld) << std::endl; // note: 8 byte(s) usually, can be 12 or 16 byte(s)
+
+	[[maybe_unused]]   signed int si = 42; // note: obsolete here, int signed by default
+	[[maybe_unused]] unsigned int ui = 42; // note: non-negative values, may be dangerous
 
 	[[maybe_unused]] int variable = 0; // good: suppressed warning
 
@@ -53,6 +62,8 @@ int main()
 	[[maybe_unused]] my_type e = 2.72;
 
  //	typedef double my_old_type; // bad: old style type alias
+
+	[[maybe_unused]] const std::size_t size = 10; // good: used with arrays
 
 	return 0;
 }
