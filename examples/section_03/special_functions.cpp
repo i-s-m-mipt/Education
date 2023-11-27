@@ -1,4 +1,5 @@
 #include <iostream>
+#include <type_traits>
 
 class Container
 {
@@ -142,15 +143,21 @@ void swap(Container & x, Container & y) // good: useful free function
 
 int main()
 {
-	Container c1;
-	Container c2(10);
+	Container c1; // note: default constructor
 
-	Container c3(c2);
+	Container c2(10); // note: main constructor
+
+	Container c3(c2); // note: copy constructor
+
+	c1 = c3; // note: copy assignment operator
 	
-	[[maybe_unused]] Container c4(static_cast < Container && > (c2)); // note: xvalue
+	Container c4(static_cast < Container && > (c2)); // note: move constructor
 
-	c1 = c3;
-	c1 = Container(10);
+	[[maybe_unused]] Container c5(std::move(c4)); // note: move constructor
+
+	c1 = Container(10); // note: move assignment operator
+
+	c1 = std::move(c3); // note: move assignment operator
 
 	return 0;
 }
