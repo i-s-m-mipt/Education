@@ -1,11 +1,10 @@
-#include <exception>
-#include <stdexcept>
+#include <detail.hpp>
+#include <logger.hpp>
 
-#include "logger/logger.hpp"
 #include "system/system.hpp"
 
-using Logger = solution::shared::Logger;
-using System = solution::system::System;
+using Logger = enclave::shared::Logger;
+using System = enclave::system::System;
 
 int main(int argc, char ** argv)
 {
@@ -13,7 +12,7 @@ int main(int argc, char ** argv)
 
 	try
 	{
-		System().run();
+		System(argc, argv).run();
 
 		return EXIT_SUCCESS;
 	}
