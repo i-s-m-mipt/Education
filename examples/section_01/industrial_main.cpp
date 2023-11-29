@@ -19,13 +19,11 @@ int main(int argc, char ** argv)
 	catch (const std::exception & exception)
 	{
 		LOGGER_WRITE_FATAL(logger, exception.what());
-
-		return EXIT_FAILURE;
 	}
 	catch (...)
 	{
 		LOGGER_WRITE_FATAL(logger, "unknown exception");
-
-		return EXIT_FAILURE;
 	}
+
+	return EXIT_FAILURE;
 }
