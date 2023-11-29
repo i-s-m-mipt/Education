@@ -10,11 +10,13 @@ int main()
 	float  f = 3.1f; std::cout << sizeof(f) << std::endl; // note: 4 byte(s) usually, single precision
 	double d = 3.14; std::cout << sizeof(d) << std::endl; // note: 8 byte(s) usually, double precision
 
-	long long   ll =   42; std::cout << sizeof(ll) << std::endl; // note: 8 byte(s) at least
-	long double ld = 3.14; std::cout << sizeof(ld) << std::endl; // note: 8 byte(s) usually, can be 12 or 16 byte(s)
+	long long    ll =   42; std::cout << sizeof(ll) << std::endl; // note: 8 byte(s) at least
+	long double  ld = 3.14; std::cout << sizeof(ld) << std::endl; // note: 8 byte(s) usually, can be 12 or 16 byte(s)
 
-	[[maybe_unused]]   signed int si = 42; // note: obsolete here, int signed by default
-	[[maybe_unused]] unsigned int ui = 42; // note: non-negative values, may be dangerous
+	signed   int si =  -42; std::cout << sizeof(si) << std::endl; // note: same as int in size, signed by default
+	unsigned int ui =  +42; std::cout << sizeof(ui) << std::endl; // note: same as int in size
+
+//	unsigned long long int ulli = 42ull; // bad: looks like Hungarian notation
 
 	[[maybe_unused]] int variable = 0; // good: suppressed warning
 
