@@ -1,4 +1,5 @@
 #include <iostream>
+#include <numbers>
 
 enum class Color
 {
@@ -60,6 +61,8 @@ int main()
 	State s_2 = gamma;
 
 	g(s_1 | s_2);
+
+	std::cout << std::numbers::pi << std::endl; // good: standard constants
 	
 	return 0;
 }
