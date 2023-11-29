@@ -262,6 +262,9 @@
     <ClCompile Include="section_02\container_vector.cpp">
       <Filter>examples\section_02</Filter>
     </ClCompile>
+    <ClCompile Include="section_08\advanced_constants.cpp">
+      <Filter>examples\section_08</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
