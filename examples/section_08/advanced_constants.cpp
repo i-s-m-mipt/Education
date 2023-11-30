@@ -3,13 +3,13 @@
 
 enum class Color
 {
-	R, G, B, quantity,
+	R, G, B, quantity, // good: quantity as limit
 
 }; // enum class Color
 
 void f(Color c)
 {
-	switch (c)
+	switch (c) // good: enumerators provide readability
 	{
 	case Color::R: { std::cout << "R"; break; }
 	case Color::G: { std::cout << "G"; break; }
@@ -26,7 +26,7 @@ void f(Color c)
 
 using underlying_t = char;
 
-enum class Message : underlying_t // note: more compact
+enum class Message : underlying_t // note: less size
 {
 	empty, debug, error, fatal,
 
@@ -48,11 +48,9 @@ void g(underlying_t s)
 
 int main()
 {
-	using integer_t = unsigned int;
+	std::cout << "Enter color number: "; unsigned int c{};
 
-	std::cout << "Enter color number: "; integer_t c{};
-
-	if (std::cin >> c; c < static_cast < integer_t > (Color::quantity))
+	if (std::cin >> c; c < static_cast < unsigned int > (Color::quantity))
 	{
 		f(static_cast < Color > (c));
 	}
