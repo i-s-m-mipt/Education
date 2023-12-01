@@ -13,34 +13,18 @@ public:
 
 	using clock_t = std::chrono::steady_clock;
 
-public:
-
 	explicit Timer(std::string name) : m_name(std::move(name)), m_begin(clock_t::now())
 	{
-		std::cout << "Timer " << m_name << " launched ... " << std::endl << std::endl;
+		std::cout << "Timer " << m_name << " launched ... " << std::endl;
 	}
 
-	~Timer() noexcept
-	{
-		try
-		{
-			elapsed();
-		}
-		catch (...)
-		{
-			std::abort();
-		}
-	}
-
-public:
+	~Timer() { elapsed(); }
 
 	void elapsed() const
 	{
-		auto end = clock_t::now();
-
 		std::cout << "Timer " << m_name << " elapsed " << std::setprecision(6) << std::fixed <<
 			static_cast < double > (std::chrono::duration_cast < std::chrono::microseconds >
-				(end - m_begin).count()) / 1'000'000.0 << " (seconds)" << std::endl << std::endl;
+				(clock_t::now() - m_begin).count()) / 1'000'000.0 << " (seconds)" << std::endl;
 	}
 
 private:
@@ -48,7 +32,8 @@ private:
 	const std::string m_name;
 
 	const clock_t::time_point m_begin;
-};
+
+}; // class Timer
 
 auto test_cpp_v1()
 {
