@@ -1,4 +1,10 @@
-import std;
+#include <cstdint>
+#include <iostream>
+
+std::uint16_t middle(std::uint32_t x)
+{
+    return (x >> 8) & 0xffff;
+}
 
 int main()
 {

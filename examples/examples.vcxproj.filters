@@ -265,6 +265,18 @@
     <ClCompile Include="section_08\advanced_constants.cpp">
       <Filter>examples\section_08</Filter>
     </ClCompile>
+    <ClCompile Include="section_08\bitwise_operations.cpp">
+      <Filter>examples\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="section_08\random_generation.cpp">
+      <Filter>examples\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="section_08\floating_point_types.cpp">
+      <Filter>examples\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="section_08\chrono_management.cpp">
+      <Filter>examples\section_08</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
