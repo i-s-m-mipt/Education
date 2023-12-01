@@ -4,9 +4,32 @@
 #include <string>
 #include <vector>
 
+double calculate_pi()
+{
+	std::random_device device; // note: make seed only once
+
+	std::mt19937 engine(device());
+
+	std::uniform_real_distribution distribution(0.0, 1.0); // note: [a; b)
+
+	const std::size_t size = 10'000'000; // note: try in release mode
+
+	std::size_t counter = 0;
+
+	for (std::size_t i = 0; i < size; ++i)
+	{
+		auto x = distribution(engine);
+		auto y = distribution(engine);
+
+		if (x * x + y * y < 1.0) ++counter;
+	}
+
+	return 4.0 * counter / size;
+}
+
 int main()
 {
-	std::random_device device;
+	std::random_device device; // note: implementation defined entropy source
 
 	std::mt19937 engine(device());
 
@@ -29,6 +52,8 @@ int main()
 	{
 		std::cout << std::string(values[i] / 100, '*') << std::endl;
 	}
+
+	std::cout << "pi = " << calculate_pi() << std::endl;
 
 	return 0;
 }
