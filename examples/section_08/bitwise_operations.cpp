@@ -11,6 +11,11 @@ constexpr std::uint16_t middle(std::uint32_t x)
     return (x >> 8) & 0xffff;
 }
 
+template < typename T > auto distance_in_bytes(T * first, T * last)
+{
+    return (reinterpret_cast < char * > (last) - reinterpret_cast < char * > (first));
+}
+
 struct Datetime
 {
     unsigned int milli  : 10;
@@ -72,6 +77,22 @@ int main()
 
     byte |= std::byte{ 0b1111'0000 }; assert(std::to_integer < int > (byte) == 0b1111'1010);
     byte &= std::byte{ 0b1111'0000 }; assert(std::to_integer < int > (byte) == 0b1111'0000);
+
+    auto ptr_int = &x;
+
+    std::cout << std::dec << *ptr_int << std::endl;
+
+    auto ptr_char = reinterpret_cast < char * > (ptr_int); // note: very dangerous
+
+    std::cout << *ptr_char << std::endl;
+
+    const std::size_t size = 10;
+
+    int a[size]{};
+
+    assert(&a[size - 1] - &a[0] == 9); // note: pointer arithmetic
+
+    assert(distance_in_bytes(&a[0], &a[size - 1]) == 36);
 
     return 0;
 }

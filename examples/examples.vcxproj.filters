@@ -277,6 +277,9 @@
     <ClCompile Include="section_08\chrono_management.cpp">
       <Filter>examples\section_08</Filter>
     </ClCompile>
+    <ClCompile Include="section_08\smsd_driver_test.cpp">
+      <Filter>examples\section_08</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
