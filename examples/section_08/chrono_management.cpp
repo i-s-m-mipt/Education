@@ -15,6 +15,17 @@ template < typename C > void verify(const std::string & name)
 	std::cout << std::endl;
 }
 
+struct kilometers // note: user-defined units
+{ 
+	unsigned long long n; 
+
+}; // struct kilometers
+
+constexpr auto operator""_km(unsigned long long km)
+{
+	return kilometers{ km };
+}
+
 class Timer
 {
 public:
@@ -61,6 +72,8 @@ int main()
 	using namespace std::literals;
 
 	[[maybe_unused]] auto duration_3 = 42ms; // note: standard literal
+
+	[[maybe_unused]] auto distance = 88_km; // note: user-defined literal
 
 	auto result = std::chrono::hours(100) + std::chrono::minutes(200);
 
