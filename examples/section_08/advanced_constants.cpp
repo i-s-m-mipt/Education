@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <iostream>
 
 enum class Color
@@ -23,7 +24,7 @@ void f(Color c)
 	std::cout << std::endl;
 }
 
-using underlying_t = char;
+using underlying_t = std::uint16_t;
 
 enum class Message : underlying_t // note: less size
 {
