@@ -81,7 +81,7 @@ int main()
 
 	std::cout << std::chrono::seconds(result) << std::endl;
 
-	std::cout << std::chrono::duration_cast <std::chrono::days > (result) << std::endl;
+	std::cout << std::chrono::duration_cast < std::chrono::days > (result) << std::endl;
 
 	{
 		Timer timer("test");
