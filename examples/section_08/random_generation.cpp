@@ -53,7 +53,7 @@ int main()
 		std::cout << std::string(values[i] / 100, '*') << std::endl;
 	}
 
-	std::cout << "pi = " << calculate_pi() << std::endl;
+	std::cout << "pi = " << calculate_pi() << std::endl; // note: monte-carlo method
 
 	return 0;
 }

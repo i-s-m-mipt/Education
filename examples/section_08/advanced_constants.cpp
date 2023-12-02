@@ -58,7 +58,7 @@ int main()
 	State s_1 = alpha;
 	State s_2 = gamma;
 
-	g(s_1 | s_2);
+	g(s_1 | s_2); // good: one argument instead many flags
 	
 	return 0;
 }
