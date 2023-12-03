@@ -1,4 +1,5 @@
 #include <cmath>
+#include <iomanip>
 #include <iostream>
 #include <random>
 #include <string>
@@ -50,6 +51,8 @@ int main()
 
 	for (std::size_t i = 0; i < values.size(); ++i)
 	{
+		std::cout << std::setw(2) << std::right << std::setfill(' ') << i << " : ";
+
 		std::cout << std::string(values[i] / 100, '*') << std::endl;
 	}
 
