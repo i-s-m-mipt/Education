@@ -36,8 +36,8 @@ int main()
 	[[maybe_unused]] S s3{ 1, 2, 3 }; // note: a = 1, b = 2, c = 3
 	[[maybe_unused]] S s4{ 1, 2 };    // note: a = 1, b = 2, c = 4
 
-	[[maybe_unused]] S s5{ .a{ 1 }, .c{ 3 } }; // note: a = 1, b = 0, c = 3
-	[[maybe_unused]] S s6{ .a = 1, .c = 3 };   // note: a = 1, b = 0, c = 3
+	[[maybe_unused]] S s5{ .a { 1 }, .c { 3 } }; // note: a = 1, b = 0, c = 3
+	[[maybe_unused]] S s6{ .a = 1,   .c = 3   }; // note: a = 1, b = 0, c = 3
 
 //	S s7{ .b{ 2 }, .a{ 1 } }; // error: invalid initialization order
 
