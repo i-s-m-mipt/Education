@@ -124,15 +124,9 @@ void Date::print_v2() const // good: large function is defined outside the class
 	if (m_year <  100) std::cout << '0';
 	if (m_year <   10) std::cout << '0';
 	 
-	std::cout << m_year << separator;
-
-	if (m_month < 10) std::cout << '0';
-
-	std::cout << m_month << separator;
-
-	if (m_day < 10) std::cout << '0';
-
-	std::cout << m_day << std::endl;
+	std::cout << m_year  << separator; if (m_month < 10) std::cout << '0';
+	std::cout << m_month << separator; if (m_day   < 10) std::cout << '0';
+	std::cout << m_day   << std::endl;
 }
 
 int main()
@@ -150,10 +144,12 @@ int main()
 
 	[[maybe_unused]] const Date c_date;
 
+	c_date.print_v2();
+
 //	c_date.set_year(2023); // error: non-constant member function
 
 	Date date_1;
-	Date date_2(2023, 19, 9);
+	Date date_2(2023, 9, 19);
 
 //	Date date_3(); // bad: most vexing parse, not an instance of the class
 
