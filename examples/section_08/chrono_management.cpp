@@ -41,9 +41,9 @@ public:
 
 	void elapsed() const
 	{
-		std::cout << "Timer " << m_name << " elapsed " << std::setprecision(6) << std::fixed <<
-			static_cast < double > (std::chrono::duration_cast < std::chrono::microseconds >
-				(clock_t::now() - m_begin).count()) / 1'000'000.0 << " (seconds)" << std::endl;
+		std::cout << "Timer " << m_name << " elapsed " << std::setprecision(6) << 
+			std::fixed << std::chrono::duration_cast < std::chrono::microseconds > (
+				clock_t::now() - m_begin).count() / 1'000'000.0 << " (seconds)" << std::endl;
 	}
 
 private:
