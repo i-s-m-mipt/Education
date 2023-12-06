@@ -4,7 +4,7 @@ class Date // note: pay attention to the order of class members
 {
 public: // good: public members first
 
-	using integer_t = int;
+	using integer_t = unsigned int;
 
 public:
 
@@ -85,7 +85,7 @@ public:
 
 	void set_year(integer_t year) // good: setter with additional actions
 	{
-		m_year = (year < 0 ? 0 : year > max_year ? max_year : year);
+		m_year = (year > max_year ? max_year : year);
 	}
 
 	void set_year_from_date(const Date & date)
@@ -102,11 +102,11 @@ public:
 
 public:
 
-	static inline const int max_year = 9999; // note: common for all instances
+	static inline const integer_t max_year = 9999; // note: common for all instances
 
 private:
 
-	static inline int counter = 0;
+	static inline std::size_t counter = 0;
 
 private: // good: private members last
 
