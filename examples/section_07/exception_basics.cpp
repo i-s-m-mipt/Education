@@ -10,7 +10,7 @@ class Error : public std::exception // good: inherited from std::exception
 public:
 
 	explicit Error(const std::string & message, int error_code) : 
-		std::exception(message.c_str()), m_error_code(error_code) {}
+		std::exception(message.c_str()), m_error_code(error_code) {} // note: Visual C++
 
 	const char * what() const override { return "error"; }
 
