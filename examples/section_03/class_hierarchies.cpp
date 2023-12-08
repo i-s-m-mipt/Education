@@ -17,6 +17,11 @@ public:
 		std::cout << "person" << std::endl;
 	}
 
+	void print_person() const
+	{
+		std::cout << "only person" << std::endl;
+	}
+
 public:
 
 	void f([[maybe_unused]] int    x) const {}
@@ -25,7 +30,7 @@ public:
 
 protected:
 
-	const auto & name() const // good: return big object by constant reference
+	const auto & get_name() const // good: return big object by constant reference
 	{
 		return m_name;
 	}
@@ -43,6 +48,10 @@ public:
 	Employee(const std::string & name, int salary) : Person(name), m_salary(salary)
 	{
 		std::cout << "employee " << name << " constructed" << std::endl;
+
+//		std::cout << m_name << std::endl; // error: private member
+
+		std::cout << get_name() << std::endl;
 	}
 
 public:
@@ -56,7 +65,7 @@ public:
 		Person::print();
 	}
 
-	using Person::name; // note: change access specifier to public
+	using Person::get_name; // note: change access specifier to public
 
 private:
 
@@ -139,6 +148,8 @@ int main()
 	Manager manager("Ivan", 100000, 10);
 
 	manager.print();
+
+	manager.print_person();
 
 	Derived_1 d1;
 
