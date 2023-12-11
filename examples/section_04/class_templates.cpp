@@ -1,3 +1,4 @@
+#include <deque>
 #include <iostream>
 #include <vector>
 
@@ -104,6 +105,8 @@ public:
 
 int main()
 {
+	[[maybe_unused]] Stack < double, std::deque < double > > deque_stack;
+
 	Stack < int > stack; // note: std::vector is used by default as an internal storage
 
 	stack.push(1);
@@ -122,7 +125,7 @@ int main()
 
 	[[maybe_unused]] Container c(10, 1.0); // note: generated deduction guide for aggregate
 
-	C < char,   double > ().f(); // note: template for T1, T2
+	C < char,   double > ().f(); // note: basic template for T1, T2
 	C < char,   char   > ().f(); // note: partial specialization for T, T
 	C < double, int    > ().f(); // note: partial specialization for T, int
 	C < int * , char * > ().f(); // note: partial specialization for T1*, T2*
