@@ -48,6 +48,17 @@ public:
 }; // class Rectangle : public Polygon
 */
 
+class Ellipse : public Shape // note: not final class in hierarchy
+{
+public:
+
+	void print() const override // note: not final function in hierarchy
+	{
+		std::cout << "Ellipse" << std::endl;
+	}
+
+}; // class Ellipse : public Shape
+
 class Abstract_Base // note: interface class like in Java
 {
 public:
@@ -84,15 +95,16 @@ int main()
 
 	Shape * s_ptr = &p; // note: works with pointers and references
 
-//	A a = b; // bad: object slicing
+//	Shape s = p; // bad: object slicing
 
 	s_ptr->print();
 
 	Polygon p1;
 	Polygon p2;
-	Polygon p3;
+	Ellipse e1;
+	Ellipse e2;
 
-	std::vector < Shape * > shapes = { &p1, &p2, &p3 };
+	std::vector < Shape * > shapes = { &p1, &p2, &e1, &e2 };
 
 	for (std::size_t i = 0; i < shapes.size(); ++i)
 	{
@@ -111,7 +123,7 @@ int main()
 
 	delete s_ptr;
 
-	s_ptr = new Shape;
+	s_ptr = new Ellipse;
 
 	auto p3_ptr = dynamic_cast < Polygon * > (s_ptr); // note: prefer virtual functions instead of casts
 
