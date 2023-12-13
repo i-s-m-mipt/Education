@@ -24,11 +24,11 @@ public:
 
 }; // class Polygon
 
-class Decorator : public Shape // note: abstract decorator
+class Decorated_Shape : public Shape // note: abstract decorator
 {
 public:
 
-    explicit Decorator(Shape * shape): m_shape(shape) 
+    explicit Decorated_Shape(Shape * shape): m_shape(shape)
     {
         if (!m_shape) // good: verify if nullptr
         {
@@ -38,33 +38,31 @@ public:
 
 public:
 
-    auto shape() const { return m_shape; }
-
     std::string description() const override 
     { 
         return m_shape->description(); 
     }
 
-private:
+protected:
 
     Shape * m_shape;
 
-}; // class Decorator : public Shape 
+}; // class Decorated_Shape : public Shape 
 
-class Colored_Shape : public Decorator // note: concrete decorator
+class Colored_Shape : public Decorated_Shape // note: concrete decorator
 {
 public:
 
-    explicit Colored_Shape(Shape * shape) : Decorator(shape) {}
+    explicit Colored_Shape(Shape * shape) : Decorated_Shape(shape) {}
 
 public:
 
     std::string description() const override 
     { 
-        return shape()->description() + " with Color"; 
+        return m_shape->description() + " with Color"; 
     }
 
-}; // class Colored_Shape : public Decorator
+}; // class Colored_Shape : public Decorated_Shape
 
 int main()
 {
