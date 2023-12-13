@@ -12,6 +12,8 @@ public:
 
 	void pop();
 
+	auto size() const { return m_container.size(); }
+
 private:
 
 	C m_container; // note: internal storage
