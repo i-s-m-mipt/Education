@@ -36,7 +36,8 @@ public:
 private:
 
 	const Fahrenheit_Sensor & m_sensor;
-};
+
+}; // class Adapter : public Sensor
 
 int main()
 {
