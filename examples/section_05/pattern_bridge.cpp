@@ -32,6 +32,8 @@ public:
 
     explicit Shape(const Drawing_API & drawing_API) : m_drawing_API(drawing_API) {}
 
+    virtual ~Shape() = default;
+
     virtual void draw() const = 0;
 
 protected:
