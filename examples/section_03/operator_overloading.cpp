@@ -199,6 +199,8 @@ int main()
 	(r4 /= r3).print();
 //	(10 += r4).print(); // error: += not defined for int
 
+	r4.operator+=(r1).print(); // note: function-like style
+
 	(++r4).print();
 	(--r4).print();
 	(r4++).print();
@@ -209,6 +211,8 @@ int main()
 	(r4 * r3).print();
 	(r4 / r2).print();
 //	(10 / 10).print(); // error: print not defined for int
+
+	operator+(r4, r1).print(); // note: function-like style
 
 	std::cout << (r3 < r4) << std::endl;
 	std::cout << (r3 > r4) << std::endl;
