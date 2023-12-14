@@ -1,4 +1,4 @@
-import std;
+#include <iostream>
 
 class A
 {
@@ -11,7 +11,8 @@ public:
 private:
 
 	int m_data = 42;
-};
+
+}; // class A
 
 void print(const A & a)
 {
@@ -29,7 +30,8 @@ public:
 private:
 
 	int m_data = 42;
-};
+
+}; // class C
 
 class B
 {
@@ -45,7 +47,8 @@ public:
 private:
 
 	int m_data = 42;
-};
+
+}; // class B
 
 void C::print(const B & b) const
 {
