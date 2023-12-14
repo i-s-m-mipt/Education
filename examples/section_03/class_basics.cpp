@@ -63,7 +63,7 @@ public:
 	{
 //		m_year = 2023; // error: const function
 
-		std::cout << m_year << '/' << m_month << '/' << m_day << std::endl;
+		std::cout << prompt << m_year << '/' << m_month << '/' << m_day << std::endl;
 	}
 
 	void print_v2() const;
@@ -115,9 +115,11 @@ public:
 
 	static inline const integer_t max_year = 9999; // note: common for all instances
 
+	static inline const std::string prompt = "date: "; // note: in-class definition
+
 private:
 
-	static inline std::size_t counter = 0;
+	static inline std::size_t counter = 0; // note: in-class definition for non-const
 
 private: // good: private members last
 
@@ -135,6 +137,8 @@ private:
 
 void Date::print_v2() const // good: large function is defined outside the class
 {
+	std::cout << prompt;
+
 	const auto separator = '/';
 
 	if (m_year < 1000) std::cout << '0';
