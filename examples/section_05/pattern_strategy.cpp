@@ -6,8 +6,6 @@ public:
 
     virtual ~Compression() = default;
 
-public:
-
     virtual void compress() const = 0;
 
 }; // class Compression
@@ -57,6 +55,8 @@ public:
         }
     }
 
+    ~Compressor() { delete m_compression; } // good: no memory leak
+
 public:
 
     void compress() const { m_compression->compress(); }
@@ -69,13 +69,7 @@ private:
 
 int main()
 {
-    Compression * compression = new ZIP_Compression;
-
-    Compressor compressor(compression); // note: choose algorithm
-
-    compressor.compress();
-
-    delete compression; // good: no memory leak
+    Compressor(new ZIP_Compression).compress(); // note: choose algorithm
 
     return 0;
 }
