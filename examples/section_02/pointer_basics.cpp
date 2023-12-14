@@ -25,9 +25,11 @@ int main()
 
 	auto c = 0;
 
-	[[maybe_unused]] const int * ptr_c = &c;
+	[[maybe_unused]] const int * ptr_c_1 = &c;
 
 //	*ptr_c = 42; // error: constant value
+
+	[[maybe_unused]] int const * ptr_c_2 = &c; // note: same as ptr_c_1
 
 	[[maybe_unused]] int * const c_ptr = &c;
 
