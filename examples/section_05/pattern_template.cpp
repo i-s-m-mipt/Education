@@ -4,6 +4,8 @@ class Base
 {
 public:
 
+	virtual ~Base() = default;
+
 	void run() const // note: template method
 	{ 
 		a(); b(); c(); d(); e(); std::cout << std::endl;
