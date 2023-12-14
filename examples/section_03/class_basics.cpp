@@ -1,12 +1,11 @@
 #include <iostream>
+#include <string>
 
 class Date // note: pay attention to the order of class members
 {
 public: // good: public members first
 
-	using integer_t = unsigned int;
-
-public:
+	using integer_t = unsigned int; // note: nested type alias
 
 	class Printer // note: nested types can’t be forward declared
 	{
@@ -46,7 +45,7 @@ public:
 		uninitialize();
 	}
 
-public:
+private:
 
 	void initialize()
 	{
@@ -71,7 +70,7 @@ public:
 
 public:
 
-	[[nodiscard]] auto year() const // good: auto in a one-liner function
+	[[nodiscard]] auto year() const // note: biwise constancy
 	{
 		return m_year;
 	}
@@ -85,12 +84,24 @@ public:
 
 	void set_year(integer_t year) // good: setter with additional actions
 	{
-		m_year = (year > max_year ? max_year : year);
+		m_year = (year > max_year ? max_year : year); 
+		
+		m_is_string_valid = false; // note: cash is not valid anymore
 	}
 
-	void set_year_from_date(const Date & date)
+	std::string get_date_as_string() const // note: logical constancy
 	{
-		set_year(date.m_year); // note: partial assignment
+		if (!m_is_string_valid) // note: updating cash
+		{
+			m_date_as_string =
+				std::to_string(m_year ) + '/' +
+				std::to_string(m_month) + '/' +
+				std::to_string(m_day  );
+
+			m_is_string_valid = true;
+		}
+
+		return m_date_as_string;
 	}
 
 public:
@@ -113,6 +124,12 @@ private: // good: private members last
 	integer_t m_year  = 0; // good: name begins with m_ prefix
 	integer_t m_month = 0;
 	integer_t m_day   = 0;
+
+private:
+
+	mutable std::string m_date_as_string; // good: data caching
+
+	mutable bool m_is_string_valid = false;
 
 }; // class Date
 
@@ -147,6 +164,8 @@ int main()
 	c_date.print_v2();
 
 //	c_date.set_year(2023); // error: non-constant member function
+
+	std::cout << c_date.get_date_as_string() << std::endl;
 
 	Date date_1;
 	Date date_2(2023, 9, 19);
