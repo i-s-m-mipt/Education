@@ -84,11 +84,8 @@ int main()
 {
     Weather_Station weather_station;
 
-    Observer * observer_1 = new Display_1;
-    Observer * observer_2 = new Display_2;
-
-    weather_station.add_observer(observer_1);
-    weather_station.add_observer(observer_2);
+    weather_station.add_observer(new Display_1);
+    weather_station.add_observer(new Display_2);
 
     weather_station.set_temperature(25.5);
     weather_station.set_temperature(24.8);
