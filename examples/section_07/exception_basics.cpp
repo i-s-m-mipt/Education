@@ -9,8 +9,7 @@ class Error : public std::exception // good: inherited from std::exception
 {
 public:
 
-	explicit Error(const std::string & message, int error_code) : 
-		std::exception(message.c_str()), m_error_code(error_code) {} // note: Visual C++
+	explicit Error(int error_code) : m_error_code(error_code) {}
 
 	const char * what() const override { return "error"; }
 
@@ -26,11 +25,11 @@ private:
 
 	try
 	{
-		throw Error("bad function", 42);
+		throw Error(42);
 	}
 	catch (const Error & error)
 	{
-		std::cout << error.what() << std::endl;
+		std::cerr << error.what() << std::endl;
 
 //		throw error; // bad: copy-initialized copy
 
@@ -63,11 +62,11 @@ void f()
 	}
 	catch (const std::exception & exception)
 	{
-		std::cout << exception.what() << std::endl;
+		std::cerr << exception.what() << std::endl;
 
 		throw std::runtime_error("new exception"); // note: throw new exception
 
-//		std::cout << "f() exited in catch" << std::endl; // warning: unreachable code
+//		std::cerr << "f() exited in catch" << std::endl; // warning: unreachable code
 	}
 
 //	std::cout << "f() exited" << std::endl; // warning: unreachable code
@@ -83,7 +82,7 @@ public:
 	}
 	catch (...) // note: destructor will not be called
 	{
-		std::cout << "constructor exception" << std::endl;
+		std::cerr << "constructor exception" << std::endl;
 
 		throw; // good: rethrow the same exception
 	}
@@ -101,6 +100,8 @@ public:
 		}
 		catch (...) // good: catch all exceptions in destructor
 		{
+			std::cerr << "bad destructor" << std::endl;
+
 			std::abort(); // note: abnormal termination
 		}
 	}
@@ -138,19 +139,19 @@ int main()
 	}
 	catch (const std::runtime_error & exception) // note: specified catch handler
 	{
-		std::cout << exception.what() << std::endl;
+		std::cerr << exception.what() << std::endl;
 
 		return EXIT_FAILURE;
 	}
 	catch (const std::exception & exception) // note: generalized catch handler
 	{
-		std::cout << exception.what() << std::endl;
+		std::cerr << exception.what() << std::endl;
 
 		return EXIT_FAILURE;
 	}
 	catch (...) // good: catch all exceptions at last in main
 	{
-		std::cout << "unknown exception" << std::endl;
+		std::cerr << "unknown exception" << std::endl;
 
 		return EXIT_FAILURE;
 	}
