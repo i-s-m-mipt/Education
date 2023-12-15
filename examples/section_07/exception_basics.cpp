@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <system_error>
 #include <type_traits>
 #include <utility>
 
@@ -25,9 +26,19 @@ private:
 
 	try
 	{
-		throw Error(42);
+		// note: some actions here before throwing an exception
+		
+//		throw 42; // bad: possible, but not good in exceptions
+
+		throw Error(42); // note: user-defined exception
+
+//		throw std::runtime_error("error"); // note: standard exception
+
+//		throw std::system_error(std::make_error_code(std::errc::illegal_byte_sequence), "error");
+
+		// note: actions are skipped after throwing an exception
 	}
-	catch (const Error & error)
+	catch (const Error & error) // note: only one exception is handled
 	{
 		std::cerr << error.what() << std::endl;
 
@@ -64,7 +75,7 @@ void f()
 	{
 		std::cerr << exception.what() << std::endl;
 
-		throw std::runtime_error("new exception"); // note: throw new exception
+		throw std::runtime_error("new error"); // note: throw new exception
 
 //		std::cerr << "f() exited in catch" << std::endl; // warning: unreachable code
 	}
@@ -151,6 +162,8 @@ int main()
 	}
 	catch (...) // good: catch all exceptions at last in main
 	{
+		[[maybe_unused]] auto ptr = std::current_exception(); // note: possible in catch (...)
+
 		std::cerr << "unknown exception" << std::endl;
 
 		return EXIT_FAILURE;
