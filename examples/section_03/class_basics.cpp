@@ -22,7 +22,7 @@ public:
 
 	Date() : m_year(0), m_month(0), m_day(0) // good: initializer list, initialization
 	{
-//		m_year  = 0; // bad: assignment, not initialization
+//		m_year  = 0; // bad: assignment, not initialization, invalid for constants and references
 //		m_month = 0;
 //		m_day   = 0;
 
