@@ -16,7 +16,7 @@ int main()
 
 	int * ptr_z = nullptr; // good: nullptr instead of 0
 
-	auto null = nullptr; // note: auto -> std::nullptr_t
+	[[maybe_unused]] auto n = nullptr; // note: auto -> std::nullptr_t
 
 //	*ptr_z = 42; // error: dereferencing nullptr
 
