@@ -134,52 +134,52 @@ private:
 
 }; // class Ratio
 
-auto operator+(Ratio lhs, Ratio rhs) // good: free function
+inline const auto operator+(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs += rhs);
 }
 
-auto operator-(Ratio lhs, Ratio rhs) // good: free function
+inline const auto operator-(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs -= rhs);
 }
 
-auto operator*(Ratio lhs, Ratio rhs) // good: free function
+inline const auto operator*(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs *= rhs);
 }
 
-auto operator/(Ratio lhs, Ratio rhs) // good: free function
+inline const auto operator/(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs /= rhs);
 }
 
-auto operator<(Ratio lhs, Ratio rhs)
+inline auto operator<(Ratio lhs, Ratio rhs)
 {
 	return static_cast < double > (lhs) < static_cast < double > (rhs);
 }
 
-auto operator>(Ratio lhs, Ratio rhs)
+inline auto operator>(Ratio lhs, Ratio rhs)
 {
 	return (rhs < lhs);
 }
 
-auto operator<=(Ratio lhs, Ratio rhs)
+inline auto operator<=(Ratio lhs, Ratio rhs)
 {
 	return !(lhs > rhs);
 }
 
-auto operator>=(Ratio lhs, Ratio rhs)
+inline auto operator>=(Ratio lhs, Ratio rhs)
 {
 	return !(lhs < rhs);
 }
 
-auto operator==(Ratio lhs, Ratio rhs)
+inline auto operator==(Ratio lhs, Ratio rhs)
 {
 	return (!(lhs < rhs) && !(rhs < lhs));
 }
 
-auto operator!=(Ratio lhs, Ratio rhs)
+inline auto operator!=(Ratio lhs, Ratio rhs)
 {
 	return !(lhs == rhs);
 }
