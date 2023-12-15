@@ -153,7 +153,7 @@ int main()
 	
 	Container c4(static_cast < Container && > (c2)); // note: move constructor
 
-	[[maybe_unused]] Container c5(std::move(c4)); // note: move constructor
+	Container c5(std::move(c4)); // note: move constructor
 
 	c1 = Container(10); // note: move assignment operator
 

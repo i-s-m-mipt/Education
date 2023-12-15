@@ -163,7 +163,7 @@ int main()
 
 	date.set_year(2023);
 
-	[[maybe_unused]] const Date c_date;
+	const Date c_date;
 
 	c_date.print_v2();
 

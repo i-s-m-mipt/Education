@@ -33,7 +33,7 @@ public:
 
 int main()
 {
-    [[maybe_unused]] Initializer < Derived > derived(42);
+    Initializer < Derived > derived(42);
 
     return 0;
 }

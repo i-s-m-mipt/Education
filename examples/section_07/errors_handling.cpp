@@ -40,7 +40,7 @@ int main()
     assert       ((sizeof(int) == 4) && "required size of int 4 bytes");
     static_assert((sizeof(int) == 4),   "required size of int 4 bytes");
 
-    [[maybe_unused]] S < int > good;
+    S < int > good;
 
 //  S bad; // error: static assertion failed
 

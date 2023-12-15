@@ -157,13 +157,13 @@ int main()
 //	d1.m_data_2 = 42; // error: protected data member
 //	d1.m_data_3 = 42; // error: private   data member
 
-	[[maybe_unused]] Derived_2 d2;
+	Derived_2 d2;
 
 //	d2.m_data_1 = 42; // error: protected data member
 //	d2.m_data_2 = 42; // error: protected data member
 //	d2.m_data_3 = 42; // error: private   data member
 
-	[[maybe_unused]] Derived_3 d3;
+	Derived_3 d3;
 
 //	d3.m_data_1 = 42; // error: private   data member
 //	d3.m_data_2 = 42; // error: private   data member

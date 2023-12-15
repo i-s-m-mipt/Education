@@ -42,13 +42,13 @@ private:
 
 int main()
 {
-    [[maybe_unused]] Point_v1 < Color_v1, Label_v1 > p1_v1(1.0, 1.0);
-    [[maybe_unused]] Point_v1 < Color_v1           > p2_v1(2.0, 2.0);
-    [[maybe_unused]] Point_v1 <                    > p3_v1(3.0, 3.0);
+    Point_v1 < Color_v1, Label_v1 > p1_v1(1.0, 1.0);
+    Point_v1 < Color_v1           > p2_v1(2.0, 2.0);
+    Point_v1 <                    > p3_v1(3.0, 3.0);
 
-    [[maybe_unused]] Point_v2 < Color_v2, Label_v2 > p1_v2(1.0, 1.0);
-    [[maybe_unused]] Point_v2 < Color_v2           > p2_v2(2.0, 2.0);
-    [[maybe_unused]] Point_v2 <                    > p3_v2(3.0, 3.0);
+    Point_v2 < Color_v2, Label_v2 > p1_v2(1.0, 1.0);
+    Point_v2 < Color_v2           > p2_v2(2.0, 2.0);
+    Point_v2 <                    > p3_v2(3.0, 3.0);
 
     return 0;
 }

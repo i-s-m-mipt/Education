@@ -107,7 +107,7 @@ public:
 
 int main()
 {
-	[[maybe_unused]] Stack < double, std::deque < double > > deque_stack;
+	Stack < double, std::deque < double > > deque_stack;
 
 	Stack < int > stack; // note: std::vector is used by default as an internal storage
 
@@ -121,11 +121,11 @@ int main()
 
 	std::cout << stack.top() << std::endl;
 
-	[[maybe_unused]] Stack new_stack = stack;
+	Stack new_stack = stack;
 
-	[[maybe_unused]] Pair p{ 1.0, 100 }; // note: generated deduction guide for aggregate
+	Pair p{ 1.0, 100 }; // note: generated deduction guide for aggregate
 
-	[[maybe_unused]] Container c(10, 1.0); // note: generated deduction guide for aggregate
+	Container c(10, 1.0); // note: generated deduction guide for aggregate
 
 	C < char,   double > ().f(); // note: basic template for T1, T2
 	C < char,   char   > ().f(); // note: partial specialization for T, T

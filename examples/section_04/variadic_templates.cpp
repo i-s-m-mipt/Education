@@ -77,7 +77,7 @@ int main()
 	print_v1('a', 42, 3.14);
 	print_v2('a', 42, 3.14); std::cout << std::endl;
 
-	[[maybe_unused]] auto ptr = make_object < Point > (1.0, 1.0);
+	auto ptr = make_object < Point > (1.0, 1.0);
 
 	delete ptr;
 

@@ -4,9 +4,9 @@ template < typename T > class Counter
 {
 protected:
 
-	Counter()                                              { ++m_counter; }
-	Counter([[maybe_unused]] const Counter < T > &  other) { ++m_counter; }
-	Counter([[maybe_unused]]       Counter < T > && other) { ++m_counter; }
+	Counter()                       { ++m_counter; }
+	Counter(const Counter < T > & ) { ++m_counter; }
+	Counter(      Counter < T > &&) { ++m_counter; }
 
 	~Counter() { --m_counter; }
 

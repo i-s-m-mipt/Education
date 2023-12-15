@@ -65,15 +65,15 @@ int main()
 
 	std::cout << now << ' ' << std::chrono::system_clock::to_time_t(now) << std::endl;
 
-	[[maybe_unused]] std::chrono::duration < long long, std::ratio < 1, 1000 > > duration_1(42);
+	std::chrono::duration < long long, std::ratio < 1, 1000 > > duration_1(42);
 
-	[[maybe_unused]] std::chrono::milliseconds duration_2(42);
+	std::chrono::milliseconds duration_2(42);
 
 	using namespace std::literals;
 
-	[[maybe_unused]] auto duration_3 = 42ms; // note: standard literal
+	auto duration_3 = 42ms; // note: standard literal
 
-	[[maybe_unused]] auto distance = 88_km; // note: user-defined literal
+	auto distance = 88_km; // note: user-defined literal
 
 	auto result = std::chrono::hours(100) + std::chrono::minutes(200);
 

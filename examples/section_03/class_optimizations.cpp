@@ -57,8 +57,8 @@ class C : public B {};
 
 int main()
 {
-	[[maybe_unused]] auto c1 = f(); // note: guaranteed copy elision
-	[[maybe_unused]] auto c2 = g(); // note: guaranteed copy elision
+	auto c1 = f(); // note: guaranteed copy elision
+	auto c2 = g(); // note: guaranteed copy elision
 
 	std::cout << sizeof(Empty) << std::endl; // note: non-zero size
 
