@@ -4,7 +4,7 @@
 
 template < typename T, typename C = std::vector < T > > class Stack
 {
-public:
+public: // note: member functions instantiated only if used
 
 	void push(T value);
 
