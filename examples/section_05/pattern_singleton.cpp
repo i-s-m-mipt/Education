@@ -17,8 +17,8 @@ private:
 
 public: // good: deleted special member functions are public
 
-    Singleton            ([[maybe_unused]] const Singleton & other) = delete;
-    Singleton & operator=([[maybe_unused]] const Singleton & other) = delete;
+    Singleton            (const Singleton &) = delete;
+    Singleton & operator=(const Singleton &) = delete;
 
 public:
 
@@ -30,9 +30,26 @@ private:
 
 }; // class Singleton 
 
+class noncopyable // good: better than singleton
+{
+protected:
+
+    noncopyable() = default; // note: non-virtual destructor
+
+    noncopyable            (const noncopyable &) = delete;
+    noncopyable & operator=(const noncopyable &) = delete;
+
+}; // class noncopyable
+
+class Unique : private noncopyable {}; // note: consider boost::noncopyable
+
 int main()
 {
     std::cout << Singleton::get_instance().data() << std::endl;
+
+    [[maybe_unused]] Unique u1;
+
+//  Unique u2 = u1; // error: noncopyable type
 
     return 0;
 }
