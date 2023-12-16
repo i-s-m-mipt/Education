@@ -3,7 +3,6 @@
 #include <iostream>
 #include <memory>
 #include <stdexcept>
-#include <type_traits>
 
 template < typename T > class Resource // good: RAII idiom
 {
@@ -146,6 +145,10 @@ int main()
 	assert(wptr.use_count() == 1);
 
 	*wptr.lock() = 43; // note: create shared_ptr from weak_ptr
+
+	sptr_9.reset();
+
+	assert(wptr.expired());
 
 	{
 		auto a = std::make_shared < A > (); 
