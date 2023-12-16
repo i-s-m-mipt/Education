@@ -9,29 +9,24 @@ public:
 		std::cout << "default constructor" << std::endl;
 	}
 
-	Container([[maybe_unused]] const Container & other)
+	Container(const Container &)
 	{
 		std::cout << "copy constructor" << std::endl;
 	}
 
-	Container([[maybe_unused]] Container && other)
+	Container(Container &&) noexcept // note: ignore noexcept here
 	{
 		std::cout << "move constructor" << std::endl;
 	}
 
-	Container & operator=([[maybe_unused]] const Container & other)
+	Container & operator=(const Container &)
 	{
 		std::cout << "copy assignment operator" << std::endl;
 	}
 
-	Container & operator=([[maybe_unused]] Container && other)
+	Container & operator=(Container &&) noexcept // note: ignore noexcept here
 	{
 		std::cout << "move assignment operator" << std::endl;
-	}
-
-	~Container()
-	{
-		std::cout << "destructor" << std::endl;
 	}
 
 }; // class Container
@@ -48,7 +43,11 @@ auto g()
 	return c; // note: copy elision, named return value optimization
 }
 
-class Empty {};
+class E {}; // note: empty class, only functions for example
+
+class X { char c;                             E e;      };
+class Y { char c; [[msvc::no_unique_address]] E e;      };
+class Z { char c; [[msvc::no_unique_address]] E e1, e2; };
 
 class A {}; // note: empty base class optimization
 
@@ -60,11 +59,15 @@ int main()
 	auto c1 = f(); // note: guaranteed copy elision
 	auto c2 = g(); // note: guaranteed copy elision
 
-	std::cout << sizeof(Empty) << std::endl; // note: non-zero size
+	std::cout << "size of E: " << sizeof(E) << std::endl; // note: non-zero size
 
-	std::cout << sizeof(A) << std::endl;
-	std::cout << sizeof(B) << std::endl;
-	std::cout << sizeof(C) << std::endl;
+	std::cout << "size of X: " << sizeof(X) << std::endl; // note: 2 byte(s)
+	std::cout << "size of Y: " << sizeof(Y) << std::endl; // note: 1 byte(s)
+	std::cout << "size of Z: " << sizeof(Z) << std::endl; // note: 2 byte(s)
+
+	std::cout << "size of A: " << sizeof(A) << std::endl; // note: 1 byte(s)
+	std::cout << "size of B: " << sizeof(B) << std::endl; // note: 1 byte(s)
+	std::cout << "size of C: " << sizeof(C) << std::endl; // note: 1 byte(s)
 
 	return 0;
 }
