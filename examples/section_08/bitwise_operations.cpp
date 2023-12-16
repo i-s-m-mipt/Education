@@ -59,7 +59,7 @@ int main()
 
     static_assert(sizeof(std::uint64_t) == 8); // note: 8 byte(s) exactly
 
-    std::cout << std::boolalpha << std::is_same_v < int, std::int32_t > << std::endl;
+    static_assert(std::is_same_v < int, std::int32_t > );
 
     assert(middle(0x12345678) == 0x3456);
 
