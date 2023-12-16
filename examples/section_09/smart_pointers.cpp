@@ -72,9 +72,14 @@ public:
 
 }; // class Derived : public Base 
 
-std::unique_ptr < Base > make_derived() // note: modern factory
+std::unique_ptr < Base > produce() // note: source - modern factory
 {
 	return std::make_unique < Derived > ();
+}
+
+void consume(std::unique_ptr < Base > base) // note: sink
+{
+	base->print();
 }
 
 int main()
@@ -153,7 +158,9 @@ int main()
 
 	auto uptr_2 = std::move(uptr_1); // note: move-only type
 
-	make_derived()->print(); // note: modern runtime polymorphism with factory
+	auto uptr_3 = produce(); 
+
+	consume(std::move(uptr_3)); // note: modern runtime polymorphism with factory
 
 	return 0;
 }

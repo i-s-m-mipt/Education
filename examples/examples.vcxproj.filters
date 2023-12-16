@@ -295,6 +295,9 @@
     <ClCompile Include="section_09\memory_details.cpp">
       <Filter>examples\section_09</Filter>
     </ClCompile>
+    <ClCompile Include="section_09\shared_from_this.cpp">
+      <Filter>examples\section_09</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
