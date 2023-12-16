@@ -1,3 +1,4 @@
+#include <cassert>
 #include <cstdint>
 #include <iostream>
 
@@ -41,10 +42,7 @@ enum State : underlying_t
 
 }; // enum State : underlying_t
 
-void g(underlying_t s)
-{
-	if (s & delta || s & gamma) std::cout << "gamma+" << std::endl;
-}
+void g(underlying_t s) { assert(s & delta || s & gamma); }
 
 int main()
 {
