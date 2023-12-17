@@ -71,7 +71,7 @@ public:
 
 }; // class Derived : public Base 
 
-std::unique_ptr < Base > produce() // note: source - modern factory
+std::unique_ptr < Base > produce() // note: source
 {
 	return std::make_unique < Derived > ();
 }
