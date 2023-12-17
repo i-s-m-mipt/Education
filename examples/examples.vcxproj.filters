@@ -283,9 +283,6 @@
     <ClCompile Include="section_05\pattern_state.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="section_05\pattern_memento.cpp">
-      <Filter>examples\section_05</Filter>
-    </ClCompile>
     <ClCompile Include="section_03\class_friends.cpp">
       <Filter>examples\section_03</Filter>
     </ClCompile>
