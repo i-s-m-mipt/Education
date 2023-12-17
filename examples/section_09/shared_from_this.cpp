@@ -1,93 +1,77 @@
+#include <cassert>
 #include <iostream>
 #include <memory>
 
-class Good : public std::enable_shared_from_this<Good>
+class Fail
 {
 public:
-    std::shared_ptr<Good> getptr()
-    {
-        return shared_from_this();
-    }
-};
 
-class Best : public std::enable_shared_from_this<Best>
+    auto get() { return std::shared_ptr < Fail > (this); }
+
+}; // class Fail
+
+class Good : public std::enable_shared_from_this < Good > // note: CRTP
 {
-    struct Private {};
+public:
+
+    auto get() { return shared_from_this(); }
+
+}; // class Good : public std::enable_shared_from_this < Good >
+
+class Best : public std::enable_shared_from_this < Best >
+{
+private:
+
+    struct Key {}; // note: see also Passkey idiom
 
 public:
-    // Constructor is only usable by this class
-    Best(Private) {}
 
-    // Everyone else has to use this factory function
-    // Hence all Best objects will be contained in shared_ptr
-    static std::shared_ptr<Best> create()
+    Best(Key) {}; // good: all instances are in shared_ptrs
+
+    static auto create() // note: factory method
     {
-        return std::make_shared<Best>(Private());
+        return std::make_shared < Best > (Key());
     }
 
-    std::shared_ptr<Best> getptr()
-    {
-        return shared_from_this();
-    }
-};
+    auto get() { return shared_from_this(); }
 
-
-struct Bad
-{
-    std::shared_ptr<Bad> getptr()
-    {
-        return std::shared_ptr<Bad>(this);
-    }
-    ~Bad() { std::cout << "Bad::~Bad() called\n"; }
-};
-
-void testGood()
-{
-    // Good: the two shared_ptr's share the same object
-    std::shared_ptr<Good> good0 = std::make_shared<Good>();
-    std::shared_ptr<Good> good1 = good0->getptr();
-    std::cout << "good1.use_count() = " << good1.use_count() << '\n';
-}
-
-void misuseGood()
-{
-    // Bad: shared_from_this is called without having std::shared_ptr owning the caller
-    try
-    {
-        Good not_so_good;
-        std::shared_ptr<Good> gp1 = not_so_good.getptr();
-    }
-    catch (std::bad_weak_ptr& e)
-    {
-        // undefined behavior (until C++17) and std::bad_weak_ptr thrown (since C++17)
-        std::cout << e.what() << '\n';
-    }
-}
-
-void testBest()
-{
-    // Best: Same but can't stack-allocate it:
-    std::shared_ptr<Best> best0 = Best::create();
-    std::shared_ptr<Best> best1 = best0->getptr();
-    std::cout << "best1.use_count() = " << best1.use_count() << '\n';
-
-    // Best stackBest; // <- Will not compile because Best::Best() is private.
-}
-
-void testBad()
-{
-    // Bad, each shared_ptr thinks it's the only owner of the object
-    std::shared_ptr<Bad> bad0 = std::make_shared<Bad>();
-    std::shared_ptr<Bad> bad1 = bad0->getptr();
-    std::cout << "bad1.use_count() = " << bad1.use_count() << '\n';
-} // UB: double-delete of Bad
+}; // class Best : public std::enable_shared_from_this < Best >
 
 int main()
 {
-    testGood();
-    misuseGood();
+    auto fail_1 = std::make_shared < Fail > ();
 
-    testBest();
+//  auto fail_2 = fail_1->get(); // bad: undefined behaviour
+    
+    assert(fail_1.use_count() == 1);
+//  assert(fail_2.use_count() == 1);
 
-    testBad();
+    auto good_1 = std::make_shared < Good > ();
+
+    auto good_2 = good_1->get();
+
+    assert(good_1.use_count() == 2);
+    assert(good_2.use_count() == 2);
+
+    try
+    {
+        Good good; // note: not managed by shared_ptr
+
+        auto good_3 = good.get();
+    }
+    catch (const std::bad_weak_ptr & exception)
+    {
+        std::cerr << exception.what() << std::endl;
+    }
+
+    auto best_1 = Best::create();
+
+    auto best_2 = best_1->get();
+
+    assert(best_1.use_count() == 2);
+    assert(best_2.use_count() == 2);
+
+//  Best best(Key()); // error: requires private key
+
+    return 0;
 }
