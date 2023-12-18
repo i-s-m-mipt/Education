@@ -1,4 +1,36 @@
-import std;
+#include <vector>
+
+template < auto N > class Array_2D 
+{
+public:
+
+	class Line 
+	{
+	public:
+
+		explicit Line(int * array) noexcept : m_array(array) {}
+
+		int & operator[](std::size_t index) noexcept
+		{
+			return m_array[index];
+		}
+
+	private:
+
+		int * m_array;
+
+	}; // class Line 
+
+	auto operator[](std::size_t index) noexcept
+	{
+		return Line(m_array[index]);
+	}
+
+private:
+
+	int m_array[N][N];
+
+}; // template < auto N > class Array_2D
 
 int main()
 {
@@ -11,11 +43,15 @@ int main()
 		{7, 8, 9}
 	};
 
-	auto p = new int* [size] {};
+	Array_2D < size > b;
+
+	b[0][0] = 42; // note: proxy object
+
+	auto p = new int*[size]{};
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		p[i] = new int[size] {};
+		p[i] = new int[size]{};
 	}
 
 	for (std::size_t i = 0; i < size; ++i)
@@ -33,7 +69,7 @@ int main()
 
 	delete[] p;
 
-	auto line = new int[size * size] {};
+	auto line = new int[size * size]{}; // note: can be more effective
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
@@ -44,6 +80,16 @@ int main()
 	}
 
 	delete[] line;
+
+	std::vector < std::vector < int > > v(size, std::vector < int > (size));
+
+	for (std::size_t i = 0; i < size; ++i)
+	{
+		for (std::size_t j = 0; j < size; ++j)
+		{
+			v[i][j] = 42;
+		}
+	}
 
 	return 0;
 }
