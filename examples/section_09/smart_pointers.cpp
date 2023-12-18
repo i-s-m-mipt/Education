@@ -71,12 +71,12 @@ public:
 
 }; // class Derived : public Base 
 
-std::unique_ptr < Base > produce() // note: source
+std::unique_ptr < Base > produce() // note: factory
 {
 	return std::make_unique < Derived > ();
 }
 
-void consume(std::unique_ptr < Base > base) // note: sink
+void consume(std::unique_ptr < Base > base) // note: user
 {
 	base->print();
 }
