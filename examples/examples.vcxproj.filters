@@ -298,13 +298,16 @@
     <ClCompile Include="section_09\data_alignment.cpp">
       <Filter>examples\section_09</Filter>
     </ClCompile>
-    <ClCompile Include="section_10\sequential_containers.cpp">
+    <ClCompile Include="section_10\container_basics.cpp">
       <Filter>examples\section_10</Filter>
     </ClCompile>
     <ClCompile Include="section_09\pattern_iterator.cpp">
       <Filter>examples\section_09</Filter>
     </ClCompile>
     <ClCompile Include="section_10\pattern_proxy.cpp">
+      <Filter>examples\section_10</Filter>
+    </ClCompile>
+    <ClCompile Include="section_10\container_lists.cpp">
       <Filter>examples\section_10</Filter>
     </ClCompile>
   </ItemGroup>
