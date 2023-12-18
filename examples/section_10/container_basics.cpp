@@ -21,7 +21,7 @@ private:
 
 int main()
 {
-	constexpr std::size_t size = 5; // good: use alias std::size_t for sizes and indexes
+	const std::size_t size = 5; // good: use alias std::size_t for sizes and indexes
 
 	std::vector < int > v; 
 	
@@ -55,11 +55,17 @@ int main()
 		++(*iterator); // note: use iterators as high-level pointers in containers
 	}
 
+	int static_array[size]{};
+
+	assert(std::size(static_array) == size);
+
+	assert(std::begin(static_array) == static_array);
+
 	std::vector < Data > v1(size);
-	std::vector < Data > v2(std::cbegin(v1), std::cend(v1)); // note: copy sequence
+	std::vector < Data > v2(std::cbegin(v1), std::cend(v1)); // note: copy collection
 	std::vector < Data > v3(
-		std::make_move_iterator(std::cbegin(v1)),
-		std::make_move_iterator(std::cend  (v1))); // note: move sequence
+		std::make_move_iterator(std::begin(v1)),
+		std::make_move_iterator(std::end  (v1))); // note: move collection
 	
 	v3.insert(std::cend(v3), std::begin(v2), std::next(std::begin(v2), 2));
 
@@ -85,13 +91,13 @@ int main()
 
 	vector.push_back(42); // good: O(1) complexity (amortized)
 
-	vector.insert(          std::begin(vector),          42); // note: O(N) complexity 
-	vector.insert(std::next(std::begin(vector), middle), 42); // note: O(N) complexity
+	vector.insert(          std::cbegin(vector),          42); // note: O(N) complexity 
+	vector.insert(std::next(std::cbegin(vector), middle), 42); // note: O(N) complexity
 
 	vector.pop_back(); // good: O(1) complexity 
 
-	vector.erase(          std::begin(vector)         ); // note: O(N) complexity 
-	vector.erase(std::next(std::begin(vector), middle)); // note: O(N) complexity
+	vector.erase(          std::cbegin(vector)         ); // note: O(N) complexity 
+	vector.erase(std::next(std::cbegin(vector), middle)); // note: O(N) complexity
 
 	[[maybe_unused]] auto vector_value = vector[middle]; // good: O(1) complexity
 
@@ -100,18 +106,20 @@ int main()
 	deque.push_back (42); // good: O(1) complexity (amortized)
 	deque.push_front(42); // good: O(1) complexity (amortized)
 
-	deque.insert(std::next(std::begin(deque), middle), 42); // note: O(N) complexity
+	deque.insert(std::next(std::cbegin(deque), middle), 42); // note: O(N) complexity
 
 	deque.pop_back (); // good: O(1) complexity 
 	deque.pop_front(); // good: O(1) complexity
 
-	deque.erase(std::next(std::begin(deque), middle)); // note: O(N) complexity
+	deque.erase(std::next(std::cbegin(deque), middle)); // note: O(N) complexity
 
 	[[maybe_unused]] auto deque_value = deque[middle]; // good: O(1) complexity
 
 	std::array < int, size > array = { 1, 2, 3, 4, 5 }; // note: aggregate initialization
 
 	[[maybe_unused]] auto array_value = array[middle]; // good: O(1) complexity, fast on stack
+
+	auto array_from_static_array = std::to_array(static_array);
 
 	return 0;
 }
