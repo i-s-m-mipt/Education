@@ -1,11 +1,8 @@
 #include <array>
 #include <cassert>
 #include <deque>
-#include <forward_list>
-#include <initializer_list>
 #include <iostream>
 #include <iterator>
-#include <list>
 #include <vector>
 
 class Data
@@ -24,12 +21,6 @@ private:
 
 int main()
 {
-	[[maybe_unused]] auto single_value { 42 }; // note: auto -> int
-
-	auto initializer_list = { 1, 2, 3, 4, 5 }; // note: auto -> std::initializer_list < int >
-
-	std::vector < int > vector(initializer_list); // note: constructor for initializer_list
-
 	constexpr std::size_t size = 5; // good: use alias std::size_t for sizes and indexes
 
 	std::vector < int > v; 
@@ -84,13 +75,43 @@ int main()
 
 	v1.emplace_back('a', 42, 3.14); // good: forwarding arguments to constructor
 
-	std::array < int, size > array = {1, 2, 3, 4, 5}; // note: aggregate as static array
+	[[maybe_unused]] auto single_value { 42 }; // note: auto -> int
 
-//	array.push_back(42); // error: static array, fixed size
+	auto initializer_list = { 1, 2, 3, 4, 5 }; // note: auto -> std::initializer_list < int >
+
+	std::vector < int > vector(initializer_list); // note: constructor for initializer_list
+
+	const auto middle = std::size(vector) / 2;
+
+	vector.push_back(42); // good: O(1) complexity (amortized)
+
+	vector.insert(          std::begin(vector),          42); // note: O(N) complexity 
+	vector.insert(std::next(std::begin(vector), middle), 42); // note: O(N) complexity
+
+	vector.pop_back(); // good: O(1) complexity 
+
+	vector.erase(          std::begin(vector)         ); // note: O(N) complexity 
+	vector.erase(std::next(std::begin(vector), middle)); // note: O(N) complexity
+
+	[[maybe_unused]] auto vector_value = vector[middle]; // good: O(1) complexity
 
 	std::deque < int > deque(std::cbegin(vector), std::cend(vector));
 
-	deque.push_front(42); // note: O(1) complexity as push_back
+	deque.push_back (42); // good: O(1) complexity (amortized)
+	deque.push_front(42); // good: O(1) complexity (amortized)
+
+	deque.insert(std::next(std::begin(deque), middle), 42); // note: O(N) complexity
+
+	deque.pop_back (); // good: O(1) complexity 
+	deque.pop_front(); // good: O(1) complexity
+
+	deque.erase(std::next(std::begin(deque), middle)); // note: O(N) complexity
+
+	[[maybe_unused]] auto deque_value = deque[middle]; // good: O(1) complexity
+
+	std::array < int, size > array = { 1, 2, 3, 4, 5 }; // note: aggregate initialization
+
+	[[maybe_unused]] auto array_value = array[middle]; // good: O(1) complexity, fast on stack
 
 	return 0;
 }
