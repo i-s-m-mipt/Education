@@ -1,6 +1,6 @@
 #include <vector>
 
-template < auto N > class Array_2D 
+template < typename T, auto N > class Array_2D 
 {
 public:
 
@@ -8,16 +8,16 @@ public:
 	{
 	public:
 
-		explicit Line(int * array) noexcept : m_array(array) {}
+		explicit Line(T * array) noexcept : m_array(array) {}
 
-		int & operator[](std::size_t index) noexcept
+		T & operator[](std::size_t index) noexcept
 		{
 			return m_array[index];
 		}
 
 	private:
 
-		int * m_array;
+		T * m_array;
 
 	}; // class Line 
 
@@ -28,7 +28,7 @@ public:
 
 private:
 
-	int m_array[N][N];
+	T m_array[N][N];
 
 }; // template < auto N > class Array_2D
 
@@ -43,7 +43,7 @@ int main()
 		{7, 8, 9}
 	};
 
-	Array_2D < size > b;
+	Array_2D < int, size > b;
 
 	b[0][0] = 42; // note: proxy object
 
