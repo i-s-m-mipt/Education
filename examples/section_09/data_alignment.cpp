@@ -45,8 +45,10 @@ int main()
 
 	static_assert(std::alignment_of_v < double > == 8);
 
-	alignas(16)   int a[10]{};
-	alignas(1024) int b[10]{};
+	const std::size_t size = 10;
+
+	alignas(16) int a[size]{};
+	alignas(64) int b[size]{};
 
 	std::cout << std::hex << a << std::endl;
 	std::cout << std::hex << b << std::endl;
