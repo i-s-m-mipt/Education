@@ -313,6 +313,9 @@
     <ClCompile Include="section_10\multidimensional.cpp">
       <Filter>examples\section_10</Filter>
     </ClCompile>
+    <ClCompile Include="section_10\container_trees.cpp">
+      <Filter>examples\section_10</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
