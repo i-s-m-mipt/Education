@@ -2,7 +2,7 @@
 
 #include <boost/operators.hpp>
 
-template < typename T > class Relational 
+template < typename T > class Relational // note: Barton-Nackman trick
 {
     friend auto operator> (const T & lhs, const T & rhs) { return  (rhs < lhs); }
     friend auto operator<=(const T & lhs, const T & rhs) { return !(lhs > rhs); }
