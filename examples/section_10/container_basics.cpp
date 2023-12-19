@@ -57,6 +57,8 @@ int main()
 
 	int static_array[size]{};
 
+//	assert(static_array.size() == size); // error: not a class
+
 	assert(std::size(static_array) == size);
 
 	assert(std::begin(static_array) == static_array);
@@ -67,7 +69,7 @@ int main()
 		std::make_move_iterator(std::begin(v1)),
 		std::make_move_iterator(std::end  (v1))); // note: move collection
 	
-	v3.insert(std::cend(v3), std::begin(v2), std::next(std::begin(v2), 2));
+	v3.insert(std::cend(v3), std::cbegin(v2), std::next(std::cbegin(v2), 2));
 
 	assert(std::size(v3) == size + 2);
 
