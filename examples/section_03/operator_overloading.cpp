@@ -174,14 +174,9 @@ inline auto operator>=(Ratio lhs, Ratio rhs)
 	return !(lhs < rhs);
 }
 
-inline auto operator==(Ratio lhs, Ratio rhs)
+inline auto operator==(Ratio lhs, Ratio rhs) // note: operator!= not required
 {
 	return (!(lhs < rhs) && !(rhs < lhs));
-}
-
-inline auto operator!=(Ratio lhs, Ratio rhs)
-{
-	return !(lhs == rhs);
 }
 
 int main()
@@ -214,12 +209,10 @@ int main()
 
 	operator+(r4, r1).print(); // note: function-like style
 
-	std::cout << (r3 < r4) << std::endl;
-	std::cout << (r3 > r4) << std::endl;
-
+	std::cout << (r3 <  r4) << std::endl;
+	std::cout << (r3 >  r4) << std::endl;
 	std::cout << (r3 <= r4) << std::endl;
 	std::cout << (r3 >= r4) << std::endl;
-
 	std::cout << (r3 == r4) << std::endl;
 	std::cout << (r3 != r4) << std::endl;
 
