@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-template < typename T, typename C = std::vector < T > > class Stack
+template < typename T, typename C = std::vector < T > > class Stack_v1
 {
 public: // note: member functions instantiated only if used
 
@@ -18,22 +18,34 @@ private:
 
 	C m_container; // note: internal storage
 
-}; // template < typename T, typename C = std::vector < T > > class Stack
+}; // template < typename T, typename C = std::vector < T > > class Stack_v1
 
-template < typename T, typename C > void Stack < T, C > ::push(T value)
+template < typename T, typename C > void Stack_v1 < T, C > ::push(T value)
 {
 	m_container.push_back(std::move(value));
 }
 
-template < typename T, typename C > [[nodiscard]] T Stack < T, C > ::top() const
+template < typename T, typename C > [[nodiscard]] T Stack_v1 < T, C > ::top() const
 {
 	return m_container.back(); // note: undefined behavior if empty
 }
 
-template < typename T, typename C > void Stack < T, C > ::pop()
+template < typename T, typename C > void Stack_v1 < T, C > ::pop()
 {
 	m_container.pop_back(); // note: undefined behavior if empty
 }
+
+template < typename T, template < typename E > typename C = std::vector > class Stack_v2
+{
+public:
+
+	auto size() const { return m_container.size(); }
+
+private:
+
+	C < T > m_container;
+
+}; // template < typename T, template < typename E > typename C = std::vector > class Stack_v2
 
 template < typename T1, typename T2 > struct Pair // note: see std::pair
 {
@@ -107,9 +119,9 @@ public:
 
 int main()
 {
-	Stack < double, std::deque < double > > deque_stack;
+	Stack_v1 < double, std::deque < double > > deque_stack_v1;
 
-	Stack < int > stack; // note: std::vector is used by default as an internal storage
+	Stack_v1 < int > stack; // note: std::vector is used by default as an internal storage
 
 	stack.push(1);
 	stack.push(2);
@@ -121,7 +133,9 @@ int main()
 
 	std::cout << stack.top() << std::endl;
 
-	Stack new_stack = stack;
+	Stack_v2 < double, std::deque > deque_stack_v2; // good: no duplication
+
+	Stack_v2 new_stack = deque_stack_v2;
 
 	Pair p{ 1.0, 100 }; // note: generated deduction guide for aggregate
 
