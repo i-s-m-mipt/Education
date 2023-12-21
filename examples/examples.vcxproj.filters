@@ -316,6 +316,15 @@
     <ClCompile Include="section_10\container_trees.cpp">
       <Filter>examples\section_10</Filter>
     </ClCompile>
+    <ClCompile Include="section_06\pimpl_idiom.cpp">
+      <Filter>examples\section_06</Filter>
+    </ClCompile>
+    <ClCompile Include="section_04\template_friends.cpp">
+      <Filter>examples\section_04</Filter>
+    </ClCompile>
+    <ClCompile Include="section_09\placement_new.cpp">
+      <Filter>examples\section_09</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
@@ -333,6 +342,9 @@
     <None Include="section_09\process_memory.drawio">
       <Filter>examples\section_09</Filter>
     </None>
+    <None Include="section_10\red_black_trees.drawio">
+      <Filter>examples\section_10</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="section_03\virtual_tables.png">
@@ -346,6 +358,9 @@
     </Image>
     <Image Include="section_09\process_memory.png">
       <Filter>examples\section_09</Filter>
+    </Image>
+    <Image Include="section_10\red_black_trees.png">
+      <Filter>examples\section_10</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
