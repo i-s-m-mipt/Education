@@ -24,7 +24,8 @@ public:
 
 }; // template < typename R1, typename R2 > class Add
 
-template < typename R1, typename R2 > using add_t = typename Add < R1, R2 > ::type;
+template < typename R1, typename R2 > using add_t = 
+typename Add < R1, R2 > ::type; // note: typename required, static object instead
 
 template < typename T, typename R = Ratio < 1 > > struct Duration { T value; };
 
