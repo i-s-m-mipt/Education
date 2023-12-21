@@ -24,7 +24,7 @@ int main()
     {
         while (true)
         {
-            new int[100'000'000];
+            new int[100'000'000]; // note: constructor can throw exceptions
         }
     }
     catch (const std::bad_alloc & exception) // good: modern approach
