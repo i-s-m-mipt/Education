@@ -106,17 +106,16 @@ public:
 		return *this;
 	}
 
-	auto operator++(int)
+	const auto operator++(int) // note: r++++ is prohibited
 	{
 		Ratio tmp(*this);
 
 		++(*this);
 
 		return tmp;
-
 	}
 
-	auto operator--(int)
+	const auto operator--(int) // note: r---- is prohibited
 	{
 		Ratio tmp(*this);
 
