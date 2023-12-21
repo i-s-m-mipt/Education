@@ -15,6 +15,10 @@ int main()
 
 //	int e[1'000'000'000]{}; // bad: array is too large, use dynamic array
 
+	std::cout << sizeof(a) / sizeof(a[0]) << std::endl; // note: old-style computation
+
+	std::cout << std::size(a) << std::endl; // good: common for static arrays and containers
+
 	*a = 42; // note: array name is a pointer to the first element
 
 	const auto m = size / 2;
