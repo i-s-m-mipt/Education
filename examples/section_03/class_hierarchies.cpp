@@ -19,14 +19,8 @@ public:
 
 	void print_person() const
 	{
-		std::cout << "only person" << std::endl;
+		std::cout << "definetely person" << std::endl;
 	}
-
-public:
-
-	void f([[maybe_unused]] int    x) const {}
-	void f([[maybe_unused]] char   x) const {}
-	void f([[maybe_unused]] double x) const {}
 
 protected:
 
@@ -41,7 +35,7 @@ private:
 
 }; // class Person
 
-class Employee : public Person
+class Employee : public Person // good: Employee is a variety of Person
 {
 public:
 
@@ -49,14 +43,14 @@ public:
 	{
 		std::cout << "employee " << name << " constructed" << std::endl;
 
-//		std::cout << m_name << std::endl; // error: private member
+//		std::cout << m_name << std::endl; // error: private member of base class
 
 		std::cout << get_name() << std::endl;
 	}
 
 public:
 
-	void print() const
+	void print() const // note: avoid inherited non-virtual functions redefinition
 	{
 		std::cout << "employee" << std::endl;
 
@@ -69,15 +63,11 @@ public:
 
 private:
 
-	using Person::f; // note: change access specifier for all overloaded functions to private
-
-private:
-
 	int m_salary = 0;
 
 }; // class Employee : public Person
 
-class Manager : public Employee
+class Manager : public Employee // good: Manager is a variety of Employee
 {
 public:
 
@@ -98,6 +88,16 @@ private:
 	int m_level = 0;
 
 }; // class Manager : public Employee
+
+class Servo {};
+
+class Robot // : private Servo // bad: Robot is implemented through Servo
+{
+private:
+
+	Servo m_servo; // good: prefer composition instead of private inheritance
+
+}; // class Robot
 
 class Base
 {
@@ -132,7 +132,7 @@ class Derived_2 : protected Base // note: useless inheritance
 
 }; // class Derived_2 : protected Base
 
-class Derived_3 : /*private*/ Base // note: default inheritance, prefer composition
+class Derived_3 : /*private*/ Base // note: default inheritance
 {
 	void f()
 	{
