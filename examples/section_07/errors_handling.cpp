@@ -21,7 +21,7 @@ template < typename T = Bad > struct S
 
 void cleanup()
 {
-    std::cout << "cleanup" << std::endl;
+    std::cerr << "cleanup at exit" << std::endl;
 }
 
 int main()
@@ -44,7 +44,7 @@ int main()
 
 //  S bad; // error: static assertion failed
 
-    std::atexit(cleanup); // note: exit callback
+    std::atexit(cleanup); // note: set exit callback function
 
     std::cout << "Terminate normally? (y/n) "; char c{};
 
