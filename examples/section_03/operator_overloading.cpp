@@ -5,18 +5,17 @@ class Ratio
 {
 public:
 
-	/*explicit*/ Ratio(int n = 0, int d = 1) : // good: no explicit constructor
-		m_numerator(n), m_denominator(d) 
+	/*explicit*/ Ratio(int num = 0, int den = 1) : m_num(num), m_den(den) 
 	{
-		if (m_denominator == 0) // note: primitive error handling
+		if (m_den == 0) // note: primitive error handling
 		{
 			std::cout << "invalid denominator" << std::endl;
 		}
 
-		if (m_denominator < 0) // note: numerator keeps ratio sign
+		if (m_den <  0) // note: numerator keeps ratio sign
 		{
-			m_numerator   *= -1;
-			m_denominator *= -1;
+			m_num *= -1;
+			m_den *= -1;
 		}
 
 		reduce();
@@ -24,48 +23,47 @@ public:
 
 	explicit operator double() const // good: explicit cast operator
 	{
-		return 1.0 * m_numerator / m_denominator;
+		return 1.0 * m_num / m_den;
 	}
 
 private:
 
 	void reduce()
 	{
-		auto gcd = std::gcd(m_numerator, m_denominator);
+		auto gcd = std::gcd(m_num, m_den);
 
-		m_numerator   /= gcd;
-		m_denominator /= gcd;
+		m_num /= gcd;
+		m_den /= gcd;
 	}
 
 public:
 
 	auto numerator() const
 	{
-		return m_numerator;
+		return m_num;
 	}
 
 	auto denominator() const
 	{
-		return m_denominator;
+		return m_den;
 	}
 
 public:
 
 	void print() const // note: function instead of output operator
 	{
-		std::cout << m_numerator << '/' << m_denominator << std::endl;
+		std::cout << m_num << '/' << m_den << std::endl;
 	}
 
 public:
 
 	auto & operator+=(Ratio other)
 	{
-		auto lcm = std::lcm(m_denominator, other.m_denominator);
+		auto lcm = std::lcm(m_den, other.m_den);
 
-		m_numerator = m_numerator * (lcm /       m_denominator) +
-			    other.m_numerator * (lcm / other.m_denominator);
+		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den);
 
-		m_denominator = lcm;
+		m_den = lcm;
 
 		reduce();
 
@@ -74,13 +72,13 @@ public:
 
 	auto & operator-=(Ratio other)
 	{
-		return (*this += (other.m_numerator *= -1));
+		return (*this += (other.m_num *= -1));
 	}
 		
 	auto & operator*=(Ratio other)
 	{
-		m_numerator   *= other.m_numerator;
-		m_denominator *= other.m_denominator;
+		m_num *= other.m_num;
+		m_den *= other.m_den;
 
 		reduce();
 
@@ -89,21 +87,21 @@ public:
 	
 	auto & operator/=(Ratio other)
 	{
-		return (*this *= Ratio(other.m_denominator, other.m_numerator));
+		return (*this *= Ratio(other.m_den, other.m_num));
 	}
 
 public:
 
 	auto & operator++()
 	{
-		m_numerator += m_denominator;
+		m_num += m_den;
 
 		return *this;
 	}
 
 	auto & operator--()
 	{
-		m_numerator -= m_denominator;
+		m_num -= m_den;
 
 		return *this;
 	}
@@ -129,8 +127,8 @@ public:
 
 private:
 
-	int m_numerator;
-	int m_denominator;
+	int m_num;
+	int m_den;
 
 }; // class Ratio
 
