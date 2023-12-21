@@ -1,7 +1,7 @@
 #include <iostream>
 #include <type_traits>
 
-template < typename T > T max_v1(T x, T y)
+template < typename T > T max_v1(T x, T y) // note: can be class instead of typename
 {
 	return (x < y ? y : x);
 }
