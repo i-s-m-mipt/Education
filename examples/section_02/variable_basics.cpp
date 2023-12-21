@@ -59,6 +59,8 @@ int main()
 
 //	pi = 1.0; // error: constant variable
 
+	[[maybe_unused]] volatile auto v = 0; // note: something strange
+
 	using my_type = const double; // good: new style type alias
 
 	[[maybe_unused]] my_type e = 2.72;
