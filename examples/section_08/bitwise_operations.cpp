@@ -30,17 +30,17 @@ struct Datetime
 
 int main()
 {
-    [[maybe_unused]] auto b = 0b101010; // note: binary
-    [[maybe_unused]] auto o = 052;      // note: octal
-    [[maybe_unused]] auto d = 42;       // note: decimal
-    [[maybe_unused]] auto x = 0x2a;     // note: hexadecimal
-
     std::cout << std::showbase;
 
     std::cout << 
         std::oct << 42 << std::endl << 
         std::dec << 42 << std::endl << 
         std::hex << 42 << std::endl;
+
+    [[maybe_unused]] auto b = 0b101010; // note: binary
+    [[maybe_unused]] auto o = 052;      // note: octal
+    [[maybe_unused]] auto d = 42;       // note: decimal
+    [[maybe_unused]] auto x = 0x2a;     // note: hexadecimal
 
     auto data = 0x1234;
     auto mask = 0x00f0;
