@@ -15,18 +15,7 @@ template < typename C > void verify(const std::string & name)
 	std::cout << std::endl;
 }
 
-struct kilometers // note: user-defined units
-{ 
-	unsigned long long n; 
-
-}; // struct kilometers
-
-constexpr auto operator""_km(unsigned long long km)
-{
-	return kilometers{ km };
-}
-
-class Timer
+class Timer // note: RAII-based timer
 {
 public:
 
@@ -57,7 +46,7 @@ private:
 int main()
 {
 	verify < std::chrono::system_clock > ("system clock");
-	verify < std::chrono::steady_clock > ("steady clock");
+	verify < std::chrono::steady_clock > ("steady clock"); // note: monotonic clock
 	
 	std::cout << std::chrono::system_clock::time_point() << std::endl; // note: clock epoch
 
@@ -68,12 +57,6 @@ int main()
 	std::chrono::duration < long long, std::ratio < 1, 1000 > > duration_1(42);
 
 	std::chrono::milliseconds duration_2(42);
-
-	using namespace std::literals;
-
-	auto duration_3 = 42ms; // note: standard literal
-
-	auto distance = 88_km; // note: user-defined literal
 
 	auto result = std::chrono::hours(100) + std::chrono::minutes(200);
 
