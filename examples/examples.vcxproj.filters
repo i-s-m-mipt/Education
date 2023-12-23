@@ -325,6 +325,9 @@
     <ClCompile Include="section_09\placement_new.cpp">
       <Filter>examples\section_09</Filter>
     </ClCompile>
+    <ClCompile Include="section_08\advanced_literals.cpp">
+      <Filter>examples\section_08</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
