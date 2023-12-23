@@ -75,7 +75,7 @@ void f()
 	{
 		std::cerr << exception.what() << std::endl;
 
-		throw std::runtime_error("new error"); // note: throw new exception
+		throw std::runtime_error("error"); // note: throw new exception
 
 //		std::cerr << "f() exited in catch" << std::endl; // warning: unreachable code
 	}
@@ -87,15 +87,17 @@ class C
 {
 public:
 
-	explicit C(const std::string & data) try : m_data(data)
+	explicit C(const std::string & data) try : m_data(data) // note: function try block
 	{
 		std::cout << "constructor" << std::endl;
+
+		throw std::runtime_error("error");
 	}
-	catch (...) // note: destructor will not be called
+	catch (...) // note: destructor will not be called, but m_data will be destroyed
 	{
 		std::cerr << "constructor exception" << std::endl;
 
-		throw; // good: rethrow the same exception
+		uninitialize(); // note: mandatory call, prefer RAII wrappers instead
 	}
 
 	const auto & data() const noexcept // good: primitive noexcept getter
