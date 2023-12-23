@@ -328,6 +328,9 @@
     <ClCompile Include="section_08\advanced_literals.cpp">
       <Filter>examples\section_08</Filter>
     </ClCompile>
+    <ClCompile Include="section_03\dynamic_typing.cpp">
+      <Filter>examples\section_03</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">

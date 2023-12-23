@@ -112,6 +112,7 @@
     <ClCompile Include="section_03\class_optimizations.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="section_03\dynamic_typing.cpp" />
     <ClCompile Include="section_03\multiple_inheritance.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
