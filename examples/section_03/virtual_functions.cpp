@@ -117,23 +117,6 @@ int main()
 
 	delete s_ptr; // note: important virtual destructor
 
-	s_ptr = new Polygon;
-
-	[[maybe_unused]] auto p1_ptr = dynamic_cast < Polygon * > (s_ptr); // note: runtime type checking
-
-	delete s_ptr;
-
-	s_ptr = new Ellipse;
-
-	auto p3_ptr = dynamic_cast < Polygon * > (s_ptr); // note: prefer virtual functions instead of casts
-
-	if (!p3_ptr)
-	{
-		std::cout << "invalid dynamic cast" << std::endl;
-	}
-
-	delete s_ptr;
-
 	Derived d;
 
 	Abstract_Base * ab_ptr = &d; // good: interface class
