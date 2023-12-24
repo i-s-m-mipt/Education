@@ -1,4 +1,3 @@
-#include <cassert>
 #include <compare>
 #include <iostream>
 
@@ -39,27 +38,29 @@ int main()
     auto x = 4;
     auto y = 7;
 
-    assert((x <=> y) < 0); // note: rewrited expression x < y
+    if ((x <=> y) < 0) std::cout << "x < y" << std::endl << std::endl; // note: same as x < y
 
     Apple apple_1(200.0);
     Apple apple_2(100.0);
 
-    assert(apple_1 <  apple_2);
-    assert(apple_1 >  apple_2);
-    assert(apple_1 <= apple_2);
-    assert(apple_1 >= apple_2);
-//  assert(apple_1 == apple_2); // note: partial ordering
-//  assert(apple_1 != apple_2); // note: partial ordering
+    std::cout << "apple_1 <  apple_2: " << (apple_1 <  apple_2) << std::endl;
+    std::cout << "apple_1 >  apple_2: " << (apple_1 >  apple_2) << std::endl;
+    std::cout << "apple_1 <= apple_2: " << (apple_1 <= apple_2) << std::endl;
+    std::cout << "apple_1 >= apple_2: " << (apple_1 >= apple_2) << std::endl;
+//  std::cout << "apple_1 == apple_2: " << (apple_1 == apple_2) << std::endl; // note: partial ordering
+//  std::cout << "apple_1 != apple_2: " << (apple_1 != apple_2) << std::endl; // note: partial ordering
+
+    std::cout << std::endl;
 
     Human human_1(85.0, 185.0);
     Human human_2(80.0, 180.0);
 
-    assert(human_1 <  human_2);
-    assert(human_1 >  human_2);
-    assert(human_1 <= human_2);
-    assert(human_1 >= human_2);
-    assert(human_1 == human_2);
-    assert(human_1 != human_2);
+    std::cout << "human_1 <  human_2: " << (human_1 <  human_2) << std::endl;
+    std::cout << "human_1 >  human_2: " << (human_1 >  human_2) << std::endl;
+    std::cout << "human_1 <= human_2: " << (human_1 <= human_2) << std::endl;
+    std::cout << "human_1 >= human_2: " << (human_1 >= human_2) << std::endl;
+    std::cout << "human_1 == human_2: " << (human_1 == human_2) << std::endl;
+    std::cout << "human_1 != human_2: " << (human_1 != human_2) << std::endl;
 
     return 0;
 }
