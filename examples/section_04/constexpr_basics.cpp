@@ -65,6 +65,8 @@ template < typename T, typename ... Types > void print(const T & arg, const Type
 	}
 }
 
+constinit auto global_variable = 42; // note: compile-time initialization
+
 int main()
 {
 	constexpr auto x = 5; // note: compile-time constant
@@ -92,6 +94,8 @@ int main()
 	std::cout << result << ' ' << f(y) << std::endl;
 
 	print('a', 42, 3.14);
+
+	std::cout << ++global_variable << std::endl; // note: non-constant global variable
 
 	return 0;
 }
