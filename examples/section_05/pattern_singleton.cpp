@@ -30,11 +30,11 @@ private:
 
 }; // class Singleton 
 
-class noncopyable // good: better than singleton
+class noncopyable // good: non-polymorphic class, better than singleton
 {
 protected:
 
-    noncopyable() = default; // note: non-virtual destructor
+    noncopyable() = default;
 
     noncopyable            (const noncopyable &) = delete;
     noncopyable & operator=(const noncopyable &) = delete;
