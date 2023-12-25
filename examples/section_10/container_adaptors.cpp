@@ -32,5 +32,19 @@ int main()
 
 	assert(q.front() == 2); assert(q.back() == 3);
 
+	std::priority_queue < int > pq; // note: FIFO concept with sort
+
+	pq.push(2);
+	pq.push(3);
+	pq.push(1);
+
+	assert(std::size(pq) == 3);
+
+	assert(pq.top() == 3);
+
+	pq.pop();
+
+	assert(pq.top() == 2);
+
 	return 0;
 }
