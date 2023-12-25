@@ -2,25 +2,25 @@
 #include <iostream>
 #include <string>
 
-class X
+class C
 {
 public:
 
-	explicit X(std::size_t index) : m_index(index)
+	explicit C(std::size_t index) : m_index(index)
 	{
-		std::cout << "X::CTOR called, index: " << m_index << std::endl;
+		std::cout << "C::CTR called, index: " << m_index << std::endl;
 	}
 
-	~X()
+	~C()
 	{
-		std::cout << "X::DTOR called, index: " << m_index << std::endl;
+		std::cout << "C::DTR called, index: " << m_index << std::endl;
 	}
 
 private:
 
 	std::size_t m_index;
 
-}; // class X
+}; // class C
 
 union U
 {
@@ -33,28 +33,64 @@ union U
 
 }; // union U
 
+template < typename T > class Manager // note: CRTP
+{
+public:
+
+	void * operator new(std::size_t size) // note: overloaded version for Manager, implicitly static
+	{
+		std::cout << "Manager::operator new called" << std::endl;
+
+		return ::operator new(size); // note: global operator new call
+	}
+
+	void operator delete(void * pointer) // note: overloaded version for Manager, implicitly static
+	{
+		std::cout << "Manager::operator delete called" << std::endl;
+
+		return ::operator delete(pointer); // note: global operator delete call
+	}
+
+}; // template < typename T > class Manager
+
+class User : public Manager < User >
+{
+public:
+
+	User()
+	{
+		std::cout << "User::CTR called" << std::endl;
+	}
+
+	~User()
+	{
+		std::cout << "User::DTR called" << std::endl;
+	}
+
+}; // class User : public Manager < User > 
+
 int main()
 {
-	assert(sizeof(X) == sizeof(std::size_t));
+	assert(sizeof(C) == sizeof(std::size_t));
 
 	const std::size_t size = 5;
 
-	auto ptr = static_cast < X * > (operator new(sizeof(X) * size)); // note: uninitialized memory
+	auto ptr = static_cast < C * > (operator new(sizeof(C) * size)); // note: uninitialized memory
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		new (ptr + i) X(i); // note: placement new, construction without allocation
+		new (ptr + i) C(i); // note: placement new, construction without allocation
 	}
 
 	const std::size_t offset = size / 2;
 
-	(ptr + offset)->~X();
+	(ptr + offset)->~C();
 
-	new (ptr + offset) X(42); // note: object reconstruction in the same memory cell
+	new (ptr + offset) C(42); // note: object reconstruction in the same memory cell
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		ptr[i].~X();
+		ptr[i].~C();
 	}
 
 	operator delete(ptr); // note: uninitialized memory
@@ -72,6 +108,8 @@ int main()
 	u.s2 = "world";
 
 	u.s2.~basic_string(); // good: explicit member destructor call
+
+	delete(new User); // note: overloaded versions are used instead of global versions
 
 	return 0;
 }
