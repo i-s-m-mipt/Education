@@ -334,6 +334,9 @@
     <ClCompile Include="section_05\spaceship_operator.cpp">
       <Filter>examples\section_05</Filter>
     </ClCompile>
+    <ClCompile Include="section_10\container_adaptors.cpp">
+      <Filter>examples\section_10</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
