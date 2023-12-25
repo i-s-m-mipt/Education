@@ -8,7 +8,7 @@ public:
 
 public:
 
-    [[nodiscard]] virtual Computer * clone() const = 0; // note: additional function
+    [[nodiscard]] virtual Computer * clone() const = 0; // note: virtual constructor
 
     virtual void run() const = 0;
 
