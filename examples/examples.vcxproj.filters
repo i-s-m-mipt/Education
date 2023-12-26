@@ -289,7 +289,7 @@
     <ClCompile Include="section_09\smart_pointers.cpp">
       <Filter>examples\section_09</Filter>
     </ClCompile>
-    <ClCompile Include="section_09\memory_details.cpp">
+    <ClCompile Include="section_09\bad_allocations.cpp">
       <Filter>examples\section_09</Filter>
     </ClCompile>
     <ClCompile Include="section_09\shared_from_this.cpp">
