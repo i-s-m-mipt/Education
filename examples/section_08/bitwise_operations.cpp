@@ -1,3 +1,4 @@
+#include <bit>
 #include <bitset>
 #include <cassert>
 #include <cstddef>
@@ -14,6 +15,8 @@ constexpr std::uint16_t middle(std::uint32_t x)
 
 void print(const std::span < const std::byte > & bytes)
 {
+    std::cout << std::boolalpha << (std::endian::native == std::endian::little) << std::endl;
+
     for (std::size_t i = 0; i < sizeof(int); ++i)
     {
         if (auto byte = std::to_integer < int > (bytes[i]); byte != 0)
