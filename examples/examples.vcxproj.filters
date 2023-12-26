@@ -337,6 +337,9 @@
     <ClCompile Include="section_10\container_adaptors.cpp">
       <Filter>examples\section_10</Filter>
     </ClCompile>
+    <ClCompile Include="section_10\circular_buffer.cpp">
+      <Filter>examples\section_10</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
