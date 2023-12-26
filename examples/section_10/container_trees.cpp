@@ -1,6 +1,7 @@
 #include <cassert>
 #include <map>
 #include <set>
+#include <string>
 
 int main()
 {
@@ -10,6 +11,8 @@ int main()
 	set.insert(2);
 	set.insert(4);
 	set.insert(5);
+
+	set.insert(std::begin(set), 0); // good: O(1) complexity (amortized)
 
 	assert(!set.insert(1).second); // note: insert differs for std::multiset
 
@@ -24,6 +27,14 @@ int main()
 
 	assert(!set.contains(1));
 	assert( set.contains(3));
+
+	std::map < std::string, int > map; // note: O(log(N)) complexity for single operations
+
+	map.insert(std::make_pair("Jenssen", 26));
+
+	map["Matthias"] = map.at("Jenssen");
+
+	map.erase("Jenssen"); // note: the only way to change key
 
 	return 0;
 }

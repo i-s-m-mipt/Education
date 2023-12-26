@@ -142,7 +142,7 @@
     <ClCompile Include="section_18\inline_assembler.cpp">
       <Filter>examples\section_18</Filter>
     </ClCompile>
-    <ClCompile Include="section_19\types_deduction.cpp">
+    <ClCompile Include="section_19\types_inference.cpp">
       <Filter>examples\section_19</Filter>
     </ClCompile>
     <ClCompile Include="section_05\pattern_adapter.cpp">
