@@ -17,26 +17,31 @@ int main()
 
 	assert(list_2.remove(42) == 1); // note: erases all elements that are equal 42
 
-	list_1.merge(list_2); // note: { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+	list_1.merge(list_2); // note: { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 } in list_1
 
-	std::list < int > list_3;
-
-	list_3.splice(std::begin(list_3), list_1, 
+	list_2.splice(std::begin(list_2), list_1, 
 		          std::begin(list_1),
 		std::next(std::begin(list_1), std::size(list_1) / 2));
 
-	for (auto iterator = std::crbegin(list_3); iterator != std::crend(list_3); ++iterator)
+	for (auto iterator = std::crbegin(list_2); iterator != std::crend(list_2); ++iterator)
 	{
 		std::cout << *iterator << ' '; // note: { 4, 3, 2, 1, 0 }
 	}
+
+	std::cout << std::endl;
 
 	std::forward_list < int > forward_list({ 1, 2, 3, 4, 5 }); // note: forward iterators
 
 	forward_list.insert_after(forward_list.before_begin(), 42);
 
-	forward_list.push_front(42); // note: no push_back member function
+	forward_list.push_front(43); // note: no push_back member function
 
-	forward_list.erase_after(std::begin(forward_list)); // note: { 42, 1, 2, 3, 4, 5 }
+	forward_list.erase_after(std::begin(forward_list)); 
+
+	for (auto iterator = std::cbegin(forward_list); iterator != std::cend(forward_list); ++iterator)
+	{
+		std::cout << *iterator << ' '; // note: { 43, 1, 2, 3, 4, 5 }
+	}
 
 //	assert(std::size(forward_list) == 6); // error: forward_list has no size() member
 
