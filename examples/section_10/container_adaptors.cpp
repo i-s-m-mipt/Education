@@ -35,7 +35,7 @@ int main()
 	std::priority_queue < int > pq; // note: FIFO concept with sort
 
 	pq.push(2);
-	pq.push(3);
+	pq.push(3); // note: highest priority
 	pq.push(1);
 
 	assert(std::size(pq) == 3);
