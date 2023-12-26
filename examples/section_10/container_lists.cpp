@@ -23,9 +23,9 @@ int main()
 		          std::begin(list_1),
 		std::next(std::begin(list_1), std::size(list_1) / 2));
 
-	for (auto iterator = std::crbegin(list_2); iterator != std::crend(list_2); ++iterator)
+	for (auto iterator = std::cbegin(list_2); iterator != std::cend(list_2); ++iterator)
 	{
-		std::cout << *iterator << ' '; // note: { 4, 3, 2, 1, 0 }
+		std::cout << *iterator << ' '; // note: { 0, 1, 2, 3, 4 }
 	}
 
 	std::cout << std::endl;
