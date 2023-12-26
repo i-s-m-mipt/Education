@@ -1,4 +1,5 @@
 #include <iostream>
+#include <span>
 #include <string>
 #include <vector>
 
@@ -9,6 +10,11 @@
 	return (x + y + z);
 }
 
+void set_code(int * code = nullptr) // good: nullptr as default argument
+{
+	[[maybe_unused]] auto local_code = (code ? *code : 1234);
+} 
+
 void test_pointers(int * x, const int * y) // note: demo only
 {
 	if (!x || !y)
@@ -16,52 +22,47 @@ void test_pointers(int * x, const int * y) // note: demo only
 		return;
 	}
 
-	std::cout << *x << ' ' << *y << std::endl;
-
 	++(*x);
 //	++(*y); // error: pointer to constant value
-
-	std::cout << *x << ' ' << *y << std::endl;
 }
 
-void test_references(int & x, const int & y) // note: demo only
+void test_references(int & x, [[maybe_unused]] const int & y) // note: demo only
 {
-	std::cout << x << ' ' << y << std::endl;
-
 	++x;
 //	++y; // error: constant reference
-
-	std::cout << x << ' ' << y << std::endl;
 }
 
-void pass_big_object(const std::string & s) // good: constant reference
+void print_string(const std::string & string) // good: constant reference for read-only
 {
-	std::cout << s << std::endl;
+	std::cout << string << std::endl;
 }
 
-void print_vector(const std::vector < int > & v) // good: no size required
-{
-	const auto size = v.size();
-
-	for (std::size_t i = 0; i < size; ++i)
-	{
-		std::cout << v[i] << (i + 1 == size ? '\n' : ' ');
-	}
-
-	std::cout << std::endl;
-}
-
-void test_array(int * a, std::size_t size) // note: array size as additional argument
+void print_array(int * array, std::size_t size) // note: array size as additional argument
 {
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		std::cout << a[i] << (i + 1 == size ? '\n' : ' ');
+		std::cout << array[i] << (i + 1 == size ? '\n' : ' ');
 	}
 }
 
-void set_code(int * code = nullptr) // good: nullptr as default argument
+void print_span(std::span < int > span) // good: std::span knows its size as all* containers
 {
-	[[maybe_unused]] auto local_code = (code ? *code : 1234);
+	const auto size = span.size();
+
+	for (std::size_t i = 0; i < size; ++i)
+	{
+		std::cout << span[i] << (i + 1 == size ? '\n' : ' ');
+	}
+}
+
+void print_vector(const std::vector < int > & vector) // good: std::vector knows its size
+{
+	const auto size = vector.size();
+
+	for (std::size_t i = 0; i < size; ++i)
+	{
+		std::cout << vector[i] << (i + 1 == size ? '\n' : ' ');
+	}
 }
 
 /*
@@ -84,11 +85,11 @@ int & get_dangling_reference()
 
 void h()
 {
-	auto x = 0;
+	auto x = 0; // note: ordinary local variable
 
 	static auto y = 0; // note: once initialized static variable
 
-	std::cout << x++ << ' ' << y++ << std::endl;
+	std::cout << ++x << ' ' << ++y << std::endl;
 
 	return;
 }
@@ -122,33 +123,25 @@ int main()
 	auto x = 0;
 	auto y = 0;
 
-	test_pointers(&x, &y);
-
-	std::cout << x << ' ' << y << std::endl;
-
-	test_references(x, y);
-
-	std::cout << x << ' ' << y << std::endl;
-
-	std::vector < int > v = { 1, 2, 3, 4, 5 };
-
-	print_vector(v); // good: no copy
+	test_pointers  (&x, &y); std::cout << x << ' ' << y << std::endl;
+	test_references( x,  y); std::cout << x << ' ' << y << std::endl;
 
 	const std::size_t size = 5;
 
-	int array_1[size]{ 1, 2, 3, 4, 5 };
+	int   array_1          [size]{ 1, 2, 3, 4, 5 };
+	int * array_2 = new int[size]{ 1, 2, 3, 4, 5 };
 
-	test_array(array_1, size); // note: uniform syntax
-
-	auto array_2 = new int[size]{ 1, 2, 3, 4, 5 };
-
-	test_array(array_2, size);
+	print_array(array_1, size); print_span({ array_1       });
+	print_array(array_2, size); print_span({ array_2, size });
 
 	delete[] array_2;
 
-//	std::cout << *get_dangling_pointer() << std::endl; // bad: undefined behavior
+	std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-//	std::cout << get_dangling_reference() << std::endl; // bad: undefined behavior
+	print_vector(vector); // good: no copying of big object
+
+//	std::cout << *get_dangling_pointer  () << std::endl; // bad: undefined behavior
+//	std::cout <<  get_dangling_reference() << std::endl; // bad: undefined behavior
 
 	h();
 	h();
@@ -165,7 +158,7 @@ int main()
 	return 0;
 }
 
-int f(int x)
+int f(int x) // note: separate definition only for demonstration here
 {
 	return (x + 1);
 }
