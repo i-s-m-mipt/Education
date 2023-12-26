@@ -47,7 +47,7 @@ int main()
 	{
 		for (std::size_t j = 0; j < size; ++j)
 		{
-			array_2D_v1[i][j] = 41;
+			array_2D_v1[i][j] = 42;
 		}
 	}
 
