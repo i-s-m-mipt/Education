@@ -119,7 +119,7 @@ int main()
 	const std::size_t size_2 = 4;
 	const std::size_t size_3 = 5;
 
-	boost::multi_array < int, 3 > array(boost::extents[size_1][size_2][size_3]); // note: 3D boost::multi_array
+	boost::multi_array < int, 3 > array_2D_v7(boost::extents[size_1][size_2][size_3]); // note: 3D boost::multi_array
 
 	auto index = 0;
 
@@ -129,7 +129,7 @@ int main()
 		{
 			for (std::size_t k = 0; k < size_3; ++k)
 			{
-				std::cout << std::setw(2) << std::right << (array[i][j][k] = ++index) << ' ';
+				std::cout << std::setw(2) << std::right << (array_2D_v7[i][j][k] = ++index) << ' ';
 			}
 
 			std::cout << std::endl;
@@ -140,7 +140,7 @@ int main()
 
 	using range_t = boost::multi_array_types::index_range;
 
-	auto view = array[boost::indices[range_t(0, 2)][1][range_t(0, 5, 2)]]; // note: 2D partial view
+	auto view = array_2D_v7[boost::indices[range_t(0, 2)][1][range_t(0, 5, 2)]]; // note: 2D partial view
 
 	const std::size_t view_size_1 = 2;
 	const std::size_t view_size_2 = 3;
