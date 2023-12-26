@@ -32,7 +32,7 @@ int main()
 
 	assert(q.front() == 2); assert(q.back() == 3);
 
-	std::priority_queue < int > pq; // note: FIFO concept with sort
+	std::priority_queue < int > pq; // note: FIFO concept with priority
 
 	pq.push(2);
 	pq.push(3); // note: highest priority
