@@ -4,7 +4,7 @@
 
 class Data {};
 
-class Loader // note: proxy class for lazy loading
+class Loader // note: proxy class with lazy loading
 {
 public:
 
