@@ -310,7 +310,7 @@
     <ClCompile Include="section_10\container_lists.cpp">
       <Filter>examples\section_10</Filter>
     </ClCompile>
-    <ClCompile Include="section_10\multidimensional.cpp">
+    <ClCompile Include="section_10\multidimensionals.cpp">
       <Filter>examples\section_10</Filter>
     </ClCompile>
     <ClCompile Include="section_10\container_trees.cpp">
