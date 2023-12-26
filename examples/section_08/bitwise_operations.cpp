@@ -4,11 +4,25 @@
 #include <cstdint>
 #include <iomanip>
 #include <iostream>
+#include <span>
 #include <type_traits>
 
 constexpr std::uint16_t middle(std::uint32_t x)
 {
     return (x >> 8) & 0xffff;
+}
+
+void print(const std::span < const std::byte > & bytes)
+{
+    for (std::size_t i = 0; i < sizeof(int); ++i)
+    {
+        if (auto byte = std::to_integer < int > (bytes[i]); byte != 0)
+        {
+            std::cout << std::hex << byte << ' ';
+        }
+    }
+        
+    std::cout << std::endl;
 }
 
 template < typename T > auto distance_in_bytes(T * first, T * last)
@@ -78,21 +92,21 @@ int main()
     byte |= std::byte{ 0b1111'0000 }; assert(std::to_integer < int > (byte) == 0b1111'1010);
     byte &= std::byte{ 0b1111'0000 }; assert(std::to_integer < int > (byte) == 0b1111'0000);
 
-    auto ptr_int = &x;
+    const std::size_t size = 10;
 
-    std::cout << std::dec << *ptr_int << std::endl;
+    int array[size]{ 42 };
+
+    print(std::as_bytes(std::span < int > (array)));
+
+    auto ptr_int = &x; assert(*ptr_int == 42);
 
     auto ptr_char = reinterpret_cast < char * > (ptr_int); // note: very dangerous
 
     std::cout << *ptr_char << std::endl;
 
-    const std::size_t size = 10;
+    assert(&array[size - 1] - &array[0] == 9); // note: pointer arithmetic
 
-    int a[size]{};
-
-    assert(&a[size - 1] - &a[0] == 9); // note: pointer arithmetic
-
-    assert(distance_in_bytes(&a[0], &a[size - 1]) == 36);
+    assert(distance_in_bytes(&array[0], &array[size - 1]) == 36);
 
     return 0;
 }
