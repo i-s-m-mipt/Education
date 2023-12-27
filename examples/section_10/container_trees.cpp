@@ -5,7 +5,7 @@
 
 int main()
 {
-	std::set set({1, 2, 3, 4, 5}); // note: O(log(N)) complexity for single operations
+	std::set set({1, 2, 3, 4, 5}); // note: O(log(N)) complexity for operations
 
 	set.insert(std::begin(set), 0); // good: O(1) complexity (amortized) at best
 
@@ -21,7 +21,7 @@ int main()
 
 	auto node = set.extract(1); node.value() = 3; set.insert(std::move(node));
 
-	std::map < std::string, int > map; // note: O(log(N)) complexity for single operations
+	std::map < std::string, int > map; // note: O(log(N)) complexity for operations
 
 	map.insert(std::make_pair("hello", 42)); // good: prefer std::make_pair function
 
