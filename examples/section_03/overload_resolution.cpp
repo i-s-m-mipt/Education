@@ -69,9 +69,9 @@ private:
 
 Person create_person(const std::string & name)
 {
-	Person p(name);
+	Person person(name);
 
-	return p;
+	return person;
 }
 
 int main()
@@ -89,11 +89,11 @@ int main()
 //	f(d); // error: ambiguous function overloading 
 	f(i);
 
-	Person p("Ivan");
+	Person person("Matthias");
 
-	std::cout << p.name() << std::endl; // note: lvalue version
+	std::cout << person.name() << std::endl; // note: lvalue version
 
-	std::cout << create_person("Ivan").name() << std::endl; // note: rvalue version
+	std::cout << create_person("Matthias").name() << std::endl; // note: rvalue version
 	
 	return 0;
 }
