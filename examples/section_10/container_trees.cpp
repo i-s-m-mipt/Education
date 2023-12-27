@@ -5,13 +5,7 @@
 
 int main()
 {
-	std::set < int > set; // note: O(log(N)) complexity for single operations
-
-	set.insert(1);
-	set.insert(2);
-	set.insert(3);
-	set.insert(4);
-	set.insert(5);
+	std::set set({1, 2, 3, 4, 5}); // note: O(log(N)) complexity for single operations
 
 	set.insert(std::begin(set), 0); // good: O(1) complexity (amortized) at best
 
@@ -26,9 +20,6 @@ int main()
 	assert(*set.lower_bound(4) == 4 && *set.upper_bound(4) == 5);
 
 	auto node = set.extract(1); node.value() = 3; set.insert(std::move(node));
-
-	assert(!set.contains(1));
-	assert( set.contains(3));
 
 	std::map < std::string, int > map; // note: O(log(N)) complexity for single operations
 
