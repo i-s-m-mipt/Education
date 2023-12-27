@@ -11,7 +11,7 @@ auto hash(const std::string & string) // note: sequential hash function for stri
 
 	for (std::size_t i = 0; i < std::size(string); ++i)
 	{
-		(seed *= 43) += static_cast < unsigned int > (string[i]); // note: prime number
+		(seed *= 31) += static_cast < unsigned int > (string[i]); // note: prime number
 	}
 
 	return seed;
