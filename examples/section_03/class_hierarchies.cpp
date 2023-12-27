@@ -145,7 +145,7 @@ class Derived_3 : /*private*/ Base // note: default inheritance
 
 int main()
 {
-	Manager manager("Ivan", 100000, 10);
+	Manager manager("Matthias", 100000, 10);
 
 	manager.print();
 
