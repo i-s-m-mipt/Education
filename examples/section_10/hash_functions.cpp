@@ -8,7 +8,7 @@ auto hash(const std::string & string) // note: sequential hash function for stri
 
 	for (std::size_t i = 0; i < std::size(string); ++i)
 	{
-		(hash *= 59) += static_cast < unsigned int > (string[i]); // note: some magic here
+		(hash *= 59) += static_cast < unsigned int > (string[i]); // note: prime number
 	}
 
 	return hash;
