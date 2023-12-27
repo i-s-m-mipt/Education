@@ -19,10 +19,8 @@ template < typename T = Bad > struct S
 
 }; // template < typename T > struct S
 
-void cleanup()
-{
-    std::cerr << "cleanup at exit" << std::endl;
-}
+void cleanup_v1() { std::cerr << "cleanup_v1 at exit" << std::endl; }
+void cleanup_v2() { std::cerr << "cleanup_v2 at exit" << std::endl; }
 
 int main()
 {
@@ -40,11 +38,12 @@ int main()
     assert       ((sizeof(int) == 4) && "required size of int 4 bytes");
     static_assert((sizeof(int) == 4),   "required size of int 4 bytes");
 
-    S < int > good;
+    [[maybe_unused]] S < int > good;
 
 //  S bad; // error: static assertion failed
 
-    std::atexit(cleanup); // note: set exit callback function
+    std::atexit(cleanup_v1);
+    std::atexit(cleanup_v2);
 
     std::cout << "Terminate normally? (y/n) "; char c{};
 
@@ -57,5 +56,5 @@ int main()
         std::abort(); // note: abnormal termination, cleanup not called
     }
 
-	return 0;
+//	return 0; // warning: unreachable code
 }
