@@ -17,17 +17,19 @@ auto hash(const std::string & string) // note: sequential hash function for stri
 	return seed;
 }
 
-template < typename T > void bind(std::size_t & seed, const T & value) noexcept
+template < typename T > 
+void bind(std::size_t & seed, const T & value) noexcept
 {
 	seed ^= (seed + 0x9e3779b9 + std::hash < T > ()(value)); // note: ^= instead of +=
 }
 
-template < typename T > void hash(std::size_t & seed, const T & value) noexcept
+template < typename T > 
+void hash(std::size_t & seed, const T & value) noexcept
 {
 	bind(seed, value);
 }
 
-template < typename T, typename ... Types >
+template < typename T, typename ... Types > 
 void hash(std::size_t & seed, const T & value, const Types & ... args) noexcept
 {
 	bind(seed, value); hash(seed, args...);
