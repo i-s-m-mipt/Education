@@ -7,24 +7,22 @@
 
 auto hash(const std::string & string) // note: sequential hash function for strings
 {
-	unsigned int seed = 0;
+	std::size_t seed = 0;
 
 	for (std::size_t i = 0; i < std::size(string); ++i)
 	{
-		(seed *= 31) += static_cast < unsigned int > (string[i]); // note: prime number
+		(seed *= 31) += static_cast < std::size_t > (string[i]); // note: prime number
 	}
 
 	return seed;
 }
 
-template < typename T > 
-void bind(std::size_t & seed, const T & value) noexcept
+template < typename T > void bind(std::size_t & seed, const T & value) noexcept
 {
-	seed ^= (seed + 0x9e3779b9 + std::hash < T > ()(value)); // note: ^= instead of +=
+	(seed *= 31) += std::hash < T > ()(value); // note: consider ^ instead of +
 }
 
-template < typename T > 
-void hash(std::size_t & seed, const T & value) noexcept
+template < typename T > void hash(std::size_t & seed, const T & value) noexcept
 {
 	bind(seed, value);
 }
