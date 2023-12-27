@@ -1,6 +1,7 @@
 #include <iomanip>
 #include <iostream>
 #include <iterator>
+#include <random>
 #include <type_traits>
 #include <unordered_set>
 
@@ -30,7 +31,7 @@ void print_state(const std::unordered_set < int > & unordered_set)
 
 	for (std::size_t i = 0; i < unordered_set.bucket_count(); ++i)
 	{
-		std::cout << "bucket[" << std::setw(3) << i << "]: ";
+		std::cout << "bucket[" << std::setw(3) << std::right << std::setfill('0') << i << "]: ";
 
 		for (auto iterator = unordered_set.begin(i); iterator != unordered_set.end(i); ++iterator)
 		{
@@ -47,14 +48,20 @@ int main()
 {
 	std::unordered_set < int > unordered_set;
 
-	for (auto i = 0; i < 64; ++i)
+	unordered_set.rehash(64); // note: creates at least 64 buckets
+
+	std::mt19937 engine{ std::random_device()() };
+
+	std::uniform_int_distribution distribution(100, 999);
+
+	for (std::size_t i = 0; i < unordered_set.bucket_count(); ++i)
 	{
-		unordered_set.insert(i);
+		unordered_set.insert(distribution(engine));
 	}
 
 	print_state(unordered_set);
 
-	unordered_set.rehash(96);
+	unordered_set.rehash(128); // note: creates at least 128 buckets
 
 	print_state(unordered_set);
 
