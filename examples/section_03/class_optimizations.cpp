@@ -38,9 +38,9 @@ auto f()
 
 auto g()
 {
-	auto c = Container(); // note: guaranteed copy elision
+	auto container = Container(); // note: guaranteed copy elision
 
-	return c; // note: copy elision, named return value optimization
+	return container; // note: copy elision, named return value optimization
 }
 
 class E {}; // note: empty class, only functions for example
@@ -56,8 +56,8 @@ class C : public B {};
 
 int main()
 {
-	auto c1 = f(); // note: guaranteed copy elision
-	auto c2 = g(); // note: guaranteed copy elision
+	auto container_1 = f(); // note: guaranteed copy elision
+	auto container_2 = g(); // note: guaranteed copy elision
 
 	std::cout << "size of E: " << sizeof(E) << std::endl; // note: non-zero size
 
