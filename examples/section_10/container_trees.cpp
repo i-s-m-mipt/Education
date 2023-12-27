@@ -30,11 +30,11 @@ int main()
 
 	std::map < std::string, int > map; // note: O(log(N)) complexity for single operations
 
-	map.insert(std::make_pair("Jenssen", 26));
+	map.insert(std::make_pair("hello", 42));
 
-	map["Matthias"] = map.at("Jenssen");
+	map["world"] = map.at("hello");
 
-	map.erase("Jenssen"); // note: the only way to change key
+	map.erase("hello"); // note: the only way to change key
 
 	return 0;
 }
