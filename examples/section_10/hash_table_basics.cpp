@@ -46,7 +46,7 @@ void print_state(const std::unordered_set < int > & unordered_set)
 
 int main()
 {
-	std::unordered_set < int > unordered_set;
+	std::unordered_set < int > unordered_set; // note: O(1) complexity (amortized) for operations
 
 	unordered_set.rehash(64); // note: creates at least 64 buckets
 
