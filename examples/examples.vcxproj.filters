@@ -346,6 +346,9 @@
     <ClCompile Include="section_10\hash_table_basics.cpp">
       <Filter>examples\section_10</Filter>
     </ClCompile>
+    <ClCompile Include="section_10\custom_hash_equal.cpp">
+      <Filter>examples\section_10</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">
