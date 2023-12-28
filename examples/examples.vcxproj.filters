@@ -59,12 +59,6 @@
     <Filter Include="examples\section_18">
       <UniqueIdentifier>{955badff-084b-43c5-9304-39cb36df585c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="examples\section_19">
-      <UniqueIdentifier>{3218670e-90f6-488e-bd97-1f6a065a3242}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="examples\section_20">
-      <UniqueIdentifier>{574b9950-23d1-4f25-8fd5-f3592b2fd924}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="section_01\minimal_program.cpp">
@@ -141,9 +135,6 @@
     </ClCompile>
     <ClCompile Include="section_18\inline_assembler.cpp">
       <Filter>examples\section_18</Filter>
-    </ClCompile>
-    <ClCompile Include="section_19\types_inference.cpp">
-      <Filter>examples\section_19</Filter>
     </ClCompile>
     <ClCompile Include="section_05\pattern_adapter.cpp">
       <Filter>examples\section_05</Filter>
