@@ -14,9 +14,7 @@ void print_state(const std::unordered_set < int > & unordered_set)
 	std::cout << "L = N / M       : " << unordered_set.     load_factor() << std::endl;
 	std::cout << "L = N / M (max) : " << unordered_set. max_load_factor() << std::endl;
 
-	using iterator_t = typename std::unordered_set < int > ::iterator;
-
-	using category_t = typename std::iterator_traits < iterator_t > ::iterator_category;
+	using category_t = typename std::unordered_set < int > ::iterator::iterator_category;
 	
 	if (std::is_same_v < category_t, std::bidirectional_iterator_tag > )
 	{
