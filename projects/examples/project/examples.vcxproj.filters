@@ -375,7 +375,7 @@
     <ClCompile Include="..\source\section_18\inline_assembler.cpp">
       <Filter>source\section_18</Filter>
     </ClCompile>
-    <ClCompile Include="pattern_facade.cpp">
+    <ClCompile Include="..\source\section_09\pattern_facade.cpp">
       <Filter>source\section_09</Filter>
     </ClCompile>
   </ItemGroup>
