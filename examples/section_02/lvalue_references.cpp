@@ -30,8 +30,9 @@ int main()
 
 	good_vector.push_back(x);
 
-	std::cout << x << ' ' << good_vector.back() << std::endl; x = 2;
-	std::cout << x << ' ' << good_vector.back() << std::endl;
+	good_vector.back().get() = 2;
+
+	std::cout << x << std::endl; 
 
 	return 0;
 }
