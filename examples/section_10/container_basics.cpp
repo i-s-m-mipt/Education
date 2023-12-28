@@ -50,6 +50,11 @@ int main()
 		assert(v[i] == 0); // note: use operator[] if index was verified elsewhere
 	}
 
+	for (auto i = std::ssize(v); i >= 0; --i) // good: signed index, no infinite loop
+	{
+		assert(v[i] == 0);
+	}
+
 	for (auto iterator = std::begin(v); iterator != std::end(v); ++iterator)
 	{
 		++(*iterator); // note: use iterators as high-level pointers in containers
