@@ -4,11 +4,11 @@
 
 template < typename T > class Relational // note: Barton-Nackman trick
 {
-    friend auto operator> (const T & lhs, const T & rhs) { return  (rhs < lhs); }
-    friend auto operator<=(const T & lhs, const T & rhs) { return !(lhs > rhs); }
-    friend auto operator>=(const T & lhs, const T & rhs) { return !(lhs < rhs); }
+    [[nodiscard]] friend auto operator> (const T & lhs, const T & rhs) { return  (rhs < lhs); }
+    [[nodiscard]] friend auto operator<=(const T & lhs, const T & rhs) { return !(lhs > rhs); }
+    [[nodiscard]] friend auto operator>=(const T & lhs, const T & rhs) { return !(lhs < rhs); }
 
-    friend auto operator==(const T & lhs, const T & rhs) // note: operator!= not required
+    [[nodiscard]] friend auto operator==(const T & lhs, const T & rhs) // note: operator!= not required
     {
         return (!(lhs < rhs) && !(rhs < lhs));
     }
