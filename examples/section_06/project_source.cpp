@@ -74,15 +74,11 @@ void C::print() const // good: member function definition in source file
 	std::cout << "print from C" << std::endl;
 }
 
-namespace education // note: namespaces additivity
+namespace education::examples // note: namespaces additivity
 {
-	namespace examples 
+	void print()
 	{
-		void print()
-		{
-			std::cout << "print from namespace" << std::endl;
-		}
+		std::cout << "print from namespace" << std::endl;
+	}
 
-	} // namespace examples
-
-} // namespace education
+} // namespace education::examples
