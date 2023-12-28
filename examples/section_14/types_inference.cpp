@@ -1,20 +1,11 @@
-#include <iostream>
-
-template < typename T >
-void f1([[maybe_unused]] T x) {}
-
-template < typename T >
-void f2([[maybe_unused]] T & x) {}
-
-template < typename T >
-void f3([[maybe_unused]] const T & x) {}
-
-template < typename T >
-void f4([[maybe_unused]] T && x) {}
+template < typename T > void f1(      T   ) {}
+template < typename T > void f2(      T & ) {}
+template < typename T > void f3(const T & ) {}
+template < typename T > void f4(      T &&) {}
 
 int main()
 {
-	int           x = 42;
+	      int     x = 42;
 	const int    cx =  x;
 	const int & rcx = cx;
 
