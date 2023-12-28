@@ -70,6 +70,9 @@ int main()
 
 	std::vector < Data > v1(size);
 	std::vector < Data > v2(std::cbegin(v1), std::cend(v1)); // note: copy collection
+
+//	*std::cbegin(v) = 42; // error: constant iterator
+
 	std::vector < Data > v3(
 		std::make_move_iterator(std::begin(v1)),
 		std::make_move_iterator(std::end  (v1))); // note: move collection
