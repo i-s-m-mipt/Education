@@ -47,7 +47,7 @@ int main()
 {
     std::cout << Singleton::get_instance().data() << std::endl;
 
-    Unique u1;
+    [[maybe_unused]] Unique u1;
 
 //  Unique u2 = u1; // error: noncopyable type
 

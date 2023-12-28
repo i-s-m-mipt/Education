@@ -92,11 +92,11 @@ namespace solution
 	public:
 
 		explicit Controller(const std::initializer_list <
-			std::pair < std::string, unsigned int > >& endpoints)
+			std::pair < std::string, boost::asio::ip::port_type > > & endpoints)
 		{
 			m_sockets.reserve(std::size(endpoints));
 
-			for (const auto& [ip_address, port] : endpoints)
+			for (const auto & [ip_address, port] : endpoints)
 			{
 				endpoint_t endpoint(ip_address_t::from_string(ip_address), port);
 
@@ -355,7 +355,7 @@ namespace solution
 
 using Controller = solution::Controller;
 
-int main(int argc, char** argv)
+int main()
 {
 	system("chcp 1251");
 
@@ -363,8 +363,8 @@ int main(int argc, char** argv)
 	{
 		{
 			Controller controller({
-				{ "192.168.1.2", 5000U},
-				{ "192.168.1.3", 5001U} });
+				{ "192.168.1.2", boost::asio::ip::port_type(5000) },
+				{ "192.168.1.3", boost::asio::ip::port_type(5001) } });
 
 			char command = ' ';
 

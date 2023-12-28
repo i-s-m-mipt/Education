@@ -13,7 +13,7 @@ template < typename T > T area(T r)
 
 int main()
 {
-	Buffer < int > buffer;
+	[[maybe_unused]] Buffer < int > buffer;
 
 	std::cout << area(1  ) << std::endl;
 	std::cout << area(1.0) << std::endl;

@@ -59,8 +59,8 @@ int main()
 
 //	std::cout << (z + ++z) << std::endl; // bad: unspecified behavior
 
-	auto m = 1 + 2 + 3; // note: left to right associativity
-	auto n = x = y = z; // note: right to left associativity
+	[[maybe_unused]] auto m = 1 + 2 + 3; // note: left to right associativity
+	[[maybe_unused]] auto n = x = y = z; // note: right to left associativity
 
 //	std::cout << (++m, ++n) << std::endl; // bad: inconvenient comma operator syntax
 

@@ -26,6 +26,8 @@ int main()
 
     std::cout << (x > 0 ? x : 42) << std::endl; // good: compact selection
 
+    std::cout << "Enter integer value: ";
+
     switch (std::cin >> x; x)
     {
     [[likely]] case 0: // good: optimally generated machine code
