@@ -381,6 +381,9 @@
     <ClCompile Include="..\source\section_09\iterator_facade.cpp">
       <Filter>source\section_09</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_09\iterator_basics.cpp">
+      <Filter>source\section_09</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
