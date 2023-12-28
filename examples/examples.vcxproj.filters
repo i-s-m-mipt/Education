@@ -343,6 +343,9 @@
     <ClCompile Include="section_14\types_inference.cpp">
       <Filter>examples\section_14</Filter>
     </ClCompile>
+    <ClCompile Include="section_10\multiple_interfaces.cpp">
+      <Filter>examples\section_10</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="section_01\general_overview.pdf">

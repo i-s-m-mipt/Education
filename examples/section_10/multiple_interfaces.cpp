@@ -1,66 +1,84 @@
+#include <cassert>
 #include <iostream>
 #include <string>
 
+#include <boost/bimap.hpp>
 #include <boost/multi_index_container.hpp>
-#include <boost/multi_index/member.hpp>
 #include <boost/multi_index/hashed_index.hpp>
+#include <boost/multi_index/member.hpp>
 #include <boost/multi_index/ordered_index.hpp>
 #include <boost/multi_index/random_access_index.hpp>
 
-using namespace boost::multi_index;
-
-struct Animal
+struct Computer
 {
 	std::string name;
-	std::size_t legs;
-};
+	std::size_t size;
 
-using animals_multi_index = multi_index_container <
-	Animal, indexed_by <
-	hashed_non_unique <
-	member < Animal, std::string, &Animal::name > >,
-	hashed_non_unique <
-	member < Animal, std::size_t, &Animal::legs	> >,
-	random_access <>,
-	ordered_non_unique <
-	member < Animal, std::size_t, &Animal::legs > > > >;
+}; // struct Computer
 
-int main(int argc, char** argv)
+using namespace boost::multi_index;
+
+using computers_container_t = multi_index_container < Computer, indexed_by <
+	 hashed_non_unique < member < Computer, std::string, &Computer::name > > ,
+	 hashed_non_unique < member < Computer, std::size_t, &Computer::size > > ,
+	ordered_non_unique < member < Computer, std::string, &Computer::name > > ,
+	ordered_non_unique < member < Computer, std::size_t, &Computer::size > > ,
+	     random_access < > > > ;
+
+enum Index // good: unscoped enumeration for get functions
 {
-	animals_multi_index animals;
+	HNU_name,
+	HNU_size,
+	ONU_name,
+	ONU_size, RA,
 
-	animals.insert({ "cat",    4 });
-	animals.insert({ "dog",    4 });
-	animals.insert({ "shark",  0 });
-	animals.insert({ "spider", 8 });
+}; // enum Index
 
-	auto& hashed_legs_index = animals.get < 1 >();
-	std::cout << hashed_legs_index.count(4) << std::endl;
+int main()
+{
+	computers_container_t computers;
 
-	auto iterator = hashed_legs_index.find(0);
-	hashed_legs_index.modify(iterator, [](Animal& animal) { animal.name = "whale"; });
+	computers.insert({ "alpha", 4 });
+	computers.insert({ "betta", 2 });
+	computers.insert({ "gamma", 4 });
+	computers.insert({ "delta", 8 });
 
-	std::cout << hashed_legs_index.find(0)->name << std::endl;
+	auto & HNU_name_index = computers.get < HNU_name > ();
+	auto & HNU_size_index = computers.get < HNU_size > ();
+	auto & ONU_name_index = computers.get < ONU_name > ();
+	auto & ONU_size_index = computers.get < ONU_size > ();
 
-	std::cout << std::endl;
+	assert(HNU_name_index.contains("alpha")); // note: smth like std::unordered_multiset
 
-	const auto& ordered_legs_index = animals.get < 3 >();
+	HNU_size_index.modify(HNU_size_index.find(2), 
+		[](auto & computer) { computer.name = "bravo"; }); // note: use modify function only
 
-	auto begin = ordered_legs_index.lower_bound(4);
-	auto end = ordered_legs_index.upper_bound(4);
+	assert(HNU_size_index.find(2)->name == "bravo");
 
-	for (; begin != end; ++begin)
+	assert(ONU_name_index.contains("alpha")); // note: smth like std::multiset
+
+	for (auto begin  = ONU_size_index.lower_bound(4); 
+		      begin != ONU_size_index.upper_bound(4); ++begin)
 	{
-		std::cout << begin->name << std::endl;
+		assert(begin->size == 4);
 	}
 
-	std::cout << std::endl;
+	assert(computers.get < RA > ()[0].name == "alpha"); // note: smth like std::vector
+	
+	boost::bimap < std::string, std::size_t > bimap; // note: consider boost::bimaps::(multi)set_of
 
-	const auto& random_access_index = animals.get < 2 >();
+	bimap.insert({ "alpha", 4 });
+	bimap.insert({ "betta", 2 });
+	bimap.insert({ "gamma", 4 }); // note: duplicate
+	bimap.insert({ "delta", 8 });
 
-	std::cout << random_access_index[0].name << std::endl;
+	assert(bimap.left. count("alpha") == 1); // good: O(log(N)) complexity search by key
+	assert(bimap.right.count(      4) == 1); // good: O(log(N)) complexity search by value
 
-	system("pause");
+	for (auto iterator = std::begin(bimap); iterator != std::end(bimap); ++iterator)
+	{
+		std::cout << iterator->left << " has size of " << iterator->right << std::endl;
+	}
 
-	return EXIT_SUCCESS;
+	return 0;
 }
