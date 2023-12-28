@@ -82,7 +82,7 @@ int main()
 
 	for (auto iterator = std::begin(list); iterator != std::end(list); ++iterator)
 	{
-		std::cout << *iterator << " ";
+		std::cout << *iterator << ' ';
 	}
 
 	return 0;
