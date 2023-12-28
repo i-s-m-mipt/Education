@@ -7,7 +7,7 @@ public:
 
     explicit Apple(double weight) : m_weight(weight) {}
 
-    auto operator<=>(const Apple & rhs) const // note: auto -> std::partial_ordering
+    [[nodiscard]] auto operator<=>(const Apple & rhs) const // note: auto -> std::partial_ordering
     {
         return (m_weight <=> rhs.m_weight);
     }
@@ -24,7 +24,7 @@ public:
 
     explicit Human(double weight, double height) : m_weight(weight), m_height(height) {}
 
-    auto operator<=>(const Human & rhs) const = default; // note: auto -> std::strong_ordering
+    [[nodiscard]] auto operator<=>(const Human & rhs) const = default; // note: auto -> std::strong_ordering
 
 private:
 
