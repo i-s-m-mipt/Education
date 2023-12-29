@@ -1,6 +1,7 @@
 #include "project_header.hpp"
 
 #include <iostream>
+#include <source_location>
 
 void f() // note: definition, external linkage
 {
@@ -65,6 +66,13 @@ void test_macros()
 	std::cout << __TIME__ << std::endl; // good: useful macro
 
 	std::cout << __func__ << std::endl; // note: implicit local array with function name
+
+	auto location = std::source_location::current(); // good: macros alternative
+
+	std::cout << location.file_name    () << std::endl;
+	std::cout << location.line         () << std::endl;
+	std::cout << location.column       () << std::endl;
+	std::cout << location.function_name() << std::endl;
 
 	TRACE; // good: semicolon at end
 }
