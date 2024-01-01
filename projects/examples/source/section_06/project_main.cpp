@@ -11,10 +11,7 @@ void f() // error: multiple defined symbol
 }
 */
 
-void print()
-{
-	std::cout << "print from global" << std::endl;
-}
+void print() { std::cout << "print from global" << std::endl; }
 
 int main()
 {
@@ -36,7 +33,7 @@ int main()
 
 	test_macros();
 
-	C().print();
+//  ============================================================================
 
 	education::examples::print();
 
@@ -48,7 +45,9 @@ int main()
 
 //	using namespace std; // bad: dangerous in big projects
 
-	using std::cout; // note: possible in local scope
+	using std::cout; // note: possible usage in local scopes
+
+//  ============================================================================
 
 	hello_module();
 

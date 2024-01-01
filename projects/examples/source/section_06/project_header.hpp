@@ -3,6 +3,17 @@
 
 #pragma once // good: new style non-standard header file guard
 
+#pragma warning(push) // note: disable warnings for one header file
+
+#pragma warning(disable: 4715) 
+#pragma warning(disable: 4459)
+
+#include <boost/asio.hpp> // note: external library header file
+
+#pragma warning(pop)
+
+// =============================================================================
+
 void f(); // good: forward declaration in header file
 
 void g(); // note: forward declaration only
@@ -16,6 +27,8 @@ void h() // error: one definition rule violation
 
 void test_macros();
 
+// =============================================================================
+
 class C // good: class definition in header file
 {
 public:
@@ -24,11 +37,12 @@ public:
 
 }; // class C
 
-template < typename T1, typename T2 >
-auto max(T1 x, T2 y) // note: template definition only in header file
+template < typename T > auto max(T x, T y) // good: no separation for templates
 {
 	return (x < y ? y : x);
 }
+
+// =============================================================================
 
 namespace education
 {
