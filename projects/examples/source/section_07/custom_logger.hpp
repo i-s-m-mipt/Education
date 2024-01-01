@@ -58,7 +58,7 @@ namespace solution
 
 		}; // class logger_exception : public std::exception 
 
-		class Logger : private boost::noncopyable
+		class Logger : boost::noncopyable
 		{			
 		private:
 
@@ -233,7 +233,7 @@ namespace solution
 
 			bool m_has_trace;
 
-		}; // class Logger : private boost::noncopyable
+		}; // class Logger : boost::noncopyable
 
 		template < typename E >
 		void catch_handler(Logger & logger, const std::exception & exception)
