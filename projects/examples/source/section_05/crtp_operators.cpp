@@ -4,6 +4,8 @@
 
 template < typename T > class Relational // note: Barton-Nackman trick
 {
+public:
+
     [[nodiscard]] friend auto operator> (const T & lhs, const T & rhs) { return  (rhs < lhs); }
     [[nodiscard]] friend auto operator<=(const T & lhs, const T & rhs) { return !(lhs > rhs); }
     [[nodiscard]] friend auto operator>=(const T & lhs, const T & rhs) { return !(lhs < rhs); }
@@ -12,6 +14,10 @@ template < typename T > class Relational // note: Barton-Nackman trick
     {
         return (!(lhs < rhs) && !(rhs < lhs));
     }
+
+protected:
+
+    ~Relational() = default; // note: non-polymorphic class
 
 }; // template < typename T > class Relational
 
