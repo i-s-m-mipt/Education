@@ -92,7 +92,12 @@ namespace education::examples // note: namespaces additivity
 {
 	void print()
 	{
-		std::cout << "print from namespace" << std::endl;
+		std::cout << "education::examples::print" << std::endl;
+	}
+
+	void function_with_ADL(X)
+	{
+		std::cout << "argument-dependent lookup" << std::endl;
 	}
 
 } // namespace education::examples

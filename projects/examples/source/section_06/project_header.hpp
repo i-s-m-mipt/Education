@@ -50,6 +50,10 @@ namespace education
 	{
 		void print();
 
+		class X {};
+
+		void function_with_ADL(X);
+
 	} // namespace examples
 
 } // namespace education

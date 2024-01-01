@@ -11,7 +11,7 @@ void f() // error: multiple defined symbol
 }
 */
 
-void print() { std::cout << "print from global" << std::endl; }
+void print() { std::cout << "::print" << std::endl; }
 
 int main()
 {
@@ -42,6 +42,8 @@ int main()
 	ee::print();
 
 	::print(); // note: print from global scope
+
+	function_with_ADL(ee::X()); // good: argument-dependent lookup
 
 //	using namespace std; // bad: dangerous in big projects
 
