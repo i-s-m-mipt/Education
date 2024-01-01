@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include <boost/noncopyable.hpp>
+
 class Singleton // bad: single responsibility principle violation
 {
 public:
@@ -30,7 +32,7 @@ private:
 
 }; // class Singleton 
 
-class noncopyable // good: non-polymorphic class, better than singleton
+class noncopyable // good: better than singleton
 {
 protected:
 
@@ -39,9 +41,11 @@ protected:
     noncopyable            (const noncopyable &) = delete;
     noncopyable & operator=(const noncopyable &) = delete;
 
+    ~noncopyable() = default; // note: non-polymorphic class
+
 }; // class noncopyable
 
-class Unique : private noncopyable {}; // note: consider boost::noncopyable
+class Unique : noncopyable {}; // note: consider boost::noncopyable
 
 int main()
 {
