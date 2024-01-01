@@ -4,6 +4,8 @@ class Base
 {
 public:
 
+    virtual ~Base() = default;
+
     virtual void initialize() = 0;
 
 }; // class Base
