@@ -1,7 +1,7 @@
 #include <iostream>
 
-class Color_v1 {};
-class Label_v1 {};
+class Color_v1 {}; // note: consider protected destructor and EBO
+class Label_v1 {}; // note: consider protected destructor and EBO
 
 template < typename ... Bases > 
 class Point_v1 : public Bases... // note: modern mixin with variadic base classes
@@ -20,8 +20,8 @@ private:
 
 }; // class Point_v1 : public Bases...
 
-template < typename T > class Color_v2 {};
-template < typename T > class Label_v2 {};
+template < typename T > class Color_v2 {}; // note: consider protected destructor and EBO
+template < typename T > class Label_v2 {}; // note: consider protected destructor and EBO
 
 template < template < typename > typename ... Bases > // note: template template parameters
 class Point_v2 : public Bases < Point_v2 < Bases ... > > ... 
