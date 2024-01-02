@@ -44,7 +44,7 @@ private:
 
 //		throw error; // bad: copy-initialized copy
 
-		throw; // good: rethrow the same exception
+		throw; // good: rethrow the same exception, polymorphic type saved
 	}
 
 //	std::cout << "h() exited" << std::endl; // warning: unreachable code
