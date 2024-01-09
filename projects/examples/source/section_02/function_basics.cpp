@@ -94,15 +94,9 @@ void h()
 	return;
 }
 
-void print(bool x)
-{
-	std::cout << x << std::endl;
-}
-
-void print(double x)
-{
-	std::cout << x << std::endl;
-}
+void print(bool   x) { std::cout << x << std::endl; } // note: overloaded function
+void print(char   x) { std::cout << x << std::endl; } // note: overloaded function
+void print(double x) { std::cout << x << std::endl; } // note: overloaded function
 
 int factorial(int n)
 {
@@ -143,9 +137,9 @@ int main()
 //	std::cout << *get_dangling_pointer  () << std::endl; // bad: undefined behavior
 //	std::cout <<  get_dangling_reference() << std::endl; // bad: undefined behavior
 
-	h();
-	h();
-	h();
+	h(); // note: outputs 1 1
+	h(); // note: outputs 1 2
+	h(); // note: outputs 1 3
 
 	print(true);
 	print(3.14);
