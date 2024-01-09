@@ -5,7 +5,7 @@ void generate_slow(std::size_t n, std::string s = "", std::size_t left = 0, std:
 {
 	if (left == n && right == n)
 	{
-		std::cout << s << std::endl; // note: slow output
+		std::cout << s << std::endl; // note: slow output with std::endl
 	}
 	else
 	{
@@ -25,14 +25,14 @@ void generate_fast(std::size_t n, std::string & output, std::string s = "", std:
 {
 	if (left < n)
 	{
-		for (auto i = n; i > std::max(left, right + 1) - 1; --i) // good: loop instead of recursion
+		for (auto i = n; i > std::max(left, right + 1) - 1; --i) // good: loop instead of recursive calls
 		{
-			generate_fast(n, output, s + std::string(i - left, '(') + ')', i, right + 1); // good: batch of (
+			generate_fast(n, output, s + std::string(i - left, '(') + ')', i, right + 1);
 		}
 	}
 	else
 	{
-		output += (s + std::string(n - right, ')') + '\n'); // good: batch of )
+		output += (s + std::string(n - right, ')') + '\n'); // good: batch of brackets
 	}
 }
 
