@@ -18,7 +18,7 @@ int main()
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		std::cin >> v[i];
+		std::cin >> v[i]; // note: consider push_back as alternative
 	}
 
 	for (std::size_t i = 0; i < size - 1; ++i)
