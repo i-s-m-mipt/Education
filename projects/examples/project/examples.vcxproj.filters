@@ -132,7 +132,7 @@
     <ClCompile Include="..\source\section_03\class_basics.cpp">
       <Filter>source\section_03</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\section_03\class_friends.cpp">
+    <ClCompile Include="..\source\section_03\friendship_basics.cpp">
       <Filter>source\section_03</Filter>
     </ClCompile>
     <ClCompile Include="..\source\section_03\class_hierarchies.cpp">
