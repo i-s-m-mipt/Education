@@ -387,6 +387,9 @@
     <ClCompile Include="..\source\section_08\calendar_time_zones.cpp">
       <Filter>source\section_08</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_02\combined_sort.cpp">
+      <Filter>source\section_02</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
