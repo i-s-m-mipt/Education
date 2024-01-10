@@ -26,15 +26,11 @@ int main()
 
 //	delete ptr_array; // bad: wrong delete
 
-	std::cout << "Enter array size: ";
-
-	std::size_t n{}; // note: runtime non-constant variable
-
-	std::cin >> n;
+	std::cout << "Enter array size: "; std::size_t n{}; std::cin >> n;
 
 	std::cout << "Enter " << n << " integer values: ";
 
-	auto s = new int[n];
+	auto s = new int[n]; // note: non-constant size
 
 	for (std::size_t i = 0; i < n; ++i)
 	{
