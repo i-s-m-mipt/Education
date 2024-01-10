@@ -17,7 +17,7 @@ void insertion_sort(std::vector < int > & v, std::size_t l, std::size_t r) // no
 	}
 }
 
-void merge(std::vector < int > & v, std::size_t l, std::size_t m, std::size_t r)
+void merge_sort(std::vector < int > & v, std::size_t l, std::size_t m, std::size_t r)
 {
 	const auto begin = l;
 
@@ -41,7 +41,7 @@ void merge(std::vector < int > & v, std::size_t l, std::size_t m, std::size_t r)
 	}
 }
 
-void sort(std::vector < int > & v, std::size_t l, std::size_t r) // note: O(N*log(N)) complexity (amortized)
+void merge_sort(std::vector < int > & v, std::size_t l, std::size_t r) // note: O(N*log(N)) complexity (amortized)
 {
 	if (static const std::size_t block = 64; r - l <= block)
 	{
@@ -49,7 +49,11 @@ void sort(std::vector < int > & v, std::size_t l, std::size_t r) // note: O(N*lo
 	}
 	else
 	{
-		auto m = std::midpoint(l, r); sort(v, l, m); sort(v, m, r); merge(v, l, m, r);
+		auto m = std::midpoint(l, r); 
+		
+		merge_sort(v, l, m   );
+		merge_sort(v,    m, r);
+		merge_sort(v, l, m, r);
 	}
 }
 
@@ -66,7 +70,7 @@ int main()
 		v[i] = size - i;
 	}
 
-	sort(v, 0, size); // good: half-open intervals preferred in C++
+	merge_sort(v, 0, size); // good: half-open intervals preferred in C++
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
