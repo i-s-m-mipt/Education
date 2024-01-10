@@ -15,10 +15,10 @@ int main()
 
 	for (auto iterator = std::cbegin(set); iterator != std::cend(set); ++iterator)
 	{
-		std::cout << *iterator << ' ';
+		std::cout << *iterator << ' '; // outputs 1 2 3 4 5
 	}
 
-	set.insert(std::begin(set), 0); // good: O(1) complexity (amortized) at best
+	set.insert(std::cbegin(set), 0); // good: O(1) complexity (amortized) at best
 
 	assert(!set.insert(1).second); // note: insert differs for std::multiset
 
