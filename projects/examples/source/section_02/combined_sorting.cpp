@@ -3,11 +3,11 @@
 #include <utility>
 #include <vector>
 
-void insertion_sort(std::vector < int > & v, int left, int right)
+void insertion_sort(std::vector < int > & v, std::size_t l, std::size_t r) // note: O(N^2) complexity 
 {
-	for (auto i = left + 1; i < right; ++i)
+	for (auto i = l + 1; i < r; ++i)
 	{
-		for (auto j = i; j > left; --j)
+		for (auto j = i; j > l; --j)
 		{
 			if (v[j - 1] > v[j])
 			{
@@ -17,64 +17,45 @@ void insertion_sort(std::vector < int > & v, int left, int right)
 	}
 }
 
-void merge(std::vector < int > & v, std::size_t left, std::size_t middle, std::size_t right)
+void merge(std::vector < int > & v, std::size_t l, std::size_t m, std::size_t r)
 {
-	const auto begin = left;
+	const auto begin = l;
 
-	std::vector < int > tmp_v(right - left, 0);
+	std::vector < int > t(r - l, 0); // note: one additional container instead of two
 
-	const auto size = tmp_v.size();
-
-	for (std::size_t i = 0, end = middle; i < size; ++i)
+	for (std::size_t i = 0, end = m; i < t.size(); ++i)
 	{
-		if (left < end && middle < right && v[left] <= v[middle])
+		if (l < end && (m < r && v[l] <= v[m] || m == r))
 		{
-			tmp_v[i] = v[left++];
-		} 
-		else if (left < end && middle < right)
-		{
-			tmp_v[i] = v[middle++];
-		}
-		else if (left < end)
-		{
-			tmp_v[i] = v[left++];
+			t[i] = v[l++];
 		}
 		else
 		{
-			tmp_v[i] = v[middle++];
+			t[i] = v[m++];
 		}
 	}
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (std::size_t i = 0; i < t.size(); ++i)
 	{
-		v[begin + i] = tmp_v[i];
+		v[begin + i] = t[i];
 	}
 }
 
-void merge_sort(std::vector < int > & v, std::size_t left, std::size_t right)
+void sort(std::vector < int > & v, std::size_t l, std::size_t r) // note: O(N*log(N)) complexity (amortized)
 {
-	if (static const std::size_t block_size = 64; right - left <= block_size)
+	if (static const std::size_t block = 64; r - l <= block)
 	{
-		insertion_sort(v, left, right); // good: amortized complexity as in std::sort
+		insertion_sort(v, l, r); // good: double nested loop instead of recursive calls
 	}
 	else
 	{
-		auto middle = std::midpoint(left, right); // good: optimized for overflows
-
-		merge_sort(v, left,   middle);
-		merge_sort(v, middle, right );
-
-		merge(v, left, middle, right);
+		auto m = std::midpoint(l, r); sort(v, l, m); sort(v, m, r); merge(v, l, m, r);
 	}
 }
 
 int main()
 {
-	std::cout << "Enter array size: ";
-
-	std::size_t n{};
-
-	std::cin >> n;
+	std::cout << "Enter array size: "; std::size_t n{}; std::cin >> n;
 
 	std::vector < int > v(n, 0);
 
@@ -85,7 +66,7 @@ int main()
 		v[i] = size - i;
 	}
 
-	merge_sort(v, 0, size); // note: half-open interval
+	sort(v, 0, size); // good: half-open intervals preferred in C++
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
