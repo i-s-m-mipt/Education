@@ -1,38 +1,31 @@
 #include <iostream>
 #include <string>
 
-void generate_slow(std::size_t n, std::string s = "", std::size_t left = 0, std::size_t right = 0)
+void generate_slow(std::size_t n, std::string s = "", std::size_t l = 0, std::size_t r = 0)
 {
-	if (left == n && right == n)
+	if (l == n && r == n)
 	{
 		std::cout << s << std::endl; // note: slow output with std::endl
 	}
 	else
 	{
-		if (left < n)
-		{
-			generate_slow(n, s + '(', left + 1, right);
-		}
-
-		if (right < left)
-		{
-			generate_slow(n, s + ')', left, right + 1);
-		}
+		if (l < n) generate_slow(n, s + '(', l + 1, r);
+		if (r < l) generate_slow(n, s + ')', l, r + 1);
 	}
 }
 
-void generate_fast(std::size_t n, std::string & output, std::string s = "", std::size_t left = 0, std::size_t right = 0)
+void generate_fast(std::size_t n, std::string & output, std::string s = "", std::size_t l = 0, std::size_t r = 0)
 {
-	if (left < n)
+	if (l < n)
 	{
-		for (auto i = n; i > std::max(left, right + 1) - 1; --i) // good: loop instead of recursive calls
+		for (auto i = n; i > std::max(l, r + 1) - 1; --i) // good: loop instead of recursive calls
 		{
-			generate_fast(n, output, s + std::string(i - left, '(') + ')', i, right + 1);
+			generate_fast(n, output, s + std::string(i - l, '(') + ')', i, r + 1);
 		}
 	}
 	else
 	{
-		output += (s + std::string(n - right, ')') + '\n'); // good: batch of brackets
+		output += (s + std::string(n - r, ')') + '\n'); // good: batch of brackets
 	}
 }
 
@@ -40,7 +33,7 @@ int main()
 {
 	std::cout << "Enter number of brackets: "; std::size_t n{}; std::cin >> n;
 
-	generate_slow(n);
+//	generate_slow(n); // bad: slow function due to suboptimal operations
 
 	std::string output;
 
