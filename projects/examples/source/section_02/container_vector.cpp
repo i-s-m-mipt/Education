@@ -4,11 +4,7 @@
 
 int main()
 {
-	std::cout << "Enter array size: "; 
-	
-	std::size_t n{};
-	
-	std::cin >> n;
+	std::cout << "Enter array size: "; std::size_t n{}; std::cin >> n;
 
 	std::cout << "Enter " << n << " integer values: ";
 
