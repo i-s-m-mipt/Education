@@ -9,8 +9,15 @@ void generate_slow(std::size_t n, std::string s = "", std::size_t l = 0, std::si
 	}
 	else
 	{
-		if (l < n) generate_slow(n, s + '(', l + 1, r);
-		if (r < l) generate_slow(n, s + ')', l, r + 1);
+		if (l < n)
+		{
+			generate_slow(n, s + '(', l + 1, r);
+		}
+
+		if (r < l)
+		{
+			generate_slow(n, s + ')', l, r + 1);
+		}
 	}
 }
 
