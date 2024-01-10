@@ -1,23 +1,21 @@
 #include <iostream>
 #include <numeric>
 
-int * search(int * a, std::size_t l, std::size_t r, int k)
+int * binary_search(int * a, std::size_t l, std::size_t r, int k) // note: O(log(N)) complexity
 {
-	if (r == 0) // good: extreme case
+	if (r == 0)
 	{
-		return nullptr;
+		return nullptr; // good: nullptr is better than special index value like INT_MAX or -1
 	}
 
-	if (r == 1) // good: extreme case
+	if (r == 1)
 	{
 		return (a[0] == k ? a : nullptr);
 	}
 
-	while (l < r) // good: one comparison in loop condition
+	while (l < r) // good: one comparison in selection condition with two branches in the loop
 	{
-		auto middle = std::midpoint(l, r); // good: optimized for possible overflows
-
-		if (a[middle] < k) // good: one comparison in selection condition with two branches
+		if (auto middle = std::midpoint(l, r); a[middle] < k) // good: optimized for overflows
 		{
 			l = middle + 1;
 		}
@@ -34,13 +32,13 @@ int main()
 {
 	const std::size_t size = 7;
 
-	auto a = new int[size]{1, 3, 4, 5, 6, 7, 8 }; // note: consider std::vector with iterators
+	int a[size]{1, 3, 4, 5, 6, 7, 8 }; // note: sorted array, consider std::vector with iterators
 
 	for (auto i = a[0] - 1; i <= a[size - 1] + 1; ++i)
 	{
 		std::cout << "index of " << i << " in array: ";
 
-		if (auto ptr = search(a, 0, size - 1, i); ptr) // note: not half-open interval
+		if (auto ptr = binary_search(a, 0, size - 1, i); ptr) // note: closed interval
 		{
 			std::cout << ptr - a << std::endl; // note: get index through pointer arithmetic
 		}
@@ -49,8 +47,6 @@ int main()
 			std::cout << "not found" << std::endl;
 		}
 	}
-
-	delete[] a; // good: no memory leak
 
 	return 0;
 }
