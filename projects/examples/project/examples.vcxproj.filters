@@ -396,6 +396,9 @@
     <ClCompile Include="..\source\section_03\associative_links.cpp">
       <Filter>source\section_03</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_02\optimized_search.cpp">
+      <Filter>source\section_02</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
