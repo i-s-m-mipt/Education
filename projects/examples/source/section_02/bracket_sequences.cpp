@@ -46,7 +46,7 @@ int main()
 
 	generate_fast(n, output);
 
-	std::cout << output; // good: one output instead of many with std::endl
+	std::cout << output; // good: fast output instead of many with std::endl
 
 	return 0;
 }
