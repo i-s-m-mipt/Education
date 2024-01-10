@@ -47,15 +47,11 @@ int main()
 		std::cout << (p + 1 == a + size ? '\n' : ' '); // good: compact formatting
 	}
 
-	std::cout << "Enter array size <= 1024: ";
-
-	std::size_t n{};
-
-	std::cin >> n;
+	std::cout << "Enter array size <= 1024: "; std::size_t n{}; std::cin >> n;
 
 	std::cout << "Enter " << n << " integer values: ";
 
-	const std::size_t buffer_size = 1024; // note: enough size
+	const std::size_t buffer_size = 1024; // note: constant size with margin
 
 	int s[buffer_size]{};
 
