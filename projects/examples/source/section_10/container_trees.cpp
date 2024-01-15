@@ -15,7 +15,7 @@ int main()
 
 	for (auto iterator = std::cbegin(set); iterator != std::cend(set); ++iterator)
 	{
-		std::cout << *iterator << ' '; // outputs 1 2 3 4 5
+		std::cout << *iterator << ' '; // note: outputs 1 2 3 4 5
 	}
 
 	set.insert(std::cbegin(set), 0); // good: O(1) complexity (amortized) at best
@@ -27,8 +27,8 @@ int main()
 
 	assert(!set.contains(3)); // note: better than set.find(3) == std::end(set)
 
-	assert(*set.lower_bound(3) == 4 && *set.upper_bound(3) == 4); // 0 1 2 4 5
-	assert(*set.lower_bound(4) == 4 && *set.upper_bound(4) == 5); // 0 1 2 4 5
+	assert(*set.lower_bound(3) == 4 && *set.upper_bound(3) == 4); // note: 0 1 2 4 5
+	assert(*set.lower_bound(4) == 4 && *set.upper_bound(4) == 5); // note: 0 1 2 4 5
 
 	auto node = set.extract(1); node.value() = 3; set.insert(std::move(node));
 
