@@ -70,23 +70,23 @@
     <None Include="..\source\section_03\virtual_tables.drawio">
       <Filter>source\section_03</Filter>
     </None>
-    <None Include="..\source\section_06\build_stages.drawio">
-      <Filter>source\section_06</Filter>
+    <None Include="..\source\section_07\build_stages.drawio">
+      <Filter>source\section_07</Filter>
     </None>
-    <None Include="..\source\section_09\process_memory.drawio">
-      <Filter>source\section_09</Filter>
-    </None>
-    <None Include="..\source\section_10\circular_buffer.drawio">
+    <None Include="..\source\section_10\process_memory.drawio">
       <Filter>source\section_10</Filter>
     </None>
-    <None Include="..\source\section_10\container_memory.drawio">
-      <Filter>source\section_10</Filter>
+    <None Include="..\source\section_11\circular_buffer.drawio">
+      <Filter>source\section_11</Filter>
     </None>
-    <None Include="..\source\section_10\hash_table_basics.drawio">
-      <Filter>source\section_10</Filter>
+    <None Include="..\source\section_11\container_memory.drawio">
+      <Filter>source\section_11</Filter>
     </None>
-    <None Include="..\source\section_10\red_black_trees.drawio">
-      <Filter>source\section_10</Filter>
+    <None Include="..\source\section_11\hash_table_basics.drawio">
+      <Filter>source\section_11</Filter>
+    </None>
+    <None Include="..\source\section_11\red_black_trees.drawio">
+      <Filter>source\section_11</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -249,143 +249,8 @@
     <ClCompile Include="..\source\section_05\variadic_bases.cpp">
       <Filter>source\section_05</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\section_06\libraries_test.cpp">
-      <Filter>source\section_06</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_06\pimpl_idiom.cpp">
-      <Filter>source\section_06</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_06\project_main.cpp">
-      <Filter>source\section_06</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_06\project_module.cpp">
-      <Filter>source\section_06</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_06\project_module.ixx">
-      <Filter>source\section_06</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_06\project_source.cpp">
-      <Filter>source\section_06</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_07\custom_logger.cpp">
-      <Filter>source\section_07</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_07\errors_handling.cpp">
-      <Filter>source\section_07</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_07\exception_basics.cpp">
-      <Filter>source\section_07</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_07\heap_snapshots.cpp">
-      <Filter>source\section_07</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_07\logger_examples.cpp">
-      <Filter>source\section_07</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_07\optional_basics.cpp">
-      <Filter>source\section_07</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_07\processor_usage.cpp">
-      <Filter>source\section_07</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_07\stack_interface.cpp">
-      <Filter>source\section_07</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_07\union_basics.cpp">
-      <Filter>source\section_07</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_07\variant_basics.cpp">
-      <Filter>source\section_07</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_08\advanced_constants.cpp">
-      <Filter>source\section_08</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_08\advanced_literals.cpp">
-      <Filter>source\section_08</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_08\bitwise_operations.cpp">
-      <Filter>source\section_08</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_08\chrono_management.cpp">
-      <Filter>source\section_08</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_08\floating_point_types.cpp">
-      <Filter>source\section_08</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_08\random_generation.cpp">
-      <Filter>source\section_08</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_08\smsd_driver_test.cpp">
-      <Filter>source\section_08</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_09\bad_allocations.cpp">
-      <Filter>source\section_09</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_09\data_alignment.cpp">
-      <Filter>source\section_09</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_09\pattern_iterator.cpp">
-      <Filter>source\section_09</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_09\placement_new.cpp">
-      <Filter>source\section_09</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_09\shared_from_this.cpp">
-      <Filter>source\section_09</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_09\smart_pointers.cpp">
-      <Filter>source\section_09</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_10\circular_buffer.cpp">
-      <Filter>source\section_10</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_10\container_adaptors.cpp">
-      <Filter>source\section_10</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_10\container_basics.cpp">
-      <Filter>source\section_10</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_10\container_lists.cpp">
-      <Filter>source\section_10</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_10\container_trees.cpp">
-      <Filter>source\section_10</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_10\custom_hash_equal.cpp">
-      <Filter>source\section_10</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_10\hash_functions.cpp">
-      <Filter>source\section_10</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_10\hash_table_basics.cpp">
-      <Filter>source\section_10</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_10\multidimensionals.cpp">
-      <Filter>source\section_10</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_10\multiple_interfaces.cpp">
-      <Filter>source\section_10</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_10\vector_bool_proxy.cpp">
-      <Filter>source\section_10</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_14\types_inference.cpp">
-      <Filter>source\section_14</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\section_18\inline_assembler.cpp">
       <Filter>source\section_18</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_09\pattern_facade.cpp">
-      <Filter>source\section_09</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_09\iterator_facade.cpp">
-      <Filter>source\section_09</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_09\iterator_basics.cpp">
-      <Filter>source\section_09</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\section_08\calendar_time_zones.cpp">
-      <Filter>source\section_08</Filter>
     </ClCompile>
     <ClCompile Include="..\source\section_02\combined_sorting.cpp">
       <Filter>source\section_02</Filter>
@@ -399,6 +264,147 @@
     <ClCompile Include="..\source\section_02\optimized_search.cpp">
       <Filter>source\section_02</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_06\types_inference.cpp">
+      <Filter>source\section_06</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_07\libraries_test.cpp">
+      <Filter>source\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_07\pimpl_idiom.cpp">
+      <Filter>source\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_07\project_main.cpp">
+      <Filter>source\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_07\project_module.cpp">
+      <Filter>source\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_07\project_module.ixx">
+      <Filter>source\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_07\project_source.cpp">
+      <Filter>source\section_07</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_08\custom_logger.cpp">
+      <Filter>source\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_08\errors_handling.cpp">
+      <Filter>source\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_08\exception_basics.cpp">
+      <Filter>source\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_08\heap_snapshots.cpp">
+      <Filter>source\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_08\logger_examples.cpp">
+      <Filter>source\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_08\optional_basics.cpp">
+      <Filter>source\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_08\processor_usage.cpp">
+      <Filter>source\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_08\stack_interface.cpp">
+      <Filter>source\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_08\union_basics.cpp">
+      <Filter>source\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_08\variant_basics.cpp">
+      <Filter>source\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_09\advanced_constants.cpp">
+      <Filter>source\section_09</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_09\advanced_literals.cpp">
+      <Filter>source\section_09</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_09\bitwise_operations.cpp">
+      <Filter>source\section_09</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_09\calendar_time_zones.cpp">
+      <Filter>source\section_09</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_09\chrono_management.cpp">
+      <Filter>source\section_09</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_09\floating_point_types.cpp">
+      <Filter>source\section_09</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_09\random_generation.cpp">
+      <Filter>source\section_09</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_09\smsd_driver_test.cpp">
+      <Filter>source\section_09</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_10\bad_allocations.cpp">
+      <Filter>source\section_10</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_10\data_alignment.cpp">
+      <Filter>source\section_10</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_10\iterator_basics.cpp">
+      <Filter>source\section_10</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_10\iterator_facade.cpp">
+      <Filter>source\section_10</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_10\pattern_facade.cpp">
+      <Filter>source\section_10</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_10\pattern_iterator.cpp">
+      <Filter>source\section_10</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_10\placement_new.cpp">
+      <Filter>source\section_10</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_10\shared_from_this.cpp">
+      <Filter>source\section_10</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_10\smart_pointers.cpp">
+      <Filter>source\section_10</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_11\circular_buffer.cpp">
+      <Filter>source\section_11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_11\container_adaptors.cpp">
+      <Filter>source\section_11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_11\container_basics.cpp">
+      <Filter>source\section_11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_11\container_lists.cpp">
+      <Filter>source\section_11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_11\container_trees.cpp">
+      <Filter>source\section_11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_11\custom_hash_equal.cpp">
+      <Filter>source\section_11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_11\hash_functions.cpp">
+      <Filter>source\section_11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_11\hash_table_basics.cpp">
+      <Filter>source\section_11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_11\multidimensionals.cpp">
+      <Filter>source\section_11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_11\multiple_interfaces.cpp">
+      <Filter>source\section_11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_11\vector_bool_proxy.cpp">
+      <Filter>source\section_11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_12\functional_objects.cpp">
+      <Filter>source\section_12</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_12\function_pointers.cpp">
+      <Filter>source\section_12</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
@@ -407,31 +413,31 @@
     <Image Include="..\source\section_03\virtual_tables.png">
       <Filter>source\section_03</Filter>
     </Image>
-    <Image Include="..\source\section_06\build_stages.png">
-      <Filter>source\section_06</Filter>
+    <Image Include="..\source\section_07\build_stages.png">
+      <Filter>source\section_07</Filter>
     </Image>
-    <Image Include="..\source\section_09\process_memory.png">
-      <Filter>source\section_09</Filter>
-    </Image>
-    <Image Include="..\source\section_10\circular_buffer.png">
+    <Image Include="..\source\section_10\process_memory.png">
       <Filter>source\section_10</Filter>
     </Image>
-    <Image Include="..\source\section_10\container_memory.png">
-      <Filter>source\section_10</Filter>
+    <Image Include="..\source\section_11\circular_buffer.png">
+      <Filter>source\section_11</Filter>
     </Image>
-    <Image Include="..\source\section_10\hash_table_basics.png">
-      <Filter>source\section_10</Filter>
+    <Image Include="..\source\section_11\container_memory.png">
+      <Filter>source\section_11</Filter>
     </Image>
-    <Image Include="..\source\section_10\red_black_trees.png">
-      <Filter>source\section_10</Filter>
+    <Image Include="..\source\section_11\hash_table_basics.png">
+      <Filter>source\section_11</Filter>
+    </Image>
+    <Image Include="..\source\section_11\red_black_trees.png">
+      <Filter>source\section_11</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\source\section_06\project_header.hpp">
-      <Filter>source\section_06</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\section_07\custom_logger.hpp">
+    <ClInclude Include="..\source\section_07\project_header.hpp">
       <Filter>source\section_07</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\section_08\custom_logger.hpp">
+      <Filter>source\section_08</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
