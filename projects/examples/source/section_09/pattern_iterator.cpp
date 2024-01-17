@@ -70,6 +70,8 @@ private:
 
 }; // template < typename T > class List
 
+struct S { void f() const { std::cout << "S::f" << std::endl; } };
+
 int main()
 {
 	List < int > list;
@@ -84,6 +86,14 @@ int main()
 	{
 		std::cout << *iterator << ' ';
 	}
+
+	std::cout << std::endl;
+
+	List < S > s_list;
+
+	s_list.push_back(S());
+
+	std::begin(s_list)->f(); // note: iterator.operator->()->f()
 
 	return 0;
 }
