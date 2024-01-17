@@ -25,19 +25,25 @@ int main()
 		std::cout << *ptr_z << std::endl;
 	}
 
-	auto c = 0;
+	auto a = 0;
 
-	[[maybe_unused]] const int * ptr_c_1 = &c;
+	[[maybe_unused]] const int * pc_1 = &a;
 
-//	*ptr_c = 42; // error: constant value
+//	*pc = 42; // error: constant value
 
-	[[maybe_unused]] int const * ptr_c_2 = &c; // note: same as ptr_c_1
+	[[maybe_unused]] int const * pc_2 = &a; // note: same as pc_1
 
-	[[maybe_unused]] int * const c_ptr = &c;
+	[[maybe_unused]] int * const cp = &a;
 
-//	c_ptr = nullptr; // error: constant pointer
+//	cp = nullptr; // error: constant pointer
 
-	[[maybe_unused]] const int * const c_ptr_c = &c;
+	[[maybe_unused]] const int * const cpc = &a;
+
+	const auto b = 0;
+
+//	int * p = &b; // error: pointer to non-constant value
+
+	[[maybe_unused]] const int * pc = &b;
 
 	return 0;
 }
