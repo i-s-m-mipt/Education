@@ -55,6 +55,8 @@ int main()
 	std::cout << ++x << ' ' << x << std::endl; // good: ++x instead of x += 1
 	std::cout << --x << ' ' << x << std::endl; // good: --x instead of x -= 1
 
+//	x+++++y; // error: maximum piece principle, write as (x++)+(++y);
+
 	auto z = (1 + 4) / (2 + 3); // note: unspecified operands evaluation order
 
 //	std::cout << (z + ++z) << std::endl; // bad: unspecified behavior
