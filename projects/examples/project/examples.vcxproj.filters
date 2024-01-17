@@ -399,7 +399,7 @@
     <ClCompile Include="..\source\section_11\vector_bool_proxy.cpp">
       <Filter>source\section_11</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\section_12\functional_objects.cpp">
+    <ClCompile Include="..\source\section_12\function_objects.cpp">
       <Filter>source\section_12</Filter>
     </ClCompile>
     <ClCompile Include="..\source\section_12\function_pointers.cpp">
