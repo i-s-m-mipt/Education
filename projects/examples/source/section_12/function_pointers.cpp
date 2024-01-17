@@ -1,25 +1,32 @@
 #include <cassert>
 #include <functional>
 #include <iostream>
+#include <type_traits>
 
-int f(int x) 
+auto f(int x) 
 { 
 	return (x + 1); 
 }
 
-int g(int (*f)(int), int x) // note: old-style function transfer
+auto g(int (*f)(int), int x) // note: old-style function argument
 {
 	return f(x);
 }
 
 template < typename F, typename T > auto h(F && f, T && x)
 {
-	return f(std::forward < T > (x));
+	return f(std::forward < T > (x)); // good: perfect forwarding
 }
 
 int main()
 {
-	int (*ptr_f)(int) = f; // note: function name is pointer to it 
+	using     f_t = int   (int);
+	using ptr_f_t = int(*)(int); // note: popular type alias in old code
+
+	static_assert(std::is_same_v < decltype( f),     f_t > );
+	static_assert(std::is_same_v < decltype(&f), ptr_f_t > );
+
+	auto ptr_f = &f; // note: auto -> int(*)(int), operator & is optional
 
 	assert((*ptr_f)(0) == 1);
 	assert(  ptr_f (0) == 1);
