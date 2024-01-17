@@ -7,7 +7,7 @@
 
 int main()
 {
-	std::set < int > set({1, 5, 3, 4, 2}); // note: O(log(N)) complexity for operations
+	std::set < int > set({ 1, 4, 2, 5, 3 }); // note: O(log(N)) complexity mainly
 
 	using category_t = typename decltype(set)::iterator::iterator_category;
 
@@ -32,7 +32,7 @@ int main()
 
 	auto node = set.extract(1); node.value() = 3; set.insert(std::move(node));
 
-	std::map < std::string, int > map; // note: O(log(N)) complexity for operations
+	std::map < std::string, int > map; // note: O(log(N)) complexity mainly
 
 	map.insert(std::make_pair("hello", 42)); // good: prefer std::make_pair function
 
