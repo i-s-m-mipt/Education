@@ -12,7 +12,7 @@ template < typename T > struct Node
 
 template < typename R, typename... Paths > auto traverse(R root, Paths ... paths)
 {
-	return (root ->* ... ->*paths); // note: ((root ->* path_1) ->* path_2) ->* ...
+	return (root ->* ... ->* paths); // note: ((root ->* path_1) ->* path_2) ->* ...
 }
 
 int main()
