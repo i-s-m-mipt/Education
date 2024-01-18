@@ -3,7 +3,7 @@
 #include <iostream>
 #include <type_traits>
 
-auto f(int x) 
+auto f(int x) noexcept
 { 
 	return (x + 1); 
 }
@@ -13,15 +13,15 @@ auto g(int (*f)(int), int x) // note: old-style function argument
 	return f(x);
 }
 
-template < typename F, typename T > auto h(F && f, T && x)
+template < typename F, typename T > auto h(F && f, T && x) // noexcept(noexcept(...))
 {
 	return f(std::forward < T > (x)); // good: perfect forwarding
 }
 
 int main()
 {
-	using     f_t = int   (int);
-	using ptr_f_t = int(*)(int); // note: popular type alias in old code
+	using     f_t = int   (int) noexcept;
+	using ptr_f_t = int(*)(int) noexcept; // note: popular type alias in old code
 
 	static_assert(std::is_same_v < decltype( f),     f_t > );
 	static_assert(std::is_same_v < decltype(&f), ptr_f_t > );
