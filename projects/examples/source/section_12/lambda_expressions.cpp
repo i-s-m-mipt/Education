@@ -4,6 +4,7 @@
 #include <functional>
 #include <iostream>
 #include <iterator>
+#include <memory>
 #include <set>
 #include <vector>
 
@@ -22,6 +23,10 @@ int main()
 	assert(a == 3);
 
 //	[&](auto c){ a = b + c; }(2); // bad: default capture by reference
+
+	auto up = std::make_unique < int > (42);
+
+	[up = std::move(up)](){ assert(*up == 42); }(); // note: capture by move
 
 	std::array < std::function < int(int, int) > , 4 > operations;
 

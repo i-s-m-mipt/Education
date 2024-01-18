@@ -408,7 +408,7 @@
     <ClCompile Include="..\source\section_04\variadic_traverse.cpp">
       <Filter>source\section_04</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\section_12\lambda_functions.cpp">
+    <ClCompile Include="..\source\section_12\lambda_expressions.cpp">
       <Filter>source\section_12</Filter>
     </ClCompile>
     <ClCompile Include="..\source\section_12\standard_algorithms.cpp">
