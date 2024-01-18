@@ -6,7 +6,7 @@
 #include <set>
 #include <vector>
 
-[[nodiscard]] auto f() // note: different functions have same types
+[[nodiscard]] auto f() noexcept // note: different functions have same types
 {
 	static auto state = 0; // note: internal state, see reference arguments
 
@@ -17,13 +17,41 @@ class C // note: different classes have different types
 {
 public:
 
-	[[nodiscard]] auto operator()() const { return (m_state++); }
+	[[nodiscard]] auto operator()() const noexcept { return (m_state++); }
 
 private:
 
 	mutable int m_state = 0; // note: internal state, see logical constancy
 
 }; // class C
+
+template < typename T > class Sum
+{
+public:
+
+	void operator()(T x) noexcept { s += x; }
+
+	auto result() const noexcept { return s; }
+
+private:
+
+	T s = T();
+
+}; // template < typename T > class Sum
+
+template < typename T > class Mean
+{
+public:
+
+	void operator()(T x) noexcept { ++n; s += x; }
+
+	auto result() const noexcept { return (s / n); }
+
+private:
+
+	std::size_t n = 0; T s = T();
+
+}; // class Mean
 
 int main()
 {
@@ -52,6 +80,13 @@ int main()
 		assert(v3[i] == static_cast < int > (i));
 	}
 
+	Sum < int > sum;
+
+	std::for_each < decltype(v2)::iterator, Sum < int > & > (std::begin(v2), std::end(v2), sum);
+	std::for_each < decltype(v3)::iterator, Sum < int > & > (std::begin(v3), std::end(v3), sum);
+
+	assert(sum.result() == 20);
+
 	std::transform(std::cbegin(v2), std::cend(v2), std:: begin(v2),                 std::negate());
 	std::transform(std::cbegin(v2), std::cend(v2), std::cbegin(v3), std::begin(v3), std::plus  ());
 
@@ -59,6 +94,8 @@ int main()
 	{
 		assert(v3[i] == 0);
 	}
+
+	assert(std::for_each(std::begin(v1), std::end(v1), Mean < decltype(v1)::value_type > ()).result() == 3);
 
 	return 0;
 }
