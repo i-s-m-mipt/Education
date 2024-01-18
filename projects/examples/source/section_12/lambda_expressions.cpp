@@ -50,8 +50,8 @@ int main()
 
 	std::vector < int > v(size, 0);
 
-	std::for_each(std:: begin(v), std:: end(v), [a](auto & x) {        x += a ; });
-	std::for_each(std::cbegin(v), std::cend(v), [a](auto   x) { assert(x == a); });
+	std::for_each(std:: begin(v), std:: end(v), [a](auto & x){        x += a ; });
+	std::for_each(std::cbegin(v), std::cend(v), [a](auto   x){ assert(x == a); });
 
 	std::set < int, decltype([](auto lhs, auto rhs){ return (lhs > rhs); }) > set({ 1, 4, 2, 5, 3 });
 
