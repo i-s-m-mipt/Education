@@ -2,6 +2,7 @@
 #include <cassert>
 #include <functional>
 #include <iostream>
+#include <iterator>
 #include <vector>
 
 [[nodiscard]] auto f() // note: different functions have same types
@@ -43,8 +44,8 @@ int main()
 		assert(v3[i] == static_cast < int > (i));
 	}
 
-	std::transform(std::begin(v2), std::end(v2), std::begin(v2),                 std::negate());
-	std::transform(std::begin(v2), std::end(v2), std::begin(v3), std::begin(v3), std::plus  ());
+	std::transform(std::cbegin(v2), std::cend(v2), std:: begin(v2),                 std::negate());
+	std::transform(std::cbegin(v2), std::cend(v2), std::cbegin(v3), std::begin(v3), std::plus  ());
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
