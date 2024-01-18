@@ -46,11 +46,11 @@ int main()
 	std::for_each(std:: begin(v), std:: end(v), [a](auto & x) {        x += a ; });
 	std::for_each(std::cbegin(v), std::cend(v), [a](auto   x) { assert(x == a); });
 
-	std::set < int, decltype([](auto lhs, auto rhs){ return (lhs < rhs); }) > set({ 1, 4, 2, 5, 3 });
+	std::set < int, decltype([](auto lhs, auto rhs){ return (lhs > rhs); }) > set({ 1, 4, 2, 5, 3 });
 
 	for (auto iterator = std::cbegin(set); iterator != std::cend(set); ++iterator)
 	{
-		std::cout << *iterator << ' '; // note: outputs 1 2 3 4 5
+		std::cout << *iterator << ' '; // note: outputs 5 4 3 2 1
 	}
 
 	return 0;
