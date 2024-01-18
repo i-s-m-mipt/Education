@@ -417,6 +417,12 @@
     <ClCompile Include="..\source\section_12\insert_iterators.cpp">
       <Filter>source\section_12</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_12\algoritms_on_ranges.cpp">
+      <Filter>source\section_12</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_12\iostream_iterators.cpp">
+      <Filter>source\section_12</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
