@@ -142,6 +142,11 @@ void swap(T & a, T & b) noexcept(
 		 a = std::move(c);
 }
 
+template < typename F, typename T > auto invoke(F f, T x) noexcept(noexcept(f(std::declval < T > ())))
+{
+	return f(x);
+}
+
 int main()
 {
 	try
