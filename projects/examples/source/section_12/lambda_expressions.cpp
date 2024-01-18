@@ -21,6 +21,8 @@ int main()
 
 	assert(a == 3);
 
+//	[&](auto c){ a = b + c; }(2); // bad: default capture by reference
+
 	std::array < std::function < int(int, int) > , 4 > operations;
 
 	operations[0] = [](auto x, auto y){ return (x + y); };
