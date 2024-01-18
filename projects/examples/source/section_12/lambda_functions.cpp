@@ -10,7 +10,7 @@ int main()
 {
 	auto lambda = [](){};
 
-	std::cout << typeid(lambda).name() << std::endl;
+	std::cout << typeid(lambda).name() << std::endl; // note: unique closure type
 
 	auto a = 0; // note: internal state, see reference arguments
 	auto b = 1;
