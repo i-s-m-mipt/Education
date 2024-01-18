@@ -3,7 +3,7 @@
 #include <iterator>
 #include <vector>
 
-int main()
+int main() // good: feel strength and elegance of this example
 {
 	std::vector < int > vector;
 
