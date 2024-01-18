@@ -4,6 +4,7 @@
 #include <functional>
 #include <iostream>
 #include <iterator>
+#include <set>
 #include <vector>
 
 int main()
@@ -32,12 +33,25 @@ int main()
 
 	assert(operations.at(1)(x, y) == (x - y));
 
+	auto templated_lambda = [] < typename T > (T x, T y) { return (x + y); };
+
+	templated_lambda(100, 200);
+	templated_lambda(1.0, 2.0);
+//	templated_lambda(100, 2.0); // error: different types
+
 	const std::size_t size = 5;
 
 	std::vector < int > v(size, 0);
 
 	std::for_each(std:: begin(v), std:: end(v), [a](auto & x) {        x += a ; });
 	std::for_each(std::cbegin(v), std::cend(v), [a](auto   x) { assert(x == a); });
+
+	std::set < int, decltype([](auto lhs, auto rhs){ return (lhs < rhs); }) > set({ 1, 4, 2, 5, 3 });
+
+	for (auto iterator = std::cbegin(set); iterator != std::cend(set); ++iterator)
+	{
+		std::cout << *iterator << ' '; // note: outputs 1 2 3 4 5
+	}
 
 	return 0;
 }
