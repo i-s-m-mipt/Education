@@ -408,6 +408,12 @@
     <ClCompile Include="..\source\section_04\variadic_traverse.cpp">
       <Filter>source\section_04</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_12\lambda_functions.cpp">
+      <Filter>source\section_12</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_12\standard_algorithms.cpp">
+      <Filter>source\section_12</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
