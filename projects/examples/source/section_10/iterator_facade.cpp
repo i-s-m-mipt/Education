@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iterator>
 #include <memory>
 
 #include <boost/iterator/iterator_facade.hpp>
