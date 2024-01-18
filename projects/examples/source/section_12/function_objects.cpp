@@ -3,6 +3,7 @@
 #include <functional>
 #include <iostream>
 #include <iterator>
+#include <set>
 #include <vector>
 
 [[nodiscard]] auto f() // note: different functions have same types
@@ -31,12 +32,19 @@ int main()
 	std::sort(std::begin(v1), std::end(v1));                 // note: 1 2 3 4 5
 	std::sort(std::begin(v1), std::end(v1), std::greater()); // note: 5 4 3 2 1
 
+	std::set < int, std::greater < int > > set({ 1, 4, 2, 5, 3 });
+
+	for (auto iterator = std::cbegin(set); iterator != std::cend(set); ++iterator)
+	{
+		std::cout << *iterator << ' '; // note: outputs 5 4 3 2 1
+	}
+
 	const std::size_t size = 5;
 
 	C c; // note: functional object with overloaded operator()
 
-	std::vector < int > v2(size, 0); std::generate(std::begin(v2), std::end(v2), f);
-	std::vector < int > v3(size, 0); std::generate(std::begin(v3), std::end(v3), c);
+	std::vector < int > v2(size, 0); std::generate(std::begin(v2), std::end(v2), f); // note: slower
+	std::vector < int > v3(size, 0); std::generate(std::begin(v3), std::end(v3), c); // note: faster
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
