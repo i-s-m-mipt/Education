@@ -414,6 +414,9 @@
     <ClCompile Include="..\source\section_12\standard_algorithms.cpp">
       <Filter>source\section_12</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_12\insert_iterators.cpp">
+      <Filter>source\section_12</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
