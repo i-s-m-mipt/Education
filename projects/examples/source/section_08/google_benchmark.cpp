@@ -22,7 +22,7 @@ void test_2(benchmark::State & state)
 {
     for (auto _ : state)
     {
-        try
+        try // note: zero-overhead principle in exceptions
         {
             auto s = 0;
             auto x = 0;
@@ -51,7 +51,13 @@ void test_3(benchmark::State & state)
             benchmark::DoNotOptimize(s);
             benchmark::DoNotOptimize(x);
 
-            while (true) if (s += ++x; x == 100) throw std::exception("exit");
+            while (true)
+            {
+                if (s += ++x; x == 100)
+                {
+                    throw std::exception("exit"); // note: slow exit
+                }
+            }
         }
         catch (...) {}
     }
