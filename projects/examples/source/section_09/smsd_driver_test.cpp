@@ -8,6 +8,8 @@
 #include <unordered_map>
 #include <vector>
 
+#define _WIN32_WINNT 0x0601
+
 #include <boost/asio.hpp>
 
 namespace solution
