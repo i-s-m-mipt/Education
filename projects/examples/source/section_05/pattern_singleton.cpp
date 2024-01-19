@@ -28,32 +28,74 @@ public:
 
 private:
 
-    int m_data;
+    int m_data = 0;
 
 }; // class Singleton 
 
-class noncopyable // good: better than singleton
+class Monostate // good: better than singleton
+{
+public:
+
+    void update(int new_data) { m_data = new_data; }
+
+    auto data() const { return m_data; }
+
+private:
+
+    static inline int m_data = 0; // note: shared data for all instances
+
+}; // class Monostate
+
+class Noncopyable // good: better than singleton
 {
 protected:
 
-    noncopyable() = default;
+    Noncopyable() = default;
 
-    noncopyable            (const noncopyable &) = delete;
-    noncopyable & operator=(const noncopyable &) = delete;
+protected:
 
-    ~noncopyable() = default; // note: non-polymorphic class
+    Noncopyable            (const Noncopyable &) = delete;
+    Noncopyable & operator=(const Noncopyable &) = delete;
 
-}; // class noncopyable
+protected:
 
-class Unique : noncopyable {}; // note: consider boost::noncopyable
+    ~Noncopyable() = default; // note: non-polymorphic class
+
+}; // class Noncopyable
+
+class Unique : Noncopyable // note: consider boost::noncopyable
+{
+public:
+
+    auto data() const { return m_data; }
+
+private:
+
+    int m_data = 0;
+
+}; // class Unique : Noncopyable
 
 int main()
 {
-    std::cout << Singleton::get_instance().data() << std::endl;
+    auto & singleton = Singleton::get_instance(); // note: single instance
 
-    [[maybe_unused]] Unique u1;
+    std::cout << singleton.data() << std::endl; // note: outputs 0
 
-//  Unique u2 = u1; // error: noncopyable type
+    Monostate monostate_1; // note: allowed multiple instances creation
+    Monostate monostate_2; 
+    Monostate monostate_3; 
+
+    monostate_3.update(42); // note: shared data for all instances 
+
+    std::cout << monostate_1.data() << std::endl; // note: outputs 42
+    std::cout << monostate_2.data() << std::endl; // note: outputs 42
+    std::cout << monostate_3.data() << std::endl; // note: outputs 42
+
+    Unique unique_1;
+
+//  Unique unique_2 = unique_1; // error: noncopyable type
+
+    std::cout << unique_1.data() << std::endl; // note: outputs 0
 
     return 0;
 }
