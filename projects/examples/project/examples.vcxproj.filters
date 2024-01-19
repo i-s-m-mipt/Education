@@ -423,6 +423,12 @@
     <ClCompile Include="..\source\section_12\iostream_iterators.cpp">
       <Filter>source\section_12</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_08\google_benchmark.cpp">
+      <Filter>source\section_08</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_12\pattern_visitor.cpp">
+      <Filter>source\section_12</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
