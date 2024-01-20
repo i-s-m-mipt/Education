@@ -1,43 +1,29 @@
+#include <exception>
 #include <iostream>
 #include <memory>
+#include <stdexcept>
 
-class Mobile;
-class Tablet;
-class Laptop;
-
-class Visitor
+class Visitor // good: provides additional functionality for other classes
 {
 public:
 
     virtual ~Visitor() noexcept = default; // note: polymorphic base class
 
-    [[nodiscard]] virtual double visit(const Mobile * mobile) const = 0;
-    [[nodiscard]] virtual double visit(const Tablet * tablet) const = 0;
-    [[nodiscard]] virtual double visit(const Laptop * laptop) const = 0;
+    virtual void visit(const class Mobile * mobile) const = 0;
+    virtual void visit(const class Tablet * tablet) const = 0;
+    virtual void visit(const class Laptop * laptop) const = 0;
 
 }; // class Visitor
 
-class Salesman : public Visitor // note: estimate price based on all tests 
-{
-public:
-
-    double visit(const Mobile * mobile) const override;
-    double visit(const Tablet * tablet) const override;
-    double visit(const Laptop * laptop) const override;
-
-}; // class Salesman : public Visitor
-
-class Computer // note: single-responsibility and opened-closed principles
+class Computer // good: provides single-responsibility princile in compute
 {
 public:
 
     virtual ~Computer() noexcept = default; // note: polymorphic base class
 
-    [[nodiscard]] virtual double run_cpu_test() const = 0;
-    [[nodiscard]] virtual double run_gpu_test() const = 0;
-    [[nodiscard]] virtual double run_ram_test() const = 0;
+    [[nodiscard]] virtual int run() const = 0; 
 
-    [[nodiscard]] virtual double visit(Visitor * visitor) const = 0;
+    virtual void visit_by(Visitor * visitor) const = 0;
 
 }; // class Computer 
 
@@ -45,14 +31,12 @@ class Mobile : public Computer
 {
 public:
 
-    double run_cpu_test() const override { return 1.0; }
-    double run_gpu_test() const override { return 1.0; }
-    double run_ram_test() const override { return 2.0; }
+    [[nodiscard]] int run() const override { return 0; };
 
-    double visit(Visitor * visitor) const override
+    void visit_by(Visitor * visitor) const override
     { 
         return visitor->visit(this); // note: second dispatch
-    } 
+    }
 
 }; // class Mobile : public Computer 
 
@@ -60,11 +44,9 @@ class Tablet : public Computer
 {
 public:
 
-    double run_cpu_test() const override { return 2.0; }
-    double run_gpu_test() const override { return 3.0; }
-    double run_ram_test() const override { return 2.0; }
+    [[nodiscard]] int run() const override { return 0; };
 
-    double visit(Visitor * visitor) const override
+    void visit_by(Visitor * visitor) const override
     {
         return visitor->visit(this); // note: second dispatch
     }
@@ -75,40 +57,35 @@ class Laptop : public Computer
 {
 public:
 
-    double run_cpu_test() const override { return 4.0; }
-    double run_gpu_test() const override { return 3.0; }
-    double run_ram_test() const override { return 3.0; }
+    [[nodiscard]] int run() const override { return 1; };
 
-    double visit(Visitor * visitor) const override
+    void visit_by(Visitor * visitor) const override
     {
         return visitor->visit(this); // note: second dispatch
     }
 
 }; // class Laptop : public Computer 
 
-double Salesman::visit(const Mobile * mobile) const
+class Tester : public Visitor // note: provides simple tests for all computers
 {
-    return (
-        mobile->run_cpu_test() * 1.0 +
-        mobile->run_gpu_test() * 2.0 +
-        mobile->run_ram_test() * 4.0);
-}
+public:
 
-double Salesman::visit(const Tablet * tablet) const
-{
-    return (
-        tablet->run_cpu_test() * 2.0 +
-        tablet->run_gpu_test() * 4.0 +
-        tablet->run_ram_test() * 1.0);
-}
+    void visit(const Mobile * mobile) const override 
+    { 
+        if (mobile->run() != 0) throw std::runtime_error("invalid Mobile::run");
+    }
 
-double Salesman::visit(const Laptop * laptop) const
-{
-    return (
-        laptop->run_cpu_test() * 4.0 +
-        laptop->run_gpu_test() * 1.0 +
-        laptop->run_ram_test() * 2.0);
-}
+    void visit(const Tablet * tablet) const override 
+    {
+        if (tablet->run() != 0) throw std::runtime_error("invalid Tablet::run");
+    }
+
+    void visit(const Laptop * laptop) const override 
+    {
+        if (laptop->run() != 0) throw std::runtime_error("invalid Laptop::run");
+    }
+
+}; // class Tester : public Visitor
 
 int main()
 {
@@ -116,11 +93,18 @@ int main()
     std::shared_ptr < Computer > tablet = std::make_shared < Tablet > ();
     std::shared_ptr < Computer > laptop = std::make_shared < Laptop > ();
 
-    Salesman salesman;
+    Tester tester;
 
-    std::cout << mobile->visit(&salesman) << std::endl; // note: first dispatch
-    std::cout << tablet->visit(&salesman) << std::endl; // note: first dispatch
-    std::cout << laptop->visit(&salesman) << std::endl; // note: first dispatch
+    try
+    {
+        mobile->visit_by(&tester); // note: first dispatch
+        tablet->visit_by(&tester); // note: first dispatch
+        laptop->visit_by(&tester); // note: first dispatch
+    }
+    catch (const std::exception & exception)
+    {
+        std::cerr << "Tester error: " << exception.what() << std::endl;
+    }
 
 	return 0;
 }
