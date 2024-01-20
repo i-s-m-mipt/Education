@@ -72,17 +72,17 @@ public:
 
     void visit(const Mobile * mobile) const override 
     { 
-        if (!mobile->run()) throw std::runtime_error("invalid Mobile::run");
+        if (mobile->run() != 0) throw std::runtime_error("invalid Mobile::run");
     }
 
     void visit(const Tablet * tablet) const override 
     {
-        if (!tablet->run()) throw std::runtime_error("invalid Tablet::run");
+        if (tablet->run() != 0) throw std::runtime_error("invalid Tablet::run");
     }
 
     void visit(const Laptop * laptop) const override 
     {
-        if (!laptop->run()) throw std::runtime_error("invalid Laptop::run");
+        if (laptop->run() != 0) throw std::runtime_error("invalid Laptop::run");
     }
 
 }; // class Tester : public Visitor
