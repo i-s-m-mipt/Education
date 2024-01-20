@@ -103,7 +103,7 @@ int main()
     }
     catch (const std::exception & exception)
     {
-        std::cerr << "Tester error: " << exception.what() << std::endl;
+        std::cerr << "Tester error: " << exception.what() << '\n';
     }
 
 	return 0;
