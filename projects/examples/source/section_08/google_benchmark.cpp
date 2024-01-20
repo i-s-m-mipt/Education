@@ -34,7 +34,7 @@ void test_2(benchmark::State & state)
         }
         catch (const std::exception & exception)
         {
-            std::cerr << exception.what() << std::endl;
+            std::cerr << exception.what() << '\n';
         }
     }
 }
