@@ -411,7 +411,7 @@ int main()
 	}
 	catch (const std::exception& exception)
 	{
-		std::cerr << exception.what() << std::endl;
+		std::cerr << exception.what() << '\n';
 
 		system("pause");
 
@@ -419,7 +419,7 @@ int main()
 	}
 	catch (...)
 	{
-		std::cerr << "unknown exception" << std::endl;
+		std::cerr << "unknown exception\n";
 
 		system("pause");
 
