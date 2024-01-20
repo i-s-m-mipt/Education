@@ -19,6 +19,8 @@
 #include <type_traits>
 #include <unordered_map>
 
+using namespace std::literals;
+
 #include <boost/core/null_deleter.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/log/attributes.hpp>
@@ -44,222 +46,154 @@
 #include <boost/preprocessor/facilities/overload.hpp>
 #include <boost/shared_ptr.hpp>
 
-namespace solution
+namespace solution::shared
 {
-	namespace shared
+	class Logger : private boost::noncopyable
 	{
-		using namespace std::literals;
+	private:
 
-		class logger_exception : public std::exception 
+		enum class Attribute
 		{
-		public:
+			line,
+			time,
+			severity,
+			thread,
+			process,
 
-			explicit logger_exception(const std::string & message) noexcept : std::exception(message.c_str()) {}
+		}; // enum class Attribute
 
-		}; // class logger_exception : public std::exception 
+	public:
 
-		class Logger : boost::noncopyable
-		{			
-		private:
-
-			enum class Attribute_Index
-			{
-				line,
-				time,
-				severity,
-				thread,
-				process,
-
-			}; // enum class Attribute_Index
-
-		private:
-
-			using attributes_container_t = std::unordered_map < Attribute_Index,
-				std::pair < std::string, std::shared_ptr < boost::log::attribute > > > ;
-
-		public:
-
-			enum class Severity
-			{
-				empty,
-				debug,
-				trace,
-				error,
-				fatal,
-
-			}; // enum class Severity
-
-		private:
-
-			using severities_container_t = std::unordered_map < Severity, std::string_view > ;
-
-		private:
-
-			using sink_t = boost::log::sinks::synchronous_sink < boost::log::sinks::text_file_backend > ;
-
-		private:
-
-			using logger_t = boost::log::sources::severity_logger_mt < Severity > ;
-
-			using status_t = bool;
-
-		public:
-
-			explicit Logger(std::string scope, bool has_trace = true) : m_scope(std::move(scope)), m_has_trace(has_trace)
-			{
-				try
-				{
-					std::call_once(is_initialized_once, &Logger::initialize);
-
-					if (m_has_trace)
-					{
-						write(Severity::trace, "EXECUTION ... ");
-					}
-				}
-				catch (const std::exception & exception)
-				{
-					catch_handler(FUNCTION, exception);
-				}
-			}
-
-			~Logger() noexcept
-			{
-				try
-				{
-					if (m_has_trace)
-					{
-						write(Severity::trace, "EXECUTION COMPLETE");
-					}
-				}
-				catch (...)
-				{
-					std::abort();
-				}
-			}
-
-		private:
-
-			static void initialize();
-
-		private:
-
-			static void add_attributes();
-
-			static void add_sinks();
-
-		private:
-
-			static void uninitialize();
-
-		private:
-
-			static void remove_attributes();
-
-			static void remove_sinks();
-
-		private:
-
-			static boost::shared_ptr < sink_t > make_fout_sink();
-
-		private:
-
-			static void fout_formatter(const boost::log::record_view & record_view, boost::log::formatting_ostream & stream);
-
-			static bool fout_filter([[maybe_unused]] const boost::log::attribute_value_set & attribute_value_set);
-
-		public:
-
-			[[nodiscard]] const auto & scope() const noexcept
-			{
-				return m_scope;
-			}
-
-		public:
-
-			void write(Severity severity, const std::string & message) const noexcept;
-
-		private:
-
-			static void catch_handler(const std::string & scope, const std::exception & exception) noexcept
-			{
-				try
-				{
-					std::cerr << scope << separator << exception.what() << '\n';
-				}
-				catch (...)
-				{
-					std::abort();
-				}
-			}
-
-			template < typename E >
-			static void	catch_handler(const std::string & scope, const std::exception & exception)
-			{
-				static_assert(std::is_same_v < logger_exception, E > , "invalid exception type");
-
-				try
-				{
-					std::cerr << scope << separator << exception.what() << '\n';
-				}
-				catch (...)
-				{
-					std::abort();
-				}
-
-				throw E(scope + " exception");
-			}
-
-		private:
-
-			static inline const auto separator = " : "s;
-
-		private:
-
-			static const attributes_container_t attributes;
-			static const severities_container_t severities;
-
-		private:
-
-			static std::once_flag is_initialized_once;
-
-			static logger_t logger;
-			static status_t status;
-
-		private:
-
-			const std::string m_scope;
-
-		private:
-
-			bool m_has_trace;
-
-		}; // class Logger : boost::noncopyable
-
-		template < typename E >
-		void catch_handler(Logger & logger, const std::exception & exception)
+		enum class Severity
 		{
-			static_assert(std::is_base_of_v < std::exception, E >, "invalid exception type");
+			empty,
+			debug,
+			trace,
+			error,
+			fatal,
 
-			logger.write(Logger::Severity::error, exception.what());
+		}; // enum class Severity
 
-			throw E(logger.scope() + " exception");
+	private:
+
+		using attributes_t = std::unordered_map < Attribute, std::pair < std::string, boost::log::attribute > > ;
+
+		using severities_t = std::unordered_map < Severity, std::string_view > ;
+
+	private:
+
+		using status_t = std::once_flag;
+
+		using logger_t = boost::log::sources::severity_logger_mt < Severity > ;
+
+	private:
+
+		using sink_t = boost::log::sinks::synchronous_sink < boost::log::sinks::text_file_backend > ;
+
+	public:
+
+		explicit Logger(const char * scope, bool has_trace = true) noexcept : m_scope(scope), m_has_trace(has_trace)
+		{
+			try
+			{
+				std::call_once(status, Logger::initialize);
+			}
+			catch (const std::exception & exception)
+			{
+				catch_handler(FUNCTION, exception.what()); std::abort();
+			}
+
+			if (m_has_trace) write(Severity::trace, "EXECUTION ... ");
 		}
 
-		template < typename E >
-		void catch_handler(Logger & logger)
+		~Logger() noexcept
 		{
-			static_assert(std::is_base_of_v < std::exception, E >, "invalid exception type");
-
-			logger.write(Logger::Severity::error, "unknown exception");
-
-			throw E(logger.scope() + " exception");
+			if (m_has_trace) write(Severity::trace, "EXECUTION COMPLETE");
 		}
 
-		void catch_handler(Logger & logger, const std::exception & exception) noexcept;
+	private:
 
-	} // namespace shared
+		static void initialize();
 
-} // namespace solution 
+		static boost::shared_ptr < sink_t > make_fout_sink();
+
+		static void fout_formatter(const boost::log::record_view & record_view, boost::log::formatting_ostream & stream);
+
+	public:
+
+		[[nodiscard]] auto scope() const noexcept
+		{
+			return m_scope;
+		}
+
+	public:
+
+		[[nodiscard]] static auto severity_as_string(Severity severity)
+		{
+			return severities.at(severity);
+		}
+
+	public:
+
+		void write(Severity severity, const std::string & message) const noexcept;
+
+	private:
+
+		static void catch_handler(std::string_view scope, std::string_view message) noexcept
+		{
+			try { std::cerr << scope << " : " << message << '\n'; } catch (...) {}
+		}
+
+	private:
+
+		static inline const auto separator = " : ";
+
+	private:
+
+		static inline const attributes_t attributes =
+		{
+			{ Logger::Attribute::line,     std::make_pair("line",    boost::log::attributes::counter < std::size_t > ()) },
+			{ Logger::Attribute::time,     std::make_pair("time",    boost::log::attributes::utc_clock               ()) },
+			{ Logger::Attribute::process,  std::make_pair("process", boost::log::attributes::current_process_id      ()) },
+			{ Logger::Attribute::thread,   std::make_pair("thread",  boost::log::attributes::current_thread_id       ()) },
+			{ Logger::Attribute::severity, std::make_pair(
+				boost::log::aux::default_attribute_names::severity().string(), boost::log::attribute()) }
+		};
+
+		static inline const severities_t severities =
+		{
+			{ Logger::Severity::empty, "empty" },
+			{ Logger::Severity::debug, "debug" },
+			{ Logger::Severity::trace, "trace" },
+			{ Logger::Severity::error, "error" },
+			{ Logger::Severity::fatal, "fatal" }
+		};
+
+	private:
+
+		static inline status_t status;
+		static inline logger_t logger;
+
+	private:
+
+		const char* const m_scope;
+
+	private:
+
+		bool m_has_trace;
+
+	}; // class Logger : private boost::noncopyable
+
+	template < typename E > void catch_handler(Logger & logger, const std::exception & exception)
+	{
+		static_assert(std::is_base_of_v < std::exception, E >, "invalid exception type");
+
+		logger.write(Logger::Severity::error, exception.what());
+
+		throw E(logger.scope() + " exception"s);
+	}
+
+} // namespace solution::shared 
 
 #define LOGGER_2(logger, has_trace) solution::shared::Logger logger(FUNCTION, has_trace)
 
@@ -270,6 +204,8 @@ namespace solution
 #else
 #  define LOGGER(...) BOOST_PP_CAT(BOOST_PP_OVERLOAD(LOGGER_,__VA_ARGS__)(__VA_ARGS__),BOOST_PP_EMPTY())
 #endif
+
+#define LOGGER_NO_TRACE(logger) solution::shared::Logger logger(FUNCTION, false)
 
 #define LOGGER_WRITE(logger, message) logger.write(solution::shared::Logger::Severity::empty, message);
 
