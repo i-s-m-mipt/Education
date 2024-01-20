@@ -19,8 +19,8 @@ template < typename T = Bad > struct S
 
 }; // template < typename T > struct S
 
-void cleanup_v1() { std::cerr << "cleanup_v1 at exit" << std::endl; }
-void cleanup_v2() { std::cerr << "cleanup_v2 at exit" << std::endl; }
+void cleanup_v1() { std::cerr << "cleanup_v1 at exit\n"; }
+void cleanup_v2() { std::cerr << "cleanup_v2 at exit\n"; }
 
 int main()
 {
