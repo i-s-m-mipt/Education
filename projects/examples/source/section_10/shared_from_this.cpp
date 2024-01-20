@@ -61,7 +61,7 @@ int main()
     }
     catch (const std::bad_weak_ptr & exception)
     {
-        std::cerr << exception.what() << std::endl;
+        std::cerr << exception.what() << '\n';
     }
 
     auto best_1 = Best::create();
