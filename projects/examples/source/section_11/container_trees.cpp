@@ -35,9 +35,16 @@ int main()
 
 	std::map < std::string, int > map; // note: O(log(N)) complexity mainly
 
-	map.insert(std::make_pair("hello", 42)); // good: prefer std::make_pair function
+	map.insert(std::make_pair("hello", 41)); // good: prefer std::make_pair function
 
 	map["world"] = map.at("hello"); map.erase("hello"); // note: way to change the key
+
+	assert(!map.    emplace("world", 42).second); // note:    additional actions
+	assert(!map.try_emplace("world", 42).second); // good: no additional actions
+
+	assert(!map.insert_or_assign("world", 42).second); // note: changes value here
+
+	assert(std::size(map) == 1 && map.at("world") == 42);
 
 	return 0;
 }
