@@ -56,9 +56,11 @@ int main()
         std::cerr << "Tester error: " << exception.what() << '\n';
     }
 
-    Visitor test([](int x) { return (x + 1); }); // note: Visitor < lambda[](int)->int >
+    assert(std::visit([](auto && x){ return x; }, std::variant < int > (42)) == 42);
 
-    assert(std::visit(test, std::variant < int > (41)) == 42);
+    Visitor test([](auto && x){ return x; }); // note: Visitor < lambda[](int)->int >
+
+    assert(std::visit(test, std::variant < int > (42)) == 42);
 
     return 0;
 }
