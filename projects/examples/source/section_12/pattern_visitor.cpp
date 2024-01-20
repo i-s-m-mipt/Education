@@ -1,15 +1,31 @@
 #include <iostream>
 #include <memory>
 
-class Visitor // note: evaluate computer performance based on runned tests 
+class Mobile;
+class Tablet;
+class Laptop;
+
+class Visitor
 {
 public:
 
-    double visit(const class Mobile * mobile) const;
-    double visit(const class Tablet * tablet) const;
-    double visit(const class Laptop * laptop) const;
+    virtual ~Visitor() noexcept = default; // note: polymorphic base class
+
+    [[nodiscard]] virtual double visit(const Mobile * mobile) const = 0;
+    [[nodiscard]] virtual double visit(const Tablet * tablet) const = 0;
+    [[nodiscard]] virtual double visit(const Laptop * laptop) const = 0;
 
 }; // class Visitor
+
+class Salesman : public Visitor // note: estimate price based on all tests 
+{
+public:
+
+    double visit(const Mobile * mobile) const override;
+    double visit(const Tablet * tablet) const override;
+    double visit(const Laptop * laptop) const override;
+
+}; // class Salesman : public Visitor
 
 class Computer // note: single-responsibility and opened-closed principles
 {
@@ -17,11 +33,11 @@ public:
 
     virtual ~Computer() noexcept = default; // note: polymorphic base class
 
-    virtual double run_cpu_test() const = 0;
-    virtual double run_gpu_test() const = 0;
-    virtual double run_ram_test() const = 0;
+    [[nodiscard]] virtual double run_cpu_test() const = 0;
+    [[nodiscard]] virtual double run_gpu_test() const = 0;
+    [[nodiscard]] virtual double run_ram_test() const = 0;
 
-    virtual double visit(Visitor * visitor) const = 0;
+    [[nodiscard]] virtual double visit(Visitor * visitor) const = 0;
 
 }; // class Computer 
 
@@ -70,7 +86,7 @@ public:
 
 }; // class Laptop : public Computer 
 
-double Visitor::visit(const Mobile * mobile) const
+double Salesman::visit(const Mobile * mobile) const
 {
     return (
         mobile->run_cpu_test() * 1.0 +
@@ -78,7 +94,7 @@ double Visitor::visit(const Mobile * mobile) const
         mobile->run_ram_test() * 4.0);
 }
 
-double Visitor::visit(const Tablet * tablet) const
+double Salesman::visit(const Tablet * tablet) const
 {
     return (
         tablet->run_cpu_test() * 2.0 +
@@ -86,7 +102,7 @@ double Visitor::visit(const Tablet * tablet) const
         tablet->run_ram_test() * 1.0);
 }
 
-double Visitor::visit(const Laptop * laptop) const
+double Salesman::visit(const Laptop * laptop) const
 {
     return (
         laptop->run_cpu_test() * 4.0 +
@@ -96,15 +112,15 @@ double Visitor::visit(const Laptop * laptop) const
 
 int main()
 {
-    auto mobile = std::make_shared < Mobile > ();
-    auto tablet = std::make_shared < Tablet > ();
-    auto laptop = std::make_shared < Laptop > ();
+    std::shared_ptr < Computer > mobile = std::make_shared < Mobile > ();
+    std::shared_ptr < Computer > tablet = std::make_shared < Tablet > ();
+    std::shared_ptr < Computer > laptop = std::make_shared < Laptop > ();
 
-    Visitor visitor;
+    Salesman salesman;
 
-    std::cout << "mobile: " << mobile->visit(&visitor) << std::endl; // note: first dispatch
-    std::cout << "tablet: " << tablet->visit(&visitor) << std::endl; // note: first dispatch
-    std::cout << "laptop: " << laptop->visit(&visitor) << std::endl; // note: first dispatch
+    std::cout << mobile->visit(&salesman) << std::endl; // note: first dispatch
+    std::cout << tablet->visit(&salesman) << std::endl; // note: first dispatch
+    std::cout << laptop->visit(&salesman) << std::endl; // note: first dispatch
 
 	return 0;
 }
