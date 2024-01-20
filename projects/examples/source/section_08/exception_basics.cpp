@@ -40,7 +40,7 @@ private:
 	}
 	catch (const Error & error) // note: only one exception is handled
 	{
-		std::cerr << error.what() << std::endl;
+		std::cerr << error.what() << '\n';
 
 //		throw error; // bad: copy-initialized copy
 
@@ -73,11 +73,11 @@ void f()
 	}
 	catch (const std::exception & exception)
 	{
-		std::cerr << exception.what() << std::endl;
+		std::cerr << exception.what() << '\n';
 
 		throw std::runtime_error("error"); // note: throw new exception
 
-//		std::cerr << "f() exited in catch" << std::endl; // warning: unreachable code
+//		std::cerr << "f() exited in catch" << '\n'; // warning: unreachable code
 	}
 
 //	std::cout << "f() exited" << std::endl; // warning: unreachable code
@@ -95,7 +95,7 @@ public:
 	}
 	catch (...) // note: destructor will not be called, but m_data will be destroyed
 	{
-		std::cerr << "constructor exception" << std::endl;
+		std::cerr << "constructor exception\n";
 
 		uninitialize(); // note: mandatory call, prefer RAII wrappers instead
 	}
@@ -113,7 +113,7 @@ public:
 		}
 		catch (...) // good: catch all exceptions in destructor
 		{
-			std::cerr << "bad destructor" << std::endl;
+			std::cerr << "bad destructor\n";
 
 			std::abort(); // note: abnormal termination
 		}
@@ -157,13 +157,13 @@ int main()
 	}
 	catch (const std::runtime_error & exception) // note: specified catch handler
 	{
-		std::cerr << exception.what() << std::endl;
+		std::cerr << exception.what() << '\n';
 
 		return EXIT_FAILURE;
 	}
 	catch (const std::exception & exception) // note: generalized catch handler
 	{
-		std::cerr << exception.what() << std::endl;
+		std::cerr << exception.what() << '\n';
 
 		return EXIT_FAILURE;
 	}
@@ -171,7 +171,7 @@ int main()
 	{
 		[[maybe_unused]] auto ptr = std::current_exception(); // note: possible in catch (...)
 
-		std::cerr << "unknown exception" << std::endl;
+		std::cerr << "unknown exception\n";
 
 		return EXIT_FAILURE;
 	}
