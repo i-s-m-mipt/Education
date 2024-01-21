@@ -55,12 +55,12 @@ private:
 
 int main()
 {
-	std::vector < int > v1({ 1, 4, 2, 5, 3 });
+	std::vector < int > v1 = { 1, 4, 2, 5, 3 };
 
 	std::sort(std::begin(v1), std::end(v1));                 // note: 1 2 3 4 5
 	std::sort(std::begin(v1), std::end(v1), std::greater()); // note: 5 4 3 2 1
 
-	std::set < int, std::greater < int > > set({ 1, 4, 2, 5, 3 });
+	std::set < int, std::greater < int > > set = { 1, 4, 2, 5, 3 };
 
 	for (auto iterator = std::cbegin(set); iterator != std::cend(set); ++iterator)
 	{
