@@ -15,7 +15,7 @@ public:
 
 class B {};
 
-std::variant < std::monostate, int, double > handle(int x)
+[[nodiscard]] std::variant < std::monostate, int, double > handle(int x)
 {
 	if (x < 0)
 	{
