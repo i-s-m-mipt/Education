@@ -10,16 +10,14 @@ int main()
 
 	std::vector < int > v(n, 0); // note: create vector of n zero elements
 
-	const auto size = v.size(); // note: get current vector size
-
-	for (std::size_t i = 0; i < size; ++i)
+	for (std::size_t i = 0; i < n; ++i)
 	{
 		std::cin >> v[i]; // note: consider push_back as alternative
 	}
 
-	for (std::size_t i = 0; i < size - 1; ++i)
+	for (std::size_t i = 0; i < n - 1; ++i)
 	{
-		for (std::size_t j = i + 1; j < size; ++j)
+		for (std::size_t j = i + 1; j < n; ++j)
 		{
 			if (v[i] > v[j])
 			{
@@ -28,9 +26,9 @@ int main()
 		}
 	}
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (std::size_t i = 0; i < n; ++i)
 	{
-		std::cout << v[i] << (i + 1 == size ? '\n' : ' ');
+		std::cout << v[i] << (i + 1 == n ? '\n' : ' ');
 	}
 
 	return 0;
