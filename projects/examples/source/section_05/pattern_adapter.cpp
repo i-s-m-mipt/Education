@@ -30,7 +30,7 @@ int main()
 {
 	Device device; Computer * computer = new Adapter(device);
 
-	computer->run(); delete computer;
+	computer->run(); delete computer; // good: no memory leak
 
 	return 0;
 }

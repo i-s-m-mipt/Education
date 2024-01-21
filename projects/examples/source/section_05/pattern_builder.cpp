@@ -87,9 +87,9 @@ public:
 
 int main()
 {
-    delete build(Builder_Mobile("Mobile"));
-    delete build(Builder_Tablet("Tablet"));
-    delete build(Builder_Laptop("Laptop"));
+    delete build(Builder_Mobile("Mobile")); // good: no memory leak
+    delete build(Builder_Tablet("Tablet")); // good: no memory leak
+    delete build(Builder_Laptop("Laptop")); // good: no memory leak
 
     return 0;
 }
