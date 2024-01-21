@@ -1,61 +1,48 @@
 #include <iostream>
 
-class Drawing_API 
+class BIOS 
 {
 public:
 
-    virtual ~Drawing_API() = default;
+    virtual ~BIOS() = default; // note: polymorphic base class
 
-    virtual void draw() const = 0;
+    virtual void run() const = 0;
 
-}; // class Drawing_API 
+}; // class BIOS 
 
-class Drawing_API_v1 : public Drawing_API 
+struct Phoenix : public BIOS { void run() const override { std::cout << "Phoenix\n"; } };
+struct Microid : public BIOS { void run() const override { std::cout << "Microid\n"; } };
+
+class Computer 
 {
 public:
 
-    void draw() const override { std::cout << "drawing API v1" << std::endl; }
+    explicit Computer(const BIOS & bios) : m_bios(bios) {}
 
-}; // class Drawing_API_v1 : public Drawing_API 
+    virtual ~Computer() = default; // note: polymorphic base class
 
-class Drawing_API_v2 : public Drawing_API 
-{
-public:
-
-    void draw() const override { std::cout << "drawing API v2" << std::endl; }
-
-}; // class Drawing_API_v2 : public Drawing_API 
-
-class Shape 
-{
-public:
-
-    explicit Shape(const Drawing_API & drawing_API) : m_drawing_API(drawing_API) {}
-
-    virtual ~Shape() = default;
-
-    virtual void draw() const = 0;
+    virtual void run() const = 0;
 
 protected:
 
-    const Drawing_API & m_drawing_API;
+    const BIOS & m_bios;
 
-}; // class Shape 
+}; // class Computer 
 
-class Triangle : public Shape 
+class Laptop : public Computer 
 {
 public:
 
-    explicit Triangle(const Drawing_API & drawing_API) : Shape(drawing_API) {}
+    explicit Laptop(const BIOS & bios) : Computer(bios) {}
 
-    void draw() const override { m_drawing_API.draw(); }
+    void run() const override { m_bios.run(); }
 
-}; // class Triangle : public Shape 
+}; // class Laptop : public Computer 
 
 int main() 
 {
-    Triangle(Drawing_API_v1()).draw();
-    Triangle(Drawing_API_v2()).draw();
+    Laptop(Phoenix()).run();
+    Laptop(Microid()).run();
 
     return 0;
 }
