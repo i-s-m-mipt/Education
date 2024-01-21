@@ -429,6 +429,12 @@
     <ClCompile Include="..\source\section_12\pattern_visitor.cpp">
       <Filter>source\section_12</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_12\advanced_visitors.cpp">
+      <Filter>source\section_12</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_12\heterogeneous_vector.cpp">
+      <Filter>source\section_12</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
