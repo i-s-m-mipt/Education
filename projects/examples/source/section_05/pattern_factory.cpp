@@ -31,7 +31,7 @@ public:
 
     }; // struct Factory
 
-    void run() const override { std::cout << "Server v" << m_version << '\n'; };
+    void run() const override { std::cout << "Server v" << m_version << std::endl; };
 
 private:
 
