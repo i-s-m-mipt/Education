@@ -6,40 +6,34 @@ class State
 {
 public:
 
-    virtual ~State() = default;
+    virtual ~State() = default; // note: polymorphic base class
 
-    virtual void stop([[maybe_unused]] Computer * c) const { std::cout << "stop already" << std::endl; }
-    virtual void slow([[maybe_unused]] Computer * c) const { std::cout << "slow already" << std::endl; }
-    virtual void fast([[maybe_unused]] Computer * c) const { std::cout << "fast already" << std::endl; }
+    virtual void stop([[maybe_unused]] Computer * c) const { std::cout << "stop already\n"; }
+    virtual void slow([[maybe_unused]] Computer * c) const { std::cout << "slow already\n"; }
+    virtual void fast([[maybe_unused]] Computer * c) const { std::cout << "fast already\n"; }
 
 }; // class State
 
-class Stop : public State // note: implements all possible state changes
+struct Stop : public State // note: implements all possible state changes
 {
-public:
-
     void slow([[maybe_unused]] Computer * c) const override;
     void fast([[maybe_unused]] Computer * c) const override;
 
-}; // class Stop : public State
+}; // struct Stop : public State
 
-class Slow : public State // note: implements all possible state changes
+struct Slow : public State // note: implements all possible state changes
 {
-public:
-
     void stop([[maybe_unused]] Computer * c) const override;
     void fast([[maybe_unused]] Computer * c) const override;
 
-}; // class Slow : public State
+}; // struct Slow : public State
 
-class Fast : public State // note: implements all possible state changes
+struct Fast : public State // note: implements all possible state changes
 {
-public:
-
     void stop([[maybe_unused]] Computer * c) const override;
     void slow([[maybe_unused]] Computer * c) const override;
 
-}; // class Fast : public State
+}; // struct Fast : public State
 
 class Computer
 {
