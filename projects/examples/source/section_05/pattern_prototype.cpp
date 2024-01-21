@@ -4,15 +4,39 @@ class Computer
 {
 public:
     
-    virtual ~Computer() = default;
+    virtual ~Computer() = default; // note: polymorphic base class
 
-public:
-
-    [[nodiscard]] virtual Computer * clone() const = 0; // note: virtual constructor
+    [[nodiscard]] virtual Computer * clone() const = 0; // note: virtual copy
 
     virtual void run() const = 0;
 
 }; // class Computer
+
+class Mobile : public Computer
+{
+public:
+
+    [[nodiscard]] Computer * clone() const override 
+    { 
+        return new Mobile(*this); // note: delete required
+    } 
+
+    void run() const override { std::cout << "Mobile" << std::endl; };
+
+}; // class Mobile : public Computer
+
+class Tablet : public Computer
+{
+public:
+
+    [[nodiscard]] Computer * clone() const override 
+    { 
+        return new Tablet(*this); // note: delete required
+    } 
+
+    void run() const override { std::cout << "Tablet" << std::endl; };
+
+}; // class Tablet : public Computer
 
 class Laptop : public Computer
 {
@@ -27,42 +51,13 @@ public:
 
 }; // class Laptop : public Computer
 
-class Desktop : public Computer
+class Factory // note: no factory hierarchy, static prototypes and virtual copy
 {
 public:
 
-    [[nodiscard]] Computer * clone() const override 
-    { 
-        return new Desktop(*this); // note: delete required
-    } 
-
-    void run() const override { std::cout << "Desktop" << std::endl; };
-
-}; // class Desktop : public Computer
-
-class Server : public Computer
-{
-public:
-
-    [[nodiscard]] Computer * clone() const override 
-    { 
-        return new Server(*this); // note: delete required
-    } 
-
-    void run() const override { std::cout << "Server" << std::endl; };
-
-}; // class Server : public Computer
-
-class Factory // note: no factory hierarchy
-{
-public:
-
-    [[nodiscard]] auto create_laptop() const
-    { 
-        static Laptop prototype; // note: controversial decision
-        
-        return prototype.clone(); 
-    }
+    [[nodiscard]] auto create_mobile() const { static Mobile p; return p.clone(); }
+    [[nodiscard]] auto create_tablet() const { static Tablet p; return p.clone(); }
+    [[nodiscard]] auto create_laptop() const { static Laptop p; return p.clone(); }
 
 }; // class Factory
 
@@ -70,11 +65,9 @@ int main()
 {
     Factory factory;
 
-    auto computer = factory.create_laptop(); // good: laptop only here
-
-    computer->run();
-
-    delete computer; // good: no memory leak
+    delete factory.create_mobile();
+    delete factory.create_tablet();
+    delete factory.create_laptop();
 
     return 0;
 }
