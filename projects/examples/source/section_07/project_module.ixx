@@ -4,6 +4,8 @@ module; // note: global module fragment
 
 export module math; // note: interface unit
 
+export import math.submodule;
+
 export void hello_module();
 
 export namespace math // good: exporting namesapce

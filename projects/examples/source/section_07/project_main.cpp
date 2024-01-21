@@ -51,7 +51,7 @@ int main()
 
 //  ============================================================================
 
-	hello_module();
+	hello_module(); hello_submodule();
 
 	std::cout << call(math::f, 0.0) << std::endl; // note: no problems here
 	std::cout << call(math::g, 0.0) << std::endl; // note: no problems here

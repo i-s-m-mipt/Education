@@ -438,6 +438,9 @@
     <ClCompile Include="..\source\section_12\pattern_command.cpp">
       <Filter>source\section_12</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_07\project_submodule.ixx">
+      <Filter>source\section_07</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
