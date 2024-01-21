@@ -13,8 +13,10 @@
 
 template < typename T, typename F > auto inline make_visitor(F f)
 {
-    return std::make_pair(std::type_index(typeid(T)), 
-        [f](const auto & any){ f(std::any_cast < T > (any)); });
+    return std::make_pair(std::type_index(typeid(T)), [f](const auto & any)
+    { 
+        f(std::any_cast < T > (any)); 
+    });
 }
 
 void handle(const std::any & any)
@@ -48,10 +50,7 @@ int main()
 
     try
     {
-        for (std::size_t i = 0; i < std::size(vector); ++i)
-        {
-            handle(vector[i]);
-        }
+        for (std::size_t i = 0; i < std::size(vector); ++i) handle(vector[i]);
     }
     catch (const std::exception & exception)
     {
