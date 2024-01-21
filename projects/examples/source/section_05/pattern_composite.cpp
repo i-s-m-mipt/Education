@@ -5,39 +5,17 @@ class Computer
 {
 public:
 
-    virtual ~Computer() = default;
+    virtual ~Computer() = default; // note: polymorphic base class
 
-public:
-
-    [[nodiscard]] virtual double performance() const = 0;
+    [[nodiscard]] virtual std::size_t cores() const = 0;
 
 }; // class Computer
 
-class Laptop : public Computer
-{
-public:
+struct Mobile : public Computer { [[nodiscard]] std::size_t cores() const override { return 1; } };
+struct Tablet : public Computer { [[nodiscard]] std::size_t cores() const override { return 2; } };
+struct Laptop : public Computer { [[nodiscard]] std::size_t cores() const override { return 3; } };
 
-    [[nodiscard]] double performance() const override { return 1.0; }
-
-}; // class Laptop : public Computer
-
-class Desktop : public Computer
-{
-public:
-
-    [[nodiscard]] double performance() const override { return 10.0; }
-
-}; // class Desktop : public Computer
-
-class Server : public Computer
-{
-public:
-
-    [[nodiscard]] double performance() const override { return 100.0; }
-
-}; // class Server : public Computer
-
-class Cluster : public Computer // note: composite of computers
+class Cluster : public Computer // note: composite class of concrete computers
 {
 public:
 
@@ -49,27 +27,19 @@ public:
         }
     }
 
-public:
-
-    [[nodiscard]] double performance() const override
+    [[nodiscard]] std::size_t cores() const override
     {
-        auto total_performance = 0.0;
+        std::size_t total_cores = 0;
 
         for (std::size_t i = 0; i < m_computers.size(); ++i)
         {
-            if (m_computers[i]) // good: verify if nullptr
-            {
-                total_performance += m_computers[i]->performance();
-            }
+            if (m_computers[i]) total_cores += m_computers[i]->cores();
         }
 
-        return total_performance;
+        return total_cores;
     }
 
-    void add_computer(Computer * computer)
-    {
-        m_computers.push_back(computer);
-    }
+    void add_computer(Computer * computer) { m_computers.push_back(computer); }
 
 private:
     
@@ -77,32 +47,26 @@ private:
 
 }; // class Cluster : public Computer
 
-[[nodiscard]] auto make_cluster(std::size_t size)
+[[nodiscard]] auto make_cluster(std::size_t n_mobiles, std::size_t n_tablets, std::size_t n_laptops)
 {
     auto cluster = new Cluster;
 
-    for (std::size_t i = 0; i < size; ++i)
-    {
-        cluster->add_computer(new Server);
-    }
+    for (std::size_t i = 0; i < n_mobiles; ++i) cluster->add_computer(new Mobile);
+    for (std::size_t i = 0; i < n_tablets; ++i) cluster->add_computer(new Tablet);
+    for (std::size_t i = 0; i < n_laptops; ++i) cluster->add_computer(new Laptop);
 
     return cluster;
 }
 
 int main()
 {
-    const std::size_t size = 4;
-
     auto super_cluster = new Cluster;
 
-    for (std::size_t i = 0; i < size; ++i)
-    {
-        super_cluster->add_computer(make_cluster(size * 2));
-    }
+    for (std::size_t i = 0; i < 4; ++i) super_cluster->add_computer(make_cluster(1, 1, 1));
 
     Computer * computer = super_cluster;
         
-    std::cout << computer->performance() << std::endl;
+    std::cout << computer->cores() << std::endl;
 
     delete computer; // good: no memory leak
 
