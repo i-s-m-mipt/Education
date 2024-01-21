@@ -6,13 +6,13 @@
 
 int main()
 {
-	std::list < int > list_1({ 8, 0, 6, 2, 4, 4, 2, 6, 0, 8 });
+	std::list < int > list_1 = { 8, 0, 6, 2, 4, 4, 2, 6, 0, 8 };
 	
 	list_1.sort(); // note: std::sort is unacceptable due to bidirectional iterators
 
 	assert(list_1.unique() == 5); // note: erases all consecutive duplicate elements
 
-	std::list < int > list_2({ 9, 7, 5, 3, 1, 42 });
+	std::list < int > list_2 = { 9, 7, 5, 3, 1, 42 };
 
 	list_2.reverse(); // note: reverses the order of the elements in the container
 
@@ -31,7 +31,7 @@ int main()
 
 	std::cout << std::endl;
 
-	std::forward_list < int > forward_list({ 1, 2, 3, 4, 5 }); // note: forward iterators
+	std::forward_list < int > forward_list = { 1, 2, 3, 4, 5 }; // note: forward iterators
 
 	forward_list.insert_after(forward_list.before_begin(), 42);
 
