@@ -8,6 +8,21 @@
 #include <set>
 #include <vector>
 
+class C
+{
+public:
+
+	void f() const
+	{
+		[this](){std::cout << m_data << std::endl; }(); // note: this captured
+	}
+
+private:
+
+	int m_data = 0;
+
+}; // class C
+
 int main()
 {
 	auto lambda = [](){};
