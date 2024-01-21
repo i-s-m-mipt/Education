@@ -30,15 +30,15 @@ int * binary_search(int * a, std::size_t l, std::size_t r, int k) // note: O(log
 
 int main()
 {
-	const std::size_t size = 7;
+	int a[]{1, 3, 4, 5, 6, 7, 8 }; // note: sorted array, consider std::vector with iterators
 
-	int a[size]{1, 3, 4, 5, 6, 7, 8 }; // note: sorted array, consider std::vector with iterators
+	const std::size_t n = sizeof(a) / sizeof(int); // note: prefer std::size over this way
 
-	for (auto i = a[0] - 1; i <= a[size - 1] + 1; ++i)
+	for (auto i = a[0] - 1; i <= a[n - 1] + 1; ++i)
 	{
 		std::cout << "index of " << i << " in array: ";
 
-		if (auto ptr = binary_search(a, 0, size - 1, i); ptr) // note: closed interval
+		if (auto ptr = binary_search(a, 0, n - 1, i); ptr) // note: closed interval
 		{
 			std::cout << ptr - a << std::endl; // note: get index through pointer arithmetic
 		}
