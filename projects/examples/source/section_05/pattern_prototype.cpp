@@ -51,23 +51,27 @@ public:
 
 }; // class Laptop : public Computer
 
-class Factory // note: no factory hierarchy, static prototypes and virtual copy
+class Factory // note: no factories hierarchy, static prototypes and virtual copy
 {
 public:
 
-    [[nodiscard]] auto create_mobile() const { static Mobile p; return p.clone(); }
-    [[nodiscard]] auto create_tablet() const { static Tablet p; return p.clone(); }
-    [[nodiscard]] auto create_laptop() const { static Laptop p; return p.clone(); }
+    [[nodiscard]] static auto create_mobile() { return mobile_prototype.clone(); }
+    [[nodiscard]] static auto create_tablet() { return tablet_prototype.clone(); }
+    [[nodiscard]] static auto create_laptop() { return laptop_prototype.clone(); }
 
-}; // class Factory
+private:
+
+    static inline const Mobile mobile_prototype;
+    static inline const Tablet tablet_prototype;
+    static inline const Laptop laptop_prototype;
+
+}; // struct Factory
 
 int main()
 {
-    Factory factory;
-
-    delete factory.create_mobile();
-    delete factory.create_tablet();
-    delete factory.create_laptop();
+    delete Factory::create_mobile();
+    delete Factory::create_tablet();
+    delete Factory::create_laptop();
 
     return 0;
 }
