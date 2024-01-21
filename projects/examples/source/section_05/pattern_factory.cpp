@@ -86,24 +86,20 @@ public:
 
 int main()
 {
-    delete create < Mobile > (); // good: no memory leak
-    delete create < Tablet > (); // good: no memory leak
-    delete create < Laptop > (); // good: no memory leak
+    auto mobile = create < Mobile > (); 
 
-    delete Server::Factory::create_v1(); // good: no memory leak
-    delete Server::Factory::create_v2(); // good: no memory leak
-    delete Server::Factory::create_v3(); // good: no memory leak
+    mobile->run(); delete mobile; // good: no memory leak
 
-    Factory * factory_mobile = new Factory_Mobile; // note: delete required
-    Factory * factory_tablet = new Factory_Tablet; // note: delete required
+    auto server = Server::Factory::create_v1(); 
+
+    server->run(); delete server; // good: no memory leak
+
     Factory * factory_laptop = new Factory_Laptop; // note: delete required
 
-    delete factory_mobile->create(); // good: no memory leak
-    delete factory_tablet->create(); // good: no memory leak
-    delete factory_laptop->create(); // good: no memory leak
+    auto laptop = factory_laptop->create(); 
 
-    delete factory_mobile; // good: no memory leak
-    delete factory_tablet; // good: no memory leak
+    laptop->run(); delete laptop; // good: no memory leak
+
     delete factory_laptop; // good: no memory leak
 
     return 0;

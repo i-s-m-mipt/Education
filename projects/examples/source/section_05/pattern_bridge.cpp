@@ -41,8 +41,9 @@ public:
 
 int main() 
 {
-    Laptop(Phoenix()).run();
-    Laptop(Microid()).run();
+    Computer * laptop = new Laptop(Phoenix());
+
+    laptop->run(); delete laptop; // good: no memory leak
 
     return 0;
 }

@@ -11,6 +11,15 @@ struct Computer
     
 }; // struct Computer
 
+void print(const Computer & computer)
+{
+    std::cout << "Computer \"" << computer.name << "\" includes: " << std::endl;
+
+    std::cout << "CPU: " << computer.cpu.name << std::endl;
+    std::cout << "GPU: " << computer.gpu.name << std::endl;
+    std::cout << "RAM: " << computer.ram.name << std::endl;
+}
+
 class Builder
 {
 public:
@@ -87,9 +96,9 @@ public:
 
 int main()
 {
-    delete build(Builder_Mobile("Mobile")); // good: no memory leak
-    delete build(Builder_Tablet("Tablet")); // good: no memory leak
-    delete build(Builder_Laptop("Laptop")); // good: no memory leak
+    auto mobile = build(Builder_Mobile("Mobile")); 
+
+    print(*mobile); delete mobile; // good: no memory leak
 
     return 0;
 }

@@ -69,9 +69,9 @@ private:
 
 int main()
 {
-    delete Factory::create_mobile(); // good: no memory leak
-    delete Factory::create_tablet(); // good: no memory leak
-    delete Factory::create_laptop(); // good: no memory leak
+    auto mobile = Factory::create_mobile(); 
+
+    mobile->run(); delete mobile; // good: no memory leak
 
     return 0;
 }
