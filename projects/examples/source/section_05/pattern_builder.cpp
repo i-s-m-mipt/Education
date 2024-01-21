@@ -11,25 +11,16 @@ struct Computer
     
 }; // struct Computer
 
-void print(const Computer & computer)
-{
-    std::cout << "Computer \"" << computer.name << "\" includes: " << std::endl;
-
-    std::cout << "CPU: " << computer.cpu.name << std::endl;
-    std::cout << "GPU: " << computer.gpu.name << std::endl;
-    std::cout << "RAM: " << computer.ram.name << std::endl;
-}
-
-class Computer_Builder
+class Builder
 {
 public:
 
-    explicit Computer_Builder(const std::string & name)
+    explicit Builder(const std::string & name)
     {
         m_computer = new Computer{ .name = name }; // note: delete required
     }
 
-    virtual ~Computer_Builder() = default;
+    virtual ~Builder() = default; // note: polymorphic base class
 
 public:
 
@@ -37,74 +28,72 @@ public:
 
 public:
 
-    virtual void build_CPU() const = 0; // note: optional pure virtual function
-    virtual void build_GPU() const = 0; // note: optional pure virtual function
-    virtual void build_RAM() const = 0; // note: optional pure virtual function
+    virtual void build_cpu() const = 0; // note: optional pure virtual function
+    virtual void build_gpu() const = 0; // note: optional pure virtual function
+    virtual void build_ram() const = 0; // note: optional pure virtual function
 
 private:
 
     Computer * m_computer; // note: consider smart pointer
 
-}; // class Computer_Builder
+}; // class Builder
 
-class Laptop_Builder : public Computer_Builder
+class Builder_Mobile : public Builder
 {
 public:
 
-    explicit Laptop_Builder(const std::string & name) : Computer_Builder(name) {}
+    explicit Builder_Mobile(const std::string & name) : Builder(name) {}
 
 public:
 
-    void build_CPU() const override { computer()->cpu.name = "AMD Ryzen 9 7945HX"; }
-    void build_GPU() const override { computer()->gpu.name = "Nvidia GeForce RTX 4090M"; }
-    void build_RAM() const override { computer()->ram.name = "Kingston Fury Impact DDR5"; }
+    void build_cpu() const override { computer()->cpu.name = "Mobile CPU"; }
+    void build_gpu() const override { computer()->gpu.name = "Mobile GPU"; }
+    void build_ram() const override { computer()->ram.name = "Mobile RAM"; }
 
-}; // class Laptop_Builder : public Computer_Builder
+}; // class Builder_Mobile : public Builder
 
-class Desktop_Builder : public Computer_Builder
+class Builder_Tablet : public Builder
 {
 public:
 
-    explicit Desktop_Builder(const std::string & name) : Computer_Builder(name) {}
+    explicit Builder_Tablet(const std::string & name) : Builder(name) {}
 
 public:
 
-    void build_CPU() const override { computer()->cpu.name = "AMD Ryzen Threadripper Pro 7995WX"; }
-    void build_GPU() const override { computer()->gpu.name = "Nvidia Quadro RTX A6000"; }
-    void build_RAM() const override { computer()->ram.name = "Kingston Fury Renegade DDR5"; }
+    void build_cpu() const override { computer()->cpu.name = "Tablet CPU"; }
+    void build_gpu() const override { computer()->gpu.name = "Tablet GPU"; }
+    void build_ram() const override { computer()->ram.name = "Tablet RAM"; }
 
-}; // class Desktop_Builder : public Computer_Builder
+}; // class Builder_Tablet : public Builder
 
-class Server_Builder : public Computer_Builder
+class Builder_Laptop : public Builder
 {
 public:
 
-    explicit Server_Builder(const std::string & name) : Computer_Builder(name) {}
+    explicit Builder_Laptop(const std::string & name) : Builder(name) {}
 
 public:
 
-    void build_CPU() const override { computer()->cpu.name = "AMD EPYC 9684"; }
-    void build_GPU() const override { computer()->gpu.name = "Nvidia Hopper H100 Accelerator"; }
-    void build_RAM() const override { computer()->ram.name = "Kingston Server Premier DDR5"; }
+    void build_cpu() const override { computer()->cpu.name = "Laptop CPU"; }
+    void build_gpu() const override { computer()->gpu.name = "Laptop GPU"; }
+    void build_ram() const override { computer()->ram.name = "Laptop RAM"; }
 
-}; // class Server_Builder : public Computer_Builder
+}; // class Builder_Laptop : public Builder
 
-[[nodiscard]] auto build_computer(const Computer_Builder & builder) // note: consider member function
+[[nodiscard]] auto build(const Builder & builder) // note: consider member function
 {
-    builder.build_CPU();
-    builder.build_GPU();
-    builder.build_RAM();
+    builder.build_cpu();
+    builder.build_gpu();
+    builder.build_ram();
 
     return builder.computer();
 }
 
 int main()
 {
-    auto computer = build_computer(Laptop_Builder("Laptop")); // good: laptop only here
-
-    print(*computer);
-    
-    delete computer; // good: no memory leak
+    delete build(Builder_Mobile("Mobile"));
+    delete build(Builder_Tablet("Tablet"));
+    delete build(Builder_Laptop("Laptop"));
 
     return 0;
 }
