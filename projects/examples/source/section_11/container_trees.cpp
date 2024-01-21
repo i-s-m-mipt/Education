@@ -8,7 +8,7 @@
 
 int main()
 {
-	std::set < int > set({ 1, 4, 2, 5, 3 }); // note: O(log(N)) complexity mainly
+	std::set < int > set = { 1, 4, 2, 5, 3 }; // note: O(log(N)) complexity mainly
 
 	using category_t = typename decltype(set)::iterator::iterator_category;
 
