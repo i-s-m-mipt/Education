@@ -63,18 +63,16 @@ int main()
 
 	std::vector < int > v(n, 0);
 
-	const auto size = v.size();
-
-	for (std::size_t i = 0; i < size; ++i)
+	for (std::size_t i = 0; i < n; ++i)
 	{
-		v[i] = size - i;
+		v[i] = n - i;
 	}
 
-	merge_sort(v, 0, size); // good: half-open intervals preferred in C++
+	merge_sort(v, 0, n); // good: half-open intervals preferred in C++
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (std::size_t i = 0; i < n; ++i)
 	{
-		std::cout << v[i] << (i + 1 == size ? '\n' : ' ');
+		std::cout << v[i] << (i + 1 == n ? '\n' : ' ');
 	}
 
 	return 0;
