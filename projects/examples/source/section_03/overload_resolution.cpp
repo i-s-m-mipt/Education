@@ -1,56 +1,37 @@
 #include <iostream>
 #include <string>
 
-int get_prvalue()
+[[nodiscard]] int get_prvalue()
 {
 	return 42;
 }
 
-const int get_const_prvalue()
+[[nodiscard]] const int get_const_prvalue()
 {
 	return 42;
 }
 
 /*
-int && get_xvalue() // warning: returning a reference to a local object
+[[nodiscard]] int && get_xvalue() // warning: returning a reference to a local object
 {
 	return 42;
 }
 */
 
-int & get_lvalue()
+[[nodiscard]] int & get_lvalue()
 {
-	static int x = 42;
-
-	return x;
+	static int x = 42; return x;
 }
 
-const int & get_const_lvalue()
+[[nodiscard]] const int & get_const_lvalue()
 {
-	static int x = 42;
-
-	return x;
+	static int x = 42; return x;
 }
 
-void f([[maybe_unused]] int & arg)
-{
-	std::cout << "int &" << std::endl;
-}
-
-void f([[maybe_unused]] int && arg)
-{
-	std::cout << "int &&" << std::endl;
-}
-
-void f([[maybe_unused]] const int & arg)
-{
-	std::cout << "const int &" << std::endl;
-}
-
-void f([[maybe_unused]] const int && arg)
-{
-	std::cout << "const int &&" << std::endl;
-}
+void f(      int &  ) { std::cout << "      int & " << std::endl; }
+void f(      int && ) { std::cout << "      int &&" << std::endl; }
+void f(const int &  ) { std::cout << "const int & " << std::endl; }
+void f(const int && ) { std::cout << "const int &&" << std::endl; }
 
 class Person
 {
@@ -58,8 +39,8 @@ public:
 
 	Person(const std::string & name) : m_name(name) {}
 
-	const auto & name() const &  { return m_name; } // note: only for lvalue instances
-	      auto   name() const && { return m_name; } // note: only for rvalue instances
+	[[nodiscard]] const auto & name() const &  { return m_name; } // note: only for lvalue instances
+	[[nodiscard]]       auto   name() const && { return m_name; } // note: only for rvalue instances
 
 private:
 
@@ -67,11 +48,9 @@ private:
 
 }; // class Person
 
-Person create_person(const std::string & name)
+[[nodiscard]] Person create_person(const std::string & name)
 {
-	Person person(name);
-
-	return person;
+	Person person(name); return person;
 }
 
 int main()
