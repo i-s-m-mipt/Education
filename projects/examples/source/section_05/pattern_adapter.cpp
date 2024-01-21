@@ -1,53 +1,36 @@
 #include <iostream>
 
-class Fahrenheit_Sensor
+struct Device {	void run() const { std::cout << "Device\n"; } };
+
+class Computer
 {
 public:
 
-	[[nodiscard]] double get_temperature() const { return 451.0; } // note: old interface
+	virtual ~Computer() = default; // note: polymorphic base class
 
-}; // class Fahrenheit_Sensor
-
-class Sensor
-{
-public:
-
-	virtual ~Sensor() = default;
-
-public:
-
-	[[nodiscard]] virtual double get_temperature() const = 0;
+	virtual void run() const = 0;
 	
-}; // class Sensor
+}; // class Computer
 
-class Adapter : public Sensor
+class Adapter : public Computer
 {
 public:
 
-	explicit Adapter(const Fahrenheit_Sensor & sensor) : m_sensor(sensor) {}
+	explicit Adapter(const Device & device) : m_device(device) {}
 
-public:
-
-	[[nodiscard]] double get_temperature() const override // note: the same interface
-	{
-		return (m_sensor.get_temperature() - 32.0) * 5.0 / 9.0;
-	}
+	void run() const override { m_device.run(); }
 
 private:
 
-	const Fahrenheit_Sensor & m_sensor;
+	const Device & m_device; // note: consider additional settings
 
-}; // class Adapter : public Sensor
+}; // class Adapter : public Computer
 
 int main()
 {
-	Fahrenheit_Sensor old_sensor;
+	Device device; Computer * computer = new Adapter(device);
 
-	Sensor * new_sensor = new Adapter(old_sensor);
-
-	std::cout << new_sensor->get_temperature() << std::endl;
-
-	delete new_sensor; // good: no memory leak
+	computer->run(); delete computer;
 
 	return 0;
 }
