@@ -8,19 +8,25 @@
 
 int main()
 {
-	std::vector < int > v({ 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+	std::vector < int > vector = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-	std::deque  < int > d; // note: has push_front  member function
-	std::list   < int > l; // note: has push_back   member function
-	std::set    < int > s; // note: has only insert member function
+	std::deque < int > deque; // note: std::deque has push_front member function
 
-	std::copy(std::cbegin(v), std::cend(v), std::front_inserter(d));
-	std::copy(std::cbegin(v), std::cend(v), std:: back_inserter(l));
-	std::copy(std::cbegin(v), std::cend(v), std::      inserter(s, std::begin(s)));
+	std::copy(std::cbegin(vector), std::cend(vector), std::front_inserter(deque));
 
-	assert(std::size(d) == std::size(v));
-	assert(std::size(l) == std::size(v));
-	assert(std::size(s) == std::size(v));
+	assert(std::size(deque) == std::size(vector));
+
+	std::list < int > list; // note: std::list has push_back member function
+
+	std::copy(std::cbegin(vector), std::cend(vector), std::back_inserter(list));
+
+	assert(std::size(list) == std::size(vector));
+
+	std::set < int > set; // note: std::set has only insert member function
+
+	std::copy(std::cbegin(vector), std::cend(vector), std::inserter(set, std::begin(set)));
+
+	assert(std::size(set) == std::size(vector));
 
 	return 0;
 }
