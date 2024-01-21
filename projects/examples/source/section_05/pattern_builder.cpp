@@ -22,11 +22,7 @@ public:
 
     virtual ~Builder() = default; // note: polymorphic base class
 
-public:
-
     [[nodiscard]] auto computer() const { return m_computer; }
-
-public:
 
     virtual void build_cpu() const = 0; // note: optional pure virtual function
     virtual void build_gpu() const = 0; // note: optional pure virtual function
