@@ -9,7 +9,7 @@ public:
 
 public:
 
-    virtual double performance() const = 0;
+    [[nodiscard]] virtual double performance() const = 0;
 
 }; // class Computer
 
@@ -17,7 +17,7 @@ class Laptop : public Computer
 {
 public:
 
-    double performance() const override { return 1.0; }
+    [[nodiscard]] double performance() const override { return 1.0; }
 
 }; // class Laptop : public Computer
 
@@ -25,7 +25,7 @@ class Desktop : public Computer
 {
 public:
 
-    double performance() const override { return 10.0; }
+    [[nodiscard]] double performance() const override { return 10.0; }
 
 }; // class Desktop : public Computer
 
@@ -33,7 +33,7 @@ class Server : public Computer
 {
 public:
 
-    double performance() const override { return 100.0; }
+    [[nodiscard]] double performance() const override { return 100.0; }
 
 }; // class Server : public Computer
 
@@ -51,7 +51,7 @@ public:
 
 public:
 
-    double performance() const override 
+    [[nodiscard]] double performance() const override
     {
         auto total_performance = 0.0;
 

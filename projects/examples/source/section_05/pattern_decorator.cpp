@@ -9,7 +9,7 @@ public:
 
 public:
 
-    virtual std::string description() const = 0;
+    [[nodiscard]] virtual std::string description() const = 0;
 
 }; // class Shape 
 
@@ -17,7 +17,7 @@ class Polygon : public Shape
 {
 public:
 
-    std::string description() const override 
+    [[nodiscard]] std::string description() const override
     { 
         return "Polygon"; 
     }
@@ -38,7 +38,7 @@ public:
 
 public:
 
-    std::string description() const override 
+    [[nodiscard]] std::string description() const override
     { 
         return m_shape->description(); 
     }
@@ -57,7 +57,7 @@ public:
 
 public:
 
-    std::string description() const override 
+    [[nodiscard]] std::string description() const override
     { 
         return m_shape->description() + " with Color"; 
     }

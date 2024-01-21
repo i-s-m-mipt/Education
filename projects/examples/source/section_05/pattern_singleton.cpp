@@ -6,11 +6,11 @@ class Singleton // bad: single responsibility principle violation
 {
 public:
 
-    static auto & get_instance() // note: once initialized global state
+    [[nodiscard]] static auto & get_instance() // note: once initialized
     {
         static Singleton instance; // good: guaranteed to be destroyed
 
-        return instance; // good: return by reference, not pointer
+        return instance; // good: return by reference, not pointer (old)
     }
 
 private:
@@ -24,7 +24,7 @@ public: // good: deleted special member functions are public
 
 public:
 
-    auto data() const { return m_data; }
+    [[nodiscard]] auto data() const { return m_data; }
 
 private:
 
@@ -38,7 +38,7 @@ public:
 
     void update(int new_data) { m_data = new_data; }
 
-    auto data() const { return m_data; }
+    [[nodiscard]] auto data() const { return m_data; }
 
 private:
 
@@ -67,7 +67,7 @@ class Unique : Noncopyable // note: consider boost::noncopyable
 {
 public:
 
-    auto data() const { return m_data; }
+    [[nodiscard]] auto data() const { return m_data; }
 
 private:
 

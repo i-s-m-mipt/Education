@@ -66,7 +66,7 @@ void print_vector(const std::vector < int > & vector) // good: std::vector knows
 }
 
 /*
-int * get_dangling_pointer()
+[[nodiscard]] int * get_dangling_pointer()
 {
 	auto d = 42; // good: static const auto d = 42;
 
@@ -75,7 +75,7 @@ int * get_dangling_pointer()
 */
 
 /*
-int & get_dangling_reference()
+[[nodiscard]] int & get_dangling_reference()
 {
 	auto d = 42; // good: static const auto d = 42;
 

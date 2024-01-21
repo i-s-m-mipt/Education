@@ -33,7 +33,7 @@ struct Point
 
 }; // struct Point
 
-template < typename T, typename ... Ts > auto make_object(Ts ... args)
+template < typename T, typename ... Ts > [[nodiscard]] auto make_object(Ts ... args)
 {
 	std::cout << sizeof...(args) << std::endl;
 

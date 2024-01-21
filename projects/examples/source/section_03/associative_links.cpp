@@ -12,7 +12,7 @@ public:
 
 public:
 
-	const auto & name() const
+	[[nodiscard]] const auto & name() const
 	{
 		return m_name;
 	}
@@ -39,7 +39,7 @@ public:
 
 public:
 
-	const auto & name() const
+	[[nodiscard]] const auto & name() const
 	{
 		return m_name;
 	}

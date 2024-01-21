@@ -31,12 +31,12 @@ public:
 
 }; // class Container
 
-auto f()
+[[nodiscard]] auto f()
 {
 	return Container(); // note: copy elision, return value optimization
 }
 
-auto g()
+[[nodiscard]] auto g()
 {
 	auto container = Container(); // note: guaranteed copy elision
 

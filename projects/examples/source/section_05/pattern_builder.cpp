@@ -89,7 +89,7 @@ public:
 
 }; // class Server_Builder : public Computer_Builder
 
-auto build_computer(const Computer_Builder & builder) // note: consider as class member function
+[[nodiscard]] auto build_computer(const Computer_Builder & builder) // note: consider member function
 {
     builder.build_CPU();
     builder.build_GPU();

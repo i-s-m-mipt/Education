@@ -6,7 +6,7 @@ class Fail
 {
 public:
 
-    auto get() { return std::shared_ptr < Fail > (this); }
+    [[nodiscard]] auto get() { return std::shared_ptr < Fail > (this); }
 
 }; // class Fail
 
@@ -14,7 +14,7 @@ class Good : public std::enable_shared_from_this < Good > // note: CRTP
 {
 public:
 
-    auto get() { return shared_from_this(); }
+    [[nodiscard]] auto get() { return shared_from_this(); }
 
 }; // class Good : public std::enable_shared_from_this < Good >
 
@@ -28,12 +28,12 @@ public:
 
     Best(Key) {}; // good: all instances are in shared_ptrs
 
-    static auto create() // note: factory method
+    [[nodiscard]] static auto create() // note: factory method
     {
         return std::make_shared < Best > (Key());
     }
 
-    auto get() { return shared_from_this(); }
+    [[nodiscard]] auto get() { return shared_from_this(); }
 
 }; // class Best : public std::enable_shared_from_this < Best >
 

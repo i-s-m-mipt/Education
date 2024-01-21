@@ -4,7 +4,7 @@ class Fahrenheit_Sensor
 {
 public:
 
-	double get_temperature() const { return 451.0; } // note: old interface
+	[[nodiscard]] double get_temperature() const { return 451.0; } // note: old interface
 
 }; // class Fahrenheit_Sensor
 
@@ -16,7 +16,7 @@ public:
 
 public:
 
-	virtual double get_temperature() const = 0;
+	[[nodiscard]] virtual double get_temperature() const = 0;
 	
 }; // class Sensor
 
@@ -28,7 +28,7 @@ public:
 
 public:
 
-	double get_temperature() const override // note: the same interface
+	[[nodiscard]] double get_temperature() const override // note: the same interface
 	{
 		return (m_sensor.get_temperature() - 32.0) * 5.0 / 9.0;
 	}

@@ -1,22 +1,20 @@
 #include <iostream>
 
-int get_prvalue() 
+[[nodiscard]] int get_prvalue()
 { 
 	return 42; 
 }
 
 /*
-int && get_xvalue() // warning: returning a reference to a local object
+[[nodiscard]] int && get_xvalue() // warning: returning a reference to a local object
 { 
 	return 42; 
 }
 */
 
-int & get_lvalue()
+[[nodiscard]] int & get_lvalue()
 {
-	static int x = 42;
-
-	return x;
+	static int x = 42; return x;
 }
 
 int main()

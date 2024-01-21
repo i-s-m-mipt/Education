@@ -34,7 +34,7 @@ void hash(std::size_t & seed, const T & value, const Types & ... args) noexcept
 	bind(seed, value); hash(seed, args...);
 }
 
-template < typename ... Types > std::size_t combined_hash(const Types & ... args) noexcept
+template < typename ... Types > [[nodiscard]] std::size_t combined_hash(const Types & ... args) noexcept
 {
 	std::size_t seed = 0; 
 	
@@ -51,7 +51,7 @@ struct S
 
 }; // struct S
 
-std::size_t hash_value(const S & s)
+[[nodiscard]] std::size_t hash_value(const S & s)
 {
 	std::size_t seed = 0;
 

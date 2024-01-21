@@ -24,7 +24,7 @@ public:
 
 protected:
 
-	const auto & get_name() const // good: return big object by constant reference
+	[[nodiscard]] const auto & get_name() const // good: return by constant reference
 	{
 		return m_name;
 	}

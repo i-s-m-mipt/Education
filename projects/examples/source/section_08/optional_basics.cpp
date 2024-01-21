@@ -3,7 +3,7 @@
 #include <optional>
 #include <string>
 
-auto create(bool b) // note: optional returned value
+[[nodiscard]] auto create(bool b) // note: optional returned value
 {
 	return (b ? std::optional < std::string > ("object") : std::nullopt);
 }

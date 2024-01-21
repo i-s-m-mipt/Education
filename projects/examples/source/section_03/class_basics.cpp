@@ -89,7 +89,7 @@ public:
 		m_is_string_valid = false; // note: cash is not valid anymore
 	}
 
-	std::string get_date_as_string() const // note: logical constancy
+	[[nodiscard]] std::string get_date_as_string() const // note: logical constancy
 	{
 		if (!m_is_string_valid) // note: updating cash
 		{
@@ -106,7 +106,7 @@ public:
 
 public:
 
-	static auto get_counter()
+	[[nodiscard]] static auto get_counter()
 	{
 		return counter;
 	}

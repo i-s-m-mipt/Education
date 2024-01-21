@@ -31,7 +31,7 @@ public:
 
 	void operator()(T x) noexcept { s += x; }
 
-	auto result() const noexcept { return s; }
+	[[nodiscard]] auto result() const noexcept { return s; }
 
 private:
 
@@ -45,7 +45,7 @@ public:
 
 	void operator()(T x) noexcept { ++n; s += x; }
 
-	auto result() const noexcept { return (s / n); }
+	[[nodiscard]] auto result() const noexcept { return (s / n); }
 
 private:
 

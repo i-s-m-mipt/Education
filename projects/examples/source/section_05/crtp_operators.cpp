@@ -27,7 +27,7 @@ public:
 
     explicit Apple(double weight) : m_weight(weight) {}
 
-    friend auto operator<(const Apple & lhs, const Apple & rhs)
+    [[nodiscard]] friend auto operator<(const Apple & lhs, const Apple & rhs)
     {
         return (lhs.m_weight < rhs.m_weight);
     }
@@ -44,7 +44,7 @@ public:
 
     explicit Human(double height) : m_height(height) {}
 
-    friend auto operator<(const Human & lhs, const Human & rhs)
+    [[nodiscard]] friend auto operator<(const Human & lhs, const Human & rhs)
     {
         return (lhs.m_height < rhs.m_height);
     }
@@ -61,7 +61,7 @@ public:
 
     explicit Train(double length) : m_length(length) {}
 
-    friend auto operator<(const Train & lhs, const Train & rhs)
+    [[nodiscard]] friend auto operator<(const Train & lhs, const Train & rhs)
     {
         return (lhs.m_length < rhs.m_length);
     }

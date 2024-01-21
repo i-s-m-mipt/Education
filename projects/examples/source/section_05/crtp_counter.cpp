@@ -20,7 +20,7 @@ protected:
 
 public:
 
-	static auto get_counter()
+	[[nodiscard]] static auto get_counter()
 	{
 		return counter;
 	}

@@ -11,7 +11,7 @@
 #include <utility>
 #include <vector>
 
-template < typename T, typename F > auto inline make_visitor(F f)
+template < typename T, typename F > [[nodiscard]] auto inline make_visitor(F f)
 {
     return std::make_pair(std::type_index(typeid(T)), [f](const auto & any)
     { 

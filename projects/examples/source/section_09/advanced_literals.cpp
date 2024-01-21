@@ -10,12 +10,12 @@ struct Kilometers // note: user-defined units
 
 namespace literals // good: namespace for user-defined literals
 {
-	constexpr auto operator""_km(unsigned long long kilometers) // note: underscore required
+	[[nodiscard]] constexpr auto operator""_km(unsigned long long kilometers) // note: underscore required
 	{
 		return Kilometers{ kilometers };
 	}
 
-	constexpr auto operator""_deg_to_rad(long double degrees) // note: underscore required
+	[[nodiscard]] constexpr auto operator""_deg_to_rad(long double degrees) // note: underscore required
 	{
 		return degrees * std::numbers::pi_v < long double > / 180.0;
 	}
@@ -37,7 +37,7 @@ namespace literals // good: namespace for user-defined literals
 		}
 	}
 
-	template < char ... digits > constexpr auto operator""_b3() // note: underscore required
+	template < char ... digits > [[nodiscard]] constexpr auto operator""_b3() // note: underscore required
 	{
 		return b3_handler < digits... > ();
 	}

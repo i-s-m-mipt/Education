@@ -21,7 +21,7 @@ public:
 		reduce();
 	}
 
-	explicit operator double() const // good: explicit cast operator
+	[[nodiscard]] explicit operator double() const // good: explicit cast operator
 	{
 		return 1.0 * m_num / m_den;
 	}
@@ -38,12 +38,12 @@ private:
 
 public:
 
-	auto numerator() const
+	[[nodiscard]] auto numerator() const
 	{
 		return m_num;
 	}
 
-	auto denominator() const
+	[[nodiscard]] auto denominator() const
 	{
 		return m_den;
 	}

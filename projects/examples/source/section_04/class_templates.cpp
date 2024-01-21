@@ -12,7 +12,7 @@ public: // note: member functions instantiated only if used
 
 	void pop();
 
-	auto size() const { return m_container.size(); }
+	[[nodiscard]] auto size() const { return m_container.size(); }
 
 private:
 
@@ -39,7 +39,7 @@ template < typename T, template < typename E > typename C = std::vector > class 
 {
 public:
 
-	auto size() const { return m_container.size(); }
+	[[nodiscard]] auto size() const { return m_container.size(); }
 
 private:
 

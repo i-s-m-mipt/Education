@@ -15,7 +15,7 @@ public:
 
 		explicit Row(T * array) noexcept : m_array(array) {}
 
-		T & operator[](std::size_t index) noexcept
+		[[nodiscard]] T & operator[](std::size_t index) noexcept
 		{
 			return m_array[index];
 		}
@@ -26,7 +26,7 @@ public:
 
 	}; // class Row 
 
-	auto operator[](std::size_t index) noexcept // note: operator[][] is invalid syntax
+	[[nodiscard]] auto operator[](std::size_t index) noexcept // note: operator[][] is invalid syntax
 	{
 		return Row(m_array[index]);
 	}

@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-double calculate_pi()
+[[nodiscard]] double calculate_pi()
 {
 	std::random_device device; // note: make seed only once
 

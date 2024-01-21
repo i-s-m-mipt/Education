@@ -16,7 +16,7 @@ struct Point
 
 }; // struct Point
 
-Point make_point(double x, double y)
+[[nodiscard]] Point make_point(double x, double y)
 {
 	if (x > 0.0 && y > 0.0)
 	{

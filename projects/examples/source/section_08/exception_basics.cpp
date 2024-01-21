@@ -12,7 +12,7 @@ public:
 
 	explicit Error(int error_code) : m_error_code(error_code) {}
 
-	const char * what() const override { return "error"; }
+	[[nodiscard]] const char * what() const override { return "error"; }
 
 private:
 
@@ -100,7 +100,7 @@ public:
 		uninitialize(); // note: mandatory call, prefer RAII wrappers instead
 	}
 
-	const auto & data() const noexcept // good: primitive noexcept getter
+	[[nodiscard]] const auto & data() const noexcept // good: primitive noexcept getter
 	{
 		return m_data;
 	}

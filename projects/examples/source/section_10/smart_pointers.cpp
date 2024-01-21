@@ -13,7 +13,7 @@ public:
 	Resource            (const Resource &) = delete;
 	Resource & operator=(const Resource &) = delete;
 
-	auto get() const noexcept { return m_ptr; }
+	[[nodiscard]] auto get() const noexcept { return m_ptr; }
 
 	~Resource() noexcept { delete m_ptr; } // good: no memory leak
 
@@ -71,7 +71,7 @@ public:
 
 }; // class Derived : public Base 
 
-std::unique_ptr < Base > produce() // note: factory
+[[nodiscard]] std::unique_ptr < Base > produce() // note: factory
 {
 	return std::make_unique < Derived > ();
 }
