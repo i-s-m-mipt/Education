@@ -37,8 +37,6 @@ private:
 
     explicit Server(int version) : m_version(version) {}; // note: use factory methods
 
-private:
-
     int m_version = 0;
 
 }; // class Server : public Computer
