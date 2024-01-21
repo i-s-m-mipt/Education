@@ -4,94 +4,109 @@ class Computer
 {
 public:
 
-    virtual ~Computer() = default;
-
-public:
+    virtual ~Computer() = default; // note: polymorphic base class
 
     virtual void run() const = 0;
     
 }; // class Computer
 
-class Laptop : public Computer 
-{ 
-public: 
-    
-    void run() const override { std::cout << "Laptop" << std::endl; }; 
+struct Mobile : public Computer { void run() const override { std::cout << "Mobile\n"; }; };
+struct Tablet : public Computer { void run() const override { std::cout << "Tablet\n"; }; }; 
+struct Laptop : public Computer { void run() const override { std::cout << "Laptop\n"; }; };
 
-}; // class Laptop : public Computer 
-
-class Desktop : public Computer
+template < typename T > Computer * create() // note: factory function, consider enumeration
 {
-public:
-
-    void run() const override { std::cout << "Desktop" << std::endl; };
-
-}; // class Desktop : public Computer 
+    return new T; // note: delete required, consider type traits to verify type T is correct
+}
 
 class Server : public Computer
 {
 public:
 
-    void run() const override { std::cout << "Server" << std::endl; };
+    struct Factory // note: factory methods
+    {
+        static Computer * create_v1() { return new Server(1); } // note: delete required
+        static Computer * create_v2() { return new Server(2); } // note: delete required
+        static Computer * create_v3() { return new Server(3); } // note: delete required
 
-}; // class Server : public Computer 
+    }; // struct Factory
+
+    void run() const override { std::cout << "Server v" << m_version << '\n'; };
+
+private:
+
+    explicit Server(int version) : m_version(version) {}; // note: use factory methods
+
+private:
+
+    int m_version = 0;
+
+}; // class Server : public Computer
 
 class Factory
 {
 public:
 
-    virtual ~Factory() = default;
+    virtual ~Factory() = default; // note: polymorphic base class
 
-public:
-
-    [[nodiscard]] virtual Computer * create_computer() const = 0;
+    [[nodiscard]] virtual Computer * create() const = 0;
     
 }; // class Factory
 
-class Laptop_Factory : public Factory
+class Factory_Mobile : public Factory
 {
 public:
 
-    [[nodiscard]] Computer * create_computer() const override 
+    [[nodiscard]] Computer * create() const override
+    { 
+        return new Mobile; // note: delete required
+    } 
+
+}; // class Factory_Mobile : public Factory
+
+class Factory_Tablet : public Factory
+{
+public:
+
+    [[nodiscard]] Computer * create() const override
+    { 
+        return new Tablet; // note: delete required
+    } 
+
+}; // class Factory_Tablet : public Factory
+
+class Factory_Laptop : public Factory
+{
+public:
+
+    [[nodiscard]] Computer * create() const override
     { 
         return new Laptop; // note: delete required
     } 
 
-}; // class Laptop_Factory : public Factory
-
-class Desktop_Factory : public Factory
-{
-public:
-
-    [[nodiscard]] Computer * create_computer() const override 
-    { 
-        return new Desktop; // note: delete required
-    } 
-
-}; // class Desktop_Factory : public Factory
-
-class Server_Factory : public Factory
-{
-public:
-
-    [[nodiscard]] Computer * create_computer() const override 
-    { 
-        return new Server; // note: delete required
-    } 
-
-}; // class Server_Factory : public Factory
+}; // class Factory_Laptop : public Factory
 
 int main()
 {
-    Factory * factory = new Laptop_Factory; // good: laptop only here
+    delete create < Mobile > ();
+    delete create < Tablet > ();
+    delete create < Laptop > ();
 
-    auto computer = factory->create_computer();
+    delete Server::Factory::create_v1();
+    delete Server::Factory::create_v2();
+    delete Server::Factory::create_v3();
 
-    computer->run();
+    Factory * factory_mobile = new Factory_Mobile; // note: delete required
+    Factory * factory_tablet = new Factory_Tablet; // note: delete required
+    Factory * factory_laptop = new Factory_Laptop; // note: delete required
 
-    delete computer; // good: no memory leak
+    delete factory_mobile->create();
+    delete factory_tablet->create();
+    delete factory_laptop->create();
 
-    delete factory; // good: no memory leak
+    delete factory_mobile;
+    delete factory_tablet;
+    delete factory_laptop;
 
     return 0;
 }
