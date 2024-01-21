@@ -1,81 +1,61 @@
 #include <iostream>
 #include <string>
 
-class Shape 
+class Computer 
 {
 public:
 
-    virtual ~Shape() = default;
-
-public:
+    virtual ~Computer() = default; // note: polymorphic base class
 
     [[nodiscard]] virtual std::string description() const = 0;
 
-}; // class Shape 
+}; // class Computer 
 
-class Polygon : public Shape 
+struct Mobile : public Computer { [[nodiscard]] std::string description() const override { return "Mobile"; } };
+struct Tablet : public Computer { [[nodiscard]] std::string description() const override { return "Tablet"; } };
+struct Laptop : public Computer { [[nodiscard]] std::string description() const override { return "Laptop"; } };
+
+class Decorated_Computer : public Computer // note: abstract decorator
 {
 public:
 
-    [[nodiscard]] std::string description() const override
-    { 
-        return "Polygon"; 
-    }
-
-}; // class Polygon
-
-class Decorated_Shape : public Shape // note: abstract decorator
-{
-public:
-
-    explicit Decorated_Shape(Shape * shape): m_shape(shape)
+    explicit Decorated_Computer(Computer * computer): m_computer(computer)
     {
-        if (!m_shape) // good: verify if nullptr
-        {
-            std::cout << "invalid shape" << std::endl;
-        }
+        if (!m_computer) std::cout << "invalid computer" << std::endl;
     }
 
-public:
-
-    [[nodiscard]] std::string description() const override
-    { 
-        return m_shape->description(); 
-    }
+    [[nodiscard]] std::string description() const override { return m_computer->description(); }
 
 protected:
 
-    Shape * m_shape;
+    Computer * m_computer;
 
-}; // class Decorated_Shape : public Shape 
+}; // class Decorated_Computer : public Computer 
 
-class Colored_Shape : public Decorated_Shape // note: concrete decorator
+class Overclocked_Computer : public Decorated_Computer // note: concrete decorator
 {
 public:
 
-    explicit Colored_Shape(Shape * shape) : Decorated_Shape(shape) {}
-
-public:
+    explicit Overclocked_Computer(Computer * computer) : Decorated_Computer(computer) {}
 
     [[nodiscard]] std::string description() const override
     { 
-        return m_shape->description() + " with Color"; 
+        return "Overclocked " + m_computer->description();
     }
 
-}; // class Colored_Shape : public Decorated_Shape
+}; // class Overclocked_Computer : public Decorated_Computer
 
 int main()
 {
-    Shape * shape_1 = new Polygon();
+    Computer * mobile = new Mobile();
 
-    std::cout << shape_1->description() << std::endl;
+    std::cout << mobile->description() << std::endl;
 
-    Shape * shape_2 = new Colored_Shape(shape_1);
+    Computer * overclocked_mobile = new Overclocked_Computer(mobile);
 
-    std::cout << shape_2->description() << std::endl;
+    std::cout << overclocked_mobile->description() << std::endl;
 
-    delete shape_1; // good: no memory leak
-    delete shape_2; // good: no memory leak
+    delete overclocked_mobile; delete mobile; // good: no memory leak
 
     return 0;
 }
