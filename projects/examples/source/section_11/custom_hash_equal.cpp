@@ -17,7 +17,7 @@ private:
 
 struct Hash
 {
-	[[nodiscard]] std::size_t operator()(const Person & person) const noexcept
+	[[nodiscard]] auto operator()(const Person & person) const noexcept
 	{
 		return std::hash < std::string > ()(person.name());
 	}
@@ -26,7 +26,7 @@ struct Hash
 
 struct Equal
 {
-	[[nodiscard]] bool operator()(const Person & lhs, const Person & rhs) const noexcept
+	[[nodiscard]] auto operator()(const Person & lhs, const Person & rhs) const noexcept
 	{
 		return (lhs.name() == rhs.name());
 	}
