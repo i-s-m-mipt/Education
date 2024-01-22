@@ -417,7 +417,7 @@
     <ClCompile Include="..\source\section_12\insert_iterators.cpp">
       <Filter>source\section_12</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\section_12\algoritms_on_ranges.cpp">
+    <ClCompile Include="..\source\section_12\algorithms_on_ranges.cpp">
       <Filter>source\section_12</Filter>
     </ClCompile>
     <ClCompile Include="..\source\section_12\iostream_iterators.cpp">
@@ -446,6 +446,9 @@
     </ClCompile>
     <ClCompile Include="..\source\section_05\pattern_memento.cpp">
       <Filter>source\section_05</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_12\algorithms_on_graphs.cpp">
+      <Filter>source\section_12</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

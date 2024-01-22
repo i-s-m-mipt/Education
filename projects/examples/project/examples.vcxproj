@@ -723,7 +723,13 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\source\section_12\algoritms_on_ranges.cpp">
+    <ClCompile Include="..\source\section_12\algorithms_on_graphs.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\source\section_12\algorithms_on_ranges.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -933,7 +939,7 @@
       <EnableModules>true</EnableModules>
       <BuildStlModules>true</BuildStlModules>
       <AdditionalIncludeDirectories>$(SolutionDir)\projects\library_v1\source;C:\Libraries\boost;C:\Libraries\benchmark\include;C:\Libraries\python\include;C:\Libraries\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4715;4459</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4715;4458;4459</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -954,7 +960,7 @@
       <EnableModules>true</EnableModules>
       <BuildStlModules>true</BuildStlModules>
       <AdditionalIncludeDirectories>$(SolutionDir)\projects\library_v1\source;C:\Libraries\boost;C:\Libraries\benchmark\include;C:\Libraries\python\include;C:\Libraries\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4715;4459</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4715;4458;4459</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -975,7 +981,7 @@
       <EnableModules>true</EnableModules>
       <BuildStlModules>true</BuildStlModules>
       <AdditionalIncludeDirectories>$(SolutionDir)\projects\library_v1\source;C:\Libraries\boost;C:\Libraries\benchmark\include;C:\Libraries\python\include;C:\Libraries\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4715;4459</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4715;4458;4459</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -996,7 +1002,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\projects\library_v1\source;C:\Libraries\boost;C:\Libraries\benchmark\include;C:\Libraries\python\include;C:\Libraries\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableModules>true</EnableModules>
       <BuildStlModules>true</BuildStlModules>
-      <DisableSpecificWarnings>4715;4459</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4715;4458;4459</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
