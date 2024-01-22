@@ -4,7 +4,7 @@ class Base
 {
 public:
 
-    virtual ~Base() = default;
+    virtual ~Base() = default; // note: polymorphic base class
 
     virtual void initialize() = 0;
 
@@ -12,7 +12,7 @@ public:
 
 class Derived : public Base
 {
-protected: // good: ctor can not be called by user
+protected: // good: constructor can not be called by user
 
     explicit Derived([[maybe_unused]] int x) {} 
 
