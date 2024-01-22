@@ -1,45 +1,37 @@
 #include <iostream>
 
-class Shape
+class Computer
 {
 public:
 
-	virtual ~Shape() = default;
+	virtual ~Computer() = default; // note: polymorphic base class
 
-	virtual void draw() const = 0;
+	virtual void run() const = 0;
 
-}; // class Shape
+}; // class Computer
 
-class Triangle_v1 : public Shape
+struct Mobile_v1 : public Computer { void run() const override { std::cout << "Mobile_v1\n"; } };
+struct Tablet_v1 : public Computer { void run() const override { std::cout << "Tablet_v1\n"; } };
+struct Laptop_v1 : public Computer { void run() const override { std::cout << "Laptop_v1\n"; } };
+
+void handle_v1(const Computer & computer) 
 {
-public:
-
-	void draw() const override { std::cout << "Triangle_v1" << std::endl; }
-
-}; // class Triangle_v1 : public Shape
-
-void handle_v1(const Shape & shape) 
-{
-	shape.draw(); // note: slower in runtime, but clear hierarchy
+	computer.run(); // note: slower in runtime, but clear hierarchy
 }
 
-class Triangle_v2
-{
-public:
-
-	void draw() const { std::cout << "Triangle_v2" << std::endl; }
-
-}; // class Triangle_v2
+struct Mobile_v2 { void run() const { std::cout << "Mobile_v2\n"; } };
+struct Tablet_v2 { void run() const { std::cout << "Tablet_v2\n"; } };
+struct Laptop_v2 { void run() const { std::cout << "Laptop_v2\n"; } };
 
 template < typename T > void handle_v2(const T & t)
 {
-	t.draw(); // note: faster in runtime, but independent classes
+	t.run(); // note: faster in runtime, but independent classes
 }
 
 int main()
 {
-	handle_v1(Triangle_v1());
-	handle_v2(Triangle_v2());
+	handle_v1(Mobile_v1());
+	handle_v2(Mobile_v2());
 
 	return 0;
 }
