@@ -4,35 +4,36 @@
 
 #include <boost/type_index.hpp>
 
-class Shape // note: polymorphic base class with virtual destructor
+class Computer
 {
 public:
 
-	virtual ~Shape() = default;
+	virtual ~Computer() = default; // note: polymorphic base class
 
-}; // class Shape 
+	virtual void run() const = 0;
 
-class Polygon : public Shape {};
-class Ellipse : public Shape {};
+}; // class Computer 
+
+struct Mobile : public Computer { void run() const override { std::cout << "Mobile\n"; } };
+struct Tablet : public Computer { void run() const override { std::cout << "Tablet\n"; } };
+struct Laptop : public Computer { void run() const override { std::cout << "Laptop\n"; } };
 
 int main()
 {
-	Shape * s_ptr = new Polygon;
+	Computer * c_ptr = new Mobile;
 
-	[[maybe_unused]] auto p_ptr = dynamic_cast < Polygon * > (s_ptr); // note: avoid downcasting
+	[[maybe_unused]] auto m_ptr = dynamic_cast < Mobile * > (c_ptr); // note: avoid downcasting
 
-	delete s_ptr;
+	delete c_ptr;
 
-	s_ptr = new Ellipse;
+	c_ptr = new Tablet;
 
-	auto e_ptr = dynamic_cast < Polygon * > (s_ptr); // note: dynamic_cast provides runtime checks 
-
-	if (!e_ptr)
+	if (auto t_ptr = dynamic_cast <Mobile*> (c_ptr); !t_ptr) // note: dynamic_cast provides runtime checks 
 	{
 		std::cout << "invalid dynamic cast" << std::endl;
 	}
 
-	delete s_ptr;
+	delete c_ptr;
 
 	auto x = 42;
 
@@ -51,15 +52,15 @@ int main()
 
 	std::cout << typeid(s).name() << std::endl; // note: not portable type name
 
-	s_ptr = new Polygon;
+	c_ptr = new Mobile;
 
-	const auto & type_info = typeid(*s_ptr);
+	const auto & type_info = typeid(*c_ptr);
 
 	std::cout << type_info.name() << std::endl; // note: dynamic type identification
 
-	delete s_ptr;
+	delete c_ptr;
 
-	const auto & reference = Polygon();
+	const auto & reference = Mobile();
 
 	std::cout << typeid(reference).name() << std::endl; // note: typeid provides not reliable result
 
