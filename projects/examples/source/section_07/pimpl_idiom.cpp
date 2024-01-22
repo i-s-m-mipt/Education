@@ -1,28 +1,28 @@
 #include <iostream>
 #include <string>
 
-class Shape // note: placed in the header file, consider also forward declarations
+class Computer // note: placed in the header file, consider also forward declarations
 {
 public:
 
-    explicit Shape(std::string name); // note: definition in source file
+    explicit Computer(std::string name); // note: definition in source file
 
-    Shape            (const Shape &) = delete;
-    Shape & operator=(const Shape &) = delete;
+    Computer            (const Computer &) = delete;
+    Computer & operator=(const Computer &) = delete;
 
-    Shape(Shape && other) noexcept : m_pimpl(other.m_pimpl) // note: ignore noexcept here
+    Computer(Computer && other) noexcept : m_pimpl(other.m_pimpl) // note: ignore noexcept here
     {
         other.m_pimpl = nullptr;
     }
 
-    Shape & operator=(Shape && other) noexcept // note: ignore noexcept here
+    Computer & operator=(Computer && other) noexcept // note: ignore noexcept here
     {
         m_pimpl = other.m_pimpl; other.m_pimpl = nullptr;
     }
 
-    ~Shape();
+    ~Computer();
 
-    void draw() const; // note: call forwarded to implementation, no inline abilities
+    void run() const; // note: call forwarded to implementation, no inline abilities
 
 private:
 
@@ -30,31 +30,31 @@ private:
 
     Implementation * m_pimpl; // note: use std::experimental::propagate_const
 
-}; // class Shape
+}; // class Computer
 
-class Shape::Implementation // note: placed in the source file
+class Computer::Implementation // note: placed in the source file
 {
 public:
 
     explicit Implementation(std::string name) : m_name(std::move(name)) {}
 
-    void draw() const { std::cout << m_name << std::endl; }
+    void run() const { std::cout << m_name << std::endl; }
 
 private:
 
     std::string m_name;
 
-}; // class Shape::Implementation
+}; // class Computer::Implementation
 
-Shape::Shape(std::string name) : m_pimpl(new Implementation(std::move(name))) {}
+Computer::Computer(std::string name) : m_pimpl(new Implementation(std::move(name))) {}
 
-Shape::~Shape() { delete m_pimpl; }
+Computer::~Computer() { delete m_pimpl; }
 
-void Shape::draw() const { m_pimpl->draw(); }
+void Computer::run() const { m_pimpl->run(); }
 
 int main()
 {
-    Shape("shape").draw();
+    Computer("shape").run();
 
     return 0;
 }
