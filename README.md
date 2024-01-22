@@ -16,10 +16,10 @@
 ### Supporting Resources
 
 - B. Stroustrup, The C++ Programming Language, 4th Edition, sections 1.2, 1.4
-- B. Stroustrup, The Design and Evolution of C++
+- B. Stroustrup, The Design and Evolution of C++, sections 1-9
 - N. Josuttis, The C++ Standard Library, 2nd Edition, section 2.1
 - S. Meyers, Effective C++, 3rd Edition, sections 1, 53-55
 - S. Meyers, More Effective C++, section 35
 - S. Dewhurst, C++ Gotchas, sections 1, 11, 12
 - H. Sutter, C++ Coding Standards, sections 0-4
-- R. Grimm, C++20: Get the Details, sections 1, 2
+- R. Grimm, C++20 Get the Details, sections 1, 2
