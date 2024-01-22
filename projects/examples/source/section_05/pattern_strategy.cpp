@@ -1,75 +1,40 @@
 #include <iostream>
 
-class Compression
+class Computation 
 {
 public:
 
-    virtual ~Compression() = default;
+    virtual ~Computation() = default; // note: polymorphic base class
 
-    virtual void compress() const = 0;
+    virtual void compute() const = 0;
 
-}; // class Compression
+}; // class Computation
 
-class ZIP_Compression : public Compression
+struct AVX : public Computation { void compute() const override { std::cout << "AVX\n"; } };
+struct SSE : public Computation { void compute() const override { std::cout << "SSE\n"; } };
+
+class Computer
 {
 public:
 
-    void compress() const override 
-    { 
-        std::cout << "ZIP compression" << std::endl; 
-    }
-
-}; // class ZIP_Compression : public Compression
-
-class RAR_Compression : public Compression
-{
-public:
-
-    void compress() const override 
-    { 
-        std::cout << "RAR compression" << std::endl; 
-    }
-
-}; // class RAR_Compression : public Compression
-
-class ARJ_Compression : public Compression
-{
-public:
-
-    void compress() const override 
-    { 
-        std::cout << "ARJ compression" << std::endl; 
-    }
-
-}; // class ARJ_Compression : public Compression
-
-class Compressor
-{
-public:
-
-    explicit Compressor(Compression * compression) : m_compression(compression) 
+    explicit Computer(Computation * computation) : m_computation(computation) 
     {
-        if (!m_compression) // good: verify if nullptr
-        {
-            std::cout << "invalid compression" << std::endl;
-        }
+        if (!m_computation) std::cout << "invalid computation" << std::endl;
     }
 
-    ~Compressor() { delete m_compression; } // good: no memory leak
+    ~Computer() { delete m_computation; } // good: no memory leak
 
-public:
-
-    void compress() const { m_compression->compress(); }
+    void compute() const { m_computation->compute(); }
 
 private:
     
-    Compression * m_compression;
+    Computation * m_computation;
 
-}; // class Compressor
+}; // class Computer
 
 int main()
 {
-    Compressor(new ZIP_Compression).compress(); // note: choose algorithm
+    Computer(new AVX).compute(); // note: instruction set for computations
 
     return 0;
 }
