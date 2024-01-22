@@ -1,16 +1,16 @@
 #include <iostream>
 #include <vector>
 
-class Shape
+class Computer // note: polymorphic base class
 {
 public:
 
-	Shape()
+	Computer()
 	{
 //		print(); // bad: base version
 	}
 
-	virtual ~Shape()
+	virtual ~Computer()
 	{
 //		print(); // bad: base version
 	}
@@ -19,51 +19,51 @@ public:
 
 	virtual void print() const // note: can be redefined in derived classes
 	{
-		std::cout << "Shape" << std::endl;
+		std::cout << "Computer" << std::endl;
 	}
 
-}; // class Shape
+}; // class Computer
 
-class Polygon final : public Shape // note: final class in hierarchy
+class Mobile final : public Computer // note: final class in hierarchy
 {
 public:
 
 	void print() const override final // note: final function in hierarchy
 	{
-		std::cout << "Polygon" << std::endl;
+		std::cout << "Mobile" << std::endl;
 	}
 
-}; // class Polygon final : public Shape
+}; // class Mobile final : public Computer
 
 /*
-class Rectangle : public Polygon // error: class Polygon declared final
+class Tablet : public Mobile // error: class Mobile declared final
 {
 public:
 
-	void print() const override // error: print declared final in class Polygon
+	void print() const override // error: print declared final in class Mobile
 	{
-		std::cout << "Rectangle" << std::endl;
+		std::cout << "Tablet" << std::endl;
 	}
 
-}; // class Rectangle : public Polygon
+}; // class Tablet : public Mobile
 */
 
-class Ellipse : public Shape // note: not final class in hierarchy
+class Laptop : public Computer // note: not final class in hierarchy
 {
 public:
 
 	void print() const override // note: not final function in hierarchy
 	{
-		std::cout << "Ellipse" << std::endl;
+		std::cout << "Laptop" << std::endl;
 	}
 
-}; // class Ellipse : public Shape
+}; // class Laptop : public Computer
 
 class Abstract_Base // note: interface class like in Java
 {
 public:
 
-	virtual ~Abstract_Base() {};
+	virtual ~Abstract_Base() = default; // note: polymorphic base class
 
 public:
 
@@ -91,31 +91,31 @@ public:
 
 int main()
 {
-	Polygon p;
+	Mobile mobile;
 
-	Shape * s_ptr = &p; // note: works with pointers and references
+	Computer * c_ptr = &mobile; // note: works with pointers and references
 
-//	Shape s = p; // bad: object slicing
+//	Computer s = p; // bad: object slicing
 
-	s_ptr->print();
+	c_ptr->print();
 
-	Polygon p1;
-	Polygon p2;
-	Ellipse e1;
-	Ellipse e2;
+	Mobile mobile_1;
+	Mobile mobile_2;
+	Laptop laptop_1;
+	Laptop laptop_2;
 
-	std::vector < Shape * > shapes = { &p1, &p2, &e1, &e2 };
+	std::vector < Computer * > computers = { &mobile_1, &mobile_2, &laptop_1, &laptop_2 };
 
-	for (std::size_t i = 0; i < shapes.size(); ++i)
+	for (std::size_t i = 0; i < computers.size(); ++i)
 	{
-		shapes[i]->print();
+		computers[i]->print();
 	}
 
-	s_ptr = new Polygon;
+	c_ptr = new Mobile;
 
-	s_ptr->print();
+	c_ptr->print();
 
-	delete s_ptr; // note: important virtual destructor
+	delete c_ptr; // note: important virtual destructor
 
 	Derived d;
 
