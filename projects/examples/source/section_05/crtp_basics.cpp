@@ -1,39 +1,31 @@
 #include <iostream>
 
-template < class Derived > class Shape
+template < class Derived > class Computer
 {
 public:
 
-	virtual ~Shape() = default;
+	virtual ~Computer() = default; // note: polymorphic base class
 
-public:
-
-	void draw() const
+	void run() const // note: non-virtual function due to template
 	{
-		static_cast < const Derived * > (this)->draw_implementation();
+		static_cast < const Derived * > (this)->run_implementation();
 	}
 
-}; // template < class Derived > class Shape
+}; // template < class Derived > class Computer
 
-class Triangle : public Shape < Triangle >
+class Laptop : public Computer < Laptop >
 {
 public:
 
-	void draw_implementation() const
-	{
-		std::cout << "triangle" << std::endl;
-	}
+	void run_implementation() const { std::cout << "Laptop\n"; }
 
-}; // class Triangle : public Shape < Triangle >
+}; // class Laptop : public Computer < Laptop >
 
-template < typename T > void handle(const T & t)
-{
-	t.draw();
-}
+template < typename T > void handle(const T & t) { t.run(); }
 
 int main()
 {
-	handle(Triangle());
+	handle(Laptop());
 
 	return 0;
 }
