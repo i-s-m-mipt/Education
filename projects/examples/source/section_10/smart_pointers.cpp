@@ -57,7 +57,7 @@ class Base
 {
 public:
 
-	virtual ~Base() noexcept = default;
+	virtual ~Base() noexcept = default; // note: polymorphic base class
 
 	virtual void print() const { std::cout << "Base" << std::endl; }
 
