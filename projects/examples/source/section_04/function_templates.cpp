@@ -26,17 +26,12 @@ template < typename RT = double, typename T1, typename T2 > RT max_v5(T1 x, T2 y
 	return (x < y ? y : x);
 }
 
-template < typename T1, typename T2, typename RT = std::common_type_t < T1, T2 > > RT max_v6(T1 x, T2 y)
+template < typename T1, typename T2 > auto max_v6(T1 x, T2 y)
 {
 	return (x < y ? y : x);
 }
 
-template < typename T1, typename T2 > auto max_v7(T1 x, T2 y)
-{
-	return (x < y ? y : x);
-}
-
-auto max_v8(auto x, auto y) // good: abbreviated function template
+auto max_v7(auto x, auto y) // good: abbreviated function template
 {
 	return (x < y ? y : x);
 }
@@ -111,7 +106,6 @@ int main()
 	std::cout << max_v5(100, 2.0) << std::endl;
 	std::cout << max_v6(100, 2.0) << std::endl;
 	std::cout << max_v7(100, 2.0) << std::endl;
-	std::cout << max_v8(100, 2.0) << std::endl;
 
 	f            ('a'); // note: overload for char
 	f            (100); // note: overload for int
