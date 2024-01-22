@@ -1,12 +1,12 @@
 #include <iostream>
 
-class Base
+class Computer
 {
 public:
 
-	virtual ~Base() = default;
+	virtual ~Computer() = default; // note: polymorphic base class
 
-	void run() const // note: template method
+	void run() const // note: template method, not template < ... >
 	{ 
 		a(); b(); c(); d(); e(); std::cout << std::endl;
 	} 
@@ -22,32 +22,34 @@ private: // note: non-virtual interface
 	virtual void b() const = 0;
 	virtual void d() const = 0;
 
-}; // class Base
+}; // class Computer
 
-class Derived_1 : public Base
+struct Mobile : public Computer
 {
-	void b() const override { std::cout << "b "; }
-	void d() const override { std::cout << "d "; }
+	void b() const override { std::cout << "M "; }
+	void d() const override { std::cout << "M "; }
 
-}; // class Derived_1 : public Base
+}; // struct Mobile : public Computer
 
-class Derived_2 : public Base
+struct Tablet : public Computer
 {
-	void b() const override { std::cout << "B "; }
-	void d() const override { std::cout << "D "; }
+	void b() const override { std::cout << "T "; }
+	void d() const override { std::cout << "T "; }
 
-}; // class Derived_2 : public Base
+}; // struct Tablet : public Computer
+
+struct Laptop : public Computer
+{
+	void b() const override { std::cout << "L "; }
+	void d() const override { std::cout << "L "; }
+
+}; // struct Laptop : public Computer
 
 int main()
 {
-	Base * b1 = new Derived_1;
-	Base * b2 = new Derived_2;
+	Computer * mobile = new Mobile;
 
-	b1->run();
-	b2->run();
-
-	delete b1; // good: no memory leak
-	delete b2; // good: no memory leak
+	mobile->run(); delete mobile; // good: no memory leak
 
 	return 0;
 }
