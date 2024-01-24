@@ -47,7 +47,6 @@ struct S
 {
 	std::string string_1;
 	std::string string_2;
-	std::string string_3;
 
 }; // struct S
 
@@ -57,25 +56,24 @@ struct S
 
 	boost::hash_combine(seed, s.string_1);
 	boost::hash_combine(seed, s.string_2);
-	boost::hash_combine(seed, s.string_3);
 
 	return seed;
 }
 
 int main()
 {
-	std::cout << hash("hello, world!") << std::endl;
+	std::cout << hash("Hello, hashing!") << std::endl;
 
-	std::cout <<   std::hash < std::string > ()("hello, world!") << std::endl;
-	std::cout << boost::hash < std::string > ()("hello, world!") << std::endl;
+	std::cout <<   std::hash < std::string > ()("Hello, hashing!") << std::endl;
+	std::cout << boost::hash < std::string > ()("Hello, hashing!") << std::endl;
 
-	S s = { "hello", "hashing", "world" };
+	S s = { "hello", "world" };
 
-	std::cout << combined_hash(s.string_1, s.string_2, s.string_3) << std::endl;
+	std::cout << combined_hash(s.string_1, s.string_2) << std::endl;
 
 	std::cout << boost::hash < S > ()(s) << std::endl;
 
-	std::vector < std::string > vector = { "hello", "hashing", "world" };
+	std::vector < std::string > vector = { "hello", "world" };
 
 	std::cout << boost::hash_range(std::begin(vector), std::end(vector)) << std::endl;
 
