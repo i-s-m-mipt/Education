@@ -24,7 +24,7 @@ extern const int global_y2 = 42; // note: external linkage
 
 // =============================================================================
 
-#define PROMPT "Hello from " // note: object-like macros with substitution text
+#define PROMPT "Hello, " // note: object-like macros with substitution text
 
 #define FUNCTION(name) void generated_##name() \
 { std::cout << PROMPT << #name << std::endl; }
