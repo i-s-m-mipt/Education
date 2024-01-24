@@ -450,6 +450,9 @@
     <ClCompile Include="..\source\section_12\algorithms_on_graphs.cpp">
       <Filter>source\section_12</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_10\standard_allocator.cpp">
+      <Filter>source\section_10</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">

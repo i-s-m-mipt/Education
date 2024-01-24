@@ -68,7 +68,7 @@ int main()
 	std::for_each(std:: begin(vector), std:: end(vector), [a](auto & x){        x += a ; });
 	std::for_each(std::cbegin(vector), std::cend(vector), [a](auto   x){ assert(x == a); });
 
-	std::set < int, decltype([](auto lhs, auto rhs){ return (lhs > rhs); }) > set({ 1, 4, 2, 5, 3 });
+	std::set < int, decltype([](auto lhs, auto rhs){ return (lhs > rhs); }) > set = { 1, 4, 2, 5, 3 };
 
 	for (auto iterator = std::cbegin(set); iterator != std::cend(set); ++iterator)
 	{
