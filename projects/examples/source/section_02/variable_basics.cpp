@@ -43,7 +43,7 @@ int main()
 
 	[[maybe_unused]] auto z4{static_cast < int > (d)}; // good: new style conversion
 
-//	auto z6{static_cast < int > ("Hello")}; // error: invalid conversion
+//	auto z6{static_cast < int > ("hello")}; // error: invalid conversion
 
 	d = i = c = b; // good: wide conversions
 
