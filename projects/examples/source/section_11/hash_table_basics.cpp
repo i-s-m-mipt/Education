@@ -5,7 +5,7 @@
 #include <type_traits>
 #include <unordered_set>
 
-void print_state(const std::unordered_set < int > & unordered_set)
+void print(const std::unordered_set < int > & unordered_set)
 {
 	std::cout << "N objects       : " << unordered_set.            size() << std::endl;
 	std::cout << "N objects (max) : " << unordered_set.        max_size() << std::endl;
@@ -57,11 +57,11 @@ int main()
 		unordered_set.insert(distribution(engine));
 	}
 
-	print_state(unordered_set);
+	print(unordered_set);
 
 	unordered_set.rehash(128); // note: creates at least 128 buckets
 
-	print_state(unordered_set);
+	print(unordered_set);
 
 	return 0;
 }
