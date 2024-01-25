@@ -6,16 +6,16 @@
 
 #include <benchmark/benchmark.h>
 
-class Linear_Allocator // note: used without deallocations for blocks of different sizes
+class Arena_Allocator // note: used without deallocations for blocks of different sizes
 {
 public:
 
-	explicit Linear_Allocator(std::size_t size) : m_size(size)
+	explicit Arena_Allocator(std::size_t size) : m_size(size)
 	{
 		m_begin = ::operator new(m_size);
 	}
 
-	~Linear_Allocator() noexcept
+	~Arena_Allocator() noexcept
 	{
 		::operator delete(m_begin);
 	}
@@ -58,7 +58,7 @@ private:
 
 	void * m_begin = nullptr;
 
-}; // class Linear_Allocator
+}; // class Arena_Allocator
 
 void test_1(benchmark::State & state) // note: very fast
 {
@@ -68,7 +68,7 @@ void test_1(benchmark::State & state) // note: very fast
 
 	for (auto _ : state)
 	{
-		Linear_Allocator allocator(gb);
+		Arena_Allocator allocator(gb);
 
 		for (std::size_t i = 0; i < kb; ++i)
 		{
@@ -96,7 +96,7 @@ BENCHMARK(test_2);
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {
-	Linear_Allocator allocator(1024); 
+	Arena_Allocator allocator(1024); 
 
 	std::cout << allocator.allocate(  1, 4) << ' '; allocator.print(); // note: A
 	std::cout << allocator.allocate(  2, 2) << ' '; allocator.print(); // note: B
