@@ -28,19 +28,15 @@ template < typename T > void hash(std::size_t & seed, const T & value) noexcept
 	bind(seed, value);
 }
 
-template < typename T, typename ... Types > 
-void hash(std::size_t & seed, const T & value, const Types & ... args) noexcept
+template < typename T, typename ... Types > void hash(
+	std::size_t & seed, const T & value, const Types & ... args) noexcept
 {
 	bind(seed, value); hash(seed, args...);
 }
 
 template < typename ... Types > [[nodiscard]] std::size_t combined_hash(const Types & ... args) noexcept
 {
-	std::size_t seed = 0; 
-	
-	hash(seed, args...); 
-	
-	return seed;
+	std::size_t seed = 0; hash(seed, args...); return seed;
 }
 
 struct S
