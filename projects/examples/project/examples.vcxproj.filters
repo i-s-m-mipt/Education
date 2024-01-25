@@ -459,6 +459,12 @@
     <ClCompile Include="..\source\section_10\pool_allocator.cpp">
       <Filter>source\section_10</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_10\list_allocator.cpp">
+      <Filter>source\section_10</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_10\stack_allocator.cpp">
+      <Filter>source\section_10</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
