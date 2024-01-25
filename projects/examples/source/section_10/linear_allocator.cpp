@@ -20,7 +20,7 @@ public:
 		::operator delete(m_begin);
 	}
 
-	void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t)) noexcept
+	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t))
 	{
 		void * first = std::bit_cast < std::byte * > (m_begin) + m_offset;
 
@@ -32,13 +32,15 @@ public:
 
 			return first;
 		}
-		
-		return nullptr;
+		else return nullptr;
 	}
 
-	void deallocate(void *) const noexcept {}
+	void deallocate(void *) noexcept {}
 
-	void clear() noexcept { m_offset = 0; } // note: manual operation
+	void clear() noexcept // note: manual operation
+	{ 
+		m_offset = 0; 
+	} 
 
 	void print() const
 	{
@@ -57,7 +59,7 @@ private:
 
 int main()
 {
-	Linear_Allocator allocator(1024);
+	Linear_Allocator allocator(1024); 
 
 	std::cout << allocator.allocate(  1, 4) << ' '; allocator.print(); // note: A
 	std::cout << allocator.allocate(  2, 2) << ' '; allocator.print(); // note: B
