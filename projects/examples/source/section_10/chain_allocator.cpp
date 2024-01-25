@@ -10,7 +10,7 @@
 
 #include <benchmark/benchmark.h>
 
-class Pool_Allocator // note: used with deallocations at any position for blocks of fixed sizes
+class Chain_Allocator // note: used with deallocations at any position for blocks of fixed sizes
 {
 private:
 
@@ -18,7 +18,7 @@ private:
 	
 public:
 
-	explicit Pool_Allocator(std::size_t size, std::size_t size_block) : m_size(size)
+	explicit Chain_Allocator(std::size_t size, std::size_t size_block) : m_size(size)
 	{
 		m_size_block = std::max(size_block, sizeof(Block));
 
@@ -30,7 +30,7 @@ public:
 		make_chain(); m_begin = m_head;
 	}
 
-	~Pool_Allocator() noexcept
+	~Chain_Allocator() noexcept
 	{
 		for (std::size_t i = 0; i < std::size(m_chains); ++i)
 		{
@@ -114,7 +114,7 @@ private:
 
 	void * m_begin = nullptr;
 
-}; // class Pool_Allocator
+}; // class Chain_Allocator
 
 void test_1(benchmark::State & state) // note: very fast
 {
@@ -128,7 +128,7 @@ void test_1(benchmark::State & state) // note: very fast
 
 	for (auto _ : state)
 	{
-		Pool_Allocator allocator(gb, mb);
+		Chain_Allocator allocator(gb, mb);
 
 		for (std::size_t i = 0; i < kb; i += 1) pointers[i] = allocator.  allocate();
 		for (std::size_t i = 0; i < kb; i += 2)               allocator.deallocate(pointers[i]);
@@ -160,7 +160,7 @@ BENCHMARK(test_2);
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {
-	Pool_Allocator allocator(32, 8);                    allocator.print(); // note: initial
+	Chain_Allocator allocator(32, 8);                    allocator.print(); // note: initial
 
 	[[maybe_unused]] auto ptr_0 = allocator.allocate(); allocator.print(); // note: head X
 	[[maybe_unused]] auto ptr_1 = allocator.allocate(); allocator.print(); // note: head Y
