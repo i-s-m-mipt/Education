@@ -88,7 +88,7 @@
     <None Include="..\source\section_11\red_black_trees.drawio">
       <Filter>source\section_11</Filter>
     </None>
-    <None Include="..\source\section_09\custom_allocators.drawio">
+    <None Include="..\source\section_10\custom_allocators.drawio">
       <Filter>source\section_10</Filter>
     </None>
   </ItemGroup>
@@ -494,7 +494,7 @@
     <Image Include="..\source\section_11\red_black_trees.png">
       <Filter>source\section_11</Filter>
     </Image>
-    <Image Include="..\source\section_09\custom_allocators.png">
+    <Image Include="..\source\section_10\custom_allocators.png">
       <Filter>source\section_10</Filter>
     </Image>
   </ItemGroup>
