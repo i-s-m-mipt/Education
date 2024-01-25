@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 #include <unordered_set>
 
@@ -35,6 +36,8 @@ struct Equal
 
 int main()
 {
+	std::cout << Hash()(Person("Matthias")) << std::endl;
+
 	std::unordered_set < Person, Hash, Equal > persons; // note: same for other containers
 
 	persons.emplace("Matthias");
