@@ -1,6 +1,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <vector>
 
 int main()
 {
@@ -11,6 +12,8 @@ int main()
 	*ptr_int = 42; // note: acceptable for fundamental types, consider construct
 
 	allocator_int.deallocate(ptr_int, 1);
+
+	std::vector < int, std::allocator < int > > vector;
 
 	std::allocator < std::string > allocator_string;
 
