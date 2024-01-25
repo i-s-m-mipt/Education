@@ -35,7 +35,7 @@ public:
 
 		if (block = std::align(alignment, size, block, space); block) // note: modifies block and space
 		{
-			auto header = std::bit_cast < Header * > (get_byte(block) - sizeof(Header));
+			auto header = get_header(get_byte(block) - sizeof(Header));
 
 			*header = static_cast < Header > (std::distance(get_byte(first), get_byte(block)));
 
@@ -48,7 +48,7 @@ public:
 
 	void deallocate(void * ptr) noexcept
 	{
-		auto header = std::bit_cast < Header * > (get_byte(ptr) - sizeof(Header));
+		auto header = get_header(get_byte(ptr) - sizeof(Header));
 
 		m_offset = get_byte(ptr) - get_byte(m_begin) - *header;
 	}
@@ -67,6 +67,11 @@ private:
 	std::byte * get_byte(void * ptr) const noexcept
 	{
 		return std::bit_cast < std::byte * > (ptr);
+	}
+
+	Header * get_header(void * ptr) const noexcept
+	{
+		return std::bit_cast < Header * > (ptr);
 	}
 
 private:
