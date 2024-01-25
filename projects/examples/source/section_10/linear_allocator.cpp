@@ -1,12 +1,10 @@
 #include <bit>
 #include <cstddef>
-#include <cstdint>
 #include <iomanip>
 #include <iostream>
 #include <memory>
-#include <string>
 
-class Linear_Allocator // note: used without partial deallocations for known total size
+class Linear_Allocator // note: used without deallocations for blocks of different sizes
 {
 public:
 
@@ -15,14 +13,14 @@ public:
 		m_begin = ::operator new(m_size);
 	}
 
-	~Linear_Allocator() noexcept // note: final deallocation once
+	~Linear_Allocator() noexcept
 	{
 		::operator delete(m_begin);
 	}
 
 	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t))
 	{
-		void * first = std::bit_cast < std::byte * > (m_begin) + m_offset; // note: first free byte
+		void * first = get_byte(m_begin) + m_offset;
 
 		auto space = m_size - m_offset;
 
@@ -30,15 +28,25 @@ public:
 		{
 			m_offset = m_size - space + size; 
 			
-			return first; // note: pointer aligned successfully
+			return first; // note: aligned pointer
 		}
-		else return nullptr; // note: pointer not aligned
+		else return nullptr;
 	}
 
 	void print() const
 	{
-		std::cout << m_begin << ": " << std::setw(std::size(std::to_string(m_size))) << 
-			std::right << std::setfill('0') << m_offset << " / " << m_size << std::endl;
+		std::cout << m_begin << ": ";
+
+		std::cout << std::setw(4) << std::right << std::setfill('0') << m_offset;
+
+		std::cout << " / " << m_size << std::endl;
+	}
+
+private:
+
+	std::byte * get_byte(void * ptr) const noexcept
+	{
+		return std::bit_cast < std::byte * > (ptr);
 	}
 
 private:
