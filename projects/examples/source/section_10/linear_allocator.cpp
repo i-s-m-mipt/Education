@@ -86,7 +86,7 @@ void test_2(benchmark::State & state) // note: very slow
 	{
 		for (std::size_t i = 0; i < kb; ++i)
 		{
-			benchmark::DoNotOptimize(::operator new(mb));
+			benchmark::DoNotOptimize(::operator new(mb)); // note: no delete
 		}
 	}
 }
