@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <iostream>
 #include <memory>
+#include <vector>
 
 #include <benchmark/benchmark.h>
 
@@ -12,12 +13,12 @@ public:
 
 	explicit Arena_Allocator(std::size_t size) : m_size(size)
 	{
-		m_begin = ::operator new(m_size);
+		m_begin = ::operator new(m_size, default_alignment);
 	}
 
 	~Arena_Allocator() noexcept
 	{
-		::operator delete(m_begin);
+		::operator delete(m_begin, default_alignment);
 	}
 
 	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t))
@@ -51,6 +52,10 @@ private:
 		return std::bit_cast < std::byte * > (ptr);
 	}
 
+public:
+
+	static inline const std::align_val_t default_alignment { alignof(std::max_align_t) };
+
 private:
 	
 	std::size_t m_size   = 0;
@@ -82,11 +87,22 @@ void test_2(benchmark::State & state) // note: very slow
 	const std::size_t kb = 1024;
 	const std::size_t mb = 1024 * 1024;
 
+	std::vector < void * > pointers(kb, nullptr);
+
+	benchmark::DoNotOptimize(pointers);
+
+	const auto alignment = Arena_Allocator::default_alignment;
+
 	for (auto _ : state)
 	{
 		for (std::size_t i = 0; i < kb; ++i)
 		{
-			benchmark::DoNotOptimize(::operator new(mb)); // note: no delete
+			pointers[i] = ::operator new(mb, alignment);
+		}
+
+		for (std::size_t i = 0; i < kb; ++i)
+		{
+			::operator delete(pointers[i], alignment);
 		}
 	}
 }
