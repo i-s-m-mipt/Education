@@ -34,7 +34,7 @@ public:
 	{
 		for (std::size_t i = 0; i < std::size(m_chains); ++i)
 		{
-			::operator delete(m_chains[i]);
+			::operator delete(m_chains[i], default_alignment);
 		}
 	}
 
@@ -91,7 +91,7 @@ private:
 
 	Block * allocate_blocks() const
 	{
-		auto block = get_block(::operator new(m_size)); 
+		auto block = get_block(::operator new(m_size, default_alignment));
 		
 		block->next = nullptr; return block;
 	}
@@ -100,6 +100,10 @@ private:
 	{
 		m_head = allocate_blocks(); ++m_offset; m_chains.push_back(m_head);
 	}
+
+public:
+
+	static inline const std::align_val_t default_alignment { alignof(std::max_align_t) };
 
 private:
 
@@ -146,12 +150,14 @@ void test_2(benchmark::State & state) // note: very slow
 
 	benchmark::DoNotOptimize(pointers);
 
+	const auto alignment = Chain_Allocator::default_alignment;
+
 	for (auto _ : state)
 	{
-		for (std::size_t i = 0; i < kb; i += 1) pointers[i] = ::operator new(mb);
-		for (std::size_t i = 0; i < kb; i += 2)               ::operator delete(pointers[i]);
-		for (std::size_t i = 0; i < kb; i += 2) pointers[i] = ::operator new(mb);
-		for (std::size_t i = 0; i < kb; i += 1)               ::operator delete(pointers[i]);
+		for (std::size_t i = 0; i < kb; i += 1) pointers[i] = ::operator new   (mb,          alignment);
+		for (std::size_t i = 0; i < kb; i += 2)               ::operator delete(pointers[i], alignment);
+		for (std::size_t i = 0; i < kb; i += 2) pointers[i] = ::operator new   (mb,          alignment);
+		for (std::size_t i = 0; i < kb; i += 1)               ::operator delete(pointers[i], alignment);
 	}
 }
 
@@ -160,7 +166,7 @@ BENCHMARK(test_2);
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {
-	Chain_Allocator allocator(32, 8);                    allocator.print(); // note: initial
+	Chain_Allocator allocator(32, 8);                   allocator.print(); // note: initial
 
 	[[maybe_unused]] auto ptr_0 = allocator.allocate(); allocator.print(); // note: head X
 	[[maybe_unused]] auto ptr_1 = allocator.allocate(); allocator.print(); // note: head Y
