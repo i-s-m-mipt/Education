@@ -22,7 +22,10 @@ int main()
         vector.push_back(static_cast < char > ('a' + i));
     }
 
-    for (auto c : buffer) std::cout << c; // note: outputs repeated data in buffer
+    for (std::size_t i = 0; i < std::size(buffer); ++i) 
+    {
+	    std::cout << buffer[i]; // note: outputs repeated data in buffer
+    }
 
     auto resource = std::pmr::new_delete_resource();
 
