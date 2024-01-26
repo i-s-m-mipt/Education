@@ -468,6 +468,9 @@
     <ClCompile Include="..\source\section_10\stack_allocator.cpp">
       <Filter>source\section_10</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_07\precompiled.cpp">
+      <Filter>source\section_07</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
@@ -504,6 +507,9 @@
     </ClInclude>
     <ClInclude Include="..\source\section_08\custom_logger.hpp">
       <Filter>source\section_08</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\section_07\precompiled.hpp">
+      <Filter>source\section_07</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

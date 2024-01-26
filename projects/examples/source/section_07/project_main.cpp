@@ -1,3 +1,5 @@
+#include "precompiled.hpp" // note: precompiled header must be first
+
 #include <iostream> // note: standard library header file
 
 #include "project_header.hpp" // note: user defined header file
