@@ -19,12 +19,12 @@ public:
 
 	explicit Stack_Allocator(std::size_t size) : m_size(size)
 	{
-		m_begin = ::operator new(m_size);
+		m_begin = ::operator new(m_size, default_alignment);
 	}
 
 	~Stack_Allocator() noexcept
 	{
-		::operator delete(m_begin);
+		::operator delete(m_begin, default_alignment);
 	}
 
 	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t))
@@ -76,6 +76,10 @@ private:
 		return std::bit_cast < Header * > (ptr);
 	}
 
+public:
+
+	static inline const std::align_val_t default_alignment { alignof(std::max_align_t) };
+
 private:
 
 	std::size_t m_size   = 0;
@@ -120,16 +124,18 @@ void test_2(benchmark::State & state) // note: very slow
 
 	benchmark::DoNotOptimize(pointers);
 
+	const auto alignment = Stack_Allocator::default_alignment;
+
 	for (auto _ : state)
 	{
 		for (std::size_t i = 0; i < kb; ++i)
 		{
-			pointers[i] = ::operator new(mb);
+			pointers[i] = ::operator new(mb, alignment);
 		}
 
 		for (std::size_t i = 0; i < kb; ++i)
 		{
-			::operator delete(pointers[std::size(pointers) - 1 - i]);
+			::operator delete(pointers[std::size(pointers) - 1 - i], alignment);
 		}
 	}
 }
