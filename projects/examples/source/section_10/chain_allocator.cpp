@@ -84,7 +84,7 @@ private:
 		return std::bit_cast < std::byte * > (ptr);
 	}
 
-	Block * get_block(void * ptr) const 
+	Block * get_block(void * ptr) const noexcept
 	{ 
 		return std::bit_cast < Block * > (ptr); 
 	}
