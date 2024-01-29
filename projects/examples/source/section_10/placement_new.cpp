@@ -8,12 +8,12 @@ public:
 
 	explicit C(std::size_t index) : m_index(index)
 	{
-		std::cout << "C::CTR called, index: " << m_index << std::endl;
+		std::cout << "C:: C called, index: " << m_index << std::endl;
 	}
 
 	~C()
 	{
-		std::cout << "C::DTR called, index: " << m_index << std::endl;
+		std::cout << "C::~C called, index: " << m_index << std::endl;
 	}
 
 private:
@@ -59,7 +59,7 @@ public:
 
 	User()
 	{
-		std::cout << "User::User called" << std::endl;
+		std::cout << "User:: User called" << std::endl;
 	}
 
 	~User()
