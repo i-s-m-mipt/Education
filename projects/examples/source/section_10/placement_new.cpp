@@ -59,12 +59,12 @@ public:
 
 	User()
 	{
-		std::cout << "User::CTR called" << std::endl;
+		std::cout << "User::User called" << std::endl;
 	}
 
 	~User()
 	{
-		std::cout << "User::DTR called" << std::endl;
+		std::cout << "User::~User called" << std::endl;
 	}
 
 }; // class User : public Manager < User > 
