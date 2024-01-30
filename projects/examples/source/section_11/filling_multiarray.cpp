@@ -6,45 +6,42 @@
 
 #include <boost/multi_array.hpp>
 
-template < auto N, typename C, typename FI > void fill_shape(const C & container, FI shape)
+template < auto N, typename C, typename FI > void fill_shape(const C & c, FI shape)
 {
-	*shape = std::size(container);
+	*shape = std::size(c);
 
 	if constexpr (N > 1)
 	{
-		fill_shape < N - 1 > (*(std::begin(container)), ++shape);
+		fill_shape < N - 1 > (*(std::begin(c)), ++shape);
 	}
 }
 
-template < auto N, typename C, typename FI > void fill_array(const C & container, FI array)
+template < auto N, typename C, typename FI > void fill_array(const C & c, FI array)
 {
 	if constexpr (N > 1)
 	{
-		for (auto element : container)
+		for (auto iterator = std::begin(c); iterator != std::end(c); ++iterator)
 		{
-			fill_array < N - 1 > (element, (array++)->begin());
+			fill_array < N - 1 > (*iterator, (array++)->begin());
 		}
 	}
 	else
 	{
-		for (auto element : container)
+		for (auto iterator = std::begin(c); iterator != std::end(c); ++iterator)
 		{
-			*(array++) = element;
+			*(array++) = *iterator;
 		}
 	}
 }
 
-template < typename T, auto N, typename C > auto make_array(const C & container)
+template < typename T, auto N, typename C > auto make_array(const C & c)
 {
 	using array_t = boost::multi_array < T, N > ;
 
 	std::vector shape(N, array_t::index(0));
 
-	fill_shape < N > (container, std::begin(shape)); 
-	
-	array_t array(shape); // note: empty array 3x4x5
-	
-	fill_array < N > (container, std::begin(array));
+	fill_shape < N > (c, std::begin(shape)); array_t array(shape); // note: 3x4x5
+	fill_array < N > (c, std::begin(array));
 
 	return array;
 }
@@ -55,9 +52,9 @@ int main()
 	const std::size_t size_2 = 4;
 	const std::size_t size_3 = 5;
 
-	std::vector < std::vector < std::vector < int > > > v(size_1,
-		          std::vector < std::vector < int > >    (size_2,
-			                    std::vector < int >      (size_3, 0)));
+	std::vector < std::vector < std::vector < int > > > vector_3D(size_1,
+		          std::vector < std::vector < int > >            (size_2,
+			                    std::vector < int >              (size_3, 0)));
 
 	std::cout << "std::vector < std::vector < std::vector < int > > >\n\n"; // note: very long with typeid
 
@@ -69,7 +66,7 @@ int main()
 		{
 			for (std::size_t k = 0; k < size_3; ++k)
 			{
-				std::cout << std::setw(2) << std::right << (v[i][j][k] = ++counter) << " ";
+				std::cout << std::setw(2) << std::right << (vector_3D[i][j][k] = ++counter) << " ";
 			}
 
 			std::cout << std::endl;
@@ -78,7 +75,7 @@ int main()
 		std::cout << std::endl;
 	}
 
-	auto array = make_array < int, 3 > (v);
+	auto array = make_array < int, 3 > (vector_3D);
 
 	std::cout << typeid(array).name() << std::endl << std::endl;
 
