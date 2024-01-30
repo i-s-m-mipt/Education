@@ -1,4 +1,4 @@
-# The C++ CodeX
+# Universal C++ Engineer's CodeX
 
 ## 01 General Introduction
 
