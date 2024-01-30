@@ -480,6 +480,9 @@
     <ClCompile Include="..\source\section_11\filling_multiarray.cpp">
       <Filter>source\section_11</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_11\vectors_matrices.cpp">
+      <Filter>source\section_11</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
