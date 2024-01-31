@@ -59,6 +59,12 @@
     <Filter Include="source\section_18">
       <UniqueIdentifier>{955badff-084b-43c5-9304-39cb36df585c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\section_19">
+      <UniqueIdentifier>{87d0e86b-5efc-48b9-861c-d20949d9dd20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\section_20">
+      <UniqueIdentifier>{0e1e19be-5c53-4eeb-9152-34057b6c9fef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\source\section_01\general_overview.pdf">
@@ -482,6 +488,15 @@
     </ClCompile>
     <ClCompile Include="..\source\section_11\vectors_matrices.cpp">
       <Filter>source\section_11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_20\vector.cpp">
+      <Filter>source\section_20</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_20\vector.ixx">
+      <Filter>source\section_20</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_10\custom_unique_ptr.cpp">
+      <Filter>source\section_10</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
