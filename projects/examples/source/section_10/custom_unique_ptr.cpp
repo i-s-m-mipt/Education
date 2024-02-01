@@ -1,94 +1,73 @@
+#include <cassert>
 #include <cstddef>
 #include <type_traits>
 #include <utility>
 
-template < typename T > class Unique_Ptr
+template < typename T > class Unique // note: no custom deleters support
 {
 public:
 
-    constexpr Unique_Ptr() noexcept = default;
+    Unique() noexcept = default;
 
-    constexpr explicit Unique_Ptr(T * data) noexcept : m_data(data) {} // good: explicit
+    explicit Unique(T * data) noexcept : m_data(data) {} // good: explicit
 
-    constexpr Unique_Ptr(std::nullptr_t) noexcept {} // note: version for nullptr literal
-
-    constexpr Unique_Ptr(const Unique_Ptr &) noexcept = delete;
+    Unique(const Unique &) noexcept = delete;
         
-    constexpr Unique_Ptr(Unique_Ptr && other) noexcept : Unique_Ptr() { swap(other); }
+    Unique(Unique && other) noexcept : Unique() { swap(other); }
 
-    template < typename U > constexpr Unique_Ptr(Unique_Ptr < U > && other) noexcept
-    {
-        Unique_Ptr < T > t(other.release()); swap(t); // note: used for base-derived
-    }
-
-    constexpr ~Unique_Ptr() noexcept { reset(); }
+    ~Unique() noexcept { reset(); }
 
 public:
 
-    constexpr Unique_Ptr & operator=(const Unique_Ptr &) noexcept = delete;
+    Unique & operator=(const Unique &) noexcept = delete;
 
-    constexpr Unique_Ptr & operator=(Unique_Ptr && other) noexcept
+    Unique & operator=(Unique && other) noexcept
     { 
         reset(other.release()); return *this;
     }
 
-    template < typename U > constexpr Unique_Ptr & operator=(Unique_Ptr < U > && other) noexcept
-    {
-        Unique_Ptr < T > t(other.release()); swap(t); return *this; // note: used for base-derived
-    }
-
-    constexpr Unique_Ptr & operator=(std::nullptr_t) noexcept // note: version for nullptr literal
-    { 
-        reset(); return *this; 
-    }
-
-    constexpr explicit operator bool() const noexcept { return m_data; }
-
 public:
         
-    constexpr void swap(Unique_Ptr & other) noexcept
+    void swap(Unique & other) noexcept
     { 
         using std::swap; // good: enable argument-dependent lookup
 
         swap(m_data, other.m_data); 
     }
 
-    [[nodiscard]] constexpr T * release() noexcept
+    [[nodiscard]] T * release() noexcept
     {
         return std::exchange(m_data, nullptr);
     }
 
-    constexpr void reset(T * ptr = nullptr) noexcept 
+    void reset(T * ptr = nullptr) noexcept 
     {
         delete std::exchange(m_data, ptr); // note: consider custom deleter
     }
 
 public:
 
-    [[nodiscard]] constexpr T *        get() const noexcept { return  m_data; }
-    [[nodiscard]] constexpr T * operator->() const noexcept { return  m_data; }
-    [[nodiscard]] constexpr T & operator* () const noexcept { return *m_data; }
+    [[nodiscard]] T & operator*() const noexcept { return *m_data; }
      
 private:
 
     T * m_data = nullptr;
 
-}; // template < typename T > class Unique_Ptr
+}; // template < typename T > class Unique
 
-template < typename T > constexpr void swap(Unique_Ptr < T > & lhs, Unique_Ptr < T > & rhs)
+template < typename T > void swap(Unique < T > & lhs, Unique < T > & rhs) noexcept
 {
     lhs.swap(rhs);
 }
 
-class B            {};
-class D : public B {};
-
 int main()
 {
-    Unique_Ptr < B > b_ptr(new B);
-    Unique_Ptr < D > d_ptr(new D);
+    Unique < int > unique_1(new int(42));
+    Unique < int > unique_2(new int(43));
 
-    b_ptr = std::move(d_ptr);
+    unique_2 = std::move(unique_1);
+
+    assert(*unique_2 == 42);
 
     return 0;
 }
