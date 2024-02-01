@@ -48,7 +48,7 @@ private:
 
 private:
 
-    T * m_data = nullptr;
+    T * m_data = nullptr; // note: note pointer but object in case of make_shared
 
 }; // template < typename T > class RCCB : public RCCB_base
 
