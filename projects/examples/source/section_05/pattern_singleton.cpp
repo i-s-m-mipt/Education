@@ -52,12 +52,8 @@ protected:
 
     Noncopyable() = default;
 
-protected:
-
     Noncopyable            (const Noncopyable &) = delete;
     Noncopyable & operator=(const Noncopyable &) = delete;
-
-protected:
 
     ~Noncopyable() = default; // note: non-polymorphic class
 
