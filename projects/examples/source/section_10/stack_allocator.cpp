@@ -7,8 +7,6 @@
 #include <memory>
 #include <string>
 
-#include <benchmark/benchmark.h>
-
 class Stack_Allocator // note: used with deallocations at end for blocks of different sizes
 {
 private:
@@ -89,60 +87,6 @@ private:
 
 }; // class Stack_Allocator
 
-void test_1(benchmark::State & state) // note: very fast
-{
-	const std::size_t kb = 1024;
-	const std::size_t mb = 1024 * 1024;
-	const std::size_t gb = 1024 * 1024 * 1024;
-
-	std::vector < void * > pointers(kb, nullptr);
-
-	benchmark::DoNotOptimize(pointers);
-
-	for (auto _ : state)
-	{
-		Stack_Allocator allocator(2 * gb);
-
-		for (std::size_t i = 0; i < kb; ++i)
-		{
-			pointers[i] = allocator.allocate(mb);
-		}
-
-		for (std::size_t i = 0; i < kb; ++i)
-		{
-			allocator.deallocate(pointers[std::size(pointers) - 1 - i]);
-		}
-	}
-}
-
-void test_2(benchmark::State & state) // note: very slow
-{
-	const std::size_t kb = 1024;
-	const std::size_t mb = 1024 * 1024;
-
-	std::vector < void * > pointers(kb, nullptr);
-
-	benchmark::DoNotOptimize(pointers);
-
-	const auto alignment = Stack_Allocator::default_alignment;
-
-	for (auto _ : state)
-	{
-		for (std::size_t i = 0; i < kb; ++i)
-		{
-			pointers[i] = ::operator new(mb, alignment);
-		}
-
-		for (std::size_t i = 0; i < kb; ++i)
-		{
-			::operator delete(pointers[std::size(pointers) - 1 - i], alignment);
-		}
-	}
-}
-
-BENCHMARK(test_1);
-BENCHMARK(test_2);
-
 int main(int argc, char ** argv) // note: arguments for benchmark
 {
 	Stack_Allocator allocator(1024);
@@ -163,10 +107,6 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 	auto ptr_5 = allocator.allocate( 8   ); std::cout << ptr_5 << ' '; allocator.print(); // note: F
 
 	// note: 000H AHBB | 000H EEEH | FFFF FFFF | ...
-
-	benchmark::Initialize(&argc, argv);
-
-	benchmark::RunSpecifiedBenchmarks();
 
 	return 0;
 }
