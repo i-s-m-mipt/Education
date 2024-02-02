@@ -1,0 +1,13 @@
+https://en.cppreference.com/w/ - reference
+https://www.boost.org/ - reference / libraries
+https://stackoverflow.com/ - discussions
+https://github.com/ - projects / libraries
+https://www.learncpp.com/ - tutorials
+https://www.cppstories.com/ - blog
+https://www.fluentcpp.com/ - blog
+https://www.modernescpp.com/ - blog
+https://www.vishalchovatiya.com/ - blog
+https://www.onlinegdb.com/ - compilers
+https://cppinsights.io/ - explorers
+https://roadmap.sh/ - overview
+https://e-maxx.ru/algo/ - algorithms
