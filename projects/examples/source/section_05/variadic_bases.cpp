@@ -1,14 +1,15 @@
 #include <iostream>
 
-class Color_v1 {}; // note: consider protected destructor and EBO
-class Label_v1 {}; // note: consider protected destructor and EBO
+struct Color_v1 { explicit Color_v1(char) {}; };
+struct Label_v1 { explicit Label_v1(char) {}; };
 
 template < typename ... Bases > 
 class Point_v1 : public Bases... // note: modern mixin with variadic base classes
 {
 public:
 
-    explicit Point_v1(double x, double y) : Bases()..., m_x(x), m_y(y)
+    template < typename ... Types > 
+    explicit Point_v1(double x, double y, Types ... args) : Bases(args)..., m_x(x), m_y(y)
     {
         std::cout << sizeof...(Bases) << std::endl;
     }
@@ -42,8 +43,8 @@ private:
 
 int main()
 {
-    Point_v1 < Color_v1, Label_v1 > p1_v1(1.0, 1.0);
-    Point_v1 < Color_v1           > p2_v1(2.0, 2.0);
+    Point_v1 < Color_v1, Label_v1 > p1_v1(1.0, 1.0, 'a', 'b');
+    Point_v1 < Color_v1           > p2_v1(2.0, 2.0, 'a');
     Point_v1 <                    > p3_v1(3.0, 3.0);
 
     Point_v2 < Color_v2, Label_v2 > p1_v2(1.0, 1.0);
