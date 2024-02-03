@@ -1,10 +1,10 @@
 #include <iostream>
 
-class Base // note: polymorphic base class
+class Base 
 {
 public:
 
-	virtual ~Base() {}
+	virtual ~Base() {} // note: polymorphic base class
 
 	virtual Base * get() { return this; }
 

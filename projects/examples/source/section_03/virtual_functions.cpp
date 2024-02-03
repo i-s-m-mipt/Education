@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-class Computer // note: polymorphic base class
+class Computer 
 {
 public:
 
@@ -10,7 +10,7 @@ public:
 //		print(); // bad: base version
 	}
 
-	virtual ~Computer()
+	virtual ~Computer() // note: polymorphic base class
 	{
 //		print(); // bad: base version
 	}
@@ -63,7 +63,7 @@ class Abstract_Base // note: interface class like in Java
 {
 public:
 
-	virtual ~Abstract_Base() = default; // note: polymorphic base class
+	virtual ~Abstract_Base() {}; // note: polymorphic base class
 
 public:
 

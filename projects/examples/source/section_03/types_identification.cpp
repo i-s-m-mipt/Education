@@ -4,11 +4,11 @@
 
 #include <boost/type_index.hpp>
 
-class Computer
+class Computer 
 {
 public:
 
-	virtual ~Computer() = default; // note: polymorphic base class
+	virtual ~Computer() {}; // note: polymorphic base class
 
 	virtual void run() const = 0;
 
