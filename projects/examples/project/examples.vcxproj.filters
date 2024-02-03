@@ -501,6 +501,9 @@
     <ClCompile Include="..\source\section_10\custom_shared_ptr.cpp">
       <Filter>source\section_10</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_07\empty_function.cpp">
+      <Filter>source\section_07</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
