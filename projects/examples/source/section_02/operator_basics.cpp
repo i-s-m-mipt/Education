@@ -13,8 +13,12 @@ int main()
 	[[maybe_unused]] auto law_1 = (!(a && b) == !a || !b);
 	[[maybe_unused]] auto law_2 = (!(a || b) == !a && !b);
 
+	std::cout << (a != b) << std::endl; // note: a xor b for booleans
+
 	auto x = 7;
 	auto y = 4;
+
+	std::cout << (!!x != !!y) << std::endl; // note: x xor y for non-booleans
 
 	std::cout << -x << std::endl;
 	std::cout << +x << std::endl;
