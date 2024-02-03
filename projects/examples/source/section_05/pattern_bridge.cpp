@@ -25,7 +25,7 @@ public:
 
 protected:
 
-    const BIOS & m_bios;
+    const BIOS & m_bios; // note: consider templates instead of hierarchy
 
 }; // class Computer 
 
