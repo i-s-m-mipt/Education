@@ -1,7 +1,7 @@
 https://en.cppreference.com/w/ - reference
-https://www.boost.org/ - reference / libraries
+https://www.boost.org/ - libraries
 https://stackoverflow.com/ - discussions
-https://github.com/ - projects / libraries
+https://github.com/ - projects
 https://www.learncpp.com/ - tutorials
 https://www.cppstories.com/ - blog
 https://www.fluentcpp.com/ - blog
