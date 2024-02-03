@@ -507,6 +507,9 @@
     <ClCompile Include="..\source\section_03\attorney_client.cpp">
       <Filter>source\section_03</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_03\covariant_types.cpp">
+      <Filter>source\section_03</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
