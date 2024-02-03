@@ -17,7 +17,7 @@ class Laptop : public Computer < Laptop >
 {
 public:
 
-	void run_implementation() const { std::cout << "Laptop\n"; }
+	void run_implementation() const { std::cout << "Laptop" << std::endl; }
 
 }; // class Laptop : public Computer < Laptop >
 

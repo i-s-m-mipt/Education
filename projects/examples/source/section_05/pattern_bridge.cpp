@@ -10,8 +10,8 @@ public:
 
 }; // class BIOS 
 
-struct Phoenix : public BIOS { void run() const override { std::cout << "Phoenix\n"; } };
-struct Microid : public BIOS { void run() const override { std::cout << "Microid\n"; } };
+struct Phoenix : public BIOS { void run() const override { std::cout << "Phoenix" << std::endl; } };
+struct Microid : public BIOS { void run() const override { std::cout << "Microid" << std::endl; } };
 
 class Computer 
 {

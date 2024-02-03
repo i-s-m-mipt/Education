@@ -10,9 +10,9 @@ public:
     
 }; // class Computer
 
-struct Mobile : public Computer { void run() const override { std::cout << "Mobile\n"; }; };
-struct Tablet : public Computer { void run() const override { std::cout << "Tablet\n"; }; }; 
-struct Laptop : public Computer { void run() const override { std::cout << "Laptop\n"; }; };
+struct Mobile : public Computer { void run() const override { std::cout << "Mobile" << std::endl; }; };
+struct Tablet : public Computer { void run() const override { std::cout << "Tablet" << std::endl; }; };
+struct Laptop : public Computer { void run() const override { std::cout << "Laptop" << std::endl; }; };
 
 template < typename T > Computer * create() // note: factory function, consider enumeration
 {

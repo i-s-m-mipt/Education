@@ -10,8 +10,8 @@ public:
 
 }; // class Computation
 
-struct AVX : public Computation { void compute() const override { std::cout << "AVX\n"; } };
-struct SSE : public Computation { void compute() const override { std::cout << "SSE\n"; } };
+struct AVX : public Computation { void compute() const override { std::cout << "AVX" << std::endl; } };
+struct SSE : public Computation { void compute() const override { std::cout << "SSE" << std::endl; } };
 
 class Computer
 {

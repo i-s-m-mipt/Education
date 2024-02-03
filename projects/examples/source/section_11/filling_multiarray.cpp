@@ -56,7 +56,7 @@ int main()
 		          std::vector < std::vector < int > >            (size_2,
 			                    std::vector < int >              (size_3, 0)));
 
-	std::cout << "std::vector < std::vector < std::vector < int > > >\n\n"; // note: very long with typeid
+	std::cout << "std::vector < std::vector < std::vector < int > > > " << std::endl << std::endl;
 
 	auto counter = 0;
 

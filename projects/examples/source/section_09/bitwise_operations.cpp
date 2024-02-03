@@ -128,7 +128,7 @@ int main()
 
         std::cout << 
              "ceil(" << bin(i) << ") = " << bin(bc) << ", " <<
-            "floor(" << bin(i) << ") = " << bin(bf) << '\n';
+            "floor(" << bin(i) << ") = " << bin(bf) << std::endl;
     }
 
     return 0;

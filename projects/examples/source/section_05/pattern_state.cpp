@@ -8,9 +8,9 @@ public:
 
     virtual ~State() = default; // note: polymorphic base class
 
-    virtual void stop([[maybe_unused]] Computer * c) const { std::cout << "stop already\n"; }
-    virtual void slow([[maybe_unused]] Computer * c) const { std::cout << "slow already\n"; }
-    virtual void fast([[maybe_unused]] Computer * c) const { std::cout << "fast already\n"; }
+    virtual void stop([[maybe_unused]] Computer * c) const { std::cout << "stop already" << std::endl; }
+    virtual void slow([[maybe_unused]] Computer * c) const { std::cout << "slow already" << std::endl; }
+    virtual void fast([[maybe_unused]] Computer * c) const { std::cout << "fast already" << std::endl; }
 
 }; // class State
 
