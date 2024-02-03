@@ -75,6 +75,11 @@ int main()
     auto m = 0x123; assert((m << 1) == 0x246); // good: bit shift as multiplication
     auto n = -4000; assert((n >> 2) == -1000); // good: bit shift as multiplication
 
+    auto a = 7;
+    auto b = 4;
+
+    a ^= b ^= a ^= b; // note: Google interview, solution 2
+
     static_assert(sizeof(std::uint64_t) == 8); // note: 8 byte(s) exactly
 
     static_assert(std::is_same_v < int, std::int32_t > );
