@@ -12,7 +12,7 @@ public:
 	
 }; // class Computer
 
-class Adapter : public Computer
+class Adapter : public Computer // note: consider private Device
 {
 public:
 
