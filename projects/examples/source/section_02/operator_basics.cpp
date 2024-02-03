@@ -29,6 +29,8 @@ int main()
 	std::cout << x / y << std::endl; 
 	std::cout << x % y << std::endl;
 
+	x = x + y - (y = x); // note: Google interview, solution 1
+
 	std::cout << 7   / 4   << std::endl; // note: integer  division
 	std::cout << 7.0 / 4.0 << std::endl; // note: floating division
 
