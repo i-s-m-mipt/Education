@@ -9,7 +9,7 @@ public:
 	{
 		if (m_den == 0) // note: primitive error handling
 		{
-			std::cout << "invalid denominator" << std::endl;
+			std::cerr << "invalid denominator" << std::endl;
 		}
 
 		if (m_den <  0) // note: numerator keeps ratio sign
@@ -38,17 +38,8 @@ private:
 
 public:
 
-	[[nodiscard]] auto numerator() const
-	{
-		return m_num;
-	}
-
-	[[nodiscard]] auto denominator() const
-	{
-		return m_den;
-	}
-
-public:
+	[[nodiscard]] auto num() const { return m_num; }
+	[[nodiscard]] auto den() const { return m_den; }
 
 	void print() const // note: function instead of output operator
 	{
@@ -184,6 +175,8 @@ int main()
 	Ratio r4(-5, 10);
 
 	std::cout << static_cast < double > (r4) << std::endl;
+
+//	std::vector < int > v = 42; // error: no non-explicit constructor
 
 	(r4 += 10).print();
 	(r4 -= r1).print();
