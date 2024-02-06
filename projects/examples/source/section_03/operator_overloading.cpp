@@ -83,14 +83,14 @@ public:
 
 public:
 
-	auto & operator++()
+	auto & operator++() // note: ++++r is allowed
 	{
 		m_num += m_den;
 
 		return *this;
 	}
 
-	auto & operator--()
+	auto & operator--() // note: ----r is allowed
 	{
 		m_num -= m_den;
 
