@@ -480,9 +480,6 @@
     <ClCompile Include="..\source\section_08\google_unit_tests.cpp">
       <Filter>source\section_08</Filter>
     </ClCompile>
-    <ClCompile Include="google_logging.cpp">
-      <Filter>source\section_08</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\section_11\filling_multiarray.cpp">
       <Filter>source\section_11</Filter>
     </ClCompile>
@@ -512,6 +509,9 @@
     </ClCompile>
     <ClCompile Include="..\source\section_03\paired_operators.cpp">
       <Filter>source\section_03</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_08\google_logging.cpp">
+      <Filter>source\section_08</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
