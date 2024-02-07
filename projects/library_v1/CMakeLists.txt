@@ -12,7 +12,7 @@ find_package(Boost) # sudo apt-get install libboost-all-dev
 
 include_directories(${Boost_INCLUDE_DIRS})
 
-add_library(library_v1 source/library.cpp)
+add_library(library_v1 STATIC source/library.cpp)
 
 set_target_properties(library_v1 PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
 
