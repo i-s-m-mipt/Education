@@ -12,7 +12,7 @@ int main()
 {
 	std::cout << library_v1::f(42) << std::endl;
 
-	const auto path = "../../library_v2/output/library_v2.dll"s;
+	const auto path = "../../library_v2/output/liblibrary_v2.so"s;
 
 	try 
 	{
