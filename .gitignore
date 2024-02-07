@@ -339,23 +339,17 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
+.vscode/
+
+output/
 service/
-/__pycache__
+libraries/
+
 *.exe
 *.dll
-*.exp
 *.lib
 *.csv
 *.data
-!assets.data
-*.ipynb_checkpoints
-clients.json
-*.db
-*.idb
-
-solutions/
-output/
-libraries/
 
 settings.txt
 readme.pdf
