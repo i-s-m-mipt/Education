@@ -8,7 +8,7 @@ int main()
 	std::cout <<    !a << ' ' << (a || b) << ' ' << (a  && b) << std::endl;
 	std::cout << not a << ' ' << (a or b) << ' ' << (a and b) << std::endl;
 
-	std::cout << (true || a && b) << std::endl; // note: short-circuit evaluation
+	std::cout << (true || (a && b)) << std::endl; // note: short-circuit evaluation
 
 	[[maybe_unused]] auto law_1 = (!(a && b) == !a || !b);
 	[[maybe_unused]] auto law_2 = (!(a || b) == !a && !b);
@@ -29,7 +29,7 @@ int main()
 	std::cout << x / y << std::endl; 
 	std::cout << x % y << std::endl;
 
-	x = x + y - (y = x); // note: Google interview, solution 1
+	x = x + y; y = x - y; x = x - y; // note: Google interview, solution 1
 
 	std::cout << 7   / 4   << std::endl; // note: integer  division
 	std::cout << 7.0 / 4.0 << std::endl; // note: floating division
@@ -56,10 +56,10 @@ int main()
 	std::cout << (x == y) << std::endl;
 	std::cout << (x != y) << std::endl;
 
-	std::cout << x++ << ' ' << x << std::endl; // good: x++ instead of x += 1
-	std::cout << x-- << ' ' << x << std::endl; // good: x-- instead of x -= 1
-	std::cout << ++x << ' ' << x << std::endl; // good: ++x instead of x += 1
-	std::cout << --x << ' ' << x << std::endl; // good: --x instead of x -= 1
+	std::cout << x++ << std::endl; // good: x++ instead of x += 1
+	std::cout << x-- << std::endl; // good: x-- instead of x -= 1
+	std::cout << ++x << std::endl; // good: ++x instead of x += 1
+	std::cout << --x << std::endl; // good: --x instead of x -= 1
 
 //	x+++++y; // error: maximum piece principle, write as (x++)+(++y);
 
