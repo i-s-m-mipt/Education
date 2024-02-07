@@ -19,5 +19,5 @@ C c; // note: global variable
 
 int main() 
 {
-	return 0; // note: main has only return 0; statement
+//	return 0; // note: main has only return 0; statement
 }
