@@ -137,7 +137,7 @@ int main()
 
 	Stack_v2 new_stack = deque_stack_v2;
 
-	Pair p{ 1.0, 100 }; // note: generated deduction guide for aggregate
+	[[maybe_unused]] Pair p{ 1.0, 100 }; // note: generated deduction guide for aggregate
 
 	Container c(10, 1.0); // note: generated deduction guide for aggregate
 
