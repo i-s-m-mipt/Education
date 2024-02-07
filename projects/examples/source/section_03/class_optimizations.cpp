@@ -21,12 +21,12 @@ public:
 
 	Container & operator=(const Container &)
 	{
-		std::cout << "copy assignment operator" << std::endl;
+		std::cout << "copy assignment operator" << std::endl; return *this;
 	}
 
 	Container & operator=(Container &&) noexcept // note: ignore noexcept here
 	{
-		std::cout << "move assignment operator" << std::endl;
+		std::cout << "move assignment operator" << std::endl; return *this;
 	}
 
 }; // class Container
@@ -45,9 +45,9 @@ public:
 
 class E {}; // note: empty class, only functions for example
 
-class X { char c;                             E e;      };
-class Y { char c; [[msvc::no_unique_address]] E e;      };
-class Z { char c; [[msvc::no_unique_address]] E e1, e2; };
+class X { char c;                       E e;      };
+class Y { char c; [[no_unique_address]] E e;      }; // note: [[msvc::no_unique_address]]
+class Z { char c; [[no_unique_address]] E e1, e2; }; // note: [[msvc::no_unique_address]]
 
 class A {}; // note: empty base class optimization
 
@@ -56,8 +56,8 @@ class C : public B {};
 
 int main()
 {
-	auto container_1 = f(); // note: guaranteed copy elision
-	auto container_2 = g(); // note: guaranteed copy elision
+	[[maybe_unused]] auto container_1 = f(); // note: guaranteed copy elision
+	[[maybe_unused]] auto container_2 = g(); // note: guaranteed copy elision
 
 	std::cout << "size of E: " << sizeof(E) << std::endl; // note: non-zero size
 
