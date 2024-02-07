@@ -7,9 +7,9 @@ int main()
 
 	int a[size]{}; // good: zero initialized array
 
-	int b[size]{ 1, 2, 3 }; // note: elements: { 1, 2, 3, 0, 0, 0, 0, 0, 0, 0 }
+	[[maybe_unused]] int b[size]{ 1, 2, 3 }; // note: elements: { 1, 2, 3, 0, 0, 0, 0, 0, 0, 0 }
 
-	int c[]{ 1, 2, 3 }; // note: elements: { 1, 2, 3 }, size deduction -> 3
+	[[maybe_unused]] int c[]{ 1, 2, 3 }; // note: elements: { 1, 2, 3 }, size deduction -> 3
 
 //	int d[2]{ 1, 2, 3 }; // error: too many initializers
 
