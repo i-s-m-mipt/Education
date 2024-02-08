@@ -136,7 +136,7 @@ endforeach()
 
 add_executable(libraries_test ${section_07}libraries_test.cpp)
 target_include_directories(libraries_test PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
-target_link_libraries(libraries_test PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/output/liblibrary_v1.a)
+target_link_libraries(libraries_test PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/library_v1/liblibrary_v1.a)
 target_link_libraries(libraries_test PRIVATE ${Boost_LIBRARIES})
 set_target_properties(libraries_test PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
 target_compile_options(libraries_test PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
