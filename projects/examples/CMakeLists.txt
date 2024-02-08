@@ -166,3 +166,95 @@ add_executable(custom_logger ${section_08}logger_examples.cpp ${section_08}custo
 set_target_properties(custom_logger PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
 target_compile_options(custom_logger PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
 target_link_libraries(custom_logger PRIVATE ${Boost_LIBRARIES})
+
+add_executable(google_benchmarks ${section_08}google_benchmarks.cpp)
+target_include_directories(google_benchmarks PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/include)
+target_link_libraries(google_benchmarks PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/build/src/libbenchmark.a)
+set_target_properties(google_benchmarks PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+target_compile_options(google_benchmarks PRIVATE -Wall -pedantic -O3) # g++ --help=warnings
+target_compile_definitions(google_benchmarks PRIVATE "NDEBUG")
+
+set(sources_09
+    advanced_constants
+    advanced_literals
+    bitwise_operations
+    calendar_time_zones
+    chrono_management
+    floating_point_types)
+
+set(section_09 source/section_09/)
+
+foreach(entry IN LISTS sources_09)
+    add_executable(${entry} ${section_09}${entry}.cpp)
+    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
+endforeach()
+
+add_executable(random_generation ${section_09}random_generation.cpp)
+set_target_properties(random_generation PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+target_compile_options(random_generation PRIVATE -Wall -pedantic -O3) # g++ --help=warnings
+
+set(sources_10
+    arena_allocator
+    bad_allocations
+    chain_allocator
+    custom_shared_ptr
+    custom_unique_ptr
+    data_alignment
+    iterator_basics
+    iterator_facade
+    memory_resource
+    pattern_facade
+    pattern_iterator
+    placement_new
+    shared_from_this
+    smart_pointers
+    stack_allocator
+    standard_allocator)
+
+foreach(entry IN LISTS sources_10)
+    add_executable(${entry} source/section_10/${entry}.cpp)
+    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
+endforeach()
+
+set(sources_11
+    circular_buffer
+    container_adaptors
+    container_basics
+    container_lists
+    container_trees
+    custom_hash_equal
+    filling_multiarray
+    hash_functions
+    hash_table_basics
+    multidimensionals
+    multiple_interfaces
+    pattern_flyweight
+    vector_bool_proxy)
+
+foreach(entry IN LISTS sources_11)
+    add_executable(${entry} source/section_11/${entry}.cpp)
+    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
+endforeach()
+
+set(sources_12
+    advanced_visitors
+    algorithms_on_graphs
+    algorithms_on_ranges
+    function_objects
+    function_pointers
+    heterogeneous_vector
+    insert_iterators
+    iostream_iterators
+    lambda_expressions
+    pattern_command
+    pattern_visitor
+    standard_algorithms)
+
+foreach(entry IN LISTS sources_12)
+    add_executable(${entry} source/section_12/${entry}.cpp)
+    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
+endforeach()
