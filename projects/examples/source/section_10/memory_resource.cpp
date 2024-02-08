@@ -7,7 +7,7 @@
 
 int main()
 {
-    std::array < char, 64 > buffer; // note: external arena stack buffer for pool
+    std::array < char, 64 > buffer{}; // note: external arena stack buffer for pool
 
     std::ranges::fill_n(std::begin(buffer), std::size(buffer), '_');
 
