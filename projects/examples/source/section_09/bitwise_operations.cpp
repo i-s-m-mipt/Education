@@ -55,10 +55,10 @@ int main()
         std::dec << 42 << std::endl << // note: outputs 42
         std::hex << 42 << std::endl;   // note: outputs 0x2a
 
-    [[maybe_unused]] auto b = 0b101010; // note: binary
-    [[maybe_unused]] auto o = 052;      // note: octal
-    [[maybe_unused]] auto d = 42;       // note: decimal
-    [[maybe_unused]] auto x = 0x2a;     // note: hexadecimal
+    [[maybe_unused]] auto bin = 0b101010; // note: binary
+    [[maybe_unused]] auto oct = 052;      // note: octal
+    [[maybe_unused]] auto dec = 42;       // note: decimal
+    [[maybe_unused]] auto hex = 0x2a;     // note: hexadecimal
 
     auto data = 0x1234;
     auto mask = 0x00f0;
@@ -124,7 +124,7 @@ int main()
 
     assert(distance_in_bytes(&array[0], &array[size - 1]) == 36);
 
-    using bin = std::bitset < 8 > ;
+    using binary = std::bitset < 8 > ;
 
     for (unsigned int i = 0; i < 10; ++i)
     {
@@ -132,8 +132,8 @@ int main()
         auto bf = std::bit_floor(i);
 
         std::cout << 
-             "ceil(" << bin(i) << ") = " << bin(bc) << ", " <<
-            "floor(" << bin(i) << ") = " << bin(bf) << std::endl;
+             "ceil(" << binary(i) << ") = " << binary(bc) << ", " <<
+            "floor(" << binary(i) << ") = " << binary(bf) << std::endl;
     }
 
     return 0;
