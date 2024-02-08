@@ -55,7 +55,7 @@ void test_3(benchmark::State & state)
             {
                 if (s += ++x; x == 100)
                 {
-                    throw std::exception("exit"); // note: slow exit
+                    throw std::runtime_error("exit"); // note: slow exit
                 }
             }
         }
