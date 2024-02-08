@@ -4,7 +4,7 @@
 
 #include "project_header.hpp" // note: user defined header file
 
-import math; // note: importing module
+//import math; // note: importing module
 
 /*
 void f() // error: multiple defined symbol
@@ -53,11 +53,11 @@ int main()
 
 //  ============================================================================
 
-	hello_module(); hello_submodule();
+//	hello_module(); hello_submodule();
 
-	std::cout << call(math::f, 0.0) << std::endl; // note: no problems here
-	std::cout << call(math::g, 0.0) << std::endl; // note: no problems here
-	std::cout << call(math::h, 0.0) << std::endl; // note: no problems here
+//	std::cout << call(math::f, 0.0) << std::endl; // note: no problems here
+//	std::cout << call(math::g, 0.0) << std::endl; // note: no problems here
+//	std::cout << call(math::h, 0.0) << std::endl; // note: no problems here
 
 	return EXIT_SUCCESS;
 }
