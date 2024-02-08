@@ -3,14 +3,14 @@
 
 #pragma once // good: new style non-standard header file guard
 
-#pragma warning(push) // note: disable warnings for one header file
+//#pragma warning(push) // note: disable warnings for one header file
 
-#pragma warning(disable: 4715) 
-#pragma warning(disable: 4459)
+//#pragma warning(disable: 4715) 
+//#pragma warning(disable: 4459)
 
 #include <boost/asio.hpp> // note: external library header file
 
-#pragma warning(pop)
+//#pragma warning(pop)
 
 // =============================================================================
 
