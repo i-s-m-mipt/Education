@@ -140,3 +140,7 @@ target_link_libraries(libraries_test PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/o
 target_link_libraries(libraries_test PRIVATE ${Boost_LIBRARIES})
 set_target_properties(libraries_test PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
 target_compile_options(libraries_test PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
+
+add_executable(project ${section_07}project_main.cpp ${section_07}project_source.cpp)
+set_target_properties(project PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+target_compile_options(project PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
