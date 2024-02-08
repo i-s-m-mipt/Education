@@ -38,7 +38,7 @@ template < typename T, auto N, typename C > auto make_array(const C & c)
 {
 	using array_t = boost::multi_array < T, N > ;
 
-	std::vector shape(N, array_t::index(0));
+	std::vector shape(N, typename array_t::index(0));
 
 	fill_shape < N > (c, std::begin(shape)); array_t array(shape); // note: 3x4x5
 	fill_array < N > (c, std::begin(array));
