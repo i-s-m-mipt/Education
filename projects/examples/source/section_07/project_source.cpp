@@ -14,7 +14,7 @@ int global_x1; // note: zero value initialization, external linkage
 
 namespace // note: anonymous namespace
 {
-	int global_x2; // note: internal linkage
+	[[maybe_unused]] int global_x2; // note: internal linkage
 
 } // namespace
 
