@@ -129,7 +129,7 @@ int main()
 
 	[[maybe_unused]] auto array_value = array[middle]; // good: O(1) complexity, fast on stack
 
-	auto array_from_static_array = std::to_array(static_array);
+	[[maybe_unused]] auto array_from_static_array = std::to_array(static_array);
 
 	return 0;
 }
