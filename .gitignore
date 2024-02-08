@@ -341,9 +341,10 @@ healthchecksdb
 
 .vscode/
 
+general/
+libraries/
 output/
 service/
-libraries/
 
 *.exe
 *.dll
