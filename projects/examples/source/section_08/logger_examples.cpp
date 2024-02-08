@@ -6,13 +6,13 @@
 
 using Logger = solution::shared::Logger;
 
-class demo_exception : public std::exception
+class demo_exception : public std::runtime_error
 {
 public:
 
-	explicit demo_exception(const std::string & message) noexcept : std::exception(message.c_str()) {}
+	explicit demo_exception(const std::string & message) noexcept : std::runtime_error(message.c_str()) {}
 
-}; // class demo_exception : public std::exception
+}; // class demo_exception : public std::runtime_error
 
 void h()
 {
