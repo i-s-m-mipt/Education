@@ -41,7 +41,7 @@ int main()
 {
 	const std::size_t size = 3;
 
-	int array_2D_v1[size][size]{}; // note: built-in static 2D array
+	[[maybe_unused]] int array_2D_v1[size][size]{}; // note: built-in static 2D array
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
