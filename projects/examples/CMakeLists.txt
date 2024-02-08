@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(x32 -m32)
 set(x64 -m64)
 
-find_package(Boost 1.84 REQUIRED filesystem)
+find_package(Boost 1.84 REQUIRED COMPONENTS filesystem log system)
 
 include_directories(${Boost_INCLUDE_DIRS})
 
@@ -142,5 +142,27 @@ set_target_properties(libraries_test PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS 
 target_compile_options(libraries_test PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
 
 add_executable(project ${section_07}project_main.cpp ${section_07}project_source.cpp)
+target_precompile_headers(project PRIVATE ${section_07}precompiled.hpp)
 set_target_properties(project PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
 target_compile_options(project PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
+
+set(sources_08
+    errors_handling
+    exception_basics
+    optional_basics
+    stack_interface
+    union_basics
+    variant_basics)
+
+set(section_08 source/section_08/)
+
+foreach(entry IN LISTS sources_08)
+    add_executable(${entry} ${section_08}${entry}.cpp)
+    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
+endforeach()
+
+add_executable(custom_logger ${section_08}logger_examples.cpp ${section_08}custom_logger.cpp)
+set_target_properties(custom_logger PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+target_compile_options(custom_logger PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
+target_link_libraries(custom_logger PRIVATE ${Boost_LIBRARIES})
