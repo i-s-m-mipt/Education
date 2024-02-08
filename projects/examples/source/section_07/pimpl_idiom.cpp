@@ -17,7 +17,7 @@ public:
 
     Computer & operator=(Computer && other) noexcept // note: ignore noexcept here
     {
-        m_pimpl = other.m_pimpl; other.m_pimpl = nullptr;
+        m_pimpl = other.m_pimpl; other.m_pimpl = nullptr; return *this;
     }
 
     ~Computer();
