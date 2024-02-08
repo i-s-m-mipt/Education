@@ -12,7 +12,10 @@ public:
 
 	explicit Error(int error_code) : m_error_code(error_code) {}
 
-	[[nodiscard]] const char * what() const override { return "error"; }
+	[[nodiscard]] const char * what() const noexcept override // note: skip noexcept in MSVC
+	{ 
+		return "error"; 
+	}
 
 private:
 
