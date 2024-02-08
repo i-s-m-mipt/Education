@@ -43,7 +43,7 @@ int main()
     Computer tablet = Tablet();
     Computer laptop = Laptop();
 
-    Visitor visitor(Tester{}); // note: Visitor < Tester >
+    Visitor < Tester > visitor(Tester{}); // note: just Visitor in MSVC
 
     try
     {
@@ -58,7 +58,9 @@ int main()
 
     assert(std::visit([](auto && x){ return x; }, std::variant < int > (42)) == 42);
 
-    Visitor test([](auto && x){ return x; }); // note: Visitor < lambda[](int)->int >
+    auto lambda = [](auto && x){ return x; };
+
+    Visitor < decltype(lambda) > test(lambda); // note: just Visitor in MSVC
 
     assert(std::visit(test, std::variant < int > (42)) == 42);
 
