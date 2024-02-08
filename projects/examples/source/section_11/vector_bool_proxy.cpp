@@ -31,7 +31,7 @@ int main()
 
 	vector[middle] = true;
 
-	auto value = vector[middle]; // note: auto -> std::vector < bool > ::reference
+	[[maybe_unused]] auto value = vector[middle]; // note: auto -> std::vector < bool > ::reference
 	
 	return 0;
 }
