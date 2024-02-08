@@ -3,11 +3,13 @@
 #include <type_traits>
 #include <utility>
 
-class RCCB_base // note: non-template/polymorphic/copyable class, no custom deleters support
+class RCCB_base // note: non-template/copyable class, no custom deleters support
 {
 protected:
 
     RCCB_base() noexcept = default; // note: available from RCCB only
+
+    virtual ~RCCB_base() noexcept = default; // note: really polymorphic?
 
 public:
 
