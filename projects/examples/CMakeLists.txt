@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(x32 -m32)
 set(x64 -m64)
 
-find_package(Boost) # sudo apt-get install libboost-all-dev
+find_package(Boost 1.84 REQUIRED filesystem)
 
 include_directories(${Boost_INCLUDE_DIRS})
 
@@ -112,3 +112,31 @@ foreach(entry IN LISTS sources_05)
     set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
 endforeach()
+
+set(sources_06
+    types_inference)
+
+foreach(entry IN LISTS sources_06)
+    add_executable(${entry} source/section_06/${entry}.cpp)
+    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
+endforeach()
+
+set(sources_07
+    empty_function
+    pimpl_idiom)
+
+set(section_07 source/section_07/)
+
+foreach(entry IN LISTS sources_07)
+    add_executable(${entry} ${section_07}${entry}.cpp)
+    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
+endforeach()
+
+add_executable(libraries_test ${section_07}libraries_test.cpp)
+target_include_directories(libraries_test PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
+target_link_libraries(libraries_test PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/output/liblibrary_v1.a)
+target_link_libraries(libraries_test PRIVATE ${Boost_LIBRARIES})
+set_target_properties(libraries_test PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+target_compile_options(libraries_test PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
