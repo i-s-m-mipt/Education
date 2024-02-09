@@ -1,11 +1,12 @@
 #include <iostream>
 #include <vector>
 
-#include <boost/numeric/ublas/fwd.hpp>
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/vector_proxy.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
+
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/
 
 int main(int argc, char const *argv[])
 {
@@ -26,13 +27,17 @@ int main(int argc, char const *argv[])
     unit_vector_t unit_vector (n, 2);                       // Единичный вектор (v_i = 1, v_{0..n}\i = 0)
     std::cout << unit_vector << std::endl;
 
-    zero_vector_t zero_vector(n);                           // Нулевой вектор (same as {0, 0, 0, 0})
-    scalar_vector_t scalar_vector(n);                       // Числовой вектор (same as {1, 1, 1, 1})
+    zero_vector_t zero_vector(n);                           // Нулевой вектор (the same as {0, 0, 0, 0})
+    scalar_vector_t scalar_vector(n);                       // Числовой вектор (the same as {1, 1, 1, 1})
 
     vector(3) = 3;                                          // Возвращает ссылку на i-й элемент:
-                                                            // "With some compilers, this notation will be faster than [i]."
-
-    std::cout << 1.5 * vector - 4 * unit_vector + 0.5 * scalar_vector << '\n' << std::endl;
+                                                            //   "With some compilers, this
+                                                            //    notation will be faster than [i]."
+    std::cout <<                                           
+          1.5 * vector                                      // Мат. операции со скалярами
+        -   4 * unit_vector
+        + 0.5 * scalar_vector
+    << std::endl;
 
 
     /* Векторные посредники (Vector Proxies) */
@@ -43,14 +48,13 @@ int main(int argc, char const *argv[])
     using        slice_t = boost::numeric::ublas::slice;
     using                  boost::numeric::ublas::project;
         
-    vector_range_t vector_range(vector, range_t(0, 2));     // Кусок вектора из диапазона индексов range
-    std::cout << vector_range << std::endl;
+    vector_range_t vector_range(vector, range_t(0, 2));     // Диапазон вектора, задаётся range(start, stop)
+    std::cout << vector_range << "\nthe same as subrange:\n"
+    << subrange(vector, 0, 2) << std::endl;                 // Эквивалентный способ с помощью прототипа subrange
 
-    vector_slice_t vector_slice (vector, slice_t(1, 2, 2)); // Срез вектора (python-like): slice(start, step, count)
-    std::cout << vector_slice                
-    << "the same as call project(vector, slice):"
-    << project(vector, slice_t(1, 2, 2))                    // Эквивалентный способ получить срез
-    << std::endl;
+    vector_slice_t vector_slice (vector, slice_t(1, 2, 2)); // Срез вектора, задаётся slice(start, step, count)
+    std::cout << vector_slice << "\nthe same as subslice:\n"
+    << subslice(vector, 1, 2, 2) << std::endl;              // Эквивалентный способ с помощью прототипа subslice
 
 
     /* Матрицы */
