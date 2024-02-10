@@ -8,9 +8,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(x32 -m32)
 set(x64 -m64)
 
-find_package(Boost 1.84 REQUIRED COMPONENTS filesystem log system)
+find_package(Boost   1.84 REQUIRED COMPONENTS filesystem log python system)
+find_package(Python3 3.11 REQUIRED COMPONENTS Interpreter Development)
 
-include_directories(${Boost_INCLUDE_DIRS})
+include_directories(  ${Boost_INCLUDE_DIRS})
+include_directories(${Python3_INCLUDE_DIRS})
 
 set(sources_01 
     minimal_program
@@ -268,3 +270,13 @@ foreach(entry IN LISTS sources_16)
     set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
 endforeach()
+
+set(section_18 source/section_18/)
+
+add_executable(python_caller ${section_18}python_caller.cpp ${section_18}python_wrapper.cpp)
+
+target_link_libraries(python_caller PRIVATE   ${Boost_LIBRARIES})
+target_link_libraries(python_caller PRIVATE ${Python3_LIBRARIES})
+
+set_target_properties(python_caller PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+target_compile_options(python_caller PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
