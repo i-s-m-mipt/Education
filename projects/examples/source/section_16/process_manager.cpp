@@ -15,7 +15,7 @@ int main()
 
 	std::cout << "Waiting   handler ... " << std::endl;
 
-	std::this_thread::sleep_for(5s); // note: some actions locally
+	std::this_thread::sleep_for(5s); // note: some local actions
 
 	std::cout << "Verifying handler ... " << std::endl;
 
