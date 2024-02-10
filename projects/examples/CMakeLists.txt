@@ -258,3 +258,13 @@ foreach(entry IN LISTS sources_12)
     set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
 endforeach()
+
+set(sources_16
+    process_handler
+    process_manager)
+
+foreach(entry IN LISTS sources_16)
+    add_executable(${entry} source/section_16/${entry}.cpp)
+    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
+endforeach()
