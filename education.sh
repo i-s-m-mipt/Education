@@ -19,3 +19,4 @@ mkdir -p output
 cd output
 cmake ..
 cmake --build .
+cp ../source/section_18/python_script.py .
