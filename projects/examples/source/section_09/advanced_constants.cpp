@@ -12,14 +12,14 @@ void f(Color c)
 {
 	switch (c) // good: enumerators provide readability
 	{
-	case Color::R: { std::cout << "R"; break; }
-	case Color::G: { std::cout << "G"; break; }
-	case Color::B: { std::cout << "B"; break; }
+		case Color::R: { std::cout << "R"; break; }
+		case Color::G: { std::cout << "G"; break; }
+		case Color::B: { std::cout << "B"; break; }
 
-	[[unlikely]] default:
-	{
-		std::cout << "default"; break;
-	}
+		[[unlikely]] default:
+		{
+			std::cout << "default"; break;
+		}
 	}
 
 	std::cout << std::endl;
