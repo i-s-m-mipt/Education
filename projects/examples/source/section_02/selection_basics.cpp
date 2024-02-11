@@ -30,28 +30,26 @@ int main()
 
     switch (std::cin >> x; x)
     {
-    [[likely]] case 0: // good: optimally generated machine code
-    [[likely]] case 1:
-    [[likely]] case 2:
-    {
-        std::cout << "path 1" << std::endl;
-        [[fallthrough]]; // good: suppressed warning, clear intentions
-    }
-    case 3:
-    {
-        std::cout << "path 2" << std::endl;
-        break;
-    }
-    [[unlikely]] case 4: // good: optimally generated machine code
-    {
-        std::cout << "path 3" << std::endl;
-        break;
-    }
-    default: // good: secure code
-    {
-        std::cout << "path 4" << std::endl;
-        break;
-    }
+        [[likely]] case 0: // good: optimally generated machine code
+        [[likely]] case 1:
+        [[likely]] case 2:
+        {
+            std::cout << "path 1" << std::endl;
+
+            [[fallthrough]]; // good: suppressed warning, clear intentions
+        }
+        case 3:
+        {
+            std::cout << "path 2" << std::endl; break;
+        }
+        [[unlikely]] case 4: // good: optimally generated machine code
+        {
+            std::cout << "path 3" << std::endl; break;
+        }
+        default: // good: secure code
+        {
+            std::cout << "path 4" << std::endl; break;
+        }
     }
 
     return 0;
