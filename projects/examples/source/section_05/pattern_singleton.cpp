@@ -28,7 +28,7 @@ public:
 
 private:
 
-    int m_data = 0;
+    int m_data = 42;
 
 }; // class Singleton 
 
@@ -42,7 +42,7 @@ public:
 
 private:
 
-    static inline int m_data = 0; // note: shared data for all instances
+    static inline int m_data = 42; // note: shared data for all instances
 
 }; // class Monostate
 
@@ -67,7 +67,7 @@ public:
 
 private:
 
-    int m_data = 0;
+    int m_data = 42;
 
 }; // class Unique : Noncopyable
 
@@ -75,23 +75,23 @@ int main()
 {
     auto & singleton = Singleton::get_instance(); // note: single instance
 
-    std::cout << singleton.data() << std::endl; // note: outputs 0
+    std::cout << singleton.data() << std::endl; // note: outputs 42
 
     Monostate monostate_1; // note: allowed multiple instances creation
     Monostate monostate_2; 
     Monostate monostate_3; 
 
-    monostate_3.update(42); // note: shared data for all instances 
+    monostate_3.update(43); // note: shared data for all instances 
 
-    std::cout << monostate_1.data() << std::endl; // note: outputs 42
-    std::cout << monostate_2.data() << std::endl; // note: outputs 42
-    std::cout << monostate_3.data() << std::endl; // note: outputs 42
+    std::cout << monostate_1.data() << std::endl; // note: outputs 43
+    std::cout << monostate_2.data() << std::endl; // note: outputs 43
+    std::cout << monostate_3.data() << std::endl; // note: outputs 43
 
     Unique unique_1;
 
 //  Unique unique_2 = unique_1; // error: noncopyable type
 
-    std::cout << unique_1.data() << std::endl; // note: outputs 0
+    std::cout << unique_1.data() << std::endl; // note: outputs 42
 
     return 0;
 }
