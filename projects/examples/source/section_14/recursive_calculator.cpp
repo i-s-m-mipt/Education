@@ -96,6 +96,8 @@ public:
 		}
 	}
 
+private:
+
 	[[nodiscard]] double statement(Stream & stream)
 	{
 		auto token = stream.get();
