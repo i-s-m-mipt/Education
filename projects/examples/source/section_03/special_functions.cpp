@@ -120,10 +120,7 @@ public:
 	{
 		std::cout << "destructor" << std::endl;
 
-		if (m_data)
-		{
-			delete[] m_data;
-		}
+		if (m_data) delete[] m_data;
 	}
 
 private:
