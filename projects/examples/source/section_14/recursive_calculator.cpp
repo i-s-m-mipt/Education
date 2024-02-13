@@ -1,19 +1,21 @@
 #include <cctype>
 #include <exception>
+#include <iostream>
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <unordered_map>
 #include <variant>
 
 class Stream
 {
 public:
 
-	using Token = std::variant < std::monostate, char, double, std::string > ;
+	using Token = std::variant < char, double, std::string > ;
 
 public:
 
-	explicit Stream(const std::string & data) noexcept : m_is_full(false), m_sin(data + semicolon) {}
+	explicit Stream(const std::string & data) noexcept : m_is_full(false), m_sin(data + ';') {}
 
 public:
 
@@ -21,7 +23,7 @@ public:
 	{
 		char c{}; m_sin >> c;
 
-		if (c != semicolon)
+		if (c != ';')
 		{
 			m_sin.putback(c); return false;
 		}
@@ -36,8 +38,8 @@ public:
 		
 		switch (c)
 		{
-			case '=': case '!': case '(': case ')':
-			case '+': case '-': case '*': case '/': case semicolon:
+			case '+': case '-': case '*': case '/': 
+			case '(': case ')': case ';':
 				return Token(c);
 			case '.':
 			case '0': case '1': case '2': case '3': case '4':
@@ -55,13 +57,14 @@ public:
 				{
 					while (m_sin.get(c) && (std::isalpha(c) || std::isdigit(c))) string += c;
 
-					if (std::isspace(c)) 
+					if (!std::isspace(c)) 
 					{
-						m_sin.putback(c); return Token(string);
+						m_sin.putback(c); 
 					}
-					else throw std::runtime_error("invalid input");
+
+					return Token(string);
 				}
-				else throw std::runtime_error("invalid input");
+				else throw std::runtime_error("invalid token");
 			}
 		}
 	}
@@ -73,289 +76,140 @@ public:
 
 private:
 
-	static inline const auto semicolon = ';';
-
-private:
-
 	Token m_token; bool m_is_full; std::stringstream m_sin;
 
 }; // class Stream
 
-struct Variable { std::string name; double value{}; };
+class Calculator
+{
+public:
 
-
-
-
-	Token::value_t expression(Stream& Stream, const std::vector < Variable >& variables);
-	Token::value_t term(Stream& Stream, const std::vector < Variable >& variables);
-	Token::value_t statement(Stream& Stream, std::vector < Variable >& variables);
-	Token::value_t primary(Stream& Stream, const std::vector < Variable >& variables);
-
-	Token::value_t get_value(const std::string& n, const std::vector < Variable >& variables);
-	bool is_declared(const std::string& n, const std::vector < Variable >& variables) noexcept;
-	Token::value_t set_variable(const std::string& n, Token::value_t v, std::vector < Variable >& variables);
-	Token::value_t declaration(Stream& Stream, std::vector < Variable >& variables);
-
-	Token::value_t primary(Stream& Stream, const std::vector < Variable >& variables)
+	void run()
 	{
-		auto t = Stream.get();
-
-		switch (t.kind)
+		for (std::string line; std::getline(std::cin, line); )
 		{
-		case Token::variable:
-			return get_value(t.name, variables);
-		case '(':
-		{
-			auto d = expression(Stream, variables);
-			t = Stream.get();
-			return d;
-		}
-		case Token::number:
-			return t.value;
-		case '-':
-			return Token::value_t(-1) * primary(Stream, variables);
-		case '+':
-			return primary(Stream, variables);
-		default:
-		{
-			throw std::ios_base::failure("error: cannot read the symbol");
-		}
+			if (Stream stream(line); !stream.empty())
+			{
+				std::cout << "= " << statement(stream) << std::endl;
+			}
+			else break;			
 		}
 	}
 
-	Token::value_t expression(Stream& Stream, const std::vector < Variable >& variables)
+	[[nodiscard]] double statement(Stream & stream)
 	{
-		auto left = term(Stream, variables);
+		auto token = stream.get();
 
-		auto t = Stream.get();
-
-		while (true)
+		if (std::holds_alternative < std::string > (token))
 		{
-			switch (t.kind)
+			if (std::get < std::string > (token) == "set")
 			{
-			case '+':
-				left = left + term(Stream, variables);
-				t = Stream.get();
-				break;
-			case '-':
-				left = left - term(Stream, variables);
-				t = Stream.get();
-				break;
-			default:
-				Stream.putback(t);
-				return left;
+				return declaration(stream);
 			}
 		}
+		
+		stream.putback(token); return expression(stream);
 	}
 
-	Token::value_t statement(Stream& Stream, std::vector < Variable >& variables)
+	[[nodiscard]] double declaration(Stream & stream)
 	{
-		auto token = Stream.get();
+		auto name = std::get < std::string > (stream.get());
 
-		switch (token.kind)
-		{
-		case Token::set:
-			return declaration(Stream, variables);
-		default:
-			Stream.putback(token);
-			return expression(Stream, variables);
-		}
+		return (m_variables[name] = expression(stream));
 	}
 
-	Token::value_t term(Stream& Stream, const std::vector < Variable >& variables)
+	[[nodiscard]] double expression(Stream & stream) const
 	{
-		auto left = primary(Stream, variables);
+		auto left = term(stream);
 
-		auto t = Stream.get();
-
-		while (true)
+		for (auto token = stream.get(); true; token = stream.get())
 		{
-			switch (t.kind)
+			if (std::holds_alternative < char > (token))
 			{
-			case '!':
-			{
-				left = fact(left);
-				t = Stream.get();
-				break;
-			}
-			case '*':
-				left = left * primary(Stream, variables);
-				t = Stream.get();
-				break;
-			case '/':
-			{
-				left = left / primary(Stream, variables);
-				t = Stream.get();
-				break;
-			}
-			default:
-				Stream.putback(t);
-				return left;
-			}
-		}
-	}
-
-	Token::value_t get_value(const std::string& n, const std::vector < Variable >& variables)
-	{
-		if (!is_declared(n, variables))
-		{
-			throw std::ios_base::failure("error: incorrect input data");
-		}
-
-		for (const Variable& variable : variables)
-		{
-			if (variable.name == n)
-			{
-				return variable.value;
-			}
-		}
-	}
-
-	Token::value_t declaration(Stream& Stream, std::vector < Variable >& variables)
-	{
-		Token token = Stream.get();
-		std::string name = token.name;
-		Token assume = Stream.get();
-		auto value = expression(Stream, variables);
-
-		set_variable(name, value, variables);
-
-		return value;
-	}
-
-	bool is_declared(const std::string& n, const std::vector < Variable >& variables) noexcept
-	{
-		for (const Variable& variable : variables)
-		{
-			if (variable.name == n)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	Token::value_t set_variable(const std::string& n, Token::value_t v, std::vector < Variable >& variables)
-	{
-		if (is_declared(n, variables))
-		{
-			throw std::ios_base::failure("error: incorrect input data");
-		}
-
-		for (auto& variable : variables)
-		{
-			if (variable.name == n)
-			{
-				variable.value = v;
-				return v;
-			}
-		}
-
-		variables.push_back(Variable(n, v));
-
-		return v;
-	}
-
-	struct IO_Service
-	{
-		struct Command
-		{
-			static inline const auto exit = "exit";
-			static inline const auto help = "help";
-		};
-
-		auto read() noexcept
-		{
-			std::cout << ">>> ";
-
-			std::string line;
-			std::string head;
-			std::string tail;
-
-			std::cin >> head;
-
-			if (head == Command::exit)
-			{
-				exit(0);
-			}
-			else
-				if (head == Command::help)
+				switch (std::get < char > (token))
 				{
-					std::cout << "Welcome to Calculator!" << std::endl;
+					case '+': { left += term(stream); break; }
+					case '-': { left -= term(stream); break; }
+
+					default: { stream.putback(token); return left; }
 				}
-				else
+			}
+			else throw std::runtime_error("invalid expression");
+		}
+	}
+
+	[[nodiscard]] double term(Stream & stream) const
+	{
+		auto left = primary(stream);
+
+		for (auto token = stream.get(); true; token = stream.get())
+		{
+			if (std::holds_alternative < char > (token))
+			{
+				switch (std::get < char > (token))
 				{
-					line += head;
+					case '*': { left *= term(stream); break; }
+					case '/': { left /= term(stream); break; }
+
+					default: { stream.putback(token); return left; }
+				}
+			}
+			else throw std::runtime_error("invalid term");
+		}
+	}
+
+	[[nodiscard]] double primary(Stream & stream) const
+	{
+		auto token = stream.get();
+
+		if (std::holds_alternative < char > (token))
+		{
+			switch (std::get < char > (token))
+			{
+				case '(':
+				{
+					auto d = expression(stream); token = stream.get(); return d;
 				}
 
-			std::getline(std::cin, tail);
-
-			line += tail;
-
-			return line;
-		}
-
-		void write(const std::string& s) noexcept
-		{
-			std::cout << "= " << s << std::endl;
-		}
-	};
-
-	struct Calculator
-	{
-		auto run(Stream& ts)
-		{
-			return statement(ts, variables);
-		}
-
-		std::vector < Variable > variables;
-	};
-
-	struct System
-	{
-		void run()
-		{
-			while (true)
-			{
-				Stream ts(io_service.read());
-
-				if (ts.empty())
-				{
-					continue;
-				}
-
-				std::stringstream sout;
-
-				sout << calculator.run(ts);
-
-				io_service.write(sout.str());
+				case '+': return        primary(stream);
+				case '-': return -1.0 * primary(stream);
+				
+				default: throw std::runtime_error("invalid primary");
 			}
 		}
+		
+		if (std::holds_alternative < double > (token))
+		{
+			return std::get < double > (token);
+		}
 
-		IO_Service io_service;
-		Calculator calculator;
-	};
+		return m_variables.at(std::get < std::string > (token));
+	}
 
-int main() try
-{
-	calculator::System s;
+private:
 
-	s.run();
+	std::unordered_map < std::string, double > m_variables;
 
-	return 0;
-}
-catch (const std::ios_base::failure& exception)
+}; // class Calculator
+
+int main()
 {
-	std::cerr << exception.what() << std::endl;
-	return 0;
-}
-catch (const std::exception& exception)
-{
-	std::cerr << exception.what() << std::endl;
-	return 0;
-}
-catch (...)
-{
-	std::cerr << "there is an exception" << std::endl;
-	return 0;
+	try
+	{
+		Calculator().run();
+
+		return EXIT_SUCCESS;
+	}
+	catch (const std::exception & exception)
+	{
+		std::cerr << exception.what() << '\n';
+
+		return EXIT_FAILURE;
+	}
+	catch (...)
+	{
+		std::cerr << "unknown exception\n";
+
+		return EXIT_FAILURE;
+	}
 }
