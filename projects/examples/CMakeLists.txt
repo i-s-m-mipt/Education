@@ -200,6 +200,7 @@ set(sources_10
     arena_allocator
     bad_allocations
     chain_allocator
+    custom_optional
     custom_shared_ptr
     custom_unique_ptr
     data_alignment
