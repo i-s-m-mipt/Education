@@ -1,5 +1,6 @@
 #include <cassert>
 #include <iostream>
+#include <new>
 #include <string>
 
 class C
@@ -75,7 +76,7 @@ int main()
 
 	const std::size_t size = 5;
 
-	auto ptr = static_cast < C * > (operator new(sizeof(C) * size)); // note: uninitialized memory
+	auto ptr = static_cast < C * > (::operator new(sizeof(C) * size)); // note: uninitialized memory
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
@@ -93,7 +94,7 @@ int main()
 		ptr[i].~C();
 	}
 
-	operator delete(ptr); // note: uninitialized memory
+	::operator delete(ptr); // note: uninitialized memory
 
 	std::cout << sizeof(U) << std::endl;
 
