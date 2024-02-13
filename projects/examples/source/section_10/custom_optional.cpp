@@ -37,7 +37,7 @@ public:
         return *this;
     }
 
-    Optional & operator=(Optional && other)
+    Optional & operator=(Optional && other) noexcept
     {
         if (this != &other)
 		{
