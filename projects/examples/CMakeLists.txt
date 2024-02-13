@@ -261,6 +261,15 @@ foreach(entry IN LISTS sources_12)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
 endforeach()
 
+set(sources_14
+    recursive_calculator)
+
+foreach(entry IN LISTS sources_14)
+    add_executable(${entry} source/section_14/${entry}.cpp)
+    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
+endforeach()
+
 set(sources_16
     process_handler
     process_manager)
