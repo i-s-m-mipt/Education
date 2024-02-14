@@ -110,9 +110,9 @@ int main()
 	f            ('a'); // note: overload for char
 	f            (100); // note: overload for int
 	f            (1.0); // note: overload for double
-	f <>         (100); // note: full specialization for int
-	f < int >    (100); // note: full specialization for int
-	f <>         (1.0); // note: basic template for T
+	f <        > (100); // note: full specialization for int
+	f < int    > (100); // note: full specialization for int
+	f <        > (1.0); // note: basic template for T
 	f < double > (1.0); // note: basic template for T
 
 	int x[]{ 1, 2, 3 };
