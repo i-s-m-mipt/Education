@@ -4,7 +4,7 @@ template < typename T, std::size_t M > class Counter
 {
 protected:
 
-	Counter()                          { initialize(); }
+	Counter(                         ) { initialize(); }
 	Counter(const Counter < T, M > & ) { initialize(); }
 	Counter(      Counter < T, M > &&) { initialize(); }
 
