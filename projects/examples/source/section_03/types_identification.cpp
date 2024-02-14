@@ -43,7 +43,7 @@ int main()
 
 	const auto & rcx = x;
 
-	[[maybe_unused]] auto           z1 = rcx; // note:          auto  ->       double
+	[[maybe_unused]]          auto  z1 = rcx; // note:          auto  ->       double
 	[[maybe_unused]] decltype(auto) z2 = rcx; // note: decltype(auto) -> const double &
 
 	std::cout << typeid(x).name() << std::endl;
