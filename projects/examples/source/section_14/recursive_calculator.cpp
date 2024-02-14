@@ -7,6 +7,8 @@
 #include <unordered_map>
 #include <variant>
 
+using namespace std::literals;
+
 class Stream
 {
 public:
@@ -64,7 +66,7 @@ public:
 
 					return Token(string);
 				}
-				else throw std::runtime_error("invalid token");
+				else throw std::runtime_error("invalid token: "s + c);
 			}
 		}
 	}
@@ -166,7 +168,7 @@ private:
 
 		if (std::holds_alternative < char > (token))
 		{
-			switch (std::get < char > (token))
+			switch (auto c = std::get < char > (token); c)
 			{
 				case '(':
 				{
@@ -176,7 +178,7 @@ private:
 				case '+': return        primary(stream);
 				case '-': return -1.0 * primary(stream);
 				
-				default: throw std::runtime_error("invalid primary");
+				default: throw std::runtime_error("invalid primary: "s + c);
 			}
 		}
 		
