@@ -44,7 +44,7 @@ public:
 public:
 
 	[[nodiscard]] constexpr Iterator begin() noexcept { return Iterator(m_head); }
-	[[nodiscard]] constexpr Iterator end  () noexcept { return Iterator();       }
+	[[nodiscard]] constexpr Iterator end  () noexcept { return Iterator(      ); }
 
 	void push_back(T value)
 	{
