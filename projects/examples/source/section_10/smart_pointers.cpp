@@ -15,7 +15,7 @@ public:
 
 	[[nodiscard]] auto get() const noexcept { return m_ptr; }
 
-	~Resource() noexcept { delete m_ptr; } // good: no memory leak
+	~Resource() noexcept { if (m_ptr) delete m_ptr; } // good: no memory leak
 
 private:
 
