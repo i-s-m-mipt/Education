@@ -519,6 +519,9 @@
     <ClCompile Include="..\source\section_10\custom_optional.cpp">
       <Filter>source\section_10</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_18\long_arithmetic.cpp">
+      <Filter>source\section_18</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
