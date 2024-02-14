@@ -1,3 +1,4 @@
+#include <cassert>
 #include <cctype>
 #include <cmath>
 #include <exception>
@@ -10,6 +11,8 @@
 #include <string>
 #include <type_traits>
 #include <vector>
+
+using namespace std::literals;
 
 class Big_Int
 {
@@ -37,29 +40,27 @@ private:
 
 			if (start <= 0) start = (m_is_negative ? 1 : 0);
 
-			m_digits[m_n_digits++] = std::stoull(string.substr(start, i - start + 1));
+			m_digits[m_n_digits++] = std::stoll(string.substr(start, i - start + 1));
 		}
 	}
 
 public:
 
-	[[nodiscard]] bool is_negative() const noexcept { return m_is_negative; }
-
-public:
-
-	friend std::istream & operator>>(std::istream & stream,       Big_Int & big_int)
+	friend std::istream & operator>>(std::istream & stream, Big_Int & big_int)
 	{
 		std::string s; stream >> s;
 
-		if (std::empty(s) || (s[0] != '+' && s[0] != '-' && !std::isdigit(s[0])))
+		if (s[0] == '+' || s[0] == '-' || std::isdigit(s[0]))
 		{
-			throw std::runtime_error("invalid input");
+			for (std::size_t i = 1; i < std::size(s); ++i)
+			{
+				if (!std::isdigit(s[i])) 
+				{
+					throw std::runtime_error("invalid input: "s + s[i]);
+				}
+			}
 		}
-
-		for (std::size_t i = 1; i < std::size(s); ++i)
-		{
-			if (!std::isdigit(s[i])) throw std::runtime_error("invalid input");
-		}
+		else throw std::runtime_error("invalid input: "s + s[0]);
 
 		big_int = Big_Int(s);
 

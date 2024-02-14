@@ -83,10 +83,7 @@ public:
 
 		if (this != &other) // note: move self-assignment check
 		{
-			if (m_data)
-			{
-				delete[] m_data;
-			}
+			if (m_data) delete[] m_data;
 			
 			m_data = other.m_data; // note: shallow copy
 			m_size = other.m_size; // note: shallow copy
