@@ -32,10 +32,10 @@ int main()
 
 //  assert(nullptr); // error: assertion failed
 
-    assert       (2 + 2 == 4); // note: optional message string
+           assert(2 + 2 == 4); // note: optional message string
     static_assert(2 + 2 == 4); // note: optional message string
 
-    assert       ((sizeof(int) == 4) && "required size of int 4 bytes");
+           assert((sizeof(int) == 4) && "required size of int 4 bytes");
     static_assert((sizeof(int) == 4),   "required size of int 4 bytes");
 
     [[maybe_unused]] S < int > good;
