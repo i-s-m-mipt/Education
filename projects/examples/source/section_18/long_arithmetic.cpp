@@ -8,13 +8,14 @@
 #include <ostream>
 #include <stdexcept>
 #include <string>
+#include <type_traits>
 #include <vector>
 
 class Big_Int
 {
 public:
 
-	using digit_t = unsigned long long; // note: 8 byte(s) at least
+	using digit_t = long long; // note: 8 byte(s) at least
 
 public:
 
@@ -22,11 +23,11 @@ public:
 
 	Big_Int(int number) : Big_Int() { parse(std::to_string(number)); }
 
-	Big_Int(const std::string & string) : Big_Int() { parse(string); }
+	Big_Int(std::string string) : Big_Int() { parse(std::move(string)); }
     
 private:
 
-	void parse(const std::string & string)
+	void parse(std::string && string)
 	{
 		m_is_negative = (string[0] == '-');
 
@@ -46,7 +47,7 @@ public:
 
 public:
 
-	friend std::istream & operator>>(std::istream & stream, Big_Int & big_int)
+	friend std::istream & operator>>(std::istream & stream,       Big_Int & big_int)
 	{
 		std::string s; stream >> s;
 
@@ -67,7 +68,9 @@ public:
 
 	friend std::ostream & operator<<(std::ostream & stream, const Big_Int & big_int)
 	{
-		stream << (big_int.m_is_negative ? '-' : '+') << big_int.m_digits.back();
+		if (big_int.m_is_negative) stream << '-';
+
+		stream << big_int.m_digits[big_int.m_n_digits - 1];
 
 		for (auto i = static_cast < int > (big_int.m_n_digits) - 2; i >= 0; --i)
 		{
@@ -79,16 +82,137 @@ public:
 
 public:
 
-	[[nodiscard]] friend auto operator<(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	auto & operator+=(Big_Int other)
+	{
+		if (!m_is_negative && !other.m_is_negative)
+		{
+			*this = unsigned_add(std::move(*this), std::move(other));
+		}
+		else
+		if ( m_is_negative &&  other.m_is_negative)
+		{
+			*this = unsigned_add(std::move(*this), std::move(other));
+
+			m_is_negative = true;
+		}
+		else
+		if (!m_is_negative &&  other.m_is_negative)
+		{
+			if (this->unsigned_less(other))
+			{
+				*this = unsigned_sub(std::move(other), std::move(*this));
+
+				m_is_negative = true;
+			}
+			else
+			{
+				*this = unsigned_sub(std::move(*this), std::move(other));
+			}
+		}
+		else
+		if ( m_is_negative && !other.m_is_negative)
+		{
+			if (this->unsigned_less(other))
+			{
+				*this = unsigned_sub(std::move(other), std::move(*this));
+			}
+			else
+			{
+				*this = unsigned_sub(std::move(*this), std::move(other));
+
+				m_is_negative = true;
+			}
+		}
+
+		return *this;
+	}
+
+	auto & operator-=(Big_Int other)
+	{
+		other.m_is_negative = !other.m_is_negative;
+
+		return (*this += other);
+	}
+
+private:
+
+	Big_Int unsigned_add(Big_Int && lhs, Big_Int && rhs) const
+	{
+		lhs.m_n_digits = std::max(lhs.m_n_digits, rhs.m_n_digits);
+
+		for (std::size_t i = 0; i < lhs.m_n_digits; ++i)
+		{
+			lhs.m_digits[i] += rhs.m_digits[i];
+
+			if (lhs.m_digits[i] >= Big_Int::base)
+			{
+				lhs.m_digits[i] -= Big_Int::base;
+
+				if (i < lhs.size - 1)
+				{
+					++lhs.m_digits[i + 1];
+				}
+				else throw std::overflow_error("too many digits");
+			}
+		}
+
+		lhs.m_n_digits += (lhs.m_digits[lhs.m_n_digits]);
+
+		return lhs;
+	}
+
+	Big_Int unsigned_sub(Big_Int && lhs, Big_Int && rhs) const noexcept
+	{
+		lhs.m_is_negative = false;
+
+		for (std::size_t i = 0; i < lhs.m_n_digits; ++i)
+		{
+			lhs.m_digits[i] -= rhs.m_digits[i];
+
+			if (lhs.m_digits[i] < 0)
+			{
+				lhs.m_digits[i] += Big_Int::base;
+
+				lhs.m_digits[i + 1]--;
+			}
+		}
+
+		auto position = lhs.m_n_digits;
+
+		while (position > 0 && !lhs.m_digits[position]) --position;
+
+		lhs.m_n_digits = position + 1;
+
+		return lhs;
+	}
+
+public:
+
+	auto & operator++() { *this += 1; return *this; }
+	auto & operator--() { *this -= 1; return *this; }
+
+	const auto operator++(int)
+	{
+		Big_Int tmp(*this); ++(*this); return tmp;
+	}
+
+	const auto operator--(int)
+	{
+		Big_Int tmp(*this); --(*this); return tmp;
+	}
+
+public:
+
+	[[nodiscard]] friend auto operator< (const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		if ( lhs.m_is_negative && !rhs.m_is_negative) return true;
 		if (!lhs.m_is_negative &&  rhs.m_is_negative) return false;
 
-		if (!lhs.m_is_negative && !rhs.m_is_negative) return lhs.less(rhs);
-		if ( lhs.m_is_negative &&  rhs.m_is_negative) return rhs.less(lhs);
+		if (!lhs.m_is_negative && !rhs.m_is_negative) return lhs.unsigned_less(rhs);
+		if ( lhs.m_is_negative &&  rhs.m_is_negative) return rhs.unsigned_less(lhs);
 	}
 
-	[[nodiscard]] friend auto operator>(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend auto operator> (const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return (rhs < lhs);
 	}
@@ -120,7 +244,7 @@ public:
 
 private:
 
-	[[nodiscard]] bool less(const Big_Int & other) const noexcept
+	[[nodiscard]] bool unsigned_less(const Big_Int & other) const noexcept
 	{
 		if (m_n_digits != other.m_n_digits) return (m_n_digits < other.m_n_digits);
 
@@ -146,103 +270,21 @@ private:
 
 	std::size_t m_n_digits;
 
-	std::vector < unsigned long long > m_digits; 
+	std::vector < digit_t > m_digits; 
 
 }; // class Big_Int
 
+[[nodiscard]] inline const auto operator+(Big_Int lhs, Big_Int rhs)
+{
+	return (lhs += rhs);
+}
 
+[[nodiscard]] inline const auto operator-(Big_Int lhs, Big_Int rhs)
+{
+	return (lhs -= rhs);
+}
 
-
-	// Math operators ===========================================================================================
-
-	auto operator-(const Big_Int& lhs, const Big_Int& rhs) noexcept
-	{
-		Big_Int result;
-
-		if (!lhs.m_is_negative && !rhs.m_is_negative)
-		{
-			if (lhs >= rhs)
-			{
-				result = detail::subtraction(lhs, rhs);
-			}
-			else
-			{
-				result = detail::subtraction(rhs, lhs);
-				result.m_is_negative = true;
-			}
-		}
-
-		if (!lhs.m_is_negative && rhs.m_is_negative)
-		{
-			result = detail::addition(rhs, lhs);
-		}
-
-		if (lhs.m_is_negative && !rhs.m_is_negative)
-		{
-			result = detail::addition(rhs, lhs);
-			result.m_is_negative = true;
-		}
-
-		if (lhs.m_is_negative && rhs.m_is_negative)
-		{
-			if (lhs < rhs)
-			{
-				result = detail::subtraction(lhs, rhs);
-				result.m_is_negative = true;
-			}
-			else
-			{
-				result = detail::subtraction(rhs, lhs);
-			}
-		}
-
-		return result;
-	}
-
-	auto operator+(const Big_Int& lhs, const Big_Int& rhs) noexcept
-	{
-		Big_Int result;
-
-		if (!lhs.m_is_negative && !rhs.m_is_negative)
-		{
-			result = detail::addition(lhs, rhs);
-		}
-
-		if (!lhs.m_is_negative && rhs.m_is_negative)
-		{
-			if (!detail::greater(rhs, lhs))
-			{
-				result = detail::subtraction(lhs, rhs);
-			}
-			else
-			{
-				result = detail::subtraction(rhs, lhs);
-				result.m_is_negative = true;
-			}
-		}
-
-		if (lhs.m_is_negative && !rhs.m_is_negative)
-		{
-			if (!detail::greater(lhs, rhs))
-			{
-				result = detail::subtraction(rhs, lhs);
-			}
-			else
-			{
-				result = detail::subtraction(lhs, rhs);
-				result.m_is_negative = true;
-			}
-		}
-
-		if (lhs.m_is_negative && rhs.m_is_negative)
-		{
-			result = detail::addition(lhs, rhs);
-			result.m_is_negative = true;
-		}
-
-		return result;
-	}
-
+/*
 	auto operator*(const Big_Int& lhs, const Big_Int& rhs) noexcept
 	{
 		Big_Int result;
@@ -389,93 +431,34 @@ private:
 
 		return result;
 	}
+*/
 
-namespace detail
+int main()
 {
-	ariphmetic::Big_Int addition(const ariphmetic::Big_Int& lhs, const ariphmetic::Big_Int& rhs) noexcept
+	try
 	{
-		ariphmetic::Big_Int result;
+		Big_Int bi1;
+		Big_Int bi2(42);
+		Big_Int bi3("123456789");
 
-		result.m_n_digits = std::max(lhs.m_n_digits, rhs.m_n_digits);
+		Big_Int bi4; std::cin >> bi4;
+		Big_Int bi5; std::cin >> bi5;
 
-		for (std::size_t i = 0; i < result.m_n_digits; ++i)
-		{
-			result.digits[i] += (lhs.digits[i] + rhs.digits[i]);
+		std::cout << bi4 + bi5 << std::endl;
+		std::cout << bi4 - bi5 << std::endl;
 
-			if (result.digits[i] >= ariphmetic::Big_Int::base)
-			{
-				result.digits[i] -= ariphmetic::Big_Int::base;
-				result.digits[i + 1]++;
-			}
-		}
-
-		if (result.digits[result.m_n_digits])
-		{
-			result.m_n_digits++;
-		}
-
-		return result;
+		return EXIT_SUCCESS;
 	}
-
-	ariphmetic::Big_Int subtraction(const ariphmetic::Big_Int& lhs, const ariphmetic::Big_Int& rhs) noexcept
+	catch (const std::exception & exception)
 	{
-		ariphmetic::Big_Int result = lhs;
+		std::cerr << exception.what() << '\n';
 
-		result.m_is_negative = false;
-
-		for (std::size_t i = 0; i < result.m_n_digits; ++i)
-		{
-			result.digits[i] = result.digits[i] - rhs.digits[i];
-
-			if (result.digits[i] < 0)
-			{
-				result.digits[i] += ariphmetic::Big_Int::base;
-				result.digits[i + 1]--;
-			}
-		}
-
-		int position = result.m_n_digits;
-
-		while (position > 0 && !result.digits[position])
-		{
-			--position;
-		}
-
-		result.m_n_digits = position + 1;
-
-		return result;
+		return EXIT_FAILURE;
 	}
-}
+	catch (...)
+	{
+		std::cerr << "unknown exception\n";
 
-int main() try
-{
-	ariphmetic::Big_Int num1(100500);
-	ariphmetic::Big_Int num2(100);
-
-	std::cout << num1 + num2 << std::endl;
-	std::cout << num1 / num2 << std::endl;
-
-	ariphmetic::Big_Int num3;
-	ariphmetic::Big_Int num4;
-	std::cin >> num3 >> num4;
-
-	std::cout << num3 + num4 << std::endl;
-	std::cout << num3 / num4 << std::endl; // abort() is called if num4 == 0; alternatively we can return inf?..
-
-	return 0;
-}
-catch (const ariphmetic::Big_Int_Error& exception)
-{
-	std::cerr << exception.what() << std::endl;
-	return 0;
-}
-catch (const std::exception& exception)
-{
-	std::cerr << exception.what() << std::endl;
-	return 0;
-}
-catch (...)
-{
-	std::cerr << "there is an exception" << std::endl;
-	return 0;
+		return EXIT_FAILURE;
+	}
 }
