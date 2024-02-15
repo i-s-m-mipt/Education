@@ -38,6 +38,16 @@ private:
 
 public:
 
+	void swap(Ratio & other)
+	{
+		using std::swap; // good: enable argument-dependent lookup
+
+		swap(m_num, other.m_num);
+		swap(m_den, other.m_den);
+	}
+
+public:
+
 	[[nodiscard]] auto num() const { return m_num; }
 	[[nodiscard]] auto den() const { return m_den; }
 
@@ -102,6 +112,8 @@ private:
 	int m_den;
 
 }; // class Ratio
+
+void swap(Ratio & x, Ratio & y) { x.swap(y); }
 
 [[nodiscard]] inline const auto operator+ (Ratio lhs, Ratio rhs) // good: free function
 {
