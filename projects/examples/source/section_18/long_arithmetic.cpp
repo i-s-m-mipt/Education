@@ -59,9 +59,14 @@ private:
 				m_digits[m_n_digits++] = std::stoll(string.substr(start, i - start + 1));
 			}
 
-			for (; m_n_digits > 1 && !m_digits[m_n_digits - 1]; --m_n_digits);
+			reduce_leading_zeros();
 		}
 		else throw std::runtime_error("invalid input: "s + string[0]);
+	}
+
+	void reduce_leading_zeros() noexcept
+	{
+		for (; m_n_digits > 1 && !m_digits[m_n_digits - 1]; --m_n_digits);
 	}
 
 public:
@@ -166,23 +171,19 @@ public:
 
 		result.m_n_digits = m_n_digits + other.m_n_digits;
 
-		for (; result.m_n_digits > 1 && !result.m_digits[result.m_n_digits - 1]; --result.m_n_digits);
-
-		swap(result); return *this;
+		swap(result); reduce_leading_zeros(); return *this;
 	}
 
 	auto & operator/=(Big_Int other)
 	{
 		if (other.m_n_digits == 0 || (other.m_n_digits == 1 && other.m_digits.front() == 0))
 		{
-			throw std::runtime_error("division by zero");
+			throw std::domain_error("division by zero");
 		}
 
-		Big_Int result;
+		Big_Int result; result.m_n_digits = m_n_digits;
 
-		result.m_is_negative = m_is_negative ^ other.m_is_negative; 
-		
-		other.m_is_negative = false;
+		result.m_is_negative = m_is_negative ^ other.m_is_negative; other.m_is_negative = false;
 
 		Big_Int current;
 
@@ -190,13 +191,13 @@ public:
 		{
 			current *= Big_Int::base; current.m_digits[0] = m_digits[i];
 
-			digit_t l = 0, r = Big_Int::base, x = 0;
+			digit_t l = 0, r = Big_Int::base, v = 0;
 
 			while (l <= r)
 			{
 				if (auto m = std::midpoint(l, r); other * m <= current)
 				{
-					l = m + 1; x = m;
+					l = m + 1; v = m;
 				}
 				else
 				{
@@ -204,14 +205,10 @@ public:
 				}
 			}
 
-			result.m_digits[i] = x; current -= other * x;
+			result.m_digits[i] = v; current -= other * v;
 		}
 
-		result.m_n_digits = m_n_digits;
-
-		for (; result.m_n_digits > 1 && !result.m_digits[result.m_n_digits - 1]; --result.m_n_digits);
-
-		swap(result); return *this;
+		swap(result); reduce_leading_zeros(); return *this;
 	}
 
 private:
@@ -249,9 +246,7 @@ private:
 			}
 		}
 
-		for (; m_n_digits > 1 && !m_digits[m_n_digits - 1]; --m_n_digits);
-
-		return *this;
+		reduce_leading_zeros(); return *this;
 	}
 
 public:
@@ -278,7 +273,7 @@ public:
 
 public:
 
-	friend auto karatsuba_multiplication(const Big_Int & x, const Big_Int & y)
+	[[nodiscard]] friend auto karatsuba_multiplication(const Big_Int & x, const Big_Int & y)
 	{
 		auto n = std::max(x.m_n_digits, y.m_n_digits);
 
@@ -286,17 +281,17 @@ public:
 
 		auto k = n / 2;
 
-		Big_Int xr; xr.m_n_digits = k;
+		Big_Int xr; xr.m_n_digits =     k;
 		Big_Int xl; xl.m_n_digits = n - k;
 
 		for (std::size_t i =     0; i < k; ++i) xr.m_digits[i    ] = x.m_digits[i];
 		for (std::size_t i = n / 2; i < n; ++i) xl.m_digits[i - k] = x.m_digits[i];
 
-		Big_Int yr; yr.m_n_digits = k;
+		Big_Int yr; yr.m_n_digits =     k;
 		Big_Int yl; yl.m_n_digits = n - k;
 
 		for (std::size_t i = 0; i < n / 2; ++i) yr.m_digits[i    ] = y.m_digits[i];
-		for (std::size_t i = k; i <     n; ++i) yl.m_digits[i - k] = y.m_digits[i];
+		for (std::size_t i = k; i < n    ; ++i) yl.m_digits[i - k] = y.m_digits[i];
 
 		auto p1 = karatsuba_multiplication(xl,      yl     );
 		auto p2 = karatsuba_multiplication(xr,      yr     );
@@ -311,6 +306,36 @@ public:
 		result.m_is_negative = x.m_is_negative ^ y.m_is_negative; 
 
 		return result;
+	}
+
+	[[nodiscard]] friend auto sqrt(const Big_Int & x)
+	{
+		if (x.m_is_negative) throw std::domain_error("invalid argument");
+
+		auto position = (static_cast < int > (x.m_n_digits) + 1) / 2;
+
+    	Big_Int result; result.m_n_digits = position;
+    	
+    	for (--position; position >= 0; --position)
+    	{
+      		digit_t l = 0, r = Big_Int::base, v = 0;
+
+      		while (l <= r)
+      		{
+        		if (auto m = result.m_digits[position] = std::midpoint(l, r); result * result <= x)
+        		{
+          			l = m + 1; v = m;
+        		}
+        		else
+				{
+					r = m - 1;
+				}				
+      		}
+
+      		result.m_digits[position] = v;
+    	}
+
+		result.reduce_leading_zeros(); return result; 
 	}
 
 public:
@@ -442,6 +467,8 @@ int main()
 		assert(karatsuba_multiplication(bi3, bi4) == "-3394111293590239892710602762023649092547630961329778427474301930"s);
 		assert(karatsuba_multiplication(bi4, bi3) == "-3394111293590239892710602762023649092547630961329778427474301930"s);
 		assert(karatsuba_multiplication(bi4, bi4) == "+2124293516152993531053750721748717735666440864785393936215696100"s);
+
+		assert(sqrt(bi3) == "+8581424947372244"s);
 
 		assert(bi4 <  bi3);
 		assert(bi3 >  bi4);
