@@ -1,6 +1,8 @@
 #include <iostream>
 #include <numeric>
 
+#include <boost/rational.hpp> // note: boost::multiprecision::gmp_rational is faster
+
 class Ratio
 {
 public:
@@ -205,6 +207,14 @@ int main()
 	std::cout << (r3 >= r4) << std::endl;
 	std::cout << (r3 == r4) << std::endl;
 	std::cout << (r3 != r4) << std::endl;
+
+	boost::rational < int > br1(2, 5);
+	boost::rational < int > br2(3, 7);
+
+	std::cout << br1 + br2 << std::endl;
+	std::cout << br1 - br2 << std::endl;
+	std::cout << br1 * br2 << std::endl;
+	std::cout << br1 / br2 << std::endl; // note: and many other operations...
 
 	return 0;
 }
