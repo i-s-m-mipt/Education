@@ -163,9 +163,9 @@ public:
 			{
 				result.m_digits[i + j] += (m_digits[i] * other.m_digits[j] + r);
 
-				r = result.m_digits[i + j] / Big_Int::base;
+				r = result.m_digits[i + j] / Big_Int::radix;
 
-				result.m_digits[i + j] -= (r * Big_Int::base);
+				result.m_digits[i + j] -= (r * Big_Int::radix);
 			}
 		}
 
@@ -189,9 +189,9 @@ public:
 
 		for (auto i = static_cast < int > (m_n_digits) - 1; i >= 0; --i)
 		{
-			current *= Big_Int::base; current.m_digits[0] = m_digits[i];
+			current *= Big_Int::radix; current.m_digits[0] = m_digits[i];
 
-			digit_t l = 0, r = Big_Int::base, v = 0;
+			digit_t l = 0, r = Big_Int::radix, v = 0;
 
 			while (l <= r)
 			{
@@ -219,9 +219,9 @@ private:
 
 		for (std::size_t i = 0; i < m_n_digits; ++i)
 		{
-			if (m_digits[i] += other.m_digits[i]; m_digits[i] >= Big_Int::base)
+			if (m_digits[i] += other.m_digits[i]; m_digits[i] >= Big_Int::radix)
 			{
-				if (m_digits[i] -= Big_Int::base; i < size - 1)
+				if (m_digits[i] -= Big_Int::radix; i < size - 1)
 				{
 					++m_digits[i + 1];
 				}
@@ -240,7 +240,7 @@ private:
 		{
 			if (m_digits[i] -= other.m_digits[i]; m_digits[i] < 0)
 			{
-				m_digits[i] += Big_Int::base;
+				m_digits[i] += Big_Int::radix;
 
 				m_digits[i + 1]--;
 			}
@@ -297,11 +297,11 @@ public:
 		auto p2 = karatsuba_multiplication(xr,      yr     );
 		auto p3 = karatsuba_multiplication(xl + xr, yl + yr);
 
-		Big_Int bases = Big_Int::base;
+		Big_Int radix = Big_Int::radix;
 
-		for (std::size_t i = 1; i < n / 2; ++i) bases *= Big_Int(Big_Int::base);
+		for (std::size_t i = 1; i < n / 2; ++i) radix *= Big_Int::radix;
 
-		auto result = (p1 * bases * bases + (p3 - p2 - p1) * bases + p2);
+		auto result = (p1 * radix * radix + (p3 - p2 - p1) * radix + p2);
 
 		result.m_is_negative = x.m_is_negative ^ y.m_is_negative; 
 
@@ -318,7 +318,7 @@ public:
     	
     	for (--position; position >= 0; --position)
     	{
-      		digit_t l = 0, r = Big_Int::base, v = 0;
+      		digit_t l = 0, r = Big_Int::radix, v = 0;
 
       		while (l <= r)
       		{
@@ -409,7 +409,7 @@ private:
 
 	static inline const auto step = std::numeric_limits < digit_t > ::digits10 / 2;
 
-	static inline const auto base = static_cast < digit_t > (std::pow(10, step));
+	static inline const auto radix = static_cast < digit_t > (std::pow(10, step));
 
 	static inline const std::size_t size = 1'000; // note: maximum number of digits
 
