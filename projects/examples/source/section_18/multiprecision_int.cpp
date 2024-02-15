@@ -3,7 +3,7 @@
 #include <limits>
 #include <stdexcept>
 
-#include <boost/multiprecision/cpp_int.hpp>
+#include <boost/multiprecision/cpp_int.hpp> // note: gmp_int is ~10 times faster
 
 int main()
 {
