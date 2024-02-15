@@ -93,8 +93,15 @@ public:
 
 public:
 
-	auto & operator++() { m_num += m_den; return *this; } // note: ++++r is allowed
-	auto & operator--() { m_num -= m_den; return *this; } // note: ----r is allowed
+	auto & operator++() // note: ++++r is allowed
+	{ 
+		m_num += m_den; return *this; 
+	} 
+
+	auto & operator--() // note: ----r is allowed
+	{ 
+		m_num -= m_den; return *this; 
+	} 
 
 	const auto operator++(int) // note: r++++ is not allowed
 	{ 
