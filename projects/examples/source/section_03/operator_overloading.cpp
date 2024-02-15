@@ -83,37 +83,18 @@ public:
 
 public:
 
-	auto & operator++() // note: ++++r is allowed
-	{
-		m_num += m_den;
+	auto & operator++() { m_num += m_den; return *this; } // note: ++++r is allowed
+	auto & operator--() { m_num -= m_den; return *this; } // note: ----r is allowed
 
-		return *this;
-	}
+	const auto operator++(int) // note: r++++ is not allowed
+	{ 
+		Ratio t(*this); ++(*this); return t; 
+	} 
 
-	auto & operator--() // note: ----r is allowed
-	{
-		m_num -= m_den;
-
-		return *this;
-	}
-
-	const auto operator++(int) // note: r++++ is prohibited
-	{
-		Ratio tmp(*this);
-
-		++(*this);
-
-		return tmp;
-	}
-
-	const auto operator--(int) // note: r---- is prohibited
-	{
-		Ratio tmp(*this);
-
-		--(*this);
-
-		return tmp;
-	}
+	const auto operator--(int) // note: r---- is not allowed
+	{ 
+		Ratio t(*this); --(*this); return t; 
+	} 
 
 private:
 
