@@ -208,8 +208,8 @@ int main()
 	std::cout << (r3 == r4) << std::endl;
 	std::cout << (r3 != r4) << std::endl;
 
-	boost::rational < int > br1(2, 5);
-	boost::rational < int > br2(3, 7);
+	boost::rational < int > br1(2, 5); // note: ignore templates here
+	boost::rational < int > br2(3, 7); // note: ignore templates here
 
 	std::cout << br1 + br2 << std::endl;
 	std::cout << br1 - br2 << std::endl;
