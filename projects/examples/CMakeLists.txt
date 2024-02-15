@@ -282,7 +282,8 @@ foreach(entry IN LISTS sources_16)
 endforeach()
 
 set(sources_18
-    long_arithmetic)
+    long_arithmetic
+    multiprecision_int)
 
 set(section_18 source/section_18/)
 
