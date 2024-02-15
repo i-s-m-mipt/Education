@@ -105,19 +105,21 @@ public:
 		return *this;
 	}
 
+	~Container()
+	{
+		std::cout << "destructor" << std::endl;
+
+		if (m_data) delete[] m_data;
+	}
+
+public:
+
 	void swap(Container & other) // good: useful member function
 	{
 		using std::swap; // good: enable argument-dependent lookup
 
 		swap(m_data, other.m_data);
 		swap(m_size, other.m_size);
-	}
-
-	~Container()
-	{
-		std::cout << "destructor" << std::endl;
-
-		if (m_data) delete[] m_data;
 	}
 
 private:
