@@ -281,7 +281,16 @@ foreach(entry IN LISTS sources_16)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
 endforeach()
 
+set(sources_18
+    long_arithmetic)
+
 set(section_18 source/section_18/)
+
+foreach(entry IN LISTS sources_18)
+    add_executable(${entry} ${section_18}${entry}.cpp)
+    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
+endforeach()
 
 add_executable(python_caller ${section_18}python_caller.cpp ${section_18}python_wrapper.cpp)
 
