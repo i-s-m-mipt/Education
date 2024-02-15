@@ -37,7 +37,7 @@ void print_string(const std::string & string) // good: constant reference for re
 	std::cout << string << std::endl;
 }
 
-void print_array(int * array, std::size_t size) // note: array size as additional argument
+void print_array(const int * array, std::size_t size) // note: array size as additional argument
 {
 	for (std::size_t i = 0; i < size; ++i)
 	{
