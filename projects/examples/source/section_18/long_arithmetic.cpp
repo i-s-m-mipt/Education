@@ -105,7 +105,7 @@ public:
 		{
 			this->unsigned_add(other);
 		}
-		else if (!m_is_negative && other.m_is_negative)
+		else if (!m_is_negative &&  other.m_is_negative)
 		{
 			if (this->unsigned_less(other))
 			{
@@ -118,7 +118,7 @@ public:
 				this->unsigned_sub(other);
 			}
 		}
-		else if (m_is_negative && !other.m_is_negative)
+		else if ( m_is_negative && !other.m_is_negative)
 		{
 			if (this->unsigned_less(other))
 			{
@@ -194,9 +194,7 @@ public:
 
 			while (l <= r)
 			{
-				auto m = std::midpoint(l, r);
-
-				if (Big_Int t(other); (t *= m) <= current)
+				if (auto m = std::midpoint(l, r); other * m <= current)
 				{
 					l = m + 1; x = m;
 				}
@@ -206,7 +204,7 @@ public:
 				}
 			}
 
-			result.m_digits[i] = x; Big_Int t(other); current -= (t *= x);
+			result.m_digits[i] = x; current -= other * x;
 		}
 
 		result.m_n_digits = m_n_digits;
@@ -258,8 +256,15 @@ private:
 
 public:
 
-	auto & operator++() { *this += 1; return *this; }
-	auto & operator--() { *this -= 1; return *this; }
+	auto & operator++() 
+	{ 
+		*this += 1; return *this; 
+	}
+
+	auto & operator--() 
+	{ 
+		*this -= 1; return *this; 
+	}
 
 	const auto operator++(int)
 	{
@@ -273,11 +278,54 @@ public:
 
 public:
 
+	friend auto karatsuba_multiplication(const Big_Int & x, const Big_Int & y)
+	{
+		auto n = std::max(x.m_n_digits, y.m_n_digits);
+
+		if (n == 1) return x * y;
+
+		auto k = n / 2;
+
+		Big_Int xr; xr.m_n_digits = k;
+		Big_Int xl; xl.m_n_digits = n - k;
+
+		for (std::size_t i =     0; i < k; ++i) xr.m_digits[i    ] = x.m_digits[i];
+		for (std::size_t i = n / 2; i < n; ++i) xl.m_digits[i - k] = x.m_digits[i];
+
+		Big_Int yr; yr.m_n_digits = k;
+		Big_Int yl; yl.m_n_digits = n - k;
+
+		for (std::size_t i = 0; i < n / 2; ++i) yr.m_digits[i    ] = y.m_digits[i];
+		for (std::size_t i = k; i <     n; ++i) yl.m_digits[i - k] = y.m_digits[i];
+
+		auto p1 = karatsuba_multiplication(xl,      yl     );
+		auto p2 = karatsuba_multiplication(xr,      yr     );
+		auto p3 = karatsuba_multiplication(xl + xr, yl + yr);
+
+		Big_Int bases = Big_Int::base;
+
+		for (std::size_t i = 1; i < n / 2; ++i) bases *= Big_Int(Big_Int::base);
+
+		auto result = (p1 * bases * bases + (p3 - p2 - p1) * bases + p2);
+
+		result.m_is_negative = x.m_is_negative ^ y.m_is_negative; 
+
+		return result;
+	}
+
+public:
+
+	[[nodiscard]] friend const Big_Int operator+(Big_Int lhs, Big_Int rhs) { return (lhs += rhs); }
+	[[nodiscard]] friend const Big_Int operator-(Big_Int lhs, Big_Int rhs) { return (lhs -= rhs); }
+	[[nodiscard]] friend const Big_Int operator*(Big_Int lhs, Big_Int rhs) { return (lhs *= rhs); }
+	[[nodiscard]] friend const Big_Int operator/(Big_Int lhs, Big_Int rhs) { return (lhs /= rhs); }
+
+public:
+
 	[[nodiscard]] friend const bool operator< (const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		if ( lhs.m_is_negative && !rhs.m_is_negative) return 1;
 		if (!lhs.m_is_negative &&  rhs.m_is_negative) return 0;
-
 		if (!lhs.m_is_negative && !rhs.m_is_negative) 
 		{
 			return lhs.unsigned_less(rhs);
@@ -352,98 +400,54 @@ private:
 
 void swap(Big_Int & x, Big_Int & y) noexcept { x.swap(y); }
 
-[[nodiscard]] inline const auto operator+(Big_Int lhs, Big_Int rhs) { return (lhs += rhs); }
-[[nodiscard]] inline const auto operator-(Big_Int lhs, Big_Int rhs) { return (lhs -= rhs); }
-[[nodiscard]] inline const auto operator*(Big_Int lhs, Big_Int rhs) { return (lhs *= rhs); }
-[[nodiscard]] inline const auto operator/(Big_Int lhs, Big_Int rhs) { return (lhs /= rhs); }
-
-/*
-
-
-	auto karatsuba_multiply(const Big_Int& x, const Big_Int& y) noexcept
-	{
-		auto n = std::max(x.m_n_digits, y.m_n_digits);
-
-		if (n == 1)
-		{
-			return x * y;
-		}
-
-		std::size_t k = n / 2;
-
-		Big_Int xr;
-		Big_Int xl;
-
-		xr.m_n_digits = k;
-		xl.m_n_digits = n - k;
-
-		for (std::size_t i = 0; i < k; ++i)
-		{
-			xr.digits[i] = x.digits[i];
-		}
-		for (std::size_t i = n / 2; i < n; ++i)
-		{
-			xl.digits[i - k] = x.digits[i];
-		}
-
-		Big_Int yr;
-		Big_Int yl;
-
-		yr.m_n_digits = k;
-		yl.m_n_digits = n - k;
-
-		for (std::size_t i = 0; i < n / 2; ++i)
-		{
-			yr.digits[i] = y.digits[i];
-		}
-		for (std::size_t i = k; i < n; ++i)
-		{
-			yl.digits[i - k] = y.digits[i];
-		}
-
-		Big_Int p1 = karatsuba_multiply(xl, yl);
-		Big_Int p2 = karatsuba_multiply(xr, yr);
-		Big_Int p3 = karatsuba_multiply(xl + xr, yl + yr);
-
-		Big_Int bases = Big_Int::base;
-
-		for (std::size_t i = 1; i < n / 2; ++i)
-		{
-			bases = bases * Big_Int(Big_Int::base);
-		}
-
-		Big_Int result = p1 * bases * bases + (p3 - p2 - p1) * bases + p2;
-
-		return result;
-	}
-
-*/
-
 int main()
 {
 	try
 	{
 		Big_Int bi1;
+
 		Big_Int bi2 = 42;
-		Big_Int bi3 = "-1234567890"s;
+
+		Big_Int bi3 = "+73640854127382725310948206095647"s;
+		Big_Int bi4 = "-46090058756232818791046807807190"s;
 
 		std::cin >> bi1; std::cout << bi1 << std::endl;
 
-		assert(bi3 + bi3 == "-2469135780"s);
-		assert(bi3 - bi3 == "-0"s);
-		assert(bi3 * bi3 == "+1524157875019052100"s);
+		assert(bi3 + bi3 == "+147281708254765450621896412191294"s);
+		assert(bi3 + bi4 ==  "+27550795371149906519901398288457"s);
+		assert(bi4 + bi3 ==  "+27550795371149906519901398288457"s);
+		assert(bi4 + bi4 ==  "-92180117512465637582093615614380"s);
+
+		assert(bi3 - bi3 ==                                 "+0"s);
+		assert(bi3 - bi4 == "+119730912883615544101995013902837"s);
+		assert(bi4 - bi3 == "-119730912883615544101995013902837"s);
+		assert(bi4 - bi4 ==                                 "-0"s);
+
+		assert(bi3 * bi3 == "+5422975396610461369717641600947386274415037870250962127712348609"s);
+		assert(bi3 * bi4 == "-3394111293590239892710602762023649092547630961329778427474301930"s);
+		assert(bi4 * bi3 == "-3394111293590239892710602762023649092547630961329778427474301930"s);
+		assert(bi4 * bi4 == "+2124293516152993531053750721748717735666440864785393936215696100"s);
+
 		assert(bi3 / bi3 == "+1"s);
+		assert(bi3 / bi4 == "-1"s);
+		assert(bi4 / bi3 == "-0"s);
+		assert(bi4 / bi4 == "+1"s);
 
-		assert(++bi3 == "-1234567889"s);
-		assert(--bi3 == "-1234567890"s);
-		assert(bi3++ == "-1234567890"s); 
-		assert(bi3-- == "-1234567889"s);
+		assert(++bi2   == 43); 
+		assert(--bi2   == 42);
+		assert(  bi2++ == 42); 
+		assert(  bi2-- == 43);
 
-		assert(bi3 <  bi2);
-		assert(bi2 >  bi3);
-		assert(bi3 <= bi2);
-		assert(bi2 >= bi3);
-		assert(bi2 != bi3);
+		assert(karatsuba_multiplication(bi3, bi3) == "+5422975396610461369717641600947386274415037870250962127712348609"s);
+		assert(karatsuba_multiplication(bi3, bi4) == "-3394111293590239892710602762023649092547630961329778427474301930"s);
+		assert(karatsuba_multiplication(bi4, bi3) == "-3394111293590239892710602762023649092547630961329778427474301930"s);
+		assert(karatsuba_multiplication(bi4, bi4) == "+2124293516152993531053750721748717735666440864785393936215696100"s);
+
+		assert(bi4 <  bi3);
+		assert(bi3 >  bi4);
+		assert(bi4 <= bi3);
+		assert(bi3 >= bi4);
+		assert(bi3 != bi4);
 
 		Big_Int result(1); for (auto i = 1; i < 101; ++i) result *= i;
 
