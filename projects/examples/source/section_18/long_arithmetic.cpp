@@ -24,47 +24,45 @@ public:
 
 	Big_Int() : m_is_negative(false), m_n_digits(0), m_digits(size, 0) {}
 
+	Big_Int(std::string string) : Big_Int() { parse(std::move(string)); }
+
 	Big_Int(int number) : Big_Int() { parse(std::to_string(number)); }
 
-	Big_Int(std::string string) : Big_Int() { parse(std::move(string)); }
-    
 private:
 
 	void parse(std::string && string)
 	{
-		m_is_negative = (string[0] == '-');
-
-		for (auto i = static_cast < int > (std::size(string)) - 1; i >= 0; i -= step)
+		if (string[0] == '+' || string[0] == '-' || std::isdigit(string[0]))
 		{
-			auto start = i - step + 1;
+			for (std::size_t i = 1; i < std::size(string); ++i)
+			{
+				if (!std::isdigit(string[i]))
+				{
+					throw std::runtime_error("invalid input: "s + string[i]);
+				}
+			}
 
-			if (start <= 0) start = (m_is_negative ? 1 : 0);
+			m_is_negative = (string[0] == '-');
 
-			m_digits[m_n_digits++] = std::stoll(string.substr(start, i - start + 1));
+			for (auto i = static_cast < int > (std::size(string)) - 1; i >= 0; i -= step)
+			{
+				auto start = i - step + 1;
+
+				if (start <= 0) start = (m_is_negative ? 1 : 0);
+
+				m_digits[m_n_digits++] = std::stoll(string.substr(start, i - start + 1));
+			}
+
+			for (; m_n_digits > 0 && !m_digits[m_n_digits - 1]; --m_n_digits);
 		}
+		else throw std::runtime_error("invalid input: "s + string[0]);
 	}
 
 public:
 
-	friend std::istream & operator>>(std::istream & stream, Big_Int & big_int)
+	friend std::istream & operator>>(std::istream & stream,       Big_Int & big_int)
 	{
-		std::string s; stream >> s;
-
-		if (s[0] == '+' || s[0] == '-' || std::isdigit(s[0]))
-		{
-			for (std::size_t i = 1; i < std::size(s); ++i)
-			{
-				if (!std::isdigit(s[i])) 
-				{
-					throw std::runtime_error("invalid input: "s + s[i]);
-				}
-			}
-		}
-		else throw std::runtime_error("invalid input: "s + s[0]);
-
-		big_int = Big_Int(s);
-
-		return stream;
+		std::string s; stream >> s; big_int = Big_Int(s); return stream;
 	}
 
 	friend std::ostream & operator<<(std::ostream & stream, const Big_Int & big_int)
@@ -75,7 +73,7 @@ public:
 
 		for (auto i = static_cast < int > (big_int.m_n_digits) - 2; i >= 0; --i)
 		{
-			stream << std::setfill('0') << std::setw(step) << big_int.m_digits[i];
+			stream << std::setw(step) << std::setfill('0') << big_int.m_digits[i];
 		}
 
 		return stream;
@@ -85,42 +83,34 @@ public:
 
 	auto & operator+=(Big_Int other)
 	{
-		if (!m_is_negative && !other.m_is_negative)
+		if ((!m_is_negative && !other.m_is_negative) ||
+			( m_is_negative &&  other.m_is_negative))
 		{
-			*this = unsigned_add(std::move(*this), std::move(other));
+			this->unsigned_add(other);
 		}
-		else
-		if ( m_is_negative &&  other.m_is_negative)
-		{
-			*this = unsigned_add(std::move(*this), std::move(other));
-
-			m_is_negative = true;
-		}
-		else
-		if (!m_is_negative &&  other.m_is_negative)
+		else if (!m_is_negative && other.m_is_negative)
 		{
 			if (this->unsigned_less(other))
 			{
-				*this = unsigned_sub(std::move(other), std::move(*this));
-
+				*this = std::move(other.unsigned_sub(*this)); 
+				
 				m_is_negative = true;
 			}
 			else
 			{
-				*this = unsigned_sub(std::move(*this), std::move(other));
+				this->unsigned_sub(other);
 			}
 		}
-		else
-		if ( m_is_negative && !other.m_is_negative)
+		else if (m_is_negative && !other.m_is_negative)
 		{
 			if (this->unsigned_less(other))
 			{
-				*this = unsigned_sub(std::move(other), std::move(*this));
+				*this = std::move(other.unsigned_sub(*this));
 			}
 			else
 			{
-				*this = unsigned_sub(std::move(*this), std::move(other));
-
+				this->unsigned_sub(other); 
+				
 				m_is_negative = true;
 			}
 		}
@@ -135,56 +125,131 @@ public:
 		return (*this += other);
 	}
 
-private:
-
-	Big_Int unsigned_add(Big_Int && lhs, Big_Int && rhs) const
+	auto & operator*=(Big_Int other)
 	{
-		lhs.m_n_digits = std::max(lhs.m_n_digits, rhs.m_n_digits);
+		if (m_n_digits + other.m_n_digits > size) throw std::overflow_error("too many digits");
+
+		Big_Int lhs(*this);
+
+		m_is_negative = lhs.m_is_negative ^ other.m_is_negative;
 
 		for (std::size_t i = 0; i < lhs.m_n_digits; ++i)
 		{
-			lhs.m_digits[i] += rhs.m_digits[i];
+			digit_t r = 0;
 
-			if (lhs.m_digits[i] >= Big_Int::base)
+			for (std::size_t j = 0; (j < other.m_n_digits) || r; ++j)
 			{
-				lhs.m_digits[i] -= Big_Int::base;
+				m_digits[i + j] += (lhs.m_digits[i] * other.m_digits[j] + r);
 
-				if (i < lhs.size - 1)
+				r = m_digits[i + j] / Big_Int::base;
+
+				m_digits[i + j] -= (r * Big_Int::base);
+			}
+		}
+
+		m_n_digits = lhs.m_n_digits + other.m_n_digits;
+
+		for (; m_n_digits > 0 && !m_digits[m_n_digits - 1]; --m_n_digits);
+
+		return *this;
+	}
+
+	auto & operator/=(Big_Int other)
+	{
+		if (other.m_n_digits == 0 || other.m_n_digits == 1 && other.m_digits.front() == 0)
+		{
+			throw std::runtime_error("division by zero");
+		}
+
+		Big_Int lhs(*this);
+
+		m_is_negative = lhs.m_is_negative ^ other.m_is_negative;
+
+		Big_Int current;
+
+		for (auto i = static_cast < int > (lhs.m_n_digits) - 1; i >= 0; --i)
+		{
+			current = current * Big_Int(Big_Int::base);
+
+			current.m_digits[0] = lhs.m_digits[i];
+
+			int x = 0;
+
+			int l = 0;
+			int r = Big_Int::base;
+
+			while (l <= r)
+			{
+				int m = (l + r) >> 1;
+
+				Big_Int temp = other * Big_Int(m);
+
+				if (temp <= current)
 				{
-					++lhs.m_digits[i + 1];
+					x = m;
+					l = m + 1;
+				}
+				else
+				{
+					r = m - 1;
+				}
+
+			}
+
+			m_digits[i] = x;
+			current = current - other * x;
+		}
+
+		int position = lhs.m_n_digits;
+
+		while (position > 0 && !m_digits[position])
+		{
+			--position;
+		}
+
+		m_n_digits = position + 1;
+
+		return *this;
+	}
+
+private:
+
+	Big_Int & unsigned_add(const Big_Int & other)
+	{
+		m_n_digits = std::max(m_n_digits, other.m_n_digits);
+
+		for (std::size_t i = 0; i < m_n_digits; ++i)
+		{
+			if (m_digits[i] += other.m_digits[i]; m_digits[i] >= Big_Int::base)
+			{
+				if (m_digits[i] -= Big_Int::base; i < size - 1)
+				{
+					++m_digits[i + 1];
 				}
 				else throw std::overflow_error("too many digits");
 			}
 		}
 
-		lhs.m_n_digits += (lhs.m_digits[lhs.m_n_digits]);
+		m_n_digits += (m_digits[m_n_digits]);
 
-		return lhs;
+		return *this;
 	}
 
-	Big_Int unsigned_sub(Big_Int && lhs, Big_Int && rhs) const noexcept
+	Big_Int & unsigned_sub(const Big_Int & other) noexcept
 	{
-		lhs.m_is_negative = false;
-
-		for (std::size_t i = 0; i < lhs.m_n_digits; ++i)
+		for (std::size_t i = 0; i < m_n_digits; ++i)
 		{
-			lhs.m_digits[i] -= rhs.m_digits[i];
-
-			if (lhs.m_digits[i] < 0)
+			if (m_digits[i] -= other.m_digits[i]; m_digits[i] < 0)
 			{
-				lhs.m_digits[i] += Big_Int::base;
+				m_digits[i] += Big_Int::base;
 
-				lhs.m_digits[i + 1]--;
+				m_digits[i + 1]--;
 			}
 		}
 
-		auto position = lhs.m_n_digits;
+		for (; m_n_digits > 0 && !m_digits[m_n_digits - 1]; --m_n_digits);
 
-		while (position > 0 && !lhs.m_digits[position]) --position;
-
-		lhs.m_n_digits = position + 1;
-
-		return lhs;
+		return *this;
 	}
 
 public:
@@ -194,17 +259,17 @@ public:
 
 	const auto operator++(int)
 	{
-		Big_Int tmp(*this); ++(*this); return tmp;
+		Big_Int t(*this); ++(*this); return t;
 	}
 
 	const auto operator--(int)
 	{
-		Big_Int tmp(*this); --(*this); return tmp;
+		Big_Int t(*this); --(*this); return t;
 	}
 
 public:
 
-	[[nodiscard]] friend auto operator< (const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend const auto operator< (const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		if ( lhs.m_is_negative && !rhs.m_is_negative) return true;
 		if (!lhs.m_is_negative &&  rhs.m_is_negative) return false;
@@ -213,22 +278,22 @@ public:
 		if ( lhs.m_is_negative &&  rhs.m_is_negative) return rhs.unsigned_less(lhs);
 	}
 
-	[[nodiscard]] friend auto operator> (const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend const auto operator> (const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return (rhs < lhs);
 	}
 
-	[[nodiscard]] friend auto operator<=(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend const auto operator<=(const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return !(rhs < lhs);
 	}
 
-	[[nodiscard]] friend auto operator>=(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend const auto operator>=(const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return !(lhs < rhs);
 	}
 
-	[[nodiscard]] friend auto operator==(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend const auto operator==(const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		if ((lhs.m_is_negative != rhs.m_is_negative) || (lhs.m_n_digits != rhs.m_n_digits))
 		{
@@ -275,48 +340,13 @@ private:
 
 }; // class Big_Int
 
-[[nodiscard]] inline const auto operator+(Big_Int lhs, Big_Int rhs)
-{
-	return (lhs += rhs);
-}
-
-[[nodiscard]] inline const auto operator-(Big_Int lhs, Big_Int rhs)
-{
-	return (lhs -= rhs);
-}
+[[nodiscard]] inline const auto operator+(Big_Int lhs, Big_Int rhs) { return (lhs += rhs); }
+[[nodiscard]] inline const auto operator-(Big_Int lhs, Big_Int rhs) { return (lhs -= rhs); }
+[[nodiscard]] inline const auto operator*(Big_Int lhs, Big_Int rhs) { return (lhs *= rhs); }
+[[nodiscard]] inline const auto operator/(Big_Int lhs, Big_Int rhs) { return (lhs /= rhs); }
 
 /*
-	auto operator*(const Big_Int& lhs, const Big_Int& rhs) noexcept
-	{
-		Big_Int result;
 
-		result.m_is_negative = lhs.m_is_negative ^ rhs.m_is_negative;
-
-		for (std::size_t i = 0; i < lhs.m_n_digits; ++i)
-		{
-			unsigned int r = 0;
-
-			for (std::size_t j = 0; (j < rhs.m_n_digits) || r; ++j)
-			{
-				result.digits[i + j] += (lhs.digits[i] * rhs.digits[j] + r);
-
-				r = result.digits[i + j] / Big_Int::base;
-
-				result.digits[i + j] -= (r * Big_Int::base);
-			}
-		}
-
-		std::size_t position = lhs.m_n_digits + rhs.m_n_digits;
-
-		while (position > 0 && !result.digits[position])
-		{
-			--position;
-		}
-
-		result.m_n_digits = position + 1;
-
-		return result;
-	};
 
 	auto karatsuba_multiply(const Big_Int& x, const Big_Int& y) noexcept
 	{
@@ -375,63 +405,6 @@ private:
 		return result;
 	}
 
-	Big_Int operator/(const Big_Int& lhs, const Big_Int& rhs) noexcept
-	{
-		if (rhs.digits[0] == 0)
-		{
-			throw Big_Int_Error("error: division by zero");
-		}
-
-		Big_Int result;
-
-		result.m_is_negative = lhs.m_is_negative ^ rhs.m_is_negative;
-
-		Big_Int current;
-
-		for (int i = lhs.m_n_digits - 1; i >= 0; --i)
-		{
-			current = current * Big_Int(Big_Int::base);
-
-			current.digits[0] = lhs.digits[i];
-
-			int x = 0;
-
-			int l = 0;
-			int r = Big_Int::base;
-
-			while (l <= r)
-			{
-				int m = (l + r) >> 1;
-
-				Big_Int temp = rhs * Big_Int(m);
-
-				if (temp <= current)
-				{
-					x = m;
-					l = m + 1;
-				}
-				else
-				{
-					r = m - 1;
-				}
-
-			}
-
-			result.digits[i] = x;
-			current = current - rhs * x;
-		}
-
-		int position = lhs.m_n_digits;
-
-		while (position > 0 && !result.digits[position])
-		{
-			--position;
-		}
-
-		result.m_n_digits = position + 1;
-
-		return result;
-	}
 */
 
 int main()
@@ -440,7 +413,7 @@ int main()
 	{
 		Big_Int bi1;
 		Big_Int bi2(42);
-		Big_Int bi3("123456789");
+		Big_Int bi3("-1234567890");
 
 		Big_Int bi4; std::cin >> bi4;
 		Big_Int bi5; std::cin >> bi5;
