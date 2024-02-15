@@ -211,10 +211,15 @@ int main()
 	boost::rational < int > br1(2, 5); // note: ignore templates here
 	boost::rational < int > br2(3, 7); // note: ignore templates here
 
+	std::cout << boost::rational < int > (5, 10) << std::endl; // note: outputs 1/2
+
 	std::cout << br1 + br2 << std::endl;
 	std::cout << br1 - br2 << std::endl;
 	std::cout << br1 * br2 << std::endl;
 	std::cout << br1 / br2 << std::endl; // note: and many other operations...
+
+	std::cout << boost::rational_cast < int    > (br1) << std::endl;
+    std::cout << boost::rational_cast < double > (br2) << std::endl;
 
 	return 0;
 }
