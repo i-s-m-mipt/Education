@@ -6,6 +6,7 @@
 #include <iostream>
 #include <istream>
 #include <limits>
+#include <numeric>
 #include <ostream>
 #include <stdexcept>
 #include <string>
@@ -22,11 +23,11 @@ public:
 
 public:
 
-	Big_Int() : m_is_negative(false), m_n_digits(0), m_digits(size, 0) {}
+	Big_Int() : m_is_negative(false), m_n_digits(1), m_digits(size, 0) {}
+
+	Big_Int(digit_t number) : Big_Int() { parse(std::to_string(number)); }
 
 	Big_Int(std::string string) : Big_Int() { parse(std::move(string)); }
-
-	Big_Int(int number) : Big_Int() { parse(std::to_string(number)); }
 
 private:
 
@@ -34,6 +35,11 @@ private:
 	{
 		if (string[0] == '+' || string[0] == '-' || std::isdigit(string[0]))
 		{
+			if (!std::isdigit(string[0]) && std::size(string) == 1)
+			{
+				throw std::runtime_error("invalid input: "s + string[0]);
+			}
+
 			for (std::size_t i = 1; i < std::size(string); ++i)
 			{
 				if (!std::isdigit(string[i]))
@@ -42,7 +48,7 @@ private:
 				}
 			}
 
-			m_is_negative = (string[0] == '-');
+			m_is_negative = (string[0] == '-'); m_n_digits = 0;
 
 			for (auto i = static_cast < int > (std::size(string)) - 1; i >= 0; i -= step)
 			{
@@ -53,9 +59,20 @@ private:
 				m_digits[m_n_digits++] = std::stoll(string.substr(start, i - start + 1));
 			}
 
-			for (; m_n_digits > 0 && !m_digits[m_n_digits - 1]; --m_n_digits);
+			for (; m_n_digits > 1 && !m_digits[m_n_digits - 1]; --m_n_digits);
 		}
 		else throw std::runtime_error("invalid input: "s + string[0]);
+	}
+
+public:
+
+	void swap(Big_Int & other) noexcept
+	{
+		using std::swap; // good: enable argument-dependent lookup
+
+		swap(m_is_negative, other.m_is_negative);
+		swap(m_n_digits,    other.m_n_digits   );
+		swap(m_digits,      other.m_digits     );
 	}
 
 public:
@@ -129,87 +146,74 @@ public:
 	{
 		if (m_n_digits + other.m_n_digits > size) throw std::overflow_error("too many digits");
 
-		Big_Int lhs(*this);
+		Big_Int result;
 
-		m_is_negative = lhs.m_is_negative ^ other.m_is_negative;
+		result.m_is_negative = m_is_negative ^ other.m_is_negative;
 
-		for (std::size_t i = 0; i < lhs.m_n_digits; ++i)
+		for (std::size_t i = 0; i < m_n_digits; ++i)
 		{
 			digit_t r = 0;
 
 			for (std::size_t j = 0; (j < other.m_n_digits) || r; ++j)
 			{
-				m_digits[i + j] += (lhs.m_digits[i] * other.m_digits[j] + r);
+				result.m_digits[i + j] += (m_digits[i] * other.m_digits[j] + r);
 
-				r = m_digits[i + j] / Big_Int::base;
+				r = result.m_digits[i + j] / Big_Int::base;
 
-				m_digits[i + j] -= (r * Big_Int::base);
+				result.m_digits[i + j] -= (r * Big_Int::base);
 			}
 		}
 
-		m_n_digits = lhs.m_n_digits + other.m_n_digits;
+		result.m_n_digits = m_n_digits + other.m_n_digits;
 
-		for (; m_n_digits > 0 && !m_digits[m_n_digits - 1]; --m_n_digits);
+		for (; result.m_n_digits > 1 && !result.m_digits[result.m_n_digits - 1]; --result.m_n_digits);
 
-		return *this;
+		swap(result); return *this;
 	}
 
 	auto & operator/=(Big_Int other)
 	{
-		if (other.m_n_digits == 0 || other.m_n_digits == 1 && other.m_digits.front() == 0)
+		if (other.m_n_digits == 0 || (other.m_n_digits == 1 && other.m_digits.front() == 0))
 		{
 			throw std::runtime_error("division by zero");
 		}
 
-		Big_Int lhs(*this);
+		Big_Int result;
 
-		m_is_negative = lhs.m_is_negative ^ other.m_is_negative;
+		result.m_is_negative = m_is_negative ^ other.m_is_negative; 
+		
+		other.m_is_negative = false;
 
 		Big_Int current;
 
-		for (auto i = static_cast < int > (lhs.m_n_digits) - 1; i >= 0; --i)
+		for (auto i = static_cast < int > (m_n_digits) - 1; i >= 0; --i)
 		{
-			current = current * Big_Int(Big_Int::base);
+			current *= Big_Int::base; current.m_digits[0] = m_digits[i];
 
-			current.m_digits[0] = lhs.m_digits[i];
-
-			int x = 0;
-
-			int l = 0;
-			int r = Big_Int::base;
+			digit_t l = 0, r = Big_Int::base, x = 0;
 
 			while (l <= r)
 			{
-				int m = (l + r) >> 1;
+				auto m = std::midpoint(l, r);
 
-				Big_Int temp = other * Big_Int(m);
-
-				if (temp <= current)
+				if (Big_Int t(other); (t *= m) <= current)
 				{
-					x = m;
-					l = m + 1;
+					l = m + 1; x = m;
 				}
 				else
 				{
 					r = m - 1;
 				}
-
 			}
 
-			m_digits[i] = x;
-			current = current - other * x;
+			result.m_digits[i] = x; Big_Int t(other); current -= (t *= x);
 		}
 
-		int position = lhs.m_n_digits;
+		result.m_n_digits = m_n_digits;
 
-		while (position > 0 && !m_digits[position])
-		{
-			--position;
-		}
+		for (; result.m_n_digits > 1 && !result.m_digits[result.m_n_digits - 1]; --result.m_n_digits);
 
-		m_n_digits = position + 1;
-
-		return *this;
+		swap(result); return *this;
 	}
 
 private:
@@ -247,7 +251,7 @@ private:
 			}
 		}
 
-		for (; m_n_digits > 0 && !m_digits[m_n_digits - 1]; --m_n_digits);
+		for (; m_n_digits > 1 && !m_digits[m_n_digits - 1]; --m_n_digits);
 
 		return *this;
 	}
@@ -269,31 +273,37 @@ public:
 
 public:
 
-	[[nodiscard]] friend const auto operator< (const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend const bool operator< (const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
-		if ( lhs.m_is_negative && !rhs.m_is_negative) return true;
-		if (!lhs.m_is_negative &&  rhs.m_is_negative) return false;
+		if ( lhs.m_is_negative && !rhs.m_is_negative) return 1;
+		if (!lhs.m_is_negative &&  rhs.m_is_negative) return 0;
 
-		if (!lhs.m_is_negative && !rhs.m_is_negative) return lhs.unsigned_less(rhs);
-		if ( lhs.m_is_negative &&  rhs.m_is_negative) return rhs.unsigned_less(lhs);
+		if (!lhs.m_is_negative && !rhs.m_is_negative) 
+		{
+			return lhs.unsigned_less(rhs);
+		}
+		else
+		{
+			return rhs.unsigned_less(lhs);
+		}
 	}
 
-	[[nodiscard]] friend const auto operator> (const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend const bool operator> (const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return (rhs < lhs);
 	}
 
-	[[nodiscard]] friend const auto operator<=(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend const bool operator<=(const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return !(rhs < lhs);
 	}
 
-	[[nodiscard]] friend const auto operator>=(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend const bool operator>=(const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return !(lhs < rhs);
 	}
 
-	[[nodiscard]] friend const auto operator==(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend const bool operator==(const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		if ((lhs.m_is_negative != rhs.m_is_negative) || (lhs.m_n_digits != rhs.m_n_digits))
 		{
@@ -339,6 +349,8 @@ private:
 	std::vector < digit_t > m_digits; 
 
 }; // class Big_Int
+
+void swap(Big_Int & x, Big_Int & y) noexcept { x.swap(y); }
 
 [[nodiscard]] inline const auto operator+(Big_Int lhs, Big_Int rhs) { return (lhs += rhs); }
 [[nodiscard]] inline const auto operator-(Big_Int lhs, Big_Int rhs) { return (lhs -= rhs); }
@@ -412,14 +424,30 @@ int main()
 	try
 	{
 		Big_Int bi1;
-		Big_Int bi2(42);
-		Big_Int bi3("-1234567890");
+		Big_Int bi2 = 42;
+		Big_Int bi3 = "-1234567890"s;
 
-		Big_Int bi4; std::cin >> bi4;
-		Big_Int bi5; std::cin >> bi5;
+		std::cin >> bi1; std::cout << bi1 << std::endl;
 
-		std::cout << bi4 + bi5 << std::endl;
-		std::cout << bi4 - bi5 << std::endl;
+		assert(bi3 + bi3 == "-2469135780"s);
+		assert(bi3 - bi3 == "-0"s);
+		assert(bi3 * bi3 == "+1524157875019052100"s);
+		assert(bi3 / bi3 == "+1"s);
+
+		assert(++bi3 == "-1234567889"s);
+		assert(--bi3 == "-1234567890"s);
+		assert(bi3++ == "-1234567890"s); 
+		assert(bi3-- == "-1234567889"s);
+
+		assert(bi3 <  bi2);
+		assert(bi2 >  bi3);
+		assert(bi3 <= bi2);
+		assert(bi2 >= bi3);
+		assert(bi2 != bi3);
+
+		Big_Int result(1); for (auto i = 1; i < 101; ++i) result *= i;
+
+		std::cout << result << std::endl;
 
 		return EXIT_SUCCESS;
 	}
