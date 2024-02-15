@@ -182,7 +182,8 @@ set(sources_09
     bitwise_operations
     calendar_time_zones
     chrono_management
-    floating_point_types)
+    floating_point_types
+    multiprecision_float)
 
 set(section_09 source/section_09/)
 
