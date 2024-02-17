@@ -1,7 +1,10 @@
 #include <cassert>
+#include <cstdint>
 #include <iomanip>
 #include <iostream>
 #include <type_traits>
+
+#include <benchmark/benchmark.h>
 
 struct S1 // note: C___IIIISS__
 {
@@ -33,7 +36,37 @@ struct alignas(32) S4
 
 }; // struct alignas(32) S4
 
-int main()
+struct alignas( 1) S5 { std::uint8_t x{}; }; // note: one  cache line
+struct alignas(64) S6 { std::uint8_t x{}; }; // note: many cache lines
+
+void test_1(benchmark::State & state) 
+{
+    for (auto _ : state)
+    {
+		const std::size_t size = 64;
+
+        auto array = new S5[size]{}; benchmark::DoNotOptimize(array);
+
+		for (std::size_t i = 1; i < size; ++i) array[i].x = array[i - 1].x + 1;
+    }
+}
+
+void test_2(benchmark::State & state) 
+{
+    for (auto _ : state)
+    {
+        const std::size_t size = 64;
+
+        auto array = new S6[size]{}; benchmark::DoNotOptimize(array);
+
+		for (std::size_t i = 1; i < size; ++i) array[i].x = array[i - 1].x + 1;
+    }
+}
+
+BENCHMARK(test_1);
+BENCHMARK(test_2);
+
+int main(int argc, char ** argv) // note: arguments for benchmark
 {
 	std::cout << "char: " << alignof(char) << ' ' << sizeof(char) << std::endl;
 	std::cout << "int*: " << alignof(int*) << ' ' << sizeof(int*) << std::endl;
@@ -52,6 +85,10 @@ int main()
 
 	std::cout << std::hex << a << std::endl;
 	std::cout << std::hex << b << std::endl;
+
+	benchmark::Initialize(&argc, argv);
+
+	benchmark::RunSpecifiedBenchmarks();
 
 	return 0;
 }
