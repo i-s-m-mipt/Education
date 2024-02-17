@@ -87,7 +87,7 @@ private:
 
 }; // class Stack_Allocator
 
-int main(int argc, char ** argv) // note: arguments for benchmark
+int main()
 {
 	Stack_Allocator allocator(1024);
 

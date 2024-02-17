@@ -63,7 +63,7 @@ private:
 
 }; // class Arena_Allocator
 
-int main(int argc, char ** argv) // note: arguments for benchmark
+int main()
 {
 	Arena_Allocator allocator(1024); 
 

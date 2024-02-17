@@ -118,7 +118,7 @@ private:
 
 }; // class Chain_Allocator
 
-int main(int argc, char ** argv) // note: arguments for benchmark
+int main()
 {
 	Chain_Allocator allocator(32, 8);                   allocator.print(); // note: initial
 
