@@ -36,10 +36,10 @@ struct alignas(32) S4
 
 }; // struct alignas(32) S4
 
-struct alignas( 1) S5 { std::uint8_t x{}; }; // note: one  cache line
-struct alignas(64) S6 { std::uint8_t x{}; }; // note: many cache lines
+struct alignas( 1) S5 { std::uint8_t x{}; };
+struct alignas(64) S6 { std::uint8_t x{}; };
 
-void test_1(benchmark::State & state) 
+void test_1(benchmark::State & state) // note: very fast
 {
     for (auto _ : state)
     {
@@ -51,7 +51,7 @@ void test_1(benchmark::State & state)
     }
 }
 
-void test_2(benchmark::State & state) 
+void test_2(benchmark::State & state) // note: very slow
 {
     for (auto _ : state)
     {
