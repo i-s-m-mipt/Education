@@ -468,7 +468,7 @@
     <ClCompile Include="..\source\section_10\chain_allocator.cpp">
       <Filter>source\section_10</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\section_10\memory_resource.cpp">
+    <ClCompile Include="..\source\section_10\list_allocator.cpp">
       <Filter>source\section_10</Filter>
     </ClCompile>
     <ClCompile Include="..\source\section_10\stack_allocator.cpp">
