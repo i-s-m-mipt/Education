@@ -5,6 +5,8 @@
 #include <memory>
 #include <vector>
 
+#include <benchmark/benchmark.h>
+
 class Arena_Allocator // note: used without deallocations for blocks of different sizes
 {
 public:
@@ -63,7 +65,41 @@ private:
 
 }; // class Arena_Allocator
 
-int main()
+void test_1(benchmark::State & state) // note: very fast
+{
+	const std::size_t kb = 1024;
+	const std::size_t mb = 1024 * 1024;
+	const std::size_t gb = 1024 * 1024 * 1024;
+
+	for (auto _ : state)
+	{
+		Arena_Allocator allocator(gb);
+
+		for (std::size_t i = 0; i < kb; ++i)
+		{
+			benchmark::DoNotOptimize(allocator.allocate(mb));
+		}
+	}
+}
+
+void test_2(benchmark::State & state) // note: very slow
+{
+	const std::size_t kb = 1024;
+	const std::size_t mb = 1024 * 1024;
+
+	for (auto _ : state)
+	{
+		for (std::size_t i = 0; i < kb; ++i)
+		{
+			benchmark::DoNotOptimize(::operator new(mb)); // note: no delete
+		}
+	}
+}
+
+BENCHMARK(test_1);
+BENCHMARK(test_2);
+
+int main(int argc, char ** argv) // note: arguments for benchmark
 {
 	Arena_Allocator allocator(1024); 
 
@@ -76,6 +112,10 @@ int main()
 
 	std::cout << allocator.allocate(988   ) << ' '; allocator.print();
 	std::cout << allocator.allocate(  1   ) << ' '; allocator.print(); // note: nullptr
+
+	benchmark::Initialize(&argc, argv);
+
+	benchmark::RunSpecifiedBenchmarks();
 
 	return 0;
 }

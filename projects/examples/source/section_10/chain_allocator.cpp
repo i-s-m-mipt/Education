@@ -8,6 +8,8 @@
 #include <stdexcept>
 #include <vector>
 
+#include <benchmark/benchmark.h>
+
 class Chain_Allocator // note: used with deallocations at any position for blocks of fixed sizes
 {
 private:
@@ -118,7 +120,49 @@ private:
 
 }; // class Chain_Allocator
 
-int main()
+void test_1(benchmark::State & state) // note: very fast
+{
+	const std::size_t kb = 1024;
+	const std::size_t mb = 1024 * 1024;
+	const std::size_t gb = 1024 * 1024 * 1024;
+
+	std::vector < void * > pointers(kb, nullptr);
+
+	benchmark::DoNotOptimize(pointers);
+
+	for (auto _ : state)
+	{
+		Chain_Allocator allocator(gb, mb);
+
+		for (std::size_t i = 0; i < kb; i += 1) pointers[i] = allocator.  allocate(           );
+		for (std::size_t i = 0; i < kb; i += 2)               allocator.deallocate(pointers[i]);
+		for (std::size_t i = 0; i < kb; i += 2) pointers[i] = allocator.  allocate(           );
+		for (std::size_t i = 0; i < kb; i += 1)               allocator.deallocate(pointers[i]);
+	}
+}
+
+void test_2(benchmark::State & state) // note: very slow
+{
+	const std::size_t kb = 1024;
+	const std::size_t mb = 1024 * 1024;
+
+	std::vector < void * > pointers(kb, nullptr);
+
+	benchmark::DoNotOptimize(pointers);
+
+	for (auto _ : state)
+	{
+		for (std::size_t i = 0; i < kb; i += 1) pointers[i] = ::operator new   (mb         );
+		for (std::size_t i = 0; i < kb; i += 2)               ::operator delete(pointers[i]);
+		for (std::size_t i = 0; i < kb; i += 2) pointers[i] = ::operator new   (mb         );
+		for (std::size_t i = 0; i < kb; i += 1)               ::operator delete(pointers[i]);
+	}
+}
+
+BENCHMARK(test_1);
+BENCHMARK(test_2);
+
+int main(int argc, char ** argv) // note: arguments for benchmark
 {
 	Chain_Allocator allocator(32, 8);                   allocator.print(); // note: initial
 
@@ -134,6 +178,10 @@ int main()
 
 	[[maybe_unused]] auto ptr_5 = allocator.allocate(); allocator.print(); // note: head X
 	[[maybe_unused]] auto ptr_6 = allocator.allocate(); allocator.print(); // note: head Z
+
+	benchmark::Initialize(&argc, argv);
+
+	benchmark::RunSpecifiedBenchmarks();
 
 	return 0;
 }
