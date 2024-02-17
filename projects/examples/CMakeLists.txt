@@ -204,7 +204,6 @@ set(sources_10
     custom_optional
     custom_shared_ptr
     custom_unique_ptr
-    data_alignment
     iterator_basics
     iterator_facade
     memory_resource
@@ -216,11 +215,20 @@ set(sources_10
     stack_allocator
     standard_allocator)
 
+    set(section_10 source/section_10/)
+
 foreach(entry IN LISTS sources_10)
-    add_executable(${entry} source/section_10/${entry}.cpp)
+    add_executable(${entry} ${section_10}${entry}.cpp)
     set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
 endforeach()
+
+add_executable(data_alignment ${section_10}data_alignment.cpp)
+target_include_directories(data_alignment PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/include)
+target_link_libraries(data_alignment PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/build/src/libbenchmark.a)
+set_target_properties(data_alignment PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+target_compile_options(data_alignment PRIVATE -Wall -pedantic -O3) # g++ --help=warnings
+target_compile_definitions(data_alignment PRIVATE "NDEBUG")
 
 set(sources_11
     circular_buffer
