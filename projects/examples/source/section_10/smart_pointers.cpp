@@ -4,14 +4,13 @@
 #include <memory>
 #include <stdexcept>
 
-template < typename T > class Resource // good: RAII idiom
+#include <boost/noncopyable.hpp>
+
+template < typename T > class Resource : private boost::noncopyable // good: RAII idiom
 {
 public:
 
 	explicit Resource(T value) : m_ptr(new T(value)) {}
-
-	Resource            (const Resource &) = delete;
-	Resource & operator=(const Resource &) = delete;
 
 	[[nodiscard]] auto get() const noexcept { return m_ptr; }
 
@@ -21,7 +20,7 @@ private:
 
 	T * m_ptr; // note: copying is prohibited for example
 
-}; // template < typename T > class Resource 
+}; // template < typename T > class Resource : private boost::noncopyable 
 
 void f(std::shared_ptr < int > x, [[maybe_unused]] int y) {}
 
