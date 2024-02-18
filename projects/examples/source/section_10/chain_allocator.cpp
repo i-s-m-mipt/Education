@@ -8,9 +8,10 @@
 #include <stdexcept>
 #include <vector>
 
+#include <boost/noncopyable.hpp>
 #include <benchmark/benchmark.h>
 
-class Chain_Allocator // note: used with deallocations at any position for blocks of fixed sizes
+class Chain_Allocator : private boost::noncopyable // note: deallocations at any position for blocks of fixed sizes
 {
 private:
 
@@ -118,7 +119,7 @@ private:
 
 	void * m_begin = nullptr;
 
-}; // class Chain_Allocator
+}; // class Chain_Allocator : private boost::noncopyable
 
 void test_1(benchmark::State & state) // note: very fast
 {

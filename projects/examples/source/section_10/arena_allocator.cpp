@@ -5,9 +5,10 @@
 #include <memory>
 #include <vector>
 
+#include <boost/noncopyable.hpp>
 #include <benchmark/benchmark.h>
 
-class Arena_Allocator // note: used without deallocations for blocks of different sizes
+class Arena_Allocator : private boost::noncopyable // note: no deallocations for blocks of different sizes
 {
 public:
 
@@ -63,7 +64,7 @@ private:
 
 	void * m_begin = nullptr;
 
-}; // class Arena_Allocator
+}; // class Arena_Allocator : private boost::noncopyable
 
 void test_1(benchmark::State & state) // note: very fast
 {

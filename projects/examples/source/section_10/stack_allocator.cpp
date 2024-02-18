@@ -7,9 +7,10 @@
 #include <memory>
 #include <string>
 
+#include <boost/noncopyable.hpp>
 #include <benchmark/benchmark.h>
 
-class Stack_Allocator // note: used with deallocations at end for blocks of different sizes
+class Stack_Allocator : private boost::noncopyable // note: deallocations at end for blocks of different sizes
 {
 private:
 
@@ -87,7 +88,7 @@ private:
 
 	void * m_begin = nullptr;
 
-}; // class Stack_Allocator
+}; // class Stack_Allocator : private boost::noncopyable
 
 void test_1(benchmark::State & state) // note: very fast
 {
