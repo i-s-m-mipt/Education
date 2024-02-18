@@ -1,14 +1,13 @@
 #include <iostream>
 #include <string>
 
-class Computer // note: placed in the header file, consider also forward declarations
+#include <boost/noncopyable.hpp>
+
+class Computer : private boost::noncopyable // note: placed in the header file
 {
 public:
 
     explicit Computer(std::string name); // note: definition in source file
-
-    Computer            (const Computer &) = delete;
-    Computer & operator=(const Computer &) = delete;
 
     Computer(Computer && other) noexcept : m_pimpl(other.m_pimpl) // note: ignore noexcept here
     {
@@ -30,7 +29,7 @@ private:
 
     Implementation * m_pimpl; // note: use std::experimental::propagate_const
 
-}; // class Computer
+}; // class Computer : private boost::noncopyable
 
 class Computer::Implementation // note: placed in the source file
 {
