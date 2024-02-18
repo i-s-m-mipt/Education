@@ -73,6 +73,6 @@ namespace solution::shared
 
 		boost::python::api::object m_global;
 
-	}; // class Python
+	}; // class Python : private boost::noncopyable
 
 } // namespace solution::shared
