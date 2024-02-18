@@ -224,7 +224,8 @@ set (sources_10_release
     data_alignment
     arena_allocator
     stack_allocator
-    chain_allocator)
+    chain_allocator
+    noheap_allocator)
 
 foreach(entry IN LISTS sources_10_release)
     add_executable(${entry} ${section_10}${entry}.cpp)
