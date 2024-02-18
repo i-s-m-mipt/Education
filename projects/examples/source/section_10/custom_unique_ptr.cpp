@@ -3,23 +3,21 @@
 #include <type_traits>
 #include <utility>
 
-template < typename T > class Unique // note: no custom deleters support
+#include <boost/noncopyable.hpp>
+
+template < typename T > class Unique : private boost::noncopyable
 {
 public:
 
     Unique() noexcept = default;
 
     explicit Unique(T * data) noexcept : m_data(data) {} // good: explicit
-
-    Unique(const Unique &) noexcept = delete;
         
     Unique(Unique && other) noexcept : Unique() { swap(other); }
 
     ~Unique() noexcept { reset(); }
 
 public:
-
-    Unique & operator=(const Unique &) noexcept = delete;
 
     Unique & operator=(Unique && other) noexcept
     { 
@@ -53,7 +51,7 @@ private:
 
     T * m_data = nullptr;
 
-}; // template < typename T > class Unique
+}; // template < typename T > class Unique : private boost::noncopyable
 
 template < typename T > void swap(Unique < T > & lhs, Unique < T > & rhs) noexcept
 {
