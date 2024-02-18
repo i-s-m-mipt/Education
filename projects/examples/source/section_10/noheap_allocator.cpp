@@ -1,9 +1,7 @@
-#include <bit>
 #include <cstddef>
 #include <iomanip>
 #include <iostream>
 #include <memory>
-#include <vector>
 
 #include <boost/noncopyable.hpp>
 #include <benchmark/benchmark.h>
