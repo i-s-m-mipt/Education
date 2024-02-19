@@ -1,4 +1,5 @@
 #include <cassert>
+#include <iostream>
 #include <iterator>
 #include <string>
 #include <tuple>
@@ -18,8 +19,7 @@ int main()
     auto begin_1 = std::begin(input_1);
     auto   end_1 = std::  end(input_1);
 
-    boost::spirit::x3::parse(begin_1, end_1, 
-        boost::spirit::x3::int_, value);
+    boost::spirit::x3::parse(begin_1, end_1, boost::spirit::x3::int_, value);
 
     assert(value == 42);
 
@@ -33,7 +33,7 @@ int main()
     boost::spirit::x3::phrase_parse(begin_2, end_2,
         boost::spirit::x3::int_ >> 
         boost::spirit::x3::int_, 
-        boost::spirit::x3::space, pair);
+        boost::spirit::x3::space, pair); // note: skip space symbols
 
     assert(pair.first  == 42);
     assert(pair.second == 42);
@@ -45,12 +45,25 @@ int main()
 
     std::tuple < int, int > tuple;
 
-    boost::spirit::x3::parse(begin_3, end_3, '(' >> 
-        boost::spirit::x3::int_ >> ", " >> 
-        boost::spirit::x3::int_ >> ')', tuple);
+    boost::spirit::x3::phrase_parse(begin_3, end_3, '(' >> 
+        boost::spirit::x3::int_ >> ',' >> 
+        boost::spirit::x3::int_ >> ')', 
+        boost::spirit::x3::space, tuple); // note: skip space symbols
 
     assert(std::get < 0 > (tuple) == 42);
     assert(std::get < 1 > (tuple) == 42);
+
+    std::string input_4("42");
+
+    auto begin_4 = std::begin(input_4);
+    auto   end_4 = std::  end(input_4);
+
+    auto f = [](auto & context)
+    { 
+        std::cout << boost::spirit::x3::_attr(context) << std::endl; 
+    };
+
+    boost::spirit::x3::parse(begin_4, end_4, boost::spirit::x3::int_[f]);
 
     return 0;
 }
