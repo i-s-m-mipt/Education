@@ -8,11 +8,8 @@ void test_1(benchmark::State & state)
 {
     for (auto _ : state)
     {
-        auto s = 0;
-        auto x = 0;
-
-        benchmark::DoNotOptimize(s);
-        benchmark::DoNotOptimize(x);
+        auto s = 0; benchmark::DoNotOptimize(s);
+        auto x = 0; benchmark::DoNotOptimize(x);
 
         while (true) if (s += ++x; x == 100) break;
     }
@@ -24,12 +21,9 @@ void test_2(benchmark::State & state)
     {
         try // note: zero-overhead principle in exceptions
         {
-            auto s = 0;
-            auto x = 0;
-
-            benchmark::DoNotOptimize(s);
-            benchmark::DoNotOptimize(x);
-
+            auto s = 0; benchmark::DoNotOptimize(s);
+            auto x = 0; benchmark::DoNotOptimize(x);
+            
             while (true) if (s += ++x; x == 100) break;
         }
         catch (const std::exception & exception)
@@ -45,11 +39,8 @@ void test_3(benchmark::State & state)
     {
         try
         {
-            auto s = 0;
-            auto x = 0;
-
-            benchmark::DoNotOptimize(s);
-            benchmark::DoNotOptimize(x);
+            auto s = 0; benchmark::DoNotOptimize(s);
+            auto x = 0; benchmark::DoNotOptimize(x);
 
             while (true)
             {
