@@ -24,7 +24,7 @@ int main()
 
     std::cout << create(false).value_or("empty") << std::endl;
 
-    if (auto object = create(true))
+    if (auto object = create(true); object)
     {
         std::cout << *object << std::endl;
     }
