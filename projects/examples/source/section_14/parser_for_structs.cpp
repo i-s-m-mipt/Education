@@ -20,8 +20,8 @@ namespace parser
     const auto quote = '\'', separator = ',';
 
     auto const data_def = '{' >> 
-        boost::spirit::x3::lexeme[ quote >> 
-        boost::spirit::x3::char_ - quote >> quote ] >> separator >> 
+        boost::spirit::x3::lexeme[ quote  >> 
+       (boost::spirit::x3::char_ - quote) >> quote ] >> separator >> 
         boost::spirit::x3::int_                     >> separator >> 
         boost::spirit::x3::double_ >> '}';
 
