@@ -5,6 +5,8 @@
 #include <tuple>
 #include <utility>
 
+using namespace std::literals;
+
 #include <boost/fusion/include/std_tuple.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 
@@ -14,7 +16,7 @@ int main()
 {
     auto value = 0; 
     
-    std::string input_1("42");
+    auto input_1 = "42"s;
 
     auto begin_1 = std::begin(input_1);
     auto   end_1 = std::  end(input_1);
@@ -23,7 +25,7 @@ int main()
 
     assert(value == 42);
 
-    std::string input_2("42 42");
+    auto input_2 = "42 42"s;
 
     auto begin_2 = std::begin(input_2);
     auto   end_2 = std::  end(input_2);
@@ -38,7 +40,7 @@ int main()
     assert(pair.first  == 42);
     assert(pair.second == 42);
 
-    std::string input_3("(42, 42)");
+    auto input_3 = "(42, 42)"s;
 
     auto begin_3 = std::begin(input_3);
     auto   end_3 = std::  end(input_3);
@@ -53,7 +55,7 @@ int main()
     assert(std::get < 0 > (tuple) == 42);
     assert(std::get < 1 > (tuple) == 42);
 
-    std::string input_4("42");
+    auto input_4 = "42"s;
 
     auto begin_4 = std::begin(input_4);
     auto   end_4 = std::  end(input_4);
