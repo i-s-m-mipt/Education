@@ -32,7 +32,7 @@ public:
 		else return true;
 	}
 
-	[[nodiscard]] Token get()
+	[[nodiscard]] Token get() // note: consider Boost.Spirit parser
 	{
 		if (m_is_full) { m_is_full = false; return m_token; }
 
