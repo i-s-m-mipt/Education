@@ -1,124 +1,109 @@
-#include <iostream>
+#include <cassert>
+#include <exception>
+#include <iterator>
+#include <stdexcept>
 #include <string>
+
+using namespace std::literals;
 
 #include <boost/spirit/home/x3.hpp>
 
-    namespace x3 = boost::spirit::x3;
-    namespace ascii = boost::spirit::x3::ascii;
-
-struct Hundreds : boost::spirit::x3::symbols < unsigned int >
+namespace parser
 {
-    Hundreds()
+    namespace detail
     {
-        add("C"   , 100);
-        add("CC"  , 200);
-        add("CCC" , 300);
-        add("CD"  , 400);
-        add("D"   , 500);
-        add("DC"  , 600);
-        add("DCC" , 700);
-        add("DCCC", 800);
-        add("CM"  , 900);
-    }
+        struct Huns : boost::spirit::x3::symbols < int >
+        {
+            Huns()
+            {
+                add("C"   , 100);
+                add("CC"  , 200);
+                add("CCC" , 300);
+                add("CD"  , 400);
+                add("D"   , 500);
+                add("DC"  , 600);
+                add("DCC" , 700);
+                add("DCCC", 800);
+                add("CM"  , 900);
+            }
 
-}; // struct Hundreds : boost::spirit::x3::symbols < unsigned int >
+        } huns; // struct Huns : boost::spirit::x3::symbols < int >
 
-struct Tens : boost::spirit::x3::symbols < unsigned int >
+        struct Tens : boost::spirit::x3::symbols < int >
+        {
+            Tens()
+            {
+                add("X"   , 10);
+                add("XX"  , 20);
+                add("XXX" , 30);
+                add("XL"  , 40);
+                add("L"   , 50);
+                add("LX"  , 60);
+                add("LXX" , 70);
+                add("LXXX", 80);
+                add("XC"  , 90);
+            }
+
+        } tens; // struct Tens : boost::spirit::x3::symbols < int >
+
+        struct Ones : boost::spirit::x3::symbols < int >
+        {
+            Ones()
+            {
+                add("I"   , 1);
+                add("II"  , 2);
+                add("III" , 3);
+                add("IV"  , 4);
+                add("V"   , 5);
+                add("VI"  , 6);
+                add("VII" , 7);
+                add("VIII", 8);
+                add("IX"  , 9);
+            }
+
+        } ones; // struct Ones : boost::spirit::x3::symbols < int >
+
+        auto set_0    = [](auto & context){ boost::spirit::x3::_val (context)  = 0;    };
+        auto add_1000 = [](auto & context){ boost::spirit::x3::_val (context) += 1000; };
+        auto add_x    = [](auto & context){ boost::spirit::x3::_val (context) += 
+                                            boost::spirit::x3::_attr(context); };
+
+    } // namespace detail
+
+    const boost::spirit::x3::rule < class Roman, int > roman; // note: tag and attribute
+
+    using namespace detail;
+
+    const auto roman_def = 
+        boost::spirit::x3::eps       [set_0   ] >> ( // note: dummy eps, always works
+       *boost::spirit::x3::char_('M')[add_1000] >> 
+            -huns[add_x] >> 
+            -tens[add_x] >> 
+            -ones[add_x]);
+
+    BOOST_SPIRIT_DEFINE(roman);
+
+} // namespace parser
+
+int test(const std::string & input)
 {
-    Tens()
-    {
-        add("X"   , 10);
-        add("XX"  , 20);
-        add("XXX" , 30);
-        add("XL"  , 40);
-        add("L"   , 50);
-        add("LX"  , 60);
-        add("LXX" , 70);
-        add("LXXX", 80);
-        add("XC"  , 90);
-    }
+    auto begin = std::begin(input);
+    auto   end = std::  end(input);
 
-}; // struct Tens : boost::spirit::x3::symbols < unsigned int >
+    auto number = 0;
 
-struct Ones : boost::spirit::x3::symbols < unsigned int >
-{
-    Ones()
-    {
-        add("I"   , 1);
-        add("II"  , 2);
-        add("III" , 3);
-        add("IV"  , 4);
-        add("V"   , 5);
-        add("VI"  , 6);
-        add("VII" , 7);
-        add("VIII", 8);
-        add("IX"  , 9);
-    }
+    auto result = boost::spirit::x3::parse(begin, end, parser::roman, number);
 
-}; // struct Ones : boost::spirit::x3::symbols < unsigned int >
+    if (!result || begin != end) throw std::runtime_error("invalid phrase");
 
-
-    namespace parser
-    {
-        using x3::eps;
-        using x3::lit;
-        using x3::_val;
-        using x3::_attr;
-        using ascii::char_;
-
-        auto set_zero = [](auto& ctx){ _val(ctx) = 0; };
-        auto add1000 = [](auto& ctx){ _val(ctx) += 1000; };
-        auto add = [](auto& ctx){ _val(ctx) += _attr(ctx); };
-
-        x3::rule<class roman, unsigned> const roman = "roman";
-
-        auto const roman_def =
-            eps                 [set_zero]
-            >>
-            (
-                -(+lit('M')     [add1000])
-                >>  -hundreds   [add]
-                >>  -tens       [add]
-                >>  -ones       [add]
-            )
-        ;
-
-        BOOST_SPIRIT_DEFINE(roman);
-    }
+    return number;
 }
 
 int main()
 {
-    typedef std::string::const_iterator iterator_type;
-    using client::parser::roman; // Our parser
-
-    std::string str;
-    unsigned result;
-    while (std::getline(std::cin, str))
-    {
-        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
-            break;
-
-        iterator_type iter = str.begin();
-        iterator_type const end = str.end();
-        bool r = parse(iter, end, roman, result);
-
-        if (r && iter == end)
-        {
-            std::cout << "-------------------------\n";
-            std::cout << "Parsing succeeded\n";
-            std::cout << "result = " << result << std::endl;
-            std::cout << "-------------------------\n";
-        }
-        else
-        {
-            std::string rest(iter, end);
-            std::cout << "-------------------------\n";
-            std::cout << "Parsing failed\n";
-            std::cout << "stopped at: \": " << rest << "\"\n";
-            std::cout << "-------------------------\n";
-        }
-    }
+    assert(test("MCCCLIII") == 1353);
+    assert(test("MCMXVIII") == 1918);
+    assert(test("MCMXCVII") == 1997);
 
     return 0;
 }
