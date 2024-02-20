@@ -1,10 +1,9 @@
 #include <cassert>
+#include <cmath>
 #include <exception>
-#include <iostream>
-#include <list>
 #include <stdexcept>
 #include <string>
-#include <variant>
+#include <vector>
 
 using namespace std::literals;
 
@@ -33,7 +32,7 @@ namespace detail
     {
         Operand head;
 
-        std::list < Step > tail;
+        std::vector < Step > tail;
 
     }; // struct List
 
@@ -110,7 +109,7 @@ namespace grammar
 
 } // namespace grammar
 
-[[nodiscard]] int test(const std::string & input)
+[[nodiscard]] double test(const std::string & input)
 {
     auto begin = std::begin(input), end = std::end(input);
 
@@ -128,7 +127,25 @@ namespace grammar
 
 int main()
 {
-    assert(test("1+1") == 2.0);
+    const auto epsilon = 0.000001;
+
+    assert(std::abs(test("+1.0") - +1.0) < epsilon);
+    assert(std::abs(test("-1.0") - -1.0) < epsilon);
+
+    assert(std::abs(test("1.0 + 2.0") - +3.0) < epsilon);
+    assert(std::abs(test("1.0 - 2.0") - -1.0) < epsilon);
+    assert(std::abs(test("1.0 * 2.0") - +2.0) < epsilon);
+    assert(std::abs(test("1.0 / 2.0") - +0.5) < epsilon);
+
+    assert(std::abs(test("1.0 + 2.0 + 3.0") - +6.0) < epsilon);
+    assert(std::abs(test("1.0 - 2.0 - 3.0") - -4.0) < epsilon);
+    assert(std::abs(test("1.0 * 2.0 * 3.0") - +6.0) < epsilon);
+
+    assert(std::abs(test("1.0 / 2.0 / 3.0") - +0.166667) < epsilon);
+
+    assert(std::abs(test("(1.0 + 2.0) * 3.0 - 4.0") - +5.00) < epsilon);
+    assert(std::abs(test("1.0 - (2.0 - 3.0) / 4.0") - +1.25) < epsilon);
+    assert(std::abs(test("1.0 * 2.0 - (3.0 + 4.0)") - -5.00) < epsilon);
 
     return 0;
 }
