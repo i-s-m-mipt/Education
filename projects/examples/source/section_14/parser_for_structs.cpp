@@ -33,8 +33,7 @@ int main()
 {
     auto input = R"({'a',100,1.0})"s;
 
-    auto begin = std::begin(input);
-    auto   end = std::  end(input);
+    auto begin = std::begin(input), end = std::end(input);
 
     Data data;
 

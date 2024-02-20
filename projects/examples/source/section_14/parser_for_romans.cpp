@@ -85,10 +85,9 @@ namespace parser
 
 } // namespace parser
 
-int test(const std::string & input)
+[[nodiscard]] int test(const std::string & input)
 {
-    auto begin = std::begin(input);
-    auto   end = std::  end(input);
+    auto begin = std::begin(input), end = std::end(input);
 
     auto number = 0;
 

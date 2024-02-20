@@ -9,7 +9,7 @@ using namespace std::literals;
 
 #include <boost/spirit/home/x3.hpp>
 
-template < typename Iterator > std::complex < double > parse_complex(Iterator first, Iterator last)
+template < typename Iterator > [[nodiscard]] std::complex < double > parse_complex(Iterator first, Iterator last)
 {
     using boost::spirit::x3::double_;
 
