@@ -40,7 +40,7 @@ int main()
 
     auto result = boost::spirit::x3::parse(begin, end, parser::data, data);
 
-    if (!result || begin != end) throw std::runtime_error("invalid phrase");
+    if (!result || begin != end) throw std::runtime_error("invalid input");
 
     assert(data.c == 'a');
     assert(data.i == 100);
