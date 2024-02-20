@@ -85,7 +85,7 @@ void test_macros()
 
 void C::print() const // good: member function definition in source file
 {
-	std::cout << "print from C" << std::endl;
+	std::cout << "C::print" << std::endl;
 }
 
 namespace education::examples // note: namespaces additivity
