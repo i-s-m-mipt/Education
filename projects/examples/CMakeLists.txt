@@ -281,7 +281,8 @@ set(sources_14
     recursive_calculator
     boost_spirit_basics
     parser_for_complex
-    parser_for_romans)
+    parser_for_romans
+    parser_for_structs)
 
 foreach(entry IN LISTS sources_14)
     add_executable(${entry} source/section_14/${entry}.cpp)
