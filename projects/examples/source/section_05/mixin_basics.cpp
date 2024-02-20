@@ -11,7 +11,7 @@ struct Number
         value = new_value; 
     }
 
-    value_type value;
+    value_type value{};
 
 }; // struct Number
 
@@ -26,7 +26,7 @@ template < typename Base > struct Undoable : public Base
         value_before = Base::get(); Base::set(new_value); 
     }
     
-    value_type value_before;
+    value_type value_before{};
 
 }; // template < typename Base > struct Undoable : public Base
 
@@ -41,7 +41,7 @@ template < typename Base > struct Redoable : public Base
         value_after = new_value; Base::set(new_value); 
     }
     
-    value_type value_after;
+    value_type value_after{};
 
 }; // template < typename Base > struct Redoable : public Base
 

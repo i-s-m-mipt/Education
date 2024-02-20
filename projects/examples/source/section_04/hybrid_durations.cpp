@@ -27,7 +27,7 @@ public:
 template < typename R1, typename R2 > using add_t = 
 typename Add < R1, R2 > ::type; // note: typename required, static object instead
 
-template < typename T, typename R = Ratio < 1 > > struct Duration { T value; };
+template < typename T, typename R = Ratio < 1 > > struct Duration { T value{}; };
 
 template < typename T1, typename R1, typename T2, typename R2 > 
 constexpr auto operator+(Duration < T1, R1 > lhs, Duration < T2, R2 > rhs)

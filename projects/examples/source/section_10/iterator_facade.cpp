@@ -10,7 +10,7 @@ private:
 
 	struct Node 
 	{
-		T value; std::shared_ptr < Node > next; 
+		T value{}; std::shared_ptr < Node > next; 
 
 	}; // struct Node
 

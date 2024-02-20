@@ -3,7 +3,7 @@
 
 template < typename T > struct Node
 {
-	T value = T();
+	T value{};
 
 	Node < T > * l = nullptr;
 	Node < T > * r = nullptr;

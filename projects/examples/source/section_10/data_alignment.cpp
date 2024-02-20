@@ -8,31 +8,31 @@
 
 struct S1 // note: C___IIIISS__
 {
-	char  c; // note: 1 byte(s)
-	int   i; // note: 4 byte(s)
-	short s; // note: 2 byte(s)
+	char  c{}; // note: 1 byte(s)
+	int   i{}; // note: 4 byte(s)
+	short s{}; // note: 2 byte(s)
 
 }; // struct S1
 
 struct S2 // note: C_SSIIII
 {
-	char  c; // note: 1 byte(s)
-	short s; // note: 2 byte(s)
-	int   i; // note: 4 byte(s)
+	char  c{}; // note: 1 byte(s)
+	short s{}; // note: 2 byte(s)
+	int   i{}; // note: 4 byte(s)
 
 }; // struct S2
 
 struct alignas(alignof(double)) S3
 {
-	char  c; // note: 1 byte(s)
-	short s; // note: 2 byte(s)
-	int   i; // note: 4 byte(s)
+	char  c{}; // note: 1 byte(s)
+	short s{}; // note: 2 byte(s)
+	int   i{}; // note: 4 byte(s)
 	
 }; // struct alignas(alignof(double)) S3
 
 struct alignas(32) S4
 {
-	double data[4];
+	double data[4]{};
 
 }; // struct alignas(32) S4
 

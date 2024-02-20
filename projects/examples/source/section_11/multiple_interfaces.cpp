@@ -12,8 +12,8 @@
 
 struct Computer
 {
-	std::string name;
-	std::size_t size;
+	std::string name{};
+	std::size_t size{};
 
 }; // struct Computer
 

@@ -4,7 +4,7 @@
 
 struct Kilometers // note: user-defined units
 {
-	unsigned long long n;
+	unsigned long long n{};
 
 }; // struct Kilometers
 
