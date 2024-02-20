@@ -7,19 +7,19 @@ public:
 
 	Person(const std::string & name) : m_name(name)
 	{
-		std::cout << "person " << name << " constructed" << std::endl;
+		std::cout << "Person " << name << " constructed" << std::endl;
 	}
 
 public:
 
 	void print() const
 	{
-		std::cout << "person" << std::endl;
+		std::cout << "Person" << std::endl;
 	}
 
 	void print_person() const
 	{
-		std::cout << "definetely person" << std::endl;
+		std::cout << "Person" << std::endl;
 	}
 
 protected:
@@ -52,7 +52,7 @@ public:
 
 	void print() const // note: avoid inherited non-virtual functions redefinition
 	{
-		std::cout << "employee" << std::endl;
+		std::cout << "Employee" << std::endl;
 
 //		print(); // error: infinite recursion
 
@@ -80,7 +80,7 @@ public:
 
 	void print() const
 	{
-		std::cout << "manager" << std::endl;
+		std::cout << "Manager" << std::endl;
 	}
 
 private:
