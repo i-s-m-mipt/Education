@@ -1,5 +1,7 @@
 #include <iostream>
+#include <istream>
 #include <numeric>
+#include <ostream>
 
 #include <boost/rational.hpp> // note: boost::multiprecision::gmp_rational is faster
 
@@ -53,9 +55,23 @@ public:
 	[[nodiscard]] auto num() const { return m_num; }
 	[[nodiscard]] auto den() const { return m_den; }
 
-	void print() const // note: function instead of output operator
+public:
+
+	friend std::istream & operator>>(std::istream & stream,       Ratio & ratio) // note: not member
 	{
-		std::cout << m_num << '/' << m_den << std::endl;
+		int num{}; stream >> num;
+		int den{}; stream >> den;
+
+		ratio = Ratio(num, den);
+		
+		return stream; // good: chain of calls
+	}
+
+	friend std::ostream & operator<<(std::ostream & stream, const Ratio & ratio) // note: not member
+	{
+		stream << ratio.m_num << '/' << ratio.m_den;
+		
+		return stream; // good: chain of calls
 	}
 
 public:
@@ -70,7 +86,7 @@ public:
 
 		reduce();
 
-		return *this;
+		return *this; // good: chain of calls
 	}
 
 	auto & operator-=(Ratio other)
@@ -180,26 +196,26 @@ int main()
 
 //	std::vector < int > v = 42; // error: no non-explicit constructor
 
-	(r4 += 10).print();
-	(r4 -= r1).print();
-	(r4 *= r2).print();
-	(r4 /= r3).print();
-//	(10 += r4).print(); // error: += not defined for int
+	std::cout << (r4 += 10) << std::endl;
+	std::cout << (r4 -= r1) << std::endl;
+	std::cout << (r4 *= r2) << std::endl;
+	std::cout << (r4 /= r3) << std::endl;
+//	std::cout << (10 += r4) << std::endl; // error: += not defined for prvalue int
 
-	r4.operator+=(r1).print(); // note: function-like style
+	std::cout << r4.operator+=(r1) << std::endl; // note: function-like style
 
-	(++r4).print();
-	(--r4).print();
-	(r4++).print();
-	(r4--).print();
+	std::cout << (++r4) << std::endl;
+	std::cout << (--r4) << std::endl;
+	std::cout << (r4++) << std::endl;
+	std::cout << (r4--) << std::endl;
 
-	(10 + r4).print(); // note: 10.operator+(r4) do not work
-	(r4 - 10).print();
-	(r4 * r3).print();
-	(r4 / r2).print();
-//	(10 / 10).print(); // error: print not defined for int
+	std::cout << (10 + r4) << std::endl; // note: 10.operator+(r4) do not work
+	std::cout << (r4 - 10) << std::endl;
+	std::cout << (r4 * r3) << std::endl;
+	std::cout << (r4 / r2) << std::endl;
+	std::cout << (10 / 10) << std::endl; // note: integer division without Ratio
 
-	operator+(r4, r1).print(); // note: function-like style
+	std::cout << operator+(r4, r1) << std::endl; // note: function-like style
 
 	std::cout << (r3 <  r4) << std::endl;
 	std::cout << (r3 >  r4) << std::endl;
