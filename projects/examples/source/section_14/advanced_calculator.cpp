@@ -1,6 +1,7 @@
 #include <cassert>
 #include <cmath>
 #include <exception>
+#include <iterator>
 #include <stdexcept>
 #include <string>
 #include <vector>
