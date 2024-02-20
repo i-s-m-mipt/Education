@@ -61,7 +61,8 @@ set(sources_03
     special_functions
     structure_basics
     types_identification
-    virtual_functions)
+    virtual_functions
+    virtual_operators)
 
 foreach(entry IN LISTS sources_03)
     add_executable(${entry} source/section_03/${entry}.cpp)
