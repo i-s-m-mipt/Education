@@ -72,7 +72,7 @@ namespace parser
 
     using namespace detail; // note: namespaces used in documentation, consider classes
 
-    const boost::spirit::x3::rule < class Roman, int > roman; // note: tag and attribute
+    const boost::spirit::x3::rule < class roman_tag, int > roman; // note: tag, attribute
 
     const auto roman_def = 
         boost::spirit::x3::eps       [set_0   ] >> ( // note: dummy element, always works
@@ -94,7 +94,7 @@ int test(const std::string & input)
 
     auto result = boost::spirit::x3::parse(begin, end, parser::roman, number);
 
-    if (!result || begin != end) throw std::runtime_error("invalid phrase");
+    if (!result || begin != end) throw std::runtime_error("invalid input");
 
     return number;
 }

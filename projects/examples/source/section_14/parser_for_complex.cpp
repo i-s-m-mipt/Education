@@ -24,7 +24,7 @@ template < typename Iterator > std::complex < double > parse_complex(Iterator fi
             ('+' >> double_[f_imag_p]) | 
             ('-' >> double_[f_imag_n])) >> 'i') | double_[f_real]), boost::spirit::x3::ascii::space);
 
-    if (!result || first != last) throw std::runtime_error("invalid phrase");
+    if (!result || first != last) throw std::runtime_error("invalid input");
             
     return std::complex < double > (real, imag);
 }
