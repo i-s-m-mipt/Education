@@ -211,9 +211,10 @@ set(sources_10
     placement_new
     shared_from_this
     smart_pointers
-    standard_allocator)
+    standard_allocator
+    arena_adaptor)
 
-    set(section_10 source/section_10/)
+set(section_10 source/section_10/)
 
 foreach(entry IN LISTS sources_10)
     add_executable(${entry} ${section_10}${entry}.cpp)
