@@ -80,12 +80,12 @@ public:
 
 public:
 
-    Shared & operator=(const Shared  & other) noexcept
+    Shared & operator=(const Shared & other) noexcept
     {
         Shared(other).swap(*this); return *this;
     }
 
-    Shared & operator=(      Shared && other) noexcept
+    Shared & operator=(Shared && other) noexcept
     {
         Shared(std::move(other)).swap(*this); return *this;
     }
