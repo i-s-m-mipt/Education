@@ -14,7 +14,7 @@ public:
         return m_data[index];
     }
 
-    auto & operator[](std::size_t index) // good: calls constant version
+          auto & operator[](std::size_t index) // good: calls constant version
     {
         std::cout << "Data::operator[]" << std::endl;
 
