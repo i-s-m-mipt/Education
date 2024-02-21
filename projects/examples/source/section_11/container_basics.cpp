@@ -25,17 +25,17 @@ int main()
 
 	std::vector < int > v; 
 	
-	v.resize(size * 2); assert(v.size() == size * 2 && v.capacity() == size * 2);
-	v.resize(size);     assert(v.size() == size     && v.capacity() == size * 2);
-	v.shrink_to_fit();  assert(v.size() == size     && v.capacity() == size    );
-	v.clear();          assert(v.size() == 0        && v.capacity() == size    );
-	v.shrink_to_fit();  assert(v.size() == 0        && v.capacity() == 0       );
-	v.reserve(size);    assert(v.size() == 0        && v.capacity() == size    );
-	v.resize(size);     assert(v.size() == size     && v.capacity() == size    );
-	v.push_back(42);    assert(v.size() == size + 1 && v.capacity() >= size + 1); // note: not +1
-	v.shrink_to_fit();  assert(v.size() == size + 1 && v.capacity() == size + 1);
-	v.pop_back();       assert(v.size() == size     && v.capacity() == size + 1);
-	v.shrink_to_fit();  assert(v.size() == size     && v.capacity() == size    );
+	v.resize(2 * size); assert(v.size() == size * 2 && v.capacity() == size * 2);
+	v.resize    (size); assert(v.size() == size     && v.capacity() == size * 2);
+	v.shrink_to_fit (); assert(v.size() == size     && v.capacity() == size    );
+	v.clear         (); assert(v.size() == 0        && v.capacity() == size    );
+	v.shrink_to_fit (); assert(v.size() == 0        && v.capacity() == 0       );
+	v.reserve   (size); assert(v.size() == 0        && v.capacity() == size    );
+	v.resize    (size); assert(v.size() == size     && v.capacity() == size    );
+	v.push_back   (42); assert(v.size() == size + 1 && v.capacity() >= size + 1); // note: not +1
+	v.shrink_to_fit (); assert(v.size() == size + 1 && v.capacity() == size + 1);
+	v.pop_back      (); assert(v.size() == size     && v.capacity() == size + 1);
+	v.shrink_to_fit (); assert(v.size() == size     && v.capacity() == size    );
 
 	std::cout << v.max_size() << std::endl;
 
