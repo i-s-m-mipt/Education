@@ -59,8 +59,11 @@ public:
 
 	friend std::istream & operator>>(std::istream & stream,       Ratio & ratio) // note: not member
 	{
-		int num{}; stream >> num;
-		int den{}; stream >> den;
+		int num{}, den{}; char c{};
+
+		stream >> num >> c >> den;
+
+		if (c != '/') std::cerr << "invalid input" << std::endl; // note: consider also stream states
 
 		ratio = Ratio(num, den);
 		
@@ -187,12 +190,13 @@ void swap(Ratio & x, Ratio & y) { x.swap(y); }
 
 int main()
 {
-	Ratio r1;
-	Ratio r2(2);
-	Ratio r3 = 3;
-	Ratio r4(-5, 10);
+	Ratio r1, r2(2), r3 = 3, r4(-5, 10), r5; // note: implicit conversion for r3
 
 	std::cout << static_cast < double > (r4) << std::endl;
+
+	std::cin >> r5; // note: enter like 1/2
+
+	std::cout << r5 << std::endl;
 
 //	std::vector < int > v = 42; // error: no non-explicit constructor
 
