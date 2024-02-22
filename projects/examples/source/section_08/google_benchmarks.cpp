@@ -10,7 +10,7 @@
 
 void test_1(benchmark::State & state) 
 {
-    for (auto _ : state)
+    for (auto _ : state) // note: range-based for loop recommended in documentation
     {
         auto s = 0; benchmark::DoNotOptimize(s);
         auto x = 0; benchmark::DoNotOptimize(x);
@@ -85,17 +85,27 @@ void test_6(benchmark::State & state)
 {
     std::vector < int > vector(state.range(0), 0);
 
-    std::iota(std::begin(vector), std::end(vector), 1); // note: 1, 2, 3, ...
+    std::iota(std::begin(vector), std::end(vector), 1); // note: writes 1, 2, 3, ...
 
     for(auto _ : state) 
     {
-        auto result = std::lower_bound(std::begin(vector), std::end(vector), 42); // note: try 1
+        auto result = std::lower_bound(std::begin(vector), std::end(vector), 42);
 
         benchmark::DoNotOptimize(result);
     }
 
-    state.SetComplexityN(state.range(0));
+    state.SetComplexityN(state.range(0)); // note: try to search 1 instead of 42
 }
+
+void test_7(benchmark::State & state)
+{
+    for(auto _ : state) 
+    {
+        state.SkipWithError("test failed");
+
+        break; // note: required to prevent all further iterations.
+    }
+} 
 
 BENCHMARK(test_1); // note: fast, no exceptions
 
@@ -119,5 +129,7 @@ void make_arguments(benchmark::internal::Benchmark * benchmark)
 BENCHMARK(test_5)->Apply(make_arguments);
 
 BENCHMARK(test_6)->RangeMultiplier(2)->Range(1024, 1024 << 16)->Complexity(); // note: lgN
+
+BENCHMARK(test_7); // note: exited with error
 
 BENCHMARK_MAIN();
