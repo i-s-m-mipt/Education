@@ -180,7 +180,6 @@ target_compile_definitions(google_benchmarks PRIVATE "NDEBUG")
 set(sources_09
     advanced_constants
     advanced_literals
-    bitwise_operations
     calendar_time_zones
     chrono_management
     floating_point_types
@@ -197,6 +196,13 @@ endforeach()
 add_executable(random_generation ${section_09}random_generation.cpp)
 set_target_properties(random_generation PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
 target_compile_options(random_generation PRIVATE -Wall -pedantic -O3) # g++ --help=warnings
+
+add_executable(bitwise_operations ${section_09}bitwise_operations.cpp)
+target_include_directories(bitwise_operations PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/include)
+target_link_libraries(bitwise_operations PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/build/src/libbenchmark.a)
+set_target_properties(bitwise_operations PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+target_compile_options(bitwise_operations PRIVATE -Wall -pedantic -O3) # g++ --help=warnings
+target_compile_definitions(bitwise_operations PRIVATE "NDEBUG")
 
 set(sources_10
     bad_allocations
