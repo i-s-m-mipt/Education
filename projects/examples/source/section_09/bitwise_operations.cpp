@@ -9,6 +9,8 @@
 #include <span>
 #include <type_traits>
 
+#include <benchmark/benchmark.h>
+
 constexpr std::uint16_t middle(std::uint32_t x)
 {
     return (x >> 8) & 0xffff;
@@ -46,7 +48,36 @@ struct Datetime
 
 }; // struct Datetime
 
-int main()
+void test_1(benchmark::State & state)
+{
+    for (auto _ : state)
+    {
+        auto d = 3.14; 
+        
+        auto p = reinterpret_cast < char * > (&d);
+
+        benchmark::DoNotOptimize(d);
+        benchmark::DoNotOptimize(p);
+    }
+}
+
+void test_2(benchmark::State & state)
+{
+    for (auto _ : state)
+    {
+        auto d = 3.14;
+
+        auto p = std::bit_cast < char * > (&d); // note: the same speed, but more safe
+
+        benchmark::DoNotOptimize(d);
+        benchmark::DoNotOptimize(p);
+    }
+}
+
+BENCHMARK(test_1);
+BENCHMARK(test_2);
+
+int main(int argc, char ** argv) // note: arguments for benchmark
 {
     std::cout << std::showbase;
 
@@ -72,8 +103,8 @@ int main()
         ( data ^  mask) << std::endl << // note: outputs 0x12c4
         (~data        ) << std::endl;   // note: outputs 0xffffedcb
 
-    auto m = 0x123; assert((m << 1) == 0x246); // good: bit shift as multiplication
-    auto n = -4000; assert((n >> 2) == -1000); // good: bit shift as multiplication
+    [[maybe_unused]] auto m = 0x123; assert((m << 1) == 0x246); // good: bit shift as multiplication
+    [[maybe_unused]] auto n = -4000; assert((n >> 2) == -1000); // good: bit shift as multiplication
 
     auto a = 7;
     auto b = 4;
@@ -124,6 +155,14 @@ int main()
 
     assert(distance_in_bytes(&array[0], &array[size - 1]) == 36);
 
+    auto d = 3.14; std::uint64_t r{};
+
+    static_assert(sizeof(d) == sizeof(r));
+
+//  r = *reinterpret_cast < std::uint64_t * > (&d); // bad: undefined behavior
+
+    r = std::bit_cast < std::uint64_t > (d); // note: or std::memcpy(&n, &d, sizeof(d));
+
     using binary = std::bitset < 8 > ;
 
     for (unsigned int i = 0; i < 10; ++i)
@@ -135,6 +174,10 @@ int main()
              "ceil(" << binary(i) << ") = " << binary(bc) << ", " <<
             "floor(" << binary(i) << ") = " << binary(bf) << std::endl;
     }
+
+    benchmark::Initialize(&argc, argv);
+
+    benchmark::RunSpecifiedBenchmarks();
 
     return 0;
 }
