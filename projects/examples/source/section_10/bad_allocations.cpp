@@ -34,7 +34,7 @@ int main()
 
     while (true)
     {
-        if (auto ptr = new(std::nothrow) int[100'000'000]; !ptr) // note: controversial decision
+        if (auto ptr = new (std::nothrow) int[100'000'000]; !ptr) // note: controversial decision
         {
             std::cerr << "pointer: bad allocation\n";
 
