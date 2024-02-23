@@ -67,7 +67,7 @@ void test_2(benchmark::State & state)
     {
         auto d = 3.14;
 
-        auto p = std::bit_cast < char * > (&d); // note: same instructions with -O3, but safer
+        auto p = std::bit_cast < char * > (&d); // note: same instructions with -O3
 
         benchmark::DoNotOptimize(d);
         benchmark::DoNotOptimize(p);
@@ -142,7 +142,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     auto ptr_uint = &value;
 
-    auto ptr_char = std::bit_cast < std::byte * > (ptr_uint); // note: better than reinterpret_cast
+    auto ptr_char = std::bit_cast < std::byte * > (ptr_uint); // note: same as reinterpret_cast here
 
     for (std::size_t i = 0; i < sizeof(int); ++i)
     {
@@ -161,7 +161,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 //  r = *reinterpret_cast < std::uint64_t * > (&d); // bad: undefined behavior, strict aliasing rule
 
-    r = std::bit_cast < std::uint64_t > (d); // good: or std::memcpy(&n, &d, sizeof(d));
+    r = std::bit_cast < std::uint64_t > (d); // good: or directly do std::memcpy(&n, &d, sizeof(d));
 
     using binary = std::bitset < 8 > ;
 
