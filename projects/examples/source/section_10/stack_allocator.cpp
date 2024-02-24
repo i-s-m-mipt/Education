@@ -92,13 +92,9 @@ private:
 
 void test_1(benchmark::State & state) // note: very fast
 {
-	const std::size_t kb = 1024;
-	const std::size_t mb = 1024 * 1024;
-	const std::size_t gb = 1024 * 1024 * 1024;
+	const std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
 
 	std::vector < void * > pointers(kb, nullptr);
-
-	benchmark::DoNotOptimize(pointers);
 
 	for (auto _ : state)
 	{
@@ -118,12 +114,9 @@ void test_1(benchmark::State & state) // note: very fast
 
 void test_2(benchmark::State & state) // note: very slow
 {
-	const std::size_t kb = 1024;
-	const std::size_t mb = 1024 * 1024;
+	const std::size_t kb = 1024, mb = kb * kb;
 
 	std::vector < void * > pointers(kb, nullptr);
-
-	benchmark::DoNotOptimize(pointers);
 
 	for (auto _ : state)
 	{

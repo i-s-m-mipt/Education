@@ -46,8 +46,7 @@ private:
 
 void test_1(benchmark::State & state) // note: very fast
 {
-	const std::size_t kb = 1024;
-	const std::size_t mb = 1024 * 1024;
+	const std::size_t kb = 1024, mb = kb * kb;
 
 	for (auto _ : state)
 	{
@@ -55,7 +54,7 @@ void test_1(benchmark::State & state) // note: very fast
 
 		for (std::size_t i = 0; i < kb; ++i)
 		{
-			benchmark::DoNotOptimize(allocator.allocate(kb));
+			auto ptr = allocator.allocate(kb); benchmark::DoNotOptimize(ptr);
 		}
 	}
 }
@@ -64,12 +63,12 @@ void test_2(benchmark::State & state) // note: very slow
 {
 	const std::size_t kb = 1024;
 
+	std::vector < void * > pointers(kb, nullptr);
+
 	for (auto _ : state)
 	{
-		for (std::size_t i = 0; i < kb; ++i)
-		{
-			benchmark::DoNotOptimize(::operator new(kb)); // note: no delete
-		}
+		for (std::size_t i = 0; i < kb; ++i) pointers[i] = ::operator new   (kb         );
+		for (std::size_t i = 0; i < kb; ++i)               ::operator delete(pointers[i]);
 	}
 }
 
