@@ -3,6 +3,8 @@
 #include <new>
 #include <string>
 
+#include <benchmark/benchmark.h>
+
 class C
 {
 public:
@@ -45,7 +47,7 @@ public:
 		return ::operator new(size); // note: global operator new call
 	}
 
-	void operator delete(void * pointer) // note: overloaded version for Manager, implicitly static
+	void operator delete(void * pointer, std::size_t size) // note: overloaded version for Manager, implicitly static
 	{
 		std::cout << "Manager::operator delete called" << std::endl;
 
@@ -70,7 +72,21 @@ public:
 
 }; // class User : public Manager < User > 
 
-int main()
+void test_1(benchmark::State & state) // note: very fast
+{
+    for (auto _ : state)
+    {
+		auto ptr = ::operator new(state.range(0));
+
+		benchmark::DoNotOptimize(ptr);
+
+		::operator delete(ptr);
+    }
+}
+
+BENCHMARK(test_1)->RangeMultiplier(2)->Range(1024 * 1024, 1024 * 1024 * 1024);
+
+int main(int argc, char ** argv) // note: arguments for benchmark
 {
 	assert(sizeof(C) == sizeof(std::size_t));
 
@@ -111,6 +127,10 @@ int main()
 	u.s2.~basic_string(); // good: explicit member destructor call
 
 	delete(new User); // note: overloaded versions are used instead of global versions
+
+	benchmark::Initialize(&argc, argv);
+
+	benchmark::RunSpecifiedBenchmarks();
 
 	return 0;
 }
