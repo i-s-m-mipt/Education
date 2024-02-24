@@ -89,12 +89,12 @@ void test_6(benchmark::State & state)
 
     for(auto _ : state) 
     {
-        auto result = std::lower_bound(std::begin(vector), std::end(vector), 42);
+        auto result = std::lower_bound(std::begin(vector), std::end(vector), 0);
 
         benchmark::DoNotOptimize(result);
     }
 
-    state.SetComplexityN(state.range(0)); // note: try to search 1 instead of 42
+    state.SetComplexityN(state.range(0)); // note: try to search 1 instead of 0
 }
 
 void test_7(benchmark::State & state)
