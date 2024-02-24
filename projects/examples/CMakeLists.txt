@@ -10,9 +10,11 @@ set(x64 -m64)
 
 find_package(Boost   1.84 REQUIRED COMPONENTS filesystem log python system)
 find_package(Python3 3.11 REQUIRED COMPONENTS Interpreter Development)
+find_package(GTest        REQUIRED)
 
 include_directories(  ${Boost_INCLUDE_DIRS})
 include_directories(${Python3_INCLUDE_DIRS})
+include_directories(  ${GTEST_INCLUDE_DIRS})
 
 set(sources_01 
     minimal_program
@@ -170,12 +172,17 @@ set_target_properties(custom_logger PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS $
 target_compile_options(custom_logger PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
 target_link_libraries(custom_logger PRIVATE ${Boost_LIBRARIES})
 
-add_executable(google_benchmarks ${section_08}google_benchmarks.cpp)
-target_include_directories(google_benchmarks PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/include)
-target_link_libraries(google_benchmarks PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/build/src/libbenchmark.a)
-set_target_properties(google_benchmarks PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
-target_compile_options(google_benchmarks PRIVATE -Wall -pedantic -O3) # g++ --help=warnings
-target_compile_definitions(google_benchmarks PRIVATE "NDEBUG")
+add_executable(google_benchmark ${section_08}google_benchmark.cpp)
+target_include_directories(google_benchmark PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/include)
+target_link_libraries(google_benchmark PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/build/src/libbenchmark.a)
+set_target_properties(google_benchmark PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+target_compile_options(google_benchmark PRIVATE -Wall -pedantic -O3) # g++ --help=warnings
+target_compile_definitions(google_benchmark PRIVATE "NDEBUG")
+
+add_executable(google_testing ${section_08}google_testing.cpp)
+target_link_libraries(google_testing PRIVATE ${GTEST_BOTH_LIBRARIES})
+set_target_properties(google_testing PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+target_compile_options(google_testing PRIVATE -Wall -pedantic -O0) # g++ --help=warnings
 
 set(sources_09
     advanced_constants
