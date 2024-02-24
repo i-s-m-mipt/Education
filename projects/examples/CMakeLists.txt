@@ -193,7 +193,8 @@ set(sources_09
     floating_point_types
     multiprecision_float
     complex_numbers
-    binary_gray_code)
+    binary_gray_code
+    indian_algorithm)
 
 set(section_09 source/section_09/)
 
