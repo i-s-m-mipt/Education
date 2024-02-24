@@ -3,7 +3,6 @@
 #include <iostream>
 #include <limits>
 #include <stdexcept>
-#include <string>
 
 unsigned long long pow(unsigned long long base, unsigned long long exp)
 {
@@ -17,19 +16,17 @@ unsigned long long pow(unsigned long long base, unsigned long long exp)
         {
             if (result > std::numeric_limits < unsigned long long > ::max() / base)
             {
-                throw std::overflow_error("overflow: " + std::to_string(result) + '*' + std::to_string(base));
+                throw std::overflow_error("overflow");
             }
 
             result *= base;
         }
 
-        exp /= 2;
-
-        if (exp == 0) break;
+        if (exp /= 2; exp == 0) break;
 
         if (base > std::numeric_limits < unsigned long long > ::max() / base)
         {
-            throw std::overflow_error("overflow: " + std::to_string(result) + '*' + std::to_string(base));
+            throw std::overflow_error("overflow");
         }
 
         base *= base;
