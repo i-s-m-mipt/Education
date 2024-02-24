@@ -208,6 +208,10 @@ add_executable(random_generation ${section_09}random_generation.cpp)
 set_target_properties(random_generation PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
 target_compile_options(random_generation PRIVATE -Wall -pedantic -O3) # g++ --help=warnings
 
+add_executable(inscribed_simplex ${section_09}inscribed_simplex.cpp)
+set_target_properties(inscribed_simplex PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+target_compile_options(inscribed_simplex PRIVATE -Wall -pedantic -O3) # g++ --help=warnings
+
 add_executable(bitwise_operations ${section_09}bitwise_operations.cpp)
 target_link_libraries(bitwise_operations PRIVATE benchmark::benchmark)
 set_target_properties(bitwise_operations PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
