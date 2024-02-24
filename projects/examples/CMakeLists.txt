@@ -8,13 +8,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(x32 -m32)
 set(x64 -m64)
 
-find_package(Boost   1.84 REQUIRED COMPONENTS filesystem log python system)
-find_package(Python3 3.11 REQUIRED COMPONENTS Interpreter Development)
-find_package(GTest        REQUIRED)
+find_package(Boost     1.84 REQUIRED COMPONENTS filesystem log python system)
+find_package(Python3   3.11 REQUIRED COMPONENTS Interpreter Development)
+find_package(benchmark      REQUIRED COMPONENTS)
+find_package(GTest          REQUIRED COMPONENTS)
 
-include_directories(  ${Boost_INCLUDE_DIRS})
-include_directories(${Python3_INCLUDE_DIRS})
-include_directories(  ${GTEST_INCLUDE_DIRS})
+include_directories(    ${Boost_INCLUDE_DIRS})
+include_directories(  ${Python3_INCLUDE_DIRS})
+include_directories(${benchmark_INCLUDE_DIRS})
+include_directories(    ${GTEST_INCLUDE_DIRS})
 
 set(sources_01 
     minimal_program
@@ -173,8 +175,7 @@ target_compile_options(custom_logger PRIVATE -Wall -pedantic -O0) # g++ --help=w
 target_link_libraries(custom_logger PRIVATE ${Boost_LIBRARIES})
 
 add_executable(google_benchmark ${section_08}google_benchmark.cpp)
-target_include_directories(google_benchmark PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/include)
-target_link_libraries(google_benchmark PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/build/src/libbenchmark.a)
+target_link_libraries(google_benchmark PRIVATE benchmark::benchmark)
 set_target_properties(google_benchmark PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
 target_compile_options(google_benchmark PRIVATE -Wall -pedantic -O3) # g++ --help=warnings
 target_compile_definitions(google_benchmark PRIVATE "NDEBUG")
@@ -205,8 +206,7 @@ set_target_properties(random_generation PROPERTIES COMPILE_FLAGS ${x64} LINK_FLA
 target_compile_options(random_generation PRIVATE -Wall -pedantic -O3) # g++ --help=warnings
 
 add_executable(bitwise_operations ${section_09}bitwise_operations.cpp)
-target_include_directories(bitwise_operations PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/include)
-target_link_libraries(bitwise_operations PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/build/src/libbenchmark.a)
+target_link_libraries(bitwise_operations PRIVATE benchmark::benchmark)
 set_target_properties(bitwise_operations PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
 target_compile_options(bitwise_operations PRIVATE -Wall -pedantic -O3) # g++ --help=warnings
 target_compile_definitions(bitwise_operations PRIVATE "NDEBUG")
@@ -244,8 +244,7 @@ set (sources_10_release
 
 foreach(entry IN LISTS sources_10_release)
     add_executable(${entry} ${section_10}${entry}.cpp)
-    target_include_directories(${entry} PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/include)
-    target_link_libraries(${entry} PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/benchmark/build/src/libbenchmark.a)
+    target_link_libraries(${entry} PRIVATE benchmark::benchmark)
     set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O3) # g++ --help=warnings
     target_compile_definitions(${entry} PRIVATE "NDEBUG")
