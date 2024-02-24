@@ -432,9 +432,6 @@
     <ClCompile Include="..\source\section_12\iostream_iterators.cpp">
       <Filter>source\section_12</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\section_08\google_benchmarks.cpp">
-      <Filter>source\section_08</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\section_12\pattern_visitor.cpp">
       <Filter>source\section_12</Filter>
     </ClCompile>
@@ -521,6 +518,9 @@
     </ClCompile>
     <ClCompile Include="..\source\section_18\long_arithmetic.cpp">
       <Filter>source\section_18</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\section_08\google_benchmark.cpp">
+      <Filter>source\section_08</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
