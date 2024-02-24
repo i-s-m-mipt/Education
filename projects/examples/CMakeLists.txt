@@ -221,7 +221,6 @@ set(sources_10
     memory_resource
     pattern_facade
     pattern_iterator
-    placement_new
     shared_from_this
     smart_pointers
     standard_allocator
@@ -236,6 +235,7 @@ foreach(entry IN LISTS sources_10)
 endforeach()
 
 set (sources_10_release
+    placement_new
     data_alignment
     arena_allocator
     stack_allocator
