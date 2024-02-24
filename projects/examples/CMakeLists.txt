@@ -191,7 +191,9 @@ set(sources_09
     calendar_time_zones
     chrono_management
     floating_point_types
-    multiprecision_float)
+    multiprecision_float
+    complex_numbers
+    binary_gray_code)
 
 set(section_09 source/section_09/)
 
