@@ -1,3 +1,5 @@
+#include <vector>
+
 #include <gtest/gtest.h>
 
 unsigned int factorial(unsigned int n)
@@ -21,7 +23,39 @@ TEST(factorial_test, positive)
 
 TEST(factorial_test, fail) 
 {
-    EXPECT_EQ(factorial(4), 25); // note: failed test
+    ASSERT_EQ(factorial(4), 25); // note: failed test
+}
+
+class Test_Fixture : public testing::Test 
+{
+protected:
+
+     Test_Fixture() noexcept {} // note:   setup actions
+    ~Test_Fixture() noexcept {} // note: cleanup actions
+
+    void SetUp   () override // note: called  after constructor
+    {
+        data.push_back(42);
+    }
+
+    void TearDown() override // note: called before  destructor
+    {
+        data.clear();
+    } 
+
+    std::vector < int > data;
+
+}; // class Test_Fixture : public testing::Test 
+
+TEST_F(Test_Fixture, test) 
+{
+    ASSERT_EQ(data.size(),  1);
+    ASSERT_EQ(data.back(), 42);
+
+    data.push_back(43);
+
+    ASSERT_EQ(data.size(),  2);
+    ASSERT_EQ(data.back(), 43);
 }
 
 int main(int argc, char ** argv) // note: arguments for testing
