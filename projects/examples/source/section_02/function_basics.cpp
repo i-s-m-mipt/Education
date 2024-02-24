@@ -98,7 +98,7 @@ void print(bool   x) { std::cout << x << std::endl; } // note: overloaded functi
 void print(char   x) { std::cout << x << std::endl; } // note: overloaded function
 void print(double x) { std::cout << x << std::endl; } // note: overloaded function
 
-int factorial(int n)
+unsigned int factorial(unsigned int n)
 {
 	return (n < 2 ? 1 : n * factorial(n - 1)); // good: compact recursion
 }
