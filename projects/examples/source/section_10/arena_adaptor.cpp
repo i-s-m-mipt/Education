@@ -1,8 +1,10 @@
 #include <bit>
 #include <cstddef>
+#include <exception>
 #include <iomanip>
 #include <iostream>
 #include <memory>
+#include <stdexcept>
 #include <vector>
 
 #include <boost/noncopyable.hpp>
@@ -33,7 +35,7 @@ public:
 			
 			return first; // note: aligned pointer
 		}
-		else return nullptr;
+		else throw std::bad_alloc(); // note: throwing exception instead of returning nullptr
 	}
 
     void deallocate(void * ptr, std::size_t size) const noexcept {}
@@ -81,7 +83,7 @@ public:
 
     [[nodiscard]] T * allocate(std::size_t size) const noexcept
     { 
-        return static_cast < T * > (m_arena->allocate(size * sizeof(T))); 
+        return static_cast < T * > (m_arena->allocate(size * sizeof(T), alignof(T))); 
     }
 
     void deallocate(T * ptr, std::size_t size) const noexcept
