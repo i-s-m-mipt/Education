@@ -8,6 +8,7 @@
 #include <limits>
 #include <span>
 #include <type_traits>
+#include <vector>
 
 #include <benchmark/benchmark.h>
 
@@ -38,13 +39,13 @@ template < typename T > auto distance_in_bytes(T * first, T * last)
 
 struct Datetime
 {
-    unsigned int milli  : 10;
-    unsigned int second : 6;
-    unsigned int minute : 6;
-    unsigned int hour   : 5;
-    unsigned int day    : 5;
-    unsigned int month  : 4;
-    unsigned int year   : 28; // good: 64 bits in total, no holes
+    unsigned int milli  : 10 {};
+    unsigned int second : 6  {};
+    unsigned int minute : 6  {};
+    unsigned int hour   : 5  {};
+    unsigned int day    : 5  {};
+    unsigned int month  : 4  {};
+    unsigned int year   : 28 {}; // good: 64 bits in total, no holes
 
 }; // struct Datetime
 
@@ -74,8 +75,56 @@ void test_2(benchmark::State & state)
     }
 }
 
+struct S1 // note: sizeof(S1) = 4
+{ 
+    std::uint32_t x : 15 {};
+    std::uint32_t y : 17 {};
+
+}; // struct S1 
+
+struct S2 // note: sizeof(S2) = 8
+{ 
+    std::uint32_t x{};
+    std::uint32_t y{};
+
+}; // struct S2 
+
+void test_3(benchmark::State & state) // note: very slow
+{
+    static_assert(sizeof(S1) == 4);
+
+    std::vector < S1 > vector(100);
+
+    for (auto _ : state)
+    {
+        for (std::size_t i = 1; i < vector.size(); ++i)
+        {
+            vector[i].x = static_cast < std::uint32_t > (i);
+            vector[i].y = vector[i].x + vector[i - 1].y;
+        }
+    }
+}
+
+void test_4(benchmark::State & state) // note: very fast
+{
+    static_assert(sizeof(S2) == 8);
+
+    std::vector < S2 > vector(100);
+
+    for (auto _ : state)
+    {
+        for (std::size_t i = 1; i < vector.size(); ++i)
+        {
+            vector[i].x = static_cast < std::uint32_t > (i);
+            vector[i].y = vector[i].x + vector[i - 1].y;
+        }
+    }
+}
+
 BENCHMARK(test_1);
 BENCHMARK(test_2);
+BENCHMARK(test_3);
+BENCHMARK(test_4);
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {
