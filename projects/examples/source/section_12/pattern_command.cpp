@@ -53,7 +53,7 @@ int main()
 		{ computer_2, Command::stop }
 	};
 
-	for (std::size_t i = 0; i < std::size(executors); ++i) executors[i].execute();
+	for (const auto & executor : executors) executor.execute();
 
 	assert(computer_1.state == Computer::State::stop);
 	assert(computer_2.state == Computer::State::stop);
