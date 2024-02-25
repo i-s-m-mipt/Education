@@ -9,7 +9,7 @@ void insertion_sort(std::vector < int > & v, std::size_t l, std::size_t r) // no
 	{
 		for (auto j = i; j > l; --j)
 		{
-			if (v[j - 1] > v[j])
+			if (v[j - 1] > v[j]) 
 			{
 				std::swap(v[j], v[j - 1]);
 			}
@@ -19,26 +19,16 @@ void insertion_sort(std::vector < int > & v, std::size_t l, std::size_t r) // no
 
 void merge_sort(std::vector < int > & v, std::size_t l, std::size_t m, std::size_t r)
 {
-	const auto begin = l;
+	const auto begin = l, end = m;
 
 	std::vector < int > t(r - l, 0); // note: one additional container instead of two
 
-	for (std::size_t i = 0, end = m; i < std::size(t); ++i)
+	for (auto & e : t) 
 	{
-		if (l < end && ((m < r && v[l] <= v[m]) || (m == r)))
-		{
-			t[i] = v[l++];
-		}
-		else
-		{
-			t[i] = v[m++];
-		}
+		e = v[(l < end && ((m < r && v[l] <= v[m]) || (m == r))) ? l++ : m++];
 	}
 
-	for (std::size_t i = 0; i < std::size(t); ++i)
-	{
-		v[begin + i] = t[i];
-	}
+	for (std::size_t i = 0; i < std::size(t); ++i) v[begin + i] = t[i];
 }
 
 void merge_sort(std::vector < int > & v, std::size_t l, std::size_t r) // note: O(N*log(N)) complexity (amortized)
@@ -63,17 +53,13 @@ int main()
 
 	std::vector < int > v(n, 0);
 
-	for (std::size_t i = 0; i < n; ++i)
-	{
-		v[i] = n - i;
-	}
+	for (auto value = static_cast < int > (n); auto & e : v) e = value--;
 
 	merge_sort(v, 0, n); // good: half-open intervals preferred in C++
 
-	for (std::size_t i = 0; i < n; ++i)
-	{
-		std::cout << v[i] << (i + 1 == n ? '\n' : ' ');
-	}
+	for (auto e : v) std::cout << e << ' ';
+
+	std::cout << std::endl;
 
 	return 0;
 }
