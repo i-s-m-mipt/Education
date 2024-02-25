@@ -61,7 +61,7 @@ public:
 
 			auto new_data = (new_size ? new data_t[new_size]{} : nullptr);
 
-			for (size_t i = 0; i < new_size; ++i)
+			for (std::size_t i = 0; i < new_size; ++i)
 			{
 				new_data[i] = other.m_data[i]; // note: deep copy
 			}
