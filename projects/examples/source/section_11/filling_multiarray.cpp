@@ -6,30 +6,30 @@
 
 #include <boost/multi_array.hpp>
 
-template < auto N, typename C, typename FI > void fill_shape(const C & c, FI shape)
+template < auto N, typename C, typename FI > void fill_shape(const C & container, FI shape)
 {
-	*shape = std::size(c);
+	*shape = std::size(container);
 
 	if constexpr (N > 1)
 	{
-		fill_shape < N - 1 > (*(std::begin(c)), ++shape);
+		fill_shape < N - 1 > (*(std::begin(container)), ++shape);
 	}
 }
 
-template < auto N, typename C, typename FI > void fill_array(const C & c, FI array)
+template < auto N, typename C, typename FI > void fill_array(const C & container, FI array)
 {
 	if constexpr (N > 1)
 	{
-		for (auto iterator = std::begin(c); iterator != std::end(c); ++iterator)
+		for (const auto & element : container)
 		{
-			fill_array < N - 1 > (*iterator, (array++)->begin());
+			fill_array < N - 1 > (element, (array++)->begin());
 		}
 	}
 	else
 	{
-		for (auto iterator = std::begin(c); iterator != std::end(c); ++iterator)
+		for (const auto & element : container)
 		{
-			*(array++) = *iterator;
+			*(array++) = element;
 		}
 	}
 }
