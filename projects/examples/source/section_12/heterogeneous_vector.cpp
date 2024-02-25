@@ -50,7 +50,7 @@ int main()
 
     try
     {
-        for (std::size_t i = 0; i < std::size(vector); ++i) handle(vector[i]);
+        for (const auto & element : vector) handle(element);
     }
     catch (const std::exception & exception)
     {
