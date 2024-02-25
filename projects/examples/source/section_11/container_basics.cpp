@@ -55,7 +55,7 @@ int main()
 		assert(v[i] == 0);
 	}
 
-	for (auto iterator = std::begin(v); iterator != std::end(v); ++iterator)
+	for (auto iterator = std::begin(v); iterator != std::end(v); ++iterator) // note: RBF
 	{
 		++(*iterator); // note: use iterators as high-level pointers in containers
 	}
