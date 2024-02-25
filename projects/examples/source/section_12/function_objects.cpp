@@ -62,10 +62,9 @@ int main()
 
 	std::set < int, std::greater < int > > set = { 1, 4, 2, 5, 3 };
 
-	for (auto iterator = std::cbegin(set); iterator != std::cend(set); ++iterator)
-	{
-		std::cout << *iterator << ' '; // note: outputs 5 4 3 2 1
-	}
+	for (auto element : set) std::cout << element << ' '; // note: outputs 5 4 3 2 1
+
+	std::cout << std::endl;
 
 	const std::size_t size = 5;
 
@@ -90,10 +89,7 @@ int main()
 	std::transform(std::cbegin(v2), std::cend(v2), std:: begin(v2),                 std::negate());
 	std::transform(std::cbegin(v2), std::cend(v2), std::cbegin(v3), std::begin(v3), std::plus  ());
 
-	for (std::size_t i = 0; i < size; ++i)
-	{
-		assert(v3[i] == 0);
-	}
+	for (auto element : v3) assert(element == 0);
 
 	assert(std::for_each(std::begin(v1), std::end(v1), Mean < decltype(v1)::value_type > ()).result() == 3);
 
