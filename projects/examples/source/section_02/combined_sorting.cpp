@@ -51,13 +51,13 @@ int main()
 {
 	std::cout << "Enter array size: "; std::size_t n{}; std::cin >> n;
 
-	std::vector < int > v(n, 0);
+	std::vector < int > vector(n, 0);
 
-	for (auto value = static_cast < int > (n); auto & e : v) e = value--;
+	for (auto value = static_cast < int > (n); auto & element : vector) element = value--;
 
-	merge_sort(v, 0, n); // good: half-open intervals preferred in C++
+	merge_sort(vector, 0, n); // good: half-open intervals preferred in C++
 
-	for (auto e : v) std::cout << e << ' ';
+	for (auto element : vector) std::cout << element << ' ';
 
 	std::cout << std::endl;
 
