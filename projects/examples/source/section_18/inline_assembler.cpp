@@ -305,11 +305,7 @@ void test_3()
 	auto a = new double[size];
 	auto b = new double[size];
 
-	for (std::size_t i = 0; i < size; ++i)
-	{
-		a[i] = 0.5;
-		b[i] = 0.5;
-	}
+	for (std::size_t i = 0; i < size; ++i) a[i] = b[i] = 0.5;
 
 	const auto result_cpp = test_cpp_v3(a, b, size);
 	const auto result_asm = test_asm_v3(a, b, size);
@@ -329,10 +325,7 @@ void test_4()
 
 	auto a = new double[size];
 
-	for (std::size_t i = 0; i < size; ++i)
-	{
-		a[i] = 0.25;
-	}
+	for (std::size_t i = 0; i < size; ++i) a[i] = 0.25;
 
 	const auto result_cpp = test_cpp_v4(a, size);
 	const auto result_asm = test_asm_v4(a, size);
