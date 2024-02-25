@@ -14,10 +14,9 @@ int main()
 
 	static_assert(std::is_same_v < category_t, std::bidirectional_iterator_tag > );
 
-	for (auto iterator = std::cbegin(set); iterator != std::cend(set); ++iterator)
-	{
-		std::cout << *iterator << ' '; // note: outputs 1 2 3 4 5
-	}
+	for (auto element : set) std::cout << element << ' '; // note: outputs 0 1 2 3 4
+
+	std::cout << std::endl;
 
 	set.insert(std::cbegin(set), 0); // good: O(1) complexity (amortized) at best
 
