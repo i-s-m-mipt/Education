@@ -72,7 +72,7 @@ public:
 
 }; // class User : public Manager < User > 
 
-void test_1(benchmark::State & state) // note: very fast
+void test_1(benchmark::State & state)
 {
     for (auto _ : state)
     {
