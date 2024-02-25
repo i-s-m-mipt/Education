@@ -10,9 +10,9 @@ auto hash(const std::string & string) // note: sequential hash function for stri
 {
 	std::size_t seed = 0;
 
-	for (std::size_t i = 0; i < std::size(string); ++i)
+	for (auto element : string)
 	{
-		(seed *= 31) += static_cast < std::size_t > (string[i]); // note: prime number
+		(seed *= 31) += static_cast < std::size_t > (element); // note: prime number
 	}
 
 	return seed;
