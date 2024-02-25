@@ -33,10 +33,7 @@ public:
 
 	~Chain_Allocator() noexcept
 	{
-		for (std::size_t i = 0; i < std::size(m_chains); ++i)
-		{
-			::operator delete(m_chains[i], default_alignment);
-		}
+		for (auto chain : m_chains) ::operator delete(chain, default_alignment);
 	}
 
 	[[nodiscard]] void * allocate()
