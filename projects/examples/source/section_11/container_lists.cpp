@@ -24,10 +24,7 @@ int main()
 		          std::begin(list_1),
 		std::next(std::begin(list_1), std::size(list_1) / 2));
 
-	for (auto iterator = std::cbegin(list_2); iterator != std::cend(list_2); ++iterator)
-	{
-		std::cout << *iterator << ' '; // note: { 0, 1, 2, 3, 4 }
-	}
+	for (auto element : list_2) std::cout << element << ' '; // note: outputs 0 1 2 3 4
 
 	std::cout << std::endl;
 
@@ -39,10 +36,9 @@ int main()
 
 	forward_list.erase_after(std::begin(forward_list)); 
 
-	for (auto iterator = std::cbegin(forward_list); iterator != std::cend(forward_list); ++iterator)
-	{
-		std::cout << *iterator << ' '; // note: { 43, 1, 2, 3, 4, 5 }
-	}
+	for (auto element : forward_list) std::cout << element << ' '; // note: outputs 43 1 2 3 4 5
+
+	std::cout << std::endl;
 
 //	assert(std::size(forward_list) == 6); // error: forward_list has no size() member
 
