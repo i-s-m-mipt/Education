@@ -26,7 +26,7 @@ int main()
 
 	std::vector < int > vector = { 1, 2, 3 }; // note: default container
 
-	std::cout << "Vector size is " << vector.size() << std::endl;
+	std::cout << "Vector size is " << std::size(vector) << std::endl;
 
 	std::cout << "Square root of 4 is " << std::sqrt(4) << std::endl;
 

@@ -23,7 +23,7 @@ void merge_sort(std::vector < int > & v, std::size_t l, std::size_t m, std::size
 
 	std::vector < int > t(r - l, 0); // note: one additional container instead of two
 
-	for (std::size_t i = 0, end = m; i < t.size(); ++i)
+	for (std::size_t i = 0, end = m; i < std::size(t); ++i)
 	{
 		if (l < end && ((m < r && v[l] <= v[m]) || (m == r)))
 		{
@@ -35,7 +35,7 @@ void merge_sort(std::vector < int > & v, std::size_t l, std::size_t m, std::size
 		}
 	}
 
-	for (std::size_t i = 0; i < t.size(); ++i)
+	for (std::size_t i = 0; i < std::size(t); ++i)
 	{
 		v[begin + i] = t[i];
 	}

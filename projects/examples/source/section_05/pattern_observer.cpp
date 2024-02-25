@@ -17,7 +17,7 @@ public:
 
     ~Computer()
     {
-        for (std::size_t i = 0; i < m_observers.size(); ++i)
+        for (std::size_t i = 0; i < std::size(m_observers); ++i)
         {
             delete m_observers[i]; // good: no memory leak
         }
@@ -30,7 +30,7 @@ public:
 
     void notify_all() const 
     { 
-        for (std::size_t i = 0; i < m_observers.size(); ++i)
+        for (std::size_t i = 0; i < std::size(m_observers); ++i)
         {
             if (m_observers[i]) m_observers[i]->update(m_temperature);
         }

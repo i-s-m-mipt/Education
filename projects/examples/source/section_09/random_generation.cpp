@@ -42,14 +42,14 @@ int main()
 	{
 		if (auto value = distribution(engine); value > 0.0)
 		{
-			if (auto index = static_cast < std::size_t > (std::round(value)); index < values.size())
+			if (auto index = static_cast < std::size_t > (std::round(value)); index < std::size(values))
 			{
 				++values[index];
 			}
 		}
 	}
 
-	for (std::size_t i = 0; i < values.size(); ++i)
+	for (std::size_t i = 0; i < std::size(values); ++i)
 	{
 		std::cout << std::setw(2) << std::right << std::setfill(' ') << i << " : ";
 

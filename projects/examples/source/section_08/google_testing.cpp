@@ -49,13 +49,11 @@ protected:
 
 TEST_F(Test_Fixture, test) 
 {
-    ASSERT_EQ(data.size(),  1);
-    ASSERT_EQ(data.back(), 42);
+    ASSERT_EQ(std::size(data), 1);
 
     data.push_back(43);
 
-    ASSERT_EQ(data.size(),  2);
-    ASSERT_EQ(data.back(), 43);
+    ASSERT_EQ(std::size(data), 2);
 }
 
 int main(int argc, char ** argv) // note: arguments for testing

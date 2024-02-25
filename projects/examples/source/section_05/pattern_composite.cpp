@@ -21,7 +21,7 @@ public:
 
     ~Cluster()
     {
-        for (std::size_t i = 0; i < m_computers.size(); ++i)
+        for (std::size_t i = 0; i < std::size(m_computers); ++i)
         {
             delete m_computers[i]; // good: no memory leak
         }
@@ -31,7 +31,7 @@ public:
     {
         std::size_t total_cores = 0;
 
-        for (std::size_t i = 0; i < m_computers.size(); ++i)
+        for (std::size_t i = 0; i < std::size(m_computers); ++i)
         {
             if (m_computers[i]) total_cores += m_computers[i]->cores();
         }

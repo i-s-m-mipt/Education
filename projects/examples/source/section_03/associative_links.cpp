@@ -62,7 +62,7 @@ void Student::show_lectures() const
 {
 	std::cout << "Student " << m_name << " visits: " << std::endl;
 
-	for (std::size_t i = 0; i < m_lectures.size(); ++i)
+	for (std::size_t i = 0; i < std::size(m_lectures); ++i)
 	{
 		std::cout << i + 1 << ": " << m_lectures[i]->name() << std::endl;
 	}
@@ -72,7 +72,7 @@ void Lecture::show_students() const
 {
 	std::cout << "Lecture " << m_name << " is visited by: " << std::endl;
 
-	for (std::size_t i = 0; i < m_students.size(); ++i)
+	for (std::size_t i = 0; i < std::size(m_students); ++i)
 	{
 		std::cout << i + 1 << ": " << m_students[i]->name() << std::endl;
 	}

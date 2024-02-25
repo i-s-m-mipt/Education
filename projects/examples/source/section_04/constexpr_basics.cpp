@@ -35,7 +35,7 @@ consteval auto fibonacci(int n) // note: must be evaluated at compile-time
 	{
 		std::vector < int > v(n, 1); // note: dynamic allocation allowed
 
-		for (std::size_t i = 2; i < v.size(); ++i)
+		for (std::size_t i = 2; i < std::size(v); ++i)
 		{
 			v[i] = v[i - 1] + v[i - 2];
 		}
