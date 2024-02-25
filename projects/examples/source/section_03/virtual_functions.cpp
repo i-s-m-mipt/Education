@@ -106,10 +106,7 @@ int main()
 
 	std::vector < Computer * > computers = { &mobile_1, &mobile_2, &laptop_1, &laptop_2 };
 
-	for (std::size_t i = 0; i < std::size(computers); ++i)
-	{
-		computers[i]->print();
-	}
+	for (auto computer : computers) computer->print();
 
 	c_ptr = new Mobile;
 
