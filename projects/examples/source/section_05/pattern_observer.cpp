@@ -17,10 +17,7 @@ public:
 
     ~Computer()
     {
-        for (std::size_t i = 0; i < std::size(m_observers); ++i)
-        {
-            delete m_observers[i]; // good: no memory leak
-        }
+        for (auto observer : m_observers) delete observer; // good: no memory leak
     }
 
     void set_temperature(double temperature) 
@@ -30,9 +27,9 @@ public:
 
     void notify_all() const 
     { 
-        for (std::size_t i = 0; i < std::size(m_observers); ++i)
+        for (auto observer : m_observers)
         {
-            if (m_observers[i]) m_observers[i]->update(m_temperature);
+            if (observer) observer->update(m_temperature);
         }
     }
 
