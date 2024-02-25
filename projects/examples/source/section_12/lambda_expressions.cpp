@@ -70,10 +70,9 @@ int main()
 
 	std::set < int, decltype([](auto lhs, auto rhs){ return (lhs > rhs); }) > set = { 1, 4, 2, 5, 3 };
 
-	for (auto iterator = std::cbegin(set); iterator != std::cend(set); ++iterator)
-	{
-		std::cout << *iterator << ' '; // note: outputs 5 4 3 2 1
-	}
+	for (auto element : set) std::cout << element << ' '; // note: outputs 5 4 3 2 1
+
+	std::cout << std::endl;
 
 	return 0;
 }
