@@ -21,19 +21,16 @@ public:
 
     ~Cluster()
     {
-        for (std::size_t i = 0; i < std::size(m_computers); ++i)
-        {
-            delete m_computers[i]; // good: no memory leak
-        }
+        for (auto computer : m_computers) delete computer; // good: no memory leak
     }
 
     [[nodiscard]] std::size_t cores() const override
     {
         std::size_t total_cores = 0;
 
-        for (std::size_t i = 0; i < std::size(m_computers); ++i)
+        for (auto computer : m_computers)
         {
-            if (m_computers[i]) total_cores += m_computers[i]->cores();
+            if (computer) total_cores += computer->cores();
         }
 
         return total_cores;
