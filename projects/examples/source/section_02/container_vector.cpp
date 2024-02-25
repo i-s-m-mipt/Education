@@ -8,28 +8,24 @@ int main()
 
 	std::cout << "Enter " << n << " integer values: ";
 
-	std::vector < int > v(n, 0); // note: create vector of n zero elements
+	std::vector < int > vector(n, 0); // note: create vector of n zero elements
 
-	for (std::size_t i = 0; i < n; ++i)
-	{
-		std::cin >> v[i]; // note: consider push_back as alternative
-	}
+	for (auto & element : vector) std::cin >> element; // note: consider push_back
 
 	for (std::size_t i = 0; i < n - 1; ++i)
 	{
 		for (std::size_t j = i + 1; j < n; ++j)
 		{
-			if (v[i] > v[j])
+			if (vector[i] > vector[j])
 			{
-				std::swap(v[i], v[j]);
+				std::swap(vector[i], vector[j]);
 			}
 		}
 	}
 
-	for (std::size_t i = 0; i < n; ++i)
-	{
-		std::cout << v[i] << (i + 1 == n ? '\n' : ' ');
-	}
+	for (auto element : vector) std::cout << element << ' ';
+
+	std::cout << std::endl;
 
 	return 0;
 }
