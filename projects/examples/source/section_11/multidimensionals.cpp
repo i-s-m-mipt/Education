@@ -58,6 +58,7 @@ int main()
 		for (std::size_t j = 0; j < size; ++j)
 		{
 			array_2D_v2[i][j] = 42;
+//			array_2D_v2(i, j) = 42; // note: consider as alternative
 		}
 	}
 
