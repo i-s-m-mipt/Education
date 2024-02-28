@@ -522,6 +522,9 @@
     <ClCompile Include="..\source\section_08\google_benchmark.cpp">
       <Filter>source\section_08</Filter>
     </ClCompile>
+    <ClCompile Include="stack_with_maximum.cpp">
+      <Filter>source\section_11</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
