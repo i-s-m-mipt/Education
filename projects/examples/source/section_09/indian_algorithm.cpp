@@ -6,7 +6,7 @@
 
 [[nodiscard]] unsigned long long pow(unsigned long long base, unsigned long long exp)
 {
-    if (base == 0) return (exp == 0) ? 1 : 0;
+    if (base == 0) return (exp == 0 ? 1 : 0);
 
     auto result = 1ull;
 
