@@ -3,18 +3,17 @@
 #include <type_traits>
 #include <utility>
 
-class RCCB_base // note: non-template/copyable class, no custom deleters support
+#include <boost/noncopyable.hpp>
+
+class RCCB_base : private boost::noncopyable // note: non-template class, no custom deleters support
 {
 protected:
 
-    RCCB_base() noexcept = default; // note: available from RCCB only
+    RCCB_base() noexcept = default; // note: available from derived constructors only
 
-    virtual ~RCCB_base() noexcept = default; // note: really polymorphic?
+    virtual ~RCCB_base() noexcept = default; // note: really polymorphic base class?
 
 public:
-
-    RCCB_base            (const RCCB_base &) = delete;
-    RCCB_base & operator=(const RCCB_base &) = delete;
 
     void create_reference() noexcept { ++m_counter; }
     void remove_reference() noexcept 
@@ -30,7 +29,7 @@ private:
 
     std::size_t m_counter = 0; // note: consider std::atomic < std::size_t > for threadsafe version
 
-}; // class RCCB_base
+}; // class RCCB_base : private boost::noncopyable
 
 template < typename T > class RCCB : public RCCB_base
 {
@@ -65,12 +64,12 @@ public:
         try_make_rccb();
     }
 
-    Shared(const Shared < T > &  other) noexcept : m_data(other.m_data), m_rccb(other.m_rccb)
+    Shared(const Shared < T > & other) noexcept : m_data(other.m_data), m_rccb(other.m_rccb)
     {
         if (m_rccb) m_rccb->create_reference();
     }
 
-    Shared(      Shared < T > && other) noexcept : m_data(other.m_data), m_rccb(other.m_rccb)
+    Shared(Shared < T > && other) noexcept : m_data(other.m_data), m_rccb(other.m_rccb)
     {
         other.m_data = nullptr;
         other.m_rccb = nullptr;
@@ -120,6 +119,11 @@ private:
 template < typename T > void swap(Shared < T > & lhs, Shared < T > & rhs) noexcept
 {
     lhs.swap(rhs);
+}
+
+template < typename T, typename ... Types > [[nodiscard]] auto make_shared(Types && ... args)
+{
+    // note: another RCCB required, combining control block and object in one allocation
 }
 
 int main()
