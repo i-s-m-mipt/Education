@@ -80,7 +80,7 @@ void test_1(benchmark::State & state)
 
 		benchmark::DoNotOptimize(ptr);
 
-		::operator delete(ptr);
+		::operator delete(ptr, state.range(0));
     }
 }
 
@@ -110,7 +110,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 		ptr[i].~C();
 	}
 
-	::operator delete(ptr); // note: uninitialized memory
+	::operator delete(ptr, sizeof(C) * size); // note: hint for memory allocator
 
 	std::cout << sizeof(U) << std::endl;
 
