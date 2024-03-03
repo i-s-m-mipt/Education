@@ -28,10 +28,10 @@
 	static int x = 42; return x;
 }
 
-void f(      int &  ) { std::cout << "      int & " << std::endl; }
-void f(      int && ) { std::cout << "      int &&" << std::endl; }
-void f(const int &  ) { std::cout << "const int & " << std::endl; }
-void f(const int && ) { std::cout << "const int &&" << std::endl; }
+void f(      int & ) { std::cout << "      int & " << std::endl; }
+void f(      int &&) { std::cout << "      int &&" << std::endl; }
+void f(const int & ) { std::cout << "const int & " << std::endl; }
+void f(const int &&) { std::cout << "const int &&" << std::endl; }
 
 class Person
 {
