@@ -47,7 +47,7 @@ public:
 		return ::operator new(size); // note: global operator new call
 	}
 
-	void operator delete(void * pointer, std::size_t size) // note: overloaded version for Manager, implicitly static
+	void operator delete(void * pointer) // note: overloaded version for Manager, implicitly static
 	{
 		std::cout << "Manager::operator delete called" << std::endl;
 
