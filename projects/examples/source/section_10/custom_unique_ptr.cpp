@@ -58,10 +58,15 @@ template < typename T > void swap(Unique < T > & lhs, Unique < T > & rhs) noexce
     lhs.swap(rhs);
 }
 
+template < typename T, typename ... Types > [[nodiscard]] auto make_unique(Types && ... args)
+{
+    return Unique < T > (new T(std::forward < Types > (args)...)); 
+}
+
 int main()
 {
-    Unique < int > unique_1(new int(42));
-    Unique < int > unique_2(new int(43));
+    auto unique_1 = make_unique < int > (42);
+    auto unique_2 = make_unique < int > (43);
 
     unique_2 = std::move(unique_1);
 
