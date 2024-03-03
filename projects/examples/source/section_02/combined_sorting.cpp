@@ -25,7 +25,7 @@ void merge_sort(std::vector < int > & v, std::size_t l, std::size_t m, std::size
 
 	for (auto & e : t) 
 	{
-		e = v[(l < end && ((m < r && v[l] <= v[m]) || (m == r))) ? l++ : m++];
+		e = v[((l < end && ((m < r && v[l] <= v[m]) || (m == r))) ? l++ : m++)];
 	}
 
 	for (std::size_t i = 0; i < std::size(t); ++i) v[begin + i] = t[i];
