@@ -37,7 +37,7 @@ int main()
 	v.pop_back      (); assert(std::size(v) == size     && v.capacity() == size + 1);
 	v.shrink_to_fit (); assert(std::size(v) == size     && v.capacity() == size    );
 
-	std::cout << v.max_size() << std::endl;
+	std::cout << v.max_size() << std::endl; // note: std::length_error if size > max size
 
 	try
 	{
