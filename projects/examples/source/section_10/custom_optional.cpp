@@ -87,21 +87,10 @@ private:
 
 public:
 
-    [[nodiscard]] explicit operator bool() const noexcept 
-    { 
-        return m_ptr; 
-    }
+    [[nodiscard]] bool  has_value() const noexcept { return  m_ptr; }
 
-    [[nodiscard]] bool      has_value () const noexcept { return  m_ptr; }
-
-    [[nodiscard]]       T * operator->()       noexcept { return  m_ptr; }
-    [[nodiscard]] const T * operator->() const noexcept { return  m_ptr; }
-
-    [[nodiscard]]       T & operator* ()       noexcept { return *m_ptr; }
-    [[nodiscard]] const T & operator* () const noexcept { return *m_ptr; }
-
-    [[nodiscard]]       T & value     ()       noexcept { return *m_ptr; }
-    [[nodiscard]] const T & value     () const noexcept { return *m_ptr; }
+    [[nodiscard]]       T & value()       noexcept { return *m_ptr; }
+    [[nodiscard]] const T & value() const noexcept { return *m_ptr; }
 
     [[nodiscard]] T value_or(T value) const noexcept 
     { 
@@ -120,24 +109,24 @@ int main()
 
     assert(o1.value_or(42) == 42);
 
-    Optional < int > o2(42); assert(o2.has_value() && *o2 == 42);
-    Optional < int > o3(o2); assert(o3.has_value() && *o3 == 42);
+    Optional < int > o2(42); assert(o2.has_value() && o2.value() == 42);
+    Optional < int > o3(o2); assert(o3.has_value() && o3.value() == 42);
 
     Optional < int > o4(std::move(o3));
 
-    assert(o4.has_value() && *o4 == 42 && !o3.has_value());
+    assert(o4.has_value() && o4.value() == 42 && !o3.has_value());
 
     o3 = o2; 
     
-    assert(o3.has_value() && *o3 == 42);
+    assert(o3.has_value() && o3.value() == 42);
 
     o4 = std::move(o3);
 
-    assert(o4.has_value() && *o4 == 42 && !o3.has_value());
+    assert(o4.has_value() && o4.value() == 42 && !o3.has_value());
 
     o4 = 43;
 
-    assert(o4.has_value() && *o4 == 43);
+    assert(o4.has_value() && o4.value() == 43);
 
     return 0;
 }
