@@ -25,7 +25,7 @@ public:
 
 	~Stack_Allocator() noexcept
 	{
-		::operator delete(m_begin, default_alignment);
+		::operator delete(m_begin, m_size, default_alignment);
 	}
 
 	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t)) noexcept
@@ -127,7 +127,7 @@ void test_2(benchmark::State & state) // note: very slow
 
 		for (std::size_t i = 0; i < kb; ++i)
 		{
-			::operator delete(pointers[std::size(pointers) - 1 - i]);
+			::operator delete(pointers[std::size(pointers) - 1 - i], mb);
 		}
 	}
 }

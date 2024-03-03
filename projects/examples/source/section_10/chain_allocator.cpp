@@ -33,7 +33,7 @@ public:
 
 	~Chain_Allocator() noexcept
 	{
-		for (auto chain : m_chains) ::operator delete(chain, default_alignment);
+		for (auto chain : m_chains) ::operator delete(chain, m_size, default_alignment);
 	}
 
 	[[nodiscard]] void * allocate()
@@ -143,10 +143,10 @@ void test_2(benchmark::State & state) // note: very slow
 
 	for (auto _ : state)
 	{
-		for (std::size_t i = 0; i < kb; i += 1) pointers[i] = ::operator new   (mb         );
-		for (std::size_t i = 0; i < kb; i += 2)               ::operator delete(pointers[i]);
-		for (std::size_t i = 0; i < kb; i += 2) pointers[i] = ::operator new   (mb         );
-		for (std::size_t i = 0; i < kb; i += 1)               ::operator delete(pointers[i]);
+		for (std::size_t i = 0; i < kb; i += 1) pointers[i] = ::operator    new(             mb);
+		for (std::size_t i = 0; i < kb; i += 2)               ::operator delete(pointers[i], mb);
+		for (std::size_t i = 0; i < kb; i += 2) pointers[i] = ::operator    new(             mb);
+		for (std::size_t i = 0; i < kb; i += 1)               ::operator delete(pointers[i], mb);
 	}
 }
 

@@ -18,7 +18,7 @@ public:
 
 	~Arena_Allocator() noexcept
 	{
-		::operator delete(m_begin, default_alignment);
+		::operator delete(m_begin, m_size, default_alignment);
 	}
 
 	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t)) noexcept
@@ -88,8 +88,8 @@ void test_2(benchmark::State & state) // note: very slow
 
 	for (auto _ : state)
 	{
-		for (std::size_t i = 0; i < kb; ++i) pointers[i] = ::operator new   (mb         );
-		for (std::size_t i = 0; i < kb; ++i)               ::operator delete(pointers[i]);
+		for (std::size_t i = 0; i < kb; ++i) pointers[i] = ::operator    new(             mb);
+		for (std::size_t i = 0; i < kb; ++i)               ::operator delete(pointers[i], mb);
 	}
 }
 
