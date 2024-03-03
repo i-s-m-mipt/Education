@@ -11,7 +11,7 @@ public:
 		m_container.push_back(std::move(value));
 	}
 
-	[[nodiscard]] T top() noexcept(noexcept(m_container.back()))
+	[[nodiscard]] T top() const noexcept(noexcept(m_container.back()))
 	{ 
 		return m_container.back(); // note: undefined behavior if empty
 	}
@@ -22,6 +22,11 @@ public:
 	}
 
 //	T pop() { ... } // bad: unsafe design
+
+	[[nodiscard]] auto size() const noexcept(noexcept(m_container.size()))
+	{ 
+		return m_container.size(); 
+	}
 
 private:
 
