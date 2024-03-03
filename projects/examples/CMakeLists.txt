@@ -270,7 +270,8 @@ set(sources_11
     multidimensionals
     multiple_interfaces
     pattern_flyweight
-    vector_bool_proxy)
+    vector_bool_proxy
+    stack_with_minimum)
 
 foreach(entry IN LISTS sources_11)
     add_executable(${entry} source/section_11/${entry}.cpp)
