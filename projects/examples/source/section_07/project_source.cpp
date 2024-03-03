@@ -73,9 +73,9 @@ void test_macros()
 
 	auto location = std::source_location::current(); // good: macros alternative
 
-	std::cout << location.file_name    () << std::endl;
-	std::cout << location.line         () << std::endl;
-	std::cout << location.column       () << std::endl;
+	std::cout << location.    file_name() << std::endl;
+	std::cout << location.         line() << std::endl;
+	std::cout << location.       column() << std::endl;
 	std::cout << location.function_name() << std::endl;
 
 	TRACE; // good: semicolon at end
