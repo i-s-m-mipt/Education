@@ -80,7 +80,7 @@ private:
 
     void deallocate() noexcept
     { 
-        ::operator delete(m_ptr, std::align_val_t(alignof(T))); m_ptr = nullptr;
+        ::operator delete(m_ptr, sizeof(T), std::align_val_t(alignof(T))); m_ptr = nullptr;
     }
 
 public:
