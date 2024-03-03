@@ -22,7 +22,7 @@ namespace literals // good: namespace for user-defined literals
 
 	constexpr int pow(int x, int n)
 	{
-		return (n > 0) ? x * pow(x, n - 1) : 1;
+		return (n > 0 ? x * pow(x, n - 1) : 1);
 	}
 
 	template < char digit, char ... tail > constexpr auto b3_handler()
