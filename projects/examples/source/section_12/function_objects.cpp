@@ -57,8 +57,8 @@ int main()
 {
 	std::vector < int > v1 = { 1, 4, 2, 5, 3 };
 
-	std::sort(std::begin(v1), std::end(v1));                 // note: 1 2 3 4 5
-	std::sort(std::begin(v1), std::end(v1), std::greater()); // note: 5 4 3 2 1
+	std::ranges::sort(v1                ); // note: 1 2 3 4 5
+	std::ranges::sort(v1, std::greater()); // note: 5 4 3 2 1
 
 	std::set < int, std::greater < int > > set = { 1, 4, 2, 5, 3 };
 
@@ -70,8 +70,8 @@ int main()
 
 	C c; // note: functional object with overloaded operator()
 
-	std::vector < int > v2(size, 0); std::generate(std::begin(v2), std::end(v2), f); // note: slower
-	std::vector < int > v3(size, 0); std::generate(std::begin(v3), std::end(v3), c); // note: faster
+	std::vector < int > v2(size, 0); std::ranges::generate(v2, f); // note: slower
+	std::vector < int > v3(size, 0); std::ranges::generate(v3, c); // note: faster
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
@@ -81,17 +81,18 @@ int main()
 
 	Sum < int > sum;
 
-	std::for_each < decltype(v2)::iterator, Sum < int > & > (std::begin(v2), std::end(v2), sum);
-	std::for_each < decltype(v3)::iterator, Sum < int > & > (std::begin(v3), std::end(v3), sum);
+	sum = std::move(std::ranges::for_each(v2, sum).fun);
+	sum = std::move(std::ranges::for_each(v3, sum).fun);
 
 	assert(sum.result() == 20);
 
-	std::transform(std::cbegin(v2), std::cend(v2), std:: begin(v2),                 std::negate());
-	std::transform(std::cbegin(v2), std::cend(v2), std::cbegin(v3), std::begin(v3), std::plus  ());
+	std::ranges::transform(v2, std:: begin(v2), std::negate());
+
+	std::ranges::transform(v2, v3, std::begin(v3), std::plus());
 
 	for (auto element : v3) assert(element == 0);
 
-	assert(std::for_each(std::begin(v1), std::end(v1), Mean < decltype(v1)::value_type > ()).result() == 3);
+	assert(std::ranges::for_each(v1, Mean < decltype(v1)::value_type > ()).fun.result() == 3);
 
 	return 0;
 }
