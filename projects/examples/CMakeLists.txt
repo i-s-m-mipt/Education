@@ -271,7 +271,8 @@ set(sources_11
     multiple_interfaces
     pattern_flyweight
     vector_bool_proxy
-    stack_with_minimum)
+    stack_with_minimum
+    longest_subsequence)
 
 set(section_11 source/section_11/)
 
