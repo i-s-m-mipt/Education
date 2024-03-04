@@ -103,9 +103,9 @@ void test_5(benchmark::State & state)
 }
 
 BENCHMARK(test_1); 
-BENCHMARK(test_2)->Arg(100'000); 
-BENCHMARK(test_3)->Arg(100'000); 
-BENCHMARK(test_4)->Arg(100'000); 
-BENCHMARK(test_5)->Arg(100'000); 
+BENCHMARK(test_2)->Arg(100'000); // note: slower
+BENCHMARK(test_3)->Arg(100'000); // note: slower
+BENCHMARK(test_4)->Arg(100'000); // note: slower
+BENCHMARK(test_5)->Arg(100'000); // note: slower
 
 BENCHMARK_MAIN();
