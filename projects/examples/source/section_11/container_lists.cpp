@@ -1,8 +1,11 @@
+#include <algorithm>
 #include <cassert>
 #include <forward_list>
 #include <iostream>
 #include <iterator>
 #include <list>
+#include <utility>
+#include <vector>
 
 int main()
 {
@@ -41,6 +44,16 @@ int main()
 	std::cout << std::endl;
 
 //	assert(std::size(forward_list) == 6); // error: forward_list has no size() member
+
+	std::list < int > list_for_sort = { 2, 4, 1, 5, 3 };
+
+	std::vector < std::reference_wrapper < int > > wrapper(std::begin(list_for_sort), std::end(list_for_sort));
+
+	std::ranges::sort(wrapper);
+
+	for (auto element : wrapper) std::cout << element << ' '; // note: outputs 1 2 3 4 5
+
+	std::cout << std::endl;
 
 	return 0;
 }
