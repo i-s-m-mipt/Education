@@ -89,7 +89,7 @@ void test_6(benchmark::State & state)
 
     for(auto _ : state) 
     {
-        auto result = std::lower_bound(std::begin(vector), std::end(vector), 0);
+        auto result = std::ranges::lower_bound(vector, 0);
 
         benchmark::DoNotOptimize(result);
     }
