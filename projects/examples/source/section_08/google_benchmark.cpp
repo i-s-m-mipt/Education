@@ -4,6 +4,7 @@
 #include <iterator>
 #include <numeric>
 #include <stdexcept>
+#include <utility>
 #include <vector>
 
 #include <benchmark/benchmark.h>
@@ -89,7 +90,7 @@ void test_6(benchmark::State & state)
 
     for(auto _ : state) 
     {
-        auto result = std::ranges::lower_bound(vector, 0);
+        auto result = std::ranges::lower_bound(std::as_const(vector), 0);
 
         benchmark::DoNotOptimize(result);
     }

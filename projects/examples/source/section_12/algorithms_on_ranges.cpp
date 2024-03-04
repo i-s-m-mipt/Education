@@ -5,6 +5,7 @@
 #include <iterator>
 #include <map>
 #include <ranges>
+#include <utility>
 #include <vector>
 
 struct Human
@@ -42,7 +43,7 @@ int main()
 
 	std::cout << std::endl;
 
-	std::ranges::transform(vector, std::begin(vector), std::negate());
+	std::ranges::transform(std::as_const(vector), std::begin(vector), std::negate());
 
 	std::ranges::sort(vector); // good: instead of iterators
 

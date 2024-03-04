@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
+#include <utility>
 #include <vector>
 
 int main() // good: feel strength and elegance of this example
@@ -14,7 +15,7 @@ int main() // good: feel strength and elegance of this example
 
 	std::ranges::sort(vector);
 
-	std::ranges::unique_copy(vector,
+	std::ranges::unique_copy(std::as_const(vector),
 		std::ostream_iterator < int > (std::cout, "\n"));
 
 	return 0;

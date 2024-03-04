@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iterator>
 #include <set>
+#include <utility>
 #include <vector>
 
 [[nodiscard]] auto f() noexcept // note: different functions have same types
@@ -81,17 +82,17 @@ int main()
 
 	Sum < int > sum;
 
-	sum = std::move(std::ranges::for_each(v2, sum).fun);
-	sum = std::move(std::ranges::for_each(v3, sum).fun);
+	sum = std::move(std::ranges::for_each(std::as_const(v2), sum).fun);
+	sum = std::move(std::ranges::for_each(std::as_const(v3), sum).fun);
 
 	assert(sum.result() == 20);
 
-	std::ranges::transform(v2,     std::begin(v2), std::negate());
-	std::ranges::transform(v2, v3, std::begin(v3), std::  plus());
+	std::ranges::transform(std::as_const(v2),                    std::begin(v2), std::negate());
+	std::ranges::transform(std::as_const(v2), std::as_const(v3), std::begin(v3), std::  plus());
 
 	for (auto element : v3) assert(element == 0);
 
-	assert(std::ranges::for_each(v1, Mean < decltype(v1)::value_type > ()).fun.result() == 3);
+	assert(std::ranges::for_each(std::as_const(v1), Mean < decltype(v1)::value_type > ()).fun.result() == 3);
 
 	return 0;
 }
