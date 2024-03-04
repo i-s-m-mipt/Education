@@ -7,14 +7,14 @@ int main() // good: feel strength and elegance of this example
 {
 	std::vector < int > vector;
 
-	std::copy(
+	std::ranges::copy(
 		std::istream_iterator < int > (std::cin),
 		std::istream_iterator < int > (),
 			std::back_inserter(vector));
 
-	std::sort(std::begin(vector), std::end(vector));
+	std::ranges::sort(vector);
 
-	std::unique_copy(std::cbegin(vector), std::cend(vector),
+	std::ranges::unique_copy(vector,
 		std::ostream_iterator < int > (std::cout, "\n"));
 
 	return 0;
