@@ -65,8 +65,8 @@ int main()
 
 	std::vector < int > vector(size, 0);
 
-	std::for_each(std:: begin(vector), std:: end(vector), [a](auto & x){        x += a ; });
-	std::for_each(std::cbegin(vector), std::cend(vector), [a](auto   x){ assert(x == a); });
+	std::ranges::for_each(vector, [a](auto & x){        x += a ; });
+	std::ranges::for_each(vector, [a](auto   x){ assert(x == a); });
 
 	std::set < int, decltype([](auto lhs, auto rhs){ return (lhs > rhs); }) > set = { 1, 4, 2, 5, 3 };
 
