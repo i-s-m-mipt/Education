@@ -1,5 +1,6 @@
 #include <deque>
 #include <iostream>
+#include <iterator>
 #include <vector>
 
 template < typename T, typename C = std::vector < T > > class Stack_v1

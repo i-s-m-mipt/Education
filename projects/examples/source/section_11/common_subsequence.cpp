@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <iterator>
 #include <vector>
 
 template < typename T > std::vector < T > longest_common_subsequence(const std::vector < T > & s1, const std::vector < T > & s2) 

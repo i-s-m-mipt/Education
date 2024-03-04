@@ -1,5 +1,6 @@
 #include <cassert>
 #include <iostream>
+#include <iterator>
 #include <string>
 #include <vector>
 

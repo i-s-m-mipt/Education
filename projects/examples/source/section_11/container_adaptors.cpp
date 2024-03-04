@@ -1,4 +1,5 @@
 #include <cassert>
+#include <iterator>
 #include <queue>
 #include <stack>
 

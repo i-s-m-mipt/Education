@@ -1,5 +1,5 @@
 #include <cassert>
-#include <iostream>
+#include <iterator>
 #include <valarray>
 
 int main() 

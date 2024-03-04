@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <exception>
 #include <iostream>
+#include <iterator>
 #include <memory>
 #include <random>
 #include <stdexcept>

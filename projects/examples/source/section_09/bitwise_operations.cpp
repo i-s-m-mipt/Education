@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <iomanip>
 #include <iostream>
+#include <iterator>
 #include <limits>
 #include <span>
 #include <type_traits>
