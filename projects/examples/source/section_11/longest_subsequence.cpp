@@ -31,14 +31,7 @@ template < typename T > std::vector < T > longest_subsequnce(const std::vector <
 		{
 			result.push_back(s1[i]); --i; --j;
 		}
-		else if (table[i][j + 1] > table[i + 1][j])
-		{
-			--i;
-		}
-		else
-		{
-			--j;
-		}
+		else (table[i][j + 1] > table[i + 1][j] ? --i : --j);
 	}
 
 	std::ranges::reverse(result); return result;
