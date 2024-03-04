@@ -13,7 +13,7 @@ int main()
 
 	std::fill_n(std::back_inserter(v1), 10, 0); // note: less effective, than constructor
 
-	std::iota(std::begin(v1), std::end(v1), 0); // note: v1 contains: 0 1 2 3 4 5 6 7 8 9
+	std::iota(std::begin(v1), std::end(v1), 0); // note: v1 contains 0 1 2 3 4 5 6 7 8 9
 
 	std::mt19937 engine(std::random_device{}());
 
