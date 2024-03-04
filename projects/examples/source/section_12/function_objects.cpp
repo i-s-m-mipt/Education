@@ -86,9 +86,8 @@ int main()
 
 	assert(sum.result() == 20);
 
-	std::ranges::transform(v2, std:: begin(v2), std::negate());
-
-	std::ranges::transform(v2, v3, std::begin(v3), std::plus());
+	std::ranges::transform(v2,     std::begin(v2), std::negate());
+	std::ranges::transform(v2, v3, std::begin(v3), std::  plus());
 
 	for (auto element : v3) assert(element == 0);
 
