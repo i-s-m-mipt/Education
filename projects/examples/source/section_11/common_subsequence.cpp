@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-template < typename T > std::vector < T > longest_subsequnce(const std::vector < T > & s1, const std::vector < T > & s2) 
+template < typename T > std::vector < T > longest_common_subsequnce(const std::vector < T > & s1, const std::vector < T > & s2) 
 {
 	std::vector < std::vector < int > > table(std::size(s1) + 1, 
                   std::vector < int >        (std::size(s2) + 1, 0)); // note: dynamic programming
@@ -12,14 +12,7 @@ template < typename T > std::vector < T > longest_subsequnce(const std::vector <
 	{
 		for (std::size_t j = 1; j < std::size(s2) + 1; ++j)
 		{
-			if (s1[i - 1] == s2[j - 1])
-			{
-				table[i][j] = table[i - 1][j - 1] + 1;
-			}
-			else
-			{
-				table[i][j] = std::max(table[i - 1][j], table[i][j - 1]);
-			}
+			table[i][j] = (s1[i - 1] == s2[j - 1] ? table[i - 1][j - 1] + 1 : std::max(table[i - 1][j], table[i][j - 1]));
 		}
 	}
 
@@ -43,7 +36,7 @@ int main()
 	std::vector < int > sequence_1 = { 1, 2, 2, 3, 4, 4 };
 	std::vector < int > sequence_2 = { 1, 1, 2, 3, 3, 4 };
 
-	for (auto element : longest_subsequnce(sequence_1, sequence_2))
+	for (auto element : longest_common_subsequnce(sequence_1, sequence_2))
 	{
 		std::cout << element << ' ';
 	}
