@@ -97,6 +97,8 @@ void test_3(benchmark::State & state) // note: very slow
 
     for (auto _ : state)
     {
+        vector[0].x = vector[0].y = 0;
+
         for (std::size_t i = 1; i < std::size(vector); ++i)
         {
             vector[i].x = static_cast < std::uint32_t > (i);
@@ -114,6 +116,8 @@ void test_4(benchmark::State & state) // note: very fast
 
     for (auto _ : state)
     {
+        vector[0].x = vector[0].y = 0;
+        
         for (std::size_t i = 1; i < std::size(vector); ++i)
         {
             vector[i].x = static_cast < std::uint32_t > (i);
