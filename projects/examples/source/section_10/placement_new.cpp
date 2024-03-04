@@ -47,7 +47,7 @@ public:
 		return ::operator new(size); // note: global operator new call
 	}
 
-	void operator delete(void * pointer) // note: overloaded version for Manager, implicitly static
+	void operator delete(void * pointer, std::size_t) // note: overloaded version for Manager, implicitly static
 	{
 		std::cout << "Manager::operator delete called" << std::endl;
 
@@ -60,15 +60,8 @@ class User : public Manager < User >
 {
 public:
 
-	User()
-	{
-		std::cout << "User:: User called" << std::endl;
-	}
-
-	~User()
-	{
-		std::cout << "User::~User called" << std::endl;
-	}
+	 User() { std::cout << "User:: User called" << std::endl; }
+	~User() { std::cout << "User::~User called" << std::endl; }
 
 }; // class User : public Manager < User > 
 
@@ -125,8 +118,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 	u.s2 = "world";
 
 	u.s2.~basic_string(); // good: explicit member destructor call
-
-	delete(new User); // note: overloaded versions are used instead of global versions
+	
+	delete(new User); // note: overloaded versions are used instead of global
 
 	benchmark::Initialize(&argc, argv);
 
