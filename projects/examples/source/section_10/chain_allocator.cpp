@@ -126,7 +126,7 @@ void test_1(benchmark::State & state) // note: very fast
 
 	for (auto _ : state)
 	{
-		Chain_Allocator allocator(gb, mb);
+		Chain_Allocator allocator(gb, mb); // note: huge constant
 
 		for (std::size_t i = 0; i < kb; i += 1) pointers[i] = allocator.  allocate(           );
 		for (std::size_t i = 0; i < kb; i += 2)               allocator.deallocate(pointers[i]);

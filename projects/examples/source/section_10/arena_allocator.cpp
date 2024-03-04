@@ -71,7 +71,7 @@ void test_1(benchmark::State & state) // note: very fast
 
 	for (auto _ : state)
 	{
-		Arena_Allocator allocator(gb);
+		Arena_Allocator allocator(gb); // note: huge constant
 
 		for (std::size_t i = 0; i < kb; ++i)
 		{

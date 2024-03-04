@@ -98,7 +98,7 @@ void test_1(benchmark::State & state) // note: very fast
 
 	for (auto _ : state)
 	{
-		Stack_Allocator allocator(2 * gb);
+		Stack_Allocator allocator(2 * gb); // note: huge constant
 
 		for (std::size_t i = 0; i < kb; ++i)
 		{
