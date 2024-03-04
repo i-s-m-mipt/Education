@@ -28,7 +28,7 @@ int main()
 
 	auto vertices = boost::vertices(default_graph);
 
-	std::copy(vertices.first, vertices.second, std::ostream_iterator < vertex_t > (std::cout, "\n"));
+	std::ranges::copy(vertices.first, vertices.second, std::ostream_iterator < vertex_t > (std::cout, "\n"));
 
 	assert(boost::add_edge(vertex_1, vertex_2, default_graph).second);
 	assert(boost::add_edge(vertex_2, vertex_1, default_graph).second);
@@ -41,7 +41,7 @@ int main()
 
 	auto edges = boost::edges(default_graph);
 
-	std::copy(edges.first, edges.second, std::ostream_iterator < edge_t > (std::cout, "\n"));
+	std::ranges::copy(edges.first, edges.second, std::ostream_iterator < edge_t > (std::cout, "\n"));
 
 	auto [begin, end] = boost::adjacent_vertices(vertex_2, default_graph);
 
@@ -49,7 +49,7 @@ int main()
 
 	auto out_edges = boost::out_edges(vertex_2, default_graph);
 
-	std::for_each(out_edges.first, out_edges.second, [&default_graph](edge_t edge)
+	std::ranges::for_each(out_edges.first, out_edges.second, [&default_graph](edge_t edge)
 	{ 
 		std::cout << boost::target(edge, default_graph) << std::endl;
 	});
