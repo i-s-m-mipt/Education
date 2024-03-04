@@ -4,8 +4,10 @@
 
 template < typename T > void swap(T & a, T & b)
 {
-    static_assert(std::is_copy_constructible_v < T > , 
-        "swap requires copy constructible type");
+    static_assert(
+        std::is_copy_constructible_v < T > &&
+        std::is_copy_assignable_v    < T > , 
+            "swap requires copy constructible type");
 
     auto c = b; b = a; a = c;
 }
