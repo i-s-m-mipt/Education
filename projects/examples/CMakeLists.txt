@@ -272,7 +272,8 @@ set(sources_11
     pattern_flyweight
     vector_bool_proxy
     stack_with_minimum
-    longest_subsequence)
+    common_subsequence
+    numeric_valarrays)
 
 set(section_11 source/section_11/)
 
