@@ -38,7 +38,7 @@ int main()
 
 	for (auto element : longest_common_subsequence(sequence_1, sequence_2))
 	{
-		std::cout << element << ' ';
+		std::cout << element << ' '; // note: outputs 1 2 3 4
 	}
 
 	std::cout << std::endl;
