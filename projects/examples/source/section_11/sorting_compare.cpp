@@ -16,11 +16,11 @@ void test_1(benchmark::State & state)
 {
     for (auto _ : state)
     {
-        std::array < int, 100'000 > array; // note: template parameter instead of state.range(0)
+        std::array < int, 100'000 > array; // note: template parameter instead of state.range(0), see also stack limit
 
         std::iota(std::begin(array), std::end(array), 1); // note: writes 1, 2, 3, ...
 
-        auto start = Clock::now();
+        auto start = Clock::now(); // note: manual timing
 
         std::ranges::sort(array, std::greater());
 
@@ -38,7 +38,7 @@ void test_2(benchmark::State & state)
 
         std::iota(std::begin(vector), std::end(vector), 1); // note: writes 1, 2, 3, ...
 
-        auto start = Clock::now();
+        auto start = Clock::now(); // note: manual timing
 
         std::ranges::sort(vector, std::greater());
 
@@ -56,7 +56,7 @@ void test_3(benchmark::State & state)
 
         std::iota(std::begin(deque), std::end(deque), 1); // note: writes 1, 2, 3, ...
 
-        auto start = Clock::now();
+        auto start = Clock::now(); // note: manual timing
 
         std::ranges::sort(deque, std::greater());
 
@@ -74,7 +74,7 @@ void test_4(benchmark::State & state)
 
         std::iota(std::begin(list), std::end(list), 1); // note: writes 1, 2, 3, ...
 
-        auto start = Clock::now();
+        auto start = Clock::now(); // note: manual timing
 
         list.sort(std::greater());
 
@@ -92,7 +92,7 @@ void test_5(benchmark::State & state)
 
         std::iota(std::begin(forward_list), std::end(forward_list), 1); // note: writes 1, 2, 3, ...
 
-        auto start = Clock::now();
+        auto start = Clock::now(); // note: manual timing
 
         forward_list.sort(std::greater());
 
