@@ -49,7 +49,7 @@ int main()
 
 	std::vector < std::reference_wrapper < int > > wrapper(std::begin(list_for_sort), std::end(list_for_sort));
 
-	std::ranges::sort(wrapper);
+	std::ranges::sort(wrapper); // note: cannot sort list directly due to bidirectional iterators
 
 	for (auto element : wrapper) std::cout << element << ' '; // note: outputs 1 2 3 4 5
 
