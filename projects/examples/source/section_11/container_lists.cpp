@@ -21,7 +21,7 @@ int main()
 
 	assert(list_2.remove(42) == 1); // note: erases all elements that are equal 42
 
-	list_1.merge(list_2); // note: { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 } in list_1
+	list_1.merge(list_2); // note: list_1 contains 0 1 2 3 4 5 6 7 8 9
 
 	list_2.splice(std::begin(list_2), list_1, 
 		          std::begin(list_1),
