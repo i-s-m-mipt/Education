@@ -10,9 +10,6 @@
 
 int main(int argc, char const *argv[])
 {
-
-    /* Векторы */
-
     using         array_t = std::vector < double >;
     using        vector_t = boost::numeric::ublas::vector < double, array_t >;
     using   unit_vector_t = boost::numeric::ublas::unit_vector < double >;
@@ -55,11 +52,6 @@ int main(int argc, char const *argv[])
     vector_slice_t vector_slice (vector, slice_t(1, 2, 2)); // Срез вектора, задаётся slice(start, step, count)
     std::cout << vector_slice << "\nthe same as subslice:\n"
     << subslice(vector, 1, 2, 2) << std::endl;              // Эквивалентный способ с помощью прототипа subslice
-
-
-    /* Матрицы */
-
-
 
     return 0;
 }
