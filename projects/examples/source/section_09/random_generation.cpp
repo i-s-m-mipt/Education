@@ -33,9 +33,9 @@ int main()
 {
 	std::random_device device; // note: implementation defined entropy source
 
-	std::mt19937 engine(device());
+	std::mt19937 engine(device()); // note: engines use entropy sources for seeding
 
-	std::normal_distribution distribution(20.0, 5.0);
+	std::normal_distribution distribution(20.0, 5.0); // note: distributions use engines
 
 	std::vector < std::size_t > values(40, 0);
 
