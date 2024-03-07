@@ -10,9 +10,7 @@ public:
 
     void push(T value)
     {
-        auto min = (std::empty(m_stack) ? value : std::min(value, m_stack.top().second));
-
-        m_stack.emplace(std::move(value), std::move(min));
+        m_stack.emplace(value, (std::empty(m_stack) ? value : std::min(value, m_stack.top().second)));
     }
 
     [[nodiscard]] T top() const noexcept { return m_stack.top().first; }
@@ -25,7 +23,7 @@ public:
 
 private:
 
-    std::stack < std::pair < T, T > > m_stack; // note: consider additional stack for maximums
+    std::stack < std::pair < T, T > > m_stack; // note: consider additional stack for extremums
 
 }; // template < typename T > class Stack_v1
 
@@ -37,15 +35,16 @@ public:
     {
         if (std::empty(m_stack)) 
         {
-            m_stack.push(std::move(value)); m_min = m_stack.top();
+            m_stack.push(value); m_min = m_stack.top();
         }
         else if (value < m_min) 
         {
-            m_stack.push(2 * value - m_min); // note: less than value
-            
-            m_min = std::move(value);
+            m_stack.push(2 * value - m_min); m_min = value; // note: less than value
         }
-        else m_stack.push(std::move(value));
+        else 
+        {
+            m_stack.push(value);
+        }
     }
 
     [[nodiscard]] T top() const noexcept
@@ -55,7 +54,7 @@ public:
 
     void pop() noexcept
     {
-        if (auto t = std::move(m_stack.top()); t < m_min) 
+        if (auto t = m_stack.top(); t < m_min) 
         {
             (m_min *= 2) -= t; // note: update current minimum
         }
