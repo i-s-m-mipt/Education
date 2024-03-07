@@ -17,7 +17,7 @@ int main()
 
 	std::mt19937 engine(std::random_device{}());
 
-	std::shuffle(std::begin(v1), std::end(v1), engine); // note: no duplicates
+	std::shuffle(std::begin(v1), std::end(v1), engine); // note: random with no duplicates
 
 	auto [min, max] = std::minmax_element(std::cbegin(v1), std::cend(v1)); // note: binding
 
