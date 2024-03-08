@@ -119,10 +119,7 @@ public:
 				
 				m_is_negative = true;
 			}
-			else
-			{
-				this->unsigned_sub(other);
-			}
+			else this->unsigned_sub(other);
 		}
 		else if ( m_is_negative && !other.m_is_negative)
 		{
@@ -130,12 +127,7 @@ public:
 			{
 				*this = std::move(other.unsigned_sub(*this));
 			}
-			else
-			{
-				this->unsigned_sub(other); 
-				
-				m_is_negative = true;
-			}
+			else { this->unsigned_sub(other); m_is_negative = true; }
 		}
 
 		return *this;

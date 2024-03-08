@@ -27,11 +27,7 @@ public:
     {
         if (this != &other)
         {
-            if (destroy(); other.has_value()) 
-            {
-                construct(*other.m_ptr);
-            } 
-            else deallocate();
+            if (destroy(); other.has_value()) construct(*other.m_ptr); else deallocate();
         }
 
         return *this;

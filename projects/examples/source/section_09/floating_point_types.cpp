@@ -21,14 +21,7 @@ bool are_equal_v3(double a, double b, double relative_epsilon)
 
 bool are_equal_v4(double a, double b, double epsilon, double relative_epsilon)
 {
-	if (std::abs(a - b) <= epsilon)
-	{
-		return true;
-	}
-	else
-	{
-		return are_equal_v3(a, b, relative_epsilon);
-	}
+	if (std::abs(a - b) <= epsilon) return true; else return are_equal_v3(a, b, relative_epsilon);
 }
 
 int main()

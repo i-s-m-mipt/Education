@@ -38,10 +38,7 @@ void handle(const std::any & any)
     {
         iterator->second(any);
     }
-    else
-    {
-        throw std::runtime_error("invalid type " + std::string(any.type().name()));
-    }
+    else throw std::runtime_error("invalid type " + std::string(any.type().name()));
 }
 
 int main()

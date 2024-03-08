@@ -70,10 +70,7 @@ int main()
 	{
 		std::cout << any.type().name() << ": " << std::any_cast < int > (any) << std::endl;
 	}
-	else
-	{
-		any = 3.14; // note: Python is watching you...
-	}
+	else any = 3.14; // note: Python is watching you...
 
 	return 0;
 }

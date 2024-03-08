@@ -22,10 +22,7 @@ struct Point
 	{
 		return Point{ x, y }; // note: temporary object
 	}
-	else
-	{
-		return {}; // good: compact syntax, type deduction
-	}
+	else return {}; // good: compact syntax, type deduction
 }
 
 int main()

@@ -28,11 +28,7 @@ constexpr auto is_prime(int p) // note: can be evaluated at compile-time
 
 consteval auto fibonacci(int n) // note: must be evaluated at compile-time
 {
-	if (n < 2)
-	{
-		return 1;
-	}
-	else
+	if (n < 2) return 1; else
 	{
 		std::vector < int > v(n, 1); // note: dynamic allocation allowed
 

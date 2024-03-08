@@ -20,17 +20,11 @@ template < auto N, typename C, typename FI > void fill_array(const C & container
 {
 	if constexpr (N > 1)
 	{
-		for (const auto & element : container)
-		{
-			fill_array < N - 1 > (element, (array++)->begin());
-		}
+		for (const auto & element : container) fill_array < N - 1 > (element, (array++)->begin());
 	}
 	else
 	{
-		for (const auto & element : container)
-		{
-			*(array++) = element;
-		}
+		for (const auto & element : container) *(array++) = element;
 	}
 }
 

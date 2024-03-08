@@ -25,11 +25,7 @@ public:
 	{
 		char c{}; m_sin >> c;
 
-		if (c != ';')
-		{
-			m_sin.putback(c); return false;
-		}
-		else return true;
+		if (c != ';') { m_sin.putback(c); return false; } else return true;
 	}
 
 	[[nodiscard]] Token get() // note: consider Boost.Spirit parser
