@@ -18,6 +18,4 @@ def make_plot(raw_points: str, label: str):
 
     plot.grid()
     plot.legend()
-
-    plot.savefig(os.path.abspath(os.path.dirname(os.path.abspath(__file__))))
     plot.show()
