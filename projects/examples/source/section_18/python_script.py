@@ -1,4 +1,4 @@
-import math, os
+import math
 
 import matplotlib.pyplot as plot
 
