@@ -177,8 +177,7 @@ target_link_libraries(custom_logger PRIVATE ${Boost_LIBRARIES})
 add_executable(google_benchmark ${section_08}google_benchmark.cpp)
 target_link_libraries(google_benchmark PRIVATE benchmark::benchmark)
 set_target_properties(google_benchmark PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
-target_compile_options(google_benchmark PRIVATE -Wall -pedantic -O3) 
-target_compile_definitions(google_benchmark PRIVATE "NDEBUG")
+target_compile_options(google_benchmark PRIVATE -Wall -pedantic -O3)
 
 add_executable(google_testing ${section_08}google_testing.cpp)
 target_link_libraries(google_testing PRIVATE ${GTEST_BOTH_LIBRARIES})
@@ -215,8 +214,7 @@ target_compile_options(inscribed_simplex PRIVATE -Wall -pedantic -O3)
 add_executable(bitwise_operations ${section_09}bitwise_operations.cpp)
 target_link_libraries(bitwise_operations PRIVATE benchmark::benchmark)
 set_target_properties(bitwise_operations PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
-target_compile_options(bitwise_operations PRIVATE -Wall -pedantic -O3) 
-target_compile_definitions(bitwise_operations PRIVATE "NDEBUG")
+target_compile_options(bitwise_operations PRIVATE -Wall -pedantic -O3)
 
 set(sources_10
     bad_allocations
@@ -253,8 +251,7 @@ foreach(entry IN LISTS sources_10_release)
     add_executable(${entry} ${section_10}${entry}.cpp)
     target_link_libraries(${entry} PRIVATE benchmark::benchmark)
     set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O3) 
-    target_compile_definitions(${entry} PRIVATE "NDEBUG")
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O3)
 endforeach()
 
 set(sources_11
@@ -262,7 +259,6 @@ set(sources_11
     container_adaptors
     container_basics
     container_lists
-    container_trees
     custom_hash_equal
     filling_multiarray
     hash_functions
@@ -284,14 +280,14 @@ foreach(entry IN LISTS sources_11)
 endforeach()
 
 set(sources_11_release
-    sorting_compare)
+    sorting_compare
+    container_trees)
 
 foreach(entry IN LISTS sources_11_release)
     add_executable(${entry} ${section_11}${entry}.cpp)
     target_link_libraries(${entry} PRIVATE benchmark::benchmark)
     set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O3) 
-    target_compile_definitions(${entry} PRIVATE "NDEBUG")
 endforeach()
 
 set(sources_12

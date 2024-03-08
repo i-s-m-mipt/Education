@@ -1,12 +1,52 @@
 #include <cassert>
+#include <functional>
 #include <iostream>
 #include <iterator>
 #include <map>
+#include <ranges>
 #include <set>
 #include <string>
 #include <type_traits>
+#include <vector>
 
-int main()
+#include <benchmark/benchmark.h>
+
+void test_1(benchmark::State & state) // note: O(N*log(N)) complexity, but fast
+{
+    for (auto _ : state)
+    {
+        std::vector < int > vector; vector.reserve(state.range(0));
+
+		for (auto x : std::views::iota(1) | std::views::take(state.range(0)))
+		{
+			vector.push_back(x);
+		}
+
+		std::ranges::sort(vector, std::greater());
+
+		benchmark::DoNotOptimize(vector);	
+    }
+}
+
+void test_2(benchmark::State & state) // note: O(N*log(N)) complexity, but slow
+{
+    for (auto _ : state)
+    {
+        std::set < int, std::greater < int > > set;
+
+		for (auto x : std::views::iota(1) | std::views::take(state.range(0)))
+		{
+			set.insert(x);
+		}
+
+		benchmark::DoNotOptimize(set);	
+    }
+}
+
+BENCHMARK(test_1)->Arg(100'000); 
+BENCHMARK(test_2)->Arg(100'000); 
+
+int main(int argc, char ** argv) // note: arguments for benchmark
 {
 	std::set < int > set = { 1, 4, 2, 5, 3 }; // note: O(log(N)) complexity mainly
 
@@ -44,6 +84,10 @@ int main()
 	assert(!map.insert_or_assign("world", 42).second); // note: changes value here
 
 	assert(std::size(map) == 1 && map.at("world") == 42);
+
+	benchmark::Initialize(&argc, argv);
+
+	benchmark::RunSpecifiedBenchmarks();
 
 	return 0;
 }
