@@ -13,7 +13,7 @@
 
 double determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) // good: for small
 {
-    if (auto size = matrix.size1(); size == matrix.size2() && size != 0)
+    if (const auto size = matrix.size1(); size == matrix.size2() && size != 0)
     {
         if (size == 1) return matrix(0, 0); else
         {
@@ -42,7 +42,7 @@ double determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) /
 
 double determinant_v2(const boost::numeric::ublas::matrix < double > & matrix) // good: for big
 {    
-    if (auto size = matrix.size1(); size == matrix.size2() && size != 0)
+    if (const auto size = matrix.size1(); size == matrix.size2() && size != 0)
     {
         if (size == 1) return matrix(0, 0); else
         {
@@ -90,7 +90,7 @@ boost::numeric::ublas::matrix < double > make_random_matrix(std::size_t size)
 
 void test_1(benchmark::State & state) // note: better for 3x3 or less
 {
-    const auto matrix = make_random_matrix(state.range(0));
+    auto matrix = make_random_matrix(state.range(0));
 
     for (auto _ : state)
     {
@@ -102,7 +102,7 @@ void test_1(benchmark::State & state) // note: better for 3x3 or less
 
 void test_2(benchmark::State & state) // note: better for 4x4 or more
 {
-    const auto matrix = make_random_matrix(state.range(0));
+    auto matrix = make_random_matrix(state.range(0));
 
     for (auto _ : state)
     {
@@ -117,7 +117,7 @@ BENCHMARK(test_2)->DenseRange(1, 9, 1);
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {
-    const auto matrix = make_random_matrix(3);
+    auto matrix = make_random_matrix(3);
 
     const auto epsilon = 0.001;
 
