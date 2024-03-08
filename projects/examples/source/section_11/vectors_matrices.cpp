@@ -1,57 +1,132 @@
-#include <iostream>
-#include <vector>
+#include <cassert>
+#include <exception>
+#include <random>
+#include <stdexcept>
 
-#include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/vector_proxy.hpp>
+//#define BOOST_UBLAS_TYPE_CHECK 0 // bad: for integral types
+
 #include <boost/numeric/ublas/io.hpp>
-
+#include <boost/numeric/ublas/lu.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
-#include <boost/numeric/ublas/
 
-int main(int argc, char const *argv[])
+#include <benchmark/benchmark.h>
+
+double determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) // good: for small
 {
-    using         array_t = std::vector < double >;
-    using        vector_t = boost::numeric::ublas::vector < double, array_t >;
-    using   unit_vector_t = boost::numeric::ublas::unit_vector < double >;
-    using   zero_vector_t = boost::numeric::ublas::zero_vector < double >;
-    using scalar_vector_t = boost::numeric::ublas::scalar_vector < double >;
+    if (auto size = matrix.size1(); size == matrix.size2() && size != 0)
+    {
+        if (size == 1) return matrix(0, 0); else
+        {
+            auto determinant = 0.0;
+    
+            for (std::size_t i = 0; i < size; ++i) 
+            {
+                boost::numeric::ublas::matrix < double > minor(size - 1, size - 1);
 
-    const size_t n = 4;
+                for (std::size_t j = 1; j < size; ++j) 
+                {
+                    for (std::size_t k = 0, c = 0; k < size; ++k) 
+                    {
+                        if (k != i) minor(j - 1, c++) = matrix(j, k);
+                    }
+                }
 
-    vector_t vector(n, {1, 2, 4, 5});                       // Обычный вектор
-    std::cout << vector << std::endl;
+                determinant += (i % 2 ? -1.0 : +1.0) * matrix(0, i) * determinant_v1(minor);
+            }
 
-    unit_vector_t unit_vector (n, 2);                       // Единичный вектор (v_i = 1, v_{0..n}\i = 0)
-    std::cout << unit_vector << std::endl;
+            return determinant;
+        }
+    }
+    else throw std::runtime_error("invalid matrix");
+}
 
-    zero_vector_t zero_vector(n);                           // Нулевой вектор (the same as {0, 0, 0, 0})
-    scalar_vector_t scalar_vector(n);                       // Числовой вектор (the same as {1, 1, 1, 1})
+double determinant_v2(const boost::numeric::ublas::matrix < double > & matrix) // good: for big
+{    
+    if (auto size = matrix.size1(); size == matrix.size2() && size != 0)
+    {
+        if (size == 1) return matrix(0, 0); else
+        {
+            boost::numeric::ublas::matrix < double > copy(matrix);
+    
+            boost::numeric::ublas::permutation_matrix <> permutation(size);
 
-    vector(3) = 3;                                          // Возвращает ссылку на i-й элемент:
-                                                            //   "With some compilers, this
-                                                            //    notation will be faster than [i]."
-    std::cout <<                                           
-          1.5 * vector                                      // Мат. операции со скалярами
-        -   4 * unit_vector
-        + 0.5 * scalar_vector
-    << std::endl;
+            if (!boost::numeric::ublas::lu_factorize(copy, permutation)) // note: check singularity
+            {
+                auto determinant = 1.0;
 
+                for (std::size_t i = 0; i < copy.size1(); ++i)
+                {
+                    if (permutation(i) != i) determinant *= -1.0;
 
-    /* Векторные посредники (Vector Proxies) */
+                    determinant *= copy(i, i);
+                }
 
-    using vector_range_t = boost::numeric::ublas::vector_range < vector_t >;
-    using        range_t = boost::numeric::ublas::range;
-    using vector_slice_t = boost::numeric::ublas::vector_slice < vector_t >;
-    using        slice_t = boost::numeric::ublas::slice;
-    using                  boost::numeric::ublas::project;
-        
-    vector_range_t vector_range(vector, range_t(0, 2));     // Диапазон вектора, задаётся range(start, stop)
-    std::cout << vector_range << "\nthe same as subrange:\n"
-    << subrange(vector, 0, 2) << std::endl;                 // Эквивалентный способ с помощью прототипа subrange
+                return determinant;
+            }
+            else return 0.0;
+        }
+    }
+    else throw std::runtime_error("invalid matrix");
+}
 
-    vector_slice_t vector_slice (vector, slice_t(1, 2, 2)); // Срез вектора, задаётся slice(start, step, count)
-    std::cout << vector_slice << "\nthe same as subslice:\n"
-    << subslice(vector, 1, 2, 2) << std::endl;              // Эквивалентный способ с помощью прототипа subslice
+boost::numeric::ublas::matrix < double > make_random_matrix(std::size_t size)
+{
+    boost::numeric::ublas::matrix < double > matrix(size, size);
 
-    return 0;
+    std::mt19937 engine(42);
+
+    std::uniform_real_distribution distribution(0.0, 10.0);
+
+    for (std::size_t i = 0; i < matrix.size1(); ++i)
+    {
+        for (std::size_t j = 0; j < matrix.size2(); ++j)
+        {
+            matrix(i, j) = distribution(engine);
+        }
+    }
+
+    return matrix;
+}
+
+void test_1(benchmark::State & state) // note: better for 3x3 or less
+{
+    const auto matrix = make_random_matrix(state.range(0));
+
+    for (auto _ : state)
+    {
+        auto determinant = determinant_v1(matrix);
+
+		benchmark::DoNotOptimize(determinant);	
+    }
+}
+
+void test_2(benchmark::State & state) // note: better for 4x4 or more
+{
+    const auto matrix = make_random_matrix(state.range(0));
+
+    for (auto _ : state)
+    {
+        auto determinant = determinant_v2(matrix);
+
+		benchmark::DoNotOptimize(determinant);	
+    }
+}
+
+BENCHMARK(test_1)->DenseRange(1, 9, 1); 
+BENCHMARK(test_2)->DenseRange(1, 9, 1);  
+
+int main(int argc, char ** argv) // note: arguments for benchmark
+{
+    const auto matrix = make_random_matrix(3);
+
+    const auto epsilon = 0.001;
+
+    assert(std::abs(determinant_v1(matrix) - 12.595) < epsilon);
+    assert(std::abs(determinant_v2(matrix) - 12.595) < epsilon);
+
+	benchmark::Initialize(&argc, argv);
+
+	benchmark::RunSpecifiedBenchmarks();
+
+	return 0;
 }

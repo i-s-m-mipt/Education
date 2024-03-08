@@ -281,7 +281,8 @@ endforeach()
 
 set(sources_11_release
     sorting_compare
-    container_trees)
+    container_trees
+    vectors_matrices)
 
 foreach(entry IN LISTS sources_11_release)
     add_executable(${entry} ${section_11}${entry}.cpp)
