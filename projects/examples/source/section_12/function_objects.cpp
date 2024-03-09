@@ -82,8 +82,8 @@ int main()
 
 	Sum < int > sum;
 
-	sum = std::move(std::ranges::for_each(std::as_const(v2), sum).fun);
-	sum = std::move(std::ranges::for_each(std::as_const(v3), sum).fun);
+	sum = std::ranges::for_each(std::as_const(v2), sum).fun;
+	sum = std::ranges::for_each(std::as_const(v3), sum).fun;
 
 	assert(sum.result() == 20);
 
