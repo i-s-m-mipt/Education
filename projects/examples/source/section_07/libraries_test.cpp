@@ -16,7 +16,7 @@ int main()
 
 	try 
 	{
-		auto f = boost::dll::import_symbol < int(int) > (path, "f");
+		auto f = boost::dll::import_symbol < int(int) > (path, "f"); // note: not import
 
 		std::cout << f(42) << std::endl;
 
