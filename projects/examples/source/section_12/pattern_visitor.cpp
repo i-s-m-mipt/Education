@@ -89,17 +89,17 @@ public:
 
 int main()
 {
-    std::shared_ptr < Computer > mobile = std::make_shared < Mobile > ();
-    std::shared_ptr < Computer > tablet = std::make_shared < Tablet > ();
-    std::shared_ptr < Computer > laptop = std::make_shared < Laptop > ();
+    std::shared_ptr < Computer > computer_1 = std::make_shared < Mobile > ();
+    std::shared_ptr < Computer > computer_2 = std::make_shared < Tablet > ();
+    std::shared_ptr < Computer > computer_3 = std::make_shared < Laptop > ();
 
     Tester tester;
 
     try
     {
-        mobile->visit_by(&tester); // note: first dispatch
-        tablet->visit_by(&tester); // note: first dispatch
-        laptop->visit_by(&tester); // note: first dispatch
+        computer_1->visit_by(&tester); // note: first dispatch
+        computer_2->visit_by(&tester); // note: first dispatch
+        computer_3->visit_by(&tester); // note: first dispatch
     }
     catch (const std::exception & exception)
     {
