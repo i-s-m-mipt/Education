@@ -39,17 +39,17 @@ template < typename ... Bases > struct Visitor : Bases...
 
 int main()
 {
-    Computer mobile = Mobile();
-    Computer tablet = Tablet();
-    Computer laptop = Laptop();
+    Computer computer_1 = Mobile();
+    Computer computer_2 = Tablet();
+    Computer computer_3 = Laptop();
 
     Visitor < Tester > visitor(Tester{}); // note: just Visitor in MSVC
 
     try
     {
-        std::visit(visitor, mobile);
-        std::visit(visitor, tablet);
-        std::visit(visitor, laptop);
+        std::visit(visitor, computer_1);
+        std::visit(visitor, computer_2);
+        std::visit(visitor, computer_3);
     }
     catch (const std::exception & exception)
     {
