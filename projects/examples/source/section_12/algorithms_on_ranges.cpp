@@ -50,7 +50,7 @@ int main()
 
 	int array[] = { 1, 2, 3, 4, 5 }; // note: consider as range
 
-	for (auto x : array) std::cout << x << ' ';
+	for (auto x : array) std::cout << x << ' '; // note: outputs 1 2 3 4 5
 
 	std::cout << std::endl;
 
@@ -104,7 +104,7 @@ int main()
 
 	for (const std::string data = "1,2,3,4,5"; auto x : std::views::split(data, ','))
 	{
-		std::cout << std::string(std::begin(x), std::end(x)) << ' ';
+		std::cout << std::string(std::begin(x), std::end(x)) << ' '; // note: outputs 1 2 3 4 5
 	}
 
 	std::cout << std::endl;
