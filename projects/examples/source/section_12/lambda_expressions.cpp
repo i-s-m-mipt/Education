@@ -26,7 +26,7 @@ private:
 
 int main()
 {
-	auto lambda = [](){};
+	auto lambda = [](){}; // note: lambda expression, look at cppinsights.io
 
 	std::cout << typeid(lambda).name() << std::endl; // note: unique closure type
 
