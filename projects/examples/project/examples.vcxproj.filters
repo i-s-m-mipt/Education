@@ -525,6 +525,9 @@
     <ClCompile Include="stack_with_maximum.cpp">
       <Filter>source\section_11</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\section_10\arena_adaptor.cpp">
+      <Filter>source\section_10</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\section_03\advanced_expressions.png">
