@@ -76,19 +76,8 @@ void test_2(benchmark::State & state)
     }
 }
 
-struct S1 // note: sizeof(S1) = 4
-{ 
-    std::uint32_t x : 15 {};
-    std::uint32_t y : 17 {};
-
-}; // struct S1 
-
-struct S2 // note: sizeof(S2) = 8
-{ 
-    std::uint32_t x{};
-    std::uint32_t y{};
-
-}; // struct S2 
+struct S1 { std::uint32_t x : 15 {}, y : 17 {}; }; // note: sizeof(S1) = 4
+struct S2 { std::uint32_t x      {}, y      {}; }; // note: sizeof(S2) = 8
 
 void test_3(benchmark::State & state) // note: very slow
 {
