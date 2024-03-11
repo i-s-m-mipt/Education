@@ -30,7 +30,8 @@ private:
 	std::string m_name;
 
 	std::vector < const Lecture * > m_lectures;
-};
+
+}; // class Student
 
 class Lecture
 {
@@ -57,7 +58,8 @@ private:
 	std::string m_name;
 
 	std::vector < const Student * > m_students;
-};
+
+}; // class Lecture
 
 void Student::show_lectures() const
 {
