@@ -53,36 +53,18 @@ public:
 
 class Factory_Mobile : public Factory
 {
-public:
-
-    [[nodiscard]] Computer * create() const override
-    { 
-        return new Mobile; // note: delete required
-    } 
-
-}; // class Factory_Mobile : public Factory
+public: [[nodiscard]] Computer * create() const override { return new Mobile; } // note: delete required 
+};
 
 class Factory_Tablet : public Factory
 {
-public:
-
-    [[nodiscard]] Computer * create() const override
-    { 
-        return new Tablet; // note: delete required
-    } 
-
-}; // class Factory_Tablet : public Factory
+public: [[nodiscard]] Computer * create() const override { return new Tablet; } // note: delete required 
+};
 
 class Factory_Laptop : public Factory
 {
-public:
-
-    [[nodiscard]] Computer * create() const override
-    { 
-        return new Laptop; // note: delete required
-    } 
-
-}; // class Factory_Laptop : public Factory
+public: [[nodiscard]] Computer * create() const override { return new Laptop; } // note: delete required
+};
 
 int main()
 {
