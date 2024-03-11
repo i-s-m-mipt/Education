@@ -64,11 +64,8 @@ public:
 
 class Derived : public Base 
 {
-public:
-
-	void print() const override { std::cout << "Derived" << std::endl; }
-
-}; // class Derived : public Base 
+public: void print() const override { std::cout << "Derived" << std::endl; }
+};
 
 [[nodiscard]] std::unique_ptr < Base > produce() // note: factory
 {
