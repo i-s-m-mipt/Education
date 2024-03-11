@@ -52,7 +52,7 @@ int main()
 
 	auto now = std::chrono::system_clock::now(); // note: time point for current time
 
-	std::cout << now << ' ' << std::chrono::system_clock::to_time_t(now) << std::endl;
+	std::cout << now << ' ' << std::chrono::system_clock::to_time_t(now) << std::endl; // note: 2038
 
 	std::chrono::duration < long long, std::ratio < 1, 1000 > > duration_1(42);
 
