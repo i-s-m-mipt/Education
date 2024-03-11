@@ -118,8 +118,8 @@ int main()
 //  using     front_t_0 =     front < list_0 > ; // error: empty list
 //  using pop_front_t_0 = pop_front < list_0 > ; // error: empty list
 
-//  using     back__t_0 =     back  < list_0 > ; // error: empty list
-//  using pop_back__t_0 = pop_back  < list_0 > ; // error: empty list
+//  using      back_t_0 =      back < list_0 > ; // error: empty list
+//  using  pop_back_t_0 =  pop_back < list_0 > ; // error: empty list
 
     using boost::typeindex::type_id_with_cvr;
 
@@ -131,13 +131,13 @@ int main()
     std::cout << type_id_with_cvr < push_front < int, list_2    > > ().pretty_name() << std::endl;
     std::cout << type_id_with_cvr <  pop_front <      list_2    > > ().pretty_name() << std::endl;
 
-    std::cout << type_id_with_cvr <      back  <      list_2    > > ().pretty_name() << std::endl;
-    std::cout << type_id_with_cvr < push_back  < int, list_2    > > ().pretty_name() << std::endl;
-    std::cout << type_id_with_cvr <  pop_back  <      list_2    > > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr <       back <      list_2    > > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr <  push_back < int, list_2    > > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr <   pop_back <      list_2    > > ().pretty_name() << std::endl;
 
-    std::cout << type_id_with_cvr <             nth < list_3, 0 > > ().pretty_name() << std::endl;
-    std::cout << type_id_with_cvr <             nth < list_3, 1 > > ().pretty_name() << std::endl;
-    std::cout << type_id_with_cvr <             nth < list_3, 2 > > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr <        nth <      list_3, 0 > > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr <        nth <      list_3, 1 > > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr <        nth <      list_3, 2 > > ().pretty_name() << std::endl;
 
     return 0;
 }
