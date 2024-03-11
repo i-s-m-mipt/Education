@@ -48,75 +48,34 @@ private:
 
 }; // template < typename T, template < typename E > typename C = std::vector > class Stack_v2
 
-template < typename T1, typename T2 > struct Pair // note: see std::pair
+template < typename T1, typename T2 > struct Pair { T1 x{}; T2 y{}; }; // note: see std::pair
+
+template < typename T > struct Container { Container(std::size_t, const T &) {} }; 
+
+template < typename T1, typename T2 > struct C // note: basic template
 {
-	T1 x{};
-	T2 y{};
+	void f() const { std::cout << "template for T1, T2" << std::endl; }
+};
 
-}; // template < typename T1, typename T2 > struct Pair
-
-template < typename T > class Container
+template < typename T > struct C < T, T > // note: partial specialization for T, T
 {
-public:
+	void f() const { std::cout << "partial specialization for T, T" << std::endl; }
+};
 
-	Container([[maybe_unused]] int count, [[maybe_unused]] const T & value) {}
-
-}; // template < typename T > class Container
-
-template < typename T1, typename T2 > class C // note: basic template
+template < typename T > struct C < T, int > // note: partial specialization for T, int
 {
-public:
+	void f() const { std::cout << "partial specialization for T, int" << std::endl; }
+};
 
-	void f() const
-	{
-		std::cout << "template for T1, T2" << std::endl;
-	}
-
-}; // template < typename T1, typename T2 > class C
-
-template < typename T > class C < T, T > // note: partial specialization for T, T
+template < typename T1, typename T2 > struct C < T1*, T2* > // note: partial specialization for T1*, T2*
 {
-public:
+	void f() const { std::cout << "partial specialization for T1*, T2*" << std::endl; }
+};
 
-	void f() const
-	{
-		std::cout << "partial specialization for T, T" << std::endl;
-	}
-
-}; // template < typename T > class C < T, T >
-
-template < typename T > class C < T, int > // note: partial specialization for T, int
+template <> struct C < int, double > // note: full specialization for int, double
 {
-public:
-
-	void f() const
-	{
-		std::cout << "partial specialization for T, int" << std::endl;
-	}
-
-}; // template < typename T > class C < T, int >
-
-template < typename T1, typename T2 > class C < T1*, T2* > // note: partial specialization for T1*, T2*
-{
-public:
-
-	void f() const
-	{
-		std::cout << "partial specialization for T1*, T2*" << std::endl;
-	}
-
-}; // template < typename T1, typename T2 > class C < T1*, T2* >
-
-template <> class C < int, double > // note: full specialization for int, double
-{
-public:
-
-	void f() const
-	{
-		std::cout << "full specialization for int, double" << std::endl;
-	}
-
-}; // template <> class C < int, double >
+	void f() const { std::cout << "full specialization for int, double" << std::endl; }
+};
 
 int main()
 {
