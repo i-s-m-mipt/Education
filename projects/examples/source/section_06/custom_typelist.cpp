@@ -94,9 +94,9 @@ template < typename L > using pop_back = typename Pop_Back < L > ::type;
 
 // =================================================================================================
 
-template < typename L, auto N > struct Nth : Nth < pop_front < L > , N - 1 > {};
+template < typename L, auto N > struct Nth : public Nth < pop_front < L > , N - 1 > {};
 
-template < typename L > struct Nth < L, 0 > : Front < L > {};
+template < typename L > struct Nth < L, 0 > : public Front < L > {};
 
 template < typename L, auto N > using nth = typename Nth < L, N > ::type;
 
@@ -110,10 +110,10 @@ int main()
 
     using list_3 = push_back < int, list_2 > ; // note: list < bool, char, int >
 
-    static_assert( empty_v < list_0 > && size_v < list_0 > == 0);
-    static_assert(!empty_v < list_1 > && size_v < list_1 > == 1);
-    static_assert(!empty_v < list_2 > && size_v < list_2 > == 2);
-    static_assert(!empty_v < list_3 > && size_v < list_3 > == 3);
+    static_assert(size_v < list_0 > == 0 &&  empty_v < list_0 > );
+    static_assert(size_v < list_1 > == 1 && !empty_v < list_1 > );
+    static_assert(size_v < list_2 > == 2 && !empty_v < list_2 > );
+    static_assert(size_v < list_3 > == 3 && !empty_v < list_3 > );
 
 //  using     front_t_0 =     front < list_0 > ; // error: empty list
 //  using pop_front_t_0 = pop_front < list_0 > ; // error: empty list
@@ -121,7 +121,7 @@ int main()
 //  using      back_t_0 =      back < list_0 > ; // error: empty list
 //  using  pop_back_t_0 =  pop_back < list_0 > ; // error: empty list
 
-    using boost::typeindex::type_id_with_cvr;
+    using boost::typeindex::type_id_with_cvr; // note: better than plain typeid
 
     std::cout << type_id_with_cvr <                   list_0      > ().pretty_name() << std::endl;
     std::cout << type_id_with_cvr <                   list_1      > ().pretty_name() << std::endl;
