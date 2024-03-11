@@ -29,13 +29,7 @@ namespace detail
     struct Sign { char c{}; Operand operand; };
     struct Step { char c{}; Operand operand; };
 
-    struct List
-    {
-        Operand head;
-
-        std::vector < Step > tail;
-
-    }; // struct List
+    struct List { Operand head; std::vector < Step > tail; };
 
 } // namespace detail
 
