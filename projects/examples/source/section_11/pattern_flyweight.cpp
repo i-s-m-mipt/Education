@@ -7,11 +7,7 @@
 #include <boost/container_hash/hash.hpp>
 #include <boost/flyweight.hpp>
 
-struct Data
-{
-    int array[1000]{}; // note: some big data with many copies
-
-}; // struct Data
+struct Data { int array[1000]{}; }; // note: some big data with many copies
 
 struct Hash
 {
