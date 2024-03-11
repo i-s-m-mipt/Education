@@ -8,11 +8,7 @@ template < typename T > class List
 {
 private:
 
-	struct Node 
-	{
-		T value{}; std::shared_ptr < Node > next; 
-
-	}; // struct Node
+	struct Node { T value{}; std::shared_ptr < Node > next; };
 
 public:
 
