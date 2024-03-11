@@ -31,11 +31,7 @@ public:
 
 }; // class Tester
 
-template < typename ... Bases > struct Visitor : Bases... 
-{
-    using Bases::operator()...;
-
-}; // template < typename ... Bases > struct Visitor : Bases...
+template < typename ... Bases > struct Visitor : Bases... { using Bases::operator()...; };
 
 int main()
 {
