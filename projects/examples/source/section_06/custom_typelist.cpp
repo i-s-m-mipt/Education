@@ -7,12 +7,18 @@
 
 // =================================================================================================
 
-template < typename ... Ts > class list {};
+template < typename ... Ts > struct list {};
 
-template < typename L > struct is_empty             : std::false_type {};
-template <            > struct is_empty < list <> > : std:: true_type {};
+template < typename     L  > struct size {};
 
-template < typename L > inline constexpr bool is_empty_v = is_empty < L > ::value;
+template < typename ... Ts > struct size < list < Ts ... > >
+{
+     static constexpr std::size_t value = sizeof...(Ts);
+};
+
+template < typename L > inline constexpr std::size_t size_v = size < L > ::value;
+
+template < typename L > inline constexpr bool empty_v = (size_v < L > == 0);
 
 // =================================================================================================
 
@@ -59,7 +65,7 @@ template < typename L > using back = typename Back < L > ::type;
 
 // =================================================================================================
 
-template < typename T, typename L, bool E = is_empty_v < L > > struct Push_Back {};
+template < typename T, typename L, bool E = empty_v < L > > struct Push_Back {};
 
 template < typename T, typename L > struct Push_Back < T, L, false >
 {
@@ -88,22 +94,6 @@ template < typename L > using pop_back = typename Pop_Back < L > ::type;
 
 // =================================================================================================
 
-template < typename L, bool E = is_empty_v < L > > struct size {};
-
-template < typename L > struct size < L, false >
-{
-     static constexpr std::size_t value = 1 + size < pop_front < L > > ::value;
-}; 
-
-template < typename L > struct size < L, true >
-{
-     static constexpr std::size_t value = 0;
-};
-
-template < typename L > inline constexpr std::size_t size_v = size < L > ::value;
-
-// =================================================================================================
-
 template < typename L, auto N > struct Nth : Nth < pop_front < L > , N - 1 > {};
 
 template < typename L > struct Nth < L, 0 > : Front < L > {};
@@ -120,10 +110,10 @@ int main()
 
     using list_3 = push_back < int, list_2 > ; // note: list < bool, char, int >
 
-    static_assert( is_empty_v < list_0 > && size_v < list_0 > == 0);
-    static_assert(!is_empty_v < list_1 > && size_v < list_1 > == 1);
-    static_assert(!is_empty_v < list_2 > && size_v < list_2 > == 2);
-    static_assert(!is_empty_v < list_3 > && size_v < list_3 > == 3);
+    static_assert( empty_v < list_0 > && size_v < list_0 > == 0);
+    static_assert(!empty_v < list_1 > && size_v < list_1 > == 1);
+    static_assert(!empty_v < list_2 > && size_v < list_2 > == 2);
+    static_assert(!empty_v < list_3 > && size_v < list_3 > == 3);
 
 //  using     front_t_0 =     front < list_0 > ; // error: empty list
 //  using pop_front_t_0 = pop_front < list_0 > ; // error: empty list
