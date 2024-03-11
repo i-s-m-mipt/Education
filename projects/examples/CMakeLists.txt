@@ -121,7 +121,8 @@ foreach(entry IN LISTS sources_05)
 endforeach()
 
 set(sources_06
-    types_inference)
+    types_inference
+    custom_typelist)
 
 foreach(entry IN LISTS sources_06)
     add_executable(${entry} source/section_06/${entry}.cpp)

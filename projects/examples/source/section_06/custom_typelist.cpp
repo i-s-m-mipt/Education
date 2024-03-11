@@ -1,168 +1,153 @@
+#include <cassert>
 #include <iostream>
+#include <typeinfo>
+#include <type_traits>
 
-template < typename ... Types > struct List {};
+#include <boost/type_index.hpp>
 
-template < typename Type                     > struct Front_Type {};
-template < typename Type, typename ... Types > struct Front_Type < List < Type, Types ... > > 
+// =================================================================================================
+
+template < typename ... Ts > class list {};
+
+template < typename L > struct is_empty             : std::false_type {};
+template <            > struct is_empty < list <> > : std:: true_type {};
+
+template < typename L > inline constexpr bool is_empty_v = is_empty < L > ::value;
+
+// =================================================================================================
+
+template <             typename     L  > struct Front {}; // note: compile error for empty list
+
+template < typename T, typename ... Ts > struct Front < list < T, Ts ... > > { using type = T; };
+
+template < typename L > using front = typename Front < L > ::type;
+
+// =================================================================================================
+
+template < typename T, typename     L  > struct Push_Front {}; 
+
+template < typename T, typename ... Ts > struct Push_Front < T, list < Ts ... > >
+{
+    using type = list < T, Ts ... > ;
+};
+
+template < typename T, typename L > using push_front = typename Push_Front < T, L > ::type;
+
+// =================================================================================================
+
+template <             typename     L  > struct Pop_Front {}; // note: compile error for empty list
+
+template < typename T, typename ... Ts > struct Pop_Front < list < T, Ts ... > >
+{
+    using type = list < Ts... > ;
+};
+
+template < typename L > using pop_front = typename Pop_Front < L > ::type;
+
+// =================================================================================================
+
+template <             typename     L  > struct Back {}; // note: compile error for empty list
+
+template < typename T                  > struct Back < list < T > > { using type = T; };
+
+template < typename T, typename ... Ts > struct Back < list < T, Ts ... > > 
 { 
-    using type = Type; 
+    using type = typename Back < list < Ts ... > > ::type; 
 };
 
-template < typename T > using Front = typename Front_Type < T > ::type;
+template < typename L > using back = typename Back < L > ::type;
 
-template < typename Type                     > struct Pop_Front_Type {};
-template < typename Type, typename ... Types > struct Pop_Front_Type < List < Type, Types ... > >
+// =================================================================================================
+
+template < typename T, typename L, bool E = is_empty_v < L > > struct Push_Back {};
+
+template < typename T, typename L > struct Push_Back < T, L, false >
 {
-    using type = List < Types... > ;
-};
+    using type = push_front < front < L >, typename Push_Back < T, pop_front < L > > ::type > ;
+}; 
 
-template < typename T > using Pop_Front = typename Pop_Front_Type < T > ::type;
-
-template < typename List, typename NewElement >
-class PushFrontT;
-
-template < typename ... Elements, typename NewElement >
-class PushFrontT < Typelist < Elements ... >, NewElement >
+template < typename T, typename L > struct Push_Back < T, L, true >
 {
-public:
-    using Type = Typelist < NewElement, Elements ... >;
+    using type = push_front < T, L > ;
 };
 
-template < typename List, typename NewElement >
-using PushFront = typename PushFrontT < List, NewElement > ::Type;
+template < typename T, typename L > using push_back = typename Push_Back < T, L > ::type;
 
-template < typename List, std::size_t N >
-class NthElementT : public NthElementT < PopFront < List > , N - 1 > {};
+// =================================================================================================
 
-template < typename List >
-class NthElementT < List, 0 > : public FrontT < List > {};
+template <             typename     L  > struct Pop_Back{}; // note: compile error for empty list
 
-template < typename List, unsigned N >
-using NthElement = typename NthElementT < List, N > ::Type;
+template < typename T                  > struct Pop_Back < list < T > > { using type = list <> ; };
 
-template < typename List >
-class IsEmpty
+template < typename T, typename ... Ts > struct Pop_Back < list < T, Ts ... > >
 {
-public:
-    static constexpr bool value = false;
+    using type = push_front < T, typename Pop_Back < list < Ts ... > > ::type > ;
 };
 
-template < >
-class IsEmpty < Typelist < > >
+template < typename L > using pop_back = typename Pop_Back < L > ::type;
+
+// =================================================================================================
+
+template < typename L, bool E = is_empty_v < L > > struct size {};
+
+template < typename L > struct size < L, false >
 {
-public:
-    static constexpr bool value = true;
-};
+     static constexpr std::size_t value = 1 + size < pop_front < L > > ::value;
+}; 
 
-template < typename List, typename NewElement, bool = IsEmpty < List > ::value >
-class PushBackRecT;
-
-template < typename List, typename NewElement >
-class PushBackRecT < List, NewElement, false >
+template < typename L > struct size < L, true >
 {
-private:
-    using Head = Front < List >;
-    using Tail = PopFront < List > ;
-    using NewTail = typename PushBackRecT < Tail, NewElement > ::Type;
-public:
-    using Type = PushFront < NewTail, Head >;
+     static constexpr std::size_t value = 0;
 };
 
-template < typename List, typename NewElement >
-class PushBackRecT < List, NewElement, true >
-{
-public:
-    using Type = PushFront < List, NewElement >;
-};
+template < typename L > inline constexpr std::size_t size_v = size < L > ::value;
 
-template < typename List, typename NewElement >
-class PushBackT : public PushBackRecT < List, NewElement > {};
+// =================================================================================================
 
-template < typename List, typename NewElement >
-using PushBack = typename PushBackT < List, NewElement > ::Type;
+template < typename L, auto N > struct Nth : Nth < pop_front < L > , N - 1 > {};
 
-template < typename List, template < typename T > class MetaFun,
-           bool Empty = IsEmpty < List > ::value >
-class TransformT;
+template < typename L > struct Nth < L, 0 > : Front < L > {};
 
-/*
-* Recursive realization
-template < typename List, template < typename T > class MetaFun >
-class TransformT < List, MetaFun, false > : 
-    public PushFrontT 
-        < typename TransformT < PopFront < List >, MetaFun > ::Type,
-          typename MetaFun < Front < List >> ::Type > {};
+template < typename L, auto N > using nth = typename Nth < L, N > ::type;
 
-template < typename List, template < typename T > class MetaFun >
-class TransformT < List, MetaFun, true >
-{
-public:
-    using Type = List;
-};
-*
-*/
-
-// Pack exspansion realization
-template < typename ... Elements, template < typename T > class MetaFun >
-class TransformT < Typelist < Elements ... >, MetaFun, false>
-{
-public:
-    using Type = Typelist < typename MetaFun < Elements > ::Type ... >;
-};
-
-template < typename List, template < typename T > class MetaFun >
-using Transform = typename TransformT < List, MetaFun > ::Type;
-
-
-template < typename T >
-struct AddConstT
-{
-    using Type = T const;
-};
-
-template < typename T >
-using AddConst = typename AddConstT < T > ::Type;
-
-template < typename List,
-           template < typename X, typename Y > class F,
-           typename I,
-           bool = IsEmpty < List > ::value >
-class AccumulateT;
-
-template < typename List,
-           template < typename X, typename Y > class F,
-           typename I >
-class AccumulateT < List, F, I, false >
-    : public AccumulateT < PopFront < List >, F, typename F < I, Front < List > > ::Type > {};
-
-template < typename List,
-           template < typename X, typename Y > class F,
-           typename I >
-class AccumulateT < List, F, I, true >
-{
-public:
-    using Type = I;
-};
-
-template < typename List,
-           template < typename X, typename Y > class F,
-           typename I >
-using Accumulate = typename AccumulateT < List, F, I > ::Type;
-
-template < typename List >
-using Reverse = Accumulate < List, PushFrontT, Typelist < > >;
+// =================================================================================================
 
 int main()
 {
-    using SignedlntegralTypes = Typelist < signed char, short, int, long, long long >;
+    using list_0 = list <            > ; 
+    using list_1 = list < bool       > ;
+    using list_2 = list < bool, char > ;
 
-    std::cout << typeid(SignedlntegralTypes).name() << std::endl;
-    std::cout << typeid(Front < SignedlntegralTypes >).name() << std::endl;
-    std::cout << typeid(PopFront < SignedlntegralTypes >).name() << std::endl;
-    std::cout << typeid(PushFront < SignedlntegralTypes, int >).name() << std::endl;
-    std::cout << typeid(PushBack < SignedlntegralTypes, int >).name() << std::endl;
-    std::cout << typeid(Transform < SignedlntegralTypes, AddConstT >).name() << std::endl;
-    std::cout << typeid(Reverse < SignedlntegralTypes >).name() << std::endl;
+    using list_3 = push_back < int, list_2 > ; // note: list < bool, char, int >
 
-    return EXIT_SUCCESS;
+    static_assert( is_empty_v < list_0 > && size_v < list_0 > == 0);
+    static_assert(!is_empty_v < list_1 > && size_v < list_1 > == 1);
+    static_assert(!is_empty_v < list_2 > && size_v < list_2 > == 2);
+    static_assert(!is_empty_v < list_3 > && size_v < list_3 > == 3);
+
+//  using     front_t_0 =     front < list_0 > ; // error: empty list
+//  using pop_front_t_0 = pop_front < list_0 > ; // error: empty list
+
+//  using     back__t_0 =     back  < list_0 > ; // error: empty list
+//  using pop_back__t_0 = pop_back  < list_0 > ; // error: empty list
+
+    using boost::typeindex::type_id_with_cvr;
+
+    std::cout << type_id_with_cvr <                   list_0      > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr <                   list_1      > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr <                   list_2      > ().pretty_name() << std::endl;
+
+    std::cout << type_id_with_cvr <      front <      list_2    > > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr < push_front < int, list_2    > > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr <  pop_front <      list_2    > > ().pretty_name() << std::endl;
+
+    std::cout << type_id_with_cvr <      back  <      list_2    > > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr < push_back  < int, list_2    > > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr <  pop_back  <      list_2    > > ().pretty_name() << std::endl;
+
+    std::cout << type_id_with_cvr <             nth < list_3, 0 > > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr <             nth < list_3, 1 > > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr <             nth < list_3, 2 > > ().pretty_name() << std::endl;
+
+    return 0;
 }
