@@ -30,11 +30,7 @@ struct alignas(alignof(double)) S3
 	
 }; // struct alignas(alignof(double)) S3
 
-struct alignas(32) S4
-{
-	double data[4]{};
-
-}; // struct alignas(32) S4
+struct alignas(32) S4 { double data[4]{}; };
 
 struct alignas( 1) S5 { std::uint8_t x{}; };
 struct alignas(64) S6 { std::uint8_t x{}; };
