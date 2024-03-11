@@ -19,7 +19,7 @@ template < typename T = Bad > struct S
     static_assert(std::is_default_constructible_v < T > ,
         "S requires default constructible type");
 
-}; // template < typename T > struct S
+}; // template < typename T = Bad > struct S
 
 void cleanup_v1() { std::cerr << "cleanup_v1 at exit\n"; }
 void cleanup_v2() { std::cerr << "cleanup_v2 at exit\n"; }
