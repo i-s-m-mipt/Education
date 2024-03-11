@@ -13,10 +13,7 @@ class C
 {
 public:
 
-	void f() const
-	{
-		[this](){std::cout << m_data << std::endl; }(); // note: this captured
-	}
+	void f() const { [this](){std::cout << m_data << std::endl; }(); } // note: this captured
 
 private:
 
