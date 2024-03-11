@@ -6,25 +6,17 @@
 
 using Logger = solution::shared::Logger;
 
-class demo_exception : public std::runtime_error
-{
-public:
-
-	explicit demo_exception(const std::string & message) noexcept : std::runtime_error(message.c_str()) {}
-
-}; // class demo_exception : public std::runtime_error
-
 void h()
 {
 	LOGGER(logger);
 
 	try
 	{
-		LOGGER_WRITE(logger, "message"); throw std::runtime_error("error");
+		LOGGER_WRITE(logger, "message"); throw std::logic_error("error");
 	}
 	catch (const std::exception & exception)
 	{
-		solution::shared::catch_handler < demo_exception > (logger, exception);
+		solution::shared::catch_handler < std::runtime_error > (logger, exception);
 	}
 }
 
