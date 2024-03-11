@@ -2,11 +2,7 @@
 #include <cstdint>
 #include <iostream>
 
-enum class Color
-{
-	R, G, B, quantity, // good: quantity as limit
-
-}; // enum class Color
+enum class Color { R, G, B, quantity }; // good: quantity as limit
 
 void f(Color c)
 {
@@ -27,18 +23,14 @@ void f(Color c)
 
 using underlying_t = std::uint16_t;
 
-enum class Message : underlying_t // note: less size
-{
-	empty, debug, error, fatal,
-
-}; // enum class Message : underlying_t
+enum class Message : underlying_t { empty, debug, error, fatal }; // note: less size
 
 enum State : underlying_t
 {
 	alpha = 0x01,
 	betta = 0x02,
 	gamma = 0x04,
-	delta = 0x08,
+	delta = 0x08
 
 }; // enum State : underlying_t
 
