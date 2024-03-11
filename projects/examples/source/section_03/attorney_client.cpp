@@ -2,7 +2,7 @@
 
 class Key
 {
-    Key() {}; // note: private constructor
+    Key() {} // note: private constructor
 
     friend class User;
 
@@ -12,7 +12,7 @@ class Client
 {
 public:
 
-    void f(Key) const { std::cout << "Client::f(Key)" << std::endl; }; 
+    void f(Key) const { std::cout << "Client::f(Key)" << std::endl; }
 
 private:
 
