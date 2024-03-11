@@ -72,8 +72,14 @@ int main()
 
 	for (auto iterator = std::begin(list); iterator != std::end(list); ++iterator)
 	{
-		std::cout << *iterator << ' ';
+		std::cout << *iterator << ' '; // note: outputs 1 2 3 4 5
 	}
+
+	std::cout << std::endl;
+
+	for (auto element : list) std::cout << element << ' '; // note: outputs 1 2 3 4 5
+
+	std::cout << std::endl;
 
 	return 0;
 }
