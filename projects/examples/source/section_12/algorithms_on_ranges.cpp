@@ -11,12 +11,7 @@
 #include <utility>
 #include <vector>
 
-struct Human
-{
-	double height{};
-	double weight{};
-
-}; // struct Human
+struct Human { double height{}, weight{}; };
 
 template < typename T > struct Range : private std::vector < T >
 {
