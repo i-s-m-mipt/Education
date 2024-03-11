@@ -3,13 +3,7 @@
 #include <numbers>
 #include <random>
 
-struct Vector
-{
-	double x = 0.0;
-	double y = 0.0;
-	double z = 0.0;
-
-}; // struct Vector
+struct Vector { double x{}, y{}, z{}; };
 
 [[nodiscard]] inline Vector vector_product(Vector a, Vector b) noexcept
 {
