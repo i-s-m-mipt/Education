@@ -15,11 +15,8 @@ public:
 
 class Laptop : public Computer < Laptop >
 {
-public:
-
-	void run_implementation() const { std::cout << "Laptop" << std::endl; }
-
-}; // class Laptop : public Computer < Laptop >
+public: void run_implementation() const { std::cout << "Laptop" << std::endl; }
+}; 
 
 template < typename T > void handle(const T & t) { t.run(); }
 
