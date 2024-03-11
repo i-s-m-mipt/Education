@@ -38,7 +38,7 @@ public:
 		else throw std::bad_alloc(); // note: throwing exception instead of returning nullptr
 	}
 
-    void deallocate(void * ptr, std::size_t size) const noexcept {}
+    void deallocate(void *, std::size_t) const noexcept {}
 
 	void print() const
 	{
