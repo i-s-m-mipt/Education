@@ -29,13 +29,7 @@ void test_macros();
 
 // =============================================================================
 
-class C // good: class definition in header file
-{
-public:
-
-	void print() const;
-
-}; // class C
+class C { public: void print() const; }; // good: class definition in header file
 
 template < typename T > auto max(T x, T y) // good: no separation for templates
 {
