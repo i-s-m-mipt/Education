@@ -9,8 +9,7 @@ private:
 	struct Node // note: can be implemented as separate struct template
 	{ 
 		T value{}; std::shared_ptr < Node > next; // note: no allocators
-
-	}; // struct Node
+	};
 
 public:
 
