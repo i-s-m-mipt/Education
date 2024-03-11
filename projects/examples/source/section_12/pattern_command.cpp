@@ -5,11 +5,7 @@
 #include <unordered_map>
 #include <vector>
 
-struct Computer
-{
-	enum class State { stop, slow, fast } state = State::stop;
-
-}; // struct Computer
+struct Computer { enum class State { stop, slow, fast } state = State::stop; };
 
 enum class Command // note: alternative version based on classes hierarchy
 {
