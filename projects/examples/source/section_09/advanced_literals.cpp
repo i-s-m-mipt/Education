@@ -2,11 +2,7 @@
 #include <iostream>
 #include <numbers>
 
-struct Kilometers // note: user-defined units
-{
-	unsigned long long n{};
-
-}; // struct Kilometers
+struct Kilometers { unsigned long long n{}; }; // note: user-defined units
 
 namespace literals // good: namespace for user-defined literals
 {
