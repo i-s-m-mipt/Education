@@ -5,13 +5,7 @@
 
 struct S { explicit S([[maybe_unused]] int x) {} };
 
-class A
-{
-public:
-
-	~A() { std::cout << "destructor" << std::endl; }
-
-}; // class A
+class A { public: ~A() { std::cout << "destructor" << std::endl; } };
 
 class B {};
 
