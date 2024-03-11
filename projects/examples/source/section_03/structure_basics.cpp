@@ -1,20 +1,9 @@
 #include <iostream>
 #include <vector>
 
-struct S // good: capital letter for user-defined types
-{
-	int a{};
-	int b{};
-	int c{ 4 };
+struct S { int a{}, b{}, c{ 4 }; }; // good: capital letter for user-defined types
 
-}; // struct S
-
-struct Point
-{
-	double x = 0.0;
-	double y = 0.0;
-
-}; // struct Point
+struct Point { double x = 0.0, y = 0.0; }; // good: do not forget initialization
 
 [[nodiscard]] Point make_point(double x, double y)
 {
