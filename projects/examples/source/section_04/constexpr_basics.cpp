@@ -41,11 +41,7 @@ consteval auto fibonacci(int n) // note: must be evaluated at compile-time
 	}
 }
 
-class C
-{
-	static constexpr auto c = 42; // note: same as inline const
-
-}; // class C
+class C { static constexpr auto c = 42; }; // note: same as inline const  
 
 constexpr auto f([[maybe_unused]] int x)
 {
