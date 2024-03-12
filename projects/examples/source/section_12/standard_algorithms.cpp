@@ -27,7 +27,11 @@ int main()
 
 	std::generate_n(std::back_inserter(v2), std::size(v1), generator); // note: duplicates
 
-	std::erase_if(v2, [](auto x){ return (x % 2 == 0); }); // note: instead of remove_if
+	auto is_even = [](auto x){ return (x % 2 == 0); };
+
+//	v2.erase(std::remove_if(std::begin(v2), std::end(v2), is_even), std::end(v2)); // bad: too long
+
+	std::erase_if(v2, is_even); // note: one algorithm instead of erase member + remove_if
 
 	std::for_each(std::begin(v2), std::end(v2), [](auto x){ assert(x % 2 != 0); });
 
