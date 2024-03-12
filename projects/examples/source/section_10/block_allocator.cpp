@@ -7,6 +7,7 @@
 #include <memory>
 #include <random>
 #include <stdexcept>
+#include <utility>
 #include <vector>
 
 #include <boost/noncopyable.hpp>
@@ -21,9 +22,13 @@ private:
 	{
 		struct Node { std::size_t size = 0; Node * next = nullptr; };
 
-		void find_first(std::size_t s, Node * & c, Node * & p) const noexcept // note: or find_best
+		std::pair < Node * , Node * > find_first(std::size_t size) const noexcept
         {
-	        for (c = head, p = nullptr; c != nullptr && s > c->size; p = c, c = c->next) {}
+            Node * c = head, * p = nullptr; // note: remember the second * here
+
+	        for (; c && size > c->size; p = c, c = c->next) {}
+
+            return std::make_pair(c, p);
         }
 
         Node * head = nullptr;
@@ -55,7 +60,59 @@ public:
         ::operator delete(m_begin, m_size, default_alignment);
     }
 
-    [[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t)) noexcept;
+    [[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t)) noexcept
+    {
+	std::size_t padding;
+	void* currentAddress = (void*)(sizeof(Header) + size);
+	void* nextAddress = (void*)(sizeof(Header) + size);
+	std::size_t space = size + 100;
+	std::align(alignof(std::max_align_t), sizeof(std::max_align_t), nextAddress, space);
+	padding = (std::size_t)nextAddress - (std::size_t)currentAddress;
+
+	LinkedList::Node* prev;
+	LinkedList::Node* best;
+
+	switch (m_SearchMethod)
+	{
+	case SearchMethod::FIRST:
+		m_List.SearchFirst(size + padding, best, prev);
+		break;
+	case SearchMethod::BEST:
+		m_List.SearchBest(size + padding, best, prev);
+		break;
+	}
+
+	if (best == nullptr)
+	{
+		return nullptr;
+	}
+
+	if (best->m_Value >= size + padding + sizeof(LinkedList::Node*) + 1)
+	{
+		LinkedList::Node* splittedNode = reinterpret_cast<LinkedList::Node*>(reinterpret_cast<char*>(best) + sizeof(Header) + size + padding);
+		splittedNode->m_Value = best->m_Value - (size + padding + sizeof(Header));
+		splittedNode->m_Next = best->m_Next;
+		best->m_Next = splittedNode;
+	}
+	else
+	{
+		padding += best->m_Value - (size + padding);
+	}
+
+	if (prev == nullptr)
+	{
+		m_List.m_Head = best->m_Next;
+	}
+	else
+	{
+		prev->m_Next = best->m_Next;
+	}
+
+	Header* header = reinterpret_cast<Header*>(best);
+	header->m_Size = size + padding;
+
+	return reinterpret_cast<char*>(best) + sizeof(Header);
+}
 
     void deallocate(void * ptr) noexcept;
 
@@ -71,7 +128,7 @@ private:
 		return std::bit_cast < Node * > (ptr);
 	}
 
-	void Coalescence(Node* prev, Node* curr)
+	void merge(Node* prev, Node* curr)
     {
 	    if (curr->next != nullptr && (std::size_t)curr + curr->size + sizeof(Header) == (std::size_t)curr->next)
 	    {
