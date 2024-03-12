@@ -39,7 +39,7 @@ private:
 	
 	std::size_t m_offset = 0;
 
-    alignas(alignof(std::max_align_t)) std::byte m_buffer[N];
+    alignas(std::max_align_t) std::byte m_buffer[N];
 
     std::byte * m_begin = m_buffer;
 

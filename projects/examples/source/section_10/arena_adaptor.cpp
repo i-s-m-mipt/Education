@@ -50,7 +50,7 @@ public:
 
 private:
 
-	std::byte * get_byte(void * ptr) const noexcept
+	[[nodiscard]] std::byte * get_byte(void * ptr) const noexcept
 	{
 		return static_cast < std::byte * > (ptr);
 	}

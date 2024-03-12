@@ -12,24 +12,21 @@
 
 #include <benchmark/benchmark.h>
 
-class Chain_Allocator : private boost::noncopyable // note: deallocations at any position for blocks of fixed sizes
+class Chain_Allocator : private boost::noncopyable // note: deallocations at any position for nodes of fixed sizes
 {
 private:
 
-	struct Block { Block * next = nullptr; };
+	struct Node { Node * next = nullptr; };
 	
 public:
 
-	explicit Chain_Allocator(std::size_t size, std::size_t size_block) : m_size(size)
+	explicit Chain_Allocator(std::size_t size, std::size_t size_node) : m_size(size), m_size_node(size_node)
 	{
-		m_size_block = std::max(size_block, sizeof(Block));
-
-		if (m_size % m_size_block != 0)
+		if (m_size % m_size_node == 0 && m_size_node >= sizeof(Node))
 		{
-			throw std::runtime_error("invalid size");
+			make_chain(); m_begin = m_head;
 		}
-
-		make_chain(); m_begin = m_head;
+		else throw std::runtime_error("invalid size");
 	}
 
 	~Chain_Allocator() noexcept
@@ -45,30 +42,30 @@ public:
 			{
 				make_chain();
 			}
-			else m_head = get_block(m_chains[++m_offset - 1]); // note: switch to next chain
+			else m_head = get_node(m_chains[++m_offset - 1]); // note: switch to next chain
 		}
 
-		auto block = m_head;
+		auto node = m_head;
 
-		if (!block->next) // note: try switch to next block in current chain
+		if (!node->next) // note: try switch to next node in current chain
 		{
-			if (auto next  = get_byte(  block               ) + m_size_block; 
+			if (auto next  = get_byte(   node               ) + m_size_node; 
 				     next != get_byte(m_chains[m_offset - 1]) + m_size)
 			{
-				m_head = get_block(next); m_head->next = nullptr;
+				m_head = get_node(next); m_head->next = nullptr;
 			}
 			else m_head = m_head->next; // note: current chain has ended
 		}
 		else m_head = m_head->next; // note: next after deallocation
 
-		return block;
+		return node;
 	}
 
 	void deallocate(void * ptr) noexcept
 	{
-		auto block = get_block(ptr); 
+		auto node = get_node(ptr); 
 		
-		block->next = m_head; m_head = block; // note: link freed block to previous head
+		node->next = m_head; m_head = node; // note: link freed node to previous head
 	}
 
 	void print() const
@@ -78,26 +75,28 @@ public:
 
 private:
 
-	std::byte * get_byte(void * ptr) const noexcept
+	[[nodiscard]] std::byte * get_byte(void * ptr) const noexcept
 	{
 		return static_cast < std::byte * > (ptr);
 	}
 
-	Block * get_block(void * ptr) const noexcept
+	[[nodiscard]] Node * get_node(void * ptr) const noexcept
 	{ 
-		return static_cast < Block * > (ptr); 
+		return static_cast < Node * > (ptr); 
 	}
 
-	Block * allocate_blocks() const
+	[[nodiscard]] Node * allocate_nodes() const
 	{
-		auto block = get_block(::operator new(m_size, default_alignment));
+		auto node = get_node(::operator new(m_size, default_alignment));
 		
-		block->next = nullptr; return block;
+		node->next = nullptr; 
+		
+		return node;
 	}
 
 	void make_chain()
 	{
-		m_head = allocate_blocks(); ++m_offset; m_chains.push_back(m_head);
+		m_head = allocate_nodes(); ++m_offset; m_chains.push_back(m_head);
 	}
 
 public:
@@ -106,16 +105,14 @@ public:
 
 private:
 
-	std::size_t m_size       = 0;
-	std::size_t m_size_block = 0;
-		
-	Block * m_head = nullptr;
-
-	std::size_t m_offset = 0;
-
-	std::vector < void * > m_chains;
+	std::size_t m_size      = 0;
+	std::size_t m_size_node = 0;
+	std::size_t m_offset    = 0;
 
 	void * m_begin = nullptr;
+	Node * m_head  = nullptr;
+
+	std::vector < void * > m_chains;
 
 }; // class Chain_Allocator : private boost::noncopyable
 

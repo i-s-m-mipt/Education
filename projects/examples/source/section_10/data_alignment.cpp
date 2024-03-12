@@ -22,13 +22,13 @@ struct S2 // note: C_SSIIII
 
 }; // struct S2
 
-struct alignas(alignof(double)) S3
+struct alignas(double) S3
 {
 	char  c{}; // note: 1 byte(s)
 	short s{}; // note: 2 byte(s)
 	int   i{}; // note: 4 byte(s)
 	
-}; // struct alignas(alignof(double)) S3
+}; // struct alignas(double) S3
 
 struct alignas(32) S4 { double data[4]{}; };
 
