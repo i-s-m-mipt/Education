@@ -43,7 +43,7 @@ int main()
 	{
 		if (auto value = distribution(engine); value > 0.0)
 		{
-			if (auto index = static_cast < std::size_t > (std::round(value)); index < std::size(values))
+			if (auto index = static_cast < std::size_t > (std::floor(value)); index < std::size(values))
 			{
 				++values[index];
 			}
