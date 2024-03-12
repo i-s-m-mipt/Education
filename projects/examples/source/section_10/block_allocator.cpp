@@ -1,4 +1,3 @@
-#include <bit>
 #include <cmath>
 #include <cstddef>
 #include <exception>
@@ -120,12 +119,12 @@ private:
 
     std::byte * get_byte(void * ptr) const noexcept
 	{
-		return std::bit_cast < std::byte * > (ptr);
+		return static_cast < std::byte * > (ptr);
 	}
 
     Node * get_node(void * ptr) const noexcept
 	{
-		return std::bit_cast < Node * > (ptr);
+		return static_cast < Node * > (ptr);
 	}
 
 	void merge(Node* prev, Node* curr)

@@ -1,4 +1,3 @@
-#include <bit>
 #include <cstddef>
 #include <cstdint>
 #include <iomanip>
@@ -70,12 +69,12 @@ private:
 
 	std::byte * get_byte(void * ptr) const noexcept
 	{
-		return std::bit_cast < std::byte * > (ptr);
+		return static_cast < std::byte * > (ptr);
 	}
 
 	Header * get_header(void * ptr) const noexcept
 	{
-		return std::bit_cast < Header * > (ptr);
+		return static_cast < Header * > (ptr);
 	}
 
 public:

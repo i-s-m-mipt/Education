@@ -1,4 +1,3 @@
-#include <bit>
 #include <cstddef>
 #include <iomanip>
 #include <iostream>
@@ -50,7 +49,7 @@ private:
 
 	std::byte * get_byte(void * ptr) const noexcept
 	{
-		return std::bit_cast < std::byte * > (ptr);
+		return static_cast < std::byte * > (ptr);
 	}
 
 public:

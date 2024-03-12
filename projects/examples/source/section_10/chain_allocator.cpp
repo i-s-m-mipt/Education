@@ -1,4 +1,3 @@
-#include <bit>
 #include <cmath>
 #include <cstddef>
 #include <exception>
@@ -81,12 +80,12 @@ private:
 
 	std::byte * get_byte(void * ptr) const noexcept
 	{
-		return std::bit_cast < std::byte * > (ptr);
+		return static_cast < std::byte * > (ptr);
 	}
 
 	Block * get_block(void * ptr) const noexcept
 	{ 
-		return std::bit_cast < Block * > (ptr); 
+		return static_cast < Block * > (ptr); 
 	}
 
 	Block * allocate_blocks() const
