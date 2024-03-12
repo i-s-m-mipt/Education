@@ -35,7 +35,7 @@ void print(const std::span < const std::byte > & bytes)
 
 template < typename T > auto distance_in_bytes(T * first, T * last)
 {
-    return (std::bit_cast < std::byte * > (last) - std::bit_cast <std::byte * > (first));
+    return (std::bit_cast < std::byte * > (last) - std::bit_cast < std::byte * > (first));
 }
 
 struct Datetime
