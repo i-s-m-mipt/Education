@@ -17,41 +17,23 @@ class Block_Allocator : private boost::noncopyable // note: deallocations at any
 {
 private:
 
-    struct List
-	{
-		struct Node { std::size_t size = 0; Node * next = nullptr; };
+    struct Node { std::size_t size = 0; Node * next = nullptr; };
 
-		std::pair < Node * , Node * > find_first(std::size_t size) const noexcept
-        {
-            Node * c = head, * p = nullptr; // note: remember the second * here
-
-	        for (; c && size > c->size; p = c, c = c->next) {}
-
-            return std::make_pair(c, p);
-        }
-
-        Node * head = nullptr;
-
-	}; // struct List
-
-    using Node = List::Node;
-
-	struct alignas(std::max_align_t) Header { std::size_t m_size = 0; };
+	struct alignas(std::max_align_t) Header { std::size_t size = 0; };
 
 public:
 	
     explicit Block_Allocator(std::size_t size) : m_size(size)
     {
-        if (m_size < sizeof(Node) + 1)
-		{
-			throw std::runtime_error("invalid size");
-		}
+        if (m_size >= sizeof(Node) + 1) 
+        {
+            m_begin = ::operator new(m_size, default_alignment);
 
-	    m_begin = ::operator new(m_size, default_alignment);
-
-	    m_list.head = get_node(m_begin); 
+	        m_head = get_node(m_begin); 
         
-        m_list.head->size = m_size - sizeof(Header);
+            m_head->size = m_size - sizeof(Header);
+        }
+        else throw std::runtime_error("invalid size");
     }
 	
     ~Block_Allocator() noexcept
@@ -61,71 +43,80 @@ public:
 
     [[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t)) noexcept
     {
-	std::size_t padding;
-	void* currentAddress = (void*)(sizeof(Header) + size);
-	void* nextAddress = (void*)(sizeof(Header) + size);
-	std::size_t space = size + 100;
-	std::align(alignof(std::max_align_t), sizeof(std::max_align_t), nextAddress, space);
-	padding = (std::size_t)nextAddress - (std::size_t)currentAddress;
+        if (size >= sizeof(Node))
+        {
+	        void * last = get_byte(m_begin) + sizeof(Header) + size, * next = last;
 
-	LinkedList::Node* prev;
-	LinkedList::Node* best;
+	        auto space = 2 * alignof(Header); // note: enough space to align next pointer to Header
 
-	switch (m_SearchMethod)
-	{
-	case SearchMethod::FIRST:
-		m_List.SearchFirst(size + padding, best, prev);
-		break;
-	case SearchMethod::BEST:
-		m_List.SearchBest(size + padding, best, prev);
-		break;
-	}
+            if (next = std::align(alignof(Header), sizeof(Header), next, space); next) // note: modifies next and space
+            {
+                auto padding = get_byte(next) - get_byte(last);
 
-	if (best == nullptr)
-	{
-		return nullptr;
-	}
+                if (auto [current, previous] = find_first(size + padding); current != nullptr) // note: or find best
+                {
+                    if (current->size >= size + padding + sizeof(Node*) + 1)
+                    {
+                        auto splitted_node = get_node(get_byte(current) + sizeof(Header) + size + padding);
 
-	if (best->m_Value >= size + padding + sizeof(LinkedList::Node*) + 1)
-	{
-		LinkedList::Node* splittedNode = reinterpret_cast<LinkedList::Node*>(reinterpret_cast<char*>(best) + sizeof(Header) + size + padding);
-		splittedNode->m_Value = best->m_Value - (size + padding + sizeof(Header));
-		splittedNode->m_Next = best->m_Next;
-		best->m_Next = splittedNode;
-	}
-	else
-	{
-		padding += best->m_Value - (size + padding);
-	}
+                        splitted_node->size = current->size - (sizeof(Header) + size + padding);
+                        
+                        splitted_node->next = current->next; current->next = splitted_node;
+                    }
+                    else
+                    {
+                        padding += current->size - (size + padding);
+                    }
 
-	if (prev == nullptr)
-	{
-		m_List.m_Head = best->m_Next;
-	}
-	else
-	{
-		prev->m_Next = best->m_Next;
-	}
+                    if (previous == nullptr)
+                    {
+                        m_head = current->next;
+                    }
+                    else
+                    {
+                        previous->next = current->next;
+                    }
 
-	Header* header = reinterpret_cast<Header*>(best);
-	header->m_Size = size + padding;
+                    auto header = get_header(current);
 
-	return reinterpret_cast<char*>(best) + sizeof(Header);
-}
+                    header->size = size + padding;
+
+                    return get_byte(current) + sizeof(Header);
+                }
+                else return nullptr;
+            }
+            else return nullptr;
+        }
+        else return nullptr;
+    }
 
     void deallocate(void * ptr) noexcept;
 
 private:
 
-    std::byte * get_byte(void * ptr) const noexcept
+    [[nodiscard]] std::byte * get_byte(void * ptr) const noexcept
 	{
 		return static_cast < std::byte * > (ptr);
 	}
 
-    Node * get_node(void * ptr) const noexcept
+    [[nodiscard]] Node * get_node(void * ptr) const noexcept
 	{
 		return static_cast < Node * > (ptr);
 	}
+
+    [[nodiscard]] Header * get_header(void * ptr) const noexcept
+	{
+		return static_cast < Header * > (ptr);
+	}
+
+    [[nodiscard]] std::pair < Node * , Node * > find_first(std::size_t size) const 
+    {
+        Node * c = m_head, * p = nullptr; // note: remember the second * here
+
+	    for (; c && size > c->size; p = c, c = c->next) {}
+
+        return std::make_pair(c, p);
+    }
 
 	void merge(Node* prev, Node* curr)
     {
@@ -150,8 +141,7 @@ private:
 
     std::size_t m_size = 0;
 
-    List m_list;
-
     void * m_begin = nullptr;
+    Node * m_head  = nullptr;
 
 }; // class Block_Allocator : private boost::noncopyable
