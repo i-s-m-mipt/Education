@@ -10,6 +10,7 @@
 #include <vector>
 
 #include <boost/noncopyable.hpp>
+
 #include <benchmark/benchmark.h>
 
 class Chain_Allocator : private boost::noncopyable // note: deallocations at any position for blocks of fixed sizes

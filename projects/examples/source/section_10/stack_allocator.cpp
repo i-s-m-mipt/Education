@@ -8,6 +8,7 @@
 #include <string>
 
 #include <boost/noncopyable.hpp>
+
 #include <benchmark/benchmark.h>
 
 class Stack_Allocator : private boost::noncopyable // note: deallocations at end for blocks of different sizes

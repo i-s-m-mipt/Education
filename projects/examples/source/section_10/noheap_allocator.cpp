@@ -4,6 +4,7 @@
 #include <memory>
 
 #include <boost/noncopyable.hpp>
+
 #include <benchmark/benchmark.h>
 
 template < auto N > class Noheap_Allocator : private boost::noncopyable // note: Arena on stack

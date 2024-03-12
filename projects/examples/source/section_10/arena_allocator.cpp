@@ -5,6 +5,7 @@
 #include <memory>
 
 #include <boost/noncopyable.hpp>
+
 #include <benchmark/benchmark.h>
 
 class Arena_Allocator : private boost::noncopyable // note: no deallocations for blocks of different sizes
