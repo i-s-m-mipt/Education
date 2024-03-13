@@ -181,20 +181,20 @@ void test_1(benchmark::State & state) // note: pretty fast
 {
 	const std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
 
-	std::vector < void * > pointers(kb, nullptr);
-
     std::mt19937 engine(state.range(0));
 
     std::uniform_int_distribution distribution(1, 16);
+
+    std::vector < void * > pointers(kb, nullptr);
 
 	for (auto _ : state)
 	{
 		Block_Allocator allocator(16 * gb); // note: huge constant
 
 		for (std::size_t i = 0; i < kb; i +=  1) pointers[i] = allocator.  allocate(distribution(engine) * mb);
-		for (std::size_t i = 0; i < kb; i += 32)               allocator.deallocate(         pointers[i]     );
+		for (std::size_t i = 0; i < kb; i += 32)               allocator.deallocate(pointers[i]              );
 		for (std::size_t i = 0; i < kb; i += 32) pointers[i] = allocator.  allocate(distribution(engine) * mb);
-		for (std::size_t i = 0; i < kb; i +=  1)               allocator.deallocate(         pointers[i]     );
+		for (std::size_t i = 0; i < kb; i +=  1)               allocator.deallocate(pointers[i]              );
 	}
 }
 
@@ -202,18 +202,27 @@ void test_2(benchmark::State & state) // note: pretty slow
 {
 	const std::size_t kb = 1024, mb = kb * kb;
 
-	std::vector < void * > pointers(kb, nullptr);
-
     std::mt19937 engine(state.range(0));
 
     std::uniform_int_distribution distribution(1, 16);
 
+    std::vector < std::pair < void * , std::size_t > > blocks(kb);
+
 	for (auto _ : state)
 	{
-		for (std::size_t i = 0; i < kb; i +=  1) pointers[i] = ::operator    new(distribution(engine) * mb);
-		for (std::size_t i = 0; i < kb; i += 32)               ::operator delete(         pointers[i] , mb);
-		for (std::size_t i = 0; i < kb; i += 32) pointers[i] = ::operator    new(distribution(engine) * mb);
-		for (std::size_t i = 0; i < kb; i +=  1)               ::operator delete(         pointers[i] , mb);
+		for (std::size_t i = 0; i < kb; i +=  1) 
+        {
+            auto size = distribution(engine) * mb; blocks[i] = { ::operator new(size), size };
+        }
+        
+		for (std::size_t i = 0; i < kb; i += 32) ::operator delete(blocks[i].first, blocks[i].second);
+
+		for (std::size_t i = 0; i < kb; i += 32)
+        {
+            auto size = distribution(engine) * mb; blocks[i] = { ::operator new(size), size };
+        } 
+        
+		for (std::size_t i = 0; i < kb; i +=  1) ::operator delete(blocks[i].first, blocks[i].second);
 	}
 }
 
@@ -226,14 +235,16 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 	[[maybe_unused]] auto ptr_A = allocator.  allocate(   16); allocator.print(); // note: initial + 32
 	[[maybe_unused]] auto ptr_B = allocator.  allocate(   32); allocator.print(); // note: initial + 32 + 48
-	[[maybe_unused]] auto ptr_C = allocator.  allocate(   64); allocator.print(); // note: initial + 32 + 48 + 80
+	[[maybe_unused]] auto ptr_C = allocator.  allocate(   32); allocator.print(); // note: initial + 32 + 48 + 48
+    [[maybe_unused]] auto ptr_D = allocator.  allocate(   16); allocator.print(); // note: initial + 32 + 48 + 48 + 32
 
 	                              allocator.deallocate(ptr_B); allocator.print(); // note: initial + 32
+                                  allocator.deallocate(ptr_C); allocator.print(); // note: initial + 32
 
-	[[maybe_unused]] auto ptr_D = allocator.  allocate(   16); allocator.print(); // note: initial + 32 + 48 + 80
-	[[maybe_unused]] auto ptr_E = allocator.  allocate(   16); allocator.print(); // note: initial + 32 + 48 + 80 + 32
+	[[maybe_unused]] auto ptr_E = allocator.  allocate(   16); allocator.print(); // note: initial + 32 + 32
+	[[maybe_unused]] auto ptr_F = allocator.  allocate(   32); allocator.print(); // note: initial + 32 + 48 + 48 + 32
     
-    // note: HAHBBHCCCC -> HA000HCCCC -> HAHD0HCCCCHE, each letter states for 16 bytes if sizeof(Header) == 16
+    // note: HAHBBHCCHDD -> HA000000HDD -> HAHEHFF0HDD, each letter states for 16 bytes if sizeof(Header) == 16
 
 	benchmark::Initialize(&argc, argv);
 
