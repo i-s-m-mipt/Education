@@ -1,3 +1,4 @@
+#include <bit>
 #include <cstddef>
 #include <exception>
 #include <iostream>
@@ -66,9 +67,9 @@ public:
 		node->next = m_head; m_head = node; // note: link freed node to previous head
 	}
 
-	void print() const
-	{
-		std::cout << m_head << std::endl;
+	void print() const 
+	{ 
+		std::cout << std::bit_cast < std::size_t > (m_head) << std::endl; 
 	}
 
 private:
@@ -151,20 +152,20 @@ BENCHMARK(test_2);
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {
-	Chain_Allocator allocator(32, 8);                   allocator.print(); // note: initial
+	Chain_Allocator allocator(32, 8);                          allocator.print(); // note: initial
 
-	[[maybe_unused]] auto ptr_0 = allocator.allocate(); allocator.print(); // note: head X
-	[[maybe_unused]] auto ptr_1 = allocator.allocate(); allocator.print(); // note: head Y
-	[[maybe_unused]] auto ptr_2 = allocator.allocate(); allocator.print();
-	[[maybe_unused]] auto ptr_3 = allocator.allocate(); allocator.print(); // note: nullptr
+	[[maybe_unused]] auto ptr_A = allocator.  allocate(     ); allocator.print(); // note: initial + 8
+	[[maybe_unused]] auto ptr_B = allocator.  allocate(     ); allocator.print(); // note: initial + 8 + 8
+	[[maybe_unused]] auto ptr_C = allocator.  allocate(     ); allocator.print(); // note: initial + 8 + 8 + 8
+	[[maybe_unused]] auto ptr_D = allocator.  allocate(     ); allocator.print(); // note: nullptr
 
-	[[maybe_unused]] auto ptr_4 = allocator.allocate(); allocator.print(); // note: head Z
+	[[maybe_unused]] auto ptr_E = allocator.  allocate(     ); allocator.print(); // note: initial_2
 
-	allocator.deallocate(ptr_1);                        allocator.print(); // note: head X
-	allocator.deallocate(ptr_2);                        allocator.print(); // note: head Y
+	                              allocator.deallocate(ptr_B); allocator.print(); // note: initial + 8
+	                              allocator.deallocate(ptr_C); allocator.print(); // note: initial + 8 + 8
 
-	[[maybe_unused]] auto ptr_5 = allocator.allocate(); allocator.print(); // note: head X
-	[[maybe_unused]] auto ptr_6 = allocator.allocate(); allocator.print(); // note: head Z
+	[[maybe_unused]] auto ptr_F = allocator.  allocate(     ); allocator.print(); // note: initial + 8
+	[[maybe_unused]] auto ptr_G = allocator.  allocate(     ); allocator.print(); // note: initial_2
 
 	benchmark::Initialize(&argc, argv);
 

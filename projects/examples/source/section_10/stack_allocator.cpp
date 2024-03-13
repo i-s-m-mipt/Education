@@ -139,20 +139,20 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 {
 	Stack_Allocator allocator(1024);
 
-	auto ptr_0 = allocator.allocate( 1, 4); std::cout << ptr_0 << ' '; allocator.print(); // note: A
-	auto ptr_1 = allocator.allocate( 2, 2); std::cout << ptr_1 << ' '; allocator.print(); // note: B
-	auto ptr_2 = allocator.allocate(10   ); std::cout << ptr_2 << ' '; allocator.print(); // note: C
-	auto ptr_3 = allocator.allocate( 4   ); std::cout << ptr_3 << ' '; allocator.print(); // note: D
+	auto ptr_A = allocator.allocate( 1, 4); std::cout << ptr_A << ' '; allocator.print();
+	auto ptr_B = allocator.allocate( 2, 2); std::cout << ptr_B << ' '; allocator.print();
+	auto ptr_C = allocator.allocate(10   ); std::cout << ptr_C << ' '; allocator.print();
+	auto ptr_D = allocator.allocate( 4   ); std::cout << ptr_D << ' '; allocator.print();
 
 	// note: 000H AHBB | 0000 000H | CCCC CCCC | CC00 000H | DDDD 0000 | ...
 
-	allocator.deallocate(ptr_3);    std::cout << std::string(17, ' '); allocator.print();
-	allocator.deallocate(ptr_2);    std::cout << std::string(17, ' '); allocator.print();
+	allocator.deallocate(ptr_D);    std::cout << std::string(17, ' '); allocator.print();
+	allocator.deallocate(ptr_C);    std::cout << std::string(17, ' '); allocator.print();
 
 	// note: 000H AHBB | ...
 
-	auto ptr_4 = allocator.allocate( 3, 4); std::cout << ptr_4 << ' '; allocator.print(); // note: E
-	auto ptr_5 = allocator.allocate( 8   ); std::cout << ptr_5 << ' '; allocator.print(); // note: F
+	auto ptr_E = allocator.allocate( 3, 4); std::cout << ptr_E << ' '; allocator.print();
+	auto ptr_F = allocator.allocate( 8   ); std::cout << ptr_F << ' '; allocator.print(); 
 
 	// note: 000H AHBB | 000H EEEH | FFFF FFFF | ...
 
