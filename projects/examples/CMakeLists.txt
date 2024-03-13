@@ -246,6 +246,7 @@ set (sources_10_release
     arena_allocator
     stack_allocator
     chain_allocator
+    block_allocator
     noheap_allocator)
 
 foreach(entry IN LISTS sources_10_release)

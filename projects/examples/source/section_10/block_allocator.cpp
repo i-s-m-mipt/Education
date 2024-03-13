@@ -1,8 +1,7 @@
-#include <cmath>
+#include <bit>
 #include <cstddef>
 #include <exception>
 #include <iostream>
-#include <iterator>
 #include <memory>
 #include <random>
 #include <stdexcept>
@@ -29,9 +28,7 @@ public:
         {
             m_begin = ::operator new(m_size, default_alignment);
 
-	        m_head = get_node(m_begin); 
-        
-            m_head->size = m_size - sizeof(Header);
+	        m_head = get_node(m_begin); *m_head = { m_size - sizeof(Header), nullptr };
         }
         else throw std::runtime_error("invalid size");
     }
@@ -41,56 +38,90 @@ public:
         ::operator delete(m_begin, m_size, default_alignment);
     }
 
-    [[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t)) noexcept
+    [[nodiscard]] void * allocate(std::size_t size) noexcept
     {
-        if (size >= sizeof(Node))
+	    void * end = get_byte(m_begin) + sizeof(Header) + size, * next = end;
+
+	    auto space = 2 * alignof(Header); // note: enough space to align next pointer to Header
+
+        if (next = std::align(alignof(Header), sizeof(Header), next, space); next) // note: modifies next and space
         {
-	        void * last = get_byte(m_begin) + sizeof(Header) + size, * next = last;
+            auto padding = get_byte(next) - get_byte(end); // note: padding between end of data and aligned header
 
-	        auto space = 2 * alignof(Header); // note: enough space to align next pointer to Header
-
-            if (next = std::align(alignof(Header), sizeof(Header), next, space); next) // note: modifies next and space
+            if (auto [current, previous] = find_first(size + padding); current) // note: consider also find best
             {
-                auto padding = get_byte(next) - get_byte(last);
-
-                if (auto [current, previous] = find_first(size + padding); current != nullptr) // note: or find best
+                if (current->size >= size + padding + sizeof(Node) + 1) // note: new splitted node for the rest
                 {
-                    if (current->size >= size + padding + sizeof(Node*) + 1)
-                    {
-                        auto splitted_node = get_node(get_byte(current) + sizeof(Header) + size + padding);
+                    auto block_size = sizeof(Header) + size + padding;
 
-                        splitted_node->size = current->size - (sizeof(Header) + size + padding);
-                        
-                        splitted_node->next = current->next; current->next = splitted_node;
-                    }
-                    else
-                    {
-                        padding += current->size - (size + padding);
-                    }
+                    auto new_node = get_node(get_byte(current) + block_size);
 
-                    if (previous == nullptr)
-                    {
-                        m_head = current->next;
-                    }
-                    else
-                    {
-                        previous->next = current->next;
-                    }
-
-                    auto header = get_header(current);
-
-                    header->size = size + padding;
-
-                    return get_byte(current) + sizeof(Header);
+                    new_node->size = current->size - block_size;
+                       
+                    new_node->next = current->next; current->next = new_node;
                 }
-                else return nullptr;
+                else
+                {
+                    padding += current->size - (size + padding); // note: not enough space for splitting nodes
+                }
+
+                if (!previous)
+                {
+                    m_head = current->next; // note: allocated on head node
+                }
+                else
+                {
+                    previous->next = current->next; // note: head skipped
+                }
+
+                auto header = get_header(current); header->size = size + padding;
+
+                return get_byte(current) + sizeof(Header);
             }
             else return nullptr;
         }
         else return nullptr;
     }
 
-    void deallocate(void * ptr) noexcept;
+    void deallocate(void * ptr) noexcept
+    {
+        auto header = get_header(get_byte(ptr) - sizeof(Header));
+
+        auto node = get_node(header); node->size = header->size;
+
+        Node * previous = nullptr;
+        
+        for (auto current = m_head; current; previous = current, current = current->next)
+        {
+            if (node < current)
+            {
+                if (node->next = current; !previous)
+                {
+                    m_head = node; // note: move head to the left
+                }
+                else
+                {
+                    previous->next = node; // note: insert node
+                }
+
+                break;
+            }
+        }
+
+        merge(previous, node);
+    }
+
+    void print() const 
+    { 
+        std::cout << std::bit_cast < std::size_t > (m_head);
+
+        if (m_head->next)
+        {
+            std::cout << ' ' << std::bit_cast < std::size_t > (m_head->next);
+        }
+
+        std::cout << std::endl;
+    }
 
 private:
 
@@ -109,27 +140,27 @@ private:
 		return static_cast < Header * > (ptr);
 	}
 
-    [[nodiscard]] std::pair < Node * , Node * > find_first(std::size_t size) const 
+    [[nodiscard]] std::pair < Node * , Node * > find_first(std::size_t size) const // note: fast, bu fragmentation
     {
-        Node * c = m_head, * p = nullptr; // note: remember the second * here
+        Node * current = m_head, * previous = nullptr; // note: remember the second * here
 
-	    for (; c && size > c->size; p = c, c = c->next) {}
+	    for (; current && size > current->size; previous = current, current = current->next) {}
 
-        return std::make_pair(c, p);
+        return std::make_pair(current, previous);
     }
 
-	void merge(Node* prev, Node* curr)
+	void merge(Node * previous, Node * node) const noexcept
     {
-	    if (curr->next != nullptr && (std::size_t)curr + curr->size + sizeof(Header) == (std::size_t)curr->next)
+	    if (node->next && get_byte(node) + node->size + sizeof(Header) == get_byte(node->next))
 	    {
-		    curr->size += curr->next->size + sizeof(Header);
-		    curr->next = curr->next->next;
+		    node->size += node->next->size + sizeof(Header);
+		    node->next  = node->next->next;
 	    }
 
-	    if (prev != nullptr && (std::size_t)prev + prev->size + sizeof(Header) == (std::size_t)curr)
+	    if (previous && get_byte(previous) + previous->size + sizeof(Header) == get_byte(node))
 	    {
-		    prev->size += curr->size + sizeof(Header);
-		    prev->next = curr->next;
+		    previous->size += node->size + sizeof(Header);
+		    previous->next  = node->next;
 	    }
     }
 
@@ -145,3 +176,68 @@ private:
     Node * m_head  = nullptr;
 
 }; // class Block_Allocator : private boost::noncopyable
+
+void test_1(benchmark::State & state) // note: pretty fast
+{
+	const std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
+
+	std::vector < void * > pointers(kb, nullptr);
+
+    std::mt19937 engine(state.range(0));
+
+    std::uniform_int_distribution distribution(1, 16);
+
+	for (auto _ : state)
+	{
+		Block_Allocator allocator(16 * gb); // note: huge constant
+
+		for (std::size_t i = 0; i < kb; i +=  1) pointers[i] = allocator.  allocate(distribution(engine) * mb);
+		for (std::size_t i = 0; i < kb; i += 32)               allocator.deallocate(         pointers[i]     );
+		for (std::size_t i = 0; i < kb; i += 32) pointers[i] = allocator.  allocate(distribution(engine) * mb);
+		for (std::size_t i = 0; i < kb; i +=  1)               allocator.deallocate(         pointers[i]     );
+	}
+}
+
+void test_2(benchmark::State & state) // note: pretty slow
+{
+	const std::size_t kb = 1024, mb = kb * kb;
+
+	std::vector < void * > pointers(kb, nullptr);
+
+    std::mt19937 engine(state.range(0));
+
+    std::uniform_int_distribution distribution(1, 16);
+
+	for (auto _ : state)
+	{
+		for (std::size_t i = 0; i < kb; i +=  1) pointers[i] = ::operator    new(distribution(engine) * mb);
+		for (std::size_t i = 0; i < kb; i += 32)               ::operator delete(         pointers[i] , mb);
+		for (std::size_t i = 0; i < kb; i += 32) pointers[i] = ::operator    new(distribution(engine) * mb);
+		for (std::size_t i = 0; i < kb; i +=  1)               ::operator delete(         pointers[i] , mb);
+	}
+}
+
+BENCHMARK(test_1)->Arg(42); // note: same seeds for PRNG
+BENCHMARK(test_2)->Arg(42);
+
+int main(int argc, char ** argv) // note: arguments for benchmark
+{
+    Block_Allocator allocator(1024);                           allocator.print(); // note: initial
+
+	[[maybe_unused]] auto ptr_A = allocator.  allocate(   16); allocator.print(); // note: initial + 32
+	[[maybe_unused]] auto ptr_B = allocator.  allocate(   32); allocator.print(); // note: initial + 32 + 48
+	[[maybe_unused]] auto ptr_C = allocator.  allocate(   64); allocator.print(); // note: initial + 32 + 48 + 80
+
+	                              allocator.deallocate(ptr_B); allocator.print(); // note: initial + 32
+
+	[[maybe_unused]] auto ptr_D = allocator.  allocate(   16); allocator.print(); // note: initial + 32 + 48 + 80
+	[[maybe_unused]] auto ptr_E = allocator.  allocate(   16); allocator.print(); // note: initial + 32 + 48 + 80 + 32
+    
+    // note: HAHBBHCCCC -> HA000HCCCC -> HAHD0HCCCCHE, each letter states for 16 bytes if sizeof(Header) == 16
+
+	benchmark::Initialize(&argc, argv);
+
+	benchmark::RunSpecifiedBenchmarks();
+
+	return 0;
+}
