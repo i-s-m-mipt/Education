@@ -7,22 +7,22 @@
 
 #include <windows.h>
 
-class Timer
+class Chronometer
 {
 public:
 
 	using clock_t = std::chrono::steady_clock;
 
-	explicit Timer(std::string name) : m_name(std::move(name)), m_begin(clock_t::now())
+	explicit Chronometer(std::string name) : m_name(std::move(name)), m_begin(clock_t::now())
 	{
-		std::cout << "Timer " << m_name << " launched ... " << std::endl;
+		std::cout << "Chronometer " << m_name << " launched ... " << std::endl;
 	}
 
-	~Timer() { elapsed(); }
+	~Chronometer() { elapsed(); }
 
 	void elapsed() const
 	{
-		std::cout << "Timer " << m_name << " elapsed " << std::setprecision(6) <<
+		std::cout << "Chronometer " << m_name << " elapsed " << std::setprecision(6) <<
 			std::fixed << std::chrono::duration_cast < std::chrono::microseconds > (
 				clock_t::now() - m_begin).count() / 1'000'000.0 << " (seconds)" << std::endl;
 	}
@@ -33,7 +33,7 @@ private:
 
 	const clock_t::time_point m_begin;
 
-}; // class Timer
+}; // class Chronometer
 
 auto test_cpp_v1()
 {
@@ -77,7 +77,7 @@ void test_asm_v1()
 	auto c = 0;
 
 	{
-		Timer timer("C++");
+		Chronometer chronometer("C++");
 
 		auto a = 1;
 		auto b = 1;
@@ -104,7 +104,7 @@ void test_asm_v1()
 	auto c = 0;
 	
 	{
-		Timer timer("ASM");
+		Chronometer chronometer("ASM");
 
 		__asm
 		{
@@ -145,7 +145,7 @@ void test_asm_v1()
 	auto result = 0.0;
 
 	{
-		Timer timer("C++");
+		Chronometer chronometer("C++");
 
 		for (std::size_t i = 0; i < size; ++i)
 		{
@@ -163,7 +163,7 @@ void test_asm_v1()
 	{
 		const auto s = size;
 
-		Timer timer("ASM");
+		Chronometer chronometer("ASM");
 
 		__asm
 		{
@@ -210,7 +210,7 @@ void test_asm_v1()
 	auto result = 0.0;
 
 	{
-		Timer timer("C++");
+		Chronometer chronometer("C++");
 
 		/*
 		for (std::size_t i = 2; i < size; ++i)
@@ -235,7 +235,7 @@ void test_asm_v1()
 	{
 		const auto s = size;
 
-		Timer timer("ASM");
+		Chronometer chronometer("ASM");
 
 		__asm
 		{
