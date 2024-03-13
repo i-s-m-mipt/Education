@@ -15,22 +15,22 @@ template < typename C > void verify(const std::string & name)
 	std::cout << std::endl;
 }
 
-class Timer // note: RAII-based timer
+class Chronometer // note: RAII-based chronometer
 {
 public:
 
 	using clock_t = std::chrono::steady_clock;
 
-	explicit Timer(std::string name) : m_name(std::move(name)), m_begin(clock_t::now())
+	explicit Chronometer(std::string name) : m_name(std::move(name)), m_begin(clock_t::now())
 	{
-		std::cout << "Timer " << m_name << " launched ... " << std::endl;
+		std::cout << "Chronometer " << m_name << " launched ... " << std::endl;
 	}
 
-	~Timer() { elapsed(); }
+	~Chronometer() { elapsed(); }
 
 	void elapsed() const
 	{
-		std::cout << "Timer " << m_name << " elapsed " << std::setprecision(6) << 
+		std::cout << "Chronometer " << m_name << " elapsed " << std::setprecision(6) << 
 			std::fixed << std::chrono::duration_cast < std::chrono::microseconds > (
 				clock_t::now() - m_begin).count() / 1'000'000.0 << " (seconds)" << std::endl;
 	}
@@ -41,7 +41,7 @@ private:
 
 	const clock_t::time_point m_begin;
 
-}; // class Timer
+}; // class Chronometer
 
 int main()
 {
@@ -67,7 +67,7 @@ int main()
 	std::cout << std::chrono::duration_cast < std::chrono::days > (result) << std::endl;
 
 	{
-		Timer timer("test");
+		Chronometer chronometer("test"); // note: consider measurement series
 
 		const std::size_t size = 1000; // note: measured operations
 
