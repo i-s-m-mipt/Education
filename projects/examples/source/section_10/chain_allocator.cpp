@@ -114,7 +114,7 @@ private:
 
 }; // class Chain_Allocator : private boost::noncopyable
 
-void test_1(benchmark::State & state) // note: very fast
+void test_1(benchmark::State & state) // note: pretty fast
 {
 	const std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
 
@@ -131,7 +131,7 @@ void test_1(benchmark::State & state) // note: very fast
 	}
 }
 
-void test_2(benchmark::State & state) // note: very slow
+void test_2(benchmark::State & state) // note: pretty slow
 {
 	const std::size_t kb = 1024, mb = kb * kb;
 
