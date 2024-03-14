@@ -313,6 +313,15 @@ foreach(entry IN LISTS sources_12)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
 
+set(sources_13
+    variadic_output)
+
+foreach(entry IN LISTS sources_13)
+    add_executable(${entry} source/section_13/${entry}.cpp)
+    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
+endforeach()
+
 set(sources_14
     recursive_calculator
     boost_spirit_basics
