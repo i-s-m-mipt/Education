@@ -9,18 +9,18 @@ public:
 
     friend std::ostream & operator<<(std::ostream & stream, const Base & base)
     {
-        base.print(); // note: virtual function called from non-virtual operator
+        base.print(stream); // note: virtual function called from non-virtual operator
 
         return stream;
     }
 
-    virtual void print() const { std::cout << "Base"; }
+    virtual void print(std::ostream & stream) const { stream << "Base"; }
 
 }; // class Base
 
 class Derived : public Base
 {
-public: void print() const override { std::cout << "Derived"; }
+public: void print(std::ostream & stream) const override { stream << "Derived"; }
 };
 
 int main()
