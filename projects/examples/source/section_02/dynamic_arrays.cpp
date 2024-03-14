@@ -26,15 +26,13 @@ int main()
 
 //	delete ptr_array; // bad: wrong delete
 
-	std::cout << "Enter array size: "; std::size_t n{}; std::cin >> n;
+	std::size_t n = 5; // note: non-constant size as runtime variable
 
-	std::cout << "Enter " << n << " integer values: ";
-
-	auto s = new int[n]; // note: non-constant size
+	auto s = new int[n]; 
 
 	for (std::size_t i = 0; i < n; ++i)
 	{
-		std::cin >> s[i];
+		s[i] = static_cast < int > (n - i);
 	}
 
 	for (std::size_t i = 0; i < n - 1; ++i) // note: bubble sort

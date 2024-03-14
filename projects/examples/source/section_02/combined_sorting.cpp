@@ -50,7 +50,7 @@ void merge_sort(std::vector < int > & v, std::size_t l, std::size_t r) // note: 
 
 int main()
 {
-	std::cout << "Enter array size: "; std::size_t n{}; std::cin >> n;
+	const std::size_t n = 5;
 
 	std::vector < int > vector(n, 0);
 

@@ -28,7 +28,7 @@ void generate_fast(std::size_t n, std::string & output, std::string s = "", std:
 
 int main()
 {
-	std::cout << "Enter number of brackets: "; std::size_t n{}; std::cin >> n;
+	const std::size_t n = 5;
 
 //	generate_slow(n); // bad: slow function due to suboptimal operations
 

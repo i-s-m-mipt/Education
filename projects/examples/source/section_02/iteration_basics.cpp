@@ -67,37 +67,27 @@ exit:
 
 	while (c != 'n') // note: undefined counter
 	{
-		std::cout << "Continue while (y/n) ? ";
-
-		std::cin >> c;
+		std::cout << "Continue while? (y/n) "; std::cin >> c;
 	}
 
 	do
 	{
-		std::cout << "Continue do while (y/n) ? ";
-
-		std::cin >> c;
+		std::cout << "Continue do while? (y/n) "; std::cin >> c;
 	} 
 	while (c != 'n');
 
 	for (;;) // note: unusual infinite loop
 	{
-		std::cout << "Continue infinite for (y/n) ? ";
+		std::cout << "Continue infinite for? (y/n) ";
 
-		if (std::cin >> c; c == 'n')
-		{
-			break;
-		}
+		if (std::cin >> c; c == 'n') break;
 	}
 
 	while (true)
 	{
-		std::cout << "Continue infinite while (y/n) ? ";
+		std::cout << "Continue infinite while? (y/n) ";
 
-		if (std::cin >> c; c == 'n')
-		{
-			break;
-		}
+		if (std::cin >> c; c == 'n') break;
 	}
 
 	return 0;

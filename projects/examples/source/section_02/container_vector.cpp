@@ -4,13 +4,14 @@
 
 int main()
 {
-	std::cout << "Enter array size: "; std::size_t n{}; std::cin >> n;
-
-	std::cout << "Enter " << n << " integer values: ";
+	const std::size_t n = 5;
 
 	std::vector < int > vector(n, 0); // note: create vector of n zero elements
 
-	for (auto & element : vector) std::cin >> element; // note: consider push_back
+	for (std::size_t i = 0; i < n; ++i) // note: see also std::size instead of n
+	{
+		vector[i] = static_cast < int > (n - i); // note: see also push_back
+	}
 
 	for (std::size_t i = 0; i < n - 1; ++i)
 	{

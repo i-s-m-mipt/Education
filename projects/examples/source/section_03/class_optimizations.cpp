@@ -43,7 +43,7 @@ public:
 	return container; // note: copy elision, named return value optimization
 }
 
-class E {}; // note: empty class, only functions for example
+class E {}; // note: empty class with no data, only functions for example
 
 class X { char c;                       E e;      };
 class Y { char c; [[no_unique_address]] E e;      }; // note: [[msvc::no_unique_address]]
