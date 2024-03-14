@@ -66,6 +66,10 @@ int main()
 
 	std::cout << std::chrono::duration_cast < std::chrono::days > (result) << std::endl;
 
+	std::cout << now - std::chrono::days(10) << std::endl; // note: time point 10 days ago from now
+
+	std::cout << now - std::chrono::system_clock::time_point() << std::endl; // note: duration in ns since epoch
+
 	{
 		Chronometer chronometer("test"); // note: consider measurement series
 
