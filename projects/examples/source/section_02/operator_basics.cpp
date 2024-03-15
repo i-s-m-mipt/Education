@@ -20,7 +20,7 @@ int main()
 
 	std::cout << (!!x != !!y) << std::endl; // note: x xor y for non-booleans
 
-	std::cout << -x << std::endl;
+	std::cout << -x << std::endl; // note: outputs -7
 	std::cout << +x << std::endl;
 
 	std::cout << x + y << std::endl;
