@@ -33,11 +33,11 @@ int main()
 
 	std::erase_if(v2, is_even); // note: one algorithm instead of erase member + remove_if
 
-	std::for_each(std::begin(v2), std::end(v2), [](auto x){ assert(x % 2 != 0); });
+	std::for_each(std::cbegin(v2), std::cend(v2), [](auto x){ assert(x % 2 != 0); });
 
-	std::sample(std::begin(v1), std::end(v1), std::back_inserter(v3), std::size(v2), engine);
+	std::sample(std::cbegin(v1), std::cend(v1), std::back_inserter(v3), std::size(v2), engine);
 
-	std::copy(std::begin(v3), std::end(v3), std::ostream_iterator < int > (std::cout, " "));
+	std::copy(std::cbegin(v3), std::cend(v3), std::ostream_iterator < int > (std::cout, " "));
 
 	return 0;
 }
