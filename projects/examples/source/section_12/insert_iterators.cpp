@@ -25,7 +25,7 @@ int main()
 
 	std::set < int > set; // note: std::set has only insert member function
 
-	std::ranges::copy(std::as_const(vector), std::inserter(set, std::begin(set)));
+	std::ranges::copy(std::as_const(vector), std::inserter(set, std::end(set)));
 
 	assert(std::size(set) == std::size(vector));
 
