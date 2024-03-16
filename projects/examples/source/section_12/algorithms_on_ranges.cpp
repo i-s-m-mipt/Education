@@ -43,7 +43,7 @@ int main()
 		std::cout << key << ", " << value << std::endl;
 	}
 
-	int array[] = { 1, 2, 3, 4, 5 }; // note: consider as range
+	int array[] = { 1, 2, 3, 4, 5 }; // note: built-in array is considered as range
 
 	for (auto x : array) std::cout << x << ' '; // note: outputs 1 2 3 4 5
 
@@ -88,8 +88,8 @@ int main()
 	std::cout << std::endl;
  
     for (auto x : std::views::iota     (1, 6)
-                | std::views::filter   ([](auto x){ return (x % 2 != 0); })
-                | std::views::transform([](auto x){ return (x * x     ); })
+                | std::views::filter   ([](auto x){ return (x % 2); })
+                | std::views::transform([](auto x){ return (x * x); })
 				| std::views::drop     (1))
 	{
 		std::cout << x << ' '; // note: outputs 9 25
@@ -105,8 +105,8 @@ int main()
 	std::cout << std::endl;
 
     auto dangling_iterator = std::ranges::max_element(
-		[](){ return std::vector({ 1, 2, 3, 4, 5 }); }());
-
+		[](){ return std::vector({ 1, 2, 3, 4, 5 }); }()); // note: temporary vector
+	
     static_assert(std::is_same_v < std::ranges::dangling, decltype(dangling_iterator) > );
 
 //	assert(*dangling_iterator == 5); // error: dangling iterator		
