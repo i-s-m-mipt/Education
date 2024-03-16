@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27.4)
+cmake_minimum_required(VERSION 3.27)
 
 project(library_v1 VERSION 24.02.06 LANGUAGES CXX)
 
