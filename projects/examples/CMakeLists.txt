@@ -301,7 +301,6 @@ set(sources_12
     function_pointers
     heterogeneous_vector
     insert_iterators
-    iostream_iterators
     lambda_expressions
     pattern_command
     pattern_visitor
@@ -314,6 +313,7 @@ foreach(entry IN LISTS sources_12)
 endforeach()
 
 set(sources_13
+    iostream_iterators
     variadic_output)
 
 foreach(entry IN LISTS sources_13)

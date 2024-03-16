@@ -19,13 +19,13 @@ int main()
 
 	std::shuffle(std::begin(v1), std::end(v1), engine); // note: random with no duplicates
 
-	auto [min, max] = std::minmax_element(std::cbegin(v1), std::cend(v1)); // note: binding
+	auto [min, max] = std::minmax_element(std::cbegin(v1), std::cend(v1)); // note: structured binding
 
 	std::uniform_int_distribution distribution(*min, *max);
 
 	auto generator = [&engine, &distribution](){ return distribution(engine); };
 
-	std::generate_n(std::back_inserter(v2), std::size(v1), generator); // note: duplicates
+	std::generate_n(std::back_inserter(v2), std::size(v1), generator); // note: random with duplicates
 
 	auto is_even = [](auto x){ return (x % 2 == 0); };
 
@@ -33,11 +33,9 @@ int main()
 
 	std::erase_if(v2, is_even); // note: one algorithm instead of erase member + remove_if
 
-	std::for_each(std::cbegin(v2), std::cend(v2), [](auto x){ assert(x % 2 != 0); });
-
 	std::sample(std::cbegin(v1), std::cend(v1), std::back_inserter(v3), std::size(v2), engine);
 
-	std::copy(std::cbegin(v3), std::cend(v3), std::ostream_iterator < int > (std::cout, " "));
+	std::for_each(std::cbegin(v3), std::cend(v3), [](auto x){ std::cout << x << std::endl; });
 
 	return 0;
 }
