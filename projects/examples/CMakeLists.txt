@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27.4)
+cmake_minimum_required(VERSION 3.27)
 
 project(examples VERSION 24.02.06 LANGUAGES CXX)
 
@@ -8,15 +8,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(x32 -m32)
 set(x64 -m64)
 
-find_package(Boost     1.84 REQUIRED COMPONENTS filesystem log python system)
-find_package(Python3   3.11 REQUIRED COMPONENTS Interpreter Development)
-find_package(benchmark      REQUIRED COMPONENTS)
-find_package(GTest          REQUIRED COMPONENTS)
+find_package(Boost         1.84 REQUIRED COMPONENTS filesystem log python system)
+find_package(Python3       3.11 REQUIRED COMPONENTS Interpreter Development)
+find_package(nlohmann_json 3.11 REQUIRED COMPONENTS)
+find_package(GTest         1.14 REQUIRED COMPONENTS)
+find_package(benchmark          REQUIRED COMPONENTS)
 
-include_directories(    ${Boost_INCLUDE_DIRS})
-include_directories(  ${Python3_INCLUDE_DIRS})
-include_directories(${benchmark_INCLUDE_DIRS})
-include_directories(    ${GTEST_INCLUDE_DIRS})
+include_directories(        ${Boost_INCLUDE_DIRS})
+include_directories(      ${Python3_INCLUDE_DIRS})
+include_directories(${nlohmann_json_INCLUDE_DIRS})
+include_directories(        ${GTEST_INCLUDE_DIRS})
+include_directories(    ${benchmark_INCLUDE_DIRS})
 
 set(sources_01 
     minimal_program
