@@ -9,12 +9,12 @@ public:
 
     explicit Computer(std::string name); // note: definition in source file
 
-    Computer(Computer && other) noexcept : m_pimpl(other.m_pimpl) // note: ignore noexcept here
+    Computer(Computer && other) : m_pimpl(other.m_pimpl)
     {
         other.m_pimpl = nullptr;
     }
 
-    Computer & operator=(Computer && other) noexcept // note: ignore noexcept here
+    Computer & operator=(Computer && other)
     {
         m_pimpl = other.m_pimpl; other.m_pimpl = nullptr; return *this;
     }
