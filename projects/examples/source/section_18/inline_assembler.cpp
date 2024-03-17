@@ -18,7 +18,10 @@ public:
 		std::cout << "Chronometer " << m_name << " launched ... " << std::endl;
 	}
 
-	~Chronometer() { elapsed(); }
+	~Chronometer() noexcept 
+	{
+		try { elapsed(); } catch (...) { std::abort(); }
+	}
 
 	void elapsed() const
 	{
