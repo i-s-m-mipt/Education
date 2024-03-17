@@ -40,7 +40,7 @@ template < typename T > class Manager // note: CRTP
 {
 public:
 
-	void * operator new(std::size_t size) // note: overloaded version for Manager, implicitly static
+	[[nodiscard]] void * operator new(std::size_t size) // note: overloaded version for Manager, implicitly static
 	{
 		std::cout << "Manager::operator new called" << std::endl;
 

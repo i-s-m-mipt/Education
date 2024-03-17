@@ -6,7 +6,7 @@
 
 #include <boost/container_hash/hash.hpp>
 
-auto hash(const std::string & string) // note: sequential hash function for strings
+[[nodiscard]] auto hash(const std::string & string) // note: sequential hash function for strings
 {
 	std::size_t seed = 0;
 

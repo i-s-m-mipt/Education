@@ -11,7 +11,7 @@
 
 #include <benchmark/benchmark.h>
 
-double determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) // good: for small
+[[nodiscard]] double determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) // good: for small
 {
     if (const auto size = matrix.size1(); size == matrix.size2() && size != 0)
     {
@@ -40,7 +40,7 @@ double determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) /
     else throw std::runtime_error("invalid matrix");
 }
 
-double determinant_v2(const boost::numeric::ublas::matrix < double > & matrix) // good: for big
+[[nodiscard]] double determinant_v2(const boost::numeric::ublas::matrix < double > & matrix) // good: for big
 {    
     if (const auto size = matrix.size1(); size == matrix.size2() && size != 0)
     {
@@ -69,7 +69,7 @@ double determinant_v2(const boost::numeric::ublas::matrix < double > & matrix) /
     else throw std::runtime_error("invalid matrix");
 }
 
-boost::numeric::ublas::matrix < double > make_random_matrix(std::size_t size)
+[[nodiscard]] boost::numeric::ublas::matrix < double > make_random_matrix(std::size_t size)
 {
     boost::numeric::ublas::matrix < double > matrix(size, size);
 

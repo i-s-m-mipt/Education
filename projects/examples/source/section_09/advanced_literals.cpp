@@ -16,12 +16,12 @@ namespace literals // good: namespace for user-defined literals
 		return degrees * std::numbers::pi_v < long double > / 180.0;
 	}
 
-	constexpr int pow(int x, int n)
+	[[nodiscard]] constexpr int pow(int x, int n)
 	{
 		return (n > 0 ? x * pow(x, n - 1) : 1);
 	}
 
-	template < char digit, char ... tail > constexpr auto b3_handler()
+	template < char digit, char ... tail > [[nodiscard]] constexpr auto b3_handler()
 	{
 		if constexpr (auto x = digit - '0'; sizeof...(tail) > 0)
 		{

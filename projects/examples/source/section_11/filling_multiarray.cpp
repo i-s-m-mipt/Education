@@ -28,7 +28,7 @@ template < auto N, typename C, typename FI > void fill_array(const C & container
 	}
 }
 
-template < typename T, auto N, typename C > auto make_array(const C & c)
+template < typename T, auto N, typename C > [[nodiscard]] auto make_array(const C & c)
 {
 	using array_t = boost::multi_array < T, N > ;
 

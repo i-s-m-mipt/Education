@@ -24,7 +24,7 @@ private:
 
 void f(std::shared_ptr < int > x, [[maybe_unused]] int y) {}
 
-int bad(bool make_error = true) 
+[[nodiscard]] int bad(bool make_error = true) 
 {
 	if (make_error)
 	{

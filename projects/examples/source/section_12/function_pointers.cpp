@@ -3,17 +3,17 @@
 #include <iostream>
 #include <type_traits>
 
-auto f(int x) noexcept
+[[nodiscard]] auto f(int x) noexcept
 { 
 	return (x + 1); 
 }
 
-auto g(int (*f)(int), int x) // note: old-style function argument
+[[nodiscard]] auto g(int (*f)(int), int x) // note: old-style function argument
 {
 	return f(x);
 }
 
-template < typename F, typename T > auto h(F && f, T && x) // noexcept(noexcept(...))
+template < typename F, typename T > [[nodiscard]] auto h(F && f, T && x) // noexcept(noexcept(...))
 {
 	return f(std::forward < T > (x)); // good: perfect forwarding
 }
