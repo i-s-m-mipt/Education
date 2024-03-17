@@ -135,8 +135,7 @@ private:
 
 }; // class C
 
-template < typename T >
-void swap(T & a, T & b) noexcept(
+template < typename T > void swap(T & a, T & b) noexcept(
 	std::is_nothrow_move_constructible_v < T > &&
 	std::is_nothrow_move_assignable_v    < T > ) // note: conditionally noexcept
 {
@@ -145,7 +144,8 @@ void swap(T & a, T & b) noexcept(
 		 a = std::move(c);
 }
 
-template < typename F, typename T > auto invoke(F f, T x) noexcept(noexcept(f(std::declval < T > ())))
+template < typename F, typename T > 
+[[nodiscard]] auto invoke(F f, T x) noexcept(noexcept(f(std::declval < T > ())))
 {
 	return f(x);
 }

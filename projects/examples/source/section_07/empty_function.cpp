@@ -1,6 +1,6 @@
 #include <iostream>
 
-auto f() { std::cout << "Hello, world!" << std::endl; return 0; }
+[[nodiscard]] auto f() { std::cout << "Hello, world!" << std::endl; return 0; }
 
 auto x = f(); // note: global variable
 

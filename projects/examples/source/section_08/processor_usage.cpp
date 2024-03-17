@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <iostream>
 
-double f(std::size_t size) // note: complex calculations
+[[nodiscard]] double f(std::size_t size) // note: complex calculations
 {
 	auto result = 0.0;
 

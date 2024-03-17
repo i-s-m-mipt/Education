@@ -21,7 +21,7 @@ public:
 		m_container.pop_back(); // note: undefined behavior if empty
 	}
 
-//	T pop() { ... } // bad: unsafe design
+//	[[nodiscard]] T pop() { ... } // bad: unsafe design
 
 	[[nodiscard]] auto size() const noexcept(noexcept(m_container.size()))
 	{ 

@@ -5,7 +5,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-unsigned int factorial(unsigned int n) {  return (n < 2 ? 1 : n * factorial(n - 1)); }
+[[nodiscard]] unsigned int factorial(unsigned int n) { return (n < 2 ? 1 : n * factorial(n - 1)); }
 
 TEST(Factorial, Results) // note: group name and test case name
 {
@@ -19,7 +19,7 @@ TEST(Factorial, Results) // note: group name and test case name
     ASSERT_EQ(factorial(4), 25); // note: failed assertion
 }
 
-testing::AssertionResult is_even(int n) 
+[[nodiscard]] testing::AssertionResult is_even(int n) 
 {
     return (n % 2 == 0 ? testing::AssertionSuccess() : 
                          testing::AssertionFailure() << n << " is odd");
