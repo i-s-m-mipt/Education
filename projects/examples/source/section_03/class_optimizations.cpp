@@ -14,7 +14,7 @@ public:
 		std::cout << "copy constructor" << std::endl;
 	}
 
-	Container(Container &&) noexcept // note: ignore noexcept here
+	Container(Container &&)
 	{
 		std::cout << "move constructor" << std::endl;
 	}
@@ -24,7 +24,7 @@ public:
 		std::cout << "copy assignment operator" << std::endl; return *this;
 	}
 
-	Container & operator=(Container &&) noexcept // note: ignore noexcept here
+	Container & operator=(Container &&)
 	{
 		std::cout << "move assignment operator" << std::endl; return *this;
 	}
