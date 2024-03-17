@@ -17,7 +17,7 @@ private:
 
 struct Computer 
 {
-    auto make_backup() const { return Backup(data); }
+    [[nodiscard]] auto make_backup() const { return Backup(data); }
 
     void load_backup(const Backup & backup) { data = backup.data(); }
 
@@ -31,7 +31,7 @@ public:
 
     void save(const Backup & backup) { m_backups.push_back(backup); }
 
-    auto load(int index) const { return m_backups.at(index); }
+    [[nodiscard]] auto load(int index) const { return m_backups.at(index); }
 
 private:
 

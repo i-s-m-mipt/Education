@@ -46,7 +46,7 @@ public:
 		return *this;
 	}
 
-	friend inline const auto operator+(Ratio lhs, Ratio rhs) // good: friend inside class template
+	[[nodiscard]] friend inline const auto operator+(Ratio lhs, Ratio rhs) // good: friend inside class template
 	{
 		return (lhs += rhs);
 	}

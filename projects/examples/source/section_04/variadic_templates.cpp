@@ -40,22 +40,22 @@ template < typename T, typename ... Ts > [[nodiscard]] auto make_object(Ts ... a
 	return new T(args...);
 }
 
-template < typename ... Ts > auto sum_v1(Ts ... args)
+template < typename ... Ts > [[nodiscard]] auto sum_v1(Ts ... args)
 {
 	return (... + args); // note: (... + args) -> (((arg_1 + arg_2) + arg_3) + ...)
 }
 
-template < typename ... Ts > auto sum_v2(Ts ... args)
+template < typename ... Ts > [[nodiscard]] auto sum_v2(Ts ... args)
 {
 	return (args + ...); // note: (args + ...) -> (... + (arg_n-2 + (arg_n-1 + arg_n)))
 }
 
-template < typename ... Ts > auto sum_v3(Ts ... args)
+template < typename ... Ts > [[nodiscard]] auto sum_v3(Ts ... args)
 {
 	return (42 + ... + args); // note: (42 + ... + args) -> (((42 + arg_1) + arg_2) + ...)
 }
 
-template < typename ... Ts > auto sum_v4(Ts ... args)
+template < typename ... Ts > [[nodiscard]] auto sum_v4(Ts ... args)
 {
 	return (args + ... + 42); // note: (args + ... + 42) -> (... + (arg_n-1 + (arg_n + 42)))
 }

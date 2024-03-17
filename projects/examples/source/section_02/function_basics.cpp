@@ -92,12 +92,12 @@ void print(bool   x) { std::cout << x << std::endl; } // note: overloaded functi
 void print(char   x) { std::cout << x << std::endl; } // note: overloaded function
 void print(double x) { std::cout << x << std::endl; } // note: overloaded function
 
-unsigned int factorial(unsigned int n)
+[[nodiscard]] unsigned int factorial(unsigned int n)
 {
 	return (n < 2 ? 1 : n * factorial(n - 1)); // good: compact recursion
 }
 
-inline auto max(int x, int y) // good: return type deduction in small function
+[[nodiscard]] inline auto max(int x, int y) // good: return type deduction in small function
 {
 	return (x > y ? x : y);
 }

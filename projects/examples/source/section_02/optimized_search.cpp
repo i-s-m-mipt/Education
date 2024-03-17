@@ -1,7 +1,7 @@
 #include <iostream>
 #include <numeric>
 
-int * binary_search(int * a, std::size_t l, std::size_t r, int k) // note: O(log(N)) complexity
+[[nodiscard]] int * binary_search(int * a, std::size_t l, std::size_t r, int k) // note: O(log(N)) complexity
 {
 	if (r == 0)
 	{

@@ -6,7 +6,7 @@ public:
 
 	virtual ~Base() {} // note: polymorphic base class
 
-	virtual Base * get() { return this; }
+	[[nodiscard]] virtual Base * get() { return this; }
 
 	void print() const { std::cout << "Base" << std::endl; }
 
@@ -16,7 +16,7 @@ class Derived : public Base
 {
 public:
 
-	Derived * get() override { return this; }
+	[[nodiscard]] Derived * get() override { return this; }
 
 	void print() const { std::cout << "Derived" << std::endl; }
 

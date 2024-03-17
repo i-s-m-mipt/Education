@@ -14,7 +14,7 @@ struct Mobile : public Computer { void run() const override { std::cout << "Mobi
 struct Tablet : public Computer { void run() const override { std::cout << "Tablet" << std::endl; }; };
 struct Laptop : public Computer { void run() const override { std::cout << "Laptop" << std::endl; }; };
 
-template < typename T > Computer * create() // note: factory function, consider enumeration
+template < typename T > [[nodiscard]] Computer * create() // note: factory function, consider enumeration
 {
     return new T; // note: delete required, consider type traits to verify type T is correct
 }
@@ -25,9 +25,9 @@ public:
 
     struct Factory // note: factory methods
     {
-        static Computer * create_v1() { return new Server(1); } // note: delete required
-        static Computer * create_v2() { return new Server(2); } // note: delete required
-        static Computer * create_v3() { return new Server(3); } // note: delete required
+        [[nodiscard]] static Computer * create_v1() { return new Server(1); } // note: delete required
+        [[nodiscard]] static Computer * create_v2() { return new Server(2); } // note: delete required
+        [[nodiscard]] static Computer * create_v3() { return new Server(3); } // note: delete required
 
     }; // struct Factory
 

@@ -3,17 +3,17 @@
 #include <type_traits>
 #include <vector>
 
-constexpr int factorial(int n) // note: can be evaluated at compile-time
+[[nodiscard]] constexpr int factorial(int n) // note: can be evaluated at compile-time
 {
 	return (n < 2 ? 1 : n * factorial(n - 1));
 }
 
-consteval auto combination(int m, int n) // note: must be evaluated at compile-time
+[[nodiscard]] consteval auto combination(int m, int n) // note: must be evaluated at compile-time
 {
 	return factorial(n) / factorial(m) / factorial(n - m);
 }
 
-constexpr auto is_prime(int p) // note: can be evaluated at compile-time
+[[nodiscard]] constexpr auto is_prime(int p) // note: can be evaluated at compile-time
 {
 	for (auto d = 2; d <= p / 2; ++d)
 	{
@@ -26,7 +26,7 @@ constexpr auto is_prime(int p) // note: can be evaluated at compile-time
 	return (p > 1);
 }
 
-consteval auto fibonacci(int n) // note: must be evaluated at compile-time
+[[nodiscard]] consteval auto fibonacci(int n) // note: must be evaluated at compile-time
 {
 	if (n < 2) return 1; else
 	{
@@ -43,7 +43,7 @@ consteval auto fibonacci(int n) // note: must be evaluated at compile-time
 
 class C { static constexpr auto c = 42; }; // note: same as inline const  
 
-constexpr auto f([[maybe_unused]] int x)
+[[nodiscard]] constexpr auto f([[maybe_unused]] int x)
 {
 	return std::is_constant_evaluated(); // note: see type traits
 }
