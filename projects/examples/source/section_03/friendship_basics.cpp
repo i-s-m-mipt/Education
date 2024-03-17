@@ -14,10 +14,7 @@ private:
 
 }; // class A
 
-void print(const A & a)
-{
-	std::cout << a.m_data << std::endl;
-}
+void print(const A & a) { std::cout << a.m_data << std::endl; }
 
 class B; // note: forward declaration required
 
@@ -37,10 +34,7 @@ class B
 {
 public:
 
-	void print(const A & a) const
-	{
-		std::cout << a.m_data << std::endl;
-	}
+	void print(const A & a) const { std::cout << a.m_data << std::endl; }
 
 	friend void C::print(const B & b) const; // note: friendship is not transitive
 
@@ -50,10 +44,7 @@ private:
 
 }; // class B
 
-void C::print(const B & b) const
-{
-	std::cout << b.m_data << std::endl;
-}
+void C::print(const B & b) const { std::cout << b.m_data << std::endl; }
 
 int main()
 {
