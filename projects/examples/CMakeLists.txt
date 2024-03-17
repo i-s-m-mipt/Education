@@ -172,7 +172,7 @@ foreach(entry IN LISTS sources_08)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
 
-add_executable(custom_logger ${section_08}logger_examples.cpp ${section_08}custom_logger.cpp)
+add_executable(custom_logger ${section_08}boost_logger.cpp)
 set_target_properties(custom_logger PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
 target_compile_options(custom_logger PRIVATE -Wall -pedantic -O0) 
 target_link_libraries(custom_logger PRIVATE ${Boost_LIBRARIES})
