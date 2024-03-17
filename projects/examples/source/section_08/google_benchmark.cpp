@@ -61,7 +61,7 @@ void test_3(benchmark::State & state)
 
 void test_4(benchmark::State & state) 
 {
-    for(auto _ : state) 
+    for (auto _ : state) 
     {
         std::vector < int > vector_1d(state.range(0), 0);
 
@@ -71,7 +71,7 @@ void test_4(benchmark::State & state)
 
 void test_5(benchmark::State & state)
 {
-    for(auto _ : state) 
+    for (auto _ : state) 
     {
         std::vector < std::vector < int > > vector_2d(state.range(0), 
                       std::vector < int >            (state.range(1), 0));
@@ -88,7 +88,7 @@ void test_6(benchmark::State & state)
 
     std::iota(std::begin(vector), std::end(vector), 1); // note: writes 1, 2, 3, ...
 
-    for(auto _ : state) 
+    for (auto _ : state) 
     {
         auto result = std::ranges::lower_bound(std::as_const(vector), 0);
 
@@ -100,7 +100,7 @@ void test_6(benchmark::State & state)
 
 void test_7(benchmark::State & state)
 {
-    for(auto _ : state) 
+    for (auto _ : state) 
     {
         state.SkipWithError("test failed");
 
