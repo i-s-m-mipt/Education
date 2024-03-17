@@ -5,7 +5,10 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-[[nodiscard]] unsigned int factorial(unsigned int n) { return (n < 2 ? 1 : n * factorial(n - 1)); }
+[[nodiscard]] unsigned int factorial(unsigned int n) noexcept 
+{ 
+    return (n < 2 ? 1 : n * factorial(n - 1)); 
+}
 
 TEST(Factorial, Results) // note: group name and test case name
 {

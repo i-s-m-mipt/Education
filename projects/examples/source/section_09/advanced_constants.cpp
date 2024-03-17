@@ -34,7 +34,7 @@ enum State : underlying_t
 
 }; // enum State : underlying_t
 
-void g(underlying_t s) { assert(s & delta || s & gamma); }
+void g(underlying_t s) noexcept { assert(s & delta || s & gamma); }
 
 int main()
 {

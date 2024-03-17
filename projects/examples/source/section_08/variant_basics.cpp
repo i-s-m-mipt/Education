@@ -9,7 +9,7 @@ class A { public: ~A() { std::cout << "destructor" << std::endl; } };
 
 class B {};
 
-[[nodiscard]] std::variant < std::monostate, int, double > handle(int x)
+[[nodiscard]] std::variant < std::monostate, int, double > handle(int x) noexcept
 {
 	if (x < 0) return std::monostate(); else if (x == 0) return x; else return std::sqrt(x);
 }

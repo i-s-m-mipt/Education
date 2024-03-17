@@ -6,7 +6,7 @@
 #include <boost/math/special_functions/gamma.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp> // note: gmp_float is ~2 times faster
 
-template < typename T > [[nodiscard]] T area(T r)
+template < typename T > [[nodiscard]] T area(T r) noexcept
 {
 	return boost::math::constants::pi < T > () * r * r; // note: remember variable templates
 }

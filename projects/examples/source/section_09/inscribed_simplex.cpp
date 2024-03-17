@@ -13,7 +13,7 @@ struct Vector { double x{}, y{}, z{}; };
         a.x * b.y - a.y * b.x }; // note: only z needed from result
 }
 
-[[nodiscard]] double calculate_probability(std::size_t size)
+[[nodiscard]] double calculate_probability(std::size_t size) noexcept
 {
 	std::mt19937 engine(std::random_device{}());
 

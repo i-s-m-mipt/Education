@@ -43,7 +43,7 @@ public:
 	}
 	*/
 
-	Container(Container && other) noexcept : Container() // note: ignore noexcept here
+	Container(Container && other) : Container()
 	{
 		std::cout << "move constructor" << std::endl;
 

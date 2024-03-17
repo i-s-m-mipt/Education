@@ -22,7 +22,7 @@ struct Result
 
 }; // struct Result
 
-[[nodiscard]] Result try_log(double x)
+[[nodiscard]] Result try_log(double x) noexcept
 {
 	Result result = { true, -1 }; // note: error code 0 by default
 
