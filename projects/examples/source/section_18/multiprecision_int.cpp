@@ -22,7 +22,7 @@ int main()
         std::cerr << exception.what() << '\n';
     }
 
-    boost::multiprecision::cpp_int result = 1; for(auto i = 1; i < 101; ++i) result *= i; 
+    boost::multiprecision::cpp_int result = 1; for (auto i = 1; i < 101; ++i) result *= i; 
    
     std::cout << result << std::endl;
 
