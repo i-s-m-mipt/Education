@@ -109,7 +109,7 @@ public:
 	
 	auto & operator/=(Ratio other)
 	{
-		return (*this *= Ratio(other.m_den, other.m_num));
+		return (*this *= Ratio(other.m_den, other.m_num)); // note: internal error handling
 	}
 
 public:
