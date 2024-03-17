@@ -13,9 +13,14 @@
 	return f(x);
 }
 
-template < typename F, typename T > [[nodiscard]] auto h(F && f, T && x) // noexcept(noexcept(...))
+template < typename ... Types > [[nodiscard]] auto h(int (*f)(Types ...), Types ... args)
 {
-	return f(std::forward < T > (x)); // good: perfect forwarding
+	return f(args...);
+}
+
+template < typename F, typename ... Types > [[nodiscard]] auto invoke(F && f, Types && ... args)
+{
+	return f(std::forward < Types > (args)...);
 }
 
 int main()
@@ -28,13 +33,12 @@ int main()
 
 	auto ptr_f = &f; // note: auto -> int(*)(int), operator & is optional
 
-	assert((*ptr_f)(0) == 1);
-	assert(  ptr_f (0) == 1);
-	assert(      f (0) == 1);
-
-	assert(g(f, 0) == 1);
-	assert(h(f, 0) == 1);
-
+	assert(      (*ptr_f)(0) == 1);
+	assert(        ptr_f (0) == 1);
+	assert(            f (0) == 1);
+	assert(          g(f, 0) == 1);
+	assert(          h(f, 0) == 1);
+	assert(     invoke(f, 0) == 1);
 	assert(std::invoke(f, 0) == 1); // note: generic caller for templates
 
 	return 0;
