@@ -11,7 +11,7 @@ template < auto N > class Noheap_Allocator : private boost::noncopyable // note:
 {
 public:
 
-	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t))
+	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t)) noexcept
 	{
 		void * first = m_begin + m_offset;
 

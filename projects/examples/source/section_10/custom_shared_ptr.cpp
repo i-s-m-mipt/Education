@@ -59,7 +59,7 @@ public:
 
     Shared() noexcept = default;
 
-    explicit Shared(T * data) noexcept : m_data(data)
+    explicit Shared(T * data) : m_data(data)
     {
         try_make_rccb();
     }
@@ -105,7 +105,7 @@ public:
 
 private:
 
-    void try_make_rccb() noexcept
+    void try_make_rccb()
     {
         try { m_rccb = new RCCB < T > (m_data); } catch (...) { delete m_data; }
     }

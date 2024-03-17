@@ -21,7 +21,7 @@ public:
 
     virtual ~Computer() noexcept = default; // note: polymorphic base class
 
-    [[nodiscard]] virtual int run() const = 0; 
+    [[nodiscard]] virtual int run() const noexcept = 0; 
 
     virtual void visit_by(Visitor * visitor) const = 0;
 
@@ -31,7 +31,7 @@ class Mobile : public Computer
 {
 public:
 
-    [[nodiscard]] int run() const override { return 0; };
+    [[nodiscard]] int run() const noexcept override { return 0; };
 
     void visit_by(Visitor * visitor) const override
     { 
@@ -44,7 +44,7 @@ class Tablet : public Computer
 {
 public:
 
-    [[nodiscard]] int run() const override { return 0; };
+    [[nodiscard]] int run() const noexcept override { return 0; };
 
     void visit_by(Visitor * visitor) const override
     {
@@ -57,7 +57,7 @@ class Laptop : public Computer
 {
 public:
 
-    [[nodiscard]] int run() const override { return 1; };
+    [[nodiscard]] int run() const noexcept override { return 1; };
 
     void visit_by(Visitor * visitor) const override
     {

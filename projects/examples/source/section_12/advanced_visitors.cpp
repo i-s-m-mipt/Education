@@ -4,9 +4,9 @@
 #include <stdexcept>
 #include <variant>
 
-class Mobile { public: [[nodiscard]] auto run() const { return 0; }; };
-class Tablet { public: [[nodiscard]] auto run() const { return 0; }; };
-class Laptop { public: [[nodiscard]] auto run() const { return 1; }; };
+class Mobile { public: [[nodiscard]] auto run() const noexcept { return 0; }; };
+class Tablet { public: [[nodiscard]] auto run() const noexcept { return 0; }; };
+class Laptop { public: [[nodiscard]] auto run() const noexcept { return 1; }; };
 
 using Computer = std::variant < Mobile, Tablet, Laptop > ;
 

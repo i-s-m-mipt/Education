@@ -9,7 +9,7 @@ class Data
 {
 public:
 
-	Data() = default;
+	Data() noexcept = default;
 
 	explicit Data(char c, int i, double d) noexcept : m_c(c), m_i(i), m_d(d) {}
 

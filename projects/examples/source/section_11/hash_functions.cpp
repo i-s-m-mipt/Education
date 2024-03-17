@@ -6,7 +6,7 @@
 
 #include <boost/container_hash/hash.hpp>
 
-[[nodiscard]] auto hash(const std::string & string) // note: sequential hash function for strings
+[[nodiscard]] auto hash(const std::string & string) noexcept // note: sequential hash function for strings
 {
 	std::size_t seed = 0;
 
@@ -41,7 +41,7 @@ template < typename ... Types > [[nodiscard]] std::size_t combined_hash(const Ty
 
 struct S { std::string string_1, string_2; };
 
-[[nodiscard]] std::size_t hash_value(const S & s)
+[[nodiscard]] std::size_t hash_value(const S & s) noexcept
 {
 	std::size_t seed = 0;
 
