@@ -19,7 +19,6 @@ namespace // note: anonymous namespace
 } // namespace
 
        const int global_y1 = 42; // note: internal linkage
-
 extern const int global_y2 = 42; // note: external linkage
 
 // =============================================================================
