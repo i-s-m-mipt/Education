@@ -12,10 +12,7 @@ public:
 
     Optional(const Optional & other) 
     {
-        if (other.has_value()) 
-        {
-            initialize(*other.m_ptr);
-        }
+        if (other.has_value()) initialize(*other.m_ptr);
     }
 
     Optional(Optional && other) noexcept : m_ptr(other.m_ptr)
@@ -37,11 +34,7 @@ public:
     {
         if (this != &other)
 		{
-            uninitialize();
-
-            m_ptr = other.m_ptr;
-
-            other.m_ptr = nullptr;
+            uninitialize(); m_ptr = other.m_ptr; other.m_ptr = nullptr;
 		}
 
 		return *this;
@@ -81,12 +74,12 @@ private:
 
 public:
 
-    [[nodiscard]] bool  has_value() const noexcept { return  m_ptr; }
+    [[nodiscard]] bool  has_value          () const noexcept { return  m_ptr; }
 
-    [[nodiscard]]       T & value()       noexcept { return *m_ptr; }
-    [[nodiscard]] const T & value() const noexcept { return *m_ptr; }
+    [[nodiscard]]       T & value          ()       noexcept { return *m_ptr; }
+    [[nodiscard]] const T & value          () const noexcept { return *m_ptr; }
 
-    [[nodiscard]] T value_or(T value) const noexcept 
+    [[nodiscard]]       T   value_or(T value) const noexcept 
     { 
         return (m_ptr ? *m_ptr : value); 
     }
