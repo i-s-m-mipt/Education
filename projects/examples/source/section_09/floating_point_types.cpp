@@ -34,7 +34,7 @@ int main()
 
 	const auto default_precision = std::cout.precision();
 
-	const auto max_precision = std::numeric_limits < double > ::digits10 + 1;
+	constexpr auto max_precision = std::numeric_limits < double > ::digits10 + 1;
 
 	for (auto p = 0; p <= max_precision; ++p) // good: formatted output
 	{
