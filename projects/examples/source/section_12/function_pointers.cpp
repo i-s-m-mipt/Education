@@ -33,11 +33,13 @@ int main()
 
 	auto ptr_f = &f; // note: auto -> int(*)(int), operator & is optional
 
-	assert(      (*ptr_f)(0) == 1);
-	assert(        ptr_f (0) == 1);
-	assert(            f (0) == 1);
-	assert(          g(f, 0) == 1);
-	assert(          h(f, 0) == 1);
+	assert((*ptr_f)(0) == 1);
+	assert(  ptr_f (0) == 1);
+
+	assert(  f (0) == 1);
+	assert(g(f, 0) == 1);
+	assert(h(f, 0) == 1);
+
 	assert(     invoke(f, 0) == 1);
 	assert(std::invoke(f, 0) == 1); // note: generic caller for templates
 
