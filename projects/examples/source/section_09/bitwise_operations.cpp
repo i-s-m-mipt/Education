@@ -13,7 +13,7 @@
 
 #include <benchmark/benchmark.h>
 
-constexpr std::uint16_t middle(std::uint32_t x)
+[[nodiscard]] constexpr std::uint16_t middle(std::uint32_t x) noexcept
 {
     return (x >> 8) & 0xffff;
 }
