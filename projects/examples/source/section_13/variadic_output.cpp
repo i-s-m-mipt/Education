@@ -30,8 +30,8 @@ template < typename ... Types > void print_v2(const Types & ... args)
 
 int main()
 {
-    print_v1('a', 42, 3.14); // note: outputs a423.14
-    print_v2('a', 42, 3.14); // note: outputs a 42 3.14
+    print_v1('a', 42, 3.14);
+    print_v2('a', 42, 3.14);
 
     return 0;
 }

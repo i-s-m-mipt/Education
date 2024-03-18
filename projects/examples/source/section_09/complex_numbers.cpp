@@ -7,18 +7,18 @@ int main()
 
     std::cout << c        << std::endl; // note: outputs (0.0, 1.0)
 
-    std::cout << c.real() << std::endl;
-    std::cout << c.imag() << std::endl;
+    std::cout << c.real() << std::endl; // note: outputs  0.0
+    std::cout << c.imag() << std::endl; // note: outputs  1.0
 
     std::cout << c + c << std::endl; // note: outputs ( 0.0, 2.0)
     std::cout << c - c << std::endl; // note: outputs ( 0.0, 0.0)
     std::cout << c * c << std::endl; // note: outputs (-1.0, 0.0)
     std::cout << c / c << std::endl; // note: outputs ( 1.0, 0.0)
 
-    std::cout << std::abs (c) << std::endl;
+    std::cout << std::abs (c) << std::endl; // note: outputs 1.000000
     std::cout << std::arg (c) << std::endl; // note: outputs 1.570800
-    
-    std::cout << std::norm(c) << std::endl;
+    std::cout << std::norm(c) << std::endl; // note: outputs 1.000000
+
     std::cout << std::conj(c) << std::endl; // note: outputs (0.0, -1.0)
     std::cout << std::proj(c) << std::endl; // note: outputs (0.0,  1.0)
 

@@ -45,7 +45,7 @@ int main()
 
 	int array[] = { 1, 2, 3, 4, 5 }; // note: built-in array is considered as range
 
-	for (auto x : array) std::cout << x << ' '; // note: outputs 1 2 3 4 5
+	for (auto x : array) std::cout << x << ' ';
 
 	std::cout << std::endl;
 
@@ -53,7 +53,7 @@ int main()
 		[](auto x){ return (x % 2); }),
 		[](auto x){ return (x + 1); })) // note: funcional syntax
 	{
-		std::cout << x << ' '; // note: outputs 2 4 6
+		std::cout << x << ' ';
 	}
 
 	std::cout << std::endl;
@@ -75,14 +75,14 @@ int main()
 
 	for (auto key : std::views::reverse(std::views::keys(map)))
 	{
-		std::cout << key << ' '; // note: outputs 3 2 1
+		std::cout << key << ' ';
 	}
 
 	std::cout << std::endl;
 
 	for (auto x : std::views::iota(1) | std::views::take(5)) // note: syntax sugar
 	{
-		std::cout << x << ' '; // note: outputs 1 2 3 4 5
+		std::cout << x << ' ';
 	}
 
 	std::cout << std::endl;
@@ -92,14 +92,14 @@ int main()
                 | std::views::transform([](auto x){ return (x * x); })
 				| std::views::drop     (1))
 	{
-		std::cout << x << ' '; // note: outputs 9 25
+		std::cout << x << ' ';
 	}
 
     std::cout << std::endl;
 
 	for (const std::string data = "1,2,3,4,5"; auto x : std::views::split(data, ','))
 	{
-		std::cout << std::string(std::begin(x), std::end(x)) << ' '; // note: outputs 1 2 3 4 5
+		std::cout << std::string(std::begin(x), std::end(x)) << ' ';
 	}
 
 	std::cout << std::endl;

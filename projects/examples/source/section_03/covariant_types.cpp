@@ -26,8 +26,8 @@ int main()
 {
 	auto d = new Derived; Base * b = d;
 
-	d->get()->print(); // note: outputs Derived
-	b->get()->print(); // note: outputs Base
+	d->get()->print();
+	b->get()->print();
 
 	delete b;
 

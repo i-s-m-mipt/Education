@@ -26,7 +26,7 @@ void print(const std::span < const std::byte > & bytes)
     {
         if (auto byte = std::to_integer < int > (bytes[i]); byte != 0)
         {
-            std::cout << std::hex << byte << ' '; // note: outputs 0x2a
+            std::cout << std::hex << byte << ' ';
         }
     }
         
@@ -181,7 +181,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     int array[size]{ 42 };
 
-    print(std::as_bytes(std::span < int > (array)));
+    print(std::as_bytes(std::span < int > (array))); // note: outputs 0x2a
 
     auto value = std::numeric_limits < unsigned int > ::max();
 
@@ -191,7 +191,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     for (std::size_t i = 0; i < sizeof(int); ++i)
     {
-        std::cout << std::to_integer < int > (*(ptr_char + i)) << ' '; // note: 0xff 4 times
+        std::cout << std::to_integer < int > (*(ptr_char + i)) << ' '; // note: outputs 0xff 4 times
     }
 
     std::cout << std::endl;

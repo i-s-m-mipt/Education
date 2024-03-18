@@ -48,7 +48,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 	static_assert(std::is_same_v < category_t, std::bidirectional_iterator_tag > );
 
-	for (auto element : set) std::cout << element << ' '; // note: outputs 1 2 3 4 5
+	for (auto element : set) std::cout << element << ' ';
 
 	std::cout << std::endl;
 

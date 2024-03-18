@@ -50,7 +50,7 @@ int main()
             python.global(), python.global());
 		
 		std::cout << boost::python::extract < std::string > (
-            python.global()["factorial"](100))() << std::endl;
+            python.global()["factorial"](100))() << std::endl; // note: outputs 100!
 
         const std::size_t size = 5'000'001, length = 10, step = 100'000;
 

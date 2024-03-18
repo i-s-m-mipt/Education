@@ -57,7 +57,7 @@ public:
 
 public:
 
-	friend std::istream & operator>>(std::istream & stream,       Ratio & ratio) // note: not member
+	friend std::istream & operator>>(std::istream & stream, Ratio & ratio) // note: not member
 	{
 		int num{}, den{}; char c{};
 
@@ -231,7 +231,7 @@ int main()
 	boost::rational < int > br1(2, 5); // note: ignore templates here
 	boost::rational < int > br2(3, 7); // note: ignore templates here
 
-	std::cout << boost::rational < int > (5, 10) << std::endl; // note: outputs 1/2
+	std::cout << boost::rational < int > (5, 10) << std::endl;
 
 	std::cout << br1 + br2 << std::endl;
 	std::cout << br1 - br2 << std::endl;

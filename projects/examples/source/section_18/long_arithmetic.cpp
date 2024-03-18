@@ -471,7 +471,7 @@ int main()
 
 		Big_Int result(1); for (auto i = 1; i < 101; ++i) result *= i;
 
-		std::cout << result << std::endl;
+		std::cout << result << std::endl; // note: outputs 100!
 
 		return EXIT_SUCCESS;
 	}

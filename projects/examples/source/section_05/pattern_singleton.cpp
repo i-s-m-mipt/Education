@@ -75,7 +75,7 @@ int main()
 {
     auto & singleton = Singleton::get_instance(); // note: single instance
 
-    std::cout << singleton.data() << std::endl; // note: outputs 42
+    std::cout << singleton.data() << std::endl;
 
     Monostate monostate_1; // note: allowed multiple instances creation
     Monostate monostate_2; 
@@ -83,15 +83,15 @@ int main()
 
     monostate_3.update(43); // note: shared data for all instances 
 
-    std::cout << monostate_1.data() << std::endl; // note: outputs 43
-    std::cout << monostate_2.data() << std::endl; // note: outputs 43
-    std::cout << monostate_3.data() << std::endl; // note: outputs 43
+    std::cout << monostate_1.data() << std::endl;
+    std::cout << monostate_2.data() << std::endl;
+    std::cout << monostate_3.data() << std::endl;
 
     Unique unique_1;
 
 //  Unique unique_2 = unique_1; // error: noncopyable type
 
-    std::cout << unique_1.data() << std::endl; // note: outputs 42
+    std::cout << unique_1.data() << std::endl;
 
     return 0;
 }

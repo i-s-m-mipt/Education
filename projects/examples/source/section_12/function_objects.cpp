@@ -63,7 +63,7 @@ int main()
 
 	std::set < int, std::greater < int > > set = { 1, 4, 2, 5, 3 };
 
-	for (auto element : set) std::cout << element << ' '; // note: outputs 5 4 3 2 1
+	for (auto element : set) std::cout << element << ' ';
 
 	std::cout << std::endl;
 
