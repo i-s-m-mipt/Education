@@ -27,7 +27,7 @@ int main()
 		          std::begin(list_1),
 		std::next(std::begin(list_1), std::size(list_1) / 2));
 
-	for (auto element : list_2) std::cout << element << ' '; // note: outputs 0 1 2 3 4
+	for (auto element : list_2) std::cout << element << ' ';
 
 	std::cout << std::endl;
 
@@ -39,7 +39,7 @@ int main()
 
 	forward_list.erase_after(std::begin(forward_list)); 
 
-	for (auto element : forward_list) std::cout << element << ' '; // note: outputs 43 1 2 3 4 5
+	for (auto element : forward_list) std::cout << element << ' ';
 
 	std::cout << std::endl;
 
@@ -51,7 +51,7 @@ int main()
 
 	std::ranges::sort(wrapper); // note: cannot sort list directly due to bidirectional iterators
 
-	for (auto element : wrapper) std::cout << element << ' '; // note: outputs 1 2 3 4 5
+	for (auto element : wrapper) std::cout << element << ' ';
 
 	std::cout << std::endl;
 
