@@ -75,9 +75,7 @@ int main()
 	print_v1('a', 42, 3.14);
 	print_v2('a', 42, 3.14); std::cout << std::endl;
 
-	const Point * const point_ptr = make_object < Point > (1.0, 1.0);
-
-	delete ptr;
+	delete make_object < Point > (1.0, 1.0);
 
 	std::cout << sum_v1(1, 2, 3) << std::endl;
 	std::cout << sum_v2(1, 2, 3) << std::endl;
