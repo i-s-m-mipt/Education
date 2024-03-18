@@ -56,7 +56,7 @@ namespace constants
 {
 //	const double old_pi = 3.14; // bad: internal linkage, multiple copies
 
-	inline const double pi = 3.14; // good: one definition
+	constexpr double pi = 3.14; // good: one definition, inline constant
 
 } // namespace constants
 
