@@ -166,7 +166,7 @@ private:
 
 public:
 
-	static inline const std::align_val_t default_alignment { alignof(std::max_align_t) };
+	static constexpr std::align_val_t default_alignment { alignof(std::max_align_t) };
 
 private:
 
