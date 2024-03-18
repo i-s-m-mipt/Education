@@ -59,6 +59,16 @@ void print_vector(const std::vector < int > & vector) // good: std::vector knows
 	std::cout << std::endl;
 }
 
+[[nodiscard]] inline auto max(int x, int y) // good: return type deduction in small function
+{
+	return (x > y ? x : y);
+}
+
+[[nodiscard]] inline unsigned int factorial(unsigned int n)
+{
+	return (n < 2 ? 1 : n * factorial(n - 1)); // good: compact recursion
+}
+
 /*
 [[nodiscard]] int * get_dangling_pointer()
 {
@@ -92,16 +102,6 @@ void print(bool   x) { std::cout << x << std::endl; } // note: overloaded functi
 void print(char   x) { std::cout << x << std::endl; } // note: overloaded function
 void print(double x) { std::cout << x << std::endl; } // note: overloaded function
 
-[[nodiscard]] unsigned int factorial(unsigned int n)
-{
-	return (n < 2 ? 1 : n * factorial(n - 1)); // good: compact recursion
-}
-
-[[nodiscard]] inline auto max(int x, int y) // good: return type deduction in small function
-{
-	return (x > y ? x : y);
-}
-
 int main()
 {
 //	f(42); // warning: nodiscard function
@@ -128,6 +128,10 @@ int main()
 
 	print_vector(vector); // good: no copying of big object
 
+	std::cout << max(4, 7) << std::endl; // note: possible inlining
+
+	std::cout << factorial(5) << std::endl;
+
 //	std::cout << *get_dangling_pointer  () << std::endl; // bad: undefined behavior
 //	std::cout <<  get_dangling_reference() << std::endl; // bad: undefined behavior
 
@@ -138,10 +142,6 @@ int main()
 	print(true);
 	print(3.14);
 //	print(1234); // error: ambiguous function overloading
-
-	std::cout << factorial(5) << std::endl;
-
-	std::cout << max(4, 7) << std::endl; // note: possible inlining
 
 	return 0;
 }
