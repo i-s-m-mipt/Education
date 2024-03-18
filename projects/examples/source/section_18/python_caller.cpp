@@ -73,7 +73,7 @@ int main()
 		
 		python.global()["make_plot"](points.c_str(), "DEK");
     }
-    catch ([[maybe_unused]] const boost::python::error_already_set & error)
+    catch (const boost::python::error_already_set &)
 	{
 		std::cerr << Python::exception() << '\n';
 	}

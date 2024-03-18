@@ -24,7 +24,7 @@ namespace solution::shared
 
 			m_global = boost::python::import("__main__").attr("__dict__");
 		}
-		catch ([[maybe_unused]] const boost::python::error_already_set & error)
+		catch (const boost::python::error_already_set &)
 		{
 			throw std::runtime_error(Python::exception());
 		}
@@ -36,7 +36,7 @@ namespace solution::shared
 		{
 			PyGILState_Release(state); mutex.unlock();
 		}
-		catch ([[maybe_unused]] const boost::python::error_already_set & error)
+		catch (const boost::python::error_already_set &)
 		{
 			throw std::runtime_error(Python::exception());
 		}
@@ -63,7 +63,7 @@ namespace solution::shared
 
 			return message;
 		}
-		catch ([[maybe_unused]] const boost::python::error_already_set & error)
+		catch (const boost::python::error_already_set &)
 		{
 			catch_handler(FUNCTION, "invalid exception");
 		}

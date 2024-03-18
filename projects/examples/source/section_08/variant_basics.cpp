@@ -3,7 +3,7 @@
 #include <string>
 #include <variant>
 
-struct S { explicit S([[maybe_unused]] int x) {} };
+struct S { explicit S(int) {} };
 
 class A { public: ~A() { std::cout << "destructor" << std::endl; } };
 

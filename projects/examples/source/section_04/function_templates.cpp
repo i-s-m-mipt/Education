@@ -36,27 +36,27 @@ template < typename T1, typename T2 > [[nodiscard]] inline auto max_v6(T1 x, T2 
 	return (x < y ? y : x);
 }
 
-template < typename T > inline void f([[maybe_unused]] T value) // note: basic template
+template < typename T > inline void f(T) // note: basic template
 {
 	std::cout << "template for T" << std::endl;
 }
 
-template <> inline void f < int > ([[maybe_unused]] int value) // note: full specialization for int
+template <> inline void f < int > (int) // note: full specialization for int
 {
 	std::cout << "full specialization for int" << std::endl;
 }
 
-inline void f([[maybe_unused]] char value) // note: overload for char
+inline void f(char) // note: overload for char
 {
 	std::cout << "overload for char" << std::endl;
 }
 
-inline void f([[maybe_unused]] int value) // note: overload for double
+inline void f(int) // note: overload for double
 {
 	std::cout << "overload for int" << std::endl;
 }
 
-inline void f([[maybe_unused]] double value) // note: overload for double
+inline void f(double) // note: overload for double
 {
 	std::cout << "overload for double" << std::endl;
 }
