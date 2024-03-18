@@ -13,7 +13,7 @@ public:
 	{
 		if (m_den == 0) // note: primitive error handling
 		{
-			std::cerr << "invalid denominator" << std::endl;
+			std::cerr << "invalid denominator\n";
 		}
 
 		if (m_den <  0) // note: numerator keeps ratio sign
@@ -63,7 +63,7 @@ public:
 
 		stream >> num >> c >> den;
 
-		if (c != '/') std::cerr << "invalid input" << std::endl; // note: consider also stream states
+		if (c != '/') std::cerr << "invalid input\n"; // note: consider also stream states
 
 		ratio = Ratio(num, den);
 		
