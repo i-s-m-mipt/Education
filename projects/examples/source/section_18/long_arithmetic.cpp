@@ -333,10 +333,10 @@ public:
 
 public:
 
-	[[nodiscard]] friend inline const Big_Int operator+(Big_Int lhs, Big_Int rhs) { return (lhs += rhs); }
-	[[nodiscard]] friend inline const Big_Int operator-(Big_Int lhs, Big_Int rhs) { return (lhs -= rhs); }
-	[[nodiscard]] friend inline const Big_Int operator*(Big_Int lhs, Big_Int rhs) { return (lhs *= rhs); }
-	[[nodiscard]] friend inline const Big_Int operator/(Big_Int lhs, Big_Int rhs) { return (lhs /= rhs); }
+	[[nodiscard]] friend inline Big_Int operator+(Big_Int lhs, Big_Int rhs) { return (lhs += rhs); }
+	[[nodiscard]] friend inline Big_Int operator-(Big_Int lhs, Big_Int rhs) { return (lhs -= rhs); }
+	[[nodiscard]] friend inline Big_Int operator*(Big_Int lhs, Big_Int rhs) { return (lhs *= rhs); }
+	[[nodiscard]] friend inline Big_Int operator/(Big_Int lhs, Big_Int rhs) { return (lhs /= rhs); }
 
 public:
 
@@ -354,17 +354,17 @@ public:
 		}
 	}
 
-	[[nodiscard]] friend inline const bool operator> (const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend inline bool operator> (const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return (rhs < lhs);
 	}
 
-	[[nodiscard]] friend inline const bool operator<=(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend inline bool operator<=(const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return !(rhs < lhs);
 	}
 
-	[[nodiscard]] friend inline const bool operator>=(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend inline bool operator>=(const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return !(lhs < rhs);
 	}
@@ -400,11 +400,11 @@ private:
 
 private:
 
-	static inline const auto step = std::numeric_limits < digit_t > ::digits10 / 2;
+	static constexpr auto step = std::numeric_limits < digit_t > ::digits10 / 2;
 
-	static inline const auto radix = static_cast < digit_t > (std::pow(10, step));
+	static constexpr auto radix = static_cast < digit_t > (std::pow(10, step));
 
-	static inline const std::size_t size = 1'000; // note: maximum number of digits
+	static constexpr std::size_t size = 1'000; // note: maximum number of digits
 
 private:
 
