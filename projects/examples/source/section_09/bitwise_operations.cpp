@@ -139,14 +139,12 @@ int main(int argc, char ** argv) // note: arguments for benchmark
     auto data = 0x1234;
     auto mask = 0x00f0;
     
-    std::cout << 
-        (         mask) << std::endl << // note: outputs 0xf0
-        ( data        ) << std::endl << // note: outputs 0x1234
-        ( data |  mask) << std::endl << // note: outputs 0x12f4
-        ( data & ~mask) << std::endl << // note: outputs 0x1204
-        ( data &  mask) << std::endl << // note: outputs 0x30
-        ( data ^  mask) << std::endl << // note: outputs 0x12c4
-        (~data        ) << std::endl;   // note: outputs 0xffffedcb
+    assert((        mask) == 0x000000f0);
+    assert((data        ) == 0x00001234);
+    assert((data |  mask) == 0x000012f4);
+    assert((data & ~mask) == 0x00001204); 
+    assert((data &  mask) == 0x00000030);
+    assert((data ^  mask) == 0x000012c4);
 
     [[maybe_unused]] auto m = 0x123; assert((m << 1) == 0x246); // good: bit shift as multiplication
     [[maybe_unused]] auto n = -4000; assert((n >> 2) == -1000); // good: bit shift as multiplication
@@ -191,10 +189,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     for (std::size_t i = 0; i < sizeof(int); ++i)
     {
-        std::cout << std::to_integer < int > (*(ptr_char + i)) << ' '; // note: outputs 0xff 4 times
+        assert(std::to_integer < int > (*(ptr_char + i)) == 0xff);
     }
-
-    std::cout << std::endl;
 
     assert(&array[size - 1] - &array[0] == 9); // note: pointer arithmetic
 
