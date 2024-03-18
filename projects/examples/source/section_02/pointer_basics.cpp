@@ -2,14 +2,14 @@
 
 int main()
 {
-	int x = 0;
+	int       x =  0;
 	int * ptr_x = &x;
 
-	auto y = 0;
-	auto ptr_y = &y;
+	auto      y =  0;
+	auto  ptr_y = &y;
 
-	*ptr_x = 42;
-	++(*ptr_y);
+	     *ptr_x = 42;
+	  ++(*ptr_y);
 
 	std::cout << ptr_x << ' ' << *ptr_x << std::endl;
 	std::cout << ptr_y << ' ' << *ptr_y << std::endl;

@@ -3,15 +3,15 @@
 
 int main()
 {
-	auto ptr_int = new int(42); // good: initialized dynamic variable
+	const int * const ptr_int = new int(42); // good: initialized dynamic variable
 
 	std::cout << *ptr_int << std::endl;
 
 	delete ptr_int; // good: no dynamic variable memory leak
 
-	std::size_t size = 10;
+	const std::size_t size = 10;
 
-	auto ptr_array = new int[size]{}; // good: zero initialized dynamic array
+	const auto ptr_array = new int[size]{}; // good: zero initialized dynamic array
 
 	const auto m = size / 2;
 
@@ -28,7 +28,7 @@ int main()
 
 	std::size_t n = 5; // note: non-constant size as runtime variable
 
-	auto s = new int[n]; 
+	const auto s = new int[n]; 
 
 	for (std::size_t i = 0; i < n; ++i)
 	{

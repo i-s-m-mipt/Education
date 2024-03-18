@@ -2,8 +2,8 @@
 
 int main()
 {
-	auto a = true;
-	auto b = true;
+	const auto a = true;
+	const auto b = true;
 
 	std::cout <<    !a << ' ' << (a || b) << ' ' << (a  && b) << std::endl;
 	std::cout << not a << ' ' << (a or b) << ' ' << (a and b) << std::endl;

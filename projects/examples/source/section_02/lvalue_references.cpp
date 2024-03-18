@@ -12,9 +12,11 @@ int main()
 
 	rx = 42;
 
-	auto y = 1;
+	const auto y = 1;
 
 	rx = y; // note: rx refers to x, not y
+
+//	int & ry = y; // error: non-constant reference to constant
 
 	[[maybe_unused]] const auto & rcx = x; // note: constant reference
 

@@ -45,7 +45,7 @@ void print_array(const int * array, std::size_t size) // note: array size as add
 	}
 }
 
-void print_span(std::span < int > span) // good: std::span knows its size as all* containers
+void print_span(std::span < const int > span) // good: std::span knows its size as all* containers
 {
 	for (auto element : span) std::cout << element << ' ';
 
@@ -72,7 +72,7 @@ void print_vector(const std::vector < int > & vector) // good: std::vector knows
 /*
 [[nodiscard]] int * get_dangling_pointer()
 {
-	auto d = 42; // good: static const auto d = 42;
+	const auto d = 42; // good: static const auto d = 42;
 
 	return &d; // warning: dangling pointer to non-static local variable
 }
@@ -81,7 +81,7 @@ void print_vector(const std::vector < int > & vector) // good: std::vector knows
 /*
 [[nodiscard]] int & get_dangling_reference()
 {
-	auto d = 42; // good: static const auto d = 42;
+	const auto d = 42; // good: static const auto d = 42;
 
 	return d; // warning: dangling reference to non-static local variable
 }
@@ -106,7 +106,7 @@ int main()
 {
 //	f(42); // warning: nodiscard function
 
-	[[maybe_unused]] auto s = g(f(4), f(7)); // note: unspecified arguments evaluation order
+	[[maybe_unused]] const auto s = g(f(4), f(7)); // note: unspecified arguments evaluation order
 
 	auto x = 0;
 	auto y = 0;
@@ -116,15 +116,15 @@ int main()
 
 	const std::size_t size = 5;
 
-	int   array_1          [size]{ 1, 2, 3, 4, 5 };
-	int * array_2 = new int[size]{ 1, 2, 3, 4, 5 };
+	const int         array_1          [size]{ 1, 2, 3, 4, 5 };
+	const int * const array_2 = new int[size]{ 1, 2, 3, 4, 5 };
 
 	print_array(array_1, size); print_span({ array_1       });
 	print_array(array_2, size); print_span({ array_2, size });
 
 	delete[] array_2;
 
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+	const std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
 	print_vector(vector); // good: no copying of big object
 

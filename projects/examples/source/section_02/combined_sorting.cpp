@@ -40,7 +40,7 @@ void merge_sort(std::vector < int > & v, std::size_t l, std::size_t r) // note: 
 	}
 	else
 	{
-		auto m = std::midpoint(l, r); 
+		const auto m = std::midpoint(l, r); 
 		
 		merge_sort(v, l, m   );
 		merge_sort(v,    m, r);

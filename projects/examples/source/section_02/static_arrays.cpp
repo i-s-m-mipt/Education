@@ -8,13 +8,13 @@ int main()
 
 	int a[size]{}; // good: zero initialized array
 
-	[[maybe_unused]] int b[size]{ 1, 2, 3 }; // note: elements: { 1, 2, 3, 0, 0, 0, 0, 0, 0, 0 }
+	[[maybe_unused]] const int b[size]{ 1, 2, 3 }; // note: elements: { 1, 2, 3, 0, 0, 0, 0, 0, 0, 0 }
 
-	[[maybe_unused]] int c[]{ 1, 2, 3 }; // note: elements: { 1, 2, 3 }, size deduction -> 3
+	[[maybe_unused]] const int c[]{ 1, 2, 3 }; // note: elements: { 1, 2, 3 }, size deduction -> 3
 
-//	int d[2]{ 1, 2, 3 }; // error: too many initializers
+//	const int d[2]{ 1, 2, 3 }; // error: too many initializers
 
-//	int e[1'000'000'000]{}; // bad: array is too large, use dynamic array
+//	const int e[1'000'000'000]{}; // bad: array is too large, use dynamic array
 
 	std::cout << sizeof(a) / sizeof(a[0]) << std::endl; // note: old-style computation
 
@@ -52,7 +52,7 @@ int main()
 
 	int s[buffer_size]{};
 
-	std::size_t n = 5; // note: buffer_size >= n (elements)
+	const std::size_t n = 5; // note: buffer_size >= n (elements)
 
 	for (std::size_t i = 0; i < n; ++i)
 	{
