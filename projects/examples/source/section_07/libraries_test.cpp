@@ -2,36 +2,27 @@
 #include <iostream>
 #include <string>
 
-#include "library.hpp"
-
 #include <boost/dll.hpp>
 
-using namespace std::literals;
+#include "library.hpp"
 
 int main()
 {
 	std::cout << library_v1::f(42) << std::endl;
 
-	const auto path = "liblibrary_v2.so"s;
+	const std::string path = "liblibrary_v2.so";
 
-	try 
-	{
-		auto f = boost::dll::import_symbol < int(int) > (path, "f"); // note: not import
+	auto f = boost::dll::import_symbol < int(int) > (path, "f"); // note: not import since C++20
 
-		std::cout << f(42) << std::endl;
+	std::cout << f(42) << std::endl;
 
-		auto variable = boost::dll::import_symbol < int > (path, "global_variable");
+	auto variable = boost::dll::import_symbol < int > (path, "global_variable"); // note: pointer
 
-		std::cout << *variable << std::endl;
+	std::cout << *variable << std::endl;
 
-		auto run = boost::dll::import_alias < int(int) > (path, "run");
+	auto run = boost::dll::import_alias < int(int) > (path, "run");
 
-		std::cout << run(42) << std::endl;
-	}
-	catch (const std::exception & exception)
-	{
-		std::cerr << exception.what() << '\n';
-	}
+	std::cout << run(42) << std::endl;
 
 	return 0;
 }
