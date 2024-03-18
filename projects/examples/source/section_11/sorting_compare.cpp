@@ -18,11 +18,11 @@ void test_1(benchmark::State & state)
     {
         std::array < int, 100'000 > array; // note: template parameter instead of state.range(0), see also stack limit
 
-        std::iota(std::begin(array), std::end(array), 1); // note: writes 1, 2, 3, ...
+        std::iota(std::begin(array), std::end(array), 1); // note: generate range 1, 2, 3, ...
 
         auto start = Clock::now(); // note: manual timing
 
-        std::ranges::sort(array, std::greater());
+        std::ranges::sort(array, std::greater()); // note: sort range in descending order
 
         state.SetIterationTime(std::chrono::duration_cast < std::chrono::duration < double > > (Clock::now() - start).count());
 
@@ -36,11 +36,11 @@ void test_2(benchmark::State & state)
     {
         std::vector < int > vector(state.range(0));
 
-        std::iota(std::begin(vector), std::end(vector), 1); // note: writes 1, 2, 3, ...
+        std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
 
         auto start = Clock::now(); // note: manual timing
 
-        std::ranges::sort(vector, std::greater());
+        std::ranges::sort(vector, std::greater()); // note: sort range in descending order
 
         state.SetIterationTime(std::chrono::duration_cast < std::chrono::duration < double > > (Clock::now() - start).count());
 
@@ -54,11 +54,11 @@ void test_3(benchmark::State & state)
     {
         std::deque < int > deque(state.range(0));
 
-        std::iota(std::begin(deque), std::end(deque), 1); // note: writes 1, 2, 3, ...
+        std::iota(std::begin(deque), std::end(deque), 1); // note: generate range 1, 2, 3, ...
 
         auto start = Clock::now(); // note: manual timing
 
-        std::ranges::sort(deque, std::greater());
+        std::ranges::sort(deque, std::greater()); // note: sort range in descending order
 
         state.SetIterationTime(std::chrono::duration_cast < std::chrono::duration < double > > (Clock::now() - start).count());
 
@@ -72,7 +72,7 @@ void test_4(benchmark::State & state)
     {
         std::list < int > list(state.range(0));
 
-        std::iota(std::begin(list), std::end(list), 1); // note: writes 1, 2, 3, ...
+        std::iota(std::begin(list), std::end(list), 1); // note: generate range 1, 2, 3, ...
 
         auto start = Clock::now(); // note: manual timing
 
@@ -90,7 +90,7 @@ void test_5(benchmark::State & state)
     {
         std::forward_list < int > forward_list(state.range(0));
 
-        std::iota(std::begin(forward_list), std::end(forward_list), 1); // note: writes 1, 2, 3, ...
+        std::iota(std::begin(forward_list), std::end(forward_list), 1); // note: generate range 1, 2, 3, ...
 
         auto start = Clock::now(); // note: manual timing
 

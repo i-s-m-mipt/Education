@@ -86,16 +86,16 @@ void test_6(benchmark::State & state)
 {
     std::vector < int > vector(state.range(0), 0);
 
-    std::iota(std::begin(vector), std::end(vector), 1); // note: writes 1, 2, 3, ...
+    std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
 
     for (auto _ : state) 
     {
-        auto result = std::ranges::lower_bound(std::as_const(vector), 0);
+        auto result = std::ranges::lower_bound(std::as_const(vector), 0); // note: binary search
 
         benchmark::DoNotOptimize(result);
     }
 
-    state.SetComplexityN(state.range(0)); // note: try to search 1 instead of 0
+    state.SetComplexityN(state.range(0)); // note: try to search 1 instead of 0 in lower_bound
 }
 
 void test_7(benchmark::State & state)

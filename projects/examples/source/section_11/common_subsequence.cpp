@@ -30,7 +30,9 @@ template < typename T > [[nodiscard]] std::vector < T > longest_common_subsequen
 		else (table[i][j + 1] > table[i + 1][j] ? --i : --j);
 	}
 
-	std::ranges::reverse(result); return result;
+	std::ranges::reverse(result); // note: reverse range
+	
+	return result;
 }
 
 int main()

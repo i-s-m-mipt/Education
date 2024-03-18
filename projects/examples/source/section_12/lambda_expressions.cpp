@@ -63,8 +63,8 @@ int main()
 
 	std::vector < int > vector(size, 0);
 
-	std::ranges::for_each(              vector , [a](auto & x){        x += a ; });
-	std::ranges::for_each(std::as_const(vector), [a](auto   x){ assert(x == a); });
+	std::ranges::for_each(              vector , [a](auto & x){        x += a ; }); // note: modify elements in range
+	std::ranges::for_each(std::as_const(vector), [a](auto   x){ assert(x == a); }); // note: verify elements in range
 
 	std::set < int, decltype([](auto lhs, auto rhs){ return (lhs > rhs); }) > set = { 1, 4, 2, 5, 3 };
 

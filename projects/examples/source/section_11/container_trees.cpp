@@ -17,12 +17,9 @@ void test_1(benchmark::State & state) // note: O(N*log(N)) complexity, but fast
     {
         std::vector < int > vector; vector.reserve(state.range(0));
 
-		for (auto x : std::views::iota(1) | std::views::take(state.range(0)))
-		{
-			vector.push_back(x);
-		}
+		for (auto x = 0; x < state.range(0); ++x) { vector.push_back(x); }
 
-		std::ranges::sort(vector, std::greater());
+		std::ranges::sort(vector, std::greater()); // note: sort range in descending order
 
 		benchmark::DoNotOptimize(vector);	
     }
@@ -32,12 +29,9 @@ void test_2(benchmark::State & state) // note: O(N*log(N)) complexity, but slow
 {
     for (auto _ : state)
     {
-        std::set < int, std::greater < int > > set;
+        std::set < int, std::greater < int > > set; // note: descending order
 
-		for (auto x : std::views::iota(1) | std::views::take(state.range(0)))
-		{
-			set.insert(x);
-		}
+		for (auto x = 0; x < state.range(0); ++x) { set.insert(x); }
 
 		benchmark::DoNotOptimize(set);	
     }

@@ -58,8 +58,8 @@ int main()
 {
 	std::vector < int > v1 = { 1, 4, 2, 5, 3 };
 
-	std::ranges::sort(v1                ); // note: 1 2 3 4 5
-	std::ranges::sort(v1, std::greater()); // note: 5 4 3 2 1
+	std::ranges::sort(v1                ); // note: sort range in  ascending order
+	std::ranges::sort(v1, std::greater()); // note: sort range in descending order
 
 	std::set < int, std::greater < int > > set = { 1, 4, 2, 5, 3 };
 
@@ -71,8 +71,8 @@ int main()
 
 	C c; // note: functional object with overloaded operator()
 
-	std::vector < int > v2(size, 0); std::ranges::generate(v2, f); // note: slower
-	std::vector < int > v3(size, 0); std::ranges::generate(v3, c); // note: faster
+	std::vector < int > v2(size, 0); std::ranges::generate(v2, f); // note: generate elements in range
+	std::vector < int > v3(size, 0); std::ranges::generate(v3, c); // note: generate elements in range
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
@@ -82,17 +82,17 @@ int main()
 
 	Sum < int > sum;
 
-	sum = std::ranges::for_each(std::as_const(v2), sum).fun;
-	sum = std::ranges::for_each(std::as_const(v3), sum).fun;
+	sum = std::ranges::for_each(std::as_const(v2), sum).fun; // note: sum elements in range
+	sum = std::ranges::for_each(std::as_const(v3), sum).fun; // note: sum elements in range
 
 	assert(sum.result() == 20);
 
-	std::ranges::transform(std::as_const(v2),                    std::begin(v2), std::negate());
-	std::ranges::transform(std::as_const(v2), std::as_const(v3), std::begin(v3), std::  plus());
+	std::ranges::transform(std::as_const(v2),                    std::begin(v2), std::negate()); // note: transform one range  to one range
+	std::ranges::transform(std::as_const(v2), std::as_const(v3), std::begin(v3), std::  plus()); // note: transform two ranges to one range
 
 	for (auto element : v3) assert(element == 0);
 
-	assert(std::ranges::for_each(std::as_const(v1), Mean < decltype(v1)::value_type > ()).fun.result() == 3);
+	assert(std::ranges::for_each(std::as_const(v1), Mean < decltype(v1)::value_type > ()).fun.result() == 3); // note: sum and count elements in range
 
 	return 0;
 }
