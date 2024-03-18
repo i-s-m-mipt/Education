@@ -141,7 +141,7 @@ private:
 
 }; // class Ratio
 
-void swap(Ratio & x, Ratio & y) { x.swap(y); }
+inline void swap(Ratio & x, Ratio & y) { x.swap(y); }
 
 [[nodiscard]] inline const auto operator+ (Ratio lhs, Ratio rhs) // good: free function
 {

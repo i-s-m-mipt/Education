@@ -333,10 +333,10 @@ public:
 
 public:
 
-	[[nodiscard]] friend const Big_Int operator+(Big_Int lhs, Big_Int rhs) { return (lhs += rhs); }
-	[[nodiscard]] friend const Big_Int operator-(Big_Int lhs, Big_Int rhs) { return (lhs -= rhs); }
-	[[nodiscard]] friend const Big_Int operator*(Big_Int lhs, Big_Int rhs) { return (lhs *= rhs); }
-	[[nodiscard]] friend const Big_Int operator/(Big_Int lhs, Big_Int rhs) { return (lhs /= rhs); }
+	[[nodiscard]] friend inline const Big_Int operator+(Big_Int lhs, Big_Int rhs) { return (lhs += rhs); }
+	[[nodiscard]] friend inline const Big_Int operator-(Big_Int lhs, Big_Int rhs) { return (lhs -= rhs); }
+	[[nodiscard]] friend inline const Big_Int operator*(Big_Int lhs, Big_Int rhs) { return (lhs *= rhs); }
+	[[nodiscard]] friend inline const Big_Int operator/(Big_Int lhs, Big_Int rhs) { return (lhs /= rhs); }
 
 public:
 
@@ -354,17 +354,17 @@ public:
 		}
 	}
 
-	[[nodiscard]] friend const bool operator> (const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend inline const bool operator> (const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return (rhs < lhs);
 	}
 
-	[[nodiscard]] friend const bool operator<=(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend inline const bool operator<=(const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return !(rhs < lhs);
 	}
 
-	[[nodiscard]] friend const bool operator>=(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend inline const bool operator>=(const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return !(lhs < rhs);
 	}
@@ -416,7 +416,7 @@ private:
 
 }; // class Big_Int
 
-void swap(Big_Int & x, Big_Int & y) noexcept { x.swap(y); }
+inline void swap(Big_Int & x, Big_Int & y) noexcept { x.swap(y); }
 
 int main()
 {

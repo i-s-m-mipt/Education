@@ -85,7 +85,7 @@ public:
 
 }; // class Builder_Laptop : public Builder
 
-[[nodiscard]] auto build(const Builder & builder) // note: consider member function
+[[nodiscard]] inline auto build(const Builder & builder) // note: consider member function
 {
     builder.build_cpu();
     builder.build_gpu();

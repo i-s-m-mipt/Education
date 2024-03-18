@@ -2,7 +2,7 @@
 #include <iostream>
 #include <type_traits>
 
-template < typename T > void swap(T & a, T & b)
+template < typename T > inline void swap(T & a, T & b)
 {
     static_assert(
         std::is_copy_constructible_v < T > &&
@@ -21,8 +21,8 @@ template < typename T = Bad > struct S
 
 }; // template < typename T = Bad > struct S
 
-void cleanup_v1() { std::cerr << "cleanup_v1 at exit\n"; }
-void cleanup_v2() { std::cerr << "cleanup_v2 at exit\n"; }
+inline void cleanup_v1() { std::cerr << "cleanup_v1 at exit\n"; }
+inline void cleanup_v2() { std::cerr << "cleanup_v2 at exit\n"; }
 
 int main()
 {

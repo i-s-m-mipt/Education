@@ -3,22 +3,22 @@
 #include <iostream>
 #include <type_traits>
 
-[[nodiscard]] auto f(int x) noexcept
+[[nodiscard]] inline auto f(int x) noexcept
 { 
 	return (x + 1); 
 }
 
-[[nodiscard]] auto g(int (*f)(int), int x) // note: old-style function argument
+[[nodiscard]] inline auto g(int (*f)(int), int x) // note: old-style function argument
 {
 	return f(x);
 }
 
-template < typename ... Types > [[nodiscard]] auto h(int (*f)(Types ...), Types ... args)
+template < typename ... Types > [[nodiscard]] inline auto h(int (*f)(Types ...), Types ... args)
 {
 	return f(args...);
 }
 
-template < typename F, typename ... Types > [[nodiscard]] auto invoke(F && f, Types && ... args)
+template < typename F, typename ... Types > [[nodiscard]] inline auto invoke(F && f, Types && ... args)
 {
 	return f(std::forward < Types > (args)...);
 }

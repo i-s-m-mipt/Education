@@ -22,9 +22,9 @@ private:
 
 }; // template < typename T > class Resource : private boost::noncopyable 
 
-void f(std::shared_ptr < int > x, [[maybe_unused]] int y) noexcept {}
+inline void f(std::shared_ptr < int > x, [[maybe_unused]] int y) noexcept {}
 
-[[nodiscard]] int bad(bool make_error = true) 
+[[nodiscard]] inline int bad(bool make_error = true) 
 {
 	if (make_error)
 	{
@@ -67,12 +67,12 @@ class Derived : public Base
 public: void print() const override { std::cout << "Derived" << std::endl; }
 };
 
-[[nodiscard]] std::unique_ptr < Base > produce() // note: factory
+[[nodiscard]] inline std::unique_ptr < Base > produce() // note: factory
 {
 	return std::make_unique < Derived > ();
 }
 
-void consume(std::unique_ptr < Base > base) // note: user
+inline void consume(std::unique_ptr < Base > base) // note: user
 {
 	base->print();
 }

@@ -128,7 +128,7 @@ private:
 
 }; // class Container
 
-void swap(Container & x, Container & y) // good: useful free function
+inline void swap(Container & x, Container & y) // good: useful free function
 {
 	x.swap(y);
 

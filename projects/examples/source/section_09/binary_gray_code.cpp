@@ -4,12 +4,12 @@
 #include <iomanip>
 #include <iostream>
 
-[[nodiscard]] unsigned int gray_encode(unsigned int n) noexcept
+[[nodiscard]] inline unsigned int gray_encode(unsigned int n) noexcept
 {
     return n ^ (n >> 1);
 }
 
-[[nodiscard]] unsigned int gray_decode(unsigned int code) noexcept
+[[nodiscard]] inline unsigned int gray_decode(unsigned int code) noexcept
 {
     for (unsigned int bit = 1 << 31; bit > 1; bit >>= 1)
     {

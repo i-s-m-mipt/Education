@@ -255,7 +255,7 @@ private:
 
 }; // class Logger : private boost::noncopyable
 
-template < typename E > void catch_handler(Logger & logger, const std::exception & exception)
+template < typename E > inline void catch_handler(Logger & logger, const std::exception & exception)
 {
 	static_assert(std::is_base_of_v < std::exception, E >, "invalid exception type");
 

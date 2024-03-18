@@ -13,7 +13,7 @@ void f() // error: multiple defined symbol
 }
 */
 
-void print() { std::cout << "::print" << std::endl; }
+inline void print() { std::cout << "::print" << std::endl; }
 
 int main()
 {
@@ -55,9 +55,9 @@ int main()
 
 //	hello_module(); hello_submodule();
 
-//	std::cout << call(math::f, 0.0) << std::endl; // note: no problems here
-//	std::cout << call(math::g, 0.0) << std::endl; // note: no problems here
-//	std::cout << call(math::h, 0.0) << std::endl; // note: no problems here
+//	std::cout << invoke(math::f, 0.0) << std::endl; // note: no problems here
+//	std::cout << invoke(math::g, 0.0) << std::endl; // note: no problems here
+//	std::cout << invoke(math::h, 0.0) << std::endl; // note: no problems here
 
 	return EXIT_SUCCESS;
 }

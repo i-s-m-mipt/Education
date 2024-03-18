@@ -4,7 +4,7 @@ class A
 {
 public:
 
-	friend void print(const A & a);
+	friend inline void print(const A & a);
 
 	friend class B;
 
@@ -14,7 +14,7 @@ private:
 
 }; // class A
 
-void print(const A & a) { std::cout << a.m_data << std::endl; }
+inline void print(const A & a) { std::cout << a.m_data << std::endl; }
 
 class B; // note: forward declaration required
 

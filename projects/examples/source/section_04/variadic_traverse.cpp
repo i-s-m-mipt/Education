@@ -11,7 +11,7 @@ template < typename T > struct Node
 
 }; // template < typename T > struct Node
 
-template < typename R, typename... Paths > [[nodiscard]] auto traverse(R root, Paths ... paths)
+template < typename R, typename... Paths > [[nodiscard]] inline auto traverse(R root, Paths ... paths)
 {
 	return (root ->* ... ->* paths); // note: ((root ->* path_1) ->* path_2) ->* ...
 }

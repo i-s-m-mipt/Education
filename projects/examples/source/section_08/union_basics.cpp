@@ -22,7 +22,7 @@ struct Result
 
 }; // struct Result
 
-[[nodiscard]] Result try_log(double x) noexcept
+[[nodiscard]] inline Result try_log(double x) noexcept
 {
 	Result result = { true, -1 }; // note: error code 0 by default
 
@@ -34,7 +34,7 @@ struct Result
 	return result;
 }
 
-void print(const Result & result)
+inline void print(const Result & result)
 {
 	if (result.has_error)
 	{

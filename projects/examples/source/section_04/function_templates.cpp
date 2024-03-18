@@ -1,79 +1,79 @@
 #include <iostream>
 #include <type_traits>
 
-template < typename T > [[nodiscard]] T max_v1(T x, T y) // note: can be class instead of typename
+template < typename T > [[nodiscard]] inline T max_v1(T x, T y) // note: can be class instead of typename
 {
 	return (x < y ? y : x);
 }
 
-template < typename T1, typename T2 > [[nodiscard]] T1 max_v2(T1 x, T2 y) 
+template < typename T1, typename T2 > [[nodiscard]] inline T1 max_v2(T1 x, T2 y) 
 {
 	return (x < y ? y : x); // note: possible narrow conversion
 }
 
-template < typename T1, typename T2, typename RT > [[nodiscard]] RT max_v3(T1 x, T2 y)
+template < typename T1, typename T2, typename RT > [[nodiscard]] inline RT max_v3(T1 x, T2 y)
 {
 	return (x < y ? y : x);
 }
 
-template < typename RT, typename T1, typename T2 > [[nodiscard]] RT max_v4(T1 x, T2 y)
+template < typename RT, typename T1, typename T2 > [[nodiscard]] inline RT max_v4(T1 x, T2 y)
 {
 	return (x < y ? y : x);
 }
 
-template < typename RT = double, typename T1, typename T2 > [[nodiscard]] RT max_v5(T1 x, T2 y)
+template < typename RT = double, typename T1, typename T2 > [[nodiscard]] inline RT max_v5(T1 x, T2 y)
 {
 	return (x < y ? y : x);
 }
 
-template < typename T1, typename T2 > [[nodiscard]] auto max_v6(T1 x, T2 y)
+template < typename T1, typename T2 > [[nodiscard]] inline auto max_v6(T1 x, T2 y)
 {
 	return (x < y ? y : x);
 }
 
-[[nodiscard]] auto max_v7(auto x, auto y) // good: abbreviated function template
+[[nodiscard]] inline auto max_v7(auto x, auto y) // good: abbreviated function template
 {
 	return (x < y ? y : x);
 }
 
-template < typename T > void f([[maybe_unused]] T value) // note: basic template
+template < typename T > inline void f([[maybe_unused]] T value) // note: basic template
 {
 	std::cout << "template for T" << std::endl;
 }
 
-template <> void f < int > ([[maybe_unused]] int value) // note: full specialization for int
+template <> inline void f < int > ([[maybe_unused]] int value) // note: full specialization for int
 {
 	std::cout << "full specialization for int" << std::endl;
 }
 
-void f([[maybe_unused]] char value) // note: overload for char
+inline void f([[maybe_unused]] char value) // note: overload for char
 {
 	std::cout << "overload for char" << std::endl;
 }
 
-void f([[maybe_unused]] int value) // note: overload for double
+inline void f([[maybe_unused]] int value) // note: overload for double
 {
 	std::cout << "overload for int" << std::endl;
 }
 
-void f([[maybe_unused]] double value) // note: overload for double
+inline void f([[maybe_unused]] double value) // note: overload for double
 {
 	std::cout << "overload for double" << std::endl;
 }
 
-template < typename T1, typename T2 > void g() // note: basic template
+template < typename T1, typename T2 > inline void g() // note: basic template
 {
 	std::cout << "g for T1, T2" << std::endl;
 }
 
 /*
-template < typename T > void g < int, T > () // error: prohibited partial specialization
+template < typename T > inline void g < int, T > () // error: prohibited partial specialization
 {
 	std::cout << "g for int, T" << std::endl;
 }
 */
 
-template < typename T, int N, int M > [[nodiscard]] auto less(T(&a)[N], T(&b)[M])
+template < typename T, int N, int M > [[nodiscard]] inline auto less(T(&a)[N], T(&b)[M])
 {
 	for (auto i = 0; i < N && i < M; ++i)
 	{

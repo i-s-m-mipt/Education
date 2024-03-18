@@ -14,7 +14,7 @@ struct Mobile : public Computer { void run() const override { std::cout << "Mobi
 struct Tablet : public Computer { void run() const override { std::cout << "Tablet" << std::endl; }; };
 struct Laptop : public Computer { void run() const override { std::cout << "Laptop" << std::endl; }; };
 
-template < typename T > [[nodiscard]] Computer * create() // note: factory function, consider enumeration
+template < typename T > [[nodiscard]] inline Computer * create() // note: factory function, consider enumeration
 {
     return new T; // note: delete required, consider type traits to verify type T is correct
 }

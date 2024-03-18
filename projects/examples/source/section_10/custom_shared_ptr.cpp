@@ -116,12 +116,12 @@ private:
 
 }; // template < typename T > class Shared
 
-template < typename T > void swap(Shared < T > & lhs, Shared < T > & rhs) noexcept
+template < typename T > inline void swap(Shared < T > & lhs, Shared < T > & rhs) noexcept
 {
     lhs.swap(rhs);
 }
 
-template < typename T, typename ... Types > [[nodiscard]] auto make_shared(Types && ... args)
+template < typename T, typename ... Types > [[nodiscard]] inline auto make_shared(Types && ... args)
 {
     // note: another RCCB required, combining control block and object in one allocation
 }

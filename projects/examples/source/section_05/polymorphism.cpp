@@ -14,7 +14,7 @@ struct Mobile_v1 : public Computer { void run() const override { std::cout << "M
 struct Tablet_v1 : public Computer { void run() const override { std::cout << "Tablet_v1" << std::endl; } };
 struct Laptop_v1 : public Computer { void run() const override { std::cout << "Laptop_v1" << std::endl; } };
 
-void handle_v1(const Computer & computer) 
+inline void handle_v1(const Computer & computer) 
 {
 	computer.run(); // note: slower in runtime, but clear hierarchy
 }
@@ -23,7 +23,7 @@ struct Mobile_v2 { void run() const { std::cout << "Mobile_v2" << std::endl; } }
 struct Tablet_v2 { void run() const { std::cout << "Tablet_v2" << std::endl; } };
 struct Laptop_v2 { void run() const { std::cout << "Laptop_v2" << std::endl; } };
 
-template < typename T > void handle_v2(const T & t)
+template < typename T > inline void handle_v2(const T & t)
 {
 	t.run(); // note: faster in runtime, but independent classes
 }

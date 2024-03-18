@@ -4,22 +4,22 @@
 #include <limits>
 #include <numbers>
 
-[[nodiscard]] bool are_equal_v1(double a, double b) noexcept
+[[nodiscard]] inline bool are_equal_v1(double a, double b) noexcept
 {
 	return std::abs(a - b) <= std::numeric_limits < double > ::epsilon();
 }
 
-[[nodiscard]] bool are_equal_v2(double a, double b, double epsilon) noexcept
+[[nodiscard]] inline bool are_equal_v2(double a, double b, double epsilon) noexcept
 {
 	return std::abs(a - b) <= epsilon;
 }
 
-[[nodiscard]] bool are_equal_v3(double a, double b, double relative_epsilon) noexcept
+[[nodiscard]] inline bool are_equal_v3(double a, double b, double relative_epsilon) noexcept
 {
 	return (std::abs(a - b) <= (std::max(std::abs(a), std::abs(b)) * relative_epsilon));
 }
 
-[[nodiscard]] bool are_equal_v4(double a, double b, double epsilon, double relative_epsilon) noexcept
+[[nodiscard]] inline bool are_equal_v4(double a, double b, double epsilon, double relative_epsilon) noexcept
 {
 	if (std::abs(a - b) <= epsilon) return true; else return are_equal_v3(a, b, relative_epsilon);
 }

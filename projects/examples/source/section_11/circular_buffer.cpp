@@ -4,7 +4,7 @@
 
 #include <boost/circular_buffer.hpp>
 
-template < typename I > void print(I first, I last)
+template < typename I > inline void print(I first, I last)
 {
 	for (auto iterator = first; iterator != last; ++iterator)
 	{

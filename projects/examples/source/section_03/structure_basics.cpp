@@ -5,7 +5,7 @@ struct S { int a{}, b{}, c{ 4 }; }; // good: capital letter for user-defined typ
 
 struct Point { double x = 0.0, y = 0.0; }; // good: do not forget initialization
 
-[[nodiscard]] Point make_point(double x, double y)
+[[nodiscard]] inline Point make_point(double x, double y)
 {
 	if (x > 0.0 && y > 0.0)
 	{

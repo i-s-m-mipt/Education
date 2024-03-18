@@ -3,24 +3,21 @@
 #include <type_traits>
 #include <vector>
 
-[[nodiscard]] constexpr int factorial(int n) // note: can be evaluated at compile-time
+[[nodiscard]] inline constexpr int factorial(int n) // note: can be evaluated at compile-time
 {
 	return (n < 2 ? 1 : n * factorial(n - 1));
 }
 
-[[nodiscard]] consteval auto combination(int m, int n) // note: must be evaluated at compile-time
+[[nodiscard]] inline consteval auto combination(int m, int n) // note: must be evaluated at compile-time
 {
 	return factorial(n) / factorial(m) / factorial(n - m);
 }
 
-[[nodiscard]] constexpr auto is_prime(int p) // note: can be evaluated at compile-time
+[[nodiscard]] inline constexpr auto is_prime(int p) // note: can be evaluated at compile-time
 {
 	for (auto d = 2; d <= p / 2; ++d)
 	{
-		if (p % d == 0)
-		{
-			return false;
-		}
+		if (p % d == 0) return false;
 	}
 
 	return (p > 1);
@@ -43,16 +40,14 @@
 
 class C { static constexpr auto c = 42; }; // note: same as inline const  
 
-[[nodiscard]] constexpr auto f([[maybe_unused]] int x)
+[[nodiscard]] inline constexpr auto f([[maybe_unused]] int x)
 {
 	return std::is_constant_evaluated(); // note: see type traits
 }
 
-template < typename T, typename ... Types > void print(const T & arg, const Types & ... args)
+template < typename T, typename ... Types > inline void print(const T & arg, const Types & ... args)
 {
-	std::cout << arg << std::endl;
-
-	if constexpr (sizeof...(args) > 0) // note: compile-time instantiation
+	if constexpr (std::cout << arg << std::endl; sizeof...(args) > 0) // note: compile-time instantiation
 	{
 		print(args...);
 	}

@@ -6,22 +6,22 @@ struct Kilometers { unsigned long long n{}; }; // note: user-defined units
 
 namespace literals // good: namespace for user-defined literals
 {
-	[[nodiscard]] constexpr auto operator""_km(unsigned long long kilometers) noexcept // note: underscore required
+	[[nodiscard]] inline constexpr auto operator""_km(unsigned long long kilometers) noexcept // note: underscore required
 	{
 		return Kilometers{ kilometers };
 	}
 
-	[[nodiscard]] constexpr auto operator""_deg_to_rad(long double degrees) noexcept // note: underscore required
+	[[nodiscard]] inline constexpr auto operator""_deg_to_rad(long double degrees) noexcept // note: underscore required
 	{
 		return degrees * std::numbers::pi_v < long double > / 180.0;
 	}
 
-	[[nodiscard]] constexpr int pow(int x, int n) noexcept
+	[[nodiscard]] inline constexpr int pow(int x, int n) noexcept
 	{
 		return (n > 0 ? x * pow(x, n - 1) : 1);
 	}
 
-	template < char digit, char ... tail > [[nodiscard]] constexpr auto b3_handler() noexcept
+	template < char digit, char ... tail > [[nodiscard]] inline constexpr auto b3_handler() noexcept
 	{
 		if constexpr (auto x = digit - '0'; sizeof...(tail) > 0)
 		{
@@ -33,7 +33,7 @@ namespace literals // good: namespace for user-defined literals
 		}
 	}
 
-	template < char ... digits > [[nodiscard]] constexpr auto operator""_b3() noexcept // note: underscore required
+	template < char ... digits > [[nodiscard]] inline constexpr auto operator""_b3() noexcept // note: underscore required
 	{
 		return b3_handler < digits... > ();
 	}

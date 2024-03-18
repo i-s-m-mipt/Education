@@ -6,7 +6,7 @@
 
 #include <boost/container_hash/hash.hpp>
 
-[[nodiscard]] auto hash(const std::string & string) noexcept // note: sequential hash function for strings
+[[nodiscard]] inline auto hash(const std::string & string) noexcept // note: sequential hash function for strings
 {
 	std::size_t seed = 0;
 
@@ -18,30 +18,30 @@
 	return seed;
 }
 
-template < typename T > void bind(std::size_t & seed, const T & value) noexcept
+template < typename T > inline void bind(std::size_t & seed, const T & value) noexcept
 {
 	(seed *= 31) += std::hash < T > ()(value); // note: consider ^ instead of +
 }
 
-template < typename T > void hash(std::size_t & seed, const T & value) noexcept
+template < typename T > inline void hash(std::size_t & seed, const T & value) noexcept
 {
 	bind(seed, value);
 }
 
-template < typename T, typename ... Types > void hash(
+template < typename T, typename ... Types > inline void hash(
 	std::size_t & seed, const T & value, const Types & ... args) noexcept
 {
 	bind(seed, value); hash(seed, args...);
 }
 
-template < typename ... Types > [[nodiscard]] std::size_t combined_hash(const Types & ... args) noexcept
+template < typename ... Types > [[nodiscard]] inline std::size_t combined_hash(const Types & ... args) noexcept
 {
 	std::size_t seed = 0; hash(seed, args...); return seed;
 }
 
 struct S { std::string string_1, string_2; };
 
-[[nodiscard]] std::size_t hash_value(const S & s) noexcept
+[[nodiscard]] inline std::size_t hash_value(const S & s) noexcept
 {
 	std::size_t seed = 0;
 

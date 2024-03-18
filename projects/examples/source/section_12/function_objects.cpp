@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-[[nodiscard]] auto f() noexcept // note: different functions have same types
+[[nodiscard]] inline auto f() noexcept // note: different functions have same types
 {
 	static auto state = 0; // note: internal state, see reference arguments
 

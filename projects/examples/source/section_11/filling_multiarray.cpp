@@ -6,17 +6,15 @@
 
 #include <boost/multi_array.hpp>
 
-template < auto N, typename C, typename FI > void fill_shape(const C & container, FI shape) noexcept
+template < auto N, typename C, typename FI > inline void fill_shape(const C & container, FI shape) noexcept
 {
-	*shape = std::size(container);
-
-	if constexpr (N > 1)
+	if constexpr (*shape = std::size(container); N > 1)
 	{
 		fill_shape < N - 1 > (*(std::begin(container)), ++shape);
 	}
 }
 
-template < auto N, typename C, typename FI > void fill_array(const C & container, FI array) noexcept
+template < auto N, typename C, typename FI > inline void fill_array(const C & container, FI array) noexcept
 {
 	if constexpr (N > 1)
 	{

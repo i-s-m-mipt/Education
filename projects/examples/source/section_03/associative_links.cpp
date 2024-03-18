@@ -81,10 +81,9 @@ void Lecture::show_students() const
 	}
 }
 
-void connect(Student & s, Lecture & l)
+inline void connect(Student & s, Lecture & l)
 {
-	s.add_lecture(l); 
-	l.add_student(s);
+	s.add_lecture(l); l.add_student(s);
 }
 
 int main()

@@ -3,12 +3,12 @@
 #include <new>
 #include <stdexcept>
 
-void cleanup() // note: cleanup will be called at exit
+inline void cleanup() // note: cleanup will be called at exit
 {
     std::cerr << "cleanup: bad allocation\n";
 }
 
-void handler() // note: handler will be called at every bad allocation
+inline void handler() // note: handler will be called at every bad allocation
 {
     std::cerr << "handler: bad allocation\n";
 

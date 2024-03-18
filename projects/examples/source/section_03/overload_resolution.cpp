@@ -1,37 +1,37 @@
 #include <iostream>
 #include <string>
 
-[[nodiscard]] int get_prvalue()
+[[nodiscard]] inline int get_prvalue()
 {
 	return 42;
 }
 
-[[nodiscard]] const int get_const_prvalue()
+[[nodiscard]] inline const int get_const_prvalue()
 {
 	return 42;
 }
 
 /*
-[[nodiscard]] int && get_xvalue() // warning: returning a reference to a local object
+[[nodiscard]] inline int && get_xvalue() // warning: returning a reference to a local object
 {
 	return 42;
 }
 */
 
-[[nodiscard]] int & get_lvalue()
+[[nodiscard]] inline int & get_lvalue()
 {
 	static int x = 42; return x;
 }
 
-[[nodiscard]] const int & get_const_lvalue()
+[[nodiscard]] inline const int & get_const_lvalue()
 {
 	static int x = 42; return x;
 }
 
-void f(      int & ) { std::cout << "      int & " << std::endl; }
-void f(      int &&) { std::cout << "      int &&" << std::endl; }
-void f(const int & ) { std::cout << "const int & " << std::endl; }
-void f(const int &&) { std::cout << "const int &&" << std::endl; }
+inline void f(      int & ) { std::cout << "      int & " << std::endl; }
+inline void f(      int &&) { std::cout << "      int &&" << std::endl; }
+inline void f(const int & ) { std::cout << "const int & " << std::endl; }
+inline void f(const int &&) { std::cout << "const int &&" << std::endl; }
 
 class Person
 {
@@ -48,7 +48,7 @@ private:
 
 }; // class Person
 
-[[nodiscard]] Person create_person(const std::string & name)
+[[nodiscard]] inline Person create_person(const std::string & name)
 {
 	Person person(name); return person;
 }

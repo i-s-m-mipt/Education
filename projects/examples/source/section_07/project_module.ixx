@@ -10,11 +10,13 @@ export void hello_module();
 
 export namespace math // good: exporting namesapce
 {
-	[[nodiscard]] auto f(double x) { return std::sin(x); }
-	[[nodiscard]] auto g(double x) { return std::cos(x); }
-	[[nodiscard]] auto h(double x) { return std::tan(x); }
+	[[nodiscard]] inline auto f(double x) { return std::sin(x); }
+	[[nodiscard]] inline auto g(double x) { return std::cos(x); }
+	[[nodiscard]] inline auto h(double x) { return std::tan(x); }
 
 } // namespace math
 
-export template < typename F, typename ... Ts >
-auto call(F f, Ts ... args) { return f(args...); }
+export template < typename F, typename ... Types > [[nodiscard]] inline auto invoke(F && f, Types && ... args) 
+{ 
+	return f(std::forward < Types > (args)...); 
+}

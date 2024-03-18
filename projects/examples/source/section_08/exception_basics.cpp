@@ -135,7 +135,7 @@ private:
 
 }; // class C
 
-template < typename T > void swap(T & a, T & b) noexcept(
+template < typename T > inline void swap(T & a, T & b) noexcept(
 	std::is_nothrow_move_constructible_v < T > &&
 	std::is_nothrow_move_assignable_v    < T > ) // note: conditionally noexcept, long instructions
 {
@@ -145,7 +145,7 @@ template < typename T > void swap(T & a, T & b) noexcept(
 }
 
 template < typename F, typename ... Types > 
-	[[nodiscard]] auto invoke(F && f, Types && ... args) 
+	[[nodiscard]] inline auto invoke(F && f, Types && ... args) 
 		noexcept(noexcept(f(std::declval < Types > ()...))) // note: or std::is_nothrow_invocable_v
 {
 	return f(std::forward < Types > (args)...);

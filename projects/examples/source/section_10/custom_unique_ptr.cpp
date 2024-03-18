@@ -53,12 +53,12 @@ private:
 
 }; // template < typename T > class Unique : private boost::noncopyable
 
-template < typename T > void swap(Unique < T > & lhs, Unique < T > & rhs) noexcept
+template < typename T > inline void swap(Unique < T > & lhs, Unique < T > & rhs) noexcept
 {
     lhs.swap(rhs);
 }
 
-template < typename T, typename ... Types > [[nodiscard]] auto make_unique(Types && ... args)
+template < typename T, typename ... Types > [[nodiscard]] inline auto make_unique(Types && ... args)
 {
     return Unique < T > (new T(std::forward < Types > (args)...)); 
 }

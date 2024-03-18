@@ -1,7 +1,7 @@
-template < typename T > void f1(      T   ) {}
-template < typename T > void f2(      T & ) {}
-template < typename T > void f3(const T & ) {}
-template < typename T > void f4(      T &&) {}
+template < typename T > inline void f1(      T   ) {}
+template < typename T > inline void f2(      T & ) {}
+template < typename T > inline void f3(const T & ) {}
+template < typename T > inline void f4(      T &&) {}
 
 int main()
 {
