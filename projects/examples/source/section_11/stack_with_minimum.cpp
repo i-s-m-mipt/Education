@@ -17,7 +17,7 @@ public:
  
     void pop() noexcept { m_stack.pop(); }
  
-    [[nodiscard]] auto size() const noexcept { return m_stack.size(); }
+    [[nodiscard]] std::size_t size() const noexcept { return m_stack.size(); }
  
     [[nodiscard]] T min() const noexcept { return m_stack.top().second; }
 
@@ -62,7 +62,7 @@ public:
         m_stack.pop();
     }
 
-    [[nodiscard]] auto size() const noexcept { return m_stack.size(); }
+    [[nodiscard]] std::size_t size() const noexcept { return m_stack.size(); }
  
     [[nodiscard]] T min() const noexcept { return m_min; }
  

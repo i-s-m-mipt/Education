@@ -39,8 +39,8 @@ public:
 
 	Person(const std::string & name) : m_name(name) {}
 
-	[[nodiscard]] const auto & name() const &  { return m_name; } // note: only for lvalue instances
-	[[nodiscard]]       auto   name() const && { return m_name; } // note: only for rvalue instances
+	[[nodiscard]] const std::string & name() const &  { return m_name; } // note: only for lvalue instances
+	[[nodiscard]]       std::string   name() const && { return m_name; } // note: only for rvalue instances
 
 private:
 

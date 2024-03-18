@@ -103,7 +103,7 @@ public:
 		uninitialize(); // note: mandatory call, prefer RAII wrappers instead
 	}
 
-	[[nodiscard]] const auto & data() const noexcept // good: primitive noexcept getter
+	[[nodiscard]] const std::string & data() const noexcept // good: primitive noexcept getter
 	{
 		return m_data;
 	}

@@ -12,7 +12,7 @@ public:
 
 	explicit Resource(T value) : m_ptr(new T(value)) {}
 
-	[[nodiscard]] auto get() const noexcept { return m_ptr; }
+	[[nodiscard]] T * get() const noexcept { return m_ptr; }
 
 	~Resource() noexcept { if (m_ptr) delete m_ptr; } // good: no memory leak
 

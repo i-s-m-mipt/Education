@@ -26,7 +26,7 @@ public:
 
 	}; // class Row 
 
-	[[nodiscard]] auto operator[](std::size_t index) noexcept // note: operator[][] is invalid syntax
+	[[nodiscard]] Row operator[](std::size_t index) noexcept // note: operator[][] is invalid syntax
 	{
 		return Row(m_array[index]);
 	}

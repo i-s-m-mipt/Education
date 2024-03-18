@@ -11,7 +11,7 @@ struct Data { int array[1000]{}; }; // note: some big data with many copies
 
 struct Hash
 {
-    [[nodiscard]] auto operator()(const Data & data) const noexcept
+    [[nodiscard]] std::size_t operator()(const Data & data) const noexcept
     {
         std::size_t seed = 0;
 
@@ -24,7 +24,7 @@ struct Hash
 
 struct Equal
 {
-    [[nodiscard]] auto operator()(const Data & lhs, const Data & rhs) const noexcept
+    [[nodiscard]] bool operator()(const Data & lhs, const Data & rhs) const noexcept
     {
         for (std::size_t i = 0; i < std::size(lhs.array); ++i)
         {

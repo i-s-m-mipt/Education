@@ -121,7 +121,7 @@ template < typename T > inline void swap(Shared < T > & lhs, Shared < T > & rhs)
     lhs.swap(rhs);
 }
 
-template < typename T, typename ... Types > [[nodiscard]] inline auto make_shared(Types && ... args)
+template < typename T, typename ... Types > [[nodiscard]] inline Shared < T > make_shared(Types && ... args)
 {
     // note: another RCCB required, combining control block and object in one allocation
 }

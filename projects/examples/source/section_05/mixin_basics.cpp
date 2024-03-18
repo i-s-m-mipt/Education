@@ -4,7 +4,7 @@ struct Number
 {
     using value_type = int;
 
-    [[nodiscard]] auto get() const { return value; }
+    [[nodiscard]] value_type get() const { return value; }
     
     void set(value_type new_value) // note: trivial setter demo only
     { 

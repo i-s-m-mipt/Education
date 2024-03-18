@@ -26,7 +26,7 @@ public:
 
 		[[nodiscard]] T & dereference() const noexcept { return m_node->value; }
 
-		[[nodiscard]] auto equal(const Iterator & other) const noexcept
+		[[nodiscard]] bool equal(const Iterator & other) const noexcept
 		{ 
 			return (m_node == other.m_node); 
 		};

@@ -104,7 +104,7 @@ public:
 
 public:
 
-	auto & operator+=(Big_Int other)
+	Big_Int & operator+=(Big_Int other)
 	{
 		if ((!m_is_negative && !other.m_is_negative) ||
 			( m_is_negative &&  other.m_is_negative))
@@ -133,14 +133,14 @@ public:
 		return *this;
 	}
 
-	auto & operator-=(Big_Int other)
+	Big_Int & operator-=(Big_Int other)
 	{
 		other.m_is_negative = !other.m_is_negative;
 
 		return (*this += other);
 	}
 
-	auto & operator*=(Big_Int other)
+	Big_Int & operator*=(Big_Int other)
 	{
 		if (m_n_digits + other.m_n_digits > size) throw std::overflow_error("too many digits");
 
@@ -167,7 +167,7 @@ public:
 		swap(result); reduce_leading_zeros(); return *this;
 	}
 
-	auto & operator/=(Big_Int other)
+	Big_Int & operator/=(Big_Int other)
 	{
 		if (other.m_n_digits == 0 || (other.m_n_digits == 1 && other.m_digits.front() == 0))
 		{
@@ -244,29 +244,29 @@ private:
 
 public:
 
-	auto & operator++() 
+	Big_Int & operator++() 
 	{ 
 		*this += 1; return *this; 
 	}
 
-	auto & operator--() 
+	Big_Int & operator--() 
 	{ 
 		*this -= 1; return *this; 
 	}
 
-	const auto operator++(int)
+	const Big_Int operator++(int)
 	{
 		Big_Int t(*this); ++(*this); return t;
 	}
 
-	const auto operator--(int)
+	const Big_Int operator--(int)
 	{
 		Big_Int t(*this); --(*this); return t;
 	}
 
 public:
 
-	[[nodiscard]] friend auto karatsuba_multiplication(const Big_Int & x, const Big_Int & y)
+	[[nodiscard]] friend Big_Int karatsuba_multiplication(const Big_Int & x, const Big_Int & y)
 	{
 		auto n = std::max(x.m_n_digits, y.m_n_digits);
 
@@ -301,7 +301,7 @@ public:
 		return result;
 	}
 
-	[[nodiscard]] friend auto sqrt(const Big_Int & x)
+	[[nodiscard]] friend Big_Int sqrt(const Big_Int & x)
 	{
 		if (x.m_is_negative) throw std::domain_error("invalid argument");
 

@@ -64,7 +64,7 @@ void print_vector(const std::vector < int > & vector) // good: std::vector knows
 	return (x > y ? x : y);
 }
 
-[[nodiscard]] inline unsigned int factorial(unsigned int n)
+[[nodiscard]] inline int factorial(int n)
 {
 	return (n < 2 ? 1 : n * factorial(n - 1)); // good: compact recursion
 }

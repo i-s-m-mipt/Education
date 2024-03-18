@@ -12,19 +12,12 @@ public:
 
 public:
 
-	void print() const
-	{
-		std::cout << "Person" << std::endl;
-	}
-
-	void print_person() const
-	{
-		std::cout << "Person" << std::endl;
-	}
+	void print       () const { std::cout << "Person" << std::endl; }
+	void print_person() const { std::cout << "Person" << std::endl; }
 
 protected:
 
-	[[nodiscard]] const auto & get_name() const // good: return by constant reference
+	[[nodiscard]] const std::string & get_name() const // good: return by constant reference
 	{
 		return m_name;
 	}
@@ -78,10 +71,7 @@ public:
 
 public:
 
-	void print() const
-	{
-		std::cout << "Manager" << std::endl;
-	}
+	void print() const { std::cout << "Manager" << std::endl; }
 
 private:
 

@@ -6,11 +6,11 @@ template < typename T > class Relational // note: Barton-Nackman trick
 {
 public:
 
-    [[nodiscard]] friend inline auto operator> (const T & lhs, const T & rhs) { return  (rhs < lhs); }
-    [[nodiscard]] friend inline auto operator<=(const T & lhs, const T & rhs) { return !(lhs > rhs); }
-    [[nodiscard]] friend inline auto operator>=(const T & lhs, const T & rhs) { return !(lhs < rhs); }
+    [[nodiscard]] friend inline bool operator> (const T & lhs, const T & rhs) { return  (rhs < lhs); }
+    [[nodiscard]] friend inline bool operator<=(const T & lhs, const T & rhs) { return !(lhs > rhs); }
+    [[nodiscard]] friend inline bool operator>=(const T & lhs, const T & rhs) { return !(lhs < rhs); }
 
-    [[nodiscard]] friend inline auto operator==(const T & lhs, const T & rhs) // note: operator!= not required
+    [[nodiscard]] friend inline bool operator==(const T & lhs, const T & rhs) // note: operator!= not required
     {
         return (!(lhs < rhs) && !(rhs < lhs));
     }
@@ -27,7 +27,7 @@ public:
 
     explicit Apple(double weight) : m_weight(weight) {}
 
-    [[nodiscard]] friend inline auto operator<(const Apple & lhs, const Apple & rhs)
+    [[nodiscard]] friend inline bool operator<(const Apple & lhs, const Apple & rhs)
     {
         return (lhs.m_weight < rhs.m_weight);
     }
@@ -44,7 +44,7 @@ public:
 
     explicit Human(double height) : m_height(height) {}
 
-    [[nodiscard]] friend inline auto operator<(const Human & lhs, const Human & rhs)
+    [[nodiscard]] friend inline bool operator<(const Human & lhs, const Human & rhs)
     {
         return (lhs.m_height < rhs.m_height);
     }
@@ -61,7 +61,7 @@ public:
 
     explicit Train(double length) : m_length(length) {}
 
-    [[nodiscard]] friend inline auto operator<(const Train & lhs, const Train & rhs)
+    [[nodiscard]] friend inline bool operator<(const Train & lhs, const Train & rhs)
     {
         return (lhs.m_length < rhs.m_length);
     }

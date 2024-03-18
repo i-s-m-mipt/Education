@@ -31,7 +31,7 @@ void test_macros();
 
 class C { public: void print() const; }; // good: class definition in header file
 
-template < typename T > [[nodiscard]] inline auto max(T x, T y) // good: no separation
+template < typename T1, typename T2 > [[nodiscard]] inline auto max(T1 x, T2 y)
 {
 	return (x < y ? y : x);
 }

@@ -33,7 +33,7 @@ private:
 
 public:
 
-	auto & operator+=(Ratio other) // note: same as in the non-template class
+	Ratio & operator+=(Ratio other) // note: same as in the non-template class
 	{
 		auto lcm = std::lcm(m_den, other.m_den);
 
@@ -46,7 +46,7 @@ public:
 		return *this;
 	}
 
-	[[nodiscard]] friend inline const auto operator+(Ratio lhs, Ratio rhs) // good: friend inside class template
+	[[nodiscard]] friend inline const Ratio operator+(Ratio lhs, Ratio rhs) // good: friend inside class template
 	{
 		return (lhs += rhs);
 	}

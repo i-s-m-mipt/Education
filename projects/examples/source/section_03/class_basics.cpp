@@ -7,7 +7,7 @@ public: // good: public members first
 
 	using integer_t = unsigned int; // note: nested type alias
 
-	class Printer // note: nested types can’t be forward declared
+	class Printer // note: nested types canï¿½t be forward declared
 	{
 	public:
 
@@ -70,7 +70,7 @@ public:
 
 public:
 
-	[[nodiscard]] auto year() const // note: biwise constancy
+	[[nodiscard]] integer_t year() const // note: biwise constancy
 	{
 		return m_year;
 	}
@@ -106,10 +106,7 @@ public:
 
 public:
 
-	[[nodiscard]] static auto get_counter()
-	{
-		return counter;
-	}
+	[[nodiscard]] static std::size_t get_counter() { return counter; }
 
 public:
 

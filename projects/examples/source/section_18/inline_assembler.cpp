@@ -38,7 +38,7 @@ private:
 
 }; // class Chronometer
 
-auto test_cpp_v1()
+void test_cpp_v1()
 {
 	printf("Hello, world!\n\n");
 
@@ -75,7 +75,7 @@ void test_asm_v1()
 	}
 }
 
-[[nodiscard]] auto test_cpp_v2()
+[[nodiscard]] int test_cpp_v2()
 {
 	auto c = 0;
 
@@ -102,7 +102,7 @@ void test_asm_v1()
 	return c;
 }
 
-[[nodiscard]] auto test_asm_v2()
+[[nodiscard]] int test_asm_v2()
 {
 	auto c = 0;
 	
@@ -143,7 +143,7 @@ void test_asm_v1()
 	return c;
 }
 
-[[nodiscard]] auto test_cpp_v3(double * a, double * b, std::size_t size)
+[[nodiscard]] double test_cpp_v3(double * a, double * b, std::size_t size)
 {
 	auto result = 0.0;
 
@@ -159,7 +159,7 @@ void test_asm_v1()
 	return result;
 }
 
-[[nodiscard]] auto test_asm_v3(double * a, double * b, std::size_t size)
+[[nodiscard]] double test_asm_v3(double * a, double * b, std::size_t size)
 {
 	auto result = 0.0;
 
@@ -208,7 +208,7 @@ void test_asm_v1()
 	return result;
 }
 
-[[nodiscard]] auto test_cpp_v4(double * a, std::size_t size)
+[[nodiscard]] double test_cpp_v4(double * a, std::size_t size)
 {
 	auto result = 0.0;
 
@@ -231,7 +231,7 @@ void test_asm_v1()
 	return result;
 }
 
-[[nodiscard]] auto test_asm_v4(double * a, std::size_t size)
+[[nodiscard]] double test_asm_v4(double * a, std::size_t size)
 {
 	auto result = 0.0;
 

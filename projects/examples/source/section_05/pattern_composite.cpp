@@ -44,7 +44,7 @@ private:
 
 }; // class Cluster : public Computer
 
-[[nodiscard]] auto make_cluster(std::size_t n_mobiles, std::size_t n_tablets, std::size_t n_laptops)
+[[nodiscard]] Computer * make_cluster(std::size_t n_mobiles, std::size_t n_tablets, std::size_t n_laptops)
 {
     auto cluster = new Cluster;
 

@@ -55,9 +55,9 @@ class Factory // note: no factories hierarchy, static prototypes and virtual cop
 {
 public:
 
-    [[nodiscard]] static auto create_mobile() { return mobile_prototype.clone(); }
-    [[nodiscard]] static auto create_tablet() { return tablet_prototype.clone(); }
-    [[nodiscard]] static auto create_laptop() { return laptop_prototype.clone(); }
+    [[nodiscard]] static Computer * create_mobile() { return mobile_prototype.clone(); }
+    [[nodiscard]] static Computer * create_tablet() { return tablet_prototype.clone(); }
+    [[nodiscard]] static Computer * create_laptop() { return laptop_prototype.clone(); }
 
 private:
 

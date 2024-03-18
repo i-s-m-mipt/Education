@@ -13,10 +13,7 @@ public:
 
 public:
 
-	[[nodiscard]] const auto & name() const
-	{
-		return m_name;
-	}
+	[[nodiscard]] const std::string & name() const { return m_name; }
 
 	void add_lecture(const Lecture & lecture)
 	{
@@ -41,10 +38,7 @@ public:
 
 public:
 
-	[[nodiscard]] const auto & name() const
-	{
-		return m_name;
-	}
+	[[nodiscard]] const std::string & name() const { return m_name; }
 
 	void add_student(const Student & student)
 	{

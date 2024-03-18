@@ -20,7 +20,7 @@ protected:
 
 public:
 
-	[[nodiscard]] static auto get_counter() { return counter; }
+	[[nodiscard]] static std::size_t get_counter() { return counter; }
 
 private:
 

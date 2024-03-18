@@ -8,7 +8,7 @@ public:
 
 	explicit Person(const std::string & name) : m_name(name) {}
 
-	[[nodiscard]] const auto & name() const noexcept { return m_name; }
+	[[nodiscard]] const std::string & name() const noexcept { return m_name; }
 
 private:
 
@@ -18,7 +18,7 @@ private:
 
 struct Hash
 {
-	[[nodiscard]] auto operator()(const Person & person) const noexcept
+	[[nodiscard]] std::size_t operator()(const Person & person) const noexcept
 	{
 		return std::hash < std::string > ()(person.name());
 	}
@@ -27,7 +27,7 @@ struct Hash
 
 struct Equal
 {
-	[[nodiscard]] auto operator()(const Person & lhs, const Person & rhs) const noexcept
+	[[nodiscard]] bool operator()(const Person & lhs, const Person & rhs) const noexcept
 	{
 		return (lhs.name() == rhs.name());
 	}

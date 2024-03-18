@@ -26,7 +26,7 @@ template < typename RT = double, typename T1, typename T2 > [[nodiscard]] inline
 	return (x < y ? y : x);
 }
 
-template < typename T1, typename T2 > [[nodiscard]] inline auto max_v6(T1 x, T2 y)
+template < typename T1, typename T2 > [[nodiscard]] inline auto max_v6(T1 x, T2 y) // good: auto
 {
 	return (x < y ? y : x);
 }
@@ -73,7 +73,7 @@ template < typename T > inline void g < int, T > () // error: prohibited partial
 }
 */
 
-template < typename T, int N, int M > [[nodiscard]] inline auto less(T(&a)[N], T(&b)[M])
+template < typename T, int N, int M > [[nodiscard]] inline bool less(T(&a)[N], T(&b)[M])
 {
 	for (auto i = 0; i < N && i < M; ++i)
 	{

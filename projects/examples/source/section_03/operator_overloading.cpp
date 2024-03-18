@@ -52,8 +52,8 @@ public:
 
 public:
 
-	[[nodiscard]] auto num() const { return m_num; }
-	[[nodiscard]] auto den() const { return m_den; }
+	[[nodiscard]] int num() const { return m_num; }
+	[[nodiscard]] int den() const { return m_den; }
 
 public:
 
@@ -79,7 +79,7 @@ public:
 
 public:
 
-	auto & operator+=(Ratio other)
+	Ratio & operator+=(Ratio other)
 	{
 		auto lcm = std::lcm(m_den, other.m_den);
 
@@ -92,12 +92,12 @@ public:
 		return *this; // good: chain of calls
 	}
 
-	auto & operator-=(Ratio other)
+	Ratio & operator-=(Ratio other)
 	{
 		return (*this += (other.m_num *= -1));
 	}
 		
-	auto & operator*=(Ratio other)
+	Ratio & operator*=(Ratio other)
 	{
 		m_num *= other.m_num;
 		m_den *= other.m_den;
@@ -107,29 +107,29 @@ public:
 		return *this;
 	}
 	
-	auto & operator/=(Ratio other)
+	Ratio & operator/=(Ratio other)
 	{
 		return (*this *= Ratio(other.m_den, other.m_num)); // note: internal error handling
 	}
 
 public:
 
-	auto & operator++() // note: ++++r is allowed
+	Ratio & operator++() // note: ++++r is allowed
 	{ 
 		m_num += m_den; return *this; 
 	} 
 
-	auto & operator--() // note: ----r is allowed
+	Ratio & operator--() // note: ----r is allowed
 	{ 
 		m_num -= m_den; return *this; 
 	} 
 
-	const auto operator++(int) // note: r++++ is not allowed
+	const Ratio operator++(int) // note: r++++ is not allowed
 	{ 
 		Ratio t(*this); ++(*this); return t; 
 	} 
 
-	const auto operator--(int) // note: r---- is not allowed
+	const Ratio operator--(int) // note: r---- is not allowed
 	{ 
 		Ratio t(*this); --(*this); return t; 
 	} 
@@ -143,47 +143,47 @@ private:
 
 inline void swap(Ratio & x, Ratio & y) { x.swap(y); }
 
-[[nodiscard]] inline const auto operator+ (Ratio lhs, Ratio rhs) // good: free function
+[[nodiscard]] inline const Ratio operator+(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs += rhs);
 }
 
-[[nodiscard]] inline const auto operator- (Ratio lhs, Ratio rhs) // good: free function
+[[nodiscard]] inline const Ratio operator-(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs -= rhs);
 }
 
-[[nodiscard]] inline const auto operator* (Ratio lhs, Ratio rhs) // good: free function
+[[nodiscard]] inline const Ratio operator*(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs *= rhs);
 }
 
-[[nodiscard]] inline const auto operator/ (Ratio lhs, Ratio rhs) // good: free function
+[[nodiscard]] inline const Ratio operator/(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs /= rhs);
 }
 
-[[nodiscard]] inline const auto operator< (Ratio lhs, Ratio rhs)
+[[nodiscard]] inline const bool operator< (Ratio lhs, Ratio rhs)
 {
 	return static_cast < double > (lhs) < static_cast < double > (rhs);
 }
 
-[[nodiscard]] inline const auto operator> (Ratio lhs, Ratio rhs)
+[[nodiscard]] inline const bool operator> (Ratio lhs, Ratio rhs)
 {
 	return (rhs < lhs);
 }
 
-[[nodiscard]] inline const auto operator<=(Ratio lhs, Ratio rhs)
+[[nodiscard]] inline const bool operator<=(Ratio lhs, Ratio rhs)
 {
 	return !(lhs > rhs);
 }
 
-[[nodiscard]] inline const auto operator>=(Ratio lhs, Ratio rhs)
+[[nodiscard]] inline const bool operator>=(Ratio lhs, Ratio rhs)
 {
 	return !(lhs < rhs);
 }
 
-[[nodiscard]] inline const auto operator==(Ratio lhs, Ratio rhs) // note: operator!= not required
+[[nodiscard]] inline const bool operator==(Ratio lhs, Ratio rhs) // note: operator!= not required
 {
 	return (!(lhs < rhs) && !(rhs < lhs));
 }

@@ -46,7 +46,7 @@ namespace solution::shared
 
 	public:
 
-		[[nodiscard]] auto & global() const noexcept
+		[[nodiscard]] const boost::python::api::object & global() const noexcept
 		{
 			return m_global;
 		}

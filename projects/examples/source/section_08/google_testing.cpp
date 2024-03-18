@@ -5,7 +5,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-[[nodiscard]] inline unsigned int factorial(unsigned int n) noexcept 
+[[nodiscard]] inline int factorial(int n) noexcept 
 { 
     return (n < 2 ? 1 : n * factorial(n - 1)); 
 }

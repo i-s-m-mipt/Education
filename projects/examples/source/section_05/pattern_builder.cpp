@@ -31,7 +31,7 @@ public:
 
     virtual ~Builder() = default; // note: polymorphic base class
 
-    [[nodiscard]] auto computer() const { return m_computer; }
+    [[nodiscard]] Computer * computer() const { return m_computer; }
 
     virtual void build_cpu() const = 0; // note: optional pure virtual function
     virtual void build_gpu() const = 0; // note: optional pure virtual function
@@ -85,7 +85,7 @@ public:
 
 }; // class Builder_Laptop : public Builder
 
-[[nodiscard]] inline auto build(const Builder & builder) // note: consider member function
+[[nodiscard]] inline Computer * build(const Builder & builder) // note: consider member function
 {
     builder.build_cpu();
     builder.build_gpu();

@@ -33,7 +33,7 @@ void print(const std::span < const std::byte > & bytes)
     std::cout << std::endl;
 }
 
-template < typename T > [[nodiscard]] inline auto distance_in_bytes(T * first, T * last) noexcept
+template < typename T > [[nodiscard]] inline std::ptrdiff_t distance_in_bytes(T * first, T * last) noexcept
 {
     return (std::bit_cast < std::byte * > (last) - std::bit_cast < std::byte * > (first));
 }

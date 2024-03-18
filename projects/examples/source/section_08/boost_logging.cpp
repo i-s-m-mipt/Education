@@ -179,11 +179,11 @@ private:
 
 public:
 
-	[[nodiscard]] auto scope() const noexcept { return m_scope; }
+	[[nodiscard]] const char * scope() const noexcept { return m_scope; }
 
 public:
 
-	[[nodiscard]] static auto severity_as_string(Severity severity)
+	[[nodiscard]] static std::string_view severity_as_string(Severity severity)
 	{
 		return severities.at(severity);
 	}

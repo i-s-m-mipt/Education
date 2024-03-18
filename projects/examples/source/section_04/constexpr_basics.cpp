@@ -8,12 +8,12 @@
 	return (n < 2 ? 1 : n * factorial(n - 1));
 }
 
-[[nodiscard]] inline consteval auto combination(int m, int n) // note: must be evaluated at compile-time
+[[nodiscard]] consteval int combination(int m, int n) // note: must be evaluated at compile-time
 {
 	return factorial(n) / factorial(m) / factorial(n - m);
 }
 
-[[nodiscard]] inline constexpr auto is_prime(int p) // note: can be evaluated at compile-time
+[[nodiscard]] inline constexpr bool is_prime(int p) // note: can be evaluated at compile-time
 {
 	for (auto d = 2; d <= p / 2; ++d)
 	{
@@ -23,7 +23,7 @@
 	return (p > 1);
 }
 
-[[nodiscard]] consteval auto fibonacci(int n) // note: must be evaluated at compile-time
+[[nodiscard]] consteval int fibonacci(int n) // note: must be evaluated at compile-time
 {
 	if (n < 2) return 1; else
 	{
@@ -40,7 +40,7 @@
 
 class C { static constexpr auto c = 42; }; // note: same as inline const  
 
-[[nodiscard]] inline constexpr auto f([[maybe_unused]] int x)
+[[nodiscard]] inline constexpr bool f([[maybe_unused]] int x)
 {
 	return std::is_constant_evaluated(); // note: see type traits
 }

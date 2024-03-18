@@ -31,7 +31,7 @@ struct Point
 
 }; // struct Point
 
-template < typename T, typename ... Ts > [[nodiscard]] inline auto make_object(Ts ... args)
+template < typename T, typename ... Ts > [[nodiscard]] inline T * make_object(Ts ... args)
 {
 	std::cout << sizeof...(args) << std::endl;
 

@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-[[nodiscard]] inline auto f() noexcept // note: different functions have same types
+[[nodiscard]] inline int f() noexcept // note: different functions have same types
 {
 	static auto state = 0; // note: internal state, see reference arguments
 
@@ -18,7 +18,7 @@ class C // note: different classes have different types
 {
 public:
 
-	[[nodiscard]] auto operator()() const noexcept { return (m_state++); }
+	[[nodiscard]] int operator()() const noexcept { return (m_state++); }
 
 private:
 
@@ -32,7 +32,7 @@ public:
 
 	void operator()(T x) noexcept { s += x; }
 
-	[[nodiscard]] auto result() const noexcept { return s; }
+	[[nodiscard]] T result() const noexcept { return s; }
 
 private:
 
@@ -46,7 +46,7 @@ public:
 
 	void operator()(T x) noexcept { ++n; s += x; }
 
-	[[nodiscard]] auto result() const noexcept { return (s / n); }
+	[[nodiscard]] T result() const noexcept { return (s / n); }
 
 private:
 

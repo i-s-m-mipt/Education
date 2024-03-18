@@ -23,7 +23,7 @@ public:
 
 //	[[nodiscard]] T pop() { ... } // bad: unsafe design
 
-	[[nodiscard]] auto size() const noexcept
+	[[nodiscard]] std::size_t size() const noexcept
 	{ 
 		return m_container.size(); 
 	}

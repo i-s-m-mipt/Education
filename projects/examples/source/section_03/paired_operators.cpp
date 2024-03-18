@@ -7,14 +7,14 @@ public:
 
     explicit Data(std::size_t size, int value) : m_data(size, value) {}
 
-    [[nodiscard]] const auto & operator[](std::size_t index) const 
+    [[nodiscard]] const int & operator[](std::size_t index) const 
     {
         std::cout << "Data::operator[] const" << std::endl;
 
         return m_data[index];
     }
 
-    [[nodiscard]] auto & operator[](std::size_t index) // good: calls constant version
+    [[nodiscard]] int & operator[](std::size_t index) // good: calls constant version
     {
         std::cout << "Data::operator[]" << std::endl;
 

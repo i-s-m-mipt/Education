@@ -6,7 +6,7 @@
 
 #include <boost/container_hash/hash.hpp>
 
-[[nodiscard]] inline auto hash(const std::string & string) noexcept // note: sequential hash function for strings
+[[nodiscard]] inline std::size_t hash(const std::string & string) noexcept // note: Java hash for strings
 {
 	std::size_t seed = 0;
 

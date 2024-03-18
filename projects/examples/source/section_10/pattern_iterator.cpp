@@ -36,7 +36,7 @@ public:
 		[[nodiscard]] T & operator* () const noexcept { return  (m_node->value); }
 		[[nodiscard]] T * operator->() const noexcept { return &(m_node->value); }
 
-		[[nodiscard]] auto operator==(const Iterator & other) const noexcept 
+		[[nodiscard]] bool operator==(const Iterator & other) const noexcept 
 		{ 
 			return (m_node == other.m_node); 
 		}

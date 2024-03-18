@@ -3,7 +3,7 @@
 #include <iostream>
 #include <type_traits>
 
-[[nodiscard]] inline auto f(int x) noexcept
+[[nodiscard]] inline int f(int x) noexcept
 { 
 	return (x + 1); 
 }

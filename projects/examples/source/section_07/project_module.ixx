@@ -10,9 +10,9 @@ export void hello_module();
 
 export namespace math // good: exporting namesapce
 {
-	[[nodiscard]] inline auto f(double x) { return std::sin(x); }
-	[[nodiscard]] inline auto g(double x) { return std::cos(x); }
-	[[nodiscard]] inline auto h(double x) { return std::tan(x); }
+	[[nodiscard]] inline double f(double x) { return std::sin(x); }
+	[[nodiscard]] inline double g(double x) { return std::cos(x); }
+	[[nodiscard]] inline double h(double x) { return std::tan(x); }
 
 } // namespace math
 
