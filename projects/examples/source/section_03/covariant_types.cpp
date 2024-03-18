@@ -24,12 +24,12 @@ public:
 
 int main()
 {
-	auto d = new Derived; Base * b = d;
+	const auto derived = new Derived; Base * const base = derived;
 
-	d->get()->print();
-	b->get()->print();
+	derived->get()->print(); 
+	base   ->get()->print();
 
-	delete b;
+	delete base;
 
 	return 0;
 }

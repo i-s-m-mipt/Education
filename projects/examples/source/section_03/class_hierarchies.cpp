@@ -24,7 +24,7 @@ protected:
 
 private:
 
-	std::string m_name;
+	const std::string m_name;
 
 }; // class Person
 
@@ -56,7 +56,7 @@ public:
 
 private:
 
-	int m_salary = 0;
+	const int m_salary = 0;
 
 }; // class Employee : public Person
 
@@ -75,7 +75,7 @@ public:
 
 private:
 
-	int m_level = 0;
+	const int m_level = 0;
 
 }; // class Manager : public Employee
 
@@ -85,7 +85,7 @@ class Robot // : private Servo // bad: Robot is implemented through Servo
 {
 private:
 
-	Servo m_servo; // good: prefer composition instead of private inheritance
+	const Servo m_servo; // good: prefer composition instead of private inheritance
 
 }; // class Robot
 
@@ -135,29 +135,29 @@ class Derived_3 : /*private*/ Base // note: default inheritance
 
 int main()
 {
-	Manager manager("Matthias", 100000, 10);
+	const Manager manager("Matthias", 100000, 10);
 
 	manager.print();
 
 	manager.print_person();
 
-	Derived_1 d1;
+	Derived_1 derived_1;
 
-	d1.m_data_1 = 42;
-//	d1.m_data_2 = 42; // error: protected data member
-//	d1.m_data_3 = 42; // error: private   data member
+	derived_1.m_data_1 = 42;
+//	derived_1.m_data_2 = 42; // error: protected data member
+//	derived_1.m_data_3 = 42; // error: private   data member
 
-	Derived_2 d2;
+	Derived_2 derived_2;
 
-//	d2.m_data_1 = 42; // error: protected data member
-//	d2.m_data_2 = 42; // error: protected data member
-//	d2.m_data_3 = 42; // error: private   data member
+//	derived_2.m_data_1 = 42; // error: protected data member
+//	derived_2.m_data_2 = 42; // error: protected data member
+//	derived_2.m_data_3 = 42; // error: private   data member
 
-	Derived_3 d3;
+	Derived_3 derived_3;
 
-//	d3.m_data_1 = 42; // error: private   data member
-//	d3.m_data_2 = 42; // error: private   data member
-//	d3.m_data_3 = 42; // error: private   data member
+//	derived_3.m_data_1 = 42; // error: private   data member
+//	derived_3.m_data_2 = 42; // error: private   data member
+//	derived_3.m_data_3 = 42; // error: private   data member
 
 	return 0;
 }

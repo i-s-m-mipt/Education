@@ -24,7 +24,7 @@ public:
 
 private:
 
-	std::string m_name;
+	const std::string m_name;
 
 	std::vector < const Lecture * > m_lectures;
 
@@ -49,7 +49,7 @@ public:
 
 private:
 
-	std::string m_name;
+	const std::string m_name;
 
 	std::vector < const Student * > m_students;
 

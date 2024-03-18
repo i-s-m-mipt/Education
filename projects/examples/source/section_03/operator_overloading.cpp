@@ -34,7 +34,7 @@ private:
 
 	void reduce()
 	{
-		auto gcd = std::gcd(m_num, m_den);
+		const auto gcd = std::gcd(m_num, m_den);
 
 		m_num /= gcd;
 		m_den /= gcd;
@@ -81,7 +81,7 @@ public:
 
 	Ratio & operator+=(Ratio other)
 	{
-		auto lcm = std::lcm(m_den, other.m_den);
+		const auto lcm = std::lcm(m_den, other.m_den);
 
 		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den);
 
@@ -143,47 +143,47 @@ private:
 
 inline void swap(Ratio & x, Ratio & y) { x.swap(y); }
 
-[[nodiscard]] inline const Ratio operator+(Ratio lhs, Ratio rhs) // good: free function
+[[nodiscard]] inline Ratio operator+(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs += rhs);
 }
 
-[[nodiscard]] inline const Ratio operator-(Ratio lhs, Ratio rhs) // good: free function
+[[nodiscard]] inline Ratio operator-(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs -= rhs);
 }
 
-[[nodiscard]] inline const Ratio operator*(Ratio lhs, Ratio rhs) // good: free function
+[[nodiscard]] inline Ratio operator*(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs *= rhs);
 }
 
-[[nodiscard]] inline const Ratio operator/(Ratio lhs, Ratio rhs) // good: free function
+[[nodiscard]] inline Ratio operator/(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs /= rhs);
 }
 
-[[nodiscard]] inline const bool operator< (Ratio lhs, Ratio rhs)
+[[nodiscard]] inline bool operator< (Ratio lhs, Ratio rhs)
 {
 	return static_cast < double > (lhs) < static_cast < double > (rhs);
 }
 
-[[nodiscard]] inline const bool operator> (Ratio lhs, Ratio rhs)
+[[nodiscard]] inline bool operator> (Ratio lhs, Ratio rhs)
 {
 	return (rhs < lhs);
 }
 
-[[nodiscard]] inline const bool operator<=(Ratio lhs, Ratio rhs)
+[[nodiscard]] inline bool operator<=(Ratio lhs, Ratio rhs)
 {
 	return !(lhs > rhs);
 }
 
-[[nodiscard]] inline const bool operator>=(Ratio lhs, Ratio rhs)
+[[nodiscard]] inline bool operator>=(Ratio lhs, Ratio rhs)
 {
 	return !(lhs < rhs);
 }
 
-[[nodiscard]] inline const bool operator==(Ratio lhs, Ratio rhs) // note: operator!= not required
+[[nodiscard]] inline bool operator==(Ratio lhs, Ratio rhs) // note: operator!= not required
 {
 	return (!(lhs < rhs) && !(rhs < lhs));
 }

@@ -38,16 +38,16 @@ public:
 
 [[nodiscard]] inline Container g()
 {
-	auto container = Container(); // note: guaranteed copy elision
+	const auto container = Container(); // note: guaranteed copy elision
 
 	return container; // note: copy elision, named return value optimization
 }
 
 class E {}; // note: empty class with no data, only functions for example
 
-class X { char c;                       E e;      };
-class Y { char c; [[no_unique_address]] E e;      }; // note: [[msvc::no_unique_address]]
-class Z { char c; [[no_unique_address]] E e1, e2; }; // note: [[msvc::no_unique_address]]
+class X { const char c{};                       const E e;      };
+class Y { const char c{}; [[no_unique_address]] const E e;      };
+class Z { const char c{}; [[no_unique_address]] const E e1, e2; };
 
 class A {}; // note: empty base class optimization
 
@@ -56,8 +56,8 @@ class C : public B {};
 
 int main()
 {
-	[[maybe_unused]] auto container_1 = f(); // note: guaranteed copy elision
-	[[maybe_unused]] auto container_2 = g(); // note: guaranteed copy elision
+	[[maybe_unused]] const auto container_1 = f(); // note: guaranteed copy elision
+	[[maybe_unused]] const auto container_2 = g(); // note: guaranteed copy elision
 
 	std::cout << "size of E: " << sizeof(E) << std::endl; // note: non-zero size
 

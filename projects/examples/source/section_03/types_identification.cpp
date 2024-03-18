@@ -20,20 +20,20 @@ struct Laptop : public Computer { void run() const override { std::cout << "Lapt
 
 int main()
 {
-	Computer * c_ptr = new Mobile;
+	Computer * computer_ptr = new Mobile;
 
-	[[maybe_unused]] auto m_ptr = dynamic_cast < Mobile * > (c_ptr); // note: avoid downcasting
+	[[maybe_unused]] const auto mobile_ptr_1 = dynamic_cast < Mobile * > (computer_ptr); // note: avoid downcasting
 
-	delete c_ptr;
+	delete computer_ptr;
 
-	c_ptr = new Tablet;
+	computer_ptr = new Tablet;
 
-	if (auto t_ptr = dynamic_cast <Mobile*> (c_ptr); !t_ptr) // note: dynamic_cast provides runtime checks 
+	if (const auto mobile_ptr_2 = dynamic_cast < Mobile * > (computer_ptr); !mobile_ptr_2) // note: runtime checks 
 	{
 		std::cout << "invalid dynamic cast" << std::endl;
 	}
 
-	delete c_ptr;
+	delete computer_ptr;
 
 	auto x = 42;
 
@@ -48,17 +48,17 @@ int main()
 
 	std::cout << typeid(x).name() << std::endl;
 
-	std::string s = "hello";
+	const std::string s = "hello";
 
 	std::cout << typeid(s).name() << std::endl; // note: not portable type name
 
-	c_ptr = new Mobile;
+	computer_ptr = new Mobile;
 
-	const auto & type_info = typeid(*c_ptr);
+	const auto & type_info = typeid(*computer_ptr);
 
 	std::cout << type_info.name() << std::endl; // note: dynamic type identification
 
-	delete c_ptr;
+	delete computer_ptr;
 
 	const auto & reference = Mobile();
 

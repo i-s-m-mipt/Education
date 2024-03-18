@@ -25,7 +25,7 @@
 
 [[nodiscard]] inline const int & get_const_lvalue()
 {
-	static int x = 42; return x;
+	static const int x = 42; return x;
 }
 
 inline void f(      int & ) { std::cout << "      int & " << std::endl; }
@@ -44,31 +44,31 @@ public:
 
 private:
 
-	std::string m_name;
+	const std::string m_name;
 
 }; // class Person
 
 [[nodiscard]] inline Person create_person(const std::string & name)
 {
-	Person person(name); return person;
+	const Person person(name); return person;
 }
 
 int main()
 {
-	[[maybe_unused]] double d = 0.0;
-
-	const int i = 0;
-
 	f(get_prvalue());
 	f(get_const_prvalue()); // note: verify int && overload
 	f(get_lvalue());
 	f(get_const_lvalue());
 
+	[[maybe_unused]] double d = 0.0;
+
+	const int i = 0;
+
 	f(0);
 //	f(d); // error: ambiguous function overloading 
 	f(i);
 
-	Person person("Matthias");
+	const Person person("Matthias");
 
 	std::cout << person.name() << std::endl; // note: lvalue version
 

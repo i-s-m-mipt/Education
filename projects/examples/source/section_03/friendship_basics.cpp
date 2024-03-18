@@ -10,7 +10,7 @@ public:
 
 private:
 
-	int m_data = 42;
+	const int m_data = 42;
 
 }; // class A
 
@@ -26,7 +26,7 @@ public:
 
 private:
 
-	int m_data = 42;
+	const int m_data = 42;
 
 }; // class C
 
@@ -40,7 +40,7 @@ public:
 
 private:
 
-	int m_data = 42;
+	const int m_data = 42;
 
 }; // class B
 

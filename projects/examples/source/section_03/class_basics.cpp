@@ -156,7 +156,7 @@ int main()
 	date.print_v1();
 	date.print_v2();
 
-	[[maybe_unused]] auto year = date.year();
+	[[maybe_unused]] const auto year = date.year();
 
 	date.set_year(2023);
 
@@ -168,12 +168,12 @@ int main()
 
 	std::cout << c_date.get_date_as_string() << std::endl;
 
-	Date date_1;
-	Date date_2(2023, 9, 19);
+	const Date date_1;
+	const Date date_2(2023, 9, 19);
 
-//	Date date_3(); // bad: most vexing parse, not an instance of the class
+//	const Date date_3(); // bad: most vexing parse, not an instance of the class
 
-	Date::Printer printer;
+	const Date::Printer printer;
 
 	printer.print(date_2);
 

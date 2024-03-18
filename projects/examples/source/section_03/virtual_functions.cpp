@@ -91,36 +91,36 @@ public:
 
 int main()
 {
-	Mobile mobile;
+	const Mobile mobile;
 
-	Computer * c_ptr = &mobile; // note: works with pointers and references
+	const Computer * computer_ptr = &mobile; // note: works with pointers and references
 
-//	Computer s = p; // bad: object slicing
+//	Computer computer = mobile; // bad: object slicing
 
-	c_ptr->print();
+	computer_ptr->print();
 
 	Mobile mobile_1;
 	Mobile mobile_2;
 	Laptop laptop_1;
 	Laptop laptop_2;
 
-	std::vector < Computer * > computers = { &mobile_1, &mobile_2, &laptop_1, &laptop_2 };
+	std::vector < const Computer * > computers = { &mobile_1, &mobile_2, &laptop_1, &laptop_2 };
 
 	for (auto computer : computers) computer->print();
 
-	c_ptr = new Mobile;
+	computer_ptr = new Mobile;
 
-	c_ptr->print();
+	computer_ptr->print();
 
-	delete c_ptr; // note: important virtual destructor
+	delete computer_ptr; // note: important virtual destructor
 
-	Derived d;
+	const Derived derived;
 
-	Abstract_Base * ab_ptr = &d; // good: interface class
+	const Abstract_Base * const abstract_base_ptr = &derived; // good: interface class
 
-	ab_ptr->print();
+	abstract_base_ptr->print();
 
-//	Abstract_Base ab; // error: abstract base class
+//	const Abstract_Base abstract_base; // error: abstract base class
 
 	return 0;
 }

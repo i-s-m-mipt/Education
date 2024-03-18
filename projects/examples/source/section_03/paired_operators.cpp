@@ -23,7 +23,7 @@ public:
 
 private:
 
-    std::vector < int > m_data;
+    const std::vector < int > m_data;
 
 }; // class Data
 

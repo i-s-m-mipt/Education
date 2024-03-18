@@ -25,7 +25,7 @@ public: void print(std::ostream & stream) const override { stream << "Derived"; 
 
 int main()
 {
-    Base * base = new Derived;
+    const Base * const base = new Derived;
 
     std::cout << *base << std::endl;
 

@@ -33,7 +33,7 @@ int main()
 
 	std::cout << s1.a << std::endl;
 
-	auto ptr = &s1;
+	const auto ptr = &s1;
 
 //	(*ptr).b = 42; // bad: redundant syntax
 
