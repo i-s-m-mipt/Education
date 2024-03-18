@@ -97,9 +97,9 @@ int main()
 
 	Stack_v2 new_stack = deque_stack_v2;
 
-	[[maybe_unused]] Pair p{ 1.0, 100 }; // note: generated deduction guide for aggregate
+	[[maybe_unused]] const Pair p{ 1.0, 100 }; // note: generated deduction guide for aggregate
 
-	Container c(10, 1.0); // note: generated deduction guide for aggregate
+	const Container c(10, 1.0); // note: generated deduction guide for aggregate
 
 	C < char,   double > ().f(); // note: basic template for T1, T2
 	C < char,   char   > ().f(); // note: partial specialization for T, T

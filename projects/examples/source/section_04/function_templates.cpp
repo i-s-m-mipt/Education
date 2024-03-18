@@ -115,8 +115,8 @@ int main()
 	f <        > (1.0); // note: basic template for T
 	f < double > (1.0); // note: basic template for T
 
-	int x[]{ 1, 2, 3 };
-	int y[]{ 1, 2, 3, 4, 5 };
+	const int x[]{ 1, 2, 3 };
+	const int y[]{ 1, 2, 3, 4, 5 };
 
 	std::cout << less(x, y) << std::endl;
 

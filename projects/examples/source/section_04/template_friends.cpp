@@ -25,7 +25,7 @@ private:
 
 	void reduce() // note: same as in the non-template class
 	{
-		auto gcd = std::gcd(m_num, m_den);
+		const auto gcd = std::gcd(m_num, m_den);
 
 		m_num /= gcd;
 		m_den /= gcd;
@@ -35,7 +35,7 @@ public:
 
 	Ratio & operator+=(Ratio other) // note: same as in the non-template class
 	{
-		auto lcm = std::lcm(m_den, other.m_den);
+		const auto lcm = std::lcm(m_den, other.m_den);
 
 		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den);
 
@@ -46,7 +46,7 @@ public:
 		return *this;
 	}
 
-	[[nodiscard]] friend inline const Ratio operator+(Ratio lhs, Ratio rhs) // good: friend inside class template
+	[[nodiscard]] friend inline Ratio operator+(Ratio lhs, Ratio rhs) // good: friend inside class template
 	{
 		return (lhs += rhs);
 	}
@@ -60,7 +60,7 @@ private:
 
 int main()
 {
-	[[maybe_unused]] auto result = 1 + Ratio < int > (1, 1); // note: free operator+ template doesn't work here
+	[[maybe_unused]] const auto result = 1 + Ratio < int > (1, 1); // note: free operator+ template doesn't work here
 
 	return 0;
 }

@@ -33,8 +33,8 @@ int main()
 	root->l->r->l    = &nodes[3];
 	root->l->r->l->r = &nodes[4];
 
-	auto l = &Node < int > ::l; // note: pointer to data member l
-	auto r = &Node < int > ::r; // note: pointer to data member r
+	const auto l = &Node < int > ::l; // note: pointer to data member l
+	const auto r = &Node < int > ::r; // note: pointer to data member r
 
 	std::cout << traverse(root, l, r, l, r)->value << std::endl;
 

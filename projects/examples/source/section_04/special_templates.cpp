@@ -13,7 +13,7 @@ template < typename T > [[nodiscard]] inline T area(T r)
 
 int main()
 {
-	[[maybe_unused]] Buffer < int > buffer;
+	[[maybe_unused]] const Buffer < int > buffer;
 
 	std::cout << area(1  ) << std::endl;
 	std::cout << area(1.0) << std::endl;

@@ -43,8 +43,8 @@ template < typename T1, typename R1, typename T2, typename R2 >
 
 int main()
 {
-	auto x = 3;
-	auto y = 6;
+	constexpr auto x = 3;
+	constexpr auto y = 6;
 
 	std::cout << (
 		Duration < int, Ratio < 2, 5 > > (x) +
