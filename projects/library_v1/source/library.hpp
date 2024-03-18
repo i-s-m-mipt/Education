@@ -2,6 +2,6 @@
 
 namespace library_v1
 {
-	int f(int x);
+	[[nodiscard]] int f(int x);
 
 } // namespace library_v1

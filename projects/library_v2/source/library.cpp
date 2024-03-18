@@ -6,7 +6,7 @@
 
 namespace library_v2
 {
-	API int f(int x)
+	API [[nodiscard]] int f(int x)
 	{
 		std::cout << "Hello, dynamic library!" << std::endl;
 
@@ -15,7 +15,7 @@ namespace library_v2
 
 	API int global_variable;
 
-	int g(int x) { return x; }
+	[[nodiscard]] int g(int x) { return x; }
 
 } // namespace library_v2
 

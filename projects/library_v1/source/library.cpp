@@ -2,7 +2,7 @@
 
 namespace library_v1
 {
-	int f(int x)
+	[[nodiscard]] int f(int x)
 	{
 		std::cout << "Hello, static library!" << std::endl;
 
