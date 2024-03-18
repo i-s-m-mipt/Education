@@ -217,7 +217,7 @@ private:
 
 private:
 
-	static inline const auto separator = " : ";
+	static constexpr auto separator = " : ";
 
 private:
 
