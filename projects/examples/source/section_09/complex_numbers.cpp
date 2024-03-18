@@ -1,23 +1,27 @@
+#include <cassert>
+#include <cmath>
 #include <complex>
 #include <iostream>
+#include <limits>
 
 int main()
 {
+    const auto epsilon = 0.000001;
+
     std::complex < double > c(0.0, 1.0);
 
-    std::cout << c        << std::endl; // note: outputs (0.0, 1.0)
+    std::cout << c << std::endl; // note: outputs (0.0, 1.0)
 
-    std::cout << c.real() << std::endl; // note: outputs  0.0
-    std::cout << c.imag() << std::endl; // note: outputs  1.0
+    assert(std::abs(c.real() - 0.0) < epsilon);
+    assert(std::abs(c.imag() - 1.0) < epsilon);
 
     std::cout << c + c << std::endl; // note: outputs ( 0.0, 2.0)
     std::cout << c - c << std::endl; // note: outputs ( 0.0, 0.0)
     std::cout << c * c << std::endl; // note: outputs (-1.0, 0.0)
     std::cout << c / c << std::endl; // note: outputs ( 1.0, 0.0)
 
-    std::cout << std::abs (c) << std::endl; // note: outputs 1.000000
-    std::cout << std::arg (c) << std::endl; // note: outputs 1.570800
-    std::cout << std::norm(c) << std::endl; // note: outputs 1.000000
+    assert(std::abs(std::abs (c) - 1.000000) < epsilon);
+    assert(std::abs(std::norm(c) - 1.000000) < epsilon);
 
     std::cout << std::conj(c) << std::endl; // note: outputs (0.0, -1.0)
     std::cout << std::proj(c) << std::endl; // note: outputs (0.0,  1.0)
