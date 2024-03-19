@@ -14,7 +14,7 @@ class Derived : public Base
 {
 protected: // good: constructor can not be called by user
 
-    explicit Derived([[maybe_unused]] int x) {} 
+    explicit Derived(int) {} 
 
 public:
 
@@ -35,7 +35,7 @@ public:
 
 int main()
 {
-    Initializer < Derived > derived(42);
+    const Initializer < Derived > derived(42);
 
     return 0;
 }
