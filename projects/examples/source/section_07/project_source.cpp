@@ -70,7 +70,7 @@ void test_macros()
 
 	std::cout << __func__ << std::endl; // note: implicit local array with function name
 
-	auto location = std::source_location::current(); // good: macros alternative
+	constexpr auto location = std::source_location::current(); // good: macros alternative
 
 	std::cout << location.    file_name() << std::endl;
 	std::cout << location.         line() << std::endl;
