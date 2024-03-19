@@ -3,22 +3,24 @@
 #include <iostream>
 #include <type_traits>
 
-[[nodiscard]] inline int f(int x) noexcept
+[[nodiscard]] inline constexpr int f(int x) noexcept
 { 
 	return (x + 1); 
 }
 
-[[nodiscard]] inline auto g(int (*f)(int), int x) // note: old-style function argument
+[[nodiscard]] inline constexpr auto g(int (*f)(int), int x) // note: old-style function argument
 {
 	return f(x);
 }
 
-template < typename ... Types > [[nodiscard]] inline auto h(int (*f)(Types ...), Types ... args)
+template < typename ... Types > 
+[[nodiscard]] inline constexpr auto h(int (*f)(Types ...), Types ... args)
 {
 	return f(args...);
 }
 
-template < typename F, typename ... Types > [[nodiscard]] inline auto invoke(F && f, Types && ... args)
+template < typename F, typename ... Types > 
+[[nodiscard]] inline constexpr auto invoke(F && f, Types && ... args)
 {
 	return f(std::forward < Types > (args)...);
 }
@@ -31,7 +33,7 @@ int main()
 	static_assert(std::is_same_v < decltype( f),     f_t > );
 	static_assert(std::is_same_v < decltype(&f), ptr_f_t > );
 
-	auto ptr_f = &f; // note: auto -> int(*)(int), operator & is optional
+	const auto ptr_f = &f; // note: auto -> int(*)(int), operator & is optional
 
 	assert((*ptr_f)(0) == 1);
 	assert(  ptr_f (0) == 1);
