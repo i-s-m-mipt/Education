@@ -11,25 +11,25 @@ template < auto N > constexpr auto factorial_v = Factorial < N > ::value;
 
 template < auto P, auto D > struct Check_Is_Prime
 {
-	static constexpr bool value = (P % D != 0) && Check_Is_Prime < P, D - 1 > ::value;
+	static constexpr auto value = (P % D != 0) && Check_Is_Prime < P, D - 1 > ::value;
 }; 
 
 template < auto P > struct Check_Is_Prime < P, 2 >
 {
-	static constexpr bool value = (P % 2 != 0);
+	static constexpr auto value = (P % 2 != 0);
 }; 
 
 template < auto P > struct Is_Prime
 {
-	static constexpr bool value = Check_Is_Prime < P, P / 2 > ::value;
+	static constexpr auto value = Check_Is_Prime < P, P / 2 > ::value;
 }; 
 
-template <> struct Is_Prime < 0 > {	static constexpr bool value = false; };
-template <> struct Is_Prime < 1 > { static constexpr bool value = false; };
-template <> struct Is_Prime < 2 > { static constexpr bool value =  true; };
-template <> struct Is_Prime < 3 > { static constexpr bool value =  true; };
+template <> struct Is_Prime < 0 > {	static constexpr auto value = false; };
+template <> struct Is_Prime < 1 > { static constexpr auto value = false; };
+template <> struct Is_Prime < 2 > { static constexpr auto value =  true; };
+template <> struct Is_Prime < 3 > { static constexpr auto value =  true; };
 
-template < auto P > constexpr bool is_prime_v = Is_Prime < P > ::value;
+template < auto P > constexpr auto is_prime_v = Is_Prime < P > ::value;
 
 int main()
 {
