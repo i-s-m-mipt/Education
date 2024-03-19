@@ -17,7 +17,7 @@ int main()
     {
         std::cout << boost::multiprecision::checked_uint128_t(0) - 1 << std::endl;
     }
-    catch(const std::exception & exception)
+    catch (const std::exception & exception)
     {
         std::cerr << exception.what() << '\n';
     }

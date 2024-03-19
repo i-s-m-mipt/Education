@@ -51,7 +51,7 @@ int main()
 
         [[maybe_unused]] auto result = pow(2, 64); // note: throws an exception
     }
-    catch(const std::exception & exception)
+    catch (const std::exception & exception)
     {
         std::cerr << exception.what() << '\n';
     }
