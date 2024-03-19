@@ -122,7 +122,7 @@ class Derived_2 : protected Base // note: useless inheritance
 
 }; // class Derived_2 : protected Base
 
-class Derived_3 : /*private*/ Base // note: default inheritance
+class Derived_3 : private Base // note: default inheritance
 {
 	void f()
 	{
