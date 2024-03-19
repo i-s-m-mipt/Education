@@ -40,7 +40,7 @@
 
 class C { static constexpr auto c = 42; }; // note: same as inline const  
 
-[[nodiscard]] inline constexpr bool f([[maybe_unused]] int x)
+[[nodiscard]] inline constexpr bool f(int)
 {
 	return std::is_constant_evaluated(); // note: see type traits
 }
