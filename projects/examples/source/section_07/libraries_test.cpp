@@ -12,15 +12,15 @@ int main()
 
 	const std::string path = "liblibrary_v2.so";
 
-	auto f = boost::dll::import_symbol < int(int) > (path, "f"); // note: not import since C++20
+	const auto f = boost::dll::import_symbol < int(int) > (path, "f"); // note: not import since C++20
 
 	std::cout << f(42) << std::endl;
 
-	auto variable = boost::dll::import_symbol < int > (path, "global_variable"); // note: pointer
+	const auto variable = boost::dll::import_symbol < int > (path, "global_variable"); // note: pointer
 
 	std::cout << *variable << std::endl;
 
-	auto run = boost::dll::import_alias < int(int) > (path, "run");
+	const auto run = boost::dll::import_alias < int(int) > (path, "run");
 
 	std::cout << run(42) << std::endl;
 
