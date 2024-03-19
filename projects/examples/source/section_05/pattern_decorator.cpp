@@ -11,15 +11,15 @@ public:
 
 }; // class Computer 
 
-struct Mobile : public Computer { [[nodiscard]] std::string description() const override { return "Mobile"; } };
-struct Tablet : public Computer { [[nodiscard]] std::string description() const override { return "Tablet"; } };
-struct Laptop : public Computer { [[nodiscard]] std::string description() const override { return "Laptop"; } };
+class Mobile : public Computer { public: [[nodiscard]] std::string description() const override { return "Mobile"; } };
+class Tablet : public Computer { public: [[nodiscard]] std::string description() const override { return "Tablet"; } };
+class Laptop : public Computer { public: [[nodiscard]] std::string description() const override { return "Laptop"; } };
 
 class Decorated_Computer : public Computer // note: abstract decorator
 {
 public:
 
-    explicit Decorated_Computer(Computer * computer): m_computer(computer)
+    explicit Decorated_Computer(const Computer * const computer): m_computer(computer)
     {
         if (!m_computer) std::cout << "invalid computer" << std::endl;
     }
@@ -28,7 +28,7 @@ public:
 
 protected:
 
-    Computer * m_computer;
+    const Computer * const m_computer;
 
 }; // class Decorated_Computer : public Computer 
 
@@ -36,7 +36,7 @@ class Overclocked_Computer : public Decorated_Computer // note: concrete decorat
 {
 public:
 
-    explicit Overclocked_Computer(Computer * computer) : Decorated_Computer(computer) {}
+    explicit Overclocked_Computer(const Computer * const computer) : Decorated_Computer(computer) {}
 
     [[nodiscard]] std::string description() const override
     { 
@@ -47,11 +47,11 @@ public:
 
 int main()
 {
-    Computer * mobile = new Mobile();
+    const Computer * const mobile = new Mobile();
 
     std::cout << mobile->description() << std::endl;
 
-    Computer * overclocked_mobile = new Overclocked_Computer(mobile);
+    const Computer * const overclocked_mobile = new Overclocked_Computer(mobile);
 
     std::cout << overclocked_mobile->description() << std::endl;
 
