@@ -1,49 +1,61 @@
 #include <iostream>
 
-struct Number
+class Number
 {
+public:
+
     using value_type = int;
 
-    [[nodiscard]] value_type get() const { return value; }
+    [[nodiscard]] constexpr value_type get() const { return value; }
     
-    void set(value_type new_value) // note: trivial setter demo only
+    constexpr void set(value_type new_value) // note: trivial setter demo only
     { 
         value = new_value; 
     }
 
+private:
+
     value_type value{};
 
-}; // struct Number
+}; // class Number
 
-template < typename Base > struct Undoable : public Base
+template < typename Base > class Undoable : public Base
 {
+public:
+
     using value_type = typename Base::value_type;
 
-    void undo() { Base::set(value_before); }
+    constexpr void undo() { Base::set(value_before); }
     
-    void set(value_type new_value) 
+    constexpr void set(value_type new_value) 
     { 
         value_before = Base::get(); Base::set(new_value); 
     }
+
+private:
     
     value_type value_before{};
 
-}; // template < typename Base > struct Undoable : public Base
+}; // template < typename Base > class Undoable : public Base
 
-template < typename Base > struct Redoable : public Base
+template < typename Base > class Redoable : public Base
 {
+public:
+
     using value_type = typename Base::value_type;
 
-    void redo() { Base::set(value_after); }
+    constexpr void redo() { Base::set(value_after); }
     
-    void set(value_type new_value) 
+    constexpr void set(value_type new_value) 
     { 
         value_after = new_value; Base::set(new_value); 
     }
     
+private:
+    
     value_type value_after{};
 
-}; // template < typename Base > struct Redoable : public Base
+}; // template < typename Base > class Redoable : public Base
 
 int main() 
 {
