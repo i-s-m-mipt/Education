@@ -1,3 +1,4 @@
+#include <cassert>
 #include <chrono>
 #include <cmath>
 #include <iomanip>
@@ -76,7 +77,9 @@ int main()
 	{
 		Chronometer chronometer("test"); // note: consider measurement series
 
-		const std::size_t size = 1000; // note: measured operations
+		constexpr auto epsilon = 0.000001;
+
+		constexpr std::size_t size = 1000;
 
 		auto test = 0.0;
 
@@ -93,7 +96,7 @@ int main()
 			}
 		}
 
-		std::cout << "test = " << std::defaultfloat << test << std::endl;
+		assert(std::abs(test - 1'000'000.0) < epsilon);
 	}
 
 	return 0;
