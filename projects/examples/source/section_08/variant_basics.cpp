@@ -3,7 +3,7 @@
 #include <string>
 #include <variant>
 
-struct S { explicit S(int) {} };
+class C { public: explicit C(int) {} };
 
 class A { public: ~A() { std::cout << "destructor" << std::endl; } };
 
@@ -27,9 +27,9 @@ int main()
 		*ptr = 42;
 	}
 
-//	std::variant < S, int > v2; // error: not default constructible
+//	std::variant < C, int > v2; // error: not default constructible
 
-	std::variant < std::monostate, S, int > v3;
+	std::variant < std::monostate, C, int > v3;
 
 	std::variant < char, int, double > v4(3.14); // note: double
 

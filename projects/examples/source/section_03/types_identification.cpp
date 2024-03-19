@@ -14,9 +14,9 @@ public:
 
 }; // class Computer 
 
-struct Mobile : public Computer { void run() const override { std::cout << "Mobile" << std::endl; } };
-struct Tablet : public Computer { void run() const override { std::cout << "Tablet" << std::endl; } };
-struct Laptop : public Computer { void run() const override { std::cout << "Laptop" << std::endl; } };
+class Mobile : public Computer { public: void run() const override { std::cout << "Mobile" << std::endl; } };
+class Tablet : public Computer { public: void run() const override { std::cout << "Tablet" << std::endl; } };
+class Laptop : public Computer { public: void run() const override { std::cout << "Laptop" << std::endl; } };
 
 int main()
 {

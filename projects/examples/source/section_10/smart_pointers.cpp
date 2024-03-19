@@ -34,23 +34,27 @@ inline void f(std::shared_ptr < int > x, [[maybe_unused]] int y) noexcept {}
 	return 0;
 }
 
-struct B; // note: forward declaration as for plain pointers
+class B; // note: forward declaration as for plain pointers
 
-struct A
+class A
 {
-	~A() { std::cout << "A destroyed" << std::endl; }
+public:
+
+	~A() noexcept { try { std::cout << "A destroyed" << std::endl; } catch (...) {} }
 
 	std::shared_ptr < B > b;
 
-}; // struct A
+}; // class A
 
-struct B
+class B
 {
-	~B() { std::cout << "B destroyed" << std::endl; }
+public:
+
+	~B() noexcept { try { std::cout << "B destroyed" << std::endl; } catch (...) {} }
 
 	std::weak_ptr < A > a; // note: immortal connection if shared_ptr
 
-}; // struct B
+}; // class B
 
 class Base 
 {

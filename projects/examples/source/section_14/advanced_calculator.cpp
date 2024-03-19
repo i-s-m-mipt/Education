@@ -17,14 +17,16 @@ namespace detail
     struct Sign;
     struct List;
 
-    struct Operand : public boost::spirit::x3::variant < double, 
+    class Operand : public boost::spirit::x3::variant < double, 
         boost::spirit::x3::forward_ast < Sign > , 
         boost::spirit::x3::forward_ast < List > > // note: pattern visitor
     {
+    public:
+
         using base_type::base_type;
         using base_type::operator=;
 
-    }; // struct Operand : boost::spirit::x3::variant < ... >
+    }; // class Operand : boost::spirit::x3::variant < ... >
 
     struct Sign { char c{}; Operand operand; };
     struct Step { char c{}; Operand operand; };
@@ -37,8 +39,10 @@ BOOST_FUSION_ADAPT_STRUCT(::detail::Sign, c, operand)
 BOOST_FUSION_ADAPT_STRUCT(::detail::Step, c, operand)
 BOOST_FUSION_ADAPT_STRUCT(::detail::List, head, tail)
 
-struct Calculator
+class Calculator
 {
+public:
+
     [[nodiscard]] double operator()(double n) const noexcept { return n; }
 
     [[nodiscard]] double operator()(const detail::Sign & sign) const
@@ -77,7 +81,7 @@ struct Calculator
         return state;
     }
 
-}; // struct Calculator
+}; // class Calculator
 
 namespace grammar
 {

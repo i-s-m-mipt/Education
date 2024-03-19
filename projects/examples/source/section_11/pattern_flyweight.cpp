@@ -36,9 +36,9 @@ struct Equal
 
 }; // struct Equal
 
-struct Storage 
+class Storage 
 {
-    explicit Storage(const Data & x, const Data & y) : m_x(x), m_y(y) {}
+public:
 
     using container = boost::flyweights::hashed_factory < Hash, Equal > ;
 
@@ -47,8 +47,10 @@ struct Storage
 
     template < typename T > using tag = boost::flyweights::tag < T > ;
 
-    boost::flyweight < Data, container, tag < X > > m_x; // Data m_x;
-    boost::flyweight < Data, container, tag < Y > > m_y; // Data m_y;
+    explicit Storage(const Data & x, const Data & y) : m_x(x), m_y(y) {}
+
+    boost::flyweight < Data, container, tag < X > > m_x; // compare with Data x;
+    boost::flyweight < Data, container, tag < Y > > m_y; // compare with Data y;
 
 }; // class Storage
 

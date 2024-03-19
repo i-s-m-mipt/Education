@@ -56,7 +56,7 @@ private:
     static inline const Tablet tablet_prototype;
     static inline const Laptop laptop_prototype;
 
-}; // struct Factory
+}; // class Factory
 
 int main()
 {

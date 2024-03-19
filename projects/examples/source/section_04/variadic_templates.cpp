@@ -22,14 +22,18 @@ template < typename T, typename ... Ts > inline void print_v2(T arg, Ts ... args
 	print_v2(args...);
 }
 
-struct Point
+class Point
 {
+public:
+
 	explicit Point(double x, double y) : m_x(x), m_y(y) {}
+
+private:
 
 	double m_x;
 	double m_y;
 
-}; // struct Point
+}; // class Point
 
 template < typename T, typename ... Ts > [[nodiscard]] inline T * make_object(Ts ... args)
 {

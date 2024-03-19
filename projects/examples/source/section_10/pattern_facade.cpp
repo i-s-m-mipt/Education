@@ -1,25 +1,31 @@
 #include <iostream>
 
-struct CPU
+class CPU
 {
+public:
+
     void make_slow() const { std::cout << "CPU is slow" << std::endl; }
     void make_fast() const { std::cout << "CPU is fast" << std::endl; }
 
-}; // struct CPU
+}; // class CPU
 
-struct GPU
+class GPU
 {
+public:
+
     void make_slow() const { std::cout << "GPU is slow" << std::endl; }
     void make_fast() const { std::cout << "GPU is fast" << std::endl; }
 
-}; // struct GPU 
+}; // class GPU 
 
-struct RAM
+class RAM
 {
+public:
+
     void make_slow() const { std::cout << "RAM is slow" << std::endl; }
     void make_fast() const { std::cout << "RAM is fast" << std::endl; }
 
-}; // struct RAM 
+}; // class RAM 
 
 class Computer 
 {

@@ -13,13 +13,15 @@
 
 struct Human { double height{}, weight{}; };
 
-template < typename T > struct Range : private std::vector < T >
+template < typename T > class Range : private std::vector < T >
 {
+public:
+
     using std::vector < T > ::begin; // note: required for       range
 	using std::vector < T > ::  end; // note: required for       range
 	using std::vector < T > :: size; // note: required for sized range
 
-}; // template < typename T > struct Range : private std::vector < T >
+}; // template < typename T > class Range : private std::vector < T >
 
 static_assert(std::ranges::      range < Range < int > > ); // note: verify if       range
 static_assert(std::ranges::sized_range < Range < int > > ); // note: verify if sized range

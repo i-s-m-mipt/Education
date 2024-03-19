@@ -14,26 +14,32 @@ public:
 
 }; // class State
 
-struct Stop : public State // note: implements all possible state changes
+class Stop : public State // note: implements all possible state changes
 {
+public:
+
     void slow([[maybe_unused]] Computer * c) const override;
     void fast([[maybe_unused]] Computer * c) const override;
 
-}; // struct Stop : public State
+}; // class Stop : public State
 
-struct Slow : public State // note: implements all possible state changes
+class Slow : public State // note: implements all possible state changes
 {
+public:
+
     void stop([[maybe_unused]] Computer * c) const override;
     void fast([[maybe_unused]] Computer * c) const override;
 
-}; // struct Slow : public State
+}; // class Slow : public State
 
-struct Fast : public State // note: implements all possible state changes
+class Fast : public State // note: implements all possible state changes
 {
+public:
+
     void stop([[maybe_unused]] Computer * c) const override;
     void slow([[maybe_unused]] Computer * c) const override;
 
-}; // struct Fast : public State
+}; // class Fast : public State
 
 class Computer
 {

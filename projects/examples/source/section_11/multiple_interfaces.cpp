@@ -10,7 +10,7 @@
 #include <boost/multi_index/ordered_index.hpp>
 #include <boost/multi_index/random_access_index.hpp>
 
-struct Computer { std::string name{}; std::size_t size{}; };
+struct Computer { std::string name; std::size_t size{}; };
 
 using namespace boost::multi_index;
 

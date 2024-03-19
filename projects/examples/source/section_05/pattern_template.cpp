@@ -24,26 +24,32 @@ private: // note: non-virtual interface
 
 }; // class Computer
 
-struct Mobile : public Computer
+class Mobile : public Computer
 {
+public:
+
 	void b() const override { std::cout << "M "; }
 	void d() const override { std::cout << "M "; }
 
-}; // struct Mobile : public Computer
+}; // class Mobile : public Computer
 
-struct Tablet : public Computer
+class Tablet : public Computer
 {
+public:
+
 	void b() const override { std::cout << "T "; }
 	void d() const override { std::cout << "T "; }
 
-}; // struct Tablet : public Computer
+}; // class Tablet : public Computer
 
-struct Laptop : public Computer
+class Laptop : public Computer
 {
+public:
+
 	void b() const override { std::cout << "L "; }
 	void d() const override { std::cout << "L "; }
 
-}; // struct Laptop : public Computer
+}; // class Laptop : public Computer
 
 int main()
 {

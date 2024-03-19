@@ -6,8 +6,8 @@ template < typename T > struct Node
 {
 	T value{};
 
-	Node < T > * l = nullptr;
-	Node < T > * r = nullptr;
+	Node < T > * l{};
+	Node < T > * r{};
 
 }; // template < typename T > struct Node
 

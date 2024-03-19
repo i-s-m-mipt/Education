@@ -12,8 +12,10 @@ namespace parser
 {
     namespace detail
     {
-        struct Huns : boost::spirit::x3::symbols < int >
+        class Huns : public boost::spirit::x3::symbols < int >
         {
+        public:
+
             Huns()
             {
                 add("C"   , 100);
@@ -27,10 +29,12 @@ namespace parser
                 add("CM"  , 900);
             }
 
-        } huns; // struct Huns : boost::spirit::x3::symbols < int >
+        } huns; // class Huns : boost::spirit::x3::symbols < int >
 
-        struct Tens : boost::spirit::x3::symbols < int >
+        class Tens : public boost::spirit::x3::symbols < int >
         {
+        public:
+
             Tens()
             {
                 add("X"   , 10);
@@ -44,10 +48,12 @@ namespace parser
                 add("XC"  , 90);
             }
 
-        } tens; // struct Tens : boost::spirit::x3::symbols < int >
+        } tens; // class Tens : boost::spirit::x3::symbols < int >
 
-        struct Ones : boost::spirit::x3::symbols < int >
+        class Ones : public boost::spirit::x3::symbols < int >
         {
+        public:
+
             Ones()
             {
                 add("I"   , 1);
@@ -61,7 +67,7 @@ namespace parser
                 add("IX"  , 9);
             }
 
-        } ones; // struct Ones : boost::spirit::x3::symbols < int >
+        } ones; // class Ones : boost::spirit::x3::symbols < int >
 
         auto set_0    = [](auto & context){ boost::spirit::x3::_val (context)  = 0;    };
         auto add_1000 = [](auto & context){ boost::spirit::x3::_val (context) += 1000; };

@@ -12,14 +12,16 @@ template < typename T > inline void swap(T & a, T & b)
     auto c = b; b = a; a = c;
 }
 
-struct Bad { Bad() = delete; }; // note: not default constructible
+class Bad { public: Bad() = delete; }; // note: not default constructible
 
-template < typename T = Bad > struct S
+template < typename T = Bad > class C
 {
-    static_assert(std::is_default_constructible_v < T > ,
-        "S requires default constructible type");
+public:
 
-}; // template < typename T = Bad > struct S
+    static_assert(std::is_default_constructible_v < T > ,
+        "C requires default constructible type");
+
+}; // template < typename T = Bad > class C
 
 inline void cleanup_v1() { std::cerr << "cleanup_v1 at exit\n"; }
 inline void cleanup_v2() { std::cerr << "cleanup_v2 at exit\n"; }
@@ -40,9 +42,9 @@ int main()
            assert((sizeof(int) == 4) && "required size of int 4 bytes");
     static_assert((sizeof(int) == 4),   "required size of int 4 bytes");
 
-    [[maybe_unused]] S < int > good;
+    [[maybe_unused]] C < int > good;
 
-//  S bad; // error: static assertion failed
+//  C bad; // error: static assertion failed
 
     std::atexit(cleanup_v1);
     std::atexit(cleanup_v2);

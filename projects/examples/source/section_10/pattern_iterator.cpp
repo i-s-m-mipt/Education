@@ -70,7 +70,7 @@ private:
 
 }; // template < typename T > class List
 
-struct S { void f() const { std::cout << "S::f" << std::endl; } };
+class C { public: void f() const { std::cout << "C::f" << std::endl; } };
 
 int main()
 {
@@ -93,11 +93,11 @@ int main()
 
 	std::cout << std::endl;
 
-	List < S > s_list;
+	List < C > c_list;
 
-	s_list.push_back(S());
+	c_list.push_back(C());
 
-	std::begin(s_list)->f(); // note: iterator.operator->()->f()
+	std::begin(c_list)->f(); // note: iterator.operator->()->f()
 
 	return 0;
 }

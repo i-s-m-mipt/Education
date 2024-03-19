@@ -1,7 +1,7 @@
 #include <iostream>
 
-struct Color_v1 { constexpr explicit Color_v1(char) {}; };
-struct Label_v1 { constexpr explicit Label_v1(char) {}; };
+class Color_v1 { public: constexpr explicit Color_v1(char) {}; };
+class Label_v1 { public: constexpr explicit Label_v1(char) {}; };
 
 template < typename ... Bases > 
 class Point_v1 : public Bases... // note: modern mixin
