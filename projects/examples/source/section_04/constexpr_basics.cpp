@@ -38,18 +38,15 @@
 	}
 }
 
-class C { static constexpr auto c = 42; }; // note: same as inline const  
+class C { static constexpr auto c = 42; }; // note: constexpr here is same as inline const  
 
-[[nodiscard]] inline constexpr bool f(int)
-{
-	return std::is_constant_evaluated(); // note: see type traits
-}
+[[nodiscard]] inline constexpr bool f(int) { return std::is_constant_evaluated(); }
 
 template < typename T, typename ... Types > inline void print(const T & arg, const Types & ... args)
 {
-	if constexpr (std::cout << arg << std::endl; sizeof...(args) > 0) // note: compile-time instantiation
+	if constexpr (std::cout << arg << std::endl; sizeof...(args) > 0) 
 	{
-		print(args...);
+		print(args...); // note: compile-time instantiation
 	}
 }
 
