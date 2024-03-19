@@ -59,7 +59,7 @@ protected:
 
 }; // class Noncopyable
 
-class Unique : Noncopyable // note: consider boost::noncopyable
+class Unique : private Noncopyable // note: consider boost::noncopyable
 {
 public:
 
@@ -69,7 +69,7 @@ private:
 
     int m_data = 0;
 
-}; // class Unique : Noncopyable
+}; // class Unique : private Noncopyable
 
 int main()
 {
