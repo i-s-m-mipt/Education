@@ -96,7 +96,7 @@ public:
 
 int main()
 {
-    auto mobile = build(Builder_Mobile("Mobile")); 
+    const Computer * const mobile = build(Builder_Mobile("Mobile")); 
 
     print(*mobile); delete mobile; // good: no memory leak
 
