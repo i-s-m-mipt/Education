@@ -106,7 +106,7 @@ int main()
 
 	std::vector < const Computer * > computers = { &mobile_1, &mobile_2, &laptop_1, &laptop_2 };
 
-	for (auto computer : computers) computer->print();
+	for (const auto computer : computers) computer->print();
 
 	computer_ptr = new Mobile;
 
