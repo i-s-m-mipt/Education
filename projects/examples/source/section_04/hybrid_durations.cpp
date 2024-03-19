@@ -43,12 +43,20 @@ template < typename T1, typename R1, typename T2, typename R2 >
 
 int main()
 {
-	constexpr auto x = 3;
-	constexpr auto y = 6;
+	constexpr auto result_1 = (
+		Duration < int, Ratio < 2, 5 > > (3) +
+		Duration < int, Ratio < 1, 7 > > (6)).value;
 
-	std::cout << (
+	std::cout << result_1 << std::endl; // note: compile-time result
+
+	auto x = 3; // note: runtime non-constant variable
+	auto y = 6; // note: runtime non-constant variable
+
+	auto result_2 = (
 		Duration < int, Ratio < 2, 5 > > (x) +
-		Duration < int, Ratio < 1, 7 > > (y)).value << std::endl;
+		Duration < int, Ratio < 1, 7 > > (y)).value;
+
+	std::cout << result_2 << std::endl; // note: hybrid-time result
 
 	return 0;
 }
