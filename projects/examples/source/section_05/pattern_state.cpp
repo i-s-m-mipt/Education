@@ -39,11 +39,11 @@ class Computer
 {
 public:
 
-    Computer() : m_state(new Stop()) {} // note: initial state
+     Computer() : m_state(new Stop()) {} // note: initial state
 
     ~Computer() { set_state(nullptr); }
 
-    void set_state(State * state) 
+    void set_state(const State * state) 
     { 
         delete m_state; m_state = state; // good: no memory leak
     }
@@ -54,7 +54,7 @@ public:
 
 private:
 
-    State * m_state; // note: internal state of state machine
+    const State * m_state; // note: internal state of state machine
 
 }; // class Computer
 

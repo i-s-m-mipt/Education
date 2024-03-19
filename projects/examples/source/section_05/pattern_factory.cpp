@@ -16,7 +16,7 @@ class Laptop : public Computer { public: void run() const override { std::cout <
 
 template < typename T > [[nodiscard]] inline Computer * create() // note: factory function, consider enumeration
 {
-    return new T; // note: delete required, consider type traits to verify type T is correct
+    return new T; // note: consider type traits to verify type T is correct
 }
 
 class Server : public Computer
@@ -27,9 +27,9 @@ public:
     {
     public:
 
-        [[nodiscard]] static Computer * create_v1() { return new Server(1); } // note: delete required
-        [[nodiscard]] static Computer * create_v2() { return new Server(2); } // note: delete required
-        [[nodiscard]] static Computer * create_v3() { return new Server(3); } // note: delete required
+        [[nodiscard]] static Computer * create_v1() { return new Server(1); }
+        [[nodiscard]] static Computer * create_v2() { return new Server(2); }
+        [[nodiscard]] static Computer * create_v3() { return new Server(3); }
 
     }; // class Factory
 
@@ -57,7 +57,7 @@ class Factory_Mobile : public Factory
 {
 public: 
     
-    [[nodiscard]] Computer * create() const override { return new Mobile; } // note: delete required 
+    [[nodiscard]] Computer * create() const override { return new Mobile; } 
 
 }; // class Factory_Mobile : public Factory
 
@@ -65,7 +65,7 @@ class Factory_Tablet : public Factory
 {
 public: 
     
-    [[nodiscard]] Computer * create() const override { return new Tablet; } // note: delete required 
+    [[nodiscard]] Computer * create() const override { return new Tablet; }
 
 }; // class Factory_Tablet : public Factory
 
@@ -73,7 +73,7 @@ class Factory_Laptop : public Factory
 {
 public: 
     
-    [[nodiscard]] Computer * create() const override { return new Laptop; } // note: delete required
+    [[nodiscard]] Computer * create() const override { return new Laptop; }
 
 }; // class Factory_Laptop : public Factory
 
@@ -87,7 +87,7 @@ int main()
 
     server->run(); delete server; // good: no memory leak
 
-    const Factory * const factory_laptop = new Factory_Laptop; // note: delete required
+    const Factory * const factory_laptop = new Factory_Laptop;
 
     const Computer * const laptop = factory_laptop->create(); 
 

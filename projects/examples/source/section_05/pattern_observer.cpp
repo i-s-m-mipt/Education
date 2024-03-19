@@ -33,11 +33,11 @@ public:
         }
     }
 
-    void add_observer(Observer * observer) { m_observers.push_back(observer); }
+    void add_observer(const Observer * observer) { m_observers.push_back(observer); }
 
 private:
 
-    double m_temperature = 0.0; std::vector < Observer * > m_observers;
+    double m_temperature = 0.0; std::vector < const Observer * > m_observers;
 
 }; // class Computer 
 

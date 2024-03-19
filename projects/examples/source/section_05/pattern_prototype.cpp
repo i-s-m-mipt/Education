@@ -16,10 +16,7 @@ class Mobile : public Computer
 {
 public:
 
-    [[nodiscard]] Computer * clone() const override 
-    { 
-        return new Mobile(*this); // note: delete required
-    } 
+    [[nodiscard]] Computer * clone() const override { return new Mobile(*this); } 
 
     void run() const override { std::cout << "Mobile" << std::endl; };
 
@@ -29,10 +26,7 @@ class Tablet : public Computer
 {
 public:
 
-    [[nodiscard]] Computer * clone() const override 
-    { 
-        return new Tablet(*this); // note: delete required
-    } 
+    [[nodiscard]] Computer * clone() const override { return new Tablet(*this); } 
 
     void run() const override { std::cout << "Tablet" << std::endl; };
 
@@ -42,10 +36,7 @@ class Laptop : public Computer
 {
 public:
 
-    [[nodiscard]] Computer * clone() const override 
-    { 
-        return new Laptop(*this); // note: delete required
-    } 
+    [[nodiscard]] Computer * clone() const override { return new Laptop(*this); } 
 
     void run() const override { std::cout << "Laptop" << std::endl; };
 
@@ -69,7 +60,7 @@ private:
 
 int main()
 {
-    auto mobile = Factory::create_mobile(); 
+    const Computer * const mobile = Factory::create_mobile(); 
 
     mobile->run(); delete mobile; // good: no memory leak
 

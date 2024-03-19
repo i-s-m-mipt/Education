@@ -24,10 +24,7 @@ class Builder
 {
 public:
 
-    explicit Builder(const std::string & name)
-    {
-        m_computer = new Computer{ .name = name }; // note: delete required
-    }
+    explicit Builder(const std::string & name) : m_computer(new Computer{ name }) {}
 
     virtual ~Builder() = default; // note: polymorphic base class
 
@@ -39,7 +36,7 @@ public:
 
 private:
 
-    Computer * m_computer; // note: consider smart pointer
+    Computer * const m_computer; // note: consider smart pointer
 
 }; // class Builder
 

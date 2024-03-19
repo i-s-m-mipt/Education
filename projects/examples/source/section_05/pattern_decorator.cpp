@@ -19,16 +19,13 @@ class Decorated_Computer : public Computer // note: abstract decorator
 {
 public:
 
-    explicit Decorated_Computer(const Computer * const computer): m_computer(computer)
-    {
-        if (!m_computer) std::cout << "invalid computer" << std::endl;
-    }
+    explicit Decorated_Computer(const Computer & computer): m_computer(computer) {}
 
-    [[nodiscard]] std::string description() const override { return m_computer->description(); }
+    [[nodiscard]] std::string description() const override { return m_computer.description(); }
 
 protected:
 
-    const Computer * const m_computer;
+    const Computer & m_computer;
 
 }; // class Decorated_Computer : public Computer 
 
@@ -36,11 +33,11 @@ class Overclocked_Computer : public Decorated_Computer // note: concrete decorat
 {
 public:
 
-    explicit Overclocked_Computer(const Computer * const computer) : Decorated_Computer(computer) {}
+    explicit Overclocked_Computer(const Computer & computer) : Decorated_Computer(computer) {}
 
     [[nodiscard]] std::string description() const override
     { 
-        return "Overclocked " + m_computer->description();
+        return "Overclocked " + m_computer.description();
     }
 
 }; // class Overclocked_Computer : public Decorated_Computer
@@ -51,7 +48,7 @@ int main()
 
     std::cout << mobile->description() << std::endl;
 
-    const Computer * const overclocked_mobile = new Overclocked_Computer(mobile);
+    const Computer * const overclocked_mobile = new Overclocked_Computer(*mobile);
 
     std::cout << overclocked_mobile->description() << std::endl;
 

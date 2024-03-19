@@ -21,7 +21,7 @@ public:
 
     ~Cluster()
     {
-        for (auto computer : m_computers) delete computer; // good: no memory leak
+        for (const auto computer : m_computers) delete computer; // good: no memory leak
     }
 
     [[nodiscard]] std::size_t cores() const override
@@ -36,11 +36,11 @@ public:
         return total_cores;
     }
 
-    void add_computer(Computer * computer) { m_computers.push_back(computer); }
+    void add_computer(const Computer * computer) { m_computers.push_back(computer); }
 
 private:
     
-    std::vector < Computer * > m_computers;
+    std::vector < const Computer * > m_computers;
 
 }; // class Cluster : public Computer
 

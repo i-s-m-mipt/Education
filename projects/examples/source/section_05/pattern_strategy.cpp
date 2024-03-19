@@ -10,31 +10,30 @@ public:
 
 }; // class Computation
 
-struct AVX : public Computation { void compute() const override { std::cout << "AVX" << std::endl; } };
-struct SSE : public Computation { void compute() const override { std::cout << "SSE" << std::endl; } };
+class AVX : public Computation { public: void compute() const override { std::cout << "AVX" << std::endl; } };
+class SSE : public Computation { public: void compute() const override { std::cout << "SSE" << std::endl; } };
 
 class Computer
 {
 public:
 
-    explicit Computer(Computation * computation) : m_computation(computation) 
-    {
-        if (!m_computation) std::cout << "invalid computation" << std::endl;
-    }
+    explicit Computer(const Computation & computation) : m_computation(computation) {}
 
-    ~Computer() { delete m_computation; } // good: no memory leak
-
-    void compute() const { m_computation->compute(); }
+    void compute() const { m_computation.compute(); }
 
 private:
     
-    Computation * m_computation;
+    const Computation & m_computation;
 
 }; // class Computer
 
 int main()
 {
-    Computer(new AVX).compute(); // note: instruction set for computations
+    const Computation * const computation = new AVX;
+
+    Computer(*computation).compute(); // note: instruction set for computations
+
+    delete computation; // good: no memory leak
 
     return 0;
 }

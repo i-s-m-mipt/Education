@@ -47,7 +47,7 @@ struct Laptop : public Computer
 
 int main()
 {
-	Computer * mobile = new Mobile;
+	const Computer * const mobile = new Mobile;
 
 	mobile->run(); delete mobile; // good: no memory leak
 
