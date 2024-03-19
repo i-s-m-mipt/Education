@@ -20,8 +20,11 @@ public:
 
 class Derived : public Base
 {
-public: void print(std::ostream & stream) const override { stream << "Derived"; }
-};
+public:
+    
+    void print(std::ostream & stream) const override { stream << "Derived"; }
+
+}; // class Derived : public Base
 
 int main()
 {
