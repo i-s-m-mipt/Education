@@ -5,9 +5,9 @@ class Backup
 {
 public:
 
-    explicit Backup(int data) : m_data(data) {}
+    constexpr explicit Backup(int data) : m_data(data) {}
 
-    [[nodiscard]] int data() const { return m_data; }
+    [[nodiscard]] constexpr int data() const { return m_data; }
 
 private:
 
@@ -15,13 +15,21 @@ private:
 
 }; // class Backup 
 
-struct Computer 
+class Computer 
 {
-    [[nodiscard]] Backup make_backup() const { return Backup(data); }
+public:
 
-    void load_backup(const Backup & backup) { data = backup.data(); }
+    [[nodiscard]] constexpr int data() const { return m_data; }
 
-    int data;
+    constexpr void update() { ++m_data; }
+
+    [[nodiscard]] constexpr Backup make_backup() const { return Backup(m_data); }
+
+    constexpr void load_backup(const Backup & backup) { m_data = backup.data(); }
+
+private:
+
+    int m_data = 0;
 
 }; // class Computer 
 
@@ -29,9 +37,9 @@ class Storage
 {
 public:
 
-    void save(const Backup & backup) { m_backups.push_back(backup); }
+    constexpr void save(const Backup & backup) { m_backups.push_back(backup); }
 
-    [[nodiscard]] Backup load(int index) const { return m_backups.at(index); }
+    [[nodiscard]] constexpr Backup load(int index) const { return m_backups.at(index); }
 
 private:
 
@@ -43,15 +51,15 @@ int main()
 {
     Computer computer; Storage storage;
 
-    computer.data = 1; storage.save(computer.make_backup());
-    computer.data = 2; 
-    computer.data = 3; storage.save(computer.make_backup());
-    computer.data = 4; 
-    computer.data = 5; storage.save(computer.make_backup());
+    computer.update(); storage.save(computer.make_backup());
+    computer.update(); 
+    computer.update(); storage.save(computer.make_backup());
+    computer.update(); 
+    computer.update(); storage.save(computer.make_backup());
 
     computer.load_backup(storage.load(1));
 
-    std::cout << computer.data << std::endl;
+    std::cout << computer.data() << std::endl;
 
     return 0;
 }
