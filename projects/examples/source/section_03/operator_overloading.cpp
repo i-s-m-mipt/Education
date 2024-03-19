@@ -9,7 +9,7 @@ class Ratio
 {
 public:
 
-	/*explicit*/ Ratio(int num = 0, int den = 1) : m_num(num), m_den(den) 
+	/*explicit*/ Ratio(int num = 0, int den = 1) : m_num(num), m_den(den) // good no explicit
 	{
 		if (m_den == 0) // note: primitive error handling
 		{
