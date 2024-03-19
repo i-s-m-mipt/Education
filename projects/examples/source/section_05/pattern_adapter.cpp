@@ -28,7 +28,7 @@ private:
 
 int main()
 {
-	Device device; Computer * computer = new Adapter(device);
+	const Device device; const Computer * const computer = new Adapter(device);
 
 	computer->run(); delete computer; // good: no memory leak
 
