@@ -2,7 +2,7 @@
 
 [[nodiscard]] inline int f() { std::cout << "Hello, world!" << std::endl; return 0; }
 
-auto x = f(); // note: global variable
+const auto x = f(); // note: global variable
 
 class C
 {
@@ -13,7 +13,7 @@ public:
 
 }; // class C
 
-C c; // note: global variable
+const C c; // note: global variable
 
 #define return std::cout << "Hello, world!" << std::endl;
 
