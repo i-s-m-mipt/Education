@@ -34,27 +34,18 @@ int main()
 {
 	std::vector < int > vector = { 0, 1, 2, 3, 4 };
 
-	for (auto && x : vector) ++x; // note: range-based for, look at cppinsights.io
+	for (auto && element : vector) ++element; // note: range-based for, look at cppinsights.io
 
 	std::map < int, int > map = { { 1, 10 }, { 2, 20 }, { 3, 30 } };
 
-	for (auto [key, value] : map) // note: structured binding, look at cppinsights.io
+	for (const auto [key, value] : map) // note: structured binding, look at cppinsights.io
 	{
 		std::cout << key << ", " << value << std::endl;
 	}
 
 	int array[] = { 1, 2, 3, 4, 5 }; // note: built-in array is considered as range
 
-	for (auto x : array) std::cout << x << ' ';
-
-	std::cout << std::endl;
-
-	for (auto x : std::views::transform(std::views::filter(vector,
-		[](auto x){ return (x % 2); }),
-		[](auto x){ return (x + 1); })) // note: funcional syntax
-	{
-		std::cout << x << ' ';
-	}
+	for (const auto element : array) std::cout << element << ' ';
 
 	std::cout << std::endl;
 
@@ -73,24 +64,33 @@ int main()
 
 	std::ranges::sort(humans, std::ranges::greater(), &Human::weight);
 
-	for (auto key : std::views::reverse(std::views::keys(map)))
+	for (const auto x : std::views::transform(std::views::filter(vector,
+		[](auto x){ return (x % 2); }),
+		[](auto x){ return (x + 1); })) // note: funcional syntax
+	{
+		std::cout << x << ' ';
+	}
+
+	std::cout << std::endl;
+
+	for (const auto key : std::views::reverse(std::views::keys(map)))
 	{
 		std::cout << key << ' ';
 	}
 
 	std::cout << std::endl;
 
-	for (auto x : std::views::iota(1) | std::views::take(5)) // note: syntax sugar
+	for (const auto x : std::views::iota(1) | std::views::take(5)) // note: syntax sugar
 	{
 		std::cout << x << ' ';
 	}
 
 	std::cout << std::endl;
  
-    for (auto x : std::views::iota     (1, 6)
-                | std::views::filter   ([](auto x){ return (x % 2); })
-                | std::views::transform([](auto x){ return (x * x); })
-				| std::views::drop     (1))
+    for (const auto x : std::views::iota     (1, 6)
+                      | std::views::filter   ([](auto x){ return (x % 2); })
+                      | std::views::transform([](auto x){ return (x * x); })
+				      | std::views::drop     (1))
 	{
 		std::cout << x << ' ';
 	}
