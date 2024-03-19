@@ -17,7 +17,7 @@ public:
 
     ~Computer()
     {
-        for (auto observer : m_observers) delete observer; // good: no memory leak
+        for (const auto observer : m_observers) delete observer; // good: no memory leak
     }
 
     void set_temperature(double temperature) 
@@ -27,7 +27,7 @@ public:
 
     void notify_all() const 
     { 
-        for (auto observer : m_observers)
+        for (const auto observer : m_observers)
         {
             if (observer) observer->update(m_temperature);
         }

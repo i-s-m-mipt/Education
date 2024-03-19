@@ -47,14 +47,14 @@ void print_array(const int * array, std::size_t size) // note: array size as add
 
 void print_span(std::span < const int > span) // good: std::span knows its size as all* containers
 {
-	for (auto element : span) std::cout << element << ' ';
+	for (const auto element : span) std::cout << element << ' ';
 
 	std::cout << std::endl;
 }
 
 void print_vector(const std::vector < int > & vector) // good: std::vector knows its size
 {
-	for (auto element : vector) std::cout << element << ' ';
+	for (const auto element : vector) std::cout << element << ' ';
 
 	std::cout << std::endl;
 }

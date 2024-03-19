@@ -10,7 +10,7 @@
 {
 	std::size_t seed = 0;
 
-	for (auto element : string)
+	for (const auto element : string)
 	{
 		(seed *= 31) += static_cast < std::size_t > (element); // note: prime number
 	}

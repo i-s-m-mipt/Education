@@ -63,7 +63,7 @@ int main()
 
 	std::set < int, std::greater < int > > set = { 1, 4, 2, 5, 3 };
 
-	for (auto element : set) std::cout << element << ' ';
+	for (const auto element : set) std::cout << element << ' ';
 
 	std::cout << std::endl;
 
@@ -90,7 +90,7 @@ int main()
 	std::ranges::transform(std::as_const(v2),                    std::begin(v2), std::negate()); // note: transform one range  to one range
 	std::ranges::transform(std::as_const(v2), std::as_const(v3), std::begin(v3), std::  plus()); // note: transform two ranges to one range
 
-	for (auto element : v3) assert(element == 0);
+	for (const auto element : v3) assert(element == 0);
 
 	assert(std::ranges::for_each(std::as_const(v1), Mean < decltype(v1)::value_type > ()).fun.result() == 3); // note: sum and count elements in range
 

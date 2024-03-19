@@ -89,7 +89,7 @@ int main()
 
 	std::cout << std::endl;
 
-	for (auto element : list) std::cout << element << ' ';
+	for (const auto element : list) std::cout << element << ' ';
 
 	std::cout << std::endl;
 

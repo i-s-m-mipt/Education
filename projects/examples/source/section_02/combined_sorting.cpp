@@ -58,7 +58,7 @@ int main()
 
 	merge_sort(vector, 0, n); // good: half-open intervals preferred in C++
 
-	for (auto element : vector) std::cout << element << ' ';
+	for (const auto element : vector) std::cout << element << ' ';
 
 	std::cout << std::endl;
 

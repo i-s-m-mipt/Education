@@ -15,7 +15,7 @@ struct Hash
     {
         std::size_t seed = 0;
 
-        for (auto element : data.array) boost::hash_combine(seed, element);
+        for (const auto element : data.array) boost::hash_combine(seed, element);
 
         return seed;
     }

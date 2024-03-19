@@ -30,7 +30,7 @@ public:
 
 	~Chain_Allocator() noexcept
 	{
-		for (auto chain : m_chains) ::operator delete(chain, m_size, default_alignment);
+		for (const auto chain : m_chains) ::operator delete(chain, m_size, default_alignment);
 	}
 
 	[[nodiscard]] void * allocate()

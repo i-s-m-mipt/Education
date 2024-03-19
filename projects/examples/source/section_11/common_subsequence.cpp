@@ -41,7 +41,7 @@ int main()
 	std::vector < int > sequence_1 = { 1, 2, 2, 3, 4, 4 };
 	std::vector < int > sequence_2 = { 1, 1, 2, 3, 3, 4 };
 
-	for (auto element : longest_common_subsequence(sequence_1, sequence_2))
+	for (const auto element : longest_common_subsequence(sequence_1, sequence_2))
 	{
 		std::cout << element << ' ';
 	}

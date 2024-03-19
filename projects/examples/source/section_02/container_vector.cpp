@@ -24,7 +24,7 @@ int main()
 		}
 	}
 
-	for (auto element : vector) std::cout << element << ' ';
+	for (const auto element : vector) std::cout << element << ' ';
 
 	std::cout << std::endl;
 

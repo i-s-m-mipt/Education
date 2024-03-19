@@ -71,7 +71,7 @@ int main()
 	assert(bimap.left. count("alpha") == 1); // good: O(log(N)) complexity search by key
 	assert(bimap.right.count(      4) == 1); // good: O(log(N)) complexity search by value
 
-	for (auto element : bimap)
+	for (const auto & element : bimap)
 	{
 		std::cout << element.left << " has size of " << element.right << std::endl;
 	}

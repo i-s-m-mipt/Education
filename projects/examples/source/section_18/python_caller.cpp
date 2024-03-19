@@ -32,7 +32,7 @@ std::size_t hash_DEK(const std::string & string) // note: Donald E. Knuth implem
 {
 	std::uint32_t hash = std::size(string); // note: as with x86 build to make collisions
 
-	for (auto letter : string)
+	for (const auto letter : string)
 	{
 		hash = ((hash << 5) ^ (hash >> 27)) ^ letter;
 	}
