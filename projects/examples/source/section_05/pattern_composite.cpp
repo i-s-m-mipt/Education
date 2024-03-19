@@ -11,9 +11,9 @@ public:
 
 }; // class Computer
 
-struct Mobile : public Computer { [[nodiscard]] std::size_t cores() const override { return 1; } };
-struct Tablet : public Computer { [[nodiscard]] std::size_t cores() const override { return 2; } };
-struct Laptop : public Computer { [[nodiscard]] std::size_t cores() const override { return 3; } };
+class Mobile : public Computer { public: [[nodiscard]] std::size_t cores() const override { return 1; } };
+class Tablet : public Computer { public: [[nodiscard]] std::size_t cores() const override { return 2; } };
+class Laptop : public Computer { public: [[nodiscard]] std::size_t cores() const override { return 3; } };
 
 class Cluster : public Computer // note: composite class of concrete computers
 {
@@ -28,7 +28,7 @@ public:
     {
         std::size_t total_cores = 0;
 
-        for (auto computer : m_computers)
+        for (const auto computer : m_computers)
         {
             if (computer) total_cores += computer->cores();
         }
@@ -46,7 +46,7 @@ private:
 
 [[nodiscard]] Computer * make_cluster(std::size_t n_mobiles, std::size_t n_tablets, std::size_t n_laptops)
 {
-    auto cluster = new Cluster;
+    const auto cluster = new Cluster;
 
     for (std::size_t i = 0; i < n_mobiles; ++i) cluster->add_computer(new Mobile);
     for (std::size_t i = 0; i < n_tablets; ++i) cluster->add_computer(new Tablet);
@@ -57,11 +57,11 @@ private:
 
 int main()
 {
-    auto super_cluster = new Cluster;
+    const auto super_cluster = new Cluster;
 
     for (std::size_t i = 0; i < 4; ++i) super_cluster->add_computer(make_cluster(1, 1, 1));
 
-    Computer * computer = super_cluster;
+    const Computer * const computer = super_cluster;
         
     std::cout << computer->cores() << std::endl;
 
