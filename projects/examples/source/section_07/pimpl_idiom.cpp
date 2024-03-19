@@ -8,19 +8,19 @@ class Computer : private boost::noncopyable // note: placed in the header file
 {
 public:
 
-    constexpr explicit Computer(std::string name); // note: definition in source file
+    explicit Computer(std::string name); // note: definition in source file
 
-    constexpr Computer(Computer && other) : m_pimpl(other.m_pimpl)
+    Computer(Computer && other) : m_pimpl(other.m_pimpl)
     {
         other.m_pimpl = nullptr;
     }
 
-    constexpr Computer & operator=(Computer && other)
+    Computer & operator=(Computer && other)
     {
         m_pimpl = std::exchange(other.m_pimpl, nullptr); return *this;
     }
 
-    constexpr ~Computer();
+    ~Computer();
 
     void run() const; // note: call forwarded to implementation, no inline abilities
 
@@ -36,7 +36,7 @@ class Computer::Implementation // note: placed in the source file
 {
 public:
 
-    constexpr explicit Implementation(std::string name) : m_name(std::move(name)) {}
+    explicit Implementation(std::string name) : m_name(std::move(name)) {}
 
     void run() const { std::cout << m_name << std::endl; }
 
@@ -46,9 +46,9 @@ private:
 
 }; // class Computer::Implementation
 
-constexpr Computer:: Computer(std::string name) : m_pimpl(new Implementation(std::move(name))) {}
+Computer:: Computer(std::string name) : m_pimpl(new Implementation(std::move(name))) {}
 
-constexpr Computer::~Computer() { delete m_pimpl; }
+Computer::~Computer() { delete m_pimpl; }
 
 void Computer::run() const { m_pimpl->run(); }
 
