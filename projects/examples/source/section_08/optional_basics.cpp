@@ -10,7 +10,7 @@
 
 int main()
 {
-    std::optional < int > o1; // note: same as std::nullopt
+    constexpr std::optional < int > o1; // note: same as std::nullopt
 
     std::cout << o1.has_value() << std::endl;
 
@@ -18,13 +18,13 @@ int main()
 
     o2.reset(); // note: same as std::nullopt
 
-    std::optional < std::string > o3(std::in_place, 5, 'a'); // note: in-place construction
+    const std::optional < std::string > o3(std::in_place, 5, 'a'); // note: in-place construction
 
     std::cout << *o3 << ' ' << o3->front() << std::endl;
 
     std::cout << create(false).value_or("empty") << std::endl;
 
-    if (auto object = create(true); object)
+    if (const auto object = create(true); object)
     {
         std::cout << *object << std::endl;
     }

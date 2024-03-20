@@ -10,10 +10,10 @@
 	{
 		for (std::size_t j = 0; j < size; ++j)
 		{
-			auto argument = 1.0 * i / size;
+			const auto argument = 1.0 * i / size;
 
-			auto l = std::pow(std::sin(argument), 2.0);
-			auto r = std::pow(std::cos(argument), 2.0);
+			const auto l = std::pow(std::sin(argument), 2.0);
+			const auto r = std::pow(std::cos(argument), 2.0);
 
 			result += (l + r); // note: required optimization
 		}

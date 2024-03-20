@@ -19,7 +19,7 @@ public:
 
 private:
 
-	int m_error_code;
+	const int m_error_code;
 
 }; // class Error : public std::exception
 
@@ -57,7 +57,7 @@ void g()
 {
 	std::cout << "g() called" << std::endl;
 
-//	auto a = new int[10]{}; // bad: consider RAII wrapper
+//	const int * const a = new int[10]{}; // bad: consider RAII wrapper
 
 	h();
 
@@ -135,11 +135,11 @@ private:
 
 }; // class C
 
-template < typename T > inline void swap(T & a, T & b) noexcept(
+template < typename T > inline constexpr void swap(T & a, T & b) noexcept(
 	std::is_nothrow_move_constructible_v < T > &&
 	std::is_nothrow_move_assignable_v    < T > ) // note: conditionally noexcept, long instructions
 {
-	auto c = std::move(b);
+	auto c = std::move(b); // note: non-constant for movement
 	     b = std::move(a);
 		 a = std::move(c);
 }

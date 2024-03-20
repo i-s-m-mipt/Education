@@ -28,7 +28,7 @@ inline void cleanup_v2() { std::cerr << "cleanup_v2 at exit\n"; }
 
 int main()
 {
-    const auto pointer = new int(42);
+    const int * const pointer = new int(42);
 
     assert(pointer); // good: convenient debugging tool
 

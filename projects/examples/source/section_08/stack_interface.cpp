@@ -6,24 +6,24 @@ template < typename T, typename C = std::vector < T > > class Stack
 {
 public:
 
-	void push(T value)
+	constexpr void push(T value)
 	{
 		m_container.push_back(std::move(value));
 	}
 
-	[[nodiscard]] T top() const noexcept
+	[[nodiscard]] constexpr T top() const noexcept
 	{ 
 		return m_container.back(); // note: undefined behavior if empty
 	}
 
-	void pop() noexcept
+	constexpr void pop() noexcept
 	{ 
 		m_container.pop_back(); // note: undefined behavior if empty
 	}
 
-//	[[nodiscard]] T pop() { ... } // bad: unsafe design
+//	[[nodiscard]] constexpr T pop() { ... } // bad: unsafe design
 
-	[[nodiscard]] std::size_t size() const noexcept
+	[[nodiscard]] constexpr std::size_t size() const noexcept
 	{ 
 		return m_container.size(); 
 	}
@@ -36,7 +36,9 @@ private:
 
 int main()
 {
-	Stack < int > stack; stack.push(42);
+	Stack < int > stack; 
+	
+	stack.push(42);
 
 //	auto value = stack.pop(); // bad: possible problem here
 
