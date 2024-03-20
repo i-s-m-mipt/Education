@@ -20,15 +20,15 @@ class Laptop : public Computer { public: void run() const override { std::cout <
 
 int main()
 {
-	Computer * computer_ptr = new Mobile;
+	const Computer * computer_ptr = new Mobile;
 
-	[[maybe_unused]] const auto mobile_ptr_1 = dynamic_cast < Mobile * > (computer_ptr); // note: avoid downcasting
+	[[maybe_unused]] const auto mobile_ptr_1 = dynamic_cast < const Mobile * > (computer_ptr); // note: avoid downcasting
 
 	delete computer_ptr;
 
 	computer_ptr = new Tablet;
 
-	if (const auto mobile_ptr_2 = dynamic_cast < Mobile * > (computer_ptr); !mobile_ptr_2) // note: runtime checks 
+	if (const auto mobile_ptr_2 = dynamic_cast < const Mobile * > (computer_ptr); !mobile_ptr_2) // note: runtime checks 
 	{
 		std::cout << "invalid dynamic cast" << std::endl;
 	}

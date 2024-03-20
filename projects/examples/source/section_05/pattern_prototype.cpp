@@ -60,7 +60,7 @@ private:
 
 int main()
 {
-    Computer * const mobile = Factory::create_mobile(); 
+    const Computer * const mobile = Factory::create_mobile(); 
 
     mobile->run(); 
     

@@ -82,7 +82,7 @@ public:
 
 }; // class Builder_Laptop : public Builder
 
-[[nodiscard]] inline Computer * build(const Builder & builder) // note: consider member function
+[[nodiscard]] inline const Computer * build(const Builder & builder) // note: consider member function
 {
     builder.build_cpu();
     builder.build_gpu();
@@ -93,7 +93,7 @@ public:
 
 int main()
 {
-    Computer * const mobile = build(Builder_Mobile("Mobile")); 
+    const auto mobile = build(Builder_Mobile("Mobile")); 
 
     print(*mobile); 
     

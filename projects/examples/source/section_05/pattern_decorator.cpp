@@ -44,11 +44,11 @@ public:
 
 int main()
 {
-    Computer * const mobile = new Mobile();
+    const Computer * const mobile = new Mobile();
 
     std::cout << mobile->description() << std::endl;
 
-    Computer * const overclocked_mobile = new Overclocked_Computer(*mobile);
+    const Computer * const overclocked_mobile = new Overclocked_Computer(*mobile);
 
     std::cout << overclocked_mobile->description() << std::endl;
 

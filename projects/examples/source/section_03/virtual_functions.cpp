@@ -95,14 +95,14 @@ int main()
 
 	const Computer * computer_ptr = &mobile; // note: works with pointers and references
 
-//	Computer computer = mobile; // bad: object slicing
+//	const Computer computer = mobile; // bad: object slicing
 
 	computer_ptr->print();
 
-	Mobile mobile_1;
-	Mobile mobile_2;
-	Laptop laptop_1;
-	Laptop laptop_2;
+	const Mobile mobile_1;
+	const Mobile mobile_2;
+	const Laptop laptop_1;
+	const Laptop laptop_2;
 
 	std::vector < const Computer * > computers = { &mobile_1, &mobile_2, &laptop_1, &laptop_2 };
 
@@ -114,7 +114,7 @@ int main()
 
 	delete computer_ptr; // note: important virtual destructor
 
-	Abstract_Base * const abstract_base_ptr = new Derived; // good: interface class
+	const Abstract_Base * const abstract_base_ptr = new Derived; // good: interface class
 
 	abstract_base_ptr->print(); 
 	

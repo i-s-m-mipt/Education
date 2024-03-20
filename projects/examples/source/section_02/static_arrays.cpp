@@ -41,7 +41,7 @@ int main()
 
 //	auto delta = b - a; // bad: pointers to different arrays
 
-	for (int * p = a; p != (a + size); ++p)
+	for (const int * p = a; p != (a + size); ++p)
 	{
 		std::cout << *p;
 

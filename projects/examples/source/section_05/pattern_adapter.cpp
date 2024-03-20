@@ -28,7 +28,7 @@ private:
 
 int main()
 {	
-	Computer * const computer = new Adapter(Device());
+	const Computer * const computer = new Adapter(Device());
 
 	computer->run(); 
 	

@@ -53,7 +53,7 @@ public:
 
 int main()
 {
-	Computer * const mobile = new Mobile;
+	const Computer * const mobile = new Mobile;
 
 	mobile->run(); 
 	

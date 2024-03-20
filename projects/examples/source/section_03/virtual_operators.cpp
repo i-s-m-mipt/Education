@@ -28,7 +28,7 @@ public:
 
 int main()
 {
-    Base * const base = new Derived;
+    const Base * const base = new Derived;
 
     std::cout << *base << std::endl;
 
