@@ -99,7 +99,7 @@ int main()
 
 	[[maybe_unused]] const Pair p{ 1.0, 100 }; // note: generated deduction guide for aggregate
 
-	const Container c(10, 1.0); // note: generated deduction guide for aggregate
+	[[maybe_unused]] const Container c(10, 1.0); // note: generated deduction guide for aggregate
 
 	C < char,   double > ().f(); // note: basic template for T1, T2
 	C < char,   char   > ().f(); // note: partial specialization for T, T
