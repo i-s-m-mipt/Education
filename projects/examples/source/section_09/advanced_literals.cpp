@@ -44,11 +44,11 @@ int main()
 {
 	using namespace std::literals; // note: std::chrono, std::complex, std::string
 
-	[[maybe_unused]] auto duration = 600s; // note: auto -> std::chrono::seconds
+	[[maybe_unused]] constexpr auto duration = 600s; // note: auto -> std::chrono::seconds
 
 	using namespace literals;
 
-	[[maybe_unused]] auto distance = 5_km; // note: auto -> kilometers, underscore required
+	[[maybe_unused]] constexpr auto distance = 5_km; // note: auto -> kilometers, underscore required
 
 	std::cout << 90.0_deg_to_rad << std::endl;
 

@@ -33,9 +33,9 @@ void print(const std::span < const std::byte > & bytes)
     std::cout << std::endl;
 }
 
-template < typename T > [[nodiscard]] inline std::ptrdiff_t distance_in_bytes(T * first, T * last) noexcept
+template < typename T > [[nodiscard]] inline constexpr std::ptrdiff_t distance_in_bytes(const T * first, const T * last) noexcept
 {
-    return (std::bit_cast < std::byte * > (last) - std::bit_cast < std::byte * > (first));
+    return (std::bit_cast < const std::byte * > (last) - std::bit_cast < const std::byte * > (first));
 }
 
 struct Datetime
@@ -131,13 +131,13 @@ int main(int argc, char ** argv) // note: arguments for benchmark
         std::dec << 42 << std::endl << // note: outputs 42
         std::hex << 42 << std::endl;   // note: outputs 0x2a
 
-    [[maybe_unused]] auto bin = 0b101010; // note: binary
-    [[maybe_unused]] auto oct = 052;      // note: octal
-    [[maybe_unused]] auto dec = 42;       // note: decimal
-    [[maybe_unused]] auto hex = 0x2a;     // note: hexadecimal
+    [[maybe_unused]] constexpr auto bin = 0b101010; // note: binary
+    [[maybe_unused]] constexpr auto oct = 052;      // note: octal
+    [[maybe_unused]] constexpr auto dec = 42;       // note: decimal
+    [[maybe_unused]] constexpr auto hex = 0x2a;     // note: hexadecimal
 
-    auto data = 0x1234;
-    auto mask = 0x00f0;
+    constexpr auto data = 0x1234;
+    constexpr auto mask = 0x00f0;
     
     assert((        mask) == 0x000000f0);
     assert((data        ) == 0x00001234);
@@ -146,8 +146,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
     assert((data &  mask) == 0x00000030);
     assert((data ^  mask) == 0x000012c4);
 
-    [[maybe_unused]] auto m = 0x123; assert((m << 1) == 0x246); // good: bit shift as multiplication
-    [[maybe_unused]] auto n = -4000; assert((n >> 2) == -1000); // good: bit shift as multiplication
+    constexpr auto m = 0x123; assert((m << 1) == 0x246); // good: bit shift as multiplication
+    constexpr auto n = -4000; assert((n >> 2) == -1000); // good: bit shift as multiplication
 
     auto a = 7;
     auto b = 4;
@@ -175,17 +175,17 @@ int main(int argc, char ** argv) // note: arguments for benchmark
     byte |= std::byte{ 0b1111'0000 }; assert(std::to_integer < int > (byte) == 0b1111'1010);
     byte &= std::byte{ 0b1111'0000 }; assert(std::to_integer < int > (byte) == 0b1111'0000);
 
-    const std::size_t size = 10;
+    constexpr std::size_t size = 10;
 
-    int array[size]{ 42 };
+    constexpr int array[size]{ 42 };
 
-    print(std::as_bytes(std::span < int > (array))); // note: outputs 0x2a
+    print(std::as_bytes(std::span < const int > (array))); // note: outputs 0x2a
 
-    auto value = std::numeric_limits < unsigned int > ::max();
+    constexpr auto value = std::numeric_limits < unsigned int > ::max();
 
-    auto ptr_uint = &value;
+    const auto ptr_uint = &value;
 
-    auto ptr_char = std::bit_cast < std::byte * > (ptr_uint); // note: same as reinterpret_cast here
+    const auto ptr_char = std::bit_cast < const std::byte * > (ptr_uint); // note: same as reinterpret_cast here
 
     for (std::size_t i = 0; i < sizeof(int); ++i)
     {
@@ -196,20 +196,20 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     assert(distance_in_bytes(&array[0], &array[size - 1]) == 36);
 
-    auto d = 3.14; std::uint64_t r{};
+    constexpr auto d = 3.14; std::uint64_t r{};
 
     static_assert(sizeof(d) == sizeof(r));
 
-//  r = *reinterpret_cast < std::uint64_t * > (&d); // bad: undefined behavior, strict aliasing rule
+//  r = *reinterpret_cast < const std::uint64_t * > (&d); // bad: undefined behavior, strict aliasing rule
 
-    r = std::bit_cast < std::uint64_t > (d); // good: or directly do std::memcpy(&n, &d, sizeof(d));
+    r = std::bit_cast < const std::uint64_t > (d); // good: or directly do std::memcpy(&n, &d, sizeof(d));
 
     using binary = std::bitset < 8 > ;
 
     for (unsigned int i = 0; i < 10; ++i)
     {
-        auto bc = std::bit_ceil (i);
-        auto bf = std::bit_floor(i);
+        const auto bc = std::bit_ceil (i);
+        const auto bf = std::bit_floor(i);
 
         std::cout << 
              "ceil(" << binary(i) << ") = " << binary(bc) << ", " <<

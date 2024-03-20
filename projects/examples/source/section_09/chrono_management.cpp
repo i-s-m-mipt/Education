@@ -58,11 +58,11 @@ int main()
 
 	std::cout << now << ' ' << std::chrono::system_clock::to_time_t(now) << std::endl; // note: 2038
 
-	std::chrono::duration < long long, std::ratio < 1, 1000 > > duration_1(42);
+	constexpr std::chrono::duration < long long, std::ratio < 1, 1000 > > duration_1(42);
 
-	std::chrono::milliseconds duration_2(42);
+	constexpr std::chrono::milliseconds duration_2(42);
 
-	auto result = std::chrono::hours(100) + std::chrono::minutes(200);
+	constexpr auto result = std::chrono::hours(100) + std::chrono::minutes(200);
 
 	std::cout << result.count() << std::endl;
 

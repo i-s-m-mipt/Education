@@ -4,12 +4,12 @@
 #include <iomanip>
 #include <iostream>
 
-[[nodiscard]] inline unsigned int gray_encode(unsigned int n) noexcept
+[[nodiscard]] inline constexpr unsigned int gray_encode(unsigned int n) noexcept
 {
     return n ^ (n >> 1);
 }
 
-[[nodiscard]] inline unsigned int gray_decode(unsigned int code) noexcept
+[[nodiscard]] inline constexpr unsigned int gray_decode(unsigned int code) noexcept
 {
     for (unsigned int bit = 1 << 31; bit > 1; bit >>= 1)
     {
@@ -21,14 +21,14 @@
 
 int main()
 {
-    const std::size_t size = 4;
+    constexpr std::size_t size = 4;
 
     using binary = std::bitset < size > ;
 
     for (unsigned int n = 0; n < static_cast < unsigned int > (std::pow(2, size)); ++n)
     {
-        auto x = gray_encode(n);
-        auto y = gray_decode(x);
+        const auto x = gray_encode(n);
+        const auto y = gray_decode(x);
 
         assert(n == y);
 

@@ -34,7 +34,7 @@ enum State : underlying_t
 
 }; // enum State : underlying_t
 
-inline void g(underlying_t s) noexcept { assert(s & delta || s & gamma); }
+inline constexpr void g(underlying_t s) noexcept { assert(s & delta || s & gamma); }
 
 int main()
 {
@@ -45,8 +45,8 @@ int main()
 		f(static_cast < Color > (c));
 	}
 
-	State s_1 = alpha;
-	State s_2 = gamma;
+	constexpr State s_1 = alpha;
+	constexpr State s_2 = gamma;
 
 	g(s_1 | s_2); // good: one argument instead many flags
 	

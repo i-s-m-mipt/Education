@@ -14,14 +14,14 @@
 
 	std::uniform_real_distribution distribution(0.0, 1.0); // note: [a; b)
 
-	const std::size_t size = 10'000'000; // note: try in release mode
+	constexpr std::size_t size = 10'000'000; // note: try in release mode
 
 	std::size_t counter = 0;
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		auto x = distribution(engine);
-		auto y = distribution(engine);
+		const auto x = distribution(engine);
+		const auto y = distribution(engine);
 
 		if (x * x + y * y < 1.0) ++counter;
 	}
@@ -41,9 +41,9 @@ int main()
 
 	for (std::size_t i = 0; i < 100'000; ++i)
 	{
-		if (auto value = distribution(engine); value > 0.0)
+		if (const auto value = distribution(engine); value > 0.0)
 		{
-			if (auto index = static_cast < std::size_t > (std::floor(value)); index < std::size(values))
+			if (const auto index = static_cast < std::size_t > (std::floor(value)); index < std::size(values))
 			{
 				++values[index];
 			}

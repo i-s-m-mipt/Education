@@ -6,7 +6,7 @@
 #include <boost/math/special_functions/gamma.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp> // note: gmp_float is ~2 times faster
 
-template < typename T > [[nodiscard]] inline T area(T r) noexcept
+template < typename T > [[nodiscard]] inline constexpr T area(T r) noexcept
 {
 	return boost::math::constants::pi < T > () * r * r; // note: remember variable templates
 }
@@ -15,7 +15,7 @@ int main()
 {
     using float_100 = boost::multiprecision::cpp_bin_float_100; // note: consider cpp_dec_float_100 also
 
-    auto precision = std::numeric_limits < float_100 > ::digits10;
+    constexpr auto precision = std::numeric_limits < float_100 > ::digits10;
 
     std::cout << std::setprecision(precision) << float_100(3.14) << std::endl;
 

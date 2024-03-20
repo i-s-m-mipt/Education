@@ -6,9 +6,9 @@
 
 int main()
 {
-    const auto epsilon = 0.000001;
+    constexpr auto epsilon = 0.000001;
 
-    std::complex < double > c(0.0, 1.0);
+    constexpr std::complex < double > c(0.0, 1.0);
 
     std::cout << c << std::endl; // note: outputs (0.0, 1.0)
 

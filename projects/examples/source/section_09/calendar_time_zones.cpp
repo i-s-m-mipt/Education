@@ -6,7 +6,7 @@ int main()
 {
 	using namespace std::literals;
 
-	std::chrono::hh_mm_ss time(10h + 20min + 30s);
+	constexpr std::chrono::hh_mm_ss time(10h + 20min + 30s);
 
 	std::cout << time << std::endl;
 
@@ -14,7 +14,7 @@ int main()
 
 	std::cout << time.to_duration() << std::endl; // note: convert to duration
 
-	std::chrono::year_month_day date(2023y, std::chrono::December, 29d);
+	constexpr std::chrono::year_month_day date(2023y, std::chrono::December, 29d);
 
 	std::cout << date << std::endl;
 
