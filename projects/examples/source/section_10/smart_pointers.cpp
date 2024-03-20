@@ -22,7 +22,7 @@ private:
 
 }; // template < typename T > class Resource : private boost::noncopyable 
 
-inline void f(std::shared_ptr < int > x, [[maybe_unused]] int y) noexcept {}
+inline void f(std::shared_ptr < int > , int) noexcept {}
 
 [[nodiscard]] inline int bad(bool make_error = true) 
 {
