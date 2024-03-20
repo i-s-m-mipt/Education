@@ -128,7 +128,7 @@ private:
 	{
 		const auto day = boost::posix_time::hours(24);
 
-		auto fout_sink_ptr = boost::make_shared < sink_t > (
+		const auto fout_sink_ptr = boost::make_shared < sink_t > (
 			boost::log::keywords::file_name = "%y.%m.%d.%H.%M.%S.log",
 			boost::log::keywords::time_based_rotation = boost::log::sinks::file::rotation_at_time_interval(day),
 			boost::log::keywords::rotation_size = 32 * 1024 * 1024,
@@ -249,13 +249,11 @@ private:
 
 	const char * const m_scope;
 
-private:
-
-	bool m_has_trace;
+	const bool m_has_trace;
 
 }; // class Logger : private boost::noncopyable
 
-template < typename E > inline void catch_handler(Logger & logger, const std::exception & exception)
+template < typename E > inline void catch_handler(const Logger & logger, const std::exception & exception)
 {
 	static_assert(std::is_base_of_v < std::exception, E >, "invalid exception type");
 
@@ -266,7 +264,7 @@ template < typename E > inline void catch_handler(Logger & logger, const std::ex
 
 // =============================================================================
 
-#define LOGGER_2(logger, has_trace) Logger logger(FUNCTION, has_trace)
+#define LOGGER_2(logger, has_trace) const Logger logger(FUNCTION, has_trace)
 
 #define LOGGER_1(logger) LOGGER_2(logger, true)
 
@@ -276,7 +274,7 @@ template < typename E > inline void catch_handler(Logger & logger, const std::ex
 #  define LOGGER(...) BOOST_PP_CAT(BOOST_PP_OVERLOAD(LOGGER_,__VA_ARGS__)(__VA_ARGS__),BOOST_PP_EMPTY())
 #endif
 
-#define LOGGER_NO_TRACE(logger) Logger logger(FUNCTION, false)
+#define LOGGER_NO_TRACE(logger) const Logger logger(FUNCTION, false)
 
 #define LOGGER_WRITE(logger, message) logger.write(Logger::Severity::empty, message);
 
