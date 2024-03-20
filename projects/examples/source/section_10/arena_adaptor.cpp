@@ -61,7 +61,10 @@ public:
 
 private:
 	
-	std::size_t m_size   = 0;
+	const std::size_t m_size;
+
+private:
+
 	std::size_t m_offset = 0;
 
 	void * m_begin = nullptr;
@@ -92,7 +95,7 @@ public:
 
 private:
 
-    Arena * m_arena = nullptr;
+    Arena * const m_arena = nullptr;
 
 }; // template < typename T > class Allocator
 

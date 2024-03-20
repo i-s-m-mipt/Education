@@ -6,7 +6,7 @@
 
 int main()
 {
-	std::vector vector = { 1, 2, 3, 4, 5 };
+	const std::vector vector = { 1, 2, 3, 4, 5 };
 
 	using category_t = typename decltype(vector)::iterator::iterator_category;
 

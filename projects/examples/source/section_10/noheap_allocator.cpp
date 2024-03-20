@@ -47,7 +47,7 @@ private:
 
 void test_1(benchmark::State & state) // note: very fast
 {
-	const std::size_t kb = 1024, mb = kb * kb;
+	constexpr std::size_t kb = 1024, mb = kb * kb;
 
 	for (auto _ : state)
 	{
@@ -62,7 +62,7 @@ void test_1(benchmark::State & state) // note: very fast
 
 void test_2(benchmark::State & state) // note: very slow
 {
-	const std::size_t kb = 1024;
+	constexpr std::size_t kb = 1024;
 
 	std::vector < void * > pointers(kb, nullptr);
 

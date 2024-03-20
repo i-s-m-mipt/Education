@@ -30,15 +30,15 @@ public:
 
 	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t)) noexcept
 	{
-		void * first = get_byte(m_begin) + m_offset;
+		void * const first = get_byte(m_begin) + m_offset;
 
-		void * block = get_byte(first) + sizeof(Header); // note: first byte for data after header
+		void *       block = get_byte(first) + sizeof(Header); // note: first byte for data after header
 
 		auto space = m_size - m_offset - sizeof(Header);
 
 		if (block = std::align(alignment, size, block, space); block) // note: modifies block and space
 		{
-			auto header = get_header(get_byte(block) - sizeof(Header));
+			const auto header = get_header(get_byte(block) - sizeof(Header));
 
 			*header = static_cast < Header > (std::distance(get_byte(first), get_byte(block)));
 
@@ -51,7 +51,7 @@ public:
 
 	void deallocate(void * ptr) noexcept
 	{
-		auto header = get_header(get_byte(ptr) - sizeof(Header));
+		const auto header = get_header(get_byte(ptr) - sizeof(Header));
 
 		m_offset = get_byte(ptr) - get_byte(m_begin) - *header;
 	}
@@ -83,7 +83,10 @@ public:
 
 private:
 
-	std::size_t m_size   = 0;
+	const std::size_t m_size;
+
+private:
+
 	std::size_t m_offset = 0;
 
 	void * m_begin = nullptr;
@@ -92,7 +95,7 @@ private:
 
 void test_1(benchmark::State & state) // note: very fast
 {
-	const std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
+	constexpr std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
 
 	std::vector < void * > pointers(kb, nullptr);
 
@@ -114,7 +117,7 @@ void test_1(benchmark::State & state) // note: very fast
 
 void test_2(benchmark::State & state) // note: very slow
 {
-	const std::size_t kb = 1024, mb = kb * kb;
+	constexpr std::size_t kb = 1024, mb = kb * kb;
 
 	std::vector < void * > pointers(kb, nullptr);
 

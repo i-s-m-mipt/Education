@@ -40,7 +40,7 @@ public:
 
     [[nodiscard]] void * allocate(std::size_t size) noexcept
     {
-	    void * end = get_byte(m_begin) + sizeof(Header) + size, * next = end;
+	    void * const end = get_byte(m_begin) + sizeof(Header) + size, * next = end; // note: remember second *
 
 	    auto space = 2 * alignof(Header); // note: enough space to align next pointer to Header
 
@@ -48,13 +48,13 @@ public:
         {
             auto padding = get_byte(next) - get_byte(end); // note: padding between end of data and aligned header
 
-            if (auto [current, previous] = find_first(size + padding); current) // note: consider also find best
+            if (const auto [current, previous] = find_first(size + padding); current) // note: consider also find best
             {
                 if (current->size >= size + padding + sizeof(Node) + 1) // note: new splitted node for the rest
                 {
-                    auto block_size = sizeof(Header) + size + padding;
+                    const auto block_size = sizeof(Header) + size + padding;
 
-                    auto new_node = get_node(get_byte(current) + block_size);
+                    const auto new_node = get_node(get_byte(current) + block_size);
 
                     new_node->size = current->size - block_size;
                        
@@ -74,7 +74,7 @@ public:
                     previous->next = current->next; // note: head skipped
                 }
 
-                auto header = get_header(current); header->size = size + padding;
+                const auto header = get_header(current); header->size = size + padding;
 
                 return get_byte(current) + sizeof(Header);
             }
@@ -85,9 +85,9 @@ public:
 
     void deallocate(void * ptr) noexcept
     {
-        auto header = get_header(get_byte(ptr) - sizeof(Header));
+        const auto header = get_header(get_byte(ptr) - sizeof(Header));
 
-        auto node = get_node(header); node->size = header->size;
+        const auto node = get_node(header); node->size = header->size;
 
         Node * previous = nullptr;
         
@@ -170,7 +170,9 @@ public:
 
 private:
 
-    std::size_t m_size = 0;
+    const std::size_t m_size;
+
+private:
 
     void * m_begin = nullptr;
     Node * m_head  = nullptr;
@@ -179,7 +181,7 @@ private:
 
 void test_1(benchmark::State & state) // note: pretty fast
 {
-	const std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
+	constexpr std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
 
     std::mt19937 engine(state.range(0));
 
@@ -200,7 +202,7 @@ void test_1(benchmark::State & state) // note: pretty fast
 
 void test_2(benchmark::State & state) // note: pretty slow
 {
-	const std::size_t kb = 1024, mb = kb * kb;
+	constexpr std::size_t kb = 1024, mb = kb * kb;
 
     std::mt19937 engine(state.range(0));
 

@@ -7,7 +7,7 @@ int main()
 {
 	std::allocator < int > allocator_int;
 
-	auto ptr_int = allocator_int.allocate(1);
+	const auto ptr_int = allocator_int.allocate(1);
 
 	*ptr_int = 42; // note: acceptable for fundamental types, consider construct
 
@@ -19,7 +19,7 @@ int main()
 
 	std::allocator_traits < decltype(allocator_string) > allocator_traits;
 
-	auto ptr_string = allocator_traits.allocate(allocator_string, 1);
+	const auto ptr_string = allocator_traits.allocate(allocator_string, 1);
 
 //	std::cout << *ptr_string << std::endl; // bad: object not constructed
 

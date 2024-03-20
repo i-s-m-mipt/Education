@@ -16,17 +16,17 @@ public:
 	{
 	public:
 
-		explicit Iterator(std::shared_ptr < Node > node = nullptr) noexcept : m_node(node) {}
+		constexpr explicit Iterator(std::shared_ptr < Node > node = nullptr) noexcept : m_node(node) {}
 
 		friend class boost::iterator_core_access;
 
 	public:
 
-		void increment() noexcept { m_node = m_node->next; }
+		constexpr void increment() noexcept { m_node = m_node->next; }
 
-		[[nodiscard]] T & dereference() const noexcept { return m_node->value; }
+		[[nodiscard]] constexpr T & dereference() const noexcept { return m_node->value; }
 
-		[[nodiscard]] bool equal(const Iterator & other) const noexcept
+		[[nodiscard]] constexpr bool equal(const Iterator & other) const noexcept
 		{ 
 			return (m_node == other.m_node); 
 		};

@@ -19,24 +19,24 @@ public:
 
 		using iterator_category = std::forward_iterator_tag; // note: forward iterator
 
-		explicit Iterator(std::shared_ptr < Node > node = nullptr) noexcept : m_node(node) {}
+		constexpr explicit Iterator(std::shared_ptr < Node > node = nullptr) noexcept : m_node(node) {}
 
 	public:
 
-		Iterator & operator++() noexcept 
+		constexpr Iterator & operator++() noexcept 
 		{ 
 			m_node = m_node->next; return *this; // note: undefined behaviour if end
 		}
 
-		Iterator operator++(int) noexcept 
+		constexpr Iterator operator++(int) noexcept 
 		{ 
 			auto prev = *this; ++(*this); return prev; 
 		}
 
-		[[nodiscard]] T & operator* () const noexcept { return  (m_node->value); }
-		[[nodiscard]] T * operator->() const noexcept { return &(m_node->value); }
+		[[nodiscard]] constexpr T & operator* () const noexcept { return  (m_node->value); }
+		[[nodiscard]] constexpr T * operator->() const noexcept { return &(m_node->value); }
 
-		[[nodiscard]] bool operator==(const Iterator & other) const noexcept 
+		[[nodiscard]] constexpr bool operator==(const Iterator & other) const noexcept 
 		{ 
 			return (m_node == other.m_node); 
 		}

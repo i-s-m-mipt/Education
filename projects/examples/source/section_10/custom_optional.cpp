@@ -92,7 +92,7 @@ private:
 
 int main()
 {
-    Optional < int > o1; assert(!o1.has_value());
+    const Optional < int > o1; assert(!o1.has_value());
 
     assert(o1.value_or(42) == 42);
 

@@ -21,7 +21,7 @@ public:
 
 private:
 
-	std::size_t m_index;
+	const std::size_t m_index;
 
 }; // class C
 
@@ -83,16 +83,16 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 {
 	assert(sizeof(C) == sizeof(std::size_t));
 
-	const std::size_t size = 5;
+	constexpr std::size_t size = 5;
 
-	auto ptr = static_cast < C * > (::operator new(sizeof(C) * size)); // note: uninitialized memory
+	const auto ptr = static_cast < C * > (::operator new(sizeof(C) * size)); // note: uninitialized memory
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
 		new (ptr + i) C(i); // note: placement new, construction without allocation
 	}
 
-	const std::size_t offset = size / 2;
+	constexpr std::size_t offset = size / 2;
 
 	(ptr + offset)->~C();
 

@@ -55,7 +55,7 @@ private:
 
 int main() 
 {
-    Computer computer;
+    const Computer computer;
 
     computer.make_fast();
     computer.make_slow();

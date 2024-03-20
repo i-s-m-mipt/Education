@@ -39,7 +39,7 @@ void test_1(benchmark::State & state) // note: very fast
 {
     for (auto _ : state)
     {
-		const std::size_t size = 64;
+		constexpr std::size_t size = 64;
 
         auto array = new S5[size]{}; benchmark::DoNotOptimize(array);
 
@@ -51,7 +51,7 @@ void test_2(benchmark::State & state) // note: very slow
 {
     for (auto _ : state)
     {
-        const std::size_t size = 64;
+        constexpr std::size_t size = 64;
 
         auto array = new S6[size]{}; benchmark::DoNotOptimize(array);
 
@@ -74,10 +74,10 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 	static_assert(std::alignment_of_v < double > == 8);
 
-	const std::size_t size = 10;
+	constexpr std::size_t size = 10;
 
-	alignas(16) int a[size]{};
-	alignas(64) int b[size]{};
+	alignas(16) constexpr int a[size]{};
+	alignas(64) constexpr int b[size]{};
 
 	std::cout << std::hex << a << std::endl;
 	std::cout << std::hex << b << std::endl;

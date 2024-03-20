@@ -44,12 +44,12 @@ public:
 			else m_head = get_node(m_chains[++m_offset - 1]); // note: switch to next chain
 		}
 
-		auto node = m_head;
+		const auto node = m_head;
 
 		if (!node->next) // note: try switch to next node in current chain
 		{
-			if (auto next  = get_byte(   node               ) + m_size_node; 
-				     next != get_byte(m_chains[m_offset - 1]) + m_size)
+			if (const auto next  = get_byte(   node               ) + m_size_node; 
+				           next != get_byte(m_chains[m_offset - 1]) + m_size)
 			{
 				m_head = get_node(next); m_head->next = nullptr;
 			}
@@ -62,7 +62,7 @@ public:
 
 	void deallocate(void * ptr) noexcept
 	{
-		auto node = get_node(ptr); 
+		const auto node = get_node(ptr); 
 		
 		node->next = m_head; m_head = node; // note: link freed node to previous head
 	}
@@ -86,7 +86,7 @@ private:
 
 	[[nodiscard]] Node * allocate_nodes() const
 	{
-		auto node = get_node(::operator new(m_size, default_alignment));
+		const auto node = get_node(::operator new(m_size, default_alignment));
 		
 		node->next = nullptr; 
 		
@@ -104,9 +104,12 @@ public:
 
 private:
 
-	std::size_t m_size      = 0;
-	std::size_t m_size_node = 0;
-	std::size_t m_offset    = 0;
+	const std::size_t m_size      = 0;
+	const std::size_t m_size_node = 0;
+
+private:
+
+	std::size_t m_offset = 0;
 
 	void * m_begin = nullptr;
 	Node * m_head  = nullptr;
@@ -117,7 +120,7 @@ private:
 
 void test_1(benchmark::State & state) // note: pretty fast
 {
-	const std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
+	constexpr std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
 
 	std::vector < void * > pointers(kb, nullptr);
 
@@ -134,7 +137,7 @@ void test_1(benchmark::State & state) // note: pretty fast
 
 void test_2(benchmark::State & state) // note: pretty slow
 {
-	const std::size_t kb = 1024, mb = kb * kb;
+	constexpr std::size_t kb = 1024, mb = kb * kb;
 
 	std::vector < void * > pointers(kb, nullptr);
 

@@ -14,7 +14,7 @@ int main()
 
     std::pmr::monotonic_buffer_resource pool(std::data(buffer), std::size(buffer));
 
-    const std::size_t size = 26;
+    constexpr std::size_t size = 26;
 
     std::pmr::vector < char > vector(&pool); // note: type alias
 
@@ -27,7 +27,7 @@ int main()
 
     auto resource = std::pmr::new_delete_resource();
 
-    auto pointer = resource->allocate(1); // note: same as ::operator new
+    const auto pointer = resource->allocate(1); // note: same as ::operator new
 
     resource->deallocate(pointer, 1); // note: same as ::operator delete
 
