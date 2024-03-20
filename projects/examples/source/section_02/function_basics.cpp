@@ -116,8 +116,8 @@ int main()
 
 	const std::size_t size = 5;
 
-	const int         array_1          [size]{ 1, 2, 3, 4, 5 };
-	const int * const array_2 = new int[size]{ 1, 2, 3, 4, 5 };
+	int         array_1          [size]{ 1, 2, 3, 4, 5 };
+	int * const array_2 = new int[size]{ 1, 2, 3, 4, 5 };
 
 	print_array(array_1, size); print_span({ array_1       });
 	print_array(array_2, size); print_span({ array_2, size });

@@ -79,21 +79,25 @@ public:
 
 int main()
 {
-    const Computer * const mobile = create < Mobile > (); 
+    Computer * const mobile = create < Mobile > (); 
 
-    mobile->run(); delete mobile; // good: no memory leak
+    mobile->run(); 
+    
+    delete mobile; // good: no memory leak
 
-    const Computer * const server = Server::Factory::create_v1(); 
+    Computer * const server = Server::Factory::create_v1(); 
 
-    server->run(); delete server; // good: no memory leak
+    server->run(); 
+    
+    delete server; // good: no memory leak
 
-    const Factory * const factory_laptop = new Factory_Laptop;
+    Factory * const factory_laptop = new Factory_Laptop;
 
-    const Computer * const laptop = factory_laptop->create(); 
+    Computer * const laptop = factory_laptop->create(); 
 
-    laptop->run(); delete laptop; // good: no memory leak
-
-    delete factory_laptop; // good: no memory leak
+    laptop->run(); 
+    
+    delete laptop; delete factory_laptop; // good: no memory leak
 
     return 0;
 }

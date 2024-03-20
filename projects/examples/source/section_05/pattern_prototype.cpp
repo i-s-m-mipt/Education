@@ -60,9 +60,11 @@ private:
 
 int main()
 {
-    const Computer * const mobile = Factory::create_mobile(); 
+    Computer * const mobile = Factory::create_mobile(); 
 
-    mobile->run(); delete mobile; // good: no memory leak
+    mobile->run(); 
+    
+    delete mobile; // good: no memory leak
 
     return 0;
 }

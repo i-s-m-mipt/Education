@@ -114,11 +114,11 @@ int main()
 
 	delete computer_ptr; // note: important virtual destructor
 
-	const Derived derived;
+	Abstract_Base * const abstract_base_ptr = new Derived; // good: interface class
 
-	const Abstract_Base * const abstract_base_ptr = &derived; // good: interface class
-
-	abstract_base_ptr->print();
+	abstract_base_ptr->print(); 
+	
+	delete abstract_base_ptr; // good: no memory leak
 
 //	const Abstract_Base abstract_base; // error: abstract base class
 

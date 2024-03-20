@@ -53,9 +53,11 @@ public:
 
 int main()
 {
-	const Computer * const mobile = new Mobile;
+	Computer * const mobile = new Mobile;
 
-	mobile->run(); delete mobile; // good: no memory leak
+	mobile->run(); 
+	
+	delete mobile; // good: no memory leak
 
 	return 0;
 }

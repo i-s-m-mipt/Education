@@ -27,10 +27,12 @@ private:
 }; // class Adapter : public Computer
 
 int main()
-{
-	const Device device; const Computer * const computer = new Adapter(device);
+{	
+	Computer * const computer = new Adapter(Device());
 
-	computer->run(); delete computer; // good: no memory leak
+	computer->run(); 
+	
+	delete computer; // good: no memory leak
 
 	return 0;
 }

@@ -41,9 +41,11 @@ public:
 
 int main() 
 {
-    const Computer * const laptop = new Laptop(Phoenix());
+    Computer * const laptop = new Laptop(Phoenix());
 
-    laptop->run(); delete laptop; // good: no memory leak
+    laptop->run(); 
+    
+    delete laptop; // good: no memory leak
 
     return 0;
 }

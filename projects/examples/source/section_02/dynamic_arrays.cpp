@@ -3,7 +3,7 @@
 
 int main()
 {
-	const int * const ptr_int = new int(42); // good: initialized dynamic variable
+	const auto ptr_int = new int(42); // good: initialized dynamic variable
 
 	std::cout << *ptr_int << std::endl;
 

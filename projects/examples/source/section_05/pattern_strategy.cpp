@@ -29,11 +29,7 @@ private:
 
 int main()
 {
-    const Computation * const computation = new AVX;
-
-    Computer(*computation).compute(); // note: instruction set for computations
-
-    delete computation; // good: no memory leak
+    Computer(AVX()).compute(); // note: instruction set for computations
 
     return 0;
 }

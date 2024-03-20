@@ -93,9 +93,11 @@ public:
 
 int main()
 {
-    const Computer * const mobile = build(Builder_Mobile("Mobile")); 
+    Computer * const mobile = build(Builder_Mobile("Mobile")); 
 
-    print(*mobile); delete mobile; // good: no memory leak
+    print(*mobile); 
+    
+    delete mobile; // good: no memory leak
 
     return 0;
 }

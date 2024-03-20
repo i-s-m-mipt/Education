@@ -61,7 +61,7 @@ int main()
 
     for (std::size_t i = 0; i < 4; ++i) super_cluster->add_computer(make_cluster(1, 1, 1));
 
-    const Computer * const computer = super_cluster;
+    Computer * const computer = super_cluster;
         
     std::cout << computer->cores() << std::endl;
 

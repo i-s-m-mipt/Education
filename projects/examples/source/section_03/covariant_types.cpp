@@ -24,10 +24,13 @@ public:
 
 int main()
 {
-	const auto derived = new Derived; Base * const base = derived;
+	Derived * const derived = new Derived; 
 
-	derived->get()->print(); 
-	base   ->get()->print();
+	derived->get()->print();
+
+	Base * const base = derived;
+
+	base->get()->print();
 
 	delete base;
 
