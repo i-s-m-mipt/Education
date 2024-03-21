@@ -9,19 +9,19 @@ class Data
 {
 public:
 
-	Data() noexcept = default;
+	constexpr Data() noexcept = default;
 
-	explicit Data(char c, int i, double d) noexcept : m_c(c), m_i(i), m_d(d) {}
+	constexpr explicit Data(char c, int i, double d) noexcept : m_c(c), m_i(i), m_d(d) {}
 
 private:
 
-	char m_c; int m_i; double m_d;
+	char m_c{}; int m_i{}; double m_d{};
 
 }; // class Data
 
 int main()
 {
-	const std::size_t size = 5; // good: use alias std::size_t for sizes and indexes
+	constexpr std::size_t size = 5; // good: use alias std::size_t for sizes and indexes
 
 	std::vector < int > v; 
 	
@@ -60,7 +60,7 @@ int main()
 		++(*iterator); // note: use iterators as high-level pointers in containers
 	}
 
-	int static_array[size]{};
+	constexpr int static_array[size]{};
 
 //	assert(static_array.size() == size); // error: not a class
 
@@ -91,9 +91,9 @@ int main()
 
 	v1.emplace_back('a', 42, 3.14); // good: forwarding arguments to constructor
 
-	[[maybe_unused]] auto single_value { 42 }; // note: auto -> int
+	[[maybe_unused]] constexpr auto single_value { 42 }; // note: auto -> int
 
-	auto initializer_list = { 1, 2, 3, 4, 5 }; // note: auto -> std::initializer_list < int >
+	const auto initializer_list = { 1, 2, 3, 4, 5 }; // note: auto -> std::initializer_list < int >
 
 	std::vector < int > vector(initializer_list); // note: constructor for initializer_list
 
@@ -109,7 +109,7 @@ int main()
 	vector.erase(          std::cbegin(vector)         ); // note: O(N) complexity 
 	vector.erase(std::next(std::cbegin(vector), middle)); // note: O(N) complexity
 
-	[[maybe_unused]] auto vector_value = vector[middle]; // good: O(1) complexity
+	[[maybe_unused]] const auto vector_value = vector[middle]; // good: O(1) complexity
 
 	std::deque < int > deque(std::cbegin(vector), std::cend(vector));
 
@@ -123,13 +123,13 @@ int main()
 
 	deque.erase(std::next(std::cbegin(deque), middle)); // note: O(N) complexity
 
-	[[maybe_unused]] auto deque_value = deque[middle]; // good: O(1) complexity
+	[[maybe_unused]] const auto deque_value = deque[middle]; // good: O(1) complexity
 
-	std::array < int, size > array = { 1, 2, 3, 4, 5 }; // note: aggregate initialization
+	constexpr std::array < int, size > array = { 1, 2, 3, 4, 5 }; // note: aggregate initialization
 
-	[[maybe_unused]] auto array_value = array[middle]; // good: O(1) complexity, fast on stack
+	[[maybe_unused]] const auto array_value = array[middle]; // good: O(1) complexity, fast on stack
 
-	[[maybe_unused]] auto array_from_static_array = std::to_array(static_array);
+	[[maybe_unused]] constexpr auto array_from_static_array = std::to_array(static_array);
 
 	return 0;
 }

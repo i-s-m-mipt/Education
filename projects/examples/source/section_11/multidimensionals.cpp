@@ -13,20 +13,20 @@ public:
 	{
 	public:
 
-		explicit Row(T * array) noexcept : m_array(array) {}
+		constexpr explicit Row(T * array) noexcept : m_array(array) {}
 
-		[[nodiscard]] T & operator[](std::size_t index) noexcept
+		[[nodiscard]] constexpr T & operator[](std::size_t index) noexcept
 		{
 			return m_array[index];
 		}
 
 	private:
 
-		T * m_array;
+		T * const m_array;
 
 	}; // class Row 
 
-	[[nodiscard]] Row operator[](std::size_t index) noexcept // note: operator[][] is invalid syntax
+	[[nodiscard]] constexpr Row operator[](std::size_t index) noexcept // note: operator[][] is invalid syntax
 	{
 		return Row(m_array[index]);
 	}
@@ -39,7 +39,7 @@ private:
 
 int main()
 {
-	const std::size_t size = 3;
+	constexpr std::size_t size = 3;
 
 	[[maybe_unused]] int array_2D_v1[size][size]{}; // note: built-in static 2D array
 
@@ -62,7 +62,7 @@ int main()
 		}
 	}
 
-	auto array_2D_v3 = new int*[size]{}; // note: built-in dynamic 2D array
+	const auto array_2D_v3 = new int*[size]{}; // note: built-in dynamic 2D array
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
@@ -84,7 +84,7 @@ int main()
 
 	delete[] array_2D_v3;
 
-	auto array_2D_v4 = new int[size * size]{}; // note: linearized built-in dynamic 2D array
+	const auto array_2D_v4 = new int[size * size]{}; // note: linearized built-in dynamic 2D array
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
@@ -116,9 +116,9 @@ int main()
 		}
 	}
 
-	const std::size_t size_1 = 3;
-	const std::size_t size_2 = 4;
-	const std::size_t size_3 = 5;
+	constexpr std::size_t size_1 = 3;
+	constexpr std::size_t size_2 = 4;
+	constexpr std::size_t size_3 = 5;
 
 	boost::multi_array < int, 3 > array_2D_v7(boost::extents[size_1][size_2][size_3]); // note: 3D boost::multi_array
 
@@ -143,8 +143,8 @@ int main()
 
 	auto view = array_2D_v7[boost::indices[range_t(0, 2)][1][range_t(0, 5, 2)]]; // note: 2D partial view
 
-	const std::size_t view_size_1 = 2;
-	const std::size_t view_size_2 = 3;
+	constexpr std::size_t view_size_1 = 2;
+	constexpr std::size_t view_size_2 = 3;
 
 	for (std::size_t i = 0; i < view_size_1; ++i)
 	{

@@ -6,7 +6,7 @@
 
 #include <boost/container_hash/hash.hpp>
 
-[[nodiscard]] inline std::size_t hash(const std::string & string) noexcept // note: Java hash for strings
+[[nodiscard]] inline constexpr std::size_t hash(const std::string & string) noexcept // note: Java hash for strings
 {
 	std::size_t seed = 0;
 
@@ -58,15 +58,15 @@ int main()
 	std::cout <<   std::hash < std::string > ()("Hello, hashing!") << std::endl;
 	std::cout << boost::hash < std::string > ()("Hello, hashing!") << std::endl;
 
-	S s = { "hello", "world" };
+	const S s = { "hello", "world" };
 
 	std::cout << combined_hash(s.string_1, s.string_2) << std::endl;
 
 	std::cout << boost::hash < S > ()(s) << std::endl;
 
-	std::vector < std::string > vector = { "hello", "world" };
+	const std::vector < std::string > vector = { "hello", "world" };
 
-	std::cout << boost::hash_range(std::begin(vector), std::end(vector)) << std::endl;
+	std::cout << boost::hash_range(std::cbegin(vector), std::cend(vector)) << std::endl;
 
 	return 0;
 }

@@ -6,13 +6,13 @@ class Person
 {
 public:
 
-	explicit Person(const std::string & name) : m_name(name) {}
+	constexpr explicit Person(const std::string & name) : m_name(name) {}
 
-	[[nodiscard]] const std::string & name() const noexcept { return m_name; }
+	[[nodiscard]] constexpr const std::string & name() const noexcept { return m_name; }
 
 private:
 
-	std::string m_name;
+	const std::string m_name;
 
 }; // class Person
 

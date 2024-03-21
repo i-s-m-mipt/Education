@@ -8,18 +8,18 @@ template < typename T > class Stack_v1 // note: min element in O(1) time and O(N
 {
 public:
 
-    void push(T value)
+    constexpr void push(T value)
     {
         m_stack.emplace(value, (std::empty(m_stack) ? value : std::min(value, m_stack.top().second)));
     }
 
-    [[nodiscard]] T top() const noexcept { return m_stack.top().first; }
+    [[nodiscard]] constexpr T top() const noexcept { return m_stack.top().first; }
  
-    void pop() noexcept { m_stack.pop(); }
+    constexpr void pop() noexcept { m_stack.pop(); }
  
-    [[nodiscard]] std::size_t size() const noexcept { return m_stack.size(); }
+    [[nodiscard]] constexpr std::size_t size() const noexcept { return m_stack.size(); }
  
-    [[nodiscard]] T min() const noexcept { return m_stack.top().second; }
+    [[nodiscard]] constexpr T min() const noexcept { return m_stack.top().second; }
 
 private:
 
@@ -31,7 +31,7 @@ template < typename T > requires std::is_arithmetic_v < T > class Stack_v2
 {
 public:
 
-    void push(T value)
+    constexpr void push(T value)
     {
         if (std::empty(m_stack)) 
         {
@@ -47,12 +47,12 @@ public:
         }
     }
 
-    [[nodiscard]] T top() const noexcept
+    [[nodiscard]] constexpr T top() const noexcept
     {
         return (m_stack.top() < m_min ? m_min : m_stack.top());
     }
 
-    void pop() noexcept
+    constexpr void pop() noexcept
     {
         if (auto t = m_stack.top(); t < m_min) 
         {
@@ -62,9 +62,9 @@ public:
         m_stack.pop();
     }
 
-    [[nodiscard]] std::size_t size() const noexcept { return m_stack.size(); }
+    [[nodiscard]] constexpr std::size_t size() const noexcept { return m_stack.size(); }
  
-    [[nodiscard]] T min() const noexcept { return m_min; }
+    [[nodiscard]] constexpr T min() const noexcept { return m_min; }
  
 private:
 

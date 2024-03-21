@@ -16,7 +16,7 @@ template < typename I > inline void print(I first, I last)
 
 int main()
 {
-	const std::size_t capacity = 3;
+	constexpr std::size_t capacity = 3;
 
 	boost::circular_buffer < int > buffer(capacity);
 

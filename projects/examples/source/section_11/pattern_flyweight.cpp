@@ -56,7 +56,7 @@ public:
 
 int main() 
 {
-    const std::size_t size = 100'000;
+    constexpr std::size_t size = 100'000;
 
     std::vector < Storage > storages; storages.reserve(size);
 
@@ -78,8 +78,8 @@ int main()
 
     std::cout << "Continue? (y/n) "; std::cin >> c;
 
-    Storage storage_1(Data{ 1 }, Data{});
-    Storage storage_2(Data{ 2 }, Data{});
+    const Storage storage_1(Data{ 1 }, Data{});
+    const Storage storage_2(Data{ 2 }, Data{});
 
     assert(&storage_1.m_x.get() != &storage_2.m_x.get());
     assert(&storage_1.m_y.get() == &storage_2.m_y.get());

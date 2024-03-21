@@ -20,7 +20,7 @@ void test_1(benchmark::State & state)
 
         std::iota(std::begin(array), std::end(array), 1); // note: generate range 1, 2, 3, ...
 
-        auto start = Clock::now(); // note: manual timing
+        const auto start = Clock::now(); // note: manual timing
 
         std::ranges::sort(array, std::greater()); // note: sort range in descending order
 
@@ -38,7 +38,7 @@ void test_2(benchmark::State & state)
 
         std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
 
-        auto start = Clock::now(); // note: manual timing
+        const auto start = Clock::now(); // note: manual timing
 
         std::ranges::sort(vector, std::greater()); // note: sort range in descending order
 
@@ -56,7 +56,7 @@ void test_3(benchmark::State & state)
 
         std::iota(std::begin(deque), std::end(deque), 1); // note: generate range 1, 2, 3, ...
 
-        auto start = Clock::now(); // note: manual timing
+        const auto start = Clock::now(); // note: manual timing
 
         std::ranges::sort(deque, std::greater()); // note: sort range in descending order
 
@@ -74,7 +74,7 @@ void test_4(benchmark::State & state)
 
         std::iota(std::begin(list), std::end(list), 1); // note: generate range 1, 2, 3, ...
 
-        auto start = Clock::now(); // note: manual timing
+        const auto start = Clock::now(); // note: manual timing
 
         list.sort(std::greater());
 
@@ -92,7 +92,7 @@ void test_5(benchmark::State & state)
 
         std::iota(std::begin(forward_list), std::end(forward_list), 1); // note: generate range 1, 2, 3, ...
 
-        auto start = Clock::now(); // note: manual timing
+        const auto start = Clock::now(); // note: manual timing
 
         forward_list.sort(std::greater());
 

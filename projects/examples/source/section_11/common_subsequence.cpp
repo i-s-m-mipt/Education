@@ -4,7 +4,7 @@
 #include <iterator>
 #include <vector>
 
-template < typename T > [[nodiscard]] std::vector < T > longest_common_subsequence(
+template < typename T > [[nodiscard]] constexpr std::vector < T > longest_common_subsequence(
 	const std::vector < T > & s1, 
 	const std::vector < T > & s2) 
 {
@@ -38,8 +38,8 @@ template < typename T > [[nodiscard]] std::vector < T > longest_common_subsequen
 int main()
 {
 
-	std::vector < int > sequence_1 = { 1, 2, 2, 3, 4, 4 };
-	std::vector < int > sequence_2 = { 1, 1, 2, 3, 3, 4 };
+	const std::vector < int > sequence_1 = { 1, 2, 2, 3, 4, 4 };
+	const std::vector < int > sequence_2 = { 1, 1, 2, 3, 3, 4 };
 
 	for (const auto element : longest_common_subsequence(sequence_1, sequence_2))
 	{

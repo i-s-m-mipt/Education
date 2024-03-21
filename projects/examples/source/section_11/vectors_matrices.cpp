@@ -90,7 +90,7 @@
 
 void test_1(benchmark::State & state) // note: better for 3x3 or less
 {
-    auto matrix = make_random_matrix(state.range(0));
+    const auto matrix = make_random_matrix(state.range(0));
 
     for (auto _ : state)
     {
@@ -102,7 +102,7 @@ void test_1(benchmark::State & state) // note: better for 3x3 or less
 
 void test_2(benchmark::State & state) // note: better for 4x4 or more
 {
-    auto matrix = make_random_matrix(state.range(0));
+    const auto matrix = make_random_matrix(state.range(0));
 
     for (auto _ : state)
     {
@@ -117,9 +117,9 @@ BENCHMARK(test_2)->DenseRange(1, 9, 1);
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {
-    auto matrix = make_random_matrix(3);
+    const auto matrix = make_random_matrix(3);
 
-    const auto epsilon = 0.001;
+    constexpr auto epsilon = 0.001;
 
     assert(std::abs(determinant_v1(matrix) - 12.595) < epsilon);
     assert(std::abs(determinant_v2(matrix) - 12.595) < epsilon);

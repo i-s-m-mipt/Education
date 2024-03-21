@@ -21,7 +21,7 @@ int main()
 {
 	constexpr std::size_t size = 8;
 
-	bool array[size]{};
+	constexpr bool array[size]{};
 
 	assert(sizeof(array) == size);
 
@@ -31,7 +31,7 @@ int main()
 
 	vector[middle] = true;
 
-	[[maybe_unused]] auto value = vector[middle]; // note: auto -> std::vector < bool > ::reference
+	[[maybe_unused]] const auto value = vector[middle]; // note: auto -> std::vector < bool > ::reference
 	
 	return 0;
 }

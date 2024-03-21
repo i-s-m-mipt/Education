@@ -40,9 +40,9 @@ template < typename T, auto N, typename C > [[nodiscard]] auto make_array(const 
 
 int main()
 {
-	const std::size_t size_1 = 3;
-	const std::size_t size_2 = 4;
-	const std::size_t size_3 = 5;
+	constexpr std::size_t size_1 = 3;
+	constexpr std::size_t size_2 = 4;
+	constexpr std::size_t size_3 = 5;
 
 	std::vector < std::vector < std::vector < int > > > vector_3D(size_1,
 		          std::vector < std::vector < int > >            (size_2,
@@ -67,7 +67,7 @@ int main()
 		std::cout << std::endl;
 	}
 
-	auto array = make_array < int, 3 > (vector_3D);
+	const auto array = make_array < int, 3 > (vector_3D);
 
 	std::cout << typeid(array).name() << std::endl << std::endl;
 
