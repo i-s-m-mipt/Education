@@ -315,8 +315,13 @@ foreach(entry IN LISTS sources_12)
 endforeach()
 
 set(sources_13
-    iostream_iterators
-    variadic_output)
+    recursive_calculator
+    boost_spirit_basics
+    parser_for_complex
+    parser_for_romans
+    parser_for_structs
+    advanced_calculator
+    character_variants)
 
 foreach(entry IN LISTS sources_13)
     add_executable(${entry} source/section_13/${entry}.cpp)
@@ -325,12 +330,8 @@ foreach(entry IN LISTS sources_13)
 endforeach()
 
 set(sources_14
-    recursive_calculator
-    boost_spirit_basics
-    parser_for_complex
-    parser_for_romans
-    parser_for_structs
-    advanced_calculator)
+    iostream_iterators
+    variadic_output)
 
 foreach(entry IN LISTS sources_14)
     add_executable(${entry} source/section_14/${entry}.cpp)
