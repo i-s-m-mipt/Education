@@ -1,4 +1,7 @@
+#include <algorithm>
 #include <iostream>
+#include <iterator>
+#include <numeric>
 #include <utility>
 #include <vector>
 
@@ -8,16 +11,15 @@ int main()
 
 	std::vector < int > vector(n, 0); // note: create vector of n zero elements
 
-	for (std::size_t i = 0; i < n; ++i) // note: see also std::size instead of n
-	{
-		vector[i] = static_cast < int > (n - i); // note: see also push_back
-	}
+	std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
+
+	std::ranges::reverse(vector); // note: reverse range
 
 	for (std::size_t i = 0; i < n - 1; ++i)
 	{
 		for (std::size_t j = i + 1; j < n; ++j)
 		{
-			if (vector[i] > vector[j])
+			if (vector[i] > vector[j]) // note: sort in ascending order
 			{
 				std::swap(vector[i], vector[j]);
 			}

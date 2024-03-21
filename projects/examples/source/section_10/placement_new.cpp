@@ -94,7 +94,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 	constexpr std::size_t offset = size / 2;
 
-	(ptr + offset)->~C();
+	(ptr + offset)->~C(); // good: explicit element destructor call 
 
 	new (ptr + offset) C(42); // note: object reconstruction in the same memory cell
 

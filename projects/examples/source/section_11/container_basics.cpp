@@ -45,7 +45,7 @@ int main()
 	}
 	catch (...) {}
 
-	for (std::size_t i = 0; i < std::size(v); ++i)
+	for (std::size_t i = 0; i < std::size(v); ++i) // good: std::size instead of member
 	{
 		assert(v[i] == 0); // note: use operator[] if index was verified elsewhere
 	}

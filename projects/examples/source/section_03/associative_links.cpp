@@ -59,9 +59,9 @@ void Student::show_lectures() const
 {
 	std::cout << "Student " << m_name << " visits: " << std::endl;
 
-	for (std::size_t i = 0; i < std::size(m_lectures); ++i)
+	for (std::size_t i = 1; const auto lecture : m_lectures)
 	{
-		std::cout << i + 1 << ": " << m_lectures[i]->name() << std::endl;
+		std::cout << i++ << ": " << lecture->name() << std::endl;
 	}
 }
 
@@ -69,9 +69,9 @@ void Lecture::show_students() const
 {
 	std::cout << "Lecture " << m_name << " is visited by: " << std::endl;
 
-	for (std::size_t i = 0; i < std::size(m_students); ++i)
+	for (std::size_t i = 1; const auto student : m_students)
 	{
-		std::cout << i + 1 << ": " << m_students[i]->name() << std::endl;
+		std::cout << i++ << ": " << student->name() << std::endl;
 	}
 }
 

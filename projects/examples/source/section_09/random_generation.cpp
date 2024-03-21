@@ -39,7 +39,9 @@ int main()
 
 	std::vector < std::size_t > values(40, 0);
 
-	for (std::size_t i = 0; i < 100'000; ++i)
+	constexpr std::size_t size = 100'000;
+
+	for (std::size_t i = 0; i < size; ++i)
 	{
 		if (const auto value = distribution(engine); value > 0.0)
 		{

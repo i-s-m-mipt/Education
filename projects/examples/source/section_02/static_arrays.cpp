@@ -1,5 +1,6 @@
+#include <algorithm>
 #include <iostream>
-#include <iterator>
+#include <numeric>
 #include <utility>
 
 int main()
@@ -43,9 +44,7 @@ int main()
 
 	for (const int * p = a; p != (a + size); ++p)
 	{
-		std::cout << *p;
-
-		std::cout << (p + 1 == a + size ? '\n' : ' '); // good: compact formatting
+		std::cout << *p << (p + 1 == a + size ? '\n' : ' '); // good: compact formatting
 	}
 
 	const std::size_t buffer_size = 1024; // note: compile-time constant
@@ -54,16 +53,15 @@ int main()
 
 	const std::size_t n = 5; // note: buffer_size >= n (elements)
 
-	for (std::size_t i = 0; i < n; ++i)
-	{
-		s[i] = static_cast < int > (n - i);
-	}
+	std::iota(s, s + n, 1); // note: generate range 1, 2, 3, ...
+
+	std::ranges::reverse(s, s + n); // note: reverse range
 
 	for (std::size_t i = 0; i < n - 1; ++i) // note: bubble sort
 	{
 		for (std::size_t j = i + 1; j < n; ++j)
 		{
-			if (s[i] > s[j])
+			if (s[i] > s[j]) // note: sort in ascending order
 			{
 				std::swap(s[i], s[j]);
 			}

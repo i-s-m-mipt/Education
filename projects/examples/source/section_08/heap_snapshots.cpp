@@ -1,6 +1,7 @@
 #include <chrono>
 #include <cstdlib>
 #include <iostream>
+#include <numeric>
 #include <thread>
 
 using namespace std::literals;
@@ -9,7 +10,7 @@ void f(std::size_t size)
 {
 	const auto a = new int[size]{}; // note: dynamic allocation
 
-	for (auto i = 0; i < size; ++i) a[i] = i;
+	std::iota(a, a + size, 1); // note: generate range 1, 2, 3, ...
 
 	std::this_thread::sleep_for(1s); // note: delay
 

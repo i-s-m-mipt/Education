@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <iterator>
 #include <numeric>
@@ -10,7 +11,7 @@ void insertion_sort(std::vector < int > & v, std::size_t l, std::size_t r) // no
 	{
 		for (auto j = i; j > l; --j)
 		{
-			if (v[j - 1] > v[j]) 
+			if (v[j - 1] > v[j]) // note: sort in ascending order
 			{
 				std::swap(v[j], v[j - 1]);
 			}
@@ -24,12 +25,9 @@ void merge_sort(std::vector < int > & v, std::size_t l, std::size_t m, std::size
 
 	std::vector < int > t(r - l, 0); // note: one additional container instead of two
 
-	for (auto & e : t) 
-	{
-		e = v[((l < end && ((m < r && v[l] <= v[m]) || (m == r))) ? l++ : m++)];
-	}
+	for (auto & e : t) e = v[((l < end && ((m < r && v[l] <= v[m]) || (m == r))) ? l++ : m++)];
 
-	for (std::size_t i = 0; i < std::size(t); ++i) v[begin + i] = t[i];
+	for (std::size_t i = 0; auto e : t) v[begin + (i++)] = e;
 }
 
 void merge_sort(std::vector < int > & v, std::size_t l, std::size_t r) // note: O(N*log(N)) complexity (amortized)
@@ -50,11 +48,13 @@ void merge_sort(std::vector < int > & v, std::size_t l, std::size_t r) // note: 
 
 int main()
 {
-	const std::size_t n = 5;
+	const std::size_t n = 128;
 
 	std::vector < int > vector(n, 0);
 
-	for (auto value = static_cast < int > (n); auto & element : vector) element = value--;
+	std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
+
+	std::ranges::reverse(vector); // note: reverse range
 
 	merge_sort(vector, 0, n); // good: half-open intervals preferred in C++
 

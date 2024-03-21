@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <utility>
 
@@ -27,10 +28,7 @@ public:
 
 		m_data = new data_t[m_size];
 
-		for (std::size_t i = 0; i < m_size; ++i)
-		{
-			m_data[i] = other.m_data[i]; // note: deep copy
-		}
+		std::ranges::copy(other.m_data, other.m_data + m_size, m_data); // note: deep copy range
 	}
 
 	/*
@@ -61,10 +59,7 @@ public:
 
 			auto new_data = (new_size ? new data_t[new_size]{} : nullptr);
 
-			for (std::size_t i = 0; i < new_size; ++i)
-			{
-				new_data[i] = other.m_data[i]; // note: deep copy
-			}
+			std::ranges::copy(other.m_data, other.m_data + new_size, new_data); // note: deep copy range
 
 			delete[] m_data; // good: delete after creating new data
 
