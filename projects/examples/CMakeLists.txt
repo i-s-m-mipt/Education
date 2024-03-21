@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(x32 -m32)
 set(x64 -m64)
 
-find_package(Boost         1.84 REQUIRED COMPONENTS filesystem log python system)
+find_package(Boost         1.84 REQUIRED COMPONENTS filesystem locale log python system)
 find_package(Python3       3.11 REQUIRED COMPONENTS Interpreter Development)
 find_package(nlohmann_json 3.11 REQUIRED COMPONENTS)
 find_package(GTest         1.14 REQUIRED COMPONENTS)
@@ -323,11 +323,18 @@ set(sources_13
     advanced_calculator
     character_variants)
 
+set(section_13 source/section_13/)
+
 foreach(entry IN LISTS sources_13)
-    add_executable(${entry} source/section_13/${entry}.cpp)
+    add_executable(${entry} ${section_13}${entry}.cpp)
     set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
+
+add_executable(converting_encodings ${section_13}converting_encodings.cpp)
+set_target_properties(converting_encodings PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+target_compile_options(converting_encodings PRIVATE -Wall -pedantic -O0) 
+target_link_libraries(converting_encodings PRIVATE ${Boost_LIBRARIES})
 
 set(sources_14
     iostream_iterators
