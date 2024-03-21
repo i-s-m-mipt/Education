@@ -19,15 +19,15 @@ int main()
 
 	std::shuffle(std::begin(v1), std::end(v1), engine); // note: random with no duplicates
 
-	auto [min, max] = std::minmax_element(std::cbegin(v1), std::cend(v1)); // note: structured binding
+	const auto [min, max] = std::minmax_element(std::cbegin(v1), std::cend(v1)); // note: structured binding
 
 	std::uniform_int_distribution distribution(*min, *max);
 
-	auto generator = [&engine, &distribution](){ return distribution(engine); };
+	const auto generator = [&engine, &distribution](){ return distribution(engine); };
 
 	std::generate_n(std::back_inserter(v2), std::size(v1), generator); // note: random with duplicates
 
-	auto is_even = [](auto x){ return (x % 2 == 0); };
+	constexpr auto is_even = [](auto x){ return (x % 2 == 0); };
 
 //	v2.erase(std::remove_if(std::begin(v2), std::end(v2), is_even), std::end(v2)); // bad: too long
 

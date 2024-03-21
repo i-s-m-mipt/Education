@@ -17,13 +17,13 @@ public:
 
 private:
 
-	int m_data = 0;
+	const int m_data = 0;
 
 }; // class C
 
 int main()
 {
-	auto lambda = [](){}; // note: lambda expression, look at cppinsights.io
+	constexpr auto lambda = [](){}; // note: lambda expression, look at cppinsights.io
 
 	std::cout << typeid(lambda).name() << std::endl; // note: unique closure type
 
@@ -48,25 +48,25 @@ int main()
 	operations[2] = [](auto x, auto y){ return (x * y); };
 	operations[3] = [](auto x, auto y){ return (x / y); };
 
-	auto x = 8;
-	auto y = 4;
+	constexpr auto x = 8;
+	constexpr auto y = 4;
 
 	assert(operations.at(1)(x, y) == (x - y));
 
-	auto templated_lambda = [] < typename T > (T x, T y) { return (x + y); };
+	constexpr auto templated_lambda = [] < typename T > (T x, T y) { return (x + y); };
 
 	templated_lambda(100, 200);
 	templated_lambda(1.0, 2.0);
 //	templated_lambda(100, 2.0); // error: different types
 
-	const std::size_t size = 5;
+	constexpr std::size_t size = 5;
 
 	std::vector < int > vector(size, 0);
 
 	std::ranges::for_each(              vector , [a](auto & x){        x += a ; }); // note: modify elements in range
 	std::ranges::for_each(std::as_const(vector), [a](auto   x){ assert(x == a); }); // note: verify elements in range
 
-	std::set < int, decltype([](auto lhs, auto rhs){ return (lhs > rhs); }) > set = { 1, 4, 2, 5, 3 };
+	const std::set < int, decltype([](auto lhs, auto rhs){ return (lhs > rhs); }) > set = { 1, 4, 2, 5, 3 };
 
 	for (const auto element : set) std::cout << element << ' ';
 

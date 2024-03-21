@@ -38,14 +38,14 @@ int main()
 
 	for (auto && element : vector) ++element; // note: range-based for, look at cppinsights.io
 
-	std::map < int, int > map = { { 1, 10 }, { 2, 20 }, { 3, 30 } };
+	const std::map < int, int > map = { { 1, 10 }, { 2, 20 }, { 3, 30 } };
 
 	for (const auto [key, value] : map) // note: structured binding, look at cppinsights.io
 	{
 		std::cout << key << ", " << value << std::endl;
 	}
 
-	int array[] = { 1, 2, 3, 4, 5 }; // note: built-in array is considered as range
+	constexpr int array[] = { 1, 2, 3, 4, 5 }; // note: built-in array is considered as range
 
 	for (const auto element : array) std::cout << element << ' ';
 
@@ -101,15 +101,15 @@ int main()
 
 	for (const std::string data = "1,2,3,4,5"; auto x : std::views::split(data, ','))
 	{
-		std::cout << std::string(std::begin(x), std::end(x)) << ' ';
+		std::cout << std::string(std::cbegin(x), std::cend(x)) << ' ';
 	}
 
 	std::cout << std::endl;
 
-    auto dangling_iterator = std::ranges::max_element(
+    constexpr auto dangling_iterator = std::ranges::max_element(
 		[](){ return std::vector({ 1, 2, 3, 4, 5 }); }()); // note: temporary vector
 	
-    static_assert(std::is_same_v < std::ranges::dangling, decltype(dangling_iterator) > );
+    static_assert(std::is_same_v < const std::ranges::dangling, decltype(dangling_iterator) > );
 
 //	assert(*dangling_iterator == 5); // error: dangling iterator		
 

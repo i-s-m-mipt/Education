@@ -89,9 +89,9 @@ public:
 
 int main()
 {
-    std::shared_ptr < Computer > computer_1 = std::make_shared < Mobile > ();
-    std::shared_ptr < Computer > computer_2 = std::make_shared < Tablet > ();
-    std::shared_ptr < Computer > computer_3 = std::make_shared < Laptop > ();
+    const std::shared_ptr < const Computer > computer_1 = std::make_shared < const Mobile > ();
+    const std::shared_ptr < const Computer > computer_2 = std::make_shared < const Tablet > ();
+    const std::shared_ptr < const Computer > computer_3 = std::make_shared < const Laptop > ();
 
     Tester tester;
 

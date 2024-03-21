@@ -18,7 +18,7 @@ class C // note: different classes have different types
 {
 public:
 
-	[[nodiscard]] int operator()() const noexcept { return (m_state++); }
+	[[nodiscard]] constexpr int operator()() const noexcept { return (m_state++); }
 
 private:
 
@@ -30,9 +30,9 @@ template < typename T > class Sum
 {
 public:
 
-	void operator()(T x) noexcept { s += x; }
+	constexpr void operator()(T x) noexcept { s += x; }
 
-	[[nodiscard]] T result() const noexcept { return s; }
+	[[nodiscard]] constexpr T result() const noexcept { return s; }
 
 private:
 
@@ -44,9 +44,9 @@ template < typename T > class Mean
 {
 public:
 
-	void operator()(T x) noexcept { ++n; s += x; }
+	constexpr void operator()(T x) noexcept { ++n; s += x; }
 
-	[[nodiscard]] T result() const noexcept { return (s / n); }
+	[[nodiscard]] constexpr T result() const noexcept { return (s / n); }
 
 private:
 
@@ -61,15 +61,15 @@ int main()
 	std::ranges::sort(v1                ); // note: sort range in  ascending order
 	std::ranges::sort(v1, std::greater()); // note: sort range in descending order
 
-	std::set < int, std::greater < int > > set = { 1, 4, 2, 5, 3 };
+	const std::set < int, std::greater < int > > set = { 1, 4, 2, 5, 3 };
 
 	for (const auto element : set) std::cout << element << ' ';
 
 	std::cout << std::endl;
 
-	const std::size_t size = 5;
+	constexpr std::size_t size = 5;
 
-	C c; // note: functional object with overloaded operator()
+	constexpr C c; // note: functional object with overloaded operator()
 
 	std::vector < int > v2(size, 0); std::ranges::generate(v2, f); // note: generate elements in range
 	std::vector < int > v3(size, 0); std::ranges::generate(v3, c); // note: generate elements in range

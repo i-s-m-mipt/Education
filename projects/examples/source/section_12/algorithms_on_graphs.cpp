@@ -20,11 +20,11 @@ int main()
 
 	default_graph_t default_graph;
 
-	auto vertex_1 = boost::add_vertex(default_graph);
-	auto vertex_2 = boost::add_vertex(default_graph);
-	auto vertex_3 = boost::add_vertex(default_graph);
+	const auto vertex_1 = boost::add_vertex(default_graph);
+	const auto vertex_2 = boost::add_vertex(default_graph);
+	const auto vertex_3 = boost::add_vertex(default_graph);
 
-	auto vertices = boost::vertices(default_graph);
+	const auto vertices = boost::vertices(default_graph);
 
 	std::ranges::for_each(vertices.first, vertices.second, [](auto vertex){ std::cout << vertex << std::endl; });
 
@@ -35,15 +35,15 @@ int main()
 
 	assert(boost::add_edge(vertex_1, vertex_2, default_graph).second == false);
 
-	auto edges = boost::edges(default_graph);
+	const auto edges = boost::edges(default_graph);
 
 	std::ranges::for_each(edges.first, edges.second, [](auto edge){ std::cout << edge << std::endl; });
 
-	auto [begin, end] = boost::adjacent_vertices(vertex_2, default_graph);
+	const auto [begin, end] = boost::adjacent_vertices(vertex_2, default_graph);
 
 	assert(std::distance(begin, end) == 2);
 
-	auto out_edges = boost::out_edges(vertex_2, default_graph);
+	const auto out_edges = boost::out_edges(vertex_2, default_graph);
 
 	std::ranges::for_each(out_edges.first, out_edges.second, [&default_graph](auto edge)
 	{ 
@@ -54,10 +54,10 @@ int main()
 	
 	custom_graph_t custom_graph;
 
-	auto u = boost::add_vertex(custom_graph);
-	auto v = boost::add_vertex(custom_graph); 
+	const auto u = boost::add_vertex(custom_graph);
+	const auto v = boost::add_vertex(custom_graph); 
 
-	auto e = boost::add_edge(u, v, custom_graph).first; 
+	const auto e = boost::add_edge(u, v, custom_graph).first; 
 	
 	custom_graph[u] = 1;
 	custom_graph[v] = 2;
@@ -65,9 +65,9 @@ int main()
 
 	boost::write_graphviz(std::cout, custom_graph); // note: suppress warning 4458
 
-	const std::size_t size = 6;
+	constexpr std::size_t size = 6;
 
-	std::array < std::pair < std::size_t, std::size_t >, size > data =
+	constexpr std::array < std::pair < std::size_t, std::size_t >, size > data =
 	{
 		std::make_pair(0, 1),
 		std::make_pair(1, 2),
@@ -77,13 +77,13 @@ int main()
 		std::make_pair(4, 5)
 	};
 
-	std::array < double, size > weights = { 1.0, 2.0, 1.0, 2.0, 1.0, 1.0 };
+	constexpr std::array < double, size > weights = { 1.0, 2.0, 1.0, 2.0, 1.0, 1.0 };
 
 	using weighted_graph_t = boost::adjacency_list < vector, vector, undirected,
 		boost::no_property, 
 		boost::   property < boost::edge_weight_t, double > > ;
 
-	weighted_graph_t weighted_graph(std::begin(data), std::end(data), std::begin(weights), size);
+	const weighted_graph_t weighted_graph(std::cbegin(data), std::cend(data), std::cbegin(weights), size);
 
 	boost::array < std::size_t, size > directions; // note: only this container works here
 

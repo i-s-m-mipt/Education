@@ -4,9 +4,9 @@
 #include <stdexcept>
 #include <variant>
 
-class Mobile { public: [[nodiscard]] int run() const noexcept { return 0; }; };
-class Tablet { public: [[nodiscard]] int run() const noexcept { return 0; }; };
-class Laptop { public: [[nodiscard]] int run() const noexcept { return 1; }; };
+class Mobile { public: [[nodiscard]] constexpr int run() const noexcept { return 0; }; };
+class Tablet { public: [[nodiscard]] constexpr int run() const noexcept { return 0; }; };
+class Laptop { public: [[nodiscard]] constexpr int run() const noexcept { return 1; }; };
 
 using Computer = std::variant < Mobile, Tablet, Laptop > ;
 
@@ -35,11 +35,11 @@ template < typename ... Bases > class Visitor : public Bases... { public: using 
 
 int main()
 {
-    Computer computer_1 = Mobile();
-    Computer computer_2 = Tablet();
-    Computer computer_3 = Laptop();
+    constexpr Computer computer_1 = Mobile();
+    constexpr Computer computer_2 = Tablet();
+    constexpr Computer computer_3 = Laptop();
 
-    Visitor < Tester > visitor(Tester{}); // note: just Visitor in MSVC
+    constexpr Visitor < Tester > visitor(Tester{}); // note: just Visitor in MSVC
 
     try
     {
@@ -54,7 +54,7 @@ int main()
 
     assert(std::visit([](auto && x){ return x; }, std::variant < int > (42)) == 42);
 
-    auto lambda = [](auto && x){ return x; };
+    constexpr auto lambda = [](auto && x){ return x; };
 
     Visitor < decltype(lambda) > test(lambda); // note: just Visitor in MSVC
 
