@@ -1,7 +1,15 @@
+#include <bit>
 #include <cassert>
 #include <iomanip>
 #include <iostream>
 #include <type_traits>
+
+[[nodiscard]] inline constexpr bool is_little_endian_system() noexcept
+{
+	constexpr char16_t test = 0x0102;
+
+	return (std::bit_cast < const char * > (&test))[0] == 0x02;
+}
 
 int main()
 {
@@ -45,6 +53,10 @@ int main()
 	assert(sizeof(char8_t )); // note: used for UTF-8  encoding
 	assert(sizeof(char16_t)); // note: used for UTF-16 encoding
 	assert(sizeof(char32_t)); // note: used for UTF-32 encoding
+
+	std::cout << std::boolalpha << (std::endian::native == std::endian::little) << std::endl;
+
+	std::cout << std::boolalpha << is_little_endian_system() << std::endl;
 
 	return 0;
 }
