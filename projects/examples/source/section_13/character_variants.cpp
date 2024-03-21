@@ -21,9 +21,7 @@ int main()
 
 	std::cout << std::boolalpha << std::is_signed_v < char > << std::endl;
 
-//	c = 255; // warning: overflow conversion from 255 to -1
-
-//	const int x = c; // bad: undefined behavior, 255 or -1
+//	c = 255; // bad: undefined behavior, overflow conversion from 255 to -1
 
 	[[maybe_unused]] constexpr   signed char sc = 'a';
 	[[maybe_unused]] constexpr unsigned char uc = 'a';
