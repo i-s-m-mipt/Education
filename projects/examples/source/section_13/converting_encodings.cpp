@@ -7,6 +7,8 @@
 
 #include <boost/locale.hpp>
 
+//#include <Windows.h> // note: required on Windows for changing code page
+
 [[nodiscard]] std::string convert_locale_to_utf(const std::string & string)
 {
 	boost::locale::generator generator;
@@ -33,7 +35,7 @@ int main()
 {
     std::cout << boost::locale::util::get_system_locale() << std::endl;
 
-	std::string string; std::cin >> string; // note: can be not UTF-8, cp1251 on Windows
+	std::string string; std::cin >> string; // note: can be not UTF-8
 
     auto u8string = convert_locale_to_utf(string);
 
