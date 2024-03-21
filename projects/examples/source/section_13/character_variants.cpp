@@ -46,13 +46,13 @@ int main()
 
 	std::cout << std::endl;
 	
-	std::cout << '8' - '0' << std::endl; // note: obtain integer digit from character digit
+	std::cout << '8' - '0' << std::endl; // good: obtain integer digit from character digit
 
-	std::cout << sizeof(wchar_t) << std::endl; // note: used for wide encodings on Windows, non-portable type
+	assert(sizeof(char8_t ) == 1); // note: used for UTF-8  encoding, problems with support
+	assert(sizeof(char16_t) == 2); // note: used for UTF-16 encoding, problems with support
+	assert(sizeof(char32_t) == 4); // note: used for UTF-32 encoding, problems with support
 
-	assert(sizeof(char8_t )); // note: used for UTF-8  encoding, supported in strings
-	assert(sizeof(char16_t)); // note: used for UTF-16 encoding, supported in strings
-	assert(sizeof(char32_t)); // note: used for UTF-32 encoding, supported in strings
+	std::cout << sizeof(wchar_t) << std::endl; // note: used for wide encodings on Windows
 
 	std::cout << std::boolalpha << (std::endian::native == std::endian::little) << std::endl;
 
