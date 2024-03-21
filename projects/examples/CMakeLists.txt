@@ -5,9 +5,6 @@ project(examples VERSION 24.02.06 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-set(x32 -m32)
-set(x64 -m64)
-
 find_package(Boost         1.84 REQUIRED COMPONENTS filesystem locale log python system)
 find_package(Python3       3.11 REQUIRED COMPONENTS Interpreter Development)
 find_package(nlohmann_json 3.11 REQUIRED COMPONENTS)
@@ -20,15 +17,19 @@ include_directories(${nlohmann_json_INCLUDE_DIRS})
 include_directories(        ${GTEST_INCLUDE_DIRS})
 include_directories(    ${benchmark_INCLUDE_DIRS})
 
+set(section_01 source/section_01/)
+
 set(sources_01 
     minimal_program
     standard_library)
 
 foreach(entry IN LISTS sources_01)
-    add_executable(${entry} source/section_01/${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_01}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
+
+set(section_02 source/section_02/)
 
 set(sources_02 
     bracket_sequences 
@@ -46,10 +47,12 @@ set(sources_02
     variable_basics)
 
 foreach(entry IN LISTS sources_02)
-    add_executable(${entry} source/section_02/${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_02}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
+
+set(section_03 source/section_03/)
 
 set(sources_03 
     associative_links
@@ -71,10 +74,12 @@ set(sources_03
     virtual_operators)
 
 foreach(entry IN LISTS sources_03)
-    add_executable(${entry} source/section_03/${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_03}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
+
+set(section_04 source/section_04/)
 
 set(sources_04
     class_templates
@@ -88,10 +93,12 @@ set(sources_04
     variadic_traverse)
 
 foreach(entry IN LISTS sources_04)
-    add_executable(${entry} source/section_04/${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_04}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
+
+set(section_05 source/section_05/)
 
 set(sources_05
     crtp_basics
@@ -117,44 +124,48 @@ set(sources_05
     variadic_bases)
 
 foreach(entry IN LISTS sources_05)
-    add_executable(${entry} source/section_05/${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_05}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
+
+set(section_06 source/section_06/)
 
 set(sources_06
     types_inference
     custom_typelist)
 
 foreach(entry IN LISTS sources_06)
-    add_executable(${entry} source/section_06/${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_06}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
+
+set(section_07 source/section_07/)
 
 set(sources_07
     empty_function
     pimpl_idiom)
 
-set(section_07 source/section_07/)
-
 foreach(entry IN LISTS sources_07)
-    add_executable(${entry} ${section_07}${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_07}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
 
-add_executable(libraries_test ${section_07}libraries_test.cpp)
+add_executable            (libraries_test ${section_07}libraries_test.cpp)
 target_include_directories(libraries_test PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
-target_link_libraries(libraries_test PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/library_v1/liblibrary_v1.a)
-target_link_libraries(libraries_test PRIVATE ${Boost_LIBRARIES})
-set_target_properties(libraries_test PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
-target_compile_options(libraries_test PRIVATE -Wall -pedantic -O0) 
+target_link_libraries     (libraries_test PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/library_v1/liblibrary_v1.a)
+target_link_libraries     (libraries_test PRIVATE ${Boost_LIBRARIES})
+set_target_properties     (libraries_test PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+target_compile_options    (libraries_test PRIVATE -Wall -pedantic -O0) 
 
-add_executable(project ${section_07}project_main.cpp ${section_07}project_source.cpp)
+add_executable           (project ${section_07}project_main.cpp ${section_07}project_source.cpp)
 target_precompile_headers(project PRIVATE ${section_07}precompiled.hpp)
-set_target_properties(project PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
-target_compile_options(project PRIVATE -Wall -pedantic -O0) 
+set_target_properties    (project PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+target_compile_options   (project PRIVATE -Wall -pedantic -O0) 
+
+set(section_08 source/section_08/)
 
 set(sources_08
     errors_handling
@@ -164,28 +175,28 @@ set(sources_08
     union_basics
     variant_basics)
 
-set(section_08 source/section_08/)
-
 foreach(entry IN LISTS sources_08)
-    add_executable(${entry} ${section_08}${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_08}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
 
-add_executable(boost_logging ${section_08}boost_logging.cpp)
-set_target_properties(boost_logging PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+add_executable        (boost_logging ${section_08}boost_logging.cpp)
+target_link_libraries (boost_logging PRIVATE ${Boost_LIBRARIES})
+set_target_properties (boost_logging PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 target_compile_options(boost_logging PRIVATE -Wall -pedantic -O0) 
-target_link_libraries(boost_logging PRIVATE ${Boost_LIBRARIES})
 
-add_executable(google_benchmark ${section_08}google_benchmark.cpp)
-target_link_libraries(google_benchmark PRIVATE benchmark::benchmark)
-set_target_properties(google_benchmark PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+add_executable        (google_benchmark ${section_08}google_benchmark.cpp)
+target_link_libraries (google_benchmark PRIVATE benchmark::benchmark)
+set_target_properties (google_benchmark PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 target_compile_options(google_benchmark PRIVATE -Wall -pedantic -O3)
 
-add_executable(google_testing ${section_08}google_testing.cpp)
-target_link_libraries(google_testing PRIVATE ${GTEST_BOTH_LIBRARIES})
-set_target_properties(google_testing PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+add_executable        (google_testing ${section_08}google_testing.cpp)
+target_link_libraries (google_testing PRIVATE ${GTEST_BOTH_LIBRARIES})
+set_target_properties (google_testing PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 target_compile_options(google_testing PRIVATE -Wall -pedantic -O0) 
+
+set(section_09 source/section_09/)
 
 set(sources_09
     advanced_constants
@@ -198,26 +209,25 @@ set(sources_09
     binary_gray_code
     indian_algorithm)
 
-set(section_09 source/section_09/)
-
 foreach(entry IN LISTS sources_09)
-    add_executable(${entry} ${section_09}${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_09}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
 
-add_executable(random_generation ${section_09}random_generation.cpp)
-set_target_properties(random_generation PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
-target_compile_options(random_generation PRIVATE -Wall -pedantic -O3) 
+set(sources_09_release
+    random_generation
+    inscribed_simplex
+    bitwise_operations)
 
-add_executable(inscribed_simplex ${section_09}inscribed_simplex.cpp)
-set_target_properties(inscribed_simplex PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
-target_compile_options(inscribed_simplex PRIVATE -Wall -pedantic -O3) 
+foreach(entry IN LISTS sources_09_release)
+    add_executable        (${entry} ${section_09}${entry}.cpp)
+    target_link_libraries (${entry} PRIVATE benchmark::benchmark)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O3)
+endforeach()
 
-add_executable(bitwise_operations ${section_09}bitwise_operations.cpp)
-target_link_libraries(bitwise_operations PRIVATE benchmark::benchmark)
-set_target_properties(bitwise_operations PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
-target_compile_options(bitwise_operations PRIVATE -Wall -pedantic -O3)
+set(section_10 source/section_10/)
 
 set(sources_10
     bad_allocations
@@ -234,11 +244,9 @@ set(sources_10
     standard_allocator
     arena_adaptor)
 
-set(section_10 source/section_10/)
-
 foreach(entry IN LISTS sources_10)
-    add_executable(${entry} ${section_10}${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_10}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
 
@@ -252,11 +260,13 @@ set (sources_10_release
     noheap_allocator)
 
 foreach(entry IN LISTS sources_10_release)
-    add_executable(${entry} ${section_10}${entry}.cpp)
-    target_link_libraries(${entry} PRIVATE benchmark::benchmark)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_10}${entry}.cpp)
+    target_link_libraries (${entry} PRIVATE benchmark::benchmark)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O3)
 endforeach()
+
+set(section_11 source/section_11/)
 
 set(sources_11
     circular_buffer
@@ -275,11 +285,9 @@ set(sources_11
     common_subsequence
     numeric_valarrays)
 
-set(section_11 source/section_11/)
-
 foreach(entry IN LISTS sources_11)
-    add_executable(${entry} ${section_11}${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_11}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
 
@@ -289,11 +297,13 @@ set(sources_11_release
     vectors_matrices)
 
 foreach(entry IN LISTS sources_11_release)
-    add_executable(${entry} ${section_11}${entry}.cpp)
-    target_link_libraries(${entry} PRIVATE benchmark::benchmark)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_11}${entry}.cpp)
+    target_link_libraries (${entry} PRIVATE benchmark::benchmark)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O3) 
 endforeach()
+
+set(section_12 source/section_12/)
 
 set(sources_12
     advanced_visitors
@@ -309,10 +319,12 @@ set(sources_12
     standard_algorithms)
 
 foreach(entry IN LISTS sources_12)
-    add_executable(${entry} source/section_12/${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_12}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
+
+set(section_13 source/section_13/)
 
 set(sources_13
     recursive_calculator
@@ -323,55 +335,55 @@ set(sources_13
     advanced_calculator
     character_variants)
 
-set(section_13 source/section_13/)
-
 foreach(entry IN LISTS sources_13)
-    add_executable(${entry} ${section_13}${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_13}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
 
-add_executable(converting_encodings ${section_13}converting_encodings.cpp)
-set_target_properties(converting_encodings PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
-target_compile_options(converting_encodings PRIVATE -Wall -pedantic -O0) 
-target_link_libraries(converting_encodings PRIVATE ${Boost_LIBRARIES})
+add_executable        (converting_encodings ${section_13}converting_encodings.cpp)
+target_link_libraries (converting_encodings PRIVATE ${Boost_LIBRARIES})
+set_target_properties (converting_encodings PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+target_compile_options(converting_encodings PRIVATE -Wall -pedantic -O0)
+
+set(section_14 source/section_14/)
 
 set(sources_14
     iostream_iterators
     variadic_output)
 
 foreach(entry IN LISTS sources_14)
-    add_executable(${entry} source/section_14/${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_14}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
+
+set(section_16 source/section_16/)
 
 set(sources_16
     process_handler
     process_manager)
 
 foreach(entry IN LISTS sources_16)
-    add_executable(${entry} source/section_16/${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_16}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
+
+set(section_18 source/section_18/)
 
 set(sources_18
     long_arithmetic
     multiprecision_int)
 
-set(section_18 source/section_18/)
-
 foreach(entry IN LISTS sources_18)
-    add_executable(${entry} ${section_18}${entry}.cpp)
-    set_target_properties(${entry} PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+    add_executable        (${entry} ${section_18}${entry}.cpp)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
 
-add_executable(python_caller ${section_18}python_caller.cpp ${section_18}python_wrapper.cpp)
-
-target_link_libraries(python_caller PRIVATE   ${Boost_LIBRARIES})
-target_link_libraries(python_caller PRIVATE ${Python3_LIBRARIES})
-
-set_target_properties(python_caller PROPERTIES COMPILE_FLAGS ${x64} LINK_FLAGS ${x64})
+add_executable        (python_caller ${section_18}python_caller.cpp ${section_18}python_wrapper.cpp)
+target_link_libraries (python_caller PRIVATE   ${Boost_LIBRARIES})
+target_link_libraries (python_caller PRIVATE ${Python3_LIBRARIES})
+set_target_properties (python_caller PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 target_compile_options(python_caller PRIVATE -Wall -pedantic -O0) 
