@@ -50,9 +50,9 @@ int main()
 
 	std::cout << sizeof(wchar_t) << std::endl; // note: used for wide encodings on Windows, non-portable type
 
-	assert(sizeof(char8_t )); // note: used for UTF-8  encoding
-	assert(sizeof(char16_t)); // note: used for UTF-16 encoding
-	assert(sizeof(char32_t)); // note: used for UTF-32 encoding
+	assert(sizeof(char8_t )); // note: used for UTF-8  encoding, supported in strings
+	assert(sizeof(char16_t)); // note: used for UTF-16 encoding, supported in strings
+	assert(sizeof(char32_t)); // note: used for UTF-32 encoding, supported in strings
 
 	std::cout << std::boolalpha << (std::endian::native == std::endian::little) << std::endl;
 
