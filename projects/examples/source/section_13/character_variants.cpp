@@ -13,7 +13,7 @@
 
 int main()
 {
-	auto c = 'a'; // note: auto -> char
+	auto c = 'a'; // note: auto -> char, also used for UTF-8 support
 
 	assert(static_cast < int > (c) == 97); // note: ASCII code
 
@@ -46,10 +46,12 @@ int main()
 	
 	assert('8' - '0' == 0); // good: obtain integer digit from character digit
 
-	[[maybe_unused]] constexpr auto c8 = u8'a'; // note: auto -> char8_t, UTF-8, consider char
+	[[maybe_unused]] constexpr auto c8 = u8'a'; // note: auto -> char8_t
 
-	assert(sizeof(char16_t) == 2); // note: u prefix, used for UTF-16, problems with support
-	assert(sizeof(char32_t) == 4); // note: U prefix, used for UTF-32, problems with support
+	assert(c8 == 'a'); // note: consider char for UTF-8 for better std support
+
+	assert(sizeof(char16_t) == 2); // note: u'a' for UTF-16, problems with support
+	assert(sizeof(char32_t) == 4); // note: U'a' for UTF-32, problems with support
 
 	std::cout << sizeof(wchar_t) << std::endl; // note: used for wide encodings on Windows
 
