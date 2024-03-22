@@ -1,6 +1,45 @@
+#include <cassert>
+#include <cctype>
+#include <cstring>
 #include <iomanip>
 #include <iostream>
+#include <iterator>
+#include <ostream>
 #include <string>
+
+struct ignorecase_traits : public std::char_traits < char > 
+{
+    static bool eq(char c1, char c2) { return std::toupper(c1) == std::toupper(c2); }
+    static bool lt(char c1, char c2) { return std::toupper(c1) <  std::toupper(c2); }
+
+    static int compare(const char * s1, const char * s2, std::size_t n) 
+    {
+        for (std::size_t i = 0; i < n; ++i) 
+        {
+            if (!eq(s1[i], s2[i])) return lt(s1[i], s2[i]) ? -1 : +1;
+        }
+
+        return 0;
+    }
+    
+    static const char * find(const char * s, std::size_t n, char c) 
+    {
+        for (std::size_t i = 0; i < n; ++i) 
+        {
+            if (eq(s[i], c)) return &(s[i]);
+        }
+
+        return nullptr;
+    }
+
+}; // struct ignorecase_traits : public std::char_traits < char > 
+
+using icstring_t = std::basic_string < char, ignorecase_traits > ;
+
+inline std::ostream & operator<<(std::ostream & stream, const icstring_t & icstring)
+{
+    return (stream << std::string(icstring.data(), std::size(icstring)));
+}
 
 int main()
 {
@@ -18,39 +57,25 @@ int main()
 
     if (const auto index = string_3.find(','); index != std::string::npos)
     {
-        std::cout << string_3.substr(0, index) << std::endl;
+        assert(string_3.substr(0, index) == "Hello"s);
     }
 
-    /*
-    const char char_array[]{ 'H', 'e', 'l', 'l', 'o' };
+    assert(string_3.starts_with("Hello"s) && string_3.ends_with('!'));
 
-    const char   string_1[]{ 'H', 'e', 'l', 'l', 'o', '\0' };
-    const char   string_2[] = "Hello";
-    const char* string_3 = "Hello";
+    auto string_4 = "43"s; string_4.erase(1); string_4.append("2"s);
 
-    char string_4[] = "Hello";
+    assert(std::stoi(string_4) == 42 && string_4 == std::to_string(42));
 
-    string_4[4] = '!';
+    [[maybe_unused]] constexpr char char_array[]{ 'H', 'e', 'l', 'l', 'o'       };
 
-    std::cout << sizeof(string_1) << std::endl;
-    std::cout << std::size(string_1) << std::endl;
-    std::cout << std::strlen(string_1) << std::endl;
+    [[maybe_unused]] constexpr char c_string_1[]{ 'H', 'e', 'l', 'l', 'o', '\0' };
+    
+    [[maybe_unused]] constexpr char c_string_2[] = "Hello";
+    [[maybe_unused]] constexpr auto c_string_3   = "Hello"; // note: auto -> const char *
 
-    std::cout << string_1;
+    assert(std::strcmp(string_3.c_str(), c_string_3) > 0); // note: C-library compatibility
 
-    auto text = f();
-
-    std::cout << text << std::endl;
-
-    std::string string_5 = "Hello";
-
-    using namespace std::string_literals;
-
-    auto string_6 = "Hello"s;
-    auto string_7 = u8"Hello"s;
-    auto string_8 = u"Hello"s;
-    auto string_9 = U"Hello"s;
-    */
+    assert(icstring_t("HELLO") == icstring_t("hello"));    
 
     return 0;
 }
