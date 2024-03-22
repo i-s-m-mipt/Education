@@ -333,7 +333,8 @@ set(sources_13
     parser_for_romans
     parser_for_structs
     advanced_calculator
-    character_variants)
+    character_variants
+    string_string_view)
 
 foreach(entry IN LISTS sources_13)
     add_executable        (${entry} ${section_13}${entry}.cpp)
