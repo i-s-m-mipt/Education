@@ -334,7 +334,8 @@ set(sources_13
     parser_for_structs
     advanced_calculator
     character_variants
-    string_string_view)
+    string_string_view
+    locales_and_facets)
 
 foreach(entry IN LISTS sources_13)
     add_executable        (${entry} ${section_13}${entry}.cpp)
