@@ -44,11 +44,12 @@ int main()
 
 	std::cout << std::endl;
 	
-	std::cout << '8' - '0' << std::endl; // good: obtain integer digit from character digit
+	assert('8' - '0' == 0); // good: obtain integer digit from character digit
 
-	assert(sizeof(char8_t ) == 1); // note: used for UTF-8  encoding, problems with support
-	assert(sizeof(char16_t) == 2); // note: used for UTF-16 encoding, problems with support
-	assert(sizeof(char32_t) == 4); // note: used for UTF-32 encoding, problems with support
+	[[maybe_unused]] constexpr auto c8 = u8'a'; // note: auto -> char8_t, UTF-8, consider char
+
+	assert(sizeof(char16_t) == 2); // note: u prefix, used for UTF-16, problems with support
+	assert(sizeof(char32_t) == 4); // note: U prefix, used for UTF-32, problems with support
 
 	std::cout << sizeof(wchar_t) << std::endl; // note: used for wide encodings on Windows
 
