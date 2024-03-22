@@ -9,7 +9,7 @@ int main()
 {
 //	using namespace std; // bad: dangerous in big projects, avoid
 	
-	std::cout << "Enter two integers separated by a space symbol: ";
+	std::cout << "Enter two integers separated by a space character: ";
 
 	int x{}, y{}; // good: zero value initialized variables
 
