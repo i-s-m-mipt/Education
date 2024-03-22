@@ -13,7 +13,7 @@ public:
 
 	using clock_t = std::chrono::steady_clock;
 
-	explicit Chronometer(std::string name) : m_name(std::move(name)), m_begin(clock_t::now())
+	explicit Chronometer(std::string_view name) : m_name(name), m_begin(clock_t::now())
 	{
 		std::cout << "Chronometer " << m_name << " launched ... " << std::endl;
 	}
@@ -32,7 +32,7 @@ public:
 
 private:
 
-	const std::string m_name;
+	const std::string_view m_name;
 
 	const clock_t::time_point m_begin;
 
