@@ -3,6 +3,7 @@
 #include <exception>
 #include <iomanip>
 #include <iostream>
+#include <iterator>
 #include <locale>
 #include <stdexcept>
 #include <string>
@@ -84,8 +85,8 @@ int main()
 		(static_cast < int > (u8string[0]) & 0xFF) << ' ' <<
 		(static_cast < int > (u8string[1]) & 0xFF) << std::dec << std::endl;
 
-    std::cout <<   string << ' ' <<   string.length() << std::endl;
-    std::cout << u8string << ' ' << u8string.length() << std::endl;
+    std::cout <<   string << ' ' << std::size(  string) << std::endl;
+    std::cout << u8string << ' ' << std::size(u8string) << std::endl;
 
     const auto u16string = boost::locale::conv::utf_to_utf < char16_t, char > (u8string);
     const auto u32string = boost::locale::conv::utf_to_utf < char32_t, char > (u8string);
