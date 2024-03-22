@@ -49,7 +49,7 @@
 	return converter.from_bytes(string);
 }
 
-[[nodiscard]] inline std::wstring convert_string_to_wstring(const std::string & string, const std::locale & locale) 
+[[nodiscard]] inline std::wstring convert_string_to_wstring(std::string_view string, const std::locale & locale) 
 {
 	std::vector < wchar_t > buffer(std::size(string));
 
@@ -60,7 +60,7 @@
 	return std::wstring(buffer.data(), std::size(buffer)); // note: avoid wchar_t and std::wstring
 }
 
-[[nodiscard]] inline std::string convert_wstring_to_string(const std::wstring & wstring, const std::locale & locale) 
+[[nodiscard]] inline std::string convert_wstring_to_string(std::wstring_view wstring, const std::locale & locale) 
 {
 	std::vector < char > buffer(std::size(wstring));
 
