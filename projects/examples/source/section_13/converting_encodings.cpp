@@ -1,9 +1,12 @@
+#include <bit>
+#include <codecvt>
 #include <exception>
 #include <iomanip>
 #include <iostream>
-#include <ostream>
+#include <locale>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 #include <boost/locale.hpp>
 
@@ -29,6 +32,42 @@
 	const auto locale = generator(boost::locale::util::get_system_locale());
 
 	return boost::locale::conv::from_utf < char > (string, locale);
+}
+
+[[nodiscard]] inline std::string convert_wstring_to_utf8(const std::wstring & wstring)
+{
+	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // note: deprecated, bad implementation
+
+	return converter.to_bytes(wstring);
+}
+
+[[nodiscard]] inline std::wstring convert_utf8_to_wstring(const std::string & string)
+{
+	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // note: deprecated, bad implementation
+
+	return converter.from_bytes(string);
+}
+
+[[nodiscard]] inline std::wstring convert_string_to_wstring(const std::string & string, const std::locale & locale) 
+{
+	std::vector < wchar_t > buffer(std::size(string));
+
+	std::use_facet < std::ctype < wchar_t > >(locale).widen(
+		string.data(), 
+		string.data() + std::size(string), buffer.data());
+
+	return std::wstring(buffer.data(), std::size(buffer)); // note: avoid wchar_t and std::wstring
+}
+
+[[nodiscard]] inline std::string convert_wstring_to_string(const std::wstring & wstring, const std::locale & locale) 
+{
+	std::vector < char > buffer(std::size(wstring));
+
+	std::use_facet < std::ctype < wchar_t > > (locale).narrow(
+		wstring.data(),
+		wstring.data() + std::size(wstring), '?', buffer.data()); // note: default character
+
+	return std::string(buffer.data(), std::size(buffer)); // note: avoid wchar_t and std::wstring
 }
 
 int main()
