@@ -343,13 +343,13 @@ foreach(entry IN LISTS sources_13)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
 
-add_executable        (converting_encodings ${section_13}converting_encodings.cpp)
-target_link_libraries (converting_encodings PRIVATE ${Boost_LIBRARIES})
-set_target_properties (converting_encodings PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-target_compile_options(converting_encodings PRIVATE -Wall -pedantic -O0)
+add_executable        (convert_encodings ${section_13}convert_encodings.cpp)
+target_link_libraries (convert_encodings PRIVATE ${Boost_LIBRARIES})
+set_target_properties (convert_encodings PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+target_compile_options(convert_encodings PRIVATE -Wall -pedantic -O0)
 
 set(sources_13_release
-    string_string_view)
+    strings_string_views)
 
 foreach(entry IN LISTS sources_13_release)
     add_executable        (${entry} ${section_13}${entry}.cpp)
