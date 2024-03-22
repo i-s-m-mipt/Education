@@ -28,11 +28,11 @@ public:
 
 	Big_Int(digit_t number) : Big_Int() { parse(std::to_string(number)); }
 
-	Big_Int(std::string string) : Big_Int() { parse(std::move(string)); }
+	Big_Int(std::string_view string) : Big_Int() { parse(string); }
 
 private:
 
-	void parse(std::string && string)
+	void parse(std::string_view string)
 	{
 		if (string[0] == '+' || string[0] == '-' || std::isdigit(string[0]))
 		{
@@ -57,7 +57,7 @@ private:
 
 				if (start <= 0) start = (m_is_negative ? 1 : 0);
 
-				m_digits[m_n_digits++] = std::stoll(string.substr(start, i - start + 1));
+				m_digits[m_n_digits++] = std::stoll(static_cast < std::string > (string.substr(start, i - start + 1)));
 			}
 
 			reduce_leading_zeros();
@@ -426,42 +426,42 @@ int main()
 
 		Big_Int bi2 = 42;
 
-		Big_Int bi3 = "+73640854127382725310948206095647"s;
-		Big_Int bi4 = "-46090058756232818791046807807190"s;
+		Big_Int bi3 = "+73640854127382725310948206095647"sv;
+		Big_Int bi4 = "-46090058756232818791046807807190"sv;
 
 		std::cin >> bi1; std::cout << bi1 << std::endl;
 
-		assert(bi3 + bi3 == "+147281708254765450621896412191294"s);
-		assert(bi3 + bi4 ==  "+27550795371149906519901398288457"s);
-		assert(bi4 + bi3 ==  "+27550795371149906519901398288457"s);
-		assert(bi4 + bi4 ==  "-92180117512465637582093615614380"s);
+		assert(bi3 + bi3 == "+147281708254765450621896412191294"sv);
+		assert(bi3 + bi4 ==  "+27550795371149906519901398288457"sv);
+		assert(bi4 + bi3 ==  "+27550795371149906519901398288457"sv);
+		assert(bi4 + bi4 ==  "-92180117512465637582093615614380"sv);
 
-		assert(bi3 - bi3 ==                                 "+0"s);
-		assert(bi3 - bi4 == "+119730912883615544101995013902837"s);
-		assert(bi4 - bi3 == "-119730912883615544101995013902837"s);
-		assert(bi4 - bi4 ==                                 "-0"s);
+		assert(bi3 - bi3 ==                                 "+0"sv);
+		assert(bi3 - bi4 == "+119730912883615544101995013902837"sv);
+		assert(bi4 - bi3 == "-119730912883615544101995013902837"sv);
+		assert(bi4 - bi4 ==                                 "-0"sv);
 
-		assert(bi3 * bi3 == "+5422975396610461369717641600947386274415037870250962127712348609"s);
-		assert(bi3 * bi4 == "-3394111293590239892710602762023649092547630961329778427474301930"s);
-		assert(bi4 * bi3 == "-3394111293590239892710602762023649092547630961329778427474301930"s);
-		assert(bi4 * bi4 == "+2124293516152993531053750721748717735666440864785393936215696100"s);
+		assert(bi3 * bi3 == "+5422975396610461369717641600947386274415037870250962127712348609"sv);
+		assert(bi3 * bi4 == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
+		assert(bi4 * bi3 == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
+		assert(bi4 * bi4 == "+2124293516152993531053750721748717735666440864785393936215696100"sv);
 
-		assert(bi3 / bi3 == "+1"s);
-		assert(bi3 / bi4 == "-1"s);
-		assert(bi4 / bi3 == "-0"s);
-		assert(bi4 / bi4 == "+1"s);
+		assert(bi3 / bi3 == "+1"sv);
+		assert(bi3 / bi4 == "-1"sv);
+		assert(bi4 / bi3 == "-0"sv);
+		assert(bi4 / bi4 == "+1"sv);
 
 		assert(++bi2   == 43); 
 		assert(--bi2   == 42);
 		assert(  bi2++ == 42); 
 		assert(  bi2-- == 43);
 
-		assert(karatsuba_multiplication(bi3, bi3) == "+5422975396610461369717641600947386274415037870250962127712348609"s);
-		assert(karatsuba_multiplication(bi3, bi4) == "-3394111293590239892710602762023649092547630961329778427474301930"s);
-		assert(karatsuba_multiplication(bi4, bi3) == "-3394111293590239892710602762023649092547630961329778427474301930"s);
-		assert(karatsuba_multiplication(bi4, bi4) == "+2124293516152993531053750721748717735666440864785393936215696100"s);
+		assert(karatsuba_multiplication(bi3, bi3) == "+5422975396610461369717641600947386274415037870250962127712348609"sv);
+		assert(karatsuba_multiplication(bi3, bi4) == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
+		assert(karatsuba_multiplication(bi4, bi3) == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
+		assert(karatsuba_multiplication(bi4, bi4) == "+2124293516152993531053750721748717735666440864785393936215696100"sv);
 
-		assert(sqrt(bi3) == "+8581424947372244"s);
+		assert(sqrt(bi3) == "+8581424947372244"sv);
 
 		assert(bi4 <  bi3);
 		assert(bi3 >  bi4);
