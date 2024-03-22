@@ -31,7 +31,7 @@ namespace parser
 
 int main()
 {
-    auto input = R"({'a',100,1.0})"s;
+    auto input = R"({'a',100,1.0})"sv;
 
     auto begin = std::begin(input), end = std::end(input);
 

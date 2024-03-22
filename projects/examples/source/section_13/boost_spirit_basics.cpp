@@ -16,13 +16,13 @@ int main()
 {
     auto value = 0; 
     
-    auto input_1 = "42"s;
+    auto input_1 = "42"sv;
 
     boost::spirit::x3::parse(std::begin(input_1), std::end(input_1), boost::spirit::x3::int_, value);
 
     assert(value == 42);
 
-    auto input_2 = "42 42"s;
+    auto input_2 = "42 42"sv;
 
     std::pair < int, int > pair;
 
@@ -34,7 +34,7 @@ int main()
     assert(pair.first  == 42);
     assert(pair.second == 42);
 
-    auto input_3 = "(42, 42)"s;
+    auto input_3 = "(42, 42)"sv;
 
     std::tuple < int, int > tuple;
 
@@ -46,7 +46,7 @@ int main()
     assert(std::get < 0 > (tuple) == 42);
     assert(std::get < 1 > (tuple) == 42);
 
-    auto input_4 = "42"s;
+    auto input_4 = "42"sv;
 
     auto f = [](auto & context)
     { 

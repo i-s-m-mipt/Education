@@ -108,7 +108,7 @@ namespace grammar
 
 } // namespace grammar
 
-[[nodiscard]] double test(const std::string & input)
+[[nodiscard]] double test(std::string_view input)
 {
     auto begin = std::begin(input), end = std::end(input);
 

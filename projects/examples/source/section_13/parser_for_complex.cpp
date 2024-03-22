@@ -31,10 +31,10 @@ template < typename Iterator > [[nodiscard]] std::complex < double > parse_compl
 
 int main()
 {
-    auto input_1 = "1.0"s; 
-    auto input_2 = "1.0+1.0i"s;
-    auto input_3 = "1.0-1.0i"s;
-    auto input_4 = " 1.0 + 1.0 i "s;
+    auto input_1 = "1.0"sv; 
+    auto input_2 = "1.0+1.0i"sv;
+    auto input_3 = "1.0-1.0i"sv;
+    auto input_4 = " 1.0 + 1.0 i "sv;
     
     auto complex_1 = parse_complex(std::begin(input_1), std::end(input_1));
     auto complex_2 = parse_complex(std::begin(input_2), std::end(input_2));
