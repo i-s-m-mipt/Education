@@ -6,6 +6,9 @@
 #include <iterator>
 #include <ostream>
 #include <string>
+#include <string_view>
+
+#include <benchmark/benchmark.h>
 
 struct ignorecase_traits : public std::char_traits < char > 
 {
@@ -41,7 +44,42 @@ inline std::ostream & operator<<(std::ostream & stream, const icstring_t & icstr
     return (stream << std::string(icstring.data(), std::size(icstring)));
 }
 
-int main()
+void print(std::string_view view) { std::cout << view << std::endl; }
+
+void test_1(benchmark::State & state) // note: slow
+{
+    const std::string string(65536, 'a');
+
+    for (auto _ : state)
+    {
+        auto substring = string.substr(0, state.range(0));
+
+		benchmark::DoNotOptimize(substring);	
+    }
+
+    state.SetComplexityN(state.range(0));
+}
+
+void test_2(benchmark::State & state) // note: fast
+{
+    const std::string string(65536, 'a');
+
+    const std::string_view view(string);
+
+    for (auto _ : state)
+    {
+        auto substring = view.substr(0, state.range(0));
+
+		benchmark::DoNotOptimize(substring);	
+    }
+
+    state.SetComplexityN(state.range(0));
+}
+
+BENCHMARK(test_1)->DenseRange(8192, 65537, 8192)->Complexity(); // note: O(N) complexity
+BENCHMARK(test_2)->DenseRange(8192, 65537, 8192)->Complexity(); // note: O(1) complexity
+
+int main(int argc, char ** argv) // note: arguments for benchmark
 {
     std::cout << "Enter string 1: "; std::string string_1; std::cin >> string_1;
     std::cout << "Enter string 2: "; std::string string_2; 
@@ -53,7 +91,7 @@ int main()
 
     using namespace std::literals;
 
-    const auto string_3 = "Hello, world!"s; // good: standard string literal for auto
+    const auto string_3 = "Hello, world!"s; // good: auto -> std::string, string literal
 
     if (const auto index = string_3.find(','); index != std::string::npos)
     {
@@ -66,16 +104,40 @@ int main()
 
     assert(std::stoi(string_4) == 42 && string_4 == std::to_string(42));
 
-    [[maybe_unused]] constexpr char char_array[]{ 'H', 'e', 'l', 'l', 'o'       };
+    [[maybe_unused]] constexpr char char_array[]{ 'h', 'e', 'l', 'l', 'o'       };
 
-    [[maybe_unused]] constexpr char c_string_1[]{ 'H', 'e', 'l', 'l', 'o', '\0' };
+    [[maybe_unused]] constexpr char c_string_1[]{ 'h', 'e', 'l', 'l', 'o', '\0' };
     
-    [[maybe_unused]] constexpr char c_string_2[] = "Hello";
-    [[maybe_unused]] constexpr auto c_string_3   = "Hello"; // note: auto -> const char *
+    [[maybe_unused]] constexpr char c_string_2[] = "hello";
+    [[maybe_unused]] constexpr auto c_string_3   = "hello"; // note: auto -> const char *
 
-    assert(std::strcmp(string_3.c_str(), c_string_3) > 0); // note: C-library compatibility
+    assert(std::strlen(string_3.c_str()) == 13); // note: see also cstring library functions
 
-    assert(icstring_t("HELLO") == icstring_t("hello"));    
+    std::cout << "Enter data: "; char data[256]{};
+
+    std::cin.getline(data, std::size(data)); // note: read maximum 256 characters till \n
+
+    std::cout << data << std::endl; // note: outputs characters till null terminator \0
+
+    assert(icstring_t("HELLO") == icstring_t("hello")); // note: custom char traits
+
+    constexpr auto string_view = "Hello, world!"sv; // note: auto -> std::string_view
+    
+    print(string_view); // good: prefer string_view for read only purposes
+
+    print(string_3);
+
+    print(std::string_view(std::begin(string_3), std::next(std::begin(string_3), 5)));
+
+//  const std::string_view bad_view_1 = "hello"s + "world"s;          // bad: undefined behavior
+
+//  const std::string_view bad_view_2 = [](){ return "hello"s; }();   // bad: undefined behavior
+
+//  const std::string_view bad_view_3 = string_4; string_4 = "hello"; // bad: undefined behavior
+
+    benchmark::Initialize(&argc, argv);
+
+	benchmark::RunSpecifiedBenchmarks();
 
     return 0;
 }

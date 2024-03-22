@@ -334,7 +334,6 @@ set(sources_13
     parser_for_structs
     advanced_calculator
     character_variants
-    string_string_view
     locales_and_facets)
 
 foreach(entry IN LISTS sources_13)
@@ -347,6 +346,16 @@ add_executable        (converting_encodings ${section_13}converting_encodings.cp
 target_link_libraries (converting_encodings PRIVATE ${Boost_LIBRARIES})
 set_target_properties (converting_encodings PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 target_compile_options(converting_encodings PRIVATE -Wall -pedantic -O0)
+
+set(sources_13_release
+    string_string_view)
+
+foreach(entry IN LISTS sources_13_release)
+    add_executable        (${entry} ${section_13}${entry}.cpp)
+    target_link_libraries (${entry} PRIVATE benchmark::benchmark)
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O3) 
+endforeach()
 
 set(section_14 source/section_14/)
 
