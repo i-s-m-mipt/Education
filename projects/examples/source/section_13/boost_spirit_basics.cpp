@@ -29,7 +29,7 @@ int main()
     boost::spirit::x3::phrase_parse(std::begin(input_2), std::end(input_2), 
         boost::spirit::x3::int_ >> 
         boost::spirit::x3::int_, 
-        boost::spirit::x3::space, pair); // note: skip space symbols
+        boost::spirit::x3::space, pair); // note: skip space characters
 
     assert(pair.first  == 42);
     assert(pair.second == 42);
@@ -41,7 +41,7 @@ int main()
     boost::spirit::x3::phrase_parse(std::begin(input_3), std::end(input_3), '(' >> 
         boost::spirit::x3::int_ >> ',' >> 
         boost::spirit::x3::int_ >> ')', 
-        boost::spirit::x3::space, tuple); // note: skip space symbols
+        boost::spirit::x3::space, tuple); // note: skip space characters
 
     assert(std::get < 0 > (tuple) == 42);
     assert(std::get < 1 > (tuple) == 42);
