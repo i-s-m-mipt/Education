@@ -12,7 +12,7 @@
 
 //#include <Windows.h> // note: required on Windows for changing code page
 
-[[nodiscard]] std::string convert_locale_to_utf(const std::string & string)
+[[nodiscard]] inline std::string convert_locale_to_utf(const std::string & string)
 {
 	boost::locale::generator generator;
 
@@ -23,7 +23,7 @@
 	return boost::locale::conv::to_utf < char > (string, locale);
 }
 
-[[nodiscard]] std::string convert_utf_to_locale(const std::string & string)
+[[nodiscard]] inline std::string convert_utf_to_locale(const std::string & string)
 {
 	boost::locale::generator generator;
 
