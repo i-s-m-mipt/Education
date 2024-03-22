@@ -48,9 +48,9 @@ int main()
 
 	std::cout << typeid(x).name() << std::endl;
 
-	const std::string s = "hello";
+	const std::string string = "hello";
 
-	std::cout << typeid(s).name() << std::endl; // note: not portable type name
+	std::cout << typeid(string).name() << std::endl; // note: not portable type name
 
 	computer_ptr = new Mobile;
 

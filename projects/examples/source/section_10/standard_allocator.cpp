@@ -23,7 +23,7 @@ int main()
 
 //	std::cout << *ptr_string << std::endl; // bad: object not constructed
 
-	allocator_traits.construct(allocator_string, ptr_string, "Hello, allocator!");
+	allocator_traits.construct(allocator_string, ptr_string, "Hello, world!");
 
 	std::cout << *ptr_string << std::endl;
 

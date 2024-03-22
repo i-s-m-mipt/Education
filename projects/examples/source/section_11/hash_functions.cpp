@@ -53,10 +53,10 @@ struct S { std::string string_1, string_2; };
 
 int main()
 {
-	std::cout << hash("Hello, hashing!") << std::endl;
+	std::cout << hash("Hello, world!") << std::endl;
 
-	std::cout <<   std::hash < std::string > ()("Hello, hashing!") << std::endl;
-	std::cout << boost::hash < std::string > ()("Hello, hashing!") << std::endl;
+	std::cout <<   std::hash < std::string > ()("Hello, world!") << std::endl;
+	std::cout << boost::hash < std::string > ()("Hello, world!") << std::endl;
 
 	const S s = { "hello", "world" };
 
