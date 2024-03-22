@@ -4,6 +4,7 @@
 #include <iterator>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <vector>
 
 using namespace std::literals;
