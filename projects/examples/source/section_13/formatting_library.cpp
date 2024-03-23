@@ -1,7 +1,26 @@
+#include <cstdint>
 #include <format>
 #include <iostream>
 #include <iterator>
 #include <string>
+
+struct Color { std::uint8_t r{}, g{}, b{}; };
+
+/*
+template <> struct std::formatter < Color > 
+{
+    [[nodiscard]] constexpr auto parse(std::format_parse_context & context) 
+    {
+        return std::begin(context);
+    }
+
+    [[nodiscard]] auto format(const Color & color, std::format_context & context) 
+    {
+        return std::format_to(context.out(), "({}, {}, {})", color.r, color.g, color.b);
+    }
+
+}; // template <> struct std::formatter < Color > 
+*/
 
 int main()
 {
@@ -27,6 +46,10 @@ int main()
     constexpr auto d = 0.123456789;
 
     std::cout << std::format("{:.5}", d) << std::endl; // note: 5 digits of precision
+
+    [[maybe_unused]] constexpr Color color = { 127, 127, 127 };
+
+//  std::cout << std::format("{}", color) << std::endl; // note: check for updates in GCC
 
     return 0;
 }
