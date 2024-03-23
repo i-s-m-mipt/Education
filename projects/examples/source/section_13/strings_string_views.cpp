@@ -96,12 +96,12 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     if (const auto index = string_3.find(','); index != std::string::npos)
     {
-        assert(string_3.substr(0, index) == "Hello"s);
+        assert(string_3.substr(0, index) == "Hello");
     }
 
-    assert(string_3.starts_with("Hello"s) && string_3.ends_with('!'));
+    assert(string_3.starts_with("Hello") && string_3.ends_with('!'));
 
-    auto string_4 = "43"s; string_4.erase(1); string_4.append("2"s);
+    auto string_4 = "43"s; string_4.erase(1); string_4.append("2");
 
     assert(std::stoi(string_4) == 42 && string_4 == std::to_string(42));
 
