@@ -339,8 +339,6 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
-.vscode/
-
 general/
 libraries/
 output/
