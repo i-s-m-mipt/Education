@@ -122,6 +122,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     assert(cistring_t("HELLO") == cistring_t("hello")); // note: custom char traits
 
+    [[maybe_unused]] const auto small_string = "hello"; // note: small strings optimization
+
     constexpr auto string_view = "Hello, world!"sv; // note: auto -> std::string_view
     
     print(string_view); // good: prefer string_view for read only purposes
