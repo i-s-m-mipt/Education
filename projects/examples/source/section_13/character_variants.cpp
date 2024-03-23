@@ -44,7 +44,7 @@ int main()
 
 	std::cout << std::endl;
 	
-	assert('8' - '0' == 0); // good: obtain integer digit from character digit
+	assert('8' - '0' == 8); // good: obtain integer digit from character digit
 
 	[[maybe_unused]] constexpr auto c8 = u8'a'; // note: auto -> char8_t
 
