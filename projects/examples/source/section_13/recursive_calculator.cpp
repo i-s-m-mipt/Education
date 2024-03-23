@@ -174,7 +174,7 @@ private:
 				case '+': return        primary(stream);
 				case '-': return -1.0 * primary(stream);
 				
-				default: throw std::runtime_error("invalid primary: "s + c);
+				default: throw std::runtime_error("invalid primary");
 			}
 		}
 		

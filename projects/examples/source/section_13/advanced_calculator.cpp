@@ -53,7 +53,7 @@ public:
             case '+': return        rhs;
             case '-': return -1.0 * rhs;
 
-            default: throw std::runtime_error("invalid sign: "s + sign.c);
+            default: throw std::invalid_argument("invalid sign: "s + sign.c);
         }
     }
 
@@ -66,7 +66,7 @@ public:
             case '*': return lhs * rhs;
             case '/': return lhs / rhs;
 
-            default: throw std::runtime_error("invalid step: "s + step.c);
+            default: throw std::invalid_argument("invalid step: "s + step.c);
         }
     }
 
@@ -118,7 +118,10 @@ namespace grammar
     auto result = boost::spirit::x3::phrase_parse(begin, end, 
         grammar::arithmetic, boost::spirit::x3::ascii::space, list);
 
-    if (!result || begin != end) throw std::runtime_error("invalid input");
+    if (!result || begin != end) 
+    {
+        throw std::invalid_argument("invalid input: " + std::string(input));
+    }
 
     Calculator calculator;
 

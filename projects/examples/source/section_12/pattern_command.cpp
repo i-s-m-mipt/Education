@@ -2,6 +2,7 @@
 #include <exception>
 #include <functional>
 #include <stdexcept>
+#include <string>
 #include <unordered_map>
 #include <vector>
 
@@ -27,7 +28,7 @@ public:
 			case Command::slow: m_computer.state = Computer::State::slow; break;
 			case Command::fast: m_computer.state = Computer::State::fast; break;
 
-			default: throw std::runtime_error("invalid command");
+			default: throw std::invalid_argument("invalid command: " + std::to_string(static_cast < int > (m_command)));
 		}
 	}
 

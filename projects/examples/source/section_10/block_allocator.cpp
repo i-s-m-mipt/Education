@@ -5,6 +5,7 @@
 #include <memory>
 #include <random>
 #include <stdexcept>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -30,7 +31,7 @@ public:
 
 	        m_head = get_node(m_begin); *m_head = { m_size - sizeof(Header), nullptr };
         }
-        else throw std::runtime_error("invalid size");
+        else throw std::invalid_argument("invalid size: " + std::to_string(size));
     }
 	
     ~Block_Allocator() noexcept

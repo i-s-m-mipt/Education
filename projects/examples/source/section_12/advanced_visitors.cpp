@@ -16,17 +16,17 @@ public:
 
     void operator()(const Mobile & mobile) const
     {
-        if (mobile.run() != 0) throw std::runtime_error("invalid Mobile::run");
+        if (mobile.run() != 0) throw std::runtime_error("Mobile::run error");
     }
 
     void operator()(const Tablet & tablet) const
     {
-        if (tablet.run() != 0) throw std::runtime_error("invalid Tablet::run");
+        if (tablet.run() != 0) throw std::runtime_error("Tablet::run error");
     }
 
     void operator()(const Laptop & laptop) const
     {
-        if (laptop.run() != 0) throw std::runtime_error("invalid Laptop::run");
+        if (laptop.run() != 0) throw std::runtime_error("Laptop::run error");
     }
 
 }; // class Tester

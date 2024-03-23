@@ -39,14 +39,14 @@ private:
 		{
 			if (!std::isdigit(string[0]) && std::size(string) == 1)
 			{
-				throw std::runtime_error("invalid input: "s + string[0]);
+				throw std::invalid_argument("invalid input: "s + string[0]);
 			}
 
 			for (std::size_t i = 1; i < std::size(string); ++i)
 			{
 				if (!std::isdigit(string[i]))
 				{
-					throw std::runtime_error("invalid input: "s + string[i]);
+					throw std::invalid_argument("invalid input: "s + string[i]);
 				}
 			}
 
@@ -63,7 +63,7 @@ private:
 
 			reduce_leading_zeros();
 		}
-		else throw std::runtime_error("invalid input: "s + string[0]);
+		else throw std::invalid_argument("invalid input: "s + string[0]);
 	}
 
 	void reduce_leading_zeros() noexcept

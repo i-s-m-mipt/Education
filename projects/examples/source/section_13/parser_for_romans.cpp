@@ -100,7 +100,10 @@ namespace parser
 
     auto result = boost::spirit::x3::parse(begin, end, parser::roman, number);
 
-    if (!result || begin != end) throw std::runtime_error("invalid input");
+    if (!result || begin != end) 
+    {
+        throw std::invalid_argument("invalid input: " + std::string(input));
+    }
 
     return number;
 }

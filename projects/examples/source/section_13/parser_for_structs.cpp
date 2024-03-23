@@ -39,7 +39,10 @@ int main()
 
     auto result = boost::spirit::x3::parse(begin, end, parser::data, data);
 
-    if (!result || begin != end) throw std::runtime_error("invalid input");
+    if (!result || begin != end) 
+    {
+        throw std::invalid_argument("invalid input: " + std::string(input));
+    }
 
     assert(data.c == 'a');
     assert(data.i == 100);

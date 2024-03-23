@@ -2,6 +2,7 @@
 #include <exception>
 #include <random>
 #include <stdexcept>
+#include <string>
 
 //#define BOOST_UBLAS_TYPE_CHECK 0 // bad: for integral types
 
@@ -37,7 +38,7 @@
             return determinant;
         }
     }
-    else throw std::runtime_error("invalid matrix");
+    else throw std::invalid_argument("invalid sizes: " + std::to_string(size) + 'x' + std::to_string(matrix.size2()));
 }
 
 [[nodiscard]] double determinant_v2(const boost::numeric::ublas::matrix < double > & matrix) // good: for big
@@ -66,7 +67,7 @@
             else return 0.0;
         }
     }
-    else throw std::runtime_error("invalid matrix");
+    else throw std::invalid_argument("invalid sizes: " + std::to_string(size) + 'x' + std::to_string(matrix.size2()));
 }
 
 [[nodiscard]] boost::numeric::ublas::matrix < double > make_random_matrix(std::size_t size)

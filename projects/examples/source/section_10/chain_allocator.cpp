@@ -5,6 +5,7 @@
 #include <iterator>
 #include <memory>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 #include <boost/noncopyable.hpp>
@@ -25,7 +26,7 @@ public:
 		{
 			make_chain(); m_begin = m_head;
 		}
-		else throw std::runtime_error("invalid size");
+		else throw std::invalid_argument("invalid sizes: " + std::to_string(size) + '/' + std::to_string(m_size_node));
 	}
 
 	~Chain_Allocator() noexcept
