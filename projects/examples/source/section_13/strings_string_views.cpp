@@ -10,41 +10,42 @@
 
 #include <benchmark/benchmark.h>
 
-struct ignorecase_traits : public std::char_traits < char > 
+struct case_insensitive_traits : public std::char_traits < char > 
 {
-    static bool eq(char c1, char c2) { return std::toupper(c1) == std::toupper(c2); }
-    static bool lt(char c1, char c2) { return std::toupper(c1) <  std::toupper(c2); }
+    [[nodiscard]] static inline bool eq(char c1, char c2) noexcept 
+    { 
+        return std::toupper(c1) == std::toupper(c2); 
+    }
 
-    static int compare(const char * s1, const char * s2, std::size_t n) 
+    [[nodiscard]] static inline bool lt(char c1, char c2) noexcept 
+    { 
+        return std::toupper(c1) <  std::toupper(c2); 
+    }
+
+    [[nodiscard]] static inline int compare(const char * s1, const char * s2, std::size_t n) noexcept
     {
-        for (std::size_t i = 0; i < n; ++i) 
-        {
-            if (!eq(s1[i], s2[i])) return lt(s1[i], s2[i]) ? -1 : +1;
-        }
+        for (std::size_t i = 0; i < n; ++i) if (!eq(s1[i], s2[i])) return lt(s1[i], s2[i]) ? -1 : +1;
 
         return 0;
     }
     
-    static const char * find(const char * s, std::size_t n, char c) 
+    [[nodiscard]] static inline const char * find(const char * s, std::size_t n, char c) noexcept
     {
-        for (std::size_t i = 0; i < n; ++i) 
-        {
-            if (eq(s[i], c)) return &(s[i]);
-        }
+        for (std::size_t i = 0; i < n; ++i) if (eq(s[i], c)) return &(s[i]);
 
         return nullptr;
     }
 
-}; // struct ignorecase_traits : public std::char_traits < char > 
+}; // struct case_insensitive_traits : public std::char_traits < char > 
 
-using icstring_t = std::basic_string < char, ignorecase_traits > ;
+using cistring_t = std::basic_string < char, case_insensitive_traits > ;
 
-inline std::ostream & operator<<(std::ostream & stream, const icstring_t & icstring)
+inline std::ostream & operator<<(std::ostream & stream, const cistring_t & cistring)
 {
-    return (stream << std::string(icstring.data(), std::size(icstring)));
+    return (stream << std::string(cistring.data(), std::size(cistring)));
 }
 
-void print(std::string_view view) { std::cout << view << std::endl; }
+inline void print(std::string_view view) { std::cout << view << std::endl; }
 
 void test_1(benchmark::State & state) // note: slow
 {
@@ -119,7 +120,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     std::cout << data << std::endl; // note: outputs characters till null terminator \0
 
-    assert(icstring_t("HELLO") == icstring_t("hello")); // note: custom char traits
+    assert(cistring_t("HELLO") == cistring_t("hello")); // note: custom char traits
 
     constexpr auto string_view = "Hello, world!"sv; // note: auto -> std::string_view
     
