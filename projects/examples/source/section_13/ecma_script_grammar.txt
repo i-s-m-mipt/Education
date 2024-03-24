@@ -1,0 +1,39 @@
+. - 1 character
+
+() - group of characters or inner groups
+
+? - suffix, 0-1 characters or groups
+* - suffix, 0+  characters or groups
++ - suffix, 1+  characters or groups
+
+{} - quantity, {n} - n, {n,} - n+, {n,m} - n-m
+
+| - choice between characters or groups
+
+^ - begin of line or negation, $ - end of line
+
+[] - class of characters
+
+[:alnum:] - alphanumeric characters
+[:alpha:] - alphabetic   characters
+[:lower:] - lowercase    characters
+[:upper:] - uppercase    characters
+[:space:] - space        characters
+[:digit:] - decimal      characters
+
+\ - prefix, next character has special meaning
+
+\w is same as [[:alnum:]_]
+\s is same as [:space:]
+\d is same as [:digit:]
+
+Example 1: ^.(AB?C*)+(D{3})|(E{2,4})$ - verify at regex101.com
+
+Example 2: C++ identifier - alphanumeric and underscore characters, the first one is not digit
+
+Version 1: [:alpha:][:alnum:]*             - very very bad
+Version 2: [[:alpha:]][[:alnum:]]*         - very bad
+Version 3: ([[:alpha:]]|_)[[:alnum:]]*     - bad
+Version 4: ([[:alpha:]]|_)([[:alnum:]]|_)* - satisfactorily
+Version 5: [_[:alpha:]][_[:alnum:]]*       - good
+Version 6: [_[:alpha:]]\w*                 - excellent
