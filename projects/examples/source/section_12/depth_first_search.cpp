@@ -94,7 +94,7 @@ int main()
     boost::add_edge(4, 0, graph);
     boost::add_edge(4, 1, graph);
 
-    boost::depth_first_search(graph, boost::root_vertex(0).visitor(Visitor())); // note: O(V + E) complexity
+    boost::depth_first_search(graph, boost::visitor(Visitor()).root_vertex(0)); // note: O(V + E) complexity
 
     return 0;
 }
