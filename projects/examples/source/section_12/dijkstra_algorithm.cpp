@@ -10,28 +10,18 @@ int main()
 {
 	using vector = boost::vecS; using directed = boost::directedS; // note: directed graph
 
-    using graph_t = boost::adjacency_list < vector, vector, directed,
-		boost::no_property, 
-		boost::   property < boost::edge_weight_t, unsigned int > > ;
+    boost::adjacency_list < vector, vector, directed, boost::no_property, 
+		boost::property < boost::edge_weight_t, unsigned int > > graph;
 
-    constexpr std::size_t size = 9; // note: number of edges
-
-	constexpr std::array < std::pair < std::size_t, std::size_t > , size > data =
-	{
-		std::make_pair(0, 2),
-		std::make_pair(1, 1),
-		std::make_pair(1, 3),
-		std::make_pair(2, 1),
-		std::make_pair(2, 3),
-		std::make_pair(3, 1),
-        std::make_pair(3, 4),
-        std::make_pair(4, 0),
-        std::make_pair(4, 1),
-	};
-
-	constexpr std::array < unsigned int, size > weights = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-
-	const graph_t graph(std::cbegin(data), std::cend(data), std::cbegin(weights), size);
+    boost::add_edge(0, 2, 1, graph);
+    boost::add_edge(1, 1, 2, graph);
+    boost::add_edge(1, 3, 3, graph);
+    boost::add_edge(2, 1, 4, graph);
+    boost::add_edge(2, 3, 5, graph);
+    boost::add_edge(3, 1, 6, graph);
+    boost::add_edge(3, 4, 7, graph);
+    boost::add_edge(4, 0, 8, graph);
+    boost::add_edge(4, 1, 9, graph);
 
 	std::array < unsigned int, 5 > distances; // note: number of vertexes
 
