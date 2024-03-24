@@ -318,7 +318,8 @@ set(sources_12
     pattern_visitor
     standard_algorithms
     depth_first_search
-    breadth_first_search)
+    breadth_first_search
+    dijkstra_algorithm)
 
 foreach(entry IN LISTS sources_12)
     add_executable        (${entry} ${section_12}${entry}.cpp)
