@@ -2,6 +2,7 @@
 
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/depth_first_search.hpp>
+#include <boost/graph/named_function_params.hpp>
 #include <boost/graph/visitors.hpp>
 
 class Visitor : public boost::default_dfs_visitor
