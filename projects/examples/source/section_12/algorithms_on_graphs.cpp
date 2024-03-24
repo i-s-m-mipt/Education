@@ -1,22 +1,16 @@
 #include <algorithm>
-#include <array>
 #include <cassert>
 #include <iostream>
 #include <iterator>
-#include <utility>
 
-#include <boost/array.hpp>
 #include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/graph/graphviz.hpp>
-#include <boost/graph/named_function_params.hpp>
 
 int main()
 {
-	using    set = boost::setS; using   directed = boost::  directedS;
-	using vector = boost::vecS; using undirected = boost::undirectedS;
+	using vector = boost::vecS; using directed = boost::directedS;
 
-	using default_graph_t = boost::adjacency_list < set, vector, directed > ;
+	using default_graph_t = boost::adjacency_list < vector, vector, directed > ;
 
 	default_graph_t default_graph;
 
@@ -50,7 +44,9 @@ int main()
 		std::cout << boost::target(edge, default_graph) << std::endl;
 	});
 
-	using custom_graph_t = boost::adjacency_list < vector, vector, directed, int, int > ;
+	using set = boost::setS;
+
+	using custom_graph_t = boost::adjacency_list < set, vector, directed, int, int > ;
 	
 	custom_graph_t custom_graph;
 
@@ -63,33 +59,7 @@ int main()
 	custom_graph[v] = 2;
 	custom_graph[e] = 3;
 
-	boost::write_graphviz(std::cout, custom_graph); // note: suppress warning 4458
-
-	constexpr std::size_t size = 6;
-
-	constexpr std::array < std::pair < std::size_t, std::size_t >, size > data =
-	{
-		std::make_pair(0, 1),
-		std::make_pair(1, 2),
-		std::make_pair(1, 3),
-		std::make_pair(2, 4),
-		std::make_pair(3, 4),
-		std::make_pair(4, 5)
-	};
-
-	constexpr std::array < double, size > weights = { 1.0, 2.0, 1.0, 2.0, 1.0, 1.0 };
-
-	using weighted_graph_t = boost::adjacency_list < vector, vector, undirected,
-		boost::no_property, 
-		boost::   property < boost::edge_weight_t, double > > ;
-
-	const weighted_graph_t weighted_graph(std::cbegin(data), std::cend(data), std::cbegin(weights), size);
-
-	boost::array < std::size_t, size > directions; // note: only this container works here
-
-	boost::dijkstra_shortest_paths(weighted_graph, 5, boost::predecessor_map(std::begin(directions)));
-
-	for (std::size_t p = 0; p != 5; std::cout << (p = directions[p]) << std::endl);
+	boost::write_graphviz(std::cout, custom_graph); // note: suppress warning 4458 im MSVC
 
 	return 0;
 }
