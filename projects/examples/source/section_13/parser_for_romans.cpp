@@ -70,10 +70,10 @@ namespace parser
 
         } ones; // class Ones : boost::spirit::x3::symbols < int >
 
-        auto set_0    = [](auto & context){ boost::spirit::x3::_val (context)  = 0;    };
-        auto add_1000 = [](auto & context){ boost::spirit::x3::_val (context) += 1000; };
-        auto add_x    = [](auto & context){ boost::spirit::x3::_val (context) += 
-                                            boost::spirit::x3::_attr(context); };
+        const auto set_0    = [](auto & context){ boost::spirit::x3::_val (context)  = 0;    };
+        const auto add_1000 = [](auto & context){ boost::spirit::x3::_val (context) += 1000; };
+        const auto add_x    = [](auto & context){ boost::spirit::x3::_val (context) += 
+                                                  boost::spirit::x3::_attr(context);         };
 
     } // namespace detail
 
@@ -94,11 +94,11 @@ namespace parser
 
 [[nodiscard]] int test(std::string_view input)
 {
-    auto begin = std::begin(input), end = std::end(input);
+    auto begin = std::cbegin(input), end = std::cend(input);
 
     auto number = 0;
 
-    auto result = boost::spirit::x3::parse(begin, end, parser::roman, number);
+    const auto result = boost::spirit::x3::parse(begin, end, parser::roman, number);
 
     if (!result || begin != end) 
     {
