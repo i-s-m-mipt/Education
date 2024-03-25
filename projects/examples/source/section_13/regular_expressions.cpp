@@ -46,7 +46,7 @@ int main()
 
     std::smatch matches;
     
-    const std::regex pattern(R"(\d{3})"); // good: raw string
+    const std::regex pattern(R"(([a-z]){3})", std::regex_constants::icase); // good: raw string, case insensitive
 
     for (auto begin = std::cbegin(data); std::regex_search(begin, std::cend(data), matches, pattern); begin = matches.suffix().first)
     {
