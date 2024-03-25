@@ -16,17 +16,17 @@ int main()
 {
     auto value = 0; 
     
-    auto input_1 = "42"sv;
+    constexpr auto input_1 = "42"sv;
 
-    boost::spirit::x3::parse(std::begin(input_1), std::end(input_1), boost::spirit::x3::int_, value);
+    boost::spirit::x3::parse(std::cbegin(input_1), std::cend(input_1), boost::spirit::x3::int_, value);
 
     assert(value == 42);
 
-    auto input_2 = "42 42"sv;
+    constexpr auto input_2 = "42 42"sv;
 
     std::pair < int, int > pair;
 
-    boost::spirit::x3::phrase_parse(std::begin(input_2), std::end(input_2), 
+    boost::spirit::x3::phrase_parse(std::cbegin(input_2), std::cend(input_2), 
         boost::spirit::x3::int_ >> 
         boost::spirit::x3::int_, 
         boost::spirit::x3::space, pair); // note: skip space characters
@@ -34,11 +34,11 @@ int main()
     assert(pair.first  == 42);
     assert(pair.second == 42);
 
-    auto input_3 = "(42, 42)"sv;
+    constexpr auto input_3 = "(42, 42)"sv;
 
     std::tuple < int, int > tuple;
 
-    boost::spirit::x3::phrase_parse(std::begin(input_3), std::end(input_3), '(' >> 
+    boost::spirit::x3::phrase_parse(std::cbegin(input_3), std::cend(input_3), '(' >> 
         boost::spirit::x3::int_ >> ',' >> 
         boost::spirit::x3::int_ >> ')', 
         boost::spirit::x3::space, tuple); // note: skip space characters
@@ -46,14 +46,14 @@ int main()
     assert(std::get < 0 > (tuple) == 42);
     assert(std::get < 1 > (tuple) == 42);
 
-    auto input_4 = "42"sv;
+    constexpr auto input_4 = "42"sv;
 
-    auto f = [](auto & context)
+    const auto f = [](auto & context)
     { 
         std::cout << boost::spirit::x3::_attr(context) << std::endl; 
     };
 
-    boost::spirit::x3::parse(std::begin(input_4), std::end(input_4), boost::spirit::x3::int_[f]);
+    boost::spirit::x3::parse(std::cbegin(input_4), std::cend(input_4), boost::spirit::x3::int_[f]);
 
     return 0;
 }
