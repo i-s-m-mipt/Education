@@ -10,7 +10,7 @@ int main()
 {
     std::array < char, 64 > buffer{}; // note: external arena stack buffer for pool
 
-    std::ranges::fill_n(std::begin(buffer), std::size(buffer), '_'); // note: fill N elements in range
+    std::ranges::fill(buffer, '_'); // note: fill elements in range
 
     std::pmr::monotonic_buffer_resource pool(std::data(buffer), std::size(buffer));
 
