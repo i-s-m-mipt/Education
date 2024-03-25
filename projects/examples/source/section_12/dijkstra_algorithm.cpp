@@ -8,10 +8,10 @@
 
 int main()
 {
-	using vector = boost::vecS; using directed = boost::directedS; // note: directed graph
+    using vector = boost::vecS; using directed = boost::directedS; // note: directed graph
 
     boost::adjacency_list < vector, vector, directed, boost::no_property, 
-		boost::property < boost::edge_weight_t, unsigned int > > graph;
+      boost::property < boost::edge_weight_t, unsigned int > > graph;
 
     boost::add_edge(0, 2, 1, graph);
     boost::add_edge(1, 1, 2, graph);
@@ -23,11 +23,11 @@ int main()
     boost::add_edge(4, 0, 8, graph);
     boost::add_edge(4, 1, 9, graph);
 
-	std::array < unsigned int, 5 > distances; // note: number of vertexes
+	  std::array < unsigned int, 5 > distances; // note: number of vertexes
 
-	boost::dijkstra_shortest_paths(graph, 0, boost::distance_map(std::begin(distances))); // note: O(E*log(V)) complexity
+	  boost::dijkstra_shortest_paths(graph, 0, boost::distance_map(std::begin(distances))); // note: O(E*log(V)) complexity
 
-	for (auto distance : distances) std::cout << distance << ' ';
+	  for (auto distance : distances) std::cout << distance << ' ';
 
     std::cout << std::endl;
 
