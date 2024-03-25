@@ -48,7 +48,7 @@ public:
 
     [[nodiscard]] double operator()(const detail::Sign & sign) const
     {
-        switch (auto rhs = boost::apply_visitor(*this, sign.operand); sign.c)
+        switch (const auto rhs = boost::apply_visitor(*this, sign.operand); sign.c)
         {
             case '+': return        rhs;
             case '-': return -1.0 * rhs;
@@ -59,7 +59,7 @@ public:
 
     [[nodiscard]] double operator()(const detail::Step & step, double lhs) const
     {
-        switch (auto rhs = boost::apply_visitor(*this, step.operand); step.c)
+        switch (const auto rhs = boost::apply_visitor(*this, step.operand); step.c)
         {
             case '+': return lhs + rhs;
             case '-': return lhs - rhs;
@@ -111,7 +111,7 @@ namespace grammar
 
 [[nodiscard]] double test(std::string_view input)
 {
-    auto begin = std::begin(input), end = std::end(input);
+    auto begin = std::cbegin(input), end = std::cend(input);
 
     detail::List list;
 
@@ -123,9 +123,7 @@ namespace grammar
         throw std::invalid_argument("invalid input: " + std::string(input));
     }
 
-    Calculator calculator;
-
-    return calculator(list);
+    return Calculator()(list);
 }
 
 int main()
