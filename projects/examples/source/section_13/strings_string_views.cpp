@@ -8,6 +8,8 @@
 #include <string>
 #include <string_view>
 
+using namespace std::literals; // note: std::chrono, std::complex, std::string
+
 #include <benchmark/benchmark.h>
 
 struct case_insensitive_traits : public std::char_traits < char > 
@@ -89,8 +91,6 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     std::cout << std::quoted(string_1) << ' ' << 
                  std::quoted(string_2) << std::endl; // note: see arguments
-
-    using namespace std::literals;
 
     const auto string_3 = "Hello, world!"s; // good: auto -> std::string, string literal
 

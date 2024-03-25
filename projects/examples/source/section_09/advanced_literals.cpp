@@ -2,6 +2,8 @@
 #include <iostream>
 #include <numbers>
 
+using namespace std::literals; // note: std::chrono, std::complex, std::string
+
 struct Kilometers { unsigned long long n{}; }; // note: user-defined units
 
 namespace literals // good: namespace for user-defined literals
@@ -42,8 +44,6 @@ namespace literals // good: namespace for user-defined literals
 
 int main()
 {
-	using namespace std::literals; // note: std::chrono, std::complex, std::string
-
 	[[maybe_unused]] constexpr auto duration = 600s; // note: auto -> std::chrono::seconds
 
 	using namespace literals;

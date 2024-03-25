@@ -2,10 +2,10 @@
 #include <chrono>
 #include <iostream>
 
+using namespace std::literals;
+
 int main()
 {
-	using namespace std::literals;
-
 	constexpr std::chrono::hh_mm_ss time(10h + 20min + 30s);
 
 	std::cout << time << std::endl;
