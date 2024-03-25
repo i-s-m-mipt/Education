@@ -29,7 +29,9 @@
 
 Example 1: ^.(AB?C*)+(D{3})|(E{2,4})$ - verify at regex101.com
 
-Example 2: C++ identifier - alphanumeric and underscore characters, the first one is not digit
+Example 2: <(.*)>(.*)</(\1)> - XML/HTML descriptors, \1 is the first group
+
+Example 3: C++ identifier - alphanumeric and underscore characters, the first one is not digit
 
 Version 1: [:alpha:][:alnum:]*             - very very bad
 Version 2: [[:alpha:]][[:alnum:]]*         - very bad
