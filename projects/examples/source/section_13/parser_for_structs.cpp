@@ -18,9 +18,9 @@ namespace parser
 {
     const boost::spirit::x3::rule < class data_tag, Data > data;
 
-    const auto quote = '\'', separator = ',';
+    constexpr auto quote = '\'', separator = ',';
 
-    auto const data_def = '{' >> 
+    const auto data_def = '{' >> 
         boost::spirit::x3::lexeme[ quote  >> 
        (boost::spirit::x3::char_ - quote) >> quote ] >> separator >> 
         boost::spirit::x3::int_                      >> separator >> 
@@ -32,13 +32,13 @@ namespace parser
 
 int main()
 {
-    auto input = R"({'a',100,1.0})"sv;
+    constexpr auto input = R"({'a',100,1.0})"sv;
 
-    auto begin = std::begin(input), end = std::end(input);
+    auto begin = std::cbegin(input), end = std::cend(input);
 
     Data data;
 
-    auto result = boost::spirit::x3::parse(begin, end, parser::data, data);
+    const auto result = boost::spirit::x3::parse(begin, end, parser::data, data);
 
     if (!result || begin != end) 
     {
