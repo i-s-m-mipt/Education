@@ -23,18 +23,18 @@ public:
 
 	[[nodiscard]] bool empty() noexcept
 	{
-		char c{}; m_sin >> c;
+		char c{}; 
 
-		if (c != ';') { m_sin.putback(c); return false; } else return true;
+		if (m_sin >> c; c != ';') { m_sin.putback(c); return false; } else return true;
 	}
 
 	[[nodiscard]] Token get() // note: consider Boost.Spirit parser
 	{
 		if (m_is_full) { m_is_full = false; return m_token; }
 
-		char c{}; m_sin >> c;
+		char c{}; 
 		
-		switch (c)
+		switch (m_sin >> c; c)
 		{
 			case '+': case '-': case '*': case '/': 
 			case '(': case ')': case ';':
@@ -43,9 +43,7 @@ public:
 			case '0': case '1': case '2': case '3': case '4':
 			case '5': case '6': case '7': case '8': case '9':
 			{
-				m_sin.putback(c);
-
-				double value{}; m_sin >> value;
+				m_sin.putback(c); double value{}; m_sin >> value;
 
 				return Token(value);
 			}
@@ -55,10 +53,7 @@ public:
 				{
 					while (m_sin.get(c) && (std::isalpha(c) || std::isdigit(c))) string += c;
 
-					if (!std::isspace(c)) 
-					{
-						m_sin.putback(c); 
-					}
+					if (!std::isspace(c)) m_sin.putback(c); 
 
 					return Token(string);
 				}
@@ -67,7 +62,7 @@ public:
 		}
 	}
 
-	void putback(const Token & token) noexcept
+	constexpr void putback(const Token & token) noexcept
 	{
 		m_token = token; m_is_full = true;
 	}
@@ -82,9 +77,9 @@ class Calculator
 {
 public:
 
-	void run()
+	void run() const
 	{
-		for (std::string line; std::getline(std::cin, line); )
+		for (std::string line; std::getline(std::cin >> std::ws, line); )
 		{
 			if (Stream stream(line); !stream.empty())
 			{
@@ -96,26 +91,21 @@ public:
 
 private:
 
-	[[nodiscard]] double statement(Stream & stream)
+	[[nodiscard]] double statement(Stream & stream) const
 	{
-		auto token = stream.get();
+		const auto token = stream.get();
 
-		if (std::holds_alternative < std::string > (token))
+		if (std::holds_alternative < std::string > (token) && std::get < std::string > (token) == "set")
 		{
-			if (std::get < std::string > (token) == "set")
-			{
-				return declaration(stream);
-			}
+			return declaration(stream);
 		}
 		
 		stream.putback(token); return expression(stream);
 	}
 
-	[[nodiscard]] double declaration(Stream & stream)
+	[[nodiscard]] double declaration(Stream & stream) const
 	{
-		auto name = std::get < std::string > (stream.get());
-
-		return (m_variables[name] = expression(stream));
+		return (m_variables[std::get < std::string > (stream.get())] = expression(stream));
 	}
 
 	[[nodiscard]] double expression(Stream & stream) const
@@ -164,11 +154,11 @@ private:
 
 		if (std::holds_alternative < char > (token))
 		{
-			switch (auto c = std::get < char > (token); c)
+			switch (std::get < char > (token))
 			{
 				case '(':
 				{
-					auto d = expression(stream); token = stream.get(); return d;
+					const auto d = expression(stream); token = stream.get(); return d;
 				}
 
 				case '+': return        primary(stream);
@@ -188,7 +178,7 @@ private:
 
 private:
 
-	std::unordered_map < std::string, double > m_variables;
+	mutable std::unordered_map < std::string, double > m_variables;
 
 }; // class Calculator
 
