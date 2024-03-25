@@ -7,7 +7,7 @@ public:
 
 	Person(const std::string & name) : m_name(name)
 	{
-		std::cout << "Person " << name << " constructed" << std::endl;
+		std::cout << "person " << name << " constructed" << std::endl;
 	}
 
 public:
@@ -56,7 +56,7 @@ public:
 
 private:
 
-	const int m_salary = 0;
+	const int m_salary;
 
 }; // class Employee : public Person
 
@@ -75,7 +75,7 @@ public:
 
 private:
 
-	const int m_level = 0;
+	const int m_level;
 
 }; // class Manager : public Employee
 
@@ -135,9 +135,17 @@ class Derived_3 : private Base // note: default inheritance
 
 int main()
 {
-	const Manager manager("Matthias", 100000, 10);
+	const Person person("Matthias");
 
-	manager.print();
+//	const auto person_name = person.get_name(); // error: protected member function
+
+	const Employee employee("Matthias", 100'000);
+
+	employee.print();
+
+	[[maybe_unused]] const auto employee_name = employee.get_name();
+
+	const Manager manager("Matthias", 100'000, 10);
 
 	manager.print_person();
 
