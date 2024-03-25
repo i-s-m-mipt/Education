@@ -3,14 +3,14 @@
 
 [[nodiscard]] const int * binary_search(const int * a, std::size_t l, std::size_t r, int k) // note: O(log(N)) complexity
 {
-	if (r == 0)
+	if (l >= r)
 	{
 		return nullptr; // good: nullptr is better than special index value like INT_MAX or -1
 	}
 
-	if (r == 1)
+	if (r - l == 1)
 	{
-		return (a[0] == k ? a : nullptr);
+		return (a[l] == k ? a : nullptr);
 	}
 
 	while (l < r) // good: one comparison in selection condition with two branches in the loop
@@ -38,7 +38,7 @@ int main()
 	{
 		std::cout << "index of " << i << " in array: ";
 
-		if (const auto ptr = binary_search(array, 0, n - 1, i); ptr) // note: closed interval
+		if (const auto ptr = binary_search(array, 0, n, i); ptr) // good: half-open intervals preferred in C++
 		{
 			std::cout << ptr - array << std::endl; // note: get index through pointer arithmetic
 		}
