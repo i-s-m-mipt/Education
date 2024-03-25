@@ -338,7 +338,8 @@ set(sources_13
     advanced_calculator
     character_variants
     locales_and_facets
-    formatting_library)
+    formatting_library
+    regular_expressions)
 
 foreach(entry IN LISTS sources_13)
     add_executable        (${entry} ${section_13}${entry}.cpp)
