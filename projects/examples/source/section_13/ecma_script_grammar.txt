@@ -25,6 +25,8 @@
 \s is same as [:space:]
 \d is same as [:digit:]
 
+\b - word border, begin or end 
+
 Example 1: .(AB?C*)+(D{3})|(E{2,4}) - verify at regex101.com
 
 Example 2: <(.*)>(.*)</(\1)> - XML/HTML descriptors, \1 is the first group

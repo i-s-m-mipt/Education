@@ -42,11 +42,11 @@ int main()
     assert(std::empty(search_post_code("_$1$2$3$4$_")));
     assert(std::empty(search_post_code("NY1234-6789")));
 
-    const auto data = "AAA123BBB456CCC789"s; 
+    const auto data = "123AAA456BBB789CCC"s; 
 
     std::smatch matches;
     
-    const std::regex pattern(R"(([a-z]){3})", std::regex_constants::icase); // good: raw string, case insensitive
+    const std::regex pattern(R"([a-z]{3})", std::regex_constants::icase); // good: raw string, case insensitive
 
     for (auto begin = std::cbegin(data); std::regex_search(begin, std::cend(data), matches, pattern); begin = matches.suffix().first)
     {
