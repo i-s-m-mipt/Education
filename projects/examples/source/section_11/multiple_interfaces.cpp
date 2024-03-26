@@ -12,23 +12,22 @@
 
 struct Computer { std::string name; std::size_t size{}; };
 
-using namespace boost::multi_index;
-
-using computers_container_t = multi_index_container < Computer, indexed_by <
-	 hashed_non_unique < member < Computer, std::string, &Computer::name > > ,
-	 hashed_non_unique < member < Computer, std::size_t, &Computer::size > > ,
-	ordered_non_unique < member < Computer, std::string, &Computer::name > > ,
-	ordered_non_unique < member < Computer, std::size_t, &Computer::size > > ,
-	     random_access < > > > ;
-
-enum Index // good: unscoped enumeration for get functions
-{
-	HNU_name,
-	HNU_size,
-	ONU_name,
-	ONU_size, RA,
-
-}; // enum Index
+using computers_container_t = boost::multi_index::multi_index_container < Computer, 
+	boost::multi_index::        indexed_by <
+	boost::multi_index:: hashed_non_unique < 
+	boost::multi_index::               tag < class HNU_name                         >   , 
+	boost::multi_index::            member < Computer, std::string, &Computer::name > > ,
+	boost::multi_index:: hashed_non_unique < 
+	boost::multi_index::               tag < class HNU_size                         >   , 
+	boost::multi_index::            member < Computer, std::size_t, &Computer::size > > ,
+	boost::multi_index::ordered_non_unique < 
+	boost::multi_index::               tag < class ONU_name                         >   , 
+	boost::multi_index::            member < Computer, std::string, &Computer::name > > ,
+	boost::multi_index::ordered_non_unique < 
+	boost::multi_index::               tag < class ONU_size                         >   , 
+	boost::multi_index::            member < Computer, std::size_t, &Computer::size > > ,
+	boost::multi_index::     random_access < 
+	boost::multi_index::               tag < class RA > > > > ; // note: impressed?
 
 int main()
 {
