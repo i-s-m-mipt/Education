@@ -1,4 +1,4 @@
-class Base
+class B
 {
 public:
 
@@ -8,10 +8,10 @@ public:
 
 	int m_data = 0; // note: possible problem with multiple inheritance
 
-}; // class Base
+}; // class B
 
-class L : public /*virtual*/ Base {}; // good: virtual inheritance
-class R : public /*virtual*/ Base {}; // good: virtual inheritance
+class L : public /*virtual*/ B {}; // good: virtual inheritance
+class R : public /*virtual*/ B {}; // good: virtual inheritance
 
 class C : public L, public R {}; // note: possible diamond problem
 
