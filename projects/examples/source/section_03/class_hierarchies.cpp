@@ -7,13 +7,13 @@ public:
 
 	Person(const std::string & name) : m_name(name)
 	{
-		std::cout << "person " << name << " constructed" << std::endl;
+		std::cout << "Person::Person " << name << std::endl;
 	}
 
 public:
 
-	void print       () const { std::cout << "Person" << std::endl; }
-	void print_person() const { std::cout << "Person" << std::endl; }
+	void print       () const { std::cout << "Person::print       " << std::endl; }
+	void print_person() const { std::cout << "Person::print_person" << std::endl; }
 
 protected:
 
@@ -34,7 +34,7 @@ public:
 
 	Employee(const std::string & name, int salary) : Person(name), m_salary(salary)
 	{
-		std::cout << "employee " << name << " constructed" << std::endl;
+		std::cout << "Employee::Employee " << name << std::endl;
 
 //		std::cout << m_name << std::endl; // error: private member of base class
 
@@ -45,7 +45,7 @@ public:
 
 	void print() const // note: avoid inherited non-virtual functions redefinition
 	{
-		std::cout << "Employee" << std::endl;
+		std::cout << "Employee::print" << std::endl;
 
 //		print(); // error: infinite recursion
 
@@ -66,12 +66,12 @@ public:
 
 	Manager(const std::string & name, int salary, int level) : Employee(name, salary), m_level(level)
 	{
-		std::cout << "manager " << name << " constructed" << std::endl;
+		std::cout << "Manager::Manager " << name << std::endl;
 	}
 
 public:
 
-	void print() const { std::cout << "Manager" << std::endl; }
+	void print() const { std::cout << "Manager::print" << std::endl; }
 
 private:
 
@@ -91,12 +91,9 @@ private:
 
 class Base
 {
-public:
-	int m_data_1{}; // note: avoid public data mostly
-protected:
-	int m_data_2{}; // note: use protected data by situation
-private:
-	int m_data_3{}; // good: prefer private data in hierarchies
+public:    int m_data_1{}; // note: avoid public data mostly
+protected: int m_data_2{}; // note: use protected data by situation
+private:   int m_data_3{}; // good: prefer private data in hierarchies
 
 }; // class Base
 
