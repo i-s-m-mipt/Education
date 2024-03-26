@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-class Lecture;
+class Lecture; // good: class forward declaration
 
 class Student
 {
@@ -98,7 +98,6 @@ int main()
 	connect(s3, l2);
 
 	s1.show_lectures();
-
 	l1.show_students();
 
 	return 0;
