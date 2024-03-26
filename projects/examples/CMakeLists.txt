@@ -186,6 +186,11 @@ target_link_libraries (boost_logging PRIVATE ${Boost_LIBRARIES})
 set_target_properties (boost_logging PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 target_compile_options(boost_logging PRIVATE -Wall -pedantic -O0) 
 
+add_executable        (boost_testing ${section_08}boost_testing.cpp)
+target_link_libraries (boost_testing PRIVATE ${Boost_LIBRARIES})
+set_target_properties (boost_testing PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+target_compile_options(boost_testing PRIVATE -Wall -pedantic -O0) 
+
 add_executable        (google_benchmark ${section_08}google_benchmark.cpp)
 target_link_libraries (google_benchmark PRIVATE benchmark::benchmark)
 set_target_properties (google_benchmark PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
