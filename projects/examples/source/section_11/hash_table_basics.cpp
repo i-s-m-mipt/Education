@@ -48,7 +48,7 @@ int main()
 
 	unordered_set.rehash(64); // note: creates at least 64 buckets
 
-	std::mt19937 engine{ std::random_device()() };
+	std::mt19937_64 engine{ std::random_device()() };
 
 	std::uniform_int_distribution distribution(100, 999);
 

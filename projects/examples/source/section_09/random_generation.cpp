@@ -10,7 +10,7 @@
 {
 	std::random_device device; // note: make seed only once
 
-	std::mt19937 engine(device());
+	std::mt19937_64 engine(device());
 
 	std::uniform_real_distribution distribution(0.0, 1.0); // note: [a; b)
 
@@ -33,7 +33,7 @@ int main()
 {
 	std::random_device device; // note: implementation defined entropy source
 
-	std::mt19937 engine(device()); // note: engines use entropy sources for seeding
+	std::mt19937_64 engine(device()); // note: engines use entropy sources for seeding
 
 	std::normal_distribution distribution(20.0, 5.0); // note: distributions use engines
 

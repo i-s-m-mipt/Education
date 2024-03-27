@@ -15,7 +15,7 @@ using Python = solution::shared::Python;
 
 std::set < std::string > make_random_words(std::size_t size, const std::size_t length)
 {
-    std::mt19937 engine(std::random_device{}());
+    std::mt19937_64 engine(std::random_device{}());
 
 	std::uniform_int_distribution <> distribution(97, 122);
 	

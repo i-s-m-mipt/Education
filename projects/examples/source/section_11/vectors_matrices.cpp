@@ -74,7 +74,7 @@
 {
     boost::numeric::ublas::matrix < double > matrix(size, size);
 
-    std::mt19937 engine(42);
+    std::mt19937_64 engine(42);
 
     std::uniform_real_distribution distribution(0.0, 10.0);
 

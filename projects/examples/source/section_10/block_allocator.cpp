@@ -184,7 +184,7 @@ void test_1(benchmark::State & state) // note: pretty fast
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
 
-    std::mt19937 engine(state.range(0));
+    std::mt19937_64 engine(state.range(0));
 
     std::uniform_int_distribution distribution(1, 16);
 
@@ -205,7 +205,7 @@ void test_2(benchmark::State & state) // note: pretty slow
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb;
 
-    std::mt19937 engine(state.range(0));
+    std::mt19937_64 engine(state.range(0));
 
     std::uniform_int_distribution distribution(1, 16);
 

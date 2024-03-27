@@ -15,7 +15,7 @@ struct Vector { double x{}, y{}, z{}; };
 
 [[nodiscard]] double calculate_probability(std::size_t size) noexcept
 {
-	std::mt19937 engine(std::random_device{}());
+	std::mt19937_64 engine(std::random_device{}());
 
 	std::uniform_real_distribution < double > distribution(0.0, 2.0 * std::numbers::pi);
 

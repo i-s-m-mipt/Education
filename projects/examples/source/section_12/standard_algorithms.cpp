@@ -15,7 +15,7 @@ int main()
 
 	std::iota(std::begin(v1), std::end(v1), 0); // note: v1 contains 0 1 2 3 4 5 6 7 8 9
 
-	std::mt19937 engine(std::random_device{}());
+	std::mt19937_64 engine(std::random_device{}());
 
 	std::shuffle(std::begin(v1), std::end(v1), engine); // note: random with no duplicates
 
