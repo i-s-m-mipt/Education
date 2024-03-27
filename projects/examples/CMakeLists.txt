@@ -5,7 +5,7 @@ project(examples VERSION 24.02.06 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-find_package(Boost         1.84 REQUIRED COMPONENTS filesystem locale log python system)
+find_package(Boost         1.84 REQUIRED COMPONENTS filesystem locale log python system unit_test_framework)
 find_package(Python3       3.11 REQUIRED COMPONENTS Interpreter Development)
 find_package(nlohmann_json 3.11 REQUIRED COMPONENTS)
 find_package(GTest         1.14 REQUIRED COMPONENTS)
