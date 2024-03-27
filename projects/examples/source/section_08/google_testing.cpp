@@ -19,7 +19,7 @@ TEST(Factorial, Results) // note: group name and test case name
     EXPECT_EQ(factorial(5),   120);
     EXPECT_EQ(factorial(8), 40320);
 
-    ASSERT_EQ(factorial(4), 25); // note: failed assertion
+    ASSERT_EQ(factorial(4),    25); // note: failed assertion
 }
 
 [[nodiscard]] testing::AssertionResult is_even(int n) 
