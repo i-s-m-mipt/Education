@@ -43,7 +43,7 @@ int main()
 
 	ee::print();
 
-	::print(); // note: print from global scope
+	  ::print(); // note: print from global scope
 
 	function_with_ADL(ee::X()); // good: argument-dependent lookup
 
