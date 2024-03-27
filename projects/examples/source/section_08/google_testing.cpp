@@ -53,7 +53,7 @@ public:
 
     std::vector < int > data;
 
-}; // class Test_Fixture : public testing::Test 
+}; // class Fixture : public testing::Test 
 
 TEST_F(Fixture, Size) 
 {
