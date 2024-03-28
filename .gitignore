@@ -350,6 +350,8 @@ service/
 *.csv
 *.data
 
+.vscode
+
 settings.txt
 readme.pdf
 introduction.pdf
