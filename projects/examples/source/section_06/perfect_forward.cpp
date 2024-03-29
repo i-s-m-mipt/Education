@@ -18,7 +18,7 @@ inline void f(      X && x)
 
 template < typename T > inline void f(T && x) // good: forwarding reference, T && or auto &&
 {
-    g(std::forward < T > (x)); // good: perfect forwarding, maintaining fundamental properties
+    g(std::forward < T > (x)); // good: perfect forwarding, maintain fundamental properties
 }
 
 template < typename F, typename ... Types > 
@@ -29,7 +29,7 @@ template < typename F, typename ... Types >
 
 int main()
 {
-	X x; const X cx;
+	X x; const X cx; // note: objects with different fundamental properties
 
 	f(          x ); // note: f -> g for       X &  x
 	f(         cx ); // note: f -> g for const X &  x

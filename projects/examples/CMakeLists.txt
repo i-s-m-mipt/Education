@@ -134,7 +134,8 @@ set(section_06 source/section_06/)
 set(sources_06
     types_inference
     custom_typelist
-    perfect_forwarding)
+    perfect_forward
+    sfinae_enable_if)
 
 foreach(entry IN LISTS sources_06)
     add_executable        (${entry} ${section_06}${entry}.cpp)
