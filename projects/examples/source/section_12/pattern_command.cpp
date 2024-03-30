@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include <vector>
 
+// =================================================================================================
+
 struct Computer { enum class State { stop, slow, fast } state = State::stop; };
 
 enum class Command // note: alternative version based on classes hierarchy
@@ -15,6 +17,8 @@ enum class Command // note: alternative version based on classes hierarchy
 	fast,
 
 }; // enum class Command
+
+// =================================================================================================
 
 class Executor
 {
@@ -35,6 +39,8 @@ public:
 	Computer & m_computer; Command m_command;
 
 }; // class Executor
+
+// =================================================================================================
 
 int main()
 {

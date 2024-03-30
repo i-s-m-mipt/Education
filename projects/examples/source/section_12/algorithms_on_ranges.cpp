@@ -13,6 +13,8 @@
 
 struct Human { double height{}, weight{}; };
 
+// =================================================================================================
+
 template < typename T > class Range : private std::vector < T >
 {
 public:
@@ -23,6 +25,8 @@ public:
 
 }; // template < typename T > class Range : private std::vector < T >
 
+// =================================================================================================
+
 static_assert(std::ranges::      range < Range < int > > ); // note: verify if       range
 static_assert(std::ranges::sized_range < Range < int > > ); // note: verify if sized range
 
@@ -31,6 +35,8 @@ static_assert(std::ranges::sized_range < std::forward_list < int > > == false);
 static_assert(std::ranges::      forward_range < std::forward_list < int > > );
 static_assert(std::ranges::bidirectional_range < std::        list < int > > );
 static_assert(std::ranges::random_access_range < std::      vector < int > > ); // note: and more...
+
+// =================================================================================================
 
 int main()
 {

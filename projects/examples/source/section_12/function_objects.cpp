@@ -7,12 +7,16 @@
 #include <utility>
 #include <vector>
 
+// =================================================================================================
+
 [[nodiscard]] inline int f() noexcept // note: different functions have same types
 {
 	static auto state = 0; // note: internal state, see reference arguments
 
 	return (state++);
 }
+
+// =================================================================================================
 
 class C // note: different classes have different types
 {
@@ -25,6 +29,8 @@ private:
 	mutable int m_state = 0; // note: internal state, see logical constancy
 
 }; // class C
+
+// =================================================================================================
 
 template < typename T > class Sum
 {
@@ -40,6 +46,8 @@ private:
 
 }; // template < typename T > class Sum
 
+// =================================================================================================
+
 template < typename T > class Mean
 {
 public:
@@ -53,6 +61,8 @@ private:
 	std::size_t n = 0; T s = T();
 
 }; // class Mean
+
+// =================================================================================================
 
 int main()
 {

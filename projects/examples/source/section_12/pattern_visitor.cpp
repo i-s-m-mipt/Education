@@ -3,6 +3,8 @@
 #include <memory>
 #include <stdexcept>
 
+// =================================================================================================
+
 class Visitor // good: provides additional functionality for other classes
 {
 public:
@@ -15,6 +17,8 @@ public:
 
 }; // class Visitor
 
+// =================================================================================================
+
 class Computer // good: provides single-responsibility princile in compute
 {
 public:
@@ -26,6 +30,8 @@ public:
     virtual void visit_by(Visitor * visitor) const = 0;
 
 }; // class Computer 
+
+// =================================================================================================
 
 class Mobile : public Computer 
 {
@@ -40,6 +46,8 @@ public:
 
 }; // class Mobile : public Computer 
 
+// =================================================================================================
+
 class Tablet : public Computer
 {
 public:
@@ -53,6 +61,8 @@ public:
 
 }; // class Tablet : public Computer 
 
+// =================================================================================================
+
 class Laptop : public Computer
 {
 public:
@@ -65,6 +75,8 @@ public:
     }
 
 }; // class Laptop : public Computer 
+
+// =================================================================================================
 
 class Tester : public Visitor // note: provides simple tests for all computers
 {
@@ -86,6 +98,8 @@ public:
     }
 
 }; // class Tester : public Visitor
+
+// =================================================================================================
 
 int main()
 {

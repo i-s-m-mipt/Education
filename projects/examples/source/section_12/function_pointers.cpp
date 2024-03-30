@@ -3,6 +3,8 @@
 #include <iostream>
 #include <type_traits>
 
+// =================================================================================================
+
 [[nodiscard]] inline constexpr int f(int x) noexcept
 { 
 	return (x + 1); 
@@ -19,11 +21,15 @@ template < typename ... Types >
 	return f(args...);
 }
 
+// =================================================================================================
+
 template < typename F, typename ... Types > 
 [[nodiscard]] inline constexpr auto invoke(F && f, Types && ... args)
 {
 	return f(std::forward < Types > (args)...);
 }
+
+// =================================================================================================
 
 int main()
 {
