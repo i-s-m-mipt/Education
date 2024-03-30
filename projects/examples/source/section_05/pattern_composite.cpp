@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+// =================================================================================================
+
 class Computer
 {
 public:
@@ -11,9 +13,13 @@ public:
 
 }; // class Computer
 
+// =================================================================================================
+
 class Mobile : public Computer { public: [[nodiscard]] std::size_t cores() const override { return 1; } };
 class Tablet : public Computer { public: [[nodiscard]] std::size_t cores() const override { return 2; } };
 class Laptop : public Computer { public: [[nodiscard]] std::size_t cores() const override { return 3; } };
+
+// =================================================================================================
 
 class Cluster : public Computer // note: composite class of concrete computers
 {
@@ -44,6 +50,8 @@ private:
 
 }; // class Cluster : public Computer
 
+// =================================================================================================
+
 [[nodiscard]] const Computer * make_cluster(std::size_t n_mobiles, std::size_t n_tablets, std::size_t n_laptops)
 {
     const auto cluster = new Cluster;
@@ -54,6 +62,8 @@ private:
 
     return cluster;
 }
+
+// =================================================================================================
 
 int main()
 {

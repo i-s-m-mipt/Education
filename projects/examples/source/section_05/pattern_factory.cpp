@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 class Computer
 {
 public:
@@ -10,14 +12,20 @@ public:
     
 }; // class Computer
 
+// =================================================================================================
+
 class Mobile : public Computer { public: void run() const override { std::cout << "Mobile" << std::endl; }; };
 class Tablet : public Computer { public: void run() const override { std::cout << "Tablet" << std::endl; }; };
 class Laptop : public Computer { public: void run() const override { std::cout << "Laptop" << std::endl; }; };
+
+// =================================================================================================ы
 
 template < typename T > [[nodiscard]] inline Computer * create() // note: factory function, consider enumeration
 {
     return new T; // note: consider type traits to verify type T is correct
 }
+
+// =================================================================================================
 
 class Server : public Computer
 {
@@ -43,6 +51,8 @@ private:
 
 }; // class Server : public Computer
 
+// =================================================================================================
+
 class Factory
 {
 public:
@@ -53,6 +63,8 @@ public:
     
 }; // class Factory
 
+// =================================================================================================
+
 class Factory_Mobile : public Factory
 {
 public: 
@@ -60,6 +72,8 @@ public:
     [[nodiscard]] Computer * create() const override { return new Mobile; } 
 
 }; // class Factory_Mobile : public Factory
+
+// =================================================================================================
 
 class Factory_Tablet : public Factory
 {
@@ -69,6 +83,8 @@ public:
 
 }; // class Factory_Tablet : public Factory
 
+// =================================================================================================
+
 class Factory_Laptop : public Factory
 {
 public: 
@@ -76,6 +92,8 @@ public:
     [[nodiscard]] Computer * create() const override { return new Laptop; }
 
 }; // class Factory_Laptop : public Factory
+
+// =================================================================================================
 
 int main()
 {

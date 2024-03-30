@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 class Computer
 {
 public:
@@ -24,6 +26,8 @@ private: // note: non-virtual interface
 
 }; // class Computer
 
+// =================================================================================================
+
 class Mobile : public Computer
 {
 public:
@@ -32,6 +36,8 @@ public:
 	void d() const override { std::cout << "M "; }
 
 }; // class Mobile : public Computer
+
+// =================================================================================================
 
 class Tablet : public Computer
 {
@@ -42,6 +48,8 @@ public:
 
 }; // class Tablet : public Computer
 
+// =================================================================================================
+
 class Laptop : public Computer
 {
 public:
@@ -50,6 +58,8 @@ public:
 	void d() const override { std::cout << "L "; }
 
 }; // class Laptop : public Computer
+
+// =================================================================================================
 
 int main()
 {

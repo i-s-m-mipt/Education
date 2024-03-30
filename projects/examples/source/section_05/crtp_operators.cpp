@@ -2,6 +2,8 @@
 
 #include <boost/operators.hpp>
 
+// =================================================================================================
+
 template < typename T > class Relational // note: Barton-Nackman trick
 {
 public:
@@ -21,6 +23,8 @@ protected:
 
 }; // template < typename T > class Relational
 
+// =================================================================================================
+
 class Apple : private Relational < Apple > // note: allowed private inheritance
 {
 public:
@@ -37,6 +41,8 @@ private:
     double m_weight;
 
 }; // class Apple : private Relational < Apple > 
+
+// =================================================================================================
 
 class Human : private Relational < Human > // note: allowed private inheritance
 {
@@ -55,6 +61,8 @@ private:
 
 }; // class Human : private Relational < Human > 
 
+// =================================================================================================
+
 class Train : private boost::less_than_comparable < Train > , private boost::equivalent < Train >
 {
 public:
@@ -71,6 +79,8 @@ private:
     double m_length;
 
 }; // class Train : private boost::less_than_comparable < Train > , private boost::equivalent < Train >
+
+// =================================================================================================
 
 int main() 
 {    

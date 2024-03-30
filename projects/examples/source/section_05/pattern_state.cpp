@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 class Computer; // note: forward declaration for pointers
 
 class State
@@ -14,6 +16,8 @@ public:
 
 }; // class State
 
+// =================================================================================================
+
 class Stop : public State // note: implements all possible state changes
 {
 public:
@@ -22,6 +26,8 @@ public:
     void fast([[maybe_unused]] Computer * c) const override;
 
 }; // class Stop : public State
+
+// =================================================================================================
 
 class Slow : public State // note: implements all possible state changes
 {
@@ -32,6 +38,8 @@ public:
 
 }; // class Slow : public State
 
+// =================================================================================================
+
 class Fast : public State // note: implements all possible state changes
 {
 public:
@@ -40,6 +48,8 @@ public:
     void slow([[maybe_unused]] Computer * c) const override;
 
 }; // class Fast : public State
+
+// =================================================================================================
 
 class Computer
 {
@@ -63,6 +73,8 @@ private:
     const State * m_state; // note: internal state of state machine
 
 }; // class Computer
+
+// =================================================================================================
 
 void Stop::slow([[maybe_unused]] Computer * c) const
 {
@@ -93,6 +105,8 @@ void Fast::slow([[maybe_unused]] Computer * c) const
 {
     c->set_state(new Slow()); std::cout << "fast -> slow" << std::endl;
 }
+
+// =================================================================================================
 
 int main()
 {

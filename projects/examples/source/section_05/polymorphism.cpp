@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 class Computer
 {
 public:
@@ -10,23 +12,33 @@ public:
 
 }; // class Computer
 
+// =================================================================================================
+
 class Mobile_v1 : public Computer { public: void run() const override { std::cout << "Mobile_v1" << std::endl; } };
 class Tablet_v1 : public Computer { public: void run() const override { std::cout << "Tablet_v1" << std::endl; } };
 class Laptop_v1 : public Computer { public: void run() const override { std::cout << "Laptop_v1" << std::endl; } };
+
+// =================================================================================================
 
 inline void handle_v1(const Computer & computer) 
 {
 	computer.run(); // note: slower in runtime, but clear hierarchy
 }
 
+// =================================================================================================
+
 class Mobile_v2 { public: void run() const { std::cout << "Mobile_v2" << std::endl; } };
 class Tablet_v2 { public: void run() const { std::cout << "Tablet_v2" << std::endl; } };
 class Laptop_v2 { public: void run() const { std::cout << "Laptop_v2" << std::endl; } };
+
+// =================================================================================================
 
 template < typename T > inline void handle_v2(const T & t)
 {
 	t.run(); // note: faster in runtime, but independent classes
 }
+
+// =================================================================================================
 
 int main()
 {

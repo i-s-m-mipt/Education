@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 class Device { public: void run() const { std::cout << "Device" << std::endl; } };
 
 class Computer
@@ -11,6 +13,8 @@ public:
 	virtual void run() const = 0;
 	
 }; // class Computer
+
+// =================================================================================================
 
 class Adapter : public Computer // note: consider private Device
 {
@@ -25,6 +29,8 @@ private:
 	const Device & m_device; // note: consider additional settings
 
 }; // class Adapter : public Computer
+
+// =================================================================================================
 
 int main()
 {	

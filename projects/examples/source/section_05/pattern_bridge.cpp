@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 class BIOS 
 {
 public:
@@ -10,8 +12,12 @@ public:
 
 }; // class BIOS 
 
+// =================================================================================================
+
 class Phoenix : public BIOS { public: void run() const override { std::cout << "Phoenix" << std::endl; } };
 class Microid : public BIOS { public: void run() const override { std::cout << "Microid" << std::endl; } };
+
+// =================================================================================================
 
 class Computer 
 {
@@ -29,6 +35,8 @@ protected:
 
 }; // class Computer 
 
+// =================================================================================================
+
 class Laptop : public Computer 
 {
 public:
@@ -38,6 +46,8 @@ public:
     void run() const override { m_bios.run(); }
 
 }; // class Laptop : public Computer 
+
+// =================================================================================================
 
 int main() 
 {

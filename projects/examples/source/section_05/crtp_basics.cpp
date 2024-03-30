@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 template < class Derived > class Computer
 {
 public:
@@ -13,6 +15,8 @@ public:
 
 }; // template < class Derived > class Computer
 
+// =================================================================================================
+
 class Laptop : public Computer < Laptop >
 {
 public:
@@ -22,6 +26,8 @@ public:
 }; // class Laptop : public Computer < Laptop >
 
 template < typename T > inline void handle(const T & t) { t.run(); }
+
+// =================================================================================================
 
 int main()
 {

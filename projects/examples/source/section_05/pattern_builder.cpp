@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+// =================================================================================================
+
 struct Computer
 {
     const std::string name;
@@ -19,6 +21,8 @@ void print(const Computer & computer)
     std::cout << "GPU: " << computer.gpu.name << std::endl;
     std::cout << "RAM: " << computer.ram.name << std::endl;
 }
+
+// =================================================================================================
 
 class Builder
 {
@@ -40,6 +44,8 @@ private:
 
 }; // class Builder
 
+// =================================================================================================
+
 class Builder_Mobile : public Builder
 {
 public:
@@ -53,6 +59,8 @@ public:
     void build_ram() const override { computer()->ram.name = "Mobile RAM"; }
 
 }; // class Builder_Mobile : public Builder
+
+// =================================================================================================
 
 class Builder_Tablet : public Builder
 {
@@ -68,6 +76,8 @@ public:
 
 }; // class Builder_Tablet : public Builder
 
+// =================================================================================================
+
 class Builder_Laptop : public Builder
 {
 public:
@@ -82,6 +92,8 @@ public:
 
 }; // class Builder_Laptop : public Builder
 
+// =================================================================================================
+
 [[nodiscard]] inline const Computer * build(const Builder & builder) // note: consider member function
 {
     builder.build_cpu();
@@ -90,6 +102,8 @@ public:
 
     return builder.computer();
 }
+
+// =================================================================================================
 
 int main()
 {

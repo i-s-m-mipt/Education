@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 class Base
 {
 public:
@@ -9,6 +11,8 @@ public:
     virtual void initialize() = 0;
 
 }; // class Base
+
+// =================================================================================================
 
 class Derived : public Base
 {
@@ -22,6 +26,8 @@ public:
 
 }; // class Derived : public Base
 
+// =================================================================================================
+
 template < typename T > class Initializer : public T
 {
 public:
@@ -32,6 +38,8 @@ public:
     }
 
 }; // template < typename T > class Initializer : public T
+
+// =================================================================================================
 
 int main()
 {

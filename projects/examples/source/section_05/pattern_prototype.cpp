@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 class Computer
 {
 public:
@@ -12,6 +14,8 @@ public:
 
 }; // class Computer
 
+// =================================================================================================
+
 class Mobile : public Computer
 {
 public:
@@ -21,6 +25,8 @@ public:
     void run() const override { std::cout << "Mobile" << std::endl; };
 
 }; // class Mobile : public Computer
+
+// =================================================================================================
 
 class Tablet : public Computer
 {
@@ -32,6 +38,8 @@ public:
 
 }; // class Tablet : public Computer
 
+// =================================================================================================
+
 class Laptop : public Computer
 {
 public:
@@ -41,6 +49,8 @@ public:
     void run() const override { std::cout << "Laptop" << std::endl; };
 
 }; // class Laptop : public Computer
+
+// =================================================================================================
 
 class Factory // note: no factories hierarchy, static prototypes and virtual copy
 {
@@ -57,6 +67,8 @@ private:
     static inline const Laptop laptop_prototype;
 
 }; // class Factory
+
+// =================================================================================================
 
 int main()
 {

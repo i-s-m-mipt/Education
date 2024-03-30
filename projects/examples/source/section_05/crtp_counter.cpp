@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 template < typename T, std::size_t M > class Counter 
 {
 protected:
@@ -28,8 +30,12 @@ private:
 
 }; // template < typename T > class Counter
 
+// =================================================================================================
+
 template < typename T > class Container_1 : public Counter < Container_1 < T > , 1 > {};
 template < typename T > class Container_2 : public Counter < Container_2 < T > , 2 > {};
+
+// =================================================================================================
 
 int main()
 {

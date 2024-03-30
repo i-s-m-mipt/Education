@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 class Computation 
 {
 public:
@@ -10,8 +12,12 @@ public:
 
 }; // class Computation
 
+// =================================================================================================
+
 class AVX : public Computation { public: void compute() const override { std::cout << "AVX" << std::endl; } };
 class SSE : public Computation { public: void compute() const override { std::cout << "SSE" << std::endl; } };
+
+// =================================================================================================
 
 class Computer
 {
@@ -26,6 +32,8 @@ private:
     const Computation & m_computation;
 
 }; // class Computer
+
+// =================================================================================================
 
 int main()
 {

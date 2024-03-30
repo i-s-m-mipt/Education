@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+// =================================================================================================
+
 class Computer 
 {
 public:
@@ -11,9 +13,13 @@ public:
 
 }; // class Computer 
 
+// =================================================================================================
+
 class Mobile : public Computer { public: [[nodiscard]] std::string description() const override { return "Mobile"; } };
 class Tablet : public Computer { public: [[nodiscard]] std::string description() const override { return "Tablet"; } };
 class Laptop : public Computer { public: [[nodiscard]] std::string description() const override { return "Laptop"; } };
+
+// =================================================================================================
 
 class Decorated_Computer : public Computer // note: abstract decorator
 {
@@ -29,6 +35,8 @@ protected:
 
 }; // class Decorated_Computer : public Computer 
 
+// =================================================================================================
+
 class Overclocked_Computer : public Decorated_Computer // note: concrete decorator
 {
 public:
@@ -41,6 +49,8 @@ public:
     }
 
 }; // class Overclocked_Computer : public Decorated_Computer
+
+// =================================================================================================
 
 int main()
 {

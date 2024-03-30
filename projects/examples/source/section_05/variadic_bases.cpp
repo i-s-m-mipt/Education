@@ -1,7 +1,11 @@
 #include <iostream>
 
+// =================================================================================================
+
 class Color_v1 { public: explicit Color_v1(char) {}; };
 class Label_v1 { public: explicit Label_v1(char) {}; };
+
+// =================================================================================================
 
 template < typename ... Bases > 
 class Point_v1 : public Bases... // note: modern mixin
@@ -21,8 +25,12 @@ private:
 
 }; // class Point_v1 : public Bases...
 
+// =================================================================================================
+
 template < typename T > class Color_v2 {}; // note: consider protected destructor and EBO
 template < typename T > class Label_v2 {}; // note: consider protected destructor and EBO
+
+// =================================================================================================
 
 template < template < typename > typename ... Bases > // note: template template parameters
 class Point_v2 : public Bases < Point_v2 < Bases ... > > ... 
@@ -40,6 +48,8 @@ private:
     double m_y;
 
 }; // class Point_v2 : public Bases < Point_v2 < Bases ... > > ... 
+
+// =================================================================================================
 
 int main()
 {

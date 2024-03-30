@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 class Number
 {
 public:
@@ -18,6 +20,8 @@ private:
     value_type value{};
 
 }; // class Number
+
+// =================================================================================================
 
 template < typename Base > class Undoable : public Base
 {
@@ -38,6 +42,8 @@ private:
 
 }; // template < typename Base > class Undoable : public Base
 
+// =================================================================================================
+
 template < typename Base > class Redoable : public Base
 {
 public:
@@ -56,6 +62,8 @@ private:
     value_type value_after{};
 
 }; // template < typename Base > class Redoable : public Base
+
+// =================================================================================================
 
 int main() 
 {

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+// =================================================================================================
+
 class Observer 
 {
 public:
@@ -10,6 +12,8 @@ public:
     virtual void update(double temperature) const = 0;
 
 }; // class Observer 
+
+// =================================================================================================
 
 class Computer 
 {
@@ -41,6 +45,8 @@ private:
 
 }; // class Computer 
 
+// =================================================================================================
+
 class Display_1 : public Observer 
 {
 public:
@@ -52,6 +58,8 @@ public:
 
 }; // class Display_1 : public Observer 
 
+// =================================================================================================
+
 class Display_2 : public Observer
 {
 public:
@@ -62,6 +70,8 @@ public:
     }
 
 }; // class Display_2 : public Observer 
+
+// =================================================================================================
 
 int main() 
 {

@@ -2,6 +2,8 @@
 
 #include <boost/noncopyable.hpp>
 
+// =================================================================================================
+
 class Singleton // bad: single responsibility principle violation
 {
 public:
@@ -32,6 +34,8 @@ private:
 
 }; // class Singleton 
 
+// =================================================================================================
+
 class Monostate // good: better than singleton
 {
 public:
@@ -46,6 +50,8 @@ private:
 
 }; // class Monostate
 
+// =================================================================================================
+
 class Noncopyable // good: better than singleton
 {
 protected:
@@ -59,6 +65,8 @@ protected:
 
 }; // class Noncopyable
 
+// =================================================================================================
+
 class Unique : private Noncopyable // note: consider boost::noncopyable
 {
 public:
@@ -70,6 +78,8 @@ private:
     int m_data = 0;
 
 }; // class Unique : private Noncopyable
+
+// =================================================================================================
 
 int main()
 {
