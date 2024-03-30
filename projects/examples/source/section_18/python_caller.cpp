@@ -13,6 +13,8 @@
 
 using Python = solution::shared::Python;
 
+// =================================================================================================
+
 std::set < std::string > make_random_words(std::size_t size, const std::size_t length)
 {
     std::mt19937_64 engine(std::random_device{}());
@@ -29,6 +31,8 @@ std::set < std::string > make_random_words(std::size_t size, const std::size_t l
 	return words;
 }
 
+// =================================================================================================
+
 std::size_t hash_DEK(std::string_view string) // note: Donald E. Knuth implementation
 {
 	std::uint32_t hash = std::size(string); // note: as with x86 build to make collisions
@@ -40,6 +44,8 @@ std::size_t hash_DEK(std::string_view string) // note: Donald E. Knuth implement
 
 	return hash;
 }
+
+// =================================================================================================
 
 int main()
 {
