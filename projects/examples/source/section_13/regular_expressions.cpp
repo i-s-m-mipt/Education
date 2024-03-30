@@ -23,7 +23,7 @@ using namespace std::literals;
 
 [[nodiscard]] inline std::string replace_substring(const std::string & string)
 {
-    return std::regex_replace(string, std::regex(R"(\b(sub)([^ ]*))"), R"(sub-$2)"); // good: raw string
+    return std::regex_replace(string, std::regex(R"(\b(sub)([^ ]+))"), R"(sub-$2)"); // good: raw string
 }
 
 int main()
@@ -42,11 +42,11 @@ int main()
     assert(std::empty(search_post_code("_$1$2$3$4$_")));
     assert(std::empty(search_post_code("NY1234-6789")));
 
-    const auto data = "123AAA456BBB789CCC"s; 
+    const auto data = "123ABC456DEF789GHI"s; 
 
     std::smatch matches;
     
-    const std::regex pattern(R"([a-z]{3})", std::regex_constants::icase); // good: raw string, case insensitive
+    const std::regex pattern(R"([a-z]{2}([a-z])?)", std::regex_constants::icase); // good: raw string, case insensitive
 
     for (auto begin = std::cbegin(data); std::regex_search(begin, std::cend(data), matches, pattern); begin = matches.suffix().first)
     {
@@ -64,15 +64,7 @@ int main()
     }
 
     {
-        const std::sregex_token_iterator begin(std::begin(data), std::cend(data), pattern, { 0 }), end;
-
-        std::ranges::for_each(begin, end, [](const auto & match){ std::cout << match << ' '; });
-
-        std::cout << std::endl;
-    }
-
-    {
-        const std::sregex_token_iterator begin(std::begin(data), std::cend(data), pattern, { -1 }), end;
+        const std::sregex_token_iterator begin(std::begin(data), std::cend(data), pattern, { -1, 0, 1 }), end;
 
         std::ranges::for_each(begin, end, [](const auto & match){ std::cout << match << ' '; });
 
