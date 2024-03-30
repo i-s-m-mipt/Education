@@ -13,6 +13,8 @@ struct Computer
     
 }; // struct Computer
 
+// =================================================================================================
+
 void print(const Computer & computer)
 {
     std::cout << "Computer \"" << computer.name << "\" includes: " << std::endl;
