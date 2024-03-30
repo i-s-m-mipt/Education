@@ -22,8 +22,8 @@
 \ - prefix, next character has special meaning
 
 \w is same as [[:alnum:]_]
-\s is same as [:space:]
-\d is same as [:digit:]
+\s is same as [[:space:]]
+\d is same as [[:digit:]]
 
 \b - word border, begin or end 
 
