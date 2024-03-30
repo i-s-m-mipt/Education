@@ -1,7 +1,9 @@
-template < typename T > inline constexpr void f1(      T   ) {}
-template < typename T > inline constexpr void f2(      T & ) {}
-template < typename T > inline constexpr void f3(const T & ) {}
-template < typename T > inline constexpr void f4(      T &&) {}
+#include <iostream>
+
+template < typename T > inline constexpr void f1(      T   ) { std::cout << "      T   " << std::endl; }
+template < typename T > inline constexpr void f2(      T & ) { std::cout << "      T & " << std::endl; }
+template < typename T > inline constexpr void f3(const T & ) { std::cout << "const T & " << std::endl; }
+template < typename T > inline constexpr void f4(      T &&) { std::cout << "      T &&" << std::endl; }
 
 int main()
 {
