@@ -162,7 +162,16 @@ private:
 			{
 				case '(':
 				{
-					const auto d = expression(stream); token = stream.get(); return d;
+					const auto d = expression(stream); 
+					
+					token = stream.get(); 
+
+					if (!std::holds_alternative < char > (token) || std::get < char > (token) != ')')
+					{
+						throw std::runtime_error("invalid token, ) expected");
+					}
+					
+					return d;
 				}
 
 				case '+': return        primary(stream);
