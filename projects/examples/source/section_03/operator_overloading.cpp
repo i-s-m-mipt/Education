@@ -5,6 +5,8 @@
 
 #include <boost/rational.hpp> // note: boost::multiprecision::gmp_rational is faster
 
+// =================================================================================================
+
 class Ratio
 {
 public:
@@ -143,6 +145,8 @@ private:
 
 inline void swap(Ratio & x, Ratio & y) { x.swap(y); }
 
+// =================================================================================================
+
 [[nodiscard]] inline Ratio operator+(Ratio lhs, Ratio rhs) // good: free function
 {
 	return (lhs += rhs);
@@ -162,6 +166,8 @@ inline void swap(Ratio & x, Ratio & y) { x.swap(y); }
 {
 	return (lhs /= rhs);
 }
+
+// =================================================================================================
 
 [[nodiscard]] inline bool operator< (Ratio lhs, Ratio rhs)
 {
@@ -187,6 +193,8 @@ inline void swap(Ratio & x, Ratio & y) { x.swap(y); }
 {
 	return (!(lhs < rhs) && !(rhs < lhs));
 }
+
+// =================================================================================================
 
 int main()
 {

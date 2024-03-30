@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+// =================================================================================================
+
 class Date // note: pay attention to the order of class members
 {
 public: // good: public members first
@@ -132,6 +134,8 @@ private:
 
 }; // class Date
 
+// =================================================================================================
+
 void Date::print_v2() const // good: large function is defined outside the class
 {
 	std::cout << prompt;
@@ -146,6 +150,8 @@ void Date::print_v2() const // good: large function is defined outside the class
 	std::cout << m_month << separator; if (m_day   < 10) std::cout << '0';
 	std::cout << m_day   << std::endl;
 }
+
+// =================================================================================================
 
 int main()
 {

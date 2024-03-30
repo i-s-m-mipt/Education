@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+// =================================================================================================
+
 class Person
 {
 public:
@@ -27,6 +29,8 @@ private:
 	const std::string m_name;
 
 }; // class Person
+
+// =================================================================================================
 
 class Employee : public Person // good: Employee is a variety of Person
 {
@@ -60,6 +64,8 @@ private:
 
 }; // class Employee : public Person
 
+// =================================================================================================
+
 class Manager : public Employee // good: Manager is a variety of Employee
 {
 public:
@@ -79,6 +85,8 @@ private:
 
 }; // class Manager : public Employee
 
+// =================================================================================================
+
 class Servo {};
 
 class Robot // : private Servo // bad: Robot is implemented through Servo
@@ -89,6 +97,8 @@ private:
 
 }; // class Robot
 
+// =================================================================================================
+
 class Base
 {
 public:    int m_data_1{}; // note: avoid public data mostly
@@ -96,6 +106,8 @@ protected: int m_data_2{}; // note: use protected data by situation
 private:   int m_data_3{}; // good: prefer private data in hierarchies
 
 }; // class Base
+
+// =================================================================================================
 
 class Derived_1 : public Base // note: useful inheritance
 {
@@ -108,6 +120,8 @@ class Derived_1 : public Base // note: useful inheritance
 
 }; // class Derived_1 : public Base
 
+// =================================================================================================
+
 class Derived_2 : protected Base // note: useless inheritance
 {
 	void f()
@@ -119,6 +133,8 @@ class Derived_2 : protected Base // note: useless inheritance
 
 }; // class Derived_2 : protected Base
 
+// =================================================================================================
+
 class Derived_3 : private Base // note: default inheritance
 {
 	void f()
@@ -129,6 +145,8 @@ class Derived_3 : private Base // note: default inheritance
 	}
 
 }; // class Derived_3 : private Base
+
+// =================================================================================================
 
 int main()
 {

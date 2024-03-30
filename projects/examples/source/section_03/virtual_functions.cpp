@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+// =================================================================================================
+
 class Computer 
 {
 public:
@@ -24,6 +26,8 @@ public:
 
 }; // class Computer
 
+// =================================================================================================
+
 class Mobile final : public Computer // note: final class in hierarchy
 {
 public:
@@ -34,6 +38,8 @@ public:
 	}
 
 }; // class Mobile final : public Computer
+
+// =================================================================================================
 
 /*
 class Tablet : public Mobile // error: class Mobile declared final
@@ -48,6 +54,8 @@ public:
 }; // class Tablet : public Mobile
 */
 
+// =================================================================================================
+
 class Laptop : public Computer // note: not final class in hierarchy
 {
 public:
@@ -58,6 +66,8 @@ public:
 	}
 
 }; // class Laptop : public Computer
+
+// =================================================================================================
 
 class Abstract_Base // note: interface class like in Java
 {
@@ -76,6 +86,8 @@ void Abstract_Base::print() const // note: definition must be provided separatel
 	std::cout << "default implementation" << std::endl;
 }
 
+// =================================================================================================
+
 class Derived : public Abstract_Base
 {
 public:
@@ -88,6 +100,8 @@ public:
 	}
 
 }; // class Derived : public Abstract_Base
+
+// =================================================================================================
 
 int main()
 {

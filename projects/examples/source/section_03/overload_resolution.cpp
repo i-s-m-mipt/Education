@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+// =================================================================================================
+
 [[nodiscard]] inline int get_prvalue()
 {
 	return 42;
@@ -28,10 +30,14 @@
 	static const int x = 42; return x;
 }
 
+// =================================================================================================
+
 inline void f(      int & ) { std::cout << "      int & " << std::endl; }
 inline void f(      int &&) { std::cout << "      int &&" << std::endl; }
 inline void f(const int & ) { std::cout << "const int & " << std::endl; }
 inline void f(const int &&) { std::cout << "const int &&" << std::endl; }
+
+// =================================================================================================
 
 class Person
 {
@@ -52,6 +58,8 @@ private:
 {
 	const Person person(name); return person;
 }
+
+// =================================================================================================
 
 int main()
 {

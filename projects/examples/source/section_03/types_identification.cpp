@@ -4,6 +4,8 @@
 
 #include <boost/type_index.hpp>
 
+// =================================================================================================
+
 class Computer 
 {
 public:
@@ -14,9 +16,13 @@ public:
 
 }; // class Computer 
 
+// =================================================================================================
+
 class Mobile : public Computer { public: void run() const override { std::cout << "Mobile" << std::endl; } };
 class Tablet : public Computer { public: void run() const override { std::cout << "Tablet" << std::endl; } };
 class Laptop : public Computer { public: void run() const override { std::cout << "Laptop" << std::endl; } };
+
+// =================================================================================================
 
 int main()
 {

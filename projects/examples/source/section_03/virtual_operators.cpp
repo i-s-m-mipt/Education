@@ -1,6 +1,8 @@
 #include <iostream>
 #include <ostream>
 
+// =================================================================================================
+
 class Base
 {
 public:
@@ -18,6 +20,8 @@ public:
 
 }; // class Base
 
+// =================================================================================================
+
 class Derived : public Base
 {
 public:
@@ -25,6 +29,8 @@ public:
     void print(std::ostream & stream) const override { stream << "Derived"; }
 
 }; // class Derived : public Base
+
+// =================================================================================================
 
 int main()
 {

@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 class Container
 {
 public:
@@ -31,6 +33,8 @@ public:
 
 }; // class Container
 
+// =================================================================================================
+
 [[nodiscard]] inline Container f()
 {
 	return Container(); // note: copy elision, return value optimization
@@ -43,6 +47,8 @@ public:
 	return container; // note: copy elision, named return value optimization
 }
 
+// =================================================================================================
+
 class E {}; // note: empty class with no data, only functions for example
 
 class X { const char c{};                       const E e;      };
@@ -53,6 +59,8 @@ class A {}; // note: empty base class optimization
 
 class B : public A {};
 class C : public B {};
+
+// =================================================================================================
 
 int main()
 {

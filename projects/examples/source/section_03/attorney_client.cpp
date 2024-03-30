@@ -1,15 +1,19 @@
 #include <iostream>
 
-class Key
-{
-    Key() {} // note: private constructor
-
-    friend class User;
-
-}; // class Key
+// =================================================================================================
 
 class Client
 {
+public:
+
+    class Key
+    {
+        Key() {} // note: private constructor
+
+        friend class User;
+
+    }; // class Key
+
 public:
 
     void f(Key) const { std::cout << "Client::f(Key)" << std::endl; }
@@ -24,6 +28,8 @@ private:
 
 }; // class Client
 
+// =================================================================================================
+
 class Attorney 
 {
 private:
@@ -34,6 +40,8 @@ private:
     friend class User;
 
 }; // class Attorney 
+
+// =================================================================================================
 
 class User // good: User has access to Client::f and Client::g only
 {
@@ -48,6 +56,8 @@ public:
     }
 
 }; // class User
+
+// =================================================================================================
 
 int main()
 {
