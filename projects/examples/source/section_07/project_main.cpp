@@ -6,6 +6,8 @@
 
 //import math; // note: importing module
 
+// =================================================================================================
+
 /*
 void f() // error: multiple defined symbol
 {
@@ -14,6 +16,8 @@ void f() // error: multiple defined symbol
 */
 
 inline void print() { std::cout << "::print" << std::endl; }
+
+// =================================================================================================
 
 int main()
 {

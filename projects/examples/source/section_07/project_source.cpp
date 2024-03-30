@@ -3,6 +3,8 @@
 #include <iostream>
 #include <source_location>
 
+// =================================================================================================
+
 void f() // note: definition, external linkage
 {
 	std::cout << "f from source" << std::endl;

@@ -4,6 +4,8 @@
 
 #include <boost/noncopyable.hpp>
 
+// =================================================================================================
+
 class Computer : private boost::noncopyable // note: placed in the header file
 {
 public:
@@ -32,6 +34,8 @@ private:
 
 }; // class Computer : private boost::noncopyable
 
+// =================================================================================================
+
 class Computer::Implementation // note: placed in the source file
 {
 public:
@@ -46,11 +50,15 @@ private:
 
 }; // class Computer::Implementation
 
+// =================================================================================================
+
 Computer:: Computer(std::string name) : m_pimpl(new Implementation(std::move(name))) {}
 
 Computer::~Computer() { delete m_pimpl; }
 
 void Computer::run() const { m_pimpl->run(); }
+
+// =================================================================================================
 
 int main()
 {
