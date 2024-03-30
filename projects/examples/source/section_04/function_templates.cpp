@@ -1,6 +1,8 @@
 #include <iostream>
 #include <type_traits>
 
+// =================================================================================================
+
 template < typename T > [[nodiscard]] inline T max_v1(T x, T y) // note: can be class instead of typename
 {
 	return (x < y ? y : x);
@@ -35,6 +37,8 @@ template < typename T1, typename T2 > [[nodiscard]] inline auto max_v6(T1 x, T2 
 {
 	return (x < y ? y : x);
 }
+
+// =================================================================================================
 
 template < typename T > inline void f(T) // note: basic template
 {
@@ -73,6 +77,8 @@ template < typename T > inline void g < int, T > () // error: prohibited partial
 }
 */
 
+// =================================================================================================
+
 template < typename T, int N, int M > [[nodiscard]] inline bool less(T(&a)[N], T(&b)[M])
 {
 	for (auto i = 0; i < N && i < M; ++i)
@@ -82,6 +88,8 @@ template < typename T, int N, int M > [[nodiscard]] inline bool less(T(&a)[N], T
 
 	return (N < M);
 }
+
+// =================================================================================================
 
 int main()
 {

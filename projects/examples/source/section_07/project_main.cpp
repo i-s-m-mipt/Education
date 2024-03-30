@@ -35,8 +35,6 @@ int main()
 
 	test_macros();
 
-//  ============================================================================
-
 	education::examples::print();
 
 	namespace ee = education::examples; // note: namespace alias
@@ -50,8 +48,6 @@ int main()
 //	using namespace std; // bad: dangerous in big projects
 
 	using std::cout; // note: possible usage in local scopes
-
-//  ============================================================================
 
 //	hello_module(); hello_submodule();
 

@@ -8,7 +8,7 @@ void f() // note: definition, external linkage
 	std::cout << "f from source" << std::endl;
 }
 
-// =============================================================================
+// =================================================================================================
 
 int global_x1; // note: zero value initialization, external linkage
 
@@ -21,7 +21,7 @@ namespace // note: anonymous namespace
        const int global_y1 = 42; // note: internal linkage
 extern const int global_y2 = 42; // note: external linkage
 
-// =============================================================================
+// =================================================================================================
 
 #define PROMPT "Hello, " // note: object-like macros with substitution text
 
@@ -80,7 +80,7 @@ void test_macros()
 	TRACE; // good: semicolon at end
 }
 
-// =============================================================================
+// =================================================================================================
 
 void C::print() const // good: member function definition in source file
 {

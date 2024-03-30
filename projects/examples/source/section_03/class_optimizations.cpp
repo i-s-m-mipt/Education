@@ -6,27 +6,27 @@ public:
 
 	Container()
 	{
-		std::cout << "default constructor" << std::endl;
+		std::cout << "constructor (default)" << std::endl;
 	}
 
 	Container(const Container &)
 	{
-		std::cout << "copy constructor" << std::endl;
+		std::cout << "constructor (copy)" << std::endl;
 	}
 
 	Container(Container &&)
 	{
-		std::cout << "move constructor" << std::endl;
+		std::cout << "constructor (move)" << std::endl;
 	}
 
 	Container & operator=(const Container &)
 	{
-		std::cout << "copy assignment operator" << std::endl; return *this;
+		std::cout << "operator= (copy)" << std::endl; return *this;
 	}
 
 	Container & operator=(Container &&)
 	{
-		std::cout << "move assignment operator" << std::endl; return *this;
+		std::cout << "operator= (move)" << std::endl; return *this;
 	}
 
 }; // class Container

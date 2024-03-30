@@ -12,19 +12,19 @@ public:
 
 	Container() : m_data(nullptr), m_size(0) 
 	{
-		std::cout << "default constructor" << std::endl;
+		std::cout << "constructor (default)" << std::endl;
 	}
 
 	Container(std::size_t size) : m_size(size)
 	{
-		std::cout << "main constructor" << std::endl;
+		std::cout << "constructor (main)" << std::endl;
 
 		m_data = new data_t[m_size]{};
 	}
 
 	Container(const Container & other) : m_size(other.m_size) 
 	{
-		std::cout << "copy constructor" << std::endl;
+		std::cout << "constructor (copy)" << std::endl;
 
 		m_data = new data_t[m_size];
 
@@ -34,7 +34,7 @@ public:
 	/*
 	Container(Container && other) : m_data(other.m_data), m_size(other.m_size) // note: shallow copy
 	{
-		std::cout << "move constructor" << std::endl;
+		std::cout << "constructor (move)" << std::endl;
 
 		other.m_data = nullptr; // note: valid state for other object
 		other.m_size = 0;       // note: valid state for other object
@@ -43,7 +43,7 @@ public:
 
 	Container(Container && other) : Container()
 	{
-		std::cout << "move constructor" << std::endl;
+		std::cout << "constructor (move)" << std::endl;
 
 		swap(other);
 	}
@@ -51,7 +51,7 @@ public:
 	/*
 	Container & operator=(const Container & other) // bad: ineffective and duplication
 	{
-		std::cout << "copy assignment operator" << std::endl;
+		std::cout << "operator= (copy)" << std::endl;
 
 		if (this != &other) // note: copy self-assignment check
 		{
@@ -74,7 +74,7 @@ public:
 	/*
 	Container & operator=(Container && other) // bad: ineffective and duplication
 	{
-		std::cout << "move assignment operator" << std::endl;
+		std::cout << "operator= (move)" << std::endl;
 
 		if (this != &other) // note: move self-assignment check
 		{
@@ -93,7 +93,7 @@ public:
 
 	Container & operator=(Container other) // good: copy and swap idiom
 	{
-		std::cout << "copy and swap" << std::endl;
+		std::cout << "operator= (swap)" << std::endl;
 
 		swap(other);
 

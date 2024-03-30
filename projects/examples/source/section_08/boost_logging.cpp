@@ -45,7 +45,7 @@ using namespace std::literals;
 #include <boost/preprocessor/facilities/overload.hpp>
 #include <boost/shared_ptr.hpp>
 
-// =============================================================================
+// =================================================================================================
 
 class Logger : private boost::noncopyable
 {
@@ -263,7 +263,7 @@ template < typename E > inline void catch_handler(const Logger & logger, const s
 	throw E(logger.scope() + " exception"s);
 }
 
-// =============================================================================
+// =================================================================================================
 
 #define LOGGER_2(logger, has_trace) const Logger logger(FUNCTION, has_trace)
 
@@ -289,7 +289,7 @@ template < typename E > inline void catch_handler(const Logger & logger, const s
 #define LOGGER_WRITE_ERROR(logger, message) logger.write(Logger::Severity::error, message);
 #define LOGGER_WRITE_FATAL(logger, message) logger.write(Logger::Severity::fatal, message);
 
-// =============================================================================
+// =================================================================================================
 
 void h()
 {
@@ -308,7 +308,7 @@ void h()
 void g() { LOGGER(logger); h(); }
 void f() { LOGGER(logger); g(); }
 
-// =============================================================================
+// =================================================================================================
 
 int main()
 {

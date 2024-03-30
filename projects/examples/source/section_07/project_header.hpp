@@ -12,7 +12,7 @@
 
 //#pragma warning(pop)
 
-// =============================================================================
+// =================================================================================================
 
 void f(); // good: forward declaration in header file
 
@@ -27,7 +27,7 @@ void h() // error: one definition rule violation
 
 void test_macros();
 
-// =============================================================================
+// =================================================================================================
 
 class C { public: void print() const; }; // good: class definition in header file
 
@@ -36,7 +36,7 @@ template < typename T1, typename T2 > [[nodiscard]] inline constexpr auto max(T1
 	return (x < y ? y : x); // good: template definition in header file, no separation
 }
 
-// =============================================================================
+// =================================================================================================
 
 namespace education
 {
