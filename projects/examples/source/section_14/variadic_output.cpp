@@ -1,6 +1,15 @@
 #include <iostream>
 #include <ostream>
 
+// =================================================================================================
+
+template < typename ... Types > void print_v1(const Types & ... args)
+{
+    (std::cout << ... << args) << std::endl; // note: fold expression with no spaces
+}
+
+// =================================================================================================
+
 template < typename T > class Spaced
 {
 public:
@@ -18,15 +27,14 @@ private:
 
 }; // template < typename T > class Spaced
 
-template < typename ... Types > void print_v1(const Types & ... args)
-{
-    (std::cout << ... << args) << std::endl; // note: fold expression with no spaces
-}
+// =================================================================================================
 
 template < typename ... Types > void print_v2(const Types & ... args)
 {
     (std::cout << ... << Spaced(args)) << std::endl; // note: fold expression with spaces
 }
+
+// =================================================================================================
 
 int main()
 {
