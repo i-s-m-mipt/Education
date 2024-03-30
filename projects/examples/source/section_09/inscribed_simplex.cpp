@@ -3,15 +3,19 @@
 #include <numbers>
 #include <random>
 
+// =================================================================================================
+
 struct Vector { double x{}, y{}, z{}; };
 
-[[nodiscard]] inline constexpr Vector vector_product(Vector a, Vector b) noexcept
+[[nodiscard]] inline constexpr Vector operator*(Vector a, Vector b) noexcept
 {
 	return {
 		a.y * b.z - a.z * b.y,
 	   -a.x * b.z + a.z * b.x,
 		a.x * b.y - a.y * b.x }; // note: only z needed from result
 }
+
+// =================================================================================================
 
 [[nodiscard]] double calculate_probability(std::size_t size) noexcept
 {
@@ -36,9 +40,9 @@ struct Vector { double x{}, y{}, z{}; };
 		const Vector PB = {x_b, y_b};
 		const Vector PC = {x_c, y_c};
 
-		const auto a = vector_product(PA, PB).z; // note: barycentric coordinate method
-		const auto b = vector_product(PB, PC).z;
-		const auto c = vector_product(PC, PA).z;
+		const auto a = (PA * PB).z; // note: barycentric coordinate method
+		const auto b = (PB * PC).z;
+		const auto c = (PC * PA).z;
 
 		if ((a >= 0.0 && b >= 0.0 && c >= 0.0) ||
 			(a <= 0.0 && b <= 0.0 && c <= 0.0))
@@ -49,6 +53,8 @@ struct Vector { double x{}, y{}, z{}; };
 
 	return 1.0 * counter / size;
 }
+
+// =================================================================================================
 
 int main()
 {

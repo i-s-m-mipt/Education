@@ -2,6 +2,8 @@
 #include <cstdint>
 #include <iostream>
 
+// =================================================================================================
+
 enum class Color { R, G, B, quantity }; // good: quantity as limit
 
 void f(Color c)
@@ -21,6 +23,8 @@ void f(Color c)
 	std::cout << std::endl;
 }
 
+// =================================================================================================
+
 using underlying_t = std::uint16_t;
 
 enum class Message : underlying_t { empty, debug, error, fatal }; // note: less size
@@ -35,6 +39,8 @@ enum State : underlying_t
 }; // enum State : underlying_t
 
 inline constexpr void g(underlying_t s) noexcept { assert(s & delta || s & gamma); }
+
+// =================================================================================================
 
 int main()
 {

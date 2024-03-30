@@ -13,10 +13,14 @@
 
 #include <benchmark/benchmark.h>
 
+// =================================================================================================
+
 [[nodiscard]] inline constexpr std::uint16_t middle(std::uint32_t x) noexcept
 {
     return (x >> 8) & 0xffff;
 }
+
+// =================================================================================================
 
 void print(const std::span < const std::byte > & bytes)
 {
@@ -33,10 +37,14 @@ void print(const std::span < const std::byte > & bytes)
     std::cout << std::endl;
 }
 
+// =================================================================================================
+
 template < typename T > [[nodiscard]] inline constexpr std::ptrdiff_t distance_in_bytes(const T * first, const T * last) noexcept
 {
     return (std::bit_cast < const std::byte * > (last) - std::bit_cast < const std::byte * > (first));
 }
+
+// =================================================================================================
 
 struct Datetime
 {
@@ -49,6 +57,8 @@ struct Datetime
     unsigned int year   : 28 {}; // good: 64 bits in total, no holes
 
 }; // struct Datetime
+
+// =================================================================================================
 
 void test_1(benchmark::State & state)
 {
@@ -63,6 +73,8 @@ void test_1(benchmark::State & state)
     }
 }
 
+// =================================================================================================
+
 void test_2(benchmark::State & state)
 {
     for (auto _ : state)
@@ -76,8 +88,12 @@ void test_2(benchmark::State & state)
     }
 }
 
+// =================================================================================================
+
 struct S1 { std::uint32_t x : 15 {}, y : 17 {}; }; // note: sizeof(S1) = 4
 struct S2 { std::uint32_t x      {}, y      {}; }; // note: sizeof(S2) = 8
+
+// =================================================================================================
 
 void test_3(benchmark::State & state) // note: very slow
 {
@@ -98,6 +114,8 @@ void test_3(benchmark::State & state) // note: very slow
     }
 }
 
+// =================================================================================================
+
 void test_4(benchmark::State & state) // note: very fast
 {
     static_assert(sizeof(S2) == 8);
@@ -117,10 +135,14 @@ void test_4(benchmark::State & state) // note: very fast
     }
 }
 
+// =================================================================================================
+
 BENCHMARK(test_1);
 BENCHMARK(test_2);
 BENCHMARK(test_3);
 BENCHMARK(test_4);
+
+// =================================================================================================
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {

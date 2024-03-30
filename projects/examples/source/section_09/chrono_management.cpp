@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 
+// =================================================================================================
+
 template < typename C > void verify(const std::string & name)
 {
 	std::cout << name << " : ";
@@ -15,6 +17,8 @@ template < typename C > void verify(const std::string & name)
 
 	std::cout << std::endl;
 }
+
+// =================================================================================================
 
 class Chronometer // note: RAII-based chronometer
 {
@@ -46,6 +50,8 @@ private:
 	const clock_t::time_point m_begin;
 
 }; // class Chronometer
+
+// =================================================================================================
 
 int main()
 {
