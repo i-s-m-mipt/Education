@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 template < auto N, auto D = 1 > class Ratio
 {
 public:
@@ -10,6 +12,8 @@ public:
 	using type = Ratio < num, den > ; // note: num and den must be visible
 
 }; // template < auto N, auto D = 1 > class Ratio
+
+// =================================================================================================
 
 template < typename R1, typename R2 > class Add
 {
@@ -27,6 +31,8 @@ public:
 template < typename R1, typename R2 > using add_t = 
 typename Add < R1, R2 > ::type; // note: typename required, static object instead
 
+// =================================================================================================
+
 template < typename T, typename R = Ratio < 1 > > struct Duration { T value{}; };
 
 template < typename T1, typename R1, typename T2, typename R2 > 
@@ -40,6 +46,8 @@ template < typename T1, typename R1, typename T2, typename R2 >
 
 	return Duration < decltype(value), unit_t > { value };
 }
+
+// =================================================================================================
 
 int main()
 {

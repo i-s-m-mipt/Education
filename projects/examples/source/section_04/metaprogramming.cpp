@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 template < auto N > struct Factorial
 {
 	static constexpr auto value = N * Factorial < N - 1 > ::value;
@@ -8,6 +10,8 @@ template < auto N > struct Factorial
 template <> struct Factorial < 0 > { static constexpr auto value = 1; };
 
 template < auto N > constexpr auto factorial_v = Factorial < N > ::value;
+
+// =================================================================================================
 
 template < auto P, auto D > struct Check_Is_Prime
 {
@@ -30,6 +34,8 @@ template <> struct Is_Prime < 2 > { static constexpr auto value =  true; };
 template <> struct Is_Prime < 3 > { static constexpr auto value =  true; };
 
 template < auto P > constexpr auto is_prime_v = Is_Prime < P > ::value;
+
+// =================================================================================================
 
 int main()
 {

@@ -1,5 +1,7 @@
 #include <iostream>
 
+// =================================================================================================
+
 void print_v1() 
 {
 	std::cout << std::endl; 
@@ -22,6 +24,8 @@ template < typename T, typename ... Ts > inline void print_v2(T arg, Ts ... args
 	print_v2(args...);
 }
 
+// =================================================================================================
+
 class Point
 {
 public:
@@ -41,6 +45,8 @@ template < typename T, typename ... Ts > [[nodiscard]] inline T * make_object(Ts
 
 	return new T(args...);
 }
+
+// =================================================================================================
 
 template < typename ... Ts > [[nodiscard]] inline auto sum_v1(Ts ... args)
 {
@@ -62,6 +68,8 @@ template < typename ... Ts > [[nodiscard]] inline auto sum_v4(Ts ... args)
 	return (args + ... + 42); // note: (args + ... + 42) -> (... + (arg_n-1 + (arg_n + 42)))
 }
 
+// =================================================================================================
+
 template < typename ... Ts > inline void f(Ts ... args)
 {
 //	print_v1(args + 1...); // error: invalid syntax
@@ -73,6 +81,8 @@ template < typename ... Ts > inline void g(Ts ... args)
 {
 	print_v1(args + args...);
 }
+
+// =================================================================================================
 
 int main()
 {

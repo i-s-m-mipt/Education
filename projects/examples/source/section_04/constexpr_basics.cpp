@@ -3,6 +3,8 @@
 #include <type_traits>
 #include <vector>
 
+// =================================================================================================
+
 [[nodiscard]] inline constexpr int factorial(int n) // note: can be evaluated at compile-time
 {
 	return (n < 2 ? 1 : n * factorial(n - 1));
@@ -38,6 +40,8 @@
 	}
 }
 
+// =================================================================================================
+
 class C { static constexpr auto c = 42; }; // note: constexpr here is same as inline const  
 
 [[nodiscard]] inline constexpr bool f(int) { return std::is_constant_evaluated(); }
@@ -51,6 +55,8 @@ template < typename T, typename ... Types > inline void print(const T & arg, con
 }
 
 constinit auto global_variable = 42; // note: compile-time initialization
+
+// =================================================================================================
 
 int main()
 {
