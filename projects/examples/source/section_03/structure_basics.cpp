@@ -1,9 +1,13 @@
 #include <iostream>
 #include <vector>
 
+// =================================================================================================
+
 struct S { int a{}, b{}, c{ 4 }; }; // good: capital letter for user-defined types
 
 struct Point { double x = 0.0, y = 0.0; }; // good: do not forget initialization
+
+// =================================================================================================
 
 [[nodiscard]] inline Point make_point(double x, double y)
 {
@@ -13,6 +17,8 @@ struct Point { double x = 0.0, y = 0.0; }; // good: do not forget initialization
 	}
 	else return {}; // good: compact syntax, type deduction
 }
+
+// =================================================================================================
 
 int main()
 {
