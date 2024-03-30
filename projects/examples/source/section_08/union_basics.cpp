@@ -1,6 +1,8 @@
 #include <cmath>
 #include <iostream>
 
+// =================================================================================================
+
 union U // note: the whole union occupies 4 bytes
 {
 	char a[1]; // note: 1 bytes
@@ -10,6 +12,8 @@ union U // note: the whole union occupies 4 bytes
 	int i = 0; // note: 4 bytes, zero initialized union
 
 }; // union U
+
+// =================================================================================================
 
 struct Result
 {
@@ -21,6 +25,8 @@ struct Result
 	};
 
 }; // struct Result
+
+// =================================================================================================
 
 [[nodiscard]] inline Result try_log(double x) noexcept
 {
@@ -34,6 +40,8 @@ struct Result
 	return result;
 }
 
+// =================================================================================================
+
 inline void print(const Result & result)
 {
 	if (result.has_error)
@@ -45,6 +53,8 @@ inline void print(const Result & result)
 		std::cout << "result: " << result.result << std::endl;
 	}
 }
+
+// =================================================================================================
 
 int main()
 {

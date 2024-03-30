@@ -14,6 +14,8 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_suite.hpp>
 
+// =================================================================================================
+
 [[nodiscard]] inline constexpr int factorial(int n) noexcept 
 { 
     return (n < 2 ? 1 : n * factorial(n - 1)); 
@@ -31,12 +33,16 @@ BOOST_AUTO_TEST_CASE(factorial_test)
     BOOST_TEST(factorial(4) ==    25); // note: failed test
 }
 
+// =================================================================================================
+
 BOOST_AUTO_TEST_CASE(expectations_test) 
 {
     BOOST_TEST("aaa" < "bbb", boost::test_tools::lexicographic());
 
     BOOST_TEST(3.14 == 3.14,  boost::test_tools::tolerance(0.001));
 } 
+
+// =================================================================================================
 
 BOOST_DATA_TEST_CASE(ranges_test, boost::unit_test::data::xrange(1, 3, 1) * 
                                   boost::unit_test::data::xrange(1, 4, 1), value_1, value_2)
@@ -52,6 +58,8 @@ BOOST_DATA_TEST_CASE(random_test, boost::unit_test::data::random(( // note: addi
 {
     BOOST_TEST(sample < 0.7); // note: 30% chance of failure
 }
+
+// =================================================================================================
 
 class Dataset 
 {
@@ -104,6 +112,8 @@ public:
 
 }; // note: Dataset
 
+// =================================================================================================
+
 namespace boost::unit_test::data::monomorphic 
 {
     template <> struct is_dataset < Dataset > : std::true_type {}; // note: std instead of mpl
@@ -114,12 +124,16 @@ BOOST_DATA_TEST_CASE(fibonacci_test, Dataset() ^ boost::unit_test::data::make( {
     BOOST_TEST(sample == expected);
 }
 
+// =================================================================================================
+
 using test_types = boost::mpl::list < bool, char, int, double > ;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(template_test, T, test_types)  // note: prefer static_assert
 {
     BOOST_TEST(sizeof(T) == 4);
 }
+
+// =================================================================================================
 
 void free_test_function(int parameter) // note: nullary function in case without parameters
 {
@@ -137,6 +151,8 @@ boost::unit_test::test_suite * init_unit_test_suite(int, char**) // note: manual
 
     return nullptr;
 }
+
+// =================================================================================================
 
 class Fixture
 {

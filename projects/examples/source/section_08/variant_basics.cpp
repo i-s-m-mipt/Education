@@ -3,16 +3,22 @@
 #include <string>
 #include <variant>
 
+// =================================================================================================
+
 class C { public: constexpr explicit C(int) {} };
 
 class A { public: ~A() { std::cout << "destructor" << std::endl; } };
 
 class B {};
 
+// =================================================================================================
+
 [[nodiscard]] inline constexpr std::variant < std::monostate, int, double > handle(int x) noexcept
 {
 	if (x < 0) return std::monostate(); else if (x == 0) return x; else return std::sqrt(x);
 }
+
+// =================================================================================================
 
 int main()
 {

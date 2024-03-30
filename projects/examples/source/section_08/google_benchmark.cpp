@@ -9,6 +9,8 @@
 
 #include <benchmark/benchmark.h>
 
+// =================================================================================================
+
 void test_1(benchmark::State & state) 
 {
     for (auto _ : state) // note: range-based for loop recommended in documentation
@@ -19,6 +21,8 @@ void test_1(benchmark::State & state)
         while (true) if (s += ++x; x == 100) break;
     }
 }
+
+// =================================================================================================
 
 void test_2(benchmark::State & state) 
 {
@@ -37,6 +41,8 @@ void test_2(benchmark::State & state)
         }
     }
 }
+
+// =================================================================================================
 
 void test_3(benchmark::State & state)
 {
@@ -59,6 +65,8 @@ void test_3(benchmark::State & state)
     }
 }
 
+// =================================================================================================
+
 void test_4(benchmark::State & state) 
 {
     for (auto _ : state) 
@@ -68,6 +76,8 @@ void test_4(benchmark::State & state)
         benchmark::DoNotOptimize(vector_1d);
     }
 }
+
+// =================================================================================================
 
 void test_5(benchmark::State & state)
 {
@@ -81,6 +91,8 @@ void test_5(benchmark::State & state)
 
     state.SetComplexityN(state.range(0));
 }
+
+// =================================================================================================
 
 void test_6(benchmark::State & state)
 {
@@ -98,6 +110,8 @@ void test_6(benchmark::State & state)
     state.SetComplexityN(state.range(0)); // note: try to search 1 instead of 0 in lower_bound
 }
 
+// =================================================================================================
+
 void test_7(benchmark::State & state)
 {
     for (auto _ : state) 
@@ -107,6 +121,8 @@ void test_7(benchmark::State & state)
         break; // note: required to prevent all further iterations.
     }
 } 
+
+// =================================================================================================
 
 BENCHMARK(test_1); // note: fast, no exceptions
 

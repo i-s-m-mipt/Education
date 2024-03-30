@@ -2,6 +2,8 @@
 #include <iostream>
 #include <type_traits>
 
+// =================================================================================================
+
 template < typename T > inline constexpr void swap(T & a, T & b)
 {
     static_assert(
@@ -11,6 +13,8 @@ template < typename T > inline constexpr void swap(T & a, T & b)
 
     const auto c = b; b = a; a = c;
 }
+
+// =================================================================================================
 
 class Bad { public: Bad() = delete; }; // note: not default constructible
 
@@ -23,8 +27,12 @@ public:
 
 }; // template < typename T = Bad > class C
 
+// =================================================================================================
+
 inline void cleanup_v1() { std::cerr << "cleanup_v1 at exit\n"; }
 inline void cleanup_v2() { std::cerr << "cleanup_v2 at exit\n"; }
+
+// =================================================================================================
 
 int main()
 {

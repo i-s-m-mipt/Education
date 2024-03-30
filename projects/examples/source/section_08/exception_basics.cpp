@@ -6,6 +6,8 @@
 #include <type_traits>
 #include <utility>
 
+// =================================================================================================
+
 class Error : public std::exception // good: inherited from std::exception
 {
 public:
@@ -22,6 +24,8 @@ private:
 	const int m_error_code;
 
 }; // class Error : public std::exception
+
+// =================================================================================================
 
 [[noreturn]] void h() // note: inconvinient control flow return
 {
@@ -53,6 +57,8 @@ private:
 //	std::cout << "h() exited" << std::endl; // warning: unreachable code
 }
 
+// =================================================================================================
+
 void g()
 {
 	std::cout << "g() called" << std::endl;
@@ -65,6 +71,8 @@ void g()
 
 //	std::cout << "g() exited" << std::endl; // warning: unreachable code
 }
+
+// =================================================================================================
 
 void f()
 {
@@ -85,6 +93,8 @@ void f()
 
 //	std::cout << "f() exited" << std::endl; // warning: unreachable code
 }
+
+// =================================================================================================
 
 class C
 {
@@ -135,6 +145,8 @@ private:
 
 }; // class C
 
+// =================================================================================================
+
 template < typename T > inline constexpr void swap(T & a, T & b) noexcept(
 	std::is_nothrow_move_constructible_v < T > &&
 	std::is_nothrow_move_assignable_v    < T > ) // note: conditionally noexcept, long instructions
@@ -150,6 +162,8 @@ template < typename F, typename ... Types >
 {
 	return f(std::forward < Types > (args)...);
 }
+
+// =================================================================================================
 
 int main()
 {
