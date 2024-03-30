@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+// =================================================================================================
+
 class Lecture; // good: class forward declaration
 
 class Student
@@ -30,6 +32,8 @@ private:
 
 }; // class Student
 
+// =================================================================================================
+
 class Lecture
 {
 public:
@@ -55,6 +59,8 @@ private:
 
 }; // class Lecture
 
+// =================================================================================================
+
 void Student::show_lectures() const
 {
 	std::cout << "Student " << m_name << " visits: " << std::endl;
@@ -75,30 +81,35 @@ void Lecture::show_students() const
 	}
 }
 
-inline void connect(Student & s, Lecture & l)
+// =================================================================================================
+
+inline void connect(Student & student, Lecture & lecture)
 {
-	s.add_lecture(l); l.add_student(s);
+	student.add_lecture(lecture); 
+	lecture.add_student(student);
 }
+
+// =================================================================================================
 
 int main()
 {
-	Student s1("Ivan");
-	Student s2("Dmitriy");
-	Student s3("Alexander");
+	Student student_1("Alex");
+	Student student_2("Nick");
+	Student student_3("Paul");
 
-	Lecture l1("Math");
-	Lecture l2("Physics");
-	Lecture l3("Literature");
+	Lecture lecture_1("Astronomy");
+	Lecture lecture_2("Chemistry");
+	Lecture lecture_3("Geograhpy");	
 
-	connect(s1, l1);
-	connect(s2, l2);
-	connect(s3, l3);
-	connect(s1, l3);
-	connect(s2, l1);
-	connect(s3, l2);
+	connect(student_1, lecture_1);
+	connect(student_2, lecture_2);
+	connect(student_3, lecture_3);
+	connect(student_1, lecture_3);
+	connect(student_2, lecture_1);
+	connect(student_3, lecture_2);
 
-	s1.show_lectures();
-	l1.show_students();
+	student_1.show_lectures();
+	lecture_1.show_students();
 
 	return 0;
 }
