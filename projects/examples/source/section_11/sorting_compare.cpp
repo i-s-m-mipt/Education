@@ -12,6 +12,8 @@
 
 using Clock = std::chrono::steady_clock;
 
+// =================================================================================================
+
 void test_1(benchmark::State & state) 
 {
     for (auto _ : state)
@@ -29,6 +31,8 @@ void test_1(benchmark::State & state)
         benchmark::DoNotOptimize(array);
     }
 }
+
+// =================================================================================================
 
 void test_2(benchmark::State & state) 
 {
@@ -48,6 +52,8 @@ void test_2(benchmark::State & state)
     }
 }
 
+// =================================================================================================
+
 void test_3(benchmark::State & state) 
 {
     for (auto _ : state)
@@ -65,6 +71,8 @@ void test_3(benchmark::State & state)
         benchmark::DoNotOptimize(deque);
     }
 }
+
+// =================================================================================================
 
 void test_4(benchmark::State & state) 
 {
@@ -84,6 +92,8 @@ void test_4(benchmark::State & state)
     }
 }
 
+// =================================================================================================
+
 void test_5(benchmark::State & state) 
 {
     for (auto _ : state)
@@ -101,6 +111,8 @@ void test_5(benchmark::State & state)
         benchmark::DoNotOptimize(forward_list);
     }
 }
+
+// =================================================================================================
 
 BENCHMARK(test_1); 
 BENCHMARK(test_2)->Arg(100'000); // note: slower

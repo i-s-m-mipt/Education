@@ -2,6 +2,8 @@
 #include <string>
 #include <unordered_set>
 
+// =================================================================================================
+
 class Person
 {
 public:
@@ -16,6 +18,8 @@ private:
 
 }; // class Person
 
+// =================================================================================================
+
 struct Hash
 {
 	[[nodiscard]] std::size_t operator()(const Person & person) const noexcept
@@ -25,6 +29,8 @@ struct Hash
 
 }; // struct Hash
 
+// =================================================================================================
+
 struct Equal
 {
 	[[nodiscard]] bool operator()(const Person & lhs, const Person & rhs) const noexcept
@@ -33,6 +39,8 @@ struct Equal
 	}
 
 }; // struct Equal
+
+// =================================================================================================
 
 int main()
 {

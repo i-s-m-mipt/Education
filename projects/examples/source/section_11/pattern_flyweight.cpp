@@ -9,6 +9,8 @@
 
 struct Data { int array[1000]{}; }; // note: some big data with many copies
 
+// =================================================================================================
+
 struct Hash
 {
     [[nodiscard]] std::size_t operator()(const Data & data) const noexcept
@@ -21,6 +23,8 @@ struct Hash
     }
 
 }; // struct Hash
+
+// =================================================================================================
 
 struct Equal
 {
@@ -35,6 +39,8 @@ struct Equal
     }
 
 }; // struct Equal
+
+// =================================================================================================
 
 class Storage 
 {
@@ -53,6 +59,8 @@ public:
     boost::flyweight < Data, container, tag < Y > > m_y; // compare with Data y;
 
 }; // class Storage
+
+// =================================================================================================
 
 int main() 
 {

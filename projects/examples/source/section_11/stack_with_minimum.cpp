@@ -4,6 +4,8 @@
 #include <type_traits>
 #include <utility>
 
+// =================================================================================================
+
 template < typename T > class Stack_v1 // note: min element in O(1) time and O(N) space complexity
 {
 public:
@@ -26,6 +28,8 @@ private:
     std::stack < std::pair < T, T > > m_stack; // note: consider additional stack for extremums
 
 }; // template < typename T > class Stack_v1
+
+// =================================================================================================
 
 template < typename T > requires std::is_arithmetic_v < T > class Stack_v2
 {
@@ -73,6 +77,8 @@ private:
     T m_min; // note: min element in O(1) time and space complexity
 
 }; // template < typename T > requires std::is_arithmetic_v < T > class Stack_v2 
+
+// =================================================================================================
 
 int main()
 {

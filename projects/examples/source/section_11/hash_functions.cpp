@@ -6,6 +6,8 @@
 
 #include <boost/container_hash/hash.hpp>
 
+// =================================================================================================
+
 [[nodiscard]] inline constexpr std::size_t hash(const std::string & string) noexcept // note: Java hash for strings
 {
 	std::size_t seed = 0;
@@ -17,6 +19,8 @@
 
 	return seed;
 }
+
+// =================================================================================================
 
 template < typename T > inline void bind(std::size_t & seed, const T & value) noexcept
 {
@@ -39,6 +43,8 @@ template < typename ... Types > [[nodiscard]] inline std::size_t combined_hash(c
 	std::size_t seed = 0; hash(seed, args...); return seed;
 }
 
+// =================================================================================================
+
 struct S { std::string string_1, string_2; };
 
 [[nodiscard]] inline std::size_t hash_value(const S & s) noexcept
@@ -50,6 +56,8 @@ struct S { std::string string_1, string_2; };
 
 	return seed;
 }
+
+// =================================================================================================
 
 int main()
 {

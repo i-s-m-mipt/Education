@@ -11,6 +11,8 @@
 
 #include <benchmark/benchmark.h>
 
+// =================================================================================================
+
 void test_1(benchmark::State & state) // note: O(N*log(N)) complexity, but fast
 {
     for (auto _ : state)
@@ -25,6 +27,8 @@ void test_1(benchmark::State & state) // note: O(N*log(N)) complexity, but fast
     }
 }
 
+// =================================================================================================
+
 void test_2(benchmark::State & state) // note: O(N*log(N)) complexity, but slow
 {
     for (auto _ : state)
@@ -37,8 +41,12 @@ void test_2(benchmark::State & state) // note: O(N*log(N)) complexity, but slow
     }
 }
 
+// =================================================================================================
+
 BENCHMARK(test_1)->Arg(100'000); 
 BENCHMARK(test_2)->Arg(100'000); 
+
+// =================================================================================================
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {

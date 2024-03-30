@@ -2,18 +2,16 @@
 #include <memory>
 #include <vector>
 
-class Data {};
-
 class Loader // note: proxy class with lazy loading
 {
 public:
 
 	void load() 
 	{
-		if (!m_data) m_data = std::make_unique < Data > ();
+		if (!m_data) m_data = std::make_unique < int > (42);
 	}
 
-	std::unique_ptr < Data > m_data; // note: nullptr
+	std::unique_ptr < int > m_data; // note: nullptr
 
 }; // class Loader
 

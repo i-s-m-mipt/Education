@@ -12,6 +12,8 @@
 
 #include <benchmark/benchmark.h>
 
+// =================================================================================================
+
 [[nodiscard]] double determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) // good: for small
 {
     if (const auto size = matrix.size1(); size == matrix.size2() && size != 0)
@@ -40,6 +42,8 @@
     }
     else throw std::invalid_argument("invalid sizes: " + std::to_string(size) + 'x' + std::to_string(matrix.size2()));
 }
+
+// =================================================================================================
 
 [[nodiscard]] double determinant_v2(const boost::numeric::ublas::matrix < double > & matrix) // good: for big
 {    
@@ -70,6 +74,8 @@
     else throw std::invalid_argument("invalid sizes: " + std::to_string(size) + 'x' + std::to_string(matrix.size2()));
 }
 
+// =================================================================================================
+
 [[nodiscard]] boost::numeric::ublas::matrix < double > make_random_matrix(std::size_t size)
 {
     boost::numeric::ublas::matrix < double > matrix(size, size);
@@ -89,6 +95,8 @@
     return matrix;
 }
 
+// =================================================================================================
+
 void test_1(benchmark::State & state) // note: better for 3x3 or less
 {
     const auto matrix = make_random_matrix(state.range(0));
@@ -100,6 +108,8 @@ void test_1(benchmark::State & state) // note: better for 3x3 or less
 		benchmark::DoNotOptimize(determinant);	
     }
 }
+
+// =================================================================================================
 
 void test_2(benchmark::State & state) // note: better for 4x4 or more
 {
@@ -113,8 +123,12 @@ void test_2(benchmark::State & state) // note: better for 4x4 or more
     }
 }
 
+// =================================================================================================
+
 BENCHMARK(test_1)->DenseRange(1, 9, 1); 
 BENCHMARK(test_2)->DenseRange(1, 9, 1);  
+
+// =================================================================================================
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {
