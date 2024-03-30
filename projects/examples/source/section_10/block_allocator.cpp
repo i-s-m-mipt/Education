@@ -13,6 +13,8 @@
 
 #include <benchmark/benchmark.h>
 
+// =================================================================================================
+
 class Block_Allocator : private boost::noncopyable // note: deallocations at any position for blocks of different sizes
 {
 private:
@@ -180,6 +182,8 @@ private:
 
 }; // class Block_Allocator : private boost::noncopyable
 
+// =================================================================================================
+
 void test_1(benchmark::State & state) // note: pretty fast
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
@@ -200,6 +204,8 @@ void test_1(benchmark::State & state) // note: pretty fast
 		for (std::size_t i = 0; i < kb; i +=  1)               allocator.deallocate(pointers[i]              );
 	}
 }
+
+// =================================================================================================
 
 void test_2(benchmark::State & state) // note: pretty slow
 {
@@ -229,8 +235,12 @@ void test_2(benchmark::State & state) // note: pretty slow
 	}
 }
 
+// =================================================================================================
+
 BENCHMARK(test_1)->Arg(42); // note: same seeds for PRNG
 BENCHMARK(test_2)->Arg(42);
+
+// =================================================================================================
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {

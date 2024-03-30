@@ -8,6 +8,8 @@
 
 #include <boost/noncopyable.hpp>
 
+// =================================================================================================
+
 class Arena : private boost::noncopyable // note: no deallocations for blocks of different sizes
 {
 public:
@@ -71,6 +73,8 @@ private:
 
 }; // class Arena_Allocator : private boost::noncopyable
 
+// =================================================================================================
+
 template < typename T > class Allocator
 {
 public:
@@ -98,6 +102,8 @@ private:
     Arena * const m_arena = nullptr;
 
 }; // template < typename T > class Allocator
+
+// =================================================================================================
 
 int main()
 {

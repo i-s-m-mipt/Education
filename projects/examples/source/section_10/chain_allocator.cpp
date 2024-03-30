@@ -12,6 +12,8 @@
 
 #include <benchmark/benchmark.h>
 
+// =================================================================================================
+
 class Chain_Allocator : private boost::noncopyable // note: deallocations at any position for nodes of fixed sizes
 {
 private:
@@ -119,6 +121,8 @@ private:
 
 }; // class Chain_Allocator : private boost::noncopyable
 
+// =================================================================================================
+
 void test_1(benchmark::State & state) // note: pretty fast
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
@@ -136,6 +140,8 @@ void test_1(benchmark::State & state) // note: pretty fast
 	}
 }
 
+// =================================================================================================
+
 void test_2(benchmark::State & state) // note: pretty slow
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb;
@@ -151,8 +157,12 @@ void test_2(benchmark::State & state) // note: pretty slow
 	}
 }
 
+// =================================================================================================
+
 BENCHMARK(test_1);
 BENCHMARK(test_2);
+
+// =================================================================================================
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {

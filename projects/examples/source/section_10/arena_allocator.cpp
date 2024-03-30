@@ -7,6 +7,8 @@
 
 #include <benchmark/benchmark.h>
 
+// =================================================================================================
+
 class Arena_Allocator : private boost::noncopyable // note: no deallocations for blocks of different sizes
 {
 public:
@@ -68,6 +70,8 @@ private:
 
 }; // class Arena_Allocator : private boost::noncopyable
 
+// =================================================================================================
+
 void test_1(benchmark::State & state) // note: very fast
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
@@ -83,6 +87,8 @@ void test_1(benchmark::State & state) // note: very fast
 	}
 }
 
+// =================================================================================================
+
 void test_2(benchmark::State & state) // note: very slow
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb;
@@ -96,8 +102,12 @@ void test_2(benchmark::State & state) // note: very slow
 	}
 }
 
+// =================================================================================================
+
 BENCHMARK(test_1);
 BENCHMARK(test_2);
+
+// =================================================================================================
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {

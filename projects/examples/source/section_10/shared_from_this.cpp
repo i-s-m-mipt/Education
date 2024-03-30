@@ -2,6 +2,8 @@
 #include <iostream>
 #include <memory>
 
+// =================================================================================================
+
 class Fail
 {
 public:
@@ -10,6 +12,8 @@ public:
 
 }; // class Fail
 
+// =================================================================================================
+
 class Good : public std::enable_shared_from_this < Good > // note: CRTP
 {
 public:
@@ -17,6 +21,8 @@ public:
     [[nodiscard]] std::shared_ptr < Good > get() { return shared_from_this(); }
 
 }; // class Good : public std::enable_shared_from_this < Good >
+
+// =================================================================================================
 
 class Best : public std::enable_shared_from_this < Best >
 {
@@ -36,6 +42,8 @@ public:
     [[nodiscard]] std::shared_ptr < Best > get() { return shared_from_this(); }
 
 }; // class Best : public std::enable_shared_from_this < Best >
+
+// =================================================================================================
 
 int main()
 {

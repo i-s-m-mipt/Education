@@ -5,6 +5,8 @@
 
 #include <boost/noncopyable.hpp>
 
+// =================================================================================================
+
 template < typename T > class Unique : private boost::noncopyable
 {
 public:
@@ -58,10 +60,14 @@ template < typename T > inline void swap(Unique < T > & lhs, Unique < T > & rhs)
     lhs.swap(rhs);
 }
 
+// =================================================================================================
+
 template < typename T, typename ... Types > [[nodiscard]] inline Unique < T > make_unique(Types && ... args)
 {
     return Unique < T > (new T(std::forward < Types > (args)...)); 
 }
+
+// =================================================================================================
 
 int main()
 {

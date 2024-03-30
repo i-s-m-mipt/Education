@@ -6,6 +6,8 @@
 
 #include <boost/noncopyable.hpp>
 
+// =================================================================================================
+
 template < typename T > class Resource : private boost::noncopyable // good: RAII idiom
 {
 public:
@@ -22,6 +24,8 @@ private:
 
 }; // template < typename T > class Resource : private boost::noncopyable 
 
+// =================================================================================================
+
 inline void f(std::shared_ptr < const int > , int) noexcept {}
 
 [[nodiscard]] inline int bad(bool make_error = true) 
@@ -30,6 +34,8 @@ inline void f(std::shared_ptr < const int > , int) noexcept {}
 
 	return 0;
 }
+
+// =================================================================================================
 
 class B; // note: forward declaration as for plain pointers
 
@@ -43,6 +49,8 @@ public:
 
 }; // class A
 
+// =================================================================================================
+
 class B
 {
 public:
@@ -52,6 +60,8 @@ public:
 	std::weak_ptr < A > a; // note: immortal connection if shared_ptr
 
 }; // class B
+
+// =================================================================================================
 
 class Base 
 {
@@ -63,6 +73,8 @@ public:
 
 }; // class Base 
 
+// =================================================================================================
+
 class Derived : public Base 
 {
 public:
@@ -70,6 +82,8 @@ public:
 	void print() const override { std::cout << "Derived" << std::endl; }
 
 }; // class Derived : public Base 
+
+// =================================================================================================
 
 [[nodiscard]] inline std::unique_ptr < const Base > produce() // note: factory
 {
@@ -80,6 +94,8 @@ inline void consume(std::unique_ptr < const Base > base) // note: user
 {
 	base->print();
 }
+
+// =================================================================================================
 
 int main()
 {

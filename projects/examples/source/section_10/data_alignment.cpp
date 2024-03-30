@@ -6,6 +6,8 @@
 
 #include <benchmark/benchmark.h>
 
+// =================================================================================================
+
 struct S1 // note: C___IIIISS__
 {
 	char  c{}; // note: 1 byte(s)
@@ -30,10 +32,14 @@ struct alignas(double) S3
 	
 }; // struct alignas(double) S3
 
+// =================================================================================================
+
 struct alignas(32) S4 { double data[4]{}; };
 
 struct alignas( 1) S5 { std::uint8_t x{}; };
 struct alignas(64) S6 { std::uint8_t x{}; };
+
+// =================================================================================================
 
 void test_1(benchmark::State & state) // note: very fast
 {
@@ -47,6 +53,8 @@ void test_1(benchmark::State & state) // note: very fast
     }
 }
 
+// =================================================================================================
+
 void test_2(benchmark::State & state) // note: very slow
 {
     for (auto _ : state)
@@ -59,8 +67,12 @@ void test_2(benchmark::State & state) // note: very slow
     }
 }
 
+// =================================================================================================
+
 BENCHMARK(test_1);
 BENCHMARK(test_2);
+
+// =================================================================================================
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {

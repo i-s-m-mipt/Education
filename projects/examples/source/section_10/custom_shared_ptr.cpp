@@ -5,6 +5,8 @@
 
 #include <boost/noncopyable.hpp>
 
+// =================================================================================================
+
 class RCCB_base : private boost::noncopyable // note: non-template class, no custom deleters support
 {
 protected:
@@ -31,6 +33,8 @@ private:
 
 }; // class RCCB_base : private boost::noncopyable
 
+// =================================================================================================
+
 template < typename T > class RCCB : public RCCB_base
 {
 public:
@@ -52,6 +56,8 @@ private:
     T * m_data = nullptr; // note: note pointer but object in case of make_shared
 
 }; // template < typename T > class RCCB : public RCCB_base
+
+// =================================================================================================
 
 template < typename T > class Shared
 {
@@ -121,10 +127,14 @@ template < typename T > inline void swap(Shared < T > & lhs, Shared < T > & rhs)
     lhs.swap(rhs);
 }
 
+// =================================================================================================
+
 template < typename T, typename ... Types > [[nodiscard]] inline Shared < T > make_shared(Types && ... args)
 {
     // note: another RCCB required, combining control block and object in one allocation
 }
+
+// =================================================================================================
 
 int main()
 {

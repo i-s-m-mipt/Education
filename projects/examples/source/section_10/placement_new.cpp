@@ -5,6 +5,8 @@
 
 #include <benchmark/benchmark.h>
 
+// =================================================================================================
+
 class C
 {
 public:
@@ -25,6 +27,8 @@ private:
 
 }; // class C
 
+// =================================================================================================
+
 union U
 {
 	U() : s1() {}
@@ -35,6 +39,8 @@ union U
 	std::string s2;
 
 }; // union U
+
+// =================================================================================================
 
 template < typename T > class Manager // note: CRTP
 {
@@ -56,6 +62,8 @@ public:
 
 }; // template < typename T > class Manager
 
+// =================================================================================================
+
 class User : public Manager < User >
 {
 public:
@@ -64,6 +72,8 @@ public:
 	~User() { std::cout << "User::~User called" << std::endl; }
 
 }; // class User : public Manager < User > 
+
+// =================================================================================================
 
 void test_1(benchmark::State & state)
 {
@@ -78,6 +88,8 @@ void test_1(benchmark::State & state)
 }
 
 BENCHMARK(test_1)->RangeMultiplier(2)->Range(1024 * 1024, 1024 * 1024 * 1024);
+
+// =================================================================================================
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {
