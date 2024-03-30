@@ -77,7 +77,7 @@ class Calculator
 {
 public:
 
-	void run() const
+	void run()
 	{
 		for (std::string line; std::getline(std::cin >> std::ws, line); )
 		{
@@ -91,7 +91,7 @@ public:
 
 private:
 
-	[[nodiscard]] double statement(Stream & stream) const
+	[[nodiscard]] double statement(Stream & stream)
 	{
 		const auto token = stream.get();
 
@@ -103,9 +103,13 @@ private:
 		stream.putback(token); return expression(stream);
 	}
 
-	[[nodiscard]] double declaration(Stream & stream) const
+	[[nodiscard]] double declaration(Stream & stream)
 	{
-		return (m_variables[std::get < std::string > (stream.get())] = expression(stream));
+		const auto name = std::get < std::string > (stream.get());
+
+		m_variables[name] = expression(stream);
+
+		return m_variables[name];
 	}
 
 	[[nodiscard]] double expression(Stream & stream) const
