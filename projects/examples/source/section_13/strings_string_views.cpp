@@ -42,9 +42,9 @@ struct case_insensitive_traits : public std::char_traits < char >
 
 }; // struct case_insensitive_traits : public std::char_traits < char > 
 
-// =================================================================================================
-
 using cistring_t = std::basic_string < char, case_insensitive_traits > ;
+
+// =================================================================================================
 
 inline std::ostream & operator<<(std::ostream & stream, const cistring_t & cistring)
 {

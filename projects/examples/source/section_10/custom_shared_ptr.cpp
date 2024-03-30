@@ -122,6 +122,8 @@ private:
 
 }; // template < typename T > class Shared
 
+// =================================================================================================
+
 template < typename T > inline void swap(Shared < T > & lhs, Shared < T > & rhs) noexcept
 {
     lhs.swap(rhs);

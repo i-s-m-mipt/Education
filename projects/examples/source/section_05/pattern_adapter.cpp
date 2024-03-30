@@ -4,6 +4,8 @@
 
 class Device { public: void run() const { std::cout << "Device" << std::endl; } };
 
+// =================================================================================================
+
 class Computer
 {
 public:

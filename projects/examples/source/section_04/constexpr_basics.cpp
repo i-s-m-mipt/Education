@@ -40,11 +40,13 @@
 	}
 }
 
+[[nodiscard]] inline constexpr bool f(int) { return std::is_constant_evaluated(); }
+
 // =================================================================================================
 
 class C { static constexpr auto c = 42; }; // note: constexpr here is same as inline const  
 
-[[nodiscard]] inline constexpr bool f(int) { return std::is_constant_evaluated(); }
+// =================================================================================================
 
 template < typename T, typename ... Types > inline void print(const T & arg, const Types & ... args)
 {
@@ -53,6 +55,8 @@ template < typename T, typename ... Types > inline void print(const T & arg, con
 		print(args...); // note: compile-time instantiation
 	}
 }
+
+// =================================================================================================
 
 constinit auto global_variable = 42; // note: compile-time initialization
 

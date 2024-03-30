@@ -39,6 +39,8 @@ private:
 
 }; // class Point
 
+// =================================================================================================
+
 template < typename T, typename ... Ts > [[nodiscard]] inline T * make_object(Ts ... args)
 {
 	std::cout << sizeof...(args) << std::endl;

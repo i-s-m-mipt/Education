@@ -10,6 +10,8 @@ class Mobile { public: [[nodiscard]] constexpr int run() const noexcept { return
 class Tablet { public: [[nodiscard]] constexpr int run() const noexcept { return 0; }; };
 class Laptop { public: [[nodiscard]] constexpr int run() const noexcept { return 1; }; };
 
+// =================================================================================================
+
 using Computer = std::variant < Mobile, Tablet, Laptop > ;
 
 // =================================================================================================
@@ -34,6 +36,8 @@ public:
     }
 
 }; // class Tester
+
+// =================================================================================================
 
 template < typename ... Bases > class Visitor : public Bases... { public: using Bases::operator()...; };
 

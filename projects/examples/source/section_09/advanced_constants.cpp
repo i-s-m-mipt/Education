@@ -29,6 +29,8 @@ using underlying_t = std::uint16_t;
 
 enum class Message : underlying_t { empty, debug, error, fatal }; // note: less size
 
+// =================================================================================================
+
 enum State : underlying_t
 {
 	alpha = 0x01,

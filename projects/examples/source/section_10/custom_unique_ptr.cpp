@@ -55,6 +55,8 @@ private:
 
 }; // template < typename T > class Unique : private boost::noncopyable
 
+// =================================================================================================
+
 template < typename T > inline void swap(Unique < T > & lhs, Unique < T > & rhs) noexcept
 {
     lhs.swap(rhs);

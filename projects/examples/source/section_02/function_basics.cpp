@@ -97,6 +97,8 @@ void print_vector(const std::vector < int > & vector) // good: std::vector knows
 }
 */
 
+// =================================================================================================
+
 void h()
 {
 	auto x = 0; // note: ordinary local variable

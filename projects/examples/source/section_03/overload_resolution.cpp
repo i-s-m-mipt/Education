@@ -54,6 +54,8 @@ private:
 
 }; // class Person
 
+// =================================================================================================
+
 [[nodiscard]] inline Person create_person(const std::string & name)
 {
 	const Person person(name); return person;

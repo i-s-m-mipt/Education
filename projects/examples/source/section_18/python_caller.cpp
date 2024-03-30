@@ -11,8 +11,6 @@
 
 #include "python_wrapper.hpp"
 
-using Python = solution::shared::Python;
-
 // =================================================================================================
 
 std::set < std::string > make_random_words(std::size_t size, const std::size_t length)
@@ -49,6 +47,8 @@ std::size_t hash_DEK(std::string_view string) // note: Donald E. Knuth implement
 
 int main()
 {
+    using Python = solution::shared::Python;
+
     try
     {
         Python python;

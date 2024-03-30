@@ -7,6 +7,8 @@
 
 class C { public: constexpr explicit C(int) {} };
 
+// =================================================================================================
+
 class A { public: ~A() { std::cout << "destructor" << std::endl; } };
 
 class B {};
