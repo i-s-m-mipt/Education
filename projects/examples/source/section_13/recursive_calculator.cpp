@@ -9,6 +9,8 @@
 
 using namespace std::literals;
 
+// =================================================================================================
+
 class Stream
 {
 public:
@@ -72,6 +74,8 @@ private:
 	Token m_token; bool m_is_full; std::stringstream m_sin;
 
 }; // class Stream
+
+// =================================================================================================
 
 class Calculator
 {
@@ -194,6 +198,8 @@ private:
 	mutable std::unordered_map < std::string, double > m_variables;
 
 }; // class Calculator
+
+// =================================================================================================
 
 int main()
 {

@@ -13,6 +13,8 @@ using namespace std::literals;
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp> // note: abstract syntax tree
 
+// =================================================================================================
+
 namespace detail
 {
     struct Sign;
@@ -36,9 +38,13 @@ namespace detail
 
 } // namespace detail
 
+// =================================================================================================
+
 BOOST_FUSION_ADAPT_STRUCT(::detail::Sign, c, operand)
 BOOST_FUSION_ADAPT_STRUCT(::detail::Step, c, operand)
 BOOST_FUSION_ADAPT_STRUCT(::detail::List, head, tail)
+
+// =================================================================================================
 
 class Calculator
 {
@@ -84,6 +90,8 @@ public:
 
 }; // class Calculator
 
+// =================================================================================================
+
 namespace grammar
 {
     const boost::spirit::x3::rule < class E_tag, detail::List    > expression;
@@ -109,6 +117,8 @@ namespace grammar
 
 } // namespace grammar
 
+// =================================================================================================
+
 [[nodiscard]] double test(std::string_view input)
 {
     auto begin = std::cbegin(input), end = std::cend(input);
@@ -125,6 +135,8 @@ namespace grammar
 
     return Calculator()(list);
 }
+
+// =================================================================================================
 
 int main()
 {

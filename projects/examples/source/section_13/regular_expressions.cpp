@@ -7,10 +7,14 @@
 
 using namespace std::literals;
 
+// =================================================================================================
+
 [[nodiscard]] inline bool match_identifier(const std::string & string)
 {
 	return std::regex_match(string, std::regex(R"([_[:alpha:]]\w*)")); // good: raw string
 }
+
+// =================================================================================================
 
 [[nodiscard]] inline std::smatch search_post_code(const std::string & string)
 {
@@ -21,10 +25,14 @@ using namespace std::literals;
     return matches;
 }
 
+// =================================================================================================
+
 [[nodiscard]] inline std::string replace_substring(const std::string & string)
 {
     return std::regex_replace(string, std::regex(R"(\b(sub)([^ ]+))"), R"(sub-$2)"); // good: raw string
 }
+
+// =================================================================================================
 
 int main()
 {

@@ -14,6 +14,8 @@
 
 //#include <Windows.h> // note: required on Windows for changing code page
 
+// =================================================================================================
+
 [[nodiscard]] inline std::string convert_locale_to_utf(const std::string & string)
 {
 	boost::locale::generator generator;
@@ -36,6 +38,8 @@
 	return boost::locale::conv::from_utf < char > (string, locale);
 }
 
+// =================================================================================================
+
 [[nodiscard]] inline std::string convert_wstring_to_utf8(const std::wstring & wstring)
 {
 	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // note: deprecated, bad implementation
@@ -49,6 +53,8 @@
 
 	return converter.from_bytes(string);
 }
+
+// =================================================================================================
 
 [[nodiscard]] inline std::wstring convert_string_to_wstring(std::string_view string, const std::locale & locale) 
 {
@@ -71,6 +77,8 @@
 
 	return std::string(buffer.data(), std::size(buffer)); // note: avoid wchar_t and std::wstring
 }
+
+// =================================================================================================
 
 int main()
 {

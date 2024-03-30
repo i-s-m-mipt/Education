@@ -12,6 +12,8 @@ using namespace std::literals; // note: std::chrono, std::complex, std::string
 
 #include <benchmark/benchmark.h>
 
+// =================================================================================================
+
 struct case_insensitive_traits : public std::char_traits < char > 
 {
     [[nodiscard]] static bool eq(char c1, char c2) noexcept 
@@ -40,6 +42,8 @@ struct case_insensitive_traits : public std::char_traits < char >
 
 }; // struct case_insensitive_traits : public std::char_traits < char > 
 
+// =================================================================================================
+
 using cistring_t = std::basic_string < char, case_insensitive_traits > ;
 
 inline std::ostream & operator<<(std::ostream & stream, const cistring_t & cistring)
@@ -47,7 +51,11 @@ inline std::ostream & operator<<(std::ostream & stream, const cistring_t & cistr
     return (stream << std::string(cistring.data(), std::size(cistring)));
 }
 
+// =================================================================================================
+
 inline void print(std::string_view view) { std::cout << view << std::endl; }
+
+// =================================================================================================
 
 void test_1(benchmark::State & state) // note: slow
 {
@@ -62,6 +70,8 @@ void test_1(benchmark::State & state) // note: slow
 
     state.SetComplexityN(state.range(0));
 }
+
+// =================================================================================================
 
 void test_2(benchmark::State & state) // note: fast
 {
@@ -79,8 +89,12 @@ void test_2(benchmark::State & state) // note: fast
     state.SetComplexityN(state.range(0));
 }
 
+// =================================================================================================
+
 BENCHMARK(test_1)->DenseRange(8192, 65537, 8192)->Complexity(); // note: O(N) complexity
 BENCHMARK(test_2)->DenseRange(8192, 65537, 8192)->Complexity(); // note: O(1) complexity
+
+// =================================================================================================
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {

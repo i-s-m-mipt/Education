@@ -9,6 +9,8 @@ using namespace std::literals;
 
 #include <boost/spirit/home/x3.hpp>
 
+// =================================================================================================
+
 namespace parser
 {
     namespace detail
@@ -92,6 +94,8 @@ namespace parser
 
 } // namespace parser
 
+// =================================================================================================
+
 [[nodiscard]] int test(std::string_view input)
 {
     auto begin = std::cbegin(input), end = std::cend(input);
@@ -107,6 +111,8 @@ namespace parser
 
     return number;
 }
+
+// =================================================================================================
 
 int main()
 {

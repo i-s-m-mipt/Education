@@ -10,9 +10,13 @@ using namespace std::literals;
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/spirit/home/x3.hpp>
 
+// =================================================================================================
+
 struct Data { char c{}; int i{}; double d{}; }; 
 
 BOOST_FUSION_ADAPT_STRUCT(Data, c, i, d) // note: global scope
+
+// =================================================================================================
 
 namespace parser
 {
@@ -29,6 +33,8 @@ namespace parser
     BOOST_SPIRIT_DEFINE(data);
 
 } // namespace parser
+
+// =================================================================================================
 
 int main()
 {
