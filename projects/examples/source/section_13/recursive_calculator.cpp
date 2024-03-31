@@ -64,7 +64,7 @@ public:
 		}
 	}
 
-	constexpr void putback(const Token & token) noexcept
+	void putback(const Token & token) noexcept
 	{
 		m_token = token; m_is_full = true;
 	}
