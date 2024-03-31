@@ -7,21 +7,24 @@ class Label_v1 { public: explicit Label_v1(char) {}; };
 
 // =================================================================================================
 
-template < typename ... Bases > 
-class Point_v1 : public Bases... // note: modern mixin
+template < typename ... Bases > class Point_v1 : public Bases... // note: modern mixin
 {
 public:
 
-    template < typename ... Types > 
-    explicit Point_v1(double x, double y, Types ... args) : Bases(args)..., m_x(x), m_y(y)
+    template < typename ... Types > explicit Point_v1(double x, double y, Types ... args) : 
+        Bases(args)..., m_x(x), m_y(y)
     {
         std::cout << sizeof...(Bases) << std::endl;
     }
 
+    template < typename V > void visit(V visitor)
+    {
+        visitor(static_cast < Bases & > (*this)...);
+    }
+
 private:
 
-    double m_x;
-    double m_y;
+    double m_x, m_y;
 
 }; // class Point_v1 : public Bases...
 
@@ -32,8 +35,8 @@ template < typename T > class Label_v2 {}; // note: consider protected destructo
 
 // =================================================================================================
 
-template < template < typename > typename ... Bases > // note: template template parameters
-class Point_v2 : public Bases < Point_v2 < Bases ... > > ... 
+template < template < typename E > typename ... Bases > class Point_v2 :
+    public Bases < Point_v2 < Bases ... > > ... 
 {
 public:
 
@@ -42,10 +45,14 @@ public:
         std::cout << sizeof...(Bases) << std::endl;
     }
 
+    template < typename V > void visit(V visitor)
+    {
+        visitor(static_cast < Bases < Point_v2 > & > (*this)...);
+    }
+
 private:
 
-    double m_x;
-    double m_y;
+    double m_x, m_y;
 
 }; // class Point_v2 : public Bases < Point_v2 < Bases ... > > ... 
 
