@@ -157,10 +157,10 @@ template < typename T > inline constexpr void swap(T & a, T & b) noexcept(
 }
 
 template < typename F, typename ... Types > 
-[[nodiscard]] inline constexpr auto invoke(F && f, Types && ... args) 
+[[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Types && ... args) 
 	noexcept(noexcept(f(std::declval < Types > ()...))) // note: or std::is_nothrow_invocable_v
 {
-	return f(std::forward < Types > (args)...);
+	return f(std::forward < Types > (args)...); // note: see std::invoke
 }
 
 // =================================================================================================

@@ -24,9 +24,9 @@ template < typename ... Types >
 // =================================================================================================
 
 template < typename F, typename ... Types > 
-[[nodiscard]] inline constexpr auto invoke(F && f, Types && ... args)
+[[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Types && ... args)
 {
-	return f(std::forward < Types > (args)...);
+	return f(std::forward < Types > (args)...); // note: see std::invoke
 }
 
 // =================================================================================================
