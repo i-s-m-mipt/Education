@@ -50,6 +50,8 @@ FUNCTION(h)
 #  define TRACE // good: nothing to do in release mode
 #endif
 
+// =================================================================================================
+
 void test_macros()
 {
 	generated_f();
@@ -58,7 +60,7 @@ void test_macros()
 
 	std::cout << FUNCTION << std::endl; // note: redefined as number
 
-	[[maybe_unused]] auto x = 1;
+	[[maybe_unused]] auto x = 1; // note: consider trigrpahs in online compiler
 
 //	std::cout << BAD_SQUARE(x + 1) << std::endl; // bad: incorrect macro
 
