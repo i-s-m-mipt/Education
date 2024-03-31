@@ -20,8 +20,8 @@ public:
 		std::cout << "Person_v1::Person_v1 (move)" << std::endl;
 	}
 	
-	Person_v1(const Person_v1 &  other) : m_name(          other.m_name ) {}
-	Person_v1(      Person_v1 && other) : m_name(std::move(other.m_name)) {}
+	Person_v1(const Person_v1 &  other)          : m_name(          other.m_name ) {}
+	Person_v1(      Person_v1 && other) noexcept : m_name(std::move(other.m_name)) {}
 
 private:
 
@@ -40,8 +40,8 @@ public:
 		std::cout << "Person_v2::Person_v2" << std::endl;
 	}
 	
-	Person_v2(const Person_v2 &  other) : m_name(          other.m_name ) {}
-	Person_v2(      Person_v2 && other) : m_name(std::move(other.m_name)) {}
+	Person_v2(const Person_v2 &  other)          : m_name(          other.m_name ) {}
+	Person_v2(      Person_v2 && other) noexcept : m_name(std::move(other.m_name)) {}
 
 private:
 
@@ -62,8 +62,8 @@ public:
 		std::cout << "Person_v3::Person_v3" << std::endl;
 	}
 	
-	Person_v3(const Person_v3 &  other) : m_name(          other.m_name ) {}
-	Person_v3(      Person_v3 && other) : m_name(std::move(other.m_name)) {}
+	Person_v3(const Person_v3 &  other)          : m_name(          other.m_name ) {}
+	Person_v3(      Person_v3 && other) noexcept : m_name(std::move(other.m_name)) {}
 
 private:
 
@@ -84,8 +84,8 @@ public:
 		std::cout << "Person_v4::Person_v4" << std::endl;
 	}
 	
-	Person_v4(const Person_v4 &  other) : m_name(          other.m_name ) {}
-	Person_v4(      Person_v4 && other) : m_name(std::move(other.m_name)) {}
+	Person_v4(const Person_v4 &  other)          : m_name(          other.m_name ) {}
+	Person_v4(      Person_v4 && other) noexcept : m_name(std::move(other.m_name)) {}
 
 private:
 
