@@ -115,6 +115,8 @@ int main()
 
 	Stack_v2 new_stack = deque_stack_v2;
 
+	[[maybe_unused]] typename Outer < int > ::template Inner < int > object; // note: impressed?
+
 	[[maybe_unused]] const Pair      p{ 1.0, 1 }; // note: generated deduction guide for aggregate
 	[[maybe_unused]] const Container c( 1.0, 1 ); // note: generated deduction guide for aggregate
 
