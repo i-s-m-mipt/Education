@@ -7,7 +7,7 @@
 
 template < typename T, typename C = std::vector < T > > class Stack_v1
 {
-public: // note: member functions instantiated only if used
+public: // note: member functions instantiated only if used, also called templated entities
 
 	void push(T value);
 
@@ -42,7 +42,7 @@ template < typename T, typename C > void Stack_v1 < T, C > ::pop()
 
 // =================================================================================================
 
-template < typename T, template < typename E > typename C = std::vector > class Stack_v2
+template < typename T, template < typename E > typename C = std::vector > class Stack_v2 
 {
 public:
 
@@ -56,9 +56,15 @@ private:
 
 // =================================================================================================
 
+template < typename T > class Outer { public: template < typename U > class Inner; };
+
+template < typename T > template < typename U > class Outer < T > ::Inner {}; // note: nested template
+
+// =================================================================================================
+
 template < typename T1, typename T2 > struct Pair { T1 x{}; T2 y{}; }; // note: see std::pair
 
-template < typename T > struct Container { Container(std::size_t, const T &) {} }; 
+template < typename T > class Container { public: Container(std::size_t, const T &) {} }; 
 
 // =================================================================================================
 
@@ -109,9 +115,8 @@ int main()
 
 	Stack_v2 new_stack = deque_stack_v2;
 
-	[[maybe_unused]] const Pair p{ 1.0, 100 }; // note: generated deduction guide for aggregate
-
-	[[maybe_unused]] const Container c(10, 1.0); // note: generated deduction guide for aggregate
+	[[maybe_unused]] const Pair      p{ 1.0, 1 }; // note: generated deduction guide for aggregate
+	[[maybe_unused]] const Container c( 1.0, 1 ); // note: generated deduction guide for aggregate
 
 	C < char,   double > ().f(); // note: basic template for T1, T2
 	C < char,   char   > ().f(); // note: partial specialization for T, T
