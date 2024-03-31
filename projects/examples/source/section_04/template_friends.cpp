@@ -1,7 +1,7 @@
 #include <iostream>
 #include <numeric>
 
-template < typename T > class Ratio
+template < typename T > class Ratio // note: usually no problems with friend classes
 {
 public:
 
@@ -46,7 +46,7 @@ public:
 		return *this;
 	}
 
-	[[nodiscard]] friend inline Ratio operator+(Ratio lhs, Ratio rhs) // good: friend inside class template
+	[[nodiscard]] friend inline Ratio operator+(Ratio lhs, Ratio rhs) // good: friend function inside class template
 	{
 		return (lhs += rhs);
 	}
