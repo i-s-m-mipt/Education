@@ -1,5 +1,6 @@
 #include <cstddef>
 #include <type_traits>
+#include <utility>
 
 // =================================================================================================
 
@@ -12,13 +13,20 @@ template < typename T1, typename ... Ts > inline constexpr auto is_homogeneous_v
 
 // =================================================================================================
 
-template < typename T > struct  is_lvalue_reference          : std::false_type {};
-template < typename T > struct  is_lvalue_reference < T & >  : std:: true_type {};
+template < typename T > struct is_void          : public std::false_type {};
+template <            > struct is_void < void > : public std:: true_type {};
+
+template < typename T > inline constexpr auto is_void_v = is_void < T > ::value;
+
+// =================================================================================================
+
+template < typename T > struct  is_lvalue_reference          : public std::false_type {};
+template < typename T > struct  is_lvalue_reference < T & >  : public std:: true_type {};
 
 template < typename T > inline constexpr auto is_lvalue_reference_v = is_lvalue_reference < T > ::value;
 
-template < typename T > struct  is_rvalue_reference          : std::false_type {};
-template < typename T > struct  is_rvalue_reference < T && > : std:: true_type {};
+template < typename T > struct  is_rvalue_reference          : public std::false_type {};
+template < typename T > struct  is_rvalue_reference < T && > : public std:: true_type {};
 
 template < typename T > inline constexpr auto is_rvalue_reference_v = is_rvalue_reference < T > ::value;
 
@@ -40,7 +48,7 @@ template < typename T > using  add_rvalue_reference_t = typename add_rvalue_refe
 
 // =================================================================================================
 
-template < typename T > struct is_integral : std::integral_constant < bool,
+template < typename T > struct is_integral : public std::integral_constant < bool,
     is_same_v < bool  , remove_reference_t < T > > || 
 	is_same_v < char  , remove_reference_t < T > > || 
 	is_same_v < short , remove_reference_t < T > > ||
@@ -51,9 +59,8 @@ template < typename T > inline constexpr auto is_integral_v = is_integral < T > 
 
 // =================================================================================================
 
-template < typename T > struct is_pointer               : std::false_type {};
-template < typename T > struct is_pointer < T *       > : std:: true_type {};
-template < typename T > struct is_pointer < T * const > : std:: true_type {};
+template < typename T > struct is_pointer         : public std::false_type {};
+template < typename T > struct is_pointer < T * > : public std:: true_type {};
 
 template < typename T > inline constexpr auto is_pointer_v = is_pointer < T > ::value;
 
@@ -67,8 +74,8 @@ template < typename T > inline constexpr auto is_array_v = is_array < T > ::valu
 
 // =================================================================================================
 
-template < typename  T                     > struct is_function                  : std::false_type {};
-template < typename RT, typename ... Types > struct is_function < RT(Types...) > : std:: true_type {};
+template < typename  T                     > struct is_function                  : public std::false_type {};
+template < typename RT, typename ... Types > struct is_function < RT(Types...) > : public std:: true_type {};
 
 // note: const, volatile, &, && and noexcept produce very long list of combinations 
 
@@ -76,17 +83,17 @@ template < typename T > inline constexpr auto is_function_v = is_function < T > 
 
 // =================================================================================================
 
-template < typename D, typename B > class is_derived
+template < typename D, typename B > class is_derived // note: old-style implementation by Herb Sutter
 {
 private:
 
-	class N { std::byte data[1]; }; // note: sizeof(N) is 1
-	class Y { std::byte data[2]; }; // note: sizeof(Y) is 2
+	class N { const std::byte data[1]{}; }; // note: sizeof(N) is 1 byte(s)
+	class Y { const std::byte data[2]{}; }; // note: sizeof(Y) is 2 byte(s)
 
 private:
 
-	static constexpr N test(...); // note: C-style for inheritance
-	static constexpr Y test(B *);
+	[[nodiscard]] static constexpr N test(...); // note: C-style for inheritance, SFINAE alternative
+	[[nodiscard]] static constexpr Y test(B *);
 
 public:
 
@@ -98,26 +105,57 @@ template < typename D, typename B > inline constexpr auto is_derived_v = is_deri
 
 // =================================================================================================
 
-namespace detail
+template < typename T > class is_polymorphic // note: based on properties of dynamic_cast
 {
-	template < typename T > std::false_type detect_is_polymorphic(...); // note: C-style for inheritance
+private:
 
-    template < typename T > std:: true_type detect_is_polymorphic(decltype(
-		dynamic_cast < void * > (static_cast < T * > (nullptr)))); // note: SFINAE based on dynamic_cast
+	template < typename T1 > 
+	[[nodiscard]] static constexpr std::false_type test(...);
 
-} // namespace detail
- 
-template < typename T > struct is_polymorphic : decltype(detail::detect_is_polymorphic < T > (nullptr)) {};
+    template < typename T1, typename Enable = decltype(
+		dynamic_cast < void * > (std::declval < T1 * > ())) >
+	[[nodiscard]] static constexpr std:: true_type test(int); // note: unevaluated context
+
+public:
+      
+	static constexpr auto value = decltype(test < T > (0))::value;
+
+}; // template < typename T > class is_polymorphic
 
 template < typename T > inline constexpr auto is_polymorphic_v = is_polymorphic < T > ::value;
 
 // =================================================================================================
 
-class Base { public: virtual ~Base() = default; }; // note: polymorphic base class
+template < typename F, typename T > class is_convertible // note: based on properties of arguments
+{
+private:
 
-class Derived : public Base {}; 
+    template < typename T1 > static constexpr void helper_consumer(T1) {}
 
-class Single {};
+private:
+
+	template < typename F1, typename T1 > 
+	[[nodiscard]] static constexpr std::false_type test(...);
+
+    template < typename F1, typename T1, typename Enable = decltype(
+		helper_consumer < T1 > (std::declval < F1 > ())) > 
+	[[nodiscard]] static constexpr std:: true_type test(int); // note: unevaluated context
+
+public:
+      
+	static constexpr auto value = decltype(test < F, T > (0))::value;
+
+}; // template < typename F, typename T > class is_convertible
+
+template < typename F, typename T > inline constexpr auto is_convertible_v = is_convertible < F, T > ::value;
+
+// =================================================================================================
+
+class B { public: virtual ~B() = default; }; // note: polymorphic base class
+
+class D : public B {}; 
+
+class C {};
 
 // =================================================================================================
 
@@ -161,9 +199,8 @@ int main()
 	static_assert( is_integral_v < int    > );
 	static_assert(!is_integral_v < double > );
 
-	static_assert(!is_pointer_v < int         > );
-	static_assert( is_pointer_v < int *       > );
-	static_assert( is_pointer_v < int * const > );
+	static_assert(!is_pointer_v < int   > );
+	static_assert( is_pointer_v < int * > );
 
 	static_assert(!is_array_v < int    > );
 	static_assert( is_array_v < int[ ] > );
@@ -173,12 +210,15 @@ int main()
 	static_assert( is_function_v < int(int     ) > );
 	static_assert( is_function_v < int(int, int) > );
 
-	static_assert( is_derived_v < Derived, Base > );
-	static_assert(!is_derived_v <  Single, Base > );
+	static_assert( is_derived_v < D, B > );
+	static_assert(!is_derived_v < C, B > );
 
-	static_assert( is_polymorphic_v < Base    > );
-	static_assert( is_polymorphic_v < Derived > );
-	static_assert(!is_polymorphic_v < Single  > );
+	static_assert( is_polymorphic_v < B > );
+	static_assert( is_polymorphic_v < D > );
+	static_assert(!is_polymorphic_v < C > );
+
+	static_assert( is_convertible_v < D * , B * > );
+	static_assert(!is_convertible_v < C * , B * > );
 
 	static_assert( is_same_v < enable_if_t < 1 + 1 == 2, int > , int > );
 //	static_assert(!is_same_v < enable_if_t < 1 + 1 != 2, int > , int > ); // error: no alternatives
