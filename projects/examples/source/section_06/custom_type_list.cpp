@@ -13,12 +13,12 @@ template < typename     L  > struct Size {};
 
 template < typename ... Ts > struct Size < Type_List < Ts ... > >
 {
-     static constexpr std::size_t value = sizeof...(Ts);
+     static constexpr auto value = sizeof...(Ts);
 };
 
-template < typename L > inline constexpr std::size_t size_v = Size < L > ::value;
+template < typename L > inline constexpr auto  size_v = Size < L > ::value;
 
-template < typename L > inline constexpr bool empty_v = (size_v < L > == 0);
+template < typename L > inline constexpr auto empty_v = (size_v < L > == 0);
 
 // =================================================================================================
 
