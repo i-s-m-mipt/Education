@@ -1,5 +1,17 @@
-#include <iostream>
+#include <cstddef>
 #include <type_traits>
+
+// =================================================================================================
+
+template < typename T1, typename T2 > struct is_same            : public std::false_type {};
+template < typename T1              > struct is_same < T1, T1 > : public std:: true_type {};
+
+template < typename T1, typename T2 > inline constexpr auto is_same_v = is_same < T1, T2 > ::value;
+
+template < typename T1, typename ... Types > inline constexpr bool is_homogeneous(T1, Types...)
+{
+	return (is_same_v < T1, Types > && ...);
+}
 
 // =================================================================================================
 
@@ -7,32 +19,21 @@ template < typename T > struct remove_reference          { using type = T; };
 template < typename T > struct remove_reference < T &  > { using type = T; };
 template < typename T > struct remove_reference < T && > { using type = T; };
 
-template < typename T > using remove_reference_t = typename remove_reference < T > ::type;
+template < typename T > using  remove_reference_t = typename remove_reference < T > ::type;
+
+// =================================================================================================
 
 template < typename T > struct add_lvalue_reference { using type = T &  ; };
 template < typename T > struct add_rvalue_reference { using type = T && ; };
 
-template < typename T > using add_lvalue_reference_t = typename add_lvalue_reference < T > ::type;
-template < typename T > using add_rvalue_reference_t = typename add_rvalue_reference < T > ::type;
+template < typename T > using  add_lvalue_reference_t = typename add_lvalue_reference < T > ::type;
+template < typename T > using  add_rvalue_reference_t = typename add_rvalue_reference < T > ::type;
 
 // =================================================================================================
 
-template < typename T1, typename T2 > struct is_same          : std::false_type {};
-template < typename T               > struct is_same < T, T > : std:: true_type {};
+template < typename T > struct is_array         : public std::false_type {};
 
-template < typename T1, typename T2 > inline constexpr bool is_same_v = is_same < T1, T2 > ::value;
-
-template < typename T > struct is_array : std::false_type {};
-
-template < typename T, std::size_t N > struct is_array < T[N] > : std::true_type
-{
-	using type = T;
-
-	static constexpr auto size = N;
-
-}; // template < typename T, std::size_t N > struct is_array < T[N] > : std::true_type
-
-template < typename T > struct is_array < T[] > : std::true_type
+template < typename T > struct is_array < T[] > : public std:: true_type
 {
 	using type = T;
 
@@ -40,66 +41,75 @@ template < typename T > struct is_array < T[] > : std::true_type
 
 }; // template < typename T > struct is_array < T[] > : std::true_type
 
-template < typename T > inline constexpr bool is_array_v = is_array < T > ::value;
+template < typename T, std::size_t N > struct is_array < T[N] > : public std::true_type
+{
+	using type = T;
+
+	static constexpr auto size = N;
+
+}; // template < typename T, std::size_t N > struct is_array < T[N] > : std::true_type
+
+template < typename T > inline constexpr auto is_array_v = is_array < T > ::value;
 
 // =================================================================================================
 
-template < typename D, typename B >
-class Is_Derived
+template < typename D, typename B > class is_derived
 {
-	class No {};
-	class Yes { No no[2]; }; // Ðàçíûõ ðàçìåðîâ !
+private:
 
-	static Yes test(B*);
-	static No test(...); // ïðîèçâ. êîëè÷åñòâî àðãóìåíòîâ íåèçâåñòíûõ òèïîâ
+	class N { std::byte data[1]; }; // note: sizeof(N) is 1
+	class Y { std::byte data[2]; }; // note: sizeof(Y) is 2
+
+private:
+
+	static constexpr N test(...) {}; // note: C-style for inheritance
+	static constexpr Y test(B *) {};
 
 public:
 
-	// Ðàçðåøåíèå ïåðåãðóçêè âûïîëíÿåòñÿ âî âðåìÿ êîìïèëÿöèè
-	// Îïðåäåëåíèå çàí÷åíèÿ sizeof âûïîëíÿåòñÿ âî âðåìÿ êîìïèëÿöèè
-	// Çíà÷åíèå â enum âû÷èñÿëþòñÿ âî âðåìÿ êîìïèëÿöèè
+	static constexpr auto value = (sizeof(test(static_cast < D * > (nullptr))) == sizeof(Y));
 
-	enum { value = sizeof(test(static_cast<D*>(0))) == sizeof(Yes) };
-};
+}; // template < typename D, typename B > class is_derived
 
-class B {};
-class D : public B {};
-class DD : public D {};
-class E {};
+template < typename D, typename B > inline constexpr auto is_derived_v = is_derived < D, B > ::value;
 
-template < bool C, typename True_Type, typename False_Type >
-struct if_then_else
+// =================================================================================================
+
+class Base {}; class Derived : public Base {}; class Empty {};
+
+// =================================================================================================
+
+template < bool C, typename TT, typename FT > struct if_then_else                   { using type = TT; };
+template <         typename TT, typename FT > struct if_then_else < false, TT, FT > { using type = FT; };
+
+template < bool C, typename TT, typename FT > using  if_then_else_t = typename if_then_else < C, TT, FT > ::type;
+
+// =================================================================================================
+
+int main()
 {
-	using type = True_Type;
-};
+	static_assert( is_same_v < int, int    > );
+	static_assert(!is_same_v < int, double > );
 
-template < typename True_Type, typename False_Type >
-struct if_then_else < false, True_Type, False_Type >
-{
-	using type = False_Type;
-};
+	static_assert( is_homogeneous('a', 'b', 'c'));
+	static_assert(!is_homogeneous('a', 'b', 1.0));
 
-template < bool C, typename TT, typename FT >
-using if_then_else_t = typename if_then_else < C, TT, FT >::type;
+	static_assert( is_same_v < remove_reference_t < int    > , int > );
+	static_assert( is_same_v < remove_reference_t < int &  > , int > );
+	static_assert( is_same_v < remove_reference_t < int && > , int > );
 
-int main(int argc, char ** argv)
-{
-	std::cout << std::boolalpha;
+	static_assert( is_same_v < add_lvalue_reference_t < int > , int &  > );
+	static_assert( is_same_v < add_rvalue_reference_t < int > , int && > );
 
-	std::cout << std::is_base_of < B, D > ::value << std::endl;
-	std::cout << std::is_base_of_v < B, DD > << std::endl;
-	std::cout << std::is_base_of_v < B, E > << std::endl;
+	static_assert(!is_array_v < int    > );
+	static_assert( is_array_v < int[ ] > );
+	static_assert( is_array_v < int[5] > );
 
-	std::cout << Is_Derived < D, B > ::value << std::endl;
-	std::cout << Is_Derived < DD, B > ::value << std::endl;
-	std::cout << Is_Derived < E, B > ::value << std::endl;
+	static_assert( is_same_v < is_array < int[5] > ::type, int > );
+	static_assert(             is_array < int[5] > ::size == 5   );
 
-	//std::cout << is_same < int, float>::value << std::endl;
-	//std::cout << is_same < int, int>::value << std::endl;
+	static_assert( is_derived_v < Derived, Base > );
+	static_assert(!is_derived_v <   Empty, Base > );
 
-	//std::cout << is_array < int[10] > ::size << std::endl;
-
-	system("pause");
-
-	return EXIT_SUCCESS;
+	return 0;
 }
