@@ -12,6 +12,10 @@ int main()
 
 	static_assert(std::is_same_v < category_t, std::random_access_iterator_tag > );
 
+	using value_type = std::iterator_traits < decltype(vector)::iterator > ::value_type;
+
+	static_assert(std::is_same_v < value_type, int > );
+
 	auto begin = vector.begin(); // note: copy of begin iterator, consider std::begin
 
 	std::advance(begin, 1); // good: better than += or -= in generic programming
