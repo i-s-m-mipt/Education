@@ -21,7 +21,7 @@ public:
 
 	virtual void print() const // note: can be redefined in derived classes
 	{
-		std::cout << "Computer" << std::endl;
+		std::cout << "Computer::print" << std::endl;
 	}
 
 }; // class Computer
@@ -34,7 +34,7 @@ public:
 
 	void print() const override final // note: final function in hierarchy
 	{
-		std::cout << "Mobile" << std::endl;
+		std::cout << "Mobile::print" << std::endl;
 	}
 
 }; // class Mobile final : public Computer
@@ -48,7 +48,7 @@ public:
 
 	void print() const override // error: print declared final in class Mobile
 	{
-		std::cout << "Tablet" << std::endl;
+		std::cout << "Tablet::print" << std::endl;
 	}
 
 }; // class Tablet : public Mobile
@@ -62,7 +62,7 @@ public:
 
 	void print() const override // note: not final function in hierarchy
 	{
-		std::cout << "Laptop" << std::endl;
+		std::cout << "Laptop::print" << std::endl;
 	}
 
 }; // class Laptop : public Computer
@@ -83,7 +83,7 @@ public:
 
 void Abstract_Base::print() const // note: definition must be provided separately
 {
-	std::cout << "default implementation" << std::endl;
+	std::cout << "Abstract_Base::print" << std::endl;
 }
 
 // =================================================================================================
@@ -94,7 +94,7 @@ public:
 
 	void print() const override
 	{
-		std::cout << "derived implementation" << std::endl;
+		std::cout << "Derived::print" << std::endl;
 
 		Abstract_Base::print(); // note: possible default implementation
 	}
@@ -109,7 +109,7 @@ int main()
 
 	const Computer * computer_ptr = &mobile; // note: works with pointers and references
 
-//	const Computer computer = mobile; // bad: object slicing
+//	const Computer   computer     =  mobile; // bad: object slicing
 
 	computer_ptr->print();
 
