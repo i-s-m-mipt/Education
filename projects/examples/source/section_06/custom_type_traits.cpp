@@ -159,17 +159,17 @@ class C {};
 
 // =================================================================================================
 
-template < bool B, typename T = void > struct enable_if             {                 }; // note: nothing
+template < bool V, typename T = void > struct enable_if             {                 }; // note: nothing
 template <         typename T        > struct enable_if < true, T > { using type = T; };
 
-template < bool B, typename T = void > using  enable_if_t = typename enable_if < B, T > ::type;
+template < bool V, typename T = void > using  enable_if_t = typename enable_if < V, T > ::type;
 
 // =================================================================================================
 
-template < bool C, typename T, typename F > struct conditional                 { using type = T; };
+template < bool V, typename T, typename F > struct conditional                 { using type = T; };
 template <         typename T, typename F > struct conditional < false, T, F > { using type = F; };
 
-template < bool C, typename T, typename F > using  conditional_t = typename conditional < C, T, F > ::type;
+template < bool V, typename T, typename F > using  conditional_t = typename conditional < V, T, F > ::type;
 
 // =================================================================================================
 
