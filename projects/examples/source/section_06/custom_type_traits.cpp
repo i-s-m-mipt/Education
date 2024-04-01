@@ -15,16 +15,16 @@ template < typename T1, typename ... Types > inline constexpr bool is_homogeneou
 
 // =================================================================================================
 
-template < typename T > struct remove_reference          { using type = T; };
-template < typename T > struct remove_reference < T &  > { using type = T; };
-template < typename T > struct remove_reference < T && > { using type = T; };
+template < typename T > struct     remove_reference          { using type = T    ; };
+template < typename T > struct     remove_reference < T &  > { using type = T    ; };
+template < typename T > struct     remove_reference < T && > { using type = T    ; };
 
-template < typename T > using  remove_reference_t = typename remove_reference < T > ::type;
+template < typename T > using      remove_reference_t = typename remove_reference < T > ::type;
 
 // =================================================================================================
 
-template < typename T > struct add_lvalue_reference { using type = T &  ; };
-template < typename T > struct add_rvalue_reference { using type = T && ; };
+template < typename T > struct add_lvalue_reference          { using type = T &  ; };
+template < typename T > struct add_rvalue_reference          { using type = T && ; };
 
 template < typename T > using  add_lvalue_reference_t = typename add_lvalue_reference < T > ::type;
 template < typename T > using  add_rvalue_reference_t = typename add_rvalue_reference < T > ::type;
@@ -62,8 +62,8 @@ private:
 
 private:
 
-	static constexpr N test(...) {}; // note: C-style for inheritance
-	static constexpr Y test(B *) {};
+	static constexpr N test(...); // note: declaration only, C-style for inheritance
+	static constexpr Y test(B *); // note: declaration only
 
 public:
 
@@ -75,7 +75,7 @@ template < typename D, typename B > inline constexpr auto is_derived_v = is_deri
 
 // =================================================================================================
 
-class Base {}; class Derived : public Base {}; class Empty {};
+class Base {}; class Derived : public Base {}; class Single {};
 
 // =================================================================================================
 
@@ -91,15 +91,15 @@ int main()
 	static_assert( is_same_v < int, int    > );
 	static_assert(!is_same_v < int, double > );
 
-	static_assert( is_homogeneous('a', 'b', 'c'));
-	static_assert(!is_homogeneous('a', 'b', 1.0));
+	static_assert( is_homogeneous(1, 2, 3   ));
+	static_assert(!is_homogeneous(1, 2, 3.14));
 
-	static_assert( is_same_v < remove_reference_t < int    > , int > );
-	static_assert( is_same_v < remove_reference_t < int &  > , int > );
-	static_assert( is_same_v < remove_reference_t < int && > , int > );
+	static_assert( is_same_v <     remove_reference_t < int    > , int    > );
+	static_assert( is_same_v <     remove_reference_t < int &  > , int    > );
+	static_assert( is_same_v <     remove_reference_t < int && > , int    > );
 
-	static_assert( is_same_v < add_lvalue_reference_t < int > , int &  > );
-	static_assert( is_same_v < add_rvalue_reference_t < int > , int && > );
+	static_assert( is_same_v < add_lvalue_reference_t < int    > , int &  > );
+	static_assert( is_same_v < add_rvalue_reference_t < int    > , int && > );
 
 	static_assert(!is_array_v < int    > );
 	static_assert( is_array_v < int[ ] > );
@@ -109,7 +109,10 @@ int main()
 	static_assert(             is_array < int[5] > ::size == 5   );
 
 	static_assert( is_derived_v < Derived, Base > );
-	static_assert(!is_derived_v <   Empty, Base > );
+	static_assert(!is_derived_v <  Single, Base > );
+
+	static_assert( is_same_v < if_then_else_t < 1 + 1 == 2, int, double > , int    > );
+	static_assert( is_same_v < if_then_else_t < 1 + 1 != 2, int, double > , double > );
 
 	return 0;
 }
