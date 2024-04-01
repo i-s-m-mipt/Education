@@ -4,6 +4,43 @@
 #include <type_traits>
 #include <vector>
 
+namespace detail
+{
+	template < typename I, typename D > inline constexpr void advance(
+		I & iterator, D distance, std::forward_iterator_tag) noexcept
+	{
+		if (distance > 0)
+		{
+			while (distance--) ++iterator;
+		}
+	}
+
+	template < typename I, typename D > inline constexpr void advance(
+		I & iterator, D distance, std::bidirectional_iterator_tag) noexcept
+	{
+		if (distance > 0)
+		{
+			while (distance--) ++iterator;
+		}
+		else
+		{
+			while (distance++) --iterator;
+		}
+	}
+
+	template < typename I, typename D > inline constexpr void advance(
+		I & iterator, D distance, std::random_access_iterator_tag) noexcept
+	{
+		iterator += distance;
+	}
+
+} // namespace detail
+
+template < typename I, typename D > inline constexpr void advance(I & iterator, D distance)
+{
+    detail::advance(iterator, distance, typename std::iterator_traits < I > ::iterator_category());
+}
+
 int main()
 {
 	const std::vector vector = { 1, 2, 3, 4, 5 };
