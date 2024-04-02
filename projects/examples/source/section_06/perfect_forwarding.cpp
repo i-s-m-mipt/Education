@@ -16,7 +16,7 @@ inline void f(      С &  с) { g(с); } // bad: multiple overloads for all case
 inline void f(const С &  с) { g(с); }
 inline void f(      С && с) 
 { 
-    g(std::move(x)); // note: local argument x is lvalue, move semantics is not transmitted
+    g(std::move(c)); // note: local argument c is lvalue, move semantics is not transmitted
 } 
 */
 
@@ -39,9 +39,9 @@ int main()
 {
 	С с; const С cс; // note: objects with different fundamental properties
 
-	f(          с ); // note: f -> g for       С &  x
-	f(         cс ); // note: f -> g for const С &  x
-	f(std::move(с)); // note: f -> g for       С && x
+	f(          с ); // note: f -> g for       С &  c
+	f(         cс ); // note: f -> g for const С &  c
+	f(std::move(с)); // note: f -> g for       С && c
 
 	return 0;
 }
