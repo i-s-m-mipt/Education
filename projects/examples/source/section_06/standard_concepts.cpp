@@ -27,6 +27,11 @@ template < typename T > concept ordable = equable < T > && requires (T x, T y)
     { x >= y } -> std::convertible_to < bool > ;
 };
 
+template < typename T > concept typable = requires
+{
+    typename T::value_type; // note: required nested member name
+};
+
 // =================================================================================================
 
 template < typename T > [[nodiscard]] inline constexpr T max_v1(T x, T y) requires integral < T >
