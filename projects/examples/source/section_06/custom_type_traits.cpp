@@ -7,9 +7,10 @@
 template < typename T1, typename T2 > struct is_same            : public std::false_type {};
 template < typename T1              > struct is_same < T1, T1 > : public std:: true_type {};
 
-template < typename T1, typename T2     > inline constexpr auto is_same_v = is_same < T1, T2 > ::value;
+template < typename T1, typename T2 > inline constexpr auto is_same_v = is_same < T1, T2 > ::value;
 
-template < typename T1, typename ... Ts > inline constexpr auto is_homogeneous_v = (is_same_v < T1, Ts > && ...);
+template < typename T1, typename ... Ts > inline constexpr auto is_any_of_v = (is_same_v < T1, Ts > || ...);
+template < typename T1, typename ... Ts > inline constexpr auto is_all_of_v = (is_same_v < T1, Ts > && ...);
 
 // =================================================================================================
 
@@ -178,8 +179,11 @@ int main()
 	static_assert( is_same_v < int, int    > );
 	static_assert(!is_same_v < int, double > );
 
-	static_assert( is_homogeneous_v < int, int, int    > );
-	static_assert(!is_homogeneous_v < int, int, double > );
+	static_assert( is_any_of_v < int, int, int    > );
+	static_assert( is_any_of_v < int, int, double > );
+
+	static_assert( is_all_of_v < int, int, int    > );
+	static_assert(!is_all_of_v < int, int, double > );
 
 	static_assert(!is_lvalue_reference_v < int    > );
 	static_assert( is_lvalue_reference_v < int &  > );
