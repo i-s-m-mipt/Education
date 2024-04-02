@@ -36,9 +36,6 @@ template < typename T > requires std::regular < T > class Container {}; // note:
 
 int main()
 {
-    static_assert( integral < int    > && !floating_point < int    > && arithmetic < int    > );
-    static_assert(!integral < double > &&  floating_point < double > && arithmetic < double > );
-
     [[maybe_unused]] constexpr auto result_1 = max_v1(1, 2);
 
 //  constexpr auto result_2 = max_v1(1.0, 2.0); // error: constraints not satisfied
