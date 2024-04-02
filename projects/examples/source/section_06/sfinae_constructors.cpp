@@ -79,7 +79,7 @@ public:
 	
     template < typename S > requires 
 		std::is_convertible_v < S, std::string >
-	explicit Person_v4(S && name) : m_name(std::forward < S > (name)) // good: concept requirement
+	explicit Person_v4(S && name) : m_name(std::forward < S > (name)) // good: requires-clause
 	{
 		std::cout << "Person_v4::Person_v4" << std::endl;
 	}
