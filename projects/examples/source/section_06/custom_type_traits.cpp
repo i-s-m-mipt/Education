@@ -54,7 +54,7 @@ template < typename T > struct is_integral : public std::integral_constant < boo
 	is_same_v < char  , remove_reference_t < T > > || 
 	is_same_v < short , remove_reference_t < T > > ||
 	is_same_v < int   , remove_reference_t < T > > ||
-	is_same_v < long  , remove_reference_t < T > > > {}; // note: not full list
+	is_same_v < long  , remove_reference_t < T > > > {}; // note: full list is longer
 
 template < typename T > inline constexpr auto is_integral_v = is_integral < T > ::value;
 
@@ -106,16 +106,24 @@ template < typename D, typename B > inline constexpr auto is_derived_v = is_deri
 
 // =================================================================================================
 
+template < typename T > add_rvalue_reference_t < T > declval() // note: or add_lvalue_reference_t
+{
+    static_assert(false); // note: allowed in unevaluated contexts only, for example, in decltype
+}
+
+class Bad { public: Bad() = delete; }; // note: not default constructible
+
+[[nodiscard]] inline constexpr int f(Bad); // note: declaration only
+
+// =================================================================================================
+
 template < typename T > class is_polymorphic // note: based on properties of dynamic_cast
 {
 private:
 
-	template < typename T1 > 
-	[[nodiscard]] static constexpr std::false_type test(...);
-
-    template < typename T1, typename Enable = decltype(
-		dynamic_cast < void * > (std::declval < T1 * > ())) >
-	[[nodiscard]] static constexpr std:: true_type test(int); // note: unevaluated context
+	template < typename T1 > [[nodiscard]] static constexpr std::false_type test(...);
+    template < typename T1 > [[nodiscard]] static constexpr std:: true_type test(int, 
+		decltype(dynamic_cast < void * > (declval < T1 * > ())) = nullptr);
 
 public:
       
@@ -131,16 +139,13 @@ template < typename F, typename T > class is_convertible // note: based on prope
 {
 private:
 
-    template < typename T1 > static constexpr void helper_consumer(T1) {}
+    template < typename T1 > static constexpr int helper_consumer(T1);
 
 private:
 
-	template < typename F1, typename T1 > 
-	[[nodiscard]] static constexpr std::false_type test(...);
-
-    template < typename F1, typename T1, typename Enable = decltype(
-		helper_consumer < T1 > (std::declval < F1 > ())) > 
-	[[nodiscard]] static constexpr std:: true_type test(int); // note: unevaluated context
+	template < typename F1, typename T1 > [[nodiscard]] static constexpr std::false_type test(...);
+    template < typename F1, typename T1 > [[nodiscard]] static constexpr std:: true_type test(int, 
+		decltype(helper_consumer < T1 > (declval < F1 > ())) = 0);
 
 public:
       
@@ -216,6 +221,8 @@ int main()
 
 	static_assert( is_derived_v < D, B > );
 	static_assert(!is_derived_v < C, B > );
+
+	[[maybe_unused]] decltype(f(declval < Bad > ())) variable{}; // note: int from f
 
 	static_assert( is_polymorphic_v < B > );
 	static_assert( is_polymorphic_v < D > );
