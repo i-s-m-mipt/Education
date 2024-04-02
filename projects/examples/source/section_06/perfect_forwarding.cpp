@@ -3,18 +3,18 @@
 
 // =================================================================================================
 
-class X {};
+class С {};
 
-inline void g(      X & ) { std::cout << "      X & " << std::endl; }
-inline void g(const X & ) { std::cout << "const X & " << std::endl; }
-inline void g(      X &&) { std::cout << "      X &&" << std::endl; }
+inline void g(      С & ) { std::cout << "      С & " << std::endl; }
+inline void g(const С & ) { std::cout << "const С & " << std::endl; }
+inline void g(      С &&) { std::cout << "      С &&" << std::endl; }
 
 // =================================================================================================
 
 /*
-inline void f(      X &  x) { g(          x ); } // bad: multiple overloads for all cases
-inline void f(const X &  x) { g(          x ); }
-inline void f(      X && x) 
+inline void f(      С &  с) { g(с); } // bad: multiple overloads for all cases
+inline void f(const С &  с) { g(с); }
+inline void f(      С && с) 
 { 
     g(std::move(x)); // note: local argument x is lvalue, move semantics is not transmitted
 } 
@@ -22,9 +22,9 @@ inline void f(      X && x)
 
 // =================================================================================================
 
-template < typename T > inline void f(T && x) // good: forwarding reference, T && or auto &&
+template < typename T > inline void f(T && с) // good: forwarding reference, T && or auto &&
 {
-    g(std::forward < T > (x)); // good: perfect forwarding, maintain fundamental properties
+    g(std::forward < T > (с)); // good: perfect forwarding, maintain fundamental properties
 }
 
 template < typename F, typename ... Types > 
@@ -37,11 +37,11 @@ template < typename F, typename ... Types >
 
 int main()
 {
-	X x; const X cx; // note: objects with different fundamental properties
+	С с; const С cс; // note: objects with different fundamental properties
 
-	f(          x ); // note: f -> g for       X &  x
-	f(         cx ); // note: f -> g for const X &  x
-	f(std::move(x)); // note: f -> g for       X && x
+	f(          с ); // note: f -> g for       С &  x
+	f(         cс ); // note: f -> g for const С &  x
+	f(std::move(с)); // note: f -> g for       С && x
 
 	return 0;
 }
