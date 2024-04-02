@@ -133,10 +133,11 @@ set(section_06 source/section_06/)
 
 set(sources_06
     inference_variants
-    custom_type_list
+    variadic_type_list
     perfect_forwarding
     sfinae_constructors
-    custom_type_traits)
+    custom_type_traits
+    standard_concepts)
 
 foreach(entry IN LISTS sources_06)
     add_executable        (${entry} ${section_06}${entry}.cpp)
