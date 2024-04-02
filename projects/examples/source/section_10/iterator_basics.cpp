@@ -1,45 +1,76 @@
 #include <cassert>
+#include <concepts>
 #include <iostream>
 #include <iterator>
 #include <type_traits>
 #include <vector>
 
+// =================================================================================================
+
 namespace detail
 {
-	template < typename I, typename D > inline constexpr void advance(
-		I & iterator, D distance, std::forward_iterator_tag) noexcept
+	template < typename I > inline constexpr void advance(I & iterator, int n, std::      forward_iterator_tag) noexcept
 	{
-		if (distance > 0)
+		if (n > 0)
 		{
-			while (distance--) ++iterator;
+			while (n--) ++iterator;
 		}
 	}
 
-	template < typename I, typename D > inline constexpr void advance(
-		I & iterator, D distance, std::bidirectional_iterator_tag) noexcept
+	template < typename I > inline constexpr void advance(I & iterator, int n, std::bidirectional_iterator_tag) noexcept
 	{
-		if (distance > 0)
+		if (n > 0)
 		{
-			while (distance--) ++iterator;
+			while (n--) ++iterator;
 		}
 		else
 		{
-			while (distance++) --iterator;
+			while (n++) --iterator;
 		}
 	}
 
-	template < typename I, typename D > inline constexpr void advance(
-		I & iterator, D distance, std::random_access_iterator_tag) noexcept
+	template < typename I > inline constexpr void advance(I & iterator, int n, std::random_access_iterator_tag) noexcept
 	{
-		iterator += distance;
+		iterator += n;
 	}
 
 } // namespace detail
 
-template < typename I, typename D > inline constexpr void advance(I & iterator, D distance)
+// =================================================================================================
+
+template < typename I > inline constexpr void advance_v1(I & iterator, int n)
 {
-    detail::advance(iterator, distance, typename std::iterator_traits < I > ::iterator_category());
+    detail::advance(iterator, n, typename std::iterator_traits < I > ::iterator_category());
 }
+
+// =================================================================================================
+
+template < std::      forward_iterator I > inline constexpr void advance_v2(I & iterator, int n) noexcept
+{
+	if (n > 0)
+	{
+		while (n--) ++iterator;
+	}
+}
+
+template < std::bidirectional_iterator I > inline constexpr void advance_v2(I & iterator, int n) noexcept
+{
+	if (n > 0)
+	{
+		while (n--) ++iterator;
+	}
+	else
+	{
+		while (n++) --iterator;
+	}
+}
+
+template < std::random_access_iterator I > inline constexpr void advance_v2(I & iterator, int n) noexcept
+{
+	iterator += n;
+}
+
+// =================================================================================================
 
 int main()
 {
@@ -57,6 +88,9 @@ int main()
 
 	std::advance(begin, 1); // good: better than += or -= in generic programming
 
+	advance_v1(begin, +2);
+	advance_v2(begin, -2); // note modern compact implementation based on concepts
+
 	assert(*begin == 2);
 
 	assert(*std::next(vector.begin(), 2) == 3); // good: better than + in generic programming
@@ -73,6 +107,8 @@ int main()
 	{
 		std::cout << *iterator << ' ';
 	}
+
+	std::cout << std::endl;
 
 	return 0;
 }
