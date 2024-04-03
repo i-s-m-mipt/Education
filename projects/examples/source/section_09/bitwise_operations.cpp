@@ -207,11 +207,11 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     const auto ptr_uint = &value;
 
-    const auto ptr_char = std::bit_cast < const std::byte * > (ptr_uint); // note: same as reinterpret_cast here
+    const auto ptr_byte = std::bit_cast < const std::byte * > (ptr_uint); // note: same as reinterpret_cast here
 
-    for (std::size_t i = 0; i < sizeof(int); ++i)
+    for (std::size_t i = 0; i < sizeof(unsigned int); ++i)
     {
-        assert(std::to_integer < int > (*(ptr_char + i)) == 0xff);
+        assert(std::to_integer < int > (*(ptr_byte + i)) == 0xff);
     }
 
     assert(&array[size - 1] - &array[0] == 9); // note: pointer arithmetic
