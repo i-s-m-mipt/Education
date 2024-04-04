@@ -135,7 +135,7 @@ set(sources_06
     template_inference
     variadic_type_list
     perfect_forwarding
-    sfinae_constructors
+    sfinae_constructor
     custom_type_traits
     custom_constraints
     cartesian_products
