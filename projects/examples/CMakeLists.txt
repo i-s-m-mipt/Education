@@ -137,7 +137,8 @@ set(sources_06
     perfect_forwarding
     sfinae_constructors
     custom_type_traits
-    custom_constraints)
+    custom_constraints
+    tuple_combination)
 
 foreach(entry IN LISTS sources_06)
     add_executable        (${entry} ${section_06}${entry}.cpp)
