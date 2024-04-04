@@ -132,7 +132,7 @@ endforeach()
 set(section_06 source/section_06/)
 
 set(sources_06
-    inference_variants
+    template_inference
     variadic_type_list
     perfect_forwarding
     sfinae_constructors
