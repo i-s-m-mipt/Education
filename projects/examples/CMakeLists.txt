@@ -138,7 +138,6 @@ set(sources_06
     sfinae_constructor
     custom_type_traits
     custom_constraints
-    cartesian_products
     variadic_container)
 
 foreach(entry IN LISTS sources_06)
@@ -317,20 +316,20 @@ endforeach()
 set(section_12 source/section_12/)
 
 set(sources_12
-    advanced_visitors
-    algorithms_on_graphs
-    algorithms_on_ranges
-    function_objects
-    function_pointers
-    heterogeneous_vector
-    insert_iterators
-    lambda_expressions
-    pattern_command
-    pattern_visitor
-    standard_algorithms
-    depth_first_search
-    breadth_first_search
-    dijkstra_algorithm)
+12.01.functors.1
+12.02.functors.2
+12.03.functors.3
+12.04.patterns.1
+12.05.patterns.2
+12.06.patterns.3
+12.07.containers
+12.08.iterators
+12.09.algorithms.1
+12.10.algorithms.2
+12.11.graphs.1
+12.13.graphs.3
+12.14.graphs.4
+12.15.graphs.5)
 
 foreach(entry IN LISTS sources_12)
     add_executable        (${entry} ${section_12}${entry}.cpp)
