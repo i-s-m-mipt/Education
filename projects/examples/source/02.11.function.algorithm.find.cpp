@@ -1,7 +1,7 @@
 #include <iostream>
 #include <numeric>
 
-[[nodiscard]] const int * binary_search(const int * a, std::size_t l, std::size_t r, int k) // note: O(log(N)) complexity
+[[nodiscard]] const int * find(const int * a, std::size_t l, std::size_t r, int k) // note: O(log(N)) complexity
 {
 	if (l >= r)
 	{
@@ -38,7 +38,7 @@ int main()
 	{
 		std::cout << "index of " << i << " in array: ";
 
-		if (const auto ptr = binary_search(array, 0, n, i); ptr) // good: half-open intervals preferred in C++
+		if (const auto ptr = find(array, 0, n, i); ptr) // good: half-open intervals preferred in C++
 		{
 			std::cout << ptr - array << std::endl; // note: get index through pointer arithmetic
 		}
