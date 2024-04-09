@@ -2,30 +2,23 @@
 #include <iterator>
 #include <vector>
 
-template < typename T > struct Node
+struct Node { int value{}; Node * l{}, * r{}; }; // note: remember second star for pointer here
+
+template < typename R, typename ... Ns > [[nodiscard]] inline R traverse(R root, Ns ... nodes)
 {
-	T value{};
-
-	Node < T > * l{};
-	Node < T > * r{};
-
-}; // template < typename T > struct Node
-
-template < typename R, typename... Paths > [[nodiscard]] inline R traverse(R root, Paths ... paths)
-{
-	return (root ->* ... ->* paths); // note: ((root ->* path_1) ->* path_2) ->* ...
+	return (root ->* ... ->* nodes); // note: ((root ->* node_1) ->* node_2) ->* ...
 }
 
 int main()
 {
-	std::vector < Node < int > > nodes(5);
+	std::vector < Node > nodes(5);
 
 	for (std::size_t i = 0; i < std::size(nodes); ++i)
 	{
 		nodes[i].value = static_cast < int > (i);
 	}
 
-	Node < int > * root = nullptr;
+	Node * root = nullptr;
 
 	root             = &nodes[0];
 	root->l          = &nodes[1];
@@ -33,8 +26,8 @@ int main()
 	root->l->r->l    = &nodes[3];
 	root->l->r->l->r = &nodes[4];
 
-	const auto l = &Node < int > ::l; // note: pointer to data member l
-	const auto r = &Node < int > ::r; // note: pointer to data member r
+	const auto l = &Node::l; // note: pointer to data member l
+	const auto r = &Node::r; // note: pointer to data member r
 
 	std::cout << traverse(root, l, r, l, r)->value << std::endl;
 
