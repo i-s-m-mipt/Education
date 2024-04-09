@@ -20,9 +20,9 @@ class Laptop : public Computer { public: void run() const override { std::cout <
 
 // =================================================================================================ы
 
-template < typename T > [[nodiscard]] inline Computer * create() // note: factory function, consider enumeration
+template < typename T > [[nodiscard]] inline const Computer * create() // note: factory function
 {
-    return new T; // note: consider type traits to verify type T is correct
+    return new const T(); // note: consider type traits or requirements to verify type T is correct
 }
 
 // =================================================================================================
@@ -35,9 +35,9 @@ public:
     {
     public:
 
-        [[nodiscard]] static Computer * create_v1() { return new Server(1); }
-        [[nodiscard]] static Computer * create_v2() { return new Server(2); }
-        [[nodiscard]] static Computer * create_v3() { return new Server(3); }
+        [[nodiscard]] static const Computer * create_v1() { return new const Server(1); }
+        [[nodiscard]] static const Computer * create_v2() { return new const Server(2); }
+        [[nodiscard]] static const Computer * create_v3() { return new const Server(3); }
 
     }; // class Factory
 
@@ -59,7 +59,7 @@ public:
 
     virtual ~Factory() = default; // note: polymorphic base class
 
-    [[nodiscard]] virtual Computer * create() const = 0;
+    [[nodiscard]] virtual const Computer * create() const = 0;
     
 }; // class Factory
 
@@ -69,7 +69,7 @@ class Factory_Mobile : public Factory
 {
 public: 
     
-    [[nodiscard]] Computer * create() const override { return new Mobile; } 
+    [[nodiscard]] const Computer * create() const override { return new const Mobile(); } 
 
 }; // class Factory_Mobile : public Factory
 
@@ -79,7 +79,7 @@ class Factory_Tablet : public Factory
 {
 public: 
     
-    [[nodiscard]] Computer * create() const override { return new Tablet; }
+    [[nodiscard]] const Computer * create() const override { return new const Tablet(); }
 
 }; // class Factory_Tablet : public Factory
 
@@ -89,7 +89,7 @@ class Factory_Laptop : public Factory
 {
 public: 
     
-    [[nodiscard]] Computer * create() const override { return new Laptop; }
+    [[nodiscard]] const Computer * create() const override { return new const Laptop(); }
 
 }; // class Factory_Laptop : public Factory
 
