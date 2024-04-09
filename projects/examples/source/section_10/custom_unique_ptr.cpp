@@ -64,9 +64,9 @@ template < typename T > inline void swap(Unique < T > & lhs, Unique < T > & rhs)
 
 // =================================================================================================
 
-template < typename T, typename ... Types > [[nodiscard]] inline Unique < T > make_unique(Types && ... args)
+template < typename T, typename ... Ts > [[nodiscard]] inline Unique < T > make_unique(Ts && ... args)
 {
-    return Unique < T > (new T(std::forward < Types > (args)...)); 
+    return Unique < T > (new T(std::forward < Ts > (args)...)); 
 }
 
 // =================================================================================================

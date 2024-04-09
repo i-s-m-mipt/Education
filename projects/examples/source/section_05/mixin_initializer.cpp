@@ -32,7 +32,7 @@ template < typename T > class Initializer : public T
 {
 public:
 
-    template < typename ... Types > explicit Initializer(Types ... args) : T(args...)
+    template < typename ... Ts > explicit Initializer(Ts ... args) : T(args...)
     {
         this->initialize(); // good: mandatory function call
     }

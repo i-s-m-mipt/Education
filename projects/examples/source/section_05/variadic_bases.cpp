@@ -11,8 +11,7 @@ template < typename ... Bases > class Point_v1 : public Bases... // note: modern
 {
 public:
 
-    template < typename ... Types > explicit Point_v1(double x, double y, Types ... args) : 
-        Bases(args)..., m_x(x), m_y(y)
+    template < typename ... Ts > explicit Point_v1(double x, double y, Ts ... args) : Bases(args)..., m_x(x), m_y(y)
     {
         std::cout << sizeof...(Bases) << std::endl;
     }

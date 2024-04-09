@@ -48,7 +48,7 @@ class C { static constexpr auto c = 42; }; // note: constexpr here is same as in
 
 // =================================================================================================
 
-template < typename T, typename ... Types > inline void print(const T & arg, const Types & ... args)
+template < typename T, typename ... Ts > inline void print(const T & arg, const Ts & ... args)
 {
 	if constexpr (std::cout << arg << std::endl; sizeof...(args) > 0) 
 	{

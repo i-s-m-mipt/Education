@@ -16,8 +16,7 @@ export namespace math // good: exporting namespace
 
 } // namespace math
 
-export template < typename F, typename ... Types > 
-[[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Types && ... args) 
+export template < typename F, typename ... Ts > [[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Ts && ... args) 
 { 
-	return f(std::forward < Types > (args)...); // note: see std::invoke
+	return f(std::forward < Ts > (args)...); // note: see std::invoke
 }

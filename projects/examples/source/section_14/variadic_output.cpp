@@ -3,7 +3,7 @@
 
 // =================================================================================================
 
-template < typename ... Types > void print_v1(const Types & ... args)
+template < typename ... Ts > void print_v1(const Ts & ... args)
 {
     (std::cout << ... << args) << std::endl; // note: fold expression with no spaces
 }
@@ -29,7 +29,7 @@ private:
 
 // =================================================================================================
 
-template < typename ... Types > void print_v2(const Types & ... args)
+template < typename ... Ts > void print_v2(const Ts & ... args)
 {
     (std::cout << ... << Spaced(args)) << std::endl; // note: fold expression with spaces
 }

@@ -32,13 +32,12 @@ template < typename T > inline void hash(std::size_t & seed, const T & value) no
 	bind(seed, value);
 }
 
-template < typename T, typename ... Types > inline void hash(
-	std::size_t & seed, const T & value, const Types & ... args) noexcept
+template < typename T, typename ... Ts > inline void hash(std::size_t & seed, const T & value, const Ts & ... args) noexcept
 {
 	bind(seed, value); hash(seed, args...);
 }
 
-template < typename ... Types > [[nodiscard]] inline std::size_t combined_hash(const Types & ... args) noexcept
+template < typename ... Ts > [[nodiscard]] inline std::size_t combined_hash(const Ts & ... args) noexcept
 {
 	std::size_t seed = 0; hash(seed, args...); return seed;
 }
