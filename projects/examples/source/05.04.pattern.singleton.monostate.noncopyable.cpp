@@ -52,16 +52,14 @@ private:
 
 // =================================================================================================
 
-class Noncopyable // good: better than singleton
+class Noncopyable // good: better than singleton, non-polymorphic class
 {
 protected:
 
-     Noncopyable() = default;
+    Noncopyable() = default;
 
-     Noncopyable            (const Noncopyable &) = delete;
-     Noncopyable & operator=(const Noncopyable &) = delete;
-
-    ~Noncopyable() = default; // note: non-polymorphic class
+    Noncopyable            (const Noncopyable &) = delete;
+    Noncopyable & operator=(const Noncopyable &) = delete;
 
 }; // class Noncopyable
 
