@@ -18,7 +18,7 @@ class Mobile : public Computer { public: void run() const override { std::cout <
 class Tablet : public Computer { public: void run() const override { std::cout << "Tablet" << std::endl; }; };
 class Laptop : public Computer { public: void run() const override { std::cout << "Laptop" << std::endl; }; };
 
-// =================================================================================================ы
+// =================================================================================================
 
 template < typename T > [[nodiscard]] inline const Computer * create() // note: factory function
 {

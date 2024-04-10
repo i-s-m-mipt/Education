@@ -62,9 +62,9 @@ public:
 
 private:
 
-    static inline const Mobile mobile_prototype;
-    static inline const Tablet tablet_prototype;
-    static inline const Laptop laptop_prototype;
+    static inline const Mobile mobile_prototype; // note: consider new-delete instead of static
+    static inline const Tablet tablet_prototype; // note: consider new-delete instead of static
+    static inline const Laptop laptop_prototype; // note: consider new-delete instead of static
 
 }; // class Factory
 
