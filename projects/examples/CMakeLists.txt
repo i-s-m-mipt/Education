@@ -17,133 +17,100 @@ include_directories(${nlohmann_json_INCLUDE_DIRS})
 include_directories(        ${GTEST_INCLUDE_DIRS})
 include_directories(    ${benchmark_INCLUDE_DIRS})
 
-set(section_01 source/section_01/)
+set(debug
+#   01.01.introduction
+    01.02.introduction.function.main
+    01.03.introduction.standard
+#   01.04.project.tool.git
+    02.01.statement.expression.variable.type
+    02.02.statement.expression.operator
+    02.03.statement.selection
+    02.04.statement.iteration.jump
+    02.05.pointer
+    02.06.pointer.array
+    02.07.pointer.array.new.delete
+    02.08.container.vector
+    02.09.reference.lvalue
+    02.10.function
+    02.11.algorithm.binary.search
+    02.12.algorithm.lexicographic.order
+    02.13.algorithm.insertion.merge.sorting
+    03.01.class.structure
+    03.02.class
+    03.03.class.friend
+    03.04.pattern.attorney.client.passkey
+    03.05.class.association
+    03.06.class.inheritance
+    03.07.class.inheritance.multiple
+#   03.08.class.inheritance.multiple.diamond
+    03.09.class.polymorphism
+#   03.10.class.polymorphism.vptr.vtbl
+    03.11.class.polymorphism.type.covariant
+    03.12.class.polymorphism.type.identification
+    03.13.class.optimization
+#   03.14.expression.classification
+    03.15.reference.lvalue.rvalue
+    03.16.reference.lvalue.rvalue.function.overload
+    03.17.implementation.container.vector
+    03.18.class.operator.overload
+    03.19.class.operator.overload.output
+    03.20.class.operator.overload.spaceship
+    03.21.class.operator.overload.optimization
+    04.01.template.function
+    04.02.template.function.variadic
+    04.03.template.function.variadic.tree.traversal
+    04.04.template.class
+    04.05.template.class.friend
+    04.06.template.alias.variable
+    04.07.metaprogramming
+    04.08.metaprogramming.constexpr
+    04.09.metaprogramming.constexpr.hybrid.ratio
+    05.01.pattern.builder
+    05.02.pattern.factory
+    05.03.pattern.prototype
+    05.04.pattern.singleton.monostate.noncopyable
+    05.05.pattern.adapter
+    05.06.pattern.bridge
+    05.07.pattern.composite
+    05.08.pattern.decorator
+    05.09.pattern.memento
+    05.10.pattern.observer
+    05.11.pattern.state
+    05.12.pattern.strategy
+    05.13.pattern.template.method
+    05.14.template.polymorphism
+    05.15.pattern.crtp
+    05.16.pattern.crtp.observer
+    05.17.pattern.crtp.operator.overload
+    05.18.pattern.crtp.mixin
+    05.19.pattern.crtp.mixin.constructor
+    05.20.pattern.crtp.mixin.inheritance.variadic
+06.01.reference.forwarding
+06.02.pattern.sfinae
+06.03.template.inference
+06.04.implementation.type.trait
+06.05.implementation.type.concept
+06.06.implementation.type.list
+06.07.implementation.tuple
+06.08.metaprogramming.algorithm.cartesian
+)
 
-set(sources_01 
-    minimal_program
-    standard_library)
+set(release
+)
 
-foreach(entry IN LISTS sources_01)
-    add_executable        (${entry} ${section_01}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+foreach(entry IN LISTS debug)
+    add_executable        (${entry} source/${entry}.cpp)
+    target_link_libraries (${entry} PRIVATE ${Boost_LIBRARIES})
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
+    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 endforeach()
 
-set(section_02 source/section_02/)
-
-set(sources_02 
-    bracket_sequences 
-    combined_sorting 
-    container_vector 
-    dynamic_arrays 
-    function_basics 
-    iteration_basics 
-    lvalue_references 
-    operator_basics 
-    optimized_search
-    pointer_basics
-    selection_basics
-    static_arrays
-    variable_basics)
-
-foreach(entry IN LISTS sources_02)
-    add_executable        (${entry} ${section_02}${entry}.cpp)
+foreach(entry IN LISTS release)
+    add_executable        (${entry} source/${entry}.cpp)
+    target_link_libraries (${entry} PRIVATE ${Boost_LIBRARIES})
+    target_link_libraries (${entry} PRIVATE benchmark::benchmark)
+    target_compile_options(${entry} PRIVATE -Wall -pedantic -O3) 
     set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-endforeach()
-
-set(section_03 source/section_03/)
-
-set(sources_03 
-    associative_links
-    attorney_client
-    class_basics
-    class_hierarchies
-    class_optimizations
-    covariant_types
-    friendship_basics
-    multiple_inheritance
-    operator_overloading
-    overload_resolution
-    paired_operators
-    rvalue_references
-    special_functions
-    structure_basics
-    types_identification
-    virtual_functions
-    virtual_operators)
-
-foreach(entry IN LISTS sources_03)
-    add_executable        (${entry} ${section_03}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-endforeach()
-
-set(section_04 source/section_04/)
-
-set(sources_04
-    class_templates
-    constexpr_basics
-    function_templates
-    hybrid_durations
-    metaprogramming
-    special_templates
-    template_friends
-    variadic_templates
-    variadic_traverse)
-
-foreach(entry IN LISTS sources_04)
-    add_executable        (${entry} ${section_04}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-endforeach()
-
-set(section_05 source/section_05/)
-
-set(sources_05
-    crtp_basics
-    crtp_counter
-    crtp_operators
-    mixin_basics
-    mixin_initializer
-    pattern_adapter
-    pattern_bridge
-    pattern_builder
-    pattern_composite
-    pattern_decorator
-    pattern_factory
-    pattern_memento
-    pattern_observer
-    pattern_prototype
-    pattern_singleton
-    pattern_state
-    pattern_strategy
-    pattern_template
-    polymorphism
-    spaceship_operator
-    variadic_bases)
-
-foreach(entry IN LISTS sources_05)
-    add_executable        (${entry} ${section_05}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-endforeach()
-
-set(section_06 source/section_06/)
-
-set(sources_06
-    template_inference
-    variadic_type_list
-    perfect_forwarding
-    sfinae_constructor
-    custom_type_traits
-    custom_constraints
-    variadic_container)
-
-foreach(entry IN LISTS sources_06)
-    add_executable        (${entry} ${section_06}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
 endforeach()
 
 set(section_07 source/section_07/)
@@ -308,65 +275,6 @@ set(sources_11_release
 
 foreach(entry IN LISTS sources_11_release)
     add_executable        (${entry} ${section_11}${entry}.cpp)
-    target_link_libraries (${entry} PRIVATE benchmark::benchmark)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O3) 
-endforeach()
-
-set(section_12 source/section_12/)
-
-set(sources_12
-12.01.functors.1
-12.02.functors.2
-12.03.functors.3
-12.04.patterns.1
-12.05.patterns.2
-12.06.patterns.3
-12.07.containers
-12.08.iterators
-12.09.algorithms.1
-12.10.algorithms.2
-12.11.graphs.1
-12.13.graphs.3
-12.14.graphs.4
-12.15.graphs.5)
-
-foreach(entry IN LISTS sources_12)
-    add_executable        (${entry} ${section_12}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-endforeach()
-
-set(section_13 source/section_13/)
-
-set(sources_13
-    recursive_calculator
-    boost_spirit_basics
-    parser_for_complex
-    parser_for_romans
-    parser_for_structs
-    advanced_calculator
-    character_variants
-    locales_and_facets
-    formatting_library
-    regular_expressions)
-
-foreach(entry IN LISTS sources_13)
-    add_executable        (${entry} ${section_13}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-endforeach()
-
-add_executable        (convert_encodings ${section_13}convert_encodings.cpp)
-target_link_libraries (convert_encodings PRIVATE ${Boost_LIBRARIES})
-set_target_properties (convert_encodings PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-target_compile_options(convert_encodings PRIVATE -Wall -pedantic -O0)
-
-set(sources_13_release
-    strings_string_views)
-
-foreach(entry IN LISTS sources_13_release)
-    add_executable        (${entry} ${section_13}${entry}.cpp)
     target_link_libraries (${entry} PRIVATE benchmark::benchmark)
     set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O3) 
