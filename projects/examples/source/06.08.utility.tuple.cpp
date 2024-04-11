@@ -85,7 +85,7 @@ int main()
     ri = std::get < 1 > (tuple_1);
     rd = std::get < 2 > (tuple_1);
 
-    std::cout << tuple_2 << std::endl; // note: tuple modified through references
+    std::cout << tuple_2 << std::endl; // note: tuple modified through lvalue references
 
     return 0;
 }
