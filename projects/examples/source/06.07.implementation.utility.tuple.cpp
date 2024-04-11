@@ -59,6 +59,12 @@ template < typename ... Ts > inline constexpr void swap(Tuple < Ts ... > & x, Tu
 template < std::size_t N > struct Get
 {
 	template < typename T, typename ... Ts > requires (N < sizeof...(Ts) + 1)
+	[[nodiscard]] static constexpr const auto & apply(const Tuple < T, Ts ...> & tuple)
+	{
+		return Get < N - 1 > ::apply(tuple.tail());
+	}
+
+	template < typename T, typename ... Ts > requires (N < sizeof...(Ts) + 1)
 	[[nodiscard]] static constexpr auto & apply(Tuple < T, Ts ...> & tuple)
 	{
 		return Get < N - 1 > ::apply(tuple.tail());
@@ -69,12 +75,24 @@ template < std::size_t N > struct Get
 template <> struct Get < 0 >
 {
 	template < typename T, typename ... Ts >
+	[[nodiscard]] static constexpr const auto & apply(const Tuple < T, Ts ... > & tuple)
+	{
+		return tuple.head();
+	}
+
+	template < typename T, typename ... Ts >
 	[[nodiscard]] static constexpr auto & apply(Tuple < T, Ts ... > & tuple)
 	{
 		return tuple.head();
 	}
 
 }; // template <> struct Get < 0 >
+
+template < std::size_t N, typename ... Ts > requires (N < sizeof...(Ts))
+[[nodiscard]] inline constexpr const auto & get(const Tuple < Ts ... > & tuple)
+{
+	return Get < N > ::apply(tuple);
+}
 
 template < std::size_t N, typename ... Ts > requires (N < sizeof...(Ts))
 [[nodiscard]] inline constexpr auto & get(Tuple < Ts ... > & tuple)
@@ -153,19 +171,17 @@ inline std::ostream & operator<<(std::ostream & stream, const Tuple < Ts ... > &
 
 int main()
 {
-	auto tuple_1 = make_tuple('a', 42, 3.14);
-	auto tuple_2 = make_tuple('b', 43, 3.15);
+	constexpr auto tuple_1 = make_tuple('a', 42, 3.14);
 
 	std::cout << tuple_1 << std::endl;
-	std::cout << tuple_2 << std::endl;
 
 	std::cout << make_tuple() << std::endl;
 
-	std::cout << get < 0 > (tuple_1) << ' ';
-	std::cout << get < 1 > (tuple_1) << ' ';
-	std::cout << get < 2 > (tuple_1) << std::endl;
+	static_assert(get < 0 > (tuple_1) ==  'a');
+	static_assert(get < 1 > (tuple_1) ==   42);
+	static_assert(get < 2 > (tuple_1) == 3.14);
 
-	tuple_2 = make_tuple('a', 42, 2.72);
+	auto tuple_2 = make_tuple('a', 42, 2.72);
 
 	get < 2 > (tuple_2) = get < 2 > (tuple_1);
 
