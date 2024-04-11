@@ -9,7 +9,7 @@
 
 // =================================================================================================
 
-template < auto N > class Noheap_Allocator : private boost::noncopyable // note: Arena on stack
+template < auto N > class Fixed_Allocator : private boost::noncopyable // note: Arena on stack
 {
 public:
 
@@ -45,7 +45,7 @@ private:
 
     std::byte * m_begin = m_buffer;
 
-}; // class Noheap_Allocator : private boost::noncopyable
+}; // class Fixed_Allocator : private boost::noncopyable
 
 // =================================================================================================
 
@@ -55,7 +55,7 @@ void test_1(benchmark::State & state) // note: very fast
 
 	for (auto _ : state)
 	{
-		Noheap_Allocator < mb > allocator;
+		Fixed_Allocator < mb > allocator;
 
 		for (std::size_t i = 0; i < kb; ++i)
 		{
@@ -88,7 +88,7 @@ BENCHMARK(test_2);
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {
-	Noheap_Allocator < 1024 > allocator; 
+	Fixed_Allocator < 1024 > allocator; 
 
 	std::cout << allocator.allocate(  1, 4) << ' '; allocator.print(); // note: A
 	std::cout << allocator.allocate(  2, 2) << ' '; allocator.print(); // note: B
