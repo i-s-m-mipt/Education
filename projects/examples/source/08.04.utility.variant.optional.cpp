@@ -53,11 +53,11 @@ int main()
 
 //	constexpr std::variant < char, double > v5(42); // error: ambiguous selection
 
-	constexpr std::variant < char, double > v6(std::in_place_type < double >, 42);
+	constexpr std::variant < char, double > v6(std::in_place_type < double > , 42);
 
-	constexpr std::variant < char, double > v7(std::in_place_index < 1 >, 42);
+	constexpr std::variant < char, double > v7(std::in_place_index < 1 > , 42);
 
-	constexpr std::variant < int, int > v8(std::in_place_index < 0 >, 42);
+	constexpr std::variant < int, int > v8(std::in_place_index < 0 > , 42);
 
 	std::cout << v8.index() << std::endl;
 

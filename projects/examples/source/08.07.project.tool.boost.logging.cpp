@@ -256,7 +256,7 @@ private:
 
 template < typename E > inline void catch_handler(const Logger & logger, const std::exception & exception)
 {
-	static_assert(std::is_base_of_v < std::exception, E >, "invalid exception type");
+	static_assert(std::is_base_of_v < std::exception, E > , "invalid exception type");
 
 	logger.write(Logger::Severity::error, exception.what());
 
