@@ -5,17 +5,40 @@
 
 // =================================================================================================
 
-inline void print(std::ostream & stream, const std::tuple <> &, bool is_first = true)
+template < typename T, std::size_t N > struct Printer
 {
-	stream << (is_first ? "{}" : " }");
+    static void print(std::ostream & stream, const T & tuple)
+    {
+        Printer < T, N - 1 > ::print(stream, tuple);
+
+        stream << ", " << std::get < N - 1 > (tuple);
+    }
+
+}; // template < typename T, std::size_t N > struct Printer
+ 
+template < typename T > struct Printer < T, 1 >
+{
+    static void print(std::ostream & stream, const T & tuple)
+    {
+        stream << std::get < 0 > (tuple);
+    }
+
+}; // template < typename T > struct Printer < T, 1 >
+ 
+template < typename ... Ts > requires (sizeof...(Ts) == 0)
+void print(std::ostream & stream, const std::tuple < Ts ... > & tuple)
+{
+    stream << "{}";
 }
-
-template < typename T, typename ... Ts > 
-inline void print(std::ostream & stream, const std::tuple < T, Ts ... > & tuple, bool is_first = true)
+ 
+template < typename ... Ts > requires (sizeof...(Ts) != 0)
+void print(std::ostream & stream, const std::tuple < Ts ... > & tuple)
 {
-	stream << (is_first ? "{ " : ", ") << tuple.head();
+    stream << "{ ";
 
-	print(stream, tuple.tail(), false);
+    Printer < decltype(tuple), sizeof...(Ts) > ::print(stream, tuple);
+
+    stream << " }";
 }
 
 template < typename ... Ts > 
@@ -50,7 +73,7 @@ int main()
  
     std::tie(c, std::ignore, d) = tuple_1; // note: lvalue references
 
-    std::ignore = nodiscard_function();
+    std::ignore = nodiscard_function(); // note: placeholder for nodiscard
 
     auto tuple_2 = std::make_tuple('b', 43, 3.15);
 
@@ -62,7 +85,7 @@ int main()
     ri = std::get < 1 > (tuple_1);
     rd = std::get < 2 > (tuple_1);
 
-    std::cout << tuple_2 << std::endl;
+    std::cout << tuple_2 << std::endl; // note: tuple modified through references
 
     return 0;
 }
