@@ -55,17 +55,17 @@ template < typename T > requires std::regular < T > class Container {}; // note:
 
 int main()
 {
-    [[maybe_unused]] constexpr auto result_1 = max_v1(1, 2);
+    static_assert(max_v1(100, 200) == 200);
 
-//  constexpr auto result_2 = max_v1(1.0, 2.0); // error: constraints not satisfied
+//  static_assert(max_v1(1.0, 2.0) == 2.0); // error: constraints not satisfied
 
-    [[maybe_unused]] constexpr auto result_3 = max_v2(1, 2);
+    static_assert(max_v2(100, 200) == 200);
 
-//  constexpr auto result_4 = max_v2(1.0, 2.0); // error: constraints not satisfied
+//  static_assert(max_v2(1.0, 2.0) == 2.0); // error: constraints not satisfied
 
-    [[maybe_unused]] constexpr auto result_5 = sum_v1(1, 2);
+    static_assert(sum_v1(100, 200) == 300);
 
-//  constexpr auto result_6 = sum_v1(1.0, 2.0); // error: constraints not satisfied
+//  static_assert(sum_v1(1.0, 2.0) == 3.0); // error: constraints not satisfied
 
     [[maybe_unused]] constexpr Container < int > container_1;
 
