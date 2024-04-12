@@ -32,55 +32,55 @@ class B {};
 
 int main()
 {
-	std::variant < char, int, double > v1;
+	std::variant < char, int, double > variant_1;
 
-	v1 = 42; // note: now holding integer value
+	variant_1 = 42; // note: now holding integer value
 
-	std::get < int > (v1) += 42;
+	std::get < int > (variant_1) += 42;
 
-	if (const auto ptr = std::get_if < int > (&v1); ptr)
+	if (const auto ptr = std::get_if < int > (&variant_1); ptr)
 	{
 		*ptr = 42;
 	}
 
-//	constexpr std::variant < C, int > v2; // error: not default constructible
+//	constexpr std::variant < C, int > variant_2; // error: not default constructible
 
-	constexpr std::variant < std::monostate, C, int > v3;
+	constexpr std::variant < std::monostate, C, int > variant_3;
 
-	constexpr std::variant < char, int, double > v4(3.14); // note: double
+	constexpr std::variant < char, int, double > variant_4(3.14); // note: double
 
-	std::cout << std::get < double > (v4) << std::endl;
+	std::cout << std::get < double > (variant_4) << std::endl;
 
-//	constexpr std::variant < char, double > v5(42); // error: ambiguous selection
+//	constexpr std::variant < char, double > variant_5(42); // error: ambiguous selection
 
-	constexpr std::variant < char, double > v6(std::in_place_type < double > , 42);
+	constexpr std::variant < char, double > variant_6(std::in_place_type < double > , 42);
 
-	constexpr std::variant < char, double > v7(std::in_place_index < 1 > , 42);
+	constexpr std::variant < char, double > variant_7(std::in_place_index < 1 > , 42);
 
-	constexpr std::variant < int, int > v8(std::in_place_index < 0 > , 42);
+	constexpr std::variant < int, int > variant_8(std::in_place_index < 0 > , 42);
 
-	std::cout << v8.index() << std::endl;
+	std::cout << variant_8.index() << std::endl;
 
-	std::variant < A, B > v9;
+	std::variant < A, B > variant_9;
 
-	v9 = B(); // good: no memory leaks, destructor called
+	variant_9 = B(); // good: no memory leaks, destructor called
 
 	if (constexpr auto result = handle(42); std::holds_alternative < double > (result))
 	{
 		std::cout << std::get < double > (result) << std::endl;
 	}
 
-	constexpr std::optional < int > o1; // note: same as std::nullopt
+	constexpr std::optional < int > optional_1; // note: same as std::nullopt
 
-    std::cout << o1.has_value() << std::endl;
+    std::cout << optional_1.has_value() << std::endl;
 
-    auto o2 = std::make_optional(42);
+    auto optional_2 = std::make_optional(42);
 
-    o2.reset(); // note: same as std::nullopt
+    optional_2.reset(); // note: same as std::nullopt
 
-    const std::optional < std::string > o3(std::in_place, 5, 'a'); // note: in-place construction
+    const std::optional < std::string > optional_3(std::in_place, 5, 'a');
 
-    std::cout << *o3 << ' ' << o3->front() << std::endl;
+    std::cout << *optional_3 << ' ' << optional_3->front() << std::endl;
 
     std::cout << create(false).value_or("empty") << std::endl;
 

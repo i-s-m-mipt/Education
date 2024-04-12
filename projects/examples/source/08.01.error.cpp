@@ -4,14 +4,14 @@
 
 // =================================================================================================
 
-template < typename T > inline constexpr void swap(T & a, T & b)
+template < typename T > inline constexpr void swap(T & x, T & y)
 {
     static_assert(
         std::is_copy_constructible_v < T > &&
         std::is_copy_assignable_v    < T > , 
             "swap requires copy constructible type");
 
-    const auto c = b; b = a; a = c;
+    const auto z = y; y = x; x = z;
 }
 
 // =================================================================================================
@@ -22,8 +22,7 @@ template < typename T = Bad > class C
 {
 public:
 
-    static_assert(std::is_default_constructible_v < T > ,
-        "C requires default constructible type");
+    static_assert(std::is_default_constructible_v < T > , "C requires default constructible type");
 
 }; // template < typename T = Bad > class C
 
@@ -36,16 +35,16 @@ inline void cleanup_v2() { std::cerr << "cleanup_v2 at exit\n"; }
 
 int main()
 {
-    const int * const pointer = new int(42);
+    const auto object = new const int(42);
 
-    assert(pointer); // good: convenient debugging tool
+    assert(object); // good: convenient debugging tool
 
-    delete pointer;
+    delete object;
 
 //  assert(nullptr); // error: assertion failed
 
-           assert(2 + 2 == 4); // note: optional message string
-    static_assert(2 + 2 == 4); // note: optional message string
+           assert(1 + 1 == 2); // note: optional message string
+    static_assert(1 + 1 == 2); // note: optional message string
 
            assert((sizeof(int) == 4) && "required size of int 4 bytes");
     static_assert((sizeof(int) == 4),   "required size of int 4 bytes");

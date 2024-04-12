@@ -63,7 +63,7 @@ void g()
 {
 	std::cout << "g() called" << std::endl;
 
-//	const int * const a = new int[10]{}; // bad: consider RAII wrapper
+//	const auto a = new int[10]{}; // bad: consider RAII wrapper
 
 	h();
 
@@ -147,13 +147,13 @@ private:
 
 // =================================================================================================
 
-template < typename T > inline constexpr void swap(T & a, T & b) noexcept(
+template < typename T > inline constexpr void swap(T & x, T & y) noexcept(
 	std::is_nothrow_move_constructible_v < T > &&
 	std::is_nothrow_move_assignable_v    < T > ) // note: conditionally noexcept, long instructions
 {
-	auto c = std::move(b); // note: non-constant for movement
-	     b = std::move(a);
-		 a = std::move(c);
+	auto z = std::move(y); // note: non-constant for movement
+	     y = std::move(x);
+		 x = std::move(z);
 }
 
 template < typename F, typename ... Ts > 

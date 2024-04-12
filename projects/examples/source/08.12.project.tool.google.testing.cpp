@@ -34,7 +34,7 @@ TEST(Factorial, Results) // note: group name and test case name
 
 TEST(Miscellaneous, Expectations) 
 { 
-    EXPECT_TRUE(is_even(7)); // note: failed expectation
+    EXPECT_TRUE(is_even(43)); // note: failed expectation
 
     EXPECT_THAT("Hello, world!", testing::StartsWith("Hello"));
 

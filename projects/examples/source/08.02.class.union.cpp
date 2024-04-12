@@ -5,9 +5,9 @@
 
 union U // note: the whole union occupies 4 bytes
 {
-	char a[1]; // note: 1 bytes
-	char b[2]; // note: 2 bytes
-	char c[3]; // note: 3 bytes
+	char c1[1]; // note: 1 bytes
+	char c2[2]; // note: 2 bytes
+	char c3[3]; // note: 3 bytes
 	
 	int i = 0; // note: 4 bytes, zero initialized union
 
@@ -60,20 +60,20 @@ int main()
 {
 	U u;
 
-	u.a[0] = 'a'; // note: u.a is now the active member
+	u.c1[0] = 'a'; // note: u.c1 is now the active member
 
-	std::cout << u.a[0] << std::endl;
+	std::cout << u.c1[0] << std::endl;
 
-//	std::cout << u.b[0] << std::endl; // bad: undefined behaviour
-//	std::cout << u.b[1] << std::endl; // bad: undefined behaviour
+//	std::cout << u.c2[0] << std::endl; // bad: undefined behaviour
+//	std::cout << u.c3[1] << std::endl; // bad: undefined behaviour
 
 	u.i = 0; 
 	
-	u.c[1] = 1; // note: u.c is now the active member
+	u.c3[1] = 1; // note: u.c3 is now the active member
 
 	std::cout << u.i << std::endl; // note: explain result
 
-	print(try_log(8.0));
+	print(try_log(1.0));
 	print(try_log(0.0));
 
 	return 0;

@@ -71,13 +71,13 @@ public:
 
         using iterator_category = std::forward_iterator_tag;
 
-        constexpr iterator() noexcept : m_a(1), m_b(1) {}
+        constexpr iterator() noexcept : m_x(1), m_y(1) {}
 
     public:
 
         constexpr iterator & operator++() noexcept 
 		    { 
-			      m_a += m_b; std::swap(m_a, m_b); return *this;
+			      m_x += m_y; std::swap(m_x, m_y); return *this;
 		    }
 
 		    constexpr iterator operator++(int) noexcept 
@@ -87,17 +87,17 @@ public:
 
         [[nodiscard]] constexpr int operator*() const noexcept // note: no operator->
         { 
-            return m_b; 
+            return m_y; 
         } 
 
 		    [[nodiscard]] constexpr bool operator==(const iterator & other) const noexcept 
 		    { 
-			      return (m_a == other.m_a && m_b == other.m_b); 
+			      return (m_x == other.m_x && m_y == other.m_y); 
 		    }
 
     private:
 
-        int m_a, m_b; // note: m_b is the output value
+        int m_x, m_y; // note: m_y is the output value
 
     }; // class iterator 
 
