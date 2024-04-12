@@ -7,7 +7,7 @@ class Label_v1 { public: explicit Label_v1(char) {}; };
 
 // =================================================================================================
 
-template < typename ... Bases > class Point_v1 : public Bases... // note: modern mixin
+template < typename ... Bases > class Point_v1 : public Bases ... // note: modern mixin
 {
 public:
 
@@ -25,7 +25,7 @@ private:
 
     double m_x, m_y;
 
-}; // class Point_v1 : public Bases...
+}; // class Point_v1 : public Bases ...
 
 // =================================================================================================
 
