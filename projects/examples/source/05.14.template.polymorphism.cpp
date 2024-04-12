@@ -20,9 +20,9 @@ class Laptop_v1 : public Computer { public: void run() const override { std::cou
 
 // =================================================================================================
 
-inline void handle_v1(const Computer & computer) 
+inline void handle_v1(const Computer & computer) // note: slower in runtime, but clear hierarchy
 {
-	computer.run(); // note: slower in runtime, but clear hierarchy
+	computer.run(); 
 }
 
 // =================================================================================================
@@ -33,9 +33,9 @@ class Laptop_v2 { public: void run() const { std::cout << "Laptop_v2" << std::en
 
 // =================================================================================================
 
-template < typename T > inline void handle_v2(const T & t)
+template < typename T > inline void handle_v2(const T & computer) // note: consider constraints
 {
-	t.run(); // note: faster in runtime, but independent classes
+	computer.run(); // note: faster in runtime
 }
 
 // =================================================================================================

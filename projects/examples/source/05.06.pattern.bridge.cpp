@@ -51,7 +51,7 @@ public:
 
 int main() 
 {
-    const Computer * const laptop = new Laptop(Phoenix());
+    const Computer * const laptop = new const Laptop(Phoenix());
 
     laptop->run(); 
     

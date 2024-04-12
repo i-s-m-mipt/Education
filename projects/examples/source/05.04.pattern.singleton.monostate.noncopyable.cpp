@@ -30,7 +30,7 @@ public:
 
 private:
 
-    int m_data = 0;
+    int m_data = 42;
 
 }; // class Singleton 
 
@@ -46,7 +46,7 @@ public:
 
 private:
 
-    static inline int m_data = 0; // note: shared data for all instances
+    static inline int m_data = 42; // note: shared data for all instances
 
 }; // class Monostate
 
@@ -73,7 +73,7 @@ public:
 
 private:
 
-    int m_data = 0;
+    int m_data = 42;
 
 }; // class Unique : private Noncopyable
 

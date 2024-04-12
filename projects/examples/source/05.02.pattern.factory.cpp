@@ -109,7 +109,7 @@ int main()
     
     delete server; // good: no memory leak
 
-    const Factory * const factory_laptop = new Factory_Laptop;
+    const Factory * const factory_laptop = new const Factory_Laptop();
 
     const Computer * const laptop = factory_laptop->create(); 
 

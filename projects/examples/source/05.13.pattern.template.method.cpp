@@ -10,19 +10,19 @@ public:
 
 	void run() const // note: template method, not template < ... >
 	{ 
-		a(); b(); c(); d(); e(); std::cout << std::endl;
+		f1(); f2(); f3(); f4(); f5(); std::cout << std::endl;
 	} 
 
 private:
 
-	void a() const { std::cout << "a "; }
-	void c() const { std::cout << "c "; }
-	void e() const { std::cout << "e "; }
+	void f1() const { std::cout << "1 "; }
+	void f3() const { std::cout << "3 "; }
+	void f5() const { std::cout << "5 "; }
 
 private: // note: non-virtual interface
 
-	virtual void b() const = 0;
-	virtual void d() const = 0;
+	virtual void f2() const = 0;
+	virtual void f4() const = 0;
 
 }; // class Computer
 
@@ -32,8 +32,8 @@ class Mobile : public Computer
 {
 public:
 
-	void b() const override { std::cout << "M "; }
-	void d() const override { std::cout << "M "; }
+	void f2() const override { std::cout << "M "; }
+	void f4() const override { std::cout << "M "; }
 
 }; // class Mobile : public Computer
 
@@ -43,8 +43,8 @@ class Tablet : public Computer
 {
 public:
 
-	void b() const override { std::cout << "T "; }
-	void d() const override { std::cout << "T "; }
+	void f2() const override { std::cout << "T "; }
+	void f4() const override { std::cout << "T "; }
 
 }; // class Tablet : public Computer
 
@@ -54,8 +54,8 @@ class Laptop : public Computer
 {
 public:
 
-	void b() const override { std::cout << "L "; }
-	void d() const override { std::cout << "L "; }
+	void f2() const override { std::cout << "L "; }
+	void f4() const override { std::cout << "L "; }
 
 }; // class Laptop : public Computer
 
@@ -63,7 +63,7 @@ public:
 
 int main()
 {
-	const Computer * const mobile = new Mobile;
+	const Computer * const mobile = new const Mobile();
 
 	mobile->run(); 
 	

@@ -33,7 +33,7 @@ public:
 
 private:
 
-    int m_data = 0;
+    int m_data = 42;
 
 }; // class Computer 
 

@@ -56,9 +56,9 @@ private:
 {
     const auto cluster = new Cluster;
 
-    for (std::size_t i = 0; i < n_mobiles; ++i) cluster->add_computer(new Mobile);
-    for (std::size_t i = 0; i < n_tablets; ++i) cluster->add_computer(new Tablet);
-    for (std::size_t i = 0; i < n_laptops; ++i) cluster->add_computer(new Laptop);
+    for (std::size_t i = 0; i < n_mobiles; ++i) cluster->add_computer(new const Mobile());
+    for (std::size_t i = 0; i < n_tablets; ++i) cluster->add_computer(new const Tablet());
+    for (std::size_t i = 0; i < n_laptops; ++i) cluster->add_computer(new const Laptop());
 
     return cluster;
 }

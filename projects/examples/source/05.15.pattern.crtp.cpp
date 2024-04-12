@@ -27,7 +27,10 @@ public:
 
 // =================================================================================================
 
-template < typename T > inline void handle(const T & t) { t.run(); }
+template < typename T > inline void handle(const T & computer) // note: consider constraints
+{ 
+	computer.run(); 
+}
 
 // =================================================================================================
 
