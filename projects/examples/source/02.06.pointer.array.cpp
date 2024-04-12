@@ -5,72 +5,67 @@
 
 int main()
 {
-	const std::size_t size = 10; // note: compile-time constant variable
+	const std::size_t size = 5; // note: compile-time constant
 
-	int a[size]{}; // good: zero initialized array
+	int array_1[size]{}; // good: zero initialized array
 
-	[[maybe_unused]] const int b[size]{ 1, 2, 3 }; // note: elements: { 1, 2, 3, 0, 0, 0, 0, 0, 0, 0 }
+	[[maybe_unused]] const int array_2[size]{ 1, 2, 3 }; // note: elements: { 1, 2, 3, 0, 0 }
+	[[maybe_unused]] const int array_3[    ]{ 1, 2, 3 }; // note: elements: { 1, 2, 3 }, size deduction -> 3
 
-	[[maybe_unused]] const int c[]{ 1, 2, 3 }; // note: elements: { 1, 2, 3 }, size deduction -> 3
+//	const int array_4[2]{ 1, 2, 3 }; // error: too many initializers
 
-//	const int d[2]{ 1, 2, 3 }; // error: too many initializers
+//	const int array_5[1'000'000'000]{}; // bad: array is too large, use dynamic array
 
-//	const int e[1'000'000'000]{}; // bad: array is too large, use dynamic array
+	std::cout << sizeof(array_1) / sizeof(array_1[0]) << std::endl; // note: old-style computation
 
-	std::cout << sizeof(a) / sizeof(a[0]) << std::endl; // note: old-style computation
+	std::cout << std::size(array_1) << std::endl; // good: common for static arrays and containers
 
-	std::cout << std::size(a) << std::endl; // good: common for static arrays and containers
+	*array_1 = 42; // note: array name is a pointer to the first element
 
-	*a = 42; // note: array name is a pointer to the first element
+	const auto middle = size / 2;
 
-	const auto m = size / 2;
+	*(array_1 + middle) = 42; // note: pointer arithmetic
 
-	*(a + m) = 42; // note: pointer arithmetic
+//	*(array_1 + 100000) = 42; // bad: undefined behavior, page fault / segmentation fault
 
-//	*(a + 100) = 42; // bad: undefined behavior
+//	std::cout << *(&array_1[0] + middle) << std::endl; // bad: redundant syntax
 
-	std::cout << a[m] << std::endl; // good: standard index access operator syntax
+	std::cout << array_1[middle] << std::endl; // good: standard index access operator syntax
 
-//	std::cout << *(&a[0] + m) << std::endl; // bad: redundant syntax
+//	std::cout << middle[array_1] << std::endl; // bad: inconvenient index access operator syntax
 
-	std::cout << *(a + m) << std::endl;
-	std::cout << *(m + a) << std::endl;
+	std::cout << (array_1 + middle + 1) - 
+				 (array_1 + middle - 1) << std::endl; // note: distance between elements
 
-//	std::cout << m[a] << std::endl; // bad: inconvenient index access operator syntax
+//	auto delta = array_2 - array_1; // bad: pointers to different arrays
 
-	std::cout << (a + m + 1) - (a + m - 1) << std::endl; // note: distance between elements
-
-//	auto delta = b - a; // bad: pointers to different arrays
-
-	for (const int * p = a; p != (a + size); ++p)
+	for (const int * ptr = array_1; ptr != (array_1 + size); ++ptr)
 	{
-		std::cout << *p << (p + 1 == a + size ? '\n' : ' '); // good: compact formatting
+		std::cout << *ptr << (ptr + 1 == array_1 + size ? '\n' : ' ');
 	}
 
-	const std::size_t buffer_size = 1024; // note: compile-time constant
+	const std::size_t buffer_size = 1024;
 
-	int s[buffer_size]{};
+	int buffer[buffer_size]{}; // note: buffer_size >= size
 
-	const std::size_t n = 5; // note: buffer_size >= n (elements)
+	std::iota(buffer, buffer + size, 1); // note: generate range 1, 2, 3, ...
 
-	std::iota(s, s + n, 1); // note: generate range 1, 2, 3, ...
+	std::ranges::reverse(buffer, buffer + size); // note: reverse range
 
-	std::ranges::reverse(s, s + n); // note: reverse range
-
-	for (std::size_t i = 0; i < n - 1; ++i) // note: bubble sort
+	for (std::size_t i = 0; i < size - 1; ++i) // note: bubble sort
 	{
-		for (std::size_t j = i + 1; j < n; ++j)
+		for (std::size_t j = i + 1; j < size; ++j)
 		{
-			if (s[i] > s[j]) // note: sort in ascending order
+			if (buffer[i] > buffer[j]) // note: sort in ascending order
 			{
-				std::swap(s[i], s[j]);
+				std::swap(buffer[i], buffer[j]);
 			}
 		}
 	}
 
-	for (std::size_t i = 0; i < n; ++i)
+	for (std::size_t i = 0; i < size; ++i)
 	{
-		std::cout << s[i] << (i + 1 == n ? '\n' : ' ');
+		std::cout << buffer[i] << (i + 1 == size ? '\n' : ' ');
 	}
 
 	return 0;

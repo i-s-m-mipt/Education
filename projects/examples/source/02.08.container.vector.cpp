@@ -7,17 +7,17 @@
 
 int main()
 {
-	const std::size_t n = 5;
+	const std::size_t size = 5;
 
-	std::vector < int > vector(n, 0); // note: create vector of n zero elements
+	std::vector < int > vector(size, 0); // note: create vector of n zero elements
 
 	std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
 
 	std::ranges::reverse(vector); // note: reverse range
 
-	for (std::size_t i = 0; i < n - 1; ++i)
+	for (std::size_t i = 0; i < size - 1; ++i) // note: bubble sort
 	{
-		for (std::size_t j = i + 1; j < n; ++j)
+		for (std::size_t j = i + 1; j < size; ++j)
 		{
 			if (vector[i] > vector[j]) // note: sort in ascending order
 			{
@@ -26,7 +26,7 @@ int main()
 		}
 	}
 
-	for (const auto element : vector) std::cout << element << ' ';
+	for (const auto element : vector) std::cout << element << ' '; // note: range-based for
 
 	std::cout << std::endl;
 

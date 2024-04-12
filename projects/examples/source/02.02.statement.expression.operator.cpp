@@ -2,44 +2,30 @@
 
 int main()
 {
-	const auto a = true;
-	const auto b = true;
+	const auto b1 = true, b2 = true;
 
-	std::cout <<    !a << ' ' << (a || b) << ' ' << (a  && b) << std::endl;
-	std::cout << not a << ' ' << (a or b) << ' ' << (a and b) << std::endl;
+	std::cout <<    !b1 << ' ' << (b1 || b2) << ' ' << (b1  && b2) << std::endl;
+	std::cout << not b1 << ' ' << (b1 or b2) << ' ' << (b1 and b2) << std::endl;
 
-	std::cout << (true || (a && b)) << std::endl; // note: short-circuit evaluation
+	std::cout << (true || (b1 && b2)) << std::endl; // note: short-circuit evaluation
 
-	[[maybe_unused]] auto law_1 = (!(a && b) == !a || !b);
-	[[maybe_unused]] auto law_2 = (!(a || b) == !a && !b);
+	[[maybe_unused]] auto law_1 = (!(b1 && b2) == !b1 || !b2);
+	[[maybe_unused]] auto law_2 = (!(b1 || b2) == !b1 && !b2);
 
-	std::cout << (a != b) << std::endl; // note: a xor b for booleans
+	std::cout << (b1 != b2) << std::endl; // note: b1 xor b2 for booleans
 
-	auto x = 7;
-	auto y = 4;
+	auto x = 1, y = 2;
 
 	std::cout << (!!x != !!y) << std::endl; // note: x xor y for non-booleans
 
-	std::cout << -x << std::endl;
-	std::cout << +x << std::endl;
+	std::cout << (    -x) << std::endl;
+	std::cout << (    +x) << std::endl;
 
-	std::cout << x + y << std::endl;
-	std::cout << x - y << std::endl;
-	std::cout << x * y << std::endl;
-	std::cout << x / y << std::endl; 
-	std::cout << x % y << std::endl;
-
-	x = x + y; y = x - y; x = x - y; // note: Google interview, solution 1
-
-	std::cout << 7   / 4   << std::endl; // note: integer  division
-	std::cout << 7.0 / 4.0 << std::endl; // note: floating division
-
-	std::cout << 1.0 * x / y << std::endl; // good: 1.0 instead of static_cast
-
-	std::cout << +7 % +4 << std::endl; // note: result is +3
-	std::cout << +7 % -4 << std::endl; // note: result is +3
-	std::cout << -7 % +4 << std::endl; // note: result is -3
-	std::cout << -7 % -4 << std::endl; // note: result is -3
+	std::cout << (x +  y) << std::endl;
+	std::cout << (x -  y) << std::endl;
+	std::cout << (x *  y) << std::endl;
+	std::cout << (x /  y) << std::endl; 
+	std::cout << (x %  y) << std::endl;
 
 	std::cout << (x += y) << std::endl; // good: x += y instead of x = x + y
 	std::cout << (x -= y) << std::endl; // good: x -= y instead of x = x - y
@@ -49,17 +35,27 @@ int main()
 
 	std::cout << (x <  y) << std::endl;
 	std::cout << (x >  y) << std::endl;
-
 	std::cout << (x <= y) << std::endl;
 	std::cout << (x >= y) << std::endl;
-
 	std::cout << (x == y) << std::endl;
 	std::cout << (x != y) << std::endl;
 
-	std::cout << x++ << std::endl; // good: x++ instead of x += 1
-	std::cout << x-- << std::endl; // good: x-- instead of x -= 1
-	std::cout << ++x << std::endl; // good: ++x instead of x += 1
-	std::cout << --x << std::endl; // good: --x instead of x -= 1
+	std::cout << (x++   ) << std::endl; // good: x++ instead of x += 1
+	std::cout << (x--   ) << std::endl; // good: x-- instead of x -= 1
+	std::cout << (   ++x) << std::endl; // good: ++x instead of x += 1
+	std::cout << (   --x) << std::endl; // good: --x instead of x -= 1
+
+	x = x + y; y = x - y; x = x - y; // note: Google interview, solution 1
+
+	std::cout << (1   / 2  ) << std::endl; // note: integer  division
+	std::cout << (1.0 / 2.0) << std::endl; // note: floating division
+
+	std::cout << (1.0 * x / y) << std::endl; // good: 1.0 instead of static_cast
+
+	std::cout << (+1 % +2) << std::endl; // note: result is +1
+	std::cout << (+1 % -2) << std::endl; // note: result is +1
+	std::cout << (-1 % +2) << std::endl; // note: result is -1
+	std::cout << (-1 % -2) << std::endl; // note: result is -1
 
 //	x+++++y; // error: maximum piece principle, write as (x++)+(++y);
 

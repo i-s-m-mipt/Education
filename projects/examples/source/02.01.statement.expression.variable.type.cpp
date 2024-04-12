@@ -18,32 +18,29 @@ int main()
 
 //	unsigned long long int ulli = 42ull; // bad: looks like Hungarian notation
 
-	[[maybe_unused]] int variable = 0; // good: suppressed warning
+	[[maybe_unused]] int m = 42, n = 42; // note: comma separator syntax
 
-//	int m = 0, n = 42; // bad: inconvenient comma separator syntax
+//	int x1; // bad: uninitialized variable, indeterminate value
 
-//	int x; // bad: uninitialized variable, indeterminate value
+//	int y1 = x1; // error: undefined behavior
 
-//	int z = x; // error: undefined behavior
+	[[maybe_unused]] int  x2 { i }; // good: initialized variable
+	[[maybe_unused]] int  x3 = i  ; // good: initialized variable
 
-	[[maybe_unused]] int x1{};   // good: initialized variable, zero value
-	[[maybe_unused]] int x2 = i; // good: initialized variable
+	[[maybe_unused]] auto x4 = i; // good: type deduction
 
-	[[maybe_unused]] auto y = i; // good: type deduction
+//	auto x5; // error: invalid type deduction, initializer required
 
-//	auto y0;   // error: invalid type deduction
-//	auto y1{}; // error: invalid type deduction
+//	int  y2 = d; // warning: narrow conversion
 
-//	int z0 = d; // warning: narrow conversion
+//	int  y3 { d }; // error: prohibited narrow conversion
 
-//	int z1{d}; // error: prohibited narrow conversion
+//	auto y4 { (int)d  }; // bad: old style conversion
+//	auto y5 {  int(d) }; // bad: old style conversion
 
-//	auto z2{(int)d}; // bad: old style conversion
-//	auto z3{int(d)}; // bad: old style conversion
+	[[maybe_unused]] auto y6 { static_cast < int > (d) }; // good: new style conversion
 
-	[[maybe_unused]] auto z4{static_cast < int > (d)}; // good: new style conversion
-
-//	auto z6{static_cast < int > ("hello")}; // error: invalid conversion
+//	auto y7 { static_cast < int > ("hello") }; // error: invalid conversion
 
 	d = i = c = b; // good: wide conversions
 
@@ -59,7 +56,7 @@ int main()
 
 //	pi = 1.0; // error: constant variable
 
-	[[maybe_unused]] volatile auto v = 0; // note: something strange
+	[[maybe_unused]] volatile auto v = 42; // note: for compiler optimizations
 
 	using my_type = const double; // good: new style type alias
 
@@ -67,7 +64,7 @@ int main()
 
  //	typedef double my_old_type; // bad: old style type alias
 
-	[[maybe_unused]] const std::size_t size = 10; // good: used with arrays
+	[[maybe_unused]] const std::size_t size = 5; // good: used with arrays
 
 	return 0;
 }

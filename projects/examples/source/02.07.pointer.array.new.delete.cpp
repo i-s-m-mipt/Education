@@ -5,54 +5,50 @@
 
 int main()
 {
-	const auto ptr_int = new const int(42); // good: initialized dynamic variable
+	const auto object = new const int(42); // good: initialized dynamic variable
 
-	std::cout << *ptr_int << std::endl;
+	std::cout << *object << std::endl;
 
-	delete ptr_int; // good: no dynamic variable memory leak
+	delete object; // good: no dynamic variable memory leak
 
-	const std::size_t size = 10;
+	const std::size_t size = 5;
 
-	const auto ptr_array = new int[size]{}; // good: zero initialized dynamic array
+	const auto array = new int[size]{}; // good: zero initialized dynamic array
 
-	const auto m = size / 2;
+	const auto middle = size / 2;
 
-	ptr_array[m] = 42;
+	array[middle] = 42;
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		std::cout << ptr_array[i] << (i + 1 == size ? '\n' : ' ');
+		std::cout << array[i] << (i + 1 == size ? '\n' : ' ');
 	}
 
-	delete[] ptr_array; // good: no dynamic array memory leak
+	delete[] array; // good: no dynamic array memory leak, don't use plain delete
 
-//	delete ptr_array; // bad: wrong delete
+	const auto buffer = new int[size]; 
 
-	std::size_t n = 5; // note: non-constant size as runtime variable
+	std::iota(buffer, buffer + size, 1); // note: generate range 1, 2, 3, ...
 
-	const auto s = new int[n]; 
+	std::ranges::reverse(buffer, buffer + size); // note: reverse range
 
-	std::iota(s, s + n, 1); // note: generate range 1, 2, 3, ...
-
-	std::ranges::reverse(s, s + n); // note: reverse range
-
-	for (std::size_t i = 0; i < n - 1; ++i) // note: bubble sort
+	for (std::size_t i = 0; i < size - 1; ++i) // note: bubble sort
 	{
-		for (std::size_t j = i + 1; j < n; ++j)
+		for (std::size_t j = i + 1; j < size; ++j)
 		{
-			if (s[i] > s[j]) // note: sort in ascending order
+			if (buffer[i] > buffer[j]) // note: sort in ascending order
 			{
-				std::swap(s[i], s[j]);
+				std::swap(buffer[i], buffer[j]);
 			}
 		}
 	}
 
-	for (std::size_t i = 0; i < n; ++i)
+	for (std::size_t i = 0; i < size; ++i)
 	{
-		std::cout << s[i] << (i + 1 == n ? '\n' : ' ');
+		std::cout << buffer[i] << (i + 1 == size ? '\n' : ' ');
 	}
 
-	delete[] s;
+	delete[] buffer; // good: no memory leak
 
 	return 0;
 }

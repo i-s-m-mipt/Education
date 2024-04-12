@@ -1,44 +1,39 @@
 #include <iostream>
 #include <numeric>
 
-[[nodiscard]] const int * find(const int * a, std::size_t l, std::size_t r, int k) // note: O(log(N)) complexity
+[[nodiscard]] const int * binary_search(const int * array, std::size_t size, int key) 
 {
-	if (l >= r)
+	std::size_t l = 0, r = size;
+
+	if (r == 0)
 	{
-		return nullptr; // good: nullptr is better than special index value like INT_MAX or -1
+		return nullptr; // good: nullptr is better than index value like INT_MAX or -1
 	}
 
-	if (r - l == 1)
+	if (r == 1)
 	{
-		return (a[l] == k ? a : nullptr);
+		return (array[0] == key ? array : nullptr);
 	}
 
-	while (l < r) // good: one comparison in selection condition with two branches in the loop
+	while (l < r) // good: O(log(N)) complexity, selection with only 2 branches
 	{
-		if (auto middle = std::midpoint(l, r); a[middle] < k) // good: optimized for overflows
-		{
-			l = middle + 1;
-		}
-		else
-		{
-			r = middle;
-		}
+		const auto m = std::midpoint(l, r); array[m] < key ? l = m + 1 : r = m;
 	}
 
-	return (a[l] == k ? &a[l] : nullptr); // good: one additional comparison after the loop
+	return (array[l] == key ? &array[l] : nullptr); // good: one additional comparison after the loop
 }
 
 int main()
 {
 	const int array[]{1, 3, 4, 5, 6, 7, 8 }; // note: sorted array, consider std::vector with iterators
 
-	const std::size_t n = sizeof(array) / sizeof(int); // note: prefer std::size over this way
+	const std::size_t size = std::size(array);
 
-	for (auto i = array[0] - 1; i <= array[n - 1] + 1; ++i)
+	for (auto key = array[0] - 1; key <= array[size - 1] + 1; ++key)
 	{
-		std::cout << "index of " << i << " in array: ";
+		std::cout << "index of " << key << " in array: ";
 
-		if (const auto ptr = find(array, 0, n, i); ptr) // good: half-open intervals preferred in C++
+		if (const auto ptr = binary_search(array, size, key); ptr) // good: half-open interval
 		{
 			std::cout << ptr - array << std::endl; // note: get index through pointer arithmetic
 		}

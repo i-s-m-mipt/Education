@@ -4,7 +4,7 @@
 
 int main()
 {
-	auto x = 0;
+	auto x = 42;
 	
 //	int & ri; // error: uninitialized reference
 
@@ -12,15 +12,15 @@ int main()
 
 	rx = 42;
 
-	const auto y = 1;
+	const auto y = 42;
 
 	rx = y; // note: rx refers to x, not y
 
 //	int & ry = y; // error: non-constant reference to constant
 
-	[[maybe_unused]] const auto & rcx = x; // note: constant reference
+	[[maybe_unused]] const auto & rcy = y; // note: constant reference
 
-//	rcx = 42; // error: constant reference
+//	rcy = 42; // error: constant reference
 
 	[[maybe_unused]] const auto & rcv = 42; // note: temporary object lifetime extension 
 

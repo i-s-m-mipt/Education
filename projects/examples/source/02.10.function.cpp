@@ -12,9 +12,9 @@
 	return (x + y + z);
 }
 
-void set_code(int * code = nullptr) // good: nullptr as default argument
+void extract_data(int * ptr = nullptr) // good: nullptr as default argument
 {
-	[[maybe_unused]] auto local_code = (code ? *code : 1234);
+	[[maybe_unused]] auto local_data = (ptr ? *ptr : 42);
 } 
 
 // =================================================================================================
@@ -82,18 +82,18 @@ void print_vector(const std::vector < int > & vector) // good: std::vector knows
 /*
 [[nodiscard]] int * get_dangling_pointer()
 {
-	const auto d = 42; // good: static const auto d = 42;
+	const auto local = 42; // good: static const auto local = 42;
 
-	return &d; // warning: dangling pointer to non-static local variable
+	return &local; // warning: dangling pointer to non-static local variable
 }
 */
 
 /*
 [[nodiscard]] int & get_dangling_reference()
 {
-	const auto d = 42; // good: static const auto d = 42;
+	const auto local = 42; // good: static const auto local = 42;
 
-	return d; // warning: dangling reference to non-static local variable
+	return local; // warning: dangling reference to non-static local variable
 }
 */
 
@@ -101,9 +101,9 @@ void print_vector(const std::vector < int > & vector) // good: std::vector knows
 
 void h()
 {
-	auto x = 0; // note: ordinary local variable
+	auto x = 42; // note: ordinary local variable
 
-	static auto y = 0; // note: once initialized static variable
+	static auto y = 42; // note: once initialized static variable
 
 	std::cout << ++x << ' ' << ++y << std::endl;
 
@@ -112,9 +112,9 @@ void h()
 
 // =================================================================================================
 
-inline void print(bool   x) { std::cout << x << std::endl; } // note: overloaded function
-inline void print(char   x) { std::cout << x << std::endl; } // note: overloaded function
-inline void print(double x) { std::cout << x << std::endl; } // note: overloaded function
+inline void print(bool  ) { std::cout << "print(bool  )" << std::endl; } // note: overloaded function
+inline void print(char  ) { std::cout << "print(char  )" << std::endl; } // note: overloaded function
+inline void print(double) { std::cout << "print(double)" << std::endl; } // note: overloaded function
 
 // =================================================================================================
 
@@ -122,18 +122,17 @@ int main()
 {
 //	f(42); // warning: nodiscard function
 
-	[[maybe_unused]] const auto s = g(f(4), f(7)); // note: unspecified arguments evaluation order
+	[[maybe_unused]] const auto result = g(f(42), f(42)); // note: unspecified arguments evaluation order
 
-	auto x = 0;
-	auto y = 0;
+	auto x = 1, y = 2;
 
 	test_pointers  (&x, &y); std::cout << x << ' ' << y << std::endl;
 	test_references( x,  y); std::cout << x << ' ' << y << std::endl;
 
 	const std::size_t size = 5;
 
-	const int         array_1          [size]{ 1, 2, 3, 4, 5 };
-	const int * const array_2 = new int[size]{ 1, 2, 3, 4, 5 };
+	const int         array_1                [size]{ 1, 2, 3, 4, 5 };
+	const int * const array_2 = new const int[size]{ 1, 2, 3, 4, 5 };
 
 	print_array(array_1, size); print_span({ array_1       });
 	print_array(array_2, size); print_span({ array_2, size });
@@ -144,7 +143,7 @@ int main()
 
 	print_vector(vector); // good: no copying of big object
 
-	std::cout << max(4, 7) << ' ' << factorial(5) << std::endl;
+	std::cout << max(1, 2) << ' ' << factorial(5) << std::endl;
 
 //	std::cout << *get_dangling_pointer  () << std::endl; // bad: undefined behavior
 //	std::cout <<  get_dangling_reference() << std::endl; // bad: undefined behavior
@@ -153,7 +152,8 @@ int main()
 
 	print(true);
 	print(3.14);
-//	print(1234); // error: ambiguous function overloading
+	
+//	print(42); // error: ambiguous function overloading
 
 	return 0;
 }
