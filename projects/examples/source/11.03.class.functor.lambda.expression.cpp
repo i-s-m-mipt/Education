@@ -27,19 +27,18 @@ int main()
 
 	std::cout << typeid(lambda).name() << std::endl; // note: unique closure type
 
-	auto a = 0; // note: internal state, see reference arguments
-	auto b = 1;
+	auto z1 = 0, z2 = 0;
 
-	[&a, b](auto c)         { a = b + c; }(2);
-	[ a, b](auto c) mutable { a = b + c; }(2);
+	[&z1, z2](auto x)         { z1 = z2 + x; }(42);
+	[ z1, z2](auto x) mutable { z1 = z2 + x; }(42);
 
-	assert(a == 3);
+	assert(z1 == 42);
 
-//	[&](auto c){ a = b + c; }(2); // bad: default capture by reference
+//	[&](auto x){ z1 = z2 + x; }(42); // bad: default capture by reference
 
-	auto up = std::make_unique < int > (42);
+	auto unique_pointer = std::make_unique < int > (42);
 
-	[up = std::move(up)](){ assert(*up == 42); }(); // note: capture by move
+	[unique_pointer = std::move(unique_pointer)](){ assert(*unique_pointer == 42); }(); 
 
 	std::array < std::function < int(int, int) > , 4 > operations;
 
@@ -48,10 +47,9 @@ int main()
 	operations[2] = [](auto x, auto y){ return (x * y); };
 	operations[3] = [](auto x, auto y){ return (x / y); };
 
-	constexpr auto x = 8;
-	constexpr auto y = 4;
+	constexpr auto x = 1, y = 2;
 
-	assert(operations.at(1)(x, y) == (x - y));
+	assert(operations.at(0)(x, y) == (x + y));
 
 	constexpr auto templated_lambda = [] < typename T > (T x, T y) { return (x + y); };
 
@@ -63,8 +61,8 @@ int main()
 
 	std::vector < int > vector(size, 0);
 
-	std::ranges::for_each(              vector , [a](auto & x){        x += a ; }); // note: modify elements in range
-	std::ranges::for_each(std::as_const(vector), [a](auto   x){ assert(x == a); }); // note: verify elements in range
+	std::ranges::for_each(              vector , [z1](auto & x){        x += z1 ; }); // note: modify elements in range
+	std::ranges::for_each(std::as_const(vector), [z1](auto   x){ assert(x == z1); }); // note: verify elements in range
 
 	const std::set < int, decltype([](auto lhs, auto rhs){ return (lhs > rhs); }) > set = { 1, 4, 2, 5, 3 };
 

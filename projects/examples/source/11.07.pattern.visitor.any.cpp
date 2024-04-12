@@ -21,9 +21,9 @@ template < typename T, typename F > [[nodiscard]] inline auto make_visitor(F f)
 
 void handle(const std::any & any)
 {
-    using type_b = bool; 
-    using type_c = char; 
-    using type_i = int; 
+    using type_b = bool  ; 
+    using type_c = char  ; 
+    using type_i = int   ; 
     using type_d = double;
 
     static std::unordered_map < std::type_index, std::function < void(const std::any &) > > visitors

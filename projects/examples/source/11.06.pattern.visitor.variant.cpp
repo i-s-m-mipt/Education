@@ -6,9 +6,9 @@
 
 // =================================================================================================
 
-class Mobile { public: [[nodiscard]] constexpr int run() const noexcept { return 0; }; };
-class Tablet { public: [[nodiscard]] constexpr int run() const noexcept { return 0; }; };
-class Laptop { public: [[nodiscard]] constexpr int run() const noexcept { return 1; }; };
+class Mobile { public: [[nodiscard]] constexpr int run() const noexcept { return 42; }; };
+class Tablet { public: [[nodiscard]] constexpr int run() const noexcept { return 42; }; };
+class Laptop { public: [[nodiscard]] constexpr int run() const noexcept { return 43; }; };
 
 // =================================================================================================
 
@@ -22,17 +22,17 @@ public:
 
     void operator()(const Mobile & mobile) const
     {
-        if (mobile.run() != 0) throw std::runtime_error("Mobile::run error");
+        if (mobile.run() != 42) throw std::runtime_error("Mobile::run error");
     }
 
     void operator()(const Tablet & tablet) const
     {
-        if (tablet.run() != 0) throw std::runtime_error("Tablet::run error");
+        if (tablet.run() != 42) throw std::runtime_error("Tablet::run error");
     }
 
     void operator()(const Laptop & laptop) const
     {
-        if (laptop.run() != 0) throw std::runtime_error("Laptop::run error");
+        if (laptop.run() != 42) throw std::runtime_error("Laptop::run error");
     }
 
 }; // class Tester

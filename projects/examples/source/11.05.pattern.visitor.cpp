@@ -37,7 +37,7 @@ class Mobile : public Computer
 {
 public:
 
-    [[nodiscard]] int run() const noexcept override { return 0; };
+    [[nodiscard]] int run() const noexcept override { return 42; };
 
     void visit_by(Visitor * visitor) const override
     { 
@@ -52,7 +52,7 @@ class Tablet : public Computer
 {
 public:
 
-    [[nodiscard]] int run() const noexcept override { return 0; };
+    [[nodiscard]] int run() const noexcept override { return 42; };
 
     void visit_by(Visitor * visitor) const override
     {
@@ -67,7 +67,7 @@ class Laptop : public Computer
 {
 public:
 
-    [[nodiscard]] int run() const noexcept override { return 1; };
+    [[nodiscard]] int run() const noexcept override { return 43; };
 
     void visit_by(Visitor * visitor) const override
     {
@@ -84,17 +84,17 @@ public:
 
     void visit(const Mobile * mobile) const override 
     { 
-        if (mobile->run() != 0) throw std::runtime_error("Mobile::run error");
+        if (mobile->run() != 42) throw std::runtime_error("Mobile::run error");
     }
 
     void visit(const Tablet * tablet) const override 
     {
-        if (tablet->run() != 0) throw std::runtime_error("Tablet::run error");
+        if (tablet->run() != 42) throw std::runtime_error("Tablet::run error");
     }
 
     void visit(const Laptop * laptop) const override 
     {
-        if (laptop->run() != 0) throw std::runtime_error("Laptop::run error");
+        if (laptop->run() != 42) throw std::runtime_error("Laptop::run error");
     }
 
 }; // class Tester : public Visitor
