@@ -40,7 +40,7 @@ int main()
 
 	std::cout << std::endl;
 
-	for (auto pc = '!'; pc <= '~'; ++pc) std::cout << pc; // note: printable ASCII characters
+	for (c = '!'; c <= '~'; ++c) std::cout << c; // note: printable ASCII characters
 
 	std::cout << std::endl;
 	

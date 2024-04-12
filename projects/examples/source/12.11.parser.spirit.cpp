@@ -49,12 +49,12 @@ int main()
 
     constexpr auto input_4 = "42"sv;
 
-    const auto f = [](auto & context)
+    const auto print = [](auto & context)
     { 
         std::cout << boost::spirit::x3::_attr(context) << std::endl; 
     };
 
-    boost::spirit::x3::parse(std::cbegin(input_4), std::cend(input_4), boost::spirit::x3::int_[f]);
+    boost::spirit::x3::parse(std::cbegin(input_4), std::cend(input_4), boost::spirit::x3::int_[print]);
 
     return 0;
 }

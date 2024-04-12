@@ -50,7 +50,7 @@ class Calculator
 {
 public:
 
-    [[nodiscard]] double operator()(double n) const noexcept { return n; }
+    [[nodiscard]] double operator()(double d) const noexcept { return d; }
 
     [[nodiscard]] double operator()(const detail::Sign & sign) const
     {
