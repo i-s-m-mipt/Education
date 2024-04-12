@@ -111,7 +111,7 @@ template < typename T > add_rvalue_reference_t < T > declval() // note: or add_l
     static_assert(false); // note: allowed in unevaluated contexts only, for example, in decltype
 }
 
-class Bad { public: Bad() = delete; }; // note: not default constructible
+class Bad { private: Bad() {} }; // note: no available default constructor
 
 [[nodiscard]] inline constexpr int f(Bad); // note: declaration only
 
@@ -157,7 +157,7 @@ template < typename F, typename T > inline constexpr auto is_convertible_v = is_
 
 // =================================================================================================
 
-class B { public: virtual ~B() = default; }; // note: polymorphic base class
+class B { public: virtual ~B() {} }; // note: polymorphic base class
 
 class D : public B {}; 
 

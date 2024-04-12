@@ -11,7 +11,7 @@ template < typename T, typename ... Ts > class Tuple < T, Ts ... >
 {
 public:
 
-	constexpr Tuple() = default;
+	constexpr Tuple() {}
 
 	constexpr explicit Tuple(T && head, Ts && ... tail) : // note: conditionally explicit in std
 		m_head(std::forward < T  > (head)   ), 
