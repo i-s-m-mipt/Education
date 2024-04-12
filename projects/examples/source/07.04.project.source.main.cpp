@@ -11,7 +11,7 @@
 /*
 void f() // error: multiple defined symbol
 {
-	std::cout << "f from main" << std::endl;
+	std::cout << "f from source.main" << std::endl;
 }
 */
 

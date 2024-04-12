@@ -60,7 +60,7 @@ void test_macros()
 
 	std::cout << FUNCTION << std::endl; // note: redefined as number
 
-	[[maybe_unused]] auto x = 1; // note: consider trigrpahs in online compiler
+	[[maybe_unused]] auto x = 42; // note: consider trigrpahs in online compiler
 
 //	std::cout << BAD_SQUARE(x + 1) << std::endl; // bad: incorrect macro
 
@@ -102,7 +102,7 @@ namespace education::examples // note: namespaces additivity
 
 	void function_with_ADL(X)
 	{
-		std::cout << "argument-dependent lookup" << std::endl;
+		std::cout << "function_with_ADL" << std::endl;
 	}
 
 } // namespace education::examples

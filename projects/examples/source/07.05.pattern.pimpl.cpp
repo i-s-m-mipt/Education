@@ -52,7 +52,7 @@ private:
 
 // =================================================================================================
 
-Computer:: Computer(std::string name) : m_pimpl(new Implementation(std::move(name))) {}
+Computer:: Computer(std::string name) : m_pimpl(new const Implementation(std::move(name))) {}
 
 Computer::~Computer() { delete m_pimpl; }
 
