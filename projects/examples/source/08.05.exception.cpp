@@ -63,11 +63,13 @@ void g()
 {
 	std::cout << "g() called" << std::endl;
 
-//	const auto a = new int[10]{}; // bad: consider RAII wrapper
+	[[maybe_unused]] const std::size_t size = 5;
+
+//	const auto array = new int[size]{}; // bad: consider RAII wrapper
 
 	h();
 
-//	delete[] a; // bad: possible memory leak in case of exceptions
+//	delete[] array; // bad: possible memory leak in case of exceptions
 
 //	std::cout << "g() exited" << std::endl; // warning: unreachable code
 }
