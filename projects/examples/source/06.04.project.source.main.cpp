@@ -1,8 +1,8 @@
-#include "07.06.project.header.precompiled.hpp" // note: precompiled header must be first
+#include "06.06.project.header.precompiled.hpp" // note: precompiled header must be first
 
 #include <iostream> // note: standard library header file
 
-#include "07.02.project.header.hpp" // note: user defined header file
+#include "06.02.project.header.hpp" // note: user defined header file
 
 //import math; // note: importing module
 
