@@ -1,81 +1,74 @@
+#include <concepts>
 #include <iostream>
-#include <iomanip>
 #include <iterator>
 #include <tuple>
 #include <utility>
 #include <vector>
-#include <string>
-#include <set>
-#include <array>
-#include <deque>
-#include <algorithm>
 
-template < std::size_t N >
-bool increase(
-	const std::array < std::size_t, N > & sizes,
-		  std::array < std::size_t, N > & indexes)
+// =================================================================================================
+
+[[nodiscard]] constexpr bool increase(std::vector < std::size_t > & steps,
+								const std::vector < std::size_t > & sizes) noexcept
 {
-	bool is_increased = false;
+	auto is_increased = false;
 
-	for (std::size_t i = 0; i < N; ++i)
+	for (int i = static_cast < int > (std::size(steps)) - 1; i >= 0; --i)
 	{
-		const std::size_t index = N - 1 - i;
-
-		++indexes[index];
-
-		if (indexes[index] >= sizes[index])
+		if (steps[i]++; steps[i] == sizes[i])
 		{
-			indexes[index] = 0;
+			steps[i] = 0;
 		}
 		else
 		{
-			is_increased = true;
-			break;
+			is_increased = true; break;
 		}
 	}
 
 	return is_increased;
 }
 
-template < typename F, std::size_t ... Indexes, std::size_t N, typename Tuple >
-constexpr void apply(F && function, std::index_sequence < Indexes ... > ,
-	const std::array < std::size_t, N > & indexes, const Tuple & tuple)
+// =================================================================================================
+
+template < typename F, std::size_t ... Is > constexpr void apply(F && f, 
+	const std::integer_sequence < std::size_t, Is ... > , 
+	const std::vector           < std::size_t         > & steps, const auto & tuple)
 {
-	function((*((std::get < Indexes > (tuple)).first + indexes[Indexes]))...);
+	f(*(std::next((std::get < Is > (tuple)).first, steps[Is]))...);
 }
 
-template < typename ... Ts > [[nodiscard]] constexpr auto combine(std::pair < Ts, Ts > ... sequences)
+// =================================================================================================
+
+template < std::forward_iterator ... Ts > [[nodiscard]] constexpr auto combine(std::pair < Ts, Ts > ... args)
 {
-    
 	std::vector < std::tuple < typename std::iterator_traits < Ts > ::value_type ... > > result;
+
+	const auto push = [&result](auto && ... args){ result.emplace_back(args...); };
 	
-	constexpr auto size = sizeof...(Ts);
+	std::vector steps (sizeof...(args), std::size_t(0));
 
-	std::array < std::size_t, size > sizes = { static_cast < std::size_t > (
-		std::distance(sequences.first, sequences.second))... };
-
-	std::array < std::size_t, size > indexes{};
+	std::vector sizes = { static_cast < std::size_t > (std::distance(args.first , args.second))... };
 
 	do
 	{
-		apply([&result](const auto & ... args) { result.emplace_back(args...); },
-			std::make_index_sequence < size > (), indexes, std::tie(sequences...));
+		apply(push, std::make_index_sequence < sizeof...(args) > (), steps, std::tie(args...));
 	} 
-	while (increase(sizes, indexes));
+	while (increase(steps, sizes));
 
 	return result;
 }
 
+// =================================================================================================
+
 int main()
 {
-    std::vector vector_1 = { 'a', 'b', 'c' }; // note: different homogeneous collections
+    std::vector vector_1 = { 'a', 'b', 'c' }; // note: different homogeneous containers
 	std::vector vector_2 = { 100, 200, 300 };
 	std::vector vector_3 = { 1.0, 2.0, 3.0 };
 
 	const auto cartesian_product = combine(
 		std::make_pair(std::begin(vector_1), std::end(vector_1)),
 		std::make_pair(std::begin(vector_2), std::end(vector_2)),
-		std::make_pair(std::begin(vector_3), std::end(vector_3))); // note: variadic
+		std::make_pair(std::begin(vector_3), std::end(vector_3)));
 
 	for (const auto & [x, y, z] : cartesian_product)
 	{

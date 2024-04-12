@@ -39,7 +39,7 @@ public:
 
 // =================================================================================================
 
-template < typename ... Bases > class Visitor : public Bases... { public: using Bases::operator()...; };
+template < typename ... Bases > class Visitor : public Bases ... { public: using Bases::operator()...; };
 
 // =================================================================================================
 
