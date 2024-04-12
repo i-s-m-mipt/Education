@@ -73,13 +73,13 @@ int main()
 	assert(std::begin(static_array) == static_array);
 
 	std::vector < Data > vector_1(size);
-	std::vector < Data > vector_2(std::cbegin(vector_1), std::cend(vector_1)); // note: copy collection
+	std::vector < Data > vector_2(std::cbegin(vector_1), std::cend(vector_1)); // note: copy container
 
 //	*std::cbegin(v) = 42; // error: constant iterator
 
 	std::vector < Data > vector_3(
 		std::make_move_iterator(std::begin(vector_1)),
-		std::make_move_iterator(std::end  (vector_1))); // note: move collection
+		std::make_move_iterator(std::end  (vector_1))); // note: move container
 	
 	vector_3.insert(std::cend(vector_3), std::cbegin(vector_2), std::next(std::cbegin(vector_2), 2));
 
