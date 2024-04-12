@@ -37,11 +37,11 @@ template < typename F, typename ... Ts >
 
 int main()
 {
-	C c; const C cc; // note: objects with different fundamental properties
+	C c1; const C c2; // note: objects with different fundamental properties
 
-	f(          c ); // note: f -> g for       C &  c
-	f(         cc ); // note: f -> g for const C &  c
-	f(std::move(c)); // note: f -> g for       C && c
+	f(          c1 ); // note: f -> g for       C &  c
+	f(          c2 ); // note: f -> g for const C &  c
+	f(std::move(c1)); // note: f -> g for       C && c
 
 	return 0;
 }
