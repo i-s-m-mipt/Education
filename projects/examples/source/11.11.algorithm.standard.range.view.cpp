@@ -53,7 +53,7 @@ int main()
 		std::cout << key << ", " << value << std::endl;
 	}
 
-	constexpr int array[] = { 1, 2, 3, 4, 5 }; // note: built-in array is considered as range
+	constexpr int array[]{ 1, 2, 3, 4, 5 }; // note: built-in array is considered as range
 
 	for (const auto element : array) std::cout << element << ' ';
 

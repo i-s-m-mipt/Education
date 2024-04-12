@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <iterator>
 #include <tuple>
 #include <utility>
 #include <vector>
@@ -36,31 +37,29 @@ bool increase(
 	return is_increased;
 }
 
-template < typename F, std::size_t ... Indexes,
-	std::size_t N, typename Tuple >
-	void apply(
-		F && function,
-		std::index_sequence < Indexes... >,
-		const std::array < std::size_t, N > & indexes,
-		const Tuple & tuple)
+template < typename F, std::size_t ... Indexes, std::size_t N, typename Tuple >
+constexpr void apply(F && function, std::index_sequence < Indexes ... > ,
+	const std::array < std::size_t, N > & indexes, const Tuple & tuple)
 {
 	function((*((std::get < Indexes > (tuple)).first + indexes[Indexes]))...);
 }
 
-template < typename ... Iterator_Types >
-auto combine(std::pair < Iterator_Types, Iterator_Types > ... ss)
+template < typename ... Ts > [[nodiscard]] constexpr auto combine(std::pair < Ts, Ts > ... sequences)
 {
-	std::vector < std::tuple < typename Iterator_Types::value_type ... > > result;
+    
+	std::vector < std::tuple < typename std::iterator_traits < Ts > ::value_type ... > > result;
 	
-	constexpr std::size_t N = sizeof...(Iterator_Types);
+	constexpr auto size = sizeof...(Ts);
 
-	std::array < std::size_t, N > sizes = { std::distance(ss.first, ss.second)... };
-	std::array < std::size_t, N > indexes; indexes.fill(0);
+	std::array < std::size_t, size > sizes = { static_cast < std::size_t > (
+		std::distance(sequences.first, sequences.second))... };
+
+	std::array < std::size_t, size > indexes{};
 
 	do
 	{
 		apply([&result](const auto & ... args) { result.emplace_back(args...); },
-			std::make_index_sequence < N > (), indexes, std::tie(ss...));
+			std::make_index_sequence < size > (), indexes, std::tie(sequences...));
 	} 
 	while (increase(sizes, indexes));
 

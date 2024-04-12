@@ -66,10 +66,10 @@ private:
 
 int main()
 {
-	std::vector < int > v1 = { 1, 4, 2, 5, 3 };
+	std::vector < int > vector_1 = { 1, 4, 2, 5, 3 };
 
-	std::ranges::sort(v1                ); // note: sort range in  ascending order
-	std::ranges::sort(v1, std::greater()); // note: sort range in descending order
+	std::ranges::sort(vector_1                ); // note: sort range in  ascending order
+	std::ranges::sort(vector_1, std::greater()); // note: sort range in descending order
 
 	const std::set < int, std::greater < int > > set = { 1, 4, 2, 5, 3 };
 
@@ -81,28 +81,39 @@ int main()
 
 	constexpr C c; // note: functional object with overloaded operator()
 
-	std::vector < int > v2(size, 0); std::ranges::generate(v2, f); // note: generate elements in range
-	std::vector < int > v3(size, 0); std::ranges::generate(v3, c); // note: generate elements in range
+	std::vector < int > vector_2(size, 0); 
+	std::vector < int > vector_3(size, 0); 
+
+	std::ranges::generate(vector_2, f); // note: generate elements in range
+	std::ranges::generate(vector_3, c); // note: generate elements in range
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		assert(v2[i] == static_cast < int > (i));
-		assert(v3[i] == static_cast < int > (i));
+		assert(vector_2[i] == static_cast < int > (i));
+		assert(vector_3[i] == static_cast < int > (i));
 	}
 
 	Sum < int > sum;
 
-	sum = std::ranges::for_each(std::as_const(v2), sum).fun; // note: sum elements in range
-	sum = std::ranges::for_each(std::as_const(v3), sum).fun; // note: sum elements in range
+	sum = std::ranges::for_each(std::as_const(vector_2), sum).fun; // note: sum elements in range
+	sum = std::ranges::for_each(std::as_const(vector_3), sum).fun; // note: sum elements in range
 
 	assert(sum.result() == 20);
 
-	std::ranges::transform(std::as_const(v2),                    std::begin(v2), std::negate()); // note: transform one range  to one range
-	std::ranges::transform(std::as_const(v2), std::as_const(v3), std::begin(v3), std::  plus()); // note: transform two ranges to one range
+	std::ranges::transform(
+		std::as_const(vector_2), std::begin(vector_2), std::negate()); // note: transform 1 range(s) to range
 
-	for (const auto element : v3) assert(element == 0);
+	std::ranges::transform(
+		std::as_const(vector_2), 
+		std::as_const(vector_3), std::begin(vector_3), std::  plus()); // note: transform 2 range(s) to range
 
-	assert(std::ranges::for_each(std::as_const(v1), Mean < decltype(v1)::value_type > ()).fun.result() == 3); // note: sum and count elements in range
+	for (const auto element : vector_3) assert(element == 0);
+
+	Mean < decltype(vector_1)::value_type > mean;
+
+	mean = std::ranges::for_each(std::as_const(vector_1), mean).fun; // note: sum and count elements in range
+
+	assert(mean.result() == 3); 
 
 	return 0;
 }

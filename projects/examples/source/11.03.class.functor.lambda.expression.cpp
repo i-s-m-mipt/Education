@@ -17,7 +17,7 @@ public:
 
 private:
 
-	const int m_data = 0;
+	const int m_data = 42;
 
 }; // class C
 

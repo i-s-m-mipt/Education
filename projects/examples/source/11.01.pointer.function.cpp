@@ -15,18 +15,17 @@
 	return f(x);
 }
 
-template < typename ... Types > 
-[[nodiscard]] inline constexpr auto h(int (*f)(Types ...), Types ... args)
+template < typename ... Ts > [[nodiscard]] inline constexpr auto h(int (*f)(Ts ...), Ts ... args)
 {
 	return f(args...);
 }
 
 // =================================================================================================
 
-template < typename F, typename ... Types > 
-[[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Types && ... args)
+template < typename F, typename ... Ts > 
+[[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Ts && ... args)
 {
-	return f(std::forward < Types > (args)...); // note: see std::invoke
+	return f(std::forward < Ts > (args)...); // note: see std::invoke
 }
 
 // =================================================================================================
