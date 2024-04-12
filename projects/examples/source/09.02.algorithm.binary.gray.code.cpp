@@ -21,7 +21,7 @@
 
 int main()
 {
-    constexpr std::size_t size = 4;
+    constexpr std::size_t size = 5;
 
     using binary = std::bitset < size > ;
 

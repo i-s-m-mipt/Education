@@ -196,7 +196,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
     byte |= std::byte{ 0b1111'0000 }; assert(std::to_integer < int > (byte) == 0b1111'1010);
     byte &= std::byte{ 0b1111'0000 }; assert(std::to_integer < int > (byte) == 0b1111'0000);
 
-    constexpr std::size_t size = 10;
+    constexpr std::size_t size = 5;
 
     constexpr int array[size]{ 42 };
 
@@ -213,9 +213,9 @@ int main(int argc, char ** argv) // note: arguments for benchmark
         assert(std::to_integer < int > (*(ptr_byte + i)) == 0xff);
     }
 
-    assert(&array[size - 1] - &array[0] == 9); // note: pointer arithmetic
+    assert(&array[size - 1] - &array[0] == 4); // note: pointer arithmetic
 
-    assert(distance_in_bytes(&array[0], &array[size - 1]) == 36);
+    assert(distance_in_bytes(&array[0], &array[size - 1]) == 16);
 
     constexpr auto d = 3.14; std::uint64_t r{};
 
