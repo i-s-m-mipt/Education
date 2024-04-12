@@ -39,7 +39,7 @@ private:
 
 int main()
 {
-	constexpr std::size_t size = 3;
+	constexpr std::size_t size = 5;
 
 	[[maybe_unused]] int array_2D_v1[size][size]{}; // note: built-in static 2D array
 

@@ -17,7 +17,7 @@ public:
 
 int main()
 {
-	constexpr std::size_t size = 8;
+	constexpr std::size_t size = 128;
 
 	constexpr bool array[size]{};
 

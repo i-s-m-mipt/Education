@@ -68,7 +68,7 @@ int main()
 
 //	assert(static_array.size() == size); // error: not a class
 
-	assert(std::size(static_array) == size);
+	assert(std::size (static_array) == size);
 
 	assert(std::begin(static_array) == static_array);
 
