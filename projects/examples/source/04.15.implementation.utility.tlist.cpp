@@ -45,7 +45,7 @@ template <             typename     L  > struct Pop_Front {}; // note: compile e
 
 template < typename T, typename ... Ts > struct Pop_Front < Tlist < T, Ts ... > >
 {
-    using type = Tlist < Ts... > ;
+    using type = Tlist < Ts ... > ;
 };
 
 template < typename L > using pop_front = typename Pop_Front < L > ::type;

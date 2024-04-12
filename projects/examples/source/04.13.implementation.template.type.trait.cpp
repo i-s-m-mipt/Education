@@ -75,8 +75,8 @@ template < typename T > inline constexpr auto is_array_v = is_array < T > ::valu
 
 // =================================================================================================
 
-template < typename  T                  > struct is_function               : public std::false_type {};
-template < typename RT, typename ... Ts > struct is_function < RT(Ts...) > : public std:: true_type {};
+template < typename  T                  > struct is_function                 : public std::false_type {};
+template < typename RT, typename ... Ts > struct is_function < RT(Ts ... ) > : public std:: true_type {};
 
 // note: const, volatile, &, && and noexcept produce very long list of combinations 
 
