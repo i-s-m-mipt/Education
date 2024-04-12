@@ -62,9 +62,17 @@ set(debug
     04.04.template.class
     04.05.template.class.friend
     04.06.template.alias.variable
-    04.07.metaprogramming
-    04.08.metaprogramming.constexpr
-    04.09.metaprogramming.constexpr.hybrid.ratio
+    04.07.template.metaprogramming
+    04.08.template.metaprogramming.constexpr
+    04.09.template.metaprogramming.constexpr.hybrid
+    04.10.reference.lvalue.rvalue.forwarding
+    04.11.pattern.sfinae
+    04.12.template.type.inference
+    04.13.implementation.template.type.trait
+    04.14.implementation.template.type.concept
+    04.15.implementation.utility.tlist
+    04.16.implementation.utility.tuple
+    04.17.utility.tuple
     05.01.pattern.builder
     05.02.pattern.factory
     05.03.pattern.prototype
@@ -85,22 +93,136 @@ set(debug
     05.18.pattern.crtp.mixin
     05.19.pattern.crtp.mixin.constructor
     05.20.pattern.crtp.mixin.inheritance.variadic
-06.01.reference.forwarding
-06.02.pattern.sfinae
-06.03.template.inference
-06.04.implementation.type.trait
-06.05.implementation.type.concept
-06.06.implementation.type.list
-06.07.implementation.tuple
-06.08.metaprogramming.algorithm.cartesian
+#   06.01.project.translation
+#   06.02.project.header
+#   06.03.project.source
+#   06.04.project.source.main
+    06.05.pattern.pimpl
+#   06.06.project.header.precompiled
+#   06.07.project.source.precompiled
+#   06.08.project.tool.cmake
+#   06.09.project.module
+#   06.10.project.module.source
+#   06.11.project.module.submodule
+#   06.12.project.library
+#   06.13.project.library.static
+#   06.14.project.library.shared
+    07.01.error.assertion.termination
+    07.02.class.union
+    07.03.implementation.utility.variant
+    07.04.utility.variant.optional
+    07.05.error.exception
+    07.06.error.exception.stack.interface
+    07.07.project.tool.boost.logging
+    07.08.project.tool.boost.testing
+    07.10.project.tool.profiler.memory
+    07.12.project.tool.google.testing
+    08.02.algorithm.binary.gray.code
+    08.03.algorithm.indian.exponentiation
+    08.04.class.enumeration
+    08.05.number.floating.point
+    08.06.number.floating.point.multiprecision
+    08.07.number.complex
+#   08.09.algorithm.monte.carlo
+    08.11.time.chrono
+    08.12.time.chrono.calendar
+    08.13.implementation.operator.literal
+    09.01.pointer.smart
+    09.02.pointer.smart.shared.this
+    09.03.implementation.pointer.smart.unique
+    09.04.implementation.pointer.smart.shared
+    09.05.iterator.classification
+    09.06.implementation.iterator.forward.list
+    09.07.implementation.iterator.forward.list.facade
+    09.08.pattern.facade
+#   09.09.memory.address.space
+#   09.10.memory.address.translation
+    09.12.memory.operator.new.handler
+    09.14.implementation.utility.optional
+    09.15.memory.allocator.standard
+#   09.16.memory.allocator
+#   09.17.memory.allocator.block
+    09.23.implementation.allocator.arena.adaptor
+    09.24.memory.allocator.polymorphism
+#   10.01.container.vector.deque.array.list.memory
+    10.02.container.vector.deque.array.list
+    10.04.pattern.proxy.vector
+    10.05.container.multidimensional
+    10.06.container.multidimensional.multiarray
+    10.08.container.multidimensional.valarray
+    10.09.algorithm.longest.common.subsequence
+    10.10.container.adaptor
+    10.11.container.adaptor.stack
+#   10.12.container.circular.buffer.memory
+    10.13.container.circular.buffer
+#   10.14.container.red.black.tree.memory
+    10.16.implementation.function.hash
+#   10.17.container.hash.table.memory
+    10.18.container.hash.table
+    10.19.implementation.class.functor.hash.equal
+    10.20.container.multiindex.bimap
+    10.21.pattern.flyweight
+    11.01.pointer.function
+    11.02.class.functor
+    11.03.class.functor.lambda.expression
+    11.04.pattern.command
+    11.05.pattern.visitor
+    11.06.pattern.visitor.variant
+    11.07.pattern.visitor.any
+    11.08.template.metaprogramming.cartesian.product
+    11.09.iterator.adaptor.inserter
+    11.10.algorithm.standard
+    11.11.algorithm.standard.range.view
+    11.12.algorithm.graph
+#   11.13.algorithm.graph.example
+    11.14.algorithm.graph.traversal.bfs
+    11.15.algorithm.graph.traversal.dfs
+    11.16.algorithm.graph.search.dijkstra
+    12.01.character.encoding
+#   12.02.character.encoding.unicode.utf
+    12.05.locale.facet
+    12.06.locale.facet.utf.converter
+#   12.07.parser.regex.ecma.script
+    12.08.parser.regex
+#   12.09.parser.grammar.arithmetic
+    12.10.parser.grammar.arithmetic.calculator
+    12.11.parser.spirit
+    12.12.parser.spirit.number.complex
+    12.13.parser.spirit.number.romanus
+    12.14.parser.spirit.fusion.class.structure
+    12.15.parser.spirit.grammar.arithmetic.calculator
+    16.02.implementation.class.big.integer
+    16.03.number.integer.multiprecision
+#   16.04.embedding.python.wrapper.header
+#   16.05.embedding.python.wrapper.source
+#   16.06.embedding.python.caller
+#   16.07.embedding.python.script
 )
 
 set(release
+    07.09.project.tool.profiler.cpu
+    07.11.project.tool.google.benchmark
+    08.01.number.integer
+    08.08.number.random.generation
+    08.10.algorithm.monte.carlo.simplex
+    09.11.memory.alignment
+    09.13.memory.operator.new.placement
+    09.18.implementation.allocator.arena
+    09.19.implementation.allocator.stack
+    09.20.implementation.allocator.chain
+    09.21.implementation.allocator.block
+    09.22.implementation.allocator.fixed
+    10.03.container.vector.deque.array.list.sorting
+    10.07.container.multidimensional.ublas
+    10.15.container.red.black.tree
+    12.03.character.string.view
+#   16.01.embedding.assembler
 )
 
 foreach(entry IN LISTS debug)
     add_executable        (${entry} source/${entry}.cpp)
     target_link_libraries (${entry} PRIVATE ${Boost_LIBRARIES})
+    target_link_libraries (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
     set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 endforeach()
@@ -113,211 +235,22 @@ foreach(entry IN LISTS release)
     set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 endforeach()
 
-set(section_07 source/section_07/)
+add_executable            (06.04.project source/06.04.project.source.main.cpp 
+                                         source/06.03.project.source.cpp)
+target_precompile_headers (06.04.project PRIVATE source/06.06.project.header.precompiled.hpp)
+target_compile_options    (06.04.project PRIVATE -Wall -pedantic -O0) 
+set_target_properties     (06.04.project PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 
-set(sources_07
-    empty_function
-    pimpl_idiom)
+add_executable            (06.12.project.library source/06.12.project.library.cpp)
+target_include_directories(06.12.project.library PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
+target_link_libraries     (06.12.project.library PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/library_v1/liblibrary_v1.a)
+target_link_libraries     (06.12.project.library PRIVATE ${Boost_LIBRARIES})
+target_compile_options    (06.12.project.library PRIVATE -Wall -pedantic -O0) 
+set_target_properties     (06.12.project.library PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 
-foreach(entry IN LISTS sources_07)
-    add_executable        (${entry} ${section_07}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-endforeach()
-
-add_executable            (libraries_test ${section_07}libraries_test.cpp)
-target_include_directories(libraries_test PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
-target_link_libraries     (libraries_test PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/library_v1/liblibrary_v1.a)
-target_link_libraries     (libraries_test PRIVATE ${Boost_LIBRARIES})
-set_target_properties     (libraries_test PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-target_compile_options    (libraries_test PRIVATE -Wall -pedantic -O0) 
-
-add_executable           (project ${section_07}project_main.cpp ${section_07}project_source.cpp)
-target_precompile_headers(project PRIVATE ${section_07}precompiled.hpp)
-set_target_properties    (project PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-target_compile_options   (project PRIVATE -Wall -pedantic -O0) 
-
-set(section_08 source/section_08/)
-
-set(sources_08
-    errors_handling
-    exception_basics
-    optional_basics
-    stack_interface
-    union_basics
-    variant_basics)
-
-foreach(entry IN LISTS sources_08)
-    add_executable        (${entry} ${section_08}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-endforeach()
-
-add_executable        (boost_logging ${section_08}boost_logging.cpp)
-target_link_libraries (boost_logging PRIVATE ${Boost_LIBRARIES})
-set_target_properties (boost_logging PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-target_compile_options(boost_logging PRIVATE -Wall -pedantic -O0) 
-
-add_executable        (boost_testing ${section_08}boost_testing.cpp)
-target_link_libraries (boost_testing PRIVATE ${Boost_LIBRARIES})
-set_target_properties (boost_testing PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-target_compile_options(boost_testing PRIVATE -Wall -pedantic -O0) 
-
-add_executable        (google_benchmark ${section_08}google_benchmark.cpp)
-target_link_libraries (google_benchmark PRIVATE benchmark::benchmark)
-set_target_properties (google_benchmark PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-target_compile_options(google_benchmark PRIVATE -Wall -pedantic -O3)
-
-add_executable        (google_testing ${section_08}google_testing.cpp)
-target_link_libraries (google_testing PRIVATE ${GTEST_BOTH_LIBRARIES})
-set_target_properties (google_testing PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-target_compile_options(google_testing PRIVATE -Wall -pedantic -O0) 
-
-set(section_09 source/section_09/)
-
-set(sources_09
-    advanced_constants
-    advanced_literals
-    calendar_time_zones
-    chrono_management
-    floating_point_types
-    multiprecision_float
-    complex_numbers
-    binary_gray_code
-    indian_algorithm)
-
-foreach(entry IN LISTS sources_09)
-    add_executable        (${entry} ${section_09}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-endforeach()
-
-set(sources_09_release
-    random_generation
-    inscribed_simplex
-    bitwise_operations)
-
-foreach(entry IN LISTS sources_09_release)
-    add_executable        (${entry} ${section_09}${entry}.cpp)
-    target_link_libraries (${entry} PRIVATE benchmark::benchmark)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O3)
-endforeach()
-
-set(section_10 source/section_10/)
-
-set(sources_10
-    bad_allocations
-    custom_optional
-    custom_shared_ptr
-    custom_unique_ptr
-    iterator_basics
-    iterator_facade
-    memory_resource
-    pattern_facade
-    pattern_iterator
-    shared_from_this
-    smart_pointers
-    standard_allocator
-    arena_adaptor)
-
-foreach(entry IN LISTS sources_10)
-    add_executable        (${entry} ${section_10}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-endforeach()
-
-set (sources_10_release
-    placement_new
-    data_alignment
-    arena_allocator
-    stack_allocator
-    chain_allocator
-    block_allocator
-    noheap_allocator)
-
-foreach(entry IN LISTS sources_10_release)
-    add_executable        (${entry} ${section_10}${entry}.cpp)
-    target_link_libraries (${entry} PRIVATE benchmark::benchmark)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O3)
-endforeach()
-
-set(section_11 source/section_11/)
-
-set(sources_11
-    circular_buffer
-    container_adaptors
-    container_basics
-    container_lists
-    custom_hash_equal
-    filling_multiarray
-    hash_functions
-    hash_table_basics
-    multidimensionals
-    multiple_interfaces
-    pattern_flyweight
-    vector_bool_proxy
-    stack_with_minimum
-    common_subsequence
-    numeric_valarrays)
-
-foreach(entry IN LISTS sources_11)
-    add_executable        (${entry} ${section_11}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-endforeach()
-
-set(sources_11_release
-    sorting_compare
-    container_trees
-    vectors_matrices)
-
-foreach(entry IN LISTS sources_11_release)
-    add_executable        (${entry} ${section_11}${entry}.cpp)
-    target_link_libraries (${entry} PRIVATE benchmark::benchmark)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O3) 
-endforeach()
-
-set(section_14 source/section_14/)
-
-set(sources_14
-    iostream_iterators
-    variadic_output)
-
-foreach(entry IN LISTS sources_14)
-    add_executable        (${entry} ${section_14}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-endforeach()
-
-set(section_16 source/section_16/)
-
-set(sources_16
-    process_handler
-    process_manager)
-
-foreach(entry IN LISTS sources_16)
-    add_executable        (${entry} ${section_16}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-endforeach()
-
-set(section_18 source/section_18/)
-
-set(sources_18
-    long_arithmetic
-    multiprecision_int)
-
-foreach(entry IN LISTS sources_18)
-    add_executable        (${entry} ${section_18}${entry}.cpp)
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-endforeach()
-
-add_executable        (python_caller ${section_18}python_caller.cpp ${section_18}python_wrapper.cpp)
-target_link_libraries (python_caller PRIVATE   ${Boost_LIBRARIES})
-target_link_libraries (python_caller PRIVATE ${Python3_LIBRARIES})
-set_target_properties (python_caller PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-target_compile_options(python_caller PRIVATE -Wall -pedantic -O0) 
+add_executable            (16.06.embedding.python source/16.06.embedding.python.caller.cpp 
+                                                  source/16.05.embedding.python.wrapper.source.cpp)
+target_link_libraries     (16.06.embedding.python PRIVATE   ${Boost_LIBRARIES})
+target_link_libraries     (16.06.embedding.python PRIVATE ${Python3_LIBRARIES})
+target_compile_options    (16.06.embedding.python PRIVATE -Wall -pedantic -O0) 
+set_target_properties     (16.06.embedding.python PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
