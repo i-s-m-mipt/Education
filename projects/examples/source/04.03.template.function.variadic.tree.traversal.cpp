@@ -11,7 +11,9 @@ template < typename R, typename ... Ns > [[nodiscard]] inline R traverse(R root,
 
 int main()
 {
-	std::vector < Node > nodes(5);
+	const std::size_t size = 5;
+
+	std::vector < Node > nodes(size);
 
 	for (std::size_t i = 0; i < std::size(nodes); ++i)
 	{

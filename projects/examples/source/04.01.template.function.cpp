@@ -42,48 +42,37 @@ template < typename T1, typename T2 > [[nodiscard]] inline auto max_v6(T1 x, T2 
 
 template < typename T > inline void f(T) // note: basic template
 {
-	std::cout << "template for T" << std::endl;
+	std::cout << "template < T > " << std::endl;
 }
 
 template <> inline void f < int > (int) // note: full specialization for int
 {
-	std::cout << "full specialization for int" << std::endl;
+	std::cout << "template < int > " << std::endl;
 }
 
-inline void f(char) // note: overload for char
-{
-	std::cout << "overload for char" << std::endl;
-}
-
-inline void f(int) // note: overload for double
-{
-	std::cout << "overload for int" << std::endl;
-}
-
-inline void f(double) // note: overload for double
-{
-	std::cout << "overload for double" << std::endl;
-}
+inline void f(char  ) { std::cout << "f(char  )" << std::endl; }
+inline void f(int   ) { std::cout << "f(int   )" << std::endl; }
+inline void f(double) { std::cout << "f(double)" << std::endl; }
 
 template < typename T1, typename T2 > inline void g() // note: basic template
 {
-	std::cout << "g for T1, T2" << std::endl;
+	std::cout << "template < T1, T2 > " << std::endl;
 }
 
 /*
 template < typename T > inline void g < int, T > () // error: prohibited partial specialization
 {
-	std::cout << "g for int, T" << std::endl;
+	std::cout << "template < int, T > " << std::endl;
 }
 */
 
 // =================================================================================================
 
-template < typename T, int N, int M > [[nodiscard]] inline bool less(T(&a)[N], T(&b)[M])
+template < typename T, int N, int M > [[nodiscard]] inline bool less(T(&array_1)[N], T(&array_2)[M])
 {
 	for (auto i = 0; i < N && i < M; ++i)
 	{
-		if (a[i] != b[i]) return (a[i] < b[i]);
+		if (array_1[i] != array_2[i]) return (array_1[i] < array_2[i]);
 	}
 
 	return (N < M);
@@ -123,10 +112,10 @@ int main()
 	f <        > (1.0); // note: basic template for T
 	f < double > (1.0); // note: basic template for T
 
-	const int x[]{ 1, 2, 3 };
-	const int y[]{ 1, 2, 3, 4, 5 };
+	const int array_1[]{ 1, 2, 3 };
+	const int array_2[]{ 1, 2, 3, 4, 5 };
 
-	std::cout << less(x, y) << std::endl;
+	std::cout << less(array_1, array_2) << std::endl;
 
 	return 0;
 }

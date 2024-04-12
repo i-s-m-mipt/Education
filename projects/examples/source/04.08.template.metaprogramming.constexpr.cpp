@@ -29,14 +29,14 @@
 {
 	if (n < 2) return 1; else
 	{
-		std::vector < int > v(n, 1); // note: dynamic allocation allowed
+		std::vector < int > vector(n, 1); // note: dynamic allocation allowed
 
-		for (std::size_t i = 2; i < std::size(v); ++i)
+		for (std::size_t i = 2; i < std::size(vector); ++i)
 		{
-			v[i] = v[i - 1] + v[i - 2];
+			vector[i] = vector[i - 1] + vector[i - 2];
 		}
 
-		return v.back();
+		return vector.back();
 	}
 }
 
@@ -68,7 +68,7 @@ int main()
 
 	std::cout << factorial(x) << std::endl;
 
-	auto y = 4;
+	auto y = 42;
 
 //	auto z = combination(x, y); // error: can't be evaluated at compile-time
 
