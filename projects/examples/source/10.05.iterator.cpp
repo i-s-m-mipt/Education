@@ -9,65 +9,71 @@
 
 namespace detail
 {
-	template < typename I > inline constexpr void advance(I & iterator, int n, std::      forward_iterator_tag) noexcept
+	template < typename I > 
+	inline constexpr void advance(I & iterator, int distance, std::forward_iterator_tag) noexcept
 	{
-		if (n > 0)
+		if (distance > 0)
 		{
-			while (n--) ++iterator;
+			while (distance--) ++iterator;
 		}
 	}
 
-	template < typename I > inline constexpr void advance(I & iterator, int n, std::bidirectional_iterator_tag) noexcept
+	template < typename I > 
+	inline constexpr void advance(I & iterator, int distance, std::bidirectional_iterator_tag) noexcept
 	{
-		if (n > 0)
+		if (distance > 0)
 		{
-			while (n--) ++iterator;
+			while (distance--) ++iterator;
 		}
 		else
 		{
-			while (n++) --iterator;
+			while (distance++) --iterator;
 		}
 	}
 
-	template < typename I > inline constexpr void advance(I & iterator, int n, std::random_access_iterator_tag) noexcept
+	template < typename I > 
+	inline constexpr void advance(I & iterator, int distance, std::random_access_iterator_tag) noexcept
 	{
-		iterator += n;
+		iterator += distance;
 	}
 
 } // namespace detail
 
 // =================================================================================================
 
-template < typename I > inline constexpr void advance_v1(I & iterator, int n)
+template < typename I > inline constexpr void advance_v1(I & iterator, int distance)
 {
-    detail::advance(iterator, n, typename std::iterator_traits < I > ::iterator_category());
+    detail::advance(iterator, distance, typename std::iterator_traits < I > ::iterator_category());
 }
 
 // =================================================================================================
 
-template < std::      forward_iterator I > inline constexpr void advance_v2(I & iterator, int n) noexcept
+template < std::forward_iterator I > 
+inline constexpr void advance_v2(I & iterator, int distance) noexcept
 {
-	if (n > 0)
+	if (distance > 0)
 	{
-		while (n--) ++iterator;
+		while (distance--) ++iterator;
 	}
 }
 
-template < std::bidirectional_iterator I > inline constexpr void advance_v2(I & iterator, int n) noexcept
+template < std::bidirectional_iterator I > 
+inline constexpr void advance_v2(I & iterator, int distance) noexcept
 {
-	if (n > 0)
+	if (distance > 0)
 	{
-		while (n--) ++iterator;
+		while (distance--) ++iterator;
 	}
 	else
 	{
-		while (n++) --iterator;
+		while (distance++) --iterator;
 	}
 }
 
-template < std::random_access_iterator I > inline constexpr void advance_v2(I & iterator, int n) noexcept
+template < std::random_access_iterator I > 
+inline constexpr void advance_v2(I & iterator, int distance) noexcept
 {
-	iterator += n;
+	iterator += distance;
 }
 
 // =================================================================================================

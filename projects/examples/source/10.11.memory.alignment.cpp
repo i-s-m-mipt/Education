@@ -92,13 +92,13 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 	static_assert(std::alignment_of_v < double > == 8);
 
-	constexpr std::size_t size = 10;
+	constexpr std::size_t size = 5;
 
-	alignas(16) constexpr int a[size]{};
-	alignas(64) constexpr int b[size]{};
+	alignas(16) constexpr int array_1[size]{};
+	alignas(64) constexpr int array_2[size]{};
 
-	std::cout << std::hex << a << std::endl;
-	std::cout << std::hex << b << std::endl;
+	std::cout << std::hex << array_1 << std::endl;
+	std::cout << std::hex << array_2 << std::endl;
 
 	benchmark::Initialize(&argc, argv);
 

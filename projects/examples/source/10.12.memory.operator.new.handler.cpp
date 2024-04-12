@@ -24,7 +24,7 @@ int main()
     {
         while (true)
         {
-            new int[100'000'000]; // note: constructor can throw exceptions
+            new const int[100'000'000]{}; // note: constructor can throw exceptions
         }
     }
     catch (const std::bad_alloc & exception) // good: modern approach
@@ -34,7 +34,7 @@ int main()
 
     while (true)
     {
-        if (const int * const ptr = new (std::nothrow) int[100'000'000]; !ptr) // note: controversial decision
+        if (const auto array = new (std::nothrow) const int[100'000'000]{}; !array)
         {
             std::cerr << "pointer: bad allocation\n";
 

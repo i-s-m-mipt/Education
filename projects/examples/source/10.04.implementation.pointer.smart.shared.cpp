@@ -124,9 +124,9 @@ private:
 
 // =================================================================================================
 
-template < typename T > inline void swap(Shared < T > & lhs, Shared < T > & rhs) noexcept
+template < typename T > inline void swap(Shared < T > & x, Shared < T > & y) noexcept
 {
-    lhs.swap(rhs);
+    x.swap(y);
 }
 
 // =================================================================================================
@@ -140,8 +140,8 @@ template < typename T, typename ... Ts > [[nodiscard]] inline Shared < T > make_
 
 int main()
 {
-    Shared < int > shared_1(new int(42));
-    Shared < int > shared_2(new int(43));
+    Shared < const int > shared_1(new const int(42));
+    Shared < const int > shared_2(new const int(43));
 
     shared_2 = shared_1;
 

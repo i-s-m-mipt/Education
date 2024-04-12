@@ -92,28 +92,30 @@ private:
 
 int main()
 {
-    const Optional < int > o1; assert(!o1.has_value());
+    const Optional < int > optional_1    ; assert(!optional_1.has_value());
+    const Optional < int > optional_2(42); assert( optional_2.has_value());
 
-    assert(o1.value_or(42) == 42);
-
-    Optional < int > o2(42); assert(o2.has_value() && o2.value() == 42);
-    Optional < int > o3(o2); assert(o3.has_value() && o3.value() == 42);
-
-    Optional < int > o4(std::move(o3));
-
-    assert(o4.has_value() && o4.value() == 42 && !o3.has_value());
-
-    o3 = o2; 
+    assert(optional_1.value_or(42) == 42 && optional_2.value_or(42) == 42);
     
-    assert(o3.has_value() && o3.value() == 42);
+    Optional < int > optional_3(optional_2); 
+    
+    assert(optional_3.has_value() && optional_3.value() == 42 &&  optional_2.has_value());
 
-    o4 = std::move(o3);
+    Optional < int > optional_4(std::move(optional_3));
 
-    assert(o4.has_value() && o4.value() == 42 && !o3.has_value());
+    assert(optional_4.has_value() && optional_4.value() == 42 && !optional_3.has_value());
 
-    o4 = 43;
+    optional_3 = optional_2; 
+    
+    assert(optional_3.has_value() && optional_3.value() == 42);
 
-    assert(o4.has_value() && o4.value() == 43);
+    optional_4 = std::move(optional_3);
+
+    assert(optional_4.has_value() && optional_4.value() == 42 && !optional_3.has_value());
+
+    optional_4 = 43;
+
+    assert(optional_4.has_value() && optional_4.value() == 43);
 
     return 0;
 }

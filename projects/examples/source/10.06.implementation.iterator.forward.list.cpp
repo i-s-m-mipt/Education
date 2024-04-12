@@ -60,7 +60,7 @@ public:
 		}
 		else
 		{
-			auto p = m_head; for (; p->next; p = p->next); p->next = new_node;
+			auto node = m_head; for (; node->next; node = node->next); node->next = new_node;
 		}
 	}
 

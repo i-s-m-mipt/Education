@@ -101,40 +101,40 @@ int main()
 {
 	try
 	{
-		const Resource < int > r(42); // note: destructor will be called
+		const Resource < int > resource(42); // note: destructor will be called
 
 		throw std::runtime_error("error");
 	}
 	catch (...) {}
 
-	const std::shared_ptr < const int > sptr_1; // note: same as nullptr
+	const std::shared_ptr < const int > shared_ptr_1; // note: same as nullptr
 
-	if (sptr_1) // note: check if not nullptr as for plain pointer
+	if (shared_ptr_1) // note: check if not nullptr as for plain pointer
 	{
-		std::cout << sptr_1 << std::endl;
+		std::cout << shared_ptr_1 << std::endl;
 	}
 
-	std::shared_ptr < const int > sptr_2(new int(42)); // note: two new calls instead of one
+	std::shared_ptr < const int > shared_ptr_2(new const int(42)); // note: two new calls instead of one
 
-	std::shared_ptr < const int > sptr_3(sptr_2);
+	std::shared_ptr < const int > shared_ptr_3(shared_ptr_2);
 
-	assert(sptr_2.use_count() == 2 && *sptr_2 == 42);
-	assert(sptr_3.use_count() == 2 && *sptr_3 == 42);
+	assert(shared_ptr_2.use_count() == 2 && *shared_ptr_2 == 42);
+	assert(shared_ptr_3.use_count() == 2 && *shared_ptr_3 == 42);
 
-	sptr_3.reset(new int(43));
+	shared_ptr_3.reset(new const int(42));
 
-	assert(sptr_2.use_count() == 1 && *sptr_2 == 42);
-	assert(sptr_3.use_count() == 1 && *sptr_3 == 43);
+	assert(shared_ptr_2.use_count() == 1 && *shared_ptr_2 == 42);
+	assert(shared_ptr_3.use_count() == 1 && *shared_ptr_3 == 42);
 
-	const int * const ptr = new int(42);
+	const auto ptr = new const int(42);
 
-//	const std::shared_ptr < const int > sptr_4(ptr); // bad: don't mix with plain pointers
+//	const std::shared_ptr < const int > shared_ptr_4(ptr); // bad: don't mix with plain pointers
 
 	delete ptr;
 
-//	f(std::shared_ptr < const int > (new int(42)), bad()); // bad: possible memory leak
+//	f(std::shared_ptr < const int > (new const int(42)), bad()); // bad: possible memory leak
 
-	const auto sptr_5 = std::make_shared < const int > (42); // good: one new call instead of two
+	const auto shared_ptr_5 = std::make_shared < const int > (42); // good: one new call instead of two
 
 	try
 	{
@@ -142,29 +142,29 @@ int main()
 	}
 	catch (...) {}
 
-	constexpr std::size_t size = 10;
+	constexpr std::size_t size = 5;
 
-//	const std::shared_ptr < const int > sptr_6(new int[size]{}); // bad: undefined behavior
+//	const std::shared_ptr < const int > shared_ptr_6(new const int[size]{}); // bad: undefined behavior
 
-	std::shared_ptr < int > sptr_7(new int[size]{}, std::default_delete < int[] > ());
+	std::shared_ptr < int > shared_ptr_7(new int[size]{}, std::default_delete < int[] > ());
 
-//	*(sptr_7++) = 42; // note: pointer arithmetic is prohibited, prefer iterators
+//	*(shared_ptr_7++) = 42; // note: pointer arithmetic is prohibited, prefer iterators
 
-	const auto sptr_8 = std::make_shared < int[] > (size, 0); // note: is it useful?
+	const auto shared_ptr_8 = std::make_shared < int[] > (size, 0); // note: is it useful?
 
-	sptr_8[0] = 42; // note: allowed only for array types
+	shared_ptr_8[0] = 42; // note: allowed only for array types
 
-	auto sptr_9 = std::make_shared < int > (42);
+	auto shared_ptr_9 = std::make_shared < int > (42);
 
-	std::weak_ptr < int > wptr = sptr_9; // note: weak_ptr doesn't own object
+	std::weak_ptr < int > weak_ptr = shared_ptr_9; // note: weak_ptr doesn't own object
 
-	assert(wptr.use_count() == 1);
+	assert(weak_ptr.use_count() == 1);
 
-	*wptr.lock() = 43; // note: create shared_ptr from weak_ptr
+	*weak_ptr.lock() = 42; // note: create shared_ptr from weak_ptr
 
-	sptr_9.reset();
+	shared_ptr_9.reset();
 
-	assert(wptr.expired());
+	assert(weak_ptr.expired());
 
 	{
 		const auto a    = std::make_shared < A > (); 

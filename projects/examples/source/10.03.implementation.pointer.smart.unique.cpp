@@ -57,9 +57,9 @@ private:
 
 // =================================================================================================
 
-template < typename T > inline void swap(Unique < T > & lhs, Unique < T > & rhs) noexcept
+template < typename T > inline void swap(Unique < T > & x, Unique < T > & y) noexcept
 {
-    lhs.swap(rhs);
+    x.swap(y);
 }
 
 // =================================================================================================
@@ -73,8 +73,8 @@ template < typename T, typename ... Ts > [[nodiscard]] inline Unique < T > make_
 
 int main()
 {
-    auto unique_1 = make_unique < int > (42);
-    auto unique_2 = make_unique < int > (43);
+    auto unique_1 = make_unique < const int > (42);
+    auto unique_2 = make_unique < const int > (43);
 
     unique_2 = std::move(unique_1);
 

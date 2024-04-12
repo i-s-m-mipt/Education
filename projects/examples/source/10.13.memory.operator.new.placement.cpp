@@ -31,12 +31,12 @@ private:
 
 union U
 {
-	U() : s1() {}
+	U() : string_1() {}
 
 	~U() {} // note: what should be destroyed here?
 
-	std::string s1;
-	std::string s2;
+	std::string string_1;
+	std::string string_2;
 
 }; // union U
 
@@ -123,17 +123,17 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 	U u; // note: prefer using std::variant
 
-	u.s1 = "hello";
+	u.string_1 = "hello";
 
-	u.s1.~basic_string(); // good: explicit member destructor call
+	u.string_1.~basic_string(); // good: explicit member destructor call
 
-	new (&u.s2) std::string;
+	new (&u.string_2) std::string;
 
-	u.s2 = "world";
+	u.string_2 = "world";
 
-	u.s2.~basic_string(); // good: explicit member destructor call
+	u.string_2.~basic_string(); // good: explicit member destructor call
 	
-	delete(new User); // note: overloaded versions are used instead of global
+	delete(new const User); // note: overloaded versions are used instead of global
 
 	benchmark::Initialize(&argc, argv);
 
