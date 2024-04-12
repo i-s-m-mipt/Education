@@ -1,9 +1,9 @@
 #include <iostream>
 
-template < typename T > inline void f1(      T   ) { std::cout << "      T   " << std::endl; }
-template < typename T > inline void f2(      T & ) { std::cout << "      T & " << std::endl; }
-template < typename T > inline void f3(const T & ) { std::cout << "const T & " << std::endl; }
-template < typename T > inline void f4(      T &&) { std::cout << "      T &&" << std::endl; }
+template < typename T > inline void f1(      T   ) { std::cout << "f1(      T   )" << std::endl; }
+template < typename T > inline void f2(      T & ) { std::cout << "f2(      T & )" << std::endl; }
+template < typename T > inline void f3(const T & ) { std::cout << "f3(const T & )" << std::endl; }
+template < typename T > inline void f4(      T &&) { std::cout << "f4(      T &&)" << std::endl; }
 
 int main()
 {
