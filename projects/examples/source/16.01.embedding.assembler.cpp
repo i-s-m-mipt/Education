@@ -84,34 +84,30 @@ void test_asm_v1()
 
 [[nodiscard]] int test_cpp_v2()
 {
-	auto c = 0;
+	auto z = 0;
 
 	{
 		Chronometer chronometer("C++");
 
-		auto a = 1;
-		auto b = 1;
+		auto x = 1, y = 1;
 
 		for (auto i = 0; i < 10'000'000; ++i)
 		{
 			for (auto j = 0; j < 25; ++j)
 			{
-				c = a + b;
-				a = b;
-				b = c;
+				z = x + y; x = y; y = z;
 			}
 
-			a = 1;
-			b = 1;
+			x = y = 1;
 		}
 	}
 
-	return c;
+	return z;
 }
 
 [[nodiscard]] int test_asm_v2()
 {
-	auto c = 0;
+	auto z = 0;
 	
 	{
 		Chronometer chronometer("ASM");
@@ -143,34 +139,34 @@ void test_asm_v1()
 			dec esi
 			jnz loop_1
 
-			mov [c], ecx
+			mov [z], ecx
 		}
 	}
 
-	return c;
+	return z;
 }
 
 // =================================================================================================
 
-[[nodiscard]] double test_cpp_v3(double * a, double * b, std::size_t size)
+[[nodiscard]] double test_cpp_v3(double * x, double * y, std::size_t size)
 {
-	auto result = 0.0;
+	auto z = 0.0;
 
 	{
 		Chronometer chronometer("C++");
 
 		for (std::size_t i = 0; i < size; ++i)
 		{
-			result += std::pow(a[i] * b[i], 8.0);
+			z += std::pow(x[i] * y[i], 8.0);
 		}
 	}
 
-	return result;
+	return z;
 }
 
-[[nodiscard]] double test_asm_v3(double * a, double * b, std::size_t size)
+[[nodiscard]] double test_asm_v3(double * x, double * y, std::size_t size)
 {
-	auto result = 0.0;
+	auto z = 0.0;
 
 	{
 		const auto s = size;
@@ -179,8 +175,8 @@ void test_asm_v1()
 
 		__asm
 		{
-			mov eax, [a]
-			mov ebx, [b]
+			mov eax, [x]
+			mov ebx, [y]
 			mov ecx, [s]
 
 			mov edx, 0
@@ -210,18 +206,18 @@ void test_asm_v1()
 			cmp edx, ecx
 			jl loop_1;
 
-			fstp [result]
+			fstp [z]
 		}
 	}
 
-	return result;
+	return z;
 }
 
 // =================================================================================================
 
-[[nodiscard]] double test_cpp_v4(double * a, std::size_t size)
+[[nodiscard]] double test_cpp_v4(double * x, std::size_t size)
 {
-	auto result = 0.0;
+	auto z = 0.0;
 
 	{
 		Chronometer chronometer("C++");
@@ -229,22 +225,22 @@ void test_asm_v1()
 		/*
 		for (std::size_t i = 2; i < size; ++i)
 		{
-			result += a[i] * a[i - 1] * a[i - 2];
+			z += x[i] * x[i - 1] * x[i - 2];
 		}
 		*/
 
 		for (std::size_t i = 3; i < size; i += 2)
 		{
-			result += a[i - 1] * a[i - 2] * (a[i - 3] + a[i]);
+			z += x[i - 1] * x[i - 2] * (x[i - 3] + x[i]);
 		}
 	}
 
-	return result;
+	return z;
 }
 
-[[nodiscard]] double test_asm_v4(double * a, std::size_t size)
+[[nodiscard]] double test_asm_v4(double * x, std::size_t size)
 {
-	auto result = 0.0;
+	auto z = 0.0;
 
 	{
 		const auto s = size;
@@ -253,7 +249,7 @@ void test_asm_v1()
 
 		__asm
 		{
-			mov eax, [a]
+			mov eax, [x]
 			mov esi, [s]
 
 			mov ebx, 0
@@ -284,11 +280,11 @@ void test_asm_v1()
 			cmp edx, esi
 			jl loop_1
 
-			fstp [result]
+			fstp [z]
 		}
 	}
 
-	return result;
+	return z;
 }
 
 // =================================================================================================
@@ -318,19 +314,19 @@ void test_3()
 
 	const std::size_t size = 10'000'000;
 
-	auto a = new double[size];
-	auto b = new double[size];
+	const auto x = new double[size];
+	const auto y = new double[size];
 
-	for (std::size_t i = 0; i < size; ++i) a[i] = b[i] = 0.5;
+	for (std::size_t i = 0; i < size; ++i) x[i] = y[i] = 0.5;
 
-	const auto result_cpp = test_cpp_v3(a, b, size);
-	const auto result_asm = test_asm_v3(a, b, size);
+	const auto result_cpp = test_cpp_v3(x, y, size);
+	const auto result_asm = test_asm_v3(x, y, size);
 
 	std::cout << "Result C++: " << std::setprecision(6) << std::fixed << result_cpp << std::endl;
 	std::cout << "Result ASM: " << std::setprecision(6) << std::fixed << result_asm << std::endl << std::endl;
 
-	delete[] a;
-	delete[] b;
+	delete[] x;
+	delete[] y;
 }
 
 void test_4()
@@ -339,17 +335,17 @@ void test_4()
 
 	const std::size_t size = 10'000'000; // note: assume size > 3 and even
 
-	auto a = new double[size];
+	const auto x = new double[size];
 
-	for (std::size_t i = 0; i < size; ++i) a[i] = 0.25;
+	for (std::size_t i = 0; i < size; ++i) x[i] = 0.25;
 
-	const auto result_cpp = test_cpp_v4(a, size);
-	const auto result_asm = test_asm_v4(a, size);
+	const auto result_cpp = test_cpp_v4(x, size);
+	const auto result_asm = test_asm_v4(x, size);
 
 	std::cout << "Result C++: " << std::setprecision(6) << std::fixed << result_cpp << std::endl;
 	std::cout << "Result ASM: " << std::setprecision(6) << std::fixed << result_asm << std::endl << std::endl;
 
-	delete[] a;
+	delete[] x;
 }
 
 // =================================================================================================

@@ -9,7 +9,7 @@
 #include <string_view>
 #include <unordered_set>
 
-#include "python_wrapper.hpp"
+#include "16.04.embedding.python.wrapper.header.hpp"
 
 // =================================================================================================
 
@@ -53,7 +53,7 @@ int main()
     {
         Python python;
 
-        boost::python::exec("from python_script import factorial", 
+        boost::python::exec("from 16.07.embedding.python.script import factorial", 
             python.global(), python.global());
 		
 		std::cout << boost::python::extract < std::string > (
@@ -75,7 +75,7 @@ int main()
 
         points.pop_back(); // note: remove last comma in string
 
-        boost::python::exec("from python_script import make_plot", 
+        boost::python::exec("from 16.07.embedding.python.script import make_plot", 
             python.global(), python.global());
 		
 		python.global()["make_plot"](points.c_str(), "DEK");

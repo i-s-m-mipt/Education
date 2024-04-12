@@ -423,52 +423,50 @@ int main()
 {
 	try
 	{
-		Big_Int bi1;
+		Big_Int big_int_2 = 42;
 
-		Big_Int bi2 = 42;
+		Big_Int big_int_3 = "+73640854127382725310948206095647"sv;
+		Big_Int big_int_4 = "-46090058756232818791046807807190"sv;
 
-		Big_Int bi3 = "+73640854127382725310948206095647"sv;
-		Big_Int bi4 = "-46090058756232818791046807807190"sv;
+		Big_Int big_int_1{}; std::cin >> big_int_1; std::cout << big_int_1 << std::endl;
 
-		std::cin >> bi1; std::cout << bi1 << std::endl;
+		assert(big_int_3 + big_int_3 == "+147281708254765450621896412191294"sv);
+		assert(big_int_3 + big_int_4 ==  "+27550795371149906519901398288457"sv);
+		assert(big_int_4 + big_int_3 ==  "+27550795371149906519901398288457"sv);
+		assert(big_int_4 + big_int_4 ==  "-92180117512465637582093615614380"sv);
 
-		assert(bi3 + bi3 == "+147281708254765450621896412191294"sv);
-		assert(bi3 + bi4 ==  "+27550795371149906519901398288457"sv);
-		assert(bi4 + bi3 ==  "+27550795371149906519901398288457"sv);
-		assert(bi4 + bi4 ==  "-92180117512465637582093615614380"sv);
+		assert(big_int_3 - big_int_3 ==                                 "+0"sv);
+		assert(big_int_3 - big_int_4 == "+119730912883615544101995013902837"sv);
+		assert(big_int_4 - big_int_3 == "-119730912883615544101995013902837"sv);
+		assert(big_int_4 - big_int_4 ==                                 "-0"sv);
 
-		assert(bi3 - bi3 ==                                 "+0"sv);
-		assert(bi3 - bi4 == "+119730912883615544101995013902837"sv);
-		assert(bi4 - bi3 == "-119730912883615544101995013902837"sv);
-		assert(bi4 - bi4 ==                                 "-0"sv);
+		assert(big_int_3 * big_int_3 == "+5422975396610461369717641600947386274415037870250962127712348609"sv);
+		assert(big_int_3 * big_int_4 == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
+		assert(big_int_4 * big_int_3 == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
+		assert(big_int_4 * big_int_4 == "+2124293516152993531053750721748717735666440864785393936215696100"sv);
 
-		assert(bi3 * bi3 == "+5422975396610461369717641600947386274415037870250962127712348609"sv);
-		assert(bi3 * bi4 == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
-		assert(bi4 * bi3 == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
-		assert(bi4 * bi4 == "+2124293516152993531053750721748717735666440864785393936215696100"sv);
+		assert(big_int_3 / big_int_3 == "+1"sv);
+		assert(big_int_3 / big_int_4 == "-1"sv);
+		assert(big_int_4 / big_int_3 == "-0"sv);
+		assert(big_int_4 / big_int_4 == "+1"sv);
 
-		assert(bi3 / bi3 == "+1"sv);
-		assert(bi3 / bi4 == "-1"sv);
-		assert(bi4 / bi3 == "-0"sv);
-		assert(bi4 / bi4 == "+1"sv);
+		assert(++big_int_2   == 43); 
+		assert(--big_int_2   == 42);
+		assert(  big_int_2++ == 42); 
+		assert(  big_int_2-- == 43);
 
-		assert(++bi2   == 43); 
-		assert(--bi2   == 42);
-		assert(  bi2++ == 42); 
-		assert(  bi2-- == 43);
+		assert(karatsuba_multiplication(big_int_3, big_int_3) == "+5422975396610461369717641600947386274415037870250962127712348609"sv);
+		assert(karatsuba_multiplication(big_int_3, big_int_4) == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
+		assert(karatsuba_multiplication(big_int_4, big_int_3) == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
+		assert(karatsuba_multiplication(big_int_4, big_int_4) == "+2124293516152993531053750721748717735666440864785393936215696100"sv);
 
-		assert(karatsuba_multiplication(bi3, bi3) == "+5422975396610461369717641600947386274415037870250962127712348609"sv);
-		assert(karatsuba_multiplication(bi3, bi4) == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
-		assert(karatsuba_multiplication(bi4, bi3) == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
-		assert(karatsuba_multiplication(bi4, bi4) == "+2124293516152993531053750721748717735666440864785393936215696100"sv);
+		assert(sqrt(big_int_3) == "+8581424947372244"sv);
 
-		assert(sqrt(bi3) == "+8581424947372244"sv);
-
-		assert(bi4 <  bi3);
-		assert(bi3 >  bi4);
-		assert(bi4 <= bi3);
-		assert(bi3 >= bi4);
-		assert(bi3 != bi4);
+		assert(big_int_4 <  big_int_3);
+		assert(big_int_3 >  big_int_4);
+		assert(big_int_4 <= big_int_3);
+		assert(big_int_3 >= big_int_4);
+		assert(big_int_3 != big_int_4);
 
 		Big_Int result(1); for (auto i = 1; i < 101; ++i) result *= i;
 
