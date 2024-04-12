@@ -122,13 +122,13 @@ int main()
 
 	for (const auto computer : computers) computer->print();
 
-	computer_ptr = new Mobile;
+	computer_ptr = new const Mobile();
 
 	computer_ptr->print();
 
 	delete computer_ptr; // note: important virtual destructor
 
-	const Abstract_Base * const abstract_base_ptr = new Derived; // good: interface class
+	const Abstract_Base * const abstract_base_ptr = new const Derived(); // good: interface class
 
 	abstract_base_ptr->print(); 
 	

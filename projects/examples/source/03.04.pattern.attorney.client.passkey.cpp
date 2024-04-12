@@ -8,6 +8,8 @@ public:
 
     class Key
     {
+    private:
+
         Key() {} // note: private constructor
 
         friend class User;
@@ -20,9 +22,9 @@ public:
 
 private:
 
-    void f() const { std::cout << "Client::f" << std::endl; }
-    void g() const { std::cout << "Client::g" << std::endl; }
-    void h() const { std::cout << "Client::h" << std::endl; }
+    void f(   ) const { std::cout << "Client::f     " << std::endl; }
+    void g(   ) const { std::cout << "Client::g     " << std::endl; }
+    void h(   ) const { std::cout << "Client::h     " << std::endl; }
 
     friend class Attorney;
 
@@ -34,8 +36,8 @@ class Attorney
 {
 private:
 
-    static void call_f(Client & client) { client.f(); }
-    static void call_g(Client & client) { client.g(); }
+    static void call_f(const Client & client) { client.f(); }
+    static void call_g(const Client & client) { client.g(); }
 
     friend class User;
 
@@ -47,7 +49,7 @@ class User // good: User has access to Client::f and Client::g only
 {
 public:
 
-    void run(Client & client) const
+    void run(const Client & client) const
     {
         client.f({}); // note: PassKey idiom
 
@@ -61,7 +63,7 @@ public:
 
 int main()
 {
-    Client client; 
+    const Client client; 
     
     User().run(client);
 

@@ -3,7 +3,7 @@
 
 // =================================================================================================
 
-struct S { int a{}, b{}, c{ 4 }; }; // good: capital letter for user-defined types
+struct S { int x{}, y{}, z{ 4 }; }; // good: capital letter for user-defined types
 
 struct Point { double x = 0.0, y = 0.0; }; // good: do not forget initialization
 
@@ -22,48 +22,45 @@ struct Point { double x = 0.0, y = 0.0; }; // good: do not forget initialization
 
 int main()
 {
-	S s1; // good: compact syntax, a = 0, b = 0, c = 4
+	S s1; // good: compact syntax, x = 0, y = 0, z = 4
 
-	[[maybe_unused]] S s2{         }; // note: a = 0, b = 0, c = 4, unnecessary {}
-	[[maybe_unused]] S s3{ 1, 2, 3 }; // note: a = 1, b = 2, c = 3
-	[[maybe_unused]] S s4{ 1, 2    }; // note: a = 1, b = 2, c = 4
+	[[maybe_unused]] S s2{         }; // note: x = 0, y = 0, z = 4, unnecessary {}
+	[[maybe_unused]] S s3{ 1, 2, 3 }; // note: x = 1, y = 2, z = 3
+	[[maybe_unused]] S s4{ 1, 2    }; // note: x = 1, y = 2, z = 4
 
-	[[maybe_unused]] S s5{ .a { 1 }, .c { 3 } }; // note: a = 1, b = 0, c = 3
-	[[maybe_unused]] S s6{ .a = 1,   .c = 3   }; // note: a = 1, b = 0, c = 3
+	[[maybe_unused]] S s5{ .x { 1 }, .z { 3 } }; // note: x = 1, y = 0, z = 3
+	[[maybe_unused]] S s6{ .x = 1,   .z = 3   }; // note: x = 1, y = 0, z = 3
 
-//	S s7{ .b{ 2 }, .a{ 1 } }; // error: invalid initialization order
+//	S s7{ .y{ 2 }, .x{ 1 } }; // error: invalid initialization order
 
-	std::vector < Point > points = { {1.0, 2.0}, {3.0, 4.0} };
-
-	s1.a = 42;
-
-	std::cout << s1.a << std::endl;
+	s1.x = 42;
 
 	const auto ptr = &s1;
 
-//	(*ptr).b = 42; // bad: redundant syntax
+//	(*ptr).y = 42; // bad: redundant syntax
 
-	ptr->b = 42;
+	ptr->y = 42;
 
-	std::cout << s1.b << std::endl;
-
-	auto & ref = s1.c;
+	auto & ref = s1.z;
 
 	ref = 42;
 
-	std::cout << s1.c << std::endl;
+	std::cout <<  s1.x << std::endl;
+	std::cout <<  s1.y << std::endl;
+	std::cout <<  s1.z << std::endl;
 
-	std::cout << &s1 << std::endl;
-
-	std::cout << &s1.a << std::endl; // note: same address as previous
+	std::cout << &s1   << std::endl;
+	std::cout << &s1.x << std::endl; // note: same address as previous
 
 	s1 = { 10, 20, 30 };
 
-	s1 = { .a = 100, .c = 300 };
+	s1 = { .x = 100, .z = 300 };
 
 	[[maybe_unused]] const S s8{ 1, 2, 3 };
 
-//	s8.a = 42; // error: constant object
+//	s8.x = 42; // error: constant object
+
+	std::vector < Point > points = { {1.0, 2.0}, {3.0, 4.0} };
 
 	return 0;
 }

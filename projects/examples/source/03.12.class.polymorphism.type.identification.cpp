@@ -26,13 +26,13 @@ class Laptop : public Computer { public: void run() const override { std::cout <
 
 int main()
 {
-	const Computer * computer_ptr = new Mobile;
+	const Computer * computer_ptr = new const Mobile();
 
 	[[maybe_unused]] const auto mobile_ptr_1 = dynamic_cast < const Mobile * > (computer_ptr); // note: avoid downcasting
 
 	delete computer_ptr;
 
-	computer_ptr = new Tablet;
+	computer_ptr = new const Tablet();
 
 	if (const auto mobile_ptr_2 = dynamic_cast < const Mobile * > (computer_ptr); !mobile_ptr_2) // note: runtime checks 
 	{
@@ -43,9 +43,8 @@ int main()
 
 	auto x = 42;
 
-	[[maybe_unused]] decltype (x)  v = x; // note: decltype -> double
-
-	[[maybe_unused]] decltype((x)) r = x; // note: decltype -> double &
+	[[maybe_unused]] decltype (x)  v = x; // note: decltype (x)  -> double
+	[[maybe_unused]] decltype((x)) r = x; // note: decltype((x)) -> double &
 
 	const auto & rcx = x;
 
@@ -58,7 +57,7 @@ int main()
 
 	std::cout << typeid(string).name() << std::endl; // note: not portable type name
 
-	computer_ptr = new Mobile;
+	computer_ptr = new const Mobile();
 
 	const auto & type_info = typeid(*computer_ptr);
 

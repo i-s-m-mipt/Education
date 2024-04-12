@@ -12,12 +12,12 @@ public:
 
 	Container() : m_data(nullptr), m_size(0) 
 	{
-		std::cout << "constructor (default)" << std::endl;
+		std::cout << "constructor (main)" << std::endl;
 	}
 
 	Container(std::size_t size) : m_size(size)
 	{
-		std::cout << "constructor (main)" << std::endl;
+		std::cout << "constructor (user)" << std::endl;
 
 		m_data = new data_t[m_size]{};
 	}
@@ -51,7 +51,7 @@ public:
 	/*
 	Container & operator=(const Container & other) // bad: ineffective and duplication
 	{
-		std::cout << "operator= (copy)" << std::endl;
+		std::cout << "assignment= (copy)" << std::endl;
 
 		if (this != &other) // note: copy self-assignment check
 		{
@@ -74,7 +74,7 @@ public:
 	/*
 	Container & operator=(Container && other) // bad: ineffective and duplication
 	{
-		std::cout << "operator= (move)" << std::endl;
+		std::cout << "assignment= (move)" << std::endl;
 
 		if (this != &other) // note: move self-assignment check
 		{
@@ -93,7 +93,7 @@ public:
 
 	Container & operator=(Container other) // good: copy and swap idiom
 	{
-		std::cout << "operator= (swap)" << std::endl;
+		std::cout << "assignment= (swap)" << std::endl;
 
 		swap(other);
 
@@ -134,21 +134,14 @@ inline void swap(Container & x, Container & y) // good: useful free function
 
 int main()
 {
-	Container c1; // note: default constructor
+	Container container_1                          ; // note: constructor (main)
+	Container container_2(                      5 ); // note: constructor (user)
 
-	Container c2(10); // note: main constructor
+	Container container_3(            container_2 ); // note: constructor (copy)
+	Container container_4(  std::move(container_3)); // note: constructor (move)
 
-	Container c3(c2); // note: copy constructor
-
-	c1 = c3; // note: copy assignment operator
-	
-	Container c4(static_cast < Container && > (c2)); // note: move constructor
-
-	Container c5(std::move(c4)); // note: move constructor
-
-	c1 = Container(10); // note: move assignment operator
-
-	c1 = std::move(c3); // note: move assignment operator
+	          container_1 =           container_3  ; // note: assignment= (copy)
+	          container_1 = std::move(container_3) ; // note: assignment= (move)
 
 	return 0;
 }

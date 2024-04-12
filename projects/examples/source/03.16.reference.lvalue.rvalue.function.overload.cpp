@@ -3,39 +3,20 @@
 
 // =================================================================================================
 
-[[nodiscard]] inline int get_prvalue()
-{
-	return 42;
-}
-
-[[nodiscard]] inline const int get_const_prvalue()
-{
-	return 42;
-}
-
+[[nodiscard]] inline       int    get_prvalue      () { return 42; }
+[[nodiscard]] inline const int    get_prvalue_const() { return 42; }
 /*
-[[nodiscard]] inline int && get_xvalue() // warning: returning a reference to a local object
-{
-	return 42;
-}
+[[nodiscard]] inline       int && get__xvalue      () { return 42; } // warning: dangling reference
 */
-
-[[nodiscard]] inline int & get_lvalue()
-{
-	static int x = 42; return x;
-}
-
-[[nodiscard]] inline const int & get_const_lvalue()
-{
-	static const int x = 42; return x;
-}
+[[nodiscard]] inline       int &  get__lvalue      () { static       int x = 42; return x; }
+[[nodiscard]] inline const int &  get__lvalue_const() { static const int x = 42; return x; }
 
 // =================================================================================================
 
-inline void f(      int & ) { std::cout << "      int & " << std::endl; }
-inline void f(      int &&) { std::cout << "      int &&" << std::endl; }
-inline void f(const int & ) { std::cout << "const int & " << std::endl; }
-inline void f(const int &&) { std::cout << "const int &&" << std::endl; }
+inline void f(      int & ) { std::cout << "f(      int & )" << std::endl; }
+inline void f(      int &&) { std::cout << "f(      int &&)" << std::endl; }
+inline void f(const int & ) { std::cout << "f(const int & )" << std::endl; }
+inline void f(const int &&) { std::cout << "f(const int &&)" << std::endl; }
 
 // =================================================================================================
 
@@ -65,17 +46,18 @@ private:
 
 int main()
 {
-	f(get_prvalue());
-	f(get_const_prvalue()); // note: verify int && overload
-	f(get_lvalue());
-	f(get_const_lvalue());
+	f(get_prvalue      ());
+	f(get_prvalue_const()); // note: verify int && overload
 
-	[[maybe_unused]] double d = 0.0;
+	f(get__lvalue      ());
+	f(get__lvalue_const());
 
-	const int i = 0;
+	[[maybe_unused]] double d = 3.14;
 
-	f(0);
+	const int i = 42;
+
 //	f(d); // error: ambiguous function overloading 
+
 	f(i);
 
 	const Person person("Matthias");

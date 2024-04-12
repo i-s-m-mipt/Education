@@ -200,56 +200,54 @@ inline void swap(Ratio & x, Ratio & y) { x.swap(y); }
 
 int main()
 {
-	Ratio r1, r2(2), r3 = 3, r4(-5, 10), r5; // note: implicit conversion for r3
+	Ratio ratio_1, ratio_2(2), ratio_3 = 3, ratio_4(-4, 5); // note: implicit conversion ratio_3
 
-	std::cout << static_cast < double > (r4) << std::endl;
+	std::cout << static_cast < double > (ratio_4) << std::endl;
 
-	std::cin >> r5; // note: enter like 1/2
+	Ratio ratio_5{}; std::cin >> ratio_5; std::cout << ratio_5 << std::endl;
 
-	std::cout << r5 << std::endl;
+//	std::vector < int > vector = 42; // error: explicit constructor required for safety
 
-//	std::vector < int > v = 42; // error: no non-explicit constructor
+	std::cout << (ratio_4 +=       1) << std::endl;
+	std::cout << (ratio_4 -= ratio_1) << std::endl;
+	std::cout << (ratio_4 *= ratio_2) << std::endl;
+	std::cout << (ratio_4 /= ratio_3) << std::endl;
+//	std::cout << (      1 += ratio_4) << std::endl; // error: 1.operator+=(ratio_4) is invalid
 
-	std::cout << (r4 += 10) << std::endl;
-	std::cout << (r4 -= r1) << std::endl;
-	std::cout << (r4 *= r2) << std::endl;
-	std::cout << (r4 /= r3) << std::endl;
-//	std::cout << (10 += r4) << std::endl; // error: += not defined for prvalue int
+	std::cout << ratio_4.operator+=(ratio_1) << std::endl; // note: function-like style
 
-	std::cout << r4.operator+=(r1) << std::endl; // note: function-like style
+	std::cout << (         ++ratio_4) << std::endl;
+	std::cout << (         --ratio_4) << std::endl;
+	std::cout << (ratio_4++         ) << std::endl;
+	std::cout << (ratio_4--         ) << std::endl;
 
-	std::cout << (++r4) << std::endl;
-	std::cout << (--r4) << std::endl;
-	std::cout << (r4++) << std::endl;
-	std::cout << (r4--) << std::endl;
+	std::cout << (      1 +  ratio_4) << std::endl; // note: 1.operator+(ratio_4) is invalid
+	std::cout << (ratio_4 -        1) << std::endl;
+	std::cout << (ratio_4 *  ratio_3) << std::endl;
+	std::cout << (ratio_4 /  ratio_2) << std::endl;
+	std::cout << (      1 /        1) << std::endl;
 
-	std::cout << (10 + r4) << std::endl; // note: 10.operator+(r4) do not work
-	std::cout << (r4 - 10) << std::endl;
-	std::cout << (r4 * r3) << std::endl;
-	std::cout << (r4 / r2) << std::endl;
-	std::cout << (10 / 10) << std::endl; // note: integer division without Ratio
+	std::cout << operator+(ratio_4, ratio_1) << std::endl; // note: function-like style
 
-	std::cout << operator+(r4, r1) << std::endl; // note: function-like style
+	std::cout << (ratio_3 <  ratio_4) << std::endl;
+	std::cout << (ratio_3 >  ratio_4) << std::endl;
+	std::cout << (ratio_3 <= ratio_4) << std::endl;
+	std::cout << (ratio_3 >= ratio_4) << std::endl;
+	std::cout << (ratio_3 == ratio_4) << std::endl;
+	std::cout << (ratio_3 != ratio_4) << std::endl;
 
-	std::cout << (r3 <  r4) << std::endl;
-	std::cout << (r3 >  r4) << std::endl;
-	std::cout << (r3 <= r4) << std::endl;
-	std::cout << (r3 >= r4) << std::endl;
-	std::cout << (r3 == r4) << std::endl;
-	std::cout << (r3 != r4) << std::endl;
-
-	boost::rational < int > br1(2, 5); // note: ignore templates here
-	boost::rational < int > br2(3, 7); // note: ignore templates here
+	boost::rational < int > ratio_6(2, 5); // note: ignore templates here
+	boost::rational < int > ratio_7(3, 7); // note: ignore templates here
 
 	std::cout << boost::rational < int > (5, 10) << std::endl;
 
-	std::cout << br1 + br2 << std::endl;
-	std::cout << br1 - br2 << std::endl;
-	std::cout << br1 * br2 << std::endl;
-	std::cout << br1 / br2 << std::endl; // note: and many other operations...
+	std::cout << (ratio_6 +  ratio_7) << std::endl;
+	std::cout << (ratio_6 -  ratio_7) << std::endl;
+	std::cout << (ratio_6 *  ratio_7) << std::endl;
+	std::cout << (ratio_6 /  ratio_7) << std::endl; // note: and many other operations...
 
-	std::cout << boost::rational_cast < int    > (br1) << std::endl;
-    std::cout << boost::rational_cast < double > (br2) << std::endl;
+	std::cout << boost::rational_cast < int    > (ratio_6) << std::endl;
+    std::cout << boost::rational_cast < double > (ratio_7) << std::endl;
 
 	return 0;
 }

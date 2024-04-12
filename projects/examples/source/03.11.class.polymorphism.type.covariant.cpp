@@ -30,7 +30,7 @@ public:
 
 int main()
 {
-	const Derived * const derived = new Derived; 
+	const Derived * const derived = new const Derived(); 
 
 	derived->get()->print();
 

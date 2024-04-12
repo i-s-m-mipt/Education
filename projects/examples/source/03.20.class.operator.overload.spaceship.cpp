@@ -41,8 +41,7 @@ private:
 
 int main()
 {
-    auto x = 4;
-    auto y = 7;
+    auto x = 1, y = 2;
 
     if ((x <=> y) < 0) std::cout << "x < y" << std::endl << std::endl; // note: same as x < y
 
