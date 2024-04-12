@@ -173,13 +173,13 @@ int main()
 		a->b->a = a; // note: cyclic dependency, destroy correctly
 	}
 
-	auto uptr_1 = std::make_unique < const int > (42); // note: much similar to shared_ptr
+	auto unique_pointer_1 = std::make_unique < const int > (42); // note: much similar to shared_ptr
 
-	auto uptr_2 = std::move(uptr_1); // note: move-only type
+	auto unique_pointer_2 = std::move(unique_pointer_1); // note: move-only type
 
-	auto uptr_3 = produce(); 
+	auto unique_pointer_3 = produce(); 
 
-	consume(std::move(uptr_3)); // note: modern runtime polymorphism with factory
+	consume(std::move(unique_pointer_3)); // note: modern runtime polymorphism with factory
 
 	return 0;
 }
