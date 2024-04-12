@@ -20,5 +20,5 @@ mkdir -p output
 cd output
 cmake ..
 cmake --build .
-cp ../source/section_18/python_script.py .
+cp ../source/16.07.embedding.python.script.py .
 cp ../../../libraries/library_v2/liblibrary_v2.so .
