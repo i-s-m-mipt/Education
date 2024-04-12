@@ -6,9 +6,9 @@
 
 enum class Color { R, G, B, quantity }; // good: quantity as limit
 
-void f(Color c)
+void f(Color color)
 {
-	switch (c) // good: enumerators provide readability
+	switch (color) // good: enumerators provide readability
 	{
 		case Color::R: { std::cout << "R"; break; }
 		case Color::G: { std::cout << "G"; break; }
@@ -40,23 +40,23 @@ enum State : underlying_t
 
 }; // enum State : underlying_t
 
-inline constexpr void g(underlying_t s) noexcept { assert(s & delta || s & gamma); }
+inline constexpr void g(underlying_t state) noexcept { assert(state & delta || state & gamma); }
 
 // =================================================================================================
 
 int main()
 {
-	std::cout << "Enter color number: "; unsigned int c{};
+	std::cout << "Enter color number: "; unsigned int color{};
 
-	if (std::cin >> c; c < static_cast < unsigned int > (Color::quantity))
+	if (std::cin >> color; color < static_cast < unsigned int > (Color::quantity))
 	{
-		f(static_cast < Color > (c));
+		f(static_cast < Color > (color));
 	}
 
-	constexpr State s_1 = alpha;
-	constexpr State s_2 = gamma;
+	constexpr State state_1 = alpha;
+	constexpr State state_2 = gamma;
 
-	g(s_1 | s_2); // good: one argument instead many flags
+	g(state_1 | state_2); // good: one argument instead many flags
 	
 	return 0;
 }

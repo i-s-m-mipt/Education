@@ -66,10 +66,10 @@ void test_1(benchmark::State & state)
     {
         auto d = 3.14; 
         
-        auto p = reinterpret_cast < char * > (&d);
+        auto c = *reinterpret_cast < char * > (&d);
 
         benchmark::DoNotOptimize(d);
-        benchmark::DoNotOptimize(p);
+        benchmark::DoNotOptimize(c);
     }
 }
 
@@ -81,10 +81,10 @@ void test_2(benchmark::State & state)
     {
         auto d = 3.14;
 
-        auto p = std::bit_cast < char * > (&d); // note: same instructions with -O3
+        auto c = *std::bit_cast < char * > (&d); // note: same instructions with -O3
 
         benchmark::DoNotOptimize(d);
-        benchmark::DoNotOptimize(p);
+        benchmark::DoNotOptimize(c);
     }
 }
 
@@ -171,10 +171,9 @@ int main(int argc, char ** argv) // note: arguments for benchmark
     constexpr auto m = 0x123; assert((m << 1) == 0x246); // good: bit shift as multiplication
     constexpr auto n = -4000; assert((n >> 2) == -1000); // good: bit shift as multiplication
 
-    auto a = 7;
-    auto b = 4;
+    auto x = 1, y = 2;
 
-    a ^= b ^= a ^= b; // note: Google interview, solution 2
+    x ^= y ^= x ^= y; // note: Google interview, solution 2
 
     static_assert(sizeof(std::uint64_t) == 8); // note: 8 byte(s) exactly
 

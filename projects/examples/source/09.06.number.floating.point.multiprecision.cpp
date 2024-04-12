@@ -6,9 +6,9 @@
 #include <boost/math/special_functions/gamma.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp> // note: gmp_float is ~2 times faster
 
-template < typename T > [[nodiscard]] inline constexpr T area(T r) noexcept
+template < typename T > [[nodiscard]] inline constexpr T area(T radius) noexcept
 {
-	return boost::math::constants::pi < T > () * r * r; // note: remember variable templates
+	return boost::math::constants::pi < T > () * radius * radius; // note: remember variable templates
 }
 
 int main()
@@ -19,12 +19,12 @@ int main()
 
     std::cout << std::setprecision(precision) << float_100(3.14) << std::endl;
 
-    float_100 b = 2.0; 
+    float_100 f = 2.0; 
 
-    std::cout << std::setprecision(precision) << boost::multiprecision::log(b) << std::endl;
+    std::cout << std::setprecision(precision) << boost::multiprecision::log(f) << std::endl;
 
-    std::cout << std::setprecision(precision) << float_100(1.0  / 7.0) << std::endl;
-    std::cout << std::setprecision(precision) << float_100(1.0) / 7.0  << std::endl; // good: big float
+    std::cout << std::setprecision(precision) << float_100(1.0  / 3.0) << std::endl;
+    std::cout << std::setprecision(precision) << float_100(1.0) / 3.0  << std::endl; // good: big float
 
     std::cout << boost::math::tgamma(float_100(1000)) << std::endl;
 

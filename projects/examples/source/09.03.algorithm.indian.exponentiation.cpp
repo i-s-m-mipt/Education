@@ -39,12 +39,12 @@ int main()
 {
 	try
     {
-        assert(pow(2,  0) == 1);
-        assert(pow(2,  1) == 2);
-        assert(pow(2,  2) == 4);
-        assert(pow(2,  4) == 16);
-        assert(pow(2,  8) == 256);
-        assert(pow(2, 16) == 65536);
+        assert(pow(2,  0) ==          1);
+        assert(pow(2,  1) ==          2);
+        assert(pow(2,  2) ==          4);
+        assert(pow(2,  4) ==         16);
+        assert(pow(2,  8) ==        256);
+        assert(pow(2, 16) ==      65536);
         assert(pow(2, 32) == 4294967296);
 
         std::cout << "all tests passed" << std::endl;
