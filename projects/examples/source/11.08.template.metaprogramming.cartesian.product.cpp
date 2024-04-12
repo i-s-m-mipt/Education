@@ -50,7 +50,7 @@ template < std::forward_iterator ... Ts > [[nodiscard]] constexpr auto combine(s
 
 	do
 	{
-		apply(push, std::make_index_sequence < sizeof...(args) > (), steps, std::tie(args...));
+		apply(push, std::make_integer_sequence < std::size_t, sizeof...(args) > (), steps, std::tie(args...));
 	} 
 	while (increase(steps, sizes));
 

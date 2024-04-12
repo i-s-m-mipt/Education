@@ -80,9 +80,7 @@ public:
 
 int main()
 {
-	using vector = boost::vecS; using directed = boost::directedS; // note: directed graph
-
-    boost::adjacency_list < vector, vector, directed > graph(5); // note: number of vertexes
+	boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS > graph;
 
     boost::add_edge(0, 2, graph);
     boost::add_edge(1, 1, graph);

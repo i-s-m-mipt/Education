@@ -8,9 +8,7 @@
 
 int main()
 {
-	using vector = boost::vecS; using directed = boost::directedS;
-
-	using default_graph_t = boost::adjacency_list < vector, vector, directed > ;
+	using default_graph_t = boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS > ;
 
 	default_graph_t default_graph;
 
@@ -27,8 +25,6 @@ int main()
 	assert(boost::add_edge(vertex_2, vertex_3, default_graph).second);
 	assert(boost::add_edge(vertex_3, vertex_1, default_graph).second);
 
-	assert(boost::add_edge(vertex_1, vertex_2, default_graph).second == false);
-
 	const auto edges = boost::edges(default_graph);
 
 	std::ranges::for_each(edges.first, edges.second, [](auto edge){ std::cout << edge << std::endl; });
@@ -44,20 +40,18 @@ int main()
 		std::cout << boost::target(edge, default_graph) << std::endl;
 	});
 
-	using set = boost::setS;
-
-	using custom_graph_t = boost::adjacency_list < set, vector, directed, int, int > ;
+	using custom_graph_t = boost::adjacency_list < boost::setS, boost::vecS, boost::directedS, int, int > ;
 	
 	custom_graph_t custom_graph;
 
-	const auto u = boost::add_vertex(custom_graph);
-	const auto v = boost::add_vertex(custom_graph); 
+	const auto vertex_u = boost::add_vertex(custom_graph);
+	const auto vertex_v = boost::add_vertex(custom_graph); 
 
-	const auto e = boost::add_edge(u, v, custom_graph).first; 
+	const auto edge_u_v = boost::add_edge(vertex_u, vertex_v, custom_graph).first; 
 	
-	custom_graph[u] = 1;
-	custom_graph[v] = 2;
-	custom_graph[e] = 3;
+	custom_graph[vertex_u] = 1;
+	custom_graph[vertex_v] = 2;
+	custom_graph[edge_u_v] = 3;
 
 	boost::write_graphviz(std::cout, custom_graph); // note: suppress warning 4458 im MSVC
 

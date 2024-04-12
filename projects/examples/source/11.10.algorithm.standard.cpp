@@ -11,7 +11,7 @@ int main()
 {
 	constexpr std::size_t size = 10;
 
-	std::vector < int > vector_1(size), vector_2(size), vector_3; // note: initially empty sequences
+	std::vector < int > vector_1(size), vector_2(size), vector_3; // note: initially empty
 
 	std::iota(std::begin(vector_1), std::end(vector_1), 0); // note: vector_1 contains 0 1 2 3 4 5 6 7 8 9
 
@@ -19,7 +19,9 @@ int main()
 
 	std::shuffle(std::begin(vector_1), std::end(vector_1), engine); // note: random with no duplicates
 
-	if (const auto element = std::find(std::cbegin(vector_1), std::cend(vector_1), 0); element != std::cend(vector_1))
+	if (const auto element  = std::find(std::cbegin(vector_1), 
+									    std::cend  (vector_1), 0); element !=           
+										std::cend  (vector_1))
 	{
 		assert(*element == 0); // good: iterator dereferencing only after verification
 	}
@@ -34,17 +36,26 @@ int main()
 
 	constexpr auto is_even = [](auto x){ return (x % 2 == 0); };
 
-//	vector_2.erase(std::remove_if(std::begin(vector_2), std::end(vector_2), is_even), std::end(vector_2)); // bad: too long
+	[[maybe_unused]] auto tail_begin = std::remove_if(std::begin(vector_2), std::end(vector_2), is_even);
 
-	std::erase_if(vector_2, is_even); // note: one algorithm instead of erase member + remove_if
+//	vector_2.erase(tail_begin, std::end(vector_2)); // bad: redundant member function and remove_if
 
-	vector_3.reserve(std::size(vector_2)); // good: reserve enough memory before push_back through back_inserter
+	std::erase_if(vector_2, is_even); // note: 1 algorithm instead of member function and remove_if
 
-	std::sample(std::cbegin(vector_1), std::cend(vector_1), std::back_inserter(vector_3), std::size(vector_2), engine);
+	vector_3.resize(std::size  (vector_2));
 
-	std::transform(std::cbegin(vector_2), std::cend(vector_2), std::cbegin(vector_3), std::begin(vector_3), std::plus());
+	std::sample    (std::cbegin(vector_1), 
+				    std::cend  (vector_1), 
+				    std:: begin(vector_3), 
+				    std::size  (vector_2), engine);
 
-	std::for_each(std::cbegin(vector_3), std::cend(vector_3), [](auto x){ std::cout << x <<  ' '; });
+	std::transform (std::cbegin(vector_2), 
+				    std::cend  (vector_2), 
+				    std::cbegin(vector_3), 
+				    std:: begin(vector_3), std::plus());
+
+	std::for_each  (std::cbegin(vector_3), 
+				    std::cend  (vector_3), [](auto x){ std::cout << x <<  ' '; });
 
 	std::cout << std::endl;
 
