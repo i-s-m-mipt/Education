@@ -5,7 +5,7 @@
 
 int main()
 {
-	const std::size_t size = 5; // note: compile-time constant
+	const std::size_t size = 5;
 
 	int array_1[size]{}; // good: zero initialized array
 
