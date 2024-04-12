@@ -188,8 +188,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     std::cout << std::bitset < 8 > (42) << std::endl; // note: outputs 00101010
    
-    assert(std::bitset < 8 > (        42).to_string() == "00101010");
-    assert(std::bitset < 8 > ("00101010").to_ullong() ==         42);
+    assert(std::bitset < 8 > (       42 ).to_string() == "00101010");
+    assert(std::bitset < 8 > ("00101010").to_ullong() ==        42 );
 
     std::byte byte{ 42 }; // note: see reference for detailed description
 
