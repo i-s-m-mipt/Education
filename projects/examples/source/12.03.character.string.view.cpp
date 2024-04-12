@@ -26,16 +26,22 @@ struct case_insensitive_traits : public std::char_traits < char >
         return std::toupper(c1) <  std::toupper(c2); 
     }
 
-    [[nodiscard]] static int compare(const char * s1, const char * s2, std::size_t n) noexcept
+    [[nodiscard]] static int compare(const char * string_1, const char * string_2, std::size_t n) noexcept
     {
-        for (std::size_t i = 0; i < n; ++i) if (!eq(s1[i], s2[i])) return lt(s1[i], s2[i]) ? -1 : +1;
+        for (std::size_t i = 0; i < n; ++i) 
+        {
+            if (!eq(string_1[i], string_2[i])) return lt(string_1[i], string_2[i]) ? -1 : +1;
+        }
 
         return 0;
     }
     
-    [[nodiscard]] static const char * find(const char * s, std::size_t n, char c) noexcept
+    [[nodiscard]] static const char * find(const char * string, std::size_t n, char c) noexcept
     {
-        for (std::size_t i = 0; i < n; ++i) if (eq(s[i], c)) return &(s[i]);
+        for (std::size_t i = 0; i < n; ++i) 
+        {
+            if (eq(string[i], c)) return &(string[i]);
+        }
 
         return nullptr;
     }
