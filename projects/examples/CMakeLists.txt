@@ -191,6 +191,8 @@ set(debug
     12.13.parser.spirit.number.romanus
     12.14.parser.spirit.fusion.class.structure
     12.15.parser.spirit.grammar.arithmetic.calculator
+#   13.01.stream.class.inheritance
+    13.02.stream.class
     16.02.implementation.class.big.integer
     16.03.number.integer.multiprecision
 #   16.04.embedding.python.wrapper.header
