@@ -195,7 +195,8 @@ set(debug
     13.02.stream.class
     13.03.stream.class.file
     13.04.stream.class.string
-    13.05.iterator.stream.input.output
+    13.05.iterator.stream.buffer.input.output
+    13.06.stream.output.format
     16.02.implementation.class.big.integer
     16.03.number.integer.multiprecision
 #   16.04.embedding.python.wrapper.header
