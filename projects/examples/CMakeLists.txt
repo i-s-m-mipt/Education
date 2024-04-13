@@ -166,8 +166,8 @@ set(debug
     11.03.class.functor.lambda.expression
     11.04.pattern.command
     11.05.pattern.visitor
-    11.06.pattern.visitor.variant
-    11.07.pattern.visitor.any
+    11.06.pattern.visitor.utility.variant
+    11.07.pattern.visitor.utility.any
     11.08.implementation.utility.variant
     11.09.template.metaprogramming.cartesian.product
     11.10.algorithm.iterator.adaptor.inserter
