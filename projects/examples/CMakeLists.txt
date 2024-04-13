@@ -109,14 +109,13 @@ set(debug
 #   06.14.project.library.shared
     07.01.error.assertion.termination
     07.02.class.union
-    07.03.implementation.utility.variant
-    07.04.utility.variant.optional
-    07.05.error.exception
-    07.06.error.exception.stack.interface
-    07.07.project.tool.boost.logging
-    07.08.project.tool.boost.testing
-    07.10.project.tool.profiler.memory
-    07.12.project.tool.google.testing
+    07.03.utility.variant.optional
+    07.04.error.exception
+    07.05.error.exception.stack.interface
+    07.06.project.tool.boost.logging
+    07.07.project.tool.boost.testing
+    07.09.project.tool.profiler.memory
+    07.11.project.tool.google.testing
     08.02.algorithm.binary.gray.code
     08.03.algorithm.indian.exponentiation
     08.04.class.enumeration
@@ -170,6 +169,7 @@ set(debug
     11.06.pattern.visitor.variant
     11.07.pattern.visitor.any
     11.08.template.metaprogramming.cartesian.product
+    07.03.implementation.utility.variant
     11.09.algorithm.iterator.adaptor.inserter
     11.10.algorithm.standard
     11.11.algorithm.standard.range.view
@@ -208,8 +208,8 @@ set(debug
 )
 
 set(release
-    07.09.project.tool.profiler.cpu
-    07.11.project.tool.google.benchmark
+    07.08.project.tool.profiler.cpu
+    07.10.project.tool.google.benchmark
     08.01.number.integer
     08.08.number.random.generation
     08.10.algorithm.monte.carlo.simplex
