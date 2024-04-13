@@ -3,6 +3,8 @@
 #include <ostream>
 #include <stdexcept>
 
+// =================================================================================================
+
 struct Formatter { std::size_t precision{}; };
 
 inline std::ostream & operator<<(std::ostream & stream, Formatter f)
@@ -14,6 +16,41 @@ inline std::ostream & operator<<(std::ostream & stream, Formatter f)
     
     return stream;
 }
+
+// =================================================================================================
+
+template < typename ... Ts > void print_v1(const Ts & ... args)
+{
+    (std::cout << ... << args) << std::endl; // note: fold expression with no spaces
+}
+
+// =================================================================================================
+
+template < typename T > class Spaced
+{
+public:
+
+    explicit Spaced(const T & reference) noexcept : m_reference(reference) {}
+
+    friend std::ostream & operator<<(std::ostream & stream, Spaced < T > spaced)
+    {
+        return (stream << spaced.m_reference << ' ');
+    }
+
+private:
+
+    const T & m_reference;
+
+}; // template < typename T > class Spaced
+
+// =================================================================================================
+
+template < typename ... Ts > void print_v2(const Ts & ... args)
+{
+    (std::cout << ... << Spaced(args)) << std::endl; // note: fold expression with spaces
+}
+
+// =================================================================================================
 
 int main()
 {
@@ -41,6 +78,9 @@ int main()
 
     std::cout << Formatter(6) << 3.14 << std::endl;
     std::cout <<                 2.72 << std::endl; // note: flags are preserved
+
+    print_v1('a', 42, 3.14);
+    print_v2('a', 42, 3.14);
 
     return 0;
 }
