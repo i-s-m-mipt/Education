@@ -1,55 +1,55 @@
-<mxfile host="app.diagrams.net" modified="2024-03-21T14:06:00.307Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="S03l8nirG4EKSx6AYdlF" version="24.0.5" type="device">
+<mxfile host="app.diagrams.net" modified="2024-04-13T08:34:21.484Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="K-SksHwzFQ-n-wyklpSc" version="24.2.5" type="device">
   <diagram name="Страница — 1" id="lHIpNA71YD9EEB81Ue6B">
     <mxGraphModel dx="819" dy="446" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="JVhbZe6pg1iud8cQLpee-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="JVhbZe6pg1iud8cQLpee-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CCCCCC;" parent="1" vertex="1">
           <mxGeometry x="200" y="40" width="40" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="JVhbZe6pg1iud8cQLpee-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="JVhbZe6pg1iud8cQLpee-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CCCCCC;" parent="1" vertex="1">
           <mxGeometry x="200" y="120" width="40" height="160" as="geometry" />
         </mxCell>
-        <mxCell id="JVhbZe6pg1iud8cQLpee-3" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" target="JVhbZe6pg1iud8cQLpee-2">
+        <mxCell id="JVhbZe6pg1iud8cQLpee-3" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" parent="1" target="JVhbZe6pg1iud8cQLpee-2" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="200" y="320" as="sourcePoint" />
             <mxPoint x="250" y="290" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="JVhbZe6pg1iud8cQLpee-4" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1">
+        <mxCell id="JVhbZe6pg1iud8cQLpee-4" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="240" y="320" as="sourcePoint" />
             <mxPoint x="240" y="280" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="JVhbZe6pg1iud8cQLpee-5" value="&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;U+0000&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JVhbZe6pg1iud8cQLpee-5" value="&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;U+0000&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="240" y="30" width="70" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="JVhbZe6pg1iud8cQLpee-6" value="&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;U+007F&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JVhbZe6pg1iud8cQLpee-6" value="&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;U+007F&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="240" y="110" width="70" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="JVhbZe6pg1iud8cQLpee-7" value="&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;U+FFFF&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JVhbZe6pg1iud8cQLpee-7" value="&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;U+FFFF&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="240" y="270" width="70" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="JVhbZe6pg1iud8cQLpee-8" value="&lt;font face=&quot;Verdana&quot;&gt;65536&amp;nbsp;characters&lt;/font&gt;" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JVhbZe6pg1iud8cQLpee-8" value="&lt;font face=&quot;Verdana&quot;&gt;65536&amp;nbsp;characters&lt;/font&gt;" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="40" y="270" width="150" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="JVhbZe6pg1iud8cQLpee-10" value="&lt;font face=&quot;Verdana&quot;&gt;128 characters&lt;/font&gt;" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JVhbZe6pg1iud8cQLpee-10" value="&lt;font face=&quot;Verdana&quot;&gt;128 characters&lt;/font&gt;" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="80" y="110" width="110" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="JVhbZe6pg1iud8cQLpee-11" value="&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;U+044F = 1103 = 0100 0100 1111 :&amp;nbsp;&lt;/b&gt;&lt;/font&gt;&lt;b style=&quot;font-family: Verdana;&quot;&gt;&quot;я&quot; - 2 octets in UTF-8&lt;/b&gt;&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;&amp;nbsp;&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JVhbZe6pg1iud8cQLpee-11" value="&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;U+044F = 1103 = 0100 0100 1111 :&amp;nbsp;&lt;/b&gt;&lt;/font&gt;&lt;b style=&quot;font-family: Verdana;&quot;&gt;&quot;я&quot; - 2 octets in UTF-8&lt;/b&gt;&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;&amp;nbsp;&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="240" y="130" width="420" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="JVhbZe6pg1iud8cQLpee-12" value="&lt;div&gt;&lt;font style=&quot;&quot; face=&quot;Verdana&quot;&gt;&lt;b&gt;&amp;nbsp;UTF-8 encoding algorithm:&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&amp;nbsp;code &amp;lt;=&lt;/font&gt;&lt;font face=&quot;Lucida Console&quot;&gt; &lt;/font&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Lucida Console&quot;&gt;00007F&lt;/font&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&amp;nbsp;: 1 octets / 07 bits : 0xxxxxxx&lt;/font&gt;&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&amp;nbsp;code &amp;lt;= 0007FF : 2 octets / 11 bits : 110xxxxx 10xxxxxx&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&amp;nbsp;code &amp;lt;= 00FFFF : 3 octets / 16 bits : 1110xxxx 10xxxxxx 10xxxxxx&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&amp;nbsp;code&amp;nbsp;&lt;/font&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&amp;lt;= 10FFFF : 4 octets / 21 bits : 11110xxx&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;10xxxxxx&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;10xxxxxx&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;10xxxxxx&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JVhbZe6pg1iud8cQLpee-12" value="&lt;div&gt;&lt;font style=&quot;&quot; face=&quot;Verdana&quot;&gt;&lt;b&gt;&amp;nbsp;UTF-8 encoding algorithm:&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&amp;nbsp;code &amp;lt;=&lt;/font&gt;&lt;font face=&quot;Lucida Console&quot;&gt; &lt;/font&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Lucida Console&quot;&gt;00007F&lt;/font&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&amp;nbsp;: 1 octets / 07 bits : 0xxxxxxx&lt;/font&gt;&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&amp;nbsp;code &amp;lt;= 0007FF : 2 octets / 11 bits : 110xxxxx 10xxxxxx&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&amp;nbsp;code &amp;lt;= 00FFFF : 3 octets / 16 bits : 1110xxxx 10xxxxxx 10xxxxxx&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&amp;nbsp;code&amp;nbsp;&lt;/font&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&amp;lt;= 10FFFF : 4 octets / 21 bits : 11110xxx&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;10xxxxxx&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;10xxxxxx&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;10xxxxxx&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="242" y="150" width="560" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="JVhbZe6pg1iud8cQLpee-13" value="&lt;font face=&quot;Verdana&quot;&gt;(ASCII)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JVhbZe6pg1iud8cQLpee-13" value="&lt;font face=&quot;Verdana&quot;&gt;(ASCII)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="250" y="70" width="50" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="JVhbZe6pg1iud8cQLpee-15" value="&lt;font face=&quot;Verdana&quot;&gt;(plane 0)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JVhbZe6pg1iud8cQLpee-15" value="&lt;font face=&quot;Verdana&quot;&gt;(plane 0)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="310" y="270" width="110" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="JVhbZe6pg1iud8cQLpee-16" value="&lt;font face=&quot;Verdana&quot;&gt;&lt;span style=&quot;color: rgb(32, 33, 34); text-align: start; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp;max 1112064&lt;/font&gt;&lt;/span&gt;&amp;nbsp;characters&lt;/font&gt;" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JVhbZe6pg1iud8cQLpee-16" value="&lt;font face=&quot;Verdana&quot;&gt;&lt;span style=&quot;color: rgb(32, 33, 34); text-align: start; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp;max 1112064&lt;/font&gt;&lt;/span&gt;&amp;nbsp;characters&lt;/font&gt;" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="20" y="310" width="170" height="20" as="geometry" />
         </mxCell>
       </root>
