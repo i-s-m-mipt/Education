@@ -90,7 +90,7 @@ void f()
 
 		throw std::runtime_error("error"); // note: throw new exception
 
-//		std::cerr << "f() exited in catch" << '\n'; // warning: unreachable code
+//		std::cerr << "f() exited in catch\n"; // warning: unreachable code
 	}
 
 //	std::cout << "f() exited" << std::endl; // warning: unreachable code
