@@ -4,7 +4,7 @@
 #include <utility>
 #include <vector>
 
-int main() // good: feel strength and elegance of this example
+int main()
 {
 	std::vector < int > vector;
 

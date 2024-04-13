@@ -24,7 +24,7 @@ int main()
 
     if (std::fstream fin(file, std::ios::in); fin)
     {
-        fin.seekg(2 * (size + 1), std::ios::beg);
+        fin.seekg(2 * (size + 1), std::ios::beg); // note: consider binary mode
 
         std::string input; std::getline(fin, input); assert(input == "hello");
 

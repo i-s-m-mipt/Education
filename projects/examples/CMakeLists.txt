@@ -193,6 +193,10 @@ set(debug
     12.15.parser.spirit.grammar.arithmetic.calculator
 #   13.01.stream.class.inheritance
     13.02.stream.class
+    13.03.stream.class.file
+    13.04.stream.class.string
+    13.05.iterator.stream.buffer
+    13.06.iterator.stream.input.output
     16.02.implementation.class.big.integer
     16.03.number.integer.multiprecision
 #   16.04.embedding.python.wrapper.header

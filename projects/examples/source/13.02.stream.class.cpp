@@ -56,22 +56,24 @@ int main()
 {
     const auto old_exceptions = std::cin.exceptions();
 
-    std::cin.exceptions(std::ios::failbit | std::ios::badbit); // good: allow exceptions
+    std::cin.exceptions(std::ios::eofbit | std::ios::badbit); // good: allow exceptions
 
     try
     {
         for (int x{}; std::cin >> x; ); // note: try enter any letter instead of numbers
+
+        if (std::cin.fail()) 
+        {
+            std::cin.clear(); char c{}; std::cin >> c; // note: restore stream good state
+
+            std::cout << "invalid entered character: " << c << std::endl;
+        }
     }
     catch(const std::ios_base::failure & exception)
     {
         std::cerr << exception.what() << '\n';
 
-        if (std::cin.fail()) 
-        {
-            std::cin.clear(); char c{}; std::cin >> c; // note: make stream goodbit state
-
-            std::cout << "invalid entered character: " << c << std::endl;
-        }
+        std::cin.clear(); // note: restore stream good state
     }
     
     std::cin.exceptions(old_exceptions);
