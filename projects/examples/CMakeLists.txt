@@ -168,16 +168,16 @@ set(debug
     11.05.pattern.visitor
     11.06.pattern.visitor.variant
     11.07.pattern.visitor.any
-    11.08.template.metaprogramming.cartesian.product
-    07.03.implementation.utility.variant
-    11.09.algorithm.iterator.adaptor.inserter
-    11.10.algorithm.standard
-    11.11.algorithm.standard.range.view
-    11.12.algorithm.graph
-#   11.13.algorithm.graph.example
-    11.14.algorithm.graph.traversal.bfs
-    11.15.algorithm.graph.traversal.dfs
-    11.16.algorithm.graph.search.dijkstra
+    11.08.implementation.utility.variant
+    11.09.template.metaprogramming.cartesian.product
+    11.10.algorithm.iterator.adaptor.inserter
+    11.11.algorithm.standard
+    11.12.algorithm.standard.range.view
+    11.13.algorithm.graph
+#   11.14.algorithm.graph.example
+    11.15.algorithm.graph.traversal.bfs
+    11.16.algorithm.graph.traversal.dfs
+    11.17.algorithm.graph.search.dijkstra
     12.01.character.encoding
 #   12.02.character.encoding.unicode.utf
     12.05.locale.facet
