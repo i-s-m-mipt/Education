@@ -39,7 +39,7 @@ int main()
 	for (auto p = 0; p <= max_precision; ++p) // good: formatted output
 	{
 		std::cout << std::setw(2) << std::right << std::setfill(' ') << p << ": " << 
-			std::setprecision(p) << std::fixed << std::numbers::pi << std::endl;
+			 std::setprecision(p) << std::fixed << std::numbers::pi  << std::endl;
 	}
 
 	std::cout << std::setprecision(default_precision);
@@ -52,7 +52,7 @@ int main()
 		std::cout << std::numeric_limits < double > ::infinity() << std::endl;
 	}
 
-	std::cout << std::log(-1) << std::endl; // note: NaN
+	std::cout << errno << ' ' << std::log(-1) << ' ' << errno << std::endl; // note: C-style
 
 	constexpr auto x = 0.0, y = 1.0;
 
