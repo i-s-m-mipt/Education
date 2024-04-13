@@ -35,7 +35,7 @@ set(debug
     02.11.algorithm.binary.search
     02.12.algorithm.lexicographic.order
     02.13.algorithm.insertion.merge.sorting
-    03.01.class.structure
+    03.01.class.struct
     03.02.class
     03.03.class.friend
     03.04.pattern.attorney.client.passkey
