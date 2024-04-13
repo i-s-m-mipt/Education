@@ -186,7 +186,7 @@ set(debug
     12.08.parser.regex
 #   12.09.parser.grammar.arithmetic
     12.10.parser.grammar.arithmetic.calculator
-    12.11.parser.spirit
+    12.11.parser.spirit.number.integer
     12.12.parser.spirit.number.complex
     12.13.parser.spirit.number.romanus
     12.14.parser.spirit.fusion.class.structure
