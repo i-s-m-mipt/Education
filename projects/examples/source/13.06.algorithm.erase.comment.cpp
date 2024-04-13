@@ -1,60 +1,48 @@
+#include <iostream>
 #include <iterator>
 #include <fstream>
 #include <string>
 
-void erase_comments(std::string & code);
-
-int main(int argc, char ** argv)
+int main()
 {
-	std::fstream fin("test.txt", std::ios::in);
+	if (std::fstream fin("13.07.algorithm.erase.comment.test.txt", std::ios::in); fin)
+    {
+        std::string code { std::istreambuf_iterator < char > (fin),
+		                   std::istreambuf_iterator < char > (   ) } ;
 
-	std::string code {
-		std::istreambuf_iterator < char > (fin),
-		std::istreambuf_iterator < char > () };
+        for (auto current = std::begin(code); current != std::end(code); ++current) 
+        {
+            if (*current == '"') // note: ignore characters inside string literals
+            {
+                for (++current; !((*current == '"') && (*std::prev(current) != '\\')); ++current);
+            }
+                
+            if (*current == '/') 
+            {
+                if (*std::next(current) == '/') // note: single-line comment
+                {
+                    auto last = std::next(current, 2);
 
-	erase_comments(code);
+                    for (; last != std::end(code) && *last != '\n'; ++last);
 
-	std::fstream fout("result.txt", std::ios::out);
+                    current = code.erase(current, last);
+                }
+                else if (*std::next(current) == '*') // note: multi-line comment
+                {
+                    auto last = std::next(current, 3);
 
-	fout << code;
+                    for (; !((*last == '/') && (*std::prev(last) == '*')); ++last);
 
-	system("pause");
+                    current = code.erase(current, ++last);
+                }
+            }
 
-	return EXIT_SUCCESS;
-}
+            if (current == std::end(code)) break;
+        }
 
-void erase_comments(std::string & code)
-{
-	for (auto current = std::begin(code); current != std::end(code); ++current) 
-	{
-		if (*current == '"')
-		{
-			for (++current; !((*current == '"') && (*std::prev(current) != '\\')); ++current);
-		}
-			
-		if (*current == '/') 
-		{
-			if (*std::next(current) == '/') 
-			{
-				auto last = std::next(current, 2);
+        std::fstream("result.txt", std::ios::out) << code;
+    }
+    else std::cerr << "invalid file stream\n";
 
-				for (; last != std::end(code) && *last != '\n'; ++last);
-
-				current = code.erase(current, last);
-			}
-			else if (*std::next(current) == '*') 
-			{
-				auto last = std::next(current, 3);
-
-				for (; !((*last == '/') && (*std::prev(last) == '*')); ++last);
-
-				current = code.erase(current, ++last);
-			}
-		}
-
-		if (current == std::end(code))
-		{
-			break;
-		}
-	}
+	return 0;
 }
