@@ -170,7 +170,7 @@ set(debug
     11.06.pattern.visitor.variant
     11.07.pattern.visitor.any
     11.08.template.metaprogramming.cartesian.product
-    11.09.iterator.adaptor.inserter
+    11.09.algorithm.iterator.adaptor.inserter
     11.10.algorithm.standard
     11.11.algorithm.standard.range.view
     11.12.algorithm.graph
@@ -195,7 +195,7 @@ set(debug
     13.02.stream.class
     13.03.stream.class.file
     13.04.stream.class.string
-    13.05.iterator.stream.input.output
+    13.05.stream.iterator.buffer.input.output
     13.06.algorithm.erase.comment
 #   13.07.algorithm.erase.comment.test
     13.08.stream.output.format
