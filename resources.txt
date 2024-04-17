@@ -1,15 +1,14 @@
-https://en.cppreference.com/w/ - reference
-https://www.boost.org/ - libraries
-https://stackoverflow.com/ - discussions
-https://github.com/ - projects
-https://www.learncpp.com/ - tutorials
-https://www.cppstories.com/ - blog
-https://www.fluentcpp.com/ - blog
-https://www.modernescpp.com/ - blog
-https://www.vishalchovatiya.com/ - blog
-https://www.onlinegdb.com/ - compilers
-https://cppinsights.io/ - explorers
-https://roadmap.sh/ - overview
-https://e-maxx.ru/algo/ - algorithms
-https://www.asciitable.com/ - characters
-https://regex101.com/ - regular expressions
+https://en.cppreference.com/w/ - справочник
+https://www.boost.org/ - библиотеки Boost
+https://stackoverflow.com/ - вопросы-ответы
+https://github.com/ - проекты и библиотеки
+https://www.learncpp.com/ - учебное пособие
+https://www.cppstories.com/ - частный блог
+https://www.fluentcpp.com/ - частный блог
+https://www.modernescpp.com/ - частный блог
+https://www.onlinegdb.com/ - компиляторы
+https://cppinsights.io/ - анализ программ
+https://roadmap.sh/ - обзор всех технологий
+https://e-maxx.ru/algo/ - сборник алгоритмов
+https://www.asciitable.com/ - таблица ASCII
+https://regex101.com/ - регулярные выражения
