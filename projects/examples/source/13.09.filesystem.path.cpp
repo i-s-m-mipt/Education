@@ -28,7 +28,7 @@ int main()
 
 	assert(std::filesystem::equivalent(file, "13.09.filesystem.path"));
 
-    const std::filesystem::path path = std::filesystem::current_path() / "13.09.filesystem.path";
+    const auto path = std::filesystem::current_path() / "13.09.filesystem.path";
 
     std::cout << "root_name      = " << path.root_name     ().string() << std::endl;
 	std::cout << "root_directory = " << path.root_directory().string() << std::endl;
