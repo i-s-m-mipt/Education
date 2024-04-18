@@ -64,7 +64,7 @@ int main()
 	std::ranges::for_each(              vector , [z1](auto & x){        x += z1 ; }); // note: modify elements in range
 	std::ranges::for_each(std::as_const(vector), [z1](auto   x){ assert(x == z1); }); // note: verify elements in range
 
-	const std::set < int, decltype([](auto lhs, auto rhs){ return (lhs > rhs); }) > set = { 1, 4, 2, 5, 3 };
+	const std::set < int, decltype([](auto lhs, auto rhs){ return (lhs > rhs); }) > set { 1, 4, 2, 5, 3 };
 
 	for (const auto element : set) std::cout << element << ' ';
 

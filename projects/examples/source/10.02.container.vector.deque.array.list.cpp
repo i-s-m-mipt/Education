@@ -129,19 +129,19 @@ int main()
 
 	[[maybe_unused]] const auto deque_value = deque[middle]; // good: O(1) complexity
 
-	constexpr std::array < int, size > array = { 1, 2, 3, 4, 5 }; // note: aggregate initialization
+	constexpr std::array < int, size > array { 1, 2, 3, 4, 5 }; // note: aggregate initialization
 
 	[[maybe_unused]] const auto array_value = array[middle]; // good: O(1) complexity, fast on stack
 
 	[[maybe_unused]] constexpr auto array_from_static_array = std::to_array(static_array);
 
-	std::list < int > list_1 = { 8, 0, 6, 2, 4, 4, 2, 6, 0, 8 };
+	std::list < int > list_1 { 8, 0, 6, 2, 4, 4, 2, 6, 0, 8 };
 	
 	list_1.sort(); // note: std::sort is unacceptable due to bidirectional iterators
 
 	assert(list_1.unique() == 5); // note: erases all consecutive duplicate elements
 
-	std::list < int > list_2 = { 9, 7, 5, 3, 1, 42 };
+	std::list < int > list_2 { 9, 7, 5, 3, 1, 42 };
 
 	list_2.reverse(); // note: reverses the order of the elements in the container
 
@@ -157,7 +157,7 @@ int main()
 
 	std::cout << std::endl;
 
-	std::forward_list < int > forward_list = { 1, 2, 3, 4, 5 }; // note: forward iterators
+	std::forward_list < int > forward_list { 1, 2, 3, 4, 5 }; // note: forward iterators
 
 	forward_list.insert_after(forward_list.before_begin(), 42);
 
@@ -171,7 +171,7 @@ int main()
 
 //	assert(std::size(forward_list) == 6); // error: forward_list has no size() member
 
-	std::list < int > list_for_sort = { 2, 4, 1, 5, 3 };
+	std::list < int > list_for_sort { 2, 4, 1, 5, 3 };
 
 	std::vector < std::reference_wrapper < int > > wrapper(std::begin(list_for_sort), std::end(list_for_sort));
 

@@ -66,12 +66,12 @@ private:
 
 int main()
 {
-	std::vector < int > vector_1 = { 1, 4, 2, 5, 3 };
+	std::vector < int > vector_1 { 1, 4, 2, 5, 3 };
 
 	std::ranges::sort(vector_1                ); // note: sort range in  ascending order
 	std::ranges::sort(vector_1, std::greater()); // note: sort range in descending order
 
-	const std::set < int, std::greater < int > > set = { 1, 4, 2, 5, 3 };
+	const std::set < int, std::greater < int > > set { 1, 4, 2, 5, 3 };
 
 	for (const auto element : set) std::cout << element << ' ';
 

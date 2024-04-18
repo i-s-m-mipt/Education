@@ -46,7 +46,7 @@ template < std::forward_iterator ... Ts > [[nodiscard]] constexpr auto combine(s
 	
 	std::vector steps (sizeof...(args), std::size_t(0));
 
-	std::vector sizes = { static_cast < std::size_t > (std::distance(args.first , args.second))... };
+	std::vector sizes { static_cast < std::size_t > (std::distance(args.first , args.second))... };
 
 	do
 	{
@@ -61,9 +61,9 @@ template < std::forward_iterator ... Ts > [[nodiscard]] constexpr auto combine(s
 
 int main()
 {
-    std::vector vector_1 = { 'a', 'b', 'c' }; // note: different homogeneous containers
-	std::vector vector_2 = { 100, 200, 300 };
-	std::vector vector_3 = { 1.0, 2.0, 3.0 };
+    std::vector vector_1 { 'a', 'b', 'c' }; // note: different homogeneous containers
+	std::vector vector_2 { 100, 200, 300 };
+	std::vector vector_3 { 1.0, 2.0, 3.0 };
 
 	const auto cartesian_product = combine(
 		std::make_pair(std::begin(vector_1), std::end(vector_1)),

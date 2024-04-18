@@ -139,7 +139,7 @@ int main()
 
 	delete[] array_2;
 
-	const std::vector < int > vector = { 1, 2, 3, 4, 5 };
+	const std::vector < int > vector { 1, 2, 3, 4, 5 };
 
 	print_vector(vector); // good: no copying of big object
 

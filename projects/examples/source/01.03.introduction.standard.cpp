@@ -25,7 +25,7 @@ int main()
 
 	std::cout << "Hello, " << name << std::endl;
 
-	std::vector < int > vector = { 1, 2, 3 }; // note: default container
+	std::vector < int > vector { 1, 2, 3 }; // note: default container
 
 	std::cout << "Vector size is " << std::size(vector) << std::endl;
 

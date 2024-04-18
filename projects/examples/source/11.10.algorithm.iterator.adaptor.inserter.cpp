@@ -9,7 +9,7 @@
 
 int main()
 {
-	const std::vector < int > vector = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	const std::vector < int > vector { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
 	std::deque < int > deque; // note: std::deque has push_front member function
 

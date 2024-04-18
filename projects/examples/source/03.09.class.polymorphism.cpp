@@ -118,7 +118,7 @@ int main()
 	const Laptop laptop_1;
 	const Laptop laptop_2;
 
-	std::vector < const Computer * > computers = { &mobile_1, &mobile_2, &laptop_1, &laptop_2 };
+	std::vector < const Computer * > computers { &mobile_1, &mobile_2, &laptop_1, &laptop_2 };
 
 	for (const auto computer : computers) computer->print();
 

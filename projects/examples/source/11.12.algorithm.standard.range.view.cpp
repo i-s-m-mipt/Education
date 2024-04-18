@@ -42,11 +42,11 @@ static_assert(std::ranges::random_access_range < std::      vector < int > > ); 
 
 int main()
 {
-	std::vector < int > vector = { 0, 1, 2, 3, 4 };
+	std::vector < int > vector { 0, 1, 2, 3, 4 };
 
 	for (auto && element : vector) ++element; // note: range-based for, look at cppinsights.io
 
-	const std::map < int, int > map = { { 1, 10 }, { 2, 20 }, { 3, 30 } };
+	const std::map < int, int > map { { 1, 10 }, { 2, 20 }, { 3, 30 } };
 
 	for (const auto [key, value] : map) // note: structured binding, look at cppinsights.io
 	{

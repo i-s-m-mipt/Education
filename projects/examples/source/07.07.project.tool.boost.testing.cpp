@@ -144,7 +144,7 @@ void free_test_function(int parameter) // note: nullary function in case without
 
 boost::unit_test::test_suite * init_unit_test_suite(int, char**) // note: manual registration
 {
-    std::vector < int > parameters = { 1, 2, 3, 4, 5 };
+    std::vector < int > parameters { 1, 2, 3, 4, 5 };
 
     boost::unit_test::framework::master_test_suite().add(BOOST_PARAM_TEST_CASE(
         &free_test_function, std::begin(parameters), std::end(parameters)));

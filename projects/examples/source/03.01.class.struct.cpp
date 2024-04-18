@@ -60,7 +60,7 @@ int main()
 
 //	s8.x = 42; // error: constant object
 
-	std::vector < Point > points = { {1.0, 2.0}, {3.0, 4.0} };
+	std::vector < Point > points { {1.0, 2.0}, {3.0, 4.0} };
 
 	return 0;
 }

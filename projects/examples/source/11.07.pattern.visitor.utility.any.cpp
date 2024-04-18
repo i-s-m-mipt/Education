@@ -43,7 +43,7 @@ void handle(const std::any & any)
 
 int main()
 {
-    const std::vector < std::any > vector = { true, 'a', 42, 3.14, "hello" };
+    const std::vector < std::any > vector { true, 'a', 42, 3.14, "hello" };
 
     try
     {
