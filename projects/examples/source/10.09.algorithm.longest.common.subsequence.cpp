@@ -45,8 +45,8 @@ template < typename T > [[nodiscard]] constexpr std::vector < T > longest_common
 int main()
 {
 
-	const std::vector < int > sequence_1 = { 1, 2, 3, 3, 3 };
-	const std::vector < int > sequence_2 = { 1, 1, 2, 2, 3 };
+	const std::vector < int > sequence_1 { 1, 2, 3, 3, 3 };
+	const std::vector < int > sequence_2 { 1, 1, 2, 2, 3 };
 
 	for (const auto element : longest_common_subsequence(sequence_1, sequence_2))
 	{

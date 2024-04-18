@@ -71,7 +71,7 @@ int main()
 
 	std::cout << boost::hash < S > ()(s) << std::endl;
 
-	const std::vector < std::string > vector = { "hello", "world" };
+	const std::vector < std::string > vector { "hello", "world" };
 
 	std::cout << boost::hash_range(std::cbegin(vector), std::cend(vector)) << std::endl;
 
