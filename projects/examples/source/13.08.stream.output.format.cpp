@@ -47,7 +47,7 @@ int main()
 
     std::cout << std::format("{:.5}", d) << std::endl; // note: 5 digits of precision
 
-    [[maybe_unused]] constexpr Color color = { 127, 127, 127 };
+    [[maybe_unused]] constexpr Color color { 127, 127, 127 };
 
 //  std::cout << std::format("{}", color) << std::endl; // note: check for updates in GCC
 

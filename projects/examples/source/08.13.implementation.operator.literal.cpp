@@ -10,7 +10,7 @@ namespace literals // good: namespace for user-defined literals
 {
 	[[nodiscard]] inline constexpr Kilometers operator""_km(unsigned long long kilometers) noexcept
 	{
-		return Kilometers{ kilometers };
+		return Kilometers { kilometers };
 	}
 
 	[[nodiscard]] inline constexpr long double operator""_deg_to_rad(long double degrees) noexcept

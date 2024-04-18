@@ -47,7 +47,7 @@ private:
 
     explicit Server(int version) : m_version(version) {}; // note: use factory methods
 
-    int m_version = 0;
+    int m_version;
 
 }; // class Server : public Computer
 
@@ -97,13 +97,13 @@ public:
 
 int main()
 {
-    const Computer * const mobile = create < Mobile > (); 
+    const auto mobile = create < Mobile > (); 
 
     mobile->run(); 
     
     delete mobile; // good: no memory leak
 
-    const Computer * const server = Server::Factory::create_v1(); 
+    const auto server = Server::Factory::create_v1(); 
 
     server->run(); 
     
@@ -111,7 +111,7 @@ int main()
 
     const Factory * const factory_laptop = new const Factory_Laptop();
 
-    const Computer * const laptop = factory_laptop->create(); 
+    const auto laptop = factory_laptop->create(); 
 
     laptop->run(); 
     

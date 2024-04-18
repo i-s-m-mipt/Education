@@ -78,8 +78,8 @@ int main()
     
     std::cin.exceptions(old_exceptions);
 
-    std::cout << Formatter(6) << 3.14 << std::endl;
-    std::cout <<                 2.72 << std::endl; // note: flags are preserved
+    std::cout << Formatter { 6 } << 3.14 << std::endl;
+    std::cout <<                    2.72 << std::endl; // note: flags are preserved
 
     print_v1('a', 42, 3.14);
     print_v2('a', 42, 3.14);

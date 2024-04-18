@@ -72,7 +72,7 @@ private:
 
 int main()
 {
-    const Computer * const mobile = Factory::create_mobile(); 
+    const auto mobile = Factory::create_mobile(); 
 
     mobile->run(); 
     

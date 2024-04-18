@@ -13,7 +13,7 @@ struct Point { double x = 0.0, y = 0.0; }; // good: do not forget initialization
 {
 	if (x > 0.0 && y > 0.0)
 	{
-		return Point{ x, y }; // note: temporary object
+		return Point { x, y }; // note: temporary object
 	}
 	else return {}; // good: compact syntax, type deduction
 }
@@ -24,14 +24,14 @@ int main()
 {
 	S s1; // good: compact syntax, x = 0, y = 0, z = 4
 
-	[[maybe_unused]] S s2{         }; // note: x = 0, y = 0, z = 4, unnecessary {}
-	[[maybe_unused]] S s3{ 1, 2, 3 }; // note: x = 1, y = 2, z = 3
-	[[maybe_unused]] S s4{ 1, 2    }; // note: x = 1, y = 2, z = 4
+	[[maybe_unused]] S s2 {         }; // note: x = 0, y = 0, z = 4, unnecessary {}
+	[[maybe_unused]] S s3 { 1, 2, 3 }; // note: x = 1, y = 2, z = 3
+	[[maybe_unused]] S s4 { 1, 2    }; // note: x = 1, y = 2, z = 4
 
-	[[maybe_unused]] S s5{ .x { 1 }, .z { 3 } }; // note: x = 1, y = 0, z = 3
-	[[maybe_unused]] S s6{ .x = 1,   .z = 3   }; // note: x = 1, y = 0, z = 3
+	[[maybe_unused]] S s5 { .x { 1 }, .z { 3 } }; // note: x = 1, y = 0, z = 3
+	[[maybe_unused]] S s6 { .x = 1,   .z = 3   }; // note: x = 1, y = 0, z = 3
 
-//	S s7{ .y{ 2 }, .x{ 1 } }; // error: invalid initialization order
+//	S s7 { .y{ 2 }, .x{ 1 } }; // error: invalid initialization order
 
 	s1.x = 42;
 
@@ -56,7 +56,7 @@ int main()
 
 	s1 = { .x = 100, .z = 300 };
 
-	[[maybe_unused]] const S s8{ 1, 2, 3 };
+	[[maybe_unused]] const S s8 { 1, 2, 3 };
 
 //	s8.x = 42; // error: constant object
 

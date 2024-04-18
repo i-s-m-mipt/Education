@@ -23,7 +23,7 @@ struct Vector { double x{}, y{}, z{}; };
 
 	std::uniform_real_distribution < double > distribution(0.0, 2.0 * std::numbers::pi);
 
-	constexpr Vector PA = {0.0, -1.0}; // note: P states for circle center in { 1.0, 1.0 }
+	constexpr Vector PA {0.0, -1.0}; // note: P states for circle center in { 1.0, 1.0 }
 
 	std::size_t counter = 0;
 
@@ -37,8 +37,8 @@ struct Vector { double x{}, y{}, z{}; };
 		const auto x_c = std::cos(w_C);
 		const auto y_c = std::sin(w_C);
 
-		const Vector PB = {x_b, y_b};
-		const Vector PC = {x_c, y_c};
+		const Vector PB {x_b, y_b};
+		const Vector PC {x_c, y_c};
 
 		const auto a = (PA * PB).z; // note: barycentric coordinate method
 		const auto b = (PB * PC).z;

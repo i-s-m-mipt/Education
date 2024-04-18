@@ -5,7 +5,7 @@
 
 struct Computer
 {
-    const std::string name;
+    const        std::string name;
 
     struct CPU { std::string name; } cpu;
     struct GPU { std::string name; } gpu;
@@ -17,11 +17,9 @@ struct Computer
 
 void print(const Computer & computer)
 {
-    std::cout << "Computer \"" << computer.name << "\" includes: " << std::endl;
-
-    std::cout << "CPU: " << computer.cpu.name << std::endl;
-    std::cout << "GPU: " << computer.gpu.name << std::endl;
-    std::cout << "RAM: " << computer.ram.name << std::endl;
+    std::cout << computer.name << " { " << computer.cpu.name << ", " <<
+                                           computer.gpu.name << ", " <<
+                                           computer.ram.name << " }" << std::endl;
 }
 
 // =================================================================================================
@@ -30,7 +28,7 @@ class Builder
 {
 public:
 
-    explicit Builder(const std::string & name) : m_computer(new Computer{ name }) {}
+    explicit Builder(const std::string & name) : m_computer(new Computer { name }) {}
 
     virtual ~Builder() = default; // note: polymorphic base class
 
@@ -56,9 +54,9 @@ public:
 
 public:
 
-    void build_cpu() const override { computer()->cpu.name = "Mobile CPU"; }
-    void build_gpu() const override { computer()->gpu.name = "Mobile GPU"; }
-    void build_ram() const override { computer()->ram.name = "Mobile RAM"; }
+    void build_cpu() const override { computer()->cpu.name = "MCPU"; }
+    void build_gpu() const override { computer()->gpu.name = "MGPU"; }
+    void build_ram() const override { computer()->ram.name = "MRAM"; }
 
 }; // class Builder_Mobile : public Builder
 
@@ -72,9 +70,9 @@ public:
 
 public:
 
-    void build_cpu() const override { computer()->cpu.name = "Tablet CPU"; }
-    void build_gpu() const override { computer()->gpu.name = "Tablet GPU"; }
-    void build_ram() const override { computer()->ram.name = "Tablet RAM"; }
+    void build_cpu() const override { computer()->cpu.name = "TCPU"; }
+    void build_gpu() const override { computer()->gpu.name = "TGPU"; }
+    void build_ram() const override { computer()->ram.name = "TRAM"; }
 
 }; // class Builder_Tablet : public Builder
 
@@ -88,9 +86,9 @@ public:
 
 public:
 
-    void build_cpu() const override { computer()->cpu.name = "Laptop CPU"; }
-    void build_gpu() const override { computer()->gpu.name = "Laptop GPU"; }
-    void build_ram() const override { computer()->ram.name = "Laptop RAM"; }
+    void build_cpu() const override { computer()->cpu.name = "LCPU"; }
+    void build_gpu() const override { computer()->gpu.name = "LGPU"; }
+    void build_ram() const override { computer()->ram.name = "LRAM"; }
 
 }; // class Builder_Laptop : public Builder
 
