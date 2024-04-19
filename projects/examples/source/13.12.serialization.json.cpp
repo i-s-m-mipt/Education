@@ -12,15 +12,6 @@
 
 // =================================================================================================
 
-[[nodiscard]] nlohmann::json load(const std::filesystem::path & path)
-{
-	if (std::fstream fin(path.string(), std::ios::in); fin)
-	{
-		return nlohmann::json::parse(fin);
-	}
-	else throw std::runtime_error("unable to open file " + path.string());
-}
-
 void save(const std::filesystem::path & path, const nlohmann::json & object)
 {
 	if (std::fstream fout(path.string(), std::ios::out); fout)
@@ -32,31 +23,36 @@ void save(const std::filesystem::path & path, const nlohmann::json & object)
 
 // =================================================================================================
 
-struct Config 
-{ 
-    bool flag{}; 
-
-    std::vector < int > parameters;
-    
-    struct Server { std::string name; double parameter{}; } server;
-
-}; // struct Config 
+[[nodiscard]] nlohmann::json load(const std::filesystem::path & path)
+{
+	if (std::fstream fin(path.string(), std::ios::in); fin)
+	{
+		return nlohmann::json::parse(fin);
+	}
+	else throw std::runtime_error("unable to open file " + path.string());
+}
 
 // =================================================================================================
 
-struct File
-{
-	static constexpr auto config = "config.json";
+struct Example 
+{ 
+    bool b{}; 
 
-}; // struct File
+    std::vector < int > vector;
+    
+    struct S { std::string string; double d{}; } s;
+
+}; // struct Example 
+
+// =================================================================================================
 
 struct Key
 {
-	static constexpr auto flag       = "flag";
-    static constexpr auto parameters = "parameters";
-    static constexpr auto server     = "server";
-    static constexpr auto name       = "name";
-    static constexpr auto parameter  = "parameter";
+	static constexpr auto b      = "b";
+    static constexpr auto vector = "vector";
+    static constexpr auto s      = "s";
+    static constexpr auto string = "string";
+    static constexpr auto d      = "d";
 
 }; // struct Key
 
@@ -64,37 +60,39 @@ struct Key
 
 int main()
 {
-    const Config config { true, { 1, 2, 3, 4, 5 }, { "hello", 3.14 } };
+    const Example example { true, { 1, 2, 3, 4, 5 }, { "hello", 3.14 } };
+
+    constexpr auto file = "example.json";
 
     {
         nlohmann::json object;
 
-        object[Key::flag] = config.flag;
+        object[Key::b] = example.b;
 
-        object[Key::parameters] = config.parameters;
+        object[Key::vector] = example.vector;
 
-        object[Key::server][Key::name] = config.server.name;
+        object[Key::s][Key::string] = example.s.string;
 
-        object[Key::server][Key::parameter] = config.server.parameter;
+        object[Key::s][Key::d] = example.s.d;
 
-        save(File::config, object);
+        save(file, object);
     }
 
     {
-        const auto object = load(File::config);
+        const auto object = load(file);
 
-        assert(object[Key::flag].get < bool > () == config.flag);
+        assert(object[Key::b].get < bool > () == example.b);
 
-        assert(object[Key::parameters].get < std::vector < int > > () == config.parameters);
+        assert(object[Key::vector].get < std::vector < int > > () == example.vector);
 
-        assert(object[Key::server][Key::name].get < std::string > () == config.server.name);
+        assert(object[Key::s][Key::string].get < std::string > () == example.s.string);
 
-        assert(object[Key::server][Key::parameter].get < double > () == config.server.parameter);
+        assert(object[Key::s][Key::d].get < double > () == example.s.d);
     }
 
-    std::cout << "Continue? (y/n) "; char c{}; std::cin >> c;
+    std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
 
-    std::remove(File::config);
+    std::remove(file);
 
 	return 0;
 }
