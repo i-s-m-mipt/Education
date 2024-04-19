@@ -19,7 +19,7 @@ int main()
 
 	std::filesystem::rename("Y", "Z");
 
-    std::cout << "Continue? (y/n) "; char c{}; std::cin >> c;
+    std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
 
 	std::filesystem::remove_all("X");
 	std::filesystem::remove_all("Z");
