@@ -2,11 +2,16 @@
 #include <filesystem>
 #include <iostream>
 
+[[nodiscard]] std::filesystem::path operator""_p(const char * ptr, std::size_t size)
+{
+	return std::filesystem::path(std::string(ptr, size));
+}
+
 int main()
 {
     std::cout << std::filesystem::current_path() << std::endl;
 
-	const std::filesystem::path file = "../output/./13.09.filesystem.path";
+	const auto file = "../output/./13.09.filesystem.path"_p;
 
 	assert(std::filesystem::exists(file));
 
@@ -15,7 +20,7 @@ int main()
 
     try
 	{
-        const std::filesystem::path path = "directory/stem.extension";
+        const auto path = "directory/stem.extension"_p;
 
 		std::cout << std::filesystem::canonical(path) << std::endl; // note: weakly canonical
 	}
@@ -24,7 +29,7 @@ int main()
 		std::cerr << exception.what() << '\n';
 	}
 
-	std::cout << (std::filesystem::path("directory") / "stem.extension") << std::endl;
+	std::cout << ("directory"_p / "stem.extension") << std::endl;
 
 	assert(std::filesystem::equivalent(file, "13.09.filesystem.path"));
 
