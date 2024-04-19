@@ -22,5 +22,6 @@ cmake ..
 cmake --build .
 cp ../source/script.py .
 cp ../source/matthias.jpg .
+cp ../source/consolas.ttf .
 cp ../source/13.07.algorithm.erase.comment.test.txt .
 cp ../../../libraries/library_v2/liblibrary_v2.so .
