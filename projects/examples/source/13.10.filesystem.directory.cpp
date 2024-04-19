@@ -24,6 +24,8 @@ int main()
 	std::filesystem::remove_all("X");
 	std::filesystem::remove_all("Z");
 
+	std::filesystem::remove_all(path / "directory");
+
 //  std::filesystem::remove_all("C:/"); // note: try it at home yourself
 
 	return EXIT_SUCCESS;
