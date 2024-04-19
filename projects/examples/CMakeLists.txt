@@ -10,12 +10,14 @@ find_package(Python3       3.11 REQUIRED COMPONENTS Interpreter Development)
 find_package(nlohmann_json 3.11 REQUIRED COMPONENTS)
 find_package(GTest         1.14 REQUIRED COMPONENTS)
 find_package(benchmark          REQUIRED COMPONENTS)
+find_package(PDFHummus          REQUIRED COMPONENTS)
 
 include_directories(        ${Boost_INCLUDE_DIRS})
 include_directories(      ${Python3_INCLUDE_DIRS})
 include_directories(${nlohmann_json_INCLUDE_DIRS})
 include_directories(        ${GTEST_INCLUDE_DIRS})
 include_directories(    ${benchmark_INCLUDE_DIRS})
+include_directories(    ${PDFHummus_INCLUDE_DIRS})
 
 set(debug
 #   01.01.introduction
@@ -168,7 +170,7 @@ set(debug
     11.05.pattern.visitor
     11.06.pattern.visitor.utility.variant
     11.07.pattern.visitor.utility.any
-    11.08.implementation.utility.variant
+#   11.08.implementation.utility.variant
     11.09.template.metaprogramming.cartesian.product
     11.10.algorithm.iterator.adaptor.inserter
     11.11.algorithm.standard
@@ -199,6 +201,11 @@ set(debug
     13.06.algorithm.erase.comment
 #   13.07.algorithm.erase.comment.test
     13.08.stream.output.format
+    13.09.filesystem.path
+    13.10.filesystem.directory
+    13.11.filesystem.directory.iterator
+    13.12.serialization.json
+    13.13.serialization.pdf
     16.02.implementation.class.big.integer
     16.03.number.integer.multiprecision
 #   16.04.embedding.python.wrapper.header
@@ -231,6 +238,7 @@ foreach(entry IN LISTS debug)
     add_executable        (${entry} source/${entry}.cpp)
     target_link_libraries (${entry} PRIVATE ${Boost_LIBRARIES})
     target_link_libraries (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
+    target_link_libraries (${entry} PRIVATE PDFHummus::PDFWriter)
     target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
     set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 endforeach()

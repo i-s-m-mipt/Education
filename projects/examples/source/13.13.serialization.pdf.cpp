@@ -19,7 +19,7 @@ int main()
 
     const auto page = std::make_unique < PDFPage > ();
 
-    constexpr auto width = 595, height = 842, dpi = 72; // note: A4 page in 72 DPI
+    [[maybe_unused]] constexpr auto width = 595, height = 842, dpi = 72; // note: A4 page in 72 DPI
 
     page->SetMediaBox(PDFRectangle(0, 0, width, height)); 
 
@@ -27,7 +27,7 @@ int main()
 
     auto line = height; // note: current output line from top of page
 
-    [[maybe_unused]] constexpr auto image_width = 380, image_height = 380, image_dpi = 96, delta = 10;
+    constexpr auto image_height = 380, image_dpi = 96, delta = 10;
 
     AbstractContentContext::ImageOptions image_options;
 
@@ -43,13 +43,24 @@ int main()
 
     auto font = writer.GetFontForFile("consolas.ttf");
 
-    [[maybe_unused]] constexpr auto font_size = 14;
+    constexpr auto font_size = 14;
 
     AbstractContentContext::TextOptions text_options(font, font_size, AbstractContentContext::eGray, 0);
 
     line -= (delta + font_size);
     
     context->WriteText(delta, line, "Hello, World!", text_options);
+
+    AbstractContentContext::GraphicOptions graphic_options(AbstractContentContext::eStroke,
+                                                           AbstractContentContext::eRGB,
+                                                           AbstractContentContext::ColorValueForName("Red"),
+                                                           2.0);
+
+    constexpr auto rectangle_height = font_size + 4, rectangle_width = 100;
+    
+    line -= (delta + rectangle_height);
+
+    context->DrawRectangle(delta, line, rectangle_width, rectangle_height, graphic_options);
     
     status = writer.EndPageContentContext(context);
 
