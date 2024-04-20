@@ -11,38 +11,38 @@ int main()
 {
     std::cout << std::filesystem::current_path() << std::endl;
 
-	const auto file = "../output/./13.09.filesystem.path"_p;
+	const auto path_1 = "../output/./13.09.filesystem.path"_p;
 
-	assert(std::filesystem::exists(file));
+	assert(std::filesystem::exists(path_1));
 
-	std::cout << std::filesystem::absolute (file) << std::endl;
-    std::cout << std::filesystem::canonical(file) << std::endl;
+	std::cout << std::filesystem::absolute (path_1) << std::endl;
+    std::cout << std::filesystem::canonical(path_1) << std::endl; // note: weakly canonical
 
     try
 	{
-        const auto path = "directory/stem.extension"_p;
+        const auto path_2 = "directory/stem.extension"_p;
 
-		std::cout << std::filesystem::canonical(path) << std::endl; // note: weakly canonical
+		std::cout << std::filesystem::canonical(path_2) << std::endl;
 	}
-	catch (const std::filesystem::filesystem_error & exception)
+	catch (const std::exception & exception)
 	{
-		std::cerr << exception.what() << '\n';
+		std::cerr << exception.what() << '\n'; // note: std::filesystem::filesystem_error
 	}
 
 	std::cout << ("directory"_p / "stem.extension") << std::endl;
 
-	assert(std::filesystem::equivalent(file, "13.09.filesystem.path"));
+	assert(std::filesystem::equivalent(path_1, "13.09.filesystem.path"));
 
-    const auto path = std::filesystem::current_path() / "13.09.filesystem.path";
+    const auto path_3 = std::filesystem::current_path() / "13.09.filesystem.path";
 
-    std::cout << "root_name      = " << path.root_name     ().string() << std::endl;
-	std::cout << "root_directory = " << path.root_directory().string() << std::endl;
-	std::cout << "root_path      = " << path.root_path     ().string() << std::endl;
-	std::cout << "relative_path  = " << path.relative_path ().string() << std::endl;
-	std::cout << "parent_path    = " << path.parent_path   ().string() << std::endl;
-	std::cout << "filename       = " << path.filename      ().string() << std::endl;
-	std::cout << "stem           = " << path.stem          ().string() << std::endl;
-	std::cout << "extension      = " << path.extension     ().string() << std::endl;
+    std::cout << "root_name      = " << path_3.root_name     ().string() << std::endl;
+	std::cout << "root_directory = " << path_3.root_directory().string() << std::endl;
+	std::cout << "root_path      = " << path_3.root_path     ().string() << std::endl;
+	std::cout << "relative_path  = " << path_3.relative_path ().string() << std::endl;
+	std::cout << "parent_path    = " << path_3.parent_path   ().string() << std::endl;
+	std::cout << "filename       = " << path_3.filename      ().string() << std::endl;
+	std::cout << "stem           = " << path_3.stem          ().string() << std::endl;
+	std::cout << "extension      = " << path_3.extension     ().string() << std::endl;
 
 	return 0;
 }
