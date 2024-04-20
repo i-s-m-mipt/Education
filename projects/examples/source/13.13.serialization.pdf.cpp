@@ -15,7 +15,7 @@ int main()
 
     PDFWriter writer;
     
-    status = writer.StartPDF(file, ePDFVersion13);
+    status = writer.StartPDF(file, ePDFVersion17);
 
     const auto page = std::make_unique < PDFPage > ();
 
@@ -45,20 +45,20 @@ int main()
 
     constexpr auto font_size = 14;
 
+    line -= (delta + font_size);
+
     AbstractContentContext::TextOptions text_options(font, font_size, AbstractContentContext::eGray, 0);
 
-    line -= (delta + font_size);
-    
     context->WriteText(delta, line, "Hello, World!", text_options);
+
+    constexpr auto rectangle_height = font_size + 4, rectangle_width = 100;
+
+    line -= (delta + rectangle_height);
 
     AbstractContentContext::GraphicOptions graphic_options(AbstractContentContext::eStroke,
                                                            AbstractContentContext::eRGB,
                                                            AbstractContentContext::ColorValueForName("Red"),
                                                            2.0);
-
-    constexpr auto rectangle_height = font_size + 4, rectangle_width = 100;
-    
-    line -= (delta + rectangle_height);
 
     context->DrawRectangle(delta, line, rectangle_width, rectangle_height, graphic_options);
     

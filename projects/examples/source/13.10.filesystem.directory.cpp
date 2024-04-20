@@ -28,5 +28,5 @@ int main()
 
 //  std::filesystem::remove_all("C:/"); // note: try it at home yourself
 
-	return EXIT_SUCCESS;
+	return 0;
 }
