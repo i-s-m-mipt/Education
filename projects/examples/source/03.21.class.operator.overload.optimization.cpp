@@ -29,6 +29,12 @@ private:
 
 int main()
 {
+    int x = 42;
+
+    const auto & rcx = x;
+
+    const_cast < int & > (rcx) = 43;
+
     std::cout << Data(1, 42)[0] << std::endl;
 
     return 0;
