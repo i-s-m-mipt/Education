@@ -56,15 +56,22 @@ private:
 
 // =================================================================================================
 
-template < typename T > class Outer { public: template < typename U > class Inner; };
-
-template < typename T > template < typename U > class Outer < T > ::Inner {}; // note: nested template
-
-// =================================================================================================
+template < template < typename E > typename C1,
+		   template < typename E > typename C2, typename T >
+[[nodiscard]] inline C2 < T > copy(const C1 < T > & container_in)
+{
+	return C2 < T > (std::cbegin(container_in), std::cend(container_in));
+}
 
 template < typename T1, typename T2 > struct Pair { T1 x{}; T2 y{}; }; // note: see std::pair
 
 template < typename T > class Container { public: Container(std::size_t, const T &) {} }; 
+
+// =================================================================================================
+
+template < typename T > class Outer { public: template < typename U > class Inner; };
+
+template < typename T > template < typename U > class Outer < T > ::Inner {}; // note: nested template
 
 // =================================================================================================
 
@@ -113,12 +120,16 @@ int main()
 
 	Stack_v2 < double, std::deque > deque_stack_v2; // good: no duplication
 
-	Stack_v2 new_stack = deque_stack_v2;
+	const std::vector < int > container_in { 1, 2, 3, 4, 5 };
 
-	[[maybe_unused]] typename Outer < int > ::template Inner < int > object; // note: impressed?
+	[[maybe_unused]] const auto container_out = copy < std::vector, std::deque > (container_in);
+
+	Stack_v2 new_stack = deque_stack_v2;
 
 	[[maybe_unused]] const Pair      pair     { 1, 42 }; // note: generated deduction guide for aggregate
 	[[maybe_unused]] const Container container( 1, 42 ); // note: generated deduction guide for aggregate
+
+	[[maybe_unused]] typename Outer < int > ::template Inner < int > object; // note: impressed?
 
 	C < char,   double > ().f(); // note: basic template for T1, T2
 	C < char,   char   > ().f(); // note: partial specialization for T, T
