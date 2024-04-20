@@ -70,7 +70,7 @@ int main()
 
     std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
 
-    std::remove(file);
+    std::filesystem::remove(file);
 
     return 0;
 }
