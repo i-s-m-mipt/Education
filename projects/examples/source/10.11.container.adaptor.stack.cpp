@@ -1,8 +1,9 @@
-#include <cassert>
 #include <cmath>
 #include <stack>
 #include <type_traits>
 #include <utility>
+
+#include <gtest/gtest.h>
 
 // =================================================================================================
 
@@ -80,33 +81,45 @@ private:
 
 // =================================================================================================
 
-int main()
+TEST(Stack_v1, Functions)
 {
     Stack_v1 < int > stack_v1;
 
-    stack_v1.push(3); assert(stack_v1.top() == 3 && stack_v1.min() == 3);
-    stack_v1.push(5); assert(stack_v1.top() == 5 && stack_v1.min() == 3);
-    stack_v1.push(2); assert(stack_v1.top() == 2 && stack_v1.min() == 2);
-    stack_v1.push(1); assert(stack_v1.top() == 1 && stack_v1.min() == 1);
-    stack_v1.push(1); assert(stack_v1.top() == 1 && stack_v1.min() == 1);
+    stack_v1.push(3); ASSERT_TRUE(stack_v1.top() == 3 && stack_v1.min() == 3);
+    stack_v1.push(5); ASSERT_TRUE(stack_v1.top() == 5 && stack_v1.min() == 3);
+    stack_v1.push(2); ASSERT_TRUE(stack_v1.top() == 2 && stack_v1.min() == 2);
+    stack_v1.push(1); ASSERT_TRUE(stack_v1.top() == 1 && stack_v1.min() == 1);
+    stack_v1.push(1); ASSERT_TRUE(stack_v1.top() == 1 && stack_v1.min() == 1);
 
-    stack_v1.pop  (); assert(stack_v1.top() == 1 && stack_v1.min() == 1);
-    stack_v1.pop  (); assert(stack_v1.top() == 2 && stack_v1.min() == 2);
-    stack_v1.pop  (); assert(stack_v1.top() == 5 && stack_v1.min() == 3);
-    stack_v1.pop  (); assert(stack_v1.top() == 3 && stack_v1.min() == 3);
+    stack_v1.pop  (); ASSERT_TRUE(stack_v1.top() == 1 && stack_v1.min() == 1);
+    stack_v1.pop  (); ASSERT_TRUE(stack_v1.top() == 2 && stack_v1.min() == 2);
+    stack_v1.pop  (); ASSERT_TRUE(stack_v1.top() == 5 && stack_v1.min() == 3);
+    stack_v1.pop  (); ASSERT_TRUE(stack_v1.top() == 3 && stack_v1.min() == 3);
+}
 
+// =================================================================================================
+
+TEST(Stack_v2, Functions)
+{
     Stack_v2 < int > stack_v2;
    
-    stack_v2.push(3); assert(stack_v2.top() == 3 && stack_v2.min() == 3);
-    stack_v2.push(5); assert(stack_v2.top() == 5 && stack_v2.min() == 3);
-    stack_v2.push(2); assert(stack_v2.top() == 2 && stack_v2.min() == 2);
-    stack_v2.push(1); assert(stack_v2.top() == 1 && stack_v2.min() == 1);
-    stack_v2.push(1); assert(stack_v2.top() == 1 && stack_v2.min() == 1);
+    stack_v2.push(3); ASSERT_TRUE(stack_v2.top() == 3 && stack_v2.min() == 3);
+    stack_v2.push(5); ASSERT_TRUE(stack_v2.top() == 5 && stack_v2.min() == 3);
+    stack_v2.push(2); ASSERT_TRUE(stack_v2.top() == 2 && stack_v2.min() == 2);
+    stack_v2.push(1); ASSERT_TRUE(stack_v2.top() == 1 && stack_v2.min() == 1);
+    stack_v2.push(1); ASSERT_TRUE(stack_v2.top() == 1 && stack_v2.min() == 1);
 
-    stack_v2.pop  (); assert(stack_v2.top() == 1 && stack_v2.min() == 1);
-    stack_v2.pop  (); assert(stack_v2.top() == 2 && stack_v2.min() == 2);
-    stack_v2.pop  (); assert(stack_v2.top() == 5 && stack_v2.min() == 3);
-    stack_v2.pop  (); assert(stack_v2.top() == 3 && stack_v2.min() == 3);
- 
-    return 0;
+    stack_v2.pop  (); ASSERT_TRUE(stack_v2.top() == 1 && stack_v2.min() == 1);
+    stack_v2.pop  (); ASSERT_TRUE(stack_v2.top() == 2 && stack_v2.min() == 2);
+    stack_v2.pop  (); ASSERT_TRUE(stack_v2.top() == 5 && stack_v2.min() == 3);
+    stack_v2.pop  (); ASSERT_TRUE(stack_v2.top() == 3 && stack_v2.min() == 3);
+}
+
+// =================================================================================================
+
+int main(int argc, char ** argv) // note: arguments for testing
+{
+    testing::InitGoogleTest(&argc, argv);
+
+    return RUN_ALL_TESTS();
 }

@@ -143,7 +143,7 @@ BENCHMARK(test_2)->DenseRange(1, 9, 1);
 
 // =================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for benchmark and testing
+int main(int argc, char ** argv) // note: arguments for testing and benchmark
 {
     testing::InitGoogleTest(&argc, argv);
 
