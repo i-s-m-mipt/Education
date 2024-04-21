@@ -24,7 +24,7 @@ public:
 
     ~Computer();
 
-    void run() const; // note: call forwarded to implementation, no inline abilities
+    void run() const; // note: call forwarded to implementation, no inline abilities, slow
 
 private:
 
@@ -52,9 +52,9 @@ private:
 
 // =================================================================================================
 
-Computer:: Computer(std::string name) : m_pimpl(new const Implementation(std::move(name))) {}
+Computer:: Computer(std::string name) : m_pimpl(new const Implementation(std::move(name))) {} // note: slow
 
-Computer::~Computer() { delete m_pimpl; }
+Computer::~Computer() { delete m_pimpl; } // note: slow
 
 void Computer::run() const { m_pimpl->run(); }
 
