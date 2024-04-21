@@ -100,7 +100,8 @@ TEST(Optional, Functions)
     const Optional < int > optional_1    ; ASSERT_TRUE(!optional_1.has_value());
     const Optional < int > optional_2(42); ASSERT_TRUE( optional_2.has_value());
 
-    ASSERT_TRUE(optional_1.value_or(42) == 42 && optional_2.value_or(42) == 42);
+    ASSERT_EQ(optional_1.value_or(42), 42);
+    ASSERT_EQ(optional_2.value_or(42), 42);
     
     Optional < int > optional_3(optional_2); 
     
