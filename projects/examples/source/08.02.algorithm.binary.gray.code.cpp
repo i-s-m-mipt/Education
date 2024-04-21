@@ -1,8 +1,11 @@
 #include <bitset>
-#include <cassert>
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+
+#include <gtest/gtest.h>
+
+// =================================================================================================
 
 [[nodiscard]] inline constexpr unsigned int gray_encode(unsigned int n) noexcept
 {
@@ -19,7 +22,21 @@
     return code;
 }
 
-int main()
+// =================================================================================================
+
+TEST(Algorithm, Binary_Gray_Code)
+{
+    constexpr std::size_t size = 5;
+
+    for (unsigned int n = 0; n < static_cast < unsigned int > (std::pow(2, size)); ++n)
+    {
+        ASSERT_EQ(n, gray_decode(gray_encode(n)));
+    }
+}
+
+// =================================================================================================
+
+int main(int argc, char ** argv) // note: arguments for testing
 {
     constexpr std::size_t size = 5;
 
@@ -27,13 +44,12 @@ int main()
 
     for (unsigned int n = 0; n < static_cast < unsigned int > (std::pow(2, size)); ++n)
     {
-        const auto x = gray_encode(n);
-        const auto y = gray_decode(x);
+        std::cout << std::setw(2) << std::right << std::setfill('0') << n << ' ';
 
-        assert(n == y);
-
-        std::cout << std::setw(2) << std::right << std::setfill('0') << n << ' ' << binary(x) << std::endl;
+        std::cout << binary(gray_encode(n)) << std::endl;
     }
 
-    return 0;
+    testing::InitGoogleTest(&argc, argv);
+
+    return RUN_ALL_TESTS();
 }

@@ -1,8 +1,11 @@
-#include <cassert>
 #include <exception>
 #include <iostream>
 #include <limits>
 #include <stdexcept>
+
+#include <gtest/gtest.h>
+
+// =================================================================================================
 
 [[nodiscard]] unsigned long long pow(unsigned long long base, unsigned long long exp)
 {
@@ -35,20 +38,25 @@
     return result;
 }
 
-int main()
+// =================================================================================================
+
+TEST(Algorithm, Indian_Exponentiation)
+{
+    ASSERT_EQ(pow(2,  0),          1);
+    ASSERT_EQ(pow(2,  1),          2);
+    ASSERT_EQ(pow(2,  2),          4);
+    ASSERT_EQ(pow(2,  4),         16);
+    ASSERT_EQ(pow(2,  8),        256);
+    ASSERT_EQ(pow(2, 16),      65536);
+    ASSERT_EQ(pow(2, 32), 4294967296);
+}
+
+// =================================================================================================
+
+int main(int argc, char ** argv) // note: arguments for testing
 {
 	try
     {
-        assert(pow(2,  0) ==          1);
-        assert(pow(2,  1) ==          2);
-        assert(pow(2,  2) ==          4);
-        assert(pow(2,  4) ==         16);
-        assert(pow(2,  8) ==        256);
-        assert(pow(2, 16) ==      65536);
-        assert(pow(2, 32) == 4294967296);
-
-        std::cout << "all tests passed" << std::endl;
-
         [[maybe_unused]] auto result = pow(2, 64); // note: throws an exception
     }
     catch (const std::exception & exception)
@@ -56,5 +64,7 @@ int main()
         std::cerr << exception.what() << '\n';
     }
 
-	return 0;
+	testing::InitGoogleTest(&argc, argv);
+
+    return RUN_ALL_TESTS();
 }
