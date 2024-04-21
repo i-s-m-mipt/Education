@@ -1,6 +1,9 @@
-#include <cassert>
 #include <new>
 #include <utility>
+
+#include <gtest/gtest.h>
+
+// =================================================================================================
 
 template < typename T > class Optional 
 {
@@ -90,32 +93,41 @@ private:
 
 }; // template < typename T > class Optional 
 
-int main()
-{
-    const Optional < int > optional_1    ; assert(!optional_1.has_value());
-    const Optional < int > optional_2(42); assert( optional_2.has_value());
+// =================================================================================================
 
-    assert(optional_1.value_or(42) == 42 && optional_2.value_or(42) == 42);
+TEST(Optional, Functions)
+{
+    const Optional < int > optional_1    ; ASSERT_TRUE(!optional_1.has_value());
+    const Optional < int > optional_2(42); ASSERT_TRUE( optional_2.has_value());
+
+    ASSERT_TRUE(optional_1.value_or(42) == 42 && optional_2.value_or(42) == 42);
     
     Optional < int > optional_3(optional_2); 
     
-    assert(optional_3.has_value() && optional_3.value() == 42 &&  optional_2.has_value());
+    ASSERT_TRUE(optional_3.has_value() && optional_3.value() == 42 &&  optional_2.has_value());
 
     Optional < int > optional_4(std::move(optional_3));
 
-    assert(optional_4.has_value() && optional_4.value() == 42 && !optional_3.has_value());
+    ASSERT_TRUE(optional_4.has_value() && optional_4.value() == 42 && !optional_3.has_value());
 
     optional_3 = optional_2; 
     
-    assert(optional_3.has_value() && optional_3.value() == 42);
+    ASSERT_TRUE(optional_3.has_value() && optional_3.value() == 42);
 
     optional_4 = std::move(optional_3);
 
-    assert(optional_4.has_value() && optional_4.value() == 42 && !optional_3.has_value());
+    ASSERT_TRUE(optional_4.has_value() && optional_4.value() == 42 && !optional_3.has_value());
 
     optional_4 = 43;
 
-    assert(optional_4.has_value() && optional_4.value() == 43);
+    ASSERT_TRUE(optional_4.has_value() && optional_4.value() == 43);
+}
 
-    return 0;
+// =================================================================================================
+
+int main(int argc, char ** argv) // note: arguments for testing
+{
+    testing::InitGoogleTest(&argc, argv);
+
+    return RUN_ALL_TESTS();
 }
