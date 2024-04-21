@@ -1,4 +1,3 @@
-#include <cassert>
 #include <cmath>
 #include <exception>
 #include <iterator>
@@ -12,6 +11,8 @@ using namespace std::literals;
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp> // note: abstract syntax tree
+
+#include <gtest/gtest.h>
 
 // =================================================================================================
 
@@ -138,27 +139,32 @@ namespace grammar
 
 // =================================================================================================
 
-int main()
+TEST(Calculator, Expressions)
 {
-    const auto epsilon = 0.000001;
+    ASSERT_DOUBLE_EQ(test("+1.0"), +1.0);
+    ASSERT_DOUBLE_EQ(test("-1.0"), -1.0);
 
-    assert(std::abs(test("+1.0") - +1.0) < epsilon);
-    assert(std::abs(test("-1.0") - -1.0) < epsilon);
+    ASSERT_DOUBLE_EQ(test("1.0 + 2.0"), +3.0);
+    ASSERT_DOUBLE_EQ(test("1.0 - 2.0"), -1.0);
+    ASSERT_DOUBLE_EQ(test("1.0 * 2.0"), +2.0);
+    ASSERT_DOUBLE_EQ(test("1.0 / 2.0"), +0.5);
 
-    assert(std::abs(test("1.0 + 2.0") - +3.0) < epsilon);
-    assert(std::abs(test("1.0 - 2.0") - -1.0) < epsilon);
-    assert(std::abs(test("1.0 * 2.0") - +2.0) < epsilon);
-    assert(std::abs(test("1.0 / 2.0") - +0.5) < epsilon);
+    ASSERT_DOUBLE_EQ(test("1.0 + 2.0 + 3.0"), +6.0);
+    ASSERT_DOUBLE_EQ(test("1.0 - 2.0 - 3.0"), -4.0);
+    ASSERT_DOUBLE_EQ(test("1.0 * 2.0 * 3.0"), +6.0);
 
-    assert(std::abs(test("1.0 + 2.0 + 3.0") - +6.0) < epsilon);
-    assert(std::abs(test("1.0 - 2.0 - 3.0") - -4.0) < epsilon);
-    assert(std::abs(test("1.0 * 2.0 * 3.0") - +6.0) < epsilon);
+    ASSERT_DOUBLE_EQ(test("1.0 / 2.0 / 3.0"), +1.0 / 6.0);
 
-    assert(std::abs(test("1.0 / 2.0 / 3.0") - +0.166667) < epsilon);
+    ASSERT_DOUBLE_EQ(test("(1.0 + 2.0) * 3.0 - 4.0"), +5.00);
+    ASSERT_DOUBLE_EQ(test("1.0 - (2.0 - 3.0) / 4.0"), +1.25);
+    ASSERT_DOUBLE_EQ(test("1.0 * 2.0 - (3.0 + 4.0)"), -5.00);
+}
 
-    assert(std::abs(test("(1.0 + 2.0) * 3.0 - 4.0") - +5.00) < epsilon);
-    assert(std::abs(test("1.0 - (2.0 - 3.0) / 4.0") - +1.25) < epsilon);
-    assert(std::abs(test("1.0 * 2.0 - (3.0 + 4.0)") - -5.00) < epsilon);
+// =================================================================================================
 
-    return 0;
+int main(int argc, char ** argv) // note: arguments for testing
+{
+    testing::InitGoogleTest(&argc, argv);
+
+    return RUN_ALL_TESTS();
 }
