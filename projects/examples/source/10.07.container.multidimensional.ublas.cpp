@@ -1,4 +1,3 @@
-#include <cassert>
 #include <exception>
 #include <random>
 #include <stdexcept>
@@ -11,6 +10,8 @@
 #include <boost/numeric/ublas/matrix.hpp>
 
 #include <benchmark/benchmark.h>
+
+#include <gtest/gtest.h>
 
 // =================================================================================================
 
@@ -130,18 +131,25 @@ BENCHMARK(test_2)->DenseRange(1, 9, 1);
 
 // =================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for benchmark
+TEST(Algorithm, Determinant)
 {
     const auto matrix = make_random_matrix(3);
 
     constexpr auto epsilon = 0.001;
 
-    assert(std::abs(determinant_v1(matrix) - 12.595) < epsilon);
-    assert(std::abs(determinant_v2(matrix) - 12.595) < epsilon);
+    ASSERT_NEAR(determinant_v1(matrix), -181.125, epsilon);
+    ASSERT_NEAR(determinant_v2(matrix), -181.125, epsilon);
+}
 
+// =================================================================================================
+
+int main(int argc, char ** argv) // note: arguments for benchmark and testing
+{
 	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
 
-	return 0;
+	testing::InitGoogleTest(&argc, argv);
+
+    return RUN_ALL_TESTS();
 }
