@@ -1,4 +1,3 @@
-#include <cassert>
 #include <cctype>
 #include <cmath>
 #include <exception>
@@ -16,6 +15,10 @@
 #include <vector>
 
 using namespace std::literals;
+
+#include <gtest/gtest.h>
+
+// =================================================================================================
 
 class Big_Int
 {
@@ -275,14 +278,14 @@ public:
 
 		auto k = n / 2;
 
-		Big_Int xr; xr.m_n_digits =     k;
-		Big_Int xl; xl.m_n_digits = n - k;
+		Big_Int xr; xr.m_n_digits =     k; // note: slow memory allocation
+		Big_Int xl; xl.m_n_digits = n - k; // note: slow memory allocation
 
 		for (std::size_t i =     0; i < k; ++i) xr.m_digits[i    ] = x.m_digits[i];
 		for (std::size_t i = n / 2; i < n; ++i) xl.m_digits[i - k] = x.m_digits[i];
 
-		Big_Int yr; yr.m_n_digits =     k;
-		Big_Int yl; yl.m_n_digits = n - k;
+		Big_Int yr; yr.m_n_digits =     k; // note: slow memory allocation
+		Big_Int yl; yl.m_n_digits = n - k; // note: slow memory allocation
 
 		for (std::size_t i = 0; i < n / 2; ++i) yr.m_digits[i    ] = y.m_digits[i];
 		for (std::size_t i = k; i < n    ; ++i) yl.m_digits[i - k] = y.m_digits[i];
@@ -291,7 +294,7 @@ public:
 		auto p2 = karatsuba_multiplication(xr,      yr     );
 		auto p3 = karatsuba_multiplication(xl + xr, yl + yr);
 
-		Big_Int radix = Big_Int::radix;
+		Big_Int radix = Big_Int::radix; // note: slow memory allocation
 
 		for (std::size_t i = 1; i < n / 2; ++i) radix *= Big_Int::radix;
 
@@ -405,6 +408,8 @@ private:
 
 	static constexpr auto radix = static_cast < digit_t > (std::pow(10, step));
 
+public:
+
 	static constexpr std::size_t size = 1'000; // note: maximum number of digits
 
 private:
@@ -417,62 +422,89 @@ private:
 
 }; // class Big_Int
 
+// =================================================================================================
+
 inline void swap(Big_Int & x, Big_Int & y) noexcept { x.swap(y); }
 
-int main()
+// =================================================================================================
+
+TEST(Big_Int, Operators)
+{
+	const Big_Int big_int_1 = "+73640854127382725310948206095647"sv;
+	const Big_Int big_int_2 = "-46090058756232818791046807807190"sv;
+
+    ASSERT_EQ(big_int_1 + big_int_1, "+147281708254765450621896412191294"sv);
+	ASSERT_EQ(big_int_1 + big_int_2,  "+27550795371149906519901398288457"sv);
+	ASSERT_EQ(big_int_2 + big_int_1,  "+27550795371149906519901398288457"sv);
+	ASSERT_EQ(big_int_2 + big_int_2,  "-92180117512465637582093615614380"sv);
+
+	ASSERT_EQ(big_int_1 - big_int_1,                                 "+0"sv);
+	ASSERT_EQ(big_int_1 - big_int_2, "+119730912883615544101995013902837"sv);
+	ASSERT_EQ(big_int_2 - big_int_1, "-119730912883615544101995013902837"sv);
+	ASSERT_EQ(big_int_2 - big_int_2,                                 "-0"sv);
+
+	ASSERT_EQ(big_int_1 * big_int_1, "+5422975396610461369717641600947386274415037870250962127712348609"sv);
+	ASSERT_EQ(big_int_1 * big_int_2, "-3394111293590239892710602762023649092547630961329778427474301930"sv);
+	ASSERT_EQ(big_int_2 * big_int_1, "-3394111293590239892710602762023649092547630961329778427474301930"sv);
+	ASSERT_EQ(big_int_2 * big_int_2, "+2124293516152993531053750721748717735666440864785393936215696100"sv);
+
+	ASSERT_EQ(big_int_1 / big_int_1, "+1"sv);
+	ASSERT_EQ(big_int_1 / big_int_2, "-1"sv);
+	ASSERT_EQ(big_int_2 / big_int_1, "-0"sv);
+	ASSERT_EQ(big_int_2 / big_int_2, "+1"sv);
+
+	Big_Int big_int_3 = 42;
+
+	ASSERT_EQ(++big_int_3  , 43); 
+	ASSERT_EQ(--big_int_3  , 42);
+	ASSERT_EQ(  big_int_3++, 42); 
+	ASSERT_EQ(  big_int_3--, 43);
+
+	ASSERT_EQ(sqrt(big_int_1), "+8581424947372244"sv);
+}
+
+// =================================================================================================
+
+TEST(Big_Int, Karatsuba_Multiplication)
+{
+	const Big_Int big_int_1 = "+73640854127382725310948206095647"sv;
+	const Big_Int big_int_2 = "-46090058756232818791046807807190"sv;
+
+	ASSERT_EQ(karatsuba_multiplication(big_int_1, big_int_1), "+5422975396610461369717641600947386274415037870250962127712348609"sv);
+	ASSERT_EQ(karatsuba_multiplication(big_int_1, big_int_2), "-3394111293590239892710602762023649092547630961329778427474301930"sv);
+	ASSERT_EQ(karatsuba_multiplication(big_int_2, big_int_1), "-3394111293590239892710602762023649092547630961329778427474301930"sv);
+	ASSERT_EQ(karatsuba_multiplication(big_int_2, big_int_2), "+2124293516152993531053750721748717735666440864785393936215696100"sv);
+}
+
+// =================================================================================================
+
+TEST(Big_Int, Comparisons)
+{
+	const Big_Int big_int_1 = "+73640854127382725310948206095647"sv;
+	const Big_Int big_int_2 = "-46090058756232818791046807807190"sv;
+
+	ASSERT_TRUE(big_int_2 <  big_int_1);
+	ASSERT_TRUE(big_int_1 >  big_int_2);
+	ASSERT_TRUE(big_int_2 <= big_int_1);
+	ASSERT_TRUE(big_int_1 >= big_int_2);
+	ASSERT_TRUE(big_int_1 != big_int_2);
+}
+
+// =================================================================================================
+
+int main(int argc, char ** argv) // note: arguments for testing
 {
 	try
 	{
-		Big_Int big_int_2 = 42;
-
-		Big_Int big_int_3 = "+73640854127382725310948206095647"sv;
-		Big_Int big_int_4 = "-46090058756232818791046807807190"sv;
-
-		Big_Int big_int_1{}; std::cin >> big_int_1; std::cout << big_int_1 << std::endl;
-
-		assert(big_int_3 + big_int_3 == "+147281708254765450621896412191294"sv);
-		assert(big_int_3 + big_int_4 ==  "+27550795371149906519901398288457"sv);
-		assert(big_int_4 + big_int_3 ==  "+27550795371149906519901398288457"sv);
-		assert(big_int_4 + big_int_4 ==  "-92180117512465637582093615614380"sv);
-
-		assert(big_int_3 - big_int_3 ==                                 "+0"sv);
-		assert(big_int_3 - big_int_4 == "+119730912883615544101995013902837"sv);
-		assert(big_int_4 - big_int_3 == "-119730912883615544101995013902837"sv);
-		assert(big_int_4 - big_int_4 ==                                 "-0"sv);
-
-		assert(big_int_3 * big_int_3 == "+5422975396610461369717641600947386274415037870250962127712348609"sv);
-		assert(big_int_3 * big_int_4 == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
-		assert(big_int_4 * big_int_3 == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
-		assert(big_int_4 * big_int_4 == "+2124293516152993531053750721748717735666440864785393936215696100"sv);
-
-		assert(big_int_3 / big_int_3 == "+1"sv);
-		assert(big_int_3 / big_int_4 == "-1"sv);
-		assert(big_int_4 / big_int_3 == "-0"sv);
-		assert(big_int_4 / big_int_4 == "+1"sv);
-
-		assert(++big_int_2   == 43); 
-		assert(--big_int_2   == 42);
-		assert(  big_int_2++ == 42); 
-		assert(  big_int_2-- == 43);
-
-		assert(karatsuba_multiplication(big_int_3, big_int_3) == "+5422975396610461369717641600947386274415037870250962127712348609"sv);
-		assert(karatsuba_multiplication(big_int_3, big_int_4) == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
-		assert(karatsuba_multiplication(big_int_4, big_int_3) == "-3394111293590239892710602762023649092547630961329778427474301930"sv);
-		assert(karatsuba_multiplication(big_int_4, big_int_4) == "+2124293516152993531053750721748717735666440864785393936215696100"sv);
-
-		assert(sqrt(big_int_3) == "+8581424947372244"sv);
-
-		assert(big_int_4 <  big_int_3);
-		assert(big_int_3 >  big_int_4);
-		assert(big_int_4 <= big_int_3);
-		assert(big_int_3 >= big_int_4);
-		assert(big_int_3 != big_int_4);
+		Big_Int big_int{}; std::cin >> big_int; std::cout << big_int << std::endl;
 
 		Big_Int result(1); for (auto i = 1; i < 101; ++i) result *= i;
 
 		std::cout << result << std::endl; // note: outputs 100!
 
-		return EXIT_SUCCESS;
+		testing::InitGoogleTest(&argc, argv);
+
+		return RUN_ALL_TESTS();
 	}
 	catch (const std::exception & exception)
 	{
