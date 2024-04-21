@@ -9,9 +9,9 @@
 #include <boost/numeric/ublas/lu.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 
-#include <benchmark/benchmark.h>
-
 #include <gtest/gtest.h>
+
+#include <benchmark/benchmark.h>
 
 // =================================================================================================
 
@@ -98,6 +98,18 @@
 
 // =================================================================================================
 
+TEST(Algorithm, Determinant)
+{
+    const auto matrix = make_random_matrix(3);
+
+    constexpr auto epsilon = 0.001;
+
+    ASSERT_NEAR(determinant_v1(matrix), -181.125, epsilon);
+    ASSERT_NEAR(determinant_v2(matrix), -181.125, epsilon);
+}
+
+// =================================================================================================
+
 void test_1(benchmark::State & state) // note: better for 3x3 or less
 {
     const auto matrix = make_random_matrix(state.range(0));
@@ -131,25 +143,13 @@ BENCHMARK(test_2)->DenseRange(1, 9, 1);
 
 // =================================================================================================
 
-TEST(Algorithm, Determinant)
-{
-    const auto matrix = make_random_matrix(3);
-
-    constexpr auto epsilon = 0.001;
-
-    ASSERT_NEAR(determinant_v1(matrix), -181.125, epsilon);
-    ASSERT_NEAR(determinant_v2(matrix), -181.125, epsilon);
-}
-
-// =================================================================================================
-
 int main(int argc, char ** argv) // note: arguments for benchmark and testing
 {
-	benchmark::Initialize(&argc, argv);
+    testing::InitGoogleTest(&argc, argv);
+
+	benchmark::Initialize  (&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
-
-	testing::InitGoogleTest(&argc, argv);
 
     return RUN_ALL_TESTS();
 }
