@@ -19,7 +19,7 @@ int main()
 
     const auto page = std::make_unique < PDFPage > ();
 
-    [[maybe_unused]] constexpr auto width = 595, height = 842, dpi = 72; // note: A4 page in 72 DPI
+    [[maybe_unused]] constexpr auto width = 595, height = 842, ppi = 72; // note: A4 page in 72 PPI
 
     page->SetMediaBox(PDFRectangle(0, 0, width, height)); 
 
@@ -27,7 +27,7 @@ int main()
 
     auto line = height; // note: current output line from top of page
 
-    constexpr auto image_height = 380, image_dpi = 96, delta = 10;
+    constexpr auto image_height = 380, image_ppi = 96, delta = 10;
 
     AbstractContentContext::ImageOptions image_options;
 
@@ -37,7 +37,7 @@ int main()
 
     image_options.matrix[0] = image_options.matrix[3] = zoom;
 
-    line -= (delta + zoom * image_height * dpi / image_dpi);
+    line -= (delta + zoom * image_height * ppi / image_ppi);
     
     context->DrawImage(delta, line, "matthias.jpg", image_options);
 
