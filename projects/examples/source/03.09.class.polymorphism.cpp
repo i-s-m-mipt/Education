@@ -96,7 +96,7 @@ public:
 	{
 		std::cout << "Derived::print" << std::endl;
 
-		Abstract_Base::print(); // note: possible default implementation
+		Abstract_Base::print(); // note: possible default implementation, see pattern Decorator
 	}
 
 }; // class Derived : public Abstract_Base
