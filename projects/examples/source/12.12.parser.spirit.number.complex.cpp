@@ -1,4 +1,3 @@
-#include <cassert>
 #include <complex>
 #include <exception>
 #include <iterator>
@@ -9,6 +8,10 @@
 using namespace std::literals;
 
 #include <boost/spirit/home/x3.hpp>
+
+#include <gtest/gtest.h>
+
+// =================================================================================================
 
 [[nodiscard]] std::complex < double > parse_complex(std::string_view input)
 {
@@ -35,17 +38,26 @@ using namespace std::literals;
     return std::complex < double > (real, imag);
 }
 
-int main()
+// =================================================================================================
+
+TEST(Parser, Complex)
 {
     const auto complex_1 = parse_complex("1.0"sv          );
     const auto complex_2 = parse_complex("1.0+1.0i"sv     );
     const auto complex_3 = parse_complex("1.0-1.0i"sv     );
     const auto complex_4 = parse_complex(" 1.0 + 1.0 i "sv);
 
-    assert(complex_1.real() == 1.0 && complex_1.imag() == +0.0);
-    assert(complex_2.real() == 1.0 && complex_2.imag() == +1.0);
-    assert(complex_3.real() == 1.0 && complex_3.imag() == -1.0);
-    assert(complex_4.real() == 1.0 && complex_4.imag() == +1.0);
+    ASSERT_DOUBLE_EQ(complex_1.real(), 1.0); ASSERT_DOUBLE_EQ(complex_1.imag(), +0.0);
+    ASSERT_DOUBLE_EQ(complex_2.real(), 1.0); ASSERT_DOUBLE_EQ(complex_2.imag(), +1.0);
+    ASSERT_DOUBLE_EQ(complex_3.real(), 1.0); ASSERT_DOUBLE_EQ(complex_3.imag(), -1.0);
+    ASSERT_DOUBLE_EQ(complex_4.real(), 1.0); ASSERT_DOUBLE_EQ(complex_4.imag(), +1.0);
+}
 
-    return 0;
+// =================================================================================================
+
+int main(int argc, char ** argv) // note: arguments for testing
+{
+    testing::InitGoogleTest(&argc, argv);
+
+    return RUN_ALL_TESTS();
 }

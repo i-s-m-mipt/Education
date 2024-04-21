@@ -139,7 +139,7 @@ namespace grammar
 
 // =================================================================================================
 
-TEST(Calculator, Expressions)
+TEST(Parser, Arithmetic)
 {
     ASSERT_DOUBLE_EQ(test("+1.0"), +1.0);
     ASSERT_DOUBLE_EQ(test("-1.0"), -1.0);

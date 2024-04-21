@@ -1,4 +1,3 @@
-#include <cassert>
 #include <exception>
 #include <iterator>
 #include <stdexcept>
@@ -8,6 +7,8 @@
 using namespace std::literals;
 
 #include <boost/spirit/home/x3.hpp>
+
+#include <gtest/gtest.h>
 
 // =================================================================================================
 
@@ -114,11 +115,18 @@ namespace parser
 
 // =================================================================================================
 
-int main()
+TEST(Parser, Romanus)
 {
-    assert(test("MCCCLIII") == 1353);
-    assert(test("MCMXVIII") == 1918);
-    assert(test("MCMXCVII") == 1997);
+    ASSERT_EQ(test("MCCCLIII"), 1353);
+    ASSERT_EQ(test("MCMXVIII"), 1918);
+    ASSERT_EQ(test("MCMXCVII"), 1997);
+}
 
-    return 0;
+// =================================================================================================
+
+int main(int argc, char ** argv) // note: arguments for testing
+{
+    testing::InitGoogleTest(&argc, argv);
+
+    return RUN_ALL_TESTS();
 }

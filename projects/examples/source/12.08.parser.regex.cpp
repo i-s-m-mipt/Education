@@ -1,11 +1,12 @@
 #include <algorithm>
-#include <cassert>
 #include <iostream>
 #include <iterator>
 #include <regex>
 #include <string>
 
 using namespace std::literals;
+
+#include <gtest/gtest.h>
 
 // =================================================================================================
 
@@ -34,22 +35,39 @@ using namespace std::literals;
 
 // =================================================================================================
 
-int main()
+TEST(Parser, Regex_Match)
 {
-	assert(match_identifier("hello")         );
-	assert(match_identifier("12345") == false); // note: invalid character (first)
-	assert(match_identifier("_name")         );
-	assert(match_identifier("_3.14") == false); // note: invalid character (third)
-    assert(match_identifier("A1234")         );
+    ASSERT_TRUE(match_identifier("hello")         );
+	ASSERT_TRUE(match_identifier("12345") == false); // note: invalid character (first)
+	ASSERT_TRUE(match_identifier("_name")         );
+	ASSERT_TRUE(match_identifier("_3.14") == false); // note: invalid character (third)
+    ASSERT_TRUE(match_identifier("A1234")         );
+}
 
-    assert(search_post_code("_NY12345______")[0] == "NY12345"     );
-    assert(search_post_code("_NY1234506789_")[0] == "NY12345"     );
-    assert(search_post_code("_NY12345-6789_")[0] == "NY12345-6789");
-    assert(search_post_code("_NY12345-6789_")[1] ==        "-6789"); // note: matched group
+// =================================================================================================
 
-    assert(std::empty(search_post_code("_$1$2$3$4$_")));
-    assert(std::empty(search_post_code("NY1234-6789")));
+TEST(Parser, Regex_Search)
+{
+    ASSERT_EQ(search_post_code("_NY12345______")[0], "NY12345"     );
+    ASSERT_EQ(search_post_code("_NY1234506789_")[0], "NY12345"     );
+    ASSERT_EQ(search_post_code("_NY12345-6789_")[0], "NY12345-6789");
+    ASSERT_EQ(search_post_code("_NY12345-6789_")[1],        "-6789"); // note: matched group
 
+    ASSERT_TRUE(std::empty(search_post_code("_$1$2$3$4$_")));
+    ASSERT_TRUE(std::empty(search_post_code("NY1234-6789")));
+}
+
+// =================================================================================================
+
+TEST(Parser, Regex_Replace)
+{
+    ASSERT_EQ(replace_substring("subsequence in the substring"), "sub-sequence in the sub-string");
+}
+
+// =================================================================================================
+
+int main(int argc, char ** argv) // note: arguments for testing
+{
     const auto data = "123ABC456DEF789GHI"s; 
 
     std::smatch matches;
@@ -79,7 +97,7 @@ int main()
         std::cout << std::endl;
     }
 
-    assert(replace_substring("subsequence in the substring") == "sub-sequence in the sub-string");
+    testing::InitGoogleTest(&argc, argv);
 
-    return 0;
+    return RUN_ALL_TESTS();
 }

@@ -1,4 +1,3 @@
-#include <cassert>
 #include <exception>
 #include <iterator>
 #include <stdexcept>
@@ -9,6 +8,8 @@ using namespace std::literals;
 
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/spirit/home/x3.hpp>
+
+#include <gtest/gtest.h>
 
 // =================================================================================================
 
@@ -36,7 +37,7 @@ namespace parser
 
 // =================================================================================================
 
-int main()
+TEST(Parser, Structure)
 {
     constexpr auto input = R"({'a',100,1.0})"sv;
 
@@ -51,9 +52,14 @@ int main()
         throw std::invalid_argument("invalid input: " + std::string(input));
     }
 
-    assert(data.c == 'a');
-    assert(data.i == 100);
-    assert(data.d == 1.0);
+    ASSERT_EQ(data.c, 'a'); ASSERT_EQ(data.i, 100); ASSERT_DOUBLE_EQ(data.d, 1.0);
+}
 
-    return 0;
+// =================================================================================================
+
+int main(int argc, char ** argv) // note: arguments for testing
+{
+    testing::InitGoogleTest(&argc, argv);
+
+    return RUN_ALL_TESTS();
 }
