@@ -10,7 +10,7 @@ public:
 
 	void run() const // note: non-virtual function due to template
 	{
-		static_cast < const Derived * > (this)->run_implementation();
+		static_cast < const Derived * > (this)->run_implementation(); // note: possible infinite recursion
 	}
 
 }; // template < class Derived > class Computer
