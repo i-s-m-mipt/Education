@@ -83,7 +83,7 @@ public:
 
 	void run()
 	{
-		for (std::string line; std::getline(std::cin >> std::ws, line); )
+		for (std::string line; std::getline(std::cin >> std::ws, line); ) // note: remember std::ws
 		{
 			if (Stream stream(line); !stream.empty())
 			{
