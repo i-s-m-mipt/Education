@@ -36,7 +36,7 @@ public:
         else throw std::invalid_argument("invalid size: " + std::to_string(size));
     }
 	
-    ~Block_Allocator() noexcept
+   ~Block_Allocator() noexcept
     {
         ::operator delete(m_begin, m_size, default_alignment);
     }

@@ -120,7 +120,7 @@ public:
 		return m_data;
 	}
 
-	~C() noexcept // good: exceptions do not leave the destructor
+   ~C() noexcept // good: exceptions do not leave the destructor
 	{
 		try
 		{

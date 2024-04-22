@@ -25,7 +25,7 @@ class Cluster : public Computer // note: composite class of concrete computers
 {
 public:
 
-    ~Cluster()
+   ~Cluster()
     {
         for (const auto computer : m_computers) delete computer; // good: no memory leak
     }

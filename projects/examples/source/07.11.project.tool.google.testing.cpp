@@ -51,8 +51,8 @@ class Fixture : public testing::Test
 {
 public:
 
-     Fixture() noexcept {} // note:   setup actions
-    ~Fixture() noexcept {} // note: cleanup actions
+    Fixture() noexcept {} // note:   setup actions
+   ~Fixture() noexcept {} // note: cleanup actions
 
     void    SetUp() override { data.push_back(42); } // note: called after constructor
     void TearDown() override { data.clear      (); } // note: called before destructor

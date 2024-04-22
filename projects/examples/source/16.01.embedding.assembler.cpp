@@ -21,7 +21,7 @@ public:
 		std::cout << "Chronometer " << m_name << " launched ... " << std::endl;
 	}
 
-	~Chronometer() noexcept 
+   ~Chronometer() noexcept 
 	{
 		try { elapsed(); } catch (...) { std::abort(); }
 	}

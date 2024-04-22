@@ -17,7 +17,7 @@ public:
         
     Unique(Unique && other) noexcept : Unique() { swap(other); }
 
-    ~Unique() noexcept { reset(); }
+   ~Unique() noexcept { reset(); }
 
 public:
 

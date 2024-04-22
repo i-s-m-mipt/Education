@@ -81,7 +81,7 @@ public:
         other.m_rccb = nullptr;
     }
 
-    ~Shared() noexcept { if (m_rccb) m_rccb->remove_reference(); }
+   ~Shared() noexcept { if (m_rccb) m_rccb->remove_reference(); }
 
 public:
 

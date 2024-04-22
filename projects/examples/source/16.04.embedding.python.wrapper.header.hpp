@@ -29,15 +29,8 @@ namespace solution::shared
 	{
 	public:
 
-		Python()
-		{
-			acquire();
-		}
-
-		~Python() noexcept
-		{
-			try { release(); } catch (...) { std::abort(); }
-		}
+		Python()          {       acquire();                                 }
+	   ~Python() noexcept { try { release(); } catch (...) { std::abort(); } }
 
 	private:
 

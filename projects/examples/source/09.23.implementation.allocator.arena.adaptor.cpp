@@ -19,7 +19,7 @@ public:
 		m_begin = ::operator new(m_size, default_alignment);
 	}
 
-	~Arena() noexcept
+   ~Arena() noexcept
 	{
 		::operator delete(m_begin, default_alignment);
 	}

@@ -48,7 +48,7 @@ public:
         destroy(); construct(value); return *this;
     }
 
-    ~Optional() noexcept { uninitialize(); }
+   ~Optional() noexcept { uninitialize(); }
 
 private:
 

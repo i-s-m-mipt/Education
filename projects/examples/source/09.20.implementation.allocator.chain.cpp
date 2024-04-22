@@ -31,7 +31,7 @@ public:
 		else throw std::invalid_argument("invalid sizes: " + std::to_string(size) + '/' + std::to_string(m_size_node));
 	}
 
-	~Chain_Allocator() noexcept
+   ~Chain_Allocator() noexcept
 	{
 		for (const auto chain : m_chains) ::operator delete(chain, m_size, default_alignment);
 	}

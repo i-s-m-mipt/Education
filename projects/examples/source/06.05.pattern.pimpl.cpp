@@ -22,7 +22,7 @@ public:
         m_pimpl = std::exchange(other.m_pimpl, nullptr); return *this;
     }
 
-    ~Computer();
+   ~Computer();
 
     void run() const; // note: call forwarded to implementation, no inline abilities, slow
 

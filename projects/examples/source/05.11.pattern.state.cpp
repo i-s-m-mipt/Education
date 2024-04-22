@@ -57,12 +57,12 @@ public:
 
     Computer() : m_state(new const Stop()) {} // note: initial state
 
+   ~Computer() { set_state(nullptr); }
+
     void set_state(const State * state) 
     { 
         delete m_state; m_state = state; // good: no memory leak
     }
-
-    ~Computer() { set_state(nullptr); }
 
     void stop() { m_state->stop(this); }
     void slow() { m_state->slow(this); }

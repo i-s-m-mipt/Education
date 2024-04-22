@@ -105,7 +105,7 @@ public:
 		if (m_has_trace) write(Severity::trace, "EXECUTION ... ");
 	}
 
-	~Logger() noexcept
+   ~Logger() noexcept
 	{
 		if (m_has_trace) write(Severity::trace, "EXECUTION COMPLETE");
 	}

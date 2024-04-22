@@ -25,7 +25,7 @@ public:
 		m_begin = ::operator new(m_size, default_alignment);
 	}
 
-	~Stack_Allocator() noexcept
+   ~Stack_Allocator() noexcept
 	{
 		::operator delete(m_begin, m_size, default_alignment);
 	}

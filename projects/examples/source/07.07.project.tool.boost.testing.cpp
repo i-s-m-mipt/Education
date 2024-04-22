@@ -160,8 +160,8 @@ class Fixture
 {
 public:
 
-     Fixture() { BOOST_TEST_MESSAGE("Fixture:: Fixture"); } // note:   setup actions
-    ~Fixture() { BOOST_TEST_MESSAGE("Fixture::~Fixture"); } // note: cleanup actions
+    Fixture() { BOOST_TEST_MESSAGE("Fixture:: Fixture"); } // note:   setup actions
+   ~Fixture() { BOOST_TEST_MESSAGE("Fixture::~Fixture"); } // note: cleanup actions
 
     void    setup() { data.push_back(42); } // note: called after constructor
     void teardown() { data.clear      (); } // note: called before destructor

@@ -176,7 +176,7 @@ public:
 
     bool empty() const { return this -> getDiscriminator() == 0; }
 
-    ~Variant() { destroy(); }
+   ~Variant() { destroy(); }
     void destroy();
 
 private:

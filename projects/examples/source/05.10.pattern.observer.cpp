@@ -19,7 +19,7 @@ class Computer
 {
 public:
 
-    ~Computer()
+   ~Computer()
     {
         for (const auto observer : m_observers) delete observer; // good: no memory leak
     }
