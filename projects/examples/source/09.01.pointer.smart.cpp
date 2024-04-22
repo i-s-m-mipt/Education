@@ -14,9 +14,9 @@ public:
 
 	constexpr explicit Resource(T value) : m_ptr(new T(value)) {}
 
-	[[nodiscard]] constexpr T * get() const noexcept { return m_ptr; }
-
 	constexpr ~Resource() noexcept { if (m_ptr) delete m_ptr; } // good: no memory leak
+
+	[[nodiscard]] constexpr T * get() const noexcept { return m_ptr; }
 
 private:
 
@@ -43,7 +43,7 @@ class A
 {
 public:
 
-	~A() noexcept { try { std::cout << "A destroyed" << std::endl; } catch (...) {} }
+   ~A() noexcept { try { std::cout << "A destroyed" << std::endl; } catch (...) {} }
 
 	std::shared_ptr < B > b;
 
@@ -55,7 +55,7 @@ class B
 {
 public:
 
-	~B() noexcept { try { std::cout << "B destroyed" << std::endl; } catch (...) {} }
+   ~B() noexcept { try { std::cout << "B destroyed" << std::endl; } catch (...) {} }
 
 	std::weak_ptr < A > a; // note: immortal connection if shared_ptr
 
