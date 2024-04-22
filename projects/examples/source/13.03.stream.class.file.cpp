@@ -1,4 +1,5 @@
 #include <cassert>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -33,6 +34,10 @@ int main()
         assert(fin.tellg() == size * (size + 1));
     }
     else std::cerr << "invalid file stream\n";
+
+    std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
+
+    std::filesystem::remove(file);
 
     return 0;
 }
