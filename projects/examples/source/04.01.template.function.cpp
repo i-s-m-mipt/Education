@@ -42,12 +42,12 @@ template < typename T1, typename T2 > [[nodiscard]] inline auto max_v6(T1 x, T2 
 
 template < typename T > inline void f(T) // note: basic template
 {
-	std::cout << "template < T > " << std::endl;
+	std::cout << "template < T > f(T)" << std::endl;
 }
 
 template <> inline void f < int > (int) // note: full specialization for int
 {
-	std::cout << "template < int > " << std::endl;
+	std::cout << "template <> f < int > (int)" << std::endl;
 }
 
 inline void f(char  ) { std::cout << "f(char  )" << std::endl; }
@@ -56,15 +56,32 @@ inline void f(double) { std::cout << "f(double)" << std::endl; }
 
 template < typename T1, typename T2 > inline void g() // note: basic template
 {
-	std::cout << "template < T1, T2 > " << std::endl;
+	std::cout << "template < T1, T2 > g()" << std::endl;
 }
 
 /*
 template < typename T > inline void g < int, T > () // error: prohibited partial specialization
 {
-	std::cout << "template < int, T > " << std::endl;
+	std::cout << "template < T > g < int, T > ()" << std::endl;
 }
 */
+
+// =================================================================================================
+
+template < typename T > inline void h(T) // note: first basic template
+{
+	std::cout << "template < T > h(T)" << std::endl;
+}
+
+template <> inline void h < int * > (int *) // note: full specialization for int
+{ 
+	std::cout << "template <> h < int * > (int *)" << std::endl;
+} 
+
+template < typename T > inline void h(T *) // note: second basic template, overload for the first
+{
+	std::cout << "template < T > h(T *)" << std::endl;
+}
 
 // =================================================================================================
 
@@ -111,6 +128,8 @@ int main()
 	f < int    > (100); // note: full specialization for int
 	f <        > (1.0); // note: basic template for T
 	f < double > (1.0); // note: basic template for T
+
+	int * ptr = nullptr; h(ptr); // note: example by Dimov-Abrams
 
 	const int array_1[]{ 1, 2, 3 };
 	const int array_2[]{ 1, 2, 3, 4, 5 };
