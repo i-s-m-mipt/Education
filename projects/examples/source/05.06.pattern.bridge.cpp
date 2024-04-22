@@ -2,7 +2,7 @@
 
 // =================================================================================================
 
-class BIOS 
+class BIOS // note: implementation hierarchy
 {
 public:
 
@@ -19,7 +19,7 @@ class Microid : public BIOS { public: void run() const override { std::cout << "
 
 // =================================================================================================
 
-class Computer 
+class Computer // note: interface hierarchy
 {
 public:
 

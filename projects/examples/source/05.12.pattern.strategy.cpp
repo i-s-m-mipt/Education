@@ -29,7 +29,7 @@ public:
 
 private:
     
-    const Computation & m_computation;
+    const Computation & m_computation; // note: replaceable algorithm
 
 }; // class Computer
 
