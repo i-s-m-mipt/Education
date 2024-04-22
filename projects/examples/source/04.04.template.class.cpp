@@ -77,27 +77,27 @@ template < typename T > template < typename U > class Outer < T > ::Inner {}; //
 
 template < typename T1, typename T2 > struct C // note: basic template
 {
-	void f() const { std::cout << "template < T1, T2 > " << std::endl; }
+	void f() const { std::cout << "template < T1, T2 > C" << std::endl; }
 };
 
 template < typename T > struct C < T, T > // note: partial specialization for T, T
 {
-	void f() const { std::cout << "template < T, T > " << std::endl; }
+	void f() const { std::cout << "template < T > C < T, T > " << std::endl; }
 };
 
 template < typename T > struct C < T, int > // note: partial specialization for T, int
 {
-	void f() const { std::cout << "template < T, int > " << std::endl; }
+	void f() const { std::cout << "template < T > C < T, int > " << std::endl; }
 };
 
 template < typename T1, typename T2 > struct C < T1*, T2* > // note: partial specialization for T1*, T2*
 {
-	void f() const { std::cout << "template < T1*, T2* > " << std::endl; }
+	void f() const { std::cout << "template < T1, T2 > C < T1*, T2* > " << std::endl; }
 };
 
 template <> struct C < int, double > // note: full specialization for int, double
 {
-	void f() const { std::cout << "template < int, double > " << std::endl; }
+	void f() const { std::cout << "template <> C < int, double > " << std::endl; }
 };
 
 // =================================================================================================
