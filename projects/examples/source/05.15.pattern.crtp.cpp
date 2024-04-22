@@ -13,6 +13,8 @@ public:
 		static_cast < const D * > (this)->run_implementation(); // note: possible infinite recursion
 	}
 
+	void run_implementation() const { std::cout << "Computer" << std::endl; } // note: default
+
 }; // template < class D > class Computer
 
 // =================================================================================================
@@ -23,6 +25,8 @@ template < typename D > inline void destroy(const Computer < D > * computer)
 }
 
 // =================================================================================================
+
+class Tablet : public Computer < Tablet > {};
 
 class Laptop : public Computer < Laptop >
 {
@@ -43,6 +47,7 @@ template < typename T > inline void handle(const T & computer) // note: consider
 
 int main()
 {
+	handle(Tablet());
 	handle(Laptop());
 
 	return 0;
