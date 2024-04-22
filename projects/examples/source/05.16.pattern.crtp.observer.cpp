@@ -2,13 +2,17 @@
 
 // =================================================================================================
 
-template < typename T, std::size_t M > class Counter 
+template < typename T, std::size_t M > class Counter // note: non-polymorphic base class
 {
 protected:
 
 	Counter(                         ) { initialize(); }
 	Counter(const Counter < T, M > & ) { initialize(); }
 	Counter(      Counter < T, M > &&) { initialize(); }
+
+   ~Counter() { --counter; }
+
+private:
 
 	void initialize() // good: better than singleton
 	{
@@ -17,8 +21,6 @@ protected:
 			std::cerr << "too many objects\n"; // good: unbuffered output stream
 		}
 	}
-
-	~Counter() { --counter; } // note: non-polymorphic class
 
 public:
 
@@ -32,8 +34,15 @@ private:
 
 // =================================================================================================
 
-template < typename T > class Container_1 : public Counter < Container_1 < T > , 1 > {};
-template < typename T > class Container_2 : public Counter < Container_2 < T > , 2 > {};
+template < typename T > class Container_1 : private Counter < Container_1 < T > , 1 > 
+{
+public: using Counter < Container_1 < T > , 1 > ::get_counter; // note: implementation detail
+};
+
+template < typename T > class Container_2 : private Counter < Container_2 < T > , 2 > 
+{
+public: using Counter < Container_2 < T > , 2 > ::get_counter; // note: implementation detail
+};
 
 // =================================================================================================
 

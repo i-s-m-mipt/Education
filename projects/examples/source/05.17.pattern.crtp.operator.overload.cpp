@@ -4,8 +4,13 @@
 
 // =================================================================================================
 
-template < typename T > class Relational // note: Barton-Nackman trick
+template < typename T > class Relational // note: non-polymorphic base class
 {
+protected:
+
+    constexpr  Relational() = default; 
+    constexpr ~Relational() = default;
+
 public:
 
     [[nodiscard]] friend inline constexpr bool operator> (const T & lhs, const T & rhs) { return  (rhs < lhs); }
@@ -16,10 +21,6 @@ public:
     {
         return (!(lhs < rhs) && !(rhs < lhs));
     }
-
-protected:
-
-    ~Relational() = default; // note: non-polymorphic class
 
 }; // template < typename T > class Relational
 

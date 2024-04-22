@@ -16,7 +16,7 @@ public:
 		std::cout << "C:: C called, index: " << m_index << std::endl;
 	}
 
-	~C()
+   ~C()
 	{
 		std::cout << "C::~C called, index: " << m_index << std::endl;
 	}
@@ -33,7 +33,7 @@ union U
 {
 	U() : string_1() {}
 
-	~U() {} // note: what should be destroyed here?
+   ~U() {} // note: what should be destroyed here?
 
 	std::string string_1;
 	std::string string_2;
@@ -42,8 +42,13 @@ union U
 
 // =================================================================================================
 
-template < typename T > class Manager // note: CRTP
+template < typename T > class Manager // note: non-polymorphic base class
 {
+protected:
+
+	constexpr  Manager()          = default;
+    constexpr ~Manager() noexcept = default;
+
 public:
 
 	[[nodiscard]] void * operator new(std::size_t size) // note: overloaded version for Manager, implicitly static
@@ -64,14 +69,19 @@ public:
 
 // =================================================================================================
 
-class User : public Manager < User >
+class User : private Manager < User >
 {
 public:
 
-	 User() { std::cout << "User:: User called" << std::endl; }
-	~User() { std::cout << "User::~User called" << std::endl; }
+	using Manager < User > ::operator new   ;
+	using Manager < User > ::operator delete;
 
-}; // class User : public Manager < User > 
+public:
+
+	User() { std::cout << "User:: User called" << std::endl; }
+   ~User() { std::cout << "User::~User called" << std::endl; }
+
+}; // class User : private Manager < User > 
 
 // =================================================================================================
 

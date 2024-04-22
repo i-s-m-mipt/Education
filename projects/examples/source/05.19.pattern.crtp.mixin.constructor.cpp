@@ -28,7 +28,7 @@ public:
 
 // =================================================================================================
 
-template < typename T > class Initializer : public T
+template < typename T > class Initializer : private T
 {
 public:
 
@@ -37,7 +37,7 @@ public:
         this->initialize(); // good: mandatory function call
     }
 
-}; // template < typename T > class Initializer : public T
+}; // template < typename T > class Initializer : private T
 
 // =================================================================================================
 

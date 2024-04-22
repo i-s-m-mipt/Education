@@ -14,17 +14,17 @@ public:
 
 // =================================================================================================
 
-class Good : public std::enable_shared_from_this < Good > // note: CRTP
+class Good : private std::enable_shared_from_this < Good > // note: CRTP
 {
 public:
 
     [[nodiscard]] std::shared_ptr < Good > get() { return shared_from_this(); }
 
-}; // class Good : public std::enable_shared_from_this < Good >
+}; // class Good : private std::enable_shared_from_this < Good >
 
 // =================================================================================================
 
-class Best : public std::enable_shared_from_this < Best >
+class Best : private std::enable_shared_from_this < Best >
 {
 private:
 
@@ -41,7 +41,7 @@ public:
 
     [[nodiscard]] std::shared_ptr < Best > get() { return shared_from_this(); }
 
-}; // class Best : public std::enable_shared_from_this < Best >
+}; // class Best : private std::enable_shared_from_this < Best >
 
 // =================================================================================================
 

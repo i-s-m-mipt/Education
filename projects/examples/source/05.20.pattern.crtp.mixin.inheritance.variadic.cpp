@@ -7,7 +7,7 @@ class Label_v1 { public: explicit Label_v1(char) {}; };
 
 // =================================================================================================
 
-template < typename ... Bases > class Point_v1 : public Bases ... // note: modern mixin
+template < typename ... Bases > class Point_v1 : private Bases ... // note: modern mixin
 {
 public:
 
@@ -25,7 +25,7 @@ private:
 
     double m_x, m_y;
 
-}; // class Point_v1 : public Bases ...
+}; // class Point_v1 : private Bases ...
 
 // =================================================================================================
 
@@ -35,7 +35,7 @@ template < typename T > class Label_v2 {}; // note: consider protected destructo
 // =================================================================================================
 
 template < template < typename E > typename ... Bases > class Point_v2 :
-    public Bases < Point_v2 < Bases ... > > ... 
+    private Bases < Point_v2 < Bases ... > > ... 
 {
 public:
 
@@ -53,7 +53,7 @@ private:
 
     double m_x, m_y;
 
-}; // class Point_v2 : public Bases < Point_v2 < Bases ... > > ... 
+}; // class Point_v2 : private Bases < Point_v2 < Bases ... > > ... 
 
 // =================================================================================================
 

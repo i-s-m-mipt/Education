@@ -2,18 +2,25 @@
 
 // =================================================================================================
 
-template < class Derived > class Computer
+template < class D > class Computer
 {
 public:
 
-	virtual ~Computer() = default; // note: polymorphic base class
+	virtual ~Computer() = default; // note: option 1 is hybrid-time polymorphism
 
 	void run() const // note: non-virtual function due to template
 	{
-		static_cast < const Derived * > (this)->run_implementation(); // note: possible infinite recursion
+		static_cast < const D * > (this)->run_implementation(); // note: possible infinite recursion
 	}
 
-}; // template < class Derived > class Computer
+}; // template < class D > class Computer
+
+// =================================================================================================
+
+template < typename D > inline void destroy(const Computer < D > * computer)
+{
+	delete static_cast < const D * > (computer); // note: option 2 is compile-time polymorphism
+}
 
 // =================================================================================================
 
