@@ -8,8 +8,6 @@ public:
 
 	static inline auto m_data_1 = 42; // note: no problems here
 
-public:
-
 	int m_data_2 = 42; // note: possible problem with multiple inheritance
 
 }; // class B

@@ -76,24 +76,24 @@ public:
     public:
 
         constexpr iterator & operator++() noexcept 
-		    { 
-			      m_x += m_y; std::swap(m_x, m_y); return *this;
-		    }
+		{ 
+			m_x += m_y; std::swap(m_x, m_y); return *this;
+		}
 
-		    constexpr iterator operator++(int) noexcept 
-		    { 
-			      auto previous = *this; ++(*this); return previous; 
-		    }
+		constexpr iterator operator++(int) noexcept 
+		{ 
+			auto previous = *this; ++(*this); return previous; 
+		}
 
         [[nodiscard]] constexpr int operator*() const noexcept // note: no operator->
         { 
             return m_y; 
         } 
 
-		    [[nodiscard]] constexpr bool operator==(const iterator & other) const noexcept 
-		    { 
-			      return (m_x == other.m_x && m_y == other.m_y); 
-		    }
+		[[nodiscard]] constexpr bool operator==(const iterator & other) const noexcept 
+		{ 
+			return (m_x == other.m_x && m_y == other.m_y); 
+		}
 
     private:
 

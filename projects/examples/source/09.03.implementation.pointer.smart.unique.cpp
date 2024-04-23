@@ -43,6 +43,8 @@ public:
         delete std::exchange(m_data, ptr); // note: consider custom deleter
     }
 
+public:
+
     [[nodiscard]] T & operator*() const noexcept { return *m_data; }
      
 private:

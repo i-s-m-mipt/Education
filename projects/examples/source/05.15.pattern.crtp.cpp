@@ -30,11 +30,8 @@ class Tablet : public Computer < Tablet > {};
 
 class Laptop : public Computer < Laptop >
 {
-public:
-	
-	void run_implementation() const { std::cout << "Laptop" << std::endl; }
-
-}; // class Laptop : public Computer < Laptop >
+public: void run_implementation() const { std::cout << "Laptop" << std::endl; }
+}; 
 
 // =================================================================================================
 

@@ -45,8 +45,6 @@ namespace solution::shared
 			return m_global;
 		}
 
-	public:
-
 		[[nodiscard]] static std::string exception() noexcept;
 
 	private:

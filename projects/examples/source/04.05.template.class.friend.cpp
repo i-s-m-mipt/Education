@@ -46,6 +46,8 @@ public:
 		return *this;
 	}
 
+public:
+
 	[[nodiscard]] friend inline Ratio operator+(Ratio lhs, Ratio rhs) // good: friend function inside class template
 	{
 		return (lhs += rhs);

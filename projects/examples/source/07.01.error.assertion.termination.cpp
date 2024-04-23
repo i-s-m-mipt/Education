@@ -20,11 +20,8 @@ class Bad { public: Bad() = delete; }; // note: not default constructible
 
 template < typename T = Bad > class C
 {
-public:
-
-    static_assert(std::is_default_constructible_v < T > , "C requires default constructible type");
-
-}; // template < typename T = Bad > class C
+public: static_assert(std::is_default_constructible_v < T > , "not default constructible");
+};
 
 // =================================================================================================
 

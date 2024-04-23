@@ -41,6 +41,8 @@ public:
         ::operator delete(m_begin, m_size, default_alignment);
     }
 
+public:
+
     [[nodiscard]] void * allocate(std::size_t size) noexcept
     {
 	    void * const end = get_byte(m_begin) + sizeof(Header) + size, * next = end; // note: remember second *

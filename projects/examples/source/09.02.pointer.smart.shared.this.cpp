@@ -6,21 +6,15 @@
 
 class Fail
 {
-public:
-
-    [[nodiscard]] std::shared_ptr < Fail > get() { return std::shared_ptr < Fail > (this); }
-
-}; // class Fail
+public: [[nodiscard]] std::shared_ptr < Fail > get() { return std::shared_ptr < Fail > (this); }
+};
 
 // =================================================================================================
 
 class Good : private std::enable_shared_from_this < Good > // note: CRTP
 {
-public:
-
-    [[nodiscard]] std::shared_ptr < Good > get() { return shared_from_this(); }
-
-}; // class Good : private std::enable_shared_from_this < Good >
+public: [[nodiscard]] std::shared_ptr < Good > get() { return shared_from_this(); }
+};
 
 // =================================================================================================
 

@@ -17,8 +17,6 @@ public:
 //		print(); // bad: base version
 	}
 
-public:
-
 	virtual void print() const // note: can be redefined in derived classes
 	{
 		std::cout << "Computer::print" << std::endl;
@@ -74,8 +72,6 @@ class Abstract_Base // note: interface class like in Java
 public:
 
 	virtual ~Abstract_Base() {}; // note: polymorphic base class
-
-public:
 
 	virtual void print() const = 0; // note: must be redefined in derived classes
 

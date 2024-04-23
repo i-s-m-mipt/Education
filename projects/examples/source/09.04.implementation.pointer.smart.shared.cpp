@@ -103,6 +103,8 @@ public:
         swap(m_rccb, other.m_rccb);
     }
 
+public:
+
     [[nodiscard]] T & operator*() const noexcept { return *m_data; }
 
 private:

@@ -25,20 +25,20 @@ public:
 
 public:
 
-	[[nodiscard]] constexpr const         T        & head() const { return m_head; }
-	[[nodiscard]] constexpr               T        & head()       { return m_head; }
-
-	[[nodiscard]] constexpr const Tuple < Ts ... > & tail() const { return m_tail; }
-	[[nodiscard]] constexpr       Tuple < Ts ... > & tail()       { return m_tail; }
-
-public:
-
 	constexpr void swap(Tuple & other) 
 	{
 		using std::swap; // good: enable argument-dependent lookup
 
 		if constexpr (swap(m_head, other.m_head); sizeof...(Ts) > 0) { m_tail.swap(other.m_tail); }
 	}
+
+public:
+
+	[[nodiscard]] constexpr const         T        & head() const { return m_head; }
+	[[nodiscard]] constexpr               T        & head()       { return m_head; }
+
+	[[nodiscard]] constexpr const Tuple < Ts ... > & tail() const { return m_tail; }
+	[[nodiscard]] constexpr       Tuple < Ts ... > & tail()       { return m_tail; }
 
 private:
 

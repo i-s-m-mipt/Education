@@ -182,8 +182,6 @@ public:
 
 	[[nodiscard]] const char * scope() const noexcept { return m_scope; }
 
-public:
-
 	[[nodiscard]] static std::string_view severity_as_string(Severity severity)
 	{
 		return severities.at(severity);

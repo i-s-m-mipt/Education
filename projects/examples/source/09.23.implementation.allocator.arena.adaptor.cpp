@@ -24,6 +24,8 @@ public:
 		::operator delete(m_begin, default_alignment);
 	}
 
+public:
+
 	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t))
 	{
 		void * first = get_byte(m_begin) + m_offset;

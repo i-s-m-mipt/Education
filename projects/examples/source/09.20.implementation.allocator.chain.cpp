@@ -36,6 +36,8 @@ public:
 		for (const auto chain : m_chains) ::operator delete(chain, m_size, default_alignment);
 	}
 
+public:
+
 	[[nodiscard]] void * allocate()
 	{
 		if (m_head == nullptr) // note: current chain has ended

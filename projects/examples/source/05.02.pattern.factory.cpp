@@ -67,31 +67,22 @@ public:
 
 class Factory_Mobile : public Factory
 {
-public: 
-    
-    [[nodiscard]] const Computer * create() const override { return new const Mobile(); } 
-
-}; // class Factory_Mobile : public Factory
+public: [[nodiscard]] const Computer * create() const override { return new const Mobile(); } 
+};
 
 // =================================================================================================
 
 class Factory_Tablet : public Factory
 {
-public: 
-    
-    [[nodiscard]] const Computer * create() const override { return new const Tablet(); }
-
-}; // class Factory_Tablet : public Factory
+public: [[nodiscard]] const Computer * create() const override { return new const Tablet(); }
+};
 
 // =================================================================================================
 
 class Factory_Laptop : public Factory
 {
-public: 
-    
-    [[nodiscard]] const Computer * create() const override { return new const Laptop(); }
-
-}; // class Factory_Laptop : public Factory
+public: [[nodiscard]] const Computer * create() const override { return new const Laptop(); }
+}; 
 
 // =================================================================================================
 
