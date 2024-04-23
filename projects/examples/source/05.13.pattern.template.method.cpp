@@ -30,7 +30,7 @@ private: // note: non-virtual interface
 
 class Mobile : public Computer
 {
-public:
+private: // note: non-virtual interface
 
 	void f2() const override { std::cout << "M "; }
 	void f4() const override { std::cout << "M "; }
@@ -41,7 +41,7 @@ public:
 
 class Tablet : public Computer
 {
-public:
+private: // note: non-virtual interface
 
 	void f2() const override { std::cout << "T "; }
 	void f4() const override { std::cout << "T "; }
@@ -52,7 +52,7 @@ public:
 
 class Laptop : public Computer
 {
-public:
+private: // note: non-virtual interface
 
 	void f2() const override { std::cout << "L "; }
 	void f4() const override { std::cout << "L "; }
