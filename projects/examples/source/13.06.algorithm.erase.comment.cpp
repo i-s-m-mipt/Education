@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <iostream>
 #include <iterator>
 #include <fstream>
@@ -12,6 +13,11 @@ int main()
 
         for (auto current = std::begin(code); current != std::end(code); ++current) 
         {
+            if (*current == '\'') // note: ignore characters inside character literals
+            {
+                for (++current; !((*current == '\'') && (*std::prev(current) != '\\')); ++current);
+            }
+
             if (*current == '"') // note: ignore characters inside string literals
             {
                 for (++current; !((*current == '"') && (*std::prev(current) != '\\')); ++current);
@@ -40,7 +46,13 @@ int main()
             if (current == std::end(code)) break;
         }
 
-        std::fstream("result.txt", std::ios::out) << code;
+        constexpr auto result = "13.07.algorithm.erase.comment.result.txt";
+
+        std::fstream(result, std::ios::out) << code;
+
+        std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
+
+        std::filesystem::remove(result);
     }
     else std::cerr << "invalid file stream\n";
 

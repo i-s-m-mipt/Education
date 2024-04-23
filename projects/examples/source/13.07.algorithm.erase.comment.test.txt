@@ -1,16 +1,17 @@
-#include <iostream> //
-// comment
-int main(/*comment*/)
-
-{ /**/
-
-	std::cout << "Hello, \"\"M\" /* commented */ world! // again :)" << std::endl; // comment
-	// comment
+#include <iostream> // comment 0
+// comment 1
+int main(/*comment 2*/)
+{
+	std::cout << "// not comment \"\"\" /* not comment */" << std::endl; // comment 3
+//  comment 4
 	
-	int x; /* comment_1
-	comment_2 */
+	int x; /* comment 5
+	comment 6 */
 	
-	int y; 
+	int y;
 
-} //
-/**/
+	char c = '"'; c = '\''; // comment 7
+
+	return 0;
+} // comment 8
+/*comment 9*/
