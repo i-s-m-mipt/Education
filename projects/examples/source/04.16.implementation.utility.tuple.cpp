@@ -6,7 +6,8 @@
 
 // =================================================================================================
 
-template <             typename ... Ts > class Tuple;
+template <             typename ... Ts > class Tuple {};
+
 template < typename T, typename ... Ts > class Tuple < T, Ts ... >
 {
 public:

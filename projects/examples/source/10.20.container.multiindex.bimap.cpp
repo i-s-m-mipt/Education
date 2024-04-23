@@ -13,6 +13,7 @@
 struct Computer { std::string name; std::size_t size{}; };
 
 using computers_container_t = boost::multi_index::multi_index_container < Computer, 
+
 	boost::multi_index::        indexed_by <
 	boost::multi_index:: hashed_non_unique < 
 	boost::multi_index::               tag < class HNU_name                         >   , 

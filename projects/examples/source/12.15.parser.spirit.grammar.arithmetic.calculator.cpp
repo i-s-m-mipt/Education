@@ -22,6 +22,7 @@ namespace detail
     struct List;
 
     class Operand : public boost::spirit::x3::variant < double, 
+    
         boost::spirit::x3::forward_ast < Sign > , 
         boost::spirit::x3::forward_ast < List > > // note: pattern visitor
     {

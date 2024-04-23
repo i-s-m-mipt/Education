@@ -11,7 +11,9 @@ template < typename ... Bases > class Point_v1 : private Bases ... // note: mode
 {
 public:
 
-    template < typename ... Ts > explicit Point_v1(double x, double y, Ts ... args) : Bases(args)..., m_x(x), m_y(y)
+    template < typename ... Ts > explicit Point_v1(double x, double y, Ts ... args) : 
+    
+        Bases(args)..., m_x(x), m_y(y)
     {
         std::cout << sizeof...(Bases) << std::endl;
     }
@@ -35,6 +37,7 @@ template < typename T > class Label_v2 {}; // note: consider protected destructo
 // =================================================================================================
 
 template < template < typename E > typename ... Bases > class Point_v2 :
+    
     private Bases < Point_v2 < Bases ... > > ... 
 {
 public:

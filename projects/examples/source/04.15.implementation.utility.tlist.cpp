@@ -104,6 +104,7 @@ template < typename L, auto N > using nth = typename Nth < L, N > ::type;
 template < typename L, bool E = empty_v < L > > struct Max_Type {};
 
 template < typename L > struct Max_Type < L, true  > { using type = char; };
+
 template < typename L > struct Max_Type < L, false >
 {
 private:
@@ -116,7 +117,7 @@ public:
 
     using type = std::conditional_t < (sizeof(contender) >= sizeof(best)), contender, best > ;
 
-}; // template < typename L > class Max_Type < L, false >
+}; // template < typename L > struct Max_Type < L, false >
 
 template < typename L > using max_type = typename Max_Type < L > ::type;
 
