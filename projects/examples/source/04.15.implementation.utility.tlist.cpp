@@ -6,11 +6,11 @@
 
 // =================================================================================================
 
-template < typename ... Ts > struct Tlist {};
+template < typename ... Ts > struct List {};
 
 template < typename     L  > struct Size {};
 
-template < typename ... Ts > struct Size < Tlist < Ts ... > >
+template < typename ... Ts > struct Size < List < Ts ... > >
 {
      static constexpr auto value = sizeof...(Ts);
 };
@@ -21,9 +21,9 @@ template < typename L > inline constexpr auto empty_v = (size_v < L > == 0);
 
 // =================================================================================================
 
-template <             typename     L  > struct Front {}; // note: compile error for empty Tlist
+template <             typename     L  > struct Front {}; // note: compile error for empty List
 
-template < typename T, typename ... Ts > struct Front < Tlist < T, Ts ... > > { using type = T; };
+template < typename T, typename ... Ts > struct Front < List < T, Ts ... > > { using type = T; };
 
 template < typename L > using front = typename Front < L > ::type;
 
@@ -31,33 +31,33 @@ template < typename L > using front = typename Front < L > ::type;
 
 template < typename T, typename     L  > struct Push_Front {}; 
 
-template < typename T, typename ... Ts > struct Push_Front < T, Tlist < Ts ... > >
+template < typename T, typename ... Ts > struct Push_Front < T, List < Ts ... > >
 {
-    using type = Tlist < T, Ts ... > ;
+    using type = List < T, Ts ... > ;
 };
 
 template < typename T, typename L > using push_front = typename Push_Front < T, L > ::type;
 
 // =================================================================================================
 
-template <             typename     L  > struct Pop_Front {}; // note: compile error for empty Tlist
+template <             typename     L  > struct Pop_Front {}; // note: compile error for empty List
 
-template < typename T, typename ... Ts > struct Pop_Front < Tlist < T, Ts ... > >
+template < typename T, typename ... Ts > struct Pop_Front < List < T, Ts ... > >
 {
-    using type = Tlist < Ts ... > ;
+    using type = List < Ts ... > ;
 };
 
 template < typename L > using pop_front = typename Pop_Front < L > ::type;
 
 // =================================================================================================
 
-template <             typename     L  > struct Back {}; // note: compile error for empty Tlist
+template <             typename     L  > struct Back {}; // note: compile error for empty List
 
-template < typename T                  > struct Back < Tlist < T > > { using type = T; };
+template < typename T                  > struct Back < List < T > > { using type = T; };
 
-template < typename T, typename ... Ts > struct Back < Tlist < T, Ts ... > > 
+template < typename T, typename ... Ts > struct Back < List < T, Ts ... > > 
 { 
-    using type = typename Back < Tlist < Ts ... > > ::type; 
+    using type = typename Back < List < Ts ... > > ::type; 
 };
 
 template < typename L > using back = typename Back < L > ::type;
@@ -80,13 +80,13 @@ template < typename T, typename L > using push_back = typename Push_Back < T, L 
 
 // =================================================================================================
 
-template <             typename     L  > struct Pop_Back{}; // note: compile error for empty Tlist
+template <             typename     L  > struct Pop_Back{}; // note: compile error for empty List
 
-template < typename T                  > struct Pop_Back < Tlist < T > > { using type = Tlist <> ; };
+template < typename T                  > struct Pop_Back < List < T > > { using type = List <> ; };
 
-template < typename T, typename ... Ts > struct Pop_Back < Tlist < T, Ts ... > >
+template < typename T, typename ... Ts > struct Pop_Back < List < T, Ts ... > >
 {
-    using type = push_front < T, typename Pop_Back < Tlist < Ts ... > > ::type > ;
+    using type = push_front < T, typename Pop_Back < List < Ts ... > > ::type > ;
 };
 
 template < typename L > using pop_back = typename Pop_Back < L > ::type;
@@ -124,40 +124,40 @@ template < typename L > using max_type = typename Max_Type < L > ::type;
 
 int main()
 {
-    using tlist_0 = Tlist <            > ; 
-    using tlist_1 = Tlist < bool       > ;
-    using tlist_2 = Tlist < bool, char > ;
+    using list_0 = List <            > ; 
+    using list_1 = List < bool       > ;
+    using list_2 = List < bool, char > ;
 
-    using tlist_3 = push_back < int, tlist_2 > ; // note: Tlist < bool, char, int >
+    using list_3 = push_back < int, list_2 > ; // note: List < bool, char, int >
 
-    static_assert(size_v < tlist_0 > == 0 &&  empty_v < tlist_0 > );
-    static_assert(size_v < tlist_1 > == 1 && !empty_v < tlist_1 > );
-    static_assert(size_v < tlist_2 > == 2 && !empty_v < tlist_2 > );
-    static_assert(size_v < tlist_3 > == 3 && !empty_v < tlist_3 > );
+    static_assert(size_v < list_0 > == 0 &&  empty_v < list_0 > );
+    static_assert(size_v < list_1 > == 1 && !empty_v < list_1 > );
+    static_assert(size_v < list_2 > == 2 && !empty_v < list_2 > );
+    static_assert(size_v < list_3 > == 3 && !empty_v < list_3 > );
 
-//  using     front_t_0 =     front < tlist_0 > ; // error: empty Tlist
-//  using pop_front_t_0 = pop_front < tlist_0 > ; // error: empty Tlist
+//  using     front_t_0 =     front < list_0 > ; // error: empty List
+//  using pop_front_t_0 = pop_front < list_0 > ; // error: empty List
 
-//  using      back_t_0 =      back < tlist_0 > ; // error: empty Tlist
-//  using  pop_back_t_0 =  pop_back < tlist_0 > ; // error: empty Tlist
+//  using      back_t_0 =      back < list_0 > ; // error: empty List
+//  using  pop_back_t_0 =  pop_back < list_0 > ; // error: empty List
 
     using boost::typeindex::type_id_with_cvr; // note: better than plain typeid
 
-    std::cout << type_id_with_cvr < tlist_0 > ().pretty_name() << std::endl;
-    std::cout << type_id_with_cvr < tlist_1 > ().pretty_name() << std::endl;
-    std::cout << type_id_with_cvr < tlist_2 > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr < list_0 > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr < list_1 > ().pretty_name() << std::endl;
+    std::cout << type_id_with_cvr < list_2 > ().pretty_name() << std::endl;
 
-    static_assert(std::is_same_v < front < push_front < int, tlist_2 > > , int  > );
-    static_assert(std::is_same_v < front <  pop_front <      tlist_2 > > , char > );
+    static_assert(std::is_same_v < front < push_front < int, list_2 > > , int  > );
+    static_assert(std::is_same_v < front <  pop_front <      list_2 > > , char > );
 
-    static_assert(std::is_same_v <  back <  push_back < int, tlist_2 > > , int  > );
-    static_assert(std::is_same_v <  back <   pop_back <      tlist_2 > > , bool > );
+    static_assert(std::is_same_v <  back <  push_back < int, list_2 > > , int  > );
+    static_assert(std::is_same_v <  back <   pop_back <      list_2 > > , bool > );
 
-    static_assert(std::is_same_v < nth < tlist_3, 0 > , bool > );
-    static_assert(std::is_same_v < nth < tlist_3, 1 > , char > );
-    static_assert(std::is_same_v < nth < tlist_3, 2 > , int  > );
+    static_assert(std::is_same_v < nth < list_3, 0 > , bool > );
+    static_assert(std::is_same_v < nth < list_3, 1 > , char > );
+    static_assert(std::is_same_v < nth < list_3, 2 > , int  > );
 
-    static_assert(std::is_same_v < max_type < tlist_3 > , int > );
+    static_assert(std::is_same_v < max_type < list_3 > , int > );
 
     return 0;
 }
