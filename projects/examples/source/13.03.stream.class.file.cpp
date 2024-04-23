@@ -6,7 +6,7 @@
 
 int main()
 {
-    constexpr auto file = "example.data"; // note: consider std::filesystem::path
+    constexpr auto file = "13.03.stream.class.file.example.data";
 
     constexpr std::size_t size = 5;
 

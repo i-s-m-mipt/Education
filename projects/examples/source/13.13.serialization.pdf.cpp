@@ -9,7 +9,7 @@
 
 int main()
 {
-    constexpr auto file = "example.pdf";
+    constexpr auto file = "13.13.serialization.pdf.example.pdf";
 
     [[maybe_unused]] PDFHummus::EStatusCode status; // note: errors handling
 

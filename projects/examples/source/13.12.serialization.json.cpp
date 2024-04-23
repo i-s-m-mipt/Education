@@ -62,7 +62,7 @@ int main()
 {
     const Example example { true, { 1, 2, 3, 4, 5 }, { "hello", 3.14 } };
 
-    constexpr auto file = "example.json";
+    constexpr auto file = "13.12.serialization.json.example.json";
 
     {
         nlohmann::json object;
