@@ -5,7 +5,7 @@
 
 int main()
 {
-	const auto object = new const int(42); // good: initialized dynamic variable
+	const auto object = new const auto(42); // good: initialized dynamic variable
 
 	std::cout << *object << std::endl;
 

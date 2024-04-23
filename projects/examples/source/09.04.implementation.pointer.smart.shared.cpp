@@ -140,8 +140,8 @@ template < typename T, typename ... Ts > [[nodiscard]] inline Shared < T > make_
 
 int main()
 {
-    Shared < const int > shared_1(new const int(42));
-    Shared < const int > shared_2(new const int(43));
+    Shared < const int > shared_1(new const auto(42));
+    Shared < const int > shared_2(new const auto(43));
 
     shared_2 = shared_1;
 

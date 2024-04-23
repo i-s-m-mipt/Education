@@ -35,7 +35,7 @@ inline void cleanup_v2() { std::cerr << "cleanup_v2 at exit\n"; }
 
 int main()
 {
-    const auto object = new const int(42);
+    const auto object = new const auto(42);
 
     assert(object); // good: convenient debugging tool
 

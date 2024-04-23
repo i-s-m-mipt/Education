@@ -114,25 +114,25 @@ int main()
 		std::cout << shared_ptr_1 << std::endl;
 	}
 
-	std::shared_ptr < const int > shared_ptr_2(new const int(42)); // note: two new calls instead of one
+	std::shared_ptr < const int > shared_ptr_2(new const auto(42)); // note: two new calls instead of one
 
 	std::shared_ptr < const int > shared_ptr_3(shared_ptr_2);
 
 	assert(shared_ptr_2.use_count() == 2 && *shared_ptr_2 == 42);
 	assert(shared_ptr_3.use_count() == 2 && *shared_ptr_3 == 42);
 
-	shared_ptr_3.reset(new const int(42));
+	shared_ptr_3.reset(new const auto(42));
 
 	assert(shared_ptr_2.use_count() == 1 && *shared_ptr_2 == 42);
 	assert(shared_ptr_3.use_count() == 1 && *shared_ptr_3 == 42);
 
-	const auto ptr = new const int(42);
+	const auto ptr = new const auto(42);
 
 //	const std::shared_ptr < const int > shared_ptr_4(ptr); // bad: don't mix with plain pointers
 
 	delete ptr;
 
-//	f(std::shared_ptr < const int > (new const int(42)), bad()); // bad: possible memory leak
+//	f(std::shared_ptr < const int > (new const auto(42)), bad()); // bad: possible memory leak
 
 	const auto shared_ptr_5 = std::make_shared < const int > (42); // good: one new call instead of two
 
