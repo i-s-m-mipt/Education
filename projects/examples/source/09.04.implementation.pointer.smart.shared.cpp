@@ -81,10 +81,6 @@ public:
         other.m_rccb = nullptr;
     }
 
-   ~Shared() noexcept { if (m_rccb) m_rccb->remove_reference(); }
-
-public:
-
     Shared & operator=(const Shared & other) noexcept
     {
         Shared(other).swap(*this); return *this;
@@ -95,6 +91,8 @@ public:
         Shared(std::move(other)).swap(*this); return *this;
     }
 
+   ~Shared() noexcept { if (m_rccb) m_rccb->remove_reference(); }
+
 public:
 
     void swap(Shared & other) noexcept
@@ -104,8 +102,6 @@ public:
         swap(m_data, other.m_data);
         swap(m_rccb, other.m_rccb);
     }
-
-public:
 
     [[nodiscard]] T & operator*() const noexcept { return *m_data; }
 

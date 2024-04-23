@@ -17,14 +17,12 @@ public:
         
     Unique(Unique && other) noexcept : Unique() { swap(other); }
 
-   ~Unique() noexcept { reset(); }
-
-public:
-
     Unique & operator=(Unique && other) noexcept
     { 
         reset(other.release()); return *this;
     }
+
+   ~Unique() noexcept { reset(); }
 
 public:
         
@@ -44,8 +42,6 @@ public:
     {
         delete std::exchange(m_data, ptr); // note: consider custom deleter
     }
-
-public:
 
     [[nodiscard]] T & operator*() const noexcept { return *m_data; }
      
