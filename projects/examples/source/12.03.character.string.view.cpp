@@ -8,7 +8,7 @@
 #include <string>
 #include <string_view>
 
-using namespace std::literals; // note: std::chrono, std::complex, std::string
+using namespace std::literals;
 
 #include <benchmark/benchmark.h>
 
