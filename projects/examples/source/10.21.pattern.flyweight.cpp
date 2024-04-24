@@ -72,9 +72,8 @@ int main()
 
     for (std::size_t i = 0; i < size; ++i) // note: unique objects, double size, ~800(Mb)
     {
-        storages.emplace_back(
-            Data { static_cast < int > (i) }, 
-            Data { static_cast < int > (i) });
+        storages.emplace_back(Data { static_cast < int > (i) }, 
+                              Data { static_cast < int > (i) });
     }
 
     std::cout << "Continue? (y/n) "; char c{}; std::cin >> c;
