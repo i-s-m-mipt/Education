@@ -7,55 +7,63 @@
 
 // =================================================================================================
 
-class RCCB_base : private boost::noncopyable // note: non-template class, no custom deleters support
+namespace detail
 {
-protected:
+    class RCCB_base : private boost::noncopyable // note: non-template class, no custom deleters support
+    {
+    protected:
 
-    RCCB_base() noexcept = default; // note: available from derived constructors only
+        RCCB_base() noexcept = default; // note: available from derived constructors only
 
-    virtual ~RCCB_base() noexcept = default; // note: really polymorphic base class?
+        virtual ~RCCB_base() noexcept = default; // note: really polymorphic base class?
 
-public:
+    public:
 
-    void create_reference() noexcept { ++m_counter; }
-    void remove_reference() noexcept 
-    { 
-        if (--m_counter == 0) clear(); 
-    }
+        void create_reference() noexcept { ++m_counter; }
+        void remove_reference() noexcept 
+        { 
+            if (--m_counter == 0) clear(); 
+        }
 
-private:
+    private:
 
-    virtual void clear() noexcept = 0; // note: NVI idiom
+        virtual void clear() noexcept = 0; // note: NVI idiom
 
-private:
+    private:
 
-    std::size_t m_counter = 0; // note: consider std::atomic < std::size_t > for threadsafe version
+        std::size_t m_counter = 0; // note: consider std::atomic < std::size_t > for threadsafe version
 
-}; // class RCCB_base : private boost::noncopyable
+    }; // class RCCB_base : private boost::noncopyable
+
+} // namespace detail
 
 // =================================================================================================
 
-template < typename T > class RCCB : public RCCB_base
+namespace detail
 {
-public:
-
-    explicit RCCB(T * data) noexcept : m_data(data) // good: explicit
+    template < typename T > class RCCB : public RCCB_base
     {
-        create_reference();
-    }
+    public:
 
-private:
+        explicit RCCB(T * data) noexcept : m_data(data) // good: explicit
+        {
+            create_reference();
+        }
 
-    void clear() noexcept override
-    {
-        delete m_data; delete this; // note: other implementation required in case of make_shared
-    }
+    private:
 
-private:
+        void clear() noexcept override
+        {
+            delete m_data; delete this; // note: other implementation required in case of make_shared
+        }
 
-    T * m_data = nullptr; // note: note pointer but object in case of make_shared
+    private:
 
-}; // template < typename T > class RCCB : public RCCB_base
+        T * m_data = nullptr; // note: note pointer but object in case of make_shared
+
+    }; // template < typename T > class RCCB : public RCCB_base
+
+} // namespace detail
 
 // =================================================================================================
 
@@ -111,12 +119,12 @@ private:
 
     void try_make_rccb()
     {
-        try { m_rccb = new RCCB < T > (m_data); } catch (...) { delete m_data; }
+        try { m_rccb = new detail::RCCB < T > (m_data); } catch (...) { delete m_data; }
     }
 
 private:
 
-    T * m_data = nullptr; RCCB_base * m_rccb = nullptr;
+    T * m_data = nullptr; detail::RCCB_base * m_rccb = nullptr;
 
 }; // template < typename T > class Shared
 
