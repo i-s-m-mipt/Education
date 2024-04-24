@@ -2,11 +2,16 @@
 #include <cstddef>
 #include <exception>
 #include <iostream>
+#include <memory>
 #include <new>
 #include <stdexcept>
+#include <string>
+#include <tuple>
 #include <type_traits>
 #include <utility>
 #include <variant>
+
+#include <gtest/gtest.h>
 
 // =================================================================================================
 
@@ -90,17 +95,17 @@ namespace detail
     {
     protected:
 
-        constexpr  Storage() noexcept = default;
-        constexpr ~Storage() noexcept = default;
+        Storage() noexcept = default;
+       ~Storage() noexcept = default;
 
-    public: // note: only non-const versions for demonstration
+    protected: // note: only non-const versions for demonstration
 
-        template < typename T > [[nodiscard]] constexpr T * buffer_as() const noexcept
-        { 
+        template < typename T > [[nodiscard]] T * buffer_as() const noexcept
+        {
             return std::bit_cast < T * > (&m_buffer); // note: consider std::launder optimization
         }
 
-        [[nodiscard]] constexpr void * buffer() noexcept { return &m_buffer; }
+        [[nodiscard]] void * buffer() noexcept { return m_buffer; }
 
     public:
 
@@ -108,7 +113,7 @@ namespace detail
 
     private:
 
-        alignas(Ts...) std::byte m_buffer[sizeof(max_type < List < Ts ... > > )];
+        alignas(Ts...) std::byte m_buffer[sizeof(max_type < List < Ts ... > > )]{};
         
     }; // template < typename ... Ts > class Storage 
 
@@ -122,22 +127,22 @@ namespace detail
     {
     protected:
 
-        constexpr  Selection() noexcept = default;
-        constexpr ~Selection() noexcept = default;
+        Selection() noexcept = default;
+       ~Selection() noexcept = default;
 
     public:
 
-        constexpr explicit Selection(const T & value) 
+        explicit Selection(const T & value) 
         { 
-            new (derived().buffer()) T(value); update();
+            std::construct_at(derived().template buffer_as < T > (), value); update();
         }
 
-        constexpr explicit Selection(T && value) noexcept 
+        explicit Selection(T && value) noexcept 
         { 
-            new (derived().buffer()) T(std::move(value)); update();
+            std::construct_at(derived().template buffer_as < T > (), std::move(value)); update();
         }
         
-        constexpr D & operator=(const T & value)
+        D & operator=(const T & value)
         {
             if (derived().current_index == index) 
             {
@@ -145,13 +150,15 @@ namespace detail
             }
             else 
             {
-                derived().destroy(); new (derived().buffer()) T(value); update();
+                derived().destroy(); 
+                
+                std::construct_at(derived().template buffer_as < T > (), value); update();
             }
 
             return derived();
         }
 
-        constexpr D & operator=(T && value) noexcept
+        D & operator=(T && value) noexcept
         {
             if (derived().current_index == index) 
             {
@@ -159,26 +166,26 @@ namespace detail
             }
             else 
             {
-                derived().destroy(); new (derived().buffer()) T(std::move(value)); update();
+                derived().destroy(); 
+                
+                std::construct_at(derived().template buffer_as < T > (), std::move(value)); update();
             }
 
             return derived();
         }
 
+    private: // note: only non-const versions for demonstration
+
+        [[nodiscard]] D & derived() noexcept { return *(static_cast < D * > (this)); }
+
+        void update() noexcept { derived().current_index = index; }
+
     protected: // note: used in derived class Variant
 
-        constexpr void destroy() noexcept
+        void destroy() noexcept
         {
             if (derived().current_index == index) derived().template buffer_as < T > ()->~T();
         }
-
-    private: // note: only non-const versions for demonstration
-
-        [[nodiscard]] constexpr D & derived() noexcept { return *(static_cast < D * > (this)); }
-
-        constexpr void update() noexcept { derived().current_index = index; }
-
-    protected:
 
         static constexpr auto index = index_v < List < Ts ... > , T > + 1;
 
@@ -188,86 +195,88 @@ namespace detail
 
 // =================================================================================================
 
-template < typename ... Ts > class Variant : private detail::Storage < Ts ... > , 
+template < typename ... Ts > class Variant : 
 
-    private detail::Selection < Variant < Ts ... > , Ts, Ts ... > ...
+    private detail::Storage < Ts ... > , 
+
+    private detail::Selection < Variant < Ts ... > , Ts, Ts ... > ... // note: variadic base classes
 {
 public:
+
+    template < typename ... Us > using List = detail::List < Us ... > ;
 
     using Derived = Variant < Ts ... > ;
 
     using detail::Selection < Derived, Ts, Ts ... > ::Selection...;
-    using detail::Selection < Derived, Ts, Ts ... > ::operator=...;
+    using detail::Selection < Derived, Ts, Ts ... > ::operator=...; // note: inherited operator= from Selection
 
 public:
 
-    constexpr Variant() { *this = detail::front < detail::List < Ts ... > > (); }
+    Variant() { *this = detail::front < List < Ts ... > > (); }
 
-    constexpr Variant(const Variant & other) 
+    Variant(const Variant & other) 
     {
         if (!other.empty()) other.visit([this](const auto & value){ *this = value; });
     }
 
-    constexpr Variant(Variant && other) noexcept
+    Variant(Variant && other) noexcept
     {
         if (!other.empty()) other.visit([this](auto && value){ *this = std::move(value); });
     }
 
-    constexpr Variant & operator=(const Variant & other)
+    Variant & operator=(const Variant & other)
     {
         other.empty() ? destroy() : other.visit([this](const auto & value) { *this = value; });
             
         return *this;
     }
 
-    constexpr Variant & operator=(Variant && other)
+    Variant & operator=(Variant && other)
     {
         other.empty() ? destroy() : other.visit([this](const auto & value) { *this = std::move(value); });
             
         return *this;
     }
 
-   ~Variant() noexcept { destroy(); }
+    ~Variant() noexcept { destroy(); }
 
 public:
 
-    [[nodiscard]] constexpr bool empty() const noexcept { return this->current_index == 0; }
+    [[nodiscard]] bool empty() const noexcept { return this->current_index == 0; }
 
-    template < typename T > [[nodiscard]] constexpr bool is() const noexcept
+    template < typename V > void visit(V && visitor) const
+    {
+        do_visit(std::forward < V > (visitor), List < Ts ... > ());
+    }
+
+    template < typename T > [[nodiscard]] bool has() const noexcept
     {
         return (this->current_index == detail::Selection < Derived, T, Ts ... > ::index);
     }
 
-    template < typename R, typename V > [[nodiscard]] constexpr R visit(V && visitor)  
+    template < typename T > [[nodiscard]] const T & get() const
     {
-        return do_visit < R > (std::forward < V > (visitor), detail::List < Ts ... > ());
-    }
-
-    template < typename T > [[nodiscard]] constexpr const T & get() const
-    {
-        if (empty() || !is < T > ()) throw std::bad_variant_access();
+        if (empty() || !has < T > ()) throw std::bad_variant_access();
 
         return *(this->template buffer_as < T > ());
     }  
 
 private:
 
-    template < typename R, typename V, typename U, typename ... Us >
-
-    [[nodiscard]] constexpr R do_visit(V && visitor, detail::List < U, Us ... > )
+    template < typename V, typename U, typename ... Us > void do_visit(V && visitor, List < U, Us ... > ) const
     {
-        if (this->template is < U > ()) 
+        if (this->template has < U > ()) 
         {
-            return static_cast < R > (visitor(this->template get < U > ()));
+            visitor(this->template get < U > ());
         }
         else if constexpr (sizeof...(Us) > 0) 
         {
-            return do_visit < R > (std::forward < V > (visitor), detail::List < Us ... > ());
+            do_visit(std::forward < V > (visitor), List < Us ... > ());
         }
         else throw std::bad_variant_access();
     }
 
-    constexpr void destroy() noexcept
+    void destroy() noexcept
     {
         (detail::Selection < Derived, Ts, Ts ... > ::destroy(), ... ); // note: fold expression
 
@@ -278,46 +287,53 @@ private:
 
     template < typename D, typename U, typename ... Us > friend class detail::Selection;
 
-}; // template < typename ... Ts > class Variant
+}; // template < typename ... Ts > class Variant : ...
 
 // =================================================================================================
 
-int main()
+class C { public: constexpr explicit C(int) {} }; // note: not default constructible
+
+// =================================================================================================
+
+TEST(Variant, Functions)
 {
-    Variant < int, double, std::string > field(17);
-    if (field.is < int >()) 
+    Variant < char, int, double > variant_1;
+
+    variant_1 = 'a'; ASSERT_TRUE(variant_1.has < char   > () && variant_1.get < char   > () == 'a');
+    variant_1 = 100; ASSERT_TRUE(variant_1.has < int    > () && variant_1.get < int    > () == 100);
+    variant_1 = 1.0; ASSERT_TRUE(variant_1.has < double > () && variant_1.get < double > () == 1.0);
+
+    Variant < char, int, double > variant_2(42);
+
+    variant_1 = variant_2;
+
+    ASSERT_TRUE(variant_1.has < int > () && variant_1.get < int > () == 42);
+
+//  Variant < C, int > variant_3; // error: not default constructible
+
+    Variant < std::monostate, int > variant_4;
+}
+
+// =================================================================================================
+
+int main(int argc, char ** argv) // note: arguments for testing
+{
+    Variant < char, int, double > variant(3.14);
+
+    try
     {
-        std::cout << "Field stores the integer " << field.get < int > () << std::endl;
+        std::ignore = variant.get < int > ();
     }
-    field = 42;
-    field = "hello";
-    std::cout << "Field now stores the string " << field.get < std::string > () << std::endl;
-
-    // =================================================================================================
-
-    Variant < short, float, char const * > v1(static_cast < short > (123));
-
-    //Variant < int, std::string, double > v2(v1);
-    //std::cout << "v2 contains the integer " << v2.get < int > () << '\n';
-
-    v1 = 3.14f;
-    //Variant < double, int, std::string > v3(std::move(v1));
-    //std::cout << "v3 contains the double " << v3.get < double > () << '\n';
-
-    v1 = "hello";
-    //Variant < double, int, std::string > v4(std::move(v1));
-    //std::cout << "v4 contains the string " << v4.get < std::string > () << '\n';
-
-    // =================================================================================================
-
-    Variant < int, double > v_1;
-    if (v_1.is < int > ())
+    catch(const std::exception & exception)
     {
-        std::cout << "Default-constructed v stores the int " << v_1.get < int > () << '\n';
+        std::cerr << exception.what() << '\n';
     }
-    Variant < double, int > v_2;
-    if (v_2.is < double > ())
-    {
-        std::cout << "Default-constructed v2 stores the double " << v_2.get < double > () << '\n';
-    }
+
+    variant = 42;
+
+    variant.visit([](auto x){ std::cout << x << std::endl; });
+
+    testing::InitGoogleTest(&argc, argv);
+
+    return RUN_ALL_TESTS();
 }
