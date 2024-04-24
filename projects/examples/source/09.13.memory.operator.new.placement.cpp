@@ -49,16 +49,16 @@ protected:
 	constexpr  Manager()          = default;
     constexpr ~Manager() noexcept = default;
 
-public:
+public: // note: consider also overloading of all other versions of new and delete
 
-	[[nodiscard]] void * operator new(std::size_t size) // note: overloaded version for Manager, implicitly static
+	[[nodiscard]] void * operator new(std::size_t size) // note: implicitly static
 	{
 		std::cout << "Manager::operator new called" << std::endl;
 
 		return ::operator new(size); // note: global operator new call
 	}
 
-	void operator delete(void * pointer, std::size_t) // note: overloaded version for Manager, implicitly static
+	void operator delete(void * pointer, std::size_t) // note: implicitly static
 	{
 		std::cout << "Manager::operator delete called" << std::endl;
 
