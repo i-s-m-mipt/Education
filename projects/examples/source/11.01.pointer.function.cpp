@@ -23,6 +23,7 @@ template < typename ... Ts > [[nodiscard]] inline constexpr auto h(int (*f)(Ts .
 // =================================================================================================
 
 template < typename F, typename ... Ts > 
+
 [[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Ts && ... args)
 {
 	return f(std::forward < Ts > (args)...); // note: see std::invoke

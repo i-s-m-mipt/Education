@@ -100,12 +100,12 @@ int main()
 
 	assert(sum.result() == 20);
 
-	std::ranges::transform(
-		std::as_const(vector_2), std::begin(vector_2), std::negate()); // note: transform 1 range(s) to range
+	std::ranges::transform(std::as_const(vector_2), 
+						   std::   begin(vector_2), std::negate()); // note: transform 1 range(s) to range
 
-	std::ranges::transform(
-		std::as_const(vector_2), 
-		std::as_const(vector_3), std::begin(vector_3), std::  plus()); // note: transform 2 range(s) to range
+	std::ranges::transform(std::as_const(vector_2), 
+						   std::as_const(vector_3), 
+						   std::   begin(vector_3), std::  plus()); // note: transform 2 range(s) to range
 
 	for (const auto element : vector_3) assert(element == 0);
 

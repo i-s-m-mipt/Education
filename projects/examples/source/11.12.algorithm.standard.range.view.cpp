@@ -75,6 +75,7 @@ int main()
 	std::ranges::sort(humans, std::ranges::greater(), &Human::weight);
 
 	for (const auto x : std::views::transform(std::views::filter(vector,
+
 		[](auto x){ return (x % 2); }),
 		[](auto x){ return (x + 1); })) // note: funcional syntax
 	{

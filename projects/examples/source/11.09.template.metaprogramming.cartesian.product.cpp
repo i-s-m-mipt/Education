@@ -30,6 +30,7 @@
 // =================================================================================================
 
 template < typename F, std::size_t ... Is > constexpr void apply(F && f, 
+
 	const std::integer_sequence < std::size_t, Is ... > , 
 	const std::vector           < std::size_t         > & steps, const auto & tuple)
 {
@@ -66,6 +67,7 @@ int main()
 	std::vector vector_3 { 1.0, 2.0, 3.0 };
 
 	const auto cartesian_product = combine(
+		
 		std::make_pair(std::begin(vector_1), std::end(vector_1)),
 		std::make_pair(std::begin(vector_2), std::end(vector_2)),
 		std::make_pair(std::begin(vector_3), std::end(vector_3)));

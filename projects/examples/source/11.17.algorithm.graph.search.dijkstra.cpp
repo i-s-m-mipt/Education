@@ -8,9 +8,9 @@
 
 int main()
 {
-    boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS, 
-        boost::no_property, 
-        boost::   property < boost::edge_weight_t, unsigned int > > graph;
+    boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS,
+
+        boost::no_property, boost::property < boost::edge_weight_t, unsigned int > > graph;
 
     boost::add_edge(0, 2, 1, graph);
     boost::add_edge(1, 1, 2, graph);
