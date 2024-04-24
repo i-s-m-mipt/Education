@@ -46,8 +46,7 @@ int main()
 
 	assert(HNU_name_index.contains("alpha")); // note: smth like std::unordered_multiset
 
-	HNU_size_index.modify(HNU_size_index.find(2), 
-		[](auto & computer) { computer.name = "bravo"; }); // note: use modify function only
+	HNU_size_index.modify(HNU_size_index.find(2), [](auto & computer) { computer.name = "bravo"; });
 
 	assert(HNU_size_index.find(2)->name == "bravo");
 

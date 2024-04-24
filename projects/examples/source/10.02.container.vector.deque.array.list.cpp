@@ -77,9 +77,8 @@ int main()
 
 //	*std::cbegin(v) = 42; // error: constant iterator
 
-	std::vector < Data > vector_3(
-		std::make_move_iterator(std::begin(vector_1)),
-		std::make_move_iterator(std::end  (vector_1))); // note: move container
+	std::vector < Data > vector_3(std::make_move_iterator(std::begin(vector_1)),
+								  std::make_move_iterator(std::end  (vector_1))); // note: move container
 	
 	vector_3.insert(std::cend(vector_3), std::cbegin(vector_2), std::next(std::cbegin(vector_2), 2));
 

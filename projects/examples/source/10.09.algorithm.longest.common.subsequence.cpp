@@ -5,6 +5,7 @@
 #include <vector>
 
 template < typename T > [[nodiscard]] constexpr std::vector < T > longest_common_subsequence(
+	
 	const std::vector < T > & sequence_1, 
 	const std::vector < T > & sequence_2) 
 {
