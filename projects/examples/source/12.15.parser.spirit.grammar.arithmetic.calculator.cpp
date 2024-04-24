@@ -94,7 +94,7 @@ public:
 
 // =================================================================================================
 
-namespace grammar
+namespace parser
 {
     const boost::spirit::x3::rule < class E_tag, detail::List    > expression;
     const boost::spirit::x3::rule < class T_tag, detail::List    > term;
@@ -119,7 +119,7 @@ namespace grammar
 
     auto arithmetic = expression;
 
-} // namespace grammar
+} // namespace parser
 
 // =================================================================================================
 
@@ -130,7 +130,7 @@ namespace grammar
     detail::List list;
 
     auto result = boost::spirit::x3::phrase_parse(begin, end, 
-        grammar::arithmetic, boost::spirit::x3::ascii::space, list);
+        parser::arithmetic, boost::spirit::x3::ascii::space, list);
 
     if (!result || begin != end) 
     {
