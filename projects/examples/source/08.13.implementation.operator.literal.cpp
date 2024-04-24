@@ -4,7 +4,11 @@
 
 using namespace std::literals; // note: std::chrono, std::complex, std::string
 
+// =================================================================================================
+
 struct Kilometers { unsigned long long n{}; }; // note: user-defined units
+
+// =================================================================================================
 
 namespace literals // good: namespace for user-defined literals
 {
@@ -41,6 +45,8 @@ namespace literals // good: namespace for user-defined literals
 	}
 
 } // namespace literals
+
+// =================================================================================================
 
 int main()
 {
