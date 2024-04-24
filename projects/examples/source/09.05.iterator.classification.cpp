@@ -10,6 +10,7 @@
 namespace detail
 {
 	template < typename I > 
+
 	inline constexpr void advance(I & iterator, int distance, std::forward_iterator_tag) noexcept
 	{
 		if (distance > 0)
@@ -19,6 +20,7 @@ namespace detail
 	}
 
 	template < typename I > 
+
 	inline constexpr void advance(I & iterator, int distance, std::bidirectional_iterator_tag) noexcept
 	{
 		if (distance > 0)
@@ -32,6 +34,7 @@ namespace detail
 	}
 
 	template < typename I > 
+
 	inline constexpr void advance(I & iterator, int distance, std::random_access_iterator_tag) noexcept
 	{
 		iterator += distance;
@@ -49,6 +52,7 @@ template < typename I > inline constexpr void advance_v1(I & iterator, int dista
 // =================================================================================================
 
 template < std::forward_iterator I > 
+
 inline constexpr void advance_v2(I & iterator, int distance) noexcept
 {
 	if (distance > 0)
@@ -58,6 +62,7 @@ inline constexpr void advance_v2(I & iterator, int distance) noexcept
 }
 
 template < std::bidirectional_iterator I > 
+
 inline constexpr void advance_v2(I & iterator, int distance) noexcept
 {
 	if (distance > 0)
@@ -70,7 +75,8 @@ inline constexpr void advance_v2(I & iterator, int distance) noexcept
 	}
 }
 
-template < std::random_access_iterator I > 
+template < std::random_access_iterator I >
+ 
 inline constexpr void advance_v2(I & iterator, int distance) noexcept
 {
 	iterator += distance;
