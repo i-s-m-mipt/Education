@@ -70,8 +70,6 @@ private:
 
 }; // template < typename T > class List
 
-class C { public: void f() const { std::cout << "C::f" << std::endl; } };
-
 int main()
 {
 	List < int > list;
@@ -92,12 +90,6 @@ int main()
 	for (const auto element : list) std::cout << element << ' ';
 
 	std::cout << std::endl;
-
-	List < C > c_list;
-
-	c_list.push_back(C());
-
-	std::begin(c_list)->f(); // note: iterator.operator->()->f()
 
 	return 0;
 }
