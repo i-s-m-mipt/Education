@@ -53,8 +53,7 @@ int main()
     {
         Python python;
 
-        boost::python::exec("from script import factorial", 
-            python.global(), python.global());
+        boost::python::exec("from script import factorial", python.global(), python.global());
 		
 		std::cout << boost::python::extract < std::string > (
             python.global()["factorial"](100))() << std::endl; // note: outputs 100!
@@ -67,16 +66,14 @@ int main()
         {
             if (hashes.insert(hash_DEK(word)); index++ % step == 0)
             {
-                points += 
-                    std::to_string(index - 1                ) + ',' + 
-                    std::to_string(index - std::size(hashes)) + ',';
+                points += std::to_string(index - 1                ) + ',' + 
+                          std::to_string(index - std::size(hashes)) + ',';
             }
         }
 
         points.pop_back(); // note: remove last comma in string
 
-        boost::python::exec("from script import make_plot", 
-            python.global(), python.global());
+        boost::python::exec("from script import make_plot", python.global(), python.global());
 		
 		python.global()["make_plot"](points.c_str(), "DEK");
     }
