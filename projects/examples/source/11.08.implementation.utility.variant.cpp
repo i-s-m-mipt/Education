@@ -98,14 +98,12 @@ namespace detail
         Storage() noexcept = default;
        ~Storage() noexcept = default;
 
-    protected: // note: only non-const versions for demonstration
+    protected:
 
         template < typename T > [[nodiscard]] T * buffer_as() const noexcept // note: need C++26
         {
             return std::bit_cast < T * > (&m_buffer); // note: consider std::launder optimization
         }
-
-        [[nodiscard]] void * buffer() noexcept { return m_buffer; }
 
     public:
 
@@ -174,9 +172,10 @@ namespace detail
             return derived();
         }
 
-    private: // note: only non-const versions for demonstration
+    private:
 
-        [[nodiscard]] D & derived() noexcept { return *(static_cast < D * > (this)); }
+        [[nodiscard]] const D & derived() const noexcept { return *(static_cast < const D * > (this)); }
+        [[nodiscard]]       D & derived()       noexcept { return *(static_cast <       D * > (this)); }
 
         void update() noexcept { derived().current_index = index; }
 
