@@ -37,6 +37,7 @@ template < typename T, typename R = Ratio < 1 > > struct Duration { T value{}; }
 // =================================================================================================
 
 template < typename T1, typename R1, typename T2, typename R2 > 
+
 [[nodiscard]] inline constexpr auto operator+(Duration < T1, R1 > lhs, Duration < T2, R2 > rhs)
 {
 	using unit_t = Ratio < 1, add_t < R1, R2 > ::den > ; // note: compile-time
@@ -51,17 +52,10 @@ template < typename T1, typename R1, typename T2, typename R2 >
 
 int main()
 {
-	constexpr auto result_1 = (Duration < int, Ratio < 2, 5 > > (1) +
-							   Duration < int, Ratio < 3, 7 > > (2)).value;
+	constexpr auto result = Duration < int, Ratio < 2, 5 > > (1) +
+							Duration < int, Ratio < 3, 7 > > (2);
 
-	std::cout << result_1 << std::endl; // note: compile-time result
-
-	auto x = 1, y = 2; // note: runtime non-constant variable
-
-	auto result_2 = (Duration < int, Ratio < 2, 5 > > (x) +
-					 Duration < int, Ratio < 3, 7 > > (y)).value;
-
-	std::cout << result_2 << std::endl; // note: hybrid-time result
+	std::cout << result.value << std::endl; // note: compile-time result
 
 	return 0;
 }

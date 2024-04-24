@@ -58,6 +58,7 @@ private:
 
 template < template < typename E > typename C1,
 		   template < typename E > typename C2, typename T >
+		   
 [[nodiscard]] inline C2 < T > copy(const C1 < T > & container_in)
 {
 	return C2 < T > (std::cbegin(container_in), std::cend(container_in));

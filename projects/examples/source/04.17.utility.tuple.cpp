@@ -26,12 +26,14 @@ template < typename T > struct Printer < T, 1 >
 }; // template < typename T > struct Printer < T, 1 >
  
 template < typename ... Ts > requires (sizeof...(Ts) == 0)
+
 void print(std::ostream & stream, const std::tuple < Ts ... > & tuple)
 {
     stream << "{}";
 }
  
 template < typename ... Ts > requires (sizeof...(Ts) != 0)
+
 void print(std::ostream & stream, const std::tuple < Ts ... > & tuple)
 {
     stream << "{ ";
@@ -42,6 +44,7 @@ void print(std::ostream & stream, const std::tuple < Ts ... > & tuple)
 }
 
 template < typename ... Ts > 
+
 inline std::ostream & operator<<(std::ostream & stream, const std::tuple < Ts ... > & tuple)
 {
 	print(stream, tuple); return stream;

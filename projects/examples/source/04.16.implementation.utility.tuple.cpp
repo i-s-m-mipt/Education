@@ -15,6 +15,7 @@ public:
 	constexpr Tuple() {}
 
 	constexpr explicit Tuple(T && head, Ts && ... tail) : // note: conditionally explicit in std
+
 		m_head(std::forward < T  > (head)   ), 
 		m_tail(std::forward < Ts > (tail)...) {}
 
@@ -35,10 +36,7 @@ public:
 public:
 
 	[[nodiscard]] constexpr const         T        & head() const { return m_head; }
-	[[nodiscard]] constexpr               T        & head()       { return m_head; }
-
 	[[nodiscard]] constexpr const Tuple < Ts ... > & tail() const { return m_tail; }
-	[[nodiscard]] constexpr       Tuple < Ts ... > & tail()       { return m_tail; }
 
 private:
 
@@ -57,16 +55,18 @@ template < typename ... Ts > inline constexpr void swap(Tuple < Ts ... > & x, Tu
 
 // =================================================================================================
 
+template < typename ... Ts > [[nodiscard]] inline constexpr auto make_tuple(Ts && ... elements)
+{
+	return Tuple < std::decay_t < Ts > ... > (std::forward < Ts > (elements)...);
+}
+
+// =================================================================================================
+
 template < std::size_t N > struct Get
 {
 	template < typename T, typename ... Ts > requires (N < sizeof...(Ts) + 1)
-	[[nodiscard]] static constexpr const auto & apply(const Tuple < T, Ts ...> & tuple)
-	{
-		return Get < N - 1 > ::apply(tuple.tail());
-	}
 
-	template < typename T, typename ... Ts > requires (N < sizeof...(Ts) + 1)
-	[[nodiscard]] static constexpr auto & apply(Tuple < T, Ts ...> & tuple)
+	[[nodiscard]] static constexpr const auto & apply(const Tuple < T, Ts ...> & tuple)
 	{
 		return Get < N - 1 > ::apply(tuple.tail());
 	}
@@ -76,13 +76,8 @@ template < std::size_t N > struct Get
 template <> struct Get < 0 >
 {
 	template < typename T, typename ... Ts >
-	[[nodiscard]] static constexpr const auto & apply(const Tuple < T, Ts ... > & tuple)
-	{
-		return tuple.head();
-	}
 
-	template < typename T, typename ... Ts >
-	[[nodiscard]] static constexpr auto & apply(Tuple < T, Ts ... > & tuple)
+	[[nodiscard]] static constexpr const auto & apply(const Tuple < T, Ts ... > & tuple)
 	{
 		return tuple.head();
 	}
@@ -90,22 +85,10 @@ template <> struct Get < 0 >
 }; // template <> struct Get < 0 >
 
 template < std::size_t N, typename ... Ts > requires (N < sizeof...(Ts))
+
 [[nodiscard]] inline constexpr const auto & get(const Tuple < Ts ... > & tuple)
 {
 	return Get < N > ::apply(tuple);
-}
-
-template < std::size_t N, typename ... Ts > requires (N < sizeof...(Ts))
-[[nodiscard]] inline constexpr auto & get(Tuple < Ts ... > & tuple)
-{
-	return Get < N > ::apply(tuple);
-}
-
-// =================================================================================================
-
-template < typename ... Ts > [[nodiscard]] inline constexpr auto make_tuple(Ts && ... elements)
-{
-	return Tuple < std::decay_t < Ts > ... > (std::forward < Ts > (elements)...);
 }
 
 // =================================================================================================
@@ -117,9 +100,9 @@ template < typename ... Ts > [[nodiscard]] inline constexpr auto make_tuple(Ts &
 
 template < typename ... Ts, 
 		   typename ... Us > requires (sizeof...(Ts) == sizeof...(Us))
-[[nodiscard]] inline constexpr bool operator==(
-	const Tuple < Ts ... > & lhs, 
-	const Tuple < Us ... > & rhs)
+
+[[nodiscard]] inline constexpr bool operator==(const Tuple < Ts ... > & lhs, 
+											   const Tuple < Us ... > & rhs)
 {
 	return ((lhs.head() == rhs.head()) && (lhs.tail() == rhs.tail()));
 }
@@ -133,9 +116,9 @@ template < typename ... Ts,
 
 template < typename ... Ts, 
 		   typename ... Us > requires (sizeof...(Ts) == sizeof...(Us))
-[[nodiscard]] inline constexpr std::strong_ordering operator<=>(
-	const Tuple < Ts ... > & lhs, 
-	const Tuple < Us ... > & rhs)
+
+[[nodiscard]] inline constexpr std::strong_ordering operator<=>(const Tuple < Ts ... > & lhs, 
+																const Tuple < Us ... > & rhs)
 {
 	if (lhs.head() == rhs.head())
 	{
@@ -155,6 +138,7 @@ inline void print(std::ostream & stream, const Tuple <> &, bool is_first = true)
 }
 
 template < typename T, typename ... Ts > 
+
 inline void print(std::ostream & stream, const Tuple < T, Ts ... > & tuple, bool is_first = true)
 {
 	stream << (is_first ? "{ " : ", ") << tuple.head();
@@ -163,6 +147,7 @@ inline void print(std::ostream & stream, const Tuple < T, Ts ... > & tuple, bool
 }
 
 template < typename ... Ts > 
+
 inline std::ostream & operator<<(std::ostream & stream, const Tuple < Ts ... > & tuple)
 {
 	print(stream, tuple); return stream;
@@ -173,25 +158,19 @@ inline std::ostream & operator<<(std::ostream & stream, const Tuple < Ts ... > &
 int main()
 {
 	constexpr auto tuple_1 = make_tuple('a', 42, 3.14);
+	constexpr auto tuple_2 = make_tuple('a', 42, 2.72);
+
+	static_assert(get < 0 > (tuple_1) == get < 0 > (tuple_2));
+
+	static_assert((tuple_1 <  tuple_2) == false);
+    static_assert((tuple_1 >  tuple_2)         );
+    static_assert((tuple_1 <= tuple_2) == false);
+    static_assert((tuple_1 >= tuple_2)         );
+    static_assert((tuple_1 == tuple_2) == false);
+    static_assert((tuple_1 != tuple_2)         );
 
 	std::cout << tuple_1 << std::endl;
-
-	std::cout << make_tuple() << std::endl;
-
-	static_assert(get < 0 > (tuple_1) ==  'a');
-	static_assert(get < 1 > (tuple_1) ==   42);
-	static_assert(get < 2 > (tuple_1) == 3.14);
-
-	auto tuple_2 = make_tuple('a', 42, 2.72);
-
-	get < 2 > (tuple_2) = get < 2 > (tuple_1);
-
-	std::cout << "tuple_1 <  tuple_2: " << (tuple_1 <  tuple_2) << std::endl;
-    std::cout << "tuple_1 >  tuple_2: " << (tuple_1 >  tuple_2) << std::endl;
-    std::cout << "tuple_1 <= tuple_2: " << (tuple_1 <= tuple_2) << std::endl;
-    std::cout << "tuple_1 >= tuple_2: " << (tuple_1 >= tuple_2) << std::endl;
-    std::cout << "tuple_1 == tuple_2: " << (tuple_1 == tuple_2) << std::endl;
-    std::cout << "tuple_1 != tuple_2: " << (tuple_1 != tuple_2) << std::endl;
+	std::cout << tuple_2 << std::endl;
 
 	return 0;
 }

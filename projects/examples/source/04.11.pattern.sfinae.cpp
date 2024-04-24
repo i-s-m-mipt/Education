@@ -55,8 +55,10 @@ class Person_v3
 {
 public:
 	
-    template < typename S, typename Enable = std::enable_if_t < 
+    template < typename S, typename Enable = std::enable_if_t <
+
 		std::is_convertible_v < S, std::string > , void > > 
+
 	explicit Person_v3(S && name) : m_name(std::forward < S > (name)) // good: SFINAE idiom
 	{
 		std::cout << "Person_v3::Person_v3" << std::endl;
@@ -77,8 +79,8 @@ class Person_v4
 {
 public:
 	
-    template < typename S > requires 
-		std::is_convertible_v < S, std::string >
+    template < typename S > requires std::is_convertible_v < S, std::string >
+	
 	explicit Person_v4(S && name) : m_name(std::forward < S > (name)) // good: requires-clause
 	{
 		std::cout << "Person_v4::Person_v4" << std::endl;

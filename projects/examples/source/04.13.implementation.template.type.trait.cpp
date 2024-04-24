@@ -50,6 +50,7 @@ template < typename T > using  add_rvalue_reference_t = typename add_rvalue_refe
 // =================================================================================================
 
 template < typename T > struct is_integral : public std::integral_constant < bool,
+
     is_same_v < bool  , remove_reference_t < T > > || 
 	is_same_v < char  , remove_reference_t < T > > || 
 	is_same_v < short , remove_reference_t < T > > ||
@@ -123,6 +124,7 @@ private:
 
 	template < typename T1 > [[nodiscard]] static constexpr std::false_type test(...);
     template < typename T1 > [[nodiscard]] static constexpr std:: true_type test(int, 
+
 		decltype(dynamic_cast < void * > (declval < T1 * > ())) = nullptr);
 
 public:
@@ -145,6 +147,7 @@ private:
 
 	template < typename F1, typename T1 > [[nodiscard]] static constexpr std::false_type test(...);
     template < typename F1, typename T1 > [[nodiscard]] static constexpr std:: true_type test(int, 
+	
 		decltype(helper_consumer < T1 > (declval < F1 > ())) = 0);
 
 public:
