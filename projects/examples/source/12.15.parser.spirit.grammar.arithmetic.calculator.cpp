@@ -48,6 +48,35 @@ BOOST_FUSION_ADAPT_STRUCT(::detail::List, head, tail)
 
 // =================================================================================================
 
+namespace parser
+{
+    const boost::spirit::x3::rule < class E_tag, detail::List    > expression;
+    const boost::spirit::x3::rule < class T_tag, detail::List    > term;
+    const boost::spirit::x3::rule < class P_tag, detail::Operand > primary;
+
+    const auto expression_def = term >> *(
+        
+        (boost::spirit::x3::char_('+') >> term) | 
+        (boost::spirit::x3::char_('-') >> term));
+
+    const auto term_def =  primary >> *(
+        
+        (boost::spirit::x3::char_('*') >> primary) | 
+        (boost::spirit::x3::char_('/') >> primary));
+
+    const auto primary_def = (boost::spirit::x3::double_) | ('(' >> expression >> ')') |  
+
+        (boost::spirit::x3::char_('-') >> primary) | 
+        (boost::spirit::x3::char_('+') >> primary);
+
+    BOOST_SPIRIT_DEFINE(expression, term, primary);
+
+    auto arithmetic = expression;
+
+} // namespace parser
+
+// =================================================================================================
+
 class Calculator
 {
 public:
@@ -91,35 +120,6 @@ public:
     }
 
 }; // class Calculator
-
-// =================================================================================================
-
-namespace parser
-{
-    const boost::spirit::x3::rule < class E_tag, detail::List    > expression;
-    const boost::spirit::x3::rule < class T_tag, detail::List    > term;
-    const boost::spirit::x3::rule < class P_tag, detail::Operand > primary;
-
-    const auto expression_def = term >> *(
-        
-        (boost::spirit::x3::char_('+') >> term) | 
-        (boost::spirit::x3::char_('-') >> term));
-
-    const auto term_def =  primary >> *(
-        
-        (boost::spirit::x3::char_('*') >> primary) | 
-        (boost::spirit::x3::char_('/') >> primary));
-
-    const auto primary_def = (boost::spirit::x3::double_) | ('(' >> expression >> ')') |  
-
-        (boost::spirit::x3::char_('-') >> primary) | 
-        (boost::spirit::x3::char_('+') >> primary);
-
-    BOOST_SPIRIT_DEFINE(expression, term, primary);
-
-    auto arithmetic = expression;
-
-} // namespace parser
 
 // =================================================================================================
 
