@@ -2,6 +2,8 @@
 #include <iostream>
 #include <utility>
 
+// =================================================================================================
+
 class Container
 {
 public:
@@ -123,6 +125,8 @@ private:
 
 }; // class Container
 
+// =================================================================================================
+
 inline void swap(Container & x, Container & y) // good: useful free function
 {
 	x.swap(y);
@@ -131,6 +135,8 @@ inline void swap(Container & x, Container & y) // good: useful free function
 //	     x = static_cast < Container && > (y);
 //	     y = static_cast < Container && > (z);
 }
+
+// =================================================================================================
 
 int main()
 {
