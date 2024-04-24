@@ -100,7 +100,7 @@ namespace detail
 
     protected: // note: only non-const versions for demonstration
 
-        template < typename T > [[nodiscard]] T * buffer_as() const noexcept
+        template < typename T > [[nodiscard]] T * buffer_as() const noexcept // note: need C++26
         {
             return std::bit_cast < T * > (&m_buffer); // note: consider std::launder optimization
         }
