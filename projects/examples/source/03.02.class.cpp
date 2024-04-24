@@ -31,7 +31,8 @@ public:
 		initialize(); // good: don't repeat yourself
 	}
 
-	Date(integer_t year, integer_t month, integer_t day) : 
+	Date(integer_t year, integer_t month, integer_t day) :
+	 
 		m_year(year), m_month(month), m_day(day) // note: member initialization order
 	{
 		initialize();
@@ -95,10 +96,9 @@ public:
 	{
 		if (!m_is_string_valid) // note: updating cash
 		{
-			m_date_as_string =
-				std::to_string(m_year ) + '/' +
-				std::to_string(m_month) + '/' +
-				std::to_string(m_day  );
+			m_date_as_string = std::to_string(m_year ) + '/' +
+							   std::to_string(m_month) + '/' +
+							   std::to_string(m_day  );
 
 			m_is_string_valid = true;
 		}
@@ -140,11 +140,11 @@ void Date::print_v2() const // good: large function is defined outside the class
 {
 	std::cout << prompt;
 
-	const auto separator = '/';
-
 	if (m_year < 1000) std::cout << '0';
 	if (m_year <  100) std::cout << '0';
 	if (m_year <   10) std::cout << '0';
+
+	const auto separator = '/';
 	 
 	std::cout << m_year  << separator; if (m_month < 10) std::cout << '0';
 	std::cout << m_month << separator; if (m_day   < 10) std::cout << '0';
