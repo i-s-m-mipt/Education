@@ -6,10 +6,8 @@
 
 template < typename T > inline constexpr void swap(T & x, T & y)
 {
-    static_assert(
-        std::is_copy_constructible_v < T > &&
-        std::is_copy_assignable_v    < T > , 
-            "swap requires copy constructible type");
+    static_assert(std::is_copy_constructible_v < T > &&
+                  std::is_copy_assignable_v    < T > ,  "swap requires copy constructible type");
 
     const auto z = y; y = x; x = z;
 }

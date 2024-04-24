@@ -51,6 +51,7 @@ BOOST_DATA_TEST_CASE(ranges_test, boost::unit_test::data::xrange(1, 3, 1) *
 }
 
 BOOST_DATA_TEST_CASE(random_test, boost::unit_test::data::random(( // note: additional parenthesis
+
     boost::unit_test::data::seed         = std::random_device{}(),
     boost::unit_test::data::engine       = std::mt19937_64     (),
     boost::unit_test::data::distribution = std::uniform_real_distribution(0.0, 1.0))) ^ 

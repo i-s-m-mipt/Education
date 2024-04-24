@@ -130,12 +130,14 @@ private:
 		const auto day = boost::posix_time::hours(24);
 
 		const auto fout_sink_ptr = boost::make_shared < sink_t > (
+
 			boost::log::keywords::file_name = "%y.%m.%d.%H.%M.%S.log",
 			boost::log::keywords::time_based_rotation = boost::log::sinks::file::rotation_at_time_interval(day),
 			boost::log::keywords::rotation_size = 32 * 1024 * 1024,
 			boost::log::keywords::max_size      = 64 * 1024 * 1024);
 
 		fout_sink_ptr->locked_backend()->set_file_collector(boost::log::sinks::file::make_collector(
+			
 			boost::log::keywords::target = "loggers",
 			boost::log::keywords::max_size       = 128 * 1024 * 1024,
 			boost::log::keywords::min_free_space = 128 * 1024 * 1024));

@@ -150,6 +150,7 @@ private:
 // =================================================================================================
 
 template < typename T > inline constexpr void swap(T & x, T & y) noexcept(
+
 	std::is_nothrow_move_constructible_v < T > &&
 	std::is_nothrow_move_assignable_v    < T > ) // note: conditionally noexcept, long instructions
 {
@@ -159,8 +160,10 @@ template < typename T > inline constexpr void swap(T & x, T & y) noexcept(
 }
 
 template < typename F, typename ... Ts > 
-[[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Ts && ... args) 
-	noexcept(noexcept(f(std::declval < Ts > ()...))) // note: or std::is_nothrow_invocable_v
+
+[[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Ts && ... args) noexcept(
+	
+	noexcept(f(std::declval < Ts > ()...))) // note: or std::is_nothrow_invocable_v
 {
 	return f(std::forward < Ts > (args)...); // note: see std::invoke
 }
