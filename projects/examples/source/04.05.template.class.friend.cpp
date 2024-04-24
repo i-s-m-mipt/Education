@@ -9,7 +9,7 @@ public:
 	{
 		if (m_den == T{}) // note: T{} used as zero value
 		{
-			std::cout << "invalid denominator" << std::endl;
+			std::cerr << "invalid denominator\n";
 		}
 
 		if (m_den <  T{}) // note: T{} used as zero value
