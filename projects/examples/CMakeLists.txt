@@ -170,7 +170,7 @@ set(debug
     11.05.pattern.visitor
     11.06.pattern.visitor.utility.variant
     11.07.pattern.visitor.utility.any
-#   11.08.implementation.utility.variant
+    11.08.implementation.utility.variant
     11.09.template.metaprogramming.cartesian.product
     11.10.algorithm.iterator.adaptor.inserter
     11.11.algorithm.standard
