@@ -36,6 +36,7 @@ TEST(Parser, Pair)
     std::pair < int, int > pair;
 
     boost::spirit::x3::phrase_parse(std::cbegin(input), std::cend(input), 
+
         boost::spirit::x3::int_ >> 
         boost::spirit::x3::int_, 
         boost::spirit::x3::space, pair); // note: skip space characters
@@ -52,10 +53,11 @@ TEST(Parser, Tuple)
 
     std::tuple < int, int > tuple;
 
-    boost::spirit::x3::phrase_parse(std::cbegin(input), std::cend(input), '(' >> 
-        boost::spirit::x3::int_ >> ',' >> 
-        boost::spirit::x3::int_ >> ')', 
-        boost::spirit::x3::space, tuple); // note: skip space characters
+    boost::spirit::x3::phrase_parse(std::cbegin(input), std::cend(input), 
+    
+        '(' >> boost::spirit::x3::int_ >> ',' >> 
+               boost::spirit::x3::int_ >> ')', 
+               boost::spirit::x3::space, tuple); // note: skip space characters
 
     ASSERT_EQ(std::get < 0 > (tuple), 42);
     ASSERT_EQ(std::get < 1 > (tuple), 42);

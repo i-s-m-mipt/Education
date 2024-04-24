@@ -26,9 +26,10 @@ using namespace std::literals;
     const auto f_imag_n = [&imag](auto & context){ imag = -1.0 * boost::spirit::x3::_attr(context); };
 
     const auto result = boost::spirit::x3::phrase_parse(begin, end,
-        (double_[f_real] >> -((
-            ('+' >> double_[f_imag_p]) | 
-            ('-' >> double_[f_imag_n])) >> 'i')), boost::spirit::x3::ascii::space);
+    
+        (       double_[f_real  ] >> 
+     -((('+' >> double_[f_imag_p]) | 
+        ('-' >> double_[f_imag_n])) >> 'i')), boost::spirit::x3::ascii::space);
 
     if (!result || begin != end) 
     {

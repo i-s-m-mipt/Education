@@ -61,6 +61,7 @@
 	std::vector < wchar_t > buffer(std::size(string));
 
 	std::use_facet < std::ctype < wchar_t > >(locale).widen(
+
 		string.data(), 
 		string.data() + std::size(string), buffer.data());
 
@@ -72,6 +73,7 @@
 	std::vector < char > buffer(std::size(wstring));
 
 	std::use_facet < std::ctype < wchar_t > > (locale).narrow(
+
 		wstring.data(),
 		wstring.data() + std::size(wstring), '?', buffer.data()); // note: default character
 
@@ -131,11 +133,14 @@ int main()
 
     auto u8string = convert_locale_to_utf(string);
 
-	std::cout << std::hex << 
-        (static_cast < int > (  string[0]) & 0xFF) << ' ' <<
-        (static_cast < int > (  string[1]) & 0xFF) << ' ' <<
-		(static_cast < int > (u8string[0]) & 0xFF) << ' ' <<
-		(static_cast < int > (u8string[1]) & 0xFF) << std::dec << std::endl;
+    std::cout << std::hex;
+
+	std::cout << (static_cast < int > (  string[0]) & 0xFF) << ' ';
+    std::cout << (static_cast < int > (  string[1]) & 0xFF) << ' ';
+	std::cout << (static_cast < int > (u8string[0]) & 0xFF) << ' ';
+	std::cout << (static_cast < int > (u8string[1]) & 0xFF) << std::endl;
+
+    std::cout << std::dec;
 
     std::cout <<   string << ' ' << std::size(  string) << std::endl;
     std::cout << u8string << ' ' << std::size(u8string) << std::endl;

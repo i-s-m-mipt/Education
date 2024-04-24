@@ -85,8 +85,10 @@ namespace parser
     const boost::spirit::x3::rule < class roman_tag, int > roman; // note: tag, attribute
 
     const auto roman_def = 
-        boost::spirit::x3::eps       [set_0   ] >> ( // note: dummy element, always works
+
+        boost::spirit::x3::eps       [set_0   ] >> ( // note: dummy element, always executed
        *boost::spirit::x3::char_('M')[add_1000] >> 
+        
             -huns[add_x] >> 
             -tens[add_x] >> 
             -ones[add_x]);

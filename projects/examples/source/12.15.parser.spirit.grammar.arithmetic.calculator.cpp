@@ -100,16 +100,18 @@ namespace grammar
     const boost::spirit::x3::rule < class T_tag, detail::List    > term;
     const boost::spirit::x3::rule < class P_tag, detail::Operand > primary;
 
-    const auto expression_def = term >> *(   
+    const auto expression_def = term >> *(
+        
         (boost::spirit::x3::char_('+') >> term) | 
         (boost::spirit::x3::char_('-') >> term));
 
-    const auto term_def = primary >> *(
+    const auto term_def =  primary >> *(
+        
         (boost::spirit::x3::char_('*') >> primary) | 
         (boost::spirit::x3::char_('/') >> primary));
 
-    const auto primary_def = boost::spirit::x3::double_ | 
-            '(' >> expression >> ')' |   
+    const auto primary_def = (boost::spirit::x3::double_) | ('(' >> expression >> ')') |  
+
         (boost::spirit::x3::char_('-') >> primary) | 
         (boost::spirit::x3::char_('+') >> primary);
 

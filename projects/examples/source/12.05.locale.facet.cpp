@@ -55,10 +55,10 @@ int main()
 
 	std::ios_base::iostate state = std::ios_base::goodbit; tm input; // note: stream state
 
-	time_get_C.get(
-		std::istreambuf_iterator < char > (std::cin), 
-		std::istreambuf_iterator < char > (),
-			std::cin, state, &input, format, format + std::strlen(format));
+	time_get_C.get(std::istreambuf_iterator < char > (std::cin), 
+				   std::istreambuf_iterator < char > (        ),
+		
+		std::cin, state, &input, format, format + std::strlen(format));
 
 	if (state != std::ios_base::goodbit) std::cerr << "invalid format\n";
 
