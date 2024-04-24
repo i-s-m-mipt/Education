@@ -232,7 +232,7 @@ public:
 
     Variant & operator=(Variant && other)
     {
-        other.empty() ? destroy() : other.visit([this](const auto & value) { *this = std::move(value); });
+        other.empty() ? destroy() : other.visit([this](auto && value) { *this = std::move(value); });
             
         return *this;
     }
