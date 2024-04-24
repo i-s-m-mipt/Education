@@ -128,7 +128,7 @@ namespace detail
         Selection() noexcept = default;
        ~Selection() noexcept = default;
 
-    public:
+    public: // note: construct_at from C++20 instead of placement new for constexpr support
 
         explicit Selection(const T & value) 
         { 
