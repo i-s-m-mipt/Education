@@ -39,7 +39,9 @@ void print(const std::span < const std::byte > & bytes)
 
 // =================================================================================================
 
-template < typename T > [[nodiscard]] inline constexpr std::ptrdiff_t distance_in_bytes(const T * first, const T * last) noexcept
+template < typename T > 
+
+[[nodiscard]] inline constexpr std::ptrdiff_t distance_in_bytes(const T * first, const T * last) noexcept
 {
     return (std::bit_cast < const std::byte * > (last) - std::bit_cast < const std::byte * > (first));
 }
@@ -148,10 +150,9 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 {
     std::cout << std::showbase;
 
-    std::cout << 
-        std::oct << 42 << std::endl << // note: outputs 052
-        std::dec << 42 << std::endl << // note: outputs 42
-        std::hex << 42 << std::endl;   // note: outputs 0x2a
+    std::cout << std::oct << 42 << std::endl << // note: outputs 052
+                 std::dec << 42 << std::endl << // note: outputs 42
+                 std::hex << 42 << std::endl;   // note: outputs 0x2a
 
     [[maybe_unused]] constexpr auto bin = 0b101010; // note: binary
     [[maybe_unused]] constexpr auto oct = 052;      // note: octal
@@ -232,9 +233,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
         const auto bc = std::bit_ceil (i);
         const auto bf = std::bit_floor(i);
 
-        std::cout << 
-             "ceil(" << binary(i) << ") = " << binary(bc) << ", " <<
-            "floor(" << binary(i) << ") = " << binary(bf) << std::endl;
+        std::cout <<  "ceil(" << binary(i) << ") = " << binary(bc) << ", " <<
+                     "floor(" << binary(i) << ") = " << binary(bf) << std::endl;
     }
 
     benchmark::Initialize(&argc, argv);

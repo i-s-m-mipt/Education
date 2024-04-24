@@ -9,10 +9,9 @@ struct Vector { double x{}, y{}, z{}; };
 
 [[nodiscard]] inline constexpr Vector operator*(Vector a, Vector b) noexcept
 {
-	return {
-		a.y * b.z - a.z * b.y,
-	   -a.x * b.z + a.z * b.x,
-		a.x * b.y - a.y * b.x }; // note: only z needed from result
+	return { a.y * b.z - a.z * b.y,
+	   		-a.x * b.z + a.z * b.x,
+			 a.x * b.y - a.y * b.x }; // note: only z needed from result
 }
 
 // =================================================================================================
