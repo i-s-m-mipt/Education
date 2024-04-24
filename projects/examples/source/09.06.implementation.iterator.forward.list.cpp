@@ -28,7 +28,7 @@ public:
 			m_node = m_node->next; return *this; // note: undefined behaviour if end
 		}
 
-		constexpr Iterator operator++(int) noexcept 
+		constexpr const Iterator operator++(int) noexcept 
 		{ 
 			auto prev = *this; ++(*this); return prev; 
 		}
