@@ -15,7 +15,7 @@ public:
 
     Optional(const Optional & other) 
     {
-        if (other.has_value()) initialize(*other.m_ptr);
+        if (other.empty()) initialize(*other.m_ptr);
     }
 
     Optional(Optional && other) noexcept : m_ptr(other.m_ptr)
@@ -27,7 +27,7 @@ public:
     {
         if (this != &other)
         {
-            if (destroy(); other.has_value()) construct(*other.m_ptr); else deallocate();
+            if (destroy(); other.empty()) construct(*other.m_ptr); else deallocate();
         }
 
         return *this;
@@ -77,11 +77,8 @@ private:
 
 public:
 
-    [[nodiscard]] bool  has_value          () const noexcept { return  m_ptr; }
-
-    [[nodiscard]]       T & value          ()       noexcept { return *m_ptr; }
-    [[nodiscard]] const T & value          () const noexcept { return *m_ptr; }
-
+    [[nodiscard]] bool      empty   (       ) const noexcept { return !m_ptr; }
+    [[nodiscard]] const T & value   (       ) const noexcept { return *m_ptr; }
     [[nodiscard]]       T   value_or(T value) const noexcept 
     { 
         return (m_ptr ? *m_ptr : value); 
@@ -97,31 +94,31 @@ private:
 
 TEST(Optional, Functions)
 {
-    const Optional < int > optional_1    ; ASSERT_TRUE(!optional_1.has_value());
-    const Optional < int > optional_2(42); ASSERT_TRUE( optional_2.has_value());
+    const Optional < int > optional_1    ; ASSERT_TRUE(!optional_1.empty());
+    const Optional < int > optional_2(42); ASSERT_TRUE( optional_2.empty());
 
     ASSERT_EQ(optional_1.value_or(42), 42);
     ASSERT_EQ(optional_2.value_or(42), 42);
     
     Optional < int > optional_3(optional_2); 
     
-    ASSERT_TRUE(optional_3.has_value() && optional_3.value() == 42 &&  optional_2.has_value());
+    ASSERT_TRUE(optional_3.empty() && optional_3.value() == 42 &&  optional_2.empty());
 
     Optional < int > optional_4(std::move(optional_3));
 
-    ASSERT_TRUE(optional_4.has_value() && optional_4.value() == 42 && !optional_3.has_value());
+    ASSERT_TRUE(optional_4.empty() && optional_4.value() == 42 && !optional_3.empty());
 
     optional_3 = optional_2; 
     
-    ASSERT_TRUE(optional_3.has_value() && optional_3.value() == 42);
+    ASSERT_TRUE(optional_3.empty() && optional_3.value() == 42);
 
     optional_4 = std::move(optional_3);
 
-    ASSERT_TRUE(optional_4.has_value() && optional_4.value() == 42 && !optional_3.has_value());
+    ASSERT_TRUE(optional_4.empty() && optional_4.value() == 42 && !optional_3.empty());
 
     optional_4 = 43;
 
-    ASSERT_TRUE(optional_4.has_value() && optional_4.value() == 43);
+    ASSERT_TRUE(optional_4.empty() && optional_4.value() == 43);
 }
 
 // =================================================================================================
