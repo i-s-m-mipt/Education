@@ -98,9 +98,7 @@ public:
 {
     builder.build_cpu();
     builder.build_gpu();
-    builder.build_ram();
-
-    return builder.computer();
+    builder.build_ram(); return builder.computer();
 }
 
 // =================================================================================================
