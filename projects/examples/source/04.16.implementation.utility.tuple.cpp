@@ -62,33 +62,37 @@ template < typename ... Ts > [[nodiscard]] inline constexpr auto make_tuple(Ts &
 
 // =================================================================================================
 
-template < std::size_t N > struct Get // note: only const versions for demonstration
+namespace detail
 {
-	template < typename T, typename ... Ts > requires (N < sizeof...(Ts) + 1)
-
-	[[nodiscard]] static constexpr const auto & apply(const Tuple < T, Ts ...> & tuple)
+	template < std::size_t N > struct Get // note: only const versions for demonstration
 	{
-		return Get < N - 1 > ::apply(tuple.tail());
-	}
+		template < typename T, typename ... Ts > requires (N < sizeof...(Ts) + 1)
 
-}; // template < std::size_t N > struct Get
+		[[nodiscard]] static constexpr const auto & apply(const Tuple < T, Ts ...> & tuple)
+		{
+			return Get < N - 1 > ::apply(tuple.tail());
+		}
 
-template <> struct Get < 0 >
-{
-	template < typename T, typename ... Ts >
+	}; // template < std::size_t N > struct Get
 
-	[[nodiscard]] static constexpr const auto & apply(const Tuple < T, Ts ... > & tuple)
+	template <> struct Get < 0 >
 	{
-		return tuple.head();
-	}
+		template < typename T, typename ... Ts >
 
-}; // template <> struct Get < 0 >
+		[[nodiscard]] static constexpr const auto & apply(const Tuple < T, Ts ... > & tuple)
+		{
+			return tuple.head();
+		}
+
+	}; // template <> struct Get < 0 >
+
+} // namespace detail
 
 template < std::size_t N, typename ... Ts > requires (N < sizeof...(Ts))
 
 [[nodiscard]] inline constexpr const auto & get(const Tuple < Ts ... > & tuple)
 {
-	return Get < N > ::apply(tuple);
+	return detail::Get < N > ::apply(tuple);
 }
 
 // =================================================================================================
@@ -132,25 +136,29 @@ template < typename ... Ts,
 
 // =================================================================================================
 
-inline void print(std::ostream & stream, const Tuple <> &, bool is_first = true)
+namespace detail
 {
-	stream << (is_first ? "{}" : " }");
-}
+	inline void print(std::ostream & stream, const Tuple <> &, bool is_first = true)
+	{
+		stream << (is_first ? "{}" : " }");
+	}
 
-template < typename T, typename ... Ts > 
+	template < typename T, typename ... Ts > 
 
-inline void print(std::ostream & stream, const Tuple < T, Ts ... > & tuple, bool is_first = true)
-{
-	stream << (is_first ? "{ " : ", ") << tuple.head();
+	inline void print(std::ostream & stream, const Tuple < T, Ts ... > & tuple, bool is_first = true)
+	{
+		stream << (is_first ? "{ " : ", ") << tuple.head();
 
-	print(stream, tuple.tail(), false);
-}
+		print(stream, tuple.tail(), false);
+	}
+
+} // namespace detail
 
 template < typename ... Ts > 
 
 inline std::ostream & operator<<(std::ostream & stream, const Tuple < Ts ... > & tuple)
 {
-	print(stream, tuple); return stream;
+	detail::print(stream, tuple); return stream;
 }
 
 // =================================================================================================
