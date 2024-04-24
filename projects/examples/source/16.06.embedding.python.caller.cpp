@@ -47,8 +47,6 @@ std::size_t hash_DEK(std::string_view string) // note: Donald E. Knuth implement
 
 int main()
 {
-    using Python = solution::shared::Python;
-
     try
     {
         Python python;

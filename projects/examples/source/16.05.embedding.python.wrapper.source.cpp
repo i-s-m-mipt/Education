@@ -1,78 +1,74 @@
 #include "16.04.embedding.python.wrapper.header.hpp"
 
-namespace solution::shared
+void Python::acquire()
 {
-	void Python::acquire()
+	try
 	{
-		try
+		std::call_once(is_initialized_once, []() 
 		{
-			std::call_once(is_initialized_once, []() 
+			if (!Py_IsInitialized()) 
 			{
-				if (!Py_IsInitialized()) 
-				{
-					Py_Initialize();
+				Py_Initialize();
 
-					auto working_directory = std::filesystem::absolute("./");
+				auto working_directory = std::filesystem::absolute("./");
 
-					auto system_path = PySys_GetObject("path");
+				auto system_path = PySys_GetObject("path");
 
-					PyList_Insert(system_path, 0, PyUnicode_FromString(working_directory.string().c_str()));
-				}
-			});
+				PyList_Insert(system_path, 0, PyUnicode_FromString(working_directory.string().c_str()));
+			}
+		});
 
-			mutex.lock(); state = PyGILState_Ensure();
+		mutex.lock(); state = PyGILState_Ensure();
 
-			m_global = boost::python::import("__main__").attr("__dict__");
-		}
-		catch (const boost::python::error_already_set &)
-		{
-			throw std::runtime_error(Python::exception());
-		}
+		m_global = boost::python::import("__main__").attr("__dict__");
 	}
-
-	void Python::release()
+	catch (const boost::python::error_already_set &)
 	{
-		try
-		{
-			PyGILState_Release(state); mutex.unlock();
-		}
-		catch (const boost::python::error_already_set &)
-		{
-			throw std::runtime_error(Python::exception());
-		}
+		throw std::runtime_error(Python::exception());
 	}
+}
 
-	[[nodiscard]] std::string Python::exception() noexcept
+void Python::release()
+{
+	try
 	{
-		try
-		{
-			PyObject * error;
-			PyObject * value;
-			PyObject * stack;
+		PyGILState_Release(state); mutex.unlock();
+	}
+	catch (const boost::python::error_already_set &)
+	{
+		throw std::runtime_error(Python::exception());
+	}
+}
 
-			PyErr_Fetch             (&error, &value, &stack);
-			PyErr_NormalizeException(&error, &value, &stack);
+[[nodiscard]] std::string Python::exception() noexcept
+{
+	try
+	{
+		PyObject * error;
+		PyObject * value;
+		PyObject * stack;
 
-			boost::python::handle <> handle_error(error);
+		PyErr_Fetch             (&error, &value, &stack);
+		PyErr_NormalizeException(&error, &value, &stack);
 
-			boost::python::handle <> handle_value(boost::python::allow_null(value));
-			boost::python::handle <> handle_stack(boost::python::allow_null(stack));
+		boost::python::handle <> handle_error(error);
 
-			std::string message = boost::python::extract < std::string > (handle_value ? 
-				boost::python::str(handle_value) : boost::python::str(handle_error));
+		boost::python::handle <> handle_value(boost::python::allow_null(value));
+		boost::python::handle <> handle_stack(boost::python::allow_null(stack));
 
-			return message;
-		}
-		catch (const boost::python::error_already_set &)
-		{
-			catch_handler(FUNCTION, "invalid exception");
-		}
-		catch (const std::exception & exception)
-		{
-			catch_handler(FUNCTION, exception.what());
-		}
+		std::string message = boost::python::extract < std::string > (handle_value ? 
+			boost::python::str(handle_value) : boost::python::str(handle_error));
 
-		return "unknown exception";
+		return message;
+	}
+	catch (const boost::python::error_already_set &)
+	{
+		catch_handler(FUNCTION, "invalid exception");
+	}
+	catch (const std::exception & exception)
+	{
+		catch_handler(FUNCTION, exception.what());
 	}
 
-} // namespace solution::shared
+	return "unknown exception";
+}
