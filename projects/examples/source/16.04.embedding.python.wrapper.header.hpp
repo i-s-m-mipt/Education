@@ -23,7 +23,6 @@
 #include <boost/noncopyable.hpp>
 #include <boost/python.hpp>
 
-
 class Python : private boost::noncopyable
 {
 public:
