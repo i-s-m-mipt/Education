@@ -22,24 +22,30 @@
 
 // =================================================================================================
 
-template < typename T > inline void bind(std::size_t & seed, const T & value) noexcept
+namespace detail
 {
-	(seed *= 31) += std::hash < T > ()(value); // note: consider ^ instead of +
-}
+	template < typename T > inline void bind(std::size_t & seed, const T & value) noexcept
+	{
+		(seed *= 31) += std::hash < T > ()(value); // note: consider ^ instead of +
+	}
 
-template < typename T > inline void hash(std::size_t & seed, const T & value) noexcept
-{
-	bind(seed, value);
-}
+	template < typename T > inline void hash(std::size_t & seed, const T & value) noexcept
+	{
+		bind(seed, value);
+	}
 
-template < typename T, typename ... Ts > inline void hash(std::size_t & seed, const T & value, const Ts & ... args) noexcept
-{
-	bind(seed, value); hash(seed, args...);
-}
+	template < typename T, typename ... Ts > 
+
+	inline void hash(std::size_t & seed, const T & value, const Ts & ... args) noexcept
+	{
+		bind(seed, value); hash(seed, args...);
+	}
+
+} // namespace detail
 
 template < typename ... Ts > [[nodiscard]] inline std::size_t combined_hash(const Ts & ... args) noexcept
 {
-	std::size_t seed = 0; hash(seed, args...); return seed;
+	std::size_t seed = 0; detail::hash(seed, args...); return seed;
 }
 
 // =================================================================================================
