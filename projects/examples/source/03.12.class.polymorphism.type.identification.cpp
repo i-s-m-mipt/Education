@@ -28,15 +28,15 @@ int main()
 {
 	const Computer * computer_ptr = new const Mobile();
 
-	[[maybe_unused]] const auto mobile_ptr_1 = dynamic_cast < const Mobile * > (computer_ptr); // note: avoid downcasting
+	[[maybe_unused]] const auto mobile_ptr_1 = dynamic_cast < const Mobile * > (computer_ptr);
 
 	delete computer_ptr;
 
 	computer_ptr = new const Tablet();
 
-	if (const auto mobile_ptr_2 = dynamic_cast < const Mobile * > (computer_ptr); !mobile_ptr_2) // note: runtime checks 
+	if (const auto mobile_ptr_2 = dynamic_cast < const Mobile * > (computer_ptr); !mobile_ptr_2)
 	{
-		std::cout << "invalid dynamic cast" << std::endl;
+		std::cout << "invalid dynamic cast" << std::endl; // note: dynamic_cast has runtime checks 
 	}
 
 	delete computer_ptr;
