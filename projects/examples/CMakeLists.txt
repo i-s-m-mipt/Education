@@ -132,7 +132,7 @@ set(debug
     09.02.pointer.smart.shared.this
     09.03.implementation.pointer.smart.unique
     09.04.implementation.pointer.smart.shared
-    09.05.iterator.classification
+#   09.05.iterator.classification
     09.06.implementation.iterator.forward.list
     09.07.implementation.iterator.forward.list.facade
     09.08.pattern.facade
@@ -235,21 +235,29 @@ set(release
 )
 
 foreach(entry IN LISTS debug)
-    add_executable        (${entry} source/${entry}.cpp)
-    target_link_libraries (${entry} PRIVATE ${Boost_LIBRARIES})
-    target_link_libraries (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
-    target_link_libraries (${entry} PRIVATE PDFHummus::PDFWriter)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O0) 
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+    add_executable            (${entry} source/${entry}.cpp)
+    target_link_libraries     (${entry} PRIVATE ${Boost_LIBRARIES})
+    target_link_libraries     (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
+    target_link_libraries     (${entry} PRIVATE PDFHummus::PDFWriter)
+    target_compile_options    (${entry} PRIVATE -Wall -pedantic -O0) 
+#   target_compile_definitions(${entry} PRIVATE _GLIBCXX_DEBUG)
+    set_target_properties     (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 endforeach()
 
+add_executable            (09.05.iterator.classification source/09.05.iterator.classification.cpp)
+target_compile_options    (09.05.iterator.classification PRIVATE -Wall -pedantic -O0) 
+target_compile_definitions(09.05.iterator.classification PRIVATE _GLIBCXX_DEBUG)
+set_target_properties     (09.05.iterator.classification PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+
 foreach(entry IN LISTS release)
-    add_executable        (${entry} source/${entry}.cpp)
-    target_link_libraries (${entry} PRIVATE ${Boost_LIBRARIES})
-    target_link_libraries (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
-    target_link_libraries (${entry} PRIVATE benchmark::benchmark)
-    target_compile_options(${entry} PRIVATE -Wall -pedantic -O3) 
-    set_target_properties (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+    add_executable            (${entry} source/${entry}.cpp)
+    target_link_libraries     (${entry} PRIVATE ${Boost_LIBRARIES})
+    target_link_libraries     (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
+    target_link_libraries     (${entry} PRIVATE benchmark::benchmark)
+    target_link_libraries     (${entry} PRIVATE PDFHummus::PDFWriter)
+    target_compile_options    (${entry} PRIVATE -Wall -pedantic -O3) 
+#   target_compile_definitions(${entry} PRIVATE NDEBUG)
+    set_target_properties     (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 endforeach()
 
 add_executable            (06.04.project source/06.04.project.source.main.cpp 
@@ -267,6 +275,7 @@ set_target_properties     (06.12.project.library PROPERTIES COMPILE_FLAGS -m64 L
 
 add_executable            (16.06.embedding.python source/16.06.embedding.python.caller.cpp 
                                                   source/16.05.embedding.python.wrapper.source.cpp)
+
 target_link_libraries     (16.06.embedding.python PRIVATE   ${Boost_LIBRARIES})
 target_link_libraries     (16.06.embedding.python PRIVATE ${Python3_LIBRARIES})
 target_compile_options    (16.06.embedding.python PRIVATE -Wall -pedantic -O0) 

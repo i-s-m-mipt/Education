@@ -86,7 +86,7 @@ inline constexpr void advance_v2(I & iterator, int distance) noexcept
 
 int main()
 {
-	const std::vector vector { 1, 2, 3, 4, 5 };
+	std::vector vector { 1, 2, 3, 4, 5 };
 
 	using category_t = typename decltype(vector)::iterator::iterator_category;
 
@@ -121,6 +121,10 @@ int main()
 	}
 
 	std::cout << std::endl;
+
+	vector.resize(100);
+
+	std::cout << *begin << std::endl; // note: invalid iterator, try -D_GLIBCXX_DEBUG
 
 	return 0;
 }
