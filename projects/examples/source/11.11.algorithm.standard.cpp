@@ -5,7 +5,14 @@
 #include <iterator>
 #include <numeric>
 #include <random>
+#include <utility>
 #include <vector>
+
+template < typename C, typename F, typename G > [[nodiscard]] constexpr auto combine(C combinator, F f, G g)
+{
+	return [=] < typename T > (T && x) { return combinator(f(std::forward < T > (x)), 
+														   g(std::forward < T > (x))); };
+}
 
 int main()
 {
@@ -35,12 +42,15 @@ int main()
 	std::generate(std::begin(vector_2), std::end(vector_2), generator); // note: random with duplicates
 
 	constexpr auto is_even = [](auto x) constexpr noexcept { return (x % 2 == 0); };
+	constexpr auto is_five = [](auto x) constexpr noexcept { return (x     == 5); };
 
-	[[maybe_unused]] auto tail_begin = std::remove_if(std::begin(vector_2), std::end(vector_2), is_even);
+	constexpr auto is_even_or_five = combine(std::logical_or <> (), is_even, is_five);
+
+	[[maybe_unused]] auto tail_begin = std::remove_if(std::begin(vector_2), std::end(vector_2), is_even_or_five);
 
 //	vector_2.erase(tail_begin, std::end(vector_2)); // bad: redundant member function and remove_if
 
-	std::erase_if(vector_2, is_even); // note: 1 algorithm instead of member function and remove_if
+	std::erase_if(vector_2, is_even_or_five); // note: 1 algorithm instead of member function and remove_if
 
 	vector_3.resize(std::size  (vector_2));
 
