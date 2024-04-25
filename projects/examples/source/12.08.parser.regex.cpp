@@ -84,7 +84,7 @@ int main(int argc, char ** argv) // note: arguments for testing
     {
         const std::sregex_iterator begin(std::begin(data), std::cend(data), pattern), end;
 
-	    std::ranges::for_each(begin, end, [](const auto & matches){ std::cout << matches[0] << ' '; });
+	    std::ranges::for_each(begin, end, [](auto && matches){ std::cout << matches[0] << ' '; });
 
         std::cout << std::endl;
     }
@@ -92,7 +92,7 @@ int main(int argc, char ** argv) // note: arguments for testing
     {
         const std::sregex_token_iterator begin(std::begin(data), std::cend(data), pattern, { -1, 0, 1 }), end;
 
-        std::ranges::for_each(begin, end, [](const auto & match){ std::cout << match << ' '; });
+        std::ranges::for_each(begin, end, [](auto && match){ std::cout << match << ' '; });
 
         std::cout << std::endl;
     }

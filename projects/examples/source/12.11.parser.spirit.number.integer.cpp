@@ -69,7 +69,7 @@ int main(int argc, char ** argv) // note: arguments for testing
 {
     constexpr auto input = "42"sv;
 
-    const auto print = [](auto & context)
+    const auto print = [](auto && context)
     { 
         std::cout << boost::spirit::x3::_attr(context) << std::endl; 
     };

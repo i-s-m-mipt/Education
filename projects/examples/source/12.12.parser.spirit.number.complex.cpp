@@ -21,9 +21,9 @@ using namespace std::literals;
 
     auto real = 0.0, imag = 0.0;
 
-    const auto f_real   = [&real](auto & context){ real =        boost::spirit::x3::_attr(context); };
-    const auto f_imag_p = [&imag](auto & context){ imag = +1.0 * boost::spirit::x3::_attr(context); };
-    const auto f_imag_n = [&imag](auto & context){ imag = -1.0 * boost::spirit::x3::_attr(context); };
+    const auto f_real   = [&real](auto && context){ real =        boost::spirit::x3::_attr(context); };
+    const auto f_imag_p = [&imag](auto && context){ imag = +1.0 * boost::spirit::x3::_attr(context); };
+    const auto f_imag_n = [&imag](auto && context){ imag = -1.0 * boost::spirit::x3::_attr(context); };
 
     const auto result = boost::spirit::x3::phrase_parse(begin, end,
     
