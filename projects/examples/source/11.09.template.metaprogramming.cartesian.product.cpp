@@ -43,7 +43,7 @@ template < std::forward_iterator ... Ts > [[nodiscard]] constexpr auto combine(s
 {
 	std::vector < std::tuple < typename std::iterator_traits < Ts > ::value_type ... > > result;
 
-	const auto push = [&result](auto && ... args){ result.emplace_back(args...); };
+	const auto push = [&result](auto && ... args) constexpr { result.emplace_back(args...); };
 	
 	std::vector steps (sizeof...(args), std::size_t(0));
 

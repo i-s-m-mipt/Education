@@ -24,7 +24,7 @@
 
 [[nodiscard]] std::string entry_permissions(std::filesystem::perms permissions)
 {
-    auto check = [permissions](std::filesystem::perms bit, char c) 
+    auto check = [permissions](std::filesystem::perms bit, char c) constexpr noexcept 
     { 
         return (permissions & bit) == std::filesystem::perms::none ? '-' : c; 
     };

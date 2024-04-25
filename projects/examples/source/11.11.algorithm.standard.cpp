@@ -34,7 +34,7 @@ int main()
 
 	std::generate(std::begin(vector_2), std::end(vector_2), generator); // note: random with duplicates
 
-	constexpr auto is_even = [](auto x){ return (x % 2 == 0); };
+	constexpr auto is_even = [](auto x) constexpr noexcept { return (x % 2 == 0); };
 
 	[[maybe_unused]] auto tail_begin = std::remove_if(std::begin(vector_2), std::end(vector_2), is_even);
 

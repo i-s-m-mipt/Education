@@ -152,11 +152,11 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     print(std::string_view(std::begin(string_3), std::next(std::begin(string_3), 5)));
 
-//  const std::string_view bad_view_1 = "hello"s + "world"s;          // bad: undefined behavior
+//  const std::string_view bad_view_1 = "hello"s + "world"s;                   // bad: undefined behavior
 
-//  const std::string_view bad_view_2 = [](){ return "hello"s; }();   // bad: undefined behavior
+//  const std::string_view bad_view_2 = []() constexpr { return "hello"s; }(); // bad: undefined behavior
 
-//  const std::string_view bad_view_3 = string_4; string_4 = "hello"; // bad: undefined behavior
+//  const std::string_view bad_view_3 = string_4; string_4 = "hello";          // bad: undefined behavior
 
     benchmark::Initialize(&argc, argv);
 

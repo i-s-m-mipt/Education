@@ -67,9 +67,9 @@ int main()
 
 	std::unordered_map < Command, std::function < void(void) > > commands =
 	{
-		{ Command::stop, [&computer_3](){ computer_3.state = Computer::State::stop; }},
-		{ Command::slow, [&computer_3](){ computer_3.state = Computer::State::slow; }},
-		{ Command::fast, [&computer_3](){ computer_3.state = Computer::State::fast; }}
+		{ Command::stop, [&computer_3]() constexpr noexcept { computer_3.state = Computer::State::stop; }},
+		{ Command::slow, [&computer_3]() constexpr noexcept { computer_3.state = Computer::State::slow; }},
+		{ Command::fast, [&computer_3]() constexpr noexcept { computer_3.state = Computer::State::fast; }}
 	};
 
 	commands.at(Command::slow)(); assert(computer_3.state == Computer::State::slow);

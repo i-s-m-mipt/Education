@@ -62,9 +62,9 @@ int main()
         std::cerr << "Tester error: " << exception.what() << '\n';
     }
 
-    assert(std::visit([](auto && x){ return x; }, std::variant < int > (42)) == 42);
+    assert(std::visit([](auto && x) constexpr noexcept { return x; }, std::variant < int > (42)) == 42);
 
-    constexpr auto lambda = [](auto && x){ return x; };
+    constexpr auto lambda = [](auto && x) constexpr noexcept { return x; };
 
     Visitor < decltype(lambda) > test(lambda); // note: just Visitor in MSVC
 

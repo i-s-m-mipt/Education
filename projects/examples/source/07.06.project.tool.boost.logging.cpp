@@ -146,7 +146,7 @@ private:
 
 		fout_sink_ptr->set_formatter(&Logger::fout_formatter);
 
-		fout_sink_ptr->set_filter([](boost::log::attribute_value_set){ return true; });
+		fout_sink_ptr->set_filter([](boost::log::attribute_value_set) constexpr noexcept { return true; });
 
 		return fout_sink_ptr;
 	}

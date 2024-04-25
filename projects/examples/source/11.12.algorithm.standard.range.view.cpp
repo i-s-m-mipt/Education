@@ -76,8 +76,8 @@ int main()
 
 	for (const auto x : std::views::transform(std::views::filter(vector,
 
-		[](auto x){ return (x % 2); }),
-		[](auto x){ return (x + 1); })) // note: funcional syntax
+		[](auto x) constexpr noexcept { return (x % 2); }),
+		[](auto x) constexpr noexcept { return (x + 1); })) // note: funcional syntax
 	{
 		std::cout << x << ' ';
 	}
@@ -99,8 +99,8 @@ int main()
 	std::cout << std::endl;
  
     for (const auto x : std::views::iota     (1, 6)
-                      | std::views::filter   ([](auto x){ return (x % 2); })
-                      | std::views::transform([](auto x){ return (x * x); })
+                      | std::views::filter   ([](auto x) constexpr noexcept { return (x % 2); })
+                      | std::views::transform([](auto x) constexpr noexcept { return (x * x); })
 				      | std::views::drop     (1))
 	{
 		std::cout << x << ' ';
@@ -116,7 +116,7 @@ int main()
 	std::cout << std::endl;
 
     constexpr auto dangling_iterator = std::ranges::max_element(
-		[](){ return std::vector({ 1, 2, 3, 4, 5 }); }()); // note: temporary vector
+		[]() constexpr { return std::vector({ 1, 2, 3, 4, 5 }); }()); // note: temporary vector
 	
     static_assert(std::is_same_v < const std::ranges::dangling, decltype(dangling_iterator) > );
 
