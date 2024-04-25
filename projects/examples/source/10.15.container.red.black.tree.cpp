@@ -80,7 +80,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 	map["world"] = map.at("hello"); map.erase("hello"); // note: way to change the key
 
-	assert(!map.    emplace("world", 42).second); // note:    additional actions
+	assert(!map.    emplace("world", 42).second); // note:    additional actions with std::pair
 	assert(!map.try_emplace("world", 42).second); // good: no additional actions
 
 	assert(!map.insert_or_assign("world", 42).second); // note: changes value here
