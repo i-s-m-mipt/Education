@@ -7,6 +7,8 @@
 
 struct Vector { double x{}, y{}, z{}; };
 
+// =================================================================================================
+
 [[nodiscard]] inline constexpr Vector operator*(Vector a, Vector b) noexcept
 {
 	return { a.y * b.z - a.z * b.y,

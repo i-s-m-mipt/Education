@@ -6,6 +6,8 @@
 
 enum class Color { R, G, B, quantity }; // good: quantity as limit
 
+// =================================================================================================
+
 void f(Color color)
 {
 	switch (color) // good: enumerators provide readability
@@ -25,22 +27,20 @@ void f(Color color)
 
 // =================================================================================================
 
-using underlying_t = std::uint16_t;
-
-enum class Message : underlying_t { empty, debug, error, fatal }; // note: less size
+enum class Message : std::uint16_t { empty, debug, error, fatal }; // note: less size
 
 // =================================================================================================
 
-enum State : underlying_t
+enum State : std::uint16_t
 {
 	alpha = 0x01,
 	betta = 0x02,
 	gamma = 0x04,
 	delta = 0x08
 
-}; // enum State : underlying_t
+}; // enum State : std::uint16_t
 
-inline constexpr void g(underlying_t state) noexcept { assert(state & delta || state & gamma); }
+inline constexpr void g(std::uint16_t state) noexcept { assert(state & delta || state & gamma); }
 
 // =================================================================================================
 
