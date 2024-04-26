@@ -8,6 +8,7 @@
 #  error "invalid macro definition"
 #endif
 
+#include <cstdlib>
 #include <exception>
 #include <iomanip>
 #include <iostream>

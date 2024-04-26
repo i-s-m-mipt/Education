@@ -10,6 +10,7 @@
 #  error "invalid macro definition"
 #endif
 
+#include <cstdlib>
 #include <exception>
 #include <filesystem>
 #include <iostream>
