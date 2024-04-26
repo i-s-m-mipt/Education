@@ -1,8 +1,33 @@
 #include <cassert>
+#include <cstdlib>
+#include <exception>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 #include <string>
+
+class Redirector // good: RAII wrapper to for redirecting cout buffer to file buffer
+{
+public:
+
+    explicit Redirector (const std::string & file) : fout(file, std::ios::out)
+    {
+        if (fout) m_old_buffer = std::cout.rdbuf(fout.rdbuf());
+    }
+
+   ~Redirector() noexcept 
+    { 
+        try { if (m_old_buffer) std::cout.rdbuf(m_old_buffer); } catch(...) { std::abort(); } 
+    }
+
+private:
+
+    std::fstream fout;
+
+    std::streambuf * m_old_buffer;
+
+}; // class Redirector
 
 int main()
 {
