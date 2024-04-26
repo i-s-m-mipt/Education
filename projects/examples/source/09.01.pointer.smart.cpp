@@ -57,7 +57,7 @@ public:
 
    ~B() noexcept { try { std::cout << "B destroyed" << std::endl; } catch (...) {} }
 
-	std::weak_ptr < A > a; // note: immortal connection if shared_ptr
+	std::weak_ptr < A > a; // note: immortal connection if std::shared_ptr
 
 }; // class B
 
@@ -153,11 +153,11 @@ int main()
 
 	auto shared_ptr_9 = std::make_shared < int > (42);
 
-	std::weak_ptr < int > weak_ptr = shared_ptr_9; // note: weak_ptr doesn't own object
+	std::weak_ptr < int > weak_ptr = shared_ptr_9; // note: std::weak_ptr doesn't own object
 
 	assert(weak_ptr.use_count() == 1);
 
-	*weak_ptr.lock() = 42; // note: create shared_ptr from weak_ptr
+	*weak_ptr.lock() = 42; // note: create std::shared_ptr from std::weak_ptr
 
 	shared_ptr_9.reset();
 
@@ -170,7 +170,7 @@ int main()
 		a->b->a = a; // note: cyclic dependency, destroy correctly
 	}
 
-	auto unique_pointer_1 = std::make_unique < const int > (42); // note: much similar to shared_ptr
+	auto unique_pointer_1 = std::make_unique < const int > (42); // note: much similar to std::shared_ptr
 
 	auto unique_pointer_2 = std::move(unique_pointer_1); // note: move-only type
 

@@ -26,7 +26,7 @@ int main()
 
 //	auto & rv = 42; // error: cannot bind to temporary object
 
-//	std::vector < int & > bad_vector; // error: invalid array of references
+//	std::vector < int & > bad_vector; // error: invalid container of references
 
 	std::vector < std::reference_wrapper < int > > good_vector;
 

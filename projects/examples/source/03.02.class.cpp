@@ -9,7 +9,7 @@ public: // good: public members first
 
 	using integer_t = unsigned int; // note: nested type alias
 
-	class Printer // note: nested types can�t be forward declared
+	class Printer // note: nested types can not be forward declared
 	{
 	public:
 

@@ -26,7 +26,7 @@ private:
 
 public:
 
-    Best(Key) {}; // good: all instances are in shared_ptrs
+    Best(Key) {}; // good: all instances are in shared pointers
 
     [[nodiscard]] static std::shared_ptr < Best > create() // note: factory method
     {
@@ -57,7 +57,7 @@ int main()
 
     try
     {
-        Good good; // note: not managed by shared_ptr
+        Good good; // note: not managed by std::shared_ptr
 
         auto good_3 = good.get();
     }

@@ -18,7 +18,7 @@ int main()
 
 	std::cout << sizeof(array_1) / sizeof(array_1[0]) << std::endl; // note: old-style computation
 
-	std::cout << std::size(array_1) << std::endl; // good: common for static arrays and containers
+	std::cout << std::size(array_1) << std::endl; // good: function for static arrays and containers
 
 	*array_1 = 42; // note: array name is a pointer to the first element
 

@@ -70,7 +70,7 @@ int main()
 
 	auto y = 42;
 
-//	auto z = combination(x, y); // error: can't be evaluated at compile-time
+//	auto z = combination(x, y); // error: can not be evaluated at compile-time
 
 	[[maybe_unused]] constexpr auto is_prime_1 = is_prime(5); // note: compile-time
 	[[maybe_unused]] constexpr auto is_prime_2 = is_prime(x); // note: compile-time

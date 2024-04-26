@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <string>
 
-class Redirector // good: RAII wrapper to for redirecting cout buffer to file buffer
+class Redirector // good: RAII wrapper to for redirecting std::cout buffer to file buffer
 {
 public:
 
