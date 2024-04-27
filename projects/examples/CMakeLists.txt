@@ -211,6 +211,7 @@ set(debug
     14.03.concurrency.thread.reduce
     14.04.concurrency.thread.reduce.async
     14.05.concurrency.thread.reduce.packaged.task
+    14.06.concurrency.algorithm.standard
     16.02.implementation.class.big.integer
     16.03.number.integer.multiprecision
 #   16.04.embedding.python.wrapper.header
