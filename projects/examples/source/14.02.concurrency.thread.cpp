@@ -1,4 +1,5 @@
 #include <cassert>
+#include <chrono>
 #include <cstdlib>
 #include <exception>
 #include <functional>
@@ -7,6 +8,8 @@
 #include <thread>
 #include <utility>
 #include <vector>
+
+using namespace std::literals;
 
 #include <boost/noncopyable.hpp>
 
@@ -92,6 +95,38 @@ int main()
 	}
 
 	for (auto & thread : threads) thread.join(); // note: remember reference
+
+    std::jthread jthread_1([](std::stop_token token)
+    {
+        std::stop_callback callback(token, []()
+        {
+            std::cout << "jthread_1::callback" << std::endl;
+        });
+
+        for (std::size_t i = 0; i < 10; ++i)
+        {
+            std::cout << "jthread_1: " << i << std::endl;
+
+            std::this_thread::sleep_for(0.1s);
+        }
+    });
+
+    std::jthread jthread_2([](std::stop_token token)
+    {
+        for (std::size_t i = 0; i < 10; ++i)
+        {
+            std::cout << "jthread_2: " << i << std::endl;
+
+            std::this_thread::sleep_for(0.1s);
+
+            if (token.stop_requested()) return; // note: interruption
+        }
+    });
+
+    std::this_thread::sleep_for(0.5s);
+
+    jthread_1.request_stop();
+    jthread_2.request_stop(); // note: interruption
 
     return 0;
 }
