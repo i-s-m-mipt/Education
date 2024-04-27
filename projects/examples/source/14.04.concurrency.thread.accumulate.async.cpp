@@ -17,7 +17,7 @@ template < std::ranges::view V, typename T > [[nodiscard]] T parallel_accumulate
 
 	const std::size_t length = std::distance(first, last);
 
-	const std::size_t max_size = 25;
+	const std::size_t max_size = 25; // note: only for demonstration
 
 	if (length <= max_size)
 	{
@@ -39,9 +39,9 @@ template < std::ranges::view V, typename T > [[nodiscard]] T parallel_accumulate
 
 int main()
 {
-    std::future < int > future_1 = std::async(std::launch::deferred, []() constexpr noexcept { return 42; });
+    std::future < int > future = std::async(std::launch::deferred, []() constexpr noexcept { return 42; });
 
-    assert(future_1.get() == 42); // note: synchronization with main thread, deferred function called
+    assert(future.get() == 42); // note: synchronization with main thread, deferred function called
 
     try
     {
