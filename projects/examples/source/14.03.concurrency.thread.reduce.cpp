@@ -66,7 +66,7 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 
 	for (auto & thread : threads) thread.join();
 
-	return std::reduce(std::begin(results), std::end(results), sum);
+	return std::reduce(std::cbegin(results), std::cend(results), sum);
 }
 
 // =================================================================================================
