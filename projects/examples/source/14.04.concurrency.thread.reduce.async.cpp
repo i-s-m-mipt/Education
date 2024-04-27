@@ -39,7 +39,7 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 
 int main()
 {
-    std::future < int > future = std::async(std::launch::deferred, []() constexpr noexcept { return 42; });
+    auto future = std::async(std::launch::deferred, []() constexpr noexcept { return 42; });
 
     assert(future.get() == 42); // note: synchronization with main thread, deferred function called
 
@@ -52,7 +52,7 @@ int main()
         std::cerr << exception.what() << '\n';
     }
 
-	const std::size_t size = 100;
+	constexpr std::size_t size = 100;
 
 	std::vector < int > vector(size, 0);
 
