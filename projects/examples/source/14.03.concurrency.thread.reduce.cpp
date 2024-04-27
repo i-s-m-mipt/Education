@@ -18,7 +18,7 @@ public:
 
 	void operator()() const
 	{
-		m_result = std::accumulate(std::ranges::cbegin(m_view), std::ranges::cend(m_view), m_result);
+		m_result = std::reduce(std::ranges::cbegin(m_view), std::ranges::cend(m_view), m_result);
 	}
 
 private:
@@ -29,7 +29,7 @@ private:
 
 // =================================================================================================
 
-template < std::ranges::view V, typename T > [[nodiscard]] T parallel_accumulate(V view, T sum)
+template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T sum)
 {
     const auto first = std::ranges::cbegin(view), last = std::ranges::cend(view);
 
@@ -66,7 +66,7 @@ template < std::ranges::view V, typename T > [[nodiscard]] T parallel_accumulate
 
 	for (auto & thread : threads) thread.join();
 
-	return std::accumulate(std::begin(results), std::end(results), sum);
+	return std::reduce(std::begin(results), std::end(results), sum);
 }
 
 // =================================================================================================
@@ -79,7 +79,7 @@ int main()
 
 	std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
 
-	assert(parallel_accumulate(std::views::all(vector), 0) == 5050);
+	assert(reduce(std::views::all(vector), 0) == 5050);
 
 	return 0;
 }

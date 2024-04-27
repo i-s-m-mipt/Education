@@ -208,9 +208,9 @@ set(debug
     13.13.serialization.pdf
 #   14.01.concurrency.process.thread
     14.02.concurrency.thread
-    14.03.concurrency.thread.accumulate
-    14.04.concurrency.thread.accumulate.async
-    14.05.concurrency.thread.accumulate.packaged.task
+    14.03.concurrency.thread.reduce
+    14.04.concurrency.thread.reduce.async
+    14.05.concurrency.thread.reduce.packaged.task
     16.02.implementation.class.big.integer
     16.03.number.integer.multiprecision
 #   16.04.embedding.python.wrapper.header

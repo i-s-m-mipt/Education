@@ -11,7 +11,7 @@
 #include <utility>
 #include <vector>
 
-template < std::ranges::view V, typename T > [[nodiscard]] T parallel_accumulate(V view, T sum)
+template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T sum)
 {
 	const auto first = std::ranges::cbegin(view), last = std::ranges::cend(view);
 
@@ -21,7 +21,7 @@ template < std::ranges::view V, typename T > [[nodiscard]] T parallel_accumulate
 
 	if (length <= max_size)
 	{
-		return std::accumulate(first, last, sum);
+		return std::reduce(first, last, sum);
 	}
 	else
 	{
@@ -29,9 +29,9 @@ template < std::ranges::view V, typename T > [[nodiscard]] T parallel_accumulate
 
         std::ranges::subrange left(first, middle);
 
-		auto result_1 = std::async(parallel_accumulate < decltype(left), T > , left, sum);
+		auto result_1 = std::async(reduce < decltype(left), T > , left, sum);
 
-		auto result_2 = parallel_accumulate(std::ranges::subrange(middle, last), T());
+		auto result_2 = reduce(std::ranges::subrange(middle, last), T());
 
 		return result_1.get() + result_2; // note: synchronization with main thread
 	}
@@ -58,7 +58,7 @@ int main()
 
 	std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
 
-	assert(parallel_accumulate(std::views::all(vector), 0) == 5050);
+	assert(reduce(std::views::all(vector), 0) == 5050);
 
 	return 0;
 }
