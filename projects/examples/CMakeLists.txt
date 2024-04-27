@@ -11,6 +11,7 @@ find_package(nlohmann_json 3.11 REQUIRED COMPONENTS)
 find_package(GTest         1.14 REQUIRED COMPONENTS)
 find_package(benchmark          REQUIRED COMPONENTS)
 find_package(PDFHummus          REQUIRED COMPONENTS)
+find_package(TBB                REQUIRED COMPONENTS tbb)
 
 include_directories(        ${Boost_INCLUDE_DIRS})
 include_directories(      ${Python3_INCLUDE_DIRS})
@@ -18,6 +19,7 @@ include_directories(${nlohmann_json_INCLUDE_DIRS})
 include_directories(        ${GTEST_INCLUDE_DIRS})
 include_directories(    ${benchmark_INCLUDE_DIRS})
 include_directories(    ${PDFHummus_INCLUDE_DIRS})
+include_directories(          ${TBB_INCLUDE_DIRS})
 
 set(debug
 #   01.01.introduction
@@ -211,7 +213,6 @@ set(debug
     14.03.concurrency.thread.reduce
     14.04.concurrency.thread.reduce.async
     14.05.concurrency.thread.reduce.packaged.task
-    14.06.concurrency.algorithm.standard
     16.02.implementation.class.big.integer
     16.03.number.integer.multiprecision
 #   16.04.embedding.python.wrapper.header
@@ -237,6 +238,7 @@ set(release
     10.07.container.multidimensional.ublas
     10.15.container.red.black.tree
     12.03.character.string.view
+    14.06.concurrency.algorithm.standard
 #   16.01.embedding.assembler
 )
 
@@ -261,6 +263,7 @@ foreach(entry IN LISTS release)
     target_link_libraries     (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
     target_link_libraries     (${entry} PRIVATE benchmark::benchmark)
     target_link_libraries     (${entry} PRIVATE PDFHummus::PDFWriter)
+    target_link_libraries     (${entry} PRIVATE tbb)
     target_compile_options    (${entry} PRIVATE -Wall -pedantic -O3) 
 #   target_compile_definitions(${entry} PRIVATE NDEBUG)
     set_target_properties     (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)

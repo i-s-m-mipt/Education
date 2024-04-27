@@ -1,37 +1,94 @@
-#include <chrono>
+#include <algorithm>
+#include <cmath>
 #include <execution>
-#include <iomanip>
-#include <iostream>
+#include <iterator>
 #include <numeric>
+#include <random>
 #include <vector>
 
-int main(int argc, char ** argv)
+#include <chrono>
+#include <iostream>
+
+#include <benchmark/benchmark.h>
+
+// =================================================================================================
+
+[[nodiscard]] inline std::vector < double > make_vector(std::size_t size)
 {
-	std::vector < double > v(10'000'007, 0.5);
+	std::vector < double > vector(size);
 
-	{
-		auto t1 = std::chrono::high_resolution_clock::now();
+	std::mt19937_64 engine(42);
 
-		double result = std::accumulate(v.begin(), v.end(), 0.0);
+	std::uniform_real_distribution distribution(0.0, 1.0);
 
-		auto t2 = std::chrono::high_resolution_clock::now();
+	const auto generator = [&engine, &distribution](){ return distribution(engine); };
 
-		std::cout << std::setw(16) << std::left << std::fixed << "std::accumulate " << result <<
-			" took " << std::chrono::duration_cast < std::chrono::milliseconds > (t2 - t1).count() << " (ms)\n";
-	}
+	std::ranges::generate(vector, generator);
 
-	{
-		auto t1 = std::chrono::high_resolution_clock::now();
+	return vector;
+}
 
-		double result = std::reduce(std::execution::par, v.begin(), v.end());
+// =================================================================================================
 
-		auto t2 = std::chrono::high_resolution_clock::now();
+void test_1(benchmark::State & state) // note: usual
+{
+    auto vector = make_vector(state.range(0));
 
-		std::cout << std::setw(16) << std::left << std::fixed << "std::reduce " << result << 
-			" took " << std::chrono::duration_cast <std::chrono::milliseconds> (t2 - t1).count() << " (ms)\n";
-	}
+    for (auto _ : state)
+    {
+        std::for_each(std::execution::seq, std::begin(vector), std::end(vector),
 
-	system("pause");
+			[](auto & x) constexpr noexcept { x = std::sin(std::cos(x)); });
 
-	return EXIT_SUCCESS;
+		benchmark::DoNotOptimize(vector);
+    }
+}
+
+// =================================================================================================
+
+void test_2(benchmark::State & state) // note: very fast
+{
+    auto vector = make_vector(state.range(0));
+
+    for (auto _ : state)
+    {
+        std::for_each(std::execution::par, std::begin(vector), std::end(vector),
+
+			[](auto & x) constexpr noexcept { x = std::sin(std::cos(x)); });
+
+		benchmark::DoNotOptimize(vector);
+    }
+}
+
+// =================================================================================================
+
+void test_3(benchmark::State & state) // note: very fast
+{
+    auto vector = make_vector(state.range(0));
+
+    for (auto _ : state)
+    {
+        std::for_each(std::execution::par_unseq, std::begin(vector), std::end(vector),
+
+			[](auto & x) constexpr noexcept { x = std::sin(std::cos(x)); });
+
+		benchmark::DoNotOptimize(vector);
+    }
+}
+
+// =================================================================================================
+
+BENCHMARK(test_1)->DenseRange(1'000'000, 5'000'000, 1'000'000);
+BENCHMARK(test_2)->DenseRange(1'000'000, 5'000'000, 1'000'000);
+BENCHMARK(test_3)->DenseRange(1'000'000, 5'000'000, 1'000'000);
+
+// =================================================================================================
+
+int main(int argc, char ** argv) // note: arguments for benchmark
+{
+	benchmark::Initialize(&argc, argv);
+
+	benchmark::RunSpecifiedBenchmarks();
+
+    return 0;
 }
