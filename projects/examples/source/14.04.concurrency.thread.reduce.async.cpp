@@ -11,6 +11,17 @@
 #include <utility>
 #include <vector>
 
+// =================================================================================================
+
+template < typename F, typename ... Ts > 
+
+[[nodiscard]] inline constexpr decltype(auto) async_invoke(F && f, Ts && ... args)
+{
+	return std::async(std::launch::async, std::forward < F > (f), std::forward < Ts > (args)...);
+}
+
+// =================================================================================================
+
 template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T sum)
 {
 	const auto first = std::ranges::cbegin(view), last = std::ranges::cend(view);
@@ -36,6 +47,8 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 		return result_1.get() + result_2; // note: synchronization with main thread
 	}
 }
+
+// =================================================================================================
 
 int main()
 {
