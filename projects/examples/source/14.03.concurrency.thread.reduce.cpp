@@ -14,16 +14,16 @@ template < std::ranges::view V, typename T > class Block
 {
 public:
 
-    explicit Block(V view, T & result) noexcept : m_view(view), m_result(result) {}
+    explicit Block(V view, T & sum) noexcept : m_view(view), m_sum(sum) {}
 
 	void operator()() const
 	{
-		m_result = std::reduce(std::ranges::cbegin(m_view), std::ranges::cend(m_view), m_result);
+		m_sum = std::reduce(std::ranges::cbegin(m_view), std::ranges::cend(m_view), m_sum);
 	}
 
 private:
 
-    const V m_view; T & m_result;
+    const V m_view; T & m_sum;
 
 }; // template < std::ranges::view V, typename T > class Block
 
@@ -47,15 +47,15 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 
 	const std::size_t block_size = length / n_threads;
 
-	std::vector < T > results(n_threads);
+	std::vector < T > results(n_threads, T());
 
 	std::vector < std::thread > threads(n_threads - 1); // note: why -1?
 
 	auto block_begin = first;
 
-	for (std::size_t i = 0; i < (n_threads - 1); ++i)
+	for (std::size_t i = 0; i < std::size(threads); ++i)
 	{
-		auto block_end = std::next(block_begin, block_size);
+		const auto block_end = std::next(block_begin, block_size);
 
 		threads[i] = std::thread(Block(std::ranges::subrange(block_begin, block_end), results[i]));
 
@@ -73,7 +73,7 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 
 int main()
 {
-	const std::size_t size = 100;
+	constexpr std::size_t size = 100;
 
 	std::vector < int > vector(size, 0);
 
