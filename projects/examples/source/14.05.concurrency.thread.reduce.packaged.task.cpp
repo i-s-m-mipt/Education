@@ -1,118 +1,88 @@
-#include <algorithm>
+#include <cassert>
+#include <cmath>
+#include <concepts>
 #include <future>
-#include <iostream>
+#include <iterator>
 #include <numeric>
+#include <ranges>
 #include <thread>
+#include <utility>
 #include <vector>
 
-class Threads_Guard
+// =================================================================================================
+
+template < std::ranges::view V, typename T > class Block
 {
 public:
 
-	explicit Threads_Guard(std::vector < std::thread > & threads) :
-		m_threads(threads)
-	{}
+    explicit Block(V view, T sum) noexcept : m_view(view), m_sum(sum) {}
 
-	Threads_Guard			(Threads_Guard const&) = delete;
-
-	Threads_Guard& operator=(Threads_Guard const&) = delete;
-
-	~Threads_Guard() noexcept
+	[[nodiscard]] T operator()() const
 	{
-		try
-		{
-			for (std::size_t i = 0; i < m_threads.size(); ++i)
-			{
-				if (m_threads[i].joinable())
-				{
-					m_threads[i].join();
-				}
-			}
-		}
-		catch (...)
-		{
-			// std::abort();
-		}
+		return std::reduce(std::ranges::cbegin(m_view), std::ranges::cend(m_view), m_sum);
 	}
 
 private:
 
-	std::vector < std::thread > & m_threads;
-};
+    const V m_view; const T m_sum;
 
-template < typename Iterator, typename T >
-struct accumulate_block
-{
-	T operator()(Iterator first, Iterator last)
-	{
-		return std::accumulate(first, last, T());
-	}
-};
+}; // template < std::ranges::view V, typename T > class Block
 
-template < typename Iterator, typename T >
-T parallel_accumulate(Iterator first, Iterator last, T init)
+// =================================================================================================
+
+template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T sum)
 {
+	const auto first = std::ranges::cbegin(view), last = std::ranges::cend(view);
+
 	const std::size_t length = std::distance(first, last);
 
-	if (!length)
-		return init;
+	if (!length) return sum;
 
-	const std::size_t min_per_thread = 25;
-	const std::size_t max_threads =
-		(length + min_per_thread - 1) / min_per_thread;
+	const std::size_t min_elements_per_thread = 25; // note: only for demonstration
 
-	const std::size_t hardware_threads =
-		std::thread::hardware_concurrency();
+	const std::size_t max_threads = (length + min_elements_per_thread - 1) / min_elements_per_thread;
 
-	const std::size_t num_threads =
-		std::min(hardware_threads != 0 ? hardware_threads : 2, max_threads);
+	const std::size_t hardware_threads = std::thread::hardware_concurrency();
 
-	const std::size_t block_size = length / num_threads;
+	const std::size_t n_threads = std::min(hardware_threads != 0 ? hardware_threads : 2, max_threads);
 
-	std::vector < std::future < T > > futures(num_threads - 1);
-	std::vector < std::thread >		  threads(num_threads - 1);
+	const std::size_t block_size = length / n_threads;
 
-	Threads_Guard guard(threads);
+	std::vector < std::pair < std::future < T > , std::jthread > > results(n_threads - 1);
 
-	Iterator block_start = first;
+	auto block_begin = first;
 
-	for (std::size_t i = 0; i < (num_threads - 1); ++i)
+	for (auto & result : results)
 	{
-		Iterator block_end = block_start;
-		std::advance(block_end, block_size);
+		const auto block_end = std::next(block_begin, block_size);
 
-		std::packaged_task < T(Iterator, Iterator) > task{
-			accumulate_block < Iterator, T >() };
+		std::ranges::subrange block(block_begin, block_end);
 
-		futures[i] = task.get_future();
-		threads[i] = std::thread(std::move(task), block_start, block_end);
+		std::packaged_task task { Block(block, T()) };
 
-		block_start = block_end;
+		result.first = task.get_future(); result.second = std::jthread(std::move(task));
+
+		block_begin = block_end;
 	}
 
-	T last_result = accumulate_block < Iterator, T > ()(block_start, last);
+	sum += Block(std::ranges::subrange(block_begin, last), T())();
 
-	T result = init;
+	for (auto & result : results) sum += result.first.get();
 
-	for (std::size_t i = 0; i < (num_threads - 1); ++i)
-	{
-		result += futures[i].get();
-	}
-
-	result += last_result;
-
-	return result;
+	return sum;
 }
 
-int main(int argc, char ** argv)
+// =================================================================================================
+
+int main()
 {
-	std::vector < int > v(100);
+	constexpr std::size_t size = 100;
 
-	std::iota(v.begin(), v.end(), 1);
+	std::vector < int > vector(size, 0);
 
-	std::cout << parallel_accumulate(v.begin(), v.end(), 0) << std::endl;
+	std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
 
-	system("pause");
+	assert(reduce(std::views::all(vector), 0) == 5050);
 
-	return EXIT_SUCCESS;
+	return 0;
 }
