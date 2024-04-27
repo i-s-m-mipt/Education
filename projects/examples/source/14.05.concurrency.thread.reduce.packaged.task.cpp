@@ -56,9 +56,7 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 	{
 		const auto block_end = std::next(block_begin, block_size);
 
-		std::ranges::subrange block(block_begin, block_end);
-
-		std::packaged_task task { Block(block, T()) };
+		std::packaged_task task { Block(std::ranges::subrange(block_begin, block_end), T()) };
 
 		result.first = task.get_future(); result.second = std::jthread(std::move(task));
 
