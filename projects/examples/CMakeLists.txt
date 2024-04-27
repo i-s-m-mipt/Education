@@ -209,6 +209,7 @@ set(debug
 #   14.01.concurrency.process.thread
     14.02.concurrency.thread
     14.03.concurrency.thread.accumulate
+    14.04.concurrency.thread.accumulate.async
     16.02.implementation.class.big.integer
     16.03.number.integer.multiprecision
 #   16.04.embedding.python.wrapper.header
