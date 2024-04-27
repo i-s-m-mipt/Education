@@ -69,7 +69,7 @@ int main()
 
 	std::vector < int > vector(size, 0);
 
-	std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
+	std::iota(std::begin(vector), std::end(vector), 1);
 
 	assert(reduce(std::views::all(vector), 0) == 5050);
 
