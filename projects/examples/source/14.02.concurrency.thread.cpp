@@ -75,13 +75,15 @@ int main()
 
 //  std::thread(Functor(x)).detach(); // bad: possible dangling reference
 
+//  std::thread(f, x, 43).join(); // bad: internal copies for arguments
+
     std::thread(f, std::ref(x), 43).join(); // good: std::reference_wrapper
 
     assert(x == 43);
 
     const C c;
 
-    std::thread(&C::print, &c).join(); // note: remember the first argument
+    std::thread(&C::print, &c).join(); // note: consider (c.*&C::print)()
 
     const Scoped_Thread scoped_thread(std::thread(f, std::ref(x), 42));
 
@@ -94,9 +96,9 @@ int main()
 		threads.emplace_back([](){});
 	}
 
-	for (auto & thread : threads) thread.join(); // note: remember reference
+	for (auto & thread : threads) thread.join();
 
-    std::jthread jthread_1([](std::stop_token token)
+    std::jthread jthread_1([](std::stop_token token) // note: threadsafe view
     {
         std::stop_callback callback(token, []()
         {
@@ -111,7 +113,7 @@ int main()
         }
     });
 
-    std::jthread jthread_2([](std::stop_token token)
+    std::jthread jthread_2([](std::stop_token token) // note: threadsafe view
     {
         for (std::size_t i = 0; i < 10; ++i)
         {
@@ -125,8 +127,8 @@ int main()
 
     std::this_thread::sleep_for(0.5s);
 
-    jthread_1.request_stop();
-    jthread_2.request_stop(); // note: interruption
+    jthread_1.get_stop_source().request_stop();
+    jthread_2.get_stop_source().request_stop(); // note: interruption
 
     return 0;
 }
