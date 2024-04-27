@@ -11,22 +11,22 @@
 
 // =================================================================================================
 
-template < std::ranges::view V, typename T > class Block
+template < std::ranges::view V > class Block
 {
 public:
 
-    explicit Block(V view, T sum) noexcept : m_view(view), m_sum(sum) {}
+    explicit Block(V view) noexcept : m_view(view) {}
 
-	[[nodiscard]] T operator()() const
+	[[nodiscard]] auto operator()() const // note: return  and throw available for std::future
 	{
-		return std::reduce(std::ranges::cbegin(m_view), std::ranges::cend(m_view), m_sum);
+		return std::reduce(std::ranges::cbegin(m_view), std::ranges::cend(m_view));
 	}
 
 private:
 
-    const V m_view; const T m_sum;
+    const V m_view;
 
-}; // template < std::ranges::view V, typename T > class Block
+}; // template < std::ranges::view V > class Block
 
 // =================================================================================================
 
@@ -56,16 +56,16 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 	{
 		const auto block_end = std::next(block_begin, block_size);
 
-		std::packaged_task task { Block(std::ranges::subrange(block_begin, block_end), T()) };
+		std::packaged_task task { Block(std::ranges::subrange(block_begin, block_end)) };
 
 		result.first = task.get_future(); result.second = std::jthread(std::move(task));
 
 		block_begin = block_end;
 	}
 
-	sum += Block(std::ranges::subrange(block_begin, last), T())();
+	sum += Block(std::ranges::subrange(block_begin, last))();
 
-	for (auto & result : results) sum += result.first.get();
+	for (auto & result : results) sum += result.first.get(); // note: synchronization with main thread
 
 	return sum;
 }
