@@ -1,7 +1,6 @@
+#include <cassert>
 #include <cmath>
 #include <concepts>
-#include <functional>
-#include <iostream>
 #include <iterator>
 #include <numeric>
 #include <ranges>
@@ -11,28 +10,30 @@
 
 // =================================================================================================
 
-template < std::input_iterator I, typename T > class Block
+template < std::ranges::view V, typename T > class Block
 {
 public:
 
-    explicit Block(I first, I last, T & result) noexcept : m_first(first), m_last(last), m_result(result) {}
+    explicit Block(V view, T & result) noexcept : m_view(view), m_result(result) {}
 
 	void operator()() const
 	{
-		m_result = std::accumulate(m_first, m_last, m_result);
+		m_result = std::accumulate(std::ranges::cbegin(m_view), std::ranges::cend(m_view), m_result);
 	}
 
 private:
 
-    I m_first, m_last; T & m_result;
+    const V m_view; T & m_result;
 
-}; // template < std::input_iterator I, typename T > class Block
+}; // template < std::ranges::view V, typename T > class Block
 
 // =================================================================================================
 
-template < std::ranges::input_range R, typename T > [[nodiscard]] T parallel_accumulate(R && range, T sum)
+template < std::ranges::view V, typename T > [[nodiscard]] T parallel_accumulate(V view, T sum)
 {
-	const std::size_t length = std::distance(std::ranges::begin(range), std::ranges::end(range));
+    const auto first = std::ranges::cbegin(view), last = std::ranges::cend(view);
+
+	const std::size_t length = std::distance(first, last);
 
 	if (!length) return sum;
 
@@ -50,18 +51,18 @@ template < std::ranges::input_range R, typename T > [[nodiscard]] T parallel_acc
 
 	std::vector < std::thread > threads(n_threads - 1); // note: why -1?
 
-	auto block_begin = std::ranges::begin(range);
+	auto block_begin = first;
 
 	for (std::size_t i = 0; i < (n_threads - 1); ++i)
 	{
 		auto block_end = std::next(block_begin, block_size);
 
-		threads[i] = std::thread(Block(block_begin, block_end, results[i]));
+		threads[i] = std::thread(Block(std::ranges::subrange(block_begin, block_end), results[i]));
 
 		block_begin = block_end;
 	}
 
-	Block(block_begin, std::ranges::end(range), results[n_threads - 1])();
+	Block(std::ranges::subrange(block_begin, last), results[n_threads - 1])();
 
 	for (auto & thread : threads) thread.join();
 
@@ -78,7 +79,7 @@ int main()
 
 	std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
 
-	std::cout << parallel_accumulate(std::as_const(vector), 0) << std::endl;
+	assert(parallel_accumulate(std::views::all(vector), 0) == 5050);
 
 	return 0;
 }
