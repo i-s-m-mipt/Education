@@ -16,9 +16,13 @@ public:
 
     explicit Block(V view, T & sum) noexcept : m_view(view), m_sum(sum) {}
 
-	void operator()() const
+	void operator()() const noexcept // note: return only by reference for std::thread
 	{
-		m_sum = std::reduce(std::ranges::cbegin(m_view), std::ranges::cend(m_view), m_sum);
+		try
+		{
+			m_sum = std::reduce(std::ranges::cbegin(m_view), std::ranges::cend(m_view));
+		}
+		catch(const std::exception & exception) {} // good: prevents std::terminate call 
 	}
 
 private:
@@ -37,7 +41,7 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 
 	if (!length) return sum;
 
-	const std::size_t min_elements_per_thread = 25; // note: only for demonstration
+	const std::size_t min_elements_per_thread = 25; // note: too few, only for demonstration
 
 	const std::size_t max_threads = (length + min_elements_per_thread - 1) / min_elements_per_thread;
 
@@ -49,22 +53,22 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 
 	std::vector < T > results(n_threads, T());
 
-	std::vector < std::thread > threads(n_threads - 1); // note: why -1?
-
 	auto block_begin = first;
 
-	for (std::size_t i = 0; i < std::size(threads); ++i)
 	{
-		const auto block_end = std::next(block_begin, block_size);
+		std::vector < std::jthread > threads(n_threads - 1); // note: why -1?
 
-		threads[i] = std::thread(Block(std::ranges::subrange(block_begin, block_end), results[i]));
+		for (std::size_t i = 0; i < std::size(threads); ++i)
+		{
+			const auto block_end = std::next(block_begin, block_size);
 
-		block_begin = block_end;
+			threads[i] = std::jthread(Block(std::ranges::subrange(block_begin, block_end), results[i]));
+
+			block_begin = block_end;
+		}
 	}
 
 	Block(std::ranges::subrange(block_begin, last), results[n_threads - 1])();
-
-	for (auto & thread : threads) thread.join();
 
 	return std::reduce(std::cbegin(results), std::cend(results), sum);
 }
