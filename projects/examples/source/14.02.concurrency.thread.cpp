@@ -34,7 +34,7 @@ private:
 
 // =================================================================================================
 
-void f(int & x, int y) { x = y; } // note: return unavailable for std::thread
+constexpr void f(int & x, int y) noexcept { x = y; } // note: return unavailable for std::thread
 
 class C { public: void print() const { std::cout << "C::print" << std::endl; } };
 
@@ -71,7 +71,7 @@ int main()
 
     thread.join(); // good: otherwise std::terminate called in destructor
 
-    [[maybe_unused]] auto x = 42;
+    auto x = 42;
 
 //  std::thread(Functor(x)).detach(); // bad: possible dangling reference
 
@@ -79,11 +79,11 @@ int main()
 
     assert(x == 43);
 
-    C c;
+    const C c;
 
     std::thread(&C::print, &c).join(); // note: remember the first argument
 
-    Scoped_Thread scoped_thread(std::thread(f, std::ref(x), 42));
+    const Scoped_Thread scoped_thread(std::thread(f, std::ref(x), 42));
 
     assert(std::thread::hardware_concurrency() != 0);
 
