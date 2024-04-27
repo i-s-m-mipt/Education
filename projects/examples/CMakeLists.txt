@@ -210,6 +210,7 @@ set(debug
     14.02.concurrency.thread
     14.03.concurrency.thread.accumulate
     14.04.concurrency.thread.accumulate.async
+    14.05.concurrency.thread.accumulate.packaged.task
     16.02.implementation.class.big.integer
     16.03.number.integer.multiprecision
 #   16.04.embedding.python.wrapper.header
