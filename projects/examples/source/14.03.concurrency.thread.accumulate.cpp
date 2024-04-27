@@ -1,72 +1,84 @@
-#include <algorithm>
+#include <cmath>
+#include <concepts>
+#include <functional>
 #include <iostream>
+#include <iterator>
 #include <numeric>
+#include <ranges>
 #include <thread>
+#include <utility>
 #include <vector>
 
-template < typename Iterator, typename T >
-struct accumulate_block
+// =================================================================================================
+
+template < std::input_iterator I, typename T > class Block
 {
-	void operator()(Iterator first, Iterator last, T & result)
+public:
+
+    explicit Block(I first, I last, T & result) noexcept : m_first(first), m_last(last), m_result(result) {}
+
+	void operator()() const
 	{
-		result = std::accumulate(first, last, result);
-	}
-};
-
-template < typename Iterator, typename T >
-T parallel_accumulate(Iterator first, Iterator last, T init)
-{
-	const std::size_t length = std::distance(first, last);
-
-	if (!length)
-		return init;
-
-	const std::size_t min_per_thread = 25;
-	const std::size_t max_threads =
-		(length + min_per_thread - 1) / min_per_thread;
-
-	const std::size_t hardware_threads =
-		std::thread::hardware_concurrency();
-
-	const std::size_t num_threads =
-		std::min(hardware_threads != 0 ? hardware_threads : 2, max_threads);
-
-	const std::size_t block_size = length / num_threads;
-
-	std::vector < T > results(num_threads);
-	std::vector < std::thread > threads(num_threads - 1);
-
-	Iterator block_start = first;
-
-	for (std::size_t i = 0; i < (num_threads - 1); ++i)
-	{
-		Iterator block_end = block_start;
-		std::advance(block_end, block_size);
-
-		threads[i] = std::thread(
-			accumulate_block < Iterator, T > (),
-			block_start, block_end, std::ref(results[i])); // !
-
-		block_start = block_end;
+		m_result = std::accumulate(m_first, m_last, m_result);
 	}
 
-	accumulate_block < Iterator, T > ()(block_start, last, results[num_threads - 1]);
+private:
 
-	std::for_each(threads.begin(), threads.end(),
-		std::mem_fn(&std::thread::join));
+    I m_first, m_last; T & m_result;
 
-	return std::accumulate(results.begin(), results.end(), init);
+}; // template < std::input_iterator I, typename T > class Block
+
+// =================================================================================================
+
+template < std::ranges::input_range R, typename T > [[nodiscard]] T parallel_accumulate(R && range, T sum)
+{
+	const std::size_t length = std::distance(std::ranges::begin(range), std::ranges::end(range));
+
+	if (!length) return sum;
+
+	const std::size_t min_elements_per_thread = 25; // note: only for demonstration
+
+	const std::size_t max_threads = (length + min_elements_per_thread - 1) / min_elements_per_thread;
+
+	const std::size_t hardware_threads = std::thread::hardware_concurrency();
+
+	const std::size_t n_threads = std::min(hardware_threads != 0 ? hardware_threads : 2, max_threads);
+
+	const std::size_t block_size = length / n_threads;
+
+	std::vector < T > results(n_threads);
+
+	std::vector < std::thread > threads(n_threads - 1); // note: why -1?
+
+	auto block_begin = std::ranges::begin(range);
+
+	for (std::size_t i = 0; i < (n_threads - 1); ++i)
+	{
+		auto block_end = std::next(block_begin, block_size);
+
+		threads[i] = std::thread(Block(block_begin, block_end, results[i]));
+
+		block_begin = block_end;
+	}
+
+	Block(block_begin, std::ranges::end(range), results[n_threads - 1])();
+
+	for (auto & thread : threads) thread.join();
+
+	return std::accumulate(std::begin(results), std::end(results), sum);
 }
 
-int main(int argc, char ** argv)
+// =================================================================================================
+
+int main()
 {
-	std::vector < int > v(100);
+	const std::size_t size = 100;
 
-	std::iota(v.begin(), v.end(), 1);
+	std::vector < int > vector(size, 0);
 
-	std::cout << parallel_accumulate(v.begin(), v.end(), 0) << std::endl;
+	std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
 
-	system("pause");
+	std::cout << parallel_accumulate(std::as_const(vector), 0) << std::endl;
 
-	return EXIT_SUCCESS;
+	return 0;
 }
