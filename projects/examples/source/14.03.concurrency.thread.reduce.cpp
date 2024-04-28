@@ -22,7 +22,7 @@ public:
 		{
 			m_sum = std::reduce(std::ranges::cbegin(m_view), std::ranges::cend(m_view));
 		}
-		catch(const std::exception & exception) {} // good: prevents std::terminate call 
+		catch(const std::exception &) {} // good: prevents std::terminate call 
 	}
 
 private:
