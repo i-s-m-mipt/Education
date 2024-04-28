@@ -28,7 +28,7 @@ class Builder
 {
 public:
 
-    explicit Builder(const std::string & name) : m_computer(new Computer { name }) {}
+    explicit Builder(const std::string & name) : m_computer(new Computer { name, {}, {}, {} }) {}
 
     virtual ~Builder() = default; // note: polymorphic base class
 

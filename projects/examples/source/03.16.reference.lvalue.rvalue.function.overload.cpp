@@ -4,7 +4,6 @@
 // =================================================================================================
 
 [[nodiscard]] inline       int    get_prvalue      () { return 42; }
-[[nodiscard]] inline const int    get_prvalue_const() { return 42; }
 /*
 [[nodiscard]] inline       int && get__xvalue      () { return 42; } // warning: dangling reference
 */
@@ -47,8 +46,6 @@ private:
 int main()
 {
 	f(get_prvalue      ());
-	f(get_prvalue_const()); // note: verify int && overload
-
 	f(get__lvalue      ());
 	f(get__lvalue_const());
 

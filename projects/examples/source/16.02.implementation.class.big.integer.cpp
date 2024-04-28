@@ -337,14 +337,14 @@ public:
 
 public:
 
-	[[nodiscard]] friend inline Big_Int operator+(Big_Int lhs, Big_Int rhs) { return (lhs += rhs); }
-	[[nodiscard]] friend inline Big_Int operator-(Big_Int lhs, Big_Int rhs) { return (lhs -= rhs); }
-	[[nodiscard]] friend inline Big_Int operator*(Big_Int lhs, Big_Int rhs) { return (lhs *= rhs); }
-	[[nodiscard]] friend inline Big_Int operator/(Big_Int lhs, Big_Int rhs) { return (lhs /= rhs); }
+	[[nodiscard]] friend Big_Int operator+(Big_Int lhs, Big_Int rhs) { return (lhs += rhs); }
+	[[nodiscard]] friend Big_Int operator-(Big_Int lhs, Big_Int rhs) { return (lhs -= rhs); }
+	[[nodiscard]] friend Big_Int operator*(Big_Int lhs, Big_Int rhs) { return (lhs *= rhs); }
+	[[nodiscard]] friend Big_Int operator/(Big_Int lhs, Big_Int rhs) { return (lhs /= rhs); }
 
 public:
 
-	[[nodiscard]] friend const bool operator< (const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend bool operator< (const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		if ( lhs.m_is_negative && !rhs.m_is_negative) return 1;
 		if (!lhs.m_is_negative &&  rhs.m_is_negative) return 0;
@@ -358,22 +358,22 @@ public:
 		}
 	}
 
-	[[nodiscard]] friend inline bool operator> (const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend bool operator> (const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return (rhs < lhs);
 	}
 
-	[[nodiscard]] friend inline bool operator<=(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend bool operator<=(const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return !(rhs < lhs);
 	}
 
-	[[nodiscard]] friend inline bool operator>=(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend bool operator>=(const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		return !(lhs < rhs);
 	}
 
-	[[nodiscard]] friend const bool operator==(const Big_Int & lhs, const Big_Int & rhs) noexcept
+	[[nodiscard]] friend bool operator==(const Big_Int & lhs, const Big_Int & rhs) noexcept
 	{
 		if ((lhs.m_is_negative != rhs.m_is_negative) || (lhs.m_n_digits != rhs.m_n_digits))
 		{

@@ -1,3 +1,5 @@
+#include <iomanip>
+#include <iostream>
 #include <iterator>
 #include <random>
 #include <type_traits>
@@ -50,14 +52,16 @@ BOOST_DATA_TEST_CASE(ranges_test, boost::unit_test::data::xrange(1, 3, 1) *
     std::cout << value_1 << " x " << value_2 << std::endl;
 }
 
-BOOST_DATA_TEST_CASE(random_test, boost::unit_test::data::random(( // note: additional parenthesis
+BOOST_DATA_TEST_CASE(random_test, (boost::unit_test::data::random(( // note: additional parenthesis
 
     boost::unit_test::data::seed         = std::random_device{}(),
     boost::unit_test::data::engine       = std::mt19937_64     (),
     boost::unit_test::data::distribution = std::uniform_real_distribution(0.0, 1.0))) ^ 
     
-    boost::unit_test::data::xrange(10), sample, index) // note: 10 random numbers
+    boost::unit_test::data::xrange(10)), sample, index) // note: 10 random numbers
 {
+    std::cout << index << " : " << std::setprecision(3) << std::fixed << sample << std::endl;
+
     BOOST_TEST(sample < 0.7); // note: 30% chance of failure
 }
 
