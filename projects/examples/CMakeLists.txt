@@ -118,8 +118,9 @@ set(debug
     07.05.error.exception.stack.interface
     07.06.project.tool.boost.logging
     07.07.project.tool.boost.testing
-    07.09.project.tool.profiler.memory
-    07.11.project.tool.google.testing
+    07.09.project.tool.profiler.cpu
+    07.10.project.tool.profiler.memory
+    07.12.project.tool.google.testing
     08.02.algorithm.binary.gray.code
     08.03.algorithm.indian.exponentiation
     08.04.class.enumeration
@@ -222,8 +223,7 @@ set(debug
 )
 
 set(release
-    07.08.project.tool.profiler.cpu
-    07.10.project.tool.google.benchmark
+    07.11.project.tool.google.benchmark
     08.01.number.integer
     08.08.number.random.generation
     08.10.algorithm.monte.carlo.simplex
@@ -247,10 +247,13 @@ foreach(entry IN LISTS debug)
     target_link_libraries     (${entry} PRIVATE ${Boost_LIBRARIES})
     target_link_libraries     (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
     target_link_libraries     (${entry} PRIVATE PDFHummus::PDFWriter)
-    target_compile_options    (${entry} PRIVATE -Wall -Wextra -pedantic -O0) 
-#   target_compile_definitions(${entry} PRIVATE _GLIBCXX_DEBUG)
+    target_compile_options    (${entry} PRIVATE -Wall -Wextra -pedantic -O0)
     set_target_properties     (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 endforeach()
+
+add_executable            (07.08.project.tool.debugger source/07.08.project.tool.debugger.cpp)
+target_compile_options    (07.08.project.tool.debugger PRIVATE -Wall -Wextra -pedantic -O0 -g)
+set_target_properties     (07.08.project.tool.debugger PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 
 add_executable            (09.05.iterator.classification source/09.05.iterator.classification.cpp)
 target_compile_options    (09.05.iterator.classification PRIVATE -Wall -Wextra -pedantic -O0) 
@@ -262,10 +265,8 @@ foreach(entry IN LISTS release)
     target_link_libraries     (${entry} PRIVATE ${Boost_LIBRARIES})
     target_link_libraries     (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
     target_link_libraries     (${entry} PRIVATE benchmark::benchmark)
-    target_link_libraries     (${entry} PRIVATE PDFHummus::PDFWriter)
     target_link_libraries     (${entry} PRIVATE tbb)
     target_compile_options    (${entry} PRIVATE -Wall -pedantic -Wextra -O3) 
-#   target_compile_definitions(${entry} PRIVATE NDEBUG)
     set_target_properties     (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 endforeach()
 
