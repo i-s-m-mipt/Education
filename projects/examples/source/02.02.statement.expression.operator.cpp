@@ -14,6 +14,8 @@ int main()
 
 	std::cout << (b1 != b2) << std::endl; // note: b1 xor b2 for booleans
 
+//  ================================================================================================
+
 	auto x = 1, y = 2;
 
 	std::cout << (!!x != !!y) << std::endl; // note: x xor y for non-booleans
@@ -45,6 +47,8 @@ int main()
 	std::cout << (   ++x) << std::endl; // good: ++x instead of x += 1
 	std::cout << (   --x) << std::endl; // good: --x instead of x -= 1
 
+//  ================================================================================================
+
 	x = x + y; y = x - y; x = x - y; // note: Google interview, solution 1
 
 	std::cout << (1   / 2  ) << std::endl; // note: integer  division
@@ -58,6 +62,8 @@ int main()
 	std::cout << (-1 % -2) << std::endl; // note: result is -1
 
 //	x+++++y; // error: maximum piece principle, write as (x++)+(++y);
+
+//  ================================================================================================
 
 	auto z = (1 + 4) / (2 + 3); // note: unspecified operands evaluation order
 

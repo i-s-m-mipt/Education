@@ -124,10 +124,14 @@ int main()
 
 	[[maybe_unused]] const auto result = g(f(42), f(42)); // note: unspecified arguments evaluation order
 
+//  ================================================================================================
+
 	auto x = 1, y = 2;
 
 	test_pointers  (&x, &y); std::cout << x << ' ' << y << std::endl;
 	test_references( x,  y); std::cout << x << ' ' << y << std::endl;
+
+//  ================================================================================================
 
 	const std::size_t size = 5;
 
@@ -142,6 +146,8 @@ int main()
 	const std::vector < int > vector { 1, 2, 3, 4, 5 };
 
 	print_vector(vector); // good: no copying of big object
+
+//  ================================================================================================
 
 	std::cout << max(1, 2) << ' ' << factorial(5) << std::endl;
 

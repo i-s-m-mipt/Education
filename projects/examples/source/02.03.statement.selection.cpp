@@ -4,6 +4,10 @@ int main()
 {
     std::cout << "Enter integer value: "; int x{};
 
+    std::cout << (x > 0 ? x : 42) << std::endl; // good: compact selection
+
+//  ================================================================================================
+
     if (std::cin >> x; 42 == x) // good: 42 == y prevents error 42 = y
     {
         std::cout << "path 1" << std::endl;
@@ -24,7 +28,7 @@ int main()
         }
     }
 
-    std::cout << (x > 0 ? x : 42) << std::endl; // good: compact selection
+//  ================================================================================================
 
     std::cout << "Enter integer value: ";
 

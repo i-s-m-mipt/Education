@@ -18,6 +18,8 @@ int main()
 
 //	unsigned long long int ulli = 42ull; // bad: looks like Hungarian notation
 
+//  ================================================================================================
+
 	[[maybe_unused]] int m = 42, n = 42; // note: comma separator syntax
 
 //	int x1; // bad: uninitialized variable, indeterminate value
@@ -30,6 +32,8 @@ int main()
 	[[maybe_unused]] auto x4 = i; // good: type deduction
 
 //	auto x5; // error: invalid type deduction, initializer required
+
+//  ================================================================================================
 
 //	int  y2 = d; // warning: narrow conversion
 
@@ -44,6 +48,8 @@ int main()
 
 	d = i = c = b; // good: wide conversions
 
+//  ================================================================================================
+
 	b = 0; // note: allowed narrow conversion
 
 	std::cout << b << std::endl; // note: false outputs as 0
@@ -52,11 +58,15 @@ int main()
 
 	std::cout << b << std::endl; // note: true outputs as 1
 
+//  ================================================================================================
+
 	[[maybe_unused]] const auto pi = 3.14; // good: constant variable
 
 //	pi = 1.0; // error: constant variable
 
 	[[maybe_unused]] volatile auto v = 42; // note: for compiler optimizations
+
+//  ================================================================================================
 
 	using my_type = const double; // good: new style type alias
 

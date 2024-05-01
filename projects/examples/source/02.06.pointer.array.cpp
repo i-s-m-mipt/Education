@@ -20,6 +20,8 @@ int main()
 
 	std::cout << std::size(array_1) << std::endl; // good: function for static arrays and containers
 
+//  ================================================================================================
+
 	*array_1 = 42; // note: array name is a pointer to the first element
 
 	const auto middle = size / 2;
@@ -43,6 +45,8 @@ int main()
 	{
 		std::cout << *ptr << (ptr + 1 == array_1 + size ? '\n' : ' ');
 	}
+
+//  ================================================================================================
 
 	const std::size_t buffer_size = 1024;
 

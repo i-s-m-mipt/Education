@@ -8,6 +8,8 @@ int main()
 	std::cout << ptr_x << ' ' << *ptr_x << std::endl;
 	std::cout << ptr_y << ' ' << *ptr_y << std::endl;
 
+//  ================================================================================================
+
 	int * ptr_null_1 = nullptr; // good: nullptr instead of 0 or NULL
 
 	[[maybe_unused]] auto ptr_null_2 = nullptr; // note: auto -> std::nullptr_t
@@ -18,6 +20,8 @@ int main()
 	{
 		std::cout << *ptr_null_1 << std::endl;
 	}
+
+//  ================================================================================================
 
 		  auto z1 = 42; 
 	const auto z2 = 42; // note: works with pointers to constant only

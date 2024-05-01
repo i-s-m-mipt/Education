@@ -11,6 +11,8 @@ int main()
 
 	delete object; // good: no dynamic variable memory leak
 
+//  ================================================================================================
+
 	const std::size_t size = 5;
 
 	const auto array = new int[size]{}; // good: zero initialized dynamic array
@@ -25,6 +27,8 @@ int main()
 	}
 
 	delete[] array; // good: no dynamic array memory leak, don't use plain delete
+
+//  ================================================================================================
 
 	const auto buffer = new int[size]; 
 
