@@ -14,7 +14,7 @@
 
 	std::uniform_real_distribution distribution(0.0, 1.0); // note: [a; b)
 
-	constexpr std::size_t size = 10'000'000; // note: try in release mode
+	constexpr std::size_t size = 1'000'000; // note: try in release mode
 
 	std::size_t counter = 0;
 

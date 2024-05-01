@@ -28,7 +28,7 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 
 	const std::size_t length = std::distance(first, last);
 
-	const std::size_t min_size = 25; // note: too few, only for demonstration
+	const std::size_t min_size = 100; // note: too few, only for demonstration
 
 	if (length <= min_size)
 	{
@@ -65,13 +65,13 @@ int main()
         std::cerr << exception.what() << '\n';
     }
 
-	constexpr std::size_t size = 100;
+	constexpr std::size_t size = 1'000;
 
 	std::vector < int > vector(size, 0);
 
 	std::iota(std::begin(vector), std::end(vector), 1);
 
-	assert(reduce(std::views::all(vector), 0) == 5050);
+	assert(reduce(std::views::all(vector), 0) == 500'500);
 
 	return 0;
 }

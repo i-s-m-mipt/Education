@@ -312,7 +312,7 @@ void test_3()
 {
 	std::cout << "Test 3 launched ... " << std::endl << std::endl;
 
-	const std::size_t size = 10'000'000;
+	const std::size_t size = 1'000'000;
 
 	const auto x = new double[size];
 	const auto y = new double[size];
@@ -333,7 +333,7 @@ void test_4()
 {
 	std::cout << "Test 4 launched ... " << std::endl << std::endl;
 
-	const std::size_t size = 10'000'000; // note: assume size > 3 and even
+	const std::size_t size = 1'000'000; // note: assume size > 3 and even
 
 	const auto x = new double[size];
 

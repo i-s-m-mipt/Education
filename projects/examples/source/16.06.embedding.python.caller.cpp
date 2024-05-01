@@ -56,11 +56,11 @@ int main()
 		std::cout << boost::python::extract < std::string > (
             python.global()["factorial"](100))() << std::endl; // note: outputs 100!
 
-        const std::size_t size = 5'000'001, length = 10, step = 100'000;
+        const std::size_t size = 1'000'000, length = 10, step = size / 50;
 
         std::unordered_set < std::size_t > hashes; std::size_t index = 0; std::string points;
 
-        for (const auto & word : make_random_words(size, length))
+        for (const auto & word : make_random_words(size + 1, length))
         {
             if (hashes.insert(hash_DEK(word)); index++ % step == 0)
             {

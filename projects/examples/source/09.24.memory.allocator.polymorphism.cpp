@@ -6,7 +6,6 @@
 #include <iterator>
 #include <list>
 #include <memory_resource>
-#include <mutex>
 #include <vector>
 
 #include <boost/pool/object_pool.hpp>
@@ -18,7 +17,7 @@
 
 void test_1(benchmark::State & state) // note: slow
 {
-	constexpr std::size_t size = 10'000;
+	constexpr std::size_t size = 1'000;
 
 	for (auto _ : state)
 	{
@@ -34,7 +33,7 @@ void test_1(benchmark::State & state) // note: slow
 
 void test_2(benchmark::State & state) // note: slow
 {
-	constexpr std::size_t size = 10'000;
+	constexpr std::size_t size = 1'000;
 
 	for (auto _ : state)
 	{
@@ -50,7 +49,7 @@ void test_2(benchmark::State & state) // note: slow
 
 void test_3(benchmark::State & state) // note: fast
 {
-	constexpr std::size_t size = 10'000;
+	constexpr std::size_t size = 1'000;
 
 	for (auto _ : state)
 	{
@@ -70,7 +69,7 @@ void test_3(benchmark::State & state) // note: fast
 
 void test_4(benchmark::State & state) // note: fast
 {
-	constexpr std::size_t size = 10'000;
+	constexpr std::size_t size = 1'000;
 
 	for (auto _ : state)
 	{
@@ -94,7 +93,7 @@ void test_4(benchmark::State & state) // note: fast
 
 void test_5(benchmark::State & state) // note: not so fast, verify with valgrind
 {
-	constexpr std::size_t size = 10'000;
+	constexpr std::size_t size = 1'000;
 
 	for (auto _ : state)
 	{
@@ -159,8 +158,6 @@ int main(int argc, char ** argv) // note: arguments for benchmark
         assert(pool.get_next_size() == 64); // note: allocation approach similar to std::vector
 
         std::vector < int, boost::pool_allocator < int > > vector; // good: continious segments
-
-        boost::singleton_pool::release_memory()
     }
 
 	benchmark::Initialize(&argc, argv);

@@ -41,7 +41,7 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 
 	if (!length) return sum;
 
-	const std::size_t min_elements_per_thread = 25; // note: too few, only for demonstration
+	const std::size_t min_elements_per_thread = 100; // note: too few, only for demonstration
 
 	const std::size_t max_threads = (length + min_elements_per_thread - 1) / min_elements_per_thread;
 
@@ -77,13 +77,13 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 
 int main()
 {
-	constexpr std::size_t size = 100;
+	constexpr std::size_t size = 1'000;
 
 	std::vector < int > vector(size, 0);
 
 	std::iota(std::begin(vector), std::end(vector), 1);
 
-	assert(reduce(std::views::all(vector), 0) == 5050);
+	assert(reduce(std::views::all(vector), 0) == 500'500);
 
 	return 0;
 }

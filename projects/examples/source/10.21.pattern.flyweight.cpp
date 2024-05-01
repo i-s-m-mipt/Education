@@ -57,8 +57,8 @@ public:
 
     explicit Storage(const Data & x, const Data & y) : m_x(x), m_y(y) {}
 
-    boost::flyweight < Data, container, tag < X > > m_x; // compare with Data x;
-    boost::flyweight < Data, container, tag < Y > > m_y; // compare with Data y;
+    boost::flyweight < Data, container, tag < X > > m_x; // note: instead of Data x;
+    boost::flyweight < Data, container, tag < Y > > m_y; // note: instead of Data y;
 
 }; // class Storage
 
