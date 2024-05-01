@@ -47,29 +47,33 @@ struct alignas(64) S6 { std::uint8_t x{}; };
 
 // =================================================================================================
 
-void test_1(benchmark::State & state) // note: very fast
+void test_1(benchmark::State & state) // note: fast
 {
+	constexpr std::size_t size = 64;
+
     for (auto _ : state)
     {
-		constexpr std::size_t size = 64;
-
-        auto array = new S5[size]{}; benchmark::DoNotOptimize(array);
+        auto array = new S5[size]{}; 
 
 		for (std::size_t i = 1; i < size; ++i) array[i].x = array[i - 1].x + 1;
+
+		benchmark::DoNotOptimize(array);
     }
 }
 
 // =================================================================================================
 
-void test_2(benchmark::State & state) // note: very slow
+void test_2(benchmark::State & state) // note: slow
 {
+	constexpr std::size_t size = 64;
+
     for (auto _ : state)
     {
-        constexpr std::size_t size = 64;
-
-        auto array = new S6[size]{}; benchmark::DoNotOptimize(array);
+        auto array = new S6[size]{}; 
 
 		for (std::size_t i = 1; i < size; ++i) array[i].x = array[i - 1].x + 1;
+
+		benchmark::DoNotOptimize(array);
     }
 }
 

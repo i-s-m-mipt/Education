@@ -99,7 +99,7 @@ private:
 
 // =================================================================================================
 
-void test_1(benchmark::State & state) // note: very fast
+void test_1(benchmark::State & state) // note: fast
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
 
@@ -123,7 +123,7 @@ void test_1(benchmark::State & state) // note: very fast
 
 // =================================================================================================
 
-void test_2(benchmark::State & state) // note: very slow
+void test_2(benchmark::State & state) // note: slow
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb;
 

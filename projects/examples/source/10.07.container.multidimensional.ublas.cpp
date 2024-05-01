@@ -116,9 +116,7 @@ void test_1(benchmark::State & state) // note: better for 3x3 or less
 
     for (auto _ : state)
     {
-        auto determinant = determinant_v1(matrix);
-
-		benchmark::DoNotOptimize(determinant);	
+		benchmark::DoNotOptimize(determinant_v1(matrix));	
     }
 }
 
@@ -130,9 +128,7 @@ void test_2(benchmark::State & state) // note: better for 4x4 or more
 
     for (auto _ : state)
     {
-        auto determinant = determinant_v2(matrix);
-
-		benchmark::DoNotOptimize(determinant);	
+		benchmark::DoNotOptimize(determinant_v2(matrix));	
     }
 }
 

@@ -39,14 +39,12 @@ void test_1(benchmark::State & state) // note: usual
         std::for_each(std::execution::seq, std::begin(vector), std::end(vector),
 
 			[](auto & x) constexpr noexcept { x = std::sin(std::cos(x)); });
-
-		benchmark::DoNotOptimize(vector);
     }
 }
 
 // =================================================================================================
 
-void test_2(benchmark::State & state) // note: very fast
+void test_2(benchmark::State & state) // note: fast
 {
     auto vector = make_vector(state.range(0));
 
@@ -55,14 +53,12 @@ void test_2(benchmark::State & state) // note: very fast
         std::for_each(std::execution::par, std::begin(vector), std::end(vector),
 
 			[](auto & x) constexpr noexcept { x = std::sin(std::cos(x)); });
-
-		benchmark::DoNotOptimize(vector);
     }
 }
 
 // =================================================================================================
 
-void test_3(benchmark::State & state) // note: very fast
+void test_3(benchmark::State & state) // note: fast
 {
     auto vector = make_vector(state.range(0));
 
@@ -71,8 +67,6 @@ void test_3(benchmark::State & state) // note: very fast
         std::for_each(std::execution::par_unseq, std::begin(vector), std::end(vector),
 
 			[](auto & x) constexpr noexcept { x = std::sin(std::cos(x)); });
-
-		benchmark::DoNotOptimize(vector);
     }
 }
 

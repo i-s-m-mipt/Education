@@ -15,10 +15,11 @@ void test_1(benchmark::State & state)
 {
     for (auto _ : state) // note: range-based for loop recommended in documentation
     {
-        auto s = 0; benchmark::DoNotOptimize(s);
-        auto x = 0; benchmark::DoNotOptimize(x);
+        auto s = 0, x = 0;
 
         while (true) if (s += ++x; x == 100) break;
+
+        benchmark::DoNotOptimize(s);
     }
 }
 
@@ -30,10 +31,11 @@ void test_2(benchmark::State & state)
     {
         try // note: zero-overhead principle in exceptions
         {
-            auto s = 0; benchmark::DoNotOptimize(s);
-            auto x = 0; benchmark::DoNotOptimize(x);
+            auto s = 0, x = 0;
             
             while (true) if (s += ++x; x == 100) break;
+
+            benchmark::DoNotOptimize(s);
         }
         catch (const std::exception & exception)
         {
@@ -50,8 +52,7 @@ void test_3(benchmark::State & state)
     {
         try
         {
-            auto s = 0; benchmark::DoNotOptimize(s);
-            auto x = 0; benchmark::DoNotOptimize(x);
+            auto s = 0, x = 0;
 
             while (true)
             {
@@ -60,6 +61,8 @@ void test_3(benchmark::State & state)
                     throw std::runtime_error("exit"); // note: slow exit
                 }
             }
+
+            benchmark::DoNotOptimize(s);
         }
         catch (...) {}
     }
@@ -102,9 +105,7 @@ void test_6(benchmark::State & state)
 
     for (auto _ : state) 
     {
-        auto result = std::ranges::lower_bound(std::as_const(vector), 0); // note: binary search
-
-        benchmark::DoNotOptimize(result);
+        benchmark::DoNotOptimize(std::ranges::lower_bound(std::as_const(vector), 0));
     }
 
     state.SetComplexityN(state.range(0)); // note: try to search 1 instead of 0 in lower_bound

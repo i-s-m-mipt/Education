@@ -89,11 +89,8 @@ void test_1(benchmark::State & state)
 {
     for (auto _ : state)
     {
-		auto ptr = ::operator new(state.range(0));
-
-		benchmark::DoNotOptimize(ptr);
-
-		::operator delete(ptr, state.range(0));
+		auto ptr = ::operator new   (     state.range(0)); benchmark::DoNotOptimize(ptr);
+		           ::operator delete(ptr, state.range(0));
     }
 }
 

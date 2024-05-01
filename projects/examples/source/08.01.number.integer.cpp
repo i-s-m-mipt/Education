@@ -68,10 +68,7 @@ void test_1(benchmark::State & state)
     {
         auto d = 3.14; 
         
-        auto c = *reinterpret_cast < char * > (&d);
-
-        benchmark::DoNotOptimize(d);
-        benchmark::DoNotOptimize(c);
+        benchmark::DoNotOptimize(*reinterpret_cast < char * > (&d));
     }
 }
 
@@ -83,10 +80,7 @@ void test_2(benchmark::State & state)
     {
         auto d = 3.14;
 
-        auto c = *std::bit_cast < char * > (&d); // note: same instructions with -O3
-
-        benchmark::DoNotOptimize(d);
-        benchmark::DoNotOptimize(c);
+        benchmark::DoNotOptimize(*std::bit_cast < char * > (&d)); // note: same instructions with -O3
     }
 }
 
@@ -97,7 +91,7 @@ struct S2 { std::uint32_t x      {}, y      {}; }; // note: sizeof(S2) = 8
 
 // =================================================================================================
 
-void test_3(benchmark::State & state) // note: very slow
+void test_3(benchmark::State & state) // note: slow
 {
     static_assert(sizeof(S1) == 4);
 
@@ -118,7 +112,7 @@ void test_3(benchmark::State & state) // note: very slow
 
 // =================================================================================================
 
-void test_4(benchmark::State & state) // note: very fast
+void test_4(benchmark::State & state) // note: fast
 {
     static_assert(sizeof(S2) == 8);
 

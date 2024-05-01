@@ -74,7 +74,7 @@ private:
 
 // =================================================================================================
 
-void test_1(benchmark::State & state) // note: very fast
+void test_1(benchmark::State & state) // note: fast
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
 
@@ -84,14 +84,14 @@ void test_1(benchmark::State & state) // note: very fast
 
 		for (std::size_t i = 0; i < kb; ++i)
 		{
-			auto ptr = allocator.allocate(mb); benchmark::DoNotOptimize(ptr);
+			benchmark::DoNotOptimize(allocator.allocate(mb));
 		}
 	}
 }
 
 // =================================================================================================
 
-void test_2(benchmark::State & state) // note: very slow
+void test_2(benchmark::State & state) // note: slow
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb;
 

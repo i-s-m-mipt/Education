@@ -69,9 +69,7 @@ void test_1(benchmark::State & state) // note: slow
 
     for (auto _ : state)
     {
-        auto substring = string.substr(0, state.range(0));
-
-		benchmark::DoNotOptimize(substring);	
+        benchmark::DoNotOptimize(string.substr(0, state.range(0)));	
     }
 
     state.SetComplexityN(state.range(0));
@@ -87,9 +85,7 @@ void test_2(benchmark::State & state) // note: fast
 
     for (auto _ : state)
     {
-        auto substring = view.substr(0, state.range(0));
-
-		benchmark::DoNotOptimize(substring);	
+        benchmark::DoNotOptimize(view.substr(0, state.range(0)));	
     }
 
     state.SetComplexityN(state.range(0));
