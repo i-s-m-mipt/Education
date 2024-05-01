@@ -86,7 +86,7 @@ int main()
 
 		constexpr auto epsilon = 0.000001;
 
-		constexpr std::size_t size = 1000;
+		constexpr std::size_t size = 1'000;
 
 		auto test = 0.0;
 

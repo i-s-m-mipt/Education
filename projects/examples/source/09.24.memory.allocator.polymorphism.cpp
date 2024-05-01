@@ -124,11 +124,11 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
         std::pmr::monotonic_buffer_resource arena(std::data(buffer), std::size(buffer));
 
-        constexpr std::size_t size = 26;
+        constexpr std::size_t n_letters = 26;
 
         std::pmr::vector < char > vector(&arena); // note: type alias
 
-        for (std::size_t i = 0; i < size; ++i)
+        for (std::size_t i = 0; i < n_letters; ++i)
         {
             vector.push_back(static_cast < char > ('a' + i));
         }

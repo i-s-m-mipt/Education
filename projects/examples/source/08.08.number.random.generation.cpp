@@ -39,7 +39,7 @@ int main()
 
 	std::vector < std::size_t > values(40, 0);
 
-	constexpr std::size_t size = 100'000;
+	constexpr std::size_t size = 1'000'000;
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
@@ -56,7 +56,7 @@ int main()
 	{
 		std::cout << std::setw(2) << std::right << std::setfill(' ') << i << " : ";
 
-		std::cout << std::string(values[i] / 100, '*') << std::endl;
+		std::cout << std::string(values[i] / 1'000, '*') << std::endl;
 	}
 
 	std::cout << "pi = " << calculate_pi() << std::endl; // note: monte-carlo method
