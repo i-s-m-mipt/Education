@@ -62,7 +62,7 @@ private:
 
 int main()
 {
-	[[maybe_unused]] const auto result = 1 + Ratio < int > (1, 1); // note: free operator+ template doesn't work here
+	[[maybe_unused]] const auto result = 1 + Ratio < int > (1, 1); // note: free operator+ template does not work here
 
 	return 0;
 }

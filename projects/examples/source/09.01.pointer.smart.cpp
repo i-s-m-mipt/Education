@@ -153,7 +153,7 @@ int main()
 
 	auto shared_ptr_9 = std::make_shared < int > (42);
 
-	std::weak_ptr < int > weak_ptr = shared_ptr_9; // note: std::weak_ptr doesn't own object
+	std::weak_ptr < int > weak_ptr = shared_ptr_9; // note: std::weak_ptr does not own object
 
 	assert(weak_ptr.use_count() == 1);
 
