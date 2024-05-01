@@ -51,7 +51,7 @@ void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t r)
 
 int main()
 {
-	const std::size_t size = 128;
+	const std::size_t size = 1'000;
 
 	std::vector < int > vector(size, 0);
 
