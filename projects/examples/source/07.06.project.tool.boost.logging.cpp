@@ -21,8 +21,7 @@
 
 using namespace std::literals;
 
-#include <boost/core/null_deleter.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp> // note: support
 #include <boost/log/attributes.hpp>
 #include <boost/log/common.hpp>
 #include <boost/log/core.hpp>
@@ -41,10 +40,9 @@ using namespace std::literals;
 #include <boost/log/utility/value_ref.hpp>
 #include <boost/log/utility/setup/file.hpp>
 #include <boost/log/utility/setup/common_attributes.hpp>
-#include <boost/make_shared.hpp>
+#include <boost/make_shared.hpp> // note: support
 #include <boost/noncopyable.hpp>
-#include <boost/preprocessor/facilities/overload.hpp>
-#include <boost/shared_ptr.hpp>
+#include <boost/shared_ptr.hpp> // note: support
 
 // =================================================================================================
 
@@ -147,7 +145,7 @@ private:
 
 		fout_sink_ptr->set_formatter(&Logger::fout_formatter);
 
-		fout_sink_ptr->set_filter([](boost::log::attribute_value_set) constexpr noexcept { return true; });
+		fout_sink_ptr->set_filter([](boost::log::attribute_value_set) noexcept { return true; });
 
 		return fout_sink_ptr;
 	}
@@ -266,26 +264,9 @@ template < typename E > inline void catch_handler(const Logger & logger, const s
 
 // =================================================================================================
 
-#define LOGGER_2(logger, has_trace) const Logger logger(FUNCTION, has_trace)
+#define LOGGER(logger) const Logger logger(FUNCTION)
 
-#define LOGGER_1(logger) LOGGER_2(logger, true)
-
-#if !BOOST_PP_VARIADICS_MSVC
-#  define LOGGER(...) BOOST_PP_OVERLOAD(LOGGER_,__VA_ARGS__)(__VA_ARGS__)
-#else
-#  define LOGGER(...) BOOST_PP_CAT(BOOST_PP_OVERLOAD(LOGGER_,__VA_ARGS__)(__VA_ARGS__),BOOST_PP_EMPTY())
-#endif
-
-#define LOGGER_NO_TRACE(logger) const Logger logger(FUNCTION, false)
-
-#define LOGGER_WRITE(logger, message) logger.write(Logger::Severity::empty, message);
-
-#if defined(_DEBUG)
-#  define LOGGER_WRITE_DEBUG(logger, message) logger.write(Logger::Severity::debug, message);
-#else
-#  define LOGGER_WRITE_DEBUG(logger, message) ;
-#endif
-
+#define LOGGER_WRITE_DEBUG(logger, message) logger.write(Logger::Severity::debug, message);
 #define LOGGER_WRITE_TRACE(logger, message) logger.write(Logger::Severity::trace, message);
 #define LOGGER_WRITE_ERROR(logger, message) logger.write(Logger::Severity::error, message);
 #define LOGGER_WRITE_FATAL(logger, message) logger.write(Logger::Severity::fatal, message);
@@ -298,7 +279,7 @@ void h()
 
 	try
 	{
-		LOGGER_WRITE(logger, "message"); throw std::logic_error("error");
+		LOGGER_WRITE_ERROR(logger, "message"); throw std::logic_error("error");
 	}
 	catch (const std::exception & exception)
 	{
