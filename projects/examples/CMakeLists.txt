@@ -147,7 +147,6 @@ set(debug
 #   09.16.memory.allocator
 #   09.17.memory.allocator.block
     09.23.implementation.allocator.arena.adaptor
-    09.24.memory.allocator.polymorphism
 #   10.01.container.vector.deque.array.list.memory
     10.02.container.vector.deque.array.list
     10.04.pattern.proxy.vector
@@ -234,6 +233,7 @@ set(release
     09.20.implementation.allocator.chain
     09.21.implementation.allocator.block
     09.22.implementation.allocator.fixed
+    09.24.memory.allocator.polymorphism
     10.03.container.vector.deque.array.list.sorting
     10.07.container.multidimensional.ublas
     10.15.container.red.black.tree
