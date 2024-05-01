@@ -81,7 +81,16 @@ int main()
 
 	if (auto any = std::make_any < decltype(x) > (x); any.has_value()) // note: any with int value
 	{
-		std::cout << any.type().name() << ": " << std::any_cast < int > (any) << std::endl;
+		std::cout << any.type().name() << ": ";
+		
+		if (any.type() == typeid(int))
+		{
+			std::cout << std::any_cast < int > (any) << std::endl;
+		}
+		else
+		{
+			std::cout << "unknown type" << std::endl;
+		}
 	}
 	else any = 3.14; // note: Python is watching you...
 
