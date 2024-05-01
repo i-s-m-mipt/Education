@@ -86,7 +86,7 @@ public:
 
 private:
 
-    T * m_ptr = nullptr;
+    T * m_ptr = nullptr; // note: consider std::aligned_storage_t
 
 }; // template < typename T > class Optional 
 
