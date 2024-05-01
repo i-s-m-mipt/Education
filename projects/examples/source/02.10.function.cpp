@@ -151,10 +151,16 @@ int main()
 
 	std::cout << max(1, 2) << ' ' << factorial(5) << std::endl;
 
+//  ================================================================================================
+
 //	std::cout << *get_dangling_pointer  () << std::endl; // bad: undefined behavior
 //	std::cout <<  get_dangling_reference() << std::endl; // bad: undefined behavior
 
+//  ================================================================================================
+
 	h(); h(); h(); // note: only y increasing
+
+//  ================================================================================================
 
 	print(true);
 	print(3.14);

@@ -176,6 +176,8 @@ int main()
 
 	std::cout << c_date.get_date_as_string() << std::endl;
 
+//  ================================================================================================
+
 	const Date date_1;
 	const Date date_2(2023, 9, 19);
 
@@ -186,6 +188,8 @@ int main()
 	const Date::Printer printer;
 
 	printer.print(date_2);
+
+//  ================================================================================================
 
 	std::cout << date_1.max_year << std::endl;
 	std::cout << date_2.max_year << std::endl;

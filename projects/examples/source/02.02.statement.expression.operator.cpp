@@ -51,6 +51,8 @@ int main()
 
 	x = x + y; y = x - y; x = x - y; // note: Google interview, solution 1
 
+//  ================================================================================================
+
 	std::cout << (1   / 2  ) << std::endl; // note: integer  division
 	std::cout << (1.0 / 2.0) << std::endl; // note: floating division
 

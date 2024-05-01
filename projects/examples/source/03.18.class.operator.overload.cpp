@@ -202,11 +202,11 @@ int main()
 {
 	Ratio ratio_1, ratio_2(2), ratio_3 = 3, ratio_4(-4, 5); // note: implicit conversion ratio_3
 
+//	std::vector < int > vector = 42; // error: explicit constructor required for safety
+
 	std::cout << static_cast < double > (ratio_4) << std::endl;
 
 	Ratio ratio_5{}; std::cin >> ratio_5; std::cout << ratio_5 << std::endl;
-
-//	std::vector < int > vector = 42; // error: explicit constructor required for safety
 
 //  ================================================================================================
 
