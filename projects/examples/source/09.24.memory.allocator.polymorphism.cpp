@@ -117,48 +117,44 @@ BENCHMARK(test_5);
 
 int main(int argc, char ** argv) // note: arguments for benchmark
 {
+    std::array < char, 64 > buffer{}; // note: external stack buffer for arena
+
+    std::ranges::fill(buffer, '_'); // note: fill elements in range
+
+    std::pmr::monotonic_buffer_resource arena(std::data(buffer), std::size(buffer));
+
+    constexpr std::size_t n_letters = 26;
+
+    std::pmr::vector < char > letters(&arena); // note: type alias
+
+    for (std::size_t i = 0; i < n_letters; ++i)
     {
-        std::array < char, 64 > buffer{}; // note: external stack buffer for arena
-
-        std::ranges::fill(buffer, '_'); // note: fill elements in range
-
-        std::pmr::monotonic_buffer_resource arena(std::data(buffer), std::size(buffer));
-
-        constexpr std::size_t n_letters = 26;
-
-        std::pmr::vector < char > vector(&arena); // note: type alias
-
-        for (std::size_t i = 0; i < n_letters; ++i)
-        {
-            vector.push_back(static_cast < char > ('a' + i));
-        }
-
-        for (const auto element : buffer) std::cout << element; // note: outputs repeated data in buffer
-
-        std::cout << std::endl;
-
-        auto resource = std::pmr::new_delete_resource();
-
-        const auto pointer = resource->allocate(1); // note: same as ::operator new
-
-        resource->deallocate(pointer, 1); // note: same as ::operator delete
+        letters.push_back(static_cast < char > ('a' + i));
     }
 
-    {
-        boost::object_pool < int > pool(32); // note: memory managed by pool consists of segments
+    for (const auto element : buffer) std::cout << element; // note: outputs repeated data in buffer
 
-        auto object_1 = pool.malloc(); // note: allocates a memory block with space for 32 int values
+    std::cout << std::endl;
 
-        pool.destroy(object_1);
+    auto resource = std::pmr::new_delete_resource();
 
-        auto object_2 = pool.construct(42); // note: allocates the same memory block used for ptr_1
+    const auto pointer = resource->allocate(1); // note: same as ::operator new
 
-        pool.destroy(object_2);
+    resource->deallocate(pointer, 1); // note: same as ::operator delete
 
-        assert(pool.get_next_size() == 64); // note: allocation approach similar to std::vector
+    boost::object_pool < int > pool(32); // note: memory managed by pool consists of segments
 
-        std::vector < int, boost::pool_allocator < int > > vector; // good: continious segments
-    }
+    auto object_1 = pool.malloc(); // note: allocates a memory block with space for 32 int values
+
+    pool.destroy(object_1);
+
+    auto object_2 = pool.construct(42); // note: allocates the same memory block used for ptr_1
+
+    pool.destroy(object_2);
+
+    assert(pool.get_next_size() == 64); // note: allocation approach similar to std::vector
+
+    std::vector < int, boost::pool_allocator < int > > vector; // good: continious segments
 
 	benchmark::Initialize(&argc, argv);
 
