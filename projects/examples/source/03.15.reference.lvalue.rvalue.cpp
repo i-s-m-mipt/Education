@@ -12,12 +12,16 @@ int main()
 
 	const int i = 42;
 
+//  ================================================================================================
+
 //	int &  lvalue_1 = get_prvalue(); // error: lvalue reference cannot be bound to prvalue
 
 	[[maybe_unused]] int &  lvalue_2 = get__lvalue();
 
 //	int &  lvalue_3 = d; // error: lvalue reference cannot be bound to prvalue
 //	int &  lvalue_4 = i; // error: lvalue reference cannot be bound to constant lvalue
+
+//  ================================================================================================
 
 	[[maybe_unused]] int && rvalue_1 = get_prvalue();
 
@@ -26,6 +30,8 @@ int main()
 //	int && rvalue_3 = d; // warning: dangerous double to int conversion
 
 //	int && rvalue_4 = i; // error: rvalue reference cannot be bound to lvalue
+
+//  ================================================================================================
 	
 	[[maybe_unused]] const int &  const_lvalue_1 = get_prvalue();
 	[[maybe_unused]] const int &  const_lvalue_2 = get__lvalue();
@@ -33,6 +39,8 @@ int main()
 //	const int &  const_lvalue_3 = d; // warning: dangerous double to int conversion
 
 	[[maybe_unused]] const int &  const_lvalue_4 = i;
+
+//  ================================================================================================
 	
 	[[maybe_unused]] const int && const_rvalue_1 = get_prvalue();
 

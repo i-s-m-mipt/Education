@@ -41,6 +41,8 @@ int main()
 
 	delete computer_ptr;
 
+//  ================================================================================================
+
 	auto x = 42;
 
 	[[maybe_unused]] decltype (x)  v = x; // note: decltype (x)  -> double
@@ -50,6 +52,8 @@ int main()
 
 	[[maybe_unused]]          auto  z1 = rcx; // note:          auto  ->       double
 	[[maybe_unused]] decltype(auto) z2 = rcx; // note: decltype(auto) -> const double &
+
+//  ================================================================================================
 
 	std::cout << typeid(x).name() << std::endl;
 
@@ -69,7 +73,11 @@ int main()
 
 	std::cout << typeid(reference).name() << std::endl; // note: typeid provides not reliable result
 
+//  ================================================================================================
+
 	std::cout << boost::typeindex::type_id_with_cvr < decltype(reference) > ().pretty_name() << std::endl;
+
+//  ================================================================================================
 
 	if (auto any = std::make_any < decltype(x) > (x); any.has_value()) // note: any with int value
 	{

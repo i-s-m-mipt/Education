@@ -45,6 +45,8 @@ int main()
 
     if ((x <=> y) < 0) std::cout << "x < y" << std::endl << std::endl; // note: same as x < y
 
+//  ================================================================================================
+
     Apple apple_1(200.0);
     Apple apple_2(100.0);
 
@@ -56,6 +58,8 @@ int main()
 //  std::cout << "apple_1 != apple_2: " << (apple_1 != apple_2) << std::endl; // note: partial ordering
 
     std::cout << std::endl;
+
+//  ================================================================================================
 
     Human human_1(85.0, 185.0);
     Human human_2(80.0, 180.0);

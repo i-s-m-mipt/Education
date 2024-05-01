@@ -208,6 +208,8 @@ int main()
 
 //	std::vector < int > vector = 42; // error: explicit constructor required for safety
 
+//  ================================================================================================
+
 	std::cout << (ratio_4 +=       1) << std::endl;
 	std::cout << (ratio_4 -= ratio_1) << std::endl;
 	std::cout << (ratio_4 *= ratio_2) << std::endl;
@@ -235,6 +237,8 @@ int main()
 	std::cout << (ratio_3 >= ratio_4) << std::endl;
 	std::cout << (ratio_3 == ratio_4) << std::endl;
 	std::cout << (ratio_3 != ratio_4) << std::endl;
+
+//  ================================================================================================
 
 	boost::rational < int > ratio_6(2, 5); // note: ignore templates here
 	boost::rational < int > ratio_7(3, 7); // note: ignore templates here

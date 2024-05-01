@@ -166,6 +166,8 @@ int main()
 
 	date.set_year(2023);
 
+//  ================================================================================================
+
 	const Date c_date;
 
 	c_date.print_v2();
@@ -178,6 +180,8 @@ int main()
 	const Date date_2(2023, 9, 19);
 
 //	const Date date_3(); // bad: most vexing parse, not an instance of the class
+
+//  ================================================================================================
 
 	const Date::Printer printer;
 

@@ -49,6 +49,8 @@ int main()
 	f(get__lvalue      ());
 	f(get__lvalue_const());
 
+//  ================================================================================================
+
 	[[maybe_unused]] double d = 3.14;
 
 	const int i = 42;
@@ -56,6 +58,8 @@ int main()
 //	f(d); // error: ambiguous function overloading 
 
 	f(i);
+
+//  ================================================================================================
 
 	const Person person("Matthias");
 

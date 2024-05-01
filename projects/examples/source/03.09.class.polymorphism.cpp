@@ -109,6 +109,8 @@ int main()
 
 	computer_ptr->print();
 
+//  ================================================================================================
+
 	const Mobile mobile_1;
 	const Mobile mobile_2;
 	const Laptop laptop_1;
@@ -118,11 +120,15 @@ int main()
 
 	for (const auto computer : computers) computer->print();
 
+//  ================================================================================================
+
 	computer_ptr = new const Mobile();
 
 	computer_ptr->print();
 
 	delete computer_ptr; // note: important virtual destructor
+
+//  ================================================================================================
 
 	const Abstract_Base * const abstract_base_ptr = new const Derived(); // good: interface class
 
