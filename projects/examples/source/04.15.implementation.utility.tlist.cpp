@@ -4,7 +4,7 @@
 
 #include <boost/type_index.hpp>
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename ... Ts > struct List {};
 
@@ -19,7 +19,7 @@ template < typename L > inline constexpr auto  size_v = Size < L > ::value;
 
 template < typename L > inline constexpr auto empty_v = (size_v < L > == 0);
 
-// =================================================================================================
+//  ================================================================================================
 
 template <             typename     L  > struct Front {}; // note: compile error for empty List
 
@@ -27,7 +27,7 @@ template < typename T, typename ... Ts > struct Front < List < T, Ts ... > > { u
 
 template < typename L > using front = typename Front < L > ::type;
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename T, typename     L  > struct Push_Front {}; 
 
@@ -38,7 +38,7 @@ template < typename T, typename ... Ts > struct Push_Front < T, List < Ts ... > 
 
 template < typename T, typename L > using push_front = typename Push_Front < T, L > ::type;
 
-// =================================================================================================
+//  ================================================================================================
 
 template <             typename     L  > struct Pop_Front {}; // note: compile error for empty List
 
@@ -49,7 +49,7 @@ template < typename T, typename ... Ts > struct Pop_Front < List < T, Ts ... > >
 
 template < typename L > using pop_front = typename Pop_Front < L > ::type;
 
-// =================================================================================================
+//  ================================================================================================
 
 template <             typename     L  > struct Back {}; // note: compile error for empty List
 
@@ -62,7 +62,7 @@ template < typename T, typename ... Ts > struct Back < List < T, Ts ... > >
 
 template < typename L > using back = typename Back < L > ::type;
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename T, typename L, bool E = empty_v < L > > struct Push_Back {};
 
@@ -78,7 +78,7 @@ template < typename T, typename L > struct Push_Back < T, L, true >
 
 template < typename T, typename L > using push_back = typename Push_Back < T, L > ::type;
 
-// =================================================================================================
+//  ================================================================================================
 
 template <             typename     L  > struct Pop_Back{}; // note: compile error for empty List
 
@@ -91,7 +91,7 @@ template < typename T, typename ... Ts > struct Pop_Back < List < T, Ts ... > >
 
 template < typename L > using pop_back = typename Pop_Back < L > ::type;
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename L, auto N > struct Nth : public Nth < pop_front < L > , N - 1 > {};
 
@@ -99,7 +99,7 @@ template < typename L > struct Nth < L, 0 > : public Front < L > {};
 
 template < typename L, auto N > using nth = typename Nth < L, N > ::type;
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename L, bool E = empty_v < L > > struct Max_Type {};
 
@@ -121,7 +121,7 @@ public:
 
 template < typename L > using max_type = typename Max_Type < L > ::type;
 
-// =================================================================================================
+//  ================================================================================================
 
 int main()
 {

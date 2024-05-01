@@ -1,7 +1,7 @@
 #include <concepts>
 #include <type_traits>
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename T > concept integral = std::is_integral_v < T > ;
 
@@ -9,7 +9,7 @@ template < typename T > concept floating_point = std::is_floating_point_v < T > 
 
 template < typename T > concept arithmetic = (integral < T > || floating_point < T > );
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename T > concept addable = requires (T x, T y) { x + y; };
 
@@ -32,7 +32,7 @@ template < typename T > concept typable = requires
     typename T::value_type; // note: required nested member name
 };
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename T > [[nodiscard]] inline constexpr T max_v1(T x, T y) requires integral < T >
 {
@@ -51,7 +51,7 @@ template < integral ... Ts > [[nodiscard]] inline constexpr integral auto sum_v1
 
 template < typename T > requires std::regular < T > class Container {}; // note: standard concept
 
-// =================================================================================================
+//  ================================================================================================
 
 int main()
 {

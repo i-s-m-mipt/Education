@@ -5,7 +5,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-// =================================================================================================
+//  ================================================================================================
 
 [[nodiscard]] inline constexpr int factorial(int n) noexcept 
 { 
@@ -24,7 +24,7 @@ TEST(Factorial, Results) // note: group name and test case name
     ASSERT_EQ(factorial(4),    25); // note: failed assertion
 }
 
-// =================================================================================================
+//  ================================================================================================
 
 [[nodiscard]] testing::AssertionResult is_even(int n) 
 {
@@ -45,7 +45,7 @@ TEST(Miscellaneous, Expectations)
     EXPECT_NEAR(3.14, 3.14, std::numeric_limits < double > ::epsilon());
 } 
 
-// =================================================================================================
+//  ================================================================================================
 
 class Fixture : public testing::Test 
 {
@@ -67,7 +67,7 @@ TEST_F(Fixture, Size)
     ASSERT_EQ(std::size(data), 2);
 }
 
-// =================================================================================================
+//  ================================================================================================
 
 class Parameters : public Fixture, public testing::WithParamInterface < int > {};
 
@@ -75,7 +75,7 @@ TEST_P(Parameters, Resize) { data.resize(GetParam(), 0); ASSERT_EQ(std::size(dat
 
 INSTANTIATE_TEST_CASE_P(Test, Parameters, testing::Values(0, 1, 2, 4, 8)); // note: testing::Range(0, 10)
 
-// =================================================================================================
+//  ================================================================================================
 
 int main(int argc, char ** argv) // note: arguments for testing
 {

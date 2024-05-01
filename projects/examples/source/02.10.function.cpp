@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-// =================================================================================================
+//  ================================================================================================
 
 [[nodiscard]] int f(int x); // note: forward declaration
 
@@ -17,7 +17,7 @@ void extract_data(int * ptr = nullptr) // good: nullptr as default argument
 	[[maybe_unused]] auto local_data = (ptr ? *ptr : 42);
 } 
 
-// =================================================================================================
+//  ================================================================================================
 
 void test_pointers(int * x, const int * y) // note: demo only
 {
@@ -36,7 +36,7 @@ void test_references(int & x, [[maybe_unused]] const int & y) // note: demo only
 //	++y; // error: constant reference
 }
 
-// =================================================================================================
+//  ================================================================================================
 
 void print_string(const std::string & string) // good: constant reference for read-only
 {
@@ -65,7 +65,7 @@ void print_vector(const std::vector < int > & vector) // good: std::vector knows
 	std::cout << std::endl;
 }
 
-// =================================================================================================
+//  ================================================================================================
 
 [[nodiscard]] inline auto max(int x, int y) // good: return type deduction in small function
 {
@@ -77,7 +77,7 @@ void print_vector(const std::vector < int > & vector) // good: std::vector knows
 	return (n < 2 ? 1 : n * factorial(n - 1)); // good: compact recursion
 }
 
-// =================================================================================================
+//  ================================================================================================
 
 /*
 [[nodiscard]] int * get_dangling_pointer()
@@ -97,7 +97,7 @@ void print_vector(const std::vector < int > & vector) // good: std::vector knows
 }
 */
 
-// =================================================================================================
+//  ================================================================================================
 
 void h()
 {
@@ -110,13 +110,13 @@ void h()
 	return;
 }
 
-// =================================================================================================
+//  ================================================================================================
 
 inline void print(bool  ) { std::cout << "print(bool  )" << std::endl; } // note: overloaded function
 inline void print(char  ) { std::cout << "print(char  )" << std::endl; } // note: overloaded function
 inline void print(double) { std::cout << "print(double)" << std::endl; } // note: overloaded function
 
-// =================================================================================================
+//  ================================================================================================
 
 int main()
 {

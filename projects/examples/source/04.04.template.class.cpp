@@ -3,7 +3,7 @@
 #include <iterator>
 #include <vector>
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename T, typename C = std::vector < T > > class Stack_v1
 {
@@ -23,7 +23,7 @@ private:
 
 }; // template < typename T, typename C = std::vector < T > > class Stack_v1
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename T, typename C > void Stack_v1 < T, C > ::push(T value)
 {
@@ -40,7 +40,7 @@ template < typename T, typename C > void Stack_v1 < T, C > ::pop()
 	m_container.pop_back(); // note: undefined behavior if empty
 }
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename T, template < typename E > typename C = std::vector > class Stack_v2 
 {
@@ -54,7 +54,7 @@ private:
 
 }; // template < typename T, template < typename E > typename C = std::vector > class Stack_v2
 
-// =================================================================================================
+//  ================================================================================================
 
 template < template < typename E > typename C1,
 		   template < typename E > typename C2, typename T >
@@ -68,13 +68,13 @@ template < typename T1, typename T2 > struct Pair { T1 x{}; T2 y{}; }; // note: 
 
 template < typename T > class Container { public: Container(std::size_t, const T &) {} }; 
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename T > class Outer { public: template < typename U > class Inner; };
 
 template < typename T > template < typename U > class Outer < T > ::Inner {}; // note: nested template
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename T1, typename T2 > class C // note: basic template
 {
@@ -101,7 +101,7 @@ template <> class C < int, double > // note: full specialization for int, double
 public: void f() const { std::cout << "template <> C < int, double > " << std::endl; }
 };
 
-// =================================================================================================
+//  ================================================================================================
 
 int main()
 {

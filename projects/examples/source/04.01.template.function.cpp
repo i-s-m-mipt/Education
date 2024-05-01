@@ -1,7 +1,7 @@
 #include <iostream>
 #include <type_traits>
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename T > [[nodiscard]] inline T max_v1(T x, T y) // note: can be class instead of typename
 {
@@ -38,7 +38,7 @@ template < typename T1, typename T2 > [[nodiscard]] inline auto max_v6(T1 x, T2 
 	return (x < y ? y : x);
 }
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename T > inline void f(T) // note: basic template
 {
@@ -66,7 +66,7 @@ template < typename T > inline void g < int, T > () // error: prohibited partial
 }
 */
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename T > inline void h(T) // note: first basic template
 {
@@ -83,7 +83,7 @@ template < typename T > inline void h(T *) // note: second basic template, overl
 	std::cout << "template < T > h(T *)" << std::endl;
 }
 
-// =================================================================================================
+//  ================================================================================================
 
 template < typename T, int N, int M > [[nodiscard]] inline bool less(T(&array_1)[N], T(&array_2)[M])
 {
@@ -95,7 +95,7 @@ template < typename T, int N, int M > [[nodiscard]] inline bool less(T(&array_1)
 	return (N < M);
 }
 
-// =================================================================================================
+//  ================================================================================================
 
 int main()
 {
