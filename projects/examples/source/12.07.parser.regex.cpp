@@ -81,6 +81,8 @@ int main(int argc, char ** argv) // note: arguments for testing
 
     std::cout << std::endl;
 
+//  ================================================================================================
+
     {
         const std::sregex_iterator begin(std::begin(data), std::cend(data), pattern), end; // note: consider also boost::tokenizer
 
@@ -89,6 +91,8 @@ int main(int argc, char ** argv) // note: arguments for testing
         std::cout << std::endl;
     }
 
+//  ================================================================================================
+
     {
         const std::sregex_token_iterator begin(std::begin(data), std::cend(data), pattern, { -1, 0, 1 }), end;
 
@@ -96,6 +100,8 @@ int main(int argc, char ** argv) // note: arguments for testing
 
         std::cout << std::endl;
     }
+
+//  ================================================================================================
 
     testing::InitGoogleTest(&argc, argv);
 

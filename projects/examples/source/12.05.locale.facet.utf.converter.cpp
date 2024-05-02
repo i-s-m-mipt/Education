@@ -145,6 +145,8 @@ int main()
     std::cout <<   string << ' ' << std::size(  string) << std::endl;
     std::cout << u8string << ' ' << std::size(u8string) << std::endl;
 
+//  ================================================================================================
+
     const auto u16string = boost::locale::conv::utf_to_utf < char16_t, char > (u8string);
     const auto u32string = boost::locale::conv::utf_to_utf < char32_t, char > (u8string);
 
@@ -162,9 +164,13 @@ int main()
 
 	std::cout << std::endl;
 
+//  ================================================================================================
+
 	u8string = boost::locale::conv::utf_to_utf < char, char32_t > (u32string);
 
 	std::cout << convert_utf_to_locale(u8string) << std::endl;
+
+//  ================================================================================================
 
 	std::cout << convert_utf_to_locale("∃y ∀x ¬(x ≺ y)") << std::endl; // note: problem with char8_t 
 

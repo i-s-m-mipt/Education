@@ -76,6 +76,8 @@ int main(int argc, char ** argv) // note: arguments for testing
 
     boost::spirit::x3::parse(std::cbegin(input), std::cend(input), boost::spirit::x3::int_[print]);
 
+//  ================================================================================================
+
     testing::InitGoogleTest(&argc, argv);
 
     return RUN_ALL_TESTS();

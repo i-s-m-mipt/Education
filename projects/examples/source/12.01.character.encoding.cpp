@@ -23,6 +23,8 @@ int main()
 
 	assert(sizeof(char) == 1); // note: guaranteed size 8 bits, remember std::byte
 
+//  ================================================================================================
+
 	std::cout << std::boolalpha << std::is_signed_v < char > << std::endl;
 
 //	c = 255; // bad: undefined behavior, overflow conversion from 255 to -1
@@ -44,11 +46,15 @@ int main()
 
 	std::cout << std::endl;
 
+//  ================================================================================================
+
 	for (c = '!'; c <= '~'; ++c) std::cout << c; // note: printable ASCII characters
 
 	std::cout << std::endl;
 	
 	assert('8' - '0' == 8); // good: obtain integer digit from character digit
+
+//  ================================================================================================
 
 	[[maybe_unused]] constexpr auto c8 = u8'a'; // note: auto -> char8_t
 

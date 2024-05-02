@@ -48,6 +48,8 @@ struct case_insensitive_traits : public std::char_traits < char >
 
 }; // struct case_insensitive_traits : public std::char_traits < char > 
 
+//  ================================================================================================
+
 using cistring_t = std::basic_string < char, case_insensitive_traits > ;
 
 //  ================================================================================================
@@ -108,6 +110,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
     std::cout << std::quoted(string_1) << ' ' << 
                  std::quoted(string_2) << std::endl; // note: see arguments
 
+//  ================================================================================================
+
     const auto string_3 = "Hello, world!"s; // good: auto -> std::string, string literal
 
     if (const auto index = string_3.find(','); index != std::string::npos)
@@ -121,6 +125,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     assert(std::stoi(string_4) == 42 && string_4 == std::to_string(42));
 
+//  ================================================================================================
+
     [[maybe_unused]] constexpr char char_array[]{ 'h', 'e', 'l', 'l', 'o'       };
 
     [[maybe_unused]] constexpr char c_string_1[]{ 'h', 'e', 'l', 'l', 'o', '\0' };
@@ -130,15 +136,23 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     assert(std::strlen(string_3.c_str()) == 13); // note: see also cstring library functions
 
+//  ================================================================================================
+
     std::cout << "Enter data: "; char data[256]{};
 
     std::cin.getline(data, std::size(data)); // note: read maximum 256 characters till \n
 
     std::cout << data << std::endl; // note: outputs characters till null terminator \0
 
+//  ================================================================================================
+
     assert(cistring_t("HELLO") == cistring_t("hello")); // note: custom char traits
 
+//  ================================================================================================
+
     [[maybe_unused]] const auto small_string = "hello"; // note: small strings optimization
+
+//  ================================================================================================
 
     constexpr auto string_view = "Hello, world!"sv; // note: auto -> std::string_view
     
@@ -153,6 +167,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 //  const std::string_view bad_view_2 = []() constexpr { return "hello"s; }(); // bad: undefined behavior
 
 //  const std::string_view bad_view_3 = string_4; string_4 = "hello";          // bad: undefined behavior
+
+//  ================================================================================================
 
     benchmark::Initialize(&argc, argv);
 

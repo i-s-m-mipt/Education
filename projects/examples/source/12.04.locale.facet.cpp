@@ -11,6 +11,8 @@ int main()
 	const auto data = std::localtime(&time);
 
 	const auto format = "%A %x"; // note: weekday followed by date
+
+//  ================================================================================================
 	
 	const std::locale locale_1("en_US.utf8"); // note: use locale -a to list all installed locales
     
@@ -27,6 +29,8 @@ int main()
 
 	std::cout << std::endl;
 
+//  ================================================================================================
+
 	const std::locale locale_2("ru_RU.utf8"); // note: use locale -a to list all installed locales
 
 	std::cout.imbue(locale_2);
@@ -41,6 +45,8 @@ int main()
 	time_put_2.put(std::cout, std::cout, ' ', data, format, format + std::strlen(format));
 
 	std::cout << std::endl;
+
+//  ================================================================================================
 
 	const auto & time_get_C = std::use_facet < std::time_get < char > > (std::locale::classic()); // note: C locale
 

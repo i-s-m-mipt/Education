@@ -35,6 +35,8 @@ namespace parser
 
         } huns; // class Huns : boost::spirit::x3::symbols < int >
 
+//  ================================================================================================
+
         class Tens : public boost::spirit::x3::symbols < int >
         {
         public:
@@ -53,6 +55,8 @@ namespace parser
             }
 
         } tens; // class Tens : boost::spirit::x3::symbols < int >
+
+//  ================================================================================================
 
         class Ones : public boost::spirit::x3::symbols < int >
         {
@@ -73,12 +77,16 @@ namespace parser
 
         } ones; // class Ones : boost::spirit::x3::symbols < int >
 
+//  ================================================================================================
+
         const auto set_0    = [](auto && context){ boost::spirit::x3::_val (context)  = 0;    };
         const auto add_1000 = [](auto && context){ boost::spirit::x3::_val (context) += 1000; };
         const auto add_x    = [](auto && context){ boost::spirit::x3::_val (context) += 
                                                    boost::spirit::x3::_attr(context);         };
 
     } // namespace detail
+
+//  ================================================================================================
 
     using namespace detail; // note: namespaces used in documentation, consider classes
 
