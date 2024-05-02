@@ -51,10 +51,14 @@ int main()
     {
         Python python;
 
+//  ================================================================================================
+
         boost::python::exec("from script import factorial", python.global(), python.global());
 		
 		std::cout << boost::python::extract < std::string > (
             python.global()["factorial"](100))() << std::endl; // note: outputs 100!
+
+//  ================================================================================================
 
         const std::size_t size = 1'000'000, length = 10, step = size / 50;
 
@@ -70,6 +74,8 @@ int main()
         }
 
         points.pop_back(); // note: remove last comma in string
+
+//  ================================================================================================
 
         boost::python::exec("from script import make_plot", python.global(), python.global());
 		

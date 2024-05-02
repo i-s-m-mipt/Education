@@ -283,10 +283,8 @@ target_link_libraries     (06.12.project.library PRIVATE ${Boost_LIBRARIES})
 target_compile_options    (06.12.project.library PRIVATE -Wall -Wextra -pedantic -O0) 
 set_target_properties     (06.12.project.library PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 
-add_executable            (16.06.embedding.python source/16.06.embedding.python.caller.cpp 
-                                                  source/16.05.embedding.python.wrapper.source.cpp)
-
-target_link_libraries     (16.06.embedding.python PRIVATE   ${Boost_LIBRARIES})
-target_link_libraries     (16.06.embedding.python PRIVATE ${Python3_LIBRARIES})
-target_compile_options    (16.06.embedding.python PRIVATE -Wall -Wextra -pedantic -O0) 
-set_target_properties     (16.06.embedding.python PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+add_executable            (16.05.embedding.python source/16.05.embedding.python.caller.cpp)
+target_link_libraries     (16.05.embedding.python PRIVATE   ${Boost_LIBRARIES})
+target_link_libraries     (16.05.embedding.python PRIVATE ${Python3_LIBRARIES})
+target_compile_options    (16.05.embedding.python PRIVATE -Wall -Wextra -pedantic -O0) 
+set_target_properties     (16.05.embedding.python PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
