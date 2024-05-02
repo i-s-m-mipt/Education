@@ -78,6 +78,8 @@ int main()
 
     std::cout << "Continue? (y/n) "; char c{}; std::cin >> c;
 
+//  ================================================================================================
+
     storages.clear();
 
     for (std::size_t i = 0; i < size; ++i) // note: shared objects, single size, ~400(Mb)
@@ -86,6 +88,8 @@ int main()
     }
 
     std::cout << "Continue? (y/n) "; std::cin >> c;
+
+//  ================================================================================================
 
     const Storage storage_1(Data { 1 }, Data{});
     const Storage storage_2(Data { 2 }, Data{});

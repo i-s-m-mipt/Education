@@ -41,6 +41,8 @@ int main()
 {
 	constexpr std::size_t size = 5;
 
+//  ================================================================================================
+
 	[[maybe_unused]] int array_2D_v1[size][size]{}; // note: built-in static 2D array
 
 	for (std::size_t i = 0; i < size; ++i)
@@ -50,6 +52,8 @@ int main()
 			array_2D_v1[i][j] = 42;
 		}
 	}
+
+//  ================================================================================================
 
 	Array_2D < int, size > array_2D_v2; // note: custom static 2D array
 
@@ -61,6 +65,8 @@ int main()
 //			array_2D_v2(i, j) = 42; // note: consider as alternative
 		}
 	}
+
+//  ================================================================================================
 
 	const auto array_2D_v3 = new int*[size]{}; // note: built-in dynamic 2D array
 
@@ -84,6 +90,8 @@ int main()
 
 	delete[] array_2D_v3;
 
+//  ================================================================================================
+
 	const auto array_2D_v4 = new int[size * size]{}; // note: linearized built-in dynamic 2D array
 
 	for (std::size_t i = 0; i < size; ++i)
@@ -96,6 +104,8 @@ int main()
 
 	delete[] array_2D_v4;
 
+//  ================================================================================================
+
 	std::array < std::array < int, size > , size > array_2D_v5; // note: static 2D std::array
 
 	for (std::size_t i = 0; i < size; ++i)
@@ -106,6 +116,8 @@ int main()
 		}
 	}
 
+//  ================================================================================================
+
 	std::vector array_2D_v6(size, std::vector < int > (size)); // note: dynamic 2D std::vector
 
 	for (std::size_t i = 0; i < size; ++i)
@@ -115,6 +127,8 @@ int main()
 			array_2D_v6[i][j] = 42;
 		}
 	}
+
+//  ================================================================================================
 
 	constexpr std::size_t size_1 = 3;
 	constexpr std::size_t size_2 = 4;
@@ -138,6 +152,8 @@ int main()
 
 		std::cout << std::endl;
 	}
+
+//  ================================================================================================
 
 	using range_t = boost::multi_array_types::index_range;
 

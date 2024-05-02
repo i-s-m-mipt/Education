@@ -56,9 +56,13 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 	static_assert(std::is_same_v < category_t, std::bidirectional_iterator_tag > );
 
+//  ================================================================================================
+
 	for (const auto element : set) std::cout << element << ' ';
 
 	std::cout << std::endl;
+
+//  ================================================================================================
 
 	set.insert(std::cbegin(set), 0); // good: O(1) complexity (amortized) at best
 
@@ -72,7 +76,11 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 	assert(*set.lower_bound(3) == 4 && *set.upper_bound(3) == 4); // note: 0 1 2 4 5
 	assert(*set.lower_bound(4) == 4 && *set.upper_bound(4) == 5); // note: 0 1 2 4 5
 
+//  ================================================================================================
+
 	auto node = set.extract(1); node.value() = 3; set.insert(std::move(node));
+
+//  ================================================================================================
 
 	std::map < std::string, int > map; // note: O(log(N)) complexity mainly
 
@@ -86,6 +94,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 	assert(!map.insert_or_assign("world", 42).second); // note: changes value here
 
 	assert(std::size(map) == 1 && map.at("world") == 42);
+
+//  ================================================================================================
 
 	benchmark::Initialize(&argc, argv);
 

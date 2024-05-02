@@ -44,6 +44,8 @@ int main()
 	constexpr std::size_t size_2 = 4;
 	constexpr std::size_t size_3 = 5;
 
+//  ================================================================================================
+
 	std::vector < std::vector < std::vector < int > > > vector_3D(size_1,
 		          std::vector < std::vector < int > >            (size_2,
 			                    std::vector < int >              (size_3, 0)));
@@ -66,6 +68,8 @@ int main()
 
 		std::cout << std::endl;
 	}
+
+//  ================================================================================================
 
 	const auto array = make_array < int, 3 > (vector_3D);
 

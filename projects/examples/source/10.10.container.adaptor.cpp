@@ -19,6 +19,8 @@ int main()
 
 	assert(stack.top() == 2);
 
+//  ================================================================================================
+
 	std::queue < int > queue; // note: FIFO concept
 
 	queue.push(1);
@@ -32,6 +34,8 @@ int main()
 	queue.pop();
 
 	assert(queue.front() == 2); assert(queue.back() == 3);
+
+//  ================================================================================================
 
 	std::priority_queue < int > priority_queue; // note: FIFO concept with priority
 

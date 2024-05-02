@@ -68,14 +68,20 @@ int main()
 {
 	std::cout << hash("Hello, world!") << std::endl;
 
+//  ================================================================================================
+
 	std::cout <<   std::hash < std::string > ()("Hello, world!") << std::endl;
 	std::cout << boost::hash < std::string > ()("Hello, world!") << std::endl;
+
+//  ================================================================================================
 
 	const S s { "hello", "world" };
 
 	std::cout << combined_hash(s.string_1, s.string_2) << std::endl;
 
 	std::cout << boost::hash < S > ()(s) << std::endl;
+
+//  ================================================================================================
 
 	const std::vector < std::string > vector { "hello", "world" };
 

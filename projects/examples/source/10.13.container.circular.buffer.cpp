@@ -22,6 +22,8 @@ int main()
 
 	assert(std::size(buffer) == 0 && buffer.capacity() == capacity);
 
+//  ================================================================================================
+
 	buffer.push_back(0); print(std::begin(buffer), std::end(buffer));
 	buffer.push_back(1); print(std::begin(buffer), std::end(buffer));
 	buffer.push_back(2); print(std::begin(buffer), std::end(buffer));
@@ -31,6 +33,8 @@ int main()
 	assert(buffer[0] == 2);
 	assert(buffer[1] == 3);
 	assert(buffer[2] == 4);
+
+//  ================================================================================================
 
 	assert(!buffer.is_linearized());
 
