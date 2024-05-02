@@ -70,6 +70,8 @@ int main()
 		std::cout << std::get < double > (result) << std::endl;
 	}
 
+//  ================================================================================================
+
 	constexpr std::optional < int > optional_1; // note: same as std::nullopt
 
     std::cout << optional_1.has_value() << std::endl;

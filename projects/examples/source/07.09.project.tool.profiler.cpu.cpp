@@ -24,10 +24,10 @@
 
 int main()
 {
-	std::cout << f(1)     << std::endl;
-	std::cout << f(10)    << std::endl;
-	std::cout << f(100)   << std::endl;
-	std::cout << f(1000)  << std::endl;
+	std::cout << f(    1) << std::endl;
+	std::cout << f(   10) << std::endl;
+	std::cout << f(  100) << std::endl;
+	std::cout << f( 1000) << std::endl;
 	std::cout << f(10000) << std::endl;
 
 	return 0;

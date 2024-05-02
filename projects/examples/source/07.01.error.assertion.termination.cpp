@@ -39,6 +39,8 @@ int main()
 
 //  assert(nullptr); // error: assertion failed
 
+//  ================================================================================================
+
            assert(1 + 1 == 2); // note: optional message string
     static_assert(1 + 1 == 2); // note: optional message string
 
@@ -48,6 +50,8 @@ int main()
     [[maybe_unused]] const C < int > good;
 
 //  const C bad; // error: static assertion failed
+
+//  ================================================================================================
 
     std::atexit(cleanup_v1);
     std::atexit(cleanup_v2);
