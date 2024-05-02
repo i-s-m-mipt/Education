@@ -150,4 +150,6 @@ BENCHMARK(test_6)->RangeMultiplier(2)->Range(1024, 1024 << 16)->Complexity(); //
 
 BENCHMARK(test_7); // note: exited with error
 
+//  ================================================================================================
+
 BENCHMARK_MAIN();

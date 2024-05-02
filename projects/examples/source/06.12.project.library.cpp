@@ -10,9 +10,9 @@ int main()
 {
 	std::cout << library_v1::f(42) << std::endl;
 
-	const std::string path = "liblibrary_v2.so";
-
 //  ================================================================================================
+
+	const std::string path = "liblibrary_v2.so";
 
 	const auto f = boost::dll::import_symbol < int(int) > (path, "f"); // note: not import since C++20
 

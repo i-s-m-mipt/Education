@@ -87,6 +87,8 @@ void test_macros()
 	std::cout << location.       column() << std::endl;
 	std::cout << location.function_name() << std::endl;
 
+//  ================================================================================================
+
 	TRACE; // good: semicolon at end
 }
 
