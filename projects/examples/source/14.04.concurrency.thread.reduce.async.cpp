@@ -65,6 +65,8 @@ int main()
         std::cerr << exception.what() << '\n';
     }
 
+//  ================================================================================================
+
 	constexpr std::size_t size = 1'000;
 
 	std::vector < int > vector(size, 0);

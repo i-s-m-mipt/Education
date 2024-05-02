@@ -36,6 +36,8 @@ private:
 
 constexpr void f(int & x, int y) noexcept { x = y; } // note: return unavailable for std::thread
 
+//  ================================================================================================
+
 class C { public: void print() const { std::cout << "C::print" << std::endl; } };
 
 //  ================================================================================================
@@ -71,6 +73,8 @@ int main()
 
     thread.join(); // good: otherwise std::terminate called in destructor
 
+//  ================================================================================================
+
     auto x = 42;
 
 //  std::thread(Functor(x)).detach(); // bad: possible dangling reference
@@ -81,11 +85,17 @@ int main()
 
     assert(x == 43);
 
+//  ================================================================================================
+
     const C c;
 
     std::thread(&C::print, &c).join(); // note: consider (c.*&C::print)()
 
+//  ================================================================================================
+
     const Scoped_Thread scoped_thread(std::thread(f, std::ref(x), 42));
+
+//  ================================================================================================
 
     assert(std::thread::hardware_concurrency() != 0);
 
@@ -97,6 +107,8 @@ int main()
 	}
 
 	for (auto & thread : threads) thread.join();
+
+//  ================================================================================================
 
     std::jthread jthread_1([](std::stop_token token) // note: threadsafe view
     {
@@ -113,6 +125,8 @@ int main()
         }
     });
 
+//  ================================================================================================
+
     std::jthread jthread_2([](std::stop_token token) // note: threadsafe view
     {
         for (std::size_t i = 0; i < 10; ++i)
@@ -124,6 +138,8 @@ int main()
             if (token.stop_requested()) return; // note: interruption
         }
     });
+
+//  ================================================================================================
 
     std::this_thread::sleep_for(0.5s);
 
