@@ -322,8 +322,10 @@ void test_3()
 	const auto result_cpp = test_cpp_v3(x, y, size);
 	const auto result_asm = test_asm_v3(x, y, size);
 
-	std::cout << "Result C++: " << std::setprecision(6) << std::fixed << result_cpp << std::endl;
-	std::cout << "Result ASM: " << std::setprecision(6) << std::fixed << result_asm << std::endl << std::endl;
+	std::cout << std::setprecision(6) << std::fixed;
+
+	std::cout << "Result C++: " << result_cpp << std::endl;
+	std::cout << "Result ASM: " << result_asm << std::endl << std::endl;
 
 	delete[] x;
 	delete[] y;
@@ -342,8 +344,10 @@ void test_4()
 	const auto result_cpp = test_cpp_v4(x, size);
 	const auto result_asm = test_asm_v4(x, size);
 
-	std::cout << "Result C++: " << std::setprecision(6) << std::fixed << result_cpp << std::endl;
-	std::cout << "Result ASM: " << std::setprecision(6) << std::fixed << result_asm << std::endl << std::endl;
+	std::cout << std::setprecision(6) << std::fixed;
+
+	std::cout << "Result C++: " << result_cpp << std::endl;
+	std::cout << "Result ASM: " << result_asm << std::endl << std::endl;
 
 	delete[] x;
 }
