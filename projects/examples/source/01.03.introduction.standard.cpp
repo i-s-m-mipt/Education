@@ -8,6 +8,8 @@
 int main()
 {
 //	using namespace std; // bad: dangerous in big projects, avoid
+
+//  ================================================================================================
 	
 	std::cout << "Enter two integers separated by a space character: ";
 
@@ -17,6 +19,8 @@ int main()
 
 	std::cout << "You have entered " << x << " and " << y << std::endl;
 
+//  ================================================================================================
+
 	std::cout << "Enter string with your name: ";
 
 	std::string name; // note: comfortable for complex operations
@@ -25,9 +29,13 @@ int main()
 
 	std::cout << "Hello, " << name << std::endl;
 
+//  ================================================================================================
+
 	std::vector < int > vector { 1, 2, 3 }; // note: default container
 
 	std::cout << "Vector size is " << std::size(vector) << std::endl;
+
+//  ================================================================================================
 
 	std::cout << "Square root of 4 is " << std::sqrt(4) << std::endl;
 
