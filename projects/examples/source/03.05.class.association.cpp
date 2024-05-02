@@ -101,16 +101,12 @@ int main()
 	Lecture lecture_2("Chemistry");
 	Lecture lecture_3("Geograhpy");
 
-//  ================================================================================================
-
 	connect(student_1, lecture_1);
 	connect(student_2, lecture_2);
 	connect(student_3, lecture_3);
 	connect(student_1, lecture_3);
 	connect(student_2, lecture_1);
 	connect(student_3, lecture_2);
-
-//  ================================================================================================
 
 	student_1.show_lectures();
 	lecture_1.show_students();

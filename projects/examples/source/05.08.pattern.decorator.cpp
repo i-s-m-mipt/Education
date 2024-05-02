@@ -58,8 +58,6 @@ int main()
 
     std::cout << mobile->description() << std::endl;
 
-//  ================================================================================================
-
     const Computer * const overclocked_mobile = new const Overclocked_Computer(*mobile);
 
     std::cout << overclocked_mobile->description() << std::endl;

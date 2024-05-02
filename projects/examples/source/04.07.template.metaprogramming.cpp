@@ -43,8 +43,6 @@ int main()
 {
 	std::cout << factorial_v < 5 > << std::endl;
 
-//  ================================================================================================
-
 	std::cout << is_prime_v < 42 > << std::endl;
 	std::cout << is_prime_v < 43 > << std::endl;
 

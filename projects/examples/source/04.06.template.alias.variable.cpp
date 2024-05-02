@@ -21,8 +21,6 @@ int main()
 {
 	[[maybe_unused]] const Buffer < int > buffer;
 
-//  ================================================================================================
-
 	std::cout << area(1  ) << std::endl;
 	std::cout << area(1.0) << std::endl;
 
