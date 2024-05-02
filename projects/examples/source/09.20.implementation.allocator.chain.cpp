@@ -183,6 +183,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 	[[maybe_unused]] auto ptr_F = allocator.  allocate(     ); allocator.print(); // note: initial + 8
 	[[maybe_unused]] auto ptr_G = allocator.  allocate(     ); allocator.print(); // note: initial_2
 
+//  ================================================================================================
+
 	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();

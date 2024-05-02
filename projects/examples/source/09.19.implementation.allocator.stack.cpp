@@ -171,6 +171,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 	// note: 000H AHBB | 000H EEEH | FFFF FFFF | ...
 
+//  ================================================================================================
+
 	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();

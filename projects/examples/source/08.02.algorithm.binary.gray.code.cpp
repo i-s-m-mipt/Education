@@ -49,6 +49,8 @@ int main(int argc, char ** argv) // note: arguments for testing
         std::cout << binary(gray_encode(n)) << std::endl;
     }
 
+//  ================================================================================================
+
     testing::InitGoogleTest(&argc, argv);
 
     return RUN_ALL_TESTS();

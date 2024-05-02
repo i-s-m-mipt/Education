@@ -64,6 +64,8 @@ int main(int argc, char ** argv) // note: arguments for testing
         std::cerr << exception.what() << '\n';
     }
 
+//  ================================================================================================
+
 	testing::InitGoogleTest(&argc, argv);
 
     return RUN_ALL_TESTS();

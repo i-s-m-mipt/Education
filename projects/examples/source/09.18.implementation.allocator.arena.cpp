@@ -125,6 +125,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 	std::cout << allocator.allocate(988   ) << ' '; allocator.print();
 	std::cout << allocator.allocate(  1   ) << ' '; allocator.print(); // note: nullptr
 
+//  ================================================================================================
+
 	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();

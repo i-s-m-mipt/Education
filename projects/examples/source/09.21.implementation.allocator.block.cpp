@@ -261,6 +261,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
     
     // note: HAHBBHCCHDD -> HA000000HDD -> HAHEHFF0HDD, each letter states for 16 bytes if sizeof(Header) == 16
 
+//  ================================================================================================
+
 	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();

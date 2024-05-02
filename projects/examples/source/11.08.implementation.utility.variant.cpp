@@ -332,6 +332,8 @@ int main(int argc, char ** argv) // note: arguments for testing
 
     variant.visit([](auto x){ std::cout << x << std::endl; });
 
+//  ================================================================================================
+
     testing::InitGoogleTest(&argc, argv);
 
     return RUN_ALL_TESTS();
