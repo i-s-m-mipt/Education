@@ -66,6 +66,8 @@ int main()
     const Point_v1 < Color_v1           > point_v1_2(2.0, 2.0, 'a');
     const Point_v1 <                    > point_v1_3(3.0, 3.0);
 
+//  ================================================================================================
+
     const Point_v2 < Color_v2, Label_v2 > point_v2_1(1.0, 1.0);
     const Point_v2 < Color_v2           > point_v2_2(2.0, 2.0);
     const Point_v2 <                    > point_v2_3(3.0, 3.0);
