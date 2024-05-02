@@ -10,7 +10,7 @@ int main()
 	float  f = 3.1f; std::cout << sizeof(f) << std::endl; // note: 4 byte(s) usually, single precision
 	double d = 3.14; std::cout << sizeof(d) << std::endl; // note: 8 byte(s) usually, double precision
 
-//  ================================================================================================ы
+//  ================================================================================================
 
 	long long    ll =   42; std::cout << sizeof(ll) << std::endl; // note: 8 byte(s) at least
 	long double  ld = 3.14; std::cout << sizeof(ld) << std::endl; // note: 8 byte(s) usually, can be 12 or 16 byte(s)
