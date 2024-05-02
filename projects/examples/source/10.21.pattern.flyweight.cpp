@@ -76,7 +76,7 @@ int main()
                               Data { static_cast < int > (i) });
     }
 
-    std::cout << "Continue? (y/n) "; char c{}; std::cin >> c;
+    std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
 
 //  ================================================================================================
 
@@ -87,7 +87,7 @@ int main()
         storages.emplace_back(Data { static_cast < int > (i) }, Data{});
     }
 
-    std::cout << "Continue? (y/n) "; std::cin >> c;
+    std::cout << "Enter any character to continue: "; std::cin >> c;
 
 //  ================================================================================================
 
