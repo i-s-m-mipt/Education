@@ -28,6 +28,8 @@ template < typename D > inline void destroy(const Computer < D > * computer)
 
 class Tablet : public Computer < Tablet > {};
 
+//  ================================================================================================
+
 class Laptop : public Computer < Laptop >
 {
 public: void run_implementation() const { std::cout << "Laptop" << std::endl; }

@@ -86,6 +86,8 @@ void Stop::fast([[maybe_unused]] Computer * computer) const
     std::cout << "stop -> fast unavailable" << std::endl;
 }
 
+//  ================================================================================================
+
 void Slow::stop([[maybe_unused]] Computer * computer) const
 {
     computer->set_state(new const Stop()); std::cout << "slow -> stop" << std::endl;
@@ -95,6 +97,8 @@ void Slow::fast([[maybe_unused]] Computer * computer) const
 {
     computer->set_state(new const Fast()); std::cout << "slow -> fast" << std::endl;
 }
+
+//  ================================================================================================
 
 void Fast::stop([[maybe_unused]] Computer * computer) const
 {

@@ -39,6 +39,8 @@ template < typename T > class Container_1 : private Counter < Container_1 < T > 
 public: using Counter < Container_1 < T > , 1 > ::get_counter; // note: implementation detail
 };
 
+//  ================================================================================================
+
 template < typename T > class Container_2 : private Counter < Container_2 < T > , 2 > 
 {
 public: using Counter < Container_2 < T > , 2 > ::get_counter; // note: implementation detail

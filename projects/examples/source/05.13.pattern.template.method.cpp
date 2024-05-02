@@ -19,7 +19,7 @@ private:
 	void f3() const { std::cout << "3 "; }
 	void f5() const { std::cout << "5 "; }
 
-private: // note: non-virtual interface
+private: // note: non-virtual interface idiom
 
 	virtual void f2() const = 0;
 	virtual void f4() const = 0;
