@@ -72,6 +72,8 @@ int main()
 
 //	auto z = combination(x, y); // error: can not be evaluated at compile-time
 
+//  ================================================================================================
+
 	[[maybe_unused]] constexpr auto is_prime_1 = is_prime(5); // note: compile-time
 	[[maybe_unused]] constexpr auto is_prime_2 = is_prime(x); // note: compile-time
 
@@ -82,13 +84,21 @@ int main()
 
 	[[maybe_unused]] auto is_prime_6 = is_prime(y); // note: runtime only
 
+//  ================================================================================================
+
 	std::cout << fibonacci(5) << std::endl;
+
+//  ================================================================================================
 
 	constexpr auto result = f(x);
 
 	std::cout << result << ' ' << f(y) << std::endl;
 
+//  ================================================================================================
+
 	print('a', 42, 3.14);
+
+//  ================================================================================================
 
 	std::cout << ++global_variable << std::endl; // note: non-constant global variable
 

@@ -131,10 +131,14 @@ int main()
 
     using list_3 = push_back < int, list_2 > ; // note: List < bool, char, int >
 
+//  ================================================================================================
+
     static_assert(size_v < list_0 > == 0 &&  empty_v < list_0 > );
     static_assert(size_v < list_1 > == 1 && !empty_v < list_1 > );
     static_assert(size_v < list_2 > == 2 && !empty_v < list_2 > );
     static_assert(size_v < list_3 > == 3 && !empty_v < list_3 > );
+
+//  ================================================================================================
 
 //  using     front_t_0 =     front < list_0 > ; // error: empty List
 //  using pop_front_t_0 = pop_front < list_0 > ; // error: empty List
@@ -142,11 +146,13 @@ int main()
 //  using      back_t_0 =      back < list_0 > ; // error: empty List
 //  using  pop_back_t_0 =  pop_back < list_0 > ; // error: empty List
 
-    using boost::typeindex::type_id_with_cvr; // note: better than plain typeid
+//  ================================================================================================
 
-    std::cout << type_id_with_cvr < list_0 > ().pretty_name() << std::endl;
-    std::cout << type_id_with_cvr < list_1 > ().pretty_name() << std::endl;
-    std::cout << type_id_with_cvr < list_2 > ().pretty_name() << std::endl;
+    std::cout << boost::typeindex::type_id_with_cvr < list_0 > ().pretty_name() << std::endl;
+    std::cout << boost::typeindex::type_id_with_cvr < list_1 > ().pretty_name() << std::endl;
+    std::cout << boost::typeindex::type_id_with_cvr < list_2 > ().pretty_name() << std::endl;
+
+//  ================================================================================================
 
     static_assert(std::is_same_v < front < push_front < int, list_2 > > , int  > );
     static_assert(std::is_same_v < front <  pop_front <      list_2 > > , char > );
@@ -154,9 +160,13 @@ int main()
     static_assert(std::is_same_v <  back <  push_back < int, list_2 > > , int  > );
     static_assert(std::is_same_v <  back <   pop_back <      list_2 > > , bool > );
 
+//  ================================================================================================
+
     static_assert(std::is_same_v < nth < list_3, 0 > , bool > );
     static_assert(std::is_same_v < nth < list_3, 1 > , char > );
     static_assert(std::is_same_v < nth < list_3, 2 > , int  > );
+
+//  ================================================================================================
 
     static_assert(std::is_same_v < max_type < list_3 > , int > );
 

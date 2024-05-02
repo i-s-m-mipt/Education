@@ -193,6 +193,8 @@ int main()
 	static_assert( is_all_of_v < int, int, int    > );
 	static_assert(!is_all_of_v < int, int, double > );
 
+//  ================================================================================================
+
 	static_assert(!is_lvalue_reference_v < int    > );
 	static_assert( is_lvalue_reference_v < int &  > );
 	static_assert(!is_lvalue_reference_v < int && > );
@@ -208,6 +210,8 @@ int main()
 	static_assert( is_same_v < add_lvalue_reference_t < int    > , int &  > );
 	static_assert( is_same_v < add_rvalue_reference_t < int    > , int && > );
 
+//  ================================================================================================
+
 	static_assert( is_integral_v < int    > );
 	static_assert(!is_integral_v < double > );
 
@@ -222,6 +226,8 @@ int main()
 	static_assert( is_function_v < int(int     ) > );
 	static_assert( is_function_v < int(int, int) > );
 
+//  ================================================================================================
+
 	static_assert( is_derived_v < D, B > );
 	static_assert(!is_derived_v < C, B > );
 
@@ -233,6 +239,8 @@ int main()
 
 	static_assert( is_convertible_v < D * , B * > );
 	static_assert(!is_convertible_v < C * , B * > );
+
+//  ================================================================================================
 
 	static_assert( is_same_v < enable_if_t < 1 + 1 == 2, int > , int > );
 //	static_assert(!is_same_v < enable_if_t < 1 + 1 != 2, int > , int > ); // error: no alternatives

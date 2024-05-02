@@ -121,6 +121,8 @@ int main()
 	std::cout << max_v6(100, 2.0) << std::endl;
 	std::cout << max_v7(100, 2.0) << std::endl;
 
+//  ================================================================================================
+
 	f            ('a'); // note: overload for char
 	f            (100); // note: overload for int
 	f            (1.0); // note: overload for double
@@ -129,7 +131,11 @@ int main()
 	f <        > (1.0); // note: basic template for T
 	f < double > (1.0); // note: basic template for T
 
+//  ================================================================================================
+
 	int * ptr = nullptr; h(ptr); // note: example by Dimov-Abrams
+
+//  ================================================================================================
 
 	const int array_1[]{ 1, 2, 3 };
 	const int array_2[]{ 1, 2, 3, 4, 5 };

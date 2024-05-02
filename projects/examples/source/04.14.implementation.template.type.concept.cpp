@@ -67,6 +67,8 @@ int main()
 
 //  static_assert(sum_v1(1.0, 2.0) == 3.0); // error: constraints not satisfied
 
+//  ================================================================================================
+
     [[maybe_unused]] constexpr Container < int > container_1;
 
 //  constexpr Container < int & > container_2; // error: template constraint failure

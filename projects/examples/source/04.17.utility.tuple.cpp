@@ -60,6 +60,8 @@ int main()
 {
     constexpr auto tuple_1 = std::make_tuple('a', 42, 3.14);
 
+//  ================================================================================================
+
     using tuple_t = decltype(tuple_1);
 
     static_assert(std::tuple_size_v < tuple_t > == 3);
@@ -68,9 +70,13 @@ int main()
     static_assert(std::is_same_v < std::tuple_element_t < 1, tuple_t > , const int    > );
     static_assert(std::is_same_v < std::tuple_element_t < 2, tuple_t > , const double > );
 
+//  ================================================================================================
+
     static_assert(std::get < 0 > (tuple_1) == std::get < char   > (tuple_1));
 	static_assert(std::get < 1 > (tuple_1) == std::get < int    > (tuple_1));
 	static_assert(std::get < 2 > (tuple_1) == std::get < double > (tuple_1));
+
+//  ================================================================================================
 
     char c{}; [[maybe_unused]] int i{}; double d{};
  
@@ -87,6 +93,8 @@ int main()
     rc = std::get < 0 > (tuple_1); 
     ri = std::get < 1 > (tuple_1);
     rd = std::get < 2 > (tuple_1);
+
+//  ================================================================================================
 
     std::cout << tuple_2 << std::endl; // note: tuple modified through lvalue references
 

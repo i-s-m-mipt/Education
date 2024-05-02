@@ -101,10 +101,14 @@ int main()
 {
 	const auto name = "Matthias";
 
+//  ================================================================================================
+
 	Person_v1 person_v1_1(                 name ); // note: main constructor with copy
 	Person_v1 person_v1_2(           "Matthias" ); // note: main constructor with move
 	Person_v1 person_v1_3(          person_v1_1 ); // note: copy constructor
 	Person_v1 person_v1_4(std::move(person_v1_1)); // note: move constructor
+
+//  ================================================================================================
 
     Person_v2 person_v2_1(                 name ); // note: template constructor with copy
 	Person_v2 person_v2_2(           "Matthias" ); // note: template constructor with move
@@ -116,10 +120,14 @@ int main()
     Person_v2 person_v2_5(          person_v2_4 ); // note: copy constructor 
 	Person_v2 person_v2_6(std::move(person_v2_1)); // note: move constructor
 
+//  ================================================================================================
+
 	Person_v3 person_v3_1(                 name ); // note: template constructor with copy
 	Person_v3 person_v3_2(           "Matthias" ); // note: template constructor with move
 	Person_v3 person_v3_3(          person_v3_1 ); // note: copy constructor
 	Person_v3 person_v3_4(std::move(person_v3_1)); // note: move constructor
+
+//  ================================================================================================
 
 	Person_v4 person_v4_1(                 name ); // note: template constructor with copy
 	Person_v4 person_v4_2(           "Matthias" ); // note: template constructor with move

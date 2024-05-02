@@ -11,12 +11,16 @@ int main()
 	int &  lx = vx; const int &  clx = vx; // note: lvalue-references as lvalues
 	int && rx = 42; const int && crx = 42; // note: rvalue-references as lvalues
 
+//  ================================================================================================
+
 	f1( vx); // note: T ->       int
 	f1(cvx); // note: T ->       int
 	f1( lx); // note: T ->       int
 	f1(clx); // note: T ->       int
 	f1( rx); // note: T ->       int
 	f1(crx); // note: T ->       int
+
+//  ================================================================================================
 
 	f2( vx); // note: T ->       int
 	f2(cvx); // note: T -> const int
@@ -25,12 +29,16 @@ int main()
 	f2( rx); // note: T ->       int
 	f2(crx); // note: T -> const int
 
+//  ================================================================================================
+
 	f3( vx); // note: T ->       int
 	f3(cvx); // note: T ->       int
 	f3( lx); // note: T ->       int
 	f3(clx); // note: T ->       int
 	f3( rx); // note: T ->       int
 	f3(crx); // note: T ->       int
+
+//  ================================================================================================
 
 	f4( vx); // note: T ->       int &
 	f4(cvx); // note: T -> const int &

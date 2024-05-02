@@ -171,7 +171,11 @@ int main()
 	constexpr auto tuple_1 = make_tuple('a', 42, 3.14);
 	constexpr auto tuple_2 = make_tuple('a', 42, 2.72);
 
+//  ================================================================================================
+
 	static_assert(get < 0 > (tuple_1) == get < 0 > (tuple_2));
+
+//  ================================================================================================
 
 	static_assert((tuple_1 <  tuple_2) == false);
     static_assert((tuple_1 >  tuple_2)         );
@@ -179,6 +183,8 @@ int main()
     static_assert((tuple_1 >= tuple_2)         );
     static_assert((tuple_1 == tuple_2) == false);
     static_assert((tuple_1 != tuple_2)         );
+
+//  ================================================================================================
 
 	std::cout << tuple_1 << std::endl;
 	std::cout << tuple_2 << std::endl;
