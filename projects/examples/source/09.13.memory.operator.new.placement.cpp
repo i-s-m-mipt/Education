@@ -126,6 +126,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 	::operator delete(ptr, sizeof(C) * size); // note: hint for memory allocator
 
+//  ================================================================================================
+
 	std::cout << sizeof(U) << std::endl;
 
 	U u; // note: prefer using std::variant
@@ -139,8 +141,12 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 	u.string_2 = "world";
 
 	u.string_2.~basic_string(); // good: explicit member destructor call
+
+//  ================================================================================================
 	
 	delete(new const User); // note: overloaded versions are used instead of global
+
+//  ================================================================================================
 
 	benchmark::Initialize(&argc, argv);
 

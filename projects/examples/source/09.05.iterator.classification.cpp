@@ -96,6 +96,8 @@ int main()
 
 	static_assert(std::is_same_v < value_type, int > );
 
+//  ================================================================================================
+
 	auto begin = vector.begin(); // note: copy of begin iterator, consider std::begin
 
 	std::advance(begin, 1); // good: better than += or -= in generic programming
@@ -108,6 +110,8 @@ int main()
 	assert(*std::next(vector.begin(), 2) == 3); // good: better than + in generic programming
 	assert(*std::prev(vector.end  (), 2) == 4); // good: better than - in generic programming
 
+//  ================================================================================================
+
 	for (auto iterator = vector.begin(); iterator != vector.end(); ++iterator) // note: consider std::end
 	{
 		std::cout << *iterator << ' ';
@@ -115,12 +119,16 @@ int main()
 
 	std::cout << std::endl;
 
+//  ================================================================================================
+
 	for (auto iterator = vector.rbegin(); iterator != vector.rend(); ++iterator) // note: reverse iterators
 	{
 		std::cout << *iterator << ' ';
 	}
 
 	std::cout << std::endl;
+
+//  ================================================================================================
 
 	vector.resize(100);
 

@@ -21,6 +21,8 @@ int main()
     std::atexit         (cleanup); // note: set callback function for exit
     std::set_new_handler(handler); // note: set callback function for new
 
+//  ================================================================================================
+
     try
     {
         while (true)
@@ -32,6 +34,8 @@ int main()
     {
         std::cerr << "message: " << exception.what() << '\n';
     }
+
+//  ================================================================================================
 
     while (true)
     {

@@ -13,6 +13,8 @@ int main()
 
 	allocator_int.deallocate(ptr_int, 1);
 
+//  ================================================================================================
+
 	std::vector < int, std::allocator < int > > vector;
 
 	std::allocator < std::string > allocator_string;

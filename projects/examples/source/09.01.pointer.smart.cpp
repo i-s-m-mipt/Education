@@ -104,6 +104,8 @@ int main()
 	}
 	catch (...) {}
 
+//  ================================================================================================
+
 	const std::shared_ptr < const int > shared_ptr_1; // note: same as nullptr
 
 	if (shared_ptr_1) // note: check if not nullptr as for plain pointer
@@ -123,11 +125,15 @@ int main()
 	assert(shared_ptr_2.use_count() == 1 && *shared_ptr_2 == 42);
 	assert(shared_ptr_3.use_count() == 1 && *shared_ptr_3 == 42);
 
+//  ================================================================================================
+
 	const auto ptr = new const auto(42);
 
 //	const std::shared_ptr < const int > shared_ptr_4(ptr); // bad: don't mix with plain pointers
 
 	delete ptr;
+
+//  ================================================================================================
 
 //	f(std::shared_ptr < const int > (new const auto(42)), bad()); // bad: possible memory leak
 
@@ -138,6 +144,8 @@ int main()
 		f(std::make_shared < const int > (42), bad()); // good: memory leak impossible
 	}
 	catch (...) {}
+
+//  ================================================================================================
 
 	constexpr std::size_t size = 5;
 
@@ -151,6 +159,8 @@ int main()
 
 	shared_ptr_8[0] = 42; // note: allowed only for array types
 
+//  ================================================================================================
+
 	auto shared_ptr_9 = std::make_shared < int > (42);
 
 	std::weak_ptr < int > weak_ptr = shared_ptr_9; // note: std::weak_ptr does not own object
@@ -163,12 +173,16 @@ int main()
 
 	assert(weak_ptr.expired());
 
+//  ================================================================================================
+
 	{
 		const auto a    = std::make_shared < A > (); 
 		           a->b = std::make_shared < B > ();
 
 		a->b->a = a; // note: cyclic dependency, destroy correctly
 	}
+
+//  ================================================================================================
 
 	auto unique_pointer_1 = std::make_unique < const int > (42); // note: much similar to std::shared_ptr
 

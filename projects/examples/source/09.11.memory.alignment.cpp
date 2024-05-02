@@ -89,12 +89,16 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 	std::cout << "char: " << alignof(char) << ' ' << sizeof(char) << std::endl;
 	std::cout << "int*: " << alignof(int*) << ' ' << sizeof(int*) << std::endl;
 
+	static_assert(std::alignment_of_v < double > == 8);
+
+//  ================================================================================================
+
 	std::cout << "S1: " << alignof(S1) << ' ' << sizeof(S1) << std::endl;
 	std::cout << "S2: " << alignof(S2) << ' ' << sizeof(S2) << std::endl;
 	std::cout << "S3: " << alignof(S3) << ' ' << sizeof(S3) << std::endl;
 	std::cout << "S4: " << alignof(S4) << ' ' << sizeof(S4) << std::endl;
 
-	static_assert(std::alignment_of_v < double > == 8);
+//  ================================================================================================
 
 	constexpr std::size_t size = 5;
 
@@ -103,6 +107,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 	std::cout << std::hex << array_1 << std::endl;
 	std::cout << std::hex << array_2 << std::endl;
+
+//  ================================================================================================
 
 	benchmark::Initialize(&argc, argv);
 

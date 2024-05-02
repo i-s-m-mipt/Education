@@ -136,11 +136,15 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     std::cout << std::endl;
 
+//  ================================================================================================
+
     auto resource = std::pmr::new_delete_resource();
 
     const auto pointer = resource->allocate(1); // note: same as ::operator new
 
     resource->deallocate(pointer, 1); // note: same as ::operator delete
+
+//  ================================================================================================
 
     boost::object_pool < int > pool(32); // note: memory managed by pool consists of segments
 
@@ -154,7 +158,11 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     assert(pool.get_next_size() == 64); // note: allocation approach similar to std::vector
 
+//  ================================================================================================
+
     std::vector < int, boost::pool_allocator < int > > vector; // good: continious segments
+
+//  ================================================================================================
 
 	benchmark::Initialize(&argc, argv);
 
