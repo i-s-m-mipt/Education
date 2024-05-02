@@ -32,14 +32,14 @@ int main()
 
 	std::shuffle(std::begin(vector_1), std::end(vector_1), engine); // note: random with no duplicates
 
+//  ================================================================================================
+
 	if (const auto element  = std::find(std::cbegin(vector_1), 
 									    std::cend  (vector_1), 0); element !=           
 										std::cend  (vector_1))
 	{
 		assert(*element == 0); // good: iterator dereferencing only after verification
 	}
-
-//  ================================================================================================
 
 	const auto [min, max] = std::minmax_element(std::cbegin(vector_1), std::cend(vector_1));
 
