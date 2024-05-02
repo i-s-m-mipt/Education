@@ -9,6 +9,8 @@ int main()
 {
 	std::ios::sync_with_stdio(false); // note: no synchronization with C-streams
 
+//  ================================================================================================
+
 	std::istreambuf_iterator < char > istreambuf_iterator(std::cin );
 	std::ostreambuf_iterator < char > ostreambuf_iterator(std::cout);
 
@@ -17,7 +19,9 @@ int main()
 		*ostreambuf_iterator++ = *istreambuf_iterator++;
 	}
 
-	std::clearerr(stdin); std::cin.clear(); // note: clearerr to handle Ctrl+D
+	std::cin.clear(); // note: restores goodbit state after reading EOF character
+
+//  ================================================================================================
 
 	std::vector < int > vector;
 

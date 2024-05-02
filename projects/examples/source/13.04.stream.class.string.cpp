@@ -13,11 +13,15 @@ int main()
 
 	assert(stream.str() == "_____052");
 
+//  ================================================================================================
+
 	stream.seekp(0);
 
 	stream << std::setw(8) << std::right << std::setfill('_') << std::hex << 42;
 
 	assert(stream.str() == "____0x2a");
+
+//  ================================================================================================
 
     for (char c{}; stream.get(c); ) // note: consider calculator implementation
     {

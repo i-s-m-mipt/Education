@@ -11,6 +11,8 @@ int main()
 
 	std::filesystem::create_directories("X/Y/Z");
 
+//  ================================================================================================
+
 	std::fstream("X/x.txt", std::ios::out);
 
 	std::filesystem::copy("X/x.txt", "X/y.txt");
@@ -19,6 +21,8 @@ int main()
 	std::filesystem::copy_options::recursive);
 
 	std::filesystem::rename("Y", "Z");
+
+//  ================================================================================================
 
     std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
 

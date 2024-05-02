@@ -64,6 +64,8 @@ int main()
 
     constexpr auto file = "13.12.serialization.json.example.json";
 
+//  ================================================================================================
+
     {
         nlohmann::json object; // note: consider also boost::property_tree
 
@@ -78,6 +80,8 @@ int main()
         save(file, object);
     }
 
+//  ================================================================================================
+
     {
         const auto object = load(file);
 
@@ -89,6 +93,8 @@ int main()
 
         assert(object[Key::s][Key::d].get < double > () == example.s.d);
     }
+
+//  ================================================================================================
 
     std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
 

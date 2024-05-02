@@ -13,6 +13,8 @@ int main()
 
     [[maybe_unused]] PDFHummus::EStatusCode status; // note: errors handling
 
+//  ================================================================================================
+
     PDFWriter writer;
     
     status = writer.StartPDF(file, ePDFVersion17);
@@ -26,6 +28,8 @@ int main()
     auto context = writer.StartPageContentContext(page.get());
 
     auto line = height; // note: current output line from top of page
+
+//  ================================================================================================
 
     constexpr auto image_height = 380, image_ppi = 96, delta = 10;
 
@@ -41,6 +45,8 @@ int main()
     
     context->DrawImage(delta, line, "matthias.jpg", image_options);
 
+//  ================================================================================================
+
     auto font = writer.GetFontForFile("consolas.ttf");
 
     constexpr auto font_size = 14;
@@ -50,6 +56,8 @@ int main()
     AbstractContentContext::TextOptions text_options(font, font_size, AbstractContentContext::eGray, 0);
 
     context->WriteText(delta, line, "Hello, World!", text_options);
+
+//  ================================================================================================
 
     constexpr auto rectangle_height = font_size + 4, rectangle_width = 100;
 
@@ -61,12 +69,16 @@ int main()
                                                            2.0);
 
     context->DrawRectangle(delta, line, rectangle_width, rectangle_height, graphic_options);
+
+//  ================================================================================================
     
     status = writer.EndPageContentContext(context);
 
     status = writer.WritePage(page.get());
 
     status = writer.EndPDF();
+
+//  ================================================================================================
 
     std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
 

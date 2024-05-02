@@ -2,10 +2,14 @@
 #include <filesystem>
 #include <iostream>
 
+//  ================================================================================================
+
 [[nodiscard]] std::filesystem::path operator""_p(const char * ptr, std::size_t size)
 {
 	return std::filesystem::path(std::string(ptr, size));
 }
+
+//  ================================================================================================
 
 int main()
 {
@@ -18,6 +22,8 @@ int main()
 	std::cout << std::filesystem::absolute (path_1) << std::endl;
     std::cout << std::filesystem::canonical(path_1) << std::endl; // note: weakly canonical
 
+//  ================================================================================================
+
     try
 	{
         const auto path_2 = "directory/stem.extension"_p;
@@ -29,9 +35,13 @@ int main()
 		std::cerr << exception.what() << '\n'; // note: std::filesystem::filesystem_error
 	}
 
+//  ================================================================================================
+
 	std::cout << ("directory"_p / "stem.extension") << std::endl;
 
 	assert(std::filesystem::equivalent(path_1, "13.09.filesystem.path"));
+
+//  ================================================================================================
 
     const auto path_3 = std::filesystem::current_path() / "13.09.filesystem.path";
 
