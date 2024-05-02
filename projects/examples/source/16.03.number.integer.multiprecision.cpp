@@ -11,6 +11,8 @@ int main()
     std::cout << std::numeric_limits < boost::multiprecision::uint256_t > ::max() << std::endl;
     std::cout << std::numeric_limits < boost::multiprecision::uint512_t > ::max() << std::endl;
 
+//  ================================================================================================
+
     std::cout << boost::multiprecision::uint128_t(0) - 1 << std::endl; // note: outputs same as max()
 
     try
@@ -21,6 +23,8 @@ int main()
     {
         std::cerr << exception.what() << '\n';
     }
+
+//  ================================================================================================
 
     boost::multiprecision::cpp_int result = 1; for (auto i = 1; i < 101; ++i) result *= i; 
    

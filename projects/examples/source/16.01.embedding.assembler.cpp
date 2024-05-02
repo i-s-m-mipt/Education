@@ -50,6 +50,8 @@ void test_cpp_v1()
 	MessageBoxA(GetForegroundWindow(), "Hello, world!\n\n", "window", MB_OK);
 }
 
+//  ================================================================================================
+
 void test_asm_v1()
 {
 	const char * string = "Hello, world!\n\n";
@@ -104,6 +106,8 @@ void test_asm_v1()
 
 	return z;
 }
+
+//  ================================================================================================
 
 [[nodiscard]] int test_asm_v2()
 {
@@ -163,6 +167,8 @@ void test_asm_v1()
 
 	return z;
 }
+
+//  ================================================================================================
 
 [[nodiscard]] double test_asm_v3(double * x, double * y, std::size_t size)
 {
@@ -238,6 +244,8 @@ void test_asm_v1()
 	return z;
 }
 
+//  ================================================================================================
+
 [[nodiscard]] double test_asm_v4(double * x, std::size_t size)
 {
 	auto z = 0.0;
@@ -297,6 +305,8 @@ void test_1()
 	test_asm_v1();
 }
 
+//  ================================================================================================
+
 void test_2()
 {
 	std::cout << "Test 2 launched ... " << std::endl << std::endl;
@@ -307,6 +317,8 @@ void test_2()
 	std::cout << "Result C++: " << result_cpp << std::endl;
 	std::cout << "Result ASM: " << result_asm << std::endl << std::endl;
 }
+
+//  ================================================================================================
 
 void test_3()
 {
@@ -330,6 +342,8 @@ void test_3()
 	delete[] x;
 	delete[] y;
 }
+
+//  ================================================================================================
 
 void test_4()
 {
