@@ -1,8 +1,12 @@
+#include <cassert>
 #include <cmath>
 #include <iostream>
 #include <optional>
 #include <string>
 #include <variant>
+
+#include <boost/logic/tribool.hpp>
+#include <boost/logic/tribool_io.hpp>
 
 //  ================================================================================================
 
@@ -32,6 +36,8 @@ class B {};
 
 int main()
 {
+	constexpr auto epsilon = 0.000001;
+
 	std::variant < char, int, double > variant_1;
 
 	variant_1 = 42; // note: now holding integer value
@@ -49,7 +55,7 @@ int main()
 
 	constexpr std::variant < char, int, double > variant_4(3.14); // note: double
 
-	std::cout << std::get < double > (variant_4) << std::endl;
+	assert(std::abs(std::get < double > (variant_4) - 3.14) < epsilon);
 
 //	constexpr std::variant < char, double > variant_5(42); // error: ambiguous selection
 
@@ -59,7 +65,7 @@ int main()
 
 	constexpr std::variant < int, int > variant_8(std::in_place_index < 0 > , 42);
 
-	std::cout << variant_8.index() << std::endl;
+	assert(variant_8.index() == 0);
 
 	std::variant < A, B > variant_9;
 
@@ -67,14 +73,14 @@ int main()
 
 	if (constexpr auto result = handle(42); std::holds_alternative < double > (result))
 	{
-		std::cout << std::get < double > (result) << std::endl;
+		assert(std::abs(std::get < double > (result) - std::sqrt(42)) < epsilon);
 	}
 
 //  ================================================================================================
 
 	constexpr std::optional < int > optional_1; // note: same as std::nullopt
 
-    std::cout << optional_1.has_value() << std::endl;
+    assert(!optional_1.has_value());
 
     auto optional_2 = std::make_optional(42);
 
@@ -82,14 +88,27 @@ int main()
 
     const std::optional < std::string > optional_3(std::in_place, 5, 'a');
 
-    std::cout << *optional_3 << ' ' << optional_3->front() << std::endl;
+    assert(*optional_3 == "aaaaa");
 
-    std::cout << create(false).value_or("empty") << std::endl;
+    assert(create(false).value_or("empty") == "empty");
 
     if (const auto object = create(true); object)
     {
-        std::cout << *object << std::endl;
+        assert(*object == "object");
     }
+
+//  ================================================================================================
+
+  	constexpr boost::logic::tribool tribool = boost::logic::indeterminate;
+
+  	if (tribool || !tribool)
+    {
+		std::cout << "true or false" << std::endl;
+	}
+ 	else
+	{
+		std::cout << "indeterminate" << std::endl;
+	}
 
 	return 0;
 }
