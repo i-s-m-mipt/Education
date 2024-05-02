@@ -62,6 +62,8 @@ int main()
         std::cerr << "Tester error: " << exception.what() << '\n';
     }
 
+//  ================================================================================================
+
     assert(std::visit([](auto x) constexpr noexcept { return x; }, std::variant < int > (42)) == 42);
 
     constexpr auto lambda = [](auto x) constexpr noexcept { return x; };

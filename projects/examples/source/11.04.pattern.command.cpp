@@ -63,6 +63,8 @@ int main()
 	assert(computer_1.state == Computer::State::stop);
 	assert(computer_2.state == Computer::State::stop);
 
+//  ================================================================================================
+
 	Computer computer_3;
 
 	std::unordered_map < Command, std::function < void(void) > > commands =

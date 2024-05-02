@@ -71,11 +71,15 @@ int main()
 	std::ranges::sort(vector_1                ); // note: sort range in  ascending order
 	std::ranges::sort(vector_1, std::greater()); // note: sort range in descending order
 
+//  ================================================================================================
+
 	const std::set < int, std::greater < int > > set { 1, 4, 2, 5, 3 };
 
 	for (const auto element : set) std::cout << element << ' ';
 
 	std::cout << std::endl;
+
+//  ================================================================================================
 
 	constexpr std::size_t size = 5;
 
@@ -93,12 +97,16 @@ int main()
 		assert(vector_3[i] == static_cast < int > (i));
 	}
 
+//  ================================================================================================
+
 	Sum < int > sum;
 
 	sum = std::ranges::for_each(std::as_const(vector_2), sum).fun; // note: sum elements in range
 	sum = std::ranges::for_each(std::as_const(vector_3), sum).fun; // note: sum elements in range
 
 	assert(sum.result() == 20);
+
+//  ================================================================================================
 
 	std::ranges::transform(std::as_const(vector_2), 
 						   std::   begin(vector_2), std::negate()); // note: transform 1 range(s) to range
@@ -108,6 +116,8 @@ int main()
 						   std::   begin(vector_3), std::  plus()); // note: transform 2 range(s) to range
 
 	for (const auto element : vector_3) assert(element == 0);
+
+//  ================================================================================================
 
 	Mean < decltype(vector_1)::value_type > mean;
 

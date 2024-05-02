@@ -46,6 +46,8 @@ int main()
 
 	for (auto && element : vector) ++element; // note: range-based for, look at cppinsights.io
 
+//  ================================================================================================
+
 	const std::map < int, int > map { { 1, 10 }, { 2, 20 }, { 3, 30 } };
 
 	for (const auto [key, value] : map) // note: structured binding, look at cppinsights.io
@@ -53,11 +55,15 @@ int main()
 		std::cout << key << ", " << value << std::endl;
 	}
 
+//  ================================================================================================
+
 	constexpr int array[]{ 1, 2, 3, 4, 5 }; // note: built-in array is considered as range
 
 	for (const auto element : array) std::cout << element << ' ';
 
 	std::cout << std::endl;
+
+//  ================================================================================================
 
 	assert(*std::ranges::begin(vector) == 1 && std::ranges::size(vector) == 5);
 
@@ -74,6 +80,8 @@ int main()
 
 	std::ranges::sort(humans, std::ranges::greater(), &Human::weight);
 
+//  ================================================================================================
+
 	for (const auto x : std::views::transform(std::views::filter(vector,
 
 		[](auto x) constexpr noexcept { return (x % 2); }),
@@ -84,6 +92,8 @@ int main()
 
 	std::cout << std::endl;
 
+//  ================================================================================================
+
 	for (const auto key : std::views::reverse(std::views::keys(map)))
 	{
 		std::cout << key << ' ';
@@ -91,12 +101,16 @@ int main()
 
 	std::cout << std::endl;
 
+//  ================================================================================================
+
 	for (const auto x : std::views::iota(1) | std::views::take(5)) // note: syntax sugar
 	{
 		std::cout << x << ' ';
 	}
 
 	std::cout << std::endl;
+
+//  ================================================================================================
  
     for (const auto x : std::views::iota     (1, 6)
                       | std::views::filter   ([](auto x) constexpr noexcept { return (x % 2); })
@@ -108,12 +122,16 @@ int main()
 
     std::cout << std::endl;
 
+//  ================================================================================================
+
 	for (const std::string data = "1,2,3,4,5"; auto x : std::views::split(data, ','))
 	{
 		std::cout << std::string(std::cbegin(x), std::cend(x)) << ' ';
 	}
 
 	std::cout << std::endl;
+
+//  ================================================================================================
 
     constexpr auto dangling_iterator = std::ranges::max_element(
 		[]() constexpr { return std::vector({ 1, 2, 3, 4, 5 }); }()); // note: temporary vector

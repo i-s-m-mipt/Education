@@ -27,6 +27,8 @@ int main()
 
 	std::cout << typeid(lambda_1).name() << std::endl; // note: unique closure type
 
+//  ================================================================================================
+
 	auto z1 = 0, z2 = 0;
 
 	[&z1, z2](auto x)         constexpr noexcept { z1 = z2 + x; }(42);
@@ -36,9 +38,13 @@ int main()
 
 //	[&](auto x) constexpr noexcept { z1 = z2 + x; }(42); // bad: default capture by reference
 
+//  ================================================================================================
+
 	auto unique_pointer = std::make_unique < int > (42);
 
 	[unique_pointer = std::move(unique_pointer)]() constexpr noexcept { assert(*unique_pointer == 42); }(); 
+
+//  ================================================================================================
 
 	std::array < std::function < int(int, int) > , 4 > operations;
 
@@ -51,11 +57,15 @@ int main()
 
 	assert(operations.at(0)(x, y) == (x + y));
 
+//  ================================================================================================
+
 	constexpr auto templated_lambda = [] < typename T > (T x, T y)  constexpr noexcept { return (x + y); };
 
 	templated_lambda(100, 200);
 	templated_lambda(1.0, 2.0);
 //	templated_lambda(100, 2.0); // error: different types
+
+//  ================================================================================================
 
 	constexpr std::size_t size = 5;
 
@@ -66,6 +76,8 @@ int main()
 
 	std::ranges::for_each(              vector , lambda_2); // note: modify elements in range
 	std::ranges::for_each(std::as_const(vector), lambda_3); // note: verify elements in range
+
+//  ================================================================================================
 
 	constexpr auto lambda_4 = [](auto lhs, auto rhs) constexpr noexcept { return (lhs > rhs); };
 
