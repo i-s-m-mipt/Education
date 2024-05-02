@@ -91,6 +91,8 @@ namespace detail // note: only const versions for demonstration
 
 } // namespace detail
 
+//  ================================================================================================
+
 template < std::size_t N, typename ... Ts > requires (N < sizeof...(Ts))
 
 [[nodiscard]] inline constexpr const auto & get(const Tuple < Ts ... > & tuple)
@@ -156,6 +158,8 @@ namespace detail
 	}
 
 } // namespace detail
+
+//  ================================================================================================
 
 template < typename ... Ts > 
 

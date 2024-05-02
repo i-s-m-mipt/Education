@@ -25,6 +25,8 @@
 	return (p > 1);
 }
 
+//  ================================================================================================
+
 [[nodiscard]] consteval int fibonacci(int n) // note: must be evaluated at compile-time
 {
 	if (n < 2) return 1; else
@@ -39,6 +41,8 @@
 		return vector.back();
 	}
 }
+
+//  ================================================================================================
 
 [[nodiscard]] inline constexpr bool f(int) { return std::is_constant_evaluated(); }
 

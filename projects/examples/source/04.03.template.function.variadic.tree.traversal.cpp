@@ -26,6 +26,8 @@ int main()
 		nodes[i].value = static_cast < int > (i);
 	}
 
+//  ================================================================================================
+
 	Node * root = nullptr;
 
 	root             = &nodes[0];
@@ -33,6 +35,8 @@ int main()
 	root->l->r       = &nodes[2];
 	root->l->r->l    = &nodes[3];
 	root->l->r->l->r = &nodes[4];
+
+//  ================================================================================================
 
 	const auto l = &Node::l; // note: pointer to data member l
 	const auto r = &Node::r; // note: pointer to data member r

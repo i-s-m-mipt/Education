@@ -12,6 +12,8 @@ template < typename T, typename ... Ts > inline void print_v1(T arg, Ts ... args
 	std::cout << arg << ' '; print_v1(args...);
 }
 
+//  ================================================================================================
+
 template < typename T > inline void print_v2(T arg)
 {
 	std::cout << arg << ' ';

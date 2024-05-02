@@ -27,11 +27,13 @@ template < typename T > inline void f(T && c) // good: forwarding reference, T &
     g(std::forward < T > (c)); // good: perfect forwarding, maintain fundamental properties
 }
 
+//  ================================================================================================
+
 template < typename F, typename ... Ts > 
 
 [[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Ts && ... args) 
 { 
-	return f(std::forward < Ts > (args)...); // note: see std::invoke
+	return f(std::forward < Ts > (args)...); // note: consider std::invoke
 }
 
 //  ================================================================================================

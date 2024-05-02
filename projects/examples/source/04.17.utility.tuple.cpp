@@ -5,49 +5,55 @@
 
 //  ================================================================================================
 
-template < typename T, std::size_t N > struct Printer
+namespace detail
 {
-    static void print(std::ostream & stream, const T & tuple)
+    template < typename T, std::size_t N > struct Printer
     {
-        Printer < T, N - 1 > ::print(stream, tuple);
+        static void print(std::ostream & stream, const T & tuple)
+        {
+            Printer < T, N - 1 > ::print(stream, tuple);
 
-        stream << ", " << std::get < N - 1 > (tuple);
+            stream << ", " << std::get < N - 1 > (tuple);
+        }
+
+    }; // template < typename T, std::size_t N > struct Printer
+    
+    template < typename T > struct Printer < T, 1 >
+    {
+        static void print(std::ostream & stream, const T & tuple)
+        {
+            stream << std::get < 0 > (tuple);
+        }
+
+    }; // template < typename T > struct Printer < T, 1 >
+
+    template < typename ... Ts > requires (sizeof...(Ts) == 0)
+
+    void print(std::ostream & stream, const std::tuple < Ts ... > & tuple)
+    {
+        stream << "{}";
+    }
+    
+    template < typename ... Ts > requires (sizeof...(Ts) != 0)
+
+    void print(std::ostream & stream, const std::tuple < Ts ... > & tuple)
+    {
+        stream << "{ ";
+
+        Printer < decltype(tuple), sizeof...(Ts) > ::print(stream, tuple);
+
+        stream << " }";
     }
 
-}; // template < typename T, std::size_t N > struct Printer
- 
-template < typename T > struct Printer < T, 1 >
-{
-    static void print(std::ostream & stream, const T & tuple)
-    {
-        stream << std::get < 0 > (tuple);
-    }
+} // namespace detail
 
-}; // template < typename T > struct Printer < T, 1 >
- 
-template < typename ... Ts > requires (sizeof...(Ts) == 0)
-
-void print(std::ostream & stream, const std::tuple < Ts ... > & tuple)
-{
-    stream << "{}";
-}
- 
-template < typename ... Ts > requires (sizeof...(Ts) != 0)
-
-void print(std::ostream & stream, const std::tuple < Ts ... > & tuple)
-{
-    stream << "{ ";
-
-    Printer < decltype(tuple), sizeof...(Ts) > ::print(stream, tuple);
-
-    stream << " }";
-}
+//  ================================================================================================
 
 template < typename ... Ts > 
 
 inline std::ostream & operator<<(std::ostream & stream, const std::tuple < Ts ... > & tuple)
 {
-	print(stream, tuple); return stream;
+	detail::print(stream, tuple); return stream;
 }
 
 //  ================================================================================================

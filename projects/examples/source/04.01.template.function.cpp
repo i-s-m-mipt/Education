@@ -54,6 +54,8 @@ inline void f(char  ) { std::cout << "f(char  )" << std::endl; }
 inline void f(int   ) { std::cout << "f(int   )" << std::endl; }
 inline void f(double) { std::cout << "f(double)" << std::endl; }
 
+//  ================================================================================================
+
 template < typename T1, typename T2 > inline void g() // note: basic template
 {
 	std::cout << "template < T1, T2 > g()" << std::endl;

@@ -112,6 +112,8 @@ template < typename T > add_rvalue_reference_t < T > declval() // note: or add_l
     static_assert(false); // note: allowed in unevaluated contexts only, for example, in decltype
 }
 
+//  ================================================================================================
+
 class Bad { private: Bad() {} }; // note: no available default constructor
 
 [[nodiscard]] inline constexpr int f(Bad); // note: declaration only

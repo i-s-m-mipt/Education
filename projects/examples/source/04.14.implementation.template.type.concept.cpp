@@ -49,6 +49,8 @@ template < integral ... Ts > [[nodiscard]] inline constexpr integral auto sum_v1
 	return (... + args);
 }
 
+//  ================================================================================================
+
 template < typename T > requires std::regular < T > class Container {}; // note: standard concept
 
 //  ================================================================================================

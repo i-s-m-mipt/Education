@@ -23,6 +23,8 @@ template < auto P > struct Check_Is_Prime < P, 2 >
 	static constexpr auto value = (P % 2 != 0);
 }; 
 
+//  ================================================================================================
+
 template < auto P > struct Is_Prime
 {
 	static constexpr auto value = Check_Is_Prime < P, P / 2 > ::value;
@@ -40,6 +42,8 @@ template < auto P > constexpr auto is_prime_v = Is_Prime < P > ::value;
 int main()
 {
 	std::cout << factorial_v < 5 > << std::endl;
+
+//  ================================================================================================
 
 	std::cout << is_prime_v < 42 > << std::endl;
 	std::cout << is_prime_v < 43 > << std::endl;
