@@ -8,6 +8,8 @@ int main()
 
 //  ================================================================================================
 
+    std::cout << "Enter integer value: ";
+
     if (std::cin >> x; 42 == x) // good: 42 == y prevents error 42 = y
     {
         std::cout << "path 1" << std::endl;

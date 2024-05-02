@@ -12,6 +12,8 @@
 	return (x + y + z);
 }
 
+//  ================================================================================================
+
 void extract_data(int * ptr = nullptr) // good: nullptr as default argument
 {
 	[[maybe_unused]] auto local_data = (ptr ? *ptr : 42);
@@ -169,6 +171,8 @@ int main()
 
 	return 0;
 }
+
+//  ================================================================================================
 
 int f(int x) // note: separate definition only for demonstration here
 {

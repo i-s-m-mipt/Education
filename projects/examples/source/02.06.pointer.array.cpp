@@ -7,6 +7,8 @@ int main()
 {
 	const std::size_t size = 5;
 
+//  ================================================================================================
+
 	int array_1[size]{}; // good: zero initialized array
 
 	[[maybe_unused]] const int array_2[size]{ 1, 2, 3 }; // note: elements: { 1, 2, 3, 0, 0 }
@@ -58,6 +60,8 @@ int main()
 
 	std::ranges::reverse(buffer, buffer + size); // note: reverse range
 
+//  ================================================================================================
+
 	for (std::size_t i = 0; i < size - 1; ++i) // note: bubble sort
 	{
 		for (std::size_t j = i + 1; j < size; ++j)
@@ -68,6 +72,8 @@ int main()
 			}
 		}
 	}
+
+//  ================================================================================================
 
 	for (std::size_t i = 0; i < size; ++i)
 	{

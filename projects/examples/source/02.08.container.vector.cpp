@@ -9,11 +9,15 @@ int main()
 {
 	const std::size_t size = 5;
 
+//  ================================================================================================
+
 	std::vector < int > vector(size, 0); // note: create std::vector of n zero elements
 
 	std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
 
 	std::ranges::reverse(vector); // note: reverse range
+
+//  ================================================================================================
 
 	for (std::size_t i = 0; i < size - 1; ++i) // note: bubble sort
 	{
@@ -25,6 +29,8 @@ int main()
 			}
 		}
 	}
+
+//  ================================================================================================
 
 	for (const auto element : vector) std::cout << element << ' '; // note: range-based for
 

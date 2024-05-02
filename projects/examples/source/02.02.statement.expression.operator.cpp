@@ -18,6 +18,8 @@ int main()
 
 	auto x = 1, y = 2;
 
+//  ================================================================================================
+
 	std::cout << (!!x != !!y) << std::endl; // note: x xor y for non-booleans
 
 	std::cout << (    -x) << std::endl;
@@ -70,6 +72,8 @@ int main()
 	auto z = (1 + 4) / (2 + 3); // note: unspecified operands evaluation order
 
 //	std::cout << (z + ++z) << std::endl; // bad: unspecified behavior
+
+//  ================================================================================================
 
 	[[maybe_unused]] auto m = 1 + 2 + 3; // note: left to right associativity
 	[[maybe_unused]] auto n = x = y = z; // note: right to left associativity

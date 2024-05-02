@@ -15,6 +15,8 @@ int main()
 
 	const std::size_t size = 5;
 
+//  ================================================================================================
+
 	const auto array = new int[size]{}; // good: zero initialized dynamic array
 
 	const auto middle = size / 2;
@@ -36,6 +38,8 @@ int main()
 
 	std::ranges::reverse(buffer, buffer + size); // note: reverse range
 
+//  ================================================================================================
+
 	for (std::size_t i = 0; i < size - 1; ++i) // note: bubble sort
 	{
 		for (std::size_t j = i + 1; j < size; ++j)
@@ -46,6 +50,8 @@ int main()
 			}
 		}
 	}
+
+//  ================================================================================================
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
