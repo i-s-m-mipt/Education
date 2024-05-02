@@ -6,7 +6,11 @@ export module math; // note: interface unit
 
 export import math.submodule;
 
+//  ================================================================================================
+
 export void hello_module();
+
+//  ================================================================================================
 
 export namespace math // good: exporting namespace
 {
@@ -15,6 +19,8 @@ export namespace math // good: exporting namespace
 	[[nodiscard]] inline double h(double x) { return std::tan(x); }
 
 } // namespace math
+
+//  ================================================================================================
 
 export template < typename F, typename ... Ts > 
 

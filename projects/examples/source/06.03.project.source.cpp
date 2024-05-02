@@ -60,6 +60,8 @@ void test_macros()
 
 	std::cout << FUNCTION << std::endl; // note: redefined as number
 
+//  ================================================================================================
+
 	[[maybe_unused]] auto x = 42; // note: consider trigrpahs in online compiler
 
 //	std::cout << BAD_SQUARE(x + 1) << std::endl; // bad: incorrect macro
@@ -67,12 +69,16 @@ void test_macros()
 //	std::cout << SQUARE(x++) << ' ' << x << std::endl; // bad: dangerous side effect
 //	std::cout << SQUARE(++x) << ' ' << x << std::endl; // bad: dangerous side effect
 
+//  ================================================================================================
+
 	std::cout << __FILE__ << std::endl; // good: useful macro
 	std::cout << __LINE__ << std::endl; // good: useful macro
 	std::cout << __DATE__ << std::endl; // good: useful macro
 	std::cout << __TIME__ << std::endl; // good: useful macro
 
 	std::cout << __func__ << std::endl; // note: implicit local array with function name
+
+//  ================================================================================================
 
 	constexpr auto location = std::source_location::current(); // good: macros alternative
 

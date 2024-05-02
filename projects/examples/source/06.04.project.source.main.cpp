@@ -25,6 +25,8 @@ int main()
 
 //	g(); // error: unresolved external symbol
 
+//  ================================================================================================
+
 	[[maybe_unused]] extern int global_x1; // note: forward declaration
 	[[maybe_unused]] extern int global_x2; // note: forward declaration
 
@@ -37,7 +39,11 @@ int main()
 //	std::cout << global_y1 << std::endl; // error: unresolved external symbol
 	std::cout << global_y2 << std::endl;
 
+//  ================================================================================================
+
 	test_macros();
+
+//  ================================================================================================
 
 	education::examples::print();
 
@@ -52,6 +58,8 @@ int main()
 //	using namespace std; // bad: dangerous in big projects
 
 	using std::cout; // note: possible usage in local scopes
+
+//  ================================================================================================
 
 //	hello_module(); hello_submodule();
 
