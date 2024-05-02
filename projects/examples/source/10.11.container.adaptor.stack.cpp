@@ -91,6 +91,8 @@ TEST(Stack_v1, Functions)
     stack_v1.push(1); ASSERT_EQ(stack_v1.top(), 1); ASSERT_EQ(stack_v1.min(), 1);
     stack_v1.push(1); ASSERT_EQ(stack_v1.top(), 1); ASSERT_EQ(stack_v1.min(), 1);
 
+//  ================================================================================================
+
     stack_v1.pop  (); ASSERT_EQ(stack_v1.top(), 1); ASSERT_EQ(stack_v1.min(), 1);
     stack_v1.pop  (); ASSERT_EQ(stack_v1.top(), 2); ASSERT_EQ(stack_v1.min(), 2);
     stack_v1.pop  (); ASSERT_EQ(stack_v1.top(), 5); ASSERT_EQ(stack_v1.min(), 3);
@@ -108,6 +110,8 @@ TEST(Stack_v2, Functions)
     stack_v2.push(2); ASSERT_EQ(stack_v2.top(), 2); ASSERT_EQ(stack_v2.min(), 2);
     stack_v2.push(1); ASSERT_EQ(stack_v2.top(), 1); ASSERT_EQ(stack_v2.min(), 1);
     stack_v2.push(1); ASSERT_EQ(stack_v2.top(), 1); ASSERT_EQ(stack_v2.min(), 1);
+
+//  ================================================================================================
 
     stack_v2.pop  (); ASSERT_EQ(stack_v2.top(), 1); ASSERT_EQ(stack_v2.min(), 1);
     stack_v2.pop  (); ASSERT_EQ(stack_v2.top(), 2); ASSERT_EQ(stack_v2.min(), 2);

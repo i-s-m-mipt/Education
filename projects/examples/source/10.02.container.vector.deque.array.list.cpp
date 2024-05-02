@@ -31,7 +31,7 @@ int main()
 {
 	constexpr std::size_t size = 5; // good: use alias std::size_t for sizes and indexes
 
-	std::vector < int > vector; 
+	std::vector < int > vector;
 
 //  ================================================================================================
 	

@@ -43,6 +43,8 @@ namespace detail
 
 } // namespace detail
 
+//  ================================================================================================
+
 template < typename ... Ts > [[nodiscard]] inline std::size_t combined_hash(const Ts & ... args) noexcept
 {
 	std::size_t seed = 0; detail::hash(seed, args...); return seed;

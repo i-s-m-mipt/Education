@@ -10,8 +10,6 @@ int main()
 
     valarray[valarray > 4] = 0; // note: valarray contains 1 2 3 4 0
 
-//  ================================================================================================
-
     const std::valarray < std::size_t > indexes { 1, 2, 3 };
 
     std::valarray < int > part; part.resize(std::size(indexes));
