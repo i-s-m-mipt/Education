@@ -65,7 +65,7 @@ int main()
     constexpr auto file = "13.12.serialization.json.example.json";
 
     {
-        nlohmann::json object;
+        nlohmann::json object; // note: consider also boost::property_tree
 
         object[Key::b] = example.b;
 
