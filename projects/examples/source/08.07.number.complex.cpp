@@ -66,7 +66,9 @@ int main()
 
     constexpr std::complex < double > complex(0.0, 1.0);
 
-    std::cout << complex << std::endl; // note: outputs (0.0, 1.0)
+    std::cout << std::showpos << std::setprecision(6) << std::fixed;
+
+    std::cout << complex << std::endl; // note: outputs (+0.000000,+1.000000)
 
     assert(std::abs(          complex.real()  - 0.0) < epsilon);
     assert(std::abs(          complex.imag()  - 1.0) < epsilon);
@@ -75,25 +77,25 @@ int main()
 
 //  ================================================================================================
 
-    std::cout << (complex + complex) << std::endl; // note: outputs ( 0.0, 2.0)
-    std::cout << (complex - complex) << std::endl; // note: outputs ( 0.0, 0.0)
-    std::cout << (complex * complex) << std::endl; // note: outputs (-1.0, 0.0)
-    std::cout << (complex / complex) << std::endl; // note: outputs ( 1.0, 0.0)
+    std::cout << (complex + complex) << std::endl; // note: outputs (+0.000000,+2.000000)
+    std::cout << (complex - complex) << std::endl; // note: outputs (+0.000000,+0.000000)
+    std::cout << (complex * complex) << std::endl; // note: outputs (-1.000000,+0.000000)
+    std::cout << (complex / complex) << std::endl; // note: outputs (+1.000000,+0.000000)
 
 //  ================================================================================================
 
-    std::cout << std::conj (complex) << std::endl; // note: outputs (0.000000, -1.000000)
-    std::cout << std::proj (complex) << std::endl; // note: outputs (0.000000, +1.000000)
-    std::cout << std::exp  (complex) << std::endl; // note: outputs (0.540302, +0.841471)
-    std::cout << std::log  (complex) << std::endl; // note: outputs (0.000000, +1.570800)
-    std::cout << std::sqrt (complex) << std::endl; // note: outputs (0.707107, +0.707107)
+    std::cout << std::conj (complex) << std::endl; // note: outputs (+0.000000,-1.000000)
+    std::cout << std::proj (complex) << std::endl; // note: outputs (+0.000000,+1.000000)
+    std::cout << std::exp  (complex) << std::endl; // note: outputs (+0.540302,+0.841471)
+    std::cout << std::log  (complex) << std::endl; // note: outputs (+0.000000,+1.570800)
+    std::cout << std::sqrt (complex) << std::endl; // note: outputs (+0.707107,+0.707107)
 
 //  ================================================================================================
 
     decltype(complex)::value_type r = 1.0, t = 0.8;
 
-    std::cout << std::polar(r      ) << std::endl; // note: outputs (1.000000, +0.000000)
-    std::cout << std::polar(r, t   ) << std::endl; // note: outputs (0.696707, +0.717356)
+    std::cout << std::polar(r      ) << std::endl; // note: outputs (+1.000000,+0.000000)
+    std::cout << std::polar(r, t   ) << std::endl; // note: outputs (+0.696707,+0.717356)
 
 //  ================================================================================================
 

@@ -46,13 +46,13 @@ namespace literals // good: namespace for user-defined literals
 
 } // namespace literals
 
+using namespace literals;
+
 //  ================================================================================================
 
 int main()
 {
 	[[maybe_unused]] constexpr auto duration = 600s; // note: auto -> std::chrono::seconds
-
-	using namespace literals;
 
 	[[maybe_unused]] constexpr auto distance = 5_km; // note: auto -> kilometers, underscore required
 
