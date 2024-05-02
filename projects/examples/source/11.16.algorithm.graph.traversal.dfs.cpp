@@ -5,6 +5,8 @@
 #include <boost/graph/named_function_params.hpp>
 #include <boost/graph/visitors.hpp>
 
+//  ================================================================================================
+
 class Visitor : public boost::default_dfs_visitor
 {
 private:
@@ -77,6 +79,8 @@ public:
     }
 
 }; // class Visitor : public boost::default_dfs_visitor
+
+//  ================================================================================================
 
 int main()
 {

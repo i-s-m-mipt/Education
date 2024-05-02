@@ -1,6 +1,8 @@
 #include <iostream>
 #include <numeric>
 
+//  ================================================================================================
+
 [[nodiscard]] const int * binary_search(const int * array, std::size_t size, int key) 
 {
 	std::size_t l = 0, r = size;
@@ -22,6 +24,8 @@
 
 	return (array[l] == key ? &array[l] : nullptr); // good: one additional comparison after the loop
 }
+
+//  ================================================================================================
 
 int main()
 {

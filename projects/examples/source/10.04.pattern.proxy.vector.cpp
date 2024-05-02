@@ -2,6 +2,8 @@
 #include <memory>
 #include <vector>
 
+//  ================================================================================================
+
 class Loader // note: proxy class with lazy loading
 {
 public:
@@ -14,6 +16,8 @@ public:
 	std::unique_ptr < int > m_data; // note: nullptr
 
 }; // class Loader
+
+//  ================================================================================================
 
 int main()
 {

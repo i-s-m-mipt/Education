@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+//  ================================================================================================
+
 [[nodiscard]] double calculate_pi() noexcept
 {
 	std::random_device device; // note: make seed only once
@@ -28,6 +30,8 @@
 
 	return 4.0 * counter / size;
 }
+
+//  ================================================================================================
 
 int main()
 {

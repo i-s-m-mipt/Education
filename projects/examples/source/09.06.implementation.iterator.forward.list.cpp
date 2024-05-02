@@ -2,6 +2,8 @@
 #include <iterator>
 #include <memory>
 
+//  ================================================================================================
+
 template < typename T > class List
 {
 private:
@@ -69,6 +71,8 @@ private:
 	std::shared_ptr < Node > m_head; // note: no allocators
 
 }; // template < typename T > class List
+
+//  ================================================================================================
 
 int main()
 {

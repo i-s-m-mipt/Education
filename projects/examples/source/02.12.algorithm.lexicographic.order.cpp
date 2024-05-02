@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+//  ================================================================================================
+
 void generate_slow(std::size_t size, std::string s = "", std::size_t l = 0, std::size_t r = 0)
 {
 	if (l == size && r == size)
@@ -14,6 +16,8 @@ void generate_slow(std::size_t size, std::string s = "", std::size_t l = 0, std:
 	}
 }
 
+//  ================================================================================================
+
 void generate_fast(std::size_t size, std::string & output, std::string s = "", std::size_t l = 0, std::size_t r = 0)
 {
 	if (l < size)
@@ -25,6 +29,8 @@ void generate_fast(std::size_t size, std::string & output, std::string s = "", s
 	}
 	else output += (s + std::string(size - r, ')') + '\n'); // good: batch of brackets
 }
+
+//  ================================================================================================
 
 int main()
 {

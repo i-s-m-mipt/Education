@@ -2,6 +2,8 @@
 #include <numeric>
 #include <vector>
 
+//  ================================================================================================
+
 [[nodiscard]] constexpr bool binary_search(const std::vector < int > & vector, int key) noexcept
 {
 	std::size_t l = 0, r = std::size(vector);
@@ -17,6 +19,8 @@
 
 	return (vector[l] == key);
 }
+
+//  ================================================================================================
 
 int main()
 {

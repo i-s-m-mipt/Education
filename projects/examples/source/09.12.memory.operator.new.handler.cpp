@@ -4,6 +4,8 @@
 #include <new>
 #include <stdexcept>
 
+//  ================================================================================================
+
 inline void cleanup() // note: cleanup will be called at exit
 {
     std::cerr << "cleanup: bad allocation\n";
@@ -15,6 +17,8 @@ inline void handler() // note: handler will be called at every bad allocation
 
     std::exit(-1); // note: consider std::abort()
 }
+
+//  ================================================================================================
 
 int main()
 {

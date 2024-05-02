@@ -8,11 +8,15 @@
 #include <utility>
 #include <vector>
 
+//  ================================================================================================
+
 template < typename C, typename F, typename G > [[nodiscard]] constexpr auto combine(C combinator, F f, G g)
 {
 	return [=] < typename T > (T && x) { return combinator(f(std::forward < T > (x)), 
 														   g(std::forward < T > (x))); };
 }
+
+//  ================================================================================================
 
 int main()
 {

@@ -5,6 +5,8 @@
 #include <utility>
 #include <vector>
 
+//  ================================================================================================
+
 void insertion_sort(std::vector < int > & vector, std::size_t l, std::size_t r) 
 {
 	for (auto i = l + 1; i < r; ++i) 
@@ -19,6 +21,8 @@ void insertion_sort(std::vector < int > & vector, std::size_t l, std::size_t r)
 	}
 }
 
+//  ================================================================================================
+
 void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t m, std::size_t r)
 {
 	const auto begin = l, end = m;
@@ -32,6 +36,8 @@ void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t m, std:
 
 	for (std::size_t i = 0; auto element : copy) vector[begin + (i++)] = element;
 }
+
+//  ================================================================================================
 
 void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t r) 
 {
@@ -48,6 +54,8 @@ void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t r)
 		merge_sort(vector, l, m, r);
 	}
 }
+
+//  ================================================================================================
 
 int main()
 {

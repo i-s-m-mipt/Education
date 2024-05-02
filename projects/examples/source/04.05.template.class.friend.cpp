@@ -1,6 +1,8 @@
 #include <iostream>
 #include <numeric>
 
+//  ================================================================================================
+
 template < typename T > class Ratio // note: usually no problems with friend classes
 {
 public:
@@ -59,6 +61,8 @@ private:
 	T m_den;
 
 }; // template < typename T > class Ratio
+
+//  ================================================================================================
 
 int main()
 {

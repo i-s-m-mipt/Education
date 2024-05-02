@@ -11,6 +11,8 @@
 #include <utility>
 #include <vector>
 
+//  ================================================================================================
+
 template < typename T, typename F > [[nodiscard]] inline auto make_visitor(F f)
 {
     return std::make_pair(std::type_index(typeid(T)), [f](const auto & any)
@@ -18,6 +20,8 @@ template < typename T, typename F > [[nodiscard]] inline auto make_visitor(F f)
         f(std::any_cast < T > (any)); 
     });
 }
+
+//  ================================================================================================
 
 void handle(const std::any & any)
 {
@@ -40,6 +44,8 @@ void handle(const std::any & any)
     }
     else throw std::invalid_argument("invalid type: " + std::string(any.type().name()));
 }
+
+//  ================================================================================================
 
 int main()
 {

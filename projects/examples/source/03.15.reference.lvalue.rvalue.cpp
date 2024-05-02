@@ -1,10 +1,14 @@
 #include <iostream>
 
+//  ================================================================================================
+
 [[nodiscard]] inline int    get_prvalue() { return 42; }
 /*
 [[nodiscard]] inline int && get__xvalue() { return 42; } // warning: dangling reference
 */
 [[nodiscard]] inline int &  get__lvalue() { static int x = 42; return x; }
+
+//  ================================================================================================
 
 int main()
 {

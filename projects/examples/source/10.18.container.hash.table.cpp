@@ -5,6 +5,8 @@
 #include <type_traits>
 #include <unordered_set>
 
+//  ================================================================================================
+
 void print(const std::unordered_set < int > & unordered_set)
 {
 	std::cout << "N objects       : " << unordered_set.            size() << std::endl;
@@ -41,6 +43,8 @@ void print(const std::unordered_set < int > & unordered_set)
 
 	std::cout << std::endl;
 }
+
+//  ================================================================================================
 
 int main()
 {

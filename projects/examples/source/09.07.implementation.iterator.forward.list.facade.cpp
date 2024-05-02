@@ -4,6 +4,8 @@
 
 #include <boost/iterator/iterator_facade.hpp>
 
+//  ================================================================================================
+
 template < typename T > class List
 {
 private:
@@ -59,6 +61,8 @@ private:
 	std::shared_ptr < Node > m_head;
 
 }; // template < typename T > class List
+
+//  ================================================================================================
 
 int main()
 {

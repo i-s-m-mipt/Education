@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <iostream>
 
+//  ================================================================================================
+
 [[nodiscard]] double f(std::size_t size) noexcept // note: complex calculations
 {
 	auto result = 0.0;
@@ -21,6 +23,8 @@
 
 	return result;
 }
+
+//  ================================================================================================
 
 int main()
 {

@@ -6,10 +6,14 @@
 #include <boost/math/special_functions/gamma.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp> // note: gmp_float is ~2 times faster
 
+//  ================================================================================================
+
 template < typename T > [[nodiscard]] inline constexpr T area(T radius) noexcept
 {
 	return boost::math::constants::pi < T > () * radius * radius; // note: remember variable templates
 }
+
+//  ================================================================================================
 
 int main()
 {

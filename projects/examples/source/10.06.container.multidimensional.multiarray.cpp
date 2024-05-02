@@ -6,6 +6,8 @@
 
 #include <boost/multi_array.hpp>
 
+//  ================================================================================================
+
 template < auto N, typename C, typename FI > inline void fill_shape(const C & container, FI shape) noexcept
 {
 	if constexpr (*shape = std::size(container); N > 1)
@@ -13,6 +15,8 @@ template < auto N, typename C, typename FI > inline void fill_shape(const C & co
 		fill_shape < N - 1 > (*(std::begin(container)), ++shape);
 	}
 }
+
+//  ================================================================================================
 
 template < auto N, typename C, typename FI > inline void fill_array(const C & container, FI array) noexcept
 {
@@ -26,6 +30,8 @@ template < auto N, typename C, typename FI > inline void fill_array(const C & co
 	}
 }
 
+//  ================================================================================================
+
 template < typename T, auto N, typename C > [[nodiscard]] auto make_array(const C & c)
 {
 	using array_t = boost::multi_array < T, N > ;
@@ -37,6 +43,8 @@ template < typename T, auto N, typename C > [[nodiscard]] auto make_array(const 
 
 	return array;
 }
+
+//  ================================================================================================
 
 int main()
 {

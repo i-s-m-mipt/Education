@@ -2,6 +2,8 @@
 #include <vector>
 #include <stack>
 
+//  ================================================================================================
+
 template < typename T, typename C = std::vector < T > > class Stack
 {
 public:
@@ -33,6 +35,8 @@ private:
 	C m_container;
 
 }; // template < typename T, typename C = std::vector < T > > class Stack
+
+//  ================================================================================================
 
 int main()
 {

@@ -6,6 +6,8 @@
 
 using namespace std::literals;
 
+//  ================================================================================================
+
 void f(std::size_t size)
 {
 	const auto array = new int[size]{}; // note: dynamic allocation
@@ -16,6 +18,8 @@ void f(std::size_t size)
 
 //  delete[] array; // bad: memory leak if skipped
 }
+
+//  ================================================================================================
 
 int main()
 {

@@ -2,12 +2,18 @@
 #include <iterator>
 #include <vector>
 
+//  ================================================================================================
+
 struct Node { int value{}; Node * l{}, * r{}; }; // note: remember second star for pointer here
+
+//  ================================================================================================
 
 template < typename R, typename ... Ns > [[nodiscard]] inline R traverse(R root, Ns ... nodes)
 {
 	return (root ->* ... ->* nodes); // note: ((root ->* node_1) ->* node_2) ->* ...
 }
+
+//  ================================================================================================
 
 int main()
 {

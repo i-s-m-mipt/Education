@@ -4,6 +4,8 @@
 #include <iterator>
 #include <vector>
 
+//  ================================================================================================
+
 template < typename T > [[nodiscard]] constexpr std::vector < T > longest_common_subsequence(
 	
 	const std::vector < T > & sequence_1, 
@@ -42,6 +44,8 @@ template < typename T > [[nodiscard]] constexpr std::vector < T > longest_common
 	
 	return result;
 }
+
+//  ================================================================================================
 
 int main()
 {

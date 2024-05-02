@@ -4,6 +4,8 @@
 #include <limits>
 #include <numbers>
 
+//  ================================================================================================
+
 [[nodiscard]] inline constexpr bool are_equal_v1(double x, double y) noexcept
 {
 	return std::abs(x - y) < std::numeric_limits < double > ::epsilon();
@@ -23,6 +25,8 @@
 {
 	if (std::abs(x - y) < epsilon) return true; else return are_equal_v3(x, y, relative_epsilon);
 }
+
+//  ================================================================================================
 
 int main()
 {
