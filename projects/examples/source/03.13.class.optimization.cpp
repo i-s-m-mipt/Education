@@ -37,7 +37,7 @@ class X { const char c{};                       const E e;      };
 class Y { const char c{}; [[no_unique_address]] const E e;      };
 class Z { const char c{}; [[no_unique_address]] const E e1, e2; };
 
-class A {}; // note: empty base class optimization
+class A {}; // note: empty base class optimization, consider also boost::compressed_pair
 
 class B : public A {};
 class C : public B {};
