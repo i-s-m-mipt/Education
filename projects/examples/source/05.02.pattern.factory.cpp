@@ -94,11 +94,15 @@ int main()
     
     delete mobile; // good: no memory leak
 
+//  ================================================================================================
+
     const auto server = Server::Factory::create_v1(); 
 
     server->run(); 
     
     delete server; // good: no memory leak
+
+//  ================================================================================================
 
     const Factory * const factory_laptop = new const Factory_Laptop();
 

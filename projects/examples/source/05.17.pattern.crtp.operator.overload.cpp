@@ -96,6 +96,8 @@ int main()
     std::cout << "apple_1 != apple_2: " << (apple_1 != apple_2) << std::endl;
 
     std::cout << std::endl;
+
+//  ================================================================================================
     
     constexpr Human human_1(185.0);
     constexpr Human human_2(180.0);
@@ -108,6 +110,8 @@ int main()
     std::cout << "human_1 != human_2: " << (human_1 != human_2) << std::endl;
 
     std::cout << std::endl;
+
+//  ================================================================================================
 
     constexpr Train train_1(800.0);
     constexpr Train train_2(600.0);

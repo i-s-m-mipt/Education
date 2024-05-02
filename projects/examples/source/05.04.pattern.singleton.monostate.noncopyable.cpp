@@ -87,6 +87,8 @@ int main()
 
     std::cout << singleton.data() << std::endl;
 
+//  ================================================================================================
+
     Monostate monostate_1; // note: allowed multiple instances creation
     Monostate monostate_2; 
     Monostate monostate_3; 
@@ -96,6 +98,8 @@ int main()
     std::cout << monostate_1.data() << std::endl;
     std::cout << monostate_2.data() << std::endl;
     std::cout << monostate_3.data() << std::endl;
+
+//  ================================================================================================
 
     const Unique unique_1;
 
