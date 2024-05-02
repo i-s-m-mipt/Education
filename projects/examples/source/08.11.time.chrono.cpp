@@ -6,6 +6,8 @@
 #include <iostream>
 #include <string>
 
+#include <boost/timer/timer.hpp>
+
 //  ================================================================================================
 
 template < typename C > void verify(const std::string & name)
@@ -87,29 +89,44 @@ int main()
 
 //  ================================================================================================
 
+	constexpr std::size_t size = 1'000'000;
+
+	constexpr auto epsilon = 0.000001;
+
 	{
 		Chronometer chronometer("test"); // note: consider measurement series
-
-		constexpr auto epsilon = 0.000001;
-
-		constexpr std::size_t size = 1'000;
 
 		auto test = 0.0;
 
 		for (std::size_t i = 0; i < size; ++i)
 		{
-			for (std::size_t j = 0; j < size; ++j)
-			{
-				auto argument = 1.0 * i / size;
+			auto l = std::pow(std::sin(i), 2.0);
+			auto r = std::pow(std::cos(i), 2.0);
 
-				auto l = std::pow(std::sin(argument), 2.0);
-				auto r = std::pow(std::cos(argument), 2.0);
-
-				test += (l + r); // note: required optimization
-			}
+			test += (l + r);
 		}
 
 		assert(std::abs(test - 1'000'000.0) < epsilon);
+	}
+
+//  ================================================================================================
+
+	{
+		boost::timer::cpu_timer timer; // note: consider measurement series
+
+		auto test = 0.0;
+
+		for (std::size_t i = 0; i < size; ++i)
+		{
+			auto l = std::pow(std::sin(i), 2.0);
+			auto r = std::pow(std::cos(i), 2.0);
+
+			test += (l + r);
+		}
+
+		assert(std::abs(test - 1'000'000.0) < epsilon);
+
+		std::cout << timer.format() << std::endl;
 	}
 
 	return 0;
