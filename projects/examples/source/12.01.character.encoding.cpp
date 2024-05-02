@@ -4,12 +4,16 @@
 #include <iostream>
 #include <type_traits>
 
+//  ================================================================================================
+
 [[nodiscard]] inline constexpr bool is_little_endian_system() noexcept
 {
 	constexpr char16_t test = 0x0102;
 
 	return (std::bit_cast < const char * > (&test))[0] == 0x02;
 }
+
+//  ================================================================================================
 
 int main()
 {
