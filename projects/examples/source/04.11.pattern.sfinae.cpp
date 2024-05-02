@@ -99,7 +99,7 @@ private:
 
 int main()
 {
-	const auto name = "Matthias";
+	constexpr auto name = "Matthias";
 
 //  ================================================================================================
 

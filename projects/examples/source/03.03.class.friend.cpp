@@ -56,10 +56,8 @@ void C::print(const B & b) const { std::cout << b.m_data << std::endl; }
 
 int main()
 {
-	print(A());
-
+	    print(A());
 	B().print(A());
-
 	C().print(B());
 
 	return 0;

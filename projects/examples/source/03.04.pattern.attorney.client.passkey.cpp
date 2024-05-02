@@ -63,9 +63,7 @@ public:
 
 int main()
 {
-    const Client client; 
-    
-    User().run(client);
+    User().run(Client());
 
     return 0;
 }
