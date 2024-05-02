@@ -140,10 +140,8 @@ inline void swap(Container & x, Container & y) // good: useful free function
 
 int main()
 {
-	const std::size_t size = 5;
-
 	Container container_1                          ; // note: constructor (main)
-	Container container_2(                   size ); // note: constructor (user)
+	Container container_2(                      5 ); // note: constructor (user)
 
 	Container container_3(            container_2 ); // note: constructor (copy)
 	Container container_4(  std::move(container_3)); // note: constructor (move)
