@@ -215,10 +215,8 @@ set(debug
     14.05.concurrency.thread.reduce.packaged.task
     16.02.implementation.class.big.integer
     16.03.number.integer.multiprecision
-#   16.04.embedding.python.wrapper.header
-#   16.05.embedding.python.wrapper.source
-#   16.06.embedding.python.caller
-#   16.07.embedding.python.script
+    16.04.embedding.python.caller
+#   16.05.embedding.python.script
 )
 
 set(release
@@ -244,9 +242,11 @@ set(release
 
 foreach(entry IN LISTS debug)
     add_executable            (${entry} source/${entry}.cpp)
-    target_link_libraries     (${entry} PRIVATE ${Boost_LIBRARIES})
+    target_link_libraries     (${entry} PRIVATE      ${Boost_LIBRARIES})
+    target_link_libraries     (${entry} PRIVATE    ${Python3_LIBRARIES})
     target_link_libraries     (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
-    target_link_libraries     (${entry} PRIVATE PDFHummus::PDFWriter)
+    target_link_libraries     (${entry} PRIVATE    PDFHummus::PDFWriter)
+    target_link_libraries     (${entry} PRIVATE                     tbb)
     target_compile_options    (${entry} PRIVATE -Wall -Wextra -pedantic -O0)
     set_target_properties     (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 endforeach()
@@ -262,10 +262,12 @@ set_target_properties     (09.05.iterator.classification PROPERTIES COMPILE_FLAG
 
 foreach(entry IN LISTS release)
     add_executable            (${entry} source/${entry}.cpp)
-    target_link_libraries     (${entry} PRIVATE ${Boost_LIBRARIES})
+    target_link_libraries     (${entry} PRIVATE      ${Boost_LIBRARIES})
+    target_link_libraries     (${entry} PRIVATE    ${Python3_LIBRARIES})
     target_link_libraries     (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
-    target_link_libraries     (${entry} PRIVATE benchmark::benchmark)
-    target_link_libraries     (${entry} PRIVATE tbb)
+    target_link_libraries     (${entry} PRIVATE    benchmark::benchmark)
+    target_link_libraries     (${entry} PRIVATE    PDFHummus::PDFWriter)
+    target_link_libraries     (${entry} PRIVATE                     tbb)
     target_compile_options    (${entry} PRIVATE -Wall -pedantic -Wextra -O3) 
     set_target_properties     (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
 endforeach()
@@ -282,9 +284,3 @@ target_link_libraries     (06.12.project.library PRIVATE ${CMAKE_SOURCE_DIR}/../
 target_link_libraries     (06.12.project.library PRIVATE ${Boost_LIBRARIES})
 target_compile_options    (06.12.project.library PRIVATE -Wall -Wextra -pedantic -O0) 
 set_target_properties     (06.12.project.library PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-
-add_executable            (16.05.embedding.python source/16.05.embedding.python.caller.cpp)
-target_link_libraries     (16.05.embedding.python PRIVATE   ${Boost_LIBRARIES})
-target_link_libraries     (16.05.embedding.python PRIVATE ${Python3_LIBRARIES})
-target_compile_options    (16.05.embedding.python PRIVATE -Wall -Wextra -pedantic -O0) 
-set_target_properties     (16.05.embedding.python PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
