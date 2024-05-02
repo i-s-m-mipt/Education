@@ -7,8 +7,6 @@ int main()
 {
 	const std::size_t size = 5;
 
-//  ================================================================================================
-
 	int array_1[size]{}; // good: zero initialized array
 
 	[[maybe_unused]] const int array_2[size]{ 1, 2, 3 }; // note: elements: { 1, 2, 3, 0, 0 }

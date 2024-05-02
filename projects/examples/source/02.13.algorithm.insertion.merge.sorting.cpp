@@ -61,19 +61,13 @@ int main()
 {
 	const std::size_t size = 1'000;
 
-//  ================================================================================================
-
 	std::vector < int > vector(size, 0);
 
 	std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
 
 	std::ranges::reverse(vector); // note: reverse range
 
-//  ================================================================================================
-
 	merge_sort(vector, 0, size); // good: half-open intervals preferred in C++
-
-//  ================================================================================================
 
 	for (const auto element : vector) std::cout << element << ' ';
 

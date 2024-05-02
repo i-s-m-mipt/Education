@@ -24,8 +24,6 @@ int main()
 
 	[[maybe_unused]] int m = 42, n = 42; // note: comma separator syntax
 
-//  ================================================================================================
-
 //	int x1; // bad: uninitialized variable, indeterminate value
 
 //	int y1 = x1; // error: undefined behavior

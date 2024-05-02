@@ -15,8 +15,6 @@ int main()
 
 	const std::size_t size = 5;
 
-//  ================================================================================================
-
 	const auto array = new int[size]{}; // good: zero initialized dynamic array
 
 	const auto middle = size / 2;

@@ -18,8 +18,6 @@ int main()
 
 	auto x = 1, y = 2;
 
-//  ================================================================================================
-
 	std::cout << (!!x != !!y) << std::endl; // note: x xor y for non-booleans
 
 	std::cout << (    -x) << std::endl;

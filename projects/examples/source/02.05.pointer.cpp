@@ -26,8 +26,6 @@ int main()
 		  auto z1 = 42; 
 	const auto z2 = 42; // note: works with pointers to constant only
 
-//  ================================================================================================
-
 	[[maybe_unused]] const int * ptr_cz1_1 = &z1;
 	[[maybe_unused]] int const * ptr_cz1_2 = &z1; // note: same as ptr_cz1_1
 

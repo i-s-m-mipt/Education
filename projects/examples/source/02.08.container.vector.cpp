@@ -9,8 +9,6 @@ int main()
 {
 	const std::size_t size = 5;
 
-//  ================================================================================================
-
 	std::vector < int > vector(size, 0); // note: create std::vector of n zero elements
 
 	std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
