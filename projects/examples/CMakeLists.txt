@@ -184,17 +184,17 @@ set(debug
     11.17.algorithm.graph.search.dijkstra
     12.01.character.encoding
 #   12.02.character.encoding.unicode.utf
-    12.05.locale.facet
-    12.06.locale.facet.utf.converter
-#   12.07.parser.regex.ecma.script
-    12.08.parser.regex
-#   12.09.parser.grammar.arithmetic
-    12.10.parser.grammar.arithmetic.calculator
-    12.11.parser.spirit.number.integer
-    12.12.parser.spirit.number.complex
-    12.13.parser.spirit.number.romanus
-    12.14.parser.spirit.fusion.class.structure
-    12.15.parser.spirit.grammar.arithmetic.calculator
+    12.04.locale.facet
+    12.05.locale.facet.utf.converter
+#   12.06.parser.regex.ecma.script
+    12.07.parser.regex
+#   12.08.parser.grammar.arithmetic
+    12.09.parser.grammar.arithmetic.calculator
+    12.10.parser.spirit.number.integer
+    12.11.parser.spirit.number.complex
+    12.12.parser.spirit.number.romanus
+    12.13.parser.spirit.fusion.class.structure
+    12.14.parser.spirit.grammar.arithmetic.calculator
 #   13.01.stream.class.inheritance
     13.02.stream.class
     13.03.stream.class.file
