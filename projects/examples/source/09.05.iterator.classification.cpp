@@ -19,6 +19,8 @@ namespace detail
 		}
 	}
 
+//  ================================================================================================
+
 	template < typename I > 
 
 	inline constexpr void advance(I & iterator, int distance, std::bidirectional_iterator_tag) noexcept
@@ -32,6 +34,8 @@ namespace detail
 			while (distance++) --iterator;
 		}
 	}
+
+//  ================================================================================================
 
 	template < typename I > 
 
@@ -61,6 +65,8 @@ inline constexpr void advance_v2(I & iterator, int distance) noexcept
 	}
 }
 
+//  ================================================================================================
+
 template < std::bidirectional_iterator I > 
 
 inline constexpr void advance_v2(I & iterator, int distance) noexcept
@@ -74,6 +80,8 @@ inline constexpr void advance_v2(I & iterator, int distance) noexcept
 		while (distance++) --iterator;
 	}
 }
+
+//  ================================================================================================
 
 template < std::random_access_iterator I >
  
