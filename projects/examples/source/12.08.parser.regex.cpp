@@ -82,7 +82,7 @@ int main(int argc, char ** argv) // note: arguments for testing
     std::cout << std::endl;
 
     {
-        const std::sregex_iterator begin(std::begin(data), std::cend(data), pattern), end;
+        const std::sregex_iterator begin(std::begin(data), std::cend(data), pattern), end; // note: consider also boost::tokenizer
 
 	    std::ranges::for_each(begin, end, [](auto && matches){ std::cout << matches[0] << ' '; });
 
