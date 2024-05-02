@@ -1,11 +1,15 @@
+#include <bit>
 #include <cassert>
 #include <cstdlib>
 #include <exception>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <iterator>
 #include <stdexcept>
 #include <string>
+
+//  ================================================================================================
 
 class Redirector // good: RAII wrapper to for redirecting std::cout buffer to file buffer
 {
@@ -29,11 +33,55 @@ private:
 
 }; // class Redirector
 
+//  ================================================================================================
+
+struct S { char c{}; int i{}; std::string s; };
+
+//  ================================================================================================
+
+std::ofstream & operator<<(std::ofstream & fout, const S & s) // note: use with std::ios::binary
+{
+    fout.write(&s.c, sizeof(s.c));
+
+    fout.write(std::bit_cast < const char * > (&s.i), sizeof(s.i));
+
+    const auto size = std::size(s.s);
+
+    fout.write(std::bit_cast < const char * > (&size), sizeof(size));
+
+    fout.write(std::data(s.s), std::size(s.s));
+
+    return fout;
+}
+
+//  ================================================================================================
+
+std::ifstream & operator>>(std::ifstream & fin, S & s) // note: use with std::ios::binary
+{
+    fin.read(&s.c, sizeof(s.c));
+
+    fin.read(std::bit_cast < char * > (&s.i), sizeof(s.i));
+
+    std::size_t size = 0;
+
+    fin.read(std::bit_cast < char * > (&size), sizeof(size));
+
+    s.s.resize(size);
+
+    fin.read(std::bit_cast < char * > (&s.s.front()), size);
+
+    return fin;
+}
+
+//  ================================================================================================
+
 int main()
 {
     constexpr auto file = "13.03.stream.class.file.example.data";
 
     constexpr std::size_t size = 5;
+
+//  ================================================================================================
 
     {
         std::fstream fout(file, std::ios::out); // note: open-close by RAII idiom
@@ -48,6 +96,8 @@ int main()
         fout << "hello"; // note: rewrites file
     }
 
+//  ================================================================================================
+
     if (std::fstream fin(file, std::ios::in); fin)
     {
         fin.seekg(2 * (size + 1), std::ios::beg); // note: consider binary mode
@@ -59,6 +109,8 @@ int main()
         assert(fin.tellg() == size * (size + 1));
     }
     else std::cerr << "invalid file stream\n";
+
+//  ================================================================================================
 
     std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
 
