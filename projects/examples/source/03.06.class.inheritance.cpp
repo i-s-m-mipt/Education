@@ -154,11 +154,15 @@ int main()
 
 //	const auto person_name = person.get_name(); // error: protected member function
 
+//  ================================================================================================
+
 	const Employee employee("Matthias", 100'000);
 
 	employee.print();
 
 	[[maybe_unused]] const auto employee_name = employee.get_name();
+
+//  ================================================================================================
 
 	const Manager manager("Matthias", 100'000, 10);
 
@@ -172,11 +176,15 @@ int main()
 //	derived_1.m_data_2 = 42; // error: protected data member
 //	derived_1.m_data_3 = 42; // error: private   data member
 
+//  ================================================================================================
+
 	Derived_2 derived_2;
 
 //	derived_2.m_data_1 = 42; // error: protected data member
 //	derived_2.m_data_2 = 42; // error: protected data member
 //	derived_2.m_data_3 = 42; // error: private   data member
+
+//  ================================================================================================
 
 	Derived_3 derived_3;
 

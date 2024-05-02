@@ -225,6 +225,8 @@ int main()
 	std::cout << (ratio_4++         ) << std::endl;
 	std::cout << (ratio_4--         ) << std::endl;
 
+//  ================================================================================================
+
 	std::cout << (      1 +  ratio_4) << std::endl; // note: 1.operator+(ratio_4) is invalid
 	std::cout << (ratio_4 -        1) << std::endl;
 	std::cout << (ratio_4 *  ratio_3) << std::endl;
@@ -232,6 +234,8 @@ int main()
 	std::cout << (      1 /        1) << std::endl;
 
 	std::cout << operator+(ratio_4, ratio_1) << std::endl; // note: function-like style
+
+//  ================================================================================================
 
 	std::cout << (ratio_3 <  ratio_4) << std::endl;
 	std::cout << (ratio_3 >  ratio_4) << std::endl;

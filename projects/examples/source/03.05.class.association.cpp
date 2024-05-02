@@ -99,7 +99,7 @@ int main()
 
 	Lecture lecture_1("Astronomy");
 	Lecture lecture_2("Chemistry");
-	Lecture lecture_3("Geograhpy");	
+	Lecture lecture_3("Geograhpy");
 
 	connect(student_1, lecture_1);
 	connect(student_2, lecture_2);
