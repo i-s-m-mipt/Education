@@ -133,6 +133,8 @@ int main()
 
     auto u8string = convert_locale_to_utf(string);
 
+//  ================================================================================================
+
     std::cout << std::hex;
 
 	std::cout << (static_cast < int > (  string[0]) & 0xFF) << ' ';

@@ -65,6 +65,8 @@ int main()
 
 	std::cout << sizeof(wchar_t) << std::endl; // note: used for wide encodings on Windows
 
+//  ================================================================================================
+
 	std::cout << std::boolalpha << (std::endian::native == std::endian::little) << std::endl;
 
 	std::cout << std::boolalpha << is_little_endian_system() << std::endl;
