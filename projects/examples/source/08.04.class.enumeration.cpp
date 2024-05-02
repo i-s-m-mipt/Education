@@ -53,6 +53,8 @@ int main()
 		f(static_cast < Color > (color));
 	}
 
+//  ================================================================================================
+
 	constexpr State state_1 = alpha;
 	constexpr State state_2 = gamma;
 

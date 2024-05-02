@@ -153,6 +153,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
     [[maybe_unused]] constexpr auto dec = 42;       // note: decimal
     [[maybe_unused]] constexpr auto hex = 0x2a;     // note: hexadecimal
 
+//  ================================================================================================
+
     constexpr auto data = 0x1234;
     constexpr auto mask = 0x00f0;
     
@@ -166,15 +168,21 @@ int main(int argc, char ** argv) // note: arguments for benchmark
     constexpr auto m = 0x123; assert((m << 1) == 0x246); // good: bit shift as multiplication
     constexpr auto n = -4000; assert((n >> 2) == -1000); // good: bit shift as multiplication
 
+//  ================================================================================================
+
     auto x = 1, y = 2;
 
     x ^= y ^= x ^= y; // note: Google interview, solution 2
+
+//  ================================================================================================
 
     static_assert(sizeof(std::uint64_t) == 8); // note: 8 byte(s) exactly
 
     static_assert(std::is_same_v < int, std::int32_t > );
 
     assert(middle(0x12345678) == 0x3456);
+
+//  ================================================================================================
 
     std::bitset < 8 > bitset(0b1101); // note: see reference for detailed description
         
@@ -186,16 +194,22 @@ int main(int argc, char ** argv) // note: arguments for benchmark
     assert(std::bitset < 8 > (       42 ).to_string() == "00101010");
     assert(std::bitset < 8 > ("00101010").to_ullong() ==        42 );
 
+//  ================================================================================================
+
     std::byte byte{ 42 }; // note: see reference for detailed description
 
     byte |= std::byte{ 0b1111'0000 }; assert(std::to_integer < int > (byte) == 0b1111'1010);
     byte &= std::byte{ 0b1111'0000 }; assert(std::to_integer < int > (byte) == 0b1111'0000);
+
+//  ================================================================================================
 
     constexpr std::size_t size = 5;
 
     constexpr int array[size]{ 42 };
 
     print(std::as_bytes(std::span < const int > (array))); // note: outputs 0x2a
+
+//  ================================================================================================
 
     constexpr auto value = std::numeric_limits < unsigned int > ::max();
 
@@ -212,6 +226,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     assert(distance_in_bytes(&array[0], &array[size - 1]) == 16);
 
+//  ================================================================================================
+
     constexpr auto d = 3.14; std::uint64_t r{};
 
     static_assert(sizeof(d) == sizeof(r));
@@ -220,6 +236,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     r = std::bit_cast < const std::uint64_t > (d); // good: or directly do std::memcpy(&n, &d, sizeof(d));
 
+//  ================================================================================================
+
     using binary = std::bitset < 8 > ;
 
     for (unsigned int i = 0; i < 10; ++i)
@@ -227,6 +245,8 @@ int main(int argc, char ** argv) // note: arguments for benchmark
         std::cout <<  "ceil(" << binary(i) << ") = " << binary(std::bit_ceil (i)) << ", ";
         std::cout << "floor(" << binary(i) << ") = " << binary(std::bit_floor(i)) << std::endl;
     }
+
+//  ================================================================================================
 
     benchmark::Initialize(&argc, argv);
 

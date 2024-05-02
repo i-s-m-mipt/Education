@@ -14,6 +14,8 @@ int main()
 
 	std::cout << time.to_duration() << std::endl; // note: convert to duration
 
+//  ================================================================================================
+
 	constexpr std::chrono::year_month_day date(2023y, std::chrono::December, 29d);
 
 	std::cout << date << std::endl;
@@ -22,13 +24,19 @@ int main()
 
 	assert(!(std::chrono::year(2023) / 2 / 29).ok()); // note: invalid date
 
+//  ================================================================================================
+
 	auto now = std::chrono::floor < std::chrono::hours > (std::chrono::system_clock::now());
 
 	auto delta = now - std::chrono::sys_days(std::chrono::year(2023) / 1 / 1);
 
 	std::cout << std::chrono::floor < std::chrono::days > (delta) << std::endl;
 
+//  ================================================================================================
+
 	std::cout << std::chrono::year_month_weekday(date).weekday() << std::endl;
+
+//  ================================================================================================
 
 	std::cout << now << std::endl; // note: printed as UTC (or GMT)
 

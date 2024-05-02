@@ -32,6 +32,8 @@ int main()
 	std::cout << std::scientific   << 3.14 << std::endl;
 	std::cout << std::defaultfloat << 3.14 << std::endl;
 
+//  ================================================================================================
+
 	const auto default_precision = std::cout.precision();
 
 	constexpr auto max_precision = std::numeric_limits < double > ::digits10 + 1;
@@ -44,6 +46,8 @@ int main()
 
 	std::cout << std::setprecision(default_precision);
 
+//  ================================================================================================
+
 	std::cout << std::numeric_limits < double > ::min() << std::endl; // note: 0.0
 	std::cout << std::numeric_limits < double > ::max() << std::endl;
 
@@ -52,11 +56,15 @@ int main()
 		std::cout << std::numeric_limits < double > ::infinity() << std::endl;
 	}
 
+//  ================================================================================================
+
 	std::cout << errno << ' ' << std::log(-1) << ' ' << errno << std::endl; // note: C-style
 
 	constexpr auto x = 0.0, y = 1.0;
 
 	std::cout << -x / y << std::endl; // note: negative zero
+
+//  ================================================================================================
 
 	std::cout << std::boolalpha << are_equal_v1(1.0, 0.1 * 10) << std::endl;
 

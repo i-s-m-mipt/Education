@@ -58,12 +58,16 @@ int main()
 {
 	verify < std::chrono::system_clock > ("system clock");
 	verify < std::chrono::steady_clock > ("steady clock"); // note: monotonic clock
+
+//  ================================================================================================
 	
 	std::cout << std::chrono::system_clock::time_point() << std::endl; // note: clock epoch
 
 	auto now = std::chrono::system_clock::now(); // note: time point for current time
 
 	std::cout << now << ' ' << std::chrono::system_clock::to_time_t(now) << std::endl; // note: 2038
+
+//  ================================================================================================
 
 	constexpr std::chrono::duration < long long, std::ratio < 1, 1000 > > duration_1(42);
 
@@ -80,6 +84,8 @@ int main()
 	std::cout << now - std::chrono::days(10) << std::endl; // note: time point 10 days ago from now
 
 	std::cout << now - std::chrono::system_clock::time_point() << std::endl; // note: duration in ns since epoch
+
+//  ================================================================================================
 
 	{
 		Chronometer chronometer("test"); // note: consider measurement series
