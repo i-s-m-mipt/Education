@@ -21,9 +21,9 @@ template < typename T > class Range : private std::vector < T >
 {
 public:
 
-    using std::vector < T > ::begin; // note: required for       range
-	using std::vector < T > ::  end; // note: required for       range
-	using std::vector < T > :: size; // note: required for sized range
+    using std::vector < T > ::begin; // note: mandatory for       range concept
+	using std::vector < T > ::  end; // note: mandatory for       range concept
+	using std::vector < T > :: size; // note: mandatory for sized range concept
 
 }; // template < typename T > class Range : private std::vector < T >
 
@@ -44,13 +44,13 @@ int main()
 {
 	std::vector < int > vector { 0, 1, 2, 3, 4 };
 
-	for (auto && element : vector) ++element; // note: range-based for, look at cppinsights.io
+	for (auto && element : vector) ++element; // note: range-based for, consider cppinsights.io
 
 //  ================================================================================================
 
 	const std::map < int, int > map { { 1, 10 }, { 2, 20 }, { 3, 30 } };
 
-	for (const auto [key, value] : map) // note: structured binding, look at cppinsights.io
+	for (const auto [key, value] : map) // note: structured binding, consider cppinsights.io
 	{
 		std::cout << key << ", " << value << std::endl;
 	}

@@ -9,7 +9,7 @@ public: // good: public members first
 
 	using integer_t = unsigned int; // note: nested type alias
 
-	class Printer // note: nested types can not be forward declared
+	class Printer
 	{
 	public:
 
@@ -24,16 +24,14 @@ public:
 
 	Date() : m_year(0), m_month(0), m_day(0) // good: initializer list, initialization
 	{
-//		m_year  = 0; // bad: assignment, not initialization, invalid for constants and references
+//		m_year  = 0; // bad: assignment instead of initialization, invalid for constants and references
 //		m_month = 0;
 //		m_day   = 0;
 
-		initialize(); // good: don't repeat yourself
+		initialize(); // good: avoid initialization code duplication
 	}
 
-	Date(integer_t year, integer_t month, integer_t day) :
-	 
-		m_year(year), m_month(month), m_day(day) // note: member initialization order
+	Date(integer_t year, integer_t month, integer_t day) : m_year(year), m_month(month), m_day(day)
 	{
 		initialize();
 	}
@@ -43,7 +41,7 @@ public:
 		initialize();
 	}
 
-   ~Date() // note: don't call destructor explicitly
+   ~Date() // note: destructor is called implicitly when leaving scope
 	{
 		uninitialize();
 	}
@@ -62,7 +60,7 @@ private:
 
 public:
 
-	void print_v1() const // note: small function is defined in the class as inline
+	void print_v1() const // note: small function defined in the class as inline
 	{
 //		m_year = 2023; // error: const function
 
@@ -73,7 +71,7 @@ public:
 
 public:
 
-	[[nodiscard]] integer_t year() const // note: biwise constancy
+	[[nodiscard]] integer_t year() const // note: bitwise constancy
 	{
 		return m_year;
 	}
@@ -89,7 +87,7 @@ public:
 	{
 		m_year = (year > max_year ? max_year : year); 
 		
-		m_is_string_valid = false; // note: cash is not valid anymore
+		m_is_string_valid = false; // note: update for cache required
 	}
 
 	[[nodiscard]] std::string get_date_as_string() const // note: logical constancy
@@ -118,7 +116,7 @@ public:
 
 private:
 
-	static inline std::size_t counter = 0; // note: in-class definition for non-const
+	static inline std::size_t counter = 0; // note: in-class definition for non-constant object
 
 private: // good: private members last
 
@@ -136,7 +134,7 @@ private:
 
 //  ================================================================================================
 
-void Date::print_v2() const // good: large function is defined outside the class
+void Date::print_v2() const // good: large function defined outside the class
 {
 	std::cout << prompt;
 
@@ -181,7 +179,7 @@ int main()
 	const Date date_1;
 	const Date date_2(2023, 9, 19);
 
-//	const Date date_3(); // bad: most vexing parse, not an instance of the class
+//	const Date date_3(); // bad: most vexing parse, function declaration instead of class instance
 
 //  ================================================================================================
 
@@ -194,7 +192,7 @@ int main()
 	std::cout << date_1.max_year << std::endl;
 	std::cout << date_2.max_year << std::endl;
 
-	std::cout << Date::max_year << std::endl; // good: preferred syntax
+	std::cout << Date::max_year << std::endl; // good: consider access through class
 
 	std::cout << Date::get_counter() << std::endl;
 

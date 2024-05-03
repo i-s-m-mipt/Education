@@ -85,7 +85,7 @@ template < typename T > inline constexpr auto is_function_v = is_function < T > 
 
 //  ================================================================================================
 
-template < typename D, typename B > class is_derived // note: old-style implementation by Herb Sutter
+template < typename D, typename B > class is_derived // note: old style implementation by Herb Sutter
 {
 private:
 
@@ -94,7 +94,7 @@ private:
 
 private:
 
-	[[nodiscard]] static constexpr N test(...); // note: C-style for inheritance, SFINAE alternative
+	[[nodiscard]] static constexpr N test(...); // note: C style for inheritance, SFINAE alternative
 	[[nodiscard]] static constexpr Y test(B *);
 
 public:

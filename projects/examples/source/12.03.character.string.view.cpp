@@ -108,7 +108,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
     std::getline(std::cin >> std::ws, string_2); // good: skip space characters
 
     std::cout << std::quoted(string_1) << ' ' << 
-                 std::quoted(string_2) << std::endl; // note: see arguments
+                 std::quoted(string_2) << std::endl; // note: consider arguments
 
 //  ================================================================================================
 
@@ -134,7 +134,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
     [[maybe_unused]] constexpr char c_string_2[] = "hello";
     [[maybe_unused]] constexpr auto c_string_3   = "hello"; // note: auto -> const char *
 
-    assert(std::strlen(string_3.c_str()) == 13); // note: see also cstring library functions
+    assert(std::strlen(string_3.c_str()) == 13); // note: consider cstring library functions
 
 //  ================================================================================================
 
@@ -156,7 +156,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     constexpr auto string_view = "Hello, world!"sv; // note: auto -> std::string_view
     
-    print(string_view); // good: prefer string_view for read only purposes
+    print(string_view); // good: consider string_view for read only purposes
 
     print(string_3);
 

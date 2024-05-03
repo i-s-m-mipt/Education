@@ -184,7 +184,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 //  ================================================================================================
 
-    std::bitset < 8 > bitset(0b1101); // note: consider also boost::dynamic_bitset
+    std::bitset < 8 > bitset(0b1101); // note: consider boost::dynamic_bitset
         
     bitset |= 0b0010; assert(bitset == 0b1111);
     bitset &= 0b0011; assert(bitset == 0b0011);
@@ -196,7 +196,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 //  ================================================================================================
 
-    std::byte byte{ 42 }; // note: see reference for detailed description
+    std::byte byte{ 42 };
 
     byte |= std::byte{ 0b1111'0000 }; assert(std::to_integer < int > (byte) == 0b1111'1010);
     byte &= std::byte{ 0b1111'0000 }; assert(std::to_integer < int > (byte) == 0b1111'0000);

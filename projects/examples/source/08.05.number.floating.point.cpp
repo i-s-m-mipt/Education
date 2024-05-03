@@ -62,7 +62,7 @@ int main()
 
 //  ================================================================================================
 
-	std::cout << errno << ' ' << std::log(-1) << ' ' << errno << std::endl; // note: C-style
+	std::cout << errno << ' ' << std::log(-1) << ' ' << errno << std::endl; // note: C style
 
 	constexpr auto x = 0.0, y = 1.0;
 

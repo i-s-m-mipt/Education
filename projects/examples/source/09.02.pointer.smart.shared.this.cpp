@@ -22,7 +22,7 @@ class Best : private std::enable_shared_from_this < Best >
 {
 private:
 
-    struct Key {}; // note: see also PassKey idiom
+    struct Key {}; // note: consider PassKey idiom
 
 public:
 

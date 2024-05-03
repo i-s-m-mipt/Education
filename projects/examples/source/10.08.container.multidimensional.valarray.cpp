@@ -8,15 +8,15 @@ int main()
 
     assert(valarray.min() == 1 && valarray.max() == 5);
 
-    valarray[valarray > 4] = 0; // note: valarray contains 1 2 3 4 0
+    valarray[valarray > 4] = 0; // note: elements: { 1, 2, 3, 4, 0 }
 
     const std::valarray < std::size_t > indexes { 1, 2, 3 };
 
     std::valarray < int > part; part.resize(std::size(indexes));
 
-    part = valarray[indexes]; // note: part contains 2 3 4
+    part = valarray[indexes]; // note: elements: { 2, 3, 4 }
 
-    const auto shift = part.cshift(1); // note: shift contains 3 4 2
+    const auto shift = part.cshift(1); // note: elements: { 3, 4, 2 }
  
     assert(shift[0] == 3 && shift[1] == 4 && shift[2] == 2);
 

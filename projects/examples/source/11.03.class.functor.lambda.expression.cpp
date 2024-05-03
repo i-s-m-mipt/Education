@@ -27,7 +27,7 @@ private:
 
 int main()
 {
-	constexpr auto lambda_1 = [](){}; // note: lambda expression, look at cppinsights.io
+	constexpr auto lambda_1 = [](){}; // note: lambda expression, consider cppinsights.io
 
 	std::cout << typeid(lambda_1).name() << std::endl; // note: unique closure type
 

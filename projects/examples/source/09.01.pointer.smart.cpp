@@ -37,7 +37,7 @@ inline void f(std::shared_ptr < const int > , int) noexcept {}
 
 //  ================================================================================================
 
-class B; // note: forward declaration as for plain pointers
+class B; // note: forward declaration required
 
 class A
 {
@@ -108,7 +108,7 @@ int main()
 
 	const std::shared_ptr < const int > shared_ptr_1; // note: same as nullptr
 
-	if (shared_ptr_1) // note: check if not nullptr as for plain pointer
+	if (shared_ptr_1) // note: verify smart pointer as plain pointer
 	{
 		std::cout << shared_ptr_1 << std::endl;
 	}
@@ -129,7 +129,7 @@ int main()
 
 	const auto ptr = new const auto(42);
 
-//	const std::shared_ptr < const int > shared_ptr_4(ptr); // bad: don't mix with plain pointers
+//	const std::shared_ptr < const int > shared_ptr_4(ptr); // bad: avoid mixing with plain pointers
 
 	delete ptr;
 
@@ -153,7 +153,7 @@ int main()
 
 	std::shared_ptr < int > shared_ptr_7(new int[size]{}, std::default_delete < int[] > ());
 
-//	*(shared_ptr_7++) = 42; // note: pointer arithmetic is prohibited, prefer iterators
+//	*(shared_ptr_7++) = 42; // note: prohibited pointer arithmetic, consider iterators
 
 	const auto shared_ptr_8 = std::make_shared < int[] > (size, 0); // note: is it useful?
 

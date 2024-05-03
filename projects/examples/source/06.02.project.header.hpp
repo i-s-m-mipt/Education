@@ -14,9 +14,9 @@
 
 //  ================================================================================================
 
-void f(); // good: forward declaration in header file
+void f(); // good: declaration in header file
 
-void g(); // note: forward declaration only
+void g(); // note: declaration only
 
 /*
 void h() // error: one definition rule violation

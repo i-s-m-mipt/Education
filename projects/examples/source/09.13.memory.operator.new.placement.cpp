@@ -49,7 +49,7 @@ protected:
 	constexpr  Manager()          = default;
     constexpr ~Manager() noexcept = default;
 
-public: // note: consider also overloading of all other versions of new and delete
+public: // note: consider overloading of all other versions of new and delete
 
 	[[nodiscard]] void * operator new(std::size_t size) // note: implicitly static
 	{
@@ -130,7 +130,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 	std::cout << sizeof(U) << std::endl;
 
-	U u; // note: prefer using std::variant
+	U u; // note: consider std::variant
 
 	u.string_1 = "hello";
 

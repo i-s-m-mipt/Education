@@ -53,13 +53,13 @@ int main()
 
 	try
 	{
-		assert(vector.at(666) == 0); // note: use at() if index wasn't verified at all
+		assert(vector.at(666) == 0); // note: consider at() for unverified indices
 	}
 	catch (...) {}
 
 	for (std::size_t i = 0; i < std::size(vector); ++i) // good: std::size instead of member
 	{
-		assert(vector[i] == 0); // note: use operator[] if index was verified elsewhere
+		assert(vector[i] == 0); // note: consider operator[] for verified indices
 	}
 
 //  ================================================================================================
@@ -166,19 +166,19 @@ int main()
 	
 	list_1.sort(); // note: std::sort is unacceptable due to bidirectional iterators
 
-	assert(list_1.unique() == 5); // note: erases all consecutive duplicate elements
+	assert(list_1.unique() == 5); // note: erase all consecutive equal elements
 
 //  ================================================================================================
 
 	std::list < int > list_2 { 9, 7, 5, 3, 1, 42 };
 
-	list_2.reverse(); // note: reverses the order of the elements in the container
+	list_2.reverse(); // note: reverse the order of the elements in the container
 
-	assert(list_2.remove(42) == 1); // note: erases all elements that are equal 42
+	assert(list_2.remove(42) == 1); // note: erase all elements that are equal 42
 
 //  ================================================================================================
 
-	list_1.merge(list_2); // note: list_1 contains 0 1 2 3 4 5 6 7 8 9
+	list_1.merge(list_2); // note: elements: { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }
 
 	list_2.splice(std::begin(list_2), list_1, 
 		          std::begin(list_1),

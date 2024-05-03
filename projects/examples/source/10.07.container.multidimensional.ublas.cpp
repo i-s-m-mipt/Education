@@ -56,7 +56,7 @@
     
             boost::numeric::ublas::permutation_matrix <> permutation(size);
 
-            if (!boost::numeric::ublas::lu_factorize(copy, permutation)) // note: check singularity
+            if (!boost::numeric::ublas::lu_factorize(copy, permutation)) // note: verify singularity
             {
                 auto determinant = 1.0;
 

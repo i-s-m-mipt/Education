@@ -3,7 +3,7 @@
 
 //  ================================================================================================
 
-template < typename T > [[nodiscard]] inline T max_v1(T x, T y) // note: can be class instead of typename
+template < typename T > [[nodiscard]] inline T max_v1(T x, T y) // note: typename instead of class
 {
 	return (x < y ? y : x);
 }

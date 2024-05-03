@@ -28,8 +28,8 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 
 	const std::size_t length = std::distance(first, last);
 
-	const std::size_t min_size = 100; // note: too few, only for demonstration
-
+	const std::size_t min_size = 100; // note: small limit for demonstration
+	
 	if (length <= min_size)
 	{
 		return std::reduce(first, last, sum);

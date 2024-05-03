@@ -20,7 +20,7 @@ void test_1(benchmark::State & state)
 {
     for (auto _ : state)
     {
-        std::array < int, 100'000 > array; // note: template parameter instead of state.range(0), see also stack limit
+        std::array < int, 100'000 > array; // note: template parameter instead of state.range(0), consider stack limit
 
         std::iota(std::begin(array), std::end(array), 1); // note: generate range 1, 2, 3, ...
 

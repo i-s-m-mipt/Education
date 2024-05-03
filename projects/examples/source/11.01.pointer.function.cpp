@@ -10,7 +10,7 @@
 	return (x + 1); 
 }
 
-[[nodiscard]] inline constexpr auto g(int (*f)(int), int x) // note: old-style function argument
+[[nodiscard]] inline constexpr auto g(int (*f)(int), int x) // note: old style function argument
 {
 	return f(x);
 }
@@ -26,7 +26,7 @@ template < typename F, typename ... Ts >
 
 [[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Ts && ... args)
 {
-	return f(std::forward < Ts > (args)...); // note: see std::invoke
+	return f(std::forward < Ts > (args)...); // note: consider std::invoke
 }
 
 //  ================================================================================================

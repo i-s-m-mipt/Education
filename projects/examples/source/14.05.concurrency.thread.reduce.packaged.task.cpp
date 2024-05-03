@@ -38,7 +38,7 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 
 	if (!length) return sum;
 
-	const std::size_t min_elements_per_thread = 100; // note: only for demonstration
+	const std::size_t min_elements_per_thread = 100; // note: small limit for demonstration
 
 	const std::size_t max_threads = (length + min_elements_per_thread - 1) / min_elements_per_thread;
 

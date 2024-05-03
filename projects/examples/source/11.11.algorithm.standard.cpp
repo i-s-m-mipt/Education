@@ -26,11 +26,11 @@ int main()
 
 //  ================================================================================================
 
-	std::iota(std::begin(vector_1), std::end(vector_1), 0); // note: vector_1 contains 0 1 2 3 4 5 6 7 8 9
+	std::iota(std::begin(vector_1), std::end(vector_1), 0); // note: elements: { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }
 
 	std::mt19937_64 engine(std::random_device{}());
 
-	std::shuffle(std::begin(vector_1), std::end(vector_1), engine); // note: random with no duplicates
+	std::shuffle(std::begin(vector_1), std::end(vector_1), engine); // note: random without duplicates
 
 //  ================================================================================================
 

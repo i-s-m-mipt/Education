@@ -24,14 +24,14 @@
 
 [[nodiscard]] std::string entry_permissions(std::filesystem::perms permissions)
 {
-    auto check = [permissions](auto bit, auto c) constexpr noexcept 
+    auto verify = [permissions](auto bit, auto c) constexpr noexcept 
     { 
         return (permissions & bit) == std::filesystem::perms::none ? '-' : c; 
     };
 
-    return { check(std::filesystem::perms::owner_read , 'r'),
-             check(std::filesystem::perms::owner_write, 'w'),
-             check(std::filesystem::perms::owner_exec , 'x') };
+    return { verify(std::filesystem::perms::owner_read , 'r'),
+             verify(std::filesystem::perms::owner_write, 'w'),
+             verify(std::filesystem::perms::owner_exec , 'x') };
 }
 
 //  ================================================================================================

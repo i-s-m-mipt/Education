@@ -68,13 +68,13 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 	assert(!set.insert(1).second); // note: insert differs for std::multiset
 
-	assert( set.erase(3) == 1); // note: erases all elements with provided key
-	assert( set.count(3) == 0); // note: counts all elements with provided key
+	assert( set.erase(3) == 1); // note: erase all elements with provided key
+	assert( set.count(3) == 0); // note: count all elements with provided key
 
 	assert(!set.contains(3)); // note: better than set.find(3) == std::end(set)
 
-	assert(*set.lower_bound(3) == 4 && *set.upper_bound(3) == 4); // note: 0 1 2 4 5
-	assert(*set.lower_bound(4) == 4 && *set.upper_bound(4) == 5); // note: 0 1 2 4 5
+	assert(*set.lower_bound(3) == 4 && *set.upper_bound(3) == 4); // note: elements: { 0, 1, 2, 4, 5 }
+	assert(*set.lower_bound(4) == 4 && *set.upper_bound(4) == 5); // note: elements: { 0, 1, 2, 4, 5 }
 
 //  ================================================================================================
 
@@ -84,7 +84,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 	std::map < std::string, int > map; // note: O(log(N)) complexity mainly
 
-	map.insert(std::make_pair("hello", 41)); // good: prefer std::make_pair function
+	map.insert(std::make_pair("hello", 41)); // good: consider std::make_pair function
 
 	map["world"] = map.at("hello"); map.erase("hello"); // note: way to change the key
 

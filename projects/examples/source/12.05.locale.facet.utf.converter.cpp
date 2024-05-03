@@ -12,7 +12,7 @@
 
 #include <boost/locale.hpp>
 
-//#include <Windows.h> // note: required on Windows for changing code page
+//#include <Windows.h> // note: change code page on Windows
 
 //  ================================================================================================
 

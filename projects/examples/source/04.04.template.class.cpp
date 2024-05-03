@@ -7,7 +7,7 @@
 
 template < typename T, typename C = std::vector < T > > class Stack_v1
 {
-public: // note: member functions instantiated only if used, also called templated entities
+public: // note: templated entities, member functions instantiated only if used
 
 	void push(T value);
 
@@ -66,7 +66,7 @@ template < template < typename E > typename C1,
 
 //  ================================================================================================
 
-template < typename T1, typename T2 > struct Pair { T1 x{}; T2 y{}; }; // note: see std::pair
+template < typename T1, typename T2 > struct Pair { T1 x{}; T2 y{}; }; // note: consider std::pair
 
 template < typename T > class Container { public: Container(std::size_t, const T &) {} }; 
 
@@ -109,7 +109,7 @@ int main()
 {
 	Stack_v1 < double, std::deque < double > > deque_stack_v1;
 
-	Stack_v1 < int > stack; // note: std::vector is used by default as an internal storage
+	Stack_v1 < int > stack; // note: std::vector as internal storage
 
 	stack.push(1);
 	stack.push(2);
@@ -123,7 +123,7 @@ int main()
 
 //  ================================================================================================
 
-	Stack_v2 < double, std::deque > deque_stack_v2; // good: no duplication
+	Stack_v2 < double, std::deque > deque_stack_v2; // good: template without type duplication
 
 	const std::vector < int > container_in { 1, 2, 3, 4, 5 };
 

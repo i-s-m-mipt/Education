@@ -61,7 +61,7 @@ int main()
 
     [[maybe_unused]] constexpr Color color { 127, 127, 127 };
 
-//  std::cout << std::format("{}", color) << std::endl; // note: check for updates in GCC
+//  std::cout << std::format("{}", color) << std::endl; // note: verify updates in GCC
 
     return 0;
 }

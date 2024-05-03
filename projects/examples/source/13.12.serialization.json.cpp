@@ -67,7 +67,7 @@ int main()
 //  ================================================================================================
 
     {
-        nlohmann::json object; // note: consider also boost::property_tree
+        nlohmann::json object; // note: consider boost::property_tree
 
         object[Key::b] = example.b;
 

@@ -26,5 +26,5 @@ export template < typename F, typename ... Ts >
 
 [[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Ts && ... args) 
 { 
-	return f(std::forward < Ts > (args)...); // note: see std::invoke
+	return f(std::forward < Ts > (args)...); // note: consider std::invoke
 }

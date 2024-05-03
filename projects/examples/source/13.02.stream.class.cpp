@@ -23,7 +23,7 @@ inline std::ostream & operator<<(std::ostream & stream, Formatter f)
 
 template < typename ... Ts > void print_v1(const Ts & ... args)
 {
-    (std::cout << ... << args) << std::endl; // note: fold expression with no spaces
+    (std::cout << ... << args) << std::endl; // note: fold expression without spaces
 }
 
 //  ================================================================================================

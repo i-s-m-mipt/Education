@@ -17,7 +17,7 @@ public:
     [[nodiscard]] friend inline constexpr bool operator<=(const T & lhs, const T & rhs) { return !(lhs > rhs); }
     [[nodiscard]] friend inline constexpr bool operator>=(const T & lhs, const T & rhs) { return !(lhs < rhs); }
 
-    [[nodiscard]] friend inline constexpr bool operator==(const T & lhs, const T & rhs) // note: operator!= not required
+    [[nodiscard]] friend inline constexpr bool operator==(const T & lhs, const T & rhs) // note: provide operator!=
     {
         return (!(lhs < rhs) && !(rhs < lhs));
     }

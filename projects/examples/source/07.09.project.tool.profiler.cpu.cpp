@@ -17,7 +17,7 @@
 			const auto l = std::pow(std::sin(argument), 2.0);
 			const auto r = std::pow(std::cos(argument), 2.0);
 
-			result += (l + r); // note: required optimization
+			result += (l + r); // note: optimization required
 		}
 	}
 

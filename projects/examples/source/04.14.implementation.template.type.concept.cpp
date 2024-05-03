@@ -29,7 +29,7 @@ template < typename T > concept ordable = equable < T > && requires (T x, T y)
 
 template < typename T > concept typable = requires
 {
-    typename T::value_type; // note: required nested member name
+    typename T::value_type; // note: nested member name required
 };
 
 //  ================================================================================================

@@ -54,7 +54,7 @@ namespace detail
 
         void clear() noexcept override
         {
-            delete m_data; delete this; // note: other implementation required in case of make_shared
+            delete m_data; delete this; // note: another implementation for make_shared
         }
 
     private:
@@ -139,7 +139,7 @@ template < typename T > inline void swap(Shared < T > & x, Shared < T > & y) noe
 
 template < typename T, typename ... Ts > [[nodiscard]] inline Shared < T > make_shared(Ts && ... args)
 {
-    // note: another RCCB required, combining control block and object in one allocation
+    // note: another RCCB derived class, combination of control block and object in one allocation
 }
 
 //  ================================================================================================

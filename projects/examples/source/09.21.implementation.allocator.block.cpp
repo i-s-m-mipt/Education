@@ -53,7 +53,7 @@ public:
         {
             auto padding = get_byte(next) - get_byte(end); // note: padding between end of data and aligned header
 
-            if (const auto [current, previous] = find_first(size + padding); current) // note: consider also find best
+            if (const auto [current, previous] = find_first(size + padding); current) // note: consider find best
             {
                 if (current->size >= size + padding + sizeof(Node) + 1) // note: new splitted node for the rest
                 {

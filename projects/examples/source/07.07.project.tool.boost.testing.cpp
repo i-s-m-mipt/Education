@@ -136,7 +136,7 @@ BOOST_DATA_TEST_CASE(fibonacci_test, Dataset() ^ boost::unit_test::data::make( {
 
 using test_types = boost::mpl::list < bool, char, int, double > ;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(template_test, T, test_types)  // note: prefer static_assert
+BOOST_AUTO_TEST_CASE_TEMPLATE(template_test, T, test_types)  // note: consider static_assert
 {
     BOOST_TEST(sizeof(T) == 4);
 }

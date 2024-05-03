@@ -17,7 +17,7 @@
 
 int main()
 {
-	auto c = 'a'; // note: auto -> char, also used for UTF-8 support
+	auto c = 'a'; // note: auto -> char, consider for UTF-8
 
 	assert(static_cast < int > (c) == 97); // note: ASCII code
 

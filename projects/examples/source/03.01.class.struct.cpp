@@ -5,7 +5,7 @@
 
 struct S { int x{}, y{}, z{ 4 }; }; // good: capital letter for user-defined types
 
-struct Point { double x = 0.0, y = 0.0; }; // good: do not forget initialization
+struct Point { double x = 0.0, y = 0.0; }; // good: remember initialization
 
 //  ================================================================================================
 

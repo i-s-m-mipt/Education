@@ -34,7 +34,7 @@ int main()
             new const int[100'000'000]{}; // note: constructor can throw exceptions
         }
     }
-    catch (const std::bad_alloc & exception) // good: modern approach
+    catch (const std::bad_alloc & exception) // good: new style approach
     {
         std::cerr << "message: " << exception.what() << '\n';
     }

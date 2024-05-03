@@ -27,14 +27,14 @@ int main()
 
 //  ================================================================================================
 
-	[[maybe_unused]] extern int global_x1; // note: forward declaration
-	[[maybe_unused]] extern int global_x2; // note: forward declaration
+	[[maybe_unused]] extern int global_x1; // note: declaration
+	[[maybe_unused]] extern int global_x2; // note: declaration
 
 	std::cout << global_x1 << std::endl;
 //	std::cout << global_x2 << std::endl; // error: unresolved external symbol
 
-	[[maybe_unused]] extern const int global_y1; // note: forward declaration
-	[[maybe_unused]] extern const int global_y2; // note: forward declaration
+	[[maybe_unused]] extern const int global_y1; // note: declaration
+	[[maybe_unused]] extern const int global_y2; // note: declaration
 
 //	std::cout << global_y1 << std::endl; // error: unresolved external symbol
 	std::cout << global_y2 << std::endl;

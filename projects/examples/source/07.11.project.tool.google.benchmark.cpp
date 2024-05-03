@@ -119,7 +119,7 @@ void test_7(benchmark::State & state)
     {
         state.SkipWithError("test failed");
 
-        break; // note: required to prevent all further iterations.
+        break; // note: prevent all further iterations
     }
 } 
 

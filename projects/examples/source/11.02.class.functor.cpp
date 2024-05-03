@@ -11,7 +11,7 @@
 
 [[nodiscard]] inline int f() noexcept // note: different functions have same types
 {
-	static auto state = 0; // note: internal state, see reference arguments
+	static auto state = 0; // note: internal state, consider reference arguments
 
 	return (state++);
 }
@@ -26,7 +26,7 @@ public:
 
 private:
 
-	mutable int m_state = 0; // note: internal state, see logical constancy
+	mutable int m_state = 0; // note: internal state, consider logical constancy
 
 }; // class C
 

@@ -2,7 +2,7 @@
 
 //  ================================================================================================
 
-class Computer; // note: forward declaration for pointers
+class Computer; // note: forward declaration required
 
 class State
 {

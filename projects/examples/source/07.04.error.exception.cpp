@@ -113,7 +113,7 @@ public:
 	{
 		std::cerr << "constructor exception\n";
 
-		uninitialize(); // note: mandatory call, prefer RAII wrappers instead
+		uninitialize(); // note: mandatory call, consider RAII wrappers instead of this
 	}
 
 	[[nodiscard]] const std::string & data() const noexcept // good: primitive noexcept getter
@@ -164,9 +164,9 @@ template < typename F, typename ... Ts >
 
 [[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Ts && ... args) noexcept(
 	
-	noexcept(f(std::declval < Ts > ()...))) // note: or std::is_nothrow_invocable_v
+	noexcept(f(std::declval < Ts > ()...))) // note: consider std::is_nothrow_invocable_v
 {
-	return f(std::forward < Ts > (args)...); // note: see std::invoke
+	return f(std::forward < Ts > (args)...); // note: consider std::invoke
 }
 
 //  ================================================================================================

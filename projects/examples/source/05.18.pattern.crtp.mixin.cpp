@@ -10,7 +10,7 @@ public:
 
     [[nodiscard]] constexpr value_type get() const { return value; }
     
-    constexpr void set(value_type new_value) // note: trivial setter demo only
+    constexpr void set(value_type new_value) // note: trivial setter for demonstration
     { 
         value = new_value; 
     }
