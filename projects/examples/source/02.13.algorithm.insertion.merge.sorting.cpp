@@ -67,7 +67,7 @@ int main()
 
 	std::ranges::reverse(vector); // note: reverse range
 
-	merge_sort(vector, 0, size); // good: half-open intervals preferred in C++
+	merge_sort(vector, 0, size); // good: half-open interval
 
 	for (const auto element : vector) std::cout << element << ' ';
 

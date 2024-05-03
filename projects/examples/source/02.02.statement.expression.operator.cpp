@@ -58,10 +58,10 @@ int main()
 
 	std::cout << (1.0 * x / y) << std::endl; // good: 1.0 instead of static_cast
 
-	std::cout << (+1 % +2) << std::endl; // note: result is +1
-	std::cout << (+1 % -2) << std::endl; // note: result is +1
-	std::cout << (-1 % +2) << std::endl; // note: result is -1
-	std::cout << (-1 % -2) << std::endl; // note: result is -1
+	std::cout << (+1 % +2) << std::endl; // note: output +1
+	std::cout << (+1 % -2) << std::endl; // note: output +1
+	std::cout << (-1 % +2) << std::endl; // note: output -1
+	std::cout << (-1 % -2) << std::endl; // note: output -1
 
 //	x+++++y; // error: maximum piece principle, write as (x++)+(++y);
 

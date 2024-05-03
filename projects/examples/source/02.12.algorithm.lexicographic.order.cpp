@@ -42,7 +42,7 @@ int main()
 
 	generate_fast(size, output);
 
-	std::cout << output; // good: fast output instead of many with std::endl
+	std::cout << output; // good: single output instead of many with std::endl
 
 	return 0;
 }

@@ -14,7 +14,7 @@ int main()
 
 	const auto y = 42;
 
-	rx = y; // note: rx refers to x, not y
+	rx = y; // note: non-constant reference to x, modify x
 
 //	int & ry = y; // error: non-constant reference to constant
 
@@ -24,11 +24,11 @@ int main()
 
 	[[maybe_unused]] const auto & rcv = 42; // note: temporary object lifetime extension 
 
-//	auto & rv = 42; // error: cannot bind to temporary object
+//	auto & rv = 42; // error: prohibited reference to temporary object
 
 //  ================================================================================================
 
-//	std::vector < int & > bad_vector; // error: invalid container of references
+//	std::vector < int & > bad_vector; // error: prohibited container with references
 
 	std::vector < std::reference_wrapper < int > > good_vector;
 

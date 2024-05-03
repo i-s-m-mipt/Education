@@ -9,7 +9,7 @@
 
 	if (r == 0)
 	{
-		return nullptr; // good: nullptr is better than index value like INT_MAX or -1
+		return nullptr; // good: nullptr instead of index value like INT_MAX or -1
 	}
 
 	if (r == 1)
@@ -17,19 +17,19 @@
 		return (array[0] == key ? array : nullptr);
 	}
 
-	while (l < r) // good: O(log(N)) complexity, selection with only 2 branches
+	while (l < r) // good: O(log(N)) complexity, selection with 2 branches only
 	{
 		const auto m = std::midpoint(l, r); array[m] < key ? l = m + 1 : r = m;
 	}
 
-	return (array[l] == key ? &array[l] : nullptr); // good: one additional comparison after the loop
+	return (array[l] == key ? &array[l] : nullptr); // good: one additional comparison
 }
 
 //  ================================================================================================
 
 int main()
 {
-	const int array[]{1, 3, 4, 5, 6, 7, 8 }; // note: sorted array, consider std::vector with iterators
+	const int array[]{1, 3, 4, 5, 6, 7, 8 }; // note: sorted array, consider sorted containers
 
 	const std::size_t size = std::size(array);
 

@@ -61,7 +61,7 @@ int main()
 
 				if (i == 1 && j == 1 && k == 1)
 				{
-					goto exit; // note: use goto only to exit nested loops
+					goto exit; // note: use goto to exit nested loops only
 				}
 			}
 		}

@@ -26,7 +26,7 @@ int main()
 		std::cout << array[i] << (i + 1 == size ? '\n' : ' ');
 	}
 
-	delete[] array; // good: no dynamic array memory leak, don't use plain delete
+	delete[] array; // good: no dynamic array memory leak, remember delete version
 
 //  ================================================================================================
 

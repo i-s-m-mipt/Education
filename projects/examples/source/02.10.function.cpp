@@ -21,7 +21,7 @@ void extract_data(int * ptr = nullptr) // good: nullptr as default argument
 
 //  ================================================================================================
 
-void test_pointers(int * x, const int * y) // note: demo only
+void test_pointers(int * x, const int * y)
 {
 	if (!x || !y)
 	{
@@ -32,7 +32,7 @@ void test_pointers(int * x, const int * y) // note: demo only
 //	++(*y); // error: pointer to constant value
 }
 
-void test_references(int & x, [[maybe_unused]] const int & y) // note: demo only
+void test_references(int & x, [[maybe_unused]] const int & y)
 {
 	++x;
 //	++y; // error: constant reference
@@ -174,7 +174,7 @@ int main()
 
 //  ================================================================================================
 
-int f(int x) // note: separate definition only for demonstration here
+int f(int x) // note: separate definition for demonstration
 {
 	return (x + 1);
 }
