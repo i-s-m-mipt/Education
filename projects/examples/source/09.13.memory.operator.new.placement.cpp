@@ -144,7 +144,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 //  ================================================================================================
 	
-	delete(new const User); // note: overloaded versions are used instead of global
+	delete(new const User); // note: overloaded versions instead of global
 
 //  ================================================================================================
 

@@ -129,7 +129,7 @@ int main()
 {
     std::cout << boost::locale::util::get_system_locale() << std::endl;
 
-	std::string string; std::cin >> string; // note: can be not UTF-8
+	std::string string; std::cin >> string; // note: CP1251 on Windows
 
     auto u8string = convert_locale_to_utf(string);
 

@@ -181,7 +181,7 @@ namespace detail
 
         void update() noexcept { derived().current_index = index; }
 
-    protected: // note: used in derived class Variant
+    protected:
 
         void destroy() noexcept
         {

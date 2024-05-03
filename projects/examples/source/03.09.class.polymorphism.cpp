@@ -17,7 +17,7 @@ public:
 //		print(); // bad: base version
 	}
 
-	virtual void print() const // note: virtual function can be redefined in derived classes
+	virtual void print() const // note: can be redefined in derived classes
 	{
 		std::cout << "Computer::print" << std::endl;
 	}
@@ -73,11 +73,11 @@ public:
 
 	virtual ~Abstract_Base() {}; // note: polymorphic base class
 
-	virtual void print() const = 0; // note: pure virtual function must be redefined in derived classes
+	virtual void print() const = 0; // note: must be redefined in derived classes
 
 }; // class Abstract_Base
 
-void Abstract_Base::print() const // note: definition must be provided separately
+void Abstract_Base::print() const // note: separate default definition for pure virtual function
 {
 	std::cout << "Abstract_Base::print" << std::endl;
 }

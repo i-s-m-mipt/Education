@@ -31,7 +31,7 @@
 {
 	if (n < 2) return 1; else
 	{
-		std::vector < int > vector(n, 1); // note: dynamic allocation allowed
+		std::vector < int > vector(n, 1); // note: allowed dynamic allocation
 
 		for (std::size_t i = 2; i < std::size(vector); ++i)
 		{
@@ -74,19 +74,19 @@ int main()
 
 	auto y = 42;
 
-//	auto z = combination(x, y); // error: can not be evaluated at compile-time
+//	auto z = combination(x, y); // error: non-compile-time evaluation
 
 //  ================================================================================================
 
-	[[maybe_unused]] constexpr auto is_prime_1 = is_prime(5); // note: compile-time
-	[[maybe_unused]] constexpr auto is_prime_2 = is_prime(x); // note: compile-time
+	[[maybe_unused]] constexpr auto is_prime_1 = is_prime(5); // note: compile-time constant
+	[[maybe_unused]] constexpr auto is_prime_2 = is_prime(x); // note: compile-time constant
 
-//	constexpr auto is_prime_3 = is_prime(y); // error: not compile-time constant
+//	constexpr auto is_prime_3 = is_prime(y); // error: non-compile-time constant
 
 	[[maybe_unused]] auto is_prime_4 = is_prime(5); // note: can be evaluated at compile-time
 	[[maybe_unused]] auto is_prime_5 = is_prime(x); // note: can be evaluated at compile-time
 
-	[[maybe_unused]] auto is_prime_6 = is_prime(y); // note: runtime only
+	[[maybe_unused]] auto is_prime_6 = is_prime(y); // note: runtime variable
 
 //  ================================================================================================
 

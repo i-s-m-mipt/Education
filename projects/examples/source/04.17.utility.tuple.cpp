@@ -92,7 +92,7 @@ int main()
 
     auto tuple_2 = std::make_tuple('b', 43, 3.15);
 
-    std::cout << std::tuple_cat(tuple_1, tuple_2) << std::endl; // note: variadic
+    std::cout << std::tuple_cat(tuple_1, tuple_2) << std::endl; // note: variadic template
  
     auto & [rc, ri, rd] = tuple_2; // note: lvalue references, structured binding
 

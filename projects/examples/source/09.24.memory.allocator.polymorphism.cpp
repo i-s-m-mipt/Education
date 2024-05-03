@@ -152,7 +152,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     pool.destroy(object_1);
 
-    auto object_2 = pool.construct(42); // note: allocates the same memory block used for ptr_1
+    auto object_2 = pool.construct(42); // note: allocates the same memory block as for ptr_1
 
     pool.destroy(object_2);
 

@@ -88,7 +88,7 @@ namespace parser
 
 //  ================================================================================================
 
-    using namespace detail; // note: namespaces used in documentation, consider classes
+    using namespace detail; // note: example from documentation, consider classes
 
     const boost::spirit::x3::rule < class roman_tag, int > roman; // note: tag, attribute
 

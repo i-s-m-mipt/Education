@@ -9,12 +9,12 @@ public:
 
 	Ratio(T num = T{}, T den = T(1)) : m_num(num), m_den(den)
 	{
-		if (m_den == T{}) // note: T{} used as zero value
+		if (m_den == T{}) // note: consider T{} as zero value
 		{
 			std::cerr << "invalid denominator\n";
 		}
 
-		if (m_den <  T{}) // note: T{} used as zero value
+		if (m_den <  T{}) // note: consider T{} as zero value
 		{
 			m_num *= -1;
 			m_den *= -1;

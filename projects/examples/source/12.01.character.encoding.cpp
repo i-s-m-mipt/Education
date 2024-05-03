@@ -63,7 +63,7 @@ int main()
 	assert(sizeof(char16_t) == 2); // note: u'a' for UTF-16, problems with support
 	assert(sizeof(char32_t) == 4); // note: U'a' for UTF-32, problems with support
 
-	std::cout << sizeof(wchar_t) << std::endl; // note: used for wide encodings on Windows
+	std::cout << sizeof(wchar_t) << std::endl; // note: consider for wide encodings on Windows
 
 //  ================================================================================================
 
