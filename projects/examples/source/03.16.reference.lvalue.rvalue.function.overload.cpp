@@ -25,8 +25,8 @@ public:
 
 	Person(const std::string & name) : m_name(name) {}
 
-	[[nodiscard]] const std::string & name() const &  { return m_name; } // note: only for lvalue
-	[[nodiscard]]       std::string   name() const && { return m_name; } // note: only for rvalue
+	[[nodiscard]] const std::string & name() const &  { return m_name; } // note: for lvalue only
+	[[nodiscard]]       std::string   name() const && { return m_name; } // note: for rvalue only
 
 private:
 

@@ -36,7 +36,7 @@ int main()
 
 	if (const auto mobile_ptr_2 = dynamic_cast < const Mobile * > (computer_ptr); !mobile_ptr_2)
 	{
-		std::cout << "invalid dynamic cast" << std::endl; // note: dynamic_cast has runtime checks 
+		std::cout << "invalid dynamic cast" << std::endl; // note: provide runtime verification 
 	}
 
 	delete computer_ptr;
@@ -59,7 +59,7 @@ int main()
 
 	const std::string string = "hello";
 
-	std::cout << typeid(string).name() << std::endl; // note: not portable type name
+	std::cout << typeid(string).name() << std::endl; // note: non-portable type name
 
 	computer_ptr = new const Mobile();
 
@@ -71,7 +71,7 @@ int main()
 
 	const auto & reference = Mobile();
 
-	std::cout << typeid(reference).name() << std::endl; // note: typeid provides not reliable result
+	std::cout << typeid(reference).name() << std::endl; // note: non-reliable type name
 
 //  ================================================================================================
 
@@ -79,7 +79,7 @@ int main()
 
 //  ================================================================================================
 
-	if (auto any = std::make_any < decltype(x) > (x); any.has_value()) // note: any with int value
+	if (auto any = std::make_any < decltype(x) > (x); any.has_value()) // note: integer value
 	{
 		std::cout << any.type().name() << ": ";
 		

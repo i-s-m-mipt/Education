@@ -5,7 +5,7 @@
 
 //  ================================================================================================
 
-class Lecture; // good: class forward declaration
+class Lecture; // good: forward declaration required
 
 class Student
 {

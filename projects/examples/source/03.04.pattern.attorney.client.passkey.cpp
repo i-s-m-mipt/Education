@@ -45,7 +45,7 @@ private:
 
 //  ================================================================================================
 
-class User // good: User has access to Client::f and Client::g only
+class User // good: access to Client::f and Client::g only
 {
 public:
 

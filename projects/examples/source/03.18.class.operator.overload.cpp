@@ -11,7 +11,7 @@ class Ratio
 {
 public:
 
-	/*explicit*/ Ratio(int num = 0, int den = 1) : m_num(num), m_den(den) // good no explicit
+	/*explicit*/ Ratio(int num = 0, int den = 1) : m_num(num), m_den(den) // good: no explicit
 	{
 		if (m_den == 0) // note: primitive error handling
 		{
@@ -191,7 +191,7 @@ inline void swap(Ratio & x, Ratio & y) { x.swap(y); }
 	return !(lhs < rhs);
 }
 
-[[nodiscard]] inline bool operator==(Ratio lhs, Ratio rhs) // note: operator!= not required
+[[nodiscard]] inline bool operator==(Ratio lhs, Ratio rhs) // note: provide operator!=
 {
 	return (!(lhs < rhs) && !(rhs < lhs));
 }

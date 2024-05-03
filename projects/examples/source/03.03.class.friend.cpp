@@ -42,7 +42,7 @@ public:
 
 	void print(const A & a) const { std::cout << a.m_data << std::endl; }
 
-	friend void C::print(const B & b) const; // note: friendship is not transitive
+	friend void C::print(const B & b) const; // note: non-transitive friendship
 
 private:
 

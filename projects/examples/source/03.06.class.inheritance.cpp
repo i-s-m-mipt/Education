@@ -47,7 +47,7 @@ public:
 
 public:
 
-	void print() const // note: avoid inherited non-virtual functions redefinition
+	void print() const // note: avoid inherited non-virtual function redefinition
 	{
 		std::cout << "Employee::print" << std::endl;
 
@@ -93,7 +93,7 @@ class Robot // : private Servo // bad: Robot is implemented through Servo
 {
 private:
 
-	const Servo m_servo; // good: prefer composition instead of private inheritance
+	const Servo m_servo; // good: consider composition instead of private inheritance
 
 }; // class Robot
 
@@ -101,9 +101,11 @@ private:
 
 class Base
 {
-public:    int m_data_1{}; // note: avoid public data mostly
-protected: int m_data_2{}; // note: use protected data by situation
-private:   int m_data_3{}; // good: prefer private data in hierarchies
+public:    int m_data_1{}; // note: consider public data in structures
+
+protected: int m_data_2{}; // note: consider protected data in hierarchies
+
+private:   int m_data_3{}; // good: consider private data in classes
 
 }; // class Base
 

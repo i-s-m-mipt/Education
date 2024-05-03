@@ -51,7 +51,7 @@ public:
 	}
 
 	/*
-	Container & operator=(const Container & other) // bad: ineffective and duplication
+	Container & operator=(const Container & other) // bad: ineffective code with duplication
 	{
 		std::cout << "assignment= (copy)" << std::endl;
 
@@ -74,7 +74,7 @@ public:
 	*/
 
 	/*
-	Container & operator=(Container && other) // bad: ineffective and duplication
+	Container & operator=(Container && other) // bad: ineffective code with duplication
 	{
 		std::cout << "assignment= (move)" << std::endl;
 

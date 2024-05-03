@@ -17,7 +17,7 @@ public:
 //		print(); // bad: base version
 	}
 
-	virtual void print() const // note: can be redefined in derived classes
+	virtual void print() const // note: virtual function can be redefined in derived classes
 	{
 		std::cout << "Computer::print" << std::endl;
 	}
@@ -44,7 +44,7 @@ class Tablet : public Mobile // error: class Mobile declared final
 {
 public:
 
-	void print() const override // error: print declared final in class Mobile
+	void print() const override // error: function print declared final in class Mobile
 	{
 		std::cout << "Tablet::print" << std::endl;
 	}
@@ -73,7 +73,7 @@ public:
 
 	virtual ~Abstract_Base() {}; // note: polymorphic base class
 
-	virtual void print() const = 0; // note: must be redefined in derived classes
+	virtual void print() const = 0; // note: pure virtual function must be redefined in derived classes
 
 }; // class Abstract_Base
 
@@ -92,7 +92,7 @@ public:
 	{
 		std::cout << "Derived::print" << std::endl;
 
-		Abstract_Base::print(); // note: possible default implementation, see pattern Decorator
+		Abstract_Base::print(); // note: possible default implementation, consider pattern Decorator
 	}
 
 }; // class Derived : public Abstract_Base

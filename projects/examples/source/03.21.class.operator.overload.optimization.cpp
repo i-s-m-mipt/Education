@@ -16,7 +16,7 @@ public:
         return m_data[index];
     }
 
-    [[nodiscard]] int & operator[](std::size_t index) // good: calls constant version
+    [[nodiscard]] int & operator[](std::size_t index) // good: call constant version
     {
         std::cout << "Data::operator[]" << std::endl;
 
