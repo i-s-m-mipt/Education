@@ -13,7 +13,7 @@ int main()
 
 //  ================================================================================================
 
-    std::cout << boost::multiprecision::uint128_t(0) - 1 << std::endl; // note: outputs same as max()
+    std::cout << boost::multiprecision::uint128_t(0) - 1 << std::endl; // note: output same as max()
 
     try
     {
@@ -28,7 +28,7 @@ int main()
 
     boost::multiprecision::cpp_int result = 1; for (auto i = 1; i < 101; ++i) result *= i; 
    
-    std::cout << result << std::endl; // note: outputs 100!
+    std::cout << result << std::endl; // note: output 100!
 
     return 0;
 }

@@ -510,7 +510,7 @@ int main(int argc, char ** argv) // note: arguments for testing
 
 		Big_Int result(1); for (auto i = 1; i < 101; ++i) result *= i;
 
-		std::cout << result << std::endl; // note: outputs 100!
+		std::cout << result << std::endl; // note: output 100!
 	}
 	catch (const std::exception & exception)
 	{

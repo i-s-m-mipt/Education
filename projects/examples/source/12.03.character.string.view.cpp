@@ -142,7 +142,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     std::cin.getline(data, std::size(data)); // note: read maximum 256 characters till \n
 
-    std::cout << data << std::endl; // note: outputs characters till null terminator \0
+    std::cout << data << std::endl; // note: output characters till null terminator \0
 
 //  ================================================================================================
 

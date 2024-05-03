@@ -132,7 +132,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
         letters.push_back(static_cast < char > ('a' + i));
     }
 
-    for (const auto element : buffer) std::cout << element; // note: outputs repeated data in buffer
+    for (const auto element : buffer) std::cout << element; // note: output repeated data in buffer
 
     std::cout << std::endl;
 

@@ -183,7 +183,7 @@ int main()
         boost::python::exec("from script import factorial", python.global(), python.global());
 		
 		std::cout << boost::python::extract < std::string > (
-            python.global()["factorial"](100))() << std::endl; // note: outputs 100!
+            python.global()["factorial"](100))() << std::endl; // note: output 100!
 
 //  ================================================================================================
 
