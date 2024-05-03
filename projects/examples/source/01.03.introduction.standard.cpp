@@ -7,7 +7,7 @@
 
 int main()
 {
-//	using namespace std; // bad: dangerous in big projects, avoid
+//	using namespace std; // bad: dangerous in big projects
 
 //  ================================================================================================
 	
@@ -23,7 +23,7 @@ int main()
 
 	std::cout << "Enter string with your name: ";
 
-	std::string name; // note: comfortable for complex operations
+	std::string name; // note: consider for complex operations
 
 	std::cin >> name;
 
@@ -39,7 +39,7 @@ int main()
 
 	std::cout << "Square root of 4 is " << std::sqrt(4) << std::endl;
 
-	std::swap(x, y); // note: std::swap will be used in sorts
+	std::swap(x, y); // note: consider for sorting algorithms
 
 	std::cout << "Now x is " << x << " and y is " << y << std::endl;
 
