@@ -2,7 +2,7 @@
 
 #include <boost/dll.hpp>
 
-#define API extern "C" BOOST_SYMBOL_EXPORT // note: forces the compiler to export by a pretty name
+#define API extern "C" BOOST_SYMBOL_EXPORT
 
 namespace library_v2
 {
