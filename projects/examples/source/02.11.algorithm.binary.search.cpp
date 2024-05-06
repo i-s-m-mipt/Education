@@ -9,7 +9,7 @@
 
 	if (r == 0)
 	{
-		return nullptr; // good: nullptr instead of index value like INT_MAX or -1
+		return nullptr;
 	}
 
 	if (r == 1)
@@ -17,19 +17,19 @@
 		return (array[0] == key ? array : nullptr);
 	}
 
-	while (l < r) // good: O(log(N)) complexity, selection with 2 branches only
+	while (l < r)
 	{
 		const auto m = std::midpoint(l, r); array[m] < key ? l = m + 1 : r = m;
 	}
 
-	return (array[l] == key ? &array[l] : nullptr); // good: one additional comparison
+	return (array[l] == key ? &array[l] : nullptr);
 }
 
 //  ================================================================================================
 
 int main()
 {
-	const int array[]{1, 3, 4, 5, 6, 7, 8 }; // note: sorted array, consider sorted containers
+	const int array[]{1, 3, 4, 5, 6, 7, 8 };
 
 	const std::size_t size = std::size(array);
 
@@ -37,9 +37,9 @@ int main()
 	{
 		std::cout << "index of " << key << " in array: ";
 
-		if (const auto ptr = binary_search(array, size, key); ptr) // good: half-open interval
+		if (const auto ptr = binary_search(array, size, key); ptr) // note: сложность O(log(N))
 		{
-			std::cout << ptr - array << std::endl; // note: get index through pointer arithmetic
+			std::cout << ptr - array << std::endl;
 		}
 		else
 		{

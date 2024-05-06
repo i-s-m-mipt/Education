@@ -13,10 +13,7 @@ void insertion_sort(std::vector < int > & vector, std::size_t l, std::size_t r)
 	{
 		for (auto j = i; j > l; --j)
 		{
-			if (vector[j - 1] > vector[j]) // note: sort in ascending order
-			{
-				std::swap(vector[j], vector[j - 1]);
-			}
+			if (vector[j - 1] > vector[j]) std::swap(vector[j], vector[j - 1]);
 		}
 	}
 }
@@ -27,11 +24,11 @@ void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t m, std:
 {
 	const auto begin = l, end = m;
 
-	std::vector < int > copy(r - l, 0); // note: one additional container instead of two
+	std::vector < int > copy(r - l, 0);
 
 	for (auto & element : copy) 
 	{
-		element = vector[((l < end && ((m < r && vector[l] <= vector[m]) || (m == r))) ? l++ : m++)];
+		element = vector[(l < end && ((m < r && vector[l] <= vector[m]) || (m == r))) ? l++ : m++];
 	}
 
 	for (std::size_t i = 0; auto element : copy) vector[begin + (i++)] = element;
@@ -41,9 +38,9 @@ void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t m, std:
 
 void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t r) 
 {
-	if (static const std::size_t block = 64; r - l <= block) // note: O(N*log(N)) complexity (amortized)
+	if (static const std::size_t block = 64; r - l <= block)
 	{
-		insertion_sort(vector, l, r); // note: O(N^2) complexity, nested loop instead of recursive calls
+		insertion_sort(vector, l, r); // note: сложность O(N^2)
 	}
 	else
 	{
@@ -63,11 +60,11 @@ int main()
 
 	std::vector < int > vector(size, 0);
 
-	std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
+	std::iota(std::begin(vector), std::end(vector), 1);
 
-	std::ranges::reverse(vector); // note: reverse range
+	std::ranges::reverse(vector);
 
-	merge_sort(vector, 0, size); // good: half-open interval
+	merge_sort(vector, 0, size); // note: сложность O(N*log(N)) амортизированная
 
 	for (const auto element : vector) std::cout << element << ' ';
 

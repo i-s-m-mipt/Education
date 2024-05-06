@@ -2,83 +2,80 @@
 
 int main()
 {
-	bool   b = true; std::cout << sizeof(b) << std::endl; // note: 1 byte(s) usually
-	char   c =  'a'; std::cout << sizeof(c) << std::endl; // note: 1 byte(s) exactly
-
-	short  s =   42; std::cout << sizeof(s) << std::endl; // note: 2 byte(s) at least
-	int    i =   42; std::cout << sizeof(i) << std::endl; // note: 2 byte(s) at least, 4 byte(s) usually
-	long   l =   42; std::cout << sizeof(l) << std::endl; // note: 4 byte(s) at least
-
-	float  f = 3.1f; std::cout << sizeof(f) << std::endl; // note: 4 byte(s) usually, single precision
-	double d = 3.14; std::cout << sizeof(d) << std::endl; // note: 8 byte(s) usually, double precision
+	bool   b = true; std::cout << sizeof(b) << std::endl; // note: вывод >= 1 (Байт)
+	char   c =  'a'; std::cout << sizeof(c) << std::endl; // note: вывод == 1 (Байт)
+	short  s =   42; std::cout << sizeof(s) << std::endl; // note: вывод >= 2 (Байт)
+	int    i =   42; std::cout << sizeof(i) << std::endl; // note: вывод >= 2 (Байт)
+	long   l =   42; std::cout << sizeof(l) << std::endl; // note: вывод >= 4 (Байт)
+	float  f = 3.1f; std::cout << sizeof(f) << std::endl; // note: вывод == 4 (Байт)
+	double d = 3.14; std::cout << sizeof(d) << std::endl; // note: вывод == 8 (Байт)
 
 //  ================================================================================================
 
-	long long    ll =   42; std::cout << sizeof(ll) << std::endl; // note: 8 byte(s) at least
-	long double  ld = 3.14; std::cout << sizeof(ld) << std::endl; // note: 8, 12 or 16 byte(s)
+	long long    ll =   42; std::cout << sizeof(ll) << std::endl; 
+	long double  ld = 3.14; std::cout << sizeof(ld) << std::endl; // note: см. стандарт IEEE-754
 
-	signed   int si =  -42; std::cout << sizeof(si) << std::endl; // note: same as int, signed by default
-	unsigned int ui =  +42; std::cout << sizeof(ui) << std::endl; // note: same as int
+	signed   int si =  -42; std::cout << sizeof(si) << std::endl;
+	unsigned int ui =  +42; std::cout << sizeof(ui) << std::endl;
 
-//	unsigned long long int ulli = 42ull; // bad: similar to Hungarian notation
-
-//  ================================================================================================
-
-	[[maybe_unused]] int m = 42, n = 42; // note: comma separator syntax
-
-//	int x1; // bad: uninitialized variable, indeterminate value
-
-//	int y1 = x1; // error: undefined behavior
-
-	[[maybe_unused]] int  x2 { i }; // good: initialized variable
-	[[maybe_unused]] int  x3 = i  ; // good: initialized variable
-
-	[[maybe_unused]] auto x4 = i; // good: type inference
-
-//	auto x5; // error: invalid type inference, initializer required
+//	unsigned long long int ulli = 42ull; // bad: суффиксы напоминают венгерскую нотацию
 
 //  ================================================================================================
 
-//	int  y2 = d; // warning: narrow conversion
+	[[maybe_unused]] int m = 42, n = 42;
 
-//	int  y3 { d }; // error: prohibited narrow conversion
+//	int x1; // bad: неинициализированная переменная
 
-//	auto y4 { (int)d  }; // bad: old style conversion
-//	auto y5 {  int(d) }; // bad: old style conversion
+//	int y1 = x1; // error: неопределенное значение
 
-	[[maybe_unused]] auto y6 { static_cast < int > (d) }; // good: new style conversion
+	[[maybe_unused]] int  x2 = i  ;
+	[[maybe_unused]] int  x3 ( i );
+	[[maybe_unused]] int  x4 { i };
+	[[maybe_unused]] auto x5 = i  ;
 
-//	auto y7 { static_cast < int > ("hello") }; // error: invalid conversion
-
-	d = i = c = b; // good: wide conversions
+//	auto x6; // error: невозможно вывести тип из-за отсутствия инициализатора
 
 //  ================================================================================================
 
-	b = 0; // note: allowed narrow conversion
+//	int  y2 = d; // warning: сужающее преобразование
 
-	std::cout << b << std::endl; // note: output 0
+//	int  y3 { d }; // error: сужающее преобразование запрещено в инициализации в фигурных скобках
+
+//	auto y4 {  int(d) }; // bad: устаревший способ
+
+	[[maybe_unused]] auto y5 { static_cast < int > (d) };
+
+//	auto y6 { static_cast < int > ("hello") }; // error: некорректное преобразование
+
+	d = i = c = b;
+
+//  ================================================================================================
+
+	b = 0;
+
+	std::cout << b << std::endl; // note: см. std::boolalpha
 
 	b = static_cast < bool > (42);
 
-	std::cout << b << std::endl; // note: output 1
+	std::cout << b << std::endl; // note: см. std::boolalpha
 
 //  ================================================================================================
 
-	[[maybe_unused]] const auto pi = 3.14; // good: constant variable
+	[[maybe_unused]] const auto pi = 3.14;
 
-//	pi = 1.0; // error: constant variable
+//	pi = 1.0; // error: константный объект
 
-	[[maybe_unused]] volatile auto v = 42; // note: consider for compiler optimizations
+	[[maybe_unused]] volatile auto v = 42; // note: см. оптимизации компилятора
 
 //  ================================================================================================
 
-	using my_type = const double; // good: new style type alias
+	using my_type = const double;
 
 	[[maybe_unused]] my_type e = 2.72;
 
- //	typedef double my_old_type; // bad: old style type alias
+ //	typedef double my_old_type; // bad: устаревший способ
 
-	[[maybe_unused]] const std::size_t size = 5; // good: consider for arrays
+	[[maybe_unused]] const std::size_t size = 5;
 
 	return 0;
 }

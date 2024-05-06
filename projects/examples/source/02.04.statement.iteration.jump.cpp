@@ -4,19 +4,22 @@ int main()
 {
 	const std::size_t size = 5;
 
-	for (std::size_t i = 0; i < size; ++i) // note: clear counter
+	for (std::size_t i = 0; i < size; ++i)
 	{
 		std::cout << "for 1: " << i << std::endl;
 	}
 
-	for (std::size_t i = 0, j = 0; i < size; ++i, j += 2) // good: useful comma separator syntax
+	for (std::size_t i = 0, j = 0; i < size; ++i, j += 2)
 	{
 		std::cout << "for 2: " << i << ' ' << j << std::endl;
 	}
 
-//	for (std::size_t i = 0; auto x = (i + 1) % size; ++i) {} // bad: declaration instead of condition
+	for (std::size_t i = 0; [[maybe_unused]] auto x = (i + 1) % size; ++i) 
+	{
+		std::cout << "for 3: " << i << std::endl;
+	}
 
-//	for (std::size_t i = size; i >= 0; --i); // error: infinite loop, two's complement
+//	for (std::size_t i = size; i >= 0; --i); // error: бесконечный цикл
 
 //  ================================================================================================
 
@@ -61,7 +64,7 @@ int main()
 
 				if (i == 1 && j == 1 && k == 1)
 				{
-					goto exit; // note: use goto to exit nested loops only
+					goto exit;
 				}
 			}
 		}
@@ -73,7 +76,7 @@ exit:
 
 	char c{};
 
-	while (c != 'n') // note: undefined counter
+	while (c != 'n')
 	{
 		std::cout << "Continue while? (y/n) "; std::cin >> c;
 	}
@@ -88,7 +91,7 @@ exit:
 
 //  ================================================================================================
 
-	for (;;) // note: unusual infinite loop
+	for (;;)
 	{
 		std::cout << "Continue infinite for? (y/n) ";
 

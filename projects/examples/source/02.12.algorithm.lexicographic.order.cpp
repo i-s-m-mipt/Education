@@ -7,7 +7,7 @@ void generate_slow(std::size_t size, std::string s = "", std::size_t l = 0, std:
 {
 	if (l == size && r == size)
 	{
-		std::cout << s << std::endl; // note: slow output with std::endl
+		std::cout << s << std::endl;
 	}
 	else
 	{
@@ -22,12 +22,12 @@ void generate_fast(std::size_t size, std::string & output, std::string s = "", s
 {
 	if (l < size)
 	{
-		for (auto i = size; i > std::max(l, r + 1) - 1; --i) // good: loop instead of recursive calls
+		for (auto i = size; i > std::max(l, r + 1) - 1; --i)
 		{
 			generate_fast(size, output, s + std::string(i - l, '(') + ')', i, r + 1);
 		}
 	}
-	else output += (s + std::string(size - r, ')') + '\n'); // good: batch of brackets
+	else output += (s + std::string(size - r, ')') + '\n');
 }
 
 //  ================================================================================================
@@ -36,13 +36,13 @@ int main()
 {
 	const std::size_t size = 5;
 
-//	generate_slow(size); // bad: slow function due to suboptimal operations
+//	generate_slow(size); // bad: медленная реализация из-за рекурсии и выводов
 
 	std::string output;
 
 	generate_fast(size, output);
 
-	std::cout << output; // good: single output instead of many with std::endl
+	std::cout << output;
 
 	return 0;
 }

@@ -6,29 +6,29 @@ int main()
 {
 	auto x = 42;
 	
-//	int & ri; // error: uninitialized reference
+//	int & ri; // error: неинициализированная ссылка
 
-	auto & rx = x; // note: non-constant reference
+	auto & rx = x;
 
 	rx = 42;
 
 	const auto y = 42;
 
-	rx = y; // note: non-constant reference to x, modify x
+	rx = y;
 
-//	int & ry = y; // error: non-constant reference to constant
+//	int & ry = y; // error: неконстантная ссылка на константный объект
 
-	[[maybe_unused]] const auto & rcy = y; // note: constant reference
+	[[maybe_unused]] const auto & rcy = y;
 
-//	rcy = 42; // error: constant reference
+//	rcy = 42; // error: константная ссылка
 
-	[[maybe_unused]] const auto & rcv = 42; // note: temporary object lifetime extension 
+	[[maybe_unused]] const auto & rcv = 42;
 
-//	auto & rv = 42; // error: prohibited reference to temporary object
+//	auto & rv = 42; // error: неконстантная ссылка на временный объект
 
 //  ================================================================================================
 
-//	std::vector < int & > bad_vector; // error: prohibited container with references
+//	std::vector < int & > bad_vector; // error: недопустимый контейнер ссылок
 
 	std::vector < std::reference_wrapper < int > > good_vector;
 

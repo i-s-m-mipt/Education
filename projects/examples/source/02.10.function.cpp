@@ -5,16 +5,16 @@
 
 //  ================================================================================================
 
-[[nodiscard]] int f(int x); // note: forward declaration
+[[nodiscard]] int f(int x);
 
-[[nodiscard]] int g(int x, int y, int z = 1) // note: trailing default arguments
+[[nodiscard]] int g(int x, int y, int z = 1)
 {
 	return (x + y + z);
 }
 
 //  ================================================================================================
 
-void extract_data(int * ptr = nullptr) // good: nullptr as default argument
+void extract_data(int * ptr = nullptr)
 {
 	[[maybe_unused]] auto local_data = (ptr ? *ptr : 42);
 } 
@@ -29,23 +29,23 @@ void test_pointers(int * x, const int * y)
 	}
 
 	++(*x);
-//	++(*y); // error: pointer to constant value
+//	++(*y); // error: указатель на константный объект
 }
 
 void test_references(int & x, [[maybe_unused]] const int & y)
 {
 	++x;
-//	++y; // error: constant reference
+//	++y; // error: константная ссылка
 }
 
 //  ================================================================================================
 
-void print_string(const std::string & string) // good: constant reference for read-only
+void print_string(const std::string & string)
 {
 	std::cout << string << std::endl;
 }
 
-void print_array(const int * array, std::size_t size) // note: array size as additional argument
+void print_array(const int * array, std::size_t size)
 {
 	for (std::size_t i = 0; i < size; ++i)
 	{
@@ -53,14 +53,14 @@ void print_array(const int * array, std::size_t size) // note: array size as add
 	}
 }
 
-void print_span(std::span < const int > span) // good: std::span knows its size as all* containers
+void print_span(std::span < const int > span)
 {
 	for (const auto element : span) std::cout << element << ' ';
 
 	std::cout << std::endl;
 }
 
-void print_vector(const std::vector < int > & vector) // good: std::vector knows its size
+void print_vector(const std::vector < int > & vector)
 {
 	for (const auto element : vector) std::cout << element << ' ';
 
@@ -69,14 +69,14 @@ void print_vector(const std::vector < int > & vector) // good: std::vector knows
 
 //  ================================================================================================
 
-[[nodiscard]] inline auto max(int x, int y) // good: return type deduction in small function
+[[nodiscard]] inline auto max(int x, int y)
 {
 	return (x > y ? x : y);
 }
 
 [[nodiscard]] inline int factorial(int n)
 {
-	return (n < 2 ? 1 : n * factorial(n - 1)); // good: compact recursion
+	return (n < 2 ? 1 : n * factorial(n - 1));
 }
 
 //  ================================================================================================
@@ -84,18 +84,18 @@ void print_vector(const std::vector < int > & vector) // good: std::vector knows
 /*
 [[nodiscard]] int * get_dangling_pointer()
 {
-	const auto local = 42; // good: static const auto local = 42;
+	const auto local = 42; // note: static const auto local = 42;
 
-	return &local; // warning: dangling pointer to non-static local variable
+	return &local; // warning: висячий указатель
 }
 */
 
 /*
 [[nodiscard]] int & get_dangling_reference()
 {
-	const auto local = 42; // good: static const auto local = 42;
+	const auto local = 42; // note: static const auto local = 42;
 
-	return local; // warning: dangling reference to non-static local variable
+	return local; // warning: висячая ссылка
 }
 */
 
@@ -103,9 +103,9 @@ void print_vector(const std::vector < int > & vector) // good: std::vector knows
 
 void h()
 {
-	auto x = 42; // note: ordinary local variable
+	auto x = 42;
 
-	static auto y = 42; // note: once initialized static variable
+	static auto y = 42;
 
 	std::cout << ++x << ' ' << ++y << std::endl;
 
@@ -114,17 +114,17 @@ void h()
 
 //  ================================================================================================
 
-inline void print(bool  ) { std::cout << "print(bool  )" << std::endl; } // note: overloaded function
-inline void print(char  ) { std::cout << "print(char  )" << std::endl; } // note: overloaded function
-inline void print(double) { std::cout << "print(double)" << std::endl; } // note: overloaded function
+inline void print(bool  ) { std::cout << "print(bool  )" << std::endl; }
+inline void print(char  ) { std::cout << "print(char  )" << std::endl; }
+inline void print(double) { std::cout << "print(double)" << std::endl; }
 
 //  ================================================================================================
 
 int main()
 {
-//	f(42); // warning: nodiscard function
+//	f(42); // warning: проигнорировано возвращаемое значение функции с атрибутом [[nodiscard]]
 
-	[[maybe_unused]] const auto result = g(f(42), f(42)); // note: unspecified arguments evaluation order
+	[[maybe_unused]] const auto result = g(f(42), f(42)); // note: неспецифицированный порядок
 
 //  ================================================================================================
 
@@ -147,7 +147,7 @@ int main()
 
 	const std::vector < int > vector { 1, 2, 3, 4, 5 };
 
-	print_vector(vector); // good: no copying of big object
+	print_vector(vector);
 
 //  ================================================================================================
 
@@ -155,26 +155,26 @@ int main()
 
 //  ================================================================================================
 
-//	std::cout << *get_dangling_pointer  () << std::endl; // bad: undefined behavior
-//	std::cout <<  get_dangling_reference() << std::endl; // bad: undefined behavior
+//	std::cout << *get_dangling_pointer  () << std::endl; // bad: неопределенное поведение
+//	std::cout <<  get_dangling_reference() << std::endl; // bad: неопределенное поведение
 
 //  ================================================================================================
 
-	h(); h(); h(); // note: only y increasing
+	h(); h(); h();
 
 //  ================================================================================================
 
 	print(true);
 	print(3.14);
 	
-//	print(42); // error: ambiguous function overloading
+//	print(42); // error: неоднозначный выбор перегруженной функции
 
 	return 0;
 }
 
 //  ================================================================================================
 
-int f(int x) // note: separate definition for demonstration
+int f(int x) // note: демонстрация
 {
 	return (x + 1);
 }

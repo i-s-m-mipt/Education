@@ -5,17 +5,17 @@
 
 int main()
 {
-	const auto object = new const auto(42); // good: initialized dynamic variable
+	const auto object = new const auto(42);
 
 	std::cout << *object << std::endl;
 
-	delete object; // good: no dynamic variable memory leak
+	delete object;
 
 //  ================================================================================================
 
 	const std::size_t size = 5;
 
-	const auto array = new int[size]{}; // good: zero initialized dynamic array
+	const auto array = new int[size]{};
 
 	const auto middle = size / 2;
 
@@ -26,26 +26,25 @@ int main()
 		std::cout << array[i] << (i + 1 == size ? '\n' : ' ');
 	}
 
-	delete[] array; // good: no dynamic array memory leak, remember delete version
+//	delete   array; // bad: утечка памяти
+
+	delete[] array;
 
 //  ================================================================================================
 
 	const auto buffer = new int[size]; 
 
-	std::iota(buffer, buffer + size, 1); // note: generate range 1, 2, 3, ...
+	std::iota(buffer, buffer + size, 1);
 
-	std::ranges::reverse(buffer, buffer + size); // note: reverse range
+	std::ranges::reverse(buffer, buffer + size);
 
 //  ================================================================================================
 
-	for (std::size_t i = 0; i < size - 1; ++i) // note: bubble sort
+	for (std::size_t i = 0; i < size - 1; ++i) // note: см. сортировку пузырьком
 	{
 		for (std::size_t j = i + 1; j < size; ++j)
 		{
-			if (buffer[i] > buffer[j]) // note: sort in ascending order
-			{
-				std::swap(buffer[i], buffer[j]);
-			}
+			if (buffer[i] > buffer[j]) std::swap(buffer[i], buffer[j]);
 		}
 	}
 
@@ -56,7 +55,7 @@ int main()
 		std::cout << buffer[i] << (i + 1 == size ? '\n' : ' ');
 	}
 
-	delete[] buffer; // good: no memory leak
+	delete[] buffer;
 
 	return 0;
 }

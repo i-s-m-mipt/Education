@@ -7,18 +7,16 @@ int main()
 	std::cout <<    !b1 << ' ' << (b1 || b2) << ' ' << (b1  && b2) << std::endl;
 	std::cout << not b1 << ' ' << (b1 or b2) << ' ' << (b1 and b2) << std::endl;
 
-	std::cout << (true || (b1 && b2)) << std::endl; // note: short-circuit evaluation
+	std::cout << (true || (b1 && b2)) << std::endl; // note: см. вычисления по короткой схеме
 
 	[[maybe_unused]] auto law_1 = (!(b1 && b2) == !b1 || !b2);
 	[[maybe_unused]] auto law_2 = (!(b1 || b2) == !b1 && !b2);
-
-	std::cout << (b1 != b2) << std::endl; // note: b1 xor b2 for booleans
 
 //  ================================================================================================
 
 	auto x = 1, y = 2;
 
-	std::cout << (!!x != !!y) << std::endl; // note: x xor y for non-booleans
+	std::cout << (!!x != !!y) << std::endl; // note: см. оператор xor
 
 	std::cout << (    -x) << std::endl;
 	std::cout << (    +x) << std::endl;
@@ -29,11 +27,11 @@ int main()
 	std::cout << (x /  y) << std::endl; 
 	std::cout << (x %  y) << std::endl;
 
-	std::cout << (x += y) << std::endl; // good: x += y instead of x = x + y
-	std::cout << (x -= y) << std::endl; // good: x -= y instead of x = x - y
-	std::cout << (x *= y) << std::endl; // good: x *= y instead of x = x * y
-	std::cout << (x /= y) << std::endl; // good: x /= y instead of x = x / y
-	std::cout << (x %= y) << std::endl; // good: x %= y instead of x = x % y
+	std::cout << (x += y) << std::endl;
+	std::cout << (x -= y) << std::endl;
+	std::cout << (x *= y) << std::endl;
+	std::cout << (x /= y) << std::endl;
+	std::cout << (x %= y) << std::endl;
 
 	std::cout << (x <  y) << std::endl;
 	std::cout << (x >  y) << std::endl;
@@ -42,41 +40,41 @@ int main()
 	std::cout << (x == y) << std::endl;
 	std::cout << (x != y) << std::endl;
 
-	std::cout << (x++   ) << std::endl; // good: x++ instead of x += 1
-	std::cout << (x--   ) << std::endl; // good: x-- instead of x -= 1
-	std::cout << (   ++x) << std::endl; // good: ++x instead of x += 1
-	std::cout << (   --x) << std::endl; // good: --x instead of x -= 1
+	std::cout << (x++   ) << std::endl;
+	std::cout << (x--   ) << std::endl;
+	std::cout << (   ++x) << std::endl;
+	std::cout << (   --x) << std::endl;
 
 //  ================================================================================================
 
-	x = x + y; y = x - y; x = x - y; // note: Google interview, solution 1
+	x = x + y; y = x - y; x = x - y; // note: см. собеседование в Google
 
 //  ================================================================================================
 
-	std::cout << (1   / 2  ) << std::endl; // note: integer  division
-	std::cout << (1.0 / 2.0) << std::endl; // note: floating division
+	std::cout << (1   / 2  ) << std::endl;
+	std::cout << (1.0 / 2.0) << std::endl;
 
-	std::cout << (1.0 * x / y) << std::endl; // good: 1.0 instead of static_cast
+	std::cout << (1.0 * x / y) << std::endl;
 
-	std::cout << (+1 % +2) << std::endl; // note: output +1
-	std::cout << (+1 % -2) << std::endl; // note: output +1
-	std::cout << (-1 % +2) << std::endl; // note: output -1
-	std::cout << (-1 % -2) << std::endl; // note: output -1
+	std::cout << (+1 % +2) << std::endl;
+	std::cout << (+1 % -2) << std::endl;
+	std::cout << (-1 % +2) << std::endl;
+	std::cout << (-1 % -2) << std::endl;
 
-//	x+++++y; // error: maximum piece principle, write as (x++)+(++y);
-
-//  ================================================================================================
-
-	auto z = (1 + 4) / (2 + 3); // note: unspecified operands evaluation order
-
-//	std::cout << (z + ++z) << std::endl; // bad: unspecified behavior
+//	x+++++y; // error: принцип максимального куска
 
 //  ================================================================================================
 
-	[[maybe_unused]] auto m = 1 + 2 + 3; // note: left to right associativity
-	[[maybe_unused]] auto n = x = y = z; // note: right to left associativity
+	auto z = (1 + 4) / (2 + 3);
 
-//	std::cout << (++m, ++n) << std::endl; // bad: inconvenient comma operator syntax
+//	std::cout << (z + ++z) << std::endl; // bad: неспецифицированный порядок
+
+//  ================================================================================================
+
+	[[maybe_unused]] auto m = 1 + 2 + 3;
+	[[maybe_unused]] auto n = x = y = z;
+
+//	std::cout << (++m, ++n) << std::endl; // bad: трудновоспринимаемый синтаксис
 
 	return 0;
 }

@@ -4,13 +4,13 @@ int main()
 {
     std::cout << "Enter integer value: "; int x{};
 
-    std::cout << (x > 0 ? x : 42) << std::endl; // good: compact selection
+    std::cout << (x > 0 ? x : 42) << std::endl;
 
 //  ================================================================================================
 
     std::cout << "Enter integer value: ";
 
-    if (std::cin >> x; 42 == x) // good: 42 == y prevents error 42 = y
+    if (std::cin >> x; 42 == x)
     {
         std::cout << "path 1" << std::endl;
     }
@@ -36,23 +36,23 @@ int main()
 
     switch (std::cin >> x; x)
     {
-        [[likely]] case 0: // good: optimally generated machine code
+        [[likely]] case 0:
         [[likely]] case 1:
         [[likely]] case 2:
         {
             std::cout << "path 1" << std::endl;
 
-            [[fallthrough]]; // good: suppressed warning, clear intentions
+            [[fallthrough]];
         }
         case 3:
         {
             std::cout << "path 2" << std::endl; break;
         }
-        [[unlikely]] case 4: // good: optimally generated machine code
+        [[unlikely]] case 4:
         {
             std::cout << "path 3" << std::endl; break;
         }
-        default: // good: secure code
+        default:
         {
             std::cout << "path 4" << std::endl; break;
         }
