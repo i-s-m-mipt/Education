@@ -24,27 +24,27 @@ template < typename F, typename ... Ts >
 
 template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T sum)
 {
-	const auto first = std::ranges::cbegin(view), last = std::ranges::cend(view);
+	const auto begin = std::ranges::cbegin(view), end = std::ranges::cend(view);
 
-	const std::size_t length = std::distance(first, last);
+	const std::size_t size = std::distance(begin, end);
 
-	const std::size_t min_size = 100; // note: small limit for demonstration
+	const std::size_t min_size = 100; // note: демонстрация
 	
-	if (length <= min_size)
+	if (size <= min_size)
 	{
-		return std::reduce(first, last, sum);
+		return std::reduce(begin, end, sum);
 	}
-	else // good: recursive data partitioning
+	else
 	{
-		const auto middle = std::next(first, length / 2);
+		const auto middle = std::next(begin, size / 2);
 
-        std::ranges::subrange left(first, middle);
+        std::ranges::subrange left(begin, middle);
 
 		auto result_1 = std::async(reduce < decltype(left), T > , left, sum);
 
-		auto result_2 = reduce(std::ranges::subrange(middle, last), T());
+		auto result_2 = reduce(std::ranges::subrange(middle, end), T());
 
-		return result_1.get() + result_2; // note: synchronization with main thread
+		return result_1.get() + result_2;
 	}
 }
 
@@ -54,13 +54,13 @@ int main()
 {
     auto future = std::async(std::launch::deferred, []() constexpr noexcept { return 42; });
 
-    assert(future.get() == 42); // note: synchronization with main thread, deferred function called
+    assert(future.get() == 42);
 
     try
     {
         std::async(std::launch::async, [](){ throw std::runtime_error("error"); }).get();
     }
-    catch(const std::exception & exception) // good: catch exception from async function
+    catch(const std::exception & exception)
     {
         std::cerr << exception.what() << '\n';
     }

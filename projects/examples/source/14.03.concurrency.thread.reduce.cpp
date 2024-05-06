@@ -16,13 +16,13 @@ public:
 
     explicit Block(V view, T & sum) noexcept : m_view(view), m_sum(sum) {}
 
-	void operator()() const noexcept // note: return only by reference for std::thread
+	void operator()() const noexcept
 	{
 		try
 		{
 			m_sum = std::reduce(std::ranges::cbegin(m_view), std::ranges::cend(m_view));
 		}
-		catch(const std::exception &) {} // good: prevents std::terminate call 
+		catch(const std::exception &) {}
 	}
 
 private:
@@ -35,40 +35,40 @@ private:
 
 template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T sum)
 {
-    const auto first = std::ranges::cbegin(view), last = std::ranges::cend(view);
+    const auto begin = std::ranges::cbegin(view), end = std::ranges::cend(view);
 
-	const std::size_t length = std::distance(first, last);
+	std::size_t size = std::distance(begin, end);
 
-	if (!length) return sum;
+	if (!size) return sum;
 
-	const std::size_t min_elements_per_thread = 100; // note: small limit for demonstration
+	const std::size_t min_size = 100; // note: демонстрация
 
-	const std::size_t max_threads = (length + min_elements_per_thread - 1) / min_elements_per_thread;
+	const std::size_t max_threads = (size + min_size - 1) / min_size;
 
-	const std::size_t hardware_threads = std::thread::hardware_concurrency();
+	const std::size_t hardware = std::thread::hardware_concurrency();
 
-	const std::size_t n_threads = std::min(hardware_threads != 0 ? hardware_threads : 2, max_threads);
+	const std::size_t n_threads = std::min(hardware != 0 ? hardware : 2, max_threads);
 
-	const std::size_t block_size = length / n_threads;
+	size /= n_threads;
 
 	std::vector < T > results(n_threads, T());
 
-	auto block_begin = first;
+	auto first = begin;
 
 	{
-		std::vector < std::jthread > threads(n_threads - 1); // note: why -1?
+		std::vector < std::jthread > threads(n_threads - 1);
 
 		for (std::size_t i = 0; i < std::size(threads); ++i)
 		{
-			const auto block_end = std::next(block_begin, block_size);
+			const auto last = std::next(first, size);
 
-			threads[i] = std::jthread(Block(std::ranges::subrange(block_begin, block_end), results[i]));
+			threads[i] = std::jthread(Block(std::ranges::subrange(first, last), results[i]));
 
-			block_begin = block_end;
+			first = last;
 		}
 	}
 
-	Block(std::ranges::subrange(block_begin, last), results[n_threads - 1])();
+	Block(std::ranges::subrange(first, end), results[n_threads - 1])();
 
 	return std::reduce(std::cbegin(results), std::cend(results), sum);
 }

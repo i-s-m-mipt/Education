@@ -34,7 +34,7 @@ private:
 
 //  ================================================================================================
 
-constexpr void f(int & x, int y) noexcept { x = y; } // note: return unavailable for std::thread
+constexpr void f(int & x, int y) noexcept { x = y; }
 
 //  ================================================================================================
 
@@ -42,7 +42,7 @@ class C { public: void print() const { std::cout << "C::print" << std::endl; } }
 
 //  ================================================================================================
 
-class Scoped_Thread : boost::noncopyable // note: std::thread is move-only class
+class Scoped_Thread : boost::noncopyable
 {
 public:
 
@@ -71,17 +71,19 @@ int main()
     std::cout << std::this_thread::get_id() << std::endl;
     std::cout <<           thread. get_id() << std::endl;
 
-    thread.join(); // good: otherwise std::terminate called in destructor
+    thread.join();
+
+//  std::thread([](){ std::this_thread::sleep_for(1s); }); // bad: отсутствует присоединение
 
 //  ================================================================================================
 
     auto x = 42;
 
-//  std::thread(Functor(x)).detach(); // bad: possible dangling reference
+//  std::thread(Functor(x)).detach(); // bad: висячая ссылка
 
-//  std::thread(f, x, 43).join(); // bad: internal copies for arguments
+//  std::thread(f, x, 43).join(); // bad: внутренние копии аргументов
 
-    std::thread(f, std::ref(x), 43).join(); // good: std::reference_wrapper
+    std::thread(f, std::ref(x), 43).join();
 
     assert(x == 43);
 
@@ -89,7 +91,7 @@ int main()
 
     const C c;
 
-    std::thread(&C::print, &c).join(); // note: consider (c.*&C::print)()
+    std::thread(&C::print, &c).join(); // note: см. указатели на функции-члены классов
 
 //  ================================================================================================
 
@@ -110,7 +112,7 @@ int main()
 
 //  ================================================================================================
 
-    std::jthread jthread_1([](std::stop_token token) // note: threadsafe view
+    std::jthread jthread_1([](std::stop_token token)
     {
         std::stop_callback callback(token, []()
         {
@@ -127,7 +129,7 @@ int main()
 
 //  ================================================================================================
 
-    std::jthread jthread_2([](std::stop_token token) // note: threadsafe view
+    std::jthread jthread_2([](std::stop_token token)
     {
         for (std::size_t i = 0; i < 10; ++i)
         {
@@ -135,7 +137,7 @@ int main()
 
             std::this_thread::sleep_for(0.1s);
 
-            if (token.stop_requested()) return; // note: interruption
+            if (token.stop_requested()) return;
         }
     });
 
@@ -144,7 +146,7 @@ int main()
     std::this_thread::sleep_for(0.5s);
 
     jthread_1.get_stop_source().request_stop();
-    jthread_2.get_stop_source().request_stop(); // note: interruption
+    jthread_2.get_stop_source().request_stop();
 
     return 0;
 }

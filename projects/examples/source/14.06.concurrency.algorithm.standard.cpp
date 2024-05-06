@@ -30,7 +30,7 @@
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state) // note: usual
+void test_1(benchmark::State & state)
 {
     auto vector = make_vector(state.range(0));
 
@@ -44,7 +44,7 @@ void test_1(benchmark::State & state) // note: usual
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state) // note: fast
+void test_2(benchmark::State & state)
 {
     auto vector = make_vector(state.range(0));
 
@@ -58,7 +58,7 @@ void test_2(benchmark::State & state) // note: fast
 
 //  ================================================================================================
 
-void test_3(benchmark::State & state) // note: fast
+void test_3(benchmark::State & state)
 {
     auto vector = make_vector(state.range(0));
 
@@ -78,7 +78,7 @@ BENCHMARK(test_3)->DenseRange(1'000'000, 5'000'000, 1'000'000);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for benchmark
+int main(int argc, char ** argv)
 {
 	benchmark::Initialize(&argc, argv);
 
