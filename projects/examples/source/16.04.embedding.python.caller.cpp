@@ -101,8 +101,8 @@ public:
 			boost::python::handle <> handle_value(boost::python::allow_null(value));
 			boost::python::handle <> handle_stack(boost::python::allow_null(stack));
 
-			const auto string = handle_value ? boost::python::str(handle_value) : 
-											   boost::python::str(handle_error);
+			const auto string = (handle_value ? boost::python::str(handle_value) : 
+											    boost::python::str(handle_error));
 
 			std::string message = boost::python::extract < std::string > (string);
 
