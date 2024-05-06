@@ -79,10 +79,10 @@ namespace parser
 
 //  ================================================================================================
 
-        const auto set_0    = [](auto && context){ boost::spirit::x3::_val (context)  = 0;    };
-        const auto add_1000 = [](auto && context){ boost::spirit::x3::_val (context) += 1000; };
-        const auto add_x    = [](auto && context){ boost::spirit::x3::_val (context) += 
-                                                   boost::spirit::x3::_attr(context);         };
+        const auto set_0 = [](auto && context){ boost::spirit::x3::_val (context)  = 0;    };
+        const auto add_M = [](auto && context){ boost::spirit::x3::_val (context) += 1000; };
+        const auto add_x = [](auto && context){ boost::spirit::x3::_val (context) += 
+                                                boost::spirit::x3::_attr(context);         };
 
     } // namespace detail
 
@@ -94,12 +94,8 @@ namespace parser
 
     const auto roman_def = 
 
-        boost::spirit::x3::eps       [set_0   ] >> (
-       *boost::spirit::x3::char_('M')[add_1000] >> 
-        
-            -huns[add_x] >> 
-            -tens[add_x] >> 
-            -ones[add_x]);
+        boost::spirit::x3::eps       [set_0] >> (
+       *boost::spirit::x3::char_('M')[add_M] >> (-huns[add_x] >> -tens[add_x] >> -ones[add_x]));
 
     BOOST_SPIRIT_DEFINE(roman);
 

@@ -21,13 +21,13 @@ using namespace std::literals;
 
     auto real = 0.0, imag = 0.0;
 
-    const auto f_r  = [&real](auto && context){ real =        boost::spirit::x3::_attr(context); };
-    const auto f_ip = [&imag](auto && context){ imag = +1.0 * boost::spirit::x3::_attr(context); };
-    const auto f_in = [&imag](auto && context){ imag = -1.0 * boost::spirit::x3::_attr(context); };
+    const auto f_r = [&real](auto && context){ real =        boost::spirit::x3::_attr(context); };
+    const auto f_p = [&imag](auto && context){ imag = +1.0 * boost::spirit::x3::_attr(context); };
+    const auto f_n = [&imag](auto && context){ imag = -1.0 * boost::spirit::x3::_attr(context); };
 
     const auto result = boost::spirit::x3::phrase_parse(begin, end,
     
-        (double_[f_r ] >> -((('+' >> double_[f_ip]) | ('-' >> double_[f_in])) >> 'i')), 
+        (double_[f_r] >> -((('+' >> double_[f_p]) | ('-' >> double_[f_n])) >> 'i')), 
         
             boost::spirit::x3::ascii::space);
 
@@ -43,17 +43,17 @@ using namespace std::literals;
 
 TEST(Parser, Complex)
 {
-    const auto complex_1 = parse_complex("1.0"sv          );
-    const auto complex_2 = parse_complex("1.0+1.0i"sv     );
-    const auto complex_3 = parse_complex("1.0-1.0i"sv     );
-    const auto complex_4 = parse_complex(" 1.0 + 1.0 i "sv);
+    const auto complex_1 = parse_complex("1.0       "sv);
+    const auto complex_2 = parse_complex("      1.0i"sv);
+    const auto complex_3 = parse_complex("1.0 + 1.0i"sv);
+    const auto complex_4 = parse_complex("1.0 - 1.0i"sv);
 
 //  ================================================================================================
 
-    ASSERT_DOUBLE_EQ(complex_1.real(), 1.0); ASSERT_DOUBLE_EQ(complex_1.imag(), +0.0);
-    ASSERT_DOUBLE_EQ(complex_2.real(), 1.0); ASSERT_DOUBLE_EQ(complex_2.imag(), +1.0);
-    ASSERT_DOUBLE_EQ(complex_3.real(), 1.0); ASSERT_DOUBLE_EQ(complex_3.imag(), -1.0);
-    ASSERT_DOUBLE_EQ(complex_4.real(), 1.0); ASSERT_DOUBLE_EQ(complex_4.imag(), +1.0);
+    ASSERT_DOUBLE_EQ(complex_1.real(), +1.0); ASSERT_DOUBLE_EQ(complex_1.imag(), +0.0);
+    ASSERT_DOUBLE_EQ(complex_2.real(), +0.0); ASSERT_DOUBLE_EQ(complex_2.imag(), +1.0);
+    ASSERT_DOUBLE_EQ(complex_3.real(), +1.0); ASSERT_DOUBLE_EQ(complex_3.imag(), -1.0);
+    ASSERT_DOUBLE_EQ(complex_4.real(), +1.0); ASSERT_DOUBLE_EQ(complex_4.imag(), -1.0);
 }
 
 //  ================================================================================================

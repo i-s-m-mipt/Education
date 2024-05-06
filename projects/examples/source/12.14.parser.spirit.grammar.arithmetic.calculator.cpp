@@ -129,8 +129,9 @@ public:
 
     detail::List list;
 
-    auto result = boost::spirit::x3::phrase_parse(begin, end, 
-        parser::arithmetic, boost::spirit::x3::ascii::space, list);
+    constexpr auto & space = boost::spirit::x3::ascii::space;
+
+    auto result = boost::spirit::x3::phrase_parse(begin, end, parser::arithmetic, space, list);
 
     if (!result || begin != end) 
     {
