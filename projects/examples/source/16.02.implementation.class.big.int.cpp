@@ -24,7 +24,7 @@ class Big_Int
 {
 public:
 
-	using digit_t = long long; // note: 8 byte(s) at least
+	using digit_t = long long;
 
 public:
 
@@ -61,7 +61,9 @@ private:
 
 				if (start <= 0) start = (m_is_negative ? 1 : 0);
 
-				m_digits[m_n_digits++] = std::stoll(static_cast < std::string > (string.substr(start, i - start + 1)));
+				const auto digit = string.substr(start, i - start + 1);
+
+				m_digits[m_n_digits++] = std::stoll(static_cast < std::string > (digit));
 			}
 
 			reduce_leading_zeros();
@@ -78,7 +80,7 @@ public:
 
 	void swap(Big_Int & other) noexcept
 	{
-		using std::swap; // good: enable argument-dependent lookup
+		using std::swap;
 
 		swap(m_is_negative, other.m_is_negative);
 		swap(m_n_digits,    other.m_n_digits   );
@@ -278,14 +280,14 @@ public:
 
 		auto k = n / 2;
 
-		Big_Int xr; xr.m_n_digits =     k; // note: slow memory allocation
-		Big_Int xl; xl.m_n_digits = n - k; // note: slow memory allocation
+		Big_Int xr; xr.m_n_digits =     k; // note: демонстрация
+		Big_Int xl; xl.m_n_digits = n - k; // note: демонстрация
 
 		for (std::size_t i =     0; i < k; ++i) xr.m_digits[i    ] = x.m_digits[i];
 		for (std::size_t i = n / 2; i < n; ++i) xl.m_digits[i - k] = x.m_digits[i];
 
-		Big_Int yr; yr.m_n_digits =     k; // note: slow memory allocation
-		Big_Int yl; yl.m_n_digits = n - k; // note: slow memory allocation
+		Big_Int yr; yr.m_n_digits =     k; // note: демонстрация
+		Big_Int yl; yl.m_n_digits = n - k; // note: демонстрация
 
 		for (std::size_t i = 0; i < n / 2; ++i) yr.m_digits[i    ] = y.m_digits[i];
 		for (std::size_t i = k; i < n    ; ++i) yl.m_digits[i - k] = y.m_digits[i];
@@ -294,7 +296,7 @@ public:
 		auto p2 = karatsuba_multiplication(xr,      yr     );
 		auto p3 = karatsuba_multiplication(xl + xr, yl + yr);
 
-		Big_Int radix = Big_Int::radix; // note: slow memory allocation
+		Big_Int radix = Big_Int::radix;
 
 		for (std::size_t i = 1; i < n / 2; ++i) radix *= Big_Int::radix;
 
@@ -410,7 +412,7 @@ private:
 
 public:
 
-	static constexpr std::size_t size = 1'000; // note: maximum number of digits
+	static constexpr std::size_t size = 1'000;
 
 private:
 
@@ -445,10 +447,14 @@ TEST(Big_Int, Operators)
 	ASSERT_EQ(big_int_2 - big_int_1, "-119730912883615544101995013902837"sv);
 	ASSERT_EQ(big_int_2 - big_int_2,                                 "-0"sv);
 
-	ASSERT_EQ(big_int_1 * big_int_1, "+5422975396610461369717641600947386274415037870250962127712348609"sv);
-	ASSERT_EQ(big_int_1 * big_int_2, "-3394111293590239892710602762023649092547630961329778427474301930"sv);
-	ASSERT_EQ(big_int_2 * big_int_1, "-3394111293590239892710602762023649092547630961329778427474301930"sv);
-	ASSERT_EQ(big_int_2 * big_int_2, "+2124293516152993531053750721748717735666440864785393936215696100"sv);
+	const auto result_1 = "+5422975396610461369717641600947386274415037870250962127712348609"sv;
+	const auto result_2 = "-3394111293590239892710602762023649092547630961329778427474301930"sv;
+	const auto result_3 = "+2124293516152993531053750721748717735666440864785393936215696100"sv;
+
+	ASSERT_EQ(big_int_1 * big_int_1, result_1);
+	ASSERT_EQ(big_int_1 * big_int_2, result_2);
+	ASSERT_EQ(big_int_2 * big_int_1, result_2);
+	ASSERT_EQ(big_int_2 * big_int_2, result_3);
 
 	ASSERT_EQ(big_int_1 / big_int_1, "+1"sv);
 	ASSERT_EQ(big_int_1 / big_int_2, "-1"sv);
@@ -478,10 +484,14 @@ TEST(Big_Int, Karatsuba_Multiplication)
 
 //  ================================================================================================
 
-	ASSERT_EQ(karatsuba_multiplication(big_int_1, big_int_1), "+5422975396610461369717641600947386274415037870250962127712348609"sv);
-	ASSERT_EQ(karatsuba_multiplication(big_int_1, big_int_2), "-3394111293590239892710602762023649092547630961329778427474301930"sv);
-	ASSERT_EQ(karatsuba_multiplication(big_int_2, big_int_1), "-3394111293590239892710602762023649092547630961329778427474301930"sv);
-	ASSERT_EQ(karatsuba_multiplication(big_int_2, big_int_2), "+2124293516152993531053750721748717735666440864785393936215696100"sv);
+	const auto result_1 = "+5422975396610461369717641600947386274415037870250962127712348609"sv;
+	const auto result_2 = "-3394111293590239892710602762023649092547630961329778427474301930"sv;
+	const auto result_3 = "+2124293516152993531053750721748717735666440864785393936215696100"sv;
+
+	ASSERT_EQ(karatsuba_multiplication(big_int_1, big_int_1), result_1);
+	ASSERT_EQ(karatsuba_multiplication(big_int_1, big_int_2), result_2);
+	ASSERT_EQ(karatsuba_multiplication(big_int_2, big_int_1), result_2);
+	ASSERT_EQ(karatsuba_multiplication(big_int_2, big_int_2), result_3);
 }
 
 //  ================================================================================================
@@ -502,7 +512,7 @@ TEST(Big_Int, Comparisons)
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for testing
+int main(int argc, char ** argv)
 {
 	try
 	{
@@ -510,7 +520,7 @@ int main(int argc, char ** argv) // note: arguments for testing
 
 		Big_Int result(1); for (auto i = 1; i < 101; ++i) result *= i;
 
-		std::cout << result << std::endl; // note: output 100!
+		std::cout << result << std::endl;
 	}
 	catch (const std::exception & exception)
 	{

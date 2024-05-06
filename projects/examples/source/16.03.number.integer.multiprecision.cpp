@@ -3,7 +3,7 @@
 #include <limits>
 #include <stdexcept>
 
-#include <boost/multiprecision/cpp_int.hpp> // note: gmp_int is ~10 times faster
+#include <boost/multiprecision/cpp_int.hpp> // note: см. gmp_int
 
 int main()
 {
@@ -13,7 +13,7 @@ int main()
 
 //  ================================================================================================
 
-    std::cout << boost::multiprecision::uint128_t(0) - 1 << std::endl; // note: output same as max()
+    std::cout << boost::multiprecision::uint128_t(0) - 1 << std::endl;
 
     try
     {
@@ -28,7 +28,7 @@ int main()
 
     boost::multiprecision::cpp_int result = 1; for (auto i = 1; i < 101; ++i) result *= i; 
    
-    std::cout << result << std::endl; // note: output 100!
+    std::cout << result << std::endl;
 
     return 0;
 }

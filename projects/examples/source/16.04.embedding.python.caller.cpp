@@ -48,11 +48,11 @@ private:
 				{
 					Py_Initialize();
 
-					auto working_directory = std::filesystem::absolute("./");
+					auto working_directory = std::filesystem::absolute("./").string().c_str();
 
 					auto system_path = PySys_GetObject("path");
 
-					PyList_Insert(system_path, 0, PyUnicode_FromString(working_directory.string().c_str()));
+					PyList_Insert(system_path, 0, PyUnicode_FromString(working_directory));
 				}
 			});
 
@@ -101,8 +101,10 @@ public:
 			boost::python::handle <> handle_value(boost::python::allow_null(value));
 			boost::python::handle <> handle_stack(boost::python::allow_null(stack));
 
-			std::string message = boost::python::extract < std::string > (handle_value ? 
-				boost::python::str(handle_value) : boost::python::str(handle_error));
+			const auto string = handle_value ? boost::python::str(handle_value) : 
+											   boost::python::str(handle_error);
+
+			std::string message = boost::python::extract < std::string > (string);
 
 			return message;
 		}
@@ -130,7 +132,7 @@ private:
 	static inline std::once_flag is_initialized_once;
 
 	static inline std::mutex       mutex;
-	static inline PyGILState_STATE state; // note: global interpreter locker
+	static inline PyGILState_STATE state;
 
 private:
 
@@ -158,9 +160,9 @@ std::set < std::string > make_random_words(std::size_t size, const std::size_t l
 
 //  ================================================================================================
 
-std::size_t hash_DEK(std::string_view string) // note: Donald E. Knuth implementation
+std::size_t hash_DEK(std::string_view string) // note: см. работы Дональда Кнута
 {
-	std::uint32_t hash = std::size(string); // note: as with x86 build to make collisions
+	std::uint32_t hash = std::size(string);
 
 	for (const auto letter : string)
 	{
@@ -181,9 +183,10 @@ int main()
 //  ================================================================================================
 
         boost::python::exec("from script import factorial", python.global(), python.global());
+
+		const auto result = python.global()["factorial"](100);
 		
-		std::cout << boost::python::extract < std::string > (
-            python.global()["factorial"](100))() << std::endl; // note: output 100!
+		std::cout << boost::python::extract < std::string > (result)() << std::endl;
 
 //  ================================================================================================
 
@@ -200,7 +203,7 @@ int main()
             }
         }
 
-        points.pop_back(); // note: remove last comma in string
+        points.pop_back();
 
 //  ================================================================================================
 

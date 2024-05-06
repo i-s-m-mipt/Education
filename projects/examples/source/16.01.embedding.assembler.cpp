@@ -28,9 +28,15 @@ public:
 
 	void elapsed() const
 	{
-		std::cout << "Chronometer " << m_name << " elapsed " << std::setprecision(6) <<
-			std::fixed << std::chrono::duration_cast < std::chrono::microseconds > (
-				clock_t::now() - m_begin).count() / 1'000'000.0 << " (seconds)" << std::endl;
+		const auto duration = clock_t::now() - m_begin;
+
+		const auto delta = std::chrono::duration_cast < std::chrono::microseconds > (duration);
+
+		std::cout << "Chronometer " << m_name << " elapsed ";
+
+		std::cout << std::setprecision(6) << std::fixed << delta.count() / 1'000'000.0;
+
+		std::cout << " (seconds)" << std::endl;
 	}
 
 private:
@@ -60,7 +66,7 @@ void test_asm_v1()
 	{
 		push [string]
 
-		call printf // note: cdecl calling convention
+		call printf // note: см. соглашение о вызовах cdecl
 
 		pop eax
 	}
@@ -78,7 +84,7 @@ void test_asm_v1()
 
 		push eax
 		
-		call MessageBoxA // note: stdcall calling convention
+		call MessageBoxA // note: см. соглашение о вызовах stdcall
 	}
 }
 
@@ -349,7 +355,7 @@ void test_4()
 {
 	std::cout << "Test 4 launched ... " << std::endl << std::endl;
 
-	const std::size_t size = 1'000'000; // note: assume size > 3 and even
+	const std::size_t size = 1'000'000;
 
 	const auto x = new double[size];
 
