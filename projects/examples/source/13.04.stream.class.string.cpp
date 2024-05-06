@@ -23,7 +23,7 @@ int main()
 
 //  ================================================================================================
 
-    for (char c{}; stream.get(c); ) // note: consider calculator implementation
+    for (char c{}; stream.get(c); )
     {
         if (c == '0')
         {
@@ -31,7 +31,7 @@ int main()
         }
     }
 
-    assert(stream.eof()); // note: all characters from stream processed successfully
+    assert(stream.eof());
 
 	return 0;
 }

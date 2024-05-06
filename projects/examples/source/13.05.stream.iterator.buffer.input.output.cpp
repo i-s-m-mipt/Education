@@ -7,7 +7,7 @@
 
 int main()
 {
-	std::ios::sync_with_stdio(false); // note: no synchronization with C-streams
+	std::ios::sync_with_stdio(false); // note: см. потоки C
 
 //  ================================================================================================
 
@@ -19,7 +19,7 @@ int main()
 		*ostreambuf_iterator++ = *istreambuf_iterator++;
 	}
 
-	std::cin.clear(); // note: restores goodbit state after reading EOF character
+	std::cin.clear();
 
 //  ================================================================================================
 

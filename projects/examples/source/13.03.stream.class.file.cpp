@@ -11,7 +11,7 @@
 
 //  ================================================================================================
 
-class Redirector // good: RAII wrapper to for redirecting std::cout buffer to file buffer
+class Redirector
 {
 public:
 
@@ -39,7 +39,7 @@ struct S { char c{}; int i{}; std::string s; };
 
 //  ================================================================================================
 
-std::ofstream & operator<<(std::ofstream & fout, const S & s) // note: use with std::ios::binary
+std::ofstream & operator<<(std::ofstream & fout, const S & s) // note: см. std::ios::binary
 {
     fout.write(&s.c, sizeof(s.c));
 
@@ -56,7 +56,7 @@ std::ofstream & operator<<(std::ofstream & fout, const S & s) // note: use with 
 
 //  ================================================================================================
 
-std::ifstream & operator>>(std::ifstream & fin, S & s) // note: use with std::ios::binary
+std::ifstream & operator>>(std::ifstream & fin, S & s) // note: см. std::ios::binary
 {
     fin.read(&s.c, sizeof(s.c));
 
@@ -84,23 +84,23 @@ int main()
 //  ================================================================================================
 
     {
-        std::fstream fout(file, std::ios::out); // note: open-close by RAII idiom
+        std::fstream fout(file, std::ios::out);
 
         for (std::size_t i = 0; i < size; ++i)
         {
             fout << std::string(size, 'a' + i) << std::endl;
         }
 
-        fout.seekp(2 * (size + 1), std::ios::beg); // note: CR and LF for Windows
+        fout.seekp(2 * (size + 1), std::ios::beg); // note: см. CRLF на Windows
 
-        fout << "hello"; // note: rewrites file
+        fout << "hello";
     }
 
 //  ================================================================================================
 
     if (std::fstream fin(file, std::ios::in); fin)
     {
-        fin.seekg(2 * (size + 1), std::ios::beg); // note: consider binary mode
+        fin.seekg(2 * (size + 1), std::ios::beg);
 
         std::string input; std::getline(fin, input); assert(input == "hello");
 

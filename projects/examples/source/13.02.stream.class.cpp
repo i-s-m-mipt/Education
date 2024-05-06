@@ -11,8 +11,8 @@ struct Formatter { std::size_t precision{}; };
 
 inline std::ostream & operator<<(std::ostream & stream, Formatter f)
 {
-    stream.setf(std::ios_base::showpos); // note: flag in the stream
-    stream.setf(std::ios_base::fixed  ); // note: flag in the stream
+    stream.setf(std::ios_base::showpos);
+    stream.setf(std::ios_base::fixed  );
 
     stream.precision(f.precision);
     
@@ -23,7 +23,7 @@ inline std::ostream & operator<<(std::ostream & stream, Formatter f)
 
 template < typename ... Ts > void print_v1(const Ts & ... args)
 {
-    (std::cout << ... << args) << std::endl; // note: fold expression without spaces
+    (std::cout << ... << args) << std::endl;
 }
 
 //  ================================================================================================
@@ -49,7 +49,7 @@ private:
 
 template < typename ... Ts > void print_v2(const Ts & ... args)
 {
-    (std::cout << ... << Spaced(args)) << std::endl; // note: fold expression with spaces
+    (std::cout << ... << Spaced(args)) << std::endl;
 }
 
 //  ================================================================================================
@@ -58,15 +58,15 @@ int main()
 {
     const auto old_exceptions = std::cin.exceptions();
 
-    std::cin.exceptions(std::ios::eofbit | std::ios::badbit); // good: allow exceptions
+    std::cin.exceptions(std::ios::eofbit | std::ios::badbit);
 
     try
     {
-        for (int x{}; std::cin >> x; ); // note: try enter any letter instead of numbers
+        for (int x{}; std::cin >> x; );
 
         if (std::cin.fail()) 
         {
-            std::cin.clear(); char c{}; std::cin >> c; // note: restore stream good state
+            std::cin.clear(); char c{}; std::cin >> c;
 
             std::cout << "invalid entered character: " << c << std::endl;
         }
@@ -75,7 +75,7 @@ int main()
     {
         std::cerr << exception.what() << '\n';
 
-        std::cin.clear(); // note: restore stream good state
+        std::cin.clear();
     }
     
     std::cin.exceptions(old_exceptions);
@@ -83,7 +83,7 @@ int main()
 //  ================================================================================================
 
     std::cout << Formatter { 6 } << 3.14 << std::endl;
-    std::cout <<                    2.72 << std::endl; // note: flags are preserved
+    std::cout <<                    2.72 << std::endl;
 
 //  ================================================================================================
 

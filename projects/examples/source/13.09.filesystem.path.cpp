@@ -20,7 +20,7 @@ int main()
 	assert(std::filesystem::exists(path_1));
 
 	std::cout << std::filesystem::absolute (path_1) << std::endl;
-    std::cout << std::filesystem::canonical(path_1) << std::endl; // note: weakly canonical
+    std::cout << std::filesystem::canonical(path_1) << std::endl;
 
 //  ================================================================================================
 
@@ -32,7 +32,7 @@ int main()
 	}
 	catch (const std::exception & exception)
 	{
-		std::cerr << exception.what() << '\n'; // note: std::filesystem::filesystem_error
+		std::cerr << exception.what() << '\n'; // note: см. std::filesystem::filesystem_error
 	}
 
 //  ================================================================================================

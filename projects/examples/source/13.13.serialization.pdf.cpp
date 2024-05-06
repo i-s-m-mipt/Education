@@ -11,7 +11,7 @@ int main()
 {
     constexpr auto file = "13.13.serialization.pdf.example.pdf";
 
-    [[maybe_unused]] PDFHummus::EStatusCode status; // note: errors handling
+    [[maybe_unused]] PDFHummus::EStatusCode status;
 
 //  ================================================================================================
 
@@ -21,19 +21,25 @@ int main()
 
     const auto page = std::make_unique < PDFPage > ();
 
-    [[maybe_unused]] constexpr auto width = 595, height = 842, ppi = 72; // note: A4 page in 72 PPI
+    [[maybe_unused]] constexpr auto width = 595, height = 842, ppi = 72; // note: см. PPI/DPI
 
     page->SetMediaBox(PDFRectangle(0, 0, width, height)); 
 
+//  ================================================================================================
+
     auto context = writer.StartPageContentContext(page.get());
 
-    auto line = height; // note: current output line from top of page
+    auto line = height;
+
+    using   Image_Options = AbstractContentContext::  ImageOptions;
+    using    Text_Options = AbstractContentContext::   TextOptions;
+    using Graphic_Options = AbstractContentContext::GraphicOptions;
 
 //  ================================================================================================
 
     constexpr auto image_height = 380, image_ppi = 96, delta = 10;
 
-    AbstractContentContext::ImageOptions image_options;
+    Image_Options image_options;
 
     image_options.transformationMethod = AbstractContentContext::eMatrix;
 
@@ -53,7 +59,7 @@ int main()
 
     line -= (delta + font_size);
 
-    AbstractContentContext::TextOptions text_options(font, font_size, AbstractContentContext::eGray, 0);
+    Text_Options text_options(font, font_size, AbstractContentContext::eGray, 0);
 
     context->WriteText(delta, line, "Hello, World!", text_options);
 
@@ -63,10 +69,9 @@ int main()
 
     line -= (delta + rectangle_height);
 
-    AbstractContentContext::GraphicOptions graphic_options(AbstractContentContext::eStroke,
-                                                           AbstractContentContext::eRGB,
-                                                           AbstractContentContext::ColorValueForName("Red"),
-                                                           2.0);
+    Graphic_Options graphic_options(AbstractContentContext::eStroke,
+                                    AbstractContentContext::eRGB,
+                                    AbstractContentContext::ColorValueForName("Red"), 2.0);
 
     context->DrawRectangle(delta, line, rectangle_width, rectangle_height, graphic_options);
 

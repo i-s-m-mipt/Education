@@ -13,19 +13,19 @@ int main()
 
         for (auto current = std::begin(code); current != std::end(code); ++current) 
         {
-            if (*current == '\'') // note: ignore characters inside character literals
+            if (*current == '\'')
             {
                 for (++current; !((*current == '\'') && (*std::prev(current) != '\\')); ++current);
             }
 
-            if (*current == '"') // note: ignore characters inside string literals
+            if (*current == '"')
             {
                 for (++current; !((*current == '"') && (*std::prev(current) != '\\')); ++current);
             }
                 
             if (*current == '/') 
             {
-                if (*std::next(current) == '/') // note: single-line comment
+                if (*std::next(current) == '/')
                 {
                     auto last = std::next(current, 2);
 
@@ -33,7 +33,7 @@ int main()
 
                     current = code.erase(current, last);
                 }
-                else if (*std::next(current) == '*') // note: multi-line comment
+                else if (*std::next(current) == '*')
                 {
                     auto last = std::next(current, 3);
 
