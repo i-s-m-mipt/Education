@@ -71,6 +71,8 @@
 
     std::stringstream sout;
 
+    sout << std::setw(5) << std::right << std::setfill(' ');
+
          if (size >= 1'073'741'824) { sout << (size / 1'073'741'824) << 'G'; } 
     else if (size >= 1'048'576    ) { sout << (size / 1'048'576    ) << 'M'; } 
     else if (size >= 1'024        ) { sout << (size / 1'024        ) << 'K'; } 
@@ -85,15 +87,18 @@ void view_directory(const std::filesystem::path & path)
 {
 	if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
 	{
+        constexpr auto separator = " | ";
+
 		for (const auto & entry : std::filesystem::directory_iterator(path))
 		{
-            std::cout << entry_type       (entry.status()              ) << " | ";
-            std::cout << entry_permissions(entry.status().permissions()) << " | ";
+            std::cout << entry_type       (entry.status()              ) << separator;
+            std::cout << entry_permissions(entry.status().permissions()) << separator;
 
-            std::cout << std::setw(5) << std::right << std::setfill(' ') << entry_size(entry) << " | ";
+            std::cout << entry_size(entry) << separator;
 
-            std::cout << std::chrono::floor < std::chrono::seconds > (
-                std::chrono::file_clock::to_sys(entry.last_write_time())) << " | ";
+            const auto time_point = std::chrono::file_clock::to_sys(entry.last_write_time());
+
+            std::cout << std::chrono::floor < std::chrono::seconds > (time_point) << separator;
 
 			std::cout << entry.path().filename().string() << std::endl;
 		}
