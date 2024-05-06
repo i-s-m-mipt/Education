@@ -7,15 +7,15 @@
 
 int main()
 {
-//	using namespace std; // bad: неудобно в больших проектах
+//	using namespace std; // bad: конфликт имен в крупных проектах с несколькими библиотеками
 
 //  ================================================================================================
 	
 	std::cout << "Enter two integers separated by a space character: ";
 
-	int x{}, y{}; // good: инициализированные нулем переменные
+	int x{}, y{};
 
-	std::cin >> x >> y; // note: цепочка операторов
+	std::cin >> x >> y;
 
 	std::cout << "You have entered " << x << " and " << y << std::endl;
 
@@ -23,15 +23,15 @@ int main()
 
 	std::cout << "Enter string with your name: ";
 
-	std::string name; // note: удобно для сложных операций со строками
+	std::string name;
 
 	std::cin >> name;
 
-	std::cout << "Hello, " << name << std::endl;
+	std::cout << "Hello, " + name << std::endl;
 
 //  ================================================================================================
 
-	std::vector < int > vector { 1, 2, 3 }; // note: контейнер по умолчанию
+	std::vector < int > vector { 1, 2, 3 };
 
 	std::cout << "Vector size is " << std::size(vector) << std::endl;
 
@@ -39,7 +39,7 @@ int main()
 
 	std::cout << "Square root of 4 is " << std::sqrt(4) << std::endl;
 
-	std::swap(x, y); // note: используется в алгоритмах сортировки
+	std::swap(x, y);
 
 	std::cout << "Now x is " << x << " and y is " << y << std::endl;
 
