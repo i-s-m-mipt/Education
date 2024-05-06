@@ -6,7 +6,7 @@ int main()
 {
 	const auto path = std::filesystem::current_path();
 
-	std::filesystem::create_directory(path / "directory");
+	std::filesystem::create_directory(path / "directory"      );
 	std::filesystem::create_directory(path / "directory", path); // note: см. права доступа
 
 	std::filesystem::create_directories("X/Y/Z");
@@ -16,9 +16,10 @@ int main()
 	std::fstream("X/x.txt", std::ios::out);
 
 	std::filesystem::copy("X/x.txt", "X/y.txt");
-	std::filesystem::copy("X/Y",     "X/Z"    );
-	std::filesystem::copy("X",       "Y", 
-	std::filesystem::copy_options::recursive);
+
+	std::filesystem::copy("X/Y", "X/Z");
+	
+	std::filesystem::copy("X", "Y", std::filesystem::copy_options::recursive);
 
 	std::filesystem::rename("Y", "Z");
 
