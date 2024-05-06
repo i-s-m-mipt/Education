@@ -10,7 +10,7 @@ using namespace std::literals;
 
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/spirit/home/x3.hpp>
-#include <boost/spirit/home/x3/support/ast/variant.hpp> // note: abstract syntax tree
+#include <boost/spirit/home/x3/support/ast/variant.hpp>
 
 #include <gtest/gtest.h>
 
@@ -24,7 +24,7 @@ namespace detail
     class Operand : public boost::spirit::x3::variant < double, 
     
         boost::spirit::x3::forward_ast < Sign > , 
-        boost::spirit::x3::forward_ast < List > > // note: pattern visitor
+        boost::spirit::x3::forward_ast < List > >
     {
     public:
 
@@ -165,7 +165,7 @@ TEST(Parser, Arithmetic)
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for testing
+int main(int argc, char ** argv)
 {
     testing::InitGoogleTest(&argc, argv);
 

@@ -17,20 +17,26 @@
 
 int main()
 {
-	auto c = 'a'; // note: auto -> char
+	auto c = 'a';
 
 	assert(static_cast < int > (c) == 97);
 
-	assert(sizeof(char) == 1); // note: см. также std::byte
+	assert(sizeof(char) == 1); // note: см. std::byte
 
 //  ================================================================================================
 
 	std::cout << std::boolalpha << std::is_signed_v < char > << std::endl;
 
-//	c = 255; // bad: неопределенное поведение
+//	c = 255; // warning: переполнение при преобразовании из int в char
+	
+	for (auto i = 0; i < 256; ++i) 
+	{
+		std::cout << static_cast < char > (i);
 
-	for (auto i = -128; i < 128; ++i) std::cout << static_cast < char > (i) << std::endl;
-	for (auto i =    0; i < 256; ++i) std::cout << static_cast < char > (i) << std::endl;
+		if ((i + 1) % 64 == 0) std::cout << std::endl;
+	}
+
+	std::cout << std::endl;
 
 	[[maybe_unused]] constexpr   signed char sc = 'a';
 	[[maybe_unused]] constexpr unsigned char uc = 'a';
@@ -45,11 +51,15 @@ int main()
 
 //  ================================================================================================
 
-	std::cout << sizeof(wchar_t) << std::endl; // bad: проблема переносимости
+	std::cout << sizeof(wchar_t) << std::endl;
 
-	[[maybe_unused]] constexpr auto c8 = u8'a'; // note: auto -> char8_t
+//	constexpr wchar_t  wc  =  L'a'; // bad: UTF-32 на Linux и UTF-16 на Windows
 
-	assert(sizeof(char8_t) == 1); // bad: слабая поддержка в стандартной библиотеке
+//	constexpr char8_t  c8  = u8'a'; // bad: неполная поддержка в стандартной библиотеке
+
+//	constexpr char16_t c16 =  u'a'; // bad: неполная поддержка в стандартной библиотеке
+
+//	constexpr char32_t c32 =  U'a'; // bad: неполная поддержка в стандартной библиотеке
 
 //  ================================================================================================
 

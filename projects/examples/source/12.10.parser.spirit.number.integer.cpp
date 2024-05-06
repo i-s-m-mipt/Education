@@ -39,7 +39,7 @@ TEST(Parser, Pair)
 
         boost::spirit::x3::int_ >> 
         boost::spirit::x3::int_, 
-        boost::spirit::x3::space, pair); // note: skip space characters
+        boost::spirit::x3::space, pair);
 
     ASSERT_EQ(pair.first , 42);
     ASSERT_EQ(pair.second, 42);
@@ -57,7 +57,7 @@ TEST(Parser, Tuple)
     
         '(' >> boost::spirit::x3::int_ >> ',' >> 
                boost::spirit::x3::int_ >> ')', 
-               boost::spirit::x3::space, tuple); // note: skip space characters
+               boost::spirit::x3::space, tuple);
 
     ASSERT_EQ(std::get < 0 > (tuple), 42);
     ASSERT_EQ(std::get < 1 > (tuple), 42);
@@ -65,7 +65,7 @@ TEST(Parser, Tuple)
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for testing
+int main(int argc, char ** argv)
 {
     constexpr auto input = "42"sv;
 

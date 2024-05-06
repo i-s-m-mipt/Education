@@ -88,20 +88,20 @@ namespace parser
 
 //  ================================================================================================
 
-    using namespace detail; // note: example from documentation, consider classes
+    using namespace detail;
 
-    const boost::spirit::x3::rule < class roman_tag, int > roman; // note: tag, attribute
+    const boost::spirit::x3::rule < class roman_tag, int > roman;
 
     const auto roman_def = 
 
-        boost::spirit::x3::eps       [set_0   ] >> ( // note: dummy element, always executed
+        boost::spirit::x3::eps       [set_0   ] >> (
        *boost::spirit::x3::char_('M')[add_1000] >> 
         
             -huns[add_x] >> 
             -tens[add_x] >> 
             -ones[add_x]);
 
-    BOOST_SPIRIT_DEFINE(roman); // note: generates parse_rule function for roman parser
+    BOOST_SPIRIT_DEFINE(roman);
 
 } // namespace parser
 
@@ -134,7 +134,7 @@ TEST(Parser, Romanus)
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for testing
+int main(int argc, char ** argv)
 {
     testing::InitGoogleTest(&argc, argv);
 

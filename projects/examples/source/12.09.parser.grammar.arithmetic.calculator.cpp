@@ -30,7 +30,7 @@ public:
 		if (m_sin >> c; c != ';') { m_sin.putback(c); return false; } else return true;
 	}
 
-	[[nodiscard]] Token get() // note: consider Boost.Spirit parser
+	[[nodiscard]] Token get()
 	{
 		if (m_is_full) { m_is_full = false; return m_token; }
 
@@ -85,7 +85,7 @@ public:
 
 	void run()
 	{
-		for (std::string line; std::getline(std::cin >> std::ws, line); ) // note: remember std::ws
+		for (std::string line; std::getline(std::cin >> std::ws, line); )
 		{
 			if (Stream stream(line); !stream.empty())
 			{

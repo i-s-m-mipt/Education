@@ -1,41 +1,41 @@
-. - 1 character
+. - 1 произвольный символ
 
-() - group of characters or inner groups
+() - группа символов, допустима вложенность
 
-? - suffix, 0-1 characters or groups
-* - suffix, 0+  characters or groups
-+ - suffix, 1+  characters or groups
+? - суффикс, 0-1 символов или групп символов
+* - суффикс, 0+  символов или групп символов
++ - суффикс, 1+  символов или групп символов
 
-{} - quantity, {n} - n, {n,} - n+, {n,m} - n-m
+{} - количество, {n} - n, {n,} - n+, {n,m} - n-m
 
-| - choice, ^ - negation
+| - выбор, ^ - отрицание
 
-[] - class of characters
+[] - класс символов
 
-[:alnum:] - alphanumeric characters
-[:alpha:] - alphabetic   characters
-[:lower:] - lowercase    characters
-[:upper:] - uppercase    characters
-[:space:] - space        characters
-[:digit:] - decimal      characters
+[:alnum:] - буквы и цифры
+[:alpha:] - буквы          
+[:lower:] - буквы (lower)
+[:upper:] - буквы (upper)
+[:digit:] - цифры
+[:space:] - пробельные символы
 
-\ - prefix, next character has special meaning
+\ - префикс, следующий символ имеет особое значение
 
-\w is same as [[:alnum:]_]
-\s is same as [[:space:]]
-\d is same as [[:digit:]]
+\w эквивалентно [[:alnum:]_]
+\d эквивалентно [[:digit:]]
+\s эквивалентно [[:space:]]
 
-\b - word border, begin or end 
+\b - граница слова, начало или конец
 
-Example 1: .(AB?C*)+(D{3})|(E{2,4}) - verify at regex101.com
+Пример 1: .(AB?C*)+(D{3})|(E{2,4}) // note: см. regex101.com
 
-Example 2: <(.*)>(.*)</(\1)> - XML/HTML descriptors, \1 is the first group
+Пример 2: <(.*)>(.*)</(\1)> - дескрипторы XML/HTML, \1 означает повторение первой группы
 
-Example 3: C++ identifier - alphanumeric and underscore characters, the first one is not digit
+Пример 3: Идентификаторы C++ состоят из букв, цифр и символа _, в начале находится не цифра
 
-Version 1: [:alpha:][:alnum:]*             - very very bad
-Version 2: [[:alpha:]][[:alnum:]]*         - very bad
-Version 3: ([[:alpha:]]|_)[[:alnum:]]*     - bad
-Version 4: ([[:alpha:]]|_)([[:alnum:]]|_)* - satisfactorily
-Version 5: [_[:alpha:]][_[:alnum:]]*       - good
-Version 6: [_[:alpha:]]\w*                 - excellent
+Version 1: [:alpha:][:alnum:]*             - плохо x3
+Version 2: [[:alpha:]][[:alnum:]]*         - плохо x2
+Version 3: ([[:alpha:]]|_)[[:alnum:]]*     - плохо x1
+Version 4: ([[:alpha:]]|_)([[:alnum:]]|_)* - удовлетворительно
+Version 5: [_[:alpha:]][_[:alnum:]]*       - хорошо
+Version 6: [_[:alpha:]]\w*                 - отлично

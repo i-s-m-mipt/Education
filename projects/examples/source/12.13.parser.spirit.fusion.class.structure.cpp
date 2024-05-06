@@ -15,7 +15,7 @@ using namespace std::literals;
 
 struct Data { char c{}; int i{}; double d{}; }; 
 
-BOOST_FUSION_ADAPT_STRUCT(Data, c, i, d) // note: global scope
+BOOST_FUSION_ADAPT_STRUCT(Data, c, i, d)
 
 //  ================================================================================================
 
@@ -58,7 +58,7 @@ TEST(Parser, Structure)
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for testing
+int main(int argc, char ** argv)
 {
     testing::InitGoogleTest(&argc, argv);
 

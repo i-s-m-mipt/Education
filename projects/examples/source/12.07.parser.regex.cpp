@@ -12,16 +12,16 @@ using namespace std::literals;
 
 [[nodiscard]] inline bool match_identifier(const std::string & string)
 {
-	return std::regex_match(string, std::regex(R"([_[:alpha:]]\w*)")); // good: raw string
+	return std::regex_match(string, std::regex(R"([_[:alpha:]]\w*)"));
 }
 
 //  ================================================================================================
 
 [[nodiscard]] inline std::smatch search_post_code(const std::string & string)
 {
-    std::smatch matches; // note: matches of type std::string, including groups
+    std::smatch matches;
     
-    std::regex_search(string, matches, std::regex(R"(\w{2}\d{5}(-\d{4})?)")); // good: raw string
+    std::regex_search(string, matches, std::regex(R"(\w{2}\d{5}(-\d{4})?)"));
 
     return matches;
 }
@@ -30,7 +30,7 @@ using namespace std::literals;
 
 [[nodiscard]] inline std::string replace_substring(const std::string & string)
 {
-    return std::regex_replace(string, std::regex(R"(\b(sub)([^ ]+))"), R"(sub-$2)"); // good: raw string
+    return std::regex_replace(string, std::regex(R"(\b(sub)([^ ]+))"), R"(sub-$2)");
 }
 
 //  ================================================================================================
@@ -38,9 +38,9 @@ using namespace std::literals;
 TEST(Parser, Regex_Match)
 {
     ASSERT_TRUE(match_identifier("hello")         );
-	ASSERT_TRUE(match_identifier("12345") == false); // note: invalid character (first)
+	ASSERT_TRUE(match_identifier("12345") == false);
 	ASSERT_TRUE(match_identifier("_name")         );
-	ASSERT_TRUE(match_identifier("_3.14") == false); // note: invalid character (third)
+	ASSERT_TRUE(match_identifier("_3.14") == false);
     ASSERT_TRUE(match_identifier("A1234")         );
 }
 
@@ -51,7 +51,7 @@ TEST(Parser, Regex_Search)
     ASSERT_EQ(search_post_code("_NY12345______")[0], "NY12345"     );
     ASSERT_EQ(search_post_code("_NY1234506789_")[0], "NY12345"     );
     ASSERT_EQ(search_post_code("_NY12345-6789_")[0], "NY12345-6789");
-    ASSERT_EQ(search_post_code("_NY12345-6789_")[1],        "-6789"); // note: matched group
+    ASSERT_EQ(search_post_code("_NY12345-6789_")[1],        "-6789");
 
     ASSERT_TRUE(std::empty(search_post_code("_$1$2$3$4$_")));
     ASSERT_TRUE(std::empty(search_post_code("NY1234-6789")));
@@ -66,27 +66,29 @@ TEST(Parser, Regex_Replace)
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for testing
+int main(int argc, char ** argv)
 {
     const auto data = "123ABC456DEF789GHI"s; 
 
+    auto begin = std::cbegin(data), end = std::cend(data);
+
     std::smatch matches;
     
-    const std::regex pattern(R"([a-z]{2}([a-z])?)", std::regex_constants::icase); // good: raw string, case insensitive
+    const std::regex pattern(R"([a-z]{2}([a-z])?)", std::regex_constants::icase);
 
-    for (auto begin = std::cbegin(data); std::regex_search(begin, std::cend(data), matches, pattern); begin = matches.suffix().first)
+    for (; std::regex_search(begin, end, matches, pattern); begin = matches.suffix().first)
     {
         std::cout << matches[0] << ' ';
     }
 
-    std::cout << std::endl;
+    std::cout << std::endl; begin = std::cbegin(data);
 
 //  ================================================================================================
 
     {
-        const std::sregex_iterator begin(std::begin(data), std::cend(data), pattern), end; // note: consider boost::tokenizer
+        const std::sregex_iterator first(begin, end, pattern), last; // note: см. boost::tokenizer
 
-	    std::ranges::for_each(begin, end, [](auto && matches){ std::cout << matches[0] << ' '; });
+	    std::ranges::for_each(first, last, [](auto && matches){ std::cout << matches[0] << ' '; });
 
         std::cout << std::endl;
     }
@@ -94,9 +96,9 @@ int main(int argc, char ** argv) // note: arguments for testing
 //  ================================================================================================
 
     {
-        const std::sregex_token_iterator begin(std::begin(data), std::cend(data), pattern, { -1, 0, 1 }), end;
+        const std::sregex_token_iterator first(begin, end, pattern, { -1, 0, 1 }), last;
 
-        std::ranges::for_each(begin, end, [](auto && match){ std::cout << match << ' '; });
+        std::ranges::for_each(first, last, [](auto && match){ std::cout << match << ' '; });
 
         std::cout << std::endl;
     }

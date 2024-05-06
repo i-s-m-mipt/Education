@@ -12,7 +12,7 @@
 
 #include <boost/locale.hpp>
 
-//#include <Windows.h> // note: change code page on Windows
+//#include <Windows.h> // note: см. system("chcp 1251") на Windows
 
 //  ================================================================================================
 
@@ -40,51 +40,59 @@
 
 //  ================================================================================================
 
+/*
 [[nodiscard]] inline std::string convert_wstring_to_utf8(const std::wstring & wstring)
 {
-	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // note: deprecated, bad implementation
+	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // bad: устаревший способ
 
 	return converter.to_bytes(wstring);
 }
+*/
 
+/*
 [[nodiscard]] inline std::wstring convert_utf8_to_wstring(const std::string & string)
 {
-	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // note: deprecated, bad implementation
+	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // bad: устаревший способ
 
 	return converter.from_bytes(string);
 }
+*/
 
 //  ================================================================================================
 
-[[nodiscard]] inline std::wstring convert_string_to_wstring(std::string_view string, const std::locale & locale) 
+[[nodiscard]] inline std::wstring convert_string_to_wstring(
+    
+    std::string_view string, const std::locale & locale) 
 {
 	std::vector < wchar_t > buffer(std::size(string));
 
-	std::use_facet < std::ctype < wchar_t > >(locale).widen(
+	std::use_facet < std::ctype < wchar_t > > (locale).widen(
 
-		string.data(), 
-		string.data() + std::size(string), buffer.data());
+		std::data(string), 
+		std::data(string) + std::size(string), std::data(buffer));
 
-	return std::wstring(buffer.data(), std::size(buffer)); // note: avoid wchar_t and std::wstring
+	return std::wstring(std::data(buffer), std::size(buffer));
 }
 
-[[nodiscard]] inline std::string convert_wstring_to_string(std::wstring_view wstring, const std::locale & locale) 
+[[nodiscard]] inline std::string convert_wstring_to_string(
+    
+    std::wstring_view wstring, const std::locale & locale) 
 {
 	std::vector < char > buffer(std::size(wstring));
 
 	std::use_facet < std::ctype < wchar_t > > (locale).narrow(
 
-		wstring.data(),
-		wstring.data() + std::size(wstring), '?', buffer.data()); // note: default character
+		std::data(wstring),
+		std::data(wstring) + std::size(wstring), '?', std::data(buffer));
 
-	return std::string(buffer.data(), std::size(buffer)); // note: avoid wchar_t and std::wstring
+	return std::string(std::data(buffer), std::size(buffer));
 }
 
 //  ================================================================================================
 
-[[nodiscard]] inline const auto & dictionary() // note: transliteration table
+[[nodiscard]] inline const auto & transliteration_table() 
 {
-    static std::unordered_map < char32_t, std::u32string > dictionary = 
+    static std::unordered_map < char32_t, std::u32string > transliteration_table = 
 	{ 
         { U'А', U"A"   }, { U'а', U"a"   },
         { U'Б', U"B"   }, { U'б', U"b"   },
@@ -120,7 +128,7 @@
         { U'Я', U"Ya"  }, { U'я', U"ya"  } 
 	};
 
-    return dictionary;
+    return transliteration_table;
 }
 
 //  ================================================================================================
@@ -129,7 +137,7 @@ int main()
 {
     std::cout << boost::locale::util::get_system_locale() << std::endl;
 
-	std::string string; std::cin >> string; // note: CP1251 on Windows
+	std::string string; std::cin >> string; // note: см. кодировки Windows
 
     auto u8string = convert_locale_to_utf(string);
 
@@ -152,19 +160,19 @@ int main()
     const auto u16string = boost::locale::conv::utf_to_utf < char16_t, char > (u8string);
     const auto u32string = boost::locale::conv::utf_to_utf < char32_t, char > (u8string);
 
-//  SetConsoleOutputCP(65001); // note: Windows only, change console code page to UTF-8
+//  SetConsoleOutputCP(65001); // note: см. Windows API
 
-	for (const auto c :  u8string) std::cout << static_cast < int > (c) << ' '; // note: no support
+	for (const auto c :  u8string) std::cout << static_cast < int > (c) << ' ';
 
 	std::cout << std::endl;
 
-	for (const auto c : u16string) std::cout << static_cast < int > (c) << ' '; // note: no support
+	for (const auto c : u16string) std::cout << static_cast < int > (c) << ' ';
 			
 	std::cout << std::endl;
 
-	for (const auto c : u32string) std::cout << static_cast < int > (c) << ' '; // note: no support
-
-	std::cout << std::endl;
+	for (const auto c : u32string) std::cout << static_cast < int > (c) << ' ';
+    
+    std::cout << std::endl;
 
 //  ================================================================================================
 
@@ -174,7 +182,7 @@ int main()
 
 //  ================================================================================================
 
-	std::cout << convert_utf_to_locale("∃y ∀x ¬(x ≺ y)") << std::endl; // note: problem with char8_t 
+	std::cout << convert_utf_to_locale("∃y ∀x ¬(x ≺ y)") << std::endl;
 
 	return 0;
 }

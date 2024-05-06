@@ -26,7 +26,8 @@ struct case_insensitive_traits : public std::char_traits < char >
         return std::toupper(c1) <  std::toupper(c2); 
     }
 
-    [[nodiscard]] static int compare(const char * string_1, const char * string_2, std::size_t n) noexcept
+    [[nodiscard]] static int compare(const char * string_1, 
+                                     const char * string_2, std::size_t n) noexcept
     {
         for (std::size_t i = 0; i < n; ++i) 
         {
@@ -61,11 +62,22 @@ inline std::ostream & operator<<(std::ostream & stream, const cistring_t & cistr
 
 //  ================================================================================================
 
+template < typename T1, typename T2 > 
+
+[[nodiscard]] inline constexpr std::ptrdiff_t distance_in_bytes(const T1 * ptr_1, 
+                                                                const T2 * ptr_2) noexcept
+{
+    return (std::bit_cast < const std::byte * > (ptr_1) - 
+            std::bit_cast < const std::byte * > (ptr_2));
+}
+
+//  ================================================================================================
+
 inline void print(std::string_view view) { std::cout << view << std::endl; }
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state) // note: slow
+void test_1(benchmark::State & state)
 {
     const std::string string(65536, 'a');
 
@@ -79,7 +91,7 @@ void test_1(benchmark::State & state) // note: slow
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state) // note: fast
+void test_2(benchmark::State & state)
 {
     const std::string string(65536, 'a');
 
@@ -95,24 +107,23 @@ void test_2(benchmark::State & state) // note: fast
 
 //  ================================================================================================
 
-BENCHMARK(test_1)->DenseRange(8192, 65537, 8192)->Complexity(); // note: O(N) complexity
-BENCHMARK(test_2)->DenseRange(8192, 65537, 8192)->Complexity(); // note: O(1) complexity
+BENCHMARK(test_1)->DenseRange(8192, 65537, 8192)->Complexity();
+BENCHMARK(test_2)->DenseRange(8192, 65537, 8192)->Complexity();
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for benchmark
+int main(int argc, char ** argv)
 {
     std::cout << "Enter string 1: "; std::string string_1; std::cin >> string_1;
     std::cout << "Enter string 2: "; std::string string_2; 
     
-    std::getline(std::cin >> std::ws, string_2); // good: skip space characters
+    std::getline(std::cin >> std::ws, string_2);
 
-    std::cout << std::quoted(string_1) << ' ' << 
-                 std::quoted(string_2) << std::endl; // note: consider arguments
+    std::cout << std::quoted(string_1) << ' ' << std::quoted(string_2) << std::endl;
 
 //  ================================================================================================
 
-    const auto string_3 = "Hello, world!"s; // good: auto -> std::string, string literal
+    const auto string_3 = "Hello, world!"s;
 
     if (const auto index = string_3.find(','); index != std::string::npos)
     {
@@ -132,41 +143,47 @@ int main(int argc, char ** argv) // note: arguments for benchmark
     [[maybe_unused]] constexpr char c_string_1[]{ 'h', 'e', 'l', 'l', 'o', '\0' };
     
     [[maybe_unused]] constexpr char c_string_2[] = "hello";
-    [[maybe_unused]] constexpr auto c_string_3   = "hello"; // note: auto -> const char *
 
-    assert(std::strlen(string_3.c_str()) == 13); // note: consider cstring library functions
+    [[maybe_unused]] constexpr auto c_string_3   = "hello";
 
-//  ================================================================================================
-
-    std::cout << "Enter data: "; char data[256]{};
-
-    std::cin.getline(data, std::size(data)); // note: read maximum 256 characters till \n
-
-    std::cout << data << std::endl; // note: output characters till null terminator \0
+    assert(std::strlen(string_3.c_str()) == 13);
 
 //  ================================================================================================
 
-    assert(cistring_t("HELLO") == cistring_t("hello")); // note: custom char traits
+    std::cout << "Enter characters: "; char buffer[256]{};
+
+    std::cin.getline(buffer, std::size(buffer));
+
+    std::cout << buffer << std::endl;
+
+//  std::cout << char_array << std::endl; // bad: отсутствует нулевой символ в конце строки
 
 //  ================================================================================================
 
-    [[maybe_unused]] const auto small_string = "hello"; // note: small strings optimization
+    assert(cistring_t("HELLO") == cistring_t("hello"));
 
 //  ================================================================================================
 
-    constexpr auto string_view = "Hello, world!"sv; // note: auto -> std::string_view
-    
-    print(string_view); // good: consider string_view for read only purposes
+    const auto string_5 = "hello"s, string_6 = "abcdefghijklmnopqrstuvwxyz"s;
+
+    std::cout << distance_in_bytes(&string_5.front(), &string_5) << std::endl;
+    std::cout << distance_in_bytes(&string_6.front(), &string_6) << std::endl;
+
+//  ================================================================================================
+
+    constexpr auto string_view = "Hello, world!"sv;
 
     print(string_3);
+    
+    print(string_view);
 
     print(std::string_view(std::begin(string_3), std::next(std::begin(string_3), 5)));
 
-//  const std::string_view bad_view_1 = "hello"s + "world"s;                   // bad: undefined behavior
+//  const std::string_view bad_1 = "hello"s + "world"s;          // bad: временный объект
 
-//  const std::string_view bad_view_2 = []() constexpr { return "hello"s; }(); // bad: undefined behavior
+//  const std::string_view bad_2 = [](){ return "hello"s; }();   // bad: временный объект
 
-//  const std::string_view bad_view_3 = string_4; string_4 = "hello";          // bad: undefined behavior
+//  const std::string_view bad_3 = string_4; string_4 = "hello"; // bad: перезаписанная строка
 
 //  ================================================================================================
 
