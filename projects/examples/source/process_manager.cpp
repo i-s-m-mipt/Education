@@ -14,7 +14,7 @@ int main()
 
 	std::cout << "Waiting   handler ... " << std::endl;
 
-	std::this_thread::sleep_for(5s); // note: some local actions
+	std::this_thread::sleep_for(5s);
 
 	std::cout << "Verifying handler ... " << std::endl;
 
@@ -25,7 +25,7 @@ int main()
 		process.terminate();
 	}
 
-	std::cout << process.exit_code() << std::endl; // note: not 0 if terminated
+	std::cout << process.exit_code() << std::endl;
 
 	return 0;
 } 

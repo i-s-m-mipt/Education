@@ -7,7 +7,7 @@ using namespace std::literals;
 
 int main(int argc, char ** argv)
 {
-    assert(argc == 3); // note: program name and 2 arguments
+    assert(argc == 3);
 
     std::cout << argv[0] << ' ';
     std::cout << argv[1] << ' ';
