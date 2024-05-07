@@ -13,13 +13,13 @@ int main()
 	
 	std::cout << "Enter 2 numbers separated by a space: "; int x{}, y{}; std::cin >> x >> y;
 
-	std::cout << "You have entered " << x << " and " << y << std::endl;
+	std::cout << "You have entered " << x << " and " << y << std::endl; 
 
 //  ================================================================================================
 
 	std::cout << "Enter string with your name: "; std::string name; std::cin >> name;
 
-	std::cout << "Hello, " + name << std::endl;
+	std::cout << "Hello, " + name << std::endl; 
 
 //  ================================================================================================
 
@@ -31,7 +31,7 @@ int main()
 
 	std::cout << "Square root of 4 is " << std::sqrt(4) << std::endl;
 
-	std::swap(x, y);
+	std::swap(x, y); // support: алгоритмы сортировки
 
 	std::cout << "Now x is " << x << " and y is " << y << std::endl;
 
