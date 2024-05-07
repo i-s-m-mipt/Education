@@ -7,19 +7,19 @@
 
 int main()
 {
-//	using namespace std; // bad: порождает конфликты имен в проектах с несколькими библиотеками
+//	using namespace std; // bad: конфликты имен
 
 //  ================================================================================================
 	
 	std::cout << "Enter 2 numbers separated by a space: "; int x{}, y{}; std::cin >> x >> y;
 
-	std::cout << "You have entered " << x << " and " << y << std::endl; 
+	std::cout << "You have entered " << x << " and " << y << std::endl;
 
 //  ================================================================================================
 
 	std::cout << "Enter string with your name: "; std::string name; std::cin >> name;
 
-	std::cout << "Hello, " + name << std::endl; 
+	std::cout << "Hello, " + name << std::endl;
 
 //  ================================================================================================
 
