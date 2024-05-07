@@ -4,31 +4,25 @@
 
 int main()
 {
-	auto x = 42;
-	
-//	int & ri; // error: неинициализированная ссылка
-
-	auto & rx = x;
-
-	rx = 42;
-
+	      auto x = 42;
 	const auto y = 42;
+	
+//	int & ri;     // error
+//	int & ry = y; // error
 
-	rx = y;
-
-//	int & ry = y; // error: неконстантная ссылка на константный объект
+	auto & rx = x; rx = 42; rx = y;
 
 	[[maybe_unused]] const auto & rcy = y;
 
-//	rcy = 42; // error: константная ссылка
+//	rcy = 42; // error
 
 	[[maybe_unused]] const auto & rcv = 42;
 
-//	auto & rv = 42; // error: неконстантная ссылка на временный объект
+//	auto & rv = 42; // error
 
 //  ================================================================================================
 
-//	std::vector < int & > bad_vector; // error: недопустимый контейнер ссылок
+//	std::vector < int & > bad_vector; // error
 
 	std::vector < std::reference_wrapper < int > > good_vector;
 

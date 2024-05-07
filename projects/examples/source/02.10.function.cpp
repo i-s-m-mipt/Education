@@ -29,13 +29,13 @@ void test_pointers(int * x, const int * y)
 	}
 
 	++(*x);
-//	++(*y); // error: указатель на константный объект
+//	++(*y); // error
 }
 
 void test_references(int & x, [[maybe_unused]] const int & y)
 {
 	++x;
-//	++y; // error: константная ссылка
+//	++y; // error
 }
 
 //  ================================================================================================
@@ -69,42 +69,20 @@ void print_vector(const std::vector < int > & vector)
 
 //  ================================================================================================
 
-[[nodiscard]] inline auto max(int x, int y)
-{
-	return (x > y ? x : y);
-}
+[[nodiscard]] inline auto max(int x, int y) { return (x > y ? x : y); }
 
-[[nodiscard]] inline int factorial(int n)
-{
-	return (n < 2 ? 1 : n * factorial(n - 1));
-}
+[[nodiscard]] inline int factorial(int n) { return (n < 2 ? 1 : n * factorial(n - 1)); }
 
 //  ================================================================================================
 
-/*
-[[nodiscard]] int * get_dangling_pointer()
-{
-	const auto local = 42; // note: static const auto local = 42;
-
-	return &local; // warning: висячий указатель
-}
-*/
-
-/*
-[[nodiscard]] int & get_dangling_reference()
-{
-	const auto local = 42; // note: static const auto local = 42;
-
-	return local; // warning: висячая ссылка
-}
-*/
+//[[nodiscard]] int * get_dangling_pointer  () { auto local = 42; return &local; } // warning
+//[[nodiscard]] int & get_dangling_reference() { auto local = 42; return  local; } // warning
 
 //  ================================================================================================
 
 void h()
 {
-	auto x = 42;
-
+	       auto x = 42; 
 	static auto y = 42;
 
 	std::cout << ++x << ' ' << ++y << std::endl;
@@ -122,9 +100,9 @@ inline void print(double) { std::cout << "print(double)" << std::endl; }
 
 int main()
 {
-//	f(42); // warning: проигнорировано возвращаемое значение функции с атрибутом [[nodiscard]]
+//	f(42); // warning
 
-	[[maybe_unused]] const auto result = g(f(42), f(42)); // note: неспецифицированный порядок
+	[[maybe_unused]] const auto result = g(f(42), f(42));
 
 //  ================================================================================================
 
@@ -155,8 +133,8 @@ int main()
 
 //  ================================================================================================
 
-//	std::cout << *get_dangling_pointer  () << std::endl; // bad: неопределенное поведение
-//	std::cout <<  get_dangling_reference() << std::endl; // bad: неопределенное поведение
+//	std::cout << *get_dangling_pointer  () << std::endl; // warning
+//	std::cout <<  get_dangling_reference() << std::endl; // warning
 
 //  ================================================================================================
 
@@ -166,15 +144,14 @@ int main()
 
 	print(true);
 	print(3.14);
-	
-//	print(42); // error: неоднозначный выбор перегруженной функции
+//	print(1000); // error
 
 	return 0;
 }
 
 //  ================================================================================================
 
-int f(int x) // note: демонстрация
+int f(int x) // demo
 {
 	return (x + 1);
 }

@@ -7,19 +7,19 @@ int main()
 	std::cout <<    !b1 << ' ' << (b1 || b2) << ' ' << (b1  && b2) << std::endl;
 	std::cout << not b1 << ' ' << (b1 or b2) << ' ' << (b1 and b2) << std::endl;
 
-	std::cout << (true || (b1 && b2)) << std::endl; // note: см. вычисления по короткой схеме
+	std::cout << (true || (b1 && b2)) << std::endl; // support: вычисления по короткой схеме
 
-	[[maybe_unused]] auto law_1 = (!(b1 && b2) == !b1 || !b2);
-	[[maybe_unused]] auto law_2 = (!(b1 || b2) == !b1 && !b2);
+	[[maybe_unused]] auto r1 = (!(b1 && b2) == !b1 || !b2); // support: законы де Моргана
+	[[maybe_unused]] auto r2 = (!(b1 || b2) == !b1 && !b2);
 
 //  ================================================================================================
 
 	auto x = 1, y = 2;
 
-	std::cout << (!!x != !!y) << std::endl; // note: см. оператор xor
+	std::cout << (!!x != !!y) << std::endl; // support: оператор xor
 
-	std::cout << (    -x) << std::endl;
-	std::cout << (    +x) << std::endl;
+	std::cout << (    -y) << std::endl;
+	std::cout << (    +y) << std::endl;
 
 	std::cout << (x +  y) << std::endl;
 	std::cout << (x -  y) << std::endl;
@@ -47,7 +47,7 @@ int main()
 
 //  ================================================================================================
 
-	x = x + y; y = x - y; x = x - y; // note: см. собеседование в Google
+	x = x + y; y = x - y; x = x - y; // support: собеседование в Google
 
 //  ================================================================================================
 
@@ -61,20 +61,20 @@ int main()
 	std::cout << (-1 % +2) << std::endl;
 	std::cout << (-1 % -2) << std::endl;
 
-//	x+++++y; // error: принцип максимального куска
+//	x+++++y; // error
 
 //  ================================================================================================
 
-	auto z = (1 + 4) / (2 + 3);
+	[[maybe_unused]] auto z = (1 + 4) / (2 + 3);
 
-//	std::cout << (z + ++z) << std::endl; // bad: неспецифицированный порядок
+//	std::cout << (z + ++z) << std::endl; // warning
 
 //  ================================================================================================
 
 	[[maybe_unused]] auto m = 1 + 2 + 3;
 	[[maybe_unused]] auto n = x = y = z;
 
-//	std::cout << (++m, ++n) << std::endl; // bad: трудновоспринимаемый синтаксис
+//	std::cout << (++m, ++n) << std::endl; // bad: непонятный синтаксис
 
 	return 0;
 }

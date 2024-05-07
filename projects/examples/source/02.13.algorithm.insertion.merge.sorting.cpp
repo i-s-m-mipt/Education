@@ -40,7 +40,7 @@ void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t r)
 {
 	if (static const std::size_t block = 64; r - l <= block)
 	{
-		insertion_sort(vector, l, r); // note: сложность O(N^2)
+		insertion_sort(vector, l, r); // complexity: O(N^2)
 	}
 	else
 	{
@@ -56,7 +56,7 @@ void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t r)
 
 int main()
 {
-	const std::size_t size = 1'000;
+	const std::size_t size = 1000;
 
 	std::vector < int > vector(size, 0);
 
@@ -64,7 +64,7 @@ int main()
 
 	std::ranges::reverse(vector);
 
-	merge_sort(vector, 0, size); // note: сложность O(N*log(N)) амортизированная
+	merge_sort(vector, 0, size); // complexity: O(N*log(N)) амортизированная
 
 	for (const auto element : vector) std::cout << element << ' ';
 

@@ -7,14 +7,11 @@ int main()
 {
 	const std::size_t size = 5;
 
-	int array_1[size]{};
-
-	[[maybe_unused]] const int array_2[size]{ 1, 2, 3 }; // note: элементы: { 1, 2, 3, 0, 0 }
-	[[maybe_unused]] const int array_3[    ]{ 1, 2, 3 }; // note: элементы: { 1, 2, 3       }
-
-//	const int array_4[2]{ 1, 2, 3 }; // error: слишком много инициализаторов
-
-//	const int array_5[1'000'000'000]{}; // error: переполнение стека
+	[[maybe_unused]]       int array_1[size]{         }; // elements: { 0, 0, 0, 0, 0 }
+	[[maybe_unused]] const int array_2[size]{ 1, 2, 3 }; // elements: { 1, 2, 3, 0, 0 }
+	[[maybe_unused]] const int array_3[    ]{ 1, 2, 3 }; // elements: { 1, 2, 3       }
+	
+//	[[maybe_unused]] const int array_4[1'000'000'000]{}; // error
 
 //  ================================================================================================
 
@@ -30,18 +27,18 @@ int main()
 
 	*(array_1 + middle) = 42;
 
-//	*(array_1 + 100000) = 42; // bad: выход за границы массива
+//	*(array_1 + 100000) = 42; // bad: арифметика указателей
 
 	std::cout << array_1[middle] << std::endl;
 
 //	std::cout << *(&array_1[0] + middle) << std::endl; // bad: избыточный синтаксис
 
-//	std::cout << middle[array_1] << std::endl; // bad: трудновоспринимаемый синтаксис
+//	std::cout << middle[array_1] << std::endl; // bad: непонятный синтаксис
 
 	std::cout << (array_1 + middle + 1) - 
 				 (array_1 + middle - 1) << std::endl;
 
-//	auto delta = array_2 - array_1; // bad: указатели на элементы из разных массивов
+//	auto delta = array_2 - array_1; // bad: разные массивы
 
 	for (const int * ptr = array_1; ptr != (array_1 + size); ++ptr)
 	{
@@ -60,7 +57,7 @@ int main()
 
 //  ================================================================================================
 
-	for (std::size_t i = 0; i < size - 1; ++i) // note: см. сортировку пузырьком
+	for (std::size_t i = 0; i < size - 1; ++i) // support: сортировка пузырьком
 	{
 		for (std::size_t j = i + 1; j < size; ++j)
 		{

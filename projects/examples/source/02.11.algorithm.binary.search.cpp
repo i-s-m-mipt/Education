@@ -5,24 +5,16 @@
 
 [[nodiscard]] const int * binary_search(const int * array, std::size_t size, int key) 
 {
-	std::size_t l = 0, r = size;
-
-	if (r == 0)
+	if (std::size_t l = 0, r = size; r != 0)
 	{
-		return nullptr;
-	}
+		while (l < r)
+		{
+			const auto m = std::midpoint(l, r); array[m] < key ? l = m + 1 : r = m;
+		}
 
-	if (r == 1)
-	{
-		return (array[0] == key ? array : nullptr);
-	}
-
-	while (l < r)
-	{
-		const auto m = std::midpoint(l, r); array[m] < key ? l = m + 1 : r = m;
-	}
-
-	return (array[l] == key ? &array[l] : nullptr);
+		return (array[l] == key ? array + l : nullptr);
+	} 
+	else return nullptr;
 }
 
 //  ================================================================================================
@@ -37,7 +29,7 @@ int main()
 	{
 		std::cout << "index of " << key << " in array: ";
 
-		if (const auto ptr = binary_search(array, size, key); ptr) // note: сложность O(log(N))
+		if (const auto ptr = binary_search(array, size, key); ptr) // complexity: O(log(N))
 		{
 			std::cout << ptr - array << std::endl;
 		}
