@@ -7,18 +7,16 @@ int main()
 	      auto x = 42;
 	const auto y = 42;
 	
-//	int & ri;     // error
-//	int & ry = y; // error
+//	[[maybe_unused]] int  & ri;     // error
+//	[[maybe_unused]] int  & ry = y; // error
 
-	auto & rx = x; rx = 42; rx = y;
+	[[maybe_unused]]       auto &  rx = x; rx = y;
+	[[maybe_unused]] const auto & cry = y;
 
-	[[maybe_unused]] const auto & rcy = y;
+//	cry = 42; // error
 
-//	rcy = 42; // error
-
-	[[maybe_unused]] const auto & rcv = 42;
-
-//	auto & rv = 42; // error
+	[[maybe_unused]] const auto & crv = 42;
+//	[[maybe_unused]]       auto &  rv = 42; // error
 
 //  ================================================================================================
 

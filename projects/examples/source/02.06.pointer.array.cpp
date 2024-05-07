@@ -38,7 +38,7 @@ int main()
 	std::cout << (array_1 + middle + 1) - 
 				 (array_1 + middle - 1) << std::endl;
 
-//	auto delta = array_2 - array_1; // bad: разные массивы
+//	[[maybe_unused]] auto delta = array_2 - array_1; // bad: разные массивы
 
 	for (const int * ptr = array_1; ptr != (array_1 + size); ++ptr)
 	{
