@@ -159,7 +159,8 @@ int main()
 
 //  ================================================================================================
 
-	const Date date_1             ;
+	const Date date_1;
+	
 	const Date date_2(2023, 9, 19);
 
 //	const Date date_3(); // warning

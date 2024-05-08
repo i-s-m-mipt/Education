@@ -12,7 +12,11 @@ public:
 
 	friend B;
 
-private: const int m_data = 42; }; // class A
+private: 
+
+	const int m_data = 42; 
+	
+}; // class A
 
 //  ================================================================================================
 
@@ -23,7 +27,11 @@ public:
 	inline void print([[maybe_unused]] const A & a, 
 					  [[maybe_unused]] const B & b) const;
 
-private: const int m_data = 42; }; // class C
+private: 
+
+	const int m_data = 42; 
+	
+}; // class C
 
 //  ================================================================================================
 
@@ -35,7 +43,11 @@ public:
 	friend inline void C::print([[maybe_unused]] const A & a, 
 								[[maybe_unused]] const B & b) const;
 
-private: const int m_data = 42; }; // class B
+private: 
+
+	const int m_data = 42; 
+	
+}; // class B
 
 //  ================================================================================================
 

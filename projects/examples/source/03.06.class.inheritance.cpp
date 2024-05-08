@@ -143,7 +143,7 @@ int main()
 {
 	const Person person("Matthias");
 
-//	[[maybe_unused]] const auto person_name = person.get_name(); // error
+//	const auto person_name = person.get_name(); // error
 
 //  ================================================================================================
 
@@ -151,7 +151,7 @@ int main()
 
 	employee.print();
 
-	[[maybe_unused]] const auto employee_name = employee.get_name();
+	const auto employee_name = employee.get_name();
 
 //  ================================================================================================
 

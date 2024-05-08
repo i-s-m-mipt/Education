@@ -167,18 +167,20 @@ int main()
 
 	std::cout << ratio_4.operator+=(ratio_1) << std::endl;
 
-	std::cout << (         ++ratio_4) << std::endl;
-	std::cout << (         --ratio_4) << std::endl;
-	std::cout << (ratio_4++         ) << std::endl;
-	std::cout << (ratio_4--         ) << std::endl;
+//  ================================================================================================
+
+	std::cout << (++ratio_4  ) << std::endl;
+	std::cout << (--ratio_4  ) << std::endl;
+	std::cout << (  ratio_4++) << std::endl;
+	std::cout << (  ratio_4--) << std::endl;
 
 //  ================================================================================================
 
-	std::cout << (      1 +  ratio_4) << std::endl;
-	std::cout << (ratio_4 -        1) << std::endl;
-	std::cout << (ratio_4 *  ratio_3) << std::endl;
-	std::cout << (ratio_4 /  ratio_2) << std::endl;
-	std::cout << (      1 /        1) << std::endl;
+	std::cout << (      1 + ratio_4) << std::endl;
+	std::cout << (ratio_4 -       1) << std::endl;
+	std::cout << (ratio_4 * ratio_3) << std::endl;
+	std::cout << (ratio_4 / ratio_2) << std::endl;
+	std::cout << (      1 /       1) << std::endl;
 
 	std::cout << operator+(ratio_4, ratio_1) << std::endl;
 
@@ -198,10 +200,10 @@ int main()
 
 	std::cout << boost::rational < int > (5, 10) << std::endl;
 
-	std::cout << (ratio_6 +  ratio_7) << std::endl;
-	std::cout << (ratio_6 -  ratio_7) << std::endl;
-	std::cout << (ratio_6 *  ratio_7) << std::endl;
-	std::cout << (ratio_6 /  ratio_7) << std::endl;
+	std::cout << (ratio_6 + ratio_7) << std::endl;
+	std::cout << (ratio_6 - ratio_7) << std::endl;
+	std::cout << (ratio_6 * ratio_7) << std::endl;
+	std::cout << (ratio_6 / ratio_7) << std::endl;
 
 	std::cout << boost::rational_cast < int    > (ratio_6) << std::endl;
     std::cout << boost::rational_cast < double > (ratio_7) << std::endl;

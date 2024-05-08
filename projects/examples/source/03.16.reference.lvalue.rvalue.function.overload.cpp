@@ -3,9 +3,9 @@
 
 //  ================================================================================================
 
-[[nodiscard]] inline       int    get_prvalue      () {                          return 42; }
-[[nodiscard]] inline       int &  get__lvalue      () { static       int x = 42; return  x; }
-[[nodiscard]] inline const int &  get__lvalue_const() { static const int x = 42; return  x; }
+[[nodiscard]] inline       int   get_prvalue      () {                          return 42; }
+[[nodiscard]] inline       int & get__lvalue      () { static       int x = 42; return  x; }
+[[nodiscard]] inline const int & get__lvalue_const() { static const int x = 42; return  x; }
 
 //  ================================================================================================
 
@@ -48,7 +48,7 @@ int main()
 
 //  ================================================================================================
 
-	[[maybe_unused]] double d = 3.14; const int i = 42;
+	[[maybe_unused]] double d = 3.14; [[maybe_unused]] const int i = 42;
 
 //	f(d); // error
 

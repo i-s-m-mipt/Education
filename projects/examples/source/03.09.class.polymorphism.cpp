@@ -89,19 +89,20 @@ int main()
 	const Mobile mobile;
 
 	const Computer * computer_ptr = &mobile;
-
 //	const Computer   computer     =  mobile; // bad: срезка объекта
 
 	computer_ptr->print();
 
 //  ================================================================================================
 
-	const Mobile mobile_1;
-	const Mobile mobile_2;
-	const Laptop laptop_1;
-	const Laptop laptop_2;
+	const Mobile mobile_1; const Mobile mobile_2;
+	const Laptop laptop_1; const Laptop laptop_2;
 
-	std::vector < const Computer * > computers { &mobile_1, &mobile_2, &laptop_1, &laptop_2 };
+	std::vector < const Computer * > computers 
+	{ 
+		&mobile_1, &mobile_2, 
+		&laptop_1, &laptop_2 
+	};
 
 	for (const auto computer : computers) computer->print();
 

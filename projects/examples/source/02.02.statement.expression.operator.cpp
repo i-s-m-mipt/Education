@@ -18,14 +18,10 @@ int main()
 
 	std::cout << (!!x != !!y) << std::endl; // support: оператор xor
 
-	std::cout << (    -y) << std::endl;
-	std::cout << (    +y) << std::endl;
+	std::cout << (-y) << std::endl;
+	std::cout << (+y) << std::endl;
 
-	std::cout << (x +  y) << std::endl;
-	std::cout << (x -  y) << std::endl;
-	std::cout << (x *  y) << std::endl;
-	std::cout << (x /  y) << std::endl; 
-	std::cout << (x %  y) << std::endl;
+//  ================================================================================================
 
 	std::cout << (x += y) << std::endl;
 	std::cout << (x -= y) << std::endl;
@@ -33,18 +29,30 @@ int main()
 	std::cout << (x /= y) << std::endl;
 	std::cout << (x %= y) << std::endl;
 
+//  ================================================================================================
+
+	std::cout << (++x  ) << std::endl;
+	std::cout << (--x  ) << std::endl;
+	std::cout << (  x++) << std::endl;
+	std::cout << (  x--) << std::endl;
+
+//  ================================================================================================
+
+	std::cout << (x + y) << std::endl;
+	std::cout << (x - y) << std::endl;
+	std::cout << (x * y) << std::endl;
+	std::cout << (x / y) << std::endl; 
+	std::cout << (x % y) << std::endl;
+
+//  ================================================================================================
+
 	std::cout << (x <  y) << std::endl;
 	std::cout << (x >  y) << std::endl;
 	std::cout << (x <= y) << std::endl;
 	std::cout << (x >= y) << std::endl;
 	std::cout << (x == y) << std::endl;
 	std::cout << (x != y) << std::endl;
-
-	std::cout << (x++   ) << std::endl;
-	std::cout << (x--   ) << std::endl;
-	std::cout << (   ++x) << std::endl;
-	std::cout << (   --x) << std::endl;
-
+	
 //  ================================================================================================
 
 	x = x + y; y = x - y; x = x - y; // support: задачи Google
