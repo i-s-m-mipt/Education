@@ -75,8 +75,10 @@ void print_vector(const std::vector < int > & vector)
 
 //  ================================================================================================
 
-//[[nodiscard]] int * get_dangling_pointer  () { auto local = 42; return &local; } // warning
-//[[nodiscard]] int & get_dangling_reference() { auto local = 42; return  local; } // warning
+/*
+[[nodiscard]] int * get_dangling_pointer  () { auto local = 42; return &local; } // warning
+[[nodiscard]] int & get_dangling_reference() { auto local = 42; return  local; } // warning
+*/
 
 //  ================================================================================================
 

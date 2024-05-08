@@ -19,16 +19,13 @@ int main()
 		std::cout << "for 3: " << i << std::endl;
 	}
 
-//	for (std::size_t i = size; i >= 0; --i); // warning
+//	for (std::size_t i = size; i >= 0; --i); // error
 
 //  ================================================================================================
 
 	for (std::size_t i = size; i >= 1; --i)
 	{
-		if (i % 2 == 0)
-		{
-			continue;
-		}
+		if (i % 2 == 0) continue;
 
 		std::cout << "for 4: " << i << std::endl;
 	}
@@ -41,10 +38,7 @@ int main()
 
 		for (std::size_t j = 0; j < size; ++j)
 		{
-			if (j > i)
-			{
-				break;
-			}
+			if (j > i) break;
 
 			std::cout << j << ' ';
 		}
@@ -62,10 +56,7 @@ int main()
 			{
 				std::cout << "for 6: " << i << ' ' << j << ' ' << k << std::endl;
 
-				if (i == 1 && j == 1 && k == 1)
-				{
-					goto exit;
-				}
+				if (i == 1 && j == 1 && k == 1) goto exit;
 			}
 		}
 	}

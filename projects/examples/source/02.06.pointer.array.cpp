@@ -26,8 +26,7 @@ int main()
 	const auto middle = size / 2;
 
 	*(array_1 + middle) = 42;
-
-//	*(array_1 + 100000) = 42; // bad: арифметика указателей
+//	*(array_1 + 10'000) = 42; // bad: арифметика указателей
 
 	std::cout << array_1[middle] << std::endl;
 
