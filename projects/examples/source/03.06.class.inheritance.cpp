@@ -86,7 +86,9 @@ private:
 
 class Servo {};
 
-class Robot : private Servo { private: const Servo m_servo; };
+class Robot_v1 : private Servo {};
+
+class Robot_v2 { private: const Servo m_servo; };
 
 //  ================================================================================================
 

@@ -12,7 +12,7 @@ public:
 
 	friend B;
 
-private: 
+private:
 
 	const int m_data = 42; 
 	
@@ -27,7 +27,7 @@ public:
 	inline void print([[maybe_unused]] const A & a, 
 					  [[maybe_unused]] const B & b) const;
 
-private: 
+private:
 
 	const int m_data = 42; 
 	
@@ -43,7 +43,7 @@ public:
 	friend inline void C::print([[maybe_unused]] const A & a, 
 								[[maybe_unused]] const B & b) const;
 
-private: 
+private:
 
 	const int m_data = 42; 
 	
