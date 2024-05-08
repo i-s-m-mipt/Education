@@ -6,7 +6,7 @@ class Computation
 {
 public:
 
-    virtual ~Computation() = default; // note: polymorphic base class
+    virtual ~Computation() = default; 
 
     virtual void compute() const = 0;
 
@@ -14,8 +14,13 @@ public:
 
 //  ================================================================================================
 
-class AVX : public Computation { public: void compute() const override { std::cout << "AVX" << std::endl; } };
-class SSE : public Computation { public: void compute() const override { std::cout << "SSE" << std::endl; } };
+class AVX : public Computation { public: void compute() const override; };
+class SSE : public Computation { public: void compute() const override; };
+
+//  ================================================================================================
+
+void AVX::compute() const { std::cout << "AVX" << std::endl; }
+void SSE::compute() const { std::cout << "SSE" << std::endl; }
 
 //  ================================================================================================
 
@@ -29,7 +34,7 @@ public:
 
 private:
     
-    const Computation & m_computation; // note: replaceable algorithm
+    const Computation & m_computation;
 
 }; // class Computer
 
@@ -37,7 +42,7 @@ private:
 
 int main()
 {
-    Computer(AVX()).compute(); // note: instruction set for computations
+    Computer(AVX()).compute();
 
     return 0;
 }

@@ -7,7 +7,7 @@ class Computer
 {
 public:
 
-    virtual ~Computer() = default; // note: polymorphic base class
+    virtual ~Computer() = default; 
 
     [[nodiscard]] virtual std::size_t cores() const = 0;
 
@@ -15,19 +15,25 @@ public:
 
 //  ================================================================================================
 
-class Mobile : public Computer { public: [[nodiscard]] std::size_t cores() const override { return 1; } };
-class Tablet : public Computer { public: [[nodiscard]] std::size_t cores() const override { return 2; } };
-class Laptop : public Computer { public: [[nodiscard]] std::size_t cores() const override { return 3; } };
+class Mobile : public Computer { public: [[nodiscard]] std::size_t cores() const override; };
+class Tablet : public Computer { public: [[nodiscard]] std::size_t cores() const override; };
+class Laptop : public Computer { public: [[nodiscard]] std::size_t cores() const override; };
 
 //  ================================================================================================
 
-class Cluster : public Computer // note: composite class of concrete computers
+[[nodiscard]] std::size_t Mobile::cores() const { return 1; }
+[[nodiscard]] std::size_t Tablet::cores() const { return 2; }
+[[nodiscard]] std::size_t Laptop::cores() const { return 3; }
+
+//  ================================================================================================
+
+class Cluster : public Computer
 {
 public:
 
    ~Cluster()
     {
-        for (const auto computer : m_computers) delete computer; // good: no memory leak
+        for (const auto computer : m_computers) delete computer;
     }
 
     [[nodiscard]] std::size_t cores() const override
@@ -52,7 +58,9 @@ private:
 
 //  ================================================================================================
 
-[[nodiscard]] const Computer * make_cluster(std::size_t n_mobiles, std::size_t n_tablets, std::size_t n_laptops)
+[[nodiscard]] const Computer * make_cluster(std::size_t n_mobiles, 
+                                            std::size_t n_tablets, 
+                                            std::size_t n_laptops)
 {
     const auto cluster = new Cluster;
 
@@ -75,7 +83,7 @@ int main()
         
     std::cout << computer->cores() << std::endl;
 
-    delete computer; // good: no memory leak
+    delete computer;
 
     return 0;
 }

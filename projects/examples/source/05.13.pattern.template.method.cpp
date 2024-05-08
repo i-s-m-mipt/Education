@@ -6,12 +6,9 @@ class Computer
 {
 public:
 
-	virtual ~Computer() = default; // note: polymorphic base class
+	virtual ~Computer() = default; 
 
-	void run() const // note: template method, not template < ... >
-	{ 
-		f1(); f2(); f3(); f4(); f5(); std::cout << std::endl;
-	} 
+	void run() const { f1(); f2(); f3(); f4(); f5(); std::cout << std::endl; } 
 
 private:
 
@@ -19,7 +16,7 @@ private:
 	void f3() const { std::cout << "3 "; }
 	void f5() const { std::cout << "5 "; }
 
-private: // note: non-virtual interface idiom
+private:
 
 	virtual void f2() const = 0;
 	virtual void f4() const = 0;
@@ -30,7 +27,7 @@ private: // note: non-virtual interface idiom
 
 class Mobile : public Computer
 {
-private: // note: non-virtual interface
+private:
 
 	void f2() const override { std::cout << "M "; }
 	void f4() const override { std::cout << "M "; }
@@ -41,7 +38,7 @@ private: // note: non-virtual interface
 
 class Tablet : public Computer
 {
-private: // note: non-virtual interface
+private:
 
 	void f2() const override { std::cout << "T "; }
 	void f4() const override { std::cout << "T "; }
@@ -52,7 +49,7 @@ private: // note: non-virtual interface
 
 class Laptop : public Computer
 {
-private: // note: non-virtual interface
+private:
 
 	void f2() const override { std::cout << "L "; }
 	void f4() const override { std::cout << "L "; }
@@ -67,7 +64,7 @@ int main()
 
 	mobile->run(); 
 	
-	delete mobile; // good: no memory leak
+	delete mobile;
 
 	return 0;
 }

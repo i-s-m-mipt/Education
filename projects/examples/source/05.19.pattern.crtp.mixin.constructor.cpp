@@ -6,7 +6,7 @@ class Base
 {
 public:
 
-    virtual ~Base() = default; // note: polymorphic base class
+    virtual ~Base() = default; 
 
     virtual void initialize() = 0;
 
@@ -16,7 +16,7 @@ public:
 
 class Derived : public Base
 {
-protected: // good: constructor can not be called by user
+protected:
 
     explicit Derived(int) {} 
 
@@ -34,7 +34,7 @@ public:
 
     template < typename ... Ts > explicit Initializer(Ts ... args) : T(args...)
     {
-        this->initialize(); // good: mandatory function call
+        this->initialize();
     }
 
 }; // template < typename T > class Initializer : private T

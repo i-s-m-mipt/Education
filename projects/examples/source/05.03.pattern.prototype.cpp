@@ -6,9 +6,9 @@ class Computer
 {
 public:
     
-    virtual ~Computer() = default; // note: polymorphic base class
+    virtual ~Computer() = default; 
 
-    [[nodiscard]] virtual const Computer * clone() const = 0; // note: virtual copy
+    [[nodiscard]] virtual const Computer * clone() const = 0;
 
     virtual void run() const = 0;
 
@@ -52,7 +52,7 @@ public:
 
 //  ================================================================================================
 
-class Factory // note: no factories hierarchy, static prototypes and virtual copy
+class Factory
 {
 public:
 
@@ -62,9 +62,9 @@ public:
 
 private:
 
-    static inline const Mobile mobile_prototype; // note: consider new-delete instead of static
-    static inline const Tablet tablet_prototype; // note: consider new-delete instead of static
-    static inline const Laptop laptop_prototype; // note: consider new-delete instead of static
+    static inline const Mobile mobile_prototype;
+    static inline const Tablet tablet_prototype;
+    static inline const Laptop laptop_prototype;
 
 }; // class Factory
 
@@ -76,7 +76,7 @@ int main()
 
     mobile->run(); 
     
-    delete mobile; // good: no memory leak
+    delete mobile;
 
     return 0;
 }

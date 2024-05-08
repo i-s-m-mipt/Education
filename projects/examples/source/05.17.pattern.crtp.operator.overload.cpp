@@ -4,7 +4,7 @@
 
 //  ================================================================================================
 
-template < typename T > class Relational // note: non-polymorphic base class
+template < typename T > class Relational
 {
 protected:
 
@@ -13,11 +13,22 @@ protected:
 
 public:
 
-    [[nodiscard]] friend inline constexpr bool operator> (const T & lhs, const T & rhs) { return  (rhs < lhs); }
-    [[nodiscard]] friend inline constexpr bool operator<=(const T & lhs, const T & rhs) { return !(lhs > rhs); }
-    [[nodiscard]] friend inline constexpr bool operator>=(const T & lhs, const T & rhs) { return !(lhs < rhs); }
+    [[nodiscard]] friend inline constexpr bool operator> (const T & lhs, const T & rhs) 
+    { 
+        return  (rhs < lhs); 
+    }
 
-    [[nodiscard]] friend inline constexpr bool operator==(const T & lhs, const T & rhs) // note: provide operator!=
+    [[nodiscard]] friend inline constexpr bool operator<=(const T & lhs, const T & rhs) 
+    { 
+        return !(lhs > rhs); 
+    }
+
+    [[nodiscard]] friend inline constexpr bool operator>=(const T & lhs, const T & rhs) 
+    { 
+        return !(lhs < rhs); 
+    }
+    
+    [[nodiscard]] friend inline constexpr bool operator==(const T & lhs, const T & rhs)
     {
         return (!(lhs < rhs) && !(rhs < lhs));
     }
@@ -26,7 +37,7 @@ public:
 
 //  ================================================================================================
 
-class Apple : private Relational < Apple > // note: allowed private inheritance
+class Apple : private Relational < Apple >
 {
 public:
 
@@ -45,7 +56,7 @@ private:
 
 //  ================================================================================================
 
-class Human : private Relational < Human > // note: allowed private inheritance
+class Human : private Relational < Human >
 {
 public:
 
@@ -79,7 +90,7 @@ private:
 
     double m_length;
 
-}; // class Train : private boost::less_than_comparable < Train > , private boost::equivalent < Train >
+}; // class Train : private boost::less_than_comparable < Train > , ...
 
 //  ================================================================================================
 

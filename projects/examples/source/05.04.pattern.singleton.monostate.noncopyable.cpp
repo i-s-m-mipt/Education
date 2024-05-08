@@ -4,22 +4,13 @@
 
 //  ================================================================================================
 
-class Singleton // bad: single responsibility principle violation
+class Singleton // support: реализация Скотта Мейерса
 {
-public:
-
-    [[nodiscard]] static Singleton & get_instance() // note: once initialized
-    {
-        static Singleton instance; // good: guaranteed to be destroyed
-
-        return instance; // good: return by reference, not pointer (old)
-    }
-
 private:
 
     Singleton() = default;
 
-public: // good: deleted special member functions are public
+public:
 
     Singleton            (const Singleton &) = delete;
     Singleton & operator=(const Singleton &) = delete;
@@ -28,15 +19,19 @@ public:
 
     [[nodiscard]] int data() const { return m_data; }
 
+public:
+
+    [[nodiscard]] static Singleton & get_instance() { static Singleton instance; return instance; }
+
 private:
 
-    int m_data = 42;
-
+    const int m_data = 42; 
+    
 }; // class Singleton 
 
 //  ================================================================================================
 
-class Monostate // good: better than singleton
+class Monostate
 {
 public:
 
@@ -46,13 +41,13 @@ public:
 
 private:
 
-    static inline int m_data = 42; // note: shared data for all instances
-
+    static inline int m_data = 42; 
+    
 }; // class Monostate
 
 //  ================================================================================================
 
-class Noncopyable // note: non-polymorphic base class
+class Noncopyable
 {
 protected:
 
@@ -67,7 +62,7 @@ protected:
 
 //  ================================================================================================
 
-class Unique : private Noncopyable // note: consider boost::noncopyable
+class Unique : private Noncopyable // support: класс boost::noncopyable
 {
 public:
 
@@ -75,25 +70,25 @@ public:
 
 private:
 
-    int m_data = 42;
-
+    const int m_data = 42; 
+    
 }; // class Unique : private Noncopyable
 
 //  ================================================================================================
 
 int main()
 {
-    const auto & singleton = Singleton::get_instance(); // note: single instance
+    const auto & singleton = Singleton::get_instance();
 
     std::cout << singleton.data() << std::endl;
 
 //  ================================================================================================
 
-    Monostate monostate_1; // note: allowed multiple instances creation
+    Monostate monostate_1;
     Monostate monostate_2; 
     Monostate monostate_3; 
 
-    monostate_3.update(42); // note: shared data for all instances 
+    monostate_3.update(42);
 
     std::cout << monostate_1.data() << std::endl;
     std::cout << monostate_2.data() << std::endl;
@@ -102,8 +97,7 @@ int main()
 //  ================================================================================================
 
     const Unique unique_1;
-
-//  const Unique unique_2 = unique_1; // error: noncopyable type
+//  const Unique unique_2 = unique_1; // error
 
     std::cout << unique_1.data() << std::endl;
 

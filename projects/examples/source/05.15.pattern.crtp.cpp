@@ -6,14 +6,14 @@ template < class D > class Computer
 {
 public:
 
-	virtual ~Computer() = default; // note: option 1 is hybrid-time polymorphism
+	virtual ~Computer() = default;
 
-	void run() const // note: non-virtual function due to template
+	void run() const
 	{
-		static_cast < const D * > (this)->run_implementation(); // note: possible infinite recursion
+		static_cast < const D * > (this)->run_implementation();
 	}
 
-	void run_implementation() const { std::cout << "Computer" << std::endl; } // note: default
+	void run_implementation() const { std::cout << "Computer" << std::endl; }
 
 }; // template < class D > class Computer
 
@@ -21,7 +21,7 @@ public:
 
 template < typename D > inline void destroy(const Computer < D > * computer)
 {
-	delete static_cast < const D * > (computer); // note: option 2 is compile-time polymorphism
+	delete static_cast < const D * > (computer);
 }
 
 //  ================================================================================================
@@ -37,7 +37,7 @@ public: void run_implementation() const { std::cout << "Laptop" << std::endl; }
 
 //  ================================================================================================
 
-template < typename T > inline void handle(const T & computer) // note: consider constraints
+template < typename T > inline void handle(const T & computer)
 { 
 	computer.run(); 
 }

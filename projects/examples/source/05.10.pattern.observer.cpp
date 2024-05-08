@@ -7,7 +7,7 @@ class Observer
 {
 public:
 
-    virtual ~Observer() = default; // note: polymorphic base class
+    virtual ~Observer() = default; 
 
     virtual void update(double temperature) const = 0;
 
@@ -21,7 +21,7 @@ public:
 
    ~Computer()
     {
-        for (const auto observer : m_observers) delete observer; // good: no memory leak
+        for (const auto observer : m_observers) delete observer;
     }
 
     void set_temperature(double temperature) 

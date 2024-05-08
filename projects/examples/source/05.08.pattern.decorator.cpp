@@ -7,7 +7,7 @@ class Computer
 {
 public:
 
-    virtual ~Computer() = default; // note: polymorphic base class
+    virtual ~Computer() = default; 
 
     [[nodiscard]] virtual std::string description() const = 0;
 
@@ -15,13 +15,19 @@ public:
 
 //  ================================================================================================
 
-class Mobile : public Computer { public: [[nodiscard]] std::string description() const override { return "Mobile"; } };
-class Tablet : public Computer { public: [[nodiscard]] std::string description() const override { return "Tablet"; } };
-class Laptop : public Computer { public: [[nodiscard]] std::string description() const override { return "Laptop"; } };
+class Mobile : public Computer { public: [[nodiscard]] std::string description() const override; };
+class Tablet : public Computer { public: [[nodiscard]] std::string description() const override; };
+class Laptop : public Computer { public: [[nodiscard]] std::string description() const override; };
 
 //  ================================================================================================
 
-class Decorated_Computer : public Computer // note: abstract decorator
+[[nodiscard]] std::string Mobile::description() const { return "Mobile"; }
+[[nodiscard]] std::string Tablet::description() const { return "Tablet"; }
+[[nodiscard]] std::string Laptop::description() const { return "Laptop"; }
+
+//  ================================================================================================
+
+class Decorated_Computer : public Computer
 {
 public:
 
@@ -37,7 +43,7 @@ protected:
 
 //  ================================================================================================
 
-class Overclocked_Computer : public Decorated_Computer // note: concrete decorator
+class Overclocked_Computer : public Decorated_Computer
 {
 public:
 
@@ -62,7 +68,7 @@ int main()
 
     std::cout << overclocked_mobile->description() << std::endl;
 
-    delete overclocked_mobile; delete mobile; // good: no memory leak
+    delete overclocked_mobile; delete mobile;
 
     return 0;
 }

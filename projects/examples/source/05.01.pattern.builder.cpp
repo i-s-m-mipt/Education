@@ -30,17 +30,17 @@ public:
 
     explicit Builder(const std::string & name) : m_computer(new Computer { name, {}, {}, {} }) {}
 
-    virtual ~Builder() = default; // note: polymorphic base class
+    virtual ~Builder() = default;
 
     [[nodiscard]] Computer * computer() const { return m_computer; }
 
-    virtual void build_cpu() const = 0; // note: optional pure virtual function
-    virtual void build_gpu() const = 0; // note: optional pure virtual function
-    virtual void build_ram() const = 0; // note: optional pure virtual function
+    virtual void build_cpu() const = 0;
+    virtual void build_gpu() const = 0;
+    virtual void build_ram() const = 0;
 
 private:
 
-    Computer * const m_computer; // note: consider smart pointer
+    Computer * const m_computer;
 
 }; // class Builder
 
@@ -94,7 +94,7 @@ public:
 
 //  ================================================================================================
 
-[[nodiscard]] inline const Computer * build(const Builder & builder) // note: consider member function
+[[nodiscard]] inline const Computer * build(const Builder & builder)
 {
     builder.build_cpu();
     builder.build_gpu();
@@ -109,7 +109,7 @@ int main()
 
     print(*mobile); 
     
-    delete mobile; // good: no memory leak
+    delete mobile;
 
     return 0;
 }

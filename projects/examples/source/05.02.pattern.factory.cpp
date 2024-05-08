@@ -6,7 +6,7 @@ class Computer
 {
 public:
 
-    virtual ~Computer() = default; // note: polymorphic base class
+    virtual ~Computer() = default;
 
     virtual void run() const = 0;
     
@@ -14,16 +14,19 @@ public:
 
 //  ================================================================================================
 
-class Mobile : public Computer { public: void run() const override { std::cout << "Mobile" << std::endl; }; };
-class Tablet : public Computer { public: void run() const override { std::cout << "Tablet" << std::endl; }; };
-class Laptop : public Computer { public: void run() const override { std::cout << "Laptop" << std::endl; }; };
+class Mobile : public Computer { public: void run() const override; };
+class Tablet : public Computer { public: void run() const override; };
+class Laptop : public Computer { public: void run() const override; };
 
 //  ================================================================================================
 
-template < typename T > [[nodiscard]] inline const Computer * create() // note: factory function
-{
-    return new const T(); // note: consider type traits or requirements to verify type T is correct
-}
+void Mobile::run() const { std::cout << "Mobile" << std::endl; }
+void Tablet::run() const { std::cout << "Tablet" << std::endl; }
+void Laptop::run() const { std::cout << "Laptop" << std::endl; }
+
+//  ================================================================================================
+
+template < typename T > [[nodiscard]] inline const Computer * create() { return new const T(); }
 
 //  ================================================================================================
 
@@ -31,7 +34,7 @@ class Server : public Computer
 {
 public:
 
-    class Factory // note: factory methods
+    class Factory
     {
     public:
 
@@ -45,7 +48,7 @@ public:
 
 private:
 
-    explicit Server(int version) : m_version(version) {}; // note: use factory methods
+    explicit Server(int version) : m_version(version) {};
 
     int m_version;
 
@@ -57,7 +60,7 @@ class Factory
 {
 public:
 
-    virtual ~Factory() = default; // note: polymorphic base class
+    virtual ~Factory() = default; 
 
     [[nodiscard]] virtual const Computer * create() const = 0;
     
@@ -92,7 +95,7 @@ int main()
 
     mobile->run(); 
     
-    delete mobile; // good: no memory leak
+    delete mobile;
 
 //  ================================================================================================
 
@@ -100,7 +103,7 @@ int main()
 
     server->run(); 
     
-    delete server; // good: no memory leak
+    delete server;
 
 //  ================================================================================================
 
@@ -110,7 +113,7 @@ int main()
 
     laptop->run(); 
     
-    delete laptop; delete factory_laptop; // good: no memory leak
+    delete laptop; delete factory_laptop;
 
     return 0;
 }

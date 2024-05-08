@@ -2,11 +2,11 @@
 
 //  ================================================================================================
 
-class BIOS // note: implementation hierarchy
+class BIOS
 {
 public:
 
-    virtual ~BIOS() = default; // note: polymorphic base class
+    virtual ~BIOS() = default; 
 
     virtual void run() const = 0;
 
@@ -14,24 +14,29 @@ public:
 
 //  ================================================================================================
 
-class Phoenix : public BIOS { public: void run() const override { std::cout << "Phoenix" << std::endl; } };
-class Microid : public BIOS { public: void run() const override { std::cout << "Microid" << std::endl; } };
+class Phoenix : public BIOS { public: void run() const override; };
+class Microid : public BIOS { public: void run() const override; };
 
 //  ================================================================================================
 
-class Computer // note: interface hierarchy
+void Phoenix::run() const { std::cout << "Phoenix" << std::endl; }
+void Microid::run() const { std::cout << "Microid" << std::endl; }
+
+//  ================================================================================================
+
+class Computer
 {
 public:
 
     explicit Computer(const BIOS & bios) : m_bios(bios) {}
 
-    virtual ~Computer() = default; // note: polymorphic base class
+    virtual ~Computer() = default; 
 
     virtual void run() const = 0;
 
 protected:
 
-    const BIOS & m_bios; // note: consider templates instead of hierarchy
+    const BIOS & m_bios;
 
 }; // class Computer 
 
@@ -55,7 +60,7 @@ int main()
 
     laptop->run(); 
     
-    delete laptop; // good: no memory leak
+    delete laptop;
 
     return 0;
 }

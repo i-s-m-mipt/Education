@@ -10,7 +10,7 @@ class Computer
 {
 public:
 
-	virtual ~Computer() = default; // note: polymorphic base class
+	virtual ~Computer() = default; 
 
 	virtual void run() const = 0;
 	
@@ -18,7 +18,7 @@ public:
 
 //  ================================================================================================
 
-class Adapter : public Computer // note: consider private Device
+class Adapter : public Computer
 {
 public:
 
@@ -28,7 +28,7 @@ public:
 
 private:
 
-	const Device & m_device; // note: consider additional settings
+	const Device & m_device;
 
 }; // class Adapter : public Computer
 
@@ -40,7 +40,7 @@ int main()
 
 	computer->run(); 
 	
-	delete computer; // good: no memory leak
+	delete computer;
 
 	return 0;
 }

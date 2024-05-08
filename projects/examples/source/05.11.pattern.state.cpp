@@ -2,23 +2,23 @@
 
 //  ================================================================================================
 
-class Computer; // note: forward declaration required
+class Computer;
 
 class State
 {
 public:
 
-    virtual ~State() = default; // note: polymorphic base class
+    virtual ~State() = default; 
 
-    virtual void stop([[maybe_unused]] Computer * computer) const { std::cout << "stop already" << std::endl; }
-    virtual void slow([[maybe_unused]] Computer * computer) const { std::cout << "slow already" << std::endl; }
-    virtual void fast([[maybe_unused]] Computer * computer) const { std::cout << "fast already" << std::endl; }
+    virtual void stop(Computer *) const { std::cout << "stop" << std::endl; }
+    virtual void slow(Computer *) const { std::cout << "slow" << std::endl; }
+    virtual void fast(Computer *) const { std::cout << "fast" << std::endl; }
 
 }; // class State
 
 //  ================================================================================================
 
-class Stop : public State // note: implements all possible state changes
+class Stop : public State
 {
 public:
 
@@ -29,7 +29,7 @@ public:
 
 //  ================================================================================================
 
-class Slow : public State // note: implements all possible state changes
+class Slow : public State
 {
 public:
 
@@ -40,7 +40,7 @@ public:
 
 //  ================================================================================================
 
-class Fast : public State // note: implements all possible state changes
+class Fast : public State
 {
 public:
 
@@ -51,17 +51,17 @@ public:
 
 //  ================================================================================================
 
-class Computer
+class Computer // support: конечные автоматы
 {
 public:
 
-    Computer() : m_state(new const Stop()) {} // note: initial state
+    Computer() : m_state(new const Stop()) {}
 
    ~Computer() { set_state(nullptr); }
 
     void set_state(const State * state) 
     { 
-        delete m_state; m_state = state; // good: no memory leak
+        delete m_state; m_state = state;
     }
 
     void stop() { m_state->stop(this); }
@@ -70,7 +70,7 @@ public:
 
 private:
 
-    const State * m_state; // note: internal state of state machine
+    const State * m_state;
 
 }; // class Computer
 
