@@ -2,32 +2,33 @@
 
 //  ================================================================================================
 
-class B
-{
-public:
-
-	static inline auto m_data_1 = 42; // note: no problems with static
-
-	int m_data_2 = 42; // note: possible problem for multiple inheritance
-
-}; // class B
+class B { public: static inline auto m_data_1 = 42; int m_data_2 = 42; };
 
 //  ================================================================================================
 
-class L : public /*virtual*/ B {}; // good: virtual inheritance
-class R : public /*virtual*/ B {}; // good: virtual inheritance
+class L1 : public         B {}; 
+class L2 : public virtual B {}; 
 
-class C : public L, public R {}; // note: possible diamond problem
+class R1 : public         B {}; 
+class R2 : public virtual B {}; 
+
+//  ================================================================================================
+
+class C1 : public L1, public R1 {};
+class C2 : public L2, public R2 {};
 
 //  ================================================================================================
 
 int main()
 {
-	C c;
+	C1 c1;
+	C2 c2;
 
-	std::cout << c.m_data_1 << std::endl;
+	std::cout << c1.m_data_1 << std::endl;
+//	std::cout << c1.m_data_2 << std::endl; // error
 
-//	std::cout << c.m_data_2 << std::endl; // error: ambiguous data member selection
+	std::cout << c2.m_data_1 << std::endl;
+	std::cout << c2.m_data_2 << std::endl;
 
 	return 0;
 }

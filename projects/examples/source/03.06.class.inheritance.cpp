@@ -19,10 +19,7 @@ public:
 
 protected:
 
-	[[nodiscard]] const std::string & get_name() const // good: return by constant reference
-	{
-		return m_name;
-	}
+	[[nodiscard]] const std::string & get_name() const { return m_name; }
 
 private:
 
@@ -32,7 +29,7 @@ private:
 
 //  ================================================================================================
 
-class Employee : public Person // good: Employee is a variety of Person
+class Employee : public Person
 {
 public:
 
@@ -40,23 +37,23 @@ public:
 	{
 		std::cout << "Employee::Employee " << name << std::endl;
 
-//		std::cout << m_name << std::endl; // error: private member of base class
+//		std::cout << m_name << std::endl; // error
 
 		std::cout << get_name() << std::endl;
 	}
 
 public:
 
-	void print() const // note: avoid inherited non-virtual function redefinition
+	void print() const
 	{
 		std::cout << "Employee::print" << std::endl;
 
-//		print(); // error: infinite recursion
+//		print(); // error
 
 		Person::print();
 	}
 
-	using Person::get_name; // note: change access specifier to public
+	using Person::get_name;
 
 private:
 
@@ -66,11 +63,11 @@ private:
 
 //  ================================================================================================
 
-class Manager : public Employee // good: Manager is a variety of Employee
+class Manager : public Employee
 {
 public:
 
-	Manager(const std::string & name, int salary, int level) : Employee(name, salary), m_level(level)
+	Manager(const std::string & name, int salary, char mark) : Employee(name, salary), m_mark(mark)
 	{
 		std::cout << "Manager::Manager " << name << std::endl;
 	}
@@ -81,7 +78,7 @@ public:
 
 private:
 
-	const int m_level;
+	const char m_mark;
 
 }; // class Manager : public Employee
 
@@ -89,61 +86,53 @@ private:
 
 class Servo {};
 
-class Robot // : private Servo // bad: Robot is implemented through Servo
-{
-private:
-
-	const Servo m_servo; // good: consider composition instead of private inheritance
-
-}; // class Robot
+class Robot : private Servo { private: const Servo m_servo; };
 
 //  ================================================================================================
 
 class Base
 {
-public:    int m_data_1{}; // note: consider public data in structures
-
-protected: int m_data_2{}; // note: consider protected data in hierarchies
-
-private:   int m_data_3{}; // good: consider private data in classes
+public:    int m_data_1{};
+protected: int m_data_2{}; 
+private:   int m_data_3{}; 
 
 }; // class Base
 
 //  ================================================================================================
 
-class Derived_1 : public Base // note: useful inheritance
+class Derived_1 : public Base
 {
 	void f()
 	{
 		m_data_1 = 42;
 		m_data_2 = 42;
-//		m_data_3 = 42; // error: private data member
+//		m_data_3 = 42; // error
 	}
 
 }; // class Derived_1 : public Base
 
 //  ================================================================================================
 
-class Derived_2 : protected Base // note: useless inheritance
+class Derived_2 : protected Base
 {
 	void f()
 	{
 		m_data_1 = 42;
 		m_data_2 = 42;
-//		m_data_3 = 42; // error: private data member
+//		m_data_3 = 42; // error
 	}
 
 }; // class Derived_2 : protected Base
 
 //  ================================================================================================
 
-class Derived_3 : private Base // note: default inheritance
+class Derived_3 : private Base
 {
 	void f()
 	{
 		m_data_1 = 42;
 		m_data_2 = 42;
-//		m_data_3 = 42; // error: private data member
+//		m_data_3 = 42; // error
 	}
 
 }; // class Derived_3 : private Base
@@ -154,7 +143,7 @@ int main()
 {
 	const Person person("Matthias");
 
-//	const auto person_name = person.get_name(); // error: protected member function
+//	[[maybe_unused]] const auto person_name = person.get_name(); // error
 
 //  ================================================================================================
 
@@ -173,26 +162,20 @@ int main()
 //  ================================================================================================
 
 	Derived_1 derived_1;
-
-	derived_1.m_data_1 = 42;
-//	derived_1.m_data_2 = 42; // error: protected data member
-//	derived_1.m_data_3 = 42; // error: private   data member
-
-//  ================================================================================================
-
 	Derived_2 derived_2;
-
-//	derived_2.m_data_1 = 42; // error: protected data member
-//	derived_2.m_data_2 = 42; // error: protected data member
-//	derived_2.m_data_3 = 42; // error: private   data member
-
-//  ================================================================================================
-
 	Derived_3 derived_3;
 
-//	derived_3.m_data_1 = 42; // error: private   data member
-//	derived_3.m_data_2 = 42; // error: private   data member
-//	derived_3.m_data_3 = 42; // error: private   data member
+	derived_1.m_data_1 = 42;
+//	derived_1.m_data_2 = 42; // error
+//	derived_1.m_data_3 = 42; // error
+
+//	derived_2.m_data_1 = 42; // error
+//	derived_2.m_data_2 = 42; // error
+//	derived_2.m_data_3 = 42; // error
+
+//	derived_3.m_data_1 = 42; // error
+//	derived_3.m_data_2 = 42; // error
+//	derived_3.m_data_3 = 42; // error
 
 	return 0;
 }

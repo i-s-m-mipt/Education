@@ -3,11 +3,11 @@
 
 //  ================================================================================================
 
-class Date // note: pay attention to the order of class members
+class Date
 {
-public: // good: public members first
+public:
 
-	using integer_t = unsigned int; // note: nested type alias
+	using integer_t = unsigned int;
 
 	class Printer
 	{
@@ -22,13 +22,11 @@ public: // good: public members first
 
 public:
 
-	Date() : m_year(0), m_month(0), m_day(0) // good: initializer list, initialization
+	Date() : m_year(0), m_month(0), m_day(0) 
 	{
-//		m_year  = 0; // bad: assignment instead of initialization, invalid for constants and references
-//		m_month = 0;
-//		m_day   = 0;
+//		m_year = 0; m_month = 0; m_day = 0; // bad: присваивание вместо инициализации	
 
-		initialize(); // good: avoid initialization code duplication
+		initialize(); 
 	}
 
 	Date(integer_t year, integer_t month, integer_t day) : m_year(year), m_month(month), m_day(day)
@@ -36,33 +34,26 @@ public:
 		initialize();
 	}
 
-	Date(integer_t year) : Date(year, 1, 1) // good: delegating constructor
+	Date(integer_t year) : Date(year, 1, 1)
 	{
 		initialize();
 	}
 
-   ~Date() // note: destructor is called implicitly when leaving scope
+   ~Date()
 	{
 		uninitialize();
 	}
 
 private:
 
-	void initialize()
-	{
-		++counter;
-	}
-
-	void uninitialize()
-	{
-		--counter;
-	}
+	void   initialize() { ++m_counter; }
+	void uninitialize() { --m_counter; }
 
 public:
 
-	void print_v1() const // note: small function defined in the class as inline
+	void print_v1() const
 	{
-//		m_year = 2023; // error: const function
+//		m_year = 2023; // error
 
 		std::cout << prompt << m_year << '/' << m_month << '/' << m_day << std::endl;
 	}
@@ -71,28 +62,20 @@ public:
 
 public:
 
-	[[nodiscard]] integer_t year() const // note: bitwise constancy
-	{
-		return m_year;
-	}
+	[[nodiscard]] integer_t year() const { return m_year; }
 
-/*
-	void set_year(integer_t year) // bad: trivial getter and setter pair
-	{
-		m_year = year;
-	}
-*/
+//	void set_year(integer_t year) { m_year = year; } // bad: тривиальный сеттер
 
-	void set_year(integer_t year) // good: setter with additional actions
+	void set_year(integer_t year)
 	{
 		m_year = (year > max_year ? max_year : year); 
 		
-		m_is_string_valid = false; // note: update for cache required
+		m_is_string_valid = false;
 	}
 
-	[[nodiscard]] std::string get_date_as_string() const // note: logical constancy
+	[[nodiscard]] std::string get_date_as_string() const
 	{
-		if (!m_is_string_valid) // note: updating cash
+		if (!m_is_string_valid)
 		{
 			m_date_as_string = std::to_string(m_year ) + '/' +
 							   std::to_string(m_month) + '/' +
@@ -106,27 +89,27 @@ public:
 
 public:
 
-	[[nodiscard]] static std::size_t get_counter() { return counter; }
+	[[nodiscard]] static std::size_t counter() { return m_counter; }
 
 public:
 
-	static inline const integer_t max_year = 9999; // note: common for all instances
+	static inline const integer_t max_year = 9999;
 
-	static inline const std::string prompt = "date: "; // note: in-class definition
+	static inline const std::string prompt = "date: ";
 
 private:
 
-	static inline std::size_t counter = 0; // note: in-class definition for non-constant object
+	static inline std::size_t m_counter = 0;
 
-private: // good: private members last
+private:
 
-	integer_t m_year  = 0; // good: name begins with m_ prefix
+	integer_t m_year  = 0;
 	integer_t m_month = 0;
 	integer_t m_day   = 0;
 
 private:
 
-	mutable std::string m_date_as_string; // good: data caching
+	mutable std::string m_date_as_string;
 
 	mutable bool m_is_string_valid = false;
 
@@ -134,7 +117,7 @@ private:
 
 //  ================================================================================================
 
-void Date::print_v2() const // good: large function defined outside the class
+void Date::print_v2() const
 {
 	std::cout << prompt;
 
@@ -153,9 +136,9 @@ void Date::print_v2() const // good: large function defined outside the class
 
 int main()
 {
-	Date date; // note: default constructor
+	Date date;
 
-//	date.m_year = 2023; // error: private data
+//	date.m_year = 2023; // error
 
 	date.print_v1();
 	date.print_v2();
@@ -170,31 +153,29 @@ int main()
 
 	c_date.print_v2();
 
-//	c_date.set_year(2023); // error: non-constant member function
+//	c_date.set_year(2023); // error
 
 	std::cout << c_date.get_date_as_string() << std::endl;
 
 //  ================================================================================================
 
-	const Date date_1;
+	const Date date_1             ;
 	const Date date_2(2023, 9, 19);
 
-//	const Date date_3(); // bad: most vexing parse, function declaration instead of class instance
+//	const Date date_3(); // warning
+
+//	const Date date_4{}; // bad: избыточный синтаксис
 
 //  ================================================================================================
 
-	const Date::Printer printer;
-
-	printer.print(date_2);
+	Date::Printer().print(date_2);
 
 //  ================================================================================================
 
 	std::cout << date_1.max_year << std::endl;
 	std::cout << date_2.max_year << std::endl;
-
-	std::cout << Date::max_year << std::endl; // good: consider access through class
-
-	std::cout << Date::get_counter() << std::endl;
+	std::cout << Date:: max_year << std::endl;
+	std::cout << Date::counter() << std::endl;
 
 	return 0;
 }

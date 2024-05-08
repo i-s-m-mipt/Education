@@ -9,78 +9,63 @@ public:
 
 	Computer()
 	{
-//		print(); // bad: base version
+//		print(); // bad: базовая версия
 	}
 
-	virtual ~Computer() // note: polymorphic base class
+	virtual ~Computer()
 	{
-//		print(); // bad: base version
+//		print(); // bad: базовая версия
 	}
 
-	virtual void print() const // note: can be redefined in derived classes
-	{
-		std::cout << "Computer::print" << std::endl;
-	}
+	virtual void print() const { std::cout << "Computer::print" << std::endl; }
 
 }; // class Computer
 
 //  ================================================================================================
 
-class Mobile final : public Computer // note: final class in hierarchy
+class Mobile final : public Computer
 {
 public:
 
-	void print() const override final // note: final function in hierarchy
-	{
-		std::cout << "Mobile::print" << std::endl;
-	}
+	void print() const override final { std::cout << "Mobile::print" << std::endl; }
 
 }; // class Mobile final : public Computer
 
 //  ================================================================================================
 
 /*
-class Tablet : public Mobile // error: class Mobile declared final
+class Tablet : public Mobile // error
 {
 public:
 
-	void print() const override // error: function print declared final in class Mobile
-	{
-		std::cout << "Tablet::print" << std::endl;
-	}
+	void print() const override { std::cout << "Tablet::print" << std::endl; } // error
 
 }; // class Tablet : public Mobile
 */
 
 //  ================================================================================================
 
-class Laptop : public Computer // note: not final class in hierarchy
+class Laptop : public Computer 
 {
-public:
+public: 
 
-	void print() const override // note: not final function in hierarchy
-	{
-		std::cout << "Laptop::print" << std::endl;
-	}
+	void print() const override { std::cout << "Laptop::print" << std::endl; }
 
 }; // class Laptop : public Computer
 
 //  ================================================================================================
 
-class Abstract_Base // note: interface class like in Java
+class Abstract_Base // support: интерфейсы Java
 {
 public:
 
-	virtual ~Abstract_Base() {}; // note: polymorphic base class
+	virtual ~Abstract_Base() {};
 
-	virtual void print() const = 0; // note: must be redefined in derived classes
+	virtual void print() const = 0;
 
 }; // class Abstract_Base
 
-void Abstract_Base::print() const // note: separate default definition for pure virtual function
-{
-	std::cout << "Abstract_Base::print" << std::endl;
-}
+void Abstract_Base::print() const { std::cout << "Abstract_Base::print" << std::endl; }
 
 //  ================================================================================================
 
@@ -92,7 +77,7 @@ public:
 	{
 		std::cout << "Derived::print" << std::endl;
 
-		Abstract_Base::print(); // note: possible default implementation, consider pattern Decorator
+		Abstract_Base::print();
 	}
 
 }; // class Derived : public Abstract_Base
@@ -103,9 +88,9 @@ int main()
 {
 	const Mobile mobile;
 
-	const Computer * computer_ptr = &mobile; // note: works with pointers and references
+	const Computer * computer_ptr = &mobile;
 
-//	const Computer   computer     =  mobile; // bad: object slicing
+//	const Computer   computer     =  mobile; // bad: срезка объекта
 
 	computer_ptr->print();
 
@@ -126,17 +111,17 @@ int main()
 
 	computer_ptr->print();
 
-	delete computer_ptr; // note: important virtual destructor
+	delete computer_ptr;
 
 //  ================================================================================================
 
-	const Abstract_Base * const abstract_base_ptr = new const Derived(); // good: interface class
+	const Abstract_Base * const abstract_base_ptr = new const Derived();
 
 	abstract_base_ptr->print(); 
 	
-	delete abstract_base_ptr; // good: no memory leak
+	delete abstract_base_ptr;
 
-//	const Abstract_Base abstract_base; // error: abstract base class
+//	const Abstract_Base abstract_base; // error
 
 	return 0;
 }

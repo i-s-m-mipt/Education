@@ -10,7 +10,7 @@ public:
     {
     private:
 
-        Key() {} // note: private constructor
+        Key() {}
 
         friend class User;
 
@@ -45,13 +45,13 @@ private:
 
 //  ================================================================================================
 
-class User // good: access to Client::f and Client::g only
+class User
 {
 public:
 
     void run(const Client & client) const
     {
-        client.f({}); // note: PassKey idiom
+        client.f({});
 
         Attorney::call_f(client);
         Attorney::call_g(client);

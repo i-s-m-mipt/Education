@@ -9,10 +9,7 @@ public:
 
     explicit Apple(double weight) : m_weight(weight) {}
 
-    [[nodiscard]] auto operator<=>(const Apple & rhs) const // note: auto -> std::partial_ordering
-    {
-        return (m_weight <=> rhs.m_weight);
-    }
+    [[nodiscard]] auto operator<=>(const Apple & rhs) const { return (m_weight <=> rhs.m_weight); }
 
 private:
 
@@ -28,7 +25,7 @@ public:
 
     explicit Human(double weight, double height) : m_weight(weight), m_height(height) {}
 
-    [[nodiscard]] auto operator<=>(const Human & rhs) const = default; // note: auto -> std::strong_ordering
+    [[nodiscard]] auto operator<=>(const Human & rhs) const = default; 
 
 private:
 
@@ -43,7 +40,7 @@ int main()
 {
     auto x = 1, y = 2;
 
-    if ((x <=> y) < 0) std::cout << "x < y" << std::endl << std::endl; // note: same as x < y
+    if ((x <=> y) < 0) std::cout << "x < y" << std::endl << std::endl;
 
 //  ================================================================================================
 
@@ -54,8 +51,8 @@ int main()
     std::cout << "apple_1 >  apple_2: " << (apple_1 >  apple_2) << std::endl;
     std::cout << "apple_1 <= apple_2: " << (apple_1 <= apple_2) << std::endl;
     std::cout << "apple_1 >= apple_2: " << (apple_1 >= apple_2) << std::endl;
-//  std::cout << "apple_1 == apple_2: " << (apple_1 == apple_2) << std::endl; // note: partial ordering
-//  std::cout << "apple_1 != apple_2: " << (apple_1 != apple_2) << std::endl; // note: partial ordering
+//  std::cout << "apple_1 == apple_2: " << (apple_1 == apple_2) << std::endl; // error
+//  std::cout << "apple_1 != apple_2: " << (apple_1 != apple_2) << std::endl; // error
 
     std::cout << std::endl;
 

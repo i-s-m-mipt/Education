@@ -8,62 +8,57 @@ class Container
 {
 public:
 
-	using data_t = int;
-
-public:
-
 	Container() : m_data(nullptr), m_size(0) 
 	{
-		std::cout << "constructor (main)" << std::endl;
+		std::cout << "Container::Container (main)" << std::endl;
 	}
 
 	Container(std::size_t size) : m_size(size)
 	{
-		std::cout << "constructor (user)" << std::endl;
+		std::cout << "Container::Container (user)" << std::endl;
 
-		m_data = new data_t[m_size]{};
+		m_data = new int[m_size]{};
 	}
 
 	Container(const Container & other) : m_size(other.m_size) 
 	{
-		std::cout << "constructor (copy)" << std::endl;
+		std::cout << "Container::Container (copy)" << std::endl;
 
-		m_data = new data_t[m_size];
+		m_data = new int[m_size]{};
 
-		std::ranges::copy(other.m_data, other.m_data + m_size, m_data); // note: deep copy range
+		std::ranges::copy(other.m_data, other.m_data + m_size, m_data);
 	}
 
 	/*
-	Container(Container && other) : m_data(other.m_data), m_size(other.m_size) // note: shallow copy
+	Container(Container && other) : m_data(other.m_data), m_size(other.m_size)
 	{
-		std::cout << "constructor (move)" << std::endl;
+		std::cout << "Container::Container (move)" << std::endl;
 
-		other.m_data = nullptr; // note: valid state for other object
-		other.m_size = 0;       // note: valid state for other object
+		other.m_data = nullptr; other.m_size = 0;       
 	}
 	*/
 
 	Container(Container && other) : Container()
 	{
-		std::cout << "constructor (move)" << std::endl;
+		std::cout << "Container::Container (move)" << std::endl;
 
 		swap(other);
 	}
 
 	/*
-	Container & operator=(const Container & other) // bad: ineffective code with duplication
+	Container & operator=(const Container & other) // bad: дублирование кода
 	{
-		std::cout << "assignment= (copy)" << std::endl;
+		std::cout << "Container::operator= (copy)" << std::endl;
 
-		if (this != &other) // note: copy self-assignment check
+		if (this != &other)
 		{
 			auto new_size = other.m_size;
 
-			auto new_data = (new_size ? new data_t[new_size]{} : nullptr);
+			auto new_data = (new_size ? new int[new_size]{} : nullptr);
 
-			std::ranges::copy(other.m_data, other.m_data + new_size, new_data); // note: deep copy range
+			std::ranges::copy(other.m_data, other.m_data + new_size, new_data);
 
-			delete[] m_data; // good: delete after creating new data
+			delete[] m_data;
 
 			m_data = new_data;
 			m_size = new_size;
@@ -74,28 +69,27 @@ public:
 	*/
 
 	/*
-	Container & operator=(Container && other) // bad: ineffective code with duplication
+	Container & operator=(Container && other) // bad: дублирование кода
 	{
-		std::cout << "assignment= (move)" << std::endl;
+		std::cout << "Container::operator= (move)" << std::endl;
 
-		if (this != &other) // note: move self-assignment check
+		if (this != &other)
 		{
 			if (m_data) delete[] m_data;
 			
-			m_data = other.m_data; // note: shallow copy
-			m_size = other.m_size; // note: shallow copy
+			m_data = other.m_data;
+			m_size = other.m_size;
 
-			other.m_data = nullptr; // note: valid state for other object
-			other.m_size = 0;       // note: valid state for other object
+			other.m_data = nullptr; other.m_size = 0;
 		}
 
 		return *this;
 	}
 	*/
 
-	Container & operator=(Container other) // good: copy and swap idiom
+	Container & operator=(Container other)
 	{
-		std::cout << "assignment= (swap)" << std::endl;
+		std::cout << "Container::operator= (swap)" << std::endl;
 
 		swap(other);
 
@@ -104,16 +98,16 @@ public:
 
    ~Container()
 	{
-		std::cout << "destructor" << std::endl;
+		std::cout << "Container::~Container" << std::endl;
 
 		if (m_data) delete[] m_data;
 	}
 
 public:
 
-	void swap(Container & other) // good: useful member function
+	void swap(Container & other)
 	{
-		using std::swap; // good: enable argument-dependent lookup
+		using std::swap; 
 
 		swap(m_data, other.m_data);
 		swap(m_size, other.m_size);
@@ -121,32 +115,33 @@ public:
 
 private:
 
-	data_t * m_data; std::size_t m_size;
+	int * m_data; std::size_t m_size;
 
 }; // class Container
 
 //  ================================================================================================
 
-inline void swap(Container & x, Container & y) // good: useful free function
-{
-	x.swap(y);
-
-//	auto z = static_cast < Container && > (x); // note: effective swap
-//	     x = static_cast < Container && > (y);
-//	     y = static_cast < Container && > (z);
-}
+inline void swap(Container & x, Container & y) { x.swap(y); }
 
 //  ================================================================================================
 
 int main()
 {
-	Container container_1                          ; // note: constructor (main)
-	Container container_2(                      5 ); // note: constructor (user)
-	Container container_3(            container_2 ); // note: constructor (copy)
-	Container container_4(  std::move(container_3)); // note: constructor (move)
+	const std::size_t size = 5;
 
-	          container_1 =           container_3  ; // note: assignment= (copy)
-	          container_1 = std::move(container_3) ; // note: assignment= (move)
+	Container container_1;
+
+	Container container_2(size);
+
+	Container container_3(container_2);
+
+	Container container_4(std::move(container_3));
+
+	container_1 = container_2;
+
+	container_3 = std::move(container_4);
+
+	swap(container_1, container_3);
 
 	return 0;
 }

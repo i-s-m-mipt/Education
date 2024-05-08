@@ -6,7 +6,7 @@ class Base
 {
 public:
 
-	virtual ~Base() {} // note: polymorphic base class
+	virtual ~Base() {}
 
 	[[nodiscard]] virtual const Base * get() const { return this; }
 

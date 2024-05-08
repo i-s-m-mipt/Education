@@ -3,12 +3,9 @@
 
 //  ================================================================================================
 
-[[nodiscard]] inline       int    get_prvalue      () { return 42; }
-/*
-[[nodiscard]] inline       int && get__xvalue      () { return 42; } // warning: dangling reference
-*/
-[[nodiscard]] inline       int &  get__lvalue      () { static       int x = 42; return x; }
-[[nodiscard]] inline const int &  get__lvalue_const() { static const int x = 42; return x; }
+[[nodiscard]] inline       int    get_prvalue      () {                          return 42; }
+[[nodiscard]] inline       int &  get__lvalue      () { static       int x = 42; return  x; }
+[[nodiscard]] inline const int &  get__lvalue_const() { static const int x = 42; return  x; }
 
 //  ================================================================================================
 
@@ -25,8 +22,8 @@ public:
 
 	Person(const std::string & name) : m_name(name) {}
 
-	[[nodiscard]] const std::string & name() const &  { return m_name; } // note: for lvalue only
-	[[nodiscard]]       std::string   name() const && { return m_name; } // note: for rvalue only
+	[[nodiscard]] const std::string & name() const &  { return m_name; }
+	[[nodiscard]]       std::string   name() const && { return m_name; }
 
 private:
 
@@ -51,11 +48,9 @@ int main()
 
 //  ================================================================================================
 
-	[[maybe_unused]] double d = 3.14;
+	[[maybe_unused]] double d = 3.14; const int i = 42;
 
-	const int i = 42;
-
-//	f(d); // error: ambiguous function overloading 
+//	f(d); // error
 
 	f(i);
 
@@ -63,9 +58,9 @@ int main()
 
 	const Person person("Matthias");
 
-	std::cout << person.name() << std::endl; // note: lvalue version
+	std::cout << person.name() << std::endl;
 
-	std::cout << create_person("Matthias").name() << std::endl; // note: rvalue version
+	std::cout << create_person("Matthias").name() << std::endl;
 	
 	return 0;
 }

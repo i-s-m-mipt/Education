@@ -7,25 +7,26 @@ class Base
 {
 public:
 
-    virtual ~Base() {}; // note: polymorphic base class
+    virtual ~Base() {};
 
     friend std::ostream & operator<<(std::ostream & stream, const Base & base)
     {
-        base.print(stream); // note: virtual function called from non-virtual operator
-
-        return stream;
+        return base.print(stream);
     }
 
-    virtual void print(std::ostream & stream) const { stream << "Base"; }
+    virtual std::ostream & print(std::ostream & stream) const { return (stream << "Base"); }
 
 }; // class Base
 
 //  ================================================================================================
 
-class Derived : public Base
-{
-public: void print(std::ostream & stream) const override { stream << "Derived"; }
-};
+class Derived : public Base 
+{ 
+public: 
+
+    std::ostream & print(std::ostream & stream) const override { return (stream << "Derived"); }
+
+}; // class Derived : public Base 
 
 //  ================================================================================================
 

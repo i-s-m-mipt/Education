@@ -3,7 +3,7 @@
 #include <numeric>
 #include <ostream>
 
-#include <boost/rational.hpp> // note: boost::multiprecision::gmp_rational is faster
+#include <boost/rational.hpp> // support: библиотека gmp_rational
 
 //  ================================================================================================
 
@@ -11,14 +11,11 @@ class Ratio
 {
 public:
 
-	/*explicit*/ Ratio(int num = 0, int den = 1) : m_num(num), m_den(den) // good: no explicit
+	/*explicit*/ Ratio(int num = 0, int den = 1) : m_num(num), m_den(den)
 	{
-		if (m_den == 0) // note: primitive error handling
-		{
-			std::cerr << "invalid denominator\n"; // good: unbuffered output stream
-		}
+		if (m_den == 0) std::cerr << "invalid denominator\n";
 
-		if (m_den <  0) // note: numerator keeps ratio sign
+		if (m_den <  0)
 		{
 			m_num *= -1;
 			m_den *= -1;
@@ -27,10 +24,7 @@ public:
 		reduce();
 	}
 
-	[[nodiscard]] explicit operator double() const // good: explicit cast operator
-	{
-		return 1.0 * m_num / m_den;
-	}
+	[[nodiscard]] explicit operator double() const { return (1.0 * m_num / m_den); }
 
 private:
 
@@ -46,7 +40,7 @@ public:
 
 	void swap(Ratio & other)
 	{
-		using std::swap; // good: enable argument-dependent lookup
+		using std::swap; 
 
 		swap(m_num, other.m_num);
 		swap(m_den, other.m_den);
@@ -59,24 +53,22 @@ public:
 
 public:
 
-	friend std::istream & operator>>(std::istream & stream, Ratio & ratio) // note: not member
+	friend std::istream & operator>>(std::istream & stream, Ratio & ratio)
 	{
-		int num{}, den{}; char c{};
+		int num{}; char c{}; int den{};
 
 		stream >> num >> c >> den;
 
-		if (c != '/') std::cerr << "invalid input\n"; // good: unbuffered output stream
+		if (c != '/') std::cerr << "invalid input\n";
 
 		ratio = Ratio(num, den);
 		
-		return stream; // good: chain of calls
+		return stream;
 	}
 
-	friend std::ostream & operator<<(std::ostream & stream, const Ratio & ratio) // note: not member
+	friend std::ostream & operator<<(std::ostream & stream, const Ratio & ratio)
 	{
-		stream << ratio.m_num << '/' << ratio.m_den;
-		
-		return stream; // good: chain of calls
+		stream << ratio.m_num << '/' << ratio.m_den; return stream;
 	}
 
 public:
@@ -85,19 +77,16 @@ public:
 	{
 		const auto lcm = std::lcm(m_den, other.m_den);
 
-		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den);
-
-		m_den = lcm;
+		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den); m_den = lcm;
 
 		reduce();
 
-		return *this; // good: chain of calls
+		return *this;
 	}
 
-	Ratio & operator-=(Ratio other)
-	{
-		return (*this += (other.m_num *= -1));
-	}
+	Ratio & operator-=(Ratio other) { return (*this += (other.m_num *= -1)); }
+
+public:
 		
 	Ratio & operator*=(Ratio other)
 	{
@@ -109,32 +98,17 @@ public:
 		return *this;
 	}
 	
-	Ratio & operator/=(Ratio other)
-	{
-		return (*this *= Ratio(other.m_den, other.m_num)); // note: internal error handling
-	}
+	Ratio & operator/=(Ratio other) { return (*this *= Ratio(other.m_den, other.m_num)); }
 
 public:
 
-	Ratio & operator++() // note: ++++r is allowed
-	{ 
-		m_num += m_den; return *this; 
-	} 
+	Ratio & operator++() { m_num += m_den; return *this; } 
+	Ratio & operator--() { m_num -= m_den; return *this; } 
 
-	Ratio & operator--() // note: ----r is allowed
-	{ 
-		m_num -= m_den; return *this; 
-	} 
+public:
 
-	const Ratio operator++(int) // note: r++++ is not allowed
-	{ 
-		Ratio t(*this); ++(*this); return t; 
-	} 
-
-	const Ratio operator--(int) // note: r---- is not allowed
-	{ 
-		Ratio t(*this); --(*this); return t; 
-	} 
+	const Ratio operator++(int) { Ratio t(*this); ++(*this); return t; } 
+	const Ratio operator--(int) { Ratio t(*this); --(*this); return t; } 
 
 private:
 
@@ -149,25 +123,10 @@ inline void swap(Ratio & x, Ratio & y) { x.swap(y); }
 
 //  ================================================================================================
 
-[[nodiscard]] inline Ratio operator+(Ratio lhs, Ratio rhs) // good: free function
-{
-	return (lhs += rhs);
-}
-
-[[nodiscard]] inline Ratio operator-(Ratio lhs, Ratio rhs) // good: free function
-{
-	return (lhs -= rhs);
-}
-
-[[nodiscard]] inline Ratio operator*(Ratio lhs, Ratio rhs) // good: free function
-{
-	return (lhs *= rhs);
-}
-
-[[nodiscard]] inline Ratio operator/(Ratio lhs, Ratio rhs) // good: free function
-{
-	return (lhs /= rhs);
-}
+[[nodiscard]] inline Ratio operator+(Ratio lhs, Ratio rhs) { return (lhs += rhs); }
+[[nodiscard]] inline Ratio operator-(Ratio lhs, Ratio rhs) { return (lhs -= rhs); }
+[[nodiscard]] inline Ratio operator*(Ratio lhs, Ratio rhs) { return (lhs *= rhs); }
+[[nodiscard]] inline Ratio operator/(Ratio lhs, Ratio rhs) { return (lhs /= rhs); }
 
 //  ================================================================================================
 
@@ -176,22 +135,10 @@ inline void swap(Ratio & x, Ratio & y) { x.swap(y); }
 	return static_cast < double > (lhs) < static_cast < double > (rhs);
 }
 
-[[nodiscard]] inline bool operator> (Ratio lhs, Ratio rhs)
-{
-	return (rhs < lhs);
-}
-
-[[nodiscard]] inline bool operator<=(Ratio lhs, Ratio rhs)
-{
-	return !(lhs > rhs);
-}
-
-[[nodiscard]] inline bool operator>=(Ratio lhs, Ratio rhs)
-{
-	return !(lhs < rhs);
-}
-
-[[nodiscard]] inline bool operator==(Ratio lhs, Ratio rhs) // note: provide operator!=
+[[nodiscard]] inline bool operator> (Ratio lhs, Ratio rhs) { return  (rhs < lhs); }
+[[nodiscard]] inline bool operator<=(Ratio lhs, Ratio rhs) { return !(lhs > rhs); }
+[[nodiscard]] inline bool operator>=(Ratio lhs, Ratio rhs) { return !(lhs < rhs); }
+[[nodiscard]] inline bool operator==(Ratio lhs, Ratio rhs)
 {
 	return (!(lhs < rhs) && !(rhs < lhs));
 }
@@ -200,9 +147,9 @@ inline void swap(Ratio & x, Ratio & y) { x.swap(y); }
 
 int main()
 {
-	Ratio ratio_1, ratio_2(2), ratio_3 = 3, ratio_4(-4, 5); // note: implicit conversion ratio_3
+	Ratio ratio_1, ratio_2(2), ratio_3 = 3, ratio_4(-4, 5);
 
-//	std::vector < int > vector = 42; // error: explicit constructor required for safety
+//	std::vector < int > vector = 42; // error
 
 	std::cout << static_cast < double > (ratio_4) << std::endl;
 
@@ -216,9 +163,9 @@ int main()
 	std::cout << (ratio_4 -= ratio_1) << std::endl;
 	std::cout << (ratio_4 *= ratio_2) << std::endl;
 	std::cout << (ratio_4 /= ratio_3) << std::endl;
-//	std::cout << (      1 += ratio_4) << std::endl; // error: 1.operator+=(ratio_4) is invalid
+//	std::cout << (      1 += ratio_4) << std::endl; // error
 
-	std::cout << ratio_4.operator+=(ratio_1) << std::endl; // note: function-like style
+	std::cout << ratio_4.operator+=(ratio_1) << std::endl;
 
 	std::cout << (         ++ratio_4) << std::endl;
 	std::cout << (         --ratio_4) << std::endl;
@@ -227,13 +174,13 @@ int main()
 
 //  ================================================================================================
 
-	std::cout << (      1 +  ratio_4) << std::endl; // note: 1.operator+(ratio_4) is invalid
+	std::cout << (      1 +  ratio_4) << std::endl;
 	std::cout << (ratio_4 -        1) << std::endl;
 	std::cout << (ratio_4 *  ratio_3) << std::endl;
 	std::cout << (ratio_4 /  ratio_2) << std::endl;
 	std::cout << (      1 /        1) << std::endl;
 
-	std::cout << operator+(ratio_4, ratio_1) << std::endl; // note: function-like style
+	std::cout << operator+(ratio_4, ratio_1) << std::endl;
 
 //  ================================================================================================
 
@@ -246,15 +193,15 @@ int main()
 
 //  ================================================================================================
 
-	boost::rational < int > ratio_6(2, 5); // note: ignore templates here
-	boost::rational < int > ratio_7(3, 7); // note: ignore templates here
+	boost::rational < int > ratio_6(2, 5);
+	boost::rational < int > ratio_7(3, 7);
 
 	std::cout << boost::rational < int > (5, 10) << std::endl;
 
 	std::cout << (ratio_6 +  ratio_7) << std::endl;
 	std::cout << (ratio_6 -  ratio_7) << std::endl;
 	std::cout << (ratio_6 *  ratio_7) << std::endl;
-	std::cout << (ratio_6 /  ratio_7) << std::endl; // note: and many other operations...
+	std::cout << (ratio_6 /  ratio_7) << std::endl;
 
 	std::cout << boost::rational_cast < int    > (ratio_6) << std::endl;
     std::cout << boost::rational_cast < double > (ratio_7) << std::endl;
