@@ -108,7 +108,7 @@ int main()
 
 //  ================================================================================================
 
-	auto x = 1, y = 2;
+	auto x = 42, y = 42;
 
 	test_pointers  (&x, &y); std::cout << x << ' ' << y << std::endl;
 	test_references( x,  y); std::cout << x << ' ' << y << std::endl;

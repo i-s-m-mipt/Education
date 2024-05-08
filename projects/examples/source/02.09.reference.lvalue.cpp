@@ -4,17 +4,17 @@
 
 int main()
 {
-	[[maybe_unused]]       int     x = 1;
-	[[maybe_unused]] const int     y = 2;
+	[[maybe_unused]]       int     x = 42;
+	[[maybe_unused]] const int     y = 42;
 	
-//	[[maybe_unused]]       int &  ri    ; // error
-//	[[maybe_unused]]       int &  ry = y; // error
+//	[[maybe_unused]]       int &  ri     ; // error
+//	[[maybe_unused]]       int &  ry =  y; // error
 
-	[[maybe_unused]]       int &  rx = x; rx = 42;
-	[[maybe_unused]] const int & cry = y;
+	[[maybe_unused]]       int &  rx =  x; rx = 42;
+	[[maybe_unused]] const int & cry =  y;
 
-//	[[maybe_unused]]       int &  rv = 0; // error
-	[[maybe_unused]] const int & crv = 0;
+//	[[maybe_unused]]       int &  rv = 42; // error
+	[[maybe_unused]] const int & crv = 42;
 
 //	cry = 42; // error
 //	crv = 42; // error
@@ -34,7 +34,7 @@ int main()
 
 	good_vector.push_back(x);
 
-	good_vector.back().get() = 2;
+	good_vector.back().get() = 42;
 
 	std::cout << x << std::endl; 
 

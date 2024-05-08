@@ -16,7 +16,7 @@ int main()
 
 	[[maybe_unused]] int * ptr_null_2 = nullptr;
 
-//	[[maybe_unused]] auto  ptr_null_3 = nullptr; // bad: std::nullptr_t
+//	[[maybe_unused]] auto  ptr_null_3 = nullptr; // bad: тип std::nullptr_t
 
 //	*ptr_null_2 = 42; // error
 
