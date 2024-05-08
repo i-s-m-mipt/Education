@@ -4,7 +4,7 @@
 
 //  ================================================================================================
 
-struct Node { int value{}; Node * l{}, * r{}; }; // note: remember second star for pointer here
+struct Node { int value{}; Node * l{}, * r{}; };
 
 //  ================================================================================================
 
@@ -34,8 +34,8 @@ int main()
 	root->l->r->l    = &nodes[3];
 	root->l->r->l->r = &nodes[4];
 
-	const auto l = &Node::l; // note: pointer to data member l
-	const auto r = &Node::r; // note: pointer to data member r
+	const auto l = &Node::l;
+	const auto r = &Node::r;
 
 	std::cout << traverse(root, l, r, l, r)->value << std::endl;
 

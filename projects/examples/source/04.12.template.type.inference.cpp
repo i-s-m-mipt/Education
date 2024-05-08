@@ -12,8 +12,8 @@ template < typename T > inline void f4(      T &&) { std::cout << "f4(      T &&
 int main()
 {
 	int    vx = 42; const int    cvx = 42;
-	int &  lx = vx; const int &  clx = vx; // note: lvalue-references as lvalues
-	int && rx = 42; const int && crx = 42; // note: rvalue-references as lvalues
+	int &  lx = vx; const int &  clx = vx; 
+	int && rx = 42; const int && crx = 42;
 
 //  ================================================================================================
 

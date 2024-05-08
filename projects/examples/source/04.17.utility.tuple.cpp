@@ -86,15 +86,15 @@ int main()
 
     char c{}; [[maybe_unused]] int i{}; double d{};
  
-    std::tie(c, std::ignore, d) = tuple_1; // note: lvalue references
+    std::tie(c, std::ignore, d) = tuple_1;
 
-    std::ignore = nodiscard_function(); // note: placeholder for nodiscard
+    std::ignore = nodiscard_function();
 
     auto tuple_2 = std::make_tuple('b', 43, 3.15);
 
-    std::cout << std::tuple_cat(tuple_1, tuple_2) << std::endl; // note: variadic template
+    std::cout << std::tuple_cat(tuple_1, tuple_2) << std::endl;
  
-    auto & [rc, ri, rd] = tuple_2; // note: lvalue references, structured binding
+    auto & [rc, ri, rd] = tuple_2;
 
     rc = std::get < 0 > (tuple_1); 
     ri = std::get < 1 > (tuple_1);
@@ -102,7 +102,7 @@ int main()
 
 //  ================================================================================================
 
-    std::cout << tuple_2 << std::endl; // note: tuple modified through lvalue references
+    std::cout << tuple_2 << std::endl;
 
     return 0;
 }

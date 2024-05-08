@@ -3,14 +3,14 @@
 
 //  ================================================================================================
 
-template < typename T > [[nodiscard]] inline T max_v1(T x, T y) // note: typename instead of class
+template < typename T > [[nodiscard]] inline T max_v1(T x, T y)
 {
 	return (x < y ? y : x);
 }
 
 template < typename T1, typename T2 > [[nodiscard]] inline T1 max_v2(T1 x, T2 y) 
 {
-	return (x < y ? y : x); // note: possible narrow conversion
+	return (x < y ? y : x);
 }
 
 template < typename T1, typename T2, typename RT > [[nodiscard]] inline RT max_v3(T1 x, T2 y)
@@ -23,29 +23,29 @@ template < typename RT, typename T1, typename T2 > [[nodiscard]] inline RT max_v
 	return (x < y ? y : x);
 }
 
-template < typename RT = double, typename T1, typename T2 > [[nodiscard]] inline RT max_v5(T1 x, T2 y)
+template < typename RT = int, typename T1, typename T2 > [[nodiscard]] inline RT max_v5(T1 x, T2 y)
 {
 	return (x < y ? y : x);
 }
 
-template < typename T1, typename T2 > [[nodiscard]] inline auto max_v6(T1 x, T2 y) // good: auto
+template < typename T1, typename T2 > [[nodiscard]] inline auto max_v6(T1 x, T2 y)
 {
 	return (x < y ? y : x);
 }
 
-[[nodiscard]] inline auto max_v7(auto x, auto y) // good: abbreviated function template
+[[nodiscard]] inline auto max_v7(auto x, auto y)
 {
 	return (x < y ? y : x);
 }
 
 //  ================================================================================================
 
-template < typename T > inline void f(T) // note: basic template
+template < typename T > inline void f(T)
 {
 	std::cout << "template < T > f(T)" << std::endl;
 }
 
-template <> inline void f < int > (int) // note: full specialization for int
+template <> inline void f < int > (int)
 {
 	std::cout << "template <> f < int > (int)" << std::endl;
 }
@@ -56,13 +56,13 @@ inline void f(double) { std::cout << "f(double)" << std::endl; }
 
 //  ================================================================================================
 
-template < typename T1, typename T2 > inline void g() // note: basic template
+template < typename T1, typename T2 > inline void g()
 {
 	std::cout << "template < T1, T2 > g()" << std::endl;
 }
 
 /*
-template < typename T > inline void g < int, T > () // error: prohibited partial specialization
+template < typename T > inline void g < int, T > () // error
 {
 	std::cout << "template < T > g < int, T > ()" << std::endl;
 }
@@ -70,17 +70,17 @@ template < typename T > inline void g < int, T > () // error: prohibited partial
 
 //  ================================================================================================
 
-template < typename T > inline void h(T) // note: first basic template
+template < typename T > inline void h(T)
 {
 	std::cout << "template < T > h(T)" << std::endl;
 }
 
-template <> inline void h < int * > (int *) // note: full specialization for int
+template <> inline void h < int * > (int *)
 { 
 	std::cout << "template <> h < int * > (int *)" << std::endl;
 } 
 
-template < typename T > inline void h(T *) // note: second basic template, overload for the first
+template < typename T > inline void h(T *)
 {
 	std::cout << "template < T > h(T *)" << std::endl;
 }
@@ -105,15 +105,14 @@ int main()
 	std::cout << max_v1(100, 200) << std::endl;
 	std::cout << max_v1(1.0, 2.0) << std::endl;
 	
-//	std::cout << max_v1(1.0, 200) << std::endl; // error: unresolved template
+//	std::cout << max_v1(1.0, 200) << std::endl; // error
 
 	std::cout << max_v1(1.0, static_cast < double > (200)) << std::endl;
 
 	std::cout << max_v1 < double > (1.0, 200) << std::endl;
 
 	std::cout << max_v2(1.0, 200) << std::endl;
-
-//	std::cout << max_v2(100, 2.0) << std::endl; // warning: narrow conversion
+	std::cout << max_v2(100, 2.0) << std::endl; 
 
 	std::cout << max_v3 < int, double, double > (100, 2.0) << std::endl;
 
@@ -125,17 +124,17 @@ int main()
 
 //  ================================================================================================
 
-	f            ('a'); // note: overload for char
-	f            (100); // note: overload for int
-	f            (1.0); // note: overload for double
-	f <        > (100); // note: full specialization for int
-	f < int    > (100); // note: full specialization for int
-	f <        > (1.0); // note: basic template for T
-	f < double > (1.0); // note: basic template for T
+	f            ('a');
+	f            (100);
+	f            (1.0);
+	f <        > (100);
+	f < int    > (100);
+	f <        > (1.0);
+	f < double > (1.0);
 
 //  ================================================================================================
 
-	int * ptr = nullptr; h(ptr); // note: example by Dimov-Abrams
+	int * ptr = nullptr; h(ptr); // support: пример Димова-Абрамса
 
 //  ================================================================================================
 

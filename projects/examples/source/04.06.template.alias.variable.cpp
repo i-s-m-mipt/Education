@@ -12,7 +12,7 @@ template < typename T > inline const T pi = T(3.141592);
 
 template < typename T > [[nodiscard]] inline T area(T radius)
 {
-	return pi < T > * radius * radius; // note: example from standard
+	return pi < T > * radius * radius;
 }
 
 //  ================================================================================================

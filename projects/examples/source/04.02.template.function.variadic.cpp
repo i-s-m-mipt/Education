@@ -76,15 +76,12 @@ template < typename ... Ts > [[nodiscard]] inline auto sum_v4(Ts ... args)
 
 template < typename ... Ts > inline void f(Ts ... args)
 {
-//	print_v1(args + 42...); // error: invalid syntax
-
-	print_v1((args + 42)...); // note: or args + 42 ...
+//	print_v1( args + 42... ); // error
+	print_v1((args + 42)...);
+	print_v1( args + 42 ...);
 }
 
-template < typename ... Ts > inline void g(Ts ... args)
-{
-	print_v1(args + args...);
-}
+template < typename ... Ts > inline void g(Ts ... args) { print_v1(args + args...); }
 
 //  ================================================================================================
 

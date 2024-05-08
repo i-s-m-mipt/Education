@@ -3,18 +3,15 @@
 
 //  ================================================================================================
 
-template < typename T > class Ratio // note: usually no problems with friend classes
+template < typename T > class Ratio
 {
 public:
 
 	Ratio(T num = T{}, T den = T(1)) : m_num(num), m_den(den)
 	{
-		if (m_den == T{}) // note: consider T{} as zero value
-		{
-			std::cerr << "invalid denominator\n";
-		}
+		if (m_den == T{}) std::cerr << "invalid denominator\n";
 
-		if (m_den <  T{}) // note: consider T{} as zero value
+		if (m_den <  T{})
 		{
 			m_num *= -1;
 			m_den *= -1;
@@ -25,7 +22,7 @@ public:
 
 private:
 
-	void reduce() // note: same as in the non-template class
+	void reduce()
 	{
 		const auto gcd = std::gcd(m_num, m_den);
 
@@ -35,13 +32,11 @@ private:
 
 public:
 
-	Ratio & operator+=(Ratio other) // note: same as in the non-template class
+	Ratio & operator+=(Ratio other)
 	{
 		const auto lcm = std::lcm(m_den, other.m_den);
 
-		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den);
-
-		m_den = lcm;
+		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den); m_den = lcm;
 
 		reduce();
 
@@ -50,10 +45,7 @@ public:
 
 public:
 
-	[[nodiscard]] friend inline Ratio operator+(Ratio lhs, Ratio rhs) // good: friend function inside class template
-	{
-		return (lhs += rhs);
-	}
+	[[nodiscard]] friend inline Ratio operator+(Ratio lhs, Ratio rhs) { return (lhs += rhs); }
 
 private:
 
@@ -66,7 +58,7 @@ private:
 
 int main()
 {
-	[[maybe_unused]] const auto result = 1 + Ratio < int > (1, 1); // note: free operator+ template does not work here
+	[[maybe_unused]] const auto result = 1 + Ratio < int > (1, 1);
 
 	return 0;
 }

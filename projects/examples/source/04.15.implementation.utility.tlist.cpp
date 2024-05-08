@@ -23,7 +23,7 @@ template < typename L > inline constexpr auto empty_v = (size_v < L > == 0);
 
 //  ================================================================================================
 
-template <             typename     L  > struct Front {}; // note: compile error for empty List
+template <             typename     L  > struct Front {};
 
 template < typename T, typename ... Ts > struct Front < List < T, Ts ... > > { using type = T; };
 
@@ -31,7 +31,7 @@ template < typename L > using front = typename Front < L > ::type;
 
 //  ================================================================================================
 
-template < typename T, typename     L  > struct Push_Front {}; 
+template < typename T, typename     L  > struct Push_Front {};
 
 template < typename T, typename ... Ts > struct Push_Front < T, List < Ts ... > >
 {
@@ -42,7 +42,7 @@ template < typename T, typename L > using push_front = typename Push_Front < T, 
 
 //  ================================================================================================
 
-template <             typename     L  > struct Pop_Front {}; // note: compile error for empty List
+template <             typename     L  > struct Pop_Front {};
 
 template < typename T, typename ... Ts > struct Pop_Front < List < T, Ts ... > >
 {
@@ -53,7 +53,7 @@ template < typename L > using pop_front = typename Pop_Front < L > ::type;
 
 //  ================================================================================================
 
-template <             typename     L  > struct Back {}; // note: compile error for empty List
+template <             typename     L  > struct Back {};
 
 template < typename T                  > struct Back < List < T > > { using type = T; };
 
@@ -82,7 +82,7 @@ template < typename T, typename L > using push_back = typename Push_Back < T, L 
 
 //  ================================================================================================
 
-template <             typename     L  > struct Pop_Back{}; // note: compile error for empty List
+template <             typename     L  > struct Pop_Back{};
 
 template < typename T                  > struct Pop_Back < List < T > > { using type = List <> ; };
 
@@ -131,7 +131,7 @@ int main()
     using list_1 = List < bool       > ;
     using list_2 = List < bool, char > ;
 
-    using list_3 = push_back < int, list_2 > ; // note: List < bool, char, int >
+    using list_3 = push_back < int, list_2 > ;
 
 //  ================================================================================================
 
@@ -142,11 +142,11 @@ int main()
 
 //  ================================================================================================
 
-//  using     front_t_0 =     front < list_0 > ; // error: empty List
-//  using pop_front_t_0 = pop_front < list_0 > ; // error: empty List
+//  using     front_t_0 =     front < list_0 > ; // error
+//  using pop_front_t_0 = pop_front < list_0 > ; // error
 
-//  using      back_t_0 =      back < list_0 > ; // error: empty List
-//  using  pop_back_t_0 =  pop_back < list_0 > ; // error: empty List
+//  using      back_t_0 =      back < list_0 > ; // error
+//  using  pop_back_t_0 =  pop_back < list_0 > ; // error
 
 //  ================================================================================================
 

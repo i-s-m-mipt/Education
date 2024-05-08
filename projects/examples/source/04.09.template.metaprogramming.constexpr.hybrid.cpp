@@ -9,7 +9,7 @@ public:
 	static constexpr auto num = N;
 	static constexpr auto den = D;
 
-	using type = Ratio < num, den > ; // note: must be visible
+	using type = Ratio < num, den > ;
 
 }; // template < auto N, auto D = 1 > class Ratio
 
@@ -24,7 +24,7 @@ private:
 
 public:
 
-	using type = Ratio < num, den > ; // note: must be visible
+	using type = Ratio < num, den > ;
 
 }; // template < typename R1, typename R2 > class Add
 
@@ -40,10 +40,10 @@ template < typename T1, typename R1, typename T2, typename R2 >
 
 [[nodiscard]] inline constexpr auto operator+(Duration < T1, R1 > lhs, Duration < T2, R2 > rhs)
 {
-	using unit_t = Ratio < 1, add_t < R1, R2 > ::den > ; // note: compile-time type
+	using unit_t = Ratio < 1, add_t < R1, R2 > ::den > ;
 
 	const auto value = lhs.value * unit_t::den / R1::den * R1::num +
-					   rhs.value * unit_t::den / R2::den * R2::num; // note: runtime value
+					   rhs.value * unit_t::den / R2::den * R2::num;
 
 	return Duration < decltype(value), unit_t > { value };
 }
@@ -55,7 +55,7 @@ int main()
 	constexpr auto result = Duration < int, Ratio < 2, 5 > > (1) +
 							Duration < int, Ratio < 3, 7 > > (2);
 
-	std::cout << result.value << std::endl; // note: compile-time result
+	std::cout << result.value << std::endl;
 
 	return 0;
 }

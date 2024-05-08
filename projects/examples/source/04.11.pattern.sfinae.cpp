@@ -59,7 +59,7 @@ public:
 
 		std::is_convertible_v < S, std::string > , void > > 
 
-	explicit Person_v3(S && name) : m_name(std::forward < S > (name)) // good: SFINAE idiom
+	explicit Person_v3(S && name) : m_name(std::forward < S > (name))
 	{
 		std::cout << "Person_v3::Person_v3" << std::endl;
 	}
@@ -81,7 +81,7 @@ public:
 	
     template < typename S > requires std::is_convertible_v < S, std::string >
 	
-	explicit Person_v4(S && name) : m_name(std::forward < S > (name)) // good: requires-clause
+	explicit Person_v4(S && name) : m_name(std::forward < S > (name))
 	{
 		std::cout << "Person_v4::Person_v4" << std::endl;
 	}
@@ -103,36 +103,34 @@ int main()
 
 //  ================================================================================================
 
-	Person_v1 person_v1_1(                 name ); // note: main constructor with copy
-	Person_v1 person_v1_2(           "Matthias" ); // note: main constructor with move
-	Person_v1 person_v1_3(          person_v1_1 ); // note: copy constructor
-	Person_v1 person_v1_4(std::move(person_v1_1)); // note: move constructor
+	Person_v1 person_v1_1(                 name );
+	Person_v1 person_v1_2(           "Matthias" );
+	Person_v1 person_v1_3(          person_v1_1 );
+	Person_v1 person_v1_4(std::move(person_v1_1));
 
 //  ================================================================================================
 
-    Person_v2 person_v2_1(                 name ); // note: template constructor with copy
-	Person_v2 person_v2_2(           "Matthias" ); // note: template constructor with move
+	const Person_v2 person_v2_c(name);
 
-//	Person_v2 person_v2_3(person_v2_1); // error: template constructor instead of copy constructor
-
-    const Person_v2 person_v2_4(name); // note: const required for copy constructor call
-
-    Person_v2 person_v2_5(          person_v2_4 ); // note: copy constructor 
-	Person_v2 person_v2_6(std::move(person_v2_1)); // note: move constructor
+    Person_v2 person_v2_1(                 name );
+	Person_v2 person_v2_2(           "Matthias" );
+//	Person_v2 person_v2_3(          person_v2_1 ); // error
+    Person_v2 person_v2_5(          person_v2_c );
+	Person_v2 person_v2_6(std::move(person_v2_1));
 
 //  ================================================================================================
 
-	Person_v3 person_v3_1(                 name ); // note: template constructor with copy
-	Person_v3 person_v3_2(           "Matthias" ); // note: template constructor with move
-	Person_v3 person_v3_3(          person_v3_1 ); // note: copy constructor
-	Person_v3 person_v3_4(std::move(person_v3_1)); // note: move constructor
+	Person_v3 person_v3_1(                 name );
+	Person_v3 person_v3_2(           "Matthias" );
+	Person_v3 person_v3_3(          person_v3_1 );
+	Person_v3 person_v3_4(std::move(person_v3_1));
 
 //  ================================================================================================
 
-	Person_v4 person_v4_1(                 name ); // note: template constructor with copy
-	Person_v4 person_v4_2(           "Matthias" ); // note: template constructor with move
-	Person_v4 person_v4_3(          person_v4_1 ); // note: copy constructor
-	Person_v4 person_v4_4(std::move(person_v4_1)); // note: move constructor
+	Person_v4 person_v4_1(                 name );
+	Person_v4 person_v4_2(           "Matthias" );
+	Person_v4 person_v4_3(          person_v4_1 );
+	Person_v4 person_v4_4(std::move(person_v4_1));
 
 	return 0;
 }

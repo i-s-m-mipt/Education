@@ -14,21 +14,24 @@ public:
 
 	constexpr Tuple() {}
 
-	constexpr explicit Tuple(T && head, Ts && ... tail) : // note: conditionally explicit in std
+	constexpr Tuple(T && head, Ts && ... tail) :
 
 		m_head(std::forward < T  > (head)   ), 
 		m_tail(std::forward < Ts > (tail)...) {}
 
-	constexpr Tuple(const Tuple &  other) : m_head(          other.m_head ), m_tail(          other.m_tail ) {}
-	constexpr Tuple(      Tuple && other) : m_head(std::move(other.m_head)), m_tail(std::move(other.m_tail)) {}
+	constexpr Tuple(const Tuple &  other) : m_head(          other.m_head ), 
+										    m_tail(          other.m_tail ) {}
 
-	constexpr Tuple & operator=(Tuple other) { swap(other); return *this; } // good: copy and swap idiom
+	constexpr Tuple(      Tuple && other) : m_head(std::move(other.m_head)), 
+									  	 	m_tail(std::move(other.m_tail)) {}
+
+	constexpr Tuple & operator=(Tuple other) { swap(other); return *this; }
 
 public:
 
 	constexpr void swap(Tuple & other) 
 	{
-		using std::swap; // good: enable argument-dependent lookup
+		using std::swap; 
 
 		if constexpr (swap(m_head, other.m_head); sizeof...(Ts) > 0) { m_tail.swap(other.m_tail); }
 	}
@@ -65,7 +68,7 @@ template < typename ... Ts > [[nodiscard]] inline constexpr auto make_tuple(Ts &
 
 //  ================================================================================================
 
-namespace detail // note: only const version for demonstration
+namespace detail // demo: константные версии
 {
 	template < std::size_t N > struct Get 
 	{
@@ -135,7 +138,8 @@ template < typename ... Ts,
 	}
 	else
 	{
-		return (lhs.head() < rhs.head() ? std::strong_ordering::less : std::strong_ordering::greater);
+		return (lhs.head() < rhs.head() ? std::strong_ordering::less 
+									    : std::strong_ordering::greater);
 	}
 }
 
@@ -143,14 +147,14 @@ template < typename ... Ts,
 
 namespace detail
 {
-	inline void print(std::ostream & stream, const Tuple <> &, bool is_first = true)
+	inline void print(std::ostream & stream, const Tuple <> &, bool is_first)
 	{
 		stream << (is_first ? "{}" : " }");
 	}
 
 	template < typename T, typename ... Ts > 
 
-	inline void print(std::ostream & stream, const Tuple < T, Ts ... > & tuple, bool is_first = true)
+	inline void print(std::ostream & stream, const Tuple < T, Ts ... > & tuple, bool is_first)
 	{
 		stream << (is_first ? "{ " : ", ") << tuple.head();
 
@@ -165,7 +169,7 @@ template < typename ... Ts >
 
 inline std::ostream & operator<<(std::ostream & stream, const Tuple < Ts ... > & tuple)
 {
-	detail::print(stream, tuple); return stream;
+	detail::print(stream, tuple, true); return stream;
 }
 
 //  ================================================================================================
