@@ -100,7 +100,7 @@ int main()
 			std::cout << "unknown type" << std::endl;
 		}
 	}
-	else any = 3.14; // support: динамическая типизация Python
+	else any = 3.14; // support: типизация Python
 
 	return 0;
 }
