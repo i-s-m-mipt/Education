@@ -2,38 +2,29 @@
 #include <iostream>
 #include <iterator>
 #include <string>
-#include <utility>
 #include <vector>
 
+//using namespace std; // bad
+
 int main()
-{
-//	using namespace std; // bad
+{	
+	std::cout << "Enter values x and y: "; int x{}, y{}; std::cin >> x >> y;
 
-//  ================================================================================================
-	
-	std::cout << "Enter 2 numbers separated by a space: "; int x{}, y{}; std::cin >> x >> y;
-
-	std::cout << "You have entered " << x << " and " << y << std::endl;
+	std::cout << "x = " << x << "; y = " << y << std::endl;
 
 //  ================================================================================================
 
-	std::cout << "Enter string with your name: "; std::string name; std::cin >> name;
+	std::cout << "Enter your name: "; std::string name; std::cin >> name;
 
-	std::cout << "Hello, " + name << std::endl;
-
-//  ================================================================================================
-
-	std::vector < int > vector { 1, 2, 3 };
-
-	std::cout << "Vector size is " << std::size(vector) << std::endl;
+	std::cout << "Hello, " + name + '!' << std::endl;
 
 //  ================================================================================================
 
-	std::cout << "Square root of 4 is " << std::sqrt(4) << std::endl;
+	std::vector < int > vector { 1, 2, 3, 4, 5 }; vector.push_back(42);
 
-	std::swap(x, y);
+	std::cout << "Vector has " << std::size(vector) << " elements" << std::endl;
 
-	std::cout << "Now x is " << x << " and y is " << y << std::endl;
+	std::cout << "|x| ^ 0.5 = " << std::sqrt(std::abs(x)) << std::endl;
 
 	return 0;
 }
