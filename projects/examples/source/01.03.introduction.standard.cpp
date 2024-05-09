@@ -7,7 +7,7 @@
 
 int main()
 {
-//	using namespace std; // bad: конфликты имен
+//	using namespace std; // bad
 
 //  ================================================================================================
 	
@@ -31,7 +31,7 @@ int main()
 
 	std::cout << "Square root of 4 is " << std::sqrt(4) << std::endl;
 
-	std::swap(x, y); // support: алгоритмы сортировки
+	std::swap(x, y);
 
 	std::cout << "Now x is " << x << " and y is " << y << std::endl;
 
