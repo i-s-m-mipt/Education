@@ -17,7 +17,7 @@ int main()
 
 //  ================================================================================================
 
-	for (std::size_t i = 0; i < size - 1; ++i) // support: сортировка пузырьком
+	for (std::size_t i = 0; i < size - 1; ++i)
 	{
 		for (std::size_t j = i + 1; j < size; ++j)
 		{
@@ -27,7 +27,7 @@ int main()
 
 //  ================================================================================================
 
-	for (const auto element : vector) std::cout << element << ' ';
+	for (const auto element : vector) std::cout << element << ' '; // output: 1 2 3 4 5
 
 	std::cout << std::endl;
 

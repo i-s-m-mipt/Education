@@ -18,8 +18,7 @@ void generate_slow(std::size_t size, std::string s = "", std::size_t l = 0, std:
 
 //  ================================================================================================
 
-void generate_fast(std::size_t size, std::string & output, std::string s = "", std::size_t l = 0, 
-																			   std::size_t r = 0)
+void generate_fast(std::size_t size, std::string & output, std::string s = "", std::size_t l = 0, std::size_t r = 0)
 {
 	if (l < size)
 	{
@@ -37,7 +36,7 @@ int main()
 {
 	const std::size_t size = 5;
 
-//	generate_slow(size); // bad: медленная реализация
+//	generate_slow(size); // bad
 
 	std::string output;
 

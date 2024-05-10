@@ -15,9 +15,9 @@ int main()
 
 //  ================================================================================================
 
-//	std::cout << sizeof(array_1) / sizeof(array_1[0]) << std::endl; // bad: устаревший способ
+//	std::cout << sizeof(array_1) / sizeof(array_1[0]) << std::endl; // bad
 
-	std::cout << std::size(array_1) << std::endl;
+	std::cout << std::size(array_1) << std::endl; // output: 5
 
 //  ================================================================================================
 
@@ -26,22 +26,22 @@ int main()
 	const auto middle = size / 2;
 
 	*(array_1 + middle) = 42;
-//	*(array_1 + 10'000) = 42; // bad: арифметика указателей
 
-	std::cout << array_1[middle] << std::endl;
+//	*(array_1 + 10'000) = 42; // bad
 
-//	std::cout << *(&array_1[0] + middle) << std::endl; // bad: избыточный синтаксис
+	std::cout << array_1[middle] << std::endl; // output: 42
 
-//	std::cout << middle[array_1] << std::endl; // bad: непонятный синтаксис
+//	std::cout << *(&array_1[0] + middle) << std::endl; // bad
 
-	std::cout << (array_1 + middle + 1) - 
-				 (array_1 + middle - 1) << std::endl;
+//	std::cout << middle[array_1] << std::endl; // bad
 
-//	[[maybe_unused]] auto delta = array_2 - array_1; // bad: разные массивы
+	std::cout << (array_1 + middle + 1) - (array_1 + middle - 1) << std::endl; // output: 2
+
+//	[[maybe_unused]] auto delta = array_2 - array_1; // bad
 
 	for (const int * ptr = array_1; ptr != (array_1 + size); ++ptr)
 	{
-		std::cout << *ptr << (ptr + 1 == array_1 + size ? '\n' : ' ');
+		std::cout << *ptr << (ptr + 1 == array_1 + size ? '\n' : ' '); // output: 42 0 42 0 0
 	}
 
 //  ================================================================================================
@@ -56,7 +56,7 @@ int main()
 
 //  ================================================================================================
 
-	for (std::size_t i = 0; i < size - 1; ++i) // support: сортировка пузырьком
+	for (std::size_t i = 0; i < size - 1; ++i)
 	{
 		for (std::size_t j = i + 1; j < size; ++j)
 		{
@@ -68,7 +68,7 @@ int main()
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		std::cout << buffer[i] << (i + 1 == size ? '\n' : ' ');
+		std::cout << buffer[i] << (i + 1 == size ? '\n' : ' '); // output: 1 2 3 4 5
 	}
 
 	return 0;

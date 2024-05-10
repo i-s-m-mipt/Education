@@ -7,7 +7,7 @@ int main()
 {
 	const auto object = new const auto(42);
 
-	std::cout << *object << std::endl;
+	std::cout << *object << std::endl; // output: 42
 
 	delete object;
 
@@ -23,10 +23,11 @@ int main()
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		std::cout << array[i] << (i + 1 == size ? '\n' : ' ');
+		std::cout << array[i] << (i + 1 == size ? '\n' : ' '); // output: 0 0 42 0 0
 	}
 
 //	delete   array; // warning
+
 	delete[] array;
 
 //  ================================================================================================
@@ -39,7 +40,7 @@ int main()
 
 //  ================================================================================================
 
-	for (std::size_t i = 0; i < size - 1; ++i) // support: сортировка пузырьком
+	for (std::size_t i = 0; i < size - 1; ++i)
 	{
 		for (std::size_t j = i + 1; j < size; ++j)
 		{
@@ -51,7 +52,7 @@ int main()
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		std::cout << buffer[i] << (i + 1 == size ? '\n' : ' ');
+		std::cout << buffer[i] << (i + 1 == size ? '\n' : ' '); // output: 1 2 3 4 5
 	}
 
 	delete[] buffer;

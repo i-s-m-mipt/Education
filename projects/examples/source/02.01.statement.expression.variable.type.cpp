@@ -12,66 +12,77 @@ int main()
 
 //  ================================================================================================
 
-//	[[maybe_unused]]   signed           int s__i = 42; // bad: избыточный синтаксис
-//	[[maybe_unused]]   signed      long int s_li = 42; // bad: избыточный синтаксис
-//	[[maybe_unused]]   signed long long int slli = 42; // bad: избыточный синтаксис
+//	[[maybe_unused]]   signed           int   si = 42; // bad
+//	[[maybe_unused]]   signed      long int  sli = 42; // bad
+//	[[maybe_unused]]   signed long long int slli = 42; // bad
 
-	[[maybe_unused]] unsigned           int u__i = 42;
-	[[maybe_unused]] unsigned      long int u_li = 42;
+	[[maybe_unused]] unsigned           int   ui = 42;
+	[[maybe_unused]] unsigned      long int  uli = 42; // support: std::size_t
 	[[maybe_unused]] unsigned long long int ulli = 42;
 
-	[[maybe_unused]] long double ld = 3.14; // support: стандарт IEEE-754
+	[[maybe_unused]] long double ld = 3.14; // support: IEEE-754
 
 //  ================================================================================================
+
+//	[[maybe_unused]] int x1; // bad
+
+	[[maybe_unused]] int x2 = i;
+
+	[[maybe_unused]] int x3(i);
+
+	[[maybe_unused]] int x4 { i };
+
+	[[maybe_unused]] int x5{};
 
 	[[maybe_unused]] int m = 42, n = 42;
 
-//	[[maybe_unused]] int  x1; // bad: неинициализированная переменная
+//  ================================================================================================
 
-	[[maybe_unused]] int  x2 = i  ;
-	[[maybe_unused]] int  x3 ( i );
-	[[maybe_unused]] int  x4 { i };
+//	[[maybe_unused]] auto y1; // error
 
-	[[maybe_unused]] auto x5 = i;
+	[[maybe_unused]] auto y2 = i;
 
-//	[[maybe_unused]] auto x6; // error
+	[[maybe_unused]] auto y3(i);
 
-//	[[maybe_unused]] auto ull = 42ull; // bad: венгерская нотация
+	[[maybe_unused]] auto y4 { i };
+
+//	[[maybe_unused]] auto y5{}; // error
+ 
+	[[maybe_unused]] auto y6 = 42ull;
+
+//	[[maybe_unused]] auto u = 42, v = 3.14; // error
 
 //  ================================================================================================
 
-//	[[maybe_unused]] int  y1 = d; // bad: сужающее преобразование
+//	[[maybe_unused]] int z1 = d; // bad
 
-//	[[maybe_unused]] int  y2 { d }; // error
+//	[[maybe_unused]] int z2 { d }; // warning
 
-//	[[maybe_unused]] auto y3 { int(d) }; // bad: устаревший способ
+//	[[maybe_unused]] int z3 { int(d) }; // bad
 
-	[[maybe_unused]] auto y4 { static_cast < int > (d) };
+	[[maybe_unused]] int z4 { static_cast < int > (d) };
 
-//  ================================================================================================
+//	[[maybe_unused]] int z5 { static_cast < int > ("hello") }; // error
 
-	d = i = c = b; 
-	
-	b = 0; std::cout << b << std::endl; // output: 0
-	b = i; std::cout << b << std::endl; // output: 1
+	d = i = c = b = 42; std::cout << d << std::endl; // output: 1
 
 //  ================================================================================================
 
-	[[maybe_unused]] const auto pi = 3.14;
+	[[maybe_unused]] const auto pi = 3.14; // support: std::numbers::pi
 
 //	pi = 1.0; // error
 
-	[[maybe_unused]] volatile auto v = 42;
+	[[maybe_unused]] volatile auto t = 42;
 
 //  ================================================================================================
 
-	using my_type = const double;
+//	typedef const double type_alias_v1; // bad
 
-	[[maybe_unused]] my_type e = 2.72;
+	using type_alias_v2 = const double;
 
- //	typedef double my_old_type; // bad: устаревший способ
+	[[maybe_unused]] type_alias_v2 e = 2.72; // support: std::numbers::e
 
-	[[maybe_unused]] const std::size_t size = 5;
+	[[maybe_unused]] const std::size_t size = 5; // support: std::size
 
 	return 0;
 }

@@ -7,10 +7,7 @@
 
 [[nodiscard]] int f(int x);
 
-[[nodiscard]] int g(int x, int y, int z = 1)
-{
-	return (x + y + z);
-}
+[[nodiscard]] int g(int x, int y, int z = 1) { return (x + y + z); }
 
 //  ================================================================================================
 
@@ -23,10 +20,7 @@ void extract_data(int * ptr = nullptr)
 
 void test_pointers(int * x, const int * y)
 {
-	if (!x || !y)
-	{
-		return;
-	}
+	if (!x || !y) return;
 
 	++(*x);
 //	++(*y); // error
@@ -69,12 +63,6 @@ void print_vector(const std::vector < int > & vector)
 
 //  ================================================================================================
 
-[[nodiscard]] inline auto max(int x, int y) { return (x > y ? x : y); }
-
-[[nodiscard]] inline int factorial(int n) { return (n < 2 ? 1 : n * factorial(n - 1)); }
-
-//  ================================================================================================
-
 /*
 [[nodiscard]] int * get_dangling_pointer  () { auto local = 42; return &local; } // warning
 [[nodiscard]] int & get_dangling_reference() { auto local = 42; return  local; } // warning
@@ -88,15 +76,21 @@ void h()
 	static auto y = 42;
 
 	std::cout << ++x << ' ' << ++y << std::endl;
-
-	return;
 }
 
 //  ================================================================================================
 
-inline void print(bool  ) { std::cout << "print(bool  )" << std::endl; }
-inline void print(char  ) { std::cout << "print(char  )" << std::endl; }
-inline void print(double) { std::cout << "print(double)" << std::endl; }
+[[nodiscard]] inline auto max(int x, int y) { return (x > y ? x : y); }
+
+[[nodiscard]] inline int factorial(int n) 
+{ 
+	return (n < 2 ? 1 : n * factorial(n - 1)); 
+}
+
+//  ================================================================================================
+
+inline void print(bool, bool) { std::cout << "print(bool, bool)" << std::endl; }
+inline void print(char, char) { std::cout << "print(char, char)" << std::endl; }
 
 //  ================================================================================================
 
@@ -110,8 +104,8 @@ int main()
 
 	auto x = 42, y = 42;
 
-	test_pointers  (&x, &y); std::cout << x << ' ' << y << std::endl;
-	test_references( x,  y); std::cout << x << ' ' << y << std::endl;
+	test_pointers  (&x, &y); std::cout << x << ' ' << y << std::endl; // output: 43 42
+	test_references( x,  y); std::cout << x << ' ' << y << std::endl; // output: 44 42
 
 //  ================================================================================================
 
@@ -131,29 +125,20 @@ int main()
 
 //  ================================================================================================
 
-	std::cout << max(1, 2) << ' ' << factorial(5) << std::endl;
-
-//  ================================================================================================
-
 //	std::cout << *get_dangling_pointer  () << std::endl; // warning
 //	std::cout <<  get_dangling_reference() << std::endl; // warning
-
-//  ================================================================================================
 
 	h(); h(); h();
 
 //  ================================================================================================
 
-	print(true);
-	print(3.14);
-//	print(1000); // error
+	std::cout << max(1, 2) << ' ' << factorial(5) << std::endl; // output: 2 120
+
+//	print('a', true); // error
 
 	return 0;
 }
 
 //  ================================================================================================
 
-int f(int x) // demo
-{
-	return (x + 1);
-}
+int f(int x) { return (x + 1); } // demo

@@ -31,7 +31,10 @@ void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t m, std:
 		element = vector[(l < end && ((m < r && vector[l] <= vector[m]) || (m == r))) ? l++ : m++];
 	}
 
-	for (std::size_t i = 0; auto element : copy) vector[begin + (i++)] = element;
+	for (std::size_t i = 0; auto element : copy) 
+	{
+		vector[begin + (i++)] = element;
+	}
 }
 
 //  ================================================================================================
@@ -64,7 +67,7 @@ int main()
 
 	std::ranges::reverse(vector);
 
-	merge_sort(vector, 0, size); // complexity: O(N*log(N)) амортизированная
+	merge_sort(vector, 0, size); // complexity: O(N*log(N))
 
 	for (const auto element : vector) std::cout << element << ' ';
 

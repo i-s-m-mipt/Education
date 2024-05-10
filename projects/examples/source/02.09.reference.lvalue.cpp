@@ -21,10 +21,10 @@ int main()
 
 //  ================================================================================================
 
-	[[maybe_unused]]       auto & test_1 = x;
-	[[maybe_unused]]       auto & test_2 = y;
-	[[maybe_unused]] const auto & test_3 = x;
-	[[maybe_unused]] const auto & test_4 = y;
+	[[maybe_unused]]       auto & test_1 = x; // detail:       int &
+	[[maybe_unused]]       auto & test_2 = y; // detail: const int &
+	[[maybe_unused]] const auto & test_3 = x; // detail: const int &
+	[[maybe_unused]] const auto & test_4 = y; // detail: const int &
 
 //  ================================================================================================
 
@@ -36,7 +36,7 @@ int main()
 
 	good_vector.back().get() = 42;
 
-	std::cout << x << std::endl; 
+	std::cout << x << std::endl; // output: 42
 
 	return 0;
 }

@@ -27,7 +27,7 @@ int main()
 
 	for (auto key = array[0] - 1; key <= array[size - 1] + 1; ++key)
 	{
-		std::cout << "index of " << key << " in array: ";
+		std::cout << "Index of element " << key << " in array: ";
 
 		if (const auto ptr = binary_search(array, size, key); ptr) // complexity: O(log(N))
 		{
