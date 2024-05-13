@@ -160,7 +160,7 @@ std::set < std::string > make_random_words(std::size_t size, const std::size_t l
 
 //  ================================================================================================
 
-std::size_t hash_DEK(std::string_view string) // note: см. работы Дональда Кнута
+std::size_t hash_DEK(std::string_view string) // support: D. Knuth
 {
 	std::uint32_t hash = std::size(string);
 

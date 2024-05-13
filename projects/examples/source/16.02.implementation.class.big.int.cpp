@@ -80,7 +80,7 @@ public:
 
 	void swap(Big_Int & other) noexcept
 	{
-		using std::swap;
+		using std::swap; 
 
 		swap(m_is_negative, other.m_is_negative);
 		swap(m_n_digits,    other.m_n_digits   );
@@ -146,6 +146,46 @@ public:
 		return (*this += other);
 	}
 
+private:
+
+	Big_Int & unsigned_add(const Big_Int & other)
+	{
+		m_n_digits = std::max(m_n_digits, other.m_n_digits);
+
+		for (std::size_t i = 0; i < m_n_digits; ++i)
+		{
+			if (m_digits[i] += other.m_digits[i]; m_digits[i] >= Big_Int::radix)
+			{
+				if (m_digits[i] -= Big_Int::radix; i < size - 1)
+				{
+					++m_digits[i + 1];
+				}
+				else throw std::overflow_error("too many digits");
+			}
+		}
+
+		m_n_digits += (m_digits[m_n_digits]);
+
+		return *this;
+	}
+
+	Big_Int & unsigned_sub(const Big_Int & other) noexcept
+	{
+		for (std::size_t i = 0; i < m_n_digits; ++i)
+		{
+			if (m_digits[i] -= other.m_digits[i]; m_digits[i] < 0)
+			{
+				m_digits[i] += Big_Int::radix;
+
+				m_digits[i + 1]--;
+			}
+		}
+
+		reduce_leading_zeros(); return *this;
+	}
+
+public:
+
 	Big_Int & operator*=(Big_Int other)
 	{
 		if (m_n_digits + other.m_n_digits > size) throw std::overflow_error("too many digits");
@@ -210,69 +250,20 @@ public:
 		swap(result); reduce_leading_zeros(); return *this;
 	}
 
-private:
+public:
 
-	Big_Int & unsigned_add(const Big_Int & other)
-	{
-		m_n_digits = std::max(m_n_digits, other.m_n_digits);
-
-		for (std::size_t i = 0; i < m_n_digits; ++i)
-		{
-			if (m_digits[i] += other.m_digits[i]; m_digits[i] >= Big_Int::radix)
-			{
-				if (m_digits[i] -= Big_Int::radix; i < size - 1)
-				{
-					++m_digits[i + 1];
-				}
-				else throw std::overflow_error("too many digits");
-			}
-		}
-
-		m_n_digits += (m_digits[m_n_digits]);
-
-		return *this;
-	}
-
-	Big_Int & unsigned_sub(const Big_Int & other) noexcept
-	{
-		for (std::size_t i = 0; i < m_n_digits; ++i)
-		{
-			if (m_digits[i] -= other.m_digits[i]; m_digits[i] < 0)
-			{
-				m_digits[i] += Big_Int::radix;
-
-				m_digits[i + 1]--;
-			}
-		}
-
-		reduce_leading_zeros(); return *this;
-	}
+	Big_Int & operator++() { *this += 1; return *this; }
+	Big_Int & operator--() { *this -= 1; return *this; }
 
 public:
 
-	Big_Int & operator++() 
-	{ 
-		*this += 1; return *this; 
-	}
-
-	Big_Int & operator--() 
-	{ 
-		*this -= 1; return *this; 
-	}
-
-	const Big_Int operator++(int)
-	{
-		Big_Int t(*this); ++(*this); return t;
-	}
-
-	const Big_Int operator--(int)
-	{
-		Big_Int t(*this); --(*this); return t;
-	}
+	const Big_Int operator++(int) { Big_Int t(*this); ++(*this); return t; }
+	const Big_Int operator--(int) { Big_Int t(*this); --(*this); return t; }
 
 public:
 
-	[[nodiscard]] friend Big_Int karatsuba_multiplication(const Big_Int & x, const Big_Int & y)
+	[[nodiscard]] friend Big_Int multiply_fast(const Big_Int & x, 
+											   const Big_Int & y) // support: A. Karatsuba
 	{
 		auto n = std::max(x.m_n_digits, y.m_n_digits);
 
@@ -280,21 +271,21 @@ public:
 
 		auto k = n / 2;
 
-		Big_Int xr; xr.m_n_digits =     k; // note: демонстрация
-		Big_Int xl; xl.m_n_digits = n - k; // note: демонстрация
+		Big_Int xr; xr.m_n_digits =     k; // demo
+		Big_Int xl; xl.m_n_digits = n - k; // demo
 
 		for (std::size_t i =     0; i < k; ++i) xr.m_digits[i    ] = x.m_digits[i];
 		for (std::size_t i = n / 2; i < n; ++i) xl.m_digits[i - k] = x.m_digits[i];
 
-		Big_Int yr; yr.m_n_digits =     k; // note: демонстрация
-		Big_Int yl; yl.m_n_digits = n - k; // note: демонстрация
+		Big_Int yr; yr.m_n_digits =     k; // demo
+		Big_Int yl; yl.m_n_digits = n - k; // demo
 
 		for (std::size_t i = 0; i < n / 2; ++i) yr.m_digits[i    ] = y.m_digits[i];
 		for (std::size_t i = k; i < n    ; ++i) yl.m_digits[i - k] = y.m_digits[i];
 
-		auto p1 = karatsuba_multiplication(xl,      yl     );
-		auto p2 = karatsuba_multiplication(xr,      yr     );
-		auto p3 = karatsuba_multiplication(xl + xr, yl + yr);
+		auto p1 = multiply_fast(xl,      yl     );
+		auto p2 = multiply_fast(xr,      yr     );
+		auto p3 = multiply_fast(xl + xr, yl + yr);
 
 		Big_Int radix = Big_Int::radix;
 
@@ -412,7 +403,7 @@ private:
 
 public:
 
-	static constexpr std::size_t size = 1'000;
+	static constexpr std::size_t size = 1000;
 
 private:
 
@@ -488,10 +479,10 @@ TEST(Big_Int, Karatsuba_Multiplication)
 	const auto result_2 = "-3394111293590239892710602762023649092547630961329778427474301930"sv;
 	const auto result_3 = "+2124293516152993531053750721748717735666440864785393936215696100"sv;
 
-	ASSERT_EQ(karatsuba_multiplication(big_int_1, big_int_1), result_1);
-	ASSERT_EQ(karatsuba_multiplication(big_int_1, big_int_2), result_2);
-	ASSERT_EQ(karatsuba_multiplication(big_int_2, big_int_1), result_2);
-	ASSERT_EQ(karatsuba_multiplication(big_int_2, big_int_2), result_3);
+	ASSERT_EQ(multiply_fast(big_int_1, big_int_1), result_1);
+	ASSERT_EQ(multiply_fast(big_int_1, big_int_2), result_2);
+	ASSERT_EQ(multiply_fast(big_int_2, big_int_1), result_2);
+	ASSERT_EQ(multiply_fast(big_int_2, big_int_2), result_3);
 }
 
 //  ================================================================================================

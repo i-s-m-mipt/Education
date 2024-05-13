@@ -3,7 +3,7 @@
 #include <limits>
 #include <stdexcept>
 
-#include <boost/multiprecision/cpp_int.hpp> // note: см. gmp_int
+#include <boost/multiprecision/cpp_int.hpp> // support: gmp_int
 
 int main()
 {

@@ -66,7 +66,7 @@ void test_asm_v1()
 	{
 		push [string]
 
-		call printf // note: см. соглашение о вызовах cdecl
+		call printf // support: cdecl
 
 		pop eax
 	}
@@ -84,7 +84,7 @@ void test_asm_v1()
 
 		push eax
 		
-		call MessageBoxA // note: см. соглашение о вызовах stdcall
+		call MessageBoxA // support: stdcall
 	}
 }
 
