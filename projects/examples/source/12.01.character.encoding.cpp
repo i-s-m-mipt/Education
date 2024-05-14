@@ -55,9 +55,9 @@ int main()
 
 	std::cout << sizeof(wchar_t) << std::endl;
 
-	constexpr char8_t c8 = u8'a';
+	constexpr auto c8 = u8'a'; // detail: char8_t
 
-	c = u8'a'; // support: UTF-8
+	c = c8; // support: UTF-8
 
 //  ================================================================================================
 

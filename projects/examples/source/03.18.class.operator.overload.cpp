@@ -159,39 +159,39 @@ int main()
 
 //  ================================================================================================
 
-	std::cout << (ratio_4 +=       1) << std::endl;
-	std::cout << (ratio_4 -= ratio_5) << std::endl;
-	std::cout << (ratio_4 *= ratio_5) << std::endl;
-	std::cout << (ratio_4 /= ratio_5) << std::endl;
-//	std::cout << (      1 += ratio_5) << std::endl; // error
+	std::cout << (ratio_3 +=       1) << std::endl;
+	std::cout << (ratio_3 -= ratio_4) << std::endl;
+	std::cout << (ratio_3 *= ratio_4) << std::endl;
+	std::cout << (ratio_3 /= ratio_4) << std::endl;
+//	std::cout << (      1 += ratio_4) << std::endl; // error
 
-	std::cout << ratio_4.operator+=(ratio_5) << std::endl;
-
-//  ================================================================================================
-
-	std::cout << (        ++ ratio_5) << std::endl;
-	std::cout << (        -- ratio_5) << std::endl;
-	std::cout << (ratio_4 ++        ) << std::endl;
-	std::cout << (ratio_4 --        ) << std::endl;
+	std::cout << ratio_3.operator+=(ratio_4) << std::endl;
 
 //  ================================================================================================
 
-	std::cout << (      1 +  ratio_5) << std::endl;
-	std::cout << (ratio_4 -        1) << std::endl;
-	std::cout << (ratio_4 *  ratio_5) << std::endl;
-	std::cout << (ratio_4 /  ratio_5) << std::endl;
+	std::cout << (        ++ ratio_4) << std::endl;
+	std::cout << (        -- ratio_4) << std::endl;
+	std::cout << (ratio_3 ++        ) << std::endl;
+	std::cout << (ratio_3 --        ) << std::endl;
+
+//  ================================================================================================
+
+	std::cout << (      1 +  ratio_4) << std::endl;
+	std::cout << (ratio_3 -        1) << std::endl;
+	std::cout << (ratio_3 *  ratio_4) << std::endl;
+	std::cout << (ratio_3 /  ratio_4) << std::endl;
 	std::cout << (      1 /        1) << std::endl;
 
-	std::cout << operator+(ratio_4, ratio_5) << std::endl;
+	std::cout << operator+(ratio_3, ratio_4) << std::endl;
 
 //  ================================================================================================
 
-	std::cout << (ratio_4 <  ratio_5) << std::endl;
-	std::cout << (ratio_4 >  ratio_5) << std::endl;
-	std::cout << (ratio_4 <= ratio_5) << std::endl;
-	std::cout << (ratio_4 >= ratio_5) << std::endl;
-	std::cout << (ratio_4 == ratio_5) << std::endl;
-	std::cout << (ratio_4 != ratio_5) << std::endl;
+	std::cout << (ratio_3 <  ratio_4) << std::endl;
+	std::cout << (ratio_3 >  ratio_4) << std::endl;
+	std::cout << (ratio_3 <= ratio_4) << std::endl;
+	std::cout << (ratio_3 >= ratio_4) << std::endl;
+	std::cout << (ratio_3 == ratio_4) << std::endl;
+	std::cout << (ratio_3 != ratio_4) << std::endl;
 
 //  ================================================================================================
 

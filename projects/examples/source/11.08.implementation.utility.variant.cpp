@@ -262,7 +262,7 @@ public:
 
     template < typename T > [[nodiscard]] const T & get() const
     {
-        if (!has < T > ()) throw std::bad_variant_access("invalid type");
+        if (!has < T > ()) throw std::runtime_error("invalid type");
 
         return *(this->template buffer_as < T > ());
     }  
@@ -281,7 +281,7 @@ private:
         {
             do_visit(std::forward < V > (visitor), List < Us ... > ());
         }
-        else throw std::bad_variant_access("invalid type");
+        else throw std::runtime_error("invalid type");
     }
 
     void destroy() noexcept
