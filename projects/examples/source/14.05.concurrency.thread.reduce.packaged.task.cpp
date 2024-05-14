@@ -38,7 +38,7 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 
 	if (!size) return sum;
 
-	const std::size_t min_size = 100; // note: демонстрация
+	const std::size_t min_size = 100; // demo
 
 	const std::size_t max_threads = (size + min_size - 1) / min_size;
 
@@ -74,7 +74,7 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 
 int main()
 {
-	constexpr std::size_t size = 1'000;
+	constexpr std::size_t size = 1000;
 
 	std::vector < int > vector(size, 0);
 

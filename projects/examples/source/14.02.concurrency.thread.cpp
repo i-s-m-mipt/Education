@@ -73,15 +73,15 @@ int main()
 
     thread.join();
 
-//  std::thread([](){ std::this_thread::sleep_for(1s); }); // bad: отсутствует присоединение
+//  std::thread([](){ std::this_thread::sleep_for(1s); }); // bad
 
 //  ================================================================================================
 
     auto x = 42;
 
-//  std::thread(Functor(x)).detach(); // bad: висячая ссылка
+//  std::thread(Functor(x)).detach(); // bad
 
-//  std::thread(f, x, 43).join(); // bad: внутренние копии аргументов
+//  std::thread(f, x, 43).join(); // bad
 
     std::thread(f, std::ref(x), 43).join();
 
@@ -91,7 +91,7 @@ int main()
 
     const C c;
 
-    std::thread(&C::print, &c).join(); // note: см. указатели на функции-члены классов
+    std::thread(&C::print, &c).join();
 
 //  ================================================================================================
 

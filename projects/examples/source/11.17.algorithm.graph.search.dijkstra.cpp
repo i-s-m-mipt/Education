@@ -22,9 +22,11 @@ int main()
     boost::add_edge(4, 0, 8, graph);
     boost::add_edge(4, 1, 9, graph);
 
-	std::array < unsigned int, 5 > distances; // note: number of vertices
+	std::array < unsigned int, 5 > distances;
 
-	boost::dijkstra_shortest_paths(graph, 0, boost::distance_map(std::begin(distances))); // note: O(E*log(V)) complexity
+    const auto map = boost::distance_map(std::begin(distances));
+
+	boost::dijkstra_shortest_paths(graph, 0, map); // complexity: O(E * log(V))
 
 	for (auto distance : distances) std::cout << distance << ' ';
 

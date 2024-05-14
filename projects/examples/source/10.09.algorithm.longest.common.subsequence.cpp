@@ -12,7 +12,7 @@ template < typename T > [[nodiscard]] constexpr std::vector < T > longest_common
 	const std::vector < T > & sequence_2) 
 {
 	std::vector < std::vector < int > > table(std::size(sequence_1) + 1, 
-                  std::vector < int >        (std::size(sequence_2) + 1, 0)); // note: dynamic programming
+                  std::vector < int >        (std::size(sequence_2) + 1, 0));
 
 	for (std::size_t i = 1; i < std::size(sequence_1) + 1; ++i)
 	{
@@ -40,7 +40,7 @@ template < typename T > [[nodiscard]] constexpr std::vector < T > longest_common
 		else (table[i][j + 1] > table[i + 1][j] ? --i : --j);
 	}
 
-	std::ranges::reverse(result); // note: reverse range
+	std::ranges::reverse(result);
 	
 	return result;
 }

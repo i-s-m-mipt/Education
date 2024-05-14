@@ -4,18 +4,20 @@
 
 //  ================================================================================================
 
-class Loader // note: proxy class with lazy loading
+class Lazy_Loader
 {
 public:
 
-	void load() 
+	void lazy_load() 
 	{
 		if (!m_data) m_data = std::make_unique < int > (42);
 	}
 
-	std::unique_ptr < int > m_data; // note: nullptr
+private:
 
-}; // class Loader
+	std::unique_ptr < int > m_data;
+
+}; // class Lazy_Loader
 
 //  ================================================================================================
 
@@ -27,13 +29,13 @@ int main()
 
 	assert(sizeof(array) == size);
 
-	std::vector < bool > vector(size); // good: 1 bit per bool
+	std::vector < bool > vector(size); 
 
 	constexpr std::size_t middle = size / 2;
 
 	vector[middle] = true;
-
-	[[maybe_unused]] const auto value = vector[middle]; // note: auto -> std::vector < bool > ::reference
+ 
+	[[maybe_unused]] const auto value = vector[middle]; // support: Proxy
 	
 	return 0;
 }

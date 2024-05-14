@@ -7,7 +7,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] unsigned long long pow(unsigned long long base, unsigned long long exp)
+[[nodiscard]] constexpr unsigned long long pow(unsigned long long base, unsigned long long exp)
 {
     if (base == 0) return (exp == 0 ? 1 : 0);
 
@@ -15,11 +15,11 @@
 
     while (exp > 0)
     {
-        if (exp & 1) // note: checks if exp is odd
+        if (exp & 1)
         {
             if (result > std::numeric_limits < unsigned long long > ::max() / base)
             {
-                throw std::overflow_error("overflow");
+                throw std::runtime_error("arithmetic overflow");
             }
 
             result *= base;
@@ -29,7 +29,7 @@
 
         if (base > std::numeric_limits < unsigned long long > ::max() / base)
         {
-            throw std::overflow_error("overflow");
+            throw std::runtime_error("arithmetic overflow");
         }
 
         base *= base;
@@ -53,11 +53,11 @@ TEST(Algorithm, Indian_Exponentiation)
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for testing
+int main(int argc, char ** argv)
 {
 	try
     {
-        [[maybe_unused]] auto result = pow(2, 64); // note: throws an exception
+        [[maybe_unused]] auto result = pow(2, 64);
     }
     catch (const std::exception & exception)
     {

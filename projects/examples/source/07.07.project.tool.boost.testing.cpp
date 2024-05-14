@@ -6,7 +6,7 @@
 #include <utility>
 #include <vector>
 
-#define BOOST_TEST_MODULE boost_testing // note: in one translation unit only
+#define BOOST_TEST_MODULE boost_testing
 
 #include <boost/mpl/list.hpp>
 #include <boost/test/data/test_case.hpp>
@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE(factorial_test)
     BOOST_TEST(factorial(5) ==   120);
     BOOST_TEST(factorial(8) == 40320);
 
-    BOOST_TEST(factorial(4) ==    25); // note: failed test
+    BOOST_TEST(factorial(4) ==    25);
 }
 
 //  ================================================================================================
@@ -52,17 +52,17 @@ BOOST_DATA_TEST_CASE(ranges_test, boost::unit_test::data::xrange(1, 3, 1) *
     std::cout << value_1 << " x " << value_2 << std::endl;
 }
 
-BOOST_DATA_TEST_CASE(random_test, (boost::unit_test::data::random(( // note: additional parenthesis
+BOOST_DATA_TEST_CASE(random_test, (boost::unit_test::data::random((
 
     boost::unit_test::data::seed         = std::random_device{}(),
     boost::unit_test::data::engine       = std::mt19937_64     (),
     boost::unit_test::data::distribution = std::uniform_real_distribution(0.0, 1.0))) ^ 
     
-    boost::unit_test::data::xrange(10)), sample, index) // note: 10 random numbers
+    boost::unit_test::data::xrange(10)), sample, index)
 {
     std::cout << index << " : " << std::setprecision(3) << std::fixed << sample << std::endl;
 
-    BOOST_TEST(sample < 0.7); // note: 30% chance of failure
+    BOOST_TEST(sample < 0.7);
 }
 
 //  ================================================================================================
@@ -71,7 +71,7 @@ class Dataset
 {
 public:
 
-    class iterator // note: lower case for the first letter
+    class iterator
     {
     public:
 
@@ -91,7 +91,7 @@ public:
 			auto previous = *this; ++(*this); return previous; 
 		}
 
-        [[nodiscard]] constexpr int operator*() const noexcept // note: no operator->
+        [[nodiscard]] constexpr int operator*() const noexcept
         { 
             return m_y; 
         } 
@@ -103,26 +103,26 @@ public:
 
     private:
 
-        int m_x, m_y; // note: m_y is the output value
+        int m_x, m_y;
 
     }; // class iterator 
 
-    [[nodiscard]] constexpr iterator begin() const noexcept { return iterator(); } // note: no end
+    [[nodiscard]] constexpr iterator begin() const noexcept { return iterator(); }
 
     [[nodiscard]] boost::unit_test::data::size_t size() const noexcept 
     { 
-        return boost::unit_test::data::BOOST_TEST_DS_INFINITE_SIZE; // note: infinite size dataset
+        return boost::unit_test::data::BOOST_TEST_DS_INFINITE_SIZE;
     }
 
-    static constexpr auto arity = 1; // note: arity of sample tuples
+    static constexpr auto arity = 1;
 
-}; // note: Dataset
+}; // class Dataset 
 
 //  ================================================================================================
 
 namespace boost::unit_test::data::monomorphic 
 {
-    template <> struct is_dataset < Dataset > : std::true_type {}; // note: std instead of mpl
+    template <> struct is_dataset < Dataset > : std::true_type {};
 }
 
 //  ================================================================================================
@@ -136,24 +136,26 @@ BOOST_DATA_TEST_CASE(fibonacci_test, Dataset() ^ boost::unit_test::data::make( {
 
 using test_types = boost::mpl::list < bool, char, int, double > ;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(template_test, T, test_types)  // note: consider static_assert
+BOOST_AUTO_TEST_CASE_TEMPLATE(template_test, T, test_types) // support: static_assert
 {
     BOOST_TEST(sizeof(T) == 4);
 }
 
 //  ================================================================================================
 
-void free_test_function(int parameter) // note: nullary function in case without parameters
+void free_test_function(int parameter)
 {
-    BOOST_TEST(parameter < 4); // note: this test does not work here due to BOOST_TEST_MODULE
+    BOOST_TEST(parameter < 4);
 }
 
-boost::unit_test::test_suite * init_unit_test_suite(int, char**) // note: manual registration
+boost::unit_test::test_suite * init_unit_test_suite(int, char**)
 {
-    std::vector < int > parameters { 1, 2, 3, 4, 5 };
+    const std::vector < int > parameters { 1, 2, 3, 4, 5 };
 
-    boost::unit_test::framework::master_test_suite().add(BOOST_PARAM_TEST_CASE(
-        &free_test_function, std::begin(parameters), std::end(parameters)));
+    const auto test_case = BOOST_PARAM_TEST_CASE(&free_test_function, std::cbegin(parameters), 
+                                                                      std::cend  (parameters));
+
+    boost::unit_test::framework::master_test_suite().add(test_case);
 
     boost::unit_test::framework::master_test_suite().p_name.value = "master";
 
@@ -166,11 +168,10 @@ class Fixture
 {
 public:
 
-    Fixture() { BOOST_TEST_MESSAGE("Fixture:: Fixture"); } // note:   setup actions
-   ~Fixture() { BOOST_TEST_MESSAGE("Fixture::~Fixture"); } // note: cleanup actions
+    Fixture() { BOOST_TEST_MESSAGE("Fixture:: Fixture"); }
+   ~Fixture() { BOOST_TEST_MESSAGE("Fixture::~Fixture"); } 
 
-    void    setup() { data.push_back(42); } // note: called after constructor
-    void teardown() { data.clear      (); } // note: called before destructor
+public:
 
     std::vector < int > data;
 
@@ -178,6 +179,7 @@ public:
 
 BOOST_FIXTURE_TEST_CASE(fixture_test, Fixture)
 {
-    BOOST_TEST(std::size(data) == 1); data.push_back(43);
+    BOOST_TEST(std::size(data) == 0); data.push_back(42);
+    BOOST_TEST(std::size(data) == 1); data.push_back(42);
     BOOST_TEST(std::size(data) == 2);
 }

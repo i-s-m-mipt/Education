@@ -41,9 +41,9 @@ template < typename T > [[nodiscard]] inline constexpr T max_v1(T x, T y) requir
 	return (x < y ? y : x);
 }
 
-template < integral ... Ts > [[nodiscard]] inline constexpr integral auto sum_v1(Ts ... args)
+template < integral T > [[nodiscard]] inline constexpr integral auto max_v3(T x, T y)
 {
-	return (... + args);
+	return (x < y ? y : x);
 }
 
 //  ================================================================================================
@@ -60,8 +60,8 @@ int main()
     static_assert(max_v2(100, 200) == 200);
 //  static_assert(max_v2(1.0, 2.0) == 2.0); // error
 
-    static_assert(sum_v1(100, 200) == 300);
-//  static_assert(sum_v1(1.0, 2.0) == 3.0); // error
+    static_assert(max_v3(100, 200) == 200);
+//  static_assert(max_v3(1.0, 2.0) == 2.0); // error
 
 //  ================================================================================================
 

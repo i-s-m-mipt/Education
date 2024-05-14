@@ -13,11 +13,11 @@
 
 //  ================================================================================================
 
-template < typename T, typename F > [[nodiscard]] inline auto make_visitor(F f)
+template < typename T, typename F > [[nodiscard]] inline auto make_visitor(F && f)
 {
-    return std::make_pair(std::type_index(typeid(T)), [f](const auto & any)
+    return std::make_pair(std::type_index(typeid(T)), [f] < typename U > (U && any) 
     { 
-        f(std::any_cast < T > (any)); 
+        f(std::any_cast < T > (std::forward < U > (any))); 
     });
 }
 
@@ -25,9 +25,9 @@ template < typename T, typename F > [[nodiscard]] inline auto make_visitor(F f)
 
 void handle(const std::any & any)
 {
-    using type_b = bool  ; 
-    using type_c = char  ; 
-    using type_i = int   ; 
+    using type_b =   bool; 
+    using type_c =   char; 
+    using type_i =    int; 
     using type_d = double;
 
     static std::unordered_map < std::type_index, std::function < void(const std::any &) > > visitors
@@ -42,7 +42,7 @@ void handle(const std::any & any)
     {
         iterator->second(any);
     }
-    else throw std::invalid_argument("invalid type: " + std::string(any.type().name()));
+    else throw std::runtime_error("invalid type");
 }
 
 //  ================================================================================================

@@ -48,10 +48,7 @@ TEST(Parser, Structure)
 
     const auto result = boost::spirit::x3::parse(begin, end, parser::data, data);
 
-    if (!result || begin != end) 
-    {
-        throw std::invalid_argument("invalid input: " + std::string(input));
-    }
+    if (!result || begin != end) throw std::runtime_error("invalid input");
 
     ASSERT_EQ(data.c, 'a'); ASSERT_EQ(data.i, 100); ASSERT_DOUBLE_EQ(data.d, 1.0);
 }

@@ -33,7 +33,7 @@ union U
 {
 	U() : string_1() {}
 
-   ~U() {} // note: what should be destroyed here?
+   ~U() {}
 
 	std::string string_1;
 	std::string string_2;
@@ -42,27 +42,27 @@ union U
 
 //  ================================================================================================
 
-template < typename T > class Manager // note: non-polymorphic base class
+template < typename T > class Manager
 {
 protected:
 
 	constexpr  Manager()          = default;
     constexpr ~Manager() noexcept = default;
 
-public: // note: consider overloading of all other versions of new and delete
+public:
 
-	[[nodiscard]] void * operator new(std::size_t size) // note: implicitly static
+	[[nodiscard]] void * operator new(std::size_t size) // detail: static
 	{
 		std::cout << "Manager::operator new called" << std::endl;
 
-		return ::operator new(size); // note: global operator new call
+		return ::operator new(size);
 	}
 
-	void operator delete(void * pointer, std::size_t) // note: implicitly static
+	void operator delete(void * pointer, std::size_t) // detail: static
 	{
 		std::cout << "Manager::operator delete called" << std::endl;
 
-		return ::operator delete(pointer); // note: global operator delete call
+		return ::operator delete(pointer);
 	}
 
 }; // template < typename T > class Manager
@@ -100,51 +100,51 @@ BENCHMARK(test_1)->RangeMultiplier(2)->Range(1024 * 1024, 1024 * 1024 * 1024);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for benchmark
+int main(int argc, char ** argv)
 {
 	assert(sizeof(C) == sizeof(std::size_t));
 
 	constexpr std::size_t size = 5;
 
-	const auto ptr = static_cast < C * > (::operator new(sizeof(C) * size)); // note: uninitialized memory
+	const auto ptr = static_cast < C * > (::operator new(sizeof(C) * size));
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		new (ptr + i) C(i); // note: placement new, construction without allocation
+		new (ptr + i) C(i);
 	}
 
 	constexpr std::size_t offset = size / 2;
 
-	(ptr + offset)->~C(); // good: explicit element destructor call 
+	(ptr + offset)->~C();
 
-	new (ptr + offset) C(42); // note: object reconstruction in the same memory cell
+	new (ptr + offset) C(42);
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
 		ptr[i].~C();
 	}
 
-	::operator delete(ptr, sizeof(C) * size); // note: hint for memory allocator
+	::operator delete(ptr, sizeof(C) * size);
 
 //  ================================================================================================
 
 	std::cout << sizeof(U) << std::endl;
 
-	U u; // note: consider std::variant
+	U u; // support: std::variant
 
 	u.string_1 = "hello";
 
-	u.string_1.~basic_string(); // good: explicit member destructor call
+	u.string_1.~basic_string();
 
 	new (&u.string_2) std::string;
 
 	u.string_2 = "world";
 
-	u.string_2.~basic_string(); // good: explicit member destructor call
+	u.string_2.~basic_string();
 
 //  ================================================================================================
 	
-	delete(new const User); // note: overloaded versions instead of global
+	delete(new const User);
 
 //  ================================================================================================
 

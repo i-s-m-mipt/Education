@@ -5,7 +5,7 @@
 
 int main()
 {
-	std::stack < int > stack; // note: LIFO concept
+	std::stack < int > stack; // support: LIFO
 
 	stack.push(1);
 	stack.push(2);
@@ -21,7 +21,7 @@ int main()
 
 //  ================================================================================================
 
-	std::queue < int > queue; // note: FIFO concept
+	std::queue < int > queue; // support: FIFO
 
 	queue.push(1);
 	queue.push(2);
@@ -37,10 +37,10 @@ int main()
 
 //  ================================================================================================
 
-	std::priority_queue < int > priority_queue; // note: FIFO concept with priority
+	std::priority_queue < int > priority_queue; // support: FIFO+
 
 	priority_queue.push(2);
-	priority_queue.push(3); // note: highest priority
+	priority_queue.push(3);
 	priority_queue.push(1);
 
 	assert(std::size(priority_queue) == 3);

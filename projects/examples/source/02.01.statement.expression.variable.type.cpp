@@ -56,7 +56,7 @@ int main()
 
 //	[[maybe_unused]] int z1 = d; // bad
 
-//	[[maybe_unused]] int z2 { d }; // warning
+//	[[maybe_unused]] int z2 { d }; // error
 
 //	[[maybe_unused]] int z3 { int(d) }; // bad
 

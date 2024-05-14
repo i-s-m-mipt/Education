@@ -10,7 +10,7 @@ struct Node { int value{}; Node * l{}, * r{}; };
 
 template < typename R, typename ... Ns > [[nodiscard]] inline R traverse(R root, Ns ... nodes)
 {
-	return (root ->* ... ->* nodes); // note: ((root ->* node_1) ->* node_2) ->* ...
+	return (root ->* ... ->* nodes); // detail: ((root ->* node_1) ->* node_2) ->* ...
 }
 
 //  ================================================================================================

@@ -37,7 +37,7 @@ int main()
 
     const auto & rcx = x;
 
-    const_cast < int & > (rcx) = 43;
+    const_cast < int & > (rcx) = 42;
 
     std::cout << Data(1, 42)[0] << std::endl;
 

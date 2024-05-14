@@ -21,22 +21,22 @@ template < typename T > class Range : private std::vector < T >
 {
 public:
 
-    using std::vector < T > ::begin; // note: mandatory for       range concept
-	using std::vector < T > ::  end; // note: mandatory for       range concept
-	using std::vector < T > :: size; // note: mandatory for sized range concept
+    using std::vector < T > ::begin;
+	using std::vector < T > ::  end;
+	using std::vector < T > :: size;
 
 }; // template < typename T > class Range : private std::vector < T >
 
 //  ================================================================================================
 
-static_assert(std::ranges::      range < Range < int > > ); // note: verify if       range
-static_assert(std::ranges::sized_range < Range < int > > ); // note: verify if sized range
+static_assert(std::ranges::      range < Range < int > > );
+static_assert(std::ranges::sized_range < Range < int > > );
 
 static_assert(std::ranges::sized_range < std::forward_list < int > > == false);
 
 static_assert(std::ranges::      forward_range < std::forward_list < int > > );
 static_assert(std::ranges::bidirectional_range < std::        list < int > > );
-static_assert(std::ranges::random_access_range < std::      vector < int > > ); // note: and more...
+static_assert(std::ranges::random_access_range < std::      vector < int > > );
 
 //  ================================================================================================
 
@@ -44,20 +44,20 @@ int main()
 {
 	std::vector < int > vector { 0, 1, 2, 3, 4 };
 
-	for (auto && element : vector) ++element; // note: range-based for, consider cppinsights.io
+	for (auto && element : vector) ++element; // support: cppinsights.io
 
 //  ================================================================================================
 
 	const std::map < int, int > map { { 1, 10 }, { 2, 20 }, { 3, 30 } };
 
-	for (const auto [key, value] : map) // note: structured binding, consider cppinsights.io
+	for (const auto [key, value] : map) // support: cppinsights.io
 	{
 		std::cout << key << ", " << value << std::endl;
 	}
 
 //  ================================================================================================
 
-	constexpr int array[]{ 1, 2, 3, 4, 5 }; // note: built-in array is considered as range
+	constexpr int array[]{ 1, 2, 3, 4, 5 };
 
 	for (const auto element : array) std::cout << element << ' ';
 
@@ -69,7 +69,7 @@ int main()
 
 	std::ranges::transform(std::as_const(vector), std::begin(vector), std::negate());
 
-	std::ranges::sort(vector); // good: instead of iterators
+	std::ranges::sort(vector);
 
 	std::vector < Human > humans = 
 	{ 
@@ -85,7 +85,7 @@ int main()
 	for (const auto x : std::views::transform(std::views::filter(vector,
 
 		[](auto x) constexpr noexcept { return (x % 2); }),
-		[](auto x) constexpr noexcept { return (x + 1); })) // note: funcional syntax
+		[](auto x) constexpr noexcept { return (x + 1); }))
 	{
 		std::cout << x << ' ';
 	}
@@ -103,7 +103,7 @@ int main()
 
 //  ================================================================================================
 
-	for (const auto x : std::views::iota(1) | std::views::take(5)) // note: syntax sugar
+	for (const auto x : std::views::iota(1) | std::views::take(5))
 	{
 		std::cout << x << ' ';
 	}
@@ -133,12 +133,13 @@ int main()
 
 //  ================================================================================================
 
-    constexpr auto dangling_iterator = std::ranges::max_element(
-		[]() constexpr { return std::vector({ 1, 2, 3, 4, 5 }); }()); // note: temporary vector
+	constexpr auto lambda = []() constexpr { return std::vector({ 1, 2, 3, 4, 5 }); };
+
+    constexpr auto dangling_iterator = std::ranges::max_element(lambda());
 	
     static_assert(std::is_same_v < const std::ranges::dangling, decltype(dangling_iterator) > );
 
-//	assert(*dangling_iterator == 5); // error: dangling iterator		
+//	assert(*dangling_iterator == 5); // error
 
 	return 0;
 }

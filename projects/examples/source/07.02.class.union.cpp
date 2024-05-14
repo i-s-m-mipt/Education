@@ -3,13 +3,13 @@
 
 //  ================================================================================================
 
-union U // note: the whole union occupies 4 bytes
+union U
 {
-	char c1[1]; // note: 1 bytes
-	char c2[2]; // note: 2 bytes
-	char c3[3]; // note: 3 bytes
+	char c1[1]; // detail: 1(B)
+	char c2[2]; // detail: 2(B)
+	char c3[3]; // detail: 3(B)
 	
-	int i = 0; // note: 4 bytes, zero initialized union
+	int i = 0;  // detail: 4(B)
 
 }; // union U
 
@@ -17,11 +17,11 @@ union U // note: the whole union occupies 4 bytes
 
 struct Result
 {
-	bool has_error = false; // note: additional switch
+	bool has_error = false;
 
-	union // note: anonymous union
+	union
 	{ 
-		int error_code; double result = 0.0; // note: consider enumerations
+		int error_code; double result = 0.0; // support: enum class
 	};
 
 }; // struct Result
@@ -30,7 +30,7 @@ struct Result
 
 [[nodiscard]] inline Result try_log(double x) noexcept
 {
-	Result result { true, -1 }; // note: error code 0 by default
+	Result result { true, -1 };
 
 	if (x > 0.0)
 	{
@@ -60,18 +60,18 @@ int main()
 {
 	U u;
 
-	u.c1[0] = 'a'; // note: u.c1 is now the active member
+	u.c1[0] = 'a';
 
 	std::cout << u.c1[0] << std::endl;
 
-//	std::cout << u.c2[0] << std::endl; // bad: undefined behaviour
-//	std::cout << u.c3[1] << std::endl; // bad: undefined behaviour
+//	std::cout << u.c2[0] << std::endl; // bad
+//	std::cout << u.c3[1] << std::endl; // bad
 
 	u.i = 0; 
 	
-	u.c3[1] = 1; // note: u.c3 is now the active member
+	u.c3[1] = 1;
 
-	std::cout << u.i << std::endl; // note: explain result
+	std::cout << u.i << std::endl;
 
 //  ================================================================================================
 

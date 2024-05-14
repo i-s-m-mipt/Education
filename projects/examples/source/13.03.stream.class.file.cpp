@@ -39,7 +39,7 @@ struct S { char c{}; int i{}; std::string s; };
 
 //  ================================================================================================
 
-std::ofstream & operator<<(std::ofstream & fout, const S & s) // note: см. std::ios::binary
+std::ofstream & operator<<(std::ofstream & fout, const S & s) // support: std::ios::binary
 {
     fout.write(&s.c, sizeof(s.c));
 
@@ -56,7 +56,7 @@ std::ofstream & operator<<(std::ofstream & fout, const S & s) // note: см. std
 
 //  ================================================================================================
 
-std::ifstream & operator>>(std::ifstream & fin, S & s) // note: см. std::ios::binary
+std::ifstream & operator>>(std::ifstream & fin, S & s) // support: std::ios::binary
 {
     fin.read(&s.c, sizeof(s.c));
 
@@ -91,7 +91,7 @@ int main()
             fout << std::string(size, 'a' + i) << std::endl;
         }
 
-        fout.seekp(2 * (size + 1), std::ios::beg); // note: см. CRLF на Windows
+        fout.seekp(2 * (size + 1), std::ios::beg); // support: LF
 
         fout << "hello";
     }

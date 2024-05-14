@@ -10,7 +10,7 @@
 
 //  ================================================================================================
 
-class Arena : private boost::noncopyable // note: no deallocations for blocks of different sizes
+class Arena : private boost::noncopyable
 {
 public:
 
@@ -32,13 +32,13 @@ public:
 
 		auto space = m_size - m_offset;
 
-		if (first = std::align(alignment, size, first, space); first) // note: modifies first and space
+		if (first = std::align(alignment, size, first, space); first)
 		{
 			m_offset = m_size - space + size; 
 			
-			return first; // note: aligned pointer
+			return first;
 		}
-		else throw std::bad_alloc(); // note: throwing exception instead of returning nullptr
+		else throw std::runtime_error("invalid size");
 	}
 
     void deallocate(void *, std::size_t) const noexcept {}
@@ -113,15 +113,15 @@ int main()
 
     Allocator < int > allocator(arena);
 
-    arena.print(); // note: 0 bytes used
+    arena.print();
 
     std::vector < int, Allocator < int > > vector(10, 42, allocator);
 
-    arena.print(); // note: 40 bytes used
+    arena.print();
 
     vector.push_back(42);
 
-    arena.print(); // note: 128 bytes used
+    arena.print();
 
 	return 0;
 }

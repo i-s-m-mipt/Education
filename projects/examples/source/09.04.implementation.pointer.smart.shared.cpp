@@ -9,13 +9,13 @@
 
 namespace detail
 {
-    class RCCB_base : private boost::noncopyable // note: non-template class, no custom deleters support
+    class RCCB_base : private boost::noncopyable
     {
     protected:
 
-        RCCB_base() noexcept = default; // note: available from derived constructors only
+        RCCB_base() noexcept = default;
 
-        virtual ~RCCB_base() noexcept = default; // note: really polymorphic base class?
+        virtual ~RCCB_base() noexcept = default;
 
     public:
 
@@ -27,11 +27,11 @@ namespace detail
 
     private:
 
-        virtual void clear() noexcept = 0; // note: NVI idiom
+        virtual void clear() noexcept = 0; // support: NVI
 
     private:
 
-        std::size_t m_counter = 0; // note: consider std::atomic < std::size_t > for threadsafe version
+        std::size_t m_counter = 0; // support: std::atomic < std::size_t >
 
     }; // class RCCB_base : private boost::noncopyable
 
@@ -45,7 +45,7 @@ namespace detail
     {
     public:
 
-        explicit RCCB(T * data) noexcept : m_data(data) // good: explicit
+        explicit RCCB(T * data) noexcept : m_data(data)
         {
             create_reference();
         }
@@ -54,12 +54,12 @@ namespace detail
 
         void clear() noexcept override
         {
-            delete m_data; delete this; // note: another implementation for make_shared
+            delete m_data; delete this;
         }
 
     private:
 
-        T * m_data = nullptr; // note: note pointer but object in case of make_shared
+        T * m_data = nullptr;
 
     }; // template < typename T > class RCCB : public RCCB_base
 
@@ -83,11 +83,10 @@ public:
         if (m_rccb) m_rccb->create_reference();
     }
 
-    Shared(Shared < T > && other) noexcept : m_data(other.m_data), m_rccb(other.m_rccb)
-    {
-        other.m_data = nullptr;
-        other.m_rccb = nullptr;
-    }
+    Shared(Shared < T > && other) noexcept : Shared()
+	{
+		swap(other);
+	}
 
     Shared & operator=(const Shared & other) noexcept
     {
@@ -105,7 +104,7 @@ public:
 
     void swap(Shared & other) noexcept
     {
-        using std::swap; // good: enable argument-dependent lookup
+        using std::swap; 
 
         swap(m_data, other.m_data);
         swap(m_rccb, other.m_rccb);
@@ -139,7 +138,7 @@ template < typename T > inline void swap(Shared < T > & x, Shared < T > & y) noe
 
 template < typename T, typename ... Ts > [[nodiscard]] inline Shared < T > make_shared(Ts && ... args)
 {
-    // note: another RCCB derived class, combination of control block and object in one allocation
+    // ...
 }
 
 //  ================================================================================================

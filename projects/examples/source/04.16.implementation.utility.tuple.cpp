@@ -68,7 +68,7 @@ template < typename ... Ts > [[nodiscard]] inline constexpr auto make_tuple(Ts &
 
 //  ================================================================================================
 
-namespace detail // demo: константные версии
+namespace detail // demo
 {
 	template < std::size_t N > struct Get 
 	{

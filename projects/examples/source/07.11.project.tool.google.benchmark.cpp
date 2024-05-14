@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cmath>
 #include <exception>
 #include <iostream>
 #include <iterator>
@@ -13,13 +14,16 @@
 
 void test_1(benchmark::State & state) 
 {
-    for (auto _ : state) // note: range-based for loop recommended in documentation
+    for (auto _ : state)
     {
-        auto s = 0, x = 0;
+        auto result = 0.0;
 
-        while (true) if (s += ++x; x == 100) break;
+        for (std::size_t i = 0; i < 1000; ++i) 
+        {
+            result += std::sin(i);
+        }
 
-        benchmark::DoNotOptimize(s);
+        benchmark::DoNotOptimize(result);
     }
 }
 
@@ -29,18 +33,21 @@ void test_2(benchmark::State & state)
 {
     for (auto _ : state)
     {
-        try // note: zero-overhead principle in exceptions
-        {
-            auto s = 0, x = 0;
-            
-            while (true) if (s += ++x; x == 100) break;
+        auto result = 0.0;
 
-            benchmark::DoNotOptimize(s);
+        try 
+        {
+            for (std::size_t i = 0; i < 1000; ++i) 
+            {
+                result += std::sin(i);
+            }
         }
         catch (const std::exception & exception)
         {
             std::cerr << exception.what() << '\n';
         }
+
+        benchmark::DoNotOptimize(result);
     }
 }
 
@@ -50,21 +57,20 @@ void test_3(benchmark::State & state)
 {
     for (auto _ : state)
     {
+        auto result = 0.0;
+
         try
         {
-            auto s = 0, x = 0;
-
-            while (true)
+            for (std::size_t i = 0; ; ++i)
             {
-                if (s += ++x; x == 100)
-                {
-                    throw std::runtime_error("exit"); // note: slow exit
-                }
-            }
+                result += std::sin(i);
 
-            benchmark::DoNotOptimize(s);
+                if (i >= 1000) throw std::runtime_error("error");
+            }
         }
         catch (...) {}
+
+        benchmark::DoNotOptimize(result);
     }
 }
 
@@ -101,14 +107,14 @@ void test_6(benchmark::State & state)
 {
     std::vector < int > vector(state.range(0), 0);
 
-    std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
+    std::iota(std::begin(vector), std::end(vector), 1);
 
     for (auto _ : state) 
     {
         benchmark::DoNotOptimize(std::ranges::lower_bound(std::as_const(vector), 0));
     }
 
-    state.SetComplexityN(state.range(0)); // note: try to search 1 instead of 0 in lower_bound
+    state.SetComplexityN(state.range(0));
 }
 
 //  ================================================================================================
@@ -119,23 +125,23 @@ void test_7(benchmark::State & state)
     {
         state.SkipWithError("test failed");
 
-        break; // note: prevent all further iterations
+        break;
     }
 } 
 
 //  ================================================================================================
 
-BENCHMARK(test_1); // note: fast, no exceptions
+BENCHMARK(test_1);
 
-BENCHMARK(test_2); // note: fast, no exceptions handling
+BENCHMARK(test_2);
 
-BENCHMARK(test_3); // note: slower than tests 1 and 2 due to exceptions handling
+BENCHMARK(test_3);
 
-BENCHMARK(test_4)->Arg(1); // note: single test with 1 argument
+BENCHMARK(test_4)->Arg(1);
 
-BENCHMARK(test_4)->DenseRange(0, 1024, 256); // note: 0, 256, 512, ...
+BENCHMARK(test_4)->DenseRange(0, 1024, 256);
 
-BENCHMARK(test_4)->RangeMultiplier(2)->Range(128, 1024); // note: 128, 256, 512, ...
+BENCHMARK(test_4)->RangeMultiplier(2)->Range(128, 1024);
 
 BENCHMARK(test_5)->Args({ 1, 2 })->Args({ 2, 4 })->Args({ 3, 6 });
 
@@ -146,9 +152,9 @@ void make_arguments(benchmark::internal::Benchmark * benchmark)
 
 BENCHMARK(test_5)->Apply(make_arguments);
 
-BENCHMARK(test_6)->RangeMultiplier(2)->Range(1024, 1024 << 16)->Complexity(); // note: lgN
+BENCHMARK(test_6)->RangeMultiplier(2)->Range(1024, 1024 << 16)->Complexity();
 
-BENCHMARK(test_7); // note: exited with error
+BENCHMARK(test_7);
 
 //  ================================================================================================
 

@@ -30,11 +30,11 @@ template <> struct std::formatter < Color >
 
 int main()
 {
-    std::cout << std::format("Answer is {}", 42) << std::endl; // note: см. форматирование в Python
+    std::cout << std::format("Answer is {}", 42) << std::endl; // support: Python
 
     std::string buffer;
 
-    std::format_to(std::back_inserter(buffer), "Answer is {}", 42); // note: см. std::format_to_n
+    std::format_to(std::back_inserter(buffer), "Answer is {}", 42);
 
     std::cout << buffer << std::endl;
 
@@ -61,7 +61,7 @@ int main()
 
     [[maybe_unused]] constexpr Color color { 127, 127, 127 };
 
-//  std::cout << std::format("{}", color) << std::endl; // note: см. обновления GCC
+//  std::cout << std::format("{}", color) << std::endl; // support: GCC
 
     return 0;
 }

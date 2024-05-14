@@ -15,7 +15,7 @@
 
 template < typename F, typename ... Ts > 
 
-[[nodiscard]] inline constexpr decltype(auto) async_invoke(F && f, Ts && ... args)
+[[nodiscard]] inline decltype(auto) async_invoke(F && f, Ts && ... args)
 {
 	return std::async(std::launch::async, std::forward < F > (f), std::forward < Ts > (args)...);
 }
@@ -28,7 +28,7 @@ template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T su
 
 	const std::size_t size = std::distance(begin, end);
 
-	const std::size_t min_size = 100; // note: демонстрация
+	const std::size_t min_size = 100; // demo
 	
 	if (size <= min_size)
 	{
@@ -58,7 +58,7 @@ int main()
 
     try
     {
-        std::async(std::launch::async, [](){ throw std::runtime_error("error"); }).get();
+        std::async(std::launch::async, []() constexpr { throw std::runtime_error("error"); }).get();
     }
     catch(const std::exception & exception)
     {
@@ -67,7 +67,7 @@ int main()
 
 //  ================================================================================================
 
-	constexpr std::size_t size = 1'000;
+	constexpr std::size_t size = 1000;
 
 	std::vector < int > vector(size, 0);
 

@@ -1,4 +1,4 @@
-module; // note: global module fragment
+module;
 
 #include <iostream>
 

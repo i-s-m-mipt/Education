@@ -20,13 +20,13 @@ void test_1(benchmark::State & state)
 {
     for (auto _ : state)
     {
-        std::array < int, 100'000 > array; // note: template parameter instead of state.range(0), consider stack limit
+        std::array < int, 100'000 > array;
 
-        std::iota(std::begin(array), std::end(array), 1); // note: generate range 1, 2, 3, ...
+        std::iota(std::begin(array), std::end(array), 1); 
 
-        const auto start = Clock::now(); // note: manual timing
+        const auto start = Clock::now();
 
-        std::ranges::sort(array, std::greater()); // note: sort range in descending order
+        std::ranges::sort(array, std::greater());
 
         state.SetIterationTime(std::chrono::duration_cast < std::chrono::duration < double > > (Clock::now() - start).count());
 
@@ -42,11 +42,11 @@ void test_2(benchmark::State & state)
     {
         std::vector < int > vector(state.range(0));
 
-        std::iota(std::begin(vector), std::end(vector), 1); // note: generate range 1, 2, 3, ...
+        std::iota(std::begin(vector), std::end(vector), 1); 
 
-        const auto start = Clock::now(); // note: manual timing
+        const auto start = Clock::now();
 
-        std::ranges::sort(vector, std::greater()); // note: sort range in descending order
+        std::ranges::sort(vector, std::greater());
 
         state.SetIterationTime(std::chrono::duration_cast < std::chrono::duration < double > > (Clock::now() - start).count());
 
@@ -62,11 +62,11 @@ void test_3(benchmark::State & state)
     {
         std::deque < int > deque(state.range(0));
 
-        std::iota(std::begin(deque), std::end(deque), 1); // note: generate range 1, 2, 3, ...
+        std::iota(std::begin(deque), std::end(deque), 1); 
 
-        const auto start = Clock::now(); // note: manual timing
+        const auto start = Clock::now();
 
-        std::ranges::sort(deque, std::greater()); // note: sort range in descending order
+        std::ranges::sort(deque, std::greater());
 
         state.SetIterationTime(std::chrono::duration_cast < std::chrono::duration < double > > (Clock::now() - start).count());
 
@@ -82,9 +82,9 @@ void test_4(benchmark::State & state)
     {
         std::list < int > list(state.range(0));
 
-        std::iota(std::begin(list), std::end(list), 1); // note: generate range 1, 2, 3, ...
+        std::iota(std::begin(list), std::end(list), 1); 
 
-        const auto start = Clock::now(); // note: manual timing
+        const auto start = Clock::now();
 
         list.sort(std::greater());
 
@@ -102,9 +102,9 @@ void test_5(benchmark::State & state)
     {
         std::forward_list < int > forward_list(state.range(0));
 
-        std::iota(std::begin(forward_list), std::end(forward_list), 1); // note: generate range 1, 2, 3, ...
+        std::iota(std::begin(forward_list), std::end(forward_list), 1); 
 
-        const auto start = Clock::now(); // note: manual timing
+        const auto start = Clock::now();
 
         forward_list.sort(std::greater());
 
@@ -117,10 +117,10 @@ void test_5(benchmark::State & state)
 //  ================================================================================================
 
 BENCHMARK(test_1); 
-BENCHMARK(test_2)->Arg(100'000); // note: slower
-BENCHMARK(test_3)->Arg(100'000); // note: slower
-BENCHMARK(test_4)->Arg(100'000); // note: slower
-BENCHMARK(test_5)->Arg(100'000); // note: slower
+BENCHMARK(test_2)->Arg(100'000);
+BENCHMARK(test_3)->Arg(100'000);
+BENCHMARK(test_4)->Arg(100'000);
+BENCHMARK(test_5)->Arg(100'000);
 
 //  ================================================================================================
 

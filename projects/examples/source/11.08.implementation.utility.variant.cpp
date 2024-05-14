@@ -93,7 +93,7 @@ namespace detail
 
 namespace detail
 {
-    template < typename ... Ts > class Storage // note: non-polymorphic base class
+    template < typename ... Ts > class Storage
     {
     protected:
 
@@ -102,14 +102,14 @@ namespace detail
 
     protected:
 
-        template < typename T > [[nodiscard]] T * buffer_as() const noexcept // note: need C++26
+        template < typename T > [[nodiscard]] T * buffer_as() const noexcept
         {
-            return std::bit_cast < T * > (&m_buffer); // note: consider std::launder optimization
+            return std::bit_cast < T * > (&m_buffer); // support: std::launder
         }
 
     public:
 
-        std::size_t current_index = 0; // note: public instead of trivial getters and setters
+        std::size_t current_index = 0;
 
     private:
 
@@ -123,14 +123,14 @@ namespace detail
 
 namespace detail
 {
-    template < typename D, typename T, typename ... Ts > class Selection // note: non-polymorphic base class
+    template < typename D, typename T, typename ... Ts > class Selection
     {
     protected:
 
         Selection() noexcept = default;
        ~Selection() noexcept = default;
 
-    public: // note: construct_at from C++20 instead of placement new for constexpr support
+    public:
 
         explicit Selection(const T & value) 
         { 
@@ -176,8 +176,7 @@ namespace detail
 
     private:
 
-        [[nodiscard]] const D & derived() const noexcept { return *(static_cast < const D * > (this)); }
-        [[nodiscard]]       D & derived()       noexcept { return *(static_cast <       D * > (this)); }
+        [[nodiscard]] D & derived() noexcept { return *(static_cast < D * > (this)); }
 
         void update() noexcept { derived().current_index = index; }
 
@@ -196,11 +195,9 @@ namespace detail
 
 //  ================================================================================================
 
-template < typename ... Ts > class Variant : 
+template < typename ... Ts > class Variant : private detail::Storage < Ts ... > , 
 
-    private detail::Storage < Ts ... > , 
-
-    private detail::Selection < Variant < Ts ... > , Ts, Ts ... > ... // note: variadic base classes
+    private detail::Selection < Variant < Ts ... > , Ts, Ts ... > ...
 {
 public:
 
@@ -209,7 +206,7 @@ public:
     using Derived = Variant < Ts ... > ;
 
     using detail::Selection < Derived, Ts, Ts ... > ::Selection...;
-    using detail::Selection < Derived, Ts, Ts ... > ::operator=...; // note: inherited operator= from Selection
+    using detail::Selection < Derived, Ts, Ts ... > ::operator=...;
 
 public:
 
@@ -227,14 +224,22 @@ public:
 
     Variant & operator=(const Variant & other)
     {
-        other.empty() ? destroy() : other.visit([this](const auto & value) { *this = value; });
+        if (!other.empty())
+        {
+            other.visit([this](const auto & value){ *this = value; });
+        }
+        else destroy();
             
         return *this;
     }
 
     Variant & operator=(Variant && other)
     {
-        other.empty() ? destroy() : other.visit([this](auto && value) { *this = std::move(value); });
+        if (!other.empty())
+        {
+            other.visit([this](auto && value){ *this = std::move(value); });
+        }
+        else destroy();
             
         return *this;
     }
@@ -257,14 +262,16 @@ public:
 
     template < typename T > [[nodiscard]] const T & get() const
     {
-        if (empty() || !has < T > ()) throw std::bad_variant_access();
+        if (empty() || !has < T > ()) throw std::bad_variant_access("invalid type");
 
         return *(this->template buffer_as < T > ());
     }  
 
 private:
 
-    template < typename V, typename U, typename ... Us > void do_visit(V && visitor, List < U, Us ... > ) const
+    template < typename V, typename U, typename ... Us > 
+    
+    void do_visit(V && visitor, List < U, Us ... > ) const
     {
         if (this->template has < U > ()) 
         {
@@ -274,12 +281,12 @@ private:
         {
             do_visit(std::forward < V > (visitor), List < Us ... > ());
         }
-        else throw std::bad_variant_access();
+        else throw std::bad_variant_access("invalid type");
     }
 
     void destroy() noexcept
     {
-        (detail::Selection < Derived, Ts, Ts ... > ::destroy(), ... ); // note: fold expression
+        (detail::Selection < Derived, Ts, Ts ... > ::destroy(), ... );
 
         this->current_index = 0;
     }
@@ -292,7 +299,7 @@ private:
 
 //  ================================================================================================
 
-class C { public: constexpr explicit C(int) {} }; // note: not default constructible
+class C { public: constexpr explicit C(int) {} };
 
 //  ================================================================================================
 
@@ -310,14 +317,14 @@ TEST(Variant, Functions)
 
     ASSERT_TRUE(variant_1.has < int > () && variant_1.get < int > () == 42);
 
-//  Variant < C, int > variant_3; // error: not default constructible
+//  Variant < C, int > variant_3; // error
 
     Variant < std::monostate, int > variant_4;
 }
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for testing
+int main(int argc, char ** argv)
 {
     Variant < char, int, double > variant(3.14);
 

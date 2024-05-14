@@ -4,7 +4,7 @@
 #include <iterator>
 #include <locale>
 
-int main() // note: см. locale -a на Linux
+int main() // support: locale -a
 {
 	const auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 
@@ -63,7 +63,7 @@ int main() // note: см. locale -a на Linux
 				  dateorder == std::time_base::ymd ? "ymd" :
 				  dateorder == std::time_base::ydm ? "ydm" : "unknown") << std::endl;
 
-	std::ios_base::iostate state = std::ios_base::goodbit; tm input; // note: см. потоки
+	auto state = std::ios_base::goodbit; tm input;
 
 	time_get_C.get(std::istreambuf_iterator < char > (std::cin), 
 				   std::istreambuf_iterator < char > (        ),

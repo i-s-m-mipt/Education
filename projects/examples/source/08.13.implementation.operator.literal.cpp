@@ -2,15 +2,15 @@
 #include <iostream>
 #include <numbers>
 
-using namespace std::literals; // note: std::chrono, std::complex, std::string
+using namespace std::literals;
 
 //  ================================================================================================
 
-struct Kilometers { unsigned long long n{}; }; // note: user-defined units
+struct Kilometers { unsigned long long n{}; };
 
 //  ================================================================================================
 
-namespace literals // good: namespace for user-defined literals
+namespace literals
 {
 	[[nodiscard]] inline constexpr Kilometers operator""_km(unsigned long long kilometers) noexcept
 	{
@@ -52,13 +52,13 @@ using namespace literals;
 
 int main()
 {
-	[[maybe_unused]] constexpr auto duration = 600s; // note: auto -> std::chrono::seconds
+	[[maybe_unused]] constexpr auto duration = 600s; // detail: std::chrono::seconds
 
-	[[maybe_unused]] constexpr auto distance = 5_km; // note: auto -> kilometers, underscore required
+	[[maybe_unused]] constexpr auto distance = 5_km; // detail: Kilometers
 
 	std::cout << 90.0_deg_to_rad << std::endl;
 
-	std::cout << 210_b3 << std::endl; // note: ternary literal
+	std::cout << 210_b3 << std::endl;
 
 	return 0;
 }

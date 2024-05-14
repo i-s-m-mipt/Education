@@ -4,7 +4,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] double f(std::size_t size) noexcept // note: complex calculations
+[[nodiscard]] double f(std::size_t size) noexcept
 {
 	auto result = 0.0;
 
@@ -17,7 +17,7 @@
 			const auto l = std::pow(std::sin(argument), 2.0);
 			const auto r = std::pow(std::cos(argument), 2.0);
 
-			result += (l + r); // note: optimization required
+			result += (l + r);
 		}
 	}
 

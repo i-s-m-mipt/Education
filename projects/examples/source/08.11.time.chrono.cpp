@@ -23,7 +23,7 @@ template < typename C > void verify(const std::string & name)
 
 //  ================================================================================================
 
-class Chronometer // note: RAII-based chronometer
+class Chronometer // support: RAII
 {
 public:
 
@@ -41,9 +41,15 @@ public:
 
 	void elapsed() const
 	{
-		std::cout << "Chronometer " << m_name << " elapsed " << std::setprecision(6) << 
-			std::fixed << std::chrono::duration_cast < std::chrono::microseconds > (
-				clock_t::now() - m_begin).count() / 1'000'000.0 << " (seconds)" << std::endl;
+		const auto duration = clock_t::now() - m_begin;
+
+		const auto delta = std::chrono::duration_cast < std::chrono::microseconds > (duration);
+
+		std::cout << "Chronometer " << m_name << " elapsed ";
+
+		std::cout << std::setprecision(6) << std::fixed << delta.count() / 1'000'000.0;
+
+		std::cout << " (seconds)" << std::endl;
 	}
 
 private:
@@ -59,15 +65,15 @@ private:
 int main()
 {
 	verify < std::chrono::system_clock > ("system clock");
-	verify < std::chrono::steady_clock > ("steady clock"); // note: monotonic clock
+	verify < std::chrono::steady_clock > ("steady clock");
 
 //  ================================================================================================
 	
-	std::cout << std::chrono::system_clock::time_point() << std::endl; // note: clock epoch
+	std::cout << std::chrono::system_clock::time_point() << std::endl;
 
-	auto now = std::chrono::system_clock::now(); // note: time point for current time
+	auto now = std::chrono::system_clock::now();
 
-	std::cout << now << ' ' << std::chrono::system_clock::to_time_t(now) << std::endl; // note: 2038
+	std::cout << now << ' ' << std::chrono::system_clock::to_time_t(now) << std::endl; // support: 2038
 
 //  ================================================================================================
 
@@ -83,9 +89,9 @@ int main()
 
 	std::cout << std::chrono::duration_cast < std::chrono::days > (result) << std::endl;
 
-	std::cout << now - std::chrono::days(10) << std::endl; // note: time point 10 days ago from now
+	std::cout << now - std::chrono::days(10) << std::endl;
 
-	std::cout << now - std::chrono::system_clock::time_point() << std::endl; // note: duration in ns since epoch
+	std::cout << now - std::chrono::system_clock::time_point() << std::endl;
 
 //  ================================================================================================
 
@@ -94,7 +100,7 @@ int main()
 	constexpr auto epsilon = 0.000001;
 
 	{
-		Chronometer chronometer("test"); // note: consider measurement series
+		Chronometer chronometer("test"); // support: Google.Benchmark
 
 		auto test = 0.0;
 
@@ -112,7 +118,7 @@ int main()
 //  ================================================================================================
 
 	{
-		boost::timer::cpu_timer timer; // note: consider measurement series
+		boost::timer::cpu_timer timer; // support: Google.Benchmark
 
 		auto test = 0.0;
 

@@ -106,21 +106,21 @@ int main()
 
 //  ================================================================================================
 
-	auto begin = vector.begin(); // note: copy of begin iterator, consider std::begin
+	auto begin = vector.begin(); // support: std::begin, std::end
 
-	std::advance(begin, 1); // good: better than += or -= in generic programming
+	std::advance(begin, 1);
 
 	advance_v1(begin, +2);
-	advance_v2(begin, -2); // note modern compact implementation based on concepts
+	advance_v2(begin, -2);
 
 	assert(*begin == 2);
 
-	assert(*std::next(vector.begin(), 2) == 3); // good: better than + in generic programming
-	assert(*std::prev(vector.end  (), 2) == 4); // good: better than - in generic programming
+	assert(*std::next(vector.begin(), 2) == 3);
+	assert(*std::prev(vector.end  (), 2) == 4);
 
 //  ================================================================================================
 
-	for (auto iterator = vector.begin(); iterator != vector.end(); ++iterator) // note: consider std::end
+	for (auto iterator = vector.begin(); iterator != vector.end(); ++iterator)
 	{
 		std::cout << *iterator << ' ';
 	}
@@ -129,7 +129,7 @@ int main()
 
 //  ================================================================================================
 
-	for (auto iterator = vector.rbegin(); iterator != vector.rend(); ++iterator) // note: reverse iterators
+	for (auto iterator = vector.rbegin(); iterator != vector.rend(); ++iterator)
 	{
 		std::cout << *iterator << ' ';
 	}
@@ -140,7 +140,7 @@ int main()
 
 	vector.resize(100);
 
-	std::cout << *begin << std::endl; // note: invalid iterator, try -D_GLIBCXX_DEBUG
+	std::cout << *begin << std::endl; // support: -D_GLIBCXX_DEBUG
 
 	return 0;
 }

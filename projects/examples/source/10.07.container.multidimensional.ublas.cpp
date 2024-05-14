@@ -3,8 +3,6 @@
 #include <stdexcept>
 #include <string>
 
-//#define BOOST_UBLAS_TYPE_CHECK 0 // bad: for integral types
-
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/lu.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
@@ -15,7 +13,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] double determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) // good: for small
+[[nodiscard]] double determinant_v1(const boost::numeric::ublas::matrix < double > & matrix)
 {
     if (const auto size = matrix.size1(); size == matrix.size2() && size != 0)
     {
@@ -41,12 +39,12 @@
             return determinant;
         }
     }
-    else throw std::invalid_argument("invalid sizes: " + std::to_string(size) + 'x' + std::to_string(matrix.size2()));
+    else throw std::runtime_error("invalid size");
 }
 
 //  ================================================================================================
 
-[[nodiscard]] double determinant_v2(const boost::numeric::ublas::matrix < double > & matrix) // good: for big
+[[nodiscard]] double determinant_v2(const boost::numeric::ublas::matrix < double > & matrix)
 {    
     if (const auto size = matrix.size1(); size == matrix.size2() && size != 0)
     {
@@ -56,7 +54,7 @@
     
             boost::numeric::ublas::permutation_matrix <> permutation(size);
 
-            if (!boost::numeric::ublas::lu_factorize(copy, permutation)) // note: verify singularity
+            if (!boost::numeric::ublas::lu_factorize(copy, permutation))
             {
                 auto determinant = 1.0;
 
@@ -72,7 +70,7 @@
             else return 0.0;
         }
     }
-    else throw std::invalid_argument("invalid sizes: " + std::to_string(size) + 'x' + std::to_string(matrix.size2()));
+    else throw std::runtime_error("invalid size");
 }
 
 //  ================================================================================================
@@ -110,7 +108,7 @@ TEST(Algorithm, Determinant)
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state) // note: better for 3x3 or less
+void test_1(benchmark::State & state)
 {
     const auto matrix = make_random_matrix(state.range(0));
 
@@ -122,7 +120,7 @@ void test_1(benchmark::State & state) // note: better for 3x3 or less
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state) // note: better for 4x4 or more
+void test_2(benchmark::State & state)
 {
     const auto matrix = make_random_matrix(state.range(0));
 
@@ -139,7 +137,7 @@ BENCHMARK(test_2)->DenseRange(1, 9, 1);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for testing and benchmark
+int main(int argc, char ** argv)
 {
     testing::InitGoogleTest(&argc, argv);
 

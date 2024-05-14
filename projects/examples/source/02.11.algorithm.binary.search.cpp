@@ -3,7 +3,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] const int * binary_search(const int * array, std::size_t size, int key) 
+[[nodiscard]] const int * binary_search(const int * array, std::size_t size, int key) // complexity: O(log(N))
 {
 	if (std::size_t l = 0, r = size; r != 0)
 	{
@@ -29,7 +29,7 @@ int main()
 	{
 		std::cout << "Index of element " << key << " in array: ";
 
-		if (const auto ptr = binary_search(array, size, key); ptr) // complexity: O(log(N))
+		if (const auto ptr = binary_search(array, size, key); ptr)
 		{
 			std::cout << ptr - array << std::endl;
 		}

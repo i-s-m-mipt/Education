@@ -64,8 +64,8 @@ void print_vector(const std::vector < int > & vector)
 //  ================================================================================================
 
 /*
-[[nodiscard]] int * get_dangling_pointer  () { auto local = 42; return &local; } // warning
-[[nodiscard]] int & get_dangling_reference() { auto local = 42; return  local; } // warning
+[[nodiscard]] int * get_dangling_pointer  () { auto local = 42; return &local; } // error
+[[nodiscard]] int & get_dangling_reference() { auto local = 42; return  local; } // error
 */
 
 //  ================================================================================================
@@ -96,7 +96,7 @@ inline void print(char, char) { std::cout << "print(char, char)" << std::endl; }
 
 int main()
 {
-//	f(42); // warning
+//	f(42); // error
 
 	[[maybe_unused]] const auto result = g(f(42), f(42));
 
@@ -125,8 +125,8 @@ int main()
 
 //  ================================================================================================
 
-//	std::cout << *get_dangling_pointer  () << std::endl; // warning
-//	std::cout <<  get_dangling_reference() << std::endl; // warning
+//	std::cout << *get_dangling_pointer  () << std::endl; // error
+//	std::cout <<  get_dangling_reference() << std::endl; // error
 
 	h(); h(); h();
 

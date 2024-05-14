@@ -24,7 +24,7 @@ public:
 
 	Date() : m_year(0), m_month(0), m_day(0) 
 	{
-//		m_year = 0; m_month = 0; m_day = 0; // bad: присваивание вместо инициализации	
+//		m_year = 0; m_month = 0; m_day = 0; // bad	
 
 		initialize(); 
 	}
@@ -64,7 +64,7 @@ public:
 
 	[[nodiscard]] integer_t year() const { return m_year; }
 
-//	void set_year(integer_t year) { m_year = year; } // bad: тривиальный сеттер
+//	void set_year(integer_t year) { m_year = year; } // bad
 
 	void set_year(integer_t year)
 	{
@@ -73,7 +73,7 @@ public:
 		m_is_string_valid = false;
 	}
 
-	[[nodiscard]] std::string get_date_as_string() const
+	[[nodiscard]] const std::string & get_date_as_string() const
 	{
 		if (!m_is_string_valid)
 		{
@@ -163,9 +163,9 @@ int main()
 	
 	const Date date_2(2023, 9, 19);
 
-//	const Date date_3(); // warning
+//	const Date date_3(); // error
 
-//	const Date date_4{}; // bad: избыточный синтаксис
+//	const Date date_4{}; // bad
 
 //  ================================================================================================
 

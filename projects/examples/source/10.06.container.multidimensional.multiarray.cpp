@@ -38,7 +38,7 @@ template < typename T, auto N, typename C > [[nodiscard]] auto make_array(const 
 
 	std::vector shape(N, typename array_t::index(0));
 
-	fill_shape < N > (c, std::begin(shape)); array_t array(shape); // note: 3x4x5
+	fill_shape < N > (c, std::begin(shape)); array_t array(shape); // detail: 3 x 4 x 5
 	fill_array < N > (c, std::begin(array));
 
 	return array;

@@ -12,7 +12,7 @@ struct Computer { enum class State { stop, slow, fast } state = State::stop; };
 
 //  ================================================================================================
 
-enum class Command // note: alternative version based on classes hierarchy
+enum class Command
 {
 	stop,
 	slow,
@@ -26,7 +26,7 @@ class Executor
 {
 public:
 
-	void execute() const
+	constexpr void execute() const
 	{
 		switch (m_command)
 		{
@@ -34,7 +34,7 @@ public:
 			case Command::slow: m_computer.state = Computer::State::slow; break;
 			case Command::fast: m_computer.state = Computer::State::fast; break;
 
-			default: throw std::invalid_argument("invalid command: " + std::to_string(static_cast < int > (m_command)));
+			default: throw std::runtime_error("invalid command");
 		}
 	}
 

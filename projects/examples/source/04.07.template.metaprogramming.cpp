@@ -7,7 +7,10 @@ template < auto N > struct Factorial
 	static constexpr auto value = N * Factorial < N - 1 > ::value;
 };
 
-template <> struct Factorial < 0 > { static constexpr auto value = 1; };
+template <> struct Factorial < 0 > 
+{ 
+	static constexpr auto value = 1; 
+};
 
 template < auto N > constexpr auto factorial_v = Factorial < N > ::value;
 
@@ -43,8 +46,7 @@ int main()
 {
 	std::cout << factorial_v < 5 > << std::endl;
 
-	std::cout << is_prime_v < 42 > << std::endl;
-	std::cout << is_prime_v < 43 > << std::endl;
+	std::cout <<  is_prime_v < 5 > << std::endl;
 
 	return 0;
 }

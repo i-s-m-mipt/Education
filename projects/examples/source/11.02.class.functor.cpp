@@ -9,16 +9,11 @@
 
 //  ================================================================================================
 
-[[nodiscard]] inline int f() noexcept // note: different functions have same types
-{
-	static auto state = 0; // note: internal state, consider reference arguments
-
-	return (state++);
-}
+[[nodiscard]] inline int f() noexcept { static auto state = 0; return (state++); }
 
 //  ================================================================================================
 
-class C // note: different classes have different types
+class C
 {
 public:
 
@@ -26,7 +21,7 @@ public:
 
 private:
 
-	mutable int m_state = 0; // note: internal state, consider logical constancy
+	mutable int m_state = 0;
 
 }; // class C
 
@@ -68,8 +63,8 @@ int main()
 {
 	std::vector < int > vector_1 { 1, 4, 2, 5, 3 };
 
-	std::ranges::sort(vector_1                ); // note: sort range in  ascending order
-	std::ranges::sort(vector_1, std::greater()); // note: sort range in descending order
+	std::ranges::sort(vector_1                );
+	std::ranges::sort(vector_1, std::greater());
 
 //  ================================================================================================
 
@@ -83,13 +78,13 @@ int main()
 
 	constexpr std::size_t size = 5;
 
-	constexpr C c; // note: functional object with overloaded operator()
+	constexpr C c;
 
 	std::vector < int > vector_2(size, 0); 
 	std::vector < int > vector_3(size, 0); 
 
-	std::ranges::generate(vector_2, f); // note: generate elements in range
-	std::ranges::generate(vector_3, c); // note: generate elements in range
+	std::ranges::generate(vector_2, f);
+	std::ranges::generate(vector_3, c);
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
@@ -101,19 +96,19 @@ int main()
 
 	Sum < int > sum;
 
-	sum = std::ranges::for_each(std::as_const(vector_2), sum).fun; // note: sum elements in range
-	sum = std::ranges::for_each(std::as_const(vector_3), sum).fun; // note: sum elements in range
+	sum = std::ranges::for_each(std::as_const(vector_2), sum).fun;
+	sum = std::ranges::for_each(std::as_const(vector_3), sum).fun;
 
 	assert(sum.result() == 20);
 
 //  ================================================================================================
 
 	std::ranges::transform(std::as_const(vector_2), 
-						   std::   begin(vector_2), std::negate()); // note: transform 1 range(s) to range
+						   std::   begin(vector_2), std::negate());
 
 	std::ranges::transform(std::as_const(vector_2), 
 						   std::as_const(vector_3), 
-						   std::   begin(vector_3), std::  plus()); // note: transform 2 range(s) to range
+						   std::   begin(vector_3), std::  plus());
 
 	for (const auto element : vector_3) assert(element == 0);
 
@@ -121,7 +116,7 @@ int main()
 
 	Mean < decltype(vector_1)::value_type > mean;
 
-	mean = std::ranges::for_each(std::as_const(vector_1), mean).fun; // note: sum and count elements in range
+	mean = std::ranges::for_each(std::as_const(vector_1), mean).fun;
 
 	assert(mean.result() == 3); 
 

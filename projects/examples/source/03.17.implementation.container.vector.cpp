@@ -46,7 +46,7 @@ public:
 	}
 
 	/*
-	Container & operator=(const Container & other) // bad: дублирование кода
+	Container & operator=(const Container & other) // bad
 	{
 		std::cout << "Container::operator= (copy)" << std::endl;
 
@@ -69,7 +69,7 @@ public:
 	*/
 
 	/*
-	Container & operator=(Container && other) // bad: дублирование кода
+	Container & operator=(Container && other) // bad
 	{
 		std::cout << "Container::operator= (move)" << std::endl;
 

@@ -18,7 +18,7 @@ void save(const std::filesystem::path & path, const nlohmann::json & object)
 	{
 		fout << std::setw(4) << object;
 	}
-	else throw std::runtime_error("unable to open file " + path.string());
+	else throw std::runtime_error("invalid file");
 }
 
 //  ================================================================================================
@@ -29,7 +29,7 @@ void save(const std::filesystem::path & path, const nlohmann::json & object)
 	{
 		return nlohmann::json::parse(fin);
 	}
-	else throw std::runtime_error("unable to open file " + path.string());
+	else throw std::runtime_error("invalid file");
 }
 
 //  ================================================================================================
@@ -67,7 +67,7 @@ int main()
 //  ================================================================================================
 
     {
-        nlohmann::json object; // note: см. boost::property_tree
+        nlohmann::json object; // support: boost::property_tree
 
         object[Key::b] = example.b;
 

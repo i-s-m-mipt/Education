@@ -14,7 +14,7 @@ private:
 
 public:
 
-	class Iterator : public boost::iterator_facade < Iterator, T, boost::forward_traversal_tag > // note: CRTP
+	class Iterator : public boost::iterator_facade < Iterator, T, boost::forward_traversal_tag >
 	{
 	public:
 

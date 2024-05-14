@@ -86,7 +86,7 @@ public:
 
 private:
 
-    T * m_ptr = nullptr; // note: consider std::aligned_storage_t
+    T * m_ptr = nullptr; // support: std::aligned_storage_t
 
 }; // template < typename T > class Optional 
 
@@ -125,7 +125,7 @@ TEST(Optional, Functions)
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for testing
+int main(int argc, char ** argv)
 {
     testing::InitGoogleTest(&argc, argv);
 

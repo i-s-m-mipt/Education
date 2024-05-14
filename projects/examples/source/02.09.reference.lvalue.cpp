@@ -10,14 +10,13 @@ int main()
 //	[[maybe_unused]]       int &  ri     ; // error
 //	[[maybe_unused]]       int &  ry =  y; // error
 
-	[[maybe_unused]]       int &  rx =  x; rx = 42;
+	[[maybe_unused]]       int &  rx =  x; rx = 43;
 	[[maybe_unused]] const int & cry =  y;
+
+//	cry = 43; // error
 
 //	[[maybe_unused]]       int &  rv = 42; // error
 	[[maybe_unused]] const int & crv = 42;
-
-//	cry = 42; // error
-//	crv = 42; // error
 
 //  ================================================================================================
 

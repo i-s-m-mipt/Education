@@ -5,49 +5,49 @@
 
 //  ================================================================================================
 
-void f() // note: definition, external linkage
+void f()
 {
 	std::cout << "f from source" << std::endl;
 }
 
 //  ================================================================================================
 
-int global_x1; // note: zero value initialization, external linkage
+int global_x1;
 
-namespace // note: anonymous namespace
+namespace
 {
-	[[maybe_unused]] int global_x2; // note: internal linkage
+	[[maybe_unused]] int global_x2;
 
 } // namespace
 
-       const int global_y1 = 42; // note: internal linkage
-extern const int global_y2 = 42; // note: external linkage
+       const int global_y1 = 42;
+extern const int global_y2 = 42;
 
 //  ================================================================================================
 
-#define PROMPT "Hello, " // note: object-like macros with substitution text
+#define PROMPT "Hello, "
 
-#define FUNCTION(name) inline void generated_##name() \
-{ std::cout << PROMPT << #name << std::endl; }
+#define FUNCTION(name) inline void generated_##name() { std::cout << PROMPT << #name << std::endl; }
 
 FUNCTION(f)
 FUNCTION(g)
 FUNCTION(h)
 
-#undef FUNCTION // note: be careful when undef outer macros
+#undef FUNCTION
 
-#define FUNCTION 42 // note: redefined macro as object-like
+#define FUNCTION 42
 
-//#define BAD_SQUARE(x) (x * x) // bad: incorrect computation
+/*
+#define BAD_SQUARE_v1(x) ( x  *  x ) // bad
+#define BAD_SQUARE_v2(x) ((x) * (x)) // bad
+*/
 
-//#define SQUARE(x) ((x) * (x)) // bad: dangerous side effect
+#define HAS_TRACE
 
-#define HAS_TRACE // note: object-like macros without substitution text
-
-#if defined(_DEBUG) && defined(HAS_TRACE) // note: _DEBUG is a preset macro in Visual Studio
-#  define TRACE std::cout << __FILE__ << ':' << __LINE__ << ':' << __func__ << std::endl
+#if !defined(NDEBUG) && defined(HAS_TRACE)
+#  define TRACE std::cout << __FILE__ << " : " << __LINE__ << " : " << __func__ << std::endl;
 #else
-#  define TRACE // good: nothing to do in release mode
+#  define TRACE
 #endif
 
 //  ================================================================================================
@@ -58,29 +58,28 @@ void test_macros()
 	generated_g();
 	generated_h();
 
-	std::cout << FUNCTION << std::endl; // note: redefined as number
+	std::cout << FUNCTION << std::endl;
 
 //  ================================================================================================
 
-	[[maybe_unused]] auto x = 42; // note: consider trigrpahs in online compiler
+	[[maybe_unused]] auto x = 42;
 
-//	std::cout << BAD_SQUARE(x + 1) << std::endl; // bad: incorrect macro
-
-//	std::cout << SQUARE(x++) << ' ' << x << std::endl; // bad: dangerous side effect
-//	std::cout << SQUARE(++x) << ' ' << x << std::endl; // bad: dangerous side effect
-
-//  ================================================================================================
-
-	std::cout << __FILE__ << std::endl; // good: useful macro
-	std::cout << __LINE__ << std::endl; // good: useful macro
-	std::cout << __DATE__ << std::endl; // good: useful macro
-	std::cout << __TIME__ << std::endl; // good: useful macro
-
-	std::cout << __func__ << std::endl; // note: implicit local array with function name
+//	std::cout << BAD_SQUARE_v1(x + 1) << ' ' << x << std::endl; // bad
+//	std::cout << BAD_SQUARE_v2(++x  ) << ' ' << x << std::endl; // bad
+//	std::cout << BAD_SQUARE_v2(  x++) << ' ' << x << std::endl; // bad
 
 //  ================================================================================================
 
-	constexpr auto location = std::source_location::current(); // good: macros alternative
+	std::cout << __FILE__ << std::endl;
+	std::cout << __LINE__ << std::endl;
+	std::cout << __DATE__ << std::endl;
+	std::cout << __TIME__ << std::endl;
+
+	std::cout << __func__ << std::endl;
+
+//  ================================================================================================
+
+	constexpr auto location = std::source_location::current();
 
 	std::cout << location.    file_name() << std::endl;
 	std::cout << location.         line() << std::endl;
@@ -89,19 +88,19 @@ void test_macros()
 
 //  ================================================================================================
 
-	TRACE; // good: semicolon at end
+	TRACE;
 }
 
 //  ================================================================================================
 
-void C::print() const // good: member function definition in source file
+void C::print() const
 {
 	std::cout << "C::print" << std::endl;
 }
 
 //  ================================================================================================
 
-namespace education::examples // note: namespaces additivity
+namespace education::examples
 {
 	void print()
 	{

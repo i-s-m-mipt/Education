@@ -7,7 +7,7 @@
 
 //  ================================================================================================
 
-void insertion_sort(std::vector < int > & vector, std::size_t l, std::size_t r) 
+void insertion_sort(std::vector < int > & vector, std::size_t l, std::size_t r) // complexity: O(N ^ 2)
 {
 	for (auto i = l + 1; i < r; ++i) 
 	{
@@ -39,11 +39,11 @@ void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t m, std:
 
 //  ================================================================================================
 
-void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t r) 
+void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t r) // complexity: O(N * log(N))
 {
 	if (static const std::size_t block = 64; r - l <= block)
 	{
-		insertion_sort(vector, l, r); // complexity: O(N^2)
+		insertion_sort(vector, l, r);
 	}
 	else
 	{
@@ -67,7 +67,7 @@ int main()
 
 	std::ranges::reverse(vector);
 
-	merge_sort(vector, 0, size); // complexity: O(N*log(N))
+	merge_sort(vector, 0, size);
 
 	for (const auto element : vector) std::cout << element << ' ';
 

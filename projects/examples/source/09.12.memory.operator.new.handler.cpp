@@ -6,24 +6,24 @@
 
 //  ================================================================================================
 
-inline void cleanup() // note: cleanup will be called at exit
+inline void cleanup()
 {
     std::cerr << "cleanup: bad allocation\n";
 }
 
-inline void handler() // note: handler will be called at every bad allocation
+inline void handler()
 {
     std::cerr << "handler: bad allocation\n";
 
-    std::exit(-1); // note: consider std::abort()
+    std::exit(-1); // suport: std::abort()
 }
 
 //  ================================================================================================
 
 int main()
 {
-    std::atexit         (cleanup); // note: set callback function for exit
-    std::set_new_handler(handler); // note: set callback function for new
+    std::atexit         (cleanup);
+    std::set_new_handler(handler);
 
 //  ================================================================================================
 
@@ -31,10 +31,10 @@ int main()
     {
         while (true)
         {
-            new const int[100'000'000]{}; // note: constructor can throw exceptions
+            new const int[100'000'000]{};
         }
     }
-    catch (const std::bad_alloc & exception) // good: new style approach
+    catch (const std::bad_alloc & exception)
     {
         std::cerr << "message: " << exception.what() << '\n';
     }

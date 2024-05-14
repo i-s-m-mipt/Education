@@ -9,8 +9,8 @@ int main()
 
 //  ================================================================================================
 
-	std::cout << (b1 || (b1 != b2)) << std::endl; // output: 1; detail: XOR
-	std::cout << (b2 && (b1 != b2)) << std::endl; // output: 0; detail: XOR
+	std::cout << (b1 || (b1 != b2)) << std::endl; // output: 1; support: XOR
+	std::cout << (b2 && (b1 != b2)) << std::endl; // output: 0; support: XOR
 
 //  ================================================================================================
 
@@ -58,7 +58,7 @@ int main()
 	
 //  ================================================================================================
 
-	std::cout << (!!x != !!y) << std::endl; // output: 0; detail: XOR
+	std::cout << (!!x != !!y) << std::endl; // output: 0; support: XOR
 
 	const auto d1 = 1.0, d2 = 2.0;
 
@@ -77,7 +77,7 @@ int main()
 
 	[[maybe_unused]] auto z = (1 + 4) / (2 + 3);
 
-//	std::cout << (z + ++z) << std::endl; // warning
+//	std::cout << (z + ++z) << std::endl; // error
 
 	[[maybe_unused]] auto m = 1 + 2 + 3;
 	[[maybe_unused]] auto n = x = y = z;

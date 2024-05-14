@@ -11,7 +11,7 @@ class Ratio
 {
 public:
 
-	/*explicit*/ Ratio(int num = 0, int den = 1) : m_num(num), m_den(den)
+	Ratio(int num = 0, int den = 1) : m_num(num), m_den(den) // support: explicit
 	{
 		if (m_den == 0) std::cerr << "invalid denominator\n";
 
@@ -147,7 +147,7 @@ inline void swap(Ratio & x, Ratio & y) { x.swap(y); }
 
 int main()
 {
-	Ratio ratio_1, ratio_2(2), ratio_3 = 3, ratio_4(-4, 5);
+	Ratio ratio_1, ratio_2(2), ratio_3 = 3, ratio_4(2, 5);
 
 //	std::vector < int > vector = 42; // error
 
@@ -155,43 +155,43 @@ int main()
 
 //  ================================================================================================
 
-	Ratio ratio_5{}; std::cin >> ratio_5; std::cout << ratio_5 << std::endl;
+	Ratio ratio_5; std::cin >> ratio_5; std::cout << ratio_5 << std::endl;
 
 //  ================================================================================================
 
 	std::cout << (ratio_4 +=       1) << std::endl;
-	std::cout << (ratio_4 -= ratio_1) << std::endl;
-	std::cout << (ratio_4 *= ratio_2) << std::endl;
-	std::cout << (ratio_4 /= ratio_3) << std::endl;
-//	std::cout << (      1 += ratio_4) << std::endl; // error
+	std::cout << (ratio_4 -= ratio_5) << std::endl;
+	std::cout << (ratio_4 *= ratio_5) << std::endl;
+	std::cout << (ratio_4 /= ratio_5) << std::endl;
+//	std::cout << (      1 += ratio_5) << std::endl; // error
 
-	std::cout << ratio_4.operator+=(ratio_1) << std::endl;
-
-//  ================================================================================================
-
-	std::cout << (++ratio_4  ) << std::endl;
-	std::cout << (--ratio_4  ) << std::endl;
-	std::cout << (  ratio_4++) << std::endl;
-	std::cout << (  ratio_4--) << std::endl;
+	std::cout << ratio_4.operator+=(ratio_5) << std::endl;
 
 //  ================================================================================================
 
-	std::cout << (      1 + ratio_4) << std::endl;
-	std::cout << (ratio_4 -       1) << std::endl;
-	std::cout << (ratio_4 * ratio_3) << std::endl;
-	std::cout << (ratio_4 / ratio_2) << std::endl;
-	std::cout << (      1 /       1) << std::endl;
-
-	std::cout << operator+(ratio_4, ratio_1) << std::endl;
+	std::cout << (        ++ ratio_5) << std::endl;
+	std::cout << (        -- ratio_5) << std::endl;
+	std::cout << (ratio_4 ++        ) << std::endl;
+	std::cout << (ratio_4 --        ) << std::endl;
 
 //  ================================================================================================
 
-	std::cout << (ratio_3 <  ratio_4) << std::endl;
-	std::cout << (ratio_3 >  ratio_4) << std::endl;
-	std::cout << (ratio_3 <= ratio_4) << std::endl;
-	std::cout << (ratio_3 >= ratio_4) << std::endl;
-	std::cout << (ratio_3 == ratio_4) << std::endl;
-	std::cout << (ratio_3 != ratio_4) << std::endl;
+	std::cout << (      1 +  ratio_5) << std::endl;
+	std::cout << (ratio_4 -        1) << std::endl;
+	std::cout << (ratio_4 *  ratio_5) << std::endl;
+	std::cout << (ratio_4 /  ratio_5) << std::endl;
+	std::cout << (      1 /        1) << std::endl;
+
+	std::cout << operator+(ratio_4, ratio_5) << std::endl;
+
+//  ================================================================================================
+
+	std::cout << (ratio_4 <  ratio_5) << std::endl;
+	std::cout << (ratio_4 >  ratio_5) << std::endl;
+	std::cout << (ratio_4 <= ratio_5) << std::endl;
+	std::cout << (ratio_4 >= ratio_5) << std::endl;
+	std::cout << (ratio_4 == ratio_5) << std::endl;
+	std::cout << (ratio_4 != ratio_5) << std::endl;
 
 //  ================================================================================================
 

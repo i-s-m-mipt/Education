@@ -46,7 +46,7 @@ int main()
 {
 	std::cout << Hash()(Person("Matthias")) << std::endl;
 
-	std::unordered_set < Person, Hash, Equal > persons; // note: same for other containers
+	std::unordered_set < Person, Hash, Equal > persons;
 
 	persons.emplace("Matthias");
 

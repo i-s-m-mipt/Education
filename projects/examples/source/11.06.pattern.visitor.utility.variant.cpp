@@ -22,17 +22,17 @@ public:
 
     void operator()(const Mobile & mobile) const
     {
-        if (mobile.run() != 42) throw std::runtime_error("Mobile::run error");
+        if (mobile.run() != 42) throw std::runtime_error("invalid Mobile");
     }
 
     void operator()(const Tablet & tablet) const
     {
-        if (tablet.run() != 42) throw std::runtime_error("Tablet::run error");
+        if (tablet.run() != 42) throw std::runtime_error("invalid Tablet");
     }
 
     void operator()(const Laptop & laptop) const
     {
-        if (laptop.run() != 42) throw std::runtime_error("Laptop::run error");
+        if (laptop.run() != 42) throw std::runtime_error("invalid Laptop");
     }
 
 }; // class Tester
@@ -49,7 +49,7 @@ int main()
     constexpr Computer computer_2 = Tablet();
     constexpr Computer computer_3 = Laptop();
 
-    constexpr Visitor < Tester > visitor(Tester{}); // note: just Visitor in MSVC
+    constexpr Visitor < Tester > visitor(Tester{});
 
     try
     {
@@ -68,7 +68,7 @@ int main()
 
     constexpr auto lambda = [](auto x) constexpr noexcept { return x; };
 
-    Visitor < decltype(lambda) > test(lambda); // note: just Visitor in MSVC
+    Visitor < decltype(lambda) > test(lambda);
 
     assert(std::visit(test, std::variant < int > (42)) == 42);
 

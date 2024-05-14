@@ -24,7 +24,7 @@ int main()
 
 //  ================================================================================================
 
-    try
+    try // support: std::filesystem::filesystem_error
 	{
         const auto path_2 = "directory/stem.extension"_p;
 
@@ -32,7 +32,7 @@ int main()
 	}
 	catch (const std::exception & exception)
 	{
-		std::cerr << exception.what() << '\n'; // note: см. std::filesystem::filesystem_error
+		std::cerr << exception.what() << '\n'; 
 	}
 
 //  ================================================================================================

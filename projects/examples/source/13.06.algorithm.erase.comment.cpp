@@ -9,7 +9,7 @@ int main()
 	if (std::fstream fin("13.07.algorithm.erase.comment.test.txt", std::ios::in); fin)
     {
         std::string code { std::istreambuf_iterator < char > (fin),
-		                   std::istreambuf_iterator < char > (   ) } ;
+		                   std::istreambuf_iterator < char > (   ) };
 
         for (auto current = std::begin(code); current != std::end(code); ++current) 
         {

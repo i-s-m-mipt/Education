@@ -28,7 +28,7 @@ public:
 
 	}; // class Row 
 
-	[[nodiscard]] constexpr Row operator[](std::size_t index) noexcept // note: operator[][] is invalid syntax
+	[[nodiscard]] constexpr Row operator[](std::size_t index) noexcept 
 	{
 		return Row(m_array[index]);
 	}
@@ -47,7 +47,7 @@ int main()
 
 //  ================================================================================================
 
-	[[maybe_unused]] int array_2D_v1[size][size]{}; // note: built-in static 2D array
+	[[maybe_unused]] int array_2D_v1[size][size]{};
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
@@ -59,24 +59,23 @@ int main()
 
 //  ================================================================================================
 
-	Array_2D < int, size > array_2D_v2; // note: custom static 2D array
+	Array_2D < int, size > array_2D_v2;
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
 		for (std::size_t j = 0; j < size; ++j)
 		{
-			array_2D_v2[i][j] = 42;
-//			array_2D_v2(i, j) = 42; // note: consider as alternative
+			array_2D_v2[i][j] = 42; // support: operator()
 		}
 	}
 
 //  ================================================================================================
 
-	const auto array_2D_v3 = new int*[size]{}; // note: built-in dynamic 2D array
+	const auto array_2D_v3 = new int*[size]{};
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		array_2D_v3[i] = new int[size]{}; // note: array of rows
+		array_2D_v3[i] = new int[size]{};
 	}
 
 	for (std::size_t i = 0; i < size; ++i)
@@ -96,7 +95,7 @@ int main()
 
 //  ================================================================================================
 
-	const auto array_2D_v4 = new int[size * size]{}; // note: linearized built-in dynamic 2D array
+	const auto array_2D_v4 = new int[size * size]{};
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
@@ -110,7 +109,7 @@ int main()
 
 //  ================================================================================================
 
-	std::array < std::array < int, size > , size > array_2D_v5; // note: static 2D std::array
+	std::array < std::array < int, size > , size > array_2D_v5;
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
@@ -122,7 +121,7 @@ int main()
 
 //  ================================================================================================
 
-	std::vector array_2D_v6(size, std::vector < int > (size)); // note: dynamic 2D std::vector
+	std::vector array_2D_v6(size, std::vector < int > (size));
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
@@ -138,7 +137,7 @@ int main()
 	constexpr std::size_t size_2 = 4;
 	constexpr std::size_t size_3 = 5;
 
-	boost::multi_array < int, 3 > array_2D_v7(boost::extents[size_1][size_2][size_3]); // note: 3D boost::multi_array
+	boost::multi_array < int, 3 > array_2D_v7(boost::extents[size_1][size_2][size_3]);
 
 	auto index = 0;
 
@@ -161,7 +160,7 @@ int main()
 
 	using range_t = boost::multi_array_types::index_range;
 
-	auto view = array_2D_v7[boost::indices[range_t(0, 2)][1][range_t(0, 5, 2)]]; // note: 2D partial view
+	auto view = array_2D_v7[boost::indices[range_t(0, 2)][1][range_t(0, 5, 2)]];
 
 	constexpr std::size_t view_size_1 = 2;
 	constexpr std::size_t view_size_2 = 3;

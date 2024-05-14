@@ -61,7 +61,7 @@ public:
 
 					return Token(string);
 				}
-				else throw std::runtime_error("invalid token: "s + c);
+				else throw std::runtime_error("invalid token");
 			}
 		}
 	}
@@ -176,7 +176,7 @@ private:
 					if (!std::holds_alternative < char > (token) || 
 						 std::get               < char > (token) != ')')
 					{
-						throw std::runtime_error("invalid token, ) expected");
+						throw std::runtime_error("invalid token");
 					}
 					
 					return d;

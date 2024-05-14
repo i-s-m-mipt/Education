@@ -9,7 +9,7 @@
 
 //  ================================================================================================
 
-struct Data { int array[1000]{}; }; // note: some big data with many copies
+struct Data { int array[1000]{}; };
 
 //  ================================================================================================
 
@@ -57,8 +57,8 @@ public:
 
     explicit Storage(const Data & x, const Data & y) : m_x(x), m_y(y) {}
 
-    boost::flyweight < Data, container, tag < X > > m_x; // note: instead of Data x;
-    boost::flyweight < Data, container, tag < Y > > m_y; // note: instead of Data y;
+    boost::flyweight < Data, container, tag < X > > m_x;
+    boost::flyweight < Data, container, tag < Y > > m_y;
 
 }; // class Storage
 
@@ -70,7 +70,7 @@ int main()
 
     std::vector < Storage > storages; storages.reserve(size);
 
-    for (std::size_t i = 0; i < size; ++i) // note: unique objects, double size, ~800(Mb)
+    for (std::size_t i = 0; i < size; ++i) // detail: ~800(MB)
     {
         storages.emplace_back(Data { static_cast < int > (i) }, 
                               Data { static_cast < int > (i) });
@@ -82,7 +82,7 @@ int main()
 
     storages.clear();
 
-    for (std::size_t i = 0; i < size; ++i) // note: shared objects, single size, ~400(Mb)
+    for (std::size_t i = 0; i < size; ++i) // detail: ~400(MB)
     {
         storages.emplace_back(Data { static_cast < int > (i) }, Data{});
     }

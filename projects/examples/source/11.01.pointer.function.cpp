@@ -10,7 +10,7 @@
 	return (x + 1); 
 }
 
-[[nodiscard]] inline constexpr auto g(int (*f)(int), int x) // note: old style function argument
+[[nodiscard]] inline constexpr auto g(int (*f)(int), int x)
 {
 	return f(x);
 }
@@ -26,7 +26,7 @@ template < typename F, typename ... Ts >
 
 [[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Ts && ... args)
 {
-	return f(std::forward < Ts > (args)...); // note: consider std::invoke
+	return f(std::forward < Ts > (args)...); // support: std::invoke
 }
 
 //  ================================================================================================
@@ -34,12 +34,12 @@ template < typename F, typename ... Ts >
 int main()
 {
 	using     f_t = int   (int) noexcept;
-	using ptr_f_t = int(*)(int) noexcept; // note: popular type alias in old code
+	using ptr_f_t = int(*)(int) noexcept;
 
 	static_assert(std::is_same_v < decltype( f),     f_t > );
 	static_assert(std::is_same_v < decltype(&f), ptr_f_t > );
 
-	const auto ptr_f = &f; // note: auto -> int(*)(int), operator & is optional
+	const auto ptr_f = &f; // detail: int(*)(int)
 
 	assert((*ptr_f)(0) == 1);
 	assert(  ptr_f (0) == 1);
@@ -53,7 +53,7 @@ int main()
 //  ================================================================================================
 
 	assert(     invoke(f, 0) == 1);
-	assert(std::invoke(f, 0) == 1); // note: generic caller for templates
+	assert(std::invoke(f, 0) == 1);
 
 	return 0;
 }

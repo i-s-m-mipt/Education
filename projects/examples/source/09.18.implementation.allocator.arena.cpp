@@ -9,7 +9,7 @@
 
 //  ================================================================================================
 
-class Arena_Allocator : private boost::noncopyable // note: no deallocations for blocks of different sizes
+class Arena_Allocator : private boost::noncopyable
 {
 public:
 
@@ -31,11 +31,11 @@ public:
 
 		auto space = m_size - m_offset;
 
-		if (first = std::align(alignment, size, first, space); first) // note: modifies first and space
+		if (first = std::align(alignment, size, first, space); first)
 		{
 			m_offset = m_size - space + size; 
 			
-			return first; // note: aligned pointer
+			return first;
 		}
 		else return nullptr;
 	}
@@ -74,13 +74,13 @@ private:
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state) // note: fast
+void test_1(benchmark::State & state)
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
 
 	for (auto _ : state)
 	{
-		Arena_Allocator allocator(gb); // note: huge constant
+		Arena_Allocator allocator(gb);
 
 		for (std::size_t i = 0; i < kb; ++i)
 		{
@@ -91,7 +91,7 @@ void test_1(benchmark::State & state) // note: fast
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state) // note: slow
+void test_2(benchmark::State & state)
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb;
 
@@ -111,19 +111,19 @@ BENCHMARK(test_2);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for benchmark
+int main(int argc, char ** argv)
 {
 	Arena_Allocator allocator(1024); 
 
-	std::cout << allocator.allocate(  1, 4) << ' '; allocator.print(); // note: A
-	std::cout << allocator.allocate(  2, 2) << ' '; allocator.print(); // note: B
-	std::cout << allocator.allocate( 10   ) << ' '; allocator.print(); // note: C
-	std::cout << allocator.allocate(  4   ) << ' '; allocator.print(); // note: D
+	std::cout << allocator.allocate(  1, 4) << ' '; allocator.print(); // detail: A
+	std::cout << allocator.allocate(  2, 2) << ' '; allocator.print(); // detail: B
+	std::cout << allocator.allocate( 10   ) << ' '; allocator.print(); // detail: C
+	std::cout << allocator.allocate(  4   ) << ' '; allocator.print(); // detail: D
 
-	// note: A0BB 0000 | CCCC CCCC | CC00 0000 | DDDD 0000 | ...
+	// detail: A0BB 0000 | CCCC CCCC | CC00 0000 | DDDD 0000 | ...
 
 	std::cout << allocator.allocate(988   ) << ' '; allocator.print();
-	std::cout << allocator.allocate(  1   ) << ' '; allocator.print(); // note: nullptr
+	std::cout << allocator.allocate(  1   ) << ' '; allocator.print(); // detail: 0
 
 //  ================================================================================================
 

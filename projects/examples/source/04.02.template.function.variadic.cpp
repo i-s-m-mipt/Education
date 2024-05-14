@@ -54,22 +54,22 @@ template < typename T, typename ... Ts > [[nodiscard]] inline T * make_object(Ts
 
 template < typename ... Ts > [[nodiscard]] inline auto sum_v1(Ts ... args)
 {
-	return (... + args); // note: (... + args) -> (((arg_1 + arg_2) + arg_3) + ...)
+	return (... + args); // detail: (((arg_1 + arg_2) + arg_3) + ...)
 }
 
 template < typename ... Ts > [[nodiscard]] inline auto sum_v2(Ts ... args)
 {
-	return (args + ...); // note: (args + ...) -> (... + (arg_n-2 + (arg_n-1 + arg_n)))
+	return (args + ...); // detail: (... + (arg_n-2 + (arg_n-1 + arg_n)))
 }
 
 template < typename ... Ts > [[nodiscard]] inline auto sum_v3(Ts ... args)
 {
-	return (42 + ... + args); // note: (42 + ... + args) -> (((42 + arg_1) + arg_2) + ...)
+	return (42 + ... + args); // detail: (((42 + arg_1) + arg_2) + ...)
 }
 
 template < typename ... Ts > [[nodiscard]] inline auto sum_v4(Ts ... args)
 {
-	return (args + ... + 42); // note: (args + ... + 42) -> (... + (arg_n-1 + (arg_n + 42)))
+	return (args + ... + 42); // detail: (... + (arg_n-1 + (arg_n + 42)))
 }
 
 //  ================================================================================================

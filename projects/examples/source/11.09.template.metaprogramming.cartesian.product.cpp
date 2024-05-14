@@ -39,19 +39,23 @@ template < typename F, std::size_t ... Is > constexpr void apply(F && f,
 
 //  ================================================================================================
 
-template < std::forward_iterator ... Ts > [[nodiscard]] constexpr auto combine(std::pair < Ts, Ts > ... args)
+template < std::forward_iterator ... Ts > 
+
+[[nodiscard]] constexpr auto combine(std::pair < Ts, Ts > ... args)
 {
 	std::vector < std::tuple < typename std::iterator_traits < Ts > ::value_type ... > > result;
 
 	const auto push = [&result](auto && ... args) constexpr { result.emplace_back(args...); };
+
+	const auto size = sizeof...(args);
 	
-	std::vector steps (sizeof...(args), std::size_t(0));
+	std::vector steps (size, std::size_t(0));
 
 	std::vector sizes { static_cast < std::size_t > (std::distance(args.first , args.second))... };
 
 	do
 	{
-		apply(push, std::make_integer_sequence < std::size_t, sizeof...(args) > (), steps, std::tie(args...));
+		apply(push, std::make_integer_sequence < std::size_t, size > (), steps, std::tie(args...));
 	} 
 	while (increase(steps, sizes));
 
@@ -62,7 +66,7 @@ template < std::forward_iterator ... Ts > [[nodiscard]] constexpr auto combine(s
 
 int main()
 {
-    std::vector vector_1 { 'a', 'b', 'c' }; // note: different homogeneous containers
+    std::vector vector_1 { 'a', 'b', 'c' };
 	std::vector vector_2 { 100, 200, 300 };
 	std::vector vector_3 { 1.0, 2.0, 3.0 };
 

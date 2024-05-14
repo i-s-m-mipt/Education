@@ -22,10 +22,11 @@ class C2 : public L2, public R2 {};
 int main()
 {
 	C1 c1;
-	C2 c2;
 
 	std::cout << c1.m_data_1 << std::endl;
 //	std::cout << c1.m_data_2 << std::endl; // error
+
+	C2 c2;
 
 	std::cout << c2.m_data_1 << std::endl;
 	std::cout << c2.m_data_2 << std::endl;

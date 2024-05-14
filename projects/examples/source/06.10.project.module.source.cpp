@@ -1,8 +1,8 @@
-module; // note: global module fragment
+module;
 
 #include <iostream>
 
-module math; // note: implementation unit
+module math;
 
 void hello_module()
 {

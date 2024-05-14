@@ -8,13 +8,13 @@
 
 //  ================================================================================================
 
-[[nodiscard]] inline constexpr std::size_t hash(const std::string & string) noexcept // note: Java hash for strings
+[[nodiscard]] inline constexpr std::size_t hash(const std::string & string) noexcept
 {
 	std::size_t seed = 0;
 
-	for (const auto element : string)
+	for (const auto element : string) 
 	{
-		(seed *= 31) += static_cast < std::size_t > (element); // note: prime number
+		(seed *= 31) += static_cast < std::size_t > (element); // support: Java
 	}
 
 	return seed;
@@ -26,7 +26,7 @@ namespace detail
 {
 	template < typename T > inline void bind(std::size_t & seed, const T & value) noexcept
 	{
-		(seed *= 31) += std::hash < T > ()(value); // note: consider ^ instead of +
+		(seed *= 31) += std::hash < T > ()(value); // support: operator^
 	}
 
 	template < typename T > inline void hash(std::size_t & seed, const T & value) noexcept
@@ -45,7 +45,9 @@ namespace detail
 
 //  ================================================================================================
 
-template < typename ... Ts > [[nodiscard]] inline std::size_t combined_hash(const Ts & ... args) noexcept
+template < typename ... Ts > 
+
+[[nodiscard]] inline std::size_t combined_hash(const Ts & ... args) noexcept
 {
 	std::size_t seed = 0; detail::hash(seed, args...); return seed;
 }

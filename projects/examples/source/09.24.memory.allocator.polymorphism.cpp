@@ -15,9 +15,9 @@
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state) // note: slow
+void test_1(benchmark::State & state)
 {
-	constexpr std::size_t size = 1'000;
+	constexpr std::size_t size = 1000;
 
 	for (auto _ : state)
 	{
@@ -31,9 +31,9 @@ void test_1(benchmark::State & state) // note: slow
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state) // note: slow
+void test_2(benchmark::State & state)
 {
-	constexpr std::size_t size = 1'000;
+	constexpr std::size_t size = 1000;
 
 	for (auto _ : state)
 	{
@@ -47,9 +47,9 @@ void test_2(benchmark::State & state) // note: slow
 
 //  ================================================================================================
 
-void test_3(benchmark::State & state) // note: fast
+void test_3(benchmark::State & state)
 {
-	constexpr std::size_t size = 1'000;
+	constexpr std::size_t size = 1000;
 
 	for (auto _ : state)
 	{
@@ -67,13 +67,13 @@ void test_3(benchmark::State & state) // note: fast
 
 //  ================================================================================================
 
-void test_4(benchmark::State & state) // note: fast
+void test_4(benchmark::State & state)
 {
-	constexpr std::size_t size = 1'000;
+	constexpr std::size_t size = 1000;
 
 	for (auto _ : state)
 	{
-        std::array < std::byte, size * 32 > buffer; // note: enough to fit in all nodes
+        std::array < std::byte, size * 32 > buffer;
 
         std::pmr::monotonic_buffer_resource arena(std::data(buffer), std::size(buffer));
 
@@ -89,15 +89,15 @@ void test_4(benchmark::State & state) // note: fast
 
 //  ================================================================================================
 
-#define BOOST_POOL_NO_MT // note: multithreading support for Boost.Pool is disabled
+#define BOOST_POOL_NO_MT
 
-void test_5(benchmark::State & state) // note: not so fast, verify with valgrind
+void test_5(benchmark::State & state) // support: Valgrind
 {
-	constexpr std::size_t size = 1'000;
+	constexpr std::size_t size = 1000;
 
 	for (auto _ : state)
 	{
-        std::list < int, boost::fast_pool_allocator < int > > list; // good: separate segments 
+        std::list < int, boost::fast_pool_allocator < int > > list;
 
 		for (std::size_t i = 0; i < size; ++i) list.push_back(42);
 
@@ -115,24 +115,24 @@ BENCHMARK(test_5);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for benchmark
+int main(int argc, char ** argv)
 {
-    std::array < char, 64 > buffer{}; // note: external stack buffer for arena
+    std::array < char, 64 > buffer{};
 
-    std::ranges::fill(buffer, '_'); // note: fill elements in range
+    std::ranges::fill(buffer, '_');
 
     std::pmr::monotonic_buffer_resource arena(std::data(buffer), std::size(buffer));
 
     constexpr std::size_t n_letters = 26;
 
-    std::pmr::vector < char > letters(&arena); // note: type alias
+    std::pmr::vector < char > letters(&arena);
 
     for (std::size_t i = 0; i < n_letters; ++i)
     {
         letters.push_back(static_cast < char > ('a' + i));
     }
 
-    for (const auto element : buffer) std::cout << element; // note: output repeated data in buffer
+    for (const auto element : buffer) std::cout << element;
 
     std::cout << std::endl;
 
@@ -140,27 +140,22 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     auto resource = std::pmr::new_delete_resource();
 
-    const auto pointer = resource->allocate(1); // note: same as ::operator new
+    const auto pointer = resource->allocate(1);
 
-    resource->deallocate(pointer, 1); // note: same as ::operator delete
-
-//  ================================================================================================
-
-    boost::object_pool < int > pool(32); // note: memory managed by pool consists of segments
-
-    auto object_1 = pool.malloc(); // note: allocates a memory block with space for 32 int values
-
-    pool.destroy(object_1);
-
-    auto object_2 = pool.construct(42); // note: allocates the same memory block as for ptr_1
-
-    pool.destroy(object_2);
-
-    assert(pool.get_next_size() == 64); // note: allocation approach similar to std::vector
+    resource->deallocate(pointer, 1);
 
 //  ================================================================================================
 
-    std::vector < int, boost::pool_allocator < int > > vector; // good: continious segments
+    boost::object_pool < int > pool(32);
+
+    auto object_1 = pool.malloc(); pool.destroy(object_1);
+    auto object_2 = pool.malloc(); pool.destroy(object_2);
+
+    assert(pool.get_next_size() == 64);
+
+//  ================================================================================================
+
+    std::vector < int, boost::pool_allocator < int > > vector;
 
 //  ================================================================================================
 

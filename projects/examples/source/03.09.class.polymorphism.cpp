@@ -9,12 +9,12 @@ public:
 
 	Computer()
 	{
-//		print(); // bad: базовая версия
+//		print(); // bad
 	}
 
 	virtual ~Computer()
 	{
-//		print(); // bad: базовая версия
+//		print(); // bad
 	}
 
 	virtual void print() const { std::cout << "Computer::print" << std::endl; }
@@ -89,7 +89,7 @@ int main()
 	const Mobile mobile;
 
 	const Computer * computer_ptr = &mobile;
-//	const Computer   computer     =  mobile; // bad: срезка объекта
+//	const Computer   computer     =  mobile; // bad
 
 	computer_ptr->print();
 

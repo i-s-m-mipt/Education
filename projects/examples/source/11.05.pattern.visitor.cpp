@@ -5,11 +5,11 @@
 
 //  ================================================================================================
 
-class Visitor // good: provides additional functionality for other classes
+class Visitor
 {
 public:
 
-    virtual ~Visitor() noexcept = default; // note: polymorphic base class
+    virtual ~Visitor() noexcept = default; 
 
     virtual void visit(const class Mobile * mobile) const = 0;
     virtual void visit(const class Tablet * tablet) const = 0;
@@ -19,11 +19,11 @@ public:
 
 //  ================================================================================================
 
-class Computer // good: provides single-responsibility princile in compute
+class Computer
 {
 public:
 
-    virtual ~Computer() noexcept = default; // note: polymorphic base class
+    virtual ~Computer() noexcept = default; 
 
     [[nodiscard]] virtual int run() const noexcept = 0; 
 
@@ -41,7 +41,7 @@ public:
 
     void visit_by(Visitor * visitor) const override
     { 
-        return visitor->visit(this); // note: second dispatch
+        return visitor->visit(this);
     }
 
 }; // class Mobile : public Computer 
@@ -56,7 +56,7 @@ public:
 
     void visit_by(Visitor * visitor) const override
     {
-        return visitor->visit(this); // note: second dispatch
+        return visitor->visit(this);
     }
 
 }; // class Tablet : public Computer 
@@ -71,30 +71,30 @@ public:
 
     void visit_by(Visitor * visitor) const override
     {
-        return visitor->visit(this); // note: second dispatch
+        return visitor->visit(this);
     }
 
 }; // class Laptop : public Computer 
 
 //  ================================================================================================
 
-class Tester : public Visitor // note: provides simple tests for all computers
+class Tester : public Visitor
 {
 public:
 
     void visit(const Mobile * mobile) const override 
     { 
-        if (mobile->run() != 42) throw std::runtime_error("Mobile::run error");
+        if (mobile->run() != 42) throw std::runtime_error("invalid Mobile");
     }
 
     void visit(const Tablet * tablet) const override 
     {
-        if (tablet->run() != 42) throw std::runtime_error("Tablet::run error");
+        if (tablet->run() != 42) throw std::runtime_error("invalid Tablet");
     }
 
     void visit(const Laptop * laptop) const override 
     {
-        if (laptop->run() != 42) throw std::runtime_error("Laptop::run error");
+        if (laptop->run() != 42) throw std::runtime_error("invalid Laptop");
     }
 
 }; // class Tester : public Visitor
@@ -111,9 +111,9 @@ int main()
 
     try
     {
-        computer_1->visit_by(&tester); // note: first dispatch
-        computer_2->visit_by(&tester); // note: first dispatch
-        computer_3->visit_by(&tester); // note: first dispatch
+        computer_1->visit_by(&tester);
+        computer_2->visit_by(&tester);
+        computer_3->visit_by(&tester);
     }
     catch (const std::exception & exception)
     {

@@ -4,7 +4,9 @@
 #include <string>
 #include <vector>
 
-//using namespace std; // bad
+/*
+using namespace std; // bad
+*/
 
 int main()
 {	

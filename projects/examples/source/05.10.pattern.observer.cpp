@@ -80,8 +80,8 @@ int main()
     computer.add_observer(new const Display_1());
     computer.add_observer(new const Display_2());
 
-    computer.set_temperature(3.14);
-    computer.set_temperature(2.72);
+    computer.set_temperature(100.0);
+    computer.set_temperature(200.0);
 
     return 0;
 }

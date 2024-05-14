@@ -156,7 +156,7 @@ int main(int argc, char ** argv)
 
     std::cout << buffer << std::endl;
 
-//  std::cout << char_array << std::endl; // bad: отсутствует нулевой символ в конце строки
+//  std::cout << char_array << std::endl; // bad
 
 //  ================================================================================================
 
@@ -179,11 +179,11 @@ int main(int argc, char ** argv)
 
     print(std::string_view(std::begin(string_3), std::next(std::begin(string_3), 5)));
 
-//  const std::string_view bad_1 = "hello"s + "world"s;          // bad: временный объект
+//  const std::string_view bad_view_1 = "hello"s + "world"s; // bad
 
-//  const std::string_view bad_2 = [](){ return "hello"s; }();   // bad: временный объект
+//  const std::string_view bad_view_3 = string_4; string_4 = "hello"; // bad
 
-//  const std::string_view bad_3 = string_4; string_4 = "hello"; // bad: перезаписанная строка
+//  const std::string_view bad_view_2 = []() constexpr { return "hello"s; }(); // bad
 
 //  ================================================================================================
 

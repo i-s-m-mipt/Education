@@ -1,8 +1,8 @@
-module; // note: global module fragment
+module;
 
 #include <cmath>
 
-export module math; // note: interface unit
+export module math;
 
 export import math.submodule;
 
@@ -12,7 +12,7 @@ export void hello_module();
 
 //  ================================================================================================
 
-export namespace math // good: exporting namespace
+export namespace math
 {
 	[[nodiscard]] inline double f(double x) { return std::sin(x); }
 	[[nodiscard]] inline double g(double x) { return std::cos(x); }
@@ -26,5 +26,5 @@ export template < typename F, typename ... Ts >
 
 [[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Ts && ... args) 
 { 
-	return f(std::forward < Ts > (args)...); // note: consider std::invoke
+	return f(std::forward < Ts > (args)...); // support: std::invoke
 }

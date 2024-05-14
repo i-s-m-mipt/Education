@@ -12,7 +12,7 @@
 
 //  ================================================================================================
 
-class Stack_Allocator : private boost::noncopyable // note: deallocations at end for blocks of different sizes
+class Stack_Allocator : private boost::noncopyable
 {
 private:
 
@@ -36,11 +36,11 @@ public:
 	{
 		void * const first = get_byte(m_begin) + m_offset;
 
-		void *       block = get_byte(first) + sizeof(Header); // note: first byte for data after header
+		void *       block = get_byte(first) + sizeof(Header);
 
 		auto space = m_size - m_offset - sizeof(Header);
 
-		if (block = std::align(alignment, size, block, space); block) // note: modifies block and space
+		if (block = std::align(alignment, size, block, space); block)
 		{
 			const auto header = get_header(get_byte(block) - sizeof(Header));
 
@@ -48,7 +48,7 @@ public:
 
 			m_offset = get_byte(block) - get_byte(m_begin) + size;
 
-			return block; // note: aligned pointer
+			return block;
 		}
 		else return nullptr;
 	}
@@ -99,7 +99,7 @@ private:
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state) // note: fast
+void test_1(benchmark::State & state)
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
 
@@ -107,7 +107,7 @@ void test_1(benchmark::State & state) // note: fast
 
 	for (auto _ : state)
 	{
-		Stack_Allocator allocator(2 * gb); // note: huge constant
+		Stack_Allocator allocator(2 * gb);
 
 		for (std::size_t i = 0; i < kb; ++i)
 		{
@@ -123,7 +123,7 @@ void test_1(benchmark::State & state) // note: fast
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state) // note: slow
+void test_2(benchmark::State & state)
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb;
 
@@ -150,7 +150,7 @@ BENCHMARK(test_2);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for benchmark
+int main(int argc, char ** argv)
 {
 	Stack_Allocator allocator(1024);
 
@@ -159,17 +159,17 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 	auto ptr_C = allocator.allocate(10   ); std::cout << ptr_C << ' '; allocator.print();
 	auto ptr_D = allocator.allocate( 4   ); std::cout << ptr_D << ' '; allocator.print();
 
-	// note: 000H AHBB | 0000 000H | CCCC CCCC | CC00 000H | DDDD 0000 | ...
+	// detail: 000H AHBB | 0000 000H | CCCC CCCC | CC00 000H | DDDD 0000 | ...
 
 	allocator.deallocate(ptr_D);    std::cout << std::string(17, ' '); allocator.print();
 	allocator.deallocate(ptr_C);    std::cout << std::string(17, ' '); allocator.print();
 
-	// note: 000H AHBB | ...
+	// detail: 000H AHBB | ...
 
 	auto ptr_E = allocator.allocate( 3, 4); std::cout << ptr_E << ' '; allocator.print();
 	auto ptr_F = allocator.allocate( 8   ); std::cout << ptr_F << ' '; allocator.print(); 
 
-	// note: 000H AHBB | 000H EEEH | FFFF FFFF | ...
+	// detail: 000H AHBB | 000H EEEH | FFFF FFFF | ...
 
 //  ================================================================================================
 

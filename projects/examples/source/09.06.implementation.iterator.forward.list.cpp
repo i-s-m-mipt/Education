@@ -8,18 +8,15 @@ template < typename T > class List
 {
 private:
 
-	struct Node // note: can be implemented as separate struct template
-	{ 
-		T value{}; std::shared_ptr < Node > next; // note: no allocators
-	};
+	struct Node { T value{}; std::shared_ptr < Node > next; };
 
 public:
 
-	class Iterator // note: can be implemented as separate class template
+	class Iterator
 	{
 	public:
 
-		using iterator_category = std::forward_iterator_tag; // note: forward iterator
+		using iterator_category = std::forward_iterator_tag;
 
 		constexpr explicit Iterator(std::shared_ptr < Node > node = nullptr) noexcept : m_node(node) {}
 
@@ -27,7 +24,7 @@ public:
 
 		constexpr Iterator & operator++() noexcept 
 		{ 
-			m_node = m_node->next; return *this; // note: undefined behaviour if end
+			m_node = m_node->next; return *this;
 		}
 
 		constexpr const Iterator operator++(int) noexcept 
@@ -45,7 +42,7 @@ public:
 
 	private:
 
-		std::shared_ptr < Node > m_node; // note: no allocators
+		std::shared_ptr < Node > m_node;
 
 	}; // class Iterator
 
@@ -68,7 +65,7 @@ public:
 
 private:
 
-	std::shared_ptr < Node > m_head; // note: no allocators
+	std::shared_ptr < Node > m_head;
 
 }; // template < typename T > class List
 

@@ -1,19 +1,21 @@
 #include <cmath>
+#include <iterator>
 #include <stack>
-#include <type_traits>
 #include <utility>
 
 #include <gtest/gtest.h>
 
 //  ================================================================================================
 
-template < typename T > class Stack_v1 // note: min element in O(1) time and O(N) space complexity
+template < typename T > class Stack_v1 // complexity: T ~ O(1), S ~ O(N)
 {
 public:
 
     constexpr void push(T value)
     {
-        m_stack.emplace(value, (std::empty(m_stack) ? value : std::min(value, m_stack.top().second)));
+        const auto new_min = (std::empty(m_stack) ? value : std::min(value, m_stack.top().second));
+
+        m_stack.emplace(value, new_min);
     }
 
     [[nodiscard]] constexpr T top() const noexcept { return m_stack.top().first; }
@@ -26,13 +28,13 @@ public:
 
 private:
 
-    std::stack < std::pair < T, T > > m_stack; // note: consider additional stack for extremums
+    std::stack < std::pair < T, T > > m_stack;
 
 }; // template < typename T > class Stack_v1
 
 //  ================================================================================================
 
-template < typename T > requires std::is_arithmetic_v < T > class Stack_v2
+template < typename T > class Stack_v2 // complexity: T ~ O(1), S ~ O(1)
 {
 public:
 
@@ -44,7 +46,7 @@ public:
         }
         else if (value < m_min) 
         {
-            m_stack.push(2 * value - m_min); m_min = value; // note: less than value
+            m_stack.push(2 * value - m_min); m_min = value;
         }
         else 
         {
@@ -61,7 +63,7 @@ public:
     {
         if (auto t = m_stack.top(); t < m_min) 
         {
-            (m_min *= 2) -= t; // note: update current minimum
+            (m_min *= 2) -= t;
         }
 
         m_stack.pop();
@@ -75,7 +77,7 @@ private:
 
     std::stack < T > m_stack; 
     
-    T m_min; // note: min element in O(1) time and space complexity
+    T m_min;
 
 }; // template < typename T > requires std::is_arithmetic_v < T > class Stack_v2 
 
@@ -121,7 +123,7 @@ TEST(Stack_v2, Functions)
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for testing
+int main(int argc, char ** argv)
 {
     testing::InitGoogleTest(&argc, argv);
 

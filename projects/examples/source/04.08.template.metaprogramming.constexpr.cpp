@@ -83,9 +83,9 @@ int main()
 	[[maybe_unused]] constexpr auto is_prime_2 = is_prime(x);
 //	[[maybe_unused]] constexpr auto is_prime_3 = is_prime(y); // error
 
-	[[maybe_unused]] auto is_prime_4 = is_prime(5);
-	[[maybe_unused]] auto is_prime_5 = is_prime(x);
-	[[maybe_unused]] auto is_prime_6 = is_prime(y);
+	[[maybe_unused]]           auto is_prime_4 = is_prime(5);
+	[[maybe_unused]]           auto is_prime_5 = is_prime(x);
+	[[maybe_unused]]           auto is_prime_6 = is_prime(y);
 
 //  ================================================================================================
 

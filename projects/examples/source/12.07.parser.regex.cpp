@@ -78,15 +78,15 @@ int main(int argc, char ** argv)
 
     for (; std::regex_search(begin, end, matches, pattern); begin = matches.suffix().first)
     {
-        std::cout << matches[0] << ' ';
-    }
+        std::cout << matches[0] << ' '; // support: boost::tokenizer
+    } 
 
     std::cout << std::endl; begin = std::cbegin(data);
 
 //  ================================================================================================
 
     {
-        const std::sregex_iterator first(begin, end, pattern), last; // note: см. boost::tokenizer
+        const std::sregex_iterator first(begin, end, pattern), last; 
 
 	    std::ranges::for_each(first, last, [](auto && matches){ std::cout << matches[0] << ' '; });
 

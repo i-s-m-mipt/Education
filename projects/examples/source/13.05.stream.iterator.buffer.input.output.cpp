@@ -7,7 +7,7 @@
 
 int main()
 {
-	std::ios::sync_with_stdio(false); // note: см. потоки C
+	std::ios::sync_with_stdio(false); // support: cstdio
 
 //  ================================================================================================
 

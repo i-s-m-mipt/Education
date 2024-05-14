@@ -13,25 +13,25 @@ int main()
 
 //  ================================================================================================
 
-	std::deque < int > deque; // note: std::deque has push_front member function
+	std::deque < int > deque;
 
-	std::ranges::copy(vector, std::front_inserter(deque)); // note: copy range via push_front
+	std::ranges::copy(vector, std::front_inserter(deque));
 
 	assert(std::size(deque) == std::size(vector));
 
 //  ================================================================================================
 
-	std::list < int > list; // note: std::list has push_back member function
+	std::list < int > list;
 
-	std::ranges::copy(vector, std::back_inserter(list)); // note: copy range via push_back
+	std::ranges::copy(vector, std::back_inserter(list));
 
 	assert(std::size(list) == std::size(vector));
 
 //  ================================================================================================
 
-	std::set < int > set; // note: std::set has only insert member function
+	std::set < int > set;
 
-	std::ranges::copy(vector, std::inserter(set, std::end(set))); // note: copy range via insert
+	std::ranges::copy(vector, std::inserter(set, std::end(set)));
 
 	assert(std::size(set) == std::size(vector));
 

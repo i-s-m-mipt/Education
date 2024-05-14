@@ -11,7 +11,7 @@ public: [[nodiscard]] std::shared_ptr < Fail > get() { return std::shared_ptr < 
 
 //  ================================================================================================
 
-class Good : private std::enable_shared_from_this < Good > // note: CRTP
+class Good : private std::enable_shared_from_this < Good > // support: CRTP
 {
 public: [[nodiscard]] std::shared_ptr < Good > get() { return shared_from_this(); }
 };
@@ -22,13 +22,13 @@ class Best : private std::enable_shared_from_this < Best >
 {
 private:
 
-    struct Key {}; // note: consider PassKey idiom
+    struct Key {}; // support: PassKey
 
 public:
 
-    Best(Key) {}; // good: all instances are in shared pointers
+    Best(Key) {};
 
-    [[nodiscard]] static std::shared_ptr < Best > create() // note: factory method
+    [[nodiscard]] static std::shared_ptr < Best > create() // support: Factory
     {
         return std::make_shared < Best > (Key());
     }
@@ -43,7 +43,7 @@ int main()
 {
     auto fail_1 = std::make_shared < Fail > ();
 
-//  auto fail_2 = fail_1->get(); // bad: undefined behaviour
+//  auto fail_2 = fail_1->get(); // bad
     
     assert(fail_1.use_count() == 1);
 //  assert(fail_2.use_count() == 1);
@@ -59,7 +59,7 @@ int main()
 
     try
     {
-        Good good; // note: not managed by std::shared_ptr
+        Good good;
 
         auto good_3 = good.get();
     }
@@ -77,7 +77,7 @@ int main()
     assert(best_1.use_count() == 2);
     assert(best_2.use_count() == 2);
 
-//  Best best(Key()); // error: requires private key
+//  Best best(Key()); // error
 
     return 0;
 }

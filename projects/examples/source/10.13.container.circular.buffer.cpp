@@ -28,11 +28,11 @@ int main()
 
 //  ================================================================================================
 
-	buffer.push_back(0); print(std::begin(buffer), std::end(buffer));
-	buffer.push_back(1); print(std::begin(buffer), std::end(buffer));
-	buffer.push_back(2); print(std::begin(buffer), std::end(buffer));
-	buffer.push_back(3); print(std::begin(buffer), std::end(buffer)); // note: overwrites 0
-	buffer.push_back(4); print(std::begin(buffer), std::end(buffer)); // note: overwrites 1
+	buffer.push_back(0); print(std::begin(buffer), std::end(buffer)); // elements: { 0       }
+	buffer.push_back(1); print(std::begin(buffer), std::end(buffer)); // elements: { 0, 1    }
+	buffer.push_back(2); print(std::begin(buffer), std::end(buffer)); // elements: { 0, 1, 2 }
+	buffer.push_back(3); print(std::begin(buffer), std::end(buffer)); // elements: { 3, 1, 2 }
+	buffer.push_back(4); print(std::begin(buffer), std::end(buffer)); // elements: { 3, 4, 2 }
 
 	assert(buffer[0] == 2);
 	assert(buffer[1] == 3);

@@ -21,7 +21,7 @@ int main()
 
     const auto page = std::make_unique < PDFPage > ();
 
-    [[maybe_unused]] constexpr auto width = 595, height = 842, ppi = 72; // note: см. PPI/DPI
+    [[maybe_unused]] constexpr auto width = 595, height = 842, ppi = 72;
 
     page->SetMediaBox(PDFRectangle(0, 0, width, height)); 
 

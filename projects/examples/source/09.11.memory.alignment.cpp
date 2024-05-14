@@ -8,21 +8,21 @@
 
 //  ================================================================================================
 
-struct S1 // note: C___IIIISS__
+struct S1 // detail: C___IIIISS__
 {
-	char  c{}; // note: 1 byte(s)
-	int   i{}; // note: 4 byte(s)
-	short s{}; // note: 2 byte(s)
+	char  c{}; // detail: 1(B)
+	int   i{}; // detail: 4(B)
+	short s{}; // detail: 2(B)
 
 }; // struct S1
 
 //  ================================================================================================
 
-struct S2 // note: C_SSIIII
+struct S2 // detail: C_SSIIII
 {
-	char  c{}; // note: 1 byte(s)
-	short s{}; // note: 2 byte(s)
-	int   i{}; // note: 4 byte(s)
+	char  c{}; // detail: 1(B)
+	short s{}; // detail: 2(B)
+	int   i{}; // detail: 4(B)
 
 }; // struct S2
 
@@ -30,9 +30,9 @@ struct S2 // note: C_SSIIII
 
 struct alignas(double) S3
 {
-	char  c{}; // note: 1 byte(s)
-	short s{}; // note: 2 byte(s)
-	int   i{}; // note: 4 byte(s)
+	char  c{}; // detail: 1(B)
+	short s{}; // detail: 2(B)
+	int   i{}; // detail: 4(B)
 	
 }; // struct alignas(double) S3
 
@@ -47,7 +47,7 @@ struct alignas(64) S6 { std::uint8_t x{}; };
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state) // note: fast
+void test_1(benchmark::State & state)
 {
 	constexpr std::size_t size = 64;
 
@@ -63,7 +63,7 @@ void test_1(benchmark::State & state) // note: fast
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state) // note: slow
+void test_2(benchmark::State & state)
 {
 	constexpr std::size_t size = 64;
 
@@ -84,7 +84,7 @@ BENCHMARK(test_2);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for benchmark
+int main(int argc, char ** argv)
 {
 	std::cout << "char: " << alignof(char) << ' ' << sizeof(char) << std::endl;
 	std::cout << "int*: " << alignof(int*) << ' ' << sizeof(int*) << std::endl;

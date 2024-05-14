@@ -13,7 +13,7 @@ struct Vector { double x{}, y{}, z{}; };
 {
 	return { a.y * b.z - a.z * b.y,
 	   		-a.x * b.z + a.z * b.x,
-			 a.x * b.y - a.y * b.x }; // note: only z needed from result
+			 a.x * b.y - a.y * b.x };
 }
 
 //  ================================================================================================
@@ -24,7 +24,7 @@ struct Vector { double x{}, y{}, z{}; };
 
 	std::uniform_real_distribution < double > distribution(0.0, 2.0 * std::numbers::pi);
 
-	constexpr Vector PA {0.0, -1.0}; // note: P states for circle center in { 1.0, 1.0 }
+	constexpr Vector PA { 0.0, -1.0 };
 
 	std::size_t counter = 0;
 
@@ -33,15 +33,13 @@ struct Vector { double x{}, y{}, z{}; };
 		const auto w_B = distribution(engine);
 		const auto w_C = distribution(engine);
 
-		const auto x_b = std::cos(w_B); // note: r = 1.0
-		const auto y_b = std::sin(w_B);
-		const auto x_c = std::cos(w_C);
-		const auto y_c = std::sin(w_C);
+		const auto x_b = std::cos(w_B), y_b = std::sin(w_B);
+		const auto x_c = std::cos(w_C), y_c = std::sin(w_C);
 
-		const Vector PB {x_b, y_b};
-		const Vector PC {x_c, y_c};
+		const Vector PB { x_b, y_b };
+		const Vector PC { x_c, y_c };
 
-		const auto a = (PA * PB).z; // note: barycentric coordinate method
+		const auto a = (PA * PB).z;
 		const auto b = (PB * PC).z;
 		const auto c = (PC * PA).z;
 
@@ -59,7 +57,7 @@ struct Vector { double x{}, y{}, z{}; };
 
 int main()
 {
-	std::cout << calculate_probability(10'000'000) << std::endl; // note: ~0.25
+	std::cout << calculate_probability(10'000'000) << std::endl; // output: ~0.25
 
 	return 0;
 }

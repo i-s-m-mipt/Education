@@ -36,7 +36,7 @@ TEST(Algorithm, Binary_Gray_Code)
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for testing
+int main(int argc, char ** argv)
 {
     constexpr std::size_t size = 5;
 

@@ -64,7 +64,7 @@ template < typename T > struct is_integral : public std::integral_constant < boo
 	is_same_v < char  , remove_reference_t < T > > || 
 	is_same_v < short , remove_reference_t < T > > ||
 	is_same_v < int   , remove_reference_t < T > > ||
-	is_same_v < long  , remove_reference_t < T > > > {}; // demo: неполный список
+	is_same_v < long  , remove_reference_t < T > > > {}; // demo
 
 template < typename T > inline constexpr auto is_integral_v = is_integral < T > ::value;
 

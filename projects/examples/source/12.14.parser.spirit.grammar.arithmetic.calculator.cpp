@@ -31,7 +31,7 @@ namespace detail
         using base_type::base_type;
         using base_type::operator=;
 
-    }; // class Operand : boost::spirit::x3::variant < ... >
+    }; // class Operand : boost::spirit::x3::variant < double, ... >
 
     struct Sign { char c{}; Operand operand; };
     struct Step { char c{}; Operand operand; };
@@ -90,7 +90,7 @@ public:
             case '+': return        rhs;
             case '-': return -1.0 * rhs;
 
-            default: throw std::invalid_argument("invalid sign: "s + sign.c);
+            default: throw std::runtime_error("invalid sign");
         }
     }
 
@@ -103,7 +103,7 @@ public:
             case '*': return lhs * rhs;
             case '/': return lhs / rhs;
 
-            default: throw std::invalid_argument("invalid step: "s + step.c);
+            default: throw std::runtime_error("invalid step");
         }
     }
 
@@ -133,10 +133,7 @@ public:
 
     auto result = boost::spirit::x3::phrase_parse(begin, end, parser::arithmetic, space, list);
 
-    if (!result || begin != end) 
-    {
-        throw std::invalid_argument("invalid input: " + std::string(input));
-    }
+    if (!result || begin != end) throw std::runtime_error("invalid input");
 
     return Calculator()(list);
 }

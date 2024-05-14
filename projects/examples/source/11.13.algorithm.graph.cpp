@@ -8,9 +8,7 @@
 
 int main()
 {
-	using default_graph_t = boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS > ;
-
-	default_graph_t default_graph;
+	boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS > default_graph;
 
 //  ================================================================================================
 
@@ -20,7 +18,10 @@ int main()
 
 	const auto vertices = boost::vertices(default_graph);
 
-	std::ranges::for_each(vertices.first, vertices.second, [](auto vertex){ std::cout << vertex << std::endl; });
+	std::ranges::for_each(vertices.first, vertices.second, [](auto vertex)
+	{ 
+		std::cout << vertex << std::endl; 
+	});
 
 //  ================================================================================================
 
@@ -31,7 +32,10 @@ int main()
 
 	const auto edges = boost::edges(default_graph);
 
-	std::ranges::for_each(edges.first, edges.second, [](auto edge){ std::cout << edge << std::endl; });
+	std::ranges::for_each(edges.first, edges.second, [](auto edge)
+	{ 
+		std::cout << edge << std::endl; 
+	});
 
 //  ================================================================================================
 
@@ -50,9 +54,7 @@ int main()
 
 //  ================================================================================================
 
-	using custom_graph_t = boost::adjacency_list < boost::setS, boost::vecS, boost::directedS, int, int > ;
-	
-	custom_graph_t custom_graph;
+	boost::adjacency_list < boost::setS, boost::vecS, boost::directedS, int, int > custom_graph;
 
 //  ================================================================================================
 
@@ -68,7 +70,7 @@ int main()
 
 //  ================================================================================================
 
-	boost::write_graphviz(std::cout, custom_graph); // note: suppress warning 4458 im MSVC
+	boost::write_graphviz(std::cout, custom_graph);
 
 	return 0;
 }

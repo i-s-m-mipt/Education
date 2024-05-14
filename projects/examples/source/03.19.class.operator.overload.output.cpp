@@ -14,7 +14,10 @@ public:
         return base.print(stream);
     }
 
-    virtual std::ostream & print(std::ostream & stream) const { return (stream << "Base"); }
+    virtual std::ostream & print(std::ostream & stream) const 
+    { 
+        return (stream << "Base"); 
+    }
 
 }; // class Base
 
@@ -24,7 +27,10 @@ class Derived : public Base
 { 
 public: 
 
-    std::ostream & print(std::ostream & stream) const override { return (stream << "Derived"); }
+    std::ostream & print(std::ostream & stream) const override 
+    { 
+        return (stream << "Derived"); 
+    }
 
 }; // class Derived : public Base 
 

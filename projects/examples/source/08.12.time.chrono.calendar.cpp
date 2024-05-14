@@ -12,7 +12,7 @@ int main()
 
 	assert(time.hours() == 10h && time.minutes() == 20min && time.seconds() == 30s);
 
-	std::cout << time.to_duration() << std::endl; // note: convert to duration
+	std::cout << time.to_duration() << std::endl;
 
 //  ================================================================================================
 
@@ -20,9 +20,9 @@ int main()
 
 	std::cout << date << std::endl;
 
-	std::cout << std::chrono::sys_days(date) << std::endl; // note: convert to time_point
+	std::cout << std::chrono::sys_days(date) << std::endl;
 
-	assert(!(std::chrono::year(2023) / 2 / 29).ok()); // note: invalid date
+	assert(!(std::chrono::year(2023) / 2 / 29).ok());
 
 //  ================================================================================================
 
@@ -38,7 +38,7 @@ int main()
 
 //  ================================================================================================
 
-	std::cout << now << std::endl; // note: printed as UTC (or GMT)
+	std::cout << now << std::endl; // output: UTC
 
 	std::cout << std::chrono::zoned_time("Europe/London", now) << std::endl;
 	std::cout << std::chrono::zoned_time("Europe/Berlin", now) << std::endl;

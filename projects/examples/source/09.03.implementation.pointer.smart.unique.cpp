@@ -13,7 +13,7 @@ public:
 
     Unique() noexcept = default;
 
-    explicit Unique(T * data) noexcept : m_data(data) {} // good: explicit
+    explicit Unique(T * data) noexcept : m_data(data) {}
         
     Unique(Unique && other) noexcept : Unique() { swap(other); }
 
@@ -28,7 +28,7 @@ public:
         
     void swap(Unique & other) noexcept
     { 
-        using std::swap; // good: enable argument-dependent lookup
+        using std::swap; 
 
         swap(m_data, other.m_data); 
     }
@@ -40,7 +40,7 @@ public:
 
     void reset(T * ptr = nullptr) noexcept 
     {
-        delete std::exchange(m_data, ptr); // note: consider custom deleter
+        delete std::exchange(m_data, ptr);
     }
 
 public:

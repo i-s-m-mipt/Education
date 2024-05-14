@@ -32,7 +32,7 @@ using computers_container_t = boost::multi_index::multi_index_container < Comput
 	boost::multi_index::               tag < class ONU_size                         >   , 
 	boost::multi_index::            member < Computer, std::size_t, &Computer::size > > ,
 	boost::multi_index::     random_access < 
-	boost::multi_index::               tag < class RA > > > > ; // note: impressed?
+	boost::multi_index::               tag < class RA > > > > ;
 
 //  ================================================================================================
 
@@ -54,17 +54,19 @@ int main()
 
 //  ================================================================================================
 
-	assert(HNU_name_index.contains("alpha")); // note: smth like std::unordered_multiset
+	assert(HNU_name_index.contains("alpha"));
 
 //  ================================================================================================
 
-	HNU_size_index.modify(HNU_size_index.find(2), [](auto && computer)  constexpr { computer.name = "bravo"; });
+	constexpr auto lambda = [](auto && computer) constexpr { computer.name = "bravo"; };
+
+	HNU_size_index.modify(HNU_size_index.find(2), lambda);
 
 	assert(HNU_size_index.find(2)->name == "bravo");
 
 //  ================================================================================================
 
-	assert(ONU_name_index.contains("alpha")); // note: smth like std::multiset
+	assert(ONU_name_index.contains("alpha"));
 
 //  ================================================================================================
 
@@ -76,19 +78,19 @@ int main()
 
 //  ================================================================================================
 
-	assert(computers.get < RA > ()[0].name == "alpha"); // note: smth like std::vector
+	assert(computers.get < RA > ()[0].name == "alpha");
 
 //  ================================================================================================
 	
-	boost::bimap < std::string, std::size_t > bimap; // note: consider boost::bimaps::(multi)set_of
+	boost::bimap < std::string, std::size_t > bimap; // support: boost::bimaps::(multi)set_of
 
 	bimap.insert({ "alpha", 4 });
 	bimap.insert({ "betta", 2 });
-	bimap.insert({ "gamma", 4 }); // note: duplicate
+	bimap.insert({ "gamma", 4 });
 	bimap.insert({ "delta", 8 });
 
-	assert(bimap.left. count("alpha") == 1); // good: O(log(N)) complexity search by key
-	assert(bimap.right.count(      4) == 1); // good: O(log(N)) complexity search by value
+	assert(bimap.left. count("alpha") == 1); // complexity: O(log(N))
+	assert(bimap.right.count(      4) == 1); // complexity: O(log(N))
 
 	for (const auto & element : bimap)
 	{

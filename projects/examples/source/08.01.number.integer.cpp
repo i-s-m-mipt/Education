@@ -39,11 +39,13 @@ void print(const std::span < const std::byte > & bytes)
 
 //  ================================================================================================
 
-template < typename T > 
+template < typename T1, typename T2 > 
 
-[[nodiscard]] inline constexpr std::ptrdiff_t distance_in_bytes(const T * first, const T * last) noexcept
+[[nodiscard]] inline constexpr std::ptrdiff_t distance_in_bytes(const T1 * ptr_1, 
+                                                                const T2 * ptr_2) noexcept
 {
-    return (std::bit_cast < const std::byte * > (last) - std::bit_cast < const std::byte * > (first));
+    return (std::bit_cast < const std::byte * > (ptr_1) - 
+            std::bit_cast < const std::byte * > (ptr_2));
 }
 
 //  ================================================================================================
@@ -56,13 +58,13 @@ struct Datetime
     unsigned int hour   : 5  {};
     unsigned int day    : 5  {};
     unsigned int month  : 4  {};
-    unsigned int year   : 28 {}; // good: 64 bits in total, no holes
+    unsigned int year   : 28 {};
 
 }; // struct Datetime
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state)
+void test_1(benchmark::State & state) // support: compiler-explorer.com
 {
     for (auto _ : state)
     {
@@ -74,24 +76,24 @@ void test_1(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state)
+void test_2(benchmark::State & state) // support: compiler-explorer.com
 {
     for (auto _ : state)
     {
         auto d = 3.14;
 
-        benchmark::DoNotOptimize(*std::bit_cast < char * > (&d)); // note: same instructions with -O3
+        benchmark::DoNotOptimize(*std::bit_cast < char * > (&d));
     }
 }
 
 //  ================================================================================================
 
-struct S1 { std::uint32_t x : 15 {}, y : 17 {}; }; // note: sizeof(S1) = 4
-struct S2 { std::uint32_t x      {}, y      {}; }; // note: sizeof(S2) = 8
+struct S1 { std::uint32_t x : 15 {}, y : 17 {}; };
+struct S2 { std::uint32_t x      {}, y      {}; };
 
 //  ================================================================================================
 
-void test_3(benchmark::State & state) // note: slow
+void test_3(benchmark::State & state)
 {
     static_assert(sizeof(S1) == 4);
 
@@ -112,7 +114,7 @@ void test_3(benchmark::State & state) // note: slow
 
 //  ================================================================================================
 
-void test_4(benchmark::State & state) // note: fast
+void test_4(benchmark::State & state)
 {
     static_assert(sizeof(S2) == 8);
 
@@ -140,18 +142,18 @@ BENCHMARK(test_4);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for benchmark
+int main(int argc, char ** argv)
 {
     std::cout << std::showbase;
 
-    std::cout << std::oct << 42 << std::endl; // note: output 052
-    std::cout << std::dec << 42 << std::endl; // note: output 42
-    std::cout << std::hex << 42 << std::endl; // note: output 0x2a
+    std::cout << std::oct << 42 << std::endl; // output: 052
+    std::cout << std::dec << 42 << std::endl; // output: 42
+    std::cout << std::hex << 42 << std::endl; // output: 0x2a
 
-    [[maybe_unused]] constexpr auto bin = 0b101010; // note: binary
-    [[maybe_unused]] constexpr auto oct = 052;      // note: octal
-    [[maybe_unused]] constexpr auto dec = 42;       // note: decimal
-    [[maybe_unused]] constexpr auto hex = 0x2a;     // note: hexadecimal
+    [[maybe_unused]] constexpr auto bin = 0b101010;
+    [[maybe_unused]] constexpr auto oct = 052;
+    [[maybe_unused]] constexpr auto dec = 42;
+    [[maybe_unused]] constexpr auto hex = 0x2a;
 
 //  ================================================================================================
 
@@ -165,18 +167,16 @@ int main(int argc, char ** argv) // note: arguments for benchmark
     assert((data &  mask) == 0x00000030);
     assert((data ^  mask) == 0x000012c4);
 
-    constexpr auto m = 0x123; assert((m << 1) == 0x246); // good: bit shift as multiplication
-    constexpr auto n = -4000; assert((n >> 2) == -1000); // good: bit shift as multiplication
+    constexpr auto m = 0x123; assert((m << 1) == 0x246);
+    constexpr auto n = -4000; assert((n >> 2) == -1000);
 
 //  ================================================================================================
 
-    auto x = 1, y = 2;
-
-    x ^= y ^= x ^= y; // note: Google interview, solution 2
+    auto x = 1, y = 2; x ^= y ^= x ^= y; // support: Google
 
 //  ================================================================================================
 
-    static_assert(sizeof(std::uint64_t) == 8); // note: 8 byte(s) exactly
+    static_assert(sizeof(std::uint64_t) == 8);
 
     static_assert(std::is_same_v < int, std::int32_t > );
 
@@ -184,12 +184,12 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 //  ================================================================================================
 
-    std::bitset < 8 > bitset(0b1101); // note: consider boost::dynamic_bitset
+    std::bitset < 8 > bitset(0b1101); // support: boost::dynamic_bitset
         
     bitset |= 0b0010; assert(bitset == 0b1111);
     bitset &= 0b0011; assert(bitset == 0b0011);
 
-    std::cout << std::bitset < 8 > (42) << std::endl; // note: output 00101010
+    std::cout << std::bitset < 8 > (42) << std::endl; // output: 00101010
    
     assert(std::bitset < 8 > (       42 ).to_string() == "00101010");
     assert(std::bitset < 8 > ("00101010").to_ullong() ==        42 );
@@ -207,7 +207,7 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     constexpr int array[size]{ 42 };
 
-    print(std::as_bytes(std::span < const int > (array))); // note: output 0x2a
+    print(std::as_bytes(std::span < const int > (array)));
 
 //  ================================================================================================
 
@@ -215,14 +215,14 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     const auto ptr_uint = &value;
 
-    const auto ptr_byte = std::bit_cast < const std::byte * > (ptr_uint); // note: same as reinterpret_cast here
+    const auto ptr_byte = std::bit_cast < const std::byte * > (ptr_uint);
 
     for (std::size_t i = 0; i < sizeof(unsigned int); ++i)
     {
         assert(std::to_integer < int > (*(ptr_byte + i)) == 0xff);
     }
 
-    assert(&array[size - 1] - &array[0] == 4); // note: pointer arithmetic
+    assert(&array[size - 1] - &array[0] == 4);
 
     assert(distance_in_bytes(&array[0], &array[size - 1]) == 16);
 
@@ -232,9 +232,9 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
     static_assert(sizeof(d) == sizeof(r));
 
-//  r = *reinterpret_cast < const std::uint64_t * > (&d); // bad: undefined behavior, strict aliasing rule
+//  r = *reinterpret_cast < const std::uint64_t * > (&d); // bad
 
-    r = std::bit_cast < const std::uint64_t > (d); // good: or directly do std::memcpy(&n, &d, sizeof(d));
+    r = std::bit_cast < const std::uint64_t > (d); // support: std::memcpy
 
 //  ================================================================================================
 

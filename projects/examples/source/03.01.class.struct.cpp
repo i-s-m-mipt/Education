@@ -3,9 +3,11 @@
 
 //  ================================================================================================
 
-struct S { int x{}, y{}, z{ 4 }; };
+struct Structure { int x{}, y{}, z = 4; };
 
-struct Point { double x = 0.0, y = 0.0; };
+//  ================================================================================================
+
+struct Point { double x = 0.0; double y = 0.0; };
 
 //  ================================================================================================
 
@@ -18,37 +20,38 @@ struct Point { double x = 0.0, y = 0.0; };
 
 int main()
 {
-	[[maybe_unused]] S s1            ; // elements: { 0, 0, 4 }
-	[[maybe_unused]] S s2 {         }; // elements: { 0, 0, 4 }
-	[[maybe_unused]] S s3 { 1, 2    }; // elements: { 1, 2, 4 }
-	[[maybe_unused]] S s4 { 1, 2, 3 }; // elements: { 1, 2, 3 }
+	[[maybe_unused]] Structure s1            ; // elements: { 0, 0, 4 }
+	[[maybe_unused]] Structure s2 {         }; // elements: { 0, 0, 4 }
+	[[maybe_unused]] Structure s3 { 1       }; // elements: { 1, 0, 4 }
+	[[maybe_unused]] Structure s4 { 1, 2    }; // elements: { 1, 2, 4 }
+	[[maybe_unused]] Structure s5 { 1, 2, 3 }; // elements: { 1, 2, 3 }
 
-	[[maybe_unused]] S s5 { .x = 1, .z = 3 }; // elements: { 1, 0, 3 }
+	[[maybe_unused]] Structure s6 { .x = 1, .z = 3 }; // elements: { 1, 0, 3 }
 	
-//	[[maybe_unused]] S s6 { .y = 2, .x = 1 }; // error
+//	[[maybe_unused]] Structure s7 { .y = 2, .x = 1 }; // error
 
 //  ================================================================================================
 
 	s1.x = 42;
 
-	const auto ptr = &s1;
+	const auto ptr = &s1; // detail: Structure * const
 
-//	(*ptr).y = 42; // bad: избыточный синтаксис
+//	(*ptr).y = 42; // bad
 
 	ptr->y = 42;
 
-	auto & ref = s1.z;
+	auto & ref = s1.z; // detail: int &
 
 	ref = 42;
 
 //  ================================================================================================
 
-	std::cout <<  s1.x << std::endl;
-	std::cout <<  s1.y << std::endl;
-	std::cout <<  s1.z << std::endl;
+	std::cout <<  s1.x << std::endl; // output: 42
+	std::cout <<  s1.y << std::endl; // output: 42
+	std::cout <<  s1.z << std::endl; // output: 42
 
-	std::cout << &s1   << std::endl;
-	std::cout << &s1.x << std::endl;
+	std::cout << &s1   << std::endl; // output: 0x...
+	std::cout << &s1.x << std::endl; // output: 0x...
 
 //  ================================================================================================
 
@@ -58,13 +61,13 @@ int main()
 
 //  ================================================================================================
 
-	[[maybe_unused]] const S s7 { 1, 2, 3 };
+	[[maybe_unused]] const Structure s8 { 1, 2, 3 };
 
-//	s7.x = 42; // error
+//	s8.x = 42; // error
 
 //  ================================================================================================
 
-	std::vector < Point > points { {0.0, 0.0}, {1.0, 1.0} };
+	std::vector < Point > points { make_point(0.0, 0.0), { 1.0, 1.0 } };
 
 	return 0;
 }

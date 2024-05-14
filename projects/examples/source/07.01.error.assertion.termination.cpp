@@ -15,7 +15,7 @@ template < typename T > inline constexpr void swap(T & x, T & y)
 
 //  ================================================================================================
 
-class Bad { public: Bad() = delete; }; // note: not default constructible
+class Bad { public: Bad() = delete; };
 
 template < typename T = Bad > class C
 {
@@ -33,23 +33,23 @@ int main()
 {
     const auto object = new const auto(42);
 
-    assert(object); // good: convenient debugging tool
+    assert(object);
 
     delete object;
 
-//  assert(nullptr); // error: assertion failed
+//  assert(nullptr); // error
 
 //  ================================================================================================
 
-           assert(1 + 1 == 2); // note: optional message string
-    static_assert(1 + 1 == 2); // note: optional message string
+           assert(1 + 1 == 2);
+    static_assert(1 + 1 == 2);
 
            assert((sizeof(int) == 4) && "required size of int 4 bytes");
     static_assert((sizeof(int) == 4),   "required size of int 4 bytes");
 
     [[maybe_unused]] const C < int > good;
 
-//  const C bad; // error: static assertion failed
+//  const C bad; // error
 
 //  ================================================================================================
 
@@ -60,12 +60,12 @@ int main()
 
     if (std::cin >> c; c == 'y')
     {
-        std::exit(0); // note: termination with exit code, cleanup called
+        std::exit(0);
     } 
     else
     {
-        std::abort(); // note: abnormal termination, cleanup not called
+        std::abort();
     }
 
-//	return 0; // warning: unreachable code
+	return 0;
 }

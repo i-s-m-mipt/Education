@@ -4,13 +4,13 @@
 
 //  ================================================================================================
 
-enum class Color { R, G, B, quantity }; // good: quantity as limit
+enum class Color { R, G, B, quantity };
 
 //  ================================================================================================
 
 void f(Color color)
 {
-	switch (color) // good: enumerators provide readability
+	switch (color)
 	{
 		case Color::R: { std::cout << "R"; break; }
 		case Color::G: { std::cout << "G"; break; }
@@ -27,7 +27,7 @@ void f(Color color)
 
 //  ================================================================================================
 
-enum class Message : std::uint16_t { empty, debug, error, fatal }; // note: less size
+enum class Message : std::uint16_t { empty, debug, error, fatal };
 
 //  ================================================================================================
 
@@ -58,7 +58,7 @@ int main()
 	constexpr State state_1 = alpha;
 	constexpr State state_2 = gamma;
 
-	g(state_1 | state_2); // good: one argument instead many flags
+	g(state_1 | state_2); // support: std::ios_base
 	
 	return 0;
 }

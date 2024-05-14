@@ -15,7 +15,7 @@
 
 //  ================================================================================================
 
-class Block_Allocator : private boost::noncopyable // note: deallocations at any position for blocks of different sizes
+class Block_Allocator : private boost::noncopyable
 {
 private:
 
@@ -33,7 +33,7 @@ public:
 
 	        m_head = get_node(m_begin); *m_head = { m_size - sizeof(Header), nullptr };
         }
-        else throw std::invalid_argument("invalid size: " + std::to_string(size));
+        else throw std::runtime_error("invalid size");
     }
 	
    ~Block_Allocator() noexcept
@@ -45,17 +45,17 @@ public:
 
     [[nodiscard]] void * allocate(std::size_t size) noexcept
     {
-	    void * const end = get_byte(m_begin) + sizeof(Header) + size, * next = end; // note: remember second *
+	    void * const end = get_byte(m_begin) + sizeof(Header) + size, * next = end;
 
-	    auto space = 2 * alignof(Header); // note: enough space to align next pointer to Header
+	    auto space = 2 * alignof(Header);
 
-        if (next = std::align(alignof(Header), sizeof(Header), next, space); next) // note: modifies next and space
+        if (next = std::align(alignof(Header), sizeof(Header), next, space); next)
         {
-            auto padding = get_byte(next) - get_byte(end); // note: padding between end of data and aligned header
+            auto padding = get_byte(next) - get_byte(end);
 
-            if (const auto [current, previous] = find_first(size + padding); current) // note: consider find best
+            if (const auto [current, previous] = find_first(size + padding); current)
             {
-                if (current->size >= size + padding + sizeof(Node) + 1) // note: new splitted node for the rest
+                if (current->size >= size + padding + sizeof(Node) + 1)
                 {
                     const auto block_size = sizeof(Header) + size + padding;
 
@@ -67,16 +67,16 @@ public:
                 }
                 else
                 {
-                    padding += current->size - (size + padding); // note: not enough space for splitting nodes
+                    padding += current->size - (size + padding);
                 }
 
                 if (!previous)
                 {
-                    m_head = current->next; // note: allocated on head node
+                    m_head = current->next;
                 }
                 else
                 {
-                    previous->next = current->next; // note: head skipped
+                    previous->next = current->next;
                 }
 
                 const auto header = get_header(current); header->size = size + padding;
@@ -102,11 +102,11 @@ public:
             {
                 if (node->next = current; !previous)
                 {
-                    m_head = node; // note: move head to the left
+                    m_head = node;
                 }
                 else
                 {
-                    previous->next = node; // note: insert node
+                    previous->next = node;
                 }
 
                 break;
@@ -145,9 +145,9 @@ private:
 		return static_cast < Header * > (ptr);
 	}
 
-    [[nodiscard]] std::pair < Node * , Node * > find_first(std::size_t size) const // note: fast, bu fragmentation
+    [[nodiscard]] std::pair < Node * , Node * > find_first(std::size_t size) const
     {
-        Node * current = m_head, * previous = nullptr; // note: remember the second * here
+        Node * current = m_head, * previous = nullptr;
 
 	    for (; current && size > current->size; previous = current, current = current->next) {}
 
@@ -186,7 +186,7 @@ private:
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state) // note: pretty fast
+void test_1(benchmark::State & state)
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
 
@@ -198,7 +198,7 @@ void test_1(benchmark::State & state) // note: pretty fast
 
 	for (auto _ : state)
 	{
-		Block_Allocator allocator(16 * gb); // note: huge constant
+		Block_Allocator allocator(16 * gb);
 
 		for (std::size_t i = 0; i < kb; i +=  1) pointers[i] = allocator.  allocate(distribution(engine) * mb);
 		for (std::size_t i = 0; i < kb; i += 32)               allocator.deallocate(pointers[i]              );
@@ -209,7 +209,7 @@ void test_1(benchmark::State & state) // note: pretty fast
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state) // note: pretty slow
+void test_2(benchmark::State & state)
 {
 	constexpr std::size_t kb = 1024, mb = kb * kb;
 
@@ -239,27 +239,27 @@ void test_2(benchmark::State & state) // note: pretty slow
 
 //  ================================================================================================
 
-BENCHMARK(test_1)->Arg(42); // note: same seeds for PRNG
+BENCHMARK(test_1)->Arg(42);
 BENCHMARK(test_2)->Arg(42);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for benchmark
+int main(int argc, char ** argv)
 {
-    Block_Allocator allocator(1024);                           allocator.print(); // note: initial
+    Block_Allocator allocator(1024);                           allocator.print(); // detail: X
 
-	[[maybe_unused]] auto ptr_A = allocator.  allocate(   16); allocator.print(); // note: initial + 32
-	[[maybe_unused]] auto ptr_B = allocator.  allocate(   32); allocator.print(); // note: initial + 32 + 48
-	[[maybe_unused]] auto ptr_C = allocator.  allocate(   32); allocator.print(); // note: initial + 32 + 48 + 48
-    [[maybe_unused]] auto ptr_D = allocator.  allocate(   16); allocator.print(); // note: initial + 32 + 48 + 48 + 32
+	[[maybe_unused]] auto ptr_A = allocator.  allocate(   16); allocator.print(); // detail: X + 32
+	[[maybe_unused]] auto ptr_B = allocator.  allocate(   32); allocator.print(); // detail: X + 32 + 48
+	[[maybe_unused]] auto ptr_C = allocator.  allocate(   32); allocator.print(); // detail: X + 32 + 48 + 48
+    [[maybe_unused]] auto ptr_D = allocator.  allocate(   16); allocator.print(); // detail: X + 32 + 48 + 48 + 32
 
-	                              allocator.deallocate(ptr_B); allocator.print(); // note: initial + 32
-                                  allocator.deallocate(ptr_C); allocator.print(); // note: initial + 32
+	                              allocator.deallocate(ptr_B); allocator.print(); // detail: X + 32
+                                  allocator.deallocate(ptr_C); allocator.print(); // detail: X + 32
 
-	[[maybe_unused]] auto ptr_E = allocator.  allocate(   16); allocator.print(); // note: initial + 32 + 32
-	[[maybe_unused]] auto ptr_F = allocator.  allocate(   32); allocator.print(); // note: initial + 32 + 48 + 48 + 32
+	[[maybe_unused]] auto ptr_E = allocator.  allocate(   16); allocator.print(); // detail: X + 32 + 32
+	[[maybe_unused]] auto ptr_F = allocator.  allocate(   32); allocator.print(); // detail: X + 32 + 48 + 48 + 32
     
-    // note: HAHBBHCCHDD -> HA000000HDD -> HAHEHFF0HDD, each letter states for 16 bytes if sizeof(Header) == 16
+    // detail: HAHBBHCCHDD -> HA000000HDD -> HAHEHFF0HDD
 
 //  ================================================================================================
 

@@ -21,13 +21,13 @@ int main()
 
 	assert(static_cast < int > (c) == 97);
 
-	assert(sizeof(char) == 1); // note: см. std::byte
+	assert(sizeof(char) == 1); // support: std::byte
 
 //  ================================================================================================
 
 	std::cout << std::boolalpha << std::is_signed_v < char > << std::endl;
 
-//	c = 255; // warning: переполнение при преобразовании из int в char
+//	c = 255; // error
 	
 	for (auto i = 0; i < 256; ++i) 
 	{
@@ -51,15 +51,13 @@ int main()
 
 //  ================================================================================================
 
+//	constexpr wchar_t wc = L'a'; // bad
+
 	std::cout << sizeof(wchar_t) << std::endl;
 
-//	constexpr wchar_t  wc  =  L'a'; // bad: UTF-32 на Linux и UTF-16 на Windows
+	constexpr char8_t c8 = u8'a';
 
-//	constexpr char8_t  c8  = u8'a'; // bad: неполная поддержка в стандартной библиотеке
-
-//	constexpr char16_t c16 =  u'a'; // bad: неполная поддержка в стандартной библиотеке
-
-//	constexpr char32_t c32 =  U'a'; // bad: неполная поддержка в стандартной библиотеке
+	c = u8'a'; // support: UTF-8
 
 //  ================================================================================================
 

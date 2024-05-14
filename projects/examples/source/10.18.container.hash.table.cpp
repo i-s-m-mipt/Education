@@ -48,9 +48,9 @@ void print(const std::unordered_set < int > & unordered_set)
 
 int main()
 {
-	std::unordered_set < int > unordered_set; // note: O(1) complexity (amortized) for operations
+	std::unordered_set < int > unordered_set;
 
-	unordered_set.rehash(64); // note: creates at least 64 buckets
+	unordered_set.rehash(64); // detail: >= 64
 
 	std::mt19937_64 engine{ std::random_device()() };
 
@@ -58,13 +58,10 @@ int main()
 
 	for (std::size_t i = 0; i < unordered_set.bucket_count(); ++i)
 	{
-		unordered_set.insert(distribution(engine));
+		unordered_set.insert(distribution(engine)); // complexity: O(1) - O(N)
 	}
 
-	print(unordered_set);
-
-	unordered_set.rehash(128); // note: creates at least 128 buckets
-
+	print(unordered_set); unordered_set.rehash(65); // complexity: O(N); detail: >= 128
 	print(unordered_set);
 
 	return 0;

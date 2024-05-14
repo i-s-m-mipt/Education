@@ -12,7 +12,7 @@
     return (n < 2 ? 1 : n * factorial(n - 1)); 
 }
 
-TEST(Factorial, Results) // note: group name and test case name
+TEST(Factorial, Results)
 {
     EXPECT_EQ(factorial(0),     1);
     EXPECT_EQ(factorial(1),     1);
@@ -21,7 +21,7 @@ TEST(Factorial, Results) // note: group name and test case name
     EXPECT_EQ(factorial(5),   120);
     EXPECT_EQ(factorial(8), 40320);
 
-    ASSERT_EQ(factorial(4),    25); // note: failed assertion
+    ASSERT_EQ(factorial(4),    25);
 }
 
 //  ================================================================================================
@@ -34,7 +34,7 @@ TEST(Factorial, Results) // note: group name and test case name
 
 TEST(Miscellaneous, Expectations) 
 { 
-    EXPECT_TRUE(is_even(43)); // note: failed expectation
+    EXPECT_TRUE(is_even(43));
 
     EXPECT_THAT("Hello, world!", testing::StartsWith("Hello"));
 
@@ -51,11 +51,11 @@ class Fixture : public testing::Test
 {
 public:
 
-    Fixture() noexcept {} // note:   setup actions
-   ~Fixture() noexcept {} // note: cleanup actions
+    Fixture() noexcept {}
+   ~Fixture() noexcept {}
 
-    void    SetUp() override { data.push_back(42); } // note: called after constructor
-    void TearDown() override { data.clear      (); } // note: called before destructor
+    void    SetUp() override { data.push_back(42); }
+    void TearDown() override { data.clear      (); }
 
     std::vector < int > data;
 
@@ -73,11 +73,11 @@ class Parameters : public Fixture, public testing::WithParamInterface < int > {}
 
 TEST_P(Parameters, Resize) { data.resize(GetParam(), 0); ASSERT_EQ(std::size(data), GetParam()); }
 
-INSTANTIATE_TEST_CASE_P(Test, Parameters, testing::Values(0, 1, 2, 4, 8)); // note: testing::Range(0, 10)
+INSTANTIATE_TEST_CASE_P(Test, Parameters, testing::Values(0, 1, 2, 4, 8));
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for testing
+int main(int argc, char ** argv)
 {
     testing::InitGoogleTest(&argc, argv);
 

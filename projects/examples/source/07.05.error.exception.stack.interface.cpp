@@ -15,15 +15,15 @@ public:
 
 	[[nodiscard]] constexpr T top() const noexcept
 	{ 
-		return m_container.back(); // note: undefined behavior if empty
+		return m_container.back();
 	}
 
 	constexpr void pop() noexcept
 	{ 
-		m_container.pop_back(); // note: undefined behavior if empty
+		m_container.pop_back();
 	}
 
-//	[[nodiscard]] constexpr T pop() { ... } // bad: unsafe design
+//	[[nodiscard]] constexpr T pop() { ... } // bad
 
 	[[nodiscard]] constexpr std::size_t size() const noexcept
 	{ 
@@ -44,7 +44,7 @@ int main()
 	
 	stack.push(42);
 
-//	auto value = stack.pop(); // bad: possible problem here
+//	auto value = stack.pop(); // bad
 
 	return 0;
 }

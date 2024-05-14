@@ -10,13 +10,13 @@ using namespace std::literals;
 
 void f(std::size_t size)
 {
-	const auto array = new int[size]{}; // note: dynamic allocation
+	const auto array = new int[size]{};
 
-	std::iota(array, array + size, 1); // note: generate range 1, 2, 3, ...
+	std::iota(array, array + size, 1);
 
-	std::this_thread::sleep_for(1s); // note: delay
+	std::this_thread::sleep_for(1s);
 
-//  delete[] array; // bad: memory leak if skipped
+//  delete[] array; // bad
 }
 
 //  ================================================================================================

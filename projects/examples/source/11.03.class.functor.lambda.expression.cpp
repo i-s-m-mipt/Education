@@ -15,7 +15,7 @@ class C
 {
 public:
 
-	void f() const { [this](){std::cout << m_data << std::endl; }(); } // note: this captured
+	void f() const { [this](){std::cout << m_data << std::endl; }(); }
 
 private:
 
@@ -27,9 +27,9 @@ private:
 
 int main()
 {
-	constexpr auto lambda_1 = [](){}; // note: lambda expression, consider cppinsights.io
+	constexpr auto lambda_1 = [](){}; // support: cppinsights.io
 
-	std::cout << typeid(lambda_1).name() << std::endl; // note: unique closure type
+	std::cout << typeid(lambda_1).name() << std::endl;
 
 //  ================================================================================================
 
@@ -40,13 +40,13 @@ int main()
 
 	assert(z1 == 42);
 
-//	[&](auto x) constexpr noexcept { z1 = z2 + x; }(42); // bad: default capture by reference
+//	[&](auto x) constexpr noexcept { z1 = z2 + x; }(42); // bad
 
 //  ================================================================================================
 
 	auto unique_pointer = std::make_unique < int > (42);
 
-	[unique_pointer = std::move(unique_pointer)]() constexpr noexcept { assert(*unique_pointer == 42); }(); 
+	[ptr = std::move(unique_pointer)]() constexpr noexcept { assert(*ptr == 42); }(); 
 
 //  ================================================================================================
 
@@ -63,11 +63,11 @@ int main()
 
 //  ================================================================================================
 
-	constexpr auto templated_lambda = [] < typename T > (T x, T y)  constexpr noexcept { return (x + y); };
+	constexpr auto lambda_2 = [] < typename T > (T x, T y)  constexpr noexcept { return (x + y); };
 
-	templated_lambda(100, 200);
-	templated_lambda(1.0, 2.0);
-//	templated_lambda(100, 2.0); // error: different types
+	lambda_2(100, 200);
+	lambda_2(1.0, 2.0);
+//	lambda_2(100, 2.0); // error
 
 //  ================================================================================================
 
@@ -75,17 +75,17 @@ int main()
 
 	std::vector < int > vector(size, 0);
 
-	auto lambda_2 = [z1](auto & x) constexpr noexcept {        x += z1 ; };
-	auto lambda_3 = [z1](auto   x) constexpr noexcept { assert(x == z1); };
+	auto lambda_3 = [z1](auto & x) constexpr noexcept {        x += z1 ; };
+	auto lambda_4 = [z1](auto   x) constexpr noexcept { assert(x == z1); };
 
-	std::ranges::for_each(              vector , lambda_2); // note: modify elements in range
-	std::ranges::for_each(std::as_const(vector), lambda_3); // note: verify elements in range
+	std::ranges::for_each(              vector , lambda_3);
+	std::ranges::for_each(std::as_const(vector), lambda_4);
 
 //  ================================================================================================
 
-	constexpr auto lambda_4 = [](auto lhs, auto rhs) constexpr noexcept { return (lhs > rhs); };
+	constexpr auto lambda_5 = [](auto lhs, auto rhs) constexpr noexcept { return (lhs > rhs); };
 
-	const std::set < int, decltype(lambda_4) > set { 1, 4, 2, 5, 3 };
+	const std::set < int, decltype(lambda_5) > set { 1, 4, 2, 5, 3 };
 
 	for (const auto element : set) std::cout << element << ' ';
 

@@ -12,7 +12,7 @@ inline void g(      C &&) { std::cout << "g(      C &&)" << std::endl; }
 //  ================================================================================================
 
 /*
-inline void f(      C &  c) { g(c); } // bad: экспоненциальный рост
+inline void f(      C &  c) { g(c); } // bad
 inline void f(const C &  c) { g(c); }
 inline void f(      C && c) 
 { 

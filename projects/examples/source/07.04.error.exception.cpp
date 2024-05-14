@@ -6,19 +6,17 @@
 #include <system_error>
 #include <type_traits>
 #include <utility>
+#include <vector>
 
 //  ================================================================================================
 
-class Error : public std::exception // good: inherited from std::exception
+class Error : public std::exception
 {
 public:
 
 	explicit Error(int error_code) : m_error_code(error_code) {}
 
-	[[nodiscard]] const char * what() const noexcept override // note: skip noexcept in MSVC
-	{ 
-		return "error"; 
-	}
+	[[nodiscard]] const char * what() const noexcept override { return "error"; } // demo
 
 private:
 
@@ -28,34 +26,32 @@ private:
 
 //  ================================================================================================
 
-[[noreturn]] void h() // note: inconvinient control flow return
+[[noreturn]] void h()
 {
 	std::cout << "h() called" << std::endl;
 
 	try
 	{
-		// note: some actions here before throwing an exception
+		// ...
 		
-//		throw 42; // bad: possible, but not good in exceptions
+//		throw 42; // bad
 
-		throw Error(42); // note: user-defined exception
+		throw Error(42); //	support: std::runtime_error
 
-//		throw std::runtime_error("error"); // note: standard exception
+//		throw std::system_error(std::make_error_code(std::errc::no_message), "error");
 
-//		throw std::system_error(std::make_error_code(std::errc::illegal_byte_sequence), "error");
-
-		// note: actions are skipped after throwing an exception
+		// ...
 	}
-	catch (const Error & error) // note: only one exception is handled
+	catch (const Error & error)
 	{
 		std::cerr << error.what() << '\n';
 
-//		throw error; // bad: copy-initialized copy
+//		throw error; // bad
 
-		throw; // good: rethrow the same exception, polymorphic type saved
+		throw;
 	}
 
-//	std::cout << "h() exited" << std::endl; // warning: unreachable code
+	std::cout << "h() exited" << std::endl;
 }
 
 //  ================================================================================================
@@ -66,13 +62,15 @@ void g()
 
 	[[maybe_unused]] const std::size_t size = 5;
 
-//	const auto array = new int[size]{}; // bad: consider RAII wrapper
+//	const auto array = new int[size]{}; // bad
+
+	std::vector < int > vector(size, 0);
 
 	h();
 
-//	delete[] array; // bad: possible memory leak in case of exceptions
+//	delete[] array; // bad
 
-//	std::cout << "g() exited" << std::endl; // warning: unreachable code
+	std::cout << "g() exited" << std::endl;
 }
 
 //  ================================================================================================
@@ -89,12 +87,10 @@ void f()
 	{
 		std::cerr << exception.what() << '\n';
 
-		throw std::runtime_error("error"); // note: throw new exception
-
-//		std::cerr << "f() exited in catch\n"; // warning: unreachable code
+		throw std::runtime_error("error");
 	}
 
-//	std::cout << "f() exited" << std::endl; // warning: unreachable code
+	std::cout << "f() exited" << std::endl;
 }
 
 //  ================================================================================================
@@ -103,41 +99,32 @@ class C
 {
 public:
 
-	explicit C(const std::string & data) try : m_data(data) // note: function try block
+	explicit C(const std::string & data) try : m_data(data)
 	{
 		std::cout << "constructor" << std::endl;
 
 		throw std::runtime_error("error");
 	}
-	catch (...) // note: destructor will not be called, but m_data will be destroyed
+	catch (...)
 	{
 		std::cerr << "constructor exception\n";
 
-		uninitialize(); // note: mandatory call, consider RAII wrappers instead of this
+		uninitialize();
 	}
 
-	[[nodiscard]] const std::string & data() const noexcept // good: primitive noexcept getter
+	[[nodiscard]] const std::string & data() const noexcept
 	{
 		return m_data;
 	}
 
-   ~C() noexcept // good: exceptions do not leave the destructor
+   ~C() noexcept
 	{
-		try
-		{
-			uninitialize();
-		}
-		catch (...) // good: catch all exceptions in destructor
-		{
-			std::cerr << "bad destructor\n";
-
-			std::abort(); // note: abnormal termination
-		}
+		try { uninitialize(); } catch (...) { std::abort(); }
 	}
 
 	void uninitialize() { std::cout << "uninitialize" << std::endl; }
 
-	void swap(C & other) noexcept // good: noexcept swap function
+	void swap(C & other) noexcept
 	{
 		std::swap(m_data, other.m_data);
 	}
@@ -153,20 +140,20 @@ private:
 template < typename T > inline constexpr void swap(T & x, T & y) noexcept(
 
 	std::is_nothrow_move_constructible_v < T > &&
-	std::is_nothrow_move_assignable_v    < T > ) // note: conditionally noexcept, long instructions
+	std::is_nothrow_move_assignable_v    < T > )
 {
-	auto z = std::move(y); // note: non-constant for movement
+	auto z = std::move(y);
 	     y = std::move(x);
 		 x = std::move(z);
 }
 
 template < typename F, typename ... Ts > 
 
-[[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Ts && ... args) noexcept(
-	
-	noexcept(f(std::declval < Ts > ()...))) // note: consider std::is_nothrow_invocable_v
+[[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Ts && ... args) 
+
+	noexcept(noexcept(f(std::declval < Ts > ()...)))
 {
-	return f(std::forward < Ts > (args)...); // note: consider std::invoke
+	return f(std::forward < Ts > (args)...); // support: std::invoke
 }
 
 //  ================================================================================================
@@ -179,21 +166,21 @@ int main()
 
 		return EXIT_SUCCESS;
 	}
-	catch (const std::runtime_error & exception) // note: specified catch handler
+	catch (const std::runtime_error & exception)
 	{
 		std::cerr << exception.what() << '\n';
 
 		return EXIT_FAILURE;
 	}
-	catch (const std::exception & exception) // note: generalized catch handler
+	catch (const std::exception & exception)
 	{
 		std::cerr << exception.what() << '\n';
 
 		return EXIT_FAILURE;
 	}
-	catch (...) // good: catch all exceptions at last in main
+	catch (...)
 	{
-		[[maybe_unused]] auto ptr = std::current_exception(); // note: possible in catch (...)
+		[[maybe_unused]] auto ptr = std::current_exception();
 
 		std::cerr << "unknown exception\n";
 

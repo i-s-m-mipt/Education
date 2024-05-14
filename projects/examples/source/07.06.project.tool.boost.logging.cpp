@@ -21,7 +21,7 @@
 
 using namespace std::literals;
 
-#include <boost/date_time/posix_time/posix_time.hpp> // note: support
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/log/attributes.hpp>
 #include <boost/log/common.hpp>
 #include <boost/log/core.hpp>
@@ -40,9 +40,9 @@ using namespace std::literals;
 #include <boost/log/utility/value_ref.hpp>
 #include <boost/log/utility/setup/file.hpp>
 #include <boost/log/utility/setup/common_attributes.hpp>
-#include <boost/make_shared.hpp> // note: support
+#include <boost/make_shared.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp> // note: support
+#include <boost/shared_ptr.hpp>
 
 //  ================================================================================================
 
@@ -145,7 +145,7 @@ private:
 
 		fout_sink_ptr->set_formatter(&Logger::fout_formatter);
 
-		fout_sink_ptr->set_filter([](boost::log::attribute_value_set) noexcept { return true; });
+		fout_sink_ptr->set_filter([](boost::log::attribute_value_set) constexpr noexcept { return true; });
 
 		return fout_sink_ptr;
 	}
@@ -154,9 +154,11 @@ private:
 	{
 		const auto & attribute_value_set = record_view.attribute_values();
 
-		stream << std::dec << std::setw(8) << std::right << std::setfill('0') <<
-			boost::log::extract_or_throw < std::size_t > (attribute_value_set[
-				attributes.at(Attribute::line).first]) << std::setfill(' ') << separator;
+		const auto & line = attribute_value_set[attributes.at(Attribute::line).first];
+
+		stream << std::dec << std::setw(8) << std::right << std::setfill('0');
+		
+		stream << boost::log::extract_or_throw < std::size_t > (line) << std::setfill(' ') << separator;
 
 		auto date_time_formatter =
 			boost::log::expressions::stream <<
@@ -167,14 +169,18 @@ private:
 
 		stream << separator;
 
-		stream << boost::log::extract_or_throw < boost::log::attributes::current_process_id::value_type > (
-			attribute_value_set[attributes.at(Attribute::process).first]) << separator;
+		using pid_t = boost::log::attributes::current_process_id::value_type;
+		using tid_t = boost::log::attributes::current_thread_id ::value_type;
 
-		stream << boost::log::extract_or_throw < boost::log::attributes::current_thread_id::value_type > (
-			attribute_value_set[attributes.at(Attribute::thread).first]) << separator;
+		const auto & pid = attribute_value_set[attributes.at(Attribute::process).first];
+		const auto & tid = attribute_value_set[attributes.at(Attribute::thread ).first];
 
-		stream << severities.at(boost::log::extract_or_throw < Severity > (
-			attribute_value_set[attributes.at(Attribute::severity).first])) << separator;
+		stream << boost::log::extract_or_throw < pid_t > (pid) << separator;
+		stream << boost::log::extract_or_throw < tid_t > (tid) << separator;
+
+		const auto & severity = attribute_value_set[attributes.at(Attribute::severity).first];
+
+		stream << severities.at(boost::log::extract_or_throw < Severity > (severity)) << separator;
 
 		stream << record_view[boost::log::expressions::message];
 	}
@@ -228,6 +234,7 @@ private:
 		{ Logger::Attribute::process,  std::make_pair("process", boost::log::attributes::current_process_id      ()) },
 		{ Logger::Attribute::thread,   std::make_pair("thread",  boost::log::attributes::current_thread_id       ()) },
 		{ Logger::Attribute::severity, std::make_pair(
+
 			boost::log::aux::default_attribute_names::severity().string(), boost::log::attribute()) }
 	};
 
@@ -279,7 +286,7 @@ void h()
 
 	try
 	{
-		LOGGER_WRITE_ERROR(logger, "message"); throw std::logic_error("error");
+		LOGGER_WRITE_ERROR(logger, "message"); throw std::runtime_error("error");
 	}
 	catch (const std::exception & exception)
 	{

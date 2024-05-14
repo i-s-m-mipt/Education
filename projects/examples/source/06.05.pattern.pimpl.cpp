@@ -6,11 +6,11 @@
 
 //  ================================================================================================
 
-class Computer : private boost::noncopyable // note: placed in the header file
+class Computer : private boost::noncopyable // detail: header.hpp
 {
 public:
 
-    explicit Computer(std::string name); // note: definition in source file
+    explicit Computer(std::string name);
 
     Computer(Computer && other) : m_pimpl(other.m_pimpl)
     {
@@ -24,19 +24,19 @@ public:
 
    ~Computer();
 
-    void run() const; // note: call forwarded to implementation, no inline abilities, slow
+    void run() const;
 
 private:
 
-    class Implementation; // note: implemetation hidden in the source file
+    class Implementation;
 
-    const Implementation * m_pimpl; // note: use std::experimental::propagate_const
+    const Implementation * m_pimpl; // support: std::experimental::propagate_const
 
 }; // class Computer : private boost::noncopyable
 
 //  ================================================================================================
 
-class Computer::Implementation // note: placed in the source file
+class Computer::Implementation // detail: source.cpp
 {
 public:
 
@@ -52,9 +52,9 @@ private:
 
 //  ================================================================================================
 
-Computer:: Computer(std::string name) : m_pimpl(new const Implementation(std::move(name))) {} // note: slow
+Computer:: Computer(std::string name) : m_pimpl(new const Implementation(std::move(name))) {}
 
-Computer::~Computer() { delete m_pimpl; } // note: slow
+Computer::~Computer() { delete m_pimpl; }
 
 void Computer::run() const { m_pimpl->run(); }
 

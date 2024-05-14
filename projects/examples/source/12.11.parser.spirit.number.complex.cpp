@@ -31,10 +31,7 @@ using namespace std::literals;
         
             boost::spirit::x3::ascii::space);
 
-    if (!result || begin != end) 
-    {
-        throw std::invalid_argument("invalid input: " + std::string(input));
-    }
+    if (!result || begin != end) throw std::runtime_error("invalid input");
             
     return std::complex < double > (real, imag);
 }

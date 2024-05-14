@@ -42,14 +42,14 @@ private:
 		{
 			if (!std::isdigit(string[0]) && std::size(string) == 1)
 			{
-				throw std::invalid_argument("invalid input: "s + string[0]);
+				throw std::runtime_error("invalid input");
 			}
 
 			for (std::size_t i = 1; i < std::size(string); ++i)
 			{
 				if (!std::isdigit(string[i]))
 				{
-					throw std::invalid_argument("invalid input: "s + string[i]);
+					throw std::runtime_error("invalid input");
 				}
 			}
 
@@ -68,7 +68,7 @@ private:
 
 			reduce_leading_zeros();
 		}
-		else throw std::invalid_argument("invalid input: "s + string[0]);
+		else throw std::runtime_error("invalid input");
 	}
 
 	void reduce_leading_zeros() noexcept
@@ -160,7 +160,7 @@ private:
 				{
 					++m_digits[i + 1];
 				}
-				else throw std::overflow_error("too many digits");
+				else throw std::runtime_error("arithmetic overflow");
 			}
 		}
 
@@ -188,7 +188,7 @@ public:
 
 	Big_Int & operator*=(Big_Int other)
 	{
-		if (m_n_digits + other.m_n_digits > size) throw std::overflow_error("too many digits");
+		if (m_n_digits + other.m_n_digits > size) throw std::runtime_error("arithmetic overflow");
 
 		Big_Int result;
 
@@ -217,7 +217,7 @@ public:
 	{
 		if (other.m_n_digits == 0 || (other.m_n_digits == 1 && other.m_digits.front() == 0))
 		{
-			throw std::domain_error("division by zero");
+			throw std::runtime_error("invalid division");
 		}
 
 		Big_Int result; result.m_n_digits = m_n_digits;
@@ -263,7 +263,7 @@ public:
 public:
 
 	[[nodiscard]] friend Big_Int multiply_fast(const Big_Int & x, 
-											   const Big_Int & y) // support: A. Karatsuba
+											   const Big_Int & y) // demo; support: A. Karatsuba
 	{
 		auto n = std::max(x.m_n_digits, y.m_n_digits);
 
@@ -271,14 +271,14 @@ public:
 
 		auto k = n / 2;
 
-		Big_Int xr; xr.m_n_digits =     k; // demo
-		Big_Int xl; xl.m_n_digits = n - k; // demo
+		Big_Int xr; xr.m_n_digits =     k;
+		Big_Int xl; xl.m_n_digits = n - k;
 
 		for (std::size_t i =     0; i < k; ++i) xr.m_digits[i    ] = x.m_digits[i];
 		for (std::size_t i = n / 2; i < n; ++i) xl.m_digits[i - k] = x.m_digits[i];
 
-		Big_Int yr; yr.m_n_digits =     k; // demo
-		Big_Int yl; yl.m_n_digits = n - k; // demo
+		Big_Int yr; yr.m_n_digits =     k;
+		Big_Int yl; yl.m_n_digits = n - k;
 
 		for (std::size_t i = 0; i < n / 2; ++i) yr.m_digits[i    ] = y.m_digits[i];
 		for (std::size_t i = k; i < n    ; ++i) yl.m_digits[i - k] = y.m_digits[i];
@@ -300,7 +300,7 @@ public:
 
 	[[nodiscard]] friend Big_Int sqrt(const Big_Int & x)
 	{
-		if (x.m_is_negative) throw std::domain_error("invalid argument");
+		if (x.m_is_negative) throw std::runtime_error("invalid sign");
 
 		auto position = (static_cast < int > (x.m_n_digits) + 1) / 2;
 

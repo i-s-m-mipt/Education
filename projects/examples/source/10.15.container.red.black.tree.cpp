@@ -13,7 +13,7 @@
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state) // note: O(N*log(N)) complexity, but fast
+void test_1(benchmark::State & state) // complexity: O(N * log(N))
 {
     for (auto _ : state)
     {
@@ -21,7 +21,7 @@ void test_1(benchmark::State & state) // note: O(N*log(N)) complexity, but fast
 
 		for (auto x = 0; x < state.range(0); ++x) { vector.push_back(x); }
 
-		std::ranges::sort(vector, std::greater()); // note: sort range in descending order
+		std::ranges::sort(vector, std::greater());
 
 		benchmark::DoNotOptimize(vector);	
     }
@@ -29,11 +29,11 @@ void test_1(benchmark::State & state) // note: O(N*log(N)) complexity, but fast
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state) // note: O(N*log(N)) complexity, but slow
+void test_2(benchmark::State & state) // complexity: O(N * log(N))
 {
     for (auto _ : state)
     {
-        std::set < int, std::greater < int > > set; // note: descending order
+        std::set < int, std::greater < int > > set;
 
 		for (auto x = 0; x < state.range(0); ++x) { set.insert(x); }
 
@@ -48,9 +48,9 @@ BENCHMARK(test_2)->Arg(100'000);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv) // note: arguments for benchmark
+int main(int argc, char ** argv)
 {
-	std::set < int > set { 1, 4, 2, 5, 3 }; // note: O(log(N)) complexity mainly
+	std::set < int > set { 1, 4, 2, 5, 3 }; // complexity: O(log(N))
 
 	using category_t = typename decltype(set)::iterator::iterator_category;
 
@@ -64,34 +64,38 @@ int main(int argc, char ** argv) // note: arguments for benchmark
 
 //  ================================================================================================
 
-	set.insert(std::cbegin(set), 0); // good: O(1) complexity (amortized) at best
+	set.insert(std::cbegin(set), 0); // complexity: O(1)
 
-	assert(!set.insert(1).second); // note: insert differs for std::multiset
+	assert(!set.insert(1).second); // support: std::multiset
 
-	assert( set.erase(3) == 1); // note: erase all elements with provided key
-	assert( set.count(3) == 0); // note: count all elements with provided key
+	assert( set.erase(3) == 1);
+	assert( set.count(3) == 0);
 
-	assert(!set.contains(3)); // note: better than set.find(3) == std::end(set)
+	assert(!set.contains(3)); // support: std::set::find
 
-	assert(*set.lower_bound(3) == 4 && *set.upper_bound(3) == 4); // note: elements: { 0, 1, 2, 4, 5 }
-	assert(*set.lower_bound(4) == 4 && *set.upper_bound(4) == 5); // note: elements: { 0, 1, 2, 4, 5 }
+	assert(*set.lower_bound(3) == 4 && *set.upper_bound(3) == 4);
+	assert(*set.lower_bound(4) == 4 && *set.upper_bound(4) == 5);
 
 //  ================================================================================================
+
+//	*std::begin(set) = 42; // error
 
 	auto node = set.extract(1); node.value() = 3; set.insert(std::move(node));
 
 //  ================================================================================================
 
-	std::map < std::string, int > map; // note: O(log(N)) complexity mainly
+	std::map < std::string, int > map; // complexity: O(log(N))
 
-	map.insert(std::make_pair("hello", 41)); // good: consider std::make_pair function
+	map.insert(std::make_pair("hello", 41)); 
 
-	map["world"] = map.at("hello"); map.erase("hello"); // note: way to change the key
+//	std::begin(map)->first = "world"; // error
 
-	assert(!map.    emplace("world", 42).second); // note:    additional actions with std::pair
-	assert(!map.try_emplace("world", 42).second); // good: no additional actions
+	map["world"] = map.at("hello"); map.erase("hello");
 
-	assert(!map.insert_or_assign("world", 42).second); // note: changes value here
+//	assert(!map.    emplace("world", 42).second); // bad
+	assert(!map.try_emplace("world", 42).second);
+
+	assert(!map.insert_or_assign("world", 42).second);
 
 	assert(std::size(map) == 1 && map.at("world") == 42);
 

@@ -7,7 +7,7 @@ int main()
 	const auto path = std::filesystem::current_path();
 
 	std::filesystem::create_directory(path / "directory"      );
-	std::filesystem::create_directory(path / "directory", path); // note: см. права доступа
+	std::filesystem::create_directory(path / "directory", path);
 
 	std::filesystem::create_directories("X/Y/Z");
 
@@ -32,7 +32,7 @@ int main()
 
 	std::filesystem::remove_all(path / "directory");
 
-//  std::filesystem::remove_all("C:/"); // bad: попробуйте самостоятельно
+//  std::filesystem::remove_all("C:/"); // bad
 
 	return 0;
 }

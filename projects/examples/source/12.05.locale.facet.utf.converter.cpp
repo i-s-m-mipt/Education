@@ -12,8 +12,6 @@
 
 #include <boost/locale.hpp>
 
-//#include <Windows.h> // note: см. system("chcp 1251") на Windows
-
 //  ================================================================================================
 
 [[nodiscard]] inline std::string convert_locale_to_utf(const std::string & string)
@@ -43,7 +41,7 @@
 /*
 [[nodiscard]] inline std::string convert_wstring_to_utf8(const std::wstring & wstring)
 {
-	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // bad: устаревший способ
+	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // bad
 
 	return converter.to_bytes(wstring);
 }
@@ -52,7 +50,7 @@
 /*
 [[nodiscard]] inline std::wstring convert_utf8_to_wstring(const std::string & string)
 {
-	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // bad: устаревший способ
+	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // bad
 
 	return converter.from_bytes(string);
 }
@@ -137,7 +135,7 @@ int main()
 {
     std::cout << boost::locale::util::get_system_locale() << std::endl;
 
-	std::string string; std::cin >> string; // note: см. кодировки Windows
+	std::string string; std::cin >> string;
 
     auto u8string = convert_locale_to_utf(string);
 
@@ -159,8 +157,6 @@ int main()
 
     const auto u16string = boost::locale::conv::utf_to_utf < char16_t, char > (u8string);
     const auto u32string = boost::locale::conv::utf_to_utf < char32_t, char > (u8string);
-
-//  SetConsoleOutputCP(65001); // note: см. Windows API
 
 	for (const auto c :  u8string) std::cout << static_cast < int > (c) << ' ';
 

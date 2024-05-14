@@ -9,7 +9,7 @@ int main()
 
 	const auto ptr_int = allocator_int.allocate(1);
 
-	*ptr_int = 42; // note: acceptable for fundamental types, consider construct
+	*ptr_int = 42;
 
 	allocator_int.deallocate(ptr_int, 1);
 
@@ -23,7 +23,7 @@ int main()
 
 	const auto ptr_string = allocator_traits.allocate(allocator_string, 1);
 
-//	std::cout << *ptr_string << std::endl; // bad: object not constructed
+//	std::cout << *ptr_string << std::endl; // bad
 
 	allocator_traits.construct(allocator_string, ptr_string, "Hello, world!");
 

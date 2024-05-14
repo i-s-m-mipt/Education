@@ -1,28 +1,18 @@
 #ifndef PROJECT_HEADER_HPP
-#define PROJECT_HEADER_HPP // note: standard header file guard
+#define PROJECT_HEADER_HPP
 
-#pragma once // good: new style non-standard header file guard
+#pragma once
 
-//#pragma warning(push) // note: disable warnings for one header file
-
-//#pragma warning(disable: 4715) 
-//#pragma warning(disable: 4459)
-
-#include <boost/asio.hpp> // note: external library header file
-
-//#pragma warning(pop)
+#include <boost/asio.hpp>
 
 //  ================================================================================================
 
-void f(); // good: declaration in header file
+void f();
 
-void g(); // note: declaration only
+void g();
 
 /*
-void h() // error: one definition rule violation
-{
-	std::cout << "h from header" << std::endl;
-}
+void h() { std::cout << "h from header" << std::endl; } // error
 */
 
 //  ================================================================================================
@@ -31,20 +21,20 @@ void test_macros();
 
 //  ================================================================================================
 
-class C { public: void print() const; }; // good: class definition in header file
+class C { public: void print() const; };
 
 //  ================================================================================================
 
 template < typename T1, typename T2 > [[nodiscard]] inline constexpr auto max(T1 x, T2 y)
 {
-	return (x < y ? y : x); // good: template definition in header file, no separation
+	return (x < y ? y : x);
 }
 
 //  ================================================================================================
 
 namespace education
 {
-	namespace examples // note: nested namespace
+	namespace examples
 	{
 		void print();
 
@@ -60,9 +50,9 @@ namespace education
 
 namespace constants
 {
-//	const double old_pi = 3.14; // bad: internal linkage, multiple copies
+//	const double old_pi = 3.14; // bad
 
-	constexpr double pi = 3.14; // good: one definition, inline constant
+	constexpr double pi = 3.14;
 
 } // namespace constants
 

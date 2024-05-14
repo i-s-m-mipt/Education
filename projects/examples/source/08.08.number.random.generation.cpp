@@ -10,13 +10,13 @@
 
 [[nodiscard]] double calculate_pi() noexcept
 {
-	std::random_device device; // note: make seed only once
+	std::random_device device;
 
 	std::mt19937_64 engine(device());
 
-	std::uniform_real_distribution distribution(0.0, 1.0); // note: [a; b)
+	std::uniform_real_distribution distribution(0.0, 1.0); // detail: [0.0; 1.0)
 
-	constexpr std::size_t size = 1'000'000; // note: try in release mode
+	constexpr std::size_t size = 1'000'000;
 
 	std::size_t counter = 0;
 
@@ -35,11 +35,11 @@
 
 int main()
 {
-	std::random_device device; // note: implementation defined entropy source
+	std::random_device device;
 
-	std::mt19937_64 engine(device()); // note: engines use entropy sources for seeding
+	std::mt19937_64 engine(device());
 
-	std::normal_distribution distribution(20.0, 5.0); // note: distributions use engines
+	std::normal_distribution distribution(20.0, 5.0);
 
 	std::vector < std::size_t > values(40, 0);
 
@@ -49,10 +49,9 @@ int main()
 	{
 		if (const auto value = distribution(engine); value > 0.0)
 		{
-			if (const auto index = static_cast < std::size_t > (std::floor(value)); index < std::size(values))
-			{
-				++values[index];
-			}
+			const auto index = static_cast < std::size_t > (std::floor(value));
+
+			if (index < std::size(values)) ++values[index];
 		}
 	}
 
@@ -60,12 +59,12 @@ int main()
 	{
 		std::cout << std::setw(2) << std::right << std::setfill(' ') << i << " : ";
 
-		std::cout << std::string(values[i] / 1'000, '*') << std::endl;
+		std::cout << std::string(values[i] / 1000, '*') << std::endl;
 	}
 
 //  ================================================================================================
 
-	std::cout << "pi = " << calculate_pi() << std::endl; // note: monte-carlo method
+	std::cout << "pi = " << calculate_pi() << std::endl; // support: Monte-Carlo
 
 	return 0;
 }

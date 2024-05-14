@@ -1,3 +1,4 @@
+#include <cerrno>
 #include <cmath>
 #include <iomanip>
 #include <iostream>
@@ -23,14 +24,14 @@
 
 [[nodiscard]] inline constexpr bool are_equal_v4(double x, double y, double epsilon, double relative_epsilon) noexcept
 {
-	if (std::abs(x - y) < epsilon) return true; else return are_equal_v3(x, y, relative_epsilon);
+	return (std::abs(x - y) < epsilon ? true : are_equal_v3(x, y, relative_epsilon));
 }
 
 //  ================================================================================================
 
 int main()
 {
-	std::cout << 1.67e-5 << std::endl; // note: scientific notation
+	std::cout << 1.67e-5 << std::endl;
 
 	std::cout << std::fixed        << 3.14 << std::endl;
 	std::cout << std::scientific   << 3.14 << std::endl;
@@ -42,17 +43,18 @@ int main()
 
 	constexpr auto max_precision = std::numeric_limits < double > ::digits10 + 1;
 
-	for (auto p = 0; p <= max_precision; ++p) // good: formatted output
+	for (auto p = 0; p <= max_precision; ++p)
 	{
-		std::cout << std::setw(2) << std::right << std::setfill(' ') << p << ": " << 
-			 std::setprecision(p) << std::fixed << std::numbers::pi  << std::endl;
+		std::cout << std::setw(2) << std::right << std::setfill(' ') << p << ": ";
+		
+		std::cout << std::setprecision(p) << std::fixed << std::numbers::pi  << std::endl;
 	}
 
 	std::cout << std::setprecision(default_precision);
 
 //  ================================================================================================
 
-	std::cout << std::numeric_limits < double > ::min() << std::endl; // note: 0.0
+	std::cout << std::numeric_limits < double > ::min() << std::endl;
 	std::cout << std::numeric_limits < double > ::max() << std::endl;
 
 	if (std::numeric_limits < double > ::has_infinity)
@@ -62,11 +64,11 @@ int main()
 
 //  ================================================================================================
 
-	std::cout << errno << ' ' << std::log(-1) << ' ' << errno << std::endl; // note: C style
+	std::cout << errno << ' ' << std::log(-1) << ' ' << errno << std::endl; // support: cerrno
 
 	constexpr auto x = 0.0, y = 1.0;
 
-	std::cout << -x / y << std::endl; // note: negative zero
+	std::cout << -x / y << std::endl; // support: IEEE-754
 
 //  ================================================================================================
 

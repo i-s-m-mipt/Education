@@ -26,8 +26,7 @@ int main()
 		std::cout << array[i] << (i + 1 == size ? '\n' : ' '); // output: 0 0 42 0 0
 	}
 
-//	delete   array; // warning
-
+//	delete   array; // error
 	delete[] array;
 
 //  ================================================================================================

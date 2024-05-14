@@ -8,15 +8,15 @@ int main()
 
     assert(valarray.min() == 1 && valarray.max() == 5);
 
-    valarray[valarray > 4] = 0; // note: elements: { 1, 2, 3, 4, 0 }
+    valarray[valarray > 4] = 0; // elements: { 1, 2, 3, 4, 0 }
 
     const std::valarray < std::size_t > indexes { 1, 2, 3 };
 
     std::valarray < int > part; part.resize(std::size(indexes));
 
-    part = valarray[indexes]; // note: elements: { 2, 3, 4 }
+    part = valarray[indexes]; // elements: { 2, 3, 4 }
 
-    const auto shift = part.cshift(1); // note: elements: { 3, 4, 2 }
+    const auto shift = part.cshift(1); // elements: { 3, 4, 2 }
  
     assert(shift[0] == 3 && shift[1] == 4 && shift[2] == 2);
 
@@ -25,7 +25,7 @@ int main()
     const std::valarray < int > valarray_1 { 1, 2, 3 };
     const std::valarray < int > valarray_2 { 3, 2, 1 };
 
-    assert((valarray_1 * valarray_2).sum() == 10); // note: scalar product
+    assert((valarray_1 * valarray_2).sum() == 10);
 
 //  ================================================================================================
 
