@@ -262,7 +262,7 @@ public:
 
     template < typename T > [[nodiscard]] const T & get() const
     {
-        if (empty() || !has < T > ()) throw std::bad_variant_access("invalid type");
+        if (!has < T > ()) throw std::bad_variant_access("invalid type");
 
         return *(this->template buffer_as < T > ());
     }  
