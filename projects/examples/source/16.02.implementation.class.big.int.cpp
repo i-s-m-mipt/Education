@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cctype>
 #include <cmath>
 #include <exception>
@@ -45,13 +46,10 @@ private:
 				throw std::runtime_error("invalid input");
 			}
 
-			for (std::size_t i = 1; i < std::size(string); ++i)
-			{
-				if (!std::isdigit(string[i]))
-				{
-					throw std::runtime_error("invalid input");
-				}
-			}
+			std::ranges::for_each(std::next(std::begin(string)), std::end(string), [](auto c)
+			{ 
+				if (!std::isdigit(c)) throw std::runtime_error("invalid input"); 
+			});
 
 			m_is_negative = (string[0] == '-'); m_n_digits = 0;
 
@@ -262,8 +260,7 @@ public:
 
 public:
 
-	[[nodiscard]] friend Big_Int multiply_fast(const Big_Int & x, 
-											   const Big_Int & y) // demo; support: A. Karatsuba
+	[[nodiscard]] friend Big_Int multiply_fast(const Big_Int & x, const Big_Int & y) // demo; support: A. Karatsuba
 	{
 		auto n = std::max(x.m_n_digits, y.m_n_digits);
 
@@ -314,7 +311,7 @@ public:
       		{
         		if (auto m = result.m_digits[position] = std::midpoint(l, r); result * result <= x)
         		{
-          			l = m + 1; v = m;
+          			l = m + 1; v = std::min(m, Big_Int::radix - 1);
         		}
         		else
 				{
