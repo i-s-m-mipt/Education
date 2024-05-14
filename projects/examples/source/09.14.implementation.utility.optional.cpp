@@ -15,7 +15,7 @@ public:
 
     Optional(const Optional & other) 
     {
-        if (other.empty()) initialize(*other.m_ptr);
+        if (!other.empty()) initialize(*other.m_ptr);
     }
 
     Optional(Optional && other) noexcept : m_ptr(other.m_ptr)
@@ -27,7 +27,7 @@ public:
     {
         if (this != &other)
         {
-            if (destroy(); other.empty()) construct(*other.m_ptr); else deallocate();
+            if (destroy(); !other.empty()) construct(*other.m_ptr); else deallocate();
         }
 
         return *this;
