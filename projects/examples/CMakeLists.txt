@@ -12,6 +12,7 @@ find_package(GTest         1.14 REQUIRED COMPONENTS)
 find_package(benchmark          REQUIRED COMPONENTS)
 find_package(PDFHummus          REQUIRED COMPONENTS)
 find_package(TBB                REQUIRED COMPONENTS tbb)
+find_package(SFML               REQUIRED COMPONENTS graphics system window)
 
 include_directories(        ${Boost_INCLUDE_DIRS})
 include_directories(      ${Python3_INCLUDE_DIRS})
@@ -20,6 +21,7 @@ include_directories(        ${GTEST_INCLUDE_DIRS})
 include_directories(    ${benchmark_INCLUDE_DIRS})
 include_directories(    ${PDFHummus_INCLUDE_DIRS})
 include_directories(          ${TBB_INCLUDE_DIRS})
+include_directories(         ${SFML_INCLUDE_DIRS})
 
 set(debug
 #   01.01.introduction
@@ -284,3 +286,21 @@ target_link_libraries     (06.12.project.library PRIVATE ${CMAKE_SOURCE_DIR}/../
 target_link_libraries     (06.12.project.library PRIVATE ${Boost_LIBRARIES})
 target_compile_options    (06.12.project.library PRIVATE -Wall -Wextra -pedantic -O0) 
 set_target_properties     (06.12.project.library PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+
+add_executable            (17.01.multimedia.modeling.physics source/17.01.multimedia.modeling.physics/main.cpp
+                                                             source/17.01.multimedia.modeling.physics/system.cpp
+                                                             source/17.01.multimedia.modeling.physics/particle.cpp
+                                                             source/17.01.multimedia.modeling.physics/link.cpp 
+                                                             source/17.01.multimedia.modeling.physics/pressure.cpp)
+
+target_compile_options    (17.01.multimedia.modeling.physics PRIVATE -Wall -Wextra -pedantic -O3)
+target_link_libraries     (17.01.multimedia.modeling.physics PRIVATE sfml-graphics sfml-system sfml-window)
+set_target_properties     (17.01.multimedia.modeling.physics PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+
+add_executable            (17.02.multimedia.modeling.fractal source/17.02.multimedia.modeling.fractal/main.cpp
+                                                             source/17.02.multimedia.modeling.fractal/calculator.cpp
+                                                             source/17.02.multimedia.modeling.fractal/visualizer.cpp)
+
+target_compile_options    (17.02.multimedia.modeling.fractal PRIVATE -Wall -Wextra -pedantic -O3)
+target_link_libraries     (17.02.multimedia.modeling.fractal PRIVATE sfml-graphics sfml-system sfml-window)
+set_target_properties     (17.02.multimedia.modeling.fractal PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
