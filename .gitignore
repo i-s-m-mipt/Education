@@ -344,6 +344,9 @@ libraries/
 output/
 service/
 
+17.01.multimedia.modeling.physics/
+17.02.multimedia.modeling.fractal/
+
 *.exe
 *.dll
 *.lib
