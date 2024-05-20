@@ -266,19 +266,19 @@ public:
 
 		if (n == 1) return x * y;
 
-		auto k = n / 2;
+		const auto k = n / 2;
 
 		Big_Int xr; xr.m_n_digits =     k;
 		Big_Int xl; xl.m_n_digits = n - k;
 
-		for (std::size_t i =     0; i < k; ++i) xr.m_digits[i    ] = x.m_digits[i];
-		for (std::size_t i = n / 2; i < n; ++i) xl.m_digits[i - k] = x.m_digits[i];
+		for (std::size_t i = 0; i < k; ++i) xr.m_digits[i    ] = x.m_digits[i];
+		for (std::size_t i = k; i < n; ++i) xl.m_digits[i - k] = x.m_digits[i];
 
 		Big_Int yr; yr.m_n_digits =     k;
 		Big_Int yl; yl.m_n_digits = n - k;
 
-		for (std::size_t i = 0; i < n / 2; ++i) yr.m_digits[i    ] = y.m_digits[i];
-		for (std::size_t i = k; i < n    ; ++i) yl.m_digits[i - k] = y.m_digits[i];
+		for (std::size_t i = 0; i < k; ++i) yr.m_digits[i    ] = y.m_digits[i];
+		for (std::size_t i = k; i < n; ++i) yl.m_digits[i - k] = y.m_digits[i];
 
 		auto p1 = multiply_fast(xl,      yl     );
 		auto p2 = multiply_fast(xr,      yr     );
@@ -286,7 +286,7 @@ public:
 
 		Big_Int radix = Big_Int::radix;
 
-		for (std::size_t i = 1; i < n / 2; ++i) radix *= Big_Int::radix;
+		for (std::size_t i = 1; i < k; ++i) radix *= Big_Int::radix;
 
 		auto result = (p1 * radix * radix + (p3 - p2 - p1) * radix + p2);
 
