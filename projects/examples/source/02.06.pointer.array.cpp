@@ -52,15 +52,13 @@ int main()
 
 	std::iota(buffer, buffer + size, 1);
 
-	std::ranges::reverse(buffer, buffer + size);
-
 //  ================================================================================================
 
 	for (std::size_t i = 0; i < size - 1; ++i)
 	{
 		for (std::size_t j = i + 1; j < size; ++j)
 		{
-			if (buffer[i] > buffer[j]) std::swap(buffer[i], buffer[j]);
+			if (buffer[i] < buffer[j]) std::swap(buffer[i], buffer[j]);
 		}
 	}
 

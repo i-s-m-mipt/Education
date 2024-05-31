@@ -13,15 +13,13 @@ int main()
 
 	std::iota(std::begin(vector), std::end(vector), 1);
 
-	std::ranges::reverse(vector);
-
 //  ================================================================================================
 
 	for (std::size_t i = 0; i < size - 1; ++i)
 	{
 		for (std::size_t j = i + 1; j < size; ++j)
 		{
-			if (vector[i] > vector[j]) std::swap(vector[i], vector[j]);
+			if (vector[i] < vector[j]) std::swap(vector[i], vector[j]);
 		}
 	}
 
