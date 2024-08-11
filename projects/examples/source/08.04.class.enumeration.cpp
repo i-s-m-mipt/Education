@@ -46,12 +46,9 @@ inline constexpr void g(std::uint16_t state) noexcept { assert(state & delta || 
 
 int main()
 {
-	std::cout << "Enter color number: "; unsigned int color{};
+	std::cout << "Enter unsigned integer: "; unsigned int color{}; std::cin >> color;
 
-	if (std::cin >> color; color < static_cast < unsigned int > (Color::quantity))
-	{
-		f(static_cast < Color > (color));
-	}
+	if (color < static_cast < unsigned int > (Color::quantity)) f(static_cast < Color > (color));
 
 //  ================================================================================================
 

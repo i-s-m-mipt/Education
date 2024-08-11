@@ -62,13 +62,13 @@ int main()
 
     try
     {
-        for (int x{}; std::cin >> x; );
+        std::cout << "Enter some integers: "; int x{}; for (; std::cin >> x; );
 
         if (std::cin.fail()) 
         {
             std::cin.clear(); char c{}; std::cin >> c;
 
-            std::cout << "invalid entered character: " << c << std::endl;
+            std::cout << "Invalid character: " << c << std::endl;
         }
     }
     catch(const std::ios_base::failure & exception)

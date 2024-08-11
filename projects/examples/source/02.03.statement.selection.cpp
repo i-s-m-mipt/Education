@@ -2,13 +2,13 @@
 
 int main()
 {
-    std::cout << "Enter integer value: "; int x{}; std::cin >> x;
+    std::cout << "Enter integer: "; int x{}; std::cin >> x;
 
     std::cout << (x > 0 ? x : 42) << std::endl;
 
 //  ================================================================================================
 
-    std::cout << "Enter integer value: "; int y{}; std::cin >> y;
+    std::cout << "Enter integer: "; int y{}; std::cin >> y;
 
     if (std::cout << "Path [0]" << std::endl; 42 == y)
     {
@@ -32,7 +32,7 @@ int main()
 
 //  ================================================================================================
 
-    std::cout << "Enter integer value: "; int z{}; std::cin >> z;
+    std::cout << "Enter integer: "; int z{}; std::cin >> z;
 
     switch (std::cout << "Path [0]" << std::endl; z)
     {

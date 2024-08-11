@@ -7,8 +7,7 @@
 
 template < typename T > inline constexpr void swap(T & x, T & y)
 {
-    static_assert(std::is_copy_constructible_v < T > &&
-                  std::is_copy_assignable_v    < T > ,  "swap requires copy constructible type");
+    static_assert(std::is_copy_constructible_v < T > && std::is_copy_assignable_v < T > );
 
     const auto z = y; y = x; x = z;
 }
@@ -44,8 +43,8 @@ int main()
            assert(1 + 1 == 2);
     static_assert(1 + 1 == 2);
 
-           assert((sizeof(int) == 4) && "required size of int 4 bytes");
-    static_assert((sizeof(int) == 4),   "required size of int 4 bytes");
+           assert((sizeof(int) == 4) && "required sizeof(int) == 4");
+    static_assert((sizeof(int) == 4),   "required sizeof(int) == 4");
 
     [[maybe_unused]] const C < int > good;
 
@@ -56,16 +55,9 @@ int main()
     std::atexit(cleanup_v1);
     std::atexit(cleanup_v2);
 
-    std::cout << "Terminate normally? (y/n) "; char c{};
+    std::cout << "Terminate normally? (y/n) "; char c{}; std::cin >> c;
 
-    if (std::cin >> c; c == 'y')
-    {
-        std::exit(0);
-    } 
-    else
-    {
-        std::abort();
-    }
+    if (c == 'y') std::exit(0); else std::abort();
 
 	return 0;
 }

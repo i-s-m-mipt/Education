@@ -504,7 +504,9 @@ int main(int argc, char ** argv)
 {
 	try
 	{
-		Big_Int big_int{}; std::cin >> big_int; std::cout << big_int << std::endl;
+		std::cout << "Enter Big_Int: "; Big_Int big_int{}; std::cin >> big_int; 
+		
+		std::cout << big_int << std::endl;
 
 		Big_Int result(1); for (auto i = 1; i < 101; ++i) result *= i;
 

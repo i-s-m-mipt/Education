@@ -114,8 +114,8 @@ BENCHMARK(test_2)->DenseRange(8192, 65537, 8192)->Complexity();
 
 int main(int argc, char ** argv)
 {
-    std::cout << "Enter string 1: "; std::string string_1; std::cin >> string_1;
-    std::cout << "Enter string 2: "; std::string string_2; 
+    std::cout << "Enter string: "; std::string string_1; std::cin >> string_1;
+    std::cout << "Enter string: "; std::string string_2; 
     
     std::getline(std::cin >> std::ws, string_2);
 
@@ -150,7 +150,7 @@ int main(int argc, char ** argv)
 
 //  ================================================================================================
 
-    std::cout << "Enter characters: "; char buffer[256]{};
+    std::cout << "Enter string: "; char buffer[256]{};
 
     std::cin.getline(buffer, std::size(buffer));
 

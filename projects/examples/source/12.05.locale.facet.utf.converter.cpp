@@ -135,7 +135,7 @@ int main()
 {
     std::cout << boost::locale::util::get_system_locale() << std::endl;
 
-	std::string string; std::cin >> string;
+	std::cout << "Enter string: "; std::string string; std::cin >> string;
 
     auto u8string = convert_locale_to_utf(string);
 

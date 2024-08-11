@@ -65,26 +65,28 @@ exit:
 
 //  ================================================================================================
 
-	char c{};
+	char c1{};
 
-	while (c != 'n')
+	while (c1 != 'n')
 	{
-		std::cout << "Continue loop? (y/n) "; std::cin >> c;
+		std::cout << "Continue loop? (y/n) "; std::cin >> c1;
 	}
 
 //  ================================================================================================
 
+	char c2{};
+
 	do
 	{
-		std::cout << "Continue loop? (y/n) "; std::cin >> c;
+		std::cout << "Continue loop? (y/n) "; std::cin >> c2;
 	} 
-	while (c != 'n');
+	while (c2 != 'n');
 
 //  ================================================================================================
 
 	for (;;)
 	{
-		std::cout << "Continue loop? (y/n) "; std::cin >> c;
+		std::cout << "Continue loop? (y/n) "; char c{}; std::cin >> c;
 
 		if (c == 'n') break;
 	}
@@ -93,7 +95,7 @@ exit:
 
 	while (true)
 	{
-		std::cout << "Continue loop? (y/n) "; std::cin >> c;
+		std::cout << "Continue loop? (y/n) "; char c{}; std::cin >> c;
 
 		if (c == 'n') break;
 	}

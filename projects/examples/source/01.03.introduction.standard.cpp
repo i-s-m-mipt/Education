@@ -10,15 +10,15 @@ using namespace std; // bad
 
 int main()
 {	
-	std::cout << "Enter values x and y: "; int x{}, y{}; std::cin >> x >> y;
+	std::cout << "Enter two integers: "; int x{}, y{}; std::cin >> x >> y;
 
-	std::cout << "x = " << x << "; y = " << y << std::endl;
+	std::cout << "You have entered integers " << x << " and " << y << std::endl;
 
 //  ================================================================================================
 
-	std::cout << "Enter your name: "; std::string name; std::cin >> name;
+	std::cout << "Enter string: "; std::string string; std::cin >> string;
 
-	std::cout << "Hello, " + name + '!' << std::endl;
+	std::cout << "You have entered string " + string << std::endl;
 
 //  ================================================================================================
 

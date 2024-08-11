@@ -85,6 +85,8 @@ public:
 
 	void run()
 	{
+		std::cout << "Enter some expressions: " << std::endl;
+
 		for (std::string line; std::getline(std::cin >> std::ws, line); )
 		{
 			if (Stream stream(line); !stream.empty())

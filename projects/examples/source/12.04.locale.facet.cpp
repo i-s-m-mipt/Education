@@ -63,6 +63,8 @@ int main() // support: locale -a
 				  dateorder == std::time_base::ymd ? "ymd" :
 				  dateorder == std::time_base::ydm ? "ydm" : "unknown") << std::endl;
 
+	std::cout << "Enter date (Day MM/DD/YYYY): ";
+
 	auto state = std::ios_base::goodbit; tm input;
 
 	time_get_C.get(std::istreambuf_iterator < char > (std::cin), 
