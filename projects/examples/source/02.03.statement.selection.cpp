@@ -2,61 +2,60 @@
 
 int main()
 {
-    std::cout << "Enter integer: "; int x{}; std::cin >> x;
+    std::cout << "Enter 1 integer: "; int x{}; std::cin >> x;
 
-    std::cout << (x > 0 ? x : 42) << std::endl;
+    std::cout << "Selection v1: ";
+
+    std::cout << (1 == x ? "(1)" : "(2)");
+
+    std::cout << std::endl;
 
 //  ================================================================================================
 
-    std::cout << "Enter integer: "; int y{}; std::cin >> y;
+    std::cout << "Selection v2: ";
 
-    if (std::cout << "Path [0]" << std::endl; 42 == y)
+    if (auto y = x; y == 1)
     {
-        std::cout << "Path [1]" << std::endl;
+        std::cout << "(1)";
     }
-    else if (y > 0)
+    else if (y > 1)
     {
-        std::cout << "Path [2]" << std::endl;
+        std::cout << "(2)";
     }
     else
     {
-        if (y < 0)
-        {
-            std::cout << "Path [3]" << std::endl;
-        }
-        else
-        { 
-            std::cout << "Path [4]" << std::endl;
-        }
+        std::cout << "(3)";
     }
+
+    std::cout << std::endl;
 
 //  ================================================================================================
 
-    std::cout << "Enter integer: "; int z{}; std::cin >> z;
+    std::cout << "Selection v3: ";
 
-    switch (std::cout << "Path [0]" << std::endl; z)
+    switch (auto z = x; z)
     {
-        [[likely]] case 0:
         [[likely]] case 1:
         [[likely]] case 2:
+        [[likely]] case 3:
         {
-            std::cout << "Path [1]" << std::endl;
-
-            [[fallthrough]];
+            std::cout << "(1)" << ' '; [[fallthrough]];
         }
-        case 3:
+        case 4:
         {
-            std::cout << "Path [2]" << std::endl; break;
+            std::cout << "(2)"; break;
         }
-        [[unlikely]] case 4:
+        case 5:
         {
-            std::cout << "Path [3]" << std::endl; break;
+            std::cout << "(3)"; break;
         }
-        default:
+        [[unlikely]] default:
         {
-            std::cout << "Path [4]" << std::endl; break;
+            std::cout << "(4)"; break;
         }
     }
+
+    std::cout << std::endl;
 
     return 0;
 }

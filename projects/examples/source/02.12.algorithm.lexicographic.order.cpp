@@ -1,48 +1,67 @@
-#include <iostream>
-#include <string>
+#include <cassert>
+#include <cmath>
 
 //  ================================================================================================
 
-void generate_slow(std::size_t size, std::string s = "", std::size_t l = 0, std::size_t r = 0) // complexity: O(N * log(N))
+std::size_t count_slow(std::size_t size, std::size_t left = 0, std::size_t right = 0) 
 {
-	if (l == size && r == size)
+	if (left < size || right < size)
 	{
-		std::cout << s << std::endl;
+		std::size_t counter = 0;
+
+		if (left < size) 
+		{ 
+			counter += count_slow(size, left + 1, right); 
+		}
+
+		if (right < left) 
+		{ 
+			counter += count_slow(size, left, right + 1); 
+		}
+
+		return counter;
 	}
-	else
-	{
-		if (l < size) generate_slow(size, s + '(', l + 1, r    );
-		if (r < l   ) generate_slow(size, s + ')', l    , r + 1);
-	}
+	else 
+	{ 
+		return 1; 
+	} 	
 }
 
 //  ================================================================================================
 
-void generate_fast(std::size_t size, std::string & output, std::string s = "", std::size_t l = 0, std::size_t r = 0) // complexity: O(N * log(N))
+std::size_t count_fast(std::size_t size, std::size_t left = 0, std::size_t right = 0) 
 {
-	if (l < size)
+	if (left < size)
 	{
-		for (auto i = size; i > std::max(l, r + 1) - 1; --i)
+		std::size_t counter = 0;
+
+		for (auto i = size; i > std::max(left, right + 1) - 1; --i)
 		{
-			generate_fast(size, output, s + std::string(i - l, '(') + ')', i, r + 1);
+			counter += count_fast(size, i, right + 1);
 		}
+
+		return counter;
 	}
-	else output += (s + std::string(size - r, ')') + '\n');
+	else
+	{
+		return 1;
+	}
 }
 
 //  ================================================================================================
 
 int main()
 {
-	const std::size_t size = 5;
-
-//	generate_slow(size); // bad
-
-	std::string output;
-
-	generate_fast(size, output);
-
-	std::cout << output;
+	assert(count_slow(0) ==    1 && count_fast(0) ==    1);
+	assert(count_slow(1) ==    1 && count_fast(1) ==    1);
+	assert(count_slow(2) ==    2 && count_fast(2) ==    2);
+	assert(count_slow(3) ==    5 && count_fast(3) ==    5);
+	assert(count_slow(4) ==   14 && count_fast(4) ==   14);
+	assert(count_slow(5) ==   42 && count_fast(5) ==   42);
+	assert(count_slow(6) ==  132 && count_fast(6) ==  132);
+	assert(count_slow(7) ==  429 && count_fast(7) ==  429);
+	assert(count_slow(8) == 1430 && count_fast(8) == 1430);
+	assert(count_slow(9) == 4862 && count_fast(9) == 4862);
 
 	return 0;
 }

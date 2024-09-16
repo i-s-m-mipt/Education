@@ -1,3 +1,4 @@
+#include <cassert>
 #include <iostream>
 #include <span>
 #include <string>
@@ -7,18 +8,21 @@
 
 [[nodiscard]] int f(int x);
 
-[[nodiscard]] int g(int x, int y, int z = 1) { return (x + y + z); }
+[[nodiscard]] int g(int x, int y, int z = 1) 
+{ 
+	return (x + y + z); 
+}
 
 //  ================================================================================================
 
 void extract_data(int * ptr = nullptr)
 {
-	[[maybe_unused]] auto local_data = (ptr ? *ptr : 42);
+	[[maybe_unused]] auto local_data = (ptr ? *ptr : 1);
 } 
 
 //  ================================================================================================
 
-void test_pointers(int * x, const int * y)
+void test(int * x, const int * y)
 {
 	if (!x || !y) return;
 
@@ -26,7 +30,7 @@ void test_pointers(int * x, const int * y)
 //	++(*y); // error
 }
 
-void test_references(int & x, [[maybe_unused]] const int & y)
+void test(int & x, [[maybe_unused]] const int & y)
 {
 	++x;
 //	++y; // error
@@ -34,53 +38,63 @@ void test_references(int & x, [[maybe_unused]] const int & y)
 
 //  ================================================================================================
 
-void print_string(const std::string & string)
+void test(const std::string & string) 
 {
-	std::cout << string << std::endl;
+	assert(std::size(string) != 0);
 }
 
-void print_array(const int * array, std::size_t size)
+//  ================================================================================================
+
+void test(const int * array, std::size_t size)
 {
-	for (std::size_t i = 0; i < size; ++i)
+	for (std::size_t i = 1; i < size; ++i)
 	{
-		std::cout << array[i] << (i + 1 == size ? '\n' : ' ');
+		assert(array[i] == array[i-1] + 1);
 	}
 }
 
-void print_span(std::span < const int > span)
-{
-	for (const auto element : span) std::cout << element << ' ';
+//  ================================================================================================
 
-	std::cout << std::endl;
+void test(std::span < const int > span)
+{
+	for (std::size_t i = 1; i < std::size(span); ++i)
+	{
+		assert(span[i] == span[i-1] + 1);
+	}
 }
 
-void print_vector(const std::vector < int > & vector)
-{
-	for (const auto element : vector) std::cout << element << ' ';
+//  ================================================================================================
 
-	std::cout << std::endl;
+void test(const std::vector < int > & vector)
+{
+	for (std::size_t i = 1; i < std::size(vector); ++i)
+	{
+		assert(vector[i] == vector[i-1] + 1);
+	}
 }
 
 //  ================================================================================================
 
 /*
-[[nodiscard]] int * get_dangling_pointer  () { auto local = 42; return &local; } // error
-[[nodiscard]] int & get_dangling_reference() { auto local = 42; return  local; } // error
+[[nodiscard]] int * get_dangling_ptr() { auto local = 1; return &local; } // error
+[[nodiscard]] int & get_dangling_ref() { auto local = 1; return  local; } // error
 */
 
 //  ================================================================================================
 
 void h()
 {
-	       auto x = 42; 
-	static auto y = 42;
-
-	std::cout << ++x << ' ' << ++y << std::endl;
+	static auto x = 1; 
+	
+	std::cout << "x = " << x++ << std::endl;
 }
 
 //  ================================================================================================
 
-[[nodiscard]] inline auto max(int x, int y) { return (x > y ? x : y); }
+[[nodiscard]] inline auto max(int x, int y) 
+{ 
+	return (x > y ? x : y); 
+}
 
 [[nodiscard]] inline int factorial(int n) 
 { 
@@ -89,56 +103,51 @@ void h()
 
 //  ================================================================================================
 
-inline void print(bool, bool) { std::cout << "print(bool, bool)" << std::endl; }
-inline void print(char, char) { std::cout << "print(char, char)" << std::endl; }
-
-//  ================================================================================================
-
 int main()
 {
-//	f(42); // error
+//	f(1); // error
 
-	[[maybe_unused]] const auto result = g(f(42), f(42));
+	[[maybe_unused]] const auto result = g(f(1), f(1));
 
 //  ================================================================================================
 
-	auto x = 42, y = 42;
+	auto x = 1, y = 1;
 
-	test_pointers  (&x, &y); std::cout << x << ' ' << y << std::endl; // output: 43 42
-	test_references( x,  y); std::cout << x << ' ' << y << std::endl; // output: 44 42
+	test(&x, &y); assert(x == 2 && y == 1);
+	test( x,  y); assert(x == 3 && y == 1);
 
 //  ================================================================================================
 
 	const std::size_t size = 5;
 
-	const int         array_1                [size]{ 1, 2, 3, 4, 5 };
-	const int * const array_2 = new const int[size]{ 1, 2, 3, 4, 5 };
+	const int         array_1                [size] { 1, 2, 3, 4, 5 };
+	const int * const array_2 = new const int[size] { 1, 2, 3, 4, 5 };
 
-	print_array(array_1, size); print_span({ array_1       });
-	print_array(array_2, size); print_span({ array_2, size });
-
+	test(  array_1, size  ); 
+	test(  array_2, size  ); 
+	test({ array_1       });
+	test({ array_2, size }); 
+	
 	delete[] array_2;
 
-	const std::vector < int > vector { 1, 2, 3, 4, 5 };
+	test(std::vector < int > { 1, 2, 3, 4, 5 });
 
-	print_vector(vector);
+//	test(1); // error
 
 //  ================================================================================================
 
-//	std::cout << *get_dangling_pointer  () << std::endl; // error
-//	std::cout <<  get_dangling_reference() << std::endl; // error
+//	assert(*get_dangling_ptr() == 1); // error
+//	assert( get_dangling_ref() == 1); // error
 
 	h(); h(); h();
 
 //  ================================================================================================
 
-	std::cout << max(1, 2) << ' ' << factorial(5) << std::endl; // output: 2 120
-
-//	print('a', true); // error
+	assert(max(1, 2) == 2 && factorial(5) == 120);
 
 	return 0;
 }
 
 //  ================================================================================================
 
-int f(int x) { return (x + 1); } // demo
+[[nodiscard]] int f(int x) { return x; }

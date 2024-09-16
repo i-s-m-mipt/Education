@@ -1,5 +1,4 @@
-#include <algorithm>
-#include <iostream>
+#include <cassert>
 #include <iterator>
 #include <numeric>
 #include <utility>
@@ -13,21 +12,18 @@ int main()
 
 	std::iota(std::begin(vector), std::end(vector), 1);
 
-//  ================================================================================================
-
 	for (std::size_t i = 0; i < size - 1; ++i)
 	{
 		for (std::size_t j = i + 1; j < size; ++j)
 		{
-			if (vector[i] < vector[j]) std::swap(vector[i], vector[j]);
+			if (vector[i] < vector[j]) 
+			{
+				std::swap(vector[i], vector[j]);
+			}
 		}
 	}
 
-//  ================================================================================================
-
-	for (const auto element : vector) std::cout << element << ' '; // output: 1 2 3 4 5
-
-	std::cout << std::endl;
+	assert(vector == std::vector < int > ({ 5, 4, 3, 2, 1 }));
 
 	return 0;
 }

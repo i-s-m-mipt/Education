@@ -1,31 +1,33 @@
+#include <cassert>
 #include <iostream>
 
 int main()
 {
-	int       z = 42;
-	int * ptr_z = &z; 
+	int       i =  1;
+	int * ptr_i = &i;
 
-	std::cout <<  ptr_z << std::endl; // output: 0x...
-	std::cout << *ptr_z << std::endl; // output: 42
+	std::cout << "ptr_i = " << ptr_i << std::endl;
 
-//	[[maybe_unused]] int * ptr = &z, v = &z; // error
+	assert(*ptr_i == 1);
+
+//	[[maybe_unused]] int * pointer = &i, value = &i; // error
 
 //  ================================================================================================
 
 //	[[maybe_unused]] int * ptr_null_1 = 0; // bad
 
-	[[maybe_unused]] int * ptr_null_2 = nullptr; // support: std::nullptr_t
+	[[maybe_unused]] int * ptr_null_2 = nullptr;
 
 //	[[maybe_unused]] auto  ptr_null_3 = nullptr; // bad 
 
-//	*ptr_null_2 = 42; // error
+//	*ptr_null_2 = 1; // error
 
-	if (ptr_null_2) std::cout << *ptr_null_2 << std::endl;
+	if (ptr_null_2) *ptr_null_2 = 1;
 
 //  ================================================================================================
 
-	[[maybe_unused]] 	   int               x = 42; 
-	[[maybe_unused]] const int               y = 42;
+	[[maybe_unused]] 	   int               x =  1; 
+	[[maybe_unused]] const int               y =  1;
 
 	[[maybe_unused]] 	   int *        ptr__x = &x; 
 //	[[maybe_unused]]       int *        ptr__y = &y; // error
@@ -41,10 +43,10 @@ int main()
 
 //  ================================================================================================
 
-	[[maybe_unused]]       auto test_1 = &x; // detail:       int *
-	[[maybe_unused]]       auto test_2 = &y; // detail: const int *
-	[[maybe_unused]] const auto test_3 = &x; // detail:       int * const
-	[[maybe_unused]] const auto test_4 = &y; // detail: const int * const
+	[[maybe_unused]]       auto test_1 = &x;
+	[[maybe_unused]]       auto test_2 = &y;
+	[[maybe_unused]] const auto test_3 = &x;
+	[[maybe_unused]] const auto test_4 = &y;
 
 	return 0;
 }

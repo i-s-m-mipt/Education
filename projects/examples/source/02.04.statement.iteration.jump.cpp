@@ -6,44 +6,46 @@ int main()
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		std::cout << "Loop for (1): " << i << std::endl;
+		std::cout << "Iteration v01: " << i << std::endl;
 	}
 
 	for (std::size_t i = 0, j = 0; i < size; ++i, j += 2)
 	{
-		std::cout << "Loop for (2): " << i << ' ' << j << std::endl;
+		std::cout << "Iteration v02: " << i << std::endl;
 	}
 
-	for (std::size_t i = 0; [[maybe_unused]] auto x = (i + 1) % size; ++i) 
+	for (std::size_t i = 0; [[maybe_unused]] auto x = (i < size); ++i) 
 	{
-		std::cout << "Loop for (3): " << i << std::endl;
+		std::cout << "Iteration v03: " << i << std::endl;
 	}
 
-//	for (std::size_t i = size; i >= 0; --i); // error
+	/*
+	for (std::size_t i = size; i >= 0; --i); // error
+	{
+		std::cout << "Iteration v04: " << i << std::endl;
+	}
+	*/
 
 //  ================================================================================================
 
-	for (std::size_t i = size; i >= 1; --i)
+	for (std::size_t i = 0; i < size; ++i)
 	{
-		if (i % 2 == 0) continue;
+		std::cout << "Iteration v05: " << i << std::endl;
+		
+		continue;
 
-		std::cout << "Loop for (4): " << i << std::endl;
+		std::cout << "Iteration v05: " << i << std::endl;
 	}
 
 //  ================================================================================================
 
 	for (std::size_t i = 0; i < size; ++i)
 	{
-		std::cout << "Loop for (5): ";
+		std::cout << "Iteration v06: ";
 
-		for (std::size_t j = 0; j < size; ++j)
-		{
-			if (j > i) break;
-
-			std::cout << j << ' ';
-		}
-
-		std::cout << std::endl;
+		std::cout << "Break? (y/n) "; char c{}; std::cin >> c; 
+		
+		if (c == 'y') break;
 	}
 
 //  ================================================================================================
@@ -54,9 +56,11 @@ int main()
 		{
 			for (std::size_t k = 0; k < size; ++k)
 			{
-				std::cout << "Loop for (6): " << i << ' ' << j << ' ' << k << std::endl;
+				std::cout << "Iteration v07: ";
 
-				if (i == 1 && j == 1 && k == 1) goto exit;
+				std::cout << "Break? (y/n) "; char c{}; std::cin >> c; 
+		
+				if (c == 'y') goto exit;
 			}
 		}
 	}
@@ -65,11 +69,35 @@ exit:
 
 //  ================================================================================================
 
+	for (;;)
+	{
+		std::cout << "Iteration v08: ";
+
+		std::cout << "Break? (y/n) "; char c{}; std::cin >> c; 
+		
+		if (c == 'y') break;
+	}
+
+//  ================================================================================================
+
+	while (true)
+	{
+		std::cout << "Iteration v09: ";
+
+		std::cout << "Break? (y/n) "; char c{}; std::cin >> c; 
+		
+		if (c == 'y') break;
+	}
+
+//  ================================================================================================
+
 	char c1{};
 
-	while (c1 != 'n')
+	while (c1 != 'y')
 	{
-		std::cout << "Continue loop? (y/n) "; std::cin >> c1;
+		std::cout << "Iteration v10: ";
+
+		std::cout << "Break? (y/n) "; std::cin >> c1;
 	}
 
 //  ================================================================================================
@@ -78,27 +106,11 @@ exit:
 
 	do
 	{
-		std::cout << "Continue loop? (y/n) "; std::cin >> c2;
+		std::cout << "Iteration v11: ";
+
+		std::cout << "Break? (y/n) "; std::cin >> c2;
 	} 
-	while (c2 != 'n');
-
-//  ================================================================================================
-
-	for (;;)
-	{
-		std::cout << "Continue loop? (y/n) "; char c{}; std::cin >> c;
-
-		if (c == 'n') break;
-	}
-
-//  ================================================================================================
-
-	while (true)
-	{
-		std::cout << "Continue loop? (y/n) "; char c{}; std::cin >> c;
-
-		if (c == 'n') break;
-	}
+	while (c2 != 'y');
 
 	return 0;
 }

@@ -1,5 +1,5 @@
 #include <algorithm>
-#include <iostream>
+#include <cassert>
 #include <iterator>
 #include <numeric>
 #include <utility>
@@ -7,13 +7,16 @@
 
 //  ================================================================================================
 
-void insertion_sort(std::vector < int > & vector, std::size_t l, std::size_t r) // complexity: O(N ^ 2)
+void insertion_sort(std::vector < int > & vector, std::size_t l, std::size_t r)
 {
 	for (auto i = l + 1; i < r; ++i) 
 	{
 		for (auto j = i; j > l; --j)
 		{
-			if (vector[j - 1] > vector[j]) std::swap(vector[j], vector[j - 1]);
+			if (vector[j - 1] > vector[j]) 
+			{
+				std::swap(vector[j], vector[j - 1]);
+			}
 		}
 	}
 }
@@ -39,7 +42,7 @@ void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t m, std:
 
 //  ================================================================================================
 
-void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t r) // complexity: O(N * log(N))
+void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t r)
 {
 	if (static const std::size_t block = 64; r - l <= block)
 	{
@@ -69,9 +72,7 @@ int main()
 
 	merge_sort(vector, 0, size);
 
-	for (const auto element : vector) std::cout << element << ' ';
-
-	std::cout << std::endl;
+	assert(std::ranges::is_sorted(vector));
 
 	return 0;
 }

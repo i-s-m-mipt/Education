@@ -1,13 +1,13 @@
 #include <algorithm>
-#include <iostream>
+#include <cassert>
 #include <numeric>
 #include <utility>
 
 int main()
 {
-	const auto object = new const auto(42);
-
-	std::cout << *object << std::endl; // output: 42
+	const auto object = new const auto(1); 
+	
+	assert(*object == 1);
 
 	delete object;
 
@@ -15,16 +15,18 @@ int main()
 
 	const std::size_t size = 5;
 
-	const auto array = new int[size]{};
+	const auto array = new int[size] {};
 
-	const auto middle = size / 2;
+	array[0] = 1;
 
-	array[middle] = 42;
-
-	for (std::size_t i = 0; i < size; ++i)
-	{
-		std::cout << array[i] << (i + 1 == size ? '\n' : ' '); // output: 0 0 42 0 0
-	}
+	assert
+	(
+		array[0] == 1 && 
+ 	    array[1] == 0 && 
+	    array[2] == 0 && 
+	    array[3] == 0 && 
+	    array[4] == 0
+	);
 
 //	delete   array; // error
 	delete[] array;
@@ -35,22 +37,25 @@ int main()
 
 	std::iota(buffer, buffer + size, 1);
 
-//  ================================================================================================
-
 	for (std::size_t i = 0; i < size - 1; ++i)
 	{
 		for (std::size_t j = i + 1; j < size; ++j)
 		{
-			if (buffer[i] < buffer[j]) std::swap(buffer[i], buffer[j]);
+			if (buffer[i] < buffer[j]) 
+			{
+				std::swap(buffer[i], buffer[j]);
+			}
 		}
 	}
 
-//  ================================================================================================
-
-	for (std::size_t i = 0; i < size; ++i)
-	{
-		std::cout << buffer[i] << (i + 1 == size ? '\n' : ' '); // output: 1 2 3 4 5
-	}
+	assert
+	(
+		buffer[0] == 5 && 
+ 	    buffer[1] == 4 && 
+	    buffer[2] == 3 && 
+	    buffer[3] == 2 && 
+	    buffer[4] == 1
+	);
 
 	delete[] buffer;
 
