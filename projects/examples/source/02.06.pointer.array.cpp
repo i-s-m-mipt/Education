@@ -9,7 +9,7 @@ int main()
 	const std::size_t size = 5;
 
 	[[maybe_unused]]       int array_1[size] {         };
-	[[maybe_unused]] const int array_2[size] { 1, 2, 3 };
+	[[maybe_unused]] const int array_2[size] { 1, 2, 3 }; 
 	[[maybe_unused]] const int array_3[    ] { 1, 2, 3 };
 	
 //	[[maybe_unused]] const int array_4[1'000'000'000] {}; // error

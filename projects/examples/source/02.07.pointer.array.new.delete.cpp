@@ -5,10 +5,10 @@
 
 int main()
 {
-	const auto object = new const auto(1); 
-	
-	assert(*object == 1);
+	const auto object = new int{};  
 
+	*object = 1; assert(*object == 1);
+	
 	delete object;
 
 //  ================================================================================================
@@ -17,18 +17,10 @@ int main()
 
 	const auto array = new int[size] {};
 
-	array[0] = 1;
+	array[0] = 1; assert(array[0] == 1);
 
-	assert
-	(
-		array[0] == 1 && 
- 	    array[1] == 0 && 
-	    array[2] == 0 && 
-	    array[3] == 0 && 
-	    array[4] == 0
-	);
+//	delete array; // error
 
-//	delete   array; // error
 	delete[] array;
 
 //  ================================================================================================

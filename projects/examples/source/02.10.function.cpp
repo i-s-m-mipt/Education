@@ -130,7 +130,7 @@ int main()
 	
 	delete[] array_2;
 
-	test(std::vector < int > { 1, 2, 3, 4, 5 });
+	test(std::vector < int > ({ 1, 2, 3, 4, 5 }));
 
 //	test(1); // error
 

@@ -4,7 +4,7 @@ int main()
 {
 	const std::size_t size = 5;
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (std::size_t i = 0; i < size; ++i) // support: compiler-explorer.com
 	{
 		std::cout << "Iteration v01: " << i << std::endl;
 	}
@@ -32,7 +32,7 @@ int main()
 	{
 		std::cout << "Iteration v05: " << i << std::endl;
 		
-		continue;
+		continue; // support: compiler-explorer.com
 
 		std::cout << "Iteration v05: " << i << std::endl;
 	}
@@ -45,7 +45,7 @@ int main()
 
 		std::cout << "Break? (y/n) "; char c{}; std::cin >> c; 
 		
-		if (c == 'y') break;
+		if (c == 'y') break; // support: compiler-explorer.com
 	}
 
 //  ================================================================================================
@@ -60,7 +60,7 @@ int main()
 
 				std::cout << "Break? (y/n) "; char c{}; std::cin >> c; 
 		
-				if (c == 'y') goto exit;
+				if (c == 'y') goto exit; // support: compiler-explorer.com
 			}
 		}
 	}

@@ -4,7 +4,7 @@
 int main()
 {
 	int       i =  1;
-	int * ptr_i = &i;
+	int * ptr_i = &i; // support: compiler-explorer.com
 
 	std::cout << "ptr_i = " << ptr_i << std::endl;
 

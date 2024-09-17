@@ -10,7 +10,7 @@ int main()
 //	[[maybe_unused]]       int &  ri    ; // error
 //	[[maybe_unused]]       int &  ry = y; // error
 
-	[[maybe_unused]]       int &  rx = x; rx = 2;
+	[[maybe_unused]]       int &  rx = x; rx = 2; assert(x == 2);
 	[[maybe_unused]] const int & cry = y;
 
 //	cry = 2; // error
@@ -33,9 +33,7 @@ int main()
 
 	good_vector.push_back(x);
 
-	good_vector.back().get() = 1;
-
-	assert(x == 1);
+	good_vector.back().get() = 1; assert(x == 1);
 
 	return 0;
 }

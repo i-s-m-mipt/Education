@@ -3,25 +3,25 @@
 
 int main()
 {
-	[[maybe_unused]] bool   b {}; assert(sizeof(b) >= 1);
-	[[maybe_unused]] char   c {}; assert(sizeof(c) == 1);
-	[[maybe_unused]] short  s {}; assert(sizeof(s) >= 2);
-	[[maybe_unused]] int    i {}; assert(sizeof(i) >= 2);
-	[[maybe_unused]] long   l {}; assert(sizeof(l) >= 4);
-	[[maybe_unused]] float  f {}; assert(sizeof(f) == 4);
-	[[maybe_unused]] double d {}; assert(sizeof(d) == 8);
+	[[maybe_unused]] bool   b; assert(sizeof(b) >= 1);
+	[[maybe_unused]] char   c; assert(sizeof(c) == 1);
+	[[maybe_unused]] short  s; assert(sizeof(s) >= 2);
+	[[maybe_unused]] int    i; assert(sizeof(i) >= 2);
+	[[maybe_unused]] long   l; assert(sizeof(l) >= 4);
+	[[maybe_unused]] float  f; assert(sizeof(f) == 4);
+	[[maybe_unused]] double d; assert(sizeof(d) == 8);
 
 //  ================================================================================================
 
-//	[[maybe_unused]]   signed           int   si {}; // bad
-//	[[maybe_unused]]   signed      long int  sli {}; // bad
-//	[[maybe_unused]]   signed long long int slli {}; // bad
+//	[[maybe_unused]]   signed           int   si; // bad
+//	[[maybe_unused]]   signed      long int  sli; // bad
+//	[[maybe_unused]]   signed long long int slli; // bad
 
-	[[maybe_unused]] unsigned           int   ui {};
-	[[maybe_unused]] unsigned      long int  uli {};
-	[[maybe_unused]] unsigned long long int ulli {};
+	[[maybe_unused]] unsigned           int   ui;
+	[[maybe_unused]] unsigned      long int  uli;
+	[[maybe_unused]] unsigned long long int ulli;
 
-	[[maybe_unused]] long double ld {}; assert(sizeof(ld) >= 8);
+	[[maybe_unused]] long double ld; assert(sizeof(ld) >= 8);
 
 //  ================================================================================================
 
@@ -53,11 +53,13 @@ int main()
 
 //	[[maybe_unused]] int z5 { static_cast < int > ("hello") }; // error
 
-	d = i = c = b = 1; assert(std::abs(d - 1.0) < 0.000001);
+	d = i = c = b = 1; // support: cppinsights.io
+	
+	assert(std::abs(d - 1.0) < 0.000001);
 
 //  ================================================================================================
 
-	[[maybe_unused]] const volatile auto cvi = 1;
+	[[maybe_unused]] const volatile auto cvi = 1; // support: compiler-explorer.com
 
 //	cvi = 2; // error
 

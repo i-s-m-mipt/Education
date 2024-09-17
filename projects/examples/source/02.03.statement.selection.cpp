@@ -14,7 +14,7 @@ int main()
 
     std::cout << "Selection v2: ";
 
-    if (auto y = x; y == 1)
+    if (auto y = x; y == 1) // support: compiler-explorer.com
     {
         std::cout << "(1)";
     }
@@ -33,7 +33,7 @@ int main()
 
     std::cout << "Selection v3: ";
 
-    switch (auto z = x; z)
+    switch (auto z = x; z) // support: compiler-explorer.com
     {
         [[likely]] case 1:
         [[likely]] case 2:
