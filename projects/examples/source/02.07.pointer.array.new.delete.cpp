@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <cassert>
-#include <numeric>
+#include <iostream>
 #include <utility>
 
 int main()
@@ -25,29 +25,21 @@ int main()
 
 //  ================================================================================================
 
-	const auto buffer = new int[size]; 
+	std::cout << "Enter 1 unsigned integer: "; std::size_t n{}; std::cin >> n;
 
-	std::iota(buffer, buffer + size, 1);
+	const auto buffer = new int[n]; 
 
-	for (std::size_t i = 0; i < size - 1; ++i)
+	std::ranges::iota(buffer, buffer + n, 1);
+
+	for (std::size_t i = 0; i < n - 1; ++i)
 	{
-		for (std::size_t j = i + 1; j < size; ++j)
+		for (std::size_t j = i + 1; j < n; ++j)
 		{
-			if (buffer[i] < buffer[j]) 
-			{
-				std::swap(buffer[i], buffer[j]);
-			}
+			if (buffer[i] < buffer[j]) std::swap(buffer[i], buffer[j]);
 		}
 	}
 
-	assert
-	(
-		buffer[0] == 5 && 
- 	    buffer[1] == 4 && 
-	    buffer[2] == 3 && 
-	    buffer[3] == 2 && 
-	    buffer[4] == 1
-	);
+	assert(std::ranges::is_sorted(buffer, buffer + n, std::ranges::greater()));
 
 	delete[] buffer;
 

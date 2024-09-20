@@ -4,26 +4,26 @@
 
 int main()
 {
-	[[maybe_unused]]       int     x = 1;
-	[[maybe_unused]] const int     y = 1;
+	[[maybe_unused]]       int        x = 1;
+	[[maybe_unused]] const int        y = 1;
 	
-//	[[maybe_unused]]       int &  ri    ; // error
-//	[[maybe_unused]]       int &  ry = y; // error
+//	[[maybe_unused]]       int &  ref_i    ; // error
+//	[[maybe_unused]]       int &  ref_y = y; // error
 
-	[[maybe_unused]]       int &  rx = x; rx = 2; assert(x == 2);
-	[[maybe_unused]] const int & cry = y;
+	[[maybe_unused]]       int &  ref_x = x; ref_x = 2; assert(x == 2);
+	[[maybe_unused]] const int & cref_y = y;
 
-//	cry = 2; // error
+//	cref_y = 2; // error
 
-//	[[maybe_unused]]       int &  rv = 1; // error
-	[[maybe_unused]] const int & crv = 1;
+//	[[maybe_unused]]       int &  ref_v = 1; // error
+	[[maybe_unused]] const int & cref_v = 1;
 
 //  ================================================================================================
 
-	[[maybe_unused]]       auto & test_1 = x;
-	[[maybe_unused]]       auto & test_2 = y;
-	[[maybe_unused]] const auto & test_3 = x;
-	[[maybe_unused]] const auto & test_4 = y;
+	[[maybe_unused]]       auto & ref_1 = x;
+	[[maybe_unused]]       auto & ref_2 = y;
+	[[maybe_unused]] const auto & ref_3 = x;
+	[[maybe_unused]] const auto & ref_4 = y;
 
 //  ================================================================================================
 

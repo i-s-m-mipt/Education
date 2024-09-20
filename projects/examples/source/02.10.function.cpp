@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <span>
@@ -8,90 +9,53 @@
 
 [[nodiscard]] int f(int x);
 
-[[nodiscard]] int g(int x, int y, int z = 1) 
+[[nodiscard]] int g(int x, int y, int z = 3) 
 { 
 	return (x + y + z); 
 }
 
 //  ================================================================================================
 
-void extract_data(int * ptr = nullptr)
-{
-	[[maybe_unused]] auto local_data = (ptr ? *ptr : 1);
-} 
+void update(int * x, [[maybe_unused]] const int * y) { if (x && y) *x = *y; }
+void update(int & x, [[maybe_unused]] const int & y) {              x =  y; }
 
 //  ================================================================================================
 
-void test(int * x, const int * y)
+[[nodiscard]] bool test(const std::string & string) 
 {
-	if (!x || !y) return;
-
-	++(*x);
-//	++(*y); // error
+	return std::ranges::is_sorted(string);
 }
 
-void test(int & x, [[maybe_unused]] const int & y)
+[[nodiscard]] bool test(const int * array, std::size_t size)
 {
-	++x;
-//	++y; // error
+	return std::ranges::is_sorted(array, array + size);
 }
 
-//  ================================================================================================
-
-void test(const std::string & string) 
+[[nodiscard]] bool test(std::span < const int > span)
 {
-	assert(std::size(string) != 0);
+	return std::ranges::is_sorted(span);
+}
+
+[[nodiscard]] bool test(const std::vector < int > & vector)
+{
+	return std::ranges::is_sorted(vector);
 }
 
 //  ================================================================================================
 
-void test(const int * array, std::size_t size)
-{
-	for (std::size_t i = 1; i < size; ++i)
-	{
-		assert(array[i] == array[i-1] + 1);
-	}
-}
-
-//  ================================================================================================
-
-void test(std::span < const int > span)
-{
-	for (std::size_t i = 1; i < std::size(span); ++i)
-	{
-		assert(span[i] == span[i-1] + 1);
-	}
-}
-
-//  ================================================================================================
-
-void test(const std::vector < int > & vector)
-{
-	for (std::size_t i = 1; i < std::size(vector); ++i)
-	{
-		assert(vector[i] == vector[i-1] + 1);
-	}
-}
-
-//  ================================================================================================
-
-/*
-[[nodiscard]] int * get_dangling_ptr() { auto local = 1; return &local; } // error
-[[nodiscard]] int & get_dangling_ref() { auto local = 1; return  local; } // error
-*/
+//  [[nodiscard]] int * get_dangling_ptr() { auto local = 1; return &local; } // error
+//  [[nodiscard]] int & get_dangling_ref() { auto local = 1; return  local; } // error
 
 //  ================================================================================================
 
 void h()
 {
-	static auto x = 1; 
-	
-	std::cout << "x = " << x++ << std::endl;
+	static auto s = 1; std::cout << "s = " << s++ << std::endl;
 }
 
 //  ================================================================================================
 
-[[nodiscard]] inline auto max(int x, int y) 
+[[nodiscard]] inline auto max(int x, int y)
 { 
 	return (x > y ? x : y); 
 }
@@ -105,34 +69,36 @@ void h()
 
 int main()
 {
-//	f(1); // error
+	auto x = 1, y = 2;
 
-	[[maybe_unused]] const auto result = g(f(1), f(1));
+//	f(x); // error
+
+	assert(g(f(x), f(y)) == 6); // support: compiler-explorer.com
+
+//  ================================================================================================
+
+	x = 1; y = 2; update(&x, &y); assert(x == 2 && y == 2);
+	x = 1; y = 2; update( x,  y); assert(x == 2 && y == 2);
 
 //  ================================================================================================
 
-	auto x = 1, y = 1;
-
-	test(&x, &y); assert(x == 2 && y == 1);
-	test( x,  y); assert(x == 3 && y == 1);
-
-//  ================================================================================================
+	assert(test(std::string("aaa")));
 
 	const std::size_t size = 5;
 
 	const int         array_1                [size] { 1, 2, 3, 4, 5 };
 	const int * const array_2 = new const int[size] { 1, 2, 3, 4, 5 };
 
-	test(  array_1, size  ); 
-	test(  array_2, size  ); 
-	test({ array_1       });
-	test({ array_2, size }); 
+	assert(test(  array_1, size  )); 
+	assert(test(  array_2, size  )); 
+	assert(test({ array_1       }));
+	assert(test({ array_2, size })); 
 	
 	delete[] array_2;
 
-	test(std::vector < int > ({ 1, 2, 3, 4, 5 }));
+	assert(test(std::vector < int > ({ 1, 2, 3, 4, 5 })));
 
-//	test(1); // error
+//	assert(test(1)); // error
 
 //  ================================================================================================
 
@@ -143,7 +109,7 @@ int main()
 
 //  ================================================================================================
 
-	assert(max(1, 2) == 2 && factorial(5) == 120);
+	assert(max(1, 2) == 2 && factorial(5) == 120); // support: compiler-explorer.com
 
 	return 0;
 }

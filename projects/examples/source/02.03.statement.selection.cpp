@@ -6,7 +6,7 @@ int main()
 
     std::cout << "Selection v1: ";
 
-    std::cout << (1 == x ? "(1)" : "(2)");
+    std::cout << (x == 1 ? "(1)" : "(2)");
 
     std::cout << std::endl;
 
@@ -14,7 +14,7 @@ int main()
 
     std::cout << "Selection v2: ";
 
-    if (auto y = x; y == 1) // support: compiler-explorer.com
+    if (auto y = x; 1 == y) // support: compiler-explorer.com
     {
         std::cout << "(1)";
     }

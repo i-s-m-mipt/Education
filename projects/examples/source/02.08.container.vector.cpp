@@ -1,29 +1,27 @@
+#include <algorithm>
 #include <cassert>
+#include <iostream>
 #include <iterator>
-#include <numeric>
 #include <utility>
 #include <vector>
 
 int main()
 {
-	const std::size_t size = 5;
+	std::cout << "Enter 1 unsigned integer: "; std::size_t n{}; std::cin >> n;
 
-	std::vector < int > vector(size, 0);
+	std::vector < int > vector(n, 0);
 
-	std::iota(std::begin(vector), std::end(vector), 1);
+	std::ranges::iota(vector, 1);
 
-	for (std::size_t i = 0; i < size - 1; ++i)
+	for (std::size_t i = 0; i < n - 1; ++i)
 	{
-		for (std::size_t j = i + 1; j < size; ++j)
+		for (std::size_t j = i + 1; j < n; ++j)
 		{
-			if (vector[i] < vector[j]) 
-			{
-				std::swap(vector[i], vector[j]);
-			}
+			if (vector[i] < vector[j]) std::swap(vector[i], vector[j]);
 		}
 	}
 
-	assert(vector == std::vector < int > ({ 5, 4, 3, 2, 1 }));
+	assert(std::ranges::is_sorted(vector, std::ranges::greater()));
 
 	return 0;
 }

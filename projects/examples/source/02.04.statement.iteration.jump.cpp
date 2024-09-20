@@ -19,12 +19,10 @@ int main()
 		std::cout << "Iteration v03: " << i << std::endl;
 	}
 
-	/*
-	for (std::size_t i = size; i >= 0; --i); // error
-	{
-		std::cout << "Iteration v04: " << i << std::endl;
-	}
-	*/
+//	for (std::size_t i = size; i >= 0; --i); // error
+//	{
+//		std::cout << "Iteration v04: " << i << std::endl;
+//	}
 
 //  ================================================================================================
 

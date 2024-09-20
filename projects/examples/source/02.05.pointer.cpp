@@ -8,21 +8,21 @@ int main()
 
 	std::cout << "ptr_i = " << ptr_i << std::endl;
 
-	assert(*ptr_i == 1);
+	assert(*ptr_i == i);
 
 //	[[maybe_unused]] int * pointer = &i, value = &i; // error
 
 //  ================================================================================================
 
-//	[[maybe_unused]] int * ptr_null_1 = 0; // bad
+//	[[maybe_unused]] int * null_ptr_1 =    0; // bad
 
-	[[maybe_unused]] int * ptr_null_2 = nullptr;
+//	[[maybe_unused]] int * null_ptr_2 = NULL; // bad
 
-//	[[maybe_unused]] auto  ptr_null_3 = nullptr; // bad 
+	[[maybe_unused]] int * null_ptr_3 = nullptr;
 
-//	*ptr_null_2 = 1; // error
+//	*null_ptr_3 = 1; // error
 
-	if (ptr_null_2) *ptr_null_2 = 1;
+	if (null_ptr_3) *null_ptr_3 = 1;
 
 //  ================================================================================================
 
@@ -43,10 +43,10 @@ int main()
 
 //  ================================================================================================
 
-	[[maybe_unused]]       auto test_1 = &x;
-	[[maybe_unused]]       auto test_2 = &y;
-	[[maybe_unused]] const auto test_3 = &x;
-	[[maybe_unused]] const auto test_4 = &y;
+	[[maybe_unused]]       auto ptr_1 = &x;
+	[[maybe_unused]]       auto ptr_2 = &y;
+	[[maybe_unused]] const auto ptr_3 = &x;
+	[[maybe_unused]] const auto ptr_4 = &y;
 
 	return 0;
 }

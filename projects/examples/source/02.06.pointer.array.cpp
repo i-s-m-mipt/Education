@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cassert>
+#include <iostream>
 #include <numeric>
 #include <utility>
 #include <vector>
@@ -32,43 +33,31 @@ int main()
 
 	assert(array_1[middle] == 3);
 
-//	assert(*(&array_1[0] + middle) == 3); // bad
-
 //	assert(middle[array_1] == 3); // bad
 
-	assert((array_1 + middle + 1) - (array_1 + middle - 1) == 2);
+	assert(array_1 + middle - array_1 == 2);
 
-//	[[maybe_unused]] auto delta = array_2 - array_1; // bad
+//	[[maybe_unused]] const auto delta = array_2 - array_1; // bad
 
-	for (int * ptr = array_1; ptr != (array_1 + size); ++ptr) *ptr = 1;
+	for (auto ptr = array_1; ptr != array_1 + size; ++ptr) *ptr = 1;
 
 //  ================================================================================================
 
-	const std::size_t buffer_size = 1024;
+	std::cout << "Enter 1 unsigned integer: "; std::size_t n{}; std::cin >> n;
 
-	int buffer[buffer_size] {};
+	int buffer[1000] {}; assert(n <= std::size(buffer));
 
-	std::iota(buffer, buffer + size, 1);
+	std::ranges::iota(buffer, buffer + n, 1);
 
-	for (std::size_t i = 0; i < size - 1; ++i)
+	for (std::size_t i = 0; i < n - 1; ++i)
 	{
-		for (std::size_t j = i + 1; j < size; ++j)
+		for (std::size_t j = i + 1; j < n; ++j)
 		{
-			if (buffer[i] < buffer[j]) 
-			{
-				std::swap(buffer[i], buffer[j]);
-			}
+			if (buffer[i] < buffer[j]) std::swap(buffer[i], buffer[j]);
 		}
 	}
 
-	assert
-	(
-		buffer[0] == 5 && 
- 	    buffer[1] == 4 && 
-	    buffer[2] == 3 && 
-	    buffer[3] == 2 && 
-	    buffer[4] == 1
-	);
+	assert(std::ranges::is_sorted(buffer, buffer + n, std::ranges::greater()));
 
 	return 0;
 }
