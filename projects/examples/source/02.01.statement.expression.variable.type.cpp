@@ -1,33 +1,52 @@
 #include <cassert>
 #include <cmath>
+#include <cstdint>
+#include <iomanip>
+#include <iostream>
+#include <type_traits>
 
 int main()
 {
-	[[maybe_unused]] bool   b; assert(sizeof(b) >= 1);
-	[[maybe_unused]] char   c; assert(sizeof(c) == 1);
-	[[maybe_unused]] short  s; assert(sizeof(s) >= 2);
-	[[maybe_unused]] int    i; assert(sizeof(i) >= 2);
-	[[maybe_unused]] long   l; assert(sizeof(l) >= 4);
-	[[maybe_unused]] float  f; assert(sizeof(f) == 4);
-	[[maybe_unused]] double d; assert(sizeof(d) == 8);
+	bool   b{}; std::cout << "sizeof(b) = " << sizeof(b) << std::endl;
+	char   c{}; std::cout << "sizeof(c) = " << sizeof(c) << std::endl;
+	short  s{}; std::cout << "sizeof(s) = " << sizeof(s) << std::endl;
+	int    i{}; std::cout << "sizeof(i) = " << sizeof(i) << std::endl;
+	long   l{}; std::cout << "sizeof(l) = " << sizeof(l) << std::endl;
+	float  f{}; std::cout << "sizeof(f) = " << sizeof(f) << std::endl;
+	double d{}; std::cout << "sizeof(d) = " << sizeof(d) << std::endl;
 
 //  ================================================================================================
 
-//	[[maybe_unused]]   signed           int   si; // bad
-//	[[maybe_unused]]   signed      long int  sli; // bad
-//	[[maybe_unused]]   signed long long int slli; // bad
+//	c = 'я'; // error
 
-	[[maybe_unused]] unsigned           int   ui;
-	[[maybe_unused]] unsigned      long int  uli;
-	[[maybe_unused]] unsigned long long int ulli;
+//	i = 2'147'483'647 + 1; // error
 
-	[[maybe_unused]] long double ld; assert(sizeof(ld) >= 8);
+//	d = 1.000'000'000'000'000'123'456'789; // error
+
+//  ================================================================================================
+
+	std::cout << "std::is_signed_v < char > = " << std::boolalpha;
+
+	std::cout <<  std::is_signed_v < char >     << std::endl;
+
+//	[[maybe_unused]]   signed           int   si{}; // bad
+//	[[maybe_unused]]   signed      long int  sli{}; // bad
+//	[[maybe_unused]]   signed long long int slli{}; // bad
+
+	[[maybe_unused]] unsigned           int   ui{};
+	[[maybe_unused]] unsigned      long int  uli{};
+	[[maybe_unused]] unsigned long long int ulli{};
+
+	long long	ll{}; std::cout << "sizeof(ll) = " << sizeof(ll) << std::endl;
+	long double ld{}; std::cout << "sizeof(ld) = " << sizeof(ld) << std::endl;
 
 //  ================================================================================================
 
 //	[[maybe_unused]] int x1; // bad
 
-	[[maybe_unused]] int x2 = 1, x3(1), x4 { 1 }, x5{};
+//	[[maybe_unused]] int x2 = x1; // error
+
+	[[maybe_unused]] int x3 = 1, x4(1), x5 { 1 }, x6{};
 
 //  ================================================================================================
 
@@ -51,7 +70,7 @@ int main()
 
 	[[maybe_unused]] int z4 { static_cast < int > (1.0) };
 
-//	[[maybe_unused]] int z5 { static_cast < int > ("hello") }; // error
+//	[[maybe_unused]] int z5 { static_cast < int > ("aaa") }; // error
 
 	d = i = c = b = 1; // support: cppinsights.io
 	
@@ -72,6 +91,10 @@ int main()
 	[[maybe_unused]] type_alias_v2 cd = 1.0;
 
 	[[maybe_unused]] const std::size_t size = 5;
+
+	std::uint16_t ui16{}; assert(sizeof(ui16) == 2);
+	std::uint32_t ui32{}; assert(sizeof(ui32) == 4);
+	std::uint64_t ui64{}; assert(sizeof(ui64) == 8);
 
 	return 0;
 }
