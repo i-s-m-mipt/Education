@@ -7,7 +7,7 @@
 
 int main()
 {
-	std::cout << "Enter 1 unsigned integer: "; std::size_t n{}; std::cin >> n;
+	std::cout << "Enter 1 unsigned integer : "; std::size_t n{}; std::cin >> n;
 
 	std::vector < int > vector(n, 0);
 

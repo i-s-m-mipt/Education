@@ -50,7 +50,7 @@ void update(int & x, [[maybe_unused]] const int & y) {              x =  y; }
 
 void h()
 {
-	static auto s = 1; std::cout << "s = " << s++ << std::endl;
+	static auto s = 1; std::cout << "s = " << s++ << std::endl; // support: compiler-explorer.com
 }
 
 //  ================================================================================================

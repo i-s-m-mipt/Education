@@ -29,7 +29,7 @@ int main()
 
 	*(array_1 + middle) = 3;
 
-//	*(array_1 + 10'000) = 1; // error
+//	*(array_1 + size) = 6; // error
 
 	assert(array_1[middle] == 3);
 
@@ -39,13 +39,13 @@ int main()
 
 //	[[maybe_unused]] const auto delta = array_2 - array_1; // bad
 
-	for (auto ptr = array_1; ptr != array_1 + size; ++ptr) *ptr = 1;
+	for (auto ptr = array_1; ptr != array_1 + size; ++ptr) *ptr = 0;
 
 //  ================================================================================================
 
-	std::cout << "Enter 1 unsigned integer: "; std::size_t n{}; std::cin >> n;
+	std::cout << "Enter 1 unsigned integer : "; std::size_t n{}; std::cin >> n;
 
-	int buffer[1000] {}; assert(n <= std::size(buffer));
+	int buffer[1'000] {}; assert(n <= std::size(buffer));
 
 	std::ranges::iota(buffer, buffer + n, 1);
 

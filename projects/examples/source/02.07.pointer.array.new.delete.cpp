@@ -25,7 +25,7 @@ int main()
 
 //  ================================================================================================
 
-	std::cout << "Enter 1 unsigned integer: "; std::size_t n{}; std::cin >> n;
+	std::cout << "Enter 1 unsigned integer : "; std::size_t n{}; std::cin >> n;
 
 	const auto buffer = new int[n]; 
 

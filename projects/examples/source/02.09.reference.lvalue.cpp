@@ -7,16 +7,16 @@ int main()
 	[[maybe_unused]]       int        x = 1;
 	[[maybe_unused]] const int        y = 1;
 	
-//	[[maybe_unused]]       int &  ref_i    ; // error
-//	[[maybe_unused]]       int &  ref_y = y; // error
+//	[[maybe_unused]]       int & ref__i    ; // error
+//	[[maybe_unused]]       int & ref__y = y; // error
 
-	[[maybe_unused]]       int &  ref_x = x; ref_x = 2; assert(x == 2);
-	[[maybe_unused]] const int & cref_y = y;
+	[[maybe_unused]]       int & ref__x = x; ref__x = 2; assert(x == 2);
+	[[maybe_unused]] const int & ref_cy = y;
 
-//	cref_y = 2; // error
+//	ref_cy = 2; // error
 
-//	[[maybe_unused]]       int &  ref_v = 1; // error
-	[[maybe_unused]] const int & cref_v = 1;
+//	[[maybe_unused]]       int & ref__v = 1; // error
+	[[maybe_unused]] const int & ref_cv = 1;
 
 //  ================================================================================================
 
@@ -33,7 +33,7 @@ int main()
 
 	good_vector.push_back(x);
 
-	good_vector.back().get() = 1; assert(x == 1);
+	good_vector.back().get() = 3; assert(x == 3);
 
 	return 0;
 }
