@@ -10,11 +10,11 @@
 
 int main()
 {
-	std::cout << "Enter 2 integers: "; int x{}, y{}; std::cin >> x >> y;
+	std::cout << "Enter 2 integers : "; int x{}, y{}; std::cin >> x >> y;
 
-	std::cout << "Entered integers: " << x << ' ' << y << std::endl;
+	std::cout << "Entered integers : " << x << ' ' << y << std::endl;
 
-	assert(std::abs(std::sin(std::numbers::pi / 2.0) - 1.0) < 0.000001);
+	assert(std::abs(std::sin(std::numbers::pi / 2.0) - 1.0) < 0.000'001);
 
 	const std::string string = "aaa"; assert(string + "bbb" == "aaabbb");
 
