@@ -1,73 +1,66 @@
-#include <iostream>
+#include <cassert>
 #include <vector>
 
 //  ================================================================================================
 
-struct Structure { int x{}, y{}, z = 4; };
+struct Data { int x{}, y{}, z{}; };
 
 //  ================================================================================================
 
-struct Point { double x = 0.0; double y = 0.0; };
-
-//  ================================================================================================
-
-[[nodiscard]] inline Point make_point(double x, double y)
-{
-	return (x * y > 0.0 ? Point { x, y } : Point{});
+[[nodiscard]] inline Data make_data(int x, int y, int z) 
+{ 
+	return Data { x, y, z }; 
 }
 
 //  ================================================================================================
 
 int main()
 {
-	[[maybe_unused]] Structure s1            ; // elements: { 0, 0, 4 }
-	[[maybe_unused]] Structure s2 {         }; // elements: { 0, 0, 4 }
-	[[maybe_unused]] Structure s3 { 1       }; // elements: { 1, 0, 4 }
-	[[maybe_unused]] Structure s4 { 1, 2    }; // elements: { 1, 2, 4 }
-	[[maybe_unused]] Structure s5 { 1, 2, 3 }; // elements: { 1, 2, 3 }
-
-	[[maybe_unused]] Structure s6 { .x = 1, .z = 3 }; // elements: { 1, 0, 3 }
+	[[maybe_unused]] Data data_1, data_2{};
 	
-//	[[maybe_unused]] Structure s7 { .y = 2, .x = 1 }; // error
+	[[maybe_unused]] Data data_3 { 1 }, data_4 { 1, 2 }, data_5 { 1, 2, 3 };
+	
+	[[maybe_unused]] Data data_6 { .x = 1, .z = 3 };
+	
+//	[[maybe_unused]] Data data_7 { .y = 2, .x = 1 }; // error
 
 //  ================================================================================================
 
-	s1.x = 42;
+	data_1.x = 1;
 
-	const auto ptr = &s1; // detail: Structure * const
+	const auto ptr = &data_1;
 
-//	(*ptr).y = 42; // bad
+//	(*ptr).y = 2; // bad
 
-	ptr->y = 42;
+	ptr->y = 2;
 
-	auto & ref = s1.z; // detail: int &
+	auto & ref = data_1.z;
 
-	ref = 42;
-
-//  ================================================================================================
-
-	std::cout <<  s1.x << std::endl; // output: 42
-	std::cout <<  s1.y << std::endl; // output: 42
-	std::cout <<  s1.z << std::endl; // output: 42
-
-	std::cout << &s1   << std::endl; // output: 0x...
-	std::cout << &s1.x << std::endl; // output: 0x...
+	ref = 3;
 
 //  ================================================================================================
 
-	s1 = { 1, 2, 3 };
-
-	s1 = { .x = 1, .z = 3 };
-
-//  ================================================================================================
-
-	[[maybe_unused]] const Structure s8 { 1, 2, 3 };
-
-//	s8.x = 42; // error
+	assert
+	(
+		static_cast < void * > (&data_1  ) == 
+		static_cast < void * > (&data_1.x)
+	);
 
 //  ================================================================================================
 
-	std::vector < Point > points { make_point(0.0, 0.0), { 1.0, 1.0 } };
+	data_1 = { 1, 2, 3 };
+
+	data_1 = { .x = 1, .z = 3 };
+
+//  ================================================================================================
+
+	[[maybe_unused]] const Data data_8;
+
+//	data_8.x = 1; // error
+
+//  ================================================================================================
+
+	std::vector < Data > vector { {}, { 1, 2, 3 }, make_data(1, 2, 3) };
 
 	return 0;
 }

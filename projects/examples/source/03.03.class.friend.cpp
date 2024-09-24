@@ -1,4 +1,4 @@
-#include <iostream>
+#include <cassert>
 
 //  ================================================================================================
 
@@ -8,13 +8,13 @@ class A
 {
 public:
 
-	friend inline void print([[maybe_unused]] const A & a);
+	friend inline void test([[maybe_unused]] const A & a);
 
 	friend B;
 
 private:
 
-	const int m_data = 42; 
+	const int m_data = 1; 
 	
 }; // class A
 
@@ -24,12 +24,12 @@ class C
 {
 public:
 
-	inline void print([[maybe_unused]] const A & a, 
-					  [[maybe_unused]] const B & b) const;
+	inline void test([[maybe_unused]] const A & a, 
+					 [[maybe_unused]] const B & b) const;
 
 private:
 
-	const int m_data = 42; 
+	const int m_data = 1; 
 	
 }; // class C
 
@@ -39,34 +39,34 @@ class B
 {
 public:
 
-	       inline void    print([[maybe_unused]] const A & a) const;
-	friend inline void C::print([[maybe_unused]] const A & a, 
-								[[maybe_unused]] const B & b) const;
+	       inline void    test([[maybe_unused]] const A & a) const;
+	friend inline void C::test([[maybe_unused]] const A & a, 
+							   [[maybe_unused]] const B & b) const;
 
 private:
 
-	const int m_data = 42; 
+	const int m_data = 1; 
 	
 }; // class B
 
 //  ================================================================================================
 
-inline void    print([[maybe_unused]] const A & a)       { std::cout << a.m_data << std::endl; }
-inline void B::print([[maybe_unused]] const A & a) const { std::cout << a.m_data << std::endl; }
-inline void C::print([[maybe_unused]] const A & a, 
-					 [[maybe_unused]] const B & b) const 
+inline void    test([[maybe_unused]] const A & a)       { assert(a.m_data == 1); }
+inline void B::test([[maybe_unused]] const A & a) const { assert(a.m_data == 1); }
+inline void C::test([[maybe_unused]] const A & a, 
+				    [[maybe_unused]] const B & b) const 
 {
-//	std::cout << a.m_data << std::endl; // error
-	std::cout << b.m_data << std::endl; 
+//	assert(a.m_data == 1); // error
+	assert(b.m_data == 1); 
 }
 
 //  ================================================================================================
 
 int main()
 {
-	    print(A()     );
-	B().print(A()     );
-	C().print(A(), B());
+	    test(A()     );
+	B().test(A()     );
+	C().test(A(), B());
 
 	return 0;
 }

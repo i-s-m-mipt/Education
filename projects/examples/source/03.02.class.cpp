@@ -1,182 +1,160 @@
+#include <cassert>
 #include <iostream>
 #include <string>
 
 //  ================================================================================================
 
-class Date
+class Computer
 {
 public:
 
 	using integer_t = unsigned int;
 
-	class Printer
+	class Tester
 	{
 	public:
 
-		void print(const Date & date) const
-		{
-			std::cout << date.m_year << '/' << date.m_month << '/' << date.m_day << std::endl;
-		}
+		[[nodiscard]] int test(const Computer & computer) const { return 1; }
 
-	}; // class Printer
-
-public:
-
-	Date() : m_year(0), m_month(0), m_day(0) 
-	{
-//		m_year = 0; m_month = 0; m_day = 0; // bad	
-
-		initialize(); 
-	}
-
-	Date(integer_t year, integer_t month, integer_t day) : m_year(year), m_month(month), m_day(day)
-	{
-		initialize();
-	}
-
-	Date(integer_t year) : Date(year, 1, 1)
-	{
-		initialize();
-	}
-
-   ~Date()
-	{
-		uninitialize();
-	}
-
-private:
-
-	void   initialize() { ++m_counter; }
-	void uninitialize() { --m_counter; }
-
-public:
-
-	void print_v1() const
-	{
-//		m_year = 2023; // error
-
-		std::cout << prompt << m_year << '/' << m_month << '/' << m_day << std::endl;
-	}
-
-	void print_v2() const;
-
-public:
-
-	[[nodiscard]] integer_t year() const { return m_year; }
-
-//	void set_year(integer_t year) { m_year = year; } // bad
-
-	void set_year(integer_t year)
-	{
-		m_year = (year > max_year ? max_year : year); 
-		
-		m_is_string_valid = false;
-	}
-
-	[[nodiscard]] const std::string & get_date_as_string() const
-	{
-		if (!m_is_string_valid)
-		{
-			m_date_as_string = std::to_string(m_year ) + '/' +
-							   std::to_string(m_month) + '/' +
-							   std::to_string(m_day  );
-
-			m_is_string_valid = true;
-		}
-
-		return m_date_as_string;
-	}
-
-public:
-
-	[[nodiscard]] static std::size_t counter() { return m_counter; }
-
-public:
-
-	static inline const integer_t max_year = 9999;
-
-	static inline const std::string prompt = "date: ";
-
-private:
-
-	static inline std::size_t m_counter = 0;
-
-private:
-
-	integer_t m_year  = 0;
-	integer_t m_month = 0;
-	integer_t m_day   = 0;
-
-private:
-
-	mutable std::string m_date_as_string;
-
-	mutable bool m_is_string_valid = false;
-
-}; // class Date
+	}; // class Tester
 
 //  ================================================================================================
 
-void Date::print_v2() const
-{
-	std::cout << prompt;
+	Computer() : m_name(""), m_data(0)
+	{
+//		m_name = ""; // error
+	}
 
-	if (m_year < 1000) std::cout << '0';
-	if (m_year <  100) std::cout << '0';
-	if (m_year <   10) std::cout << '0';
+	Computer(const std::string & name, integer_t data) : m_name(name)
+	{
+		set_data(data);
+	}
 
-	const auto separator = '/';
-	 
-	std::cout << m_year  << separator; if (m_month < 10) std::cout << '0';
-	std::cout << m_month << separator; if (m_day   < 10) std::cout << '0';
-	std::cout << m_day   << std::endl;
-}
+	Computer(const std::string & name) : Computer(name, 0) {}
+
+   ~Computer()
+	{
+		std::cout << "Computer::~Computer" << std::endl;
+	}
+
+//  ================================================================================================
+
+	[[nodiscard]] int test_v1() const
+	{
+//		m_data = m_data_limit; // error
+
+		return 1;
+	}
+
+	[[nodiscard]] int test_v2() const;
+
+//  ================================================================================================
+
+	[[nodiscard]] integer_t data() const { return m_data; }
+
+//	void set_data(integer_t data) { m_data = data; } // bad
+
+	void set_data(integer_t data)
+	{
+		m_data = (data > m_data_limit ? m_data_limit : data); 
+		
+		m_is_cache_valid = false;
+	}
+
+	[[nodiscard]] const std::string & data_as_string() const
+	{
+		if (!m_is_cache_valid)
+		{
+			m_data_as_string = std::to_string(m_data);
+
+			m_is_cache_valid = true;
+		}
+
+		return m_data_as_string;
+	}
+
+//  ================================================================================================
+
+	[[nodiscard]] static integer_t test_v3()
+	{
+//		m_data = m_data_limit; // error
+
+		return 3;
+	}
+
+//  ================================================================================================
+
+	static inline const integer_t m_data_limit = 1;
+
+//  ================================================================================================
+
+private:
+
+	const std::string m_name;
+
+	integer_t m_data = 0;
+
+//  ================================================================================================
+
+	mutable std::string m_data_as_string;
+
+	mutable bool m_is_cache_valid = false;
+
+}; // class Computer
+
+//  ================================================================================================
+
+[[nodiscard]] int Computer::test_v2() const { return 2; }
 
 //  ================================================================================================
 
 int main()
 {
-	Date date;
+	Computer computer_1;
 
-//	date.m_year = 2023; // error
+//	computer_1.m_data = 1; // error
 
-	date.print_v1();
-	date.print_v2();
+	assert(computer_1.test_v1() == 1);
+	assert(computer_1.test_v2() == 2);
 
-	[[maybe_unused]] const auto year = date.year();
-
-	date.set_year(2023);
-
-//  ================================================================================================
-
-	const Date c_date;
-
-	c_date.print_v2();
-
-//	c_date.set_year(2023); // error
-
-	std::cout << c_date.get_date_as_string() << std::endl;
-
-//  ================================================================================================
-
-	const Date date_1;
+	computer_1.set_data(1); 
 	
-	const Date date_2(2023, 9, 19);
-
-//	const Date date_3(); // error
-
-//	const Date date_4{}; // bad
+	assert(computer_1.data          () ==  1 );
+	assert(computer_1.data_as_string() == "1");
 
 //  ================================================================================================
 
-	Date::Printer().print(date_2);
+	const Computer computer_2;
+
+	assert(computer_2.test_v1() == 1);
+	assert(computer_2.test_v2() == 2);
+
+//  computer_2.set_data(1); // error
+
+	assert(computer_2.data          () ==  0 );
+	assert(computer_2.data_as_string() == "0");
 
 //  ================================================================================================
 
-	std::cout << date_1.max_year << std::endl;
-	std::cout << date_2.max_year << std::endl;
-	std::cout << Date:: max_year << std::endl;
-	std::cout << Date::counter() << std::endl;
+	const Computer computer_3;
+
+	const Computer computer_4("Computer", 1);
+	
+	const Computer computer_5("Computer");
+
+//	const Computer computer_6(); // error
+
+	{
+		const Computer computer_7;
+	}
+
+//  ================================================================================================
+
+	assert(Computer::m_data_limit == 1);
+
+	assert(Computer::test_v3() == 3);
+
+	assert(Computer::Tester().test(computer_1) == 1);
 
 	return 0;
 }
