@@ -6,76 +6,69 @@
 
 //  ================================================================================================
 
-class Computer 
+class System 
 {
 public:
 
-	virtual ~Computer() {};
+	virtual ~System() = default;
 
-	virtual void run() const = 0;
+	virtual void test() const = 0;
 
-}; // class Computer 
-
-//  ================================================================================================
-
-class Mobile : public Computer { public: void run() const override; };
-class Tablet : public Computer { public: void run() const override; };
-class Laptop : public Computer { public: void run() const override; };
+}; // class System 
 
 //  ================================================================================================
 
-void Mobile::run() const { std::cout << "Mobile" << std::endl; }
-void Tablet::run() const { std::cout << "Tablet" << std::endl; }
-void Laptop::run() const { std::cout << "Laptop" << std::endl; }
+class Server : public System { void test() const override {	std::clog << "Server::test\n"; } };
+class Client : public System { void test() const override { std::clog << "Client::test\n"; } };
 
 //  ================================================================================================
 
 int main()
 {
-	const Computer * computer_ptr = new const Mobile();
+	const System * system = new const Server();
 
-	[[maybe_unused]] const auto mobile_ptr_1 = dynamic_cast < const Mobile * > (computer_ptr);
+	[[maybe_unused]] const auto server_1 = dynamic_cast < const Server * > (system);
 
-	delete computer_ptr;
+	delete system;
 
-	computer_ptr = new const Tablet();
+	system = new const Client();
 
-	if (const auto mobile_ptr_2 = dynamic_cast < const Mobile * > (computer_ptr); !mobile_ptr_2)
+	if (const auto server_2 = dynamic_cast < const Server * > (system); !server_2)
 	{
-		std::cout << "invalid dynamic cast" << std::endl; 
+		std::cout << "invalid dynamic cast\n"; 
 	}
 
-	delete computer_ptr;
+	delete system;
 
 //  ================================================================================================
 
-	auto x = 42;
+	auto x = 1;
 
-	[[maybe_unused]] decltype (x)  v = x;
-	[[maybe_unused]] decltype((x)) r = x;
+	[[maybe_unused]] decltype( x )     y = x;
+	[[maybe_unused]] decltype((x)) ref_x = x;
 
-	const auto & rcx = x;
+	const auto & ref_cx = x;
 
-	[[maybe_unused]]          auto  z1 = rcx; 
-	[[maybe_unused]] decltype(auto) z2 = rcx;
+	[[maybe_unused]]          auto  z1 = ref_cx; 
+	[[maybe_unused]] decltype(auto) z2 = ref_cx;
 
 //  ================================================================================================
 
 	std::cout << typeid(x).name() << std::endl;
 
-	const std::string string = "hello";
+	const std::string string = "aaaaa";
 
 	std::cout << typeid(string).name() << std::endl;
 
-	computer_ptr = new const Mobile();
+	system = new const Server();
 
-	const auto & type_info = typeid(*computer_ptr);
+	const auto & type_info = typeid(*system);
 
 	std::cout << type_info.name() << std::endl;
 
-	delete computer_ptr;
+	delete system;
 
-	const auto & reference = Mobile();
+	const auto & reference = Server();
 
 	std::cout << typeid(reference).name() << std::endl;
 
@@ -87,9 +80,9 @@ int main()
 
 //  ================================================================================================
 
-	if (auto any = std::make_any < decltype(x) > (x); any.has_value())
+	if (std::any any = std::make_any < decltype(x) > (x); any.has_value())
 	{
-		std::cout << any.type().name() << ": ";
+		std::cout << any.type().name() << " : ";
 		
 		if (any.type() == typeid(int))
 		{
@@ -97,10 +90,13 @@ int main()
 		}
 		else
 		{
-			std::cout << "unknown type" << std::endl;
+			std::cout << "unknown type\n";
 		}
 	}
-	else any = 3.14; // support: типизация Python
+	else 
+	{
+		any = 1.0;
+	}
 
 	return 0;
 }

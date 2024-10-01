@@ -1,183 +1,134 @@
+#include <cassert>
 #include <iostream>
 #include <string>
 
 //  ================================================================================================
 
-class Person
+class System
 {
 public:
 
-	Person(const std::string & name) : m_name(name)
-	{
-		std::cout << "Person::Person " << name << std::endl;
-	}
+	System(const std::string & name) : m_name(name) {}
 
 public:
 
-	void print       () const { std::cout << "Person::print       " << std::endl; }
-	void print_person() const { std::cout << "Person::print_person" << std::endl; }
+	void test_v1() const { std::clog << "System::test_v1\n"; }
+	void test_v2() const { std::clog << "System::test_v2\n"; }
 
 protected:
 
-	[[nodiscard]] const std::string & get_name() const { return m_name; }
+	[[nodiscard]] const std::string & get_name() const 
+	{ 
+		return m_name; 
+	}
 
 private:
 
 	const std::string m_name;
 
-}; // class Person
+}; // class System
 
 //  ================================================================================================
 
-class Employee : public Person
+class Server : public System
 {
 public:
 
-	Employee(const std::string & name, int salary) : Person(name), m_salary(salary)
+	Server(const std::string & name, int data) : System(name), m_data(data)
 	{
-		std::cout << "Employee::Employee " << name << std::endl;
-
-//		std::cout << m_name << std::endl; // error
-
-		std::cout << get_name() << std::endl;
+		assert(get_name() == name);
 	}
 
 public:
 
-	void print() const
+	void test_v1() const
 	{
-		std::cout << "Employee::print" << std::endl;
+		std::clog << "Server::test_v1\n";
 
-//		print(); // error
+//		test_v1(); // error
 
-		Person::print();
+		System::test_v1();
 	}
 
-	using Person::get_name;
+	using System::get_name;
 
 private:
 
-	const int m_salary;
+	const int m_data = 0;
 
-}; // class Employee : public Person
+}; // class Server : public System
 
 //  ================================================================================================
 
-class Manager : public Employee
+class Client_v1 : private System 
 {
 public:
 
-	Manager(const std::string & name, int salary, char mark) : Employee(name, salary), m_mark(mark)
-	{
-		std::cout << "Manager::Manager " << name << std::endl;
-	}
+	Client_v1(const std::string & name) : System(name) {}
 
 public:
 
-	void print() const { std::cout << "Manager::print" << std::endl; }
-
-private:
-
-	const char m_mark;
-
-}; // class Manager : public Employee
-
-//  ================================================================================================
-
-class Servo {};
-
-class Robot_v1 : private Servo {};
-
-class Robot_v2 { private: const Servo m_servo; };
-
-//  ================================================================================================
-
-class Base
-{
-public:    int m_data_1{};
-protected: int m_data_2{}; 
-private:   int m_data_3{}; 
-
-}; // class Base
-
-//  ================================================================================================
-
-class Derived_1 : public Base
-{
-	void f()
-	{
-		m_data_1 = 42;
-		m_data_2 = 42;
-//		m_data_3 = 42; // error
+	void test() const 
+	{ 
+		test_v1(); 
+		test_v2(); 
 	}
 
-}; // class Derived_1 : public Base
+}; // class Client_v1 : private System 
 
 //  ================================================================================================
 
-class Derived_2 : protected Base
+class Client_v2 
 {
-	void f()
-	{
-		m_data_1 = 42;
-		m_data_2 = 42;
-//		m_data_3 = 42; // error
+public:
+
+	Client_v2(const std::string & name) : m_system(name) {}
+
+public:
+
+	void test() const 
+	{ 
+		m_system.test_v1(); 
+		m_system.test_v2(); 
 	}
 
-}; // class Derived_2 : protected Base
+private: 
 
-//  ================================================================================================
+	const System m_system; 
 
-class Derived_3 : private Base
-{
-	void f()
-	{
-		m_data_1 = 42;
-		m_data_2 = 42;
-//		m_data_3 = 42; // error
-	}
-
-}; // class Derived_3 : private Base
+}; // class Client_v2
 
 //  ================================================================================================
 
 int main()
 {
-	const Person person("Matthias");
+	const System system("system");
 
-//	const auto person_name = person.get_name(); // error
-
-//  ================================================================================================
-
-	const Employee employee("Matthias", 100'000);
-
-	employee.print();
-
-	const auto employee_name = employee.get_name();
+//	const auto system_name = system.get_name(); // error
 
 //  ================================================================================================
 
-	const Manager manager("Matthias", 100'000, 10);
+	const Server server("server", 1);
 
-	manager.print_person();
+	server.test_v1();
+	server.test_v2();
+
+	const auto server_name = server.get_name();
 
 //  ================================================================================================
 
-	Derived_1 derived_1;
-	Derived_2 derived_2;
-	Derived_3 derived_3;
+	Client_v1 client_v1("client_v1");
+	
+//	client_v1.test_v1(); // error
+//	client_v1.test_v2(); // error
 
-	derived_1.m_data_1 = 42;
-//	derived_1.m_data_2 = 42; // error
-//	derived_1.m_data_3 = 42; // error
+	client_v1.test();
 
-//	derived_2.m_data_1 = 42; // error
-//	derived_2.m_data_2 = 42; // error
-//	derived_2.m_data_3 = 42; // error
+//  ================================================================================================
 
-//	derived_3.m_data_1 = 42; // error
-//	derived_3.m_data_2 = 42; // error
-//	derived_3.m_data_3 = 42; // error
+	Client_v2 client_v2("client_v2");
+
+	client_v2.test();
 
 	return 0;
 }

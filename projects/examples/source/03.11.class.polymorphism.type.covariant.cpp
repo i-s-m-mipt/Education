@@ -2,43 +2,57 @@
 
 //  ================================================================================================
 
-class Base 
+class System_v1 
 {
 public:
 
-	virtual ~Base() {}
+	virtual ~System_v1() = default;
 
-	[[nodiscard]] virtual const Base * get() const { return this; }
+}; // class System_v1 
 
-	void print() const { std::cout << "Base" << std::endl; }
-
-}; // class Base
+class Server_v1 : public System_v1 {};
 
 //  ================================================================================================
 
-class Derived : public Base
+class System_v2 
 {
 public:
 
-	[[nodiscard]] const Derived * get() const override { return this; }
+	virtual ~System_v2() = default;
 
-	void print() const { std::cout << "Derived" << std::endl; }
+	[[nodiscard]] virtual const System_v1 * test() const 
+	{ 
+		std::clog << "System_v2::test\n";
 
-}; // class Derived : public Base
+		return new const System_v1(); 
+	}
+
+}; // class System_v2
+
+//  ================================================================================================
+
+class Server_v2 : public System_v2
+{
+public:
+
+	[[nodiscard]] const Server_v1 * test() const override 
+	{ 
+		std::clog << "Server_v2::test\n";
+
+		return new const Server_v1(); 
+	}
+
+}; // class Server_v2 : public System_v2
 
 //  ================================================================================================
 
 int main()
 {
-	const Derived * const derived = new const Derived(); 
+	const System_v2 * const system_v2 = new const Server_v2();
 
-	derived->get()->print();
+	delete system_v2->test();
 
-	const Base * const base = derived;
-
-	base->get()->print();
-
-	delete base;
+	delete system_v2;
 
 	return 0;
 }

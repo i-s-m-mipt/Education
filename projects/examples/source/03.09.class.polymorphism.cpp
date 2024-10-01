@@ -3,126 +3,120 @@
 
 //  ================================================================================================
 
-class Computer 
+class System 
 {
 public:
 
-	Computer()
+	System()
 	{
-//		print(); // bad
+//		test_v1(); // bad
 	}
 
-	virtual ~Computer()
-	{
-//		print(); // bad
+// ~System() = default; // error
+
+	virtual ~System() = default;
+
+public:
+
+	virtual void test_v1() const 
+	{ 
+		std::clog << "System::test_v1\n"; 
 	}
 
-	virtual void print() const { std::cout << "Computer::print" << std::endl; }
+	virtual void test_v2() const = 0;
 
-}; // class Computer
+//	virtual void test_v3() const = 0 // error
+//	{
+//		std::clog << "System::test_v3\n";
+//	}
+
+private:
+
+	const int * m_system_data = nullptr;
+
+}; // class System
+
+void System::test_v2() const 
+{ 
+	std::clog << "System::test_v2\n"; 
+}
 
 //  ================================================================================================
 
-class Mobile final : public Computer
+class Server : public System
 {
 public:
 
-	void print() const override final { std::cout << "Mobile::print" << std::endl; }
-
-}; // class Mobile final : public Computer
-
-//  ================================================================================================
-
-/*
-class Tablet : public Mobile // error
-{
-public:
-
-	void print() const override { std::cout << "Tablet::print" << std::endl; } // error
-
-}; // class Tablet : public Mobile
-*/
-
-//  ================================================================================================
-
-class Laptop : public Computer 
-{
-public: 
-
-	void print() const override { std::cout << "Laptop::print" << std::endl; }
-
-}; // class Laptop : public Computer
-
-//  ================================================================================================
-
-class Abstract_Base // support: интерфейсы Java
-{
-public:
-
-	virtual ~Abstract_Base() {};
-
-	virtual void print() const = 0;
-
-}; // class Abstract_Base
-
-void Abstract_Base::print() const { std::cout << "Abstract_Base::print" << std::endl; }
-
-//  ================================================================================================
-
-class Derived : public Abstract_Base
-{
-public:
-
-	void print() const override
-	{
-		std::cout << "Derived::print" << std::endl;
-
-		Abstract_Base::print();
+	void test_v1() const override final 
+	{ 
+		std::clog << "Server::test_v1\n"; 
 	}
 
-}; // class Derived : public Abstract_Base
+	void test_v2() const override 
+	{ 
+		std::clog << "Server::test_v2\n"; 
+
+		System::test_v2();
+	}
+
+private:
+
+	const int * m_server_data = nullptr;
+
+}; // class Server final : public System
+
+//  ================================================================================================
+
+class Client final : public System 
+{
+public:
+
+	void test_v2() const override 
+	{ 
+		std::clog << "Client::test_v2\n"; 
+
+		System::test_v2();
+	}
+
+private:
+
+	const int * m_client_data = nullptr;
+
+}; // class Client final : public System 
 
 //  ================================================================================================
 
 int main()
 {
-	const Mobile mobile;
+	const Server server;
 
-	const Computer * computer_ptr = &mobile;
-//	const Computer   computer     =  mobile; // bad
+	[[maybe_unused]] const System * system_1 = &server;
+	[[maybe_unused]] const System & system_2 =  server;
+//	[[maybe_unused]] const System   system_3 =  server; // error
 
-	computer_ptr->print();
+	system_1->test_v1(); // support: compiler-explorer.com
 
 //  ================================================================================================
 
-	const Mobile mobile_1; const Mobile mobile_2;
-	const Laptop laptop_1; const Laptop laptop_2;
-
-	std::vector < const Computer * > computers 
+	std::vector < const System * > systems 
 	{ 
-		&mobile_1, &mobile_2, 
-		&laptop_1, &laptop_2 
+		new const Server(), 
+		new const Client() 
 	};
 
-	for (const auto computer : computers) computer->print();
+	for (const auto system : systems) 
+	{
+		system->test_v1();
+		system->test_v2();
+
+		delete system;
+	}
 
 //  ================================================================================================
 
-	computer_ptr = new const Mobile();
-
-	computer_ptr->print();
-
-	delete computer_ptr;
-
-//  ================================================================================================
-
-	const Abstract_Base * const abstract_base_ptr = new const Derived();
-
-	abstract_base_ptr->print(); 
-	
-	delete abstract_base_ptr;
-
-//	const Abstract_Base abstract_base; // error
+	std::cout << "sizeof(System) = " << sizeof(System) << '\n';
+	std::cout << "sizeof(Server) = " << sizeof(Server) << '\n';
+	std::cout << "sizeof(Client) = " << sizeof(Client) << '\n';
 
 	return 0;
 }

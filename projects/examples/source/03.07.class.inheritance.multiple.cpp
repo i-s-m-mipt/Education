@@ -1,35 +1,48 @@
-#include <iostream>
+#include <cassert>
 
 //  ================================================================================================
 
-class B { public: static inline auto m_data_1 = 42; int m_data_2 = 42; };
+class System 
+{ 
+public: 
+	
+	static inline const int m_data_1 = 1; 
+				  const int m_data_2 = 2; 
+
+}; // class System 
 
 //  ================================================================================================
 
-class L1 : public         B {}; 
-class L2 : public virtual B {}; 
+class Server_v11 : public         System {}; 
+class Server_v12 : public virtual System {}; 
 
-class R1 : public         B {}; 
-class R2 : public virtual B {}; 
+class Server_v21 : public         System {}; 
+class Server_v22 : public virtual System {}; 
 
 //  ================================================================================================
 
-class C1 : public L1, public R1 {};
-class C2 : public L2, public R2 {};
+class Server_v31 : public Server_v11, public Server_v21 { public: Server_v31() {} };
+class Server_v32 : public Server_v12, public Server_v22 { public: Server_v32() {} };
 
 //  ================================================================================================
 
 int main()
 {
-	C1 c1;
+	Server_v31 server_v31; // support: compiler-explorer.com
 
-	std::cout << c1.m_data_1 << std::endl;
-//	std::cout << c1.m_data_2 << std::endl; // error
+	assert(server_v31.m_data_1 == 1);
+//	assert(server_v31.m_data_2 == 2); // error
 
-	C2 c2;
+//  ================================================================================================
 
-	std::cout << c2.m_data_1 << std::endl;
-	std::cout << c2.m_data_2 << std::endl;
+	Server_v32 server_v32; // support: compiler-explorer.com
+
+	assert(server_v32.m_data_1 == 1);
+	assert(server_v32.m_data_2 == 2);
+
+//  ================================================================================================
+
+	Server_v22 server_v22; // support: compiler-explorer.com
 
 	return 0;
 }

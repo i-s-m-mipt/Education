@@ -53,17 +53,17 @@ int main()
 
 //  ================================================================================================
 
-	std::cout << "size of E: " << sizeof(E) << std::endl; // output: >= 1
+	std::cout << "sizeof(E) = " << sizeof(E) << std::endl;
 
-	std::cout << "size of X: " << sizeof(X) << std::endl; // output: >= 2
-	std::cout << "size of Y: " << sizeof(Y) << std::endl; // output: == 1
-	std::cout << "size of Z: " << sizeof(Z) << std::endl; // output: >= 2
+	std::cout << "sizeof(X) = " << sizeof(X) << std::endl;
+	std::cout << "sizeof(Y) = " << sizeof(Y) << std::endl;
+	std::cout << "sizeof(Z) = " << sizeof(Z) << std::endl;
 
 //  ================================================================================================
 
-	std::cout << "size of A: " << sizeof(A) << std::endl; // output: == 1
-	std::cout << "size of B: " << sizeof(B) << std::endl; // output: == 1
-	std::cout << "size of C: " << sizeof(C) << std::endl; // output: == 1
+	std::cout << "sizeof(A) = " << sizeof(A) << std::endl;
+	std::cout << "sizeof(B) = " << sizeof(B) << std::endl;
+	std::cout << "sizeof(C) = " << sizeof(C) << std::endl;
 
 	return 0;
 }

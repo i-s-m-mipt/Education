@@ -1,115 +1,57 @@
-#include <iostream>
-#include <iterator>
-#include <string>
 #include <vector>
 
 //  ================================================================================================
 
-class Lecture;
+class Client;
 
-class Student
+//  ================================================================================================
+
+class Server
 {
 public:
 
-	Student(const std::string & name) : m_name(name) {}
-
-public:
-
-	[[nodiscard]] const std::string & name() const { return m_name; }
-
-	void add_lecture(const Lecture & lecture)
+	void connect(const Client * client)
 	{
-		m_lectures.push_back(&lecture);
+		m_clients.push_back(client);
 	}
-
-	void show_lectures() const;
 
 private:
 
-	const std::string m_name;
+	std::vector < const Client * > m_clients;
 
-	std::vector < const Lecture * > m_lectures;
-
-}; // class Student
+}; // class Server
 
 //  ================================================================================================
 
-class Lecture
+class Client
 {
 public:
 
-	Lecture(const std::string & name) : m_name(name) {}
-
-public:
-
-	[[nodiscard]] const std::string & name() const { return m_name; }
-
-	void add_student(const Student & student)
+	void connect(const Server * server)
 	{
-		m_students.push_back(&student);
+		m_servers.push_back(server);
 	}
-
-	void show_students() const;
 
 private:
 
-	const std::string m_name;
+	std::vector < const Server * > m_servers;
 
-	std::vector < const Student * > m_students;
-
-}; // class Lecture
-
-//  ================================================================================================
-
-void Student::show_lectures() const
-{
-	std::cout << "Student " << m_name << " visits: " << std::endl;
-
-	for (std::size_t i = 1; const auto lecture : m_lectures)
-	{
-		std::cout << i++ << ": " << lecture->name() << std::endl;
-	}
-}
-
-void Lecture::show_students() const
-{
-	std::cout << "Lecture " << m_name << " is visited by: " << std::endl;
-
-	for (std::size_t i = 1; const auto student : m_students)
-	{
-		std::cout << i++ << ": " << student->name() << std::endl;
-	}
-}
-
-//  ================================================================================================
-
-inline void connect(Student & student, Lecture & lecture)
-{
-	student.add_lecture(lecture); 
-	lecture.add_student(student);
-}
+}; // class Client
 
 //  ================================================================================================
 
 int main()
 {
-	Student student_1("Alex");
-	Student student_2("Nick");
-	Student student_3("Paul");
+	const std::size_t size = 5;
 
-	Lecture lecture_1("Astronomy");
-	Lecture lecture_2("Chemistry");
-	Lecture lecture_3("Geograhpy");
-
-	connect(student_1, lecture_1);
-	connect(student_2, lecture_2);
-	connect(student_3, lecture_3);
-	connect(student_1, lecture_3);
-	connect(student_2, lecture_1);
-	connect(student_3, lecture_2);
-
-	student_1.show_lectures();
-	lecture_1.show_students();
+	std::vector < Server > servers(size);
+	std::vector < Client > clients(size);
+	
+	for (std::size_t i = 0; i < size; ++i)
+	{
+		servers[i].connect(&clients[i]);
+		clients[i].connect(&servers[i]);
+	}
 
 	return 0;
 }
