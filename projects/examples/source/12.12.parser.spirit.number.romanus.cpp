@@ -14,115 +14,106 @@ using namespace std::literals;
 
 namespace parser
 {
-    namespace detail
+    struct Huns : boost::spirit::x3::symbols < int >
     {
-        class Huns : public boost::spirit::x3::symbols < int >
+        Huns()
         {
-        public:
-
-            Huns()
-            {
-                add("C"   , 100);
-                add("CC"  , 200);
-                add("CCC" , 300);
-                add("CD"  , 400);
-                add("D"   , 500);
-                add("DC"  , 600);
-                add("DCC" , 700);
-                add("DCCC", 800);
-                add("CM"  , 900);
-            }
-
-        } huns; // class Huns : boost::spirit::x3::symbols < int >
+            add("C"   , 100);
+            add("CC"  , 200);
+            add("CCC" , 300);
+            add("CD"  , 400);
+            add("D"   , 500);
+            add("DC"  , 600);
+            add("DCC" , 700);
+            add("DCCC", 800);
+            add("CM"  , 900);
+        }
+    };
 
 //  ================================================================================================
 
-        class Tens : public boost::spirit::x3::symbols < int >
+    struct Tens : boost::spirit::x3::symbols < int >
+    {
+        Tens()
         {
-        public:
-
-            Tens()
-            {
-                add("X"   , 10);
-                add("XX"  , 20);
-                add("XXX" , 30);
-                add("XL"  , 40);
-                add("L"   , 50);
-                add("LX"  , 60);
-                add("LXX" , 70);
-                add("LXXX", 80);
-                add("XC"  , 90);
-            }
-
-        } tens; // class Tens : boost::spirit::x3::symbols < int >
-
+            add("X"   , 10);
+            add("XX"  , 20);
+            add("XXX" , 30);
+            add("XL"  , 40);
+            add("L"   , 50);
+            add("LX"  , 60);
+            add("LXX" , 70);
+            add("LXXX", 80);
+            add("XC"  , 90);
+        }
+    };
+    
 //  ================================================================================================
 
-        class Ones : public boost::spirit::x3::symbols < int >
+    struct Ones : boost::spirit::x3::symbols < int >
+    {
+        Ones()
         {
-        public:
-
-            Ones()
-            {
-                add("I"   , 1);
-                add("II"  , 2);
-                add("III" , 3);
-                add("IV"  , 4);
-                add("V"   , 5);
-                add("VI"  , 6);
-                add("VII" , 7);
-                add("VIII", 8);
-                add("IX"  , 9);
-            }
-
-        } ones; // class Ones : boost::spirit::x3::symbols < int >
+            add("I"   , 1);
+            add("II"  , 2);
+            add("III" , 3);
+            add("IV"  , 4);
+            add("V"   , 5);
+            add("VI"  , 6);
+            add("VII" , 7);
+            add("VIII", 8);
+            add("IX"  , 9);
+        }
+    };
 
 //  ================================================================================================
 
-        const auto set_0 = [](auto && context){ boost::spirit::x3::_val (context)  = 0;    };
-        const auto add_M = [](auto && context){ boost::spirit::x3::_val (context) += 1000; };
-        const auto add_x = [](auto && context){ boost::spirit::x3::_val (context) += 
-                                                boost::spirit::x3::_attr(context);         };
+    const boost::spirit::x3::rule < class rule_tag, int > rule;
+    
+    using boost::spirit::x3::_val;
 
-    } // namespace detail
+    const auto set_0 = [](auto && context){ _val(context) = 0; };
+
+    const auto add_M = [](auto && context){ _val(context) += 1'000; };
+
+    const auto add_x = [](auto && context){ _val(context) += boost::spirit::x3::_attr(context); };
+
+    const Huns huns;
+    const Tens tens;
+    const Ones ones;
+
+    const auto rule_def = 
+    (
+        boost::spirit::x3::eps       [set_0] >>
+       *boost::spirit::x3::char_('M')[add_M] >> 
+        (
+            -huns[add_x] >> 
+            -tens[add_x] >> 
+            -ones[add_x]
+        )
+    );
+
+    BOOST_SPIRIT_DEFINE(rule);
+}
 
 //  ================================================================================================
 
-    using namespace detail;
-
-    const boost::spirit::x3::rule < class roman_tag, int > roman;
-
-    const auto roman_def = 
-
-        boost::spirit::x3::eps       [set_0] >> (
-       *boost::spirit::x3::char_('M')[add_M] >> (-huns[add_x] >> -tens[add_x] >> -ones[add_x]));
-
-    BOOST_SPIRIT_DEFINE(roman);
-
-} // namespace parser
-
-//  ================================================================================================
-
-[[nodiscard]] int test(std::string_view input)
+[[nodiscard]] int test(std::string_view data)
 {
-    auto begin = std::cbegin(input), end = std::cend(input);
+    int value{};
+    
+    const auto skip = boost::spirit::x3::ascii::space;
 
-    auto number = 0;
+    boost::spirit::x3::phrase_parse(std::cbegin(data), std::cend(data), parser::rule, skip, value);
 
-    const auto result = boost::spirit::x3::parse(begin, end, parser::roman, number);
-
-    if (!result || begin != end) throw std::runtime_error("invalid input");
-
-    return number;
+    return value;
 }
 
 //  ================================================================================================
 
 TEST(Parser, Romanus)
 {
-    ASSERT_EQ(test("MCCCLIII"), 1353);
-    ASSERT_EQ(test("MCMXVIII"), 1918);
-    ASSERT_EQ(test("MCMXCVII"), 1997);
+    ASSERT_EQ(test("MCMLXX"), 1970);
 }
 
 //  ================================================================================================

@@ -1,4 +1,3 @@
-#include <iostream>
 #include <iterator>
 #include <string>
 #include <string_view>
@@ -18,67 +17,76 @@ using namespace std::literals;
 
 TEST(Parser, Variable)
 {
-    auto value = 0; 
-    
-    constexpr auto input = "42"sv;
+    const auto data = "1"sv;
 
-    boost::spirit::x3::parse(std::cbegin(input), std::cend(input), boost::spirit::x3::int_, value);
+    const auto rule = boost::spirit::x3::int_;
 
-    ASSERT_EQ(value, 42);
+    const auto skip = boost::spirit::x3::ascii::space;
+
+    int value{};
+
+    boost::spirit::x3::phrase_parse(std::cbegin(data), std::cend(data), rule, skip, value);
+
+    ASSERT_EQ(value, 1);
 }
 
 //  ================================================================================================
 
 TEST(Parser, Pair)
 {
-    constexpr auto input = "42 42"sv;
+    const auto data = "1 2"sv;
+
+    const auto rule = boost::spirit::x3::int_ >> boost::spirit::x3::int_;
+
+    const auto skip = boost::spirit::x3::ascii::space;
 
     std::pair < int, int > pair;
 
-    boost::spirit::x3::phrase_parse(std::cbegin(input), std::cend(input), 
+    boost::spirit::x3::phrase_parse(std::cbegin(data), std::cend(data), rule, skip, pair);
 
-        boost::spirit::x3::int_ >> 
-        boost::spirit::x3::int_, 
-        boost::spirit::x3::space, pair);
-
-    ASSERT_EQ(pair.first , 42);
-    ASSERT_EQ(pair.second, 42);
+    ASSERT_EQ(pair, std::pair(1, 2));
 }
 
 //  ================================================================================================
 
 TEST(Parser, Tuple)
 {
-    constexpr auto input = "(42, 42)"sv;
+    const auto data = "(1, 2)"sv;
+
+    const auto rule = '(' >> boost::spirit::x3::int_ >> ',' >> boost::spirit::x3::int_ >> ')';
+
+    const auto skip = boost::spirit::x3::ascii::space;
 
     std::tuple < int, int > tuple;
 
-    boost::spirit::x3::phrase_parse(std::cbegin(input), std::cend(input), 
-    
-        '(' >> boost::spirit::x3::int_ >> ',' >> 
-               boost::spirit::x3::int_ >> ')', 
-               boost::spirit::x3::space, tuple);
+    boost::spirit::x3::phrase_parse(std::cbegin(data), std::cend(data), rule, skip, tuple);
 
-    ASSERT_EQ(std::get < 0 > (tuple), 42);
-    ASSERT_EQ(std::get < 1 > (tuple), 42);
+    ASSERT_EQ(tuple, std::tuple(1, 2));
+}
+
+//  ================================================================================================
+
+TEST(Parser, Attribute)
+{
+    const auto data = "1"sv;
+
+    const auto test = [](auto && context)
+    { 
+        ASSERT_EQ(boost::spirit::x3::_attr(context), 1); 
+    };
+
+    const auto rule = boost::spirit::x3::int_[test];
+
+    const auto skip = boost::spirit::x3::ascii::space;
+
+    boost::spirit::x3::phrase_parse(std::cbegin(data), std::cend(data), rule, skip);
 }
 
 //  ================================================================================================
 
 int main(int argc, char ** argv)
 {
-    constexpr auto input = "42"sv;
-
-    const auto print = [](auto && context)
-    { 
-        std::cout << boost::spirit::x3::_attr(context) << std::endl; 
-    };
-
-    boost::spirit::x3::parse(std::cbegin(input), std::cend(input), boost::spirit::x3::int_[print]);
-
-//  ================================================================================================
-
-    testing::InitGoogleTest(&argc, argv);
-
+    testing::InitGoogleTest(&argc, argv); 
+    
     return RUN_ALL_TESTS();
 }

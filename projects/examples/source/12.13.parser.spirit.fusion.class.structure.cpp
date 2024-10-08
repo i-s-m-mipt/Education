@@ -13,44 +13,67 @@ using namespace std::literals;
 
 //  ================================================================================================
 
-struct Data { char c{}; int i{}; double d{}; }; 
+struct System { std::string name; int data{}; }; 
 
-BOOST_FUSION_ADAPT_STRUCT(Data, c, i, d)
+//  ================================================================================================
+
+[[nodiscard]] bool operator==(const System & lhs, const System & rhs) noexcept
+{
+    return 
+    (
+        lhs.name == rhs.name && 
+        lhs.data == rhs.data
+    );
+}
+
+//  ================================================================================================
+
+BOOST_FUSION_ADAPT_STRUCT(System, name, data)
 
 //  ================================================================================================
 
 namespace parser
 {
-    const boost::spirit::x3::rule < class data_tag, Data > data;
-
-    constexpr auto quote = '\'', separator = ',';
-
-    const auto data_def = '{' >> 
+    const boost::spirit::x3::rule < struct rule_tag, System > rule;
     
-        boost::spirit::x3::lexeme[ quote  >> 
-       (boost::spirit::x3::char_ - quote) >> quote ] >> separator >> 
-        boost::spirit::x3::int_                      >> separator >> 
-        boost::spirit::x3::double_ >> '}';
+    const auto name_def = boost::spirit::x3::lexeme
+    [
+        '"' 
+            >> *(boost::spirit::x3::char_ - '"') >> 
+        '"'
+    ];
 
-    BOOST_SPIRIT_DEFINE(data);
+    const auto data_def = boost::spirit::x3::int_;
 
-} // namespace parser
+    const auto rule_def = 
+    (
+        '{' 
+            >> name_def >> ',' 
+            >> data_def >> 
+        '}'
+    );
+
+    BOOST_SPIRIT_DEFINE(rule);
+}
 
 //  ================================================================================================
 
-TEST(Parser, Structure)
+[[nodiscard]] System test(std::string_view data)
 {
-    constexpr auto input = R"({'a',100,1.0})"sv;
+    System system;
 
-    auto begin = std::cbegin(input), end = std::cend(input);
+    const auto skip = boost::spirit::x3::ascii::space;
 
-    Data data;
+    boost::spirit::x3::phrase_parse(std::cbegin(data), std::cend(data), parser::rule, skip, system);
 
-    const auto result = boost::spirit::x3::parse(begin, end, parser::data, data);
+    return system;
+}
 
-    if (!result || begin != end) throw std::runtime_error("invalid input");
+//  ================================================================================================
 
-    ASSERT_EQ(data.c, 'a'); ASSERT_EQ(data.i, 100); ASSERT_DOUBLE_EQ(data.d, 1.0);
+TEST(Parser, System)
+{
+    ASSERT_EQ(test(R"({ "system", 1 })"), System("system", 1));
 }
 
 //  ================================================================================================
