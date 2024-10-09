@@ -18,31 +18,27 @@ using namespace std::literals;
 
 namespace detail
 {
-    struct Sign;
-    struct List;
-
     struct Operand : boost::spirit::x3::variant 
     < 
-        double, boost::spirit::x3::forward_ast < Sign > , 
-                boost::spirit::x3::forward_ast < List > 
+        double, boost::spirit::x3::forward_ast < struct Sign > , 
+                boost::spirit::x3::forward_ast < struct List > 
     >
     {
         using base_type::base_type;
-        
         using base_type::operator=;
     };
 
-    struct Sign { char c{}; Operand operand; };
-    struct Step { char c{}; Operand operand; };
+    struct Sign { char operation{}; Operand operand; };
+    struct Step { char operation{}; Operand operand; };
 
     struct List { Operand head; std::vector < Step > tail; };
 }
 
 //  ================================================================================================
 
-BOOST_FUSION_ADAPT_STRUCT(::detail::Sign, c, operand)
+BOOST_FUSION_ADAPT_STRUCT(::detail::Sign, operation, operand)
 
-BOOST_FUSION_ADAPT_STRUCT(::detail::Step, c, operand)
+BOOST_FUSION_ADAPT_STRUCT(::detail::Step, operation, operand)
 
 BOOST_FUSION_ADAPT_STRUCT(::detail::List, head, tail)
 
@@ -54,8 +50,6 @@ namespace parser
     const boost::spirit::x3::rule < struct rule_2_tag, detail::List    > rule_2;
     const boost::spirit::x3::rule < struct rule_3_tag, detail::Operand > rule_3;
 
-    const auto rule = rule_1;
-    
     const auto rule_1_def = rule_2 >> *
     (        
         (boost::spirit::x3::char_('+') >> rule_2) | 
@@ -78,20 +72,22 @@ namespace parser
     );
 
     BOOST_SPIRIT_DEFINE(rule_1, rule_2, rule_3);
+
+    const auto rule = rule_1;
 }
 
 //  ================================================================================================
 
 struct Calculator
 {
-    [[nodiscard]] double operator()(double d) const noexcept 
+    [[nodiscard]] double operator()(double value) const noexcept 
     { 
-        return d; 
+        return value; 
     }
 
     [[nodiscard]] double operator()(const detail::Sign & sign) const
     {
-        switch (const auto rhs = boost::apply_visitor(*this, sign.operand); sign.c)
+        switch (const auto rhs = boost::apply_visitor(*this, sign.operand); sign.operation)
         {
             case '+': return        rhs;
             case '-': return -1.0 * rhs;
@@ -102,7 +98,7 @@ struct Calculator
 
     [[nodiscard]] double operator()(const detail::Step & step, double lhs) const
     {
-        switch (const auto rhs = boost::apply_visitor(*this, step.operand); step.c)
+        switch (const auto rhs = boost::apply_visitor(*this, step.operand); step.operation)
         {
             case '+': return lhs + rhs;
             case '-': return lhs - rhs;
