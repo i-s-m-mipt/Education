@@ -6,7 +6,7 @@ struct Entity
 {
     virtual ~Entity() = default; 
 
-    virtual void test() const = 0;
+    virtual void initialize() const = 0;
 };
 
 //  ================================================================================================
@@ -19,9 +19,9 @@ protected:
 
 public:
 
-    void test() const override 
+    void initialize() const override 
     { 
-        std::clog << "Client::test\n"; 
+        std::clog << "Client::initialize\n"; 
     }
 };
 
@@ -31,7 +31,7 @@ template < typename B > struct Router : private B
 {
     template < typename ... Ts > explicit Router(Ts && ... args) : B(std::forward < Ts > (args)...)
     {
-        this->test();
+        this->initialize();
     }
 };
 

@@ -17,9 +17,9 @@ struct Server : public Entity { void test() const override { std::clog << "Serve
 
 //  ================================================================================================
 
-template < typename E > [[nodiscard]] auto make_entity()
+template < typename E > [[nodiscard]] Entity * make_entity()
 { 
-    return static_cast < Entity * > (new E()); 
+    return new E(); 
 }
 
 //  ================================================================================================
@@ -30,8 +30,8 @@ public:
 
     struct Factory
     {
-        [[nodiscard]] static auto make_v1() { return static_cast < Entity * > (new Router(1)); }
-        [[nodiscard]] static auto make_v2() { return static_cast < Entity * > (new Router(2)); }
+        [[nodiscard]] static Entity * make_v1() { return new Router(1); }
+        [[nodiscard]] static Entity * make_v2() { return new Router(2); }
     };
 
 //  ------------------------------------------------------------------------------------------------

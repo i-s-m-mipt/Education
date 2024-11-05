@@ -18,11 +18,11 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] static auto & get_instance() 
+    [[nodiscard]] static auto & instance() 
     { 
-        static Singleton instance; 
+        static Singleton singleton; 
         
-        return instance; 
+        return singleton; 
     }
 
 //  ------------------------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ struct Unique_v2 : private boost::noncopyable {};
 
 int main()
 {
-    Singleton::get_instance().test();
+    Singleton::instance().test();
 
 //  ------------------------------------------------------------------------------------------------
 

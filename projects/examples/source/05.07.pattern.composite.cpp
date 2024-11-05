@@ -9,13 +9,13 @@ struct Entity
 
 //  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] virtual std::size_t connections() const = 0;
+    [[nodiscard]] virtual std::size_t size() const = 0;
 };
 
 //  ================================================================================================
 
-struct Client : public Entity { [[nodiscard]] std::size_t connections() const override { return 1; }; };
-struct Server : public Entity { [[nodiscard]] std::size_t connections() const override { return 2; }; };
+struct Client : public Entity { [[nodiscard]] std::size_t size() const override { return 1; }; };
+struct Server : public Entity { [[nodiscard]] std::size_t size() const override { return 2; }; };
 
 //  ================================================================================================
 
@@ -36,19 +36,19 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] std::size_t connections() const override
+    [[nodiscard]] std::size_t size() const override
     {
-        auto total_connections = 0uz;
+        auto size = 0uz;
 
         for (auto entity : m_entities)
         {
             if (entity) 
             {
-                total_connections += entity->connections();
+                size += entity->size();
             }
         }
 
-        return total_connections;
+        return size;
     }
     
 //  ------------------------------------------------------------------------------------------------
@@ -65,18 +65,14 @@ private:
 
 //  ================================================================================================
 
-[[nodiscard]] auto make_composite
-(
-    std::size_t n_clients, 
-    std::size_t n_servers
-)
+[[nodiscard]] Entity * make_composite(std::size_t n_clients, std::size_t n_servers)
 {
     auto composite = new Composite;
 
     for (auto i = 0uz; i < n_clients; ++i) { composite->add_entity(new Client()); }
     for (auto i = 0uz; i < n_servers; ++i) { composite->add_entity(new Server()); }
 
-    return static_cast < Entity * > (composite);
+    return composite;
 }
 
 //  ================================================================================================
@@ -92,7 +88,7 @@ int main()
 
     Entity * entity = composite;
         
-    assert(entity->connections() == 15);
+    assert(entity->size() == 15);
 
     delete entity;
 }

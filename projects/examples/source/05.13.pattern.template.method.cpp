@@ -10,7 +10,7 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-	void test() const
+	void template_method() const
 	{ 
 		test_v1(); 
 		test_v2(); 
@@ -53,7 +53,7 @@ int main()
 {
 	Entity * entity = new Client();
 
-	entity->test(); 
+	entity->template_method(); 
 	
 	delete entity;
 }

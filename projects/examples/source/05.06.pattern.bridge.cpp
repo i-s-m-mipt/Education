@@ -20,7 +20,7 @@ class Entity_v2
 {
 public:
 
-    explicit Entity_v2(Entity_v1 & entity_v1) : m_entity_v1(entity_v1) {}
+    explicit Entity_v2(Entity_v1 & entity_v1) : m_bridge(entity_v1) {}
 
     virtual ~Entity_v2() = default; 
 
@@ -30,7 +30,7 @@ public:
 
 protected:
 
-    Entity_v1 & m_entity_v1;
+    Entity_v1 & m_bridge;
 };
 
 //  ================================================================================================
@@ -45,7 +45,7 @@ struct Server_v1 : public Entity_v2
     {
         std::clog << "Server_v1::test\n";
 
-        m_entity_v1.test(); 
+        m_bridge.test(); 
     }
 };
 
@@ -61,7 +61,7 @@ struct Server_v2 : public Entity_v2
     { 
         std::clog << "Server_v2::test\n";
 
-        m_entity_v1.test(); 
+        m_bridge.test(); 
     }
 };
 
