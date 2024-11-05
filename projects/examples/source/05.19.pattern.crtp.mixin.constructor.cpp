@@ -2,48 +2,42 @@
 
 //  ================================================================================================
 
-class Base
+struct Entity
 {
-public:
+    virtual ~Entity() = default; 
 
-    virtual ~Base() = default; 
-
-    virtual void initialize() = 0;
-
-}; // class Base
+    virtual void test() const = 0;
+};
 
 //  ================================================================================================
 
-class Derived : public Base
+class Client : public Entity
 {
 protected:
 
-    explicit Derived(int) {} 
+    explicit Client(int) {} 
 
 public:
 
-    void initialize() override { std::cout << "initialization" << std::endl; }
-
-}; // class Derived : public Base
+    void test() const override 
+    { 
+        std::clog << "Client::test\n"; 
+    }
+};
 
 //  ================================================================================================
 
-template < typename T > class Initializer : private T
+template < typename B > struct Router : private B
 {
-public:
-
-    template < typename ... Ts > explicit Initializer(Ts ... args) : T(args...)
+    template < typename ... Ts > explicit Router(Ts && ... args) : B(std::forward < Ts > (args)...)
     {
-        this->initialize();
+        this->test();
     }
-
-}; // template < typename T > class Initializer : private T
+};
 
 //  ================================================================================================
 
 int main()
 {
-    const Initializer < Derived > derived(42);
-
-    return 0;
+    Router < Client > router(1);
 }

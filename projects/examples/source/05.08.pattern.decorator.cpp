@@ -3,72 +3,56 @@
 
 //  ================================================================================================
 
-class Computer 
+struct Entity 
+{
+    virtual ~Entity() = default; 
+
+    virtual void test() const = 0;
+};
+
+//  ================================================================================================
+
+struct Client : public Entity { void test() const override { std::clog << "Client::test\n"; } };
+struct Server : public Entity { void test() const override { std::clog << "Server::test\n"; } };
+
+//  ================================================================================================
+
+class Decorator : public Entity
 {
 public:
 
-    virtual ~Computer() = default; 
-
-    [[nodiscard]] virtual std::string description() const = 0;
-
-}; // class Computer 
-
-//  ================================================================================================
-
-class Mobile : public Computer { public: [[nodiscard]] std::string description() const override; };
-class Tablet : public Computer { public: [[nodiscard]] std::string description() const override; };
-class Laptop : public Computer { public: [[nodiscard]] std::string description() const override; };
-
-//  ================================================================================================
-
-[[nodiscard]] std::string Mobile::description() const { return "Mobile"; }
-[[nodiscard]] std::string Tablet::description() const { return "Tablet"; }
-[[nodiscard]] std::string Laptop::description() const { return "Laptop"; }
-
-//  ================================================================================================
-
-class Decorated_Computer : public Computer
-{
-public:
-
-    explicit Decorated_Computer(const Computer & computer): m_computer(computer) {}
-
-    [[nodiscard]] std::string description() const override { return m_computer.description(); }
+    explicit Decorator(Entity & entity): m_entity(entity) {}
 
 protected:
 
-    const Computer & m_computer;
-
-}; // class Decorated_Computer : public Computer 
+    Entity & m_entity;
+};
 
 //  ================================================================================================
 
-class Overclocked_Computer : public Decorated_Computer
+struct Decorated_Entity : public Decorator
 {
-public:
+    explicit Decorated_Entity(Entity & entity) : Decorator(entity) {}
 
-    explicit Overclocked_Computer(const Computer & computer) : Decorated_Computer(computer) {}
+//  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] std::string description() const override
+    void test() const override
     { 
-        return "Overclocked " + m_computer.description();
+        std::clog << "Decorated::Entity::"; m_entity.test();
     }
-
-}; // class Overclocked_Computer : public Decorated_Computer
+};
 
 //  ================================================================================================
 
 int main()
 {
-    const Computer * const mobile = new const Mobile();
+    Entity * entity_1 = new Client();
 
-    std::cout << mobile->description() << std::endl;
+    Entity * entity_2 = new Decorated_Entity(*entity_1);
 
-    const Computer * const overclocked_mobile = new const Overclocked_Computer(*mobile);
-
-    std::cout << overclocked_mobile->description() << std::endl;
-
-    delete overclocked_mobile; delete mobile;
-
-    return 0;
+    entity_1->test();
+    entity_2->test(); 
+     
+    delete entity_1;   
+    delete entity_2; 
 }

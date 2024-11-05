@@ -1,10 +1,11 @@
+#include <cassert>
 #include <iostream>
 
 #include <boost/noncopyable.hpp>
 
 //  ================================================================================================
 
-class Singleton // support: реализация Скотта Мейерса
+class Singleton
 {
 private:
 
@@ -15,19 +16,22 @@ public:
     Singleton            (const Singleton &) = delete;
     Singleton & operator=(const Singleton &) = delete;
 
-public:
+//  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] int data() const { return m_data; }
+    [[nodiscard]] static auto & get_instance() 
+    { 
+        static Singleton instance; 
+        
+        return instance; 
+    }
 
-public:
+//  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] static Singleton & get_instance() { static Singleton instance; return instance; }
-
-private:
-
-    const int m_data = 42; 
-    
-}; // class Singleton 
+    void test() const
+    { 
+        std::clog << "Singleton::test\n"; 
+    }
+};
 
 //  ================================================================================================
 
@@ -35,15 +39,20 @@ class Monostate
 {
 public:
 
-    void update(int new_data) { m_data = new_data; }
+    [[nodiscard]] auto data() const
+    { 
+        return s_data; 
+    }
 
-    [[nodiscard]] int data() const { return m_data; }
+    void set_data(int data) 
+    { 
+        s_data = data < 0 ? 0 : data; 
+    }
 
 private:
 
-    static inline int m_data = 42; 
-    
-}; // class Monostate
+    static inline auto s_data = 0;   
+};
 
 //  ================================================================================================
 
@@ -57,49 +66,35 @@ protected:
     Noncopyable & operator=(const Noncopyable &) = delete;
 
    ~Noncopyable() = default;
-
-}; // class Noncopyable
+};
 
 //  ================================================================================================
 
-class Unique : private Noncopyable // support: класс boost::noncopyable
-{
-public:
-
-    [[nodiscard]] constexpr int data() const { return m_data; }
-
-private:
-
-    const int m_data = 42; 
-    
-}; // class Unique : private Noncopyable
+struct Unique_v1 : private        Noncopyable {};
+struct Unique_v2 : private boost::noncopyable {};
 
 //  ================================================================================================
 
 int main()
 {
-    const auto & singleton = Singleton::get_instance();
+    Singleton::get_instance().test();
 
-    std::cout << singleton.data() << std::endl;
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
-
-    Monostate monostate_1;
+    Monostate monostate_1; monostate_1.set_data(1);
     Monostate monostate_2; 
-    Monostate monostate_3; 
 
-    monostate_3.update(42);
+    assert
+    (
+        monostate_1.data() == 
+        monostate_2.data()
+    );
 
-    std::cout << monostate_1.data() << std::endl;
-    std::cout << monostate_2.data() << std::endl;
-    std::cout << monostate_3.data() << std::endl;
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
+    [[maybe_unused]] Unique_v1 unique_v1_1;
+//  [[maybe_unused]] Unique_v1 unique_v1_2 = unique_v1_1; // error
 
-    const Unique unique_1;
-//  const Unique unique_2 = unique_1; // error
-
-    std::cout << unique_1.data() << std::endl;
-
-    return 0;
+    [[maybe_unused]] Unique_v2 unique_v2_1;
+//  [[maybe_unused]] Unique_v2 unique_v2_2 = unique_v2_1; // error
 }

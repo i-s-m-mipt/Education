@@ -1,87 +1,89 @@
 #include <iostream>
+#include <string>
 #include <vector>
 
 //  ================================================================================================
 
-class Observer 
+struct Observer 
 {
-public:
-
     virtual ~Observer() = default; 
 
-    virtual void update(double temperature) const = 0;
-
-}; // class Observer 
+    virtual void test(int data) const = 0;
+};
 
 //  ================================================================================================
 
-class Computer 
+class Entity 
 {
 public:
 
-   ~Computer()
+   ~Entity()
     {
-        for (const auto observer : m_observers) delete observer;
-    }
-
-    void set_temperature(double temperature) 
-    {
-        m_temperature = temperature; notify_all();
-    }
-
-    void notify_all() const 
-    { 
-        for (const auto observer : m_observers)
+        for (auto observer : m_observers) 
         {
-            if (observer) observer->update(m_temperature);
+            if (observer)
+            {
+                delete observer;
+            }
         }
     }
 
-    void add_observer(const Observer * observer) { m_observers.push_back(observer); }
+//  ------------------------------------------------------------------------------------------------
+
+    void set_data(int data) 
+    { 
+        m_data = data < 0 ? 0 : data; 
+        
+        notify_all();
+    }
+
+    void notify_all() const
+    { 
+        for (auto observer : m_observers)
+        {
+            if (observer) 
+            {
+                observer->test(m_data);
+            }
+        }
+    }
+
+    void add_observer(Observer * observer) 
+    { 
+        m_observers.push_back(observer); 
+    }
 
 private:
 
-    double m_temperature = 0.0; std::vector < const Observer * > m_observers;
-
-}; // class Computer 
-
-//  ================================================================================================
-
-class Display_1 : public Observer 
-{
-public:
-
-    void update(double temperature) const override
-    {
-        std::cout << "Display 1: temperature = " << temperature << std::endl;
-    }
-
-}; // class Display_1 : public Observer 
+    int m_data = 0; std::vector < Observer * > m_observers;
+};
 
 //  ================================================================================================
 
-class Display_2 : public Observer
+struct Client : public Observer 
 {
-public:
-
-    void update(double temperature) const override
+    void test(int data) const override
     {
-        std::cout << "Display 2: temperature = " << temperature << std::endl;
+        std::clog << "Client::test : data = " << data << '\n';
     }
+};
 
-}; // class Display_2 : public Observer 
+//  ================================================================================================
+
+struct Server : public Observer
+{
+    void test(int data) const override
+    {
+        std::clog << "Server::test : data = " << data << '\n';
+    }
+};
 
 //  ================================================================================================
 
 int main() 
 {
-    Computer computer;
+    Entity entity;
 
-    computer.add_observer(new const Display_1());
-    computer.add_observer(new const Display_2());
-
-    computer.set_temperature(100.0);
-    computer.set_temperature(200.0);
-
-    return 0;
+    entity.add_observer(new Client()); entity.set_data(1);
+    entity.add_observer(new Server()); entity.set_data(2);    
 }

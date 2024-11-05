@@ -1,73 +1,55 @@
-#include <iostream>
+#include <cassert>
+#include <string>
 #include <vector>
 
 //  ================================================================================================
 
-class Backup 
+class Entity 
 {
 public:
 
-    constexpr explicit Backup(int data) : m_data(data) {}
+    struct Memento 
+    { 
+        int data = 0; 
+    };
 
-    [[nodiscard]] constexpr int data() const { return m_data; }
+//  ------------------------------------------------------------------------------------------------
 
-private:
+    [[nodiscard]] auto data() const 
+    { 
+        return m_data; 
+    }
 
-    const int m_data; 
-    
-}; // class Backup 
+    void set_data(int data) 
+    { 
+        m_data = data < 0 ? 0 : data; 
+    }
 
-//  ================================================================================================
+    void save()
+    { 
+        m_mementos.emplace_back(m_data); 
+    }
 
-class Computer 
-{
-public:
-
-    [[nodiscard]] constexpr int data() const { return m_data; }
-
-    constexpr void update() { ++m_data; }
-
-    [[nodiscard]] constexpr Backup make_backup() const { return Backup(m_data); }
-
-    constexpr void load_backup(const Backup & backup) { m_data = backup.data(); }
-
-private:
-
-    int m_data = 42;
-
-}; // class Computer 
-
-//  ================================================================================================
-
-class Storage 
-{
-public:
-
-    constexpr void save(const Backup & backup) { m_backups.push_back(backup); }
-
-    [[nodiscard]] constexpr Backup load(int index) const { return m_backups.at(index); }
+    void load(std::size_t index) 
+    { 
+        m_data = m_mementos.at(index).data;
+    }
 
 private:
 
-    std::vector < Backup > m_backups;
-
-}; // class Storage 
+    int m_data = 0; std::vector < Memento > m_mementos;
+};
 
 //  ================================================================================================
 
 int main() 
 {
-    Computer computer; Storage storage;
-
-    computer.update(); storage.save(computer.make_backup());
-    computer.update(); 
-    computer.update(); storage.save(computer.make_backup());
-    computer.update(); 
-    computer.update(); storage.save(computer.make_backup());
-
-    computer.load_backup(storage.load(1));
-
-    std::cout << computer.data() << std::endl;
-
-    return 0;
+    Entity entity; 
+    
+    entity.set_data(1); entity.save();
+    entity.set_data(2); entity.save();
+    
+    entity.load(0); 
+    
+    assert(entity.data() == 1);
 }

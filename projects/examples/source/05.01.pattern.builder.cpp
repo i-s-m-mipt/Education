@@ -1,26 +1,13 @@
-#include <iostream>
+#include <cassert>
 #include <string>
 
 //  ================================================================================================
 
-struct Computer
+struct Entity
 {
-    const        std::string name;
-
-    struct CPU { std::string name; } cpu;
-    struct GPU { std::string name; } gpu;
-    struct RAM { std::string name; } ram;
-    
-}; // struct Computer
-
-//  ================================================================================================
-
-void print(const Computer & computer)
-{
-    std::cout << computer.name << " { " << computer.cpu.name << ", " <<
-                                           computer.gpu.name << ", " <<
-                                           computer.ram.name << " }" << std::endl;
-}
+    int data_1 = 0;
+    int data_2 = 0; 
+};
 
 //  ================================================================================================
 
@@ -28,88 +15,59 @@ class Builder
 {
 public:
 
-    explicit Builder(const std::string & name) : m_computer(new Computer { name, {}, {}, {} }) {}
-
     virtual ~Builder() = default;
 
-    [[nodiscard]] Computer * computer() const { return m_computer; }
+//  ------------------------------------------------------------------------------------------------
 
-    virtual void build_cpu() const = 0;
-    virtual void build_gpu() const = 0;
-    virtual void build_ram() const = 0;
+    [[nodiscard]] auto make() const
+    { 
+        m_entity = new Entity();
 
-private:
+        make_data_1();
+        make_data_2();
 
-    Computer * const m_computer;
+        return m_entity; 
+    }
 
-}; // class Builder
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
+    virtual void make_data_1() const = 0;
+    virtual void make_data_2() const = 0;
 
-class Builder_Mobile : public Builder
-{
-public:
+protected:
 
-    explicit Builder_Mobile(const std::string & name) : Builder(name) {}
-
-public:
-
-    void build_cpu() const override { computer()->cpu.name = "MCPU"; }
-    void build_gpu() const override { computer()->gpu.name = "MGPU"; }
-    void build_ram() const override { computer()->ram.name = "MRAM"; }
-
-}; // class Builder_Mobile : public Builder
+    mutable Entity * m_entity = nullptr;
+};
 
 //  ================================================================================================
 
-class Builder_Tablet : public Builder
+struct Builder_Client : public Builder
 {
-public:
-
-    explicit Builder_Tablet(const std::string & name) : Builder(name) {}
-
-public:
-
-    void build_cpu() const override { computer()->cpu.name = "TCPU"; }
-    void build_gpu() const override { computer()->gpu.name = "TGPU"; }
-    void build_ram() const override { computer()->ram.name = "TRAM"; }
-
-}; // class Builder_Tablet : public Builder
+    void make_data_1() const override { m_entity->data_1 = 1; }
+    void make_data_2() const override { m_entity->data_2 = 1; }
+};
 
 //  ================================================================================================
 
-class Builder_Laptop : public Builder
+struct Builder_Server : public Builder
 {
-public:
-
-    explicit Builder_Laptop(const std::string & name) : Builder(name) {}
-
-public:
-
-    void build_cpu() const override { computer()->cpu.name = "LCPU"; }
-    void build_gpu() const override { computer()->gpu.name = "LGPU"; }
-    void build_ram() const override { computer()->ram.name = "LRAM"; }
-
-}; // class Builder_Laptop : public Builder
-
-//  ================================================================================================
-
-[[nodiscard]] inline const Computer * build(const Builder & builder)
-{
-    builder.build_cpu();
-    builder.build_gpu();
-    builder.build_ram(); return builder.computer();
-}
+    void make_data_1() const override { m_entity->data_1 = 2; }
+    void make_data_2() const override { m_entity->data_2 = 2; }
+};
 
 //  ================================================================================================
 
 int main()
 {
-    const auto mobile = build(Builder_Mobile("Mobile")); 
+    Builder * builder = new Builder_Client();
 
-    print(*mobile); 
-    
-    delete mobile;
+    auto entity = builder->make();
 
-    return 0;
+    assert
+    (
+        entity->data_1 == 1 &&
+        entity->data_2 == 1
+    );
+
+    delete entity; delete builder;
 }

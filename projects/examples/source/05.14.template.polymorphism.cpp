@@ -2,54 +2,63 @@
 
 //  ================================================================================================
 
-class Computer
+struct Entity
 {
-public:
+	virtual ~Entity() = default;
 
-	virtual ~Computer() = default; 
-
-	virtual void run() const = 0;
-
-}; // class Computer
+	virtual void test() const = 0;
+};
 
 //  ================================================================================================
 
-class Mobile_v1 : public Computer { public: void run() const override; };
-class Tablet_v1 : public Computer { public: void run() const override; };
-class Laptop_v1 : public Computer { public: void run() const override; };
+struct Client_v1 : public Entity 
+{ 
+	void test() const override 
+	{ 
+		std::clog << "Client_v1::test\n"; 
+	} 
+};
 
 //  ================================================================================================
 
-void Mobile_v1::run() const { std::cout << "Mobile_v1" << std::endl; }
-void Tablet_v1::run() const { std::cout << "Tablet_v1" << std::endl; }
-void Laptop_v1::run() const { std::cout << "Laptop_v1" << std::endl; }
+struct Server_v1 : public Entity 
+{ 
+	void test() const override 
+	{ 
+		std::clog << "Server_v1::test\n"; 
+	} 
+};
 
 //  ================================================================================================
 
-inline void handle_v1(const Computer & computer)
+void test_v1(const Entity & entity)
 {
-	computer.run(); 
+	entity.test(); 
 }
 
 //  ================================================================================================
 
-class Mobile_v2 { public: void run() const { std::cout << "Mobile_v2" << std::endl; } };
-class Tablet_v2 { public: void run() const { std::cout << "Tablet_v2" << std::endl; } };
-class Laptop_v2 { public: void run() const { std::cout << "Laptop_v2" << std::endl; } };
+struct Client_v2 { void test() const { std::clog << "Client_v2::test\n"; } };
+struct Server_v2 { void test() const { std::clog << "Server_v2::test\n"; } };
 
 //  ================================================================================================
 
-template < typename T > inline void handle_v2(const T & computer)
+template < typename E > void test_v2(const E & entity)
 {
-	computer.run();
+	entity.test();
 }
 
 //  ================================================================================================
 
 int main()
 {
-	handle_v1(Mobile_v1());
-	handle_v2(Mobile_v2());
+	Entity * entity = new Client_v1();
 
-	return 0;
+	test_v1(*entity);
+
+	delete entity;
+
+	Client_v2 client_v2; 
+	
+	test_v2(client_v2);
 }

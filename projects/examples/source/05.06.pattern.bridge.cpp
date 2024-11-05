@@ -2,65 +2,79 @@
 
 //  ================================================================================================
 
-class BIOS
+struct Entity_v1
+{
+    virtual ~Entity_v1() = default; 
+
+    virtual void test() const = 0;
+};
+
+//  ================================================================================================
+
+struct Client_v1 : public Entity_v1 { void test() const override { std::clog << "Client_v1::test\n"; } };
+struct Client_v2 : public Entity_v1 { void test() const override { std::clog << "Client_v2::test\n"; } };
+
+//  ================================================================================================
+
+class Entity_v2
 {
 public:
 
-    virtual ~BIOS() = default; 
+    explicit Entity_v2(Entity_v1 & entity_v1) : m_entity_v1(entity_v1) {}
 
-    virtual void run() const = 0;
+    virtual ~Entity_v2() = default; 
 
-}; // class BIOS 
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
-
-class Phoenix : public BIOS { public: void run() const override; };
-class Microid : public BIOS { public: void run() const override; };
-
-//  ================================================================================================
-
-void Phoenix::run() const { std::cout << "Phoenix" << std::endl; }
-void Microid::run() const { std::cout << "Microid" << std::endl; }
-
-//  ================================================================================================
-
-class Computer
-{
-public:
-
-    explicit Computer(const BIOS & bios) : m_bios(bios) {}
-
-    virtual ~Computer() = default; 
-
-    virtual void run() const = 0;
+    virtual void test() const = 0;
 
 protected:
 
-    const BIOS & m_bios;
-
-}; // class Computer 
+    Entity_v1 & m_entity_v1;
+};
 
 //  ================================================================================================
 
-class Laptop : public Computer 
+struct Server_v1 : public Entity_v2 
 {
-public:
+    explicit Server_v1(Entity_v1 & entity_v1) : Entity_v2(entity_v1) {}
 
-    explicit Laptop(const BIOS & bios) : Computer(bios) {}
+//  ------------------------------------------------------------------------------------------------
 
-    void run() const override { m_bios.run(); }
+    void test() const override 
+    {
+        std::clog << "Server_v1::test\n";
 
-}; // class Laptop : public Computer 
+        m_entity_v1.test(); 
+    }
+};
+
+//  ================================================================================================
+
+struct Server_v2 : public Entity_v2 
+{
+    explicit Server_v2(Entity_v1 & entity_v1) : Entity_v2(entity_v1) {}
+
+//  ------------------------------------------------------------------------------------------------
+
+    void test() const override 
+    { 
+        std::clog << "Server_v2::test\n";
+
+        m_entity_v1.test(); 
+    }
+};
 
 //  ================================================================================================
 
 int main() 
 {
-    const Computer * const laptop = new const Laptop(Phoenix());
-
-    laptop->run(); 
+    Entity_v1 * entity_v1 = new Client_v1();
     
-    delete laptop;
+    Entity_v2 * entity_v2 = new Server_v1(*entity_v1);
 
-    return 0;
+    entity_v2->test(); 
+    
+    delete entity_v1;
+    delete entity_v2;
 }

@@ -2,47 +2,47 @@
 
 //  ================================================================================================
 
-class Computation 
+struct Strategy 
+{
+    virtual ~Strategy() = default; 
+
+    virtual void test() const = 0;
+};
+
+//  ================================================================================================
+
+struct Fast : public Strategy { void test() const override { std::clog << "Fast::test\n"; } };
+struct Slow : public Strategy { void test() const override { std::clog << "Slow::test\n"; } };
+
+//  ================================================================================================
+
+class Entity
 {
 public:
 
-    virtual ~Computation() = default; 
+    explicit Entity(Strategy & strategy) : m_strategy(strategy) {}
 
-    virtual void compute() const = 0;
+//  ------------------------------------------------------------------------------------------------
 
-}; // class Computation
-
-//  ================================================================================================
-
-class AVX : public Computation { public: void compute() const override; };
-class SSE : public Computation { public: void compute() const override; };
-
-//  ================================================================================================
-
-void AVX::compute() const { std::cout << "AVX" << std::endl; }
-void SSE::compute() const { std::cout << "SSE" << std::endl; }
-
-//  ================================================================================================
-
-class Computer
-{
-public:
-
-    explicit Computer(const Computation & computation) : m_computation(computation) {}
-
-    void compute() const { m_computation.compute(); }
+    void test() const
+    { 
+        m_strategy.test(); 
+    }
 
 private:
     
-    const Computation & m_computation;
-
-}; // class Computer
+    Strategy & m_strategy;
+};
 
 //  ================================================================================================
 
 int main()
 {
-    Computer(AVX()).compute();
+    Strategy * strategy = new Fast();
 
-    return 0;
+    Entity entity(*strategy);
+    
+    entity.test();
+
+    delete strategy;
 }

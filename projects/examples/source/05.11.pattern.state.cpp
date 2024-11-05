@@ -2,128 +2,97 @@
 
 //  ================================================================================================
 
-class Computer;
-
-class State
+struct State
 {
-public:
-
     virtual ~State() = default; 
 
-    virtual void stop(Computer *) const { std::cout << "stop" << std::endl; }
-    virtual void slow(Computer *) const { std::cout << "slow" << std::endl; }
-    virtual void fast(Computer *) const { std::cout << "fast" << std::endl; }
+//  ------------------------------------------------------------------------------------------------
 
-}; // class State
-
-//  ================================================================================================
-
-class Stop : public State
-{
-public:
-
-    void slow([[maybe_unused]] Computer * computer) const override;
-    void fast([[maybe_unused]] Computer * computer) const override;
-
-}; // class Stop : public State
+    virtual void set_fast(class Entity *) const = 0;
+    virtual void set_slow(class Entity *) const = 0;
+};
 
 //  ================================================================================================
 
-class Slow : public State
-{
-public:
-
-    void stop([[maybe_unused]] Computer * computer) const override;
-    void fast([[maybe_unused]] Computer * computer) const override;
-
-}; // class Slow : public State
+struct Fast : public State 
+{ 
+    void set_fast([[maybe_unused]] class Entity * entity) const override;
+    void set_slow([[maybe_unused]] class Entity * entity) const override; 
+};
 
 //  ================================================================================================
 
-class Fast : public State
-{
-public:
-
-    void stop([[maybe_unused]] Computer * computer) const override;
-    void slow([[maybe_unused]] Computer * computer) const override;
-
-}; // class Fast : public State
+struct Slow : public State 
+{ 
+    void set_fast([[maybe_unused]] class Entity * entity) const override;
+    void set_slow([[maybe_unused]] class Entity * entity) const override; 
+};
 
 //  ================================================================================================
 
-class Computer // support: конечные автоматы
+class Entity
 {
 public:
 
-    Computer() : m_state(new const Stop()) {}
+    Entity() : m_state(new Slow()) {}
 
-   ~Computer() { set_state(nullptr); }
-
-    void set_state(const State * state) 
+   ~Entity() 
     { 
-        delete m_state; m_state = state;
+        set_state(nullptr); 
     }
 
-    void stop() { m_state->stop(this); }
-    void slow() { m_state->slow(this); }
-    void fast() { m_state->fast(this); }
+//  ------------------------------------------------------------------------------------------------
+
+    void set_state(State * state) 
+    { 
+        if (m_state)
+        {
+            delete m_state;
+        }
+        
+        m_state = state;
+    }
+
+//  ------------------------------------------------------------------------------------------------
+
+    void set_fast() { m_state->set_fast(this); }
+    void set_slow() { m_state->set_slow(this); }
 
 private:
 
-    const State * m_state;
-
-}; // class Computer
-
-//  ================================================================================================
-
-void Stop::slow([[maybe_unused]] Computer * computer) const
-{
-    computer->set_state(new const Slow()); std::cout << "stop -> slow" << std::endl;
-}
-
-void Stop::fast([[maybe_unused]] Computer * computer) const
-{
-    std::cout << "stop -> fast unavailable" << std::endl;
-}
+    State * m_state = nullptr;
+};
 
 //  ================================================================================================
 
-void Slow::stop([[maybe_unused]] Computer * computer) const
+void Fast::set_fast([[maybe_unused]] Entity * entity) const
 {
-    computer->set_state(new const Stop()); std::cout << "slow -> stop" << std::endl;
+    std::clog << "Fast::fast\n";
 }
 
-void Slow::fast([[maybe_unused]] Computer * computer) const
+void Fast::set_slow([[maybe_unused]] Entity * entity) const
 {
-    computer->set_state(new const Fast()); std::cout << "slow -> fast" << std::endl;
+    std::clog << "Fast::slow\n"; entity->set_state(new Slow()); 
 }
 
-//  ================================================================================================
-
-void Fast::stop([[maybe_unused]] Computer * computer) const
+void Slow::set_fast([[maybe_unused]] Entity * entity) const
 {
-    std::cout << "fast -> stop unavailable" << std::endl;
+    std::clog << "Slow::fast\n"; entity->set_state(new Fast());
 }
 
-void Fast::slow([[maybe_unused]] Computer * computer) const
+void Slow::set_slow([[maybe_unused]] Entity * entity) const
 {
-    computer->set_state(new const Slow()); std::cout << "fast -> slow" << std::endl;
+    std::clog << "Slow::slow\n";
 }
 
 //  ================================================================================================
 
 int main()
 {
-    Computer computer;
+    Entity entity;
 
-    computer.stop();
-    computer.fast();
-    computer.slow();
-    computer.fast();
-    computer.fast();
-    computer.stop();
-    computer.slow();
-    computer.stop();
-
-    return 0;
+    entity.set_slow(); 
+    entity.set_fast(); 
+    entity.set_fast();
+    entity.set_slow();
 }

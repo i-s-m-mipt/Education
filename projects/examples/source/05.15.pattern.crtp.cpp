@@ -2,52 +2,46 @@
 
 //  ================================================================================================
 
-template < class D > class Computer
+template < typename D > struct Entity
 {
-public:
+	virtual ~Entity() = default;
 
-	virtual ~Computer() = default;
+//  ------------------------------------------------------------------------------------------------
 
-	void run() const
+	void test() const
 	{
-		static_cast < const D * > (this)->run_implementation();
+		static_cast < const D * > (this)->test_implementation();
 	}
 
-	void run_implementation() const { std::cout << "Computer" << std::endl; }
-
-}; // template < class D > class Computer
+	void test_implementation() const
+	{ 
+		std::clog << "Entity::test_implementation\n"; 
+	}
+};
 
 //  ================================================================================================
 
-template < typename D > inline void destroy(const Computer < D > * computer)
+struct Client : public Entity < Client > {};
+
+struct Server : public Entity < Server >
 {
-	delete static_cast < const D * > (computer);
-}
-
-//  ================================================================================================
-
-class Tablet : public Computer < Tablet > {};
-
-//  ================================================================================================
-
-class Laptop : public Computer < Laptop >
-{
-public: void run_implementation() const { std::cout << "Laptop" << std::endl; }
+	void test_implementation() const
+	{ 
+		std::clog << "Server::test_implementation\n"; 
+	}
 }; 
 
 //  ================================================================================================
 
-template < typename T > inline void handle(const T & computer)
+template < typename E > void test(const E & entity)
 { 
-	computer.run(); 
+	entity.test(); 
 }
 
 //  ================================================================================================
 
 int main()
 {
-	handle(Tablet());
-	handle(Laptop());
-
-	return 0;
+	Client client; test(client);
+	Server server; test(server);
 }

@@ -2,62 +2,65 @@
 
 //  ================================================================================================
 
-template < typename T, std::size_t M > class Counter
+template < typename D, std::size_t S > class Counter
 {
 protected:
 
 	Counter(                         ) { initialize(); }
-	Counter(const Counter < T, M > & ) { initialize(); }
-	Counter(      Counter < T, M > &&) { initialize(); }
+	Counter(const Counter < D, S > & ) { initialize(); }
+	Counter(      Counter < D, S > &&) { initialize(); }
 
-   ~Counter() { --counter; }
+   ~Counter() 
+    { 
+		--s_counter; 
+	}
 
 private:
 
-	void initialize()
+	void initialize() const
 	{
-		if (++counter > M)
+		if (++s_counter > S)
 		{
-			std::cerr << "too many objects\n";
+			std::cerr << "Counter::initialize : too many objects\n";
 		}
 	}
 
 public:
 
-	[[nodiscard]] static std::size_t get_counter() { return counter; }
+	[[nodiscard]] static auto counter() 
+	{ 
+		return s_counter; 
+	}
 
 private:
 
-	static inline std::size_t counter = 0;
-
-}; // template < typename T > class Counter
-
-//  ================================================================================================
-
-template < typename T > class Container_1 : private Counter < Container_1 < T > , 1 > 
-{
-public: using Counter < Container_1 < T > , 1 > ::get_counter;
+	static inline auto s_counter = 0uz;
 };
 
 //  ================================================================================================
 
-template < typename T > class Container_2 : private Counter < Container_2 < T > , 2 > 
+template < typename T > struct Entity_v1 : private Counter < Entity_v1 < T > , 1 > 
 {
-public: using Counter < Container_2 < T > , 2 > ::get_counter;
+	using Counter < Entity_v1 < T > , 1 > ::counter;
+};
+
+//  ================================================================================================
+
+template < typename T > struct Entity_v2 : private Counter < Entity_v2 < T > , 2 > 
+{
+	using Counter < Entity_v2 < T > , 2 > ::counter;
 };
 
 //  ================================================================================================
 
 int main()
 {
-	const Container_1 < int > ci_1;
+	Entity_v1 < int > entity_v1_1;
 	
-	const Container_1 < int > ci_2(ci_1);
+	Entity_v1 < int > entity_v1_2(entity_v1_1);
 
-	const Container_2 < int > ci_3;
+	Entity_v2 < int > entity_v2;
 
-	std::cout << Container_1 < int > ::get_counter() << std::endl;
-	std::cout << Container_2 < int > ::get_counter() << std::endl;
-
-	return 0;
+	std::cout << Entity_v1 < int > ::counter() << std::endl;
+	std::cout << Entity_v2 < int > ::counter() << std::endl;
 }

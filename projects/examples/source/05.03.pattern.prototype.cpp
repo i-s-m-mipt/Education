@@ -2,81 +2,73 @@
 
 //  ================================================================================================
 
-class Computer
-{
-public:
-    
-    virtual ~Computer() = default; 
+struct Entity
+{    
+    virtual ~Entity() = default; 
 
-    [[nodiscard]] virtual const Computer * clone() const = 0;
+//  ------------------------------------------------------------------------------------------------
 
-    virtual void run() const = 0;
+    [[nodiscard]] virtual Entity * clone() const = 0;
 
-}; // class Computer
-
-//  ================================================================================================
-
-class Mobile : public Computer
-{
-public:
-
-    [[nodiscard]] const Computer * clone() const override { return new const Mobile(*this); } 
-
-    void run() const override { std::cout << "Mobile" << std::endl; };
-
-}; // class Mobile : public Computer
+    virtual void test() const = 0;
+};
 
 //  ================================================================================================
 
-class Tablet : public Computer
+struct Client : public Entity
 {
-public:
+    [[nodiscard]] Entity * clone() const override 
+    { 
+        return new Client(*this); 
+    } 
 
-    [[nodiscard]] const Computer * clone() const override { return new const Tablet(*this); } 
-
-    void run() const override { std::cout << "Tablet" << std::endl; };
-
-}; // class Tablet : public Computer
+    void test() const override 
+    { 
+        std::clog << "Client::test\n"; 
+    };
+};
 
 //  ================================================================================================
 
-class Laptop : public Computer
+struct Server : public Entity
 {
-public:
+    [[nodiscard]] Entity * clone() const override 
+    { 
+        return new Server(*this); 
+    } 
 
-    [[nodiscard]] const Computer * clone() const override { return new const Laptop(*this); } 
-
-    void run() const override { std::cout << "Laptop" << std::endl; };
-
-}; // class Laptop : public Computer
+    void test() const override 
+    { 
+        std::clog << "Server::test\n"; 
+    };
+};
 
 //  ================================================================================================
 
-class Factory
+struct Factory
 {
-public:
+    [[nodiscard]] static auto make_client() 
+    { 
+        static Client prototype;
 
-    [[nodiscard]] static const Computer * create_mobile() { return mobile_prototype.clone(); }
-    [[nodiscard]] static const Computer * create_tablet() { return tablet_prototype.clone(); }
-    [[nodiscard]] static const Computer * create_laptop() { return laptop_prototype.clone(); }
+        return prototype.clone(); 
+    }
 
-private:
+    [[nodiscard]] static auto make_server() 
+    { 
+        static Server prototype;
 
-    static inline const Mobile mobile_prototype;
-    static inline const Tablet tablet_prototype;
-    static inline const Laptop laptop_prototype;
-
-}; // class Factory
+        return prototype.clone(); 
+    }
+};
 
 //  ================================================================================================
 
 int main()
 {
-    const auto mobile = Factory::create_mobile(); 
+    auto entity = Factory::make_client(); 
 
-    mobile->run(); 
+    entity->test(); 
     
-    delete mobile;
-
-    return 0;
+    delete entity;
 }

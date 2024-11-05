@@ -1,79 +1,90 @@
-#include <iostream>
+#include <cassert>
 
 //  ================================================================================================
 
-class Number
+class Entity
 {
 public:
 
     using value_type = int;
 
-    [[nodiscard]] constexpr value_type get() const { return value; }
-    
-    constexpr void set(value_type new_value) // demo
+//  ------------------------------------------------------------------------------------------------
+
+    [[nodiscard]] auto get() const 
     { 
-        value = new_value; 
+        return m_data; 
+    }
+    
+    void set(int data) 
+    { 
+        m_data = data < 0 ? 0 : data;
     }
 
 private:
 
-    value_type value{};
-
-}; // class Number
+    int m_data = 0;
+};
 
 //  ================================================================================================
 
-template < typename Base > class Undoable : public Base
+template < typename B > class Undoable : public B
 {
 public:
 
-    using value_type = typename Base::value_type;
+    using value_type = typename B::value_type;
 
-    constexpr void undo() { Base::set(value_before); }
-    
-    constexpr void set(value_type new_value) 
+//  ------------------------------------------------------------------------------------------------
+
+    void undo() 
     { 
-        value_before = Base::get(); Base::set(new_value); 
+        B::set(prev); 
+    }
+    
+    void set(value_type value) 
+    { 
+        prev = B::get(); B::set(value); 
     }
 
 private:
     
-    value_type value_before{};
-
-}; // template < typename Base > class Undoable : public Base
+    value_type prev = value_type();
+};
 
 //  ================================================================================================
 
-template < typename Base > class Redoable : public Base
+template < typename B > class Redoable : public B
 {
 public:
 
-    using value_type = typename Base::value_type;
+    using value_type = typename B::value_type;
 
-    constexpr void redo() { Base::set(value_after); }
-    
-    constexpr void set(value_type new_value) 
+//  ------------------------------------------------------------------------------------------------
+
+    void redo() 
     { 
-        value_after = new_value; Base::set(new_value); 
+        B::set(next); 
+    }
+    
+    void set(value_type value) 
+    { 
+        next = value; B::set(value); 
     }
     
 private:
     
-    value_type value_after{};
-
-}; // template < typename Base > class Redoable : public Base
+    value_type next = value_type(); 
+};
 
 //  ================================================================================================
 
 int main() 
 {
-    Redoable < Undoable < Number > > number;
+    Redoable < Undoable < Entity > > entity;
 
-    number.set(42); number.set(84);
+    entity.set(1); 
+    entity.set(2);
 
-    std::cout << number.get() << std::endl; number.undo();
-    std::cout << number.get() << std::endl; number.redo();
-    std::cout << number.get() << std::endl;
-
-    return 0;
+    assert(entity.get() == 2); entity.undo();
+    assert(entity.get() == 1); entity.redo();
+    assert(entity.get() == 2);
 }

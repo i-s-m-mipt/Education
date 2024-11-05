@@ -1,119 +1,109 @@
 #include <iostream>
+#include <string>
 
 //  ================================================================================================
 
-class Computer
+struct Entity
+{
+    virtual ~Entity() = default;
+
+    virtual void test() const = 0;
+};
+
+//  ================================================================================================
+
+struct Client : public Entity { void test() const override { std::clog << "Client::test\n"; } };
+struct Server : public Entity { void test() const override { std::clog << "Server::test\n"; } };
+
+//  ================================================================================================
+
+template < typename E > [[nodiscard]] auto make_entity()
+{ 
+    return static_cast < Entity * > (new E()); 
+}
+
+//  ================================================================================================
+
+class Router : public Entity
 {
 public:
 
-    virtual ~Computer() = default;
-
-    virtual void run() const = 0;
-    
-}; // class Computer
-
-//  ================================================================================================
-
-class Mobile : public Computer { public: void run() const override; };
-class Tablet : public Computer { public: void run() const override; };
-class Laptop : public Computer { public: void run() const override; };
-
-//  ================================================================================================
-
-void Mobile::run() const { std::cout << "Mobile" << std::endl; }
-void Tablet::run() const { std::cout << "Tablet" << std::endl; }
-void Laptop::run() const { std::cout << "Laptop" << std::endl; }
-
-//  ================================================================================================
-
-template < typename T > [[nodiscard]] inline const Computer * create() { return new const T(); }
-
-//  ================================================================================================
-
-class Server : public Computer
-{
-public:
-
-    class Factory
+    struct Factory
     {
-    public:
+        [[nodiscard]] static auto make_v1() { return static_cast < Entity * > (new Router(1)); }
+        [[nodiscard]] static auto make_v2() { return static_cast < Entity * > (new Router(2)); }
+    };
 
-        [[nodiscard]] static const Computer * create_v1() { return new const Server(1); }
-        [[nodiscard]] static const Computer * create_v2() { return new const Server(2); }
-        [[nodiscard]] static const Computer * create_v3() { return new const Server(3); }
+//  ------------------------------------------------------------------------------------------------
 
-    }; // class Factory
-
-    void run() const override { std::cout << "Server v" << m_version << std::endl; };
+    void test() const override 
+    { 
+        std::clog << "Router::test\n"; 
+    };
 
 private:
 
-    explicit Server(int version) : m_version(version) {};
+    explicit Router(int data) : m_data(data) {};
 
-    int m_version;
+//  ------------------------------------------------------------------------------------------------
 
-}; // class Server : public Computer
+    int m_data = 0;
+};
 
 //  ================================================================================================
 
-class Factory
+struct Factory
 {
-public:
-
     virtual ~Factory() = default; 
 
-    [[nodiscard]] virtual const Computer * create() const = 0;
-    
-}; // class Factory
-
-//  ================================================================================================
-
-class Factory_Mobile : public Factory
-{
-public: [[nodiscard]] const Computer * create() const override { return new const Mobile(); } 
+    [[nodiscard]] virtual Entity * make() const = 0;  
 };
 
 //  ================================================================================================
 
-class Factory_Tablet : public Factory
+struct Factory_Client : public Factory
 {
-public: [[nodiscard]] const Computer * create() const override { return new const Tablet(); }
+    [[nodiscard]] Entity * make() const override 
+    { 
+        return new Client(); 
+    } 
 };
 
 //  ================================================================================================
 
-class Factory_Laptop : public Factory
+struct Factory_Server : public Factory
 {
-public: [[nodiscard]] const Computer * create() const override { return new const Laptop(); }
-}; 
+    [[nodiscard]] Entity * make() const override 
+    { 
+        return new Server(); 
+    }
+};
 
 //  ================================================================================================
 
 int main()
 {
-    const auto mobile = create < Mobile > (); 
+    auto entity_v1 = make_entity < Client > (); 
 
-    mobile->run(); 
+    entity_v1->test(); 
     
-    delete mobile;
+    delete entity_v1;
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-    const auto server = Server::Factory::create_v1(); 
+    auto entity_v2 = Router::Factory::make_v1(); 
 
-    server->run(); 
+    entity_v2->test(); 
     
-    delete server;
+    delete entity_v2;
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-    const Factory * const factory_laptop = new const Factory_Laptop();
+    Factory * factory = new Factory_Server();
 
-    const auto laptop = factory_laptop->create(); 
+    auto entity_v3 = factory->make(); 
 
-    laptop->run(); 
+    entity_v3->test(); 
     
-    delete laptop; delete factory_laptop;
-
-    return 0;
+    delete entity_v3; delete factory;
 }

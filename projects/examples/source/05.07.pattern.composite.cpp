@@ -1,89 +1,98 @@
-#include <iostream>
+#include <cassert>
 #include <vector>
 
 //  ================================================================================================
 
-class Computer
+struct Entity
+{
+    virtual ~Entity() = default; 
+
+//  ------------------------------------------------------------------------------------------------
+
+    [[nodiscard]] virtual std::size_t connections() const = 0;
+};
+
+//  ================================================================================================
+
+struct Client : public Entity { [[nodiscard]] std::size_t connections() const override { return 1; }; };
+struct Server : public Entity { [[nodiscard]] std::size_t connections() const override { return 2; }; };
+
+//  ================================================================================================
+
+class Composite : public Entity
 {
 public:
 
-    virtual ~Computer() = default; 
-
-    [[nodiscard]] virtual std::size_t cores() const = 0;
-
-}; // class Computer
-
-//  ================================================================================================
-
-class Mobile : public Computer { public: [[nodiscard]] std::size_t cores() const override; };
-class Tablet : public Computer { public: [[nodiscard]] std::size_t cores() const override; };
-class Laptop : public Computer { public: [[nodiscard]] std::size_t cores() const override; };
-
-//  ================================================================================================
-
-[[nodiscard]] std::size_t Mobile::cores() const { return 1; }
-[[nodiscard]] std::size_t Tablet::cores() const { return 2; }
-[[nodiscard]] std::size_t Laptop::cores() const { return 3; }
-
-//  ================================================================================================
-
-class Cluster : public Computer
-{
-public:
-
-   ~Cluster()
+   ~Composite()
     {
-        for (const auto computer : m_computers) delete computer;
+        for (auto entity : m_entities) 
+        {
+            if (entity)
+            {
+                delete entity;
+            }
+        }
     }
 
-    [[nodiscard]] std::size_t cores() const override
-    {
-        std::size_t total_cores = 0;
+//  ------------------------------------------------------------------------------------------------
 
-        for (const auto computer : m_computers)
+    [[nodiscard]] std::size_t connections() const override
+    {
+        auto total_connections = 0uz;
+
+        for (auto entity : m_entities)
         {
-            if (computer) total_cores += computer->cores();
+            if (entity) 
+            {
+                total_connections += entity->connections();
+            }
         }
 
-        return total_cores;
+        return total_connections;
     }
+    
+//  ------------------------------------------------------------------------------------------------
 
-    void add_computer(const Computer * computer) { m_computers.push_back(computer); }
+    void add_entity(Entity * entity) 
+    { 
+        m_entities.push_back(entity); 
+    }
 
 private:
     
-    std::vector < const Computer * > m_computers;
-
-}; // class Cluster : public Computer
+    std::vector < Entity * > m_entities;
+};
 
 //  ================================================================================================
 
-[[nodiscard]] const Computer * make_cluster(std::size_t n_mobiles, 
-                                            std::size_t n_tablets, 
-                                            std::size_t n_laptops)
+[[nodiscard]] auto make_composite
+(
+    std::size_t n_clients, 
+    std::size_t n_servers
+)
 {
-    const auto cluster = new Cluster;
+    auto composite = new Composite;
 
-    for (std::size_t i = 0; i < n_mobiles; ++i) cluster->add_computer(new const Mobile());
-    for (std::size_t i = 0; i < n_tablets; ++i) cluster->add_computer(new const Tablet());
-    for (std::size_t i = 0; i < n_laptops; ++i) cluster->add_computer(new const Laptop());
+    for (auto i = 0uz; i < n_clients; ++i) { composite->add_entity(new Client()); }
+    for (auto i = 0uz; i < n_servers; ++i) { composite->add_entity(new Server()); }
 
-    return cluster;
+    return static_cast < Entity * > (composite);
 }
 
 //  ================================================================================================
 
 int main()
 {
-    const auto super_cluster = new Cluster;
+    auto composite = new Composite;
 
-    for (std::size_t i = 0; i < 4; ++i) super_cluster->add_computer(make_cluster(1, 1, 1));
+    for (auto i = 0uz; i < 5; ++i) 
+    {
+        composite->add_entity(make_composite(1, 1));
+    }
 
-    const Computer * const computer = super_cluster;
+    Entity * entity = composite;
         
-    std::cout << computer->cores() << std::endl;
+    assert(entity->connections() == 15);
 
-    delete computer;
-
-    return 0;
+    delete entity;
 }

@@ -2,69 +2,58 @@
 
 //  ================================================================================================
 
-class Computer
+class Entity
 {
 public:
 
-	virtual ~Computer() = default; 
+	virtual ~Entity() = default; 
 
-	void run() const { f1(); f2(); f3(); f4(); f5(); std::cout << std::endl; } 
+//  ------------------------------------------------------------------------------------------------
+
+	void test() const
+	{ 
+		test_v1(); 
+		test_v2(); 
+		test_v3(); 
+		test_v4();
+	} 
+
+//  ------------------------------------------------------------------------------------------------
 
 private:
 
-	void f1() const { std::cout << "1 "; }
-	void f3() const { std::cout << "3 "; }
-	void f5() const { std::cout << "5 "; }
+	void test_v1() const { std::clog << "Entity::test_v1\n"; }
+	void test_v3() const { std::clog << "Entity::test_v3\n"; }
 
-private:
+//  ------------------------------------------------------------------------------------------------
 
-	virtual void f2() const = 0;
-	virtual void f4() const = 0;
-
-}; // class Computer
+	virtual void test_v2() const = 0;
+	virtual void test_v4() const = 0;
+};
 
 //  ================================================================================================
 
-class Mobile : public Computer
-{
-private:
-
-	void f2() const override { std::cout << "M "; }
-	void f4() const override { std::cout << "M "; }
-
-}; // class Mobile : public Computer
+class Client : public Entity 
+{ 
+	void test_v2() const override { std::clog << "Client::test_v2\n"; }
+	void test_v4() const override { std::clog << "Client::test_v4\n"; }  
+};
 
 //  ================================================================================================
 
-class Tablet : public Computer
+class Server : public Entity
 {
-private:
-
-	void f2() const override { std::cout << "T "; }
-	void f4() const override { std::cout << "T "; }
-
-}; // class Tablet : public Computer
-
-//  ================================================================================================
-
-class Laptop : public Computer
-{
-private:
-
-	void f2() const override { std::cout << "L "; }
-	void f4() const override { std::cout << "L "; }
-
-}; // class Laptop : public Computer
+	void test_v2() const override { std::clog << "Server::test_v2\n"; }
+	void test_v4() const override { std::clog << "Server::test_v4\n"; } 
+};
 
 //  ================================================================================================
 
 int main()
 {
-	const Computer * const mobile = new const Mobile();
+	Entity * entity = new Client();
 
-	mobile->run(); 
+	entity->test(); 
 	
-	delete mobile;
-
-	return 0;
+	delete entity;
 }

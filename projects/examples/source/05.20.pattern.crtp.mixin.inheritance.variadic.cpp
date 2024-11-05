@@ -2,73 +2,59 @@
 
 //  ================================================================================================
 
-class Color_v1 { public: explicit Color_v1(char) {}; };
-class Label_v1 { public: explicit Label_v1(char) {}; };
+struct Client_v1 { explicit Client_v1(int) {} };
+struct Server_v1 { explicit Server_v1(int) {} };
 
 //  ================================================================================================
 
-template < typename ... Bases > class Point_v1 : private Bases ...
+template < typename ... Bs > class Router_v1 : public Bs ...
 {
 public:
 
-    template < typename ... Ts > explicit Point_v1(double x, double y, Ts ... args) : 
-    
-        Bases(args)..., m_x(x), m_y(y)
+    template < typename ... Ts > explicit Router_v1(int data, Ts && ... args) 
+    : 
+        Bs(std::forward < Ts > (args))..., m_data(data)
     {
-        std::cout << sizeof...(Bases) << std::endl;
-    }
-
-    template < typename V > void visit(V visitor)
-    {
-        visitor(static_cast < Bases & > (*this)...);
+        std::clog << "Router_v1::Router_v1 : sizeof...(Bs) = " << sizeof...(Bs) << '\n';
     }
 
 private:
 
-    double m_x, m_y;
-
-}; // class Point_v1 : private Bases ...
-
-//  ================================================================================================
-
-template < typename T > class Color_v2 {};
-template < typename T > class Label_v2 {};
+    int m_data = 0;
+};
 
 //  ================================================================================================
 
-template < template < typename E > typename ... Bases > class Point_v2 :
-    
-    private Bases < Point_v2 < Bases ... > > ... 
+template < typename T > struct Client_v2 {};
+template < typename T > struct Server_v2 {};
+
+//  ================================================================================================
+
+template < template < typename T > typename ... Bs > class Router_v2 
+: 
+    public Bs < Router_v2 < Bs ... > > ... 
 {
 public:
 
-    explicit Point_v2(double x, double y) : Bases < Point_v2 > ()..., m_x(x), m_y(y)
+    explicit Router_v2(int data) : Bs < Router_v2 > ()..., m_data(data)
     {
-        std::cout << sizeof...(Bases) << std::endl;
-    }
-
-    template < typename V > void visit(V visitor)
-    {
-        visitor(static_cast < Bases < Point_v2 > & > (*this)...);
+        std::clog << "Router_v2::Router_v2 : sizeof...(Bs) = " << sizeof...(Bs) << '\n';
     }
 
 private:
 
-    double m_x, m_y;
-
-}; // template < template < typename E > typename ... Bases > class Point_v2 : ...
+    int m_data = 0;
+};
 
 //  ================================================================================================
 
 int main()
 {
-    const Point_v1 < Color_v1, Label_v1 > point_v1_1(1.0, 1.0, 'a', 'b');
-    const Point_v1 < Color_v1           > point_v1_2(2.0, 2.0, 'a');
-    const Point_v1 <                    > point_v1_3(3.0, 3.0);
+    Router_v1 < Client_v1, Server_v1 > router_v1_1(1, 1, 2);
+    Router_v1 < Client_v1            > router_v1_2(2, 1   );
+    Router_v1 <                      > router_v1_3(3      );
 
-    const Point_v2 < Color_v2, Label_v2 > point_v2_1(1.0, 1.0);
-    const Point_v2 < Color_v2           > point_v2_2(2.0, 2.0);
-    const Point_v2 <                    > point_v2_3(3.0, 3.0);
-
-    return 0;
+    Router_v2 < Client_v2, Server_v2 > router_v2_1(1);
+    Router_v2 < Client_v2            > router_v2_2(2);
+    Router_v2 <                      > router_v2_3(3);
 }

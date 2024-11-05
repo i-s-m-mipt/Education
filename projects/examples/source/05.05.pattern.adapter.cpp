@@ -2,45 +2,52 @@
 
 //  ================================================================================================
 
-class Device { public: void run() const { std::cout << "Device" << std::endl; } };
+struct Client 
+{ 
+	void test()
+	{ 
+		std::clog << "Client::test\n"; 
+	} 
+};
 
 //  ================================================================================================
 
-class Computer
+struct Entity
 {
-public:
+	virtual ~Entity() = default; 
 
-	virtual ~Computer() = default; 
-
-	virtual void run() const = 0;
-	
-}; // class Computer
+	virtual void test() const = 0;	
+};
 
 //  ================================================================================================
 
-class Adapter : public Computer
+class Adapter : public Entity
 {
 public:
 
-	explicit Adapter(const Device & device) : m_device(device) {}
+	explicit Adapter(Client & client) : m_client(client) {}
 
-	void run() const override { m_device.run(); }
+//  ------------------------------------------------------------------------------------------------
+
+	void test() const override 
+	{ 
+		m_client.test(); 
+	}
 
 private:
 
-	const Device & m_device;
-
-}; // class Adapter : public Computer
+	Client & m_client;
+};
 
 //  ================================================================================================
 
 int main()
 {	
-	const Computer * const computer = new const Adapter(Device());
+	Client client;
 
-	computer->run(); 
+	Entity * entity = new Adapter(client);
+
+	entity->test(); 
 	
-	delete computer;
-
-	return 0;
+	delete entity;
 }
