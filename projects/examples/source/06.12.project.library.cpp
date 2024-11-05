@@ -1,6 +1,4 @@
-#include <exception>
-#include <iostream>
-#include <string>
+#include <cassert>
 
 #include <boost/dll.hpp>
 
@@ -8,27 +6,12 @@
 
 int main()
 {
-	std::cout << library_v1::f(42) << std::endl;
+	assert(library_v1::test(1) == 1);
 
-//  ================================================================================================
+//  -------------------------------------------------------------------------
 
-	const std::string path = "liblibrary_v2.so";
+	auto path = "liblibrary_v2.so";
 
-	const auto f = boost::dll::import_symbol < int(int) > (path, "f");
-
-	std::cout << f(42) << std::endl;
-
-//  ================================================================================================
-
-	const auto variable = boost::dll::import_symbol < int > (path, "global_variable");
-
-	std::cout << *variable << std::endl;
-
-//  ================================================================================================
-
-	const auto run = boost::dll::import_alias < int(int) > (path, "run");
-
-	std::cout << run(42) << std::endl;
-
-	return 0;
+	assert(boost::dll::import_symbol < int(int) > (path, "test_v1")(1) == 1);
+	assert(boost::dll::import_alias  < int(int) > (path, "test_v2")(1) == 1);
 }

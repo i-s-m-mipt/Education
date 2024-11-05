@@ -1,10 +1,11 @@
 module;
 
-#include <iostream>
+module demo;
 
-module math;
-
-void hello_module()
+namespace demo
 {
-	std::cout << "Hello, module!" << std::endl;
+	[[nodiscard]] int test_v2(int x) 
+	{ 
+		return x; 
+	}
 }

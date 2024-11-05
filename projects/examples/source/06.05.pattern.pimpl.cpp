@@ -1,68 +1,75 @@
 #include <iostream>
-#include <string>
 #include <utility>
 
 #include <boost/noncopyable.hpp>
 
 //  ================================================================================================
 
-class Computer : private boost::noncopyable // detail: header.hpp
+class Entity : private boost::noncopyable // detail: header.hpp
 {
+private:
+
+    struct Implementation;
+
 public:
 
-    explicit Computer(std::string name);
+    Entity();
 
-    Computer(Computer && other) : m_pimpl(other.m_pimpl)
+    Entity(Entity && other) : m_pimpl(other.m_pimpl)
     {
         other.m_pimpl = nullptr;
     }
 
-    Computer & operator=(Computer && other)
+    auto & operator=(Entity && other)
     {
-        m_pimpl = std::exchange(other.m_pimpl, nullptr); return *this;
+        m_pimpl = std::exchange(other.m_pimpl, nullptr); 
+        
+        return *this;
     }
 
-   ~Computer();
+   ~Entity();
 
-    void run() const;
+//  ------------------------------------------------------------------------------------------------
+
+    void test() const;
 
 private:
 
-    class Implementation;
-
-    const Implementation * m_pimpl; // support: std::experimental::propagate_const
-
-}; // class Computer : private boost::noncopyable
+    Implementation * m_pimpl = nullptr;
+};
 
 //  ================================================================================================
 
-class Computer::Implementation // detail: source.cpp
+struct Entity::Implementation // detail: source.cpp
 {
-public:
-
-    explicit Implementation(std::string name) : m_name(std::move(name)) {}
-
-    void run() const { std::cout << m_name << std::endl; }
-
-private:
-
-    const std::string m_name;
-
-}; // class Computer::Implementation
+    void test() const
+    { 
+        std::clog << "Entity::Implementation::test\n"; 
+    }
+};
 
 //  ================================================================================================
 
-Computer:: Computer(std::string name) : m_pimpl(new const Implementation(std::move(name))) {}
+Entity:: Entity() : m_pimpl(new Implementation()) {}
 
-Computer::~Computer() { delete m_pimpl; }
+Entity::~Entity() 
+{ 
+    if (m_pimpl)
+    {
+        delete m_pimpl;
+    }
+}
 
-void Computer::run() const { m_pimpl->run(); }
+//  ================================================================================================
+
+void Entity::test() const
+{ 
+    m_pimpl->test(); 
+}
 
 //  ================================================================================================
 
 int main()
 {
-    Computer("shape").run();
-
-    return 0;
+    Entity().test();
 }

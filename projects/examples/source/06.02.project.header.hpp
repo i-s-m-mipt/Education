@@ -3,32 +3,52 @@
 
 #pragma once
 
-#include <boost/asio.hpp>
+#include <iostream>
 
 //  ================================================================================================
 
-void f();
-
-void g();
-
-/*
-void h() { std::cout << "h from header" << std::endl; } // error
-*/
+void test_v1();
+void test_v2();
 
 //  ================================================================================================
 
-void test_macros();
+//  void test_v3() // error
+//  { 
+//	    std::clog << "test_v3\n"; 
+//  } 
 
 //  ================================================================================================
 
-class C { public: void print() const; };
-
-//  ================================================================================================
-
-template < typename T1, typename T2 > [[nodiscard]] inline constexpr auto max(T1 x, T2 y)
-{
-	return (x < y ? y : x);
+inline void test_v4()
+{ 
+    std::clog << "test_v4\n"; 
 }
+
+//  ================================================================================================
+
+template < typename T > void test_v5()
+{
+	std::clog << "test_v5\n";
+}
+
+//  ================================================================================================
+
+struct Entity_v1 
+{ 
+	static void test_v1()
+	{ 
+		std::clog << "Entity_v1::test_v1\n"; 
+	} 
+
+	static void test_v2();
+};
+
+//  ================================================================================================
+
+extern       int global_x1;
+extern       int global_x2;
+extern const int global_x3;
+extern const int global_x4;
 
 //  ================================================================================================
 
@@ -36,24 +56,29 @@ namespace education
 {
 	namespace examples
 	{
-		void print();
+		struct Entity_v2 {};
+	}
+}
 
-		class X {};
-
-		void function_with_ADL(X);
-
-	} // namespace examples
-
-} // namespace education
+namespace education
+{
+	namespace examples
+	{
+		void test(Entity_v2);
+	}
+}
 
 //  ================================================================================================
 
 namespace constants
 {
-//	const double old_pi = 3.14; // bad
+//					 auto x1 = 1; // error
 
-	constexpr double pi = 3.14;
+//		   const     auto x2 = 2; // bad
 
-} // namespace constants
+	inline const     auto x3 = 3;
+	
+		   constexpr auto x4 = 4;
+}
 
-#endif // #ifndef PROJECT_HEADER_HPP
+#endif
