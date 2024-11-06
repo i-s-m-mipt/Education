@@ -50,9 +50,13 @@ template < std::ranges::view V, typename T > [[nodiscard]] auto reduce(V view, T
 		{
 			auto range = std::ranges::subrange(first, last);
 
-			std::packaged_task task((Block < decltype(range) > ()));
+			Block < decltype(range) > block;
 
-			result.first = task.get_future(); result.second = std::jthread(std::move(task), range);
+			std::packaged_task task(block);
+
+			result.first = task.get_future(); 
+			
+			result.second = std::jthread(std::move(task), range);
 
 			first = last; last = std::next(first, block_size);
 		}

@@ -73,7 +73,7 @@ int main()
 
 //  ================================================================================================
 
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+	std::vector < int > vector { 1, 2, 3, 4, 5 };
 
 	std::cout << boost::hash_range(std::cbegin(vector), std::cend(vector)) << '\n';
 }

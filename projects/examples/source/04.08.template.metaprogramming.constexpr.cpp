@@ -39,7 +39,7 @@
 {
 //	[[maybe_unused]] auto object = new auto(1); // error
 
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+	std::vector < int > vector { 1, 2, 3, 4, 5 };
 
 	return std::ranges::fold_left(vector, 0, std::plus <> ());
 }

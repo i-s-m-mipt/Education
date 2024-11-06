@@ -68,7 +68,7 @@ template < typename S > void print(const S & string)
 
 [[nodiscard]] auto convert_v5(std::string_view string, const std::locale & locale) 
 {
-	std::vector < wchar_t > buffer(std::size(string));
+	std::vector < wchar_t > buffer(std::size(string), L'\0');
 
 	std::use_facet < std::ctype < wchar_t > > (locale).widen
     (
@@ -83,7 +83,7 @@ template < typename S > void print(const S & string)
 
 [[nodiscard]] auto convert_v6(std::wstring_view wstring, const std::locale & locale)
 {
-	std::vector < char > buffer(std::size(wstring));
+	std::vector < char > buffer(std::size(wstring), '\0');
 
 	std::use_facet < std::ctype < wchar_t > > (locale).narrow
     (
@@ -98,7 +98,7 @@ template < typename S > void print(const S & string)
 
 [[nodiscard]] const auto & transliteration() 
 {
-    static std::unordered_map < char32_t, std::u32string > table =
+    static std::unordered_map < char32_t, std::u32string > table
     { 
         { U'А', U"A"   }, { U'а', U"a"   },
         { U'Б', U"B"   }, { U'б', U"b"   },

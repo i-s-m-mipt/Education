@@ -176,11 +176,13 @@ int main(int argc, char ** argv)
 
 //  ================================================================================================
 
-    std::byte byte{ 42 };
+    auto byte_1 = static_cast < std::byte > (1);
 
-    byte |= std::byte{ 0b1111'0000 }; assert(std::to_integer < int > (byte) == 0b1111'1010);
-    byte &= std::byte{ 0b1111'0000 }; assert(std::to_integer < int > (byte) == 0b1111'0000);
+    auto byte_2 = static_cast < std::byte > (0b0000'1111);
 
+    assert(std::to_integer < int > (byte_1 & byte_2) == 0b0000'0001);
+    assert(std::to_integer < int > (byte_1 | byte_2) == 0b0000'1111);
+    
 //  ================================================================================================
 
     int array[]{ 1, 2, 3, 4, 5 };

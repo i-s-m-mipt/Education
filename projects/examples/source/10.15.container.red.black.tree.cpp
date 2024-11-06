@@ -58,7 +58,7 @@ BENCHMARK(test_v2);
 
 int main(int argc, char ** argv)
 {
-	std::set < int > set({ 1, 4, 2, 5, 3 });
+	std::set < int > set { 1, 4, 2, 5, 3 };
 
 	using category_t = typename decltype(set)::iterator::iterator_category;
 

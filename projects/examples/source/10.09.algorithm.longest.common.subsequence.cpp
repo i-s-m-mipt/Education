@@ -49,5 +49,5 @@
 
 int main()
 {
-	assert(find({ 1, 2, 3, 4, 5 }, { 1, 2, 3 }) == std::vector < int > ({ 1, 2, 3 }));
+	assert((find({ 1, 2, 3, 4, 5 }, { 1, 2, 3 }) == std::vector < int > { 1, 2, 3 }));
 }

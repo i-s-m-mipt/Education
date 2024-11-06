@@ -52,7 +52,9 @@ int main()
 
 	unordered_set.rehash(64);
 
-	std::mt19937_64 engine{ std::random_device()() };
+	std::random_device device;
+
+	std::mt19937_64 engine(device());
 
 	std::uniform_int_distribution distribution(100, 999);
 

@@ -175,12 +175,12 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(Test_v6, T, list_t)
 
 void test(int x)
 {
-    BOOST_TEST(x < 4);
+    BOOST_TEST(x < 5);
 }
 
 boost::unit_test::test_suite * init_unit_test_suite(int, char **)
 {
-    std::vector < int > vector = { 1, 2, 3, 4, 5 };
+    std::vector < int > vector { 1, 2, 3, 4, 5 };
 
     auto test_case = BOOST_PARAM_TEST_CASE(&test, std::cbegin(vector), std::cend(vector));
 
@@ -207,7 +207,7 @@ struct Fixture
 
 BOOST_FIXTURE_TEST_CASE(Test_v7, Fixture)
 {
-    BOOST_TEST(std::size(data) == 0); data.push_back(42);
-    BOOST_TEST(std::size(data) == 1); data.push_back(42);
+    BOOST_TEST(std::size(data) == 0); data.push_back(1);
+    BOOST_TEST(std::size(data) == 1); data.push_back(2);
     BOOST_TEST(std::size(data) == 2);
 }

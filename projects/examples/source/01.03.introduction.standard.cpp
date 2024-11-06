@@ -20,9 +20,9 @@ int main()
 
 	auto string = "aaaaa"s; assert(string.substr(1, 3).contains('a'));
 
-	std::vector < int > vector = { 1, 2, 3, 4 }; vector.push_back(1);
+	std::vector < int > vector { 1, 2, 3, 4, 5 }; vector.push_back(1);
 
-	assert(std::size(vector) == 5 && vector.front() == vector.back());
+	assert(std::size(vector) == 6 && vector.front() == vector.back());
 
 	std::ranges::sort(vector); assert(std::ranges::is_sorted(vector));
 }

@@ -10,11 +10,9 @@ void transform(const std::string & path_1, const std::string & path_2)
 {
     if (std::fstream fin(path_1, std::ios::in); fin)
     {
-        std::string code 
-        { 
-            std::istreambuf_iterator < char > (fin),
-		    std::istreambuf_iterator < char > (   ) 
-        };
+        std::istreambuf_iterator < char > begin(fin), end;
+
+        std::string code(begin, end);
 
         for (auto current = std::begin(code); current != std::end(code); ++current) 
         {

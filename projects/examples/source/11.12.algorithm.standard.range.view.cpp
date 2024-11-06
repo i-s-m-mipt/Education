@@ -81,7 +81,7 @@ int main()
 
 	assert(std::ranges::is_sorted(vector));
 
-	std::vector < Entity > entities({ { 1 }, { 2 }, { 3 } });
+	std::vector < Entity > entities { { 1 }, { 2 }, { 3 } };
 
 	std::ranges::sort(entities, std::ranges::greater(), &Entity::data);
 
@@ -128,7 +128,7 @@ int main()
 
 //  ================================================================================================
 
-	auto lambda = [](){ return std::vector({ 1, 2, 3, 4, 5 }); };
+	auto lambda = [](){ return std::vector < int > { 1, 2, 3, 4, 5 }; };
 
     auto dangling_iterator = std::ranges::max_element(lambda());
 	

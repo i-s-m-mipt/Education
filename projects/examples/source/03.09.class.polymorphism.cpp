@@ -100,12 +100,10 @@ int main()
 //  ------------------------------------------------------------------------------------------------
 
 	std::vector < Entity * > entities 
-	(
-		{ 
-			new Client(), 
-			new Server() 
-		}
-	);
+	{ 
+		new Client(), 
+		new Server() 
+	};
 
 	for (auto entity : entities) 
 	{

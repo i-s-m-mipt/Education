@@ -189,11 +189,11 @@ int main()
 	test_v3(ptr);
 	test_v4(ptr);
 
-//  ----------------------------------
+//  -------------------------------
 
-	int array_1[] = { 1, 2, 3, 4, 5 };
+	int array_1[]{ 1, 2, 3, 4, 5 };
 
-	int array_2[] = { 1, 2, 3 };
+	int array_2[]{ 1, 2, 3 };
 
 	assert(max_v9(array_1, array_2) == array_1);
 }

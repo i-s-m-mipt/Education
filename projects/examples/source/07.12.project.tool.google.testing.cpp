@@ -69,13 +69,13 @@ struct Parameters : public Fixture, public testing::WithParamInterface < int > {
 
 //  ------------------------------------------------------------------------------
 
-TEST_P(Parameters, Size) 
+TEST_P(Parameters, Data) 
 { 
-    auto size = GetParam();
+    auto value = GetParam();
 
-    data.resize(size, 0); 
+    data.push_back(value); 
     
-    ASSERT_EQ(std::size(data), size); 
+    ASSERT_EQ(data.back(), value); 
 }
 
 //  -------------------------------------------------------------------------

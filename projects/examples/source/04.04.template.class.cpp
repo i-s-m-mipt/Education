@@ -155,11 +155,11 @@ int main()
 	stack.push(2);
 	stack.push(3);
 
-	assert(stack.top() == 3);
+	assert(stack.size() == 3 && stack.top() == 3);
 
 	stack.pop();
 
-	assert(stack.top() == 2);
+	assert(stack.size() == 2 && stack.top() == 2);
 
 //  ------------------------------------------------------------------------------------------------
 
@@ -168,19 +168,17 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-	std::vector < int > container_from({ 1, 2, 3, 4, 5 });
+	std::vector < int > vector_1 { 1, 2, 3, 4, 5 };
 
-	auto deque = copy < std::vector, std::deque > (container_from);
-
-	assert(deque == std::deque < int > ({ 1, 2, 3, 4, 5 }));
+	auto deque = copy < std::vector, std::deque > (vector_1);
 
 //  ------------------------------------------------------------------------------------------------
 
 	Stack_v2 new_stack = deque_stack_v2;
 
-	[[maybe_unused]] Pair pair = { 1, 2 };
+	[[maybe_unused]] Pair pair { 1, 2 };
 
-	std::vector vector(5, 0);
+	std::vector vector_2 { 1, 2, 3, 4, 5 };
 
 //  ------------------------------------------------------------------------------------------------
 

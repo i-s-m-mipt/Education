@@ -78,7 +78,7 @@ template < std::random_access_iterator I > void advance_v2(I & iterator, int dis
 
 int main()
 {
-	std::vector < int > vector({ 1, 2, 3, 4, 5 });
+	std::vector < int > vector { 1, 2, 3, 4, 5 };
 
 	using category_t = typename decltype(vector)::iterator::iterator_category;
 

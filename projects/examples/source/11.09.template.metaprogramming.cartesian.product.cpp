@@ -52,11 +52,9 @@ template < std::forward_iterator ... Is > [[nodiscard]] auto generate(std::pair 
 	std::vector < std::size_t > steps(sizeof...(args), 0);
 
 	std::vector < std::size_t > sizes
-	(
-		{ 
-			static_cast < std::size_t > (std::distance(args.first , args.second))... 
-		}
-	);
+	{ 
+		static_cast < std::size_t > (std::distance(args.first , args.second))... 
+	};
 
 	do
 	{
@@ -78,8 +76,8 @@ template < std::forward_iterator ... Is > [[nodiscard]] auto generate(std::pair 
 
 int main()
 {
-    std::vector < int > vector_1({ 1, 2, 3, 4, 5 });
-	std::vector < int > vector_2({ 1, 2, 3, 4, 5 });
+    std::vector < int > vector_1 { 1, 2, 3, 4, 5 };
+	std::vector < int > vector_2 { 1, 2, 3, 4, 5 };
 
 //  ---------------------------------------------------------------
 

@@ -31,13 +31,11 @@ void visit(const std::any & any)
     static auto visitor = [](auto x){ std::cout << x << '\n'; };
 
     static std::unordered_map < std::type_index, std::function < void(const std::any &) > > visitors
-    (
-        {
-            make_visitor < char   > (visitor),
-            make_visitor < int    > (visitor),
-            make_visitor < double > (visitor)
-        }
-    );
+    {
+        make_visitor < char   > (visitor),
+        make_visitor < int    > (visitor),
+        make_visitor < double > (visitor)
+    };
 
     if (auto iterator = visitors.find(std::type_index(any.type())); iterator != std::cend(visitors))
     {
@@ -49,7 +47,7 @@ void visit(const std::any & any)
 
 int main()
 {
-    std::vector < std::any > vector({ 'a', 1, 1.0, "aaaaa" });
+    std::vector < std::any > vector { 'a', 1, 1.0, "aaaaa" };
 
     for (const auto & element : vector) 
     {
