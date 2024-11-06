@@ -1,43 +1,41 @@
-#include <iostream>
+#include <cassert>
 #include <iterator>
 #include <vector>
 
 //  ================================================================================================
 
-struct Node { int value{}; Node * l{}, * r{}; };
+template < typename T > struct Node 
+{ 
+	T value = T(); Node * left = nullptr, * right = nullptr; 
+};
 
 //  ================================================================================================
 
-template < typename R, typename ... Ns > [[nodiscard]] inline R traverse(R root, Ns ... nodes)
+template < typename R, typename ... Ns > [[nodiscard]] auto traverse(R root, Ns ... nodes)
 {
-	return (root ->* ... ->* nodes); // detail: ((root ->* node_1) ->* node_2) ->* ...
+	return (root ->* ... ->* nodes); // support: cppinsights.io
 }
 
 //  ================================================================================================
 
 int main()
 {
-	const std::size_t size = 5;
+	std::vector < Node < int > > nodes(5);
 
-	std::vector < Node > nodes(size);
-
-	for (std::size_t i = 0; i < std::size(nodes); ++i)
+	for (auto i = 0uz; i < std::size(nodes); ++i)
 	{
-		nodes[i].value = static_cast < int > (i);
+		nodes[i].value = static_cast < int > (i) + 1;
 	}
 
-	Node * root = nullptr;
+	Node < int > * root = nullptr;
+	
+	root 						   = &nodes[0];
+	root->left          		   = &nodes[1];
+	root->left->right       	   = &nodes[2];
+	root->left->right->left    	   = &nodes[3];
+	root->left->right->left->right = &nodes[4];
 
-	root             = &nodes[0];
-	root->l          = &nodes[1];
-	root->l->r       = &nodes[2];
-	root->l->r->l    = &nodes[3];
-	root->l->r->l->r = &nodes[4];
+	auto left = &Node < int > ::left, right = &Node < int > ::right;
 
-	const auto l = &Node::l;
-	const auto r = &Node::r;
-
-	std::cout << traverse(root, l, r, l, r)->value << std::endl;
-
-	return 0;
+	assert(traverse(root, left, right, left, right)->value == 5);
 }

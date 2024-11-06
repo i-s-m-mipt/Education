@@ -1,10 +1,6 @@
-#include <iostream>
-
-//  ================================================================================================
-
-template < auto N > struct Factorial
+template < int X > struct Factorial // support: cppinsights.io
 {
-	static constexpr auto value = N * Factorial < N - 1 > ::value;
+	static constexpr auto value = X * Factorial < X - 1 > ::value;
 };
 
 template <> struct Factorial < 0 > 
@@ -12,25 +8,25 @@ template <> struct Factorial < 0 >
 	static constexpr auto value = 1; 
 };
 
-template < auto N > constexpr auto factorial_v = Factorial < N > ::value;
+template < int X > constexpr auto factorial_v = Factorial < X > ::value;
 
 //  ================================================================================================
 
-template < auto P, auto D > struct Check_Is_Prime
+template < int X, int D > struct Helper
 {
-	static constexpr auto value = (P % D != 0) && Check_Is_Prime < P, D - 1 > ::value;
+	static constexpr auto value = X % D != 0 && Helper < X, D - 1 > ::value;
 }; 
 
-template < auto P > struct Check_Is_Prime < P, 2 >
+template < int X > struct Helper < X, 2 >
 {
-	static constexpr auto value = (P % 2 != 0);
+	static constexpr auto value = X % 2 != 0;
 }; 
 
 //  ================================================================================================
 
-template < auto P > struct Is_Prime
+template < int X > struct Is_Prime
 {
-	static constexpr auto value = Check_Is_Prime < P, P / 2 > ::value;
+	static constexpr auto value = Helper < X, X / 2 > ::value;
 }; 
 
 template <> struct Is_Prime < 0 > {	static constexpr auto value = false; };
@@ -38,15 +34,11 @@ template <> struct Is_Prime < 1 > { static constexpr auto value = false; };
 template <> struct Is_Prime < 2 > { static constexpr auto value =  true; };
 template <> struct Is_Prime < 3 > { static constexpr auto value =  true; };
 
-template < auto P > constexpr auto is_prime_v = Is_Prime < P > ::value;
+template < int X > constexpr auto is_prime_v = Is_Prime < X > ::value;
 
 //  ================================================================================================
 
 int main()
 {
-	std::cout << factorial_v < 5 > << std::endl;
-
-	std::cout <<  is_prime_v < 5 > << std::endl;
-
-	return 0;
+	static_assert(factorial_v < 5 > == 120 && is_prime_v < 5 > );
 }

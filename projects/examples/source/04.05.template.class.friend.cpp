@@ -1,5 +1,7 @@
+#include <cassert>
 #include <iostream>
 #include <numeric>
+#include <utility>
 
 //  ================================================================================================
 
@@ -7,11 +9,14 @@ template < typename T > class Ratio
 {
 public:
 
-	Ratio(T num = T{}, T den = T(1)) : m_num(num), m_den(den)
+	Ratio(T num = T(0), T den = T(1)) : m_num(num), m_den(den)
 	{
-		if (m_den == T{}) std::cerr << "invalid denominator\n";
+		if (m_den == T(0)) 
+		{ 
+			std::cerr << "Ratio::Ratio : invalid denominator\n"; 
+		}
 
-		if (m_den <  T{})
+		if (m_den < T(0))
 		{
 			m_num *= -1;
 			m_den *= -1;
@@ -20,11 +25,16 @@ public:
 		reduce();
 	}
 
+	[[nodiscard]] explicit operator double() const 
+	{ 
+		return 1.0 * m_num / m_den; 
+	}
+
 private:
 
 	void reduce()
 	{
-		const auto gcd = std::gcd(m_num, m_den);
+		auto gcd = std::gcd(m_num, m_den);
 
 		m_num /= gcd;
 		m_den /= gcd;
@@ -32,9 +42,9 @@ private:
 
 public:
 
-	Ratio & operator+=(Ratio other)
+	auto & operator+=(Ratio other)
 	{
-		const auto lcm = std::lcm(m_den, other.m_den);
+		auto lcm = std::lcm(m_den, other.m_den);
 
 		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den); m_den = lcm;
 
@@ -43,22 +53,55 @@ public:
 		return *this;
 	}
 
-public:
+	auto & operator-=(Ratio other) 
+	{ 
+		return *this += other.m_num *= -1; 
+	}
 
-	[[nodiscard]] friend inline Ratio operator+(Ratio lhs, Ratio rhs) { return (lhs += rhs); }
+//  ------------------------------------------------------------------------------------------------
+
+	[[nodiscard]] friend auto operator+(Ratio lhs, Ratio rhs) 
+	{ 
+		return lhs += rhs; 
+	}
+
+//  ------------------------------------------------------------------------------------------------
+
+	[[nodiscard]] friend auto operator< (Ratio lhs, Ratio rhs)
+	{
+		return static_cast < double > (lhs) < static_cast < double > (rhs);
+	}
+
+	[[nodiscard]] friend auto operator==(Ratio lhs, Ratio rhs)
+	{
+		return !(lhs < rhs) && !(rhs < lhs);
+	}
 
 private:
 
-	T m_num;
-	T m_den;
+	T m_num = T(0);
+	T m_den = T(1);
+};
 
-}; // template < typename T > class Ratio
+//  ================================================================================================
+
+template < typename U > [[nodiscard]] auto operator-(Ratio < U > lhs, Ratio < U > rhs)
+{ 
+	return lhs -= rhs;
+}
 
 //  ================================================================================================
 
 int main()
 {
-	[[maybe_unused]] const auto result = 1 + Ratio < int > (1, 1);
+	Ratio < int > ratio(1, 1);
 
-	return 0;
+//  ------------------------------------------
+
+	assert(1 + ratio == Ratio < int > (2, 1));
+//	assert(1 - ratio == Ratio < int > (0, 1)); // error
+
+//  -------------------------------------------------------------
+
+	assert(operator- < int > (1, ratio) == Ratio < int > (0, 1));
 }

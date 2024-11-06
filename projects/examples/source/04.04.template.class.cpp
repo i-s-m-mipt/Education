@@ -1,6 +1,8 @@
+#include <cassert>
 #include <deque>
 #include <iostream>
 #include <iterator>
+#include <string>
 #include <vector>
 
 //  ================================================================================================
@@ -11,33 +13,35 @@ public:
 
 	void push(T value);
 
-	[[nodiscard]] T top() const;
+	[[nodiscard]] auto top() const;
 
 	void pop();
 
-	[[nodiscard]] std::size_t size() const { return std::size(m_container); }
+	[[nodiscard]] auto size() const 
+	{ 
+		return std::size(m_data); 
+	}
 
 private:
 
-	C m_container;
-
-}; // template < typename T, typename C = std::vector < T > > class Stack_v1
+	C m_data;
+};
 
 //  ================================================================================================
 
 template < typename T, typename C > void Stack_v1 < T, C > ::push(T value)
 {
-	m_container.push_back(std::move(value));
+	m_data.push_back(std::move(value));
 }
 
-template < typename T, typename C > [[nodiscard]] T Stack_v1 < T, C > ::top() const
+template < typename T, typename C > [[nodiscard]] auto Stack_v1 < T, C > ::top() const
 {
-	return m_container.back();
+	return m_data.back();
 }
 
 template < typename T, typename C > void Stack_v1 < T, C > ::pop()
 {
-	m_container.pop_back();
+	m_data.pop_back();
 }
 
 //  ================================================================================================
@@ -46,110 +50,156 @@ template < typename T, template < typename E > typename C = std::vector > class 
 {
 public:
 
-	[[nodiscard]] std::size_t size() const { return std::size(m_container); }
+	void push(T value)
+	{
+		m_data.push_back(std::move(value));
+	}
+
+	[[nodiscard]] auto top() const
+	{
+		return m_data.back();
+	}
+
+	void pop()
+	{
+		m_data.pop_back();
+	}
+
+	[[nodiscard]] auto size() const
+	{ 
+		return std::size(m_data); 
+	}
 
 private:
 
-	C < T > m_container;
-
-}; // template < typename T, template < typename E > typename C = std::vector > class Stack_v2
+	C < T > m_data;
+};
 
 //  ================================================================================================
 
-template < template < typename E > typename C1,
-		   template < typename E > typename C2, typename T >
-		   
-[[nodiscard]] inline C2 < T > copy(const C1 < T > & container_in)
+template 
+< 
+	template < typename E > typename C1,
+	template < typename E > typename C2, typename T 
+>		   
+[[nodiscard]] auto copy(const C1 < T > & container_from)
 {
-	return C2 < T > (std::cbegin(container_in), std::cend(container_in));
+	return C2 < T > (std::cbegin(container_from), std::cend(container_from));
 }
 
 //  ================================================================================================
 
-template < typename T1, typename T2 > struct Pair { T1 x{}; T2 y{}; };
-
-template < typename T > class Container { public: Container(std::size_t, const T &) {} }; 
+template < typename T1, typename T2 > struct Pair 
+{ 
+	T1 x = T1(); 
+	T2 y = T2(); 
+};
 
 //  ================================================================================================
 
-template < typename T > class Outer { public: template < typename U > class Inner; };
+template < typename T > struct Outer { template < typename U > struct Inner; };
 
-template < typename T > template < typename U > class Outer < T > ::Inner {};
+template < typename T > 
+
+template < typename U > struct Outer < T > ::Inner {};
 
 //  ================================================================================================
 
-template < typename T1, typename T2 > class C
+template < typename T1, typename T2 > struct Entity
 {
-public: void f() const { std::cout << "template < T1, T2 > C" << std::endl; }
+	void test() const
+	{ 
+		std::clog << "Entity::test (1)\n"; 
+	}
 };
 
-template < typename T > class C < T, T >
+template < typename T > struct Entity < T, T >
 {
-public: void f() const { std::cout << "template < T > C < T, T > " << std::endl; }
+	void test() const 
+	{ 
+		std::clog << "Entity::test (2)\n"; 
+	}
 };
 
-template < typename T > class C < T, int >
+template < typename T > struct Entity < T, int >
 {
-public: void f() const { std::cout << "template < T > C < T, int > " << std::endl; }
+	void test() const 
+	{ 
+		std::clog << "Entity::test (3)\n"; 
+	}
 };
 
-template < typename T1, typename T2 > class C < T1*, T2* >
+template < typename T1, typename T2 > struct Entity < T1 * , T2 * >
 {
-public: void f() const { std::cout << "template < T1, T2 > C < T1*, T2* > " << std::endl; }
+	void test() const 
+	{ 
+		std::clog << "Entity::test (4)\n"; 
+	}
 };
 
-template <> class C < int, double >
+template <> struct Entity < int, std::string >
 {
-public: void f() const { std::cout << "template <> C < int, double > " << std::endl; }
+	void test() const 
+	{ 
+		std::clog << "Entity::test (5)\n"; 
+	}
 };
 
 //  ================================================================================================
 
 int main()
 {
-	Stack_v1 < double, std::deque < double > > deque_stack_v1;
-
 	Stack_v1 < int > stack;
 
 	stack.push(1);
 	stack.push(2);
 	stack.push(3);
 
-	std::cout << stack.top() << std::endl;
+	assert(stack.top() == 3);
 
 	stack.pop();
 
-	std::cout << stack.top() << std::endl;
+	assert(stack.top() == 2);
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	Stack_v2 < double, std::deque > deque_stack_v2;
+	Stack_v1 < double, std::deque < double > > deque_stack_v1;
+	Stack_v2 < double, std::deque            > deque_stack_v2;
 
-	const std::vector < int > container_in { 1, 2, 3, 4, 5 };
+//  ------------------------------------------------------------------------------------------------
 
-	[[maybe_unused]] const auto container_out = copy < std::vector, std::deque > (container_in);
+	std::vector < int > container_from({ 1, 2, 3, 4, 5 });
 
-//  ================================================================================================
+	auto deque = copy < std::vector, std::deque > (container_from);
+
+	assert(deque == std::deque < int > ({ 1, 2, 3, 4, 5 }));
+
+//  ------------------------------------------------------------------------------------------------
 
 	Stack_v2 new_stack = deque_stack_v2;
 
-	[[maybe_unused]] const Pair      pair     { 1, 42 };
-	[[maybe_unused]] const Container container( 1, 42 );
+	[[maybe_unused]] Pair pair = { 1, 2 };
 
-//  ================================================================================================
+	std::vector vector(5, 0);
 
-	[[maybe_unused]] typename Outer < int > ::template Inner < int > object;
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
+	[[maybe_unused]] typename Outer < int > ::template Inner < int > inner;
 
-	C < char,   double > ().f();
-	C < char,   char   > ().f();
-	C < double, int    > ().f();
-	C < int * , char * > ().f();
-	C < int,    double > ().f();
+//  ------------------------------------------------------------------------------------------------
 
-//	C < int,    int    > ().f(); // error
-//	C < int * , int *  > ().f(); // error
+	using type_1 = int;
 
-	return 0;
+	using type_2 = std::string;
+
+	using type_3 = double;
+
+	Entity < type_1   , type_3   > ().test();
+	Entity < type_2   , type_2   > ().test();
+	Entity < type_2   , type_1   > ().test();
+	Entity < type_1 * , type_2 * > ().test();
+	Entity < type_1   , type_2   > ().test();
+
+//	Entity < type_1   , type_1   > ().test(); // error
+//	Entity < type_1 * , type_1 * > ().test(); // error
 }

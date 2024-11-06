@@ -1,3 +1,6 @@
+#include <algorithm>
+#include <cassert>
+#include <iomanip>
 #include <iostream>
 #include <iterator>
 #include <type_traits>
@@ -5,57 +8,54 @@
 
 //  ================================================================================================
 
-[[nodiscard]] inline constexpr int factorial(int n)
+[[nodiscard]] constexpr int factorial_v1(int x)
 {
-	return (n < 2 ? 1 : n * factorial(n - 1));
+	return x <= 1 ? 1 : x * factorial_v1(x - 1);
 }
 
-[[nodiscard]] consteval int combination(int m, int n)
+[[nodiscard]] consteval int factorial_v2(int x)
 {
-	return factorial(n) / factorial(m) / factorial(n - m);
-}
-
-[[nodiscard]] inline constexpr bool is_prime(int p)
-{
-	for (auto d = 2; d <= p / 2; ++d)
-	{
-		if (p % d == 0) return false;
-	}
-
-	return (p > 1);
+	return x <= 1 ? 1 : x * factorial_v2(x - 1);
 }
 
 //  ================================================================================================
 
-[[nodiscard]] consteval int fibonacci(int n)
+[[nodiscard]] consteval auto is_prime(int x)
 {
-	if (n < 2) return 1; else
+	for (auto d = 2; d * d < x; ++d)
 	{
-		std::vector < int > vector(n, 1);
-
-		for (std::size_t i = 2; i < std::size(vector); ++i)
+		if (x % d == 0) 
 		{
-			vector[i] = vector[i - 1] + vector[i - 2];
+			return false;
 		}
-
-		return vector.back();
 	}
+
+	return x > 1;
 }
 
 //  ================================================================================================
 
-[[nodiscard]] inline constexpr bool f(int) { return std::is_constant_evaluated(); }
-
-//  ================================================================================================
-
-class C1 { static        constexpr auto c = 42; };
-class C2 { static inline const     auto c = 42; };
-
-//  ================================================================================================
-
-template < typename T, typename ... Ts > inline void print(const T & arg, const Ts & ... args)
+[[nodiscard]] consteval auto test_v1()
 {
-	if constexpr (std::cout << arg << std::endl; sizeof...(args) > 0) 
+//	[[maybe_unused]] auto object = new auto(1); // error
+
+	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+
+	return std::ranges::fold_left(vector, 0, std::plus <> ());
+}
+
+//  ================================================================================================
+
+[[nodiscard]] constexpr auto test_v2(int) 
+{ 
+	return std::is_constant_evaluated(); 
+}
+
+//  ================================================================================================
+
+template < typename T, typename ... Ts > void print(T arg, Ts ... args)
+{
+	if constexpr (std::cout << arg << ' '; sizeof...(args) > 0) 
 	{
 		print(args...);
 	}
@@ -63,47 +63,44 @@ template < typename T, typename ... Ts > inline void print(const T & arg, const 
 
 //  ================================================================================================
 
-constinit auto global_variable = 42;
+constinit auto global_x = 1;
 
 //  ================================================================================================
 
 int main()
 {
-	constexpr auto x = 5;
+	constexpr auto x = 5; auto y = 5;
 
-	std::cout << factorial(x) << std::endl;
+//  --------------------------------------------------------------
 
-	[[maybe_unused]] auto y = 42;
+	[[maybe_unused]] constexpr auto factorial_1 = factorial_v1(x);
+//	[[maybe_unused]] constexpr auto factorial_2 = factorial_v1(y); // error
 
-//	[[maybe_unused]] auto z = combination(x, y); // error
+	[[maybe_unused]]           auto factorial_3 = factorial_v1(x); // support: compiler-explorer.com
+	[[maybe_unused]]           auto factorial_4 = factorial_v1(y);
 
-//  ================================================================================================
+	[[maybe_unused]] constexpr auto factorial_5 = factorial_v2(x);
+//	[[maybe_unused]] constexpr auto factorial_6 = factorial_v2(y); // error
 
-	[[maybe_unused]] constexpr auto is_prime_1 = is_prime(5);
-	[[maybe_unused]] constexpr auto is_prime_2 = is_prime(x);
-//	[[maybe_unused]] constexpr auto is_prime_3 = is_prime(y); // error
+	[[maybe_unused]]           auto factorial_7 = factorial_v2(x);
+//	[[maybe_unused]]           auto factorial_8 = factorial_v2(y); // error
 
-	[[maybe_unused]]           auto is_prime_4 = is_prime(5);
-	[[maybe_unused]]           auto is_prime_5 = is_prime(x);
-	[[maybe_unused]]           auto is_prime_6 = is_prime(y);
+//  -----------------------------------------------------------------------
 
-//  ================================================================================================
+	static_assert(is_prime(x) && test_v1() == 15);
 
-	std::cout << fibonacci(5) << std::endl;
+//  ----------------------------------------------------
 
-//  ================================================================================================
+	constexpr auto is_constant_evaluated_1 = test_v2(x);
+		      auto is_constant_evaluated_2 = test_v2(y);
 
-	constexpr auto result = f(x);
+	assert(is_constant_evaluated_1 && !is_constant_evaluated_2);
 
-	std::cout << result << ' ' << f(y) << std::endl;
+//  ----------------------------------------------------------------
 
-//  ================================================================================================
+	std::cout << "args = { "; print(1, "aaaaa"); std::cout << "}\n";
 
-	print('a', 42, 3.14);
+//  ----------------------------------------------------------------
 
-//  ================================================================================================
-
-	std::cout << ++global_variable << std::endl;
-
-	return 0;
+	assert(++global_x == 2);
 }

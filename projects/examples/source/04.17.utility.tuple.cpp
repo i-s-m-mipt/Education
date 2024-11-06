@@ -1,108 +1,109 @@
+#include <cassert>
 #include <iostream>
 #include <ostream>
+#include <string>
 #include <tuple>
 #include <type_traits>
 
+using namespace std::literals;
+
 //  ================================================================================================
 
-namespace detail
+template < typename T, std::size_t I > struct Helper
 {
-    template < typename T, std::size_t N > struct Printer
+    static void print(std::ostream & stream, const T & tuple)
     {
-        static void print(std::ostream & stream, const T & tuple)
-        {
-            Printer < T, N - 1 > ::print(stream, tuple);
+        Helper < T, I - 1 > ::print(stream, tuple);
 
-            stream << ", " << std::get < N - 1 > (tuple);
-        }
-
-    }; // template < typename T, std::size_t N > struct Printer
+        stream << " " << std::get < I - 1 > (tuple);
+    }
+};
     
-    template < typename T > struct Printer < T, 1 >
+template < typename T > struct Helper < T, 1 >
+{
+    static void print(std::ostream & stream, const T & tuple)
     {
-        static void print(std::ostream & stream, const T & tuple)
-        {
-            stream << std::get < 0 > (tuple);
-        }
+        stream << std::get < 0 > (tuple);
+    }
+};
 
-    }; // template < typename T > struct Printer < T, 1 >
+//  ================================================================================================
 
-    template < typename ... Ts > requires (sizeof...(Ts) == 0)
+template 
+< 
+    typename ... Ts 
+> 
+auto & operator<<(std::ostream & stream, const std::tuple < Ts ... > & tuple)
+{
+    if constexpr (sizeof...(Ts) > 0)
+    {
+        stream << "{ ";
 
-    void print(std::ostream & stream, const std::tuple < Ts ... > & tuple)
+        Helper < decltype(tuple), sizeof...(Ts) > ::print(stream, tuple);
+
+        stream << " }";
+    }
+	else
     {
         stream << "{}";
     }
     
-    template < typename ... Ts > requires (sizeof...(Ts) != 0)
-
-    void print(std::ostream & stream, const std::tuple < Ts ... > & tuple)
-    {
-        stream << "{ ";
-
-        Printer < decltype(tuple), sizeof...(Ts) > ::print(stream, tuple);
-
-        stream << " }";
-    }
-
-} // namespace detail
-
-//  ================================================================================================
-
-template < typename ... Ts > 
-
-inline std::ostream & operator<<(std::ostream & stream, const std::tuple < Ts ... > & tuple)
-{
-	detail::print(stream, tuple); return stream;
+    return stream;
 }
-
-//  ================================================================================================
-
-[[nodiscard]] inline constexpr int nodiscard_function() { return 42; }
 
 //  ================================================================================================
 
 int main()
 {
-    constexpr auto tuple_1 = std::make_tuple('a', 42, 3.14);
+    constexpr auto tuple_c = std::make_tuple('a', 1, 1.0);
 
-//  ================================================================================================
+//  ------------------------------------------------------
 
-    using tuple_t = decltype(tuple_1);
+    using tuple_t = decltype(tuple_c);
 
     static_assert(std::tuple_size_v < tuple_t > == 3);
 
-    static_assert(std::is_same_v < std::tuple_element_t < 0, tuple_t > , const char   > );
-    static_assert(std::is_same_v < std::tuple_element_t < 1, tuple_t > , const int    > );
-    static_assert(std::is_same_v < std::tuple_element_t < 2, tuple_t > , const double > );
+    static_assert(std::is_same_v < std::tuple_element_t < 1, tuple_t > , const int > );
 
-//  ================================================================================================
+    static_assert(std::get < 1 > (tuple_c) == std::get < int > (tuple_c));
 
-    static_assert(std::get < 0 > (tuple_1) == std::get < char   > (tuple_1));
-	static_assert(std::get < 1 > (tuple_1) == std::get < int    > (tuple_1));
-	static_assert(std::get < 2 > (tuple_1) == std::get < double > (tuple_1));
+//  ----------------------------------------------------------------------
 
-//  ================================================================================================
+    auto tuple_1 = std::make_tuple(1, "aaaaa"s);
+    
+    auto tuple_2 = tuple_1;
+    
+//  -----------------------------
 
-    char c{}; [[maybe_unused]] int i{}; double d{};
- 
-    std::tie(c, std::ignore, d) = tuple_1;
+	std::get < 0 > (tuple_2) = 2;
 
-    std::ignore = nodiscard_function();
+	std::get < 1 > (tuple_2) = "bbbbb"s;
 
-    auto tuple_2 = std::make_tuple('b', 43, 3.15);
+//  ------------------------------------
 
-    std::cout << std::tuple_cat(tuple_1, tuple_2) << std::endl;
- 
-    auto & [rc, ri, rd] = tuple_2;
+    auto f = false, t = true;
 
-    rc = std::get < 0 > (tuple_1); 
-    ri = std::get < 1 > (tuple_1);
-    rd = std::get < 2 > (tuple_1);
+//  ----------------------------------
 
-//  ================================================================================================
+    assert((tuple_1 <  tuple_2) == t);
+    assert((tuple_1 >  tuple_2) == f);
+    assert((tuple_1 <= tuple_2) == t);
+    assert((tuple_1 >= tuple_2) == f);
+    assert((tuple_1 == tuple_2) == f);
+    assert((tuple_1 != tuple_2) == t);
 
-    std::cout << tuple_2 << std::endl;
+//  ---------------------------------------------
 
-    return 0;
+    std::cout << "tuple_1 = " << tuple_1 << '\n';
+	std::cout << "tuple_2 = " << tuple_2 << '\n';
+
+//  ---------------------------------------------------------------
+
+    auto x = 0; std::tie(x, std::ignore) = tuple_1; assert(x == 1);
+
+    assert(std::tuple_cat(tuple_1, tuple_2) == std::make_tuple(1, "aaaaa"s, 2, "bbbbb"s));
+
+    const auto & [data_1, data_2] = tuple_2; // support: cppinsights.io
+
+    assert(data_1 == 2 && data_2 == "bbbbb");
 }

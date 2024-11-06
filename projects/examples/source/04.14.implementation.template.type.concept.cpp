@@ -1,5 +1,10 @@
+#include <cassert>
+#include <cmath>
 #include <concepts>
+#include <string>
 #include <type_traits>
+
+using namespace std::literals;
 
 //  ================================================================================================
 
@@ -7,7 +12,7 @@ template < typename T > concept integral = std::is_integral_v < T > ;
 
 template < typename T > concept floating_point = std::is_floating_point_v < T > ;
 
-template < typename T > concept arithmetic = (integral < T > || floating_point < T > );
+template < typename T > concept arithmetic = integral < T > || floating_point < T > ;
 
 //  ================================================================================================
 
@@ -27,46 +32,48 @@ template < typename T > concept ordable = equable < T > && requires (T x, T y)
     { x >= y } -> std::convertible_to < bool > ;
 };
 
-template < typename T > concept typable = requires { typename T::value_type; };
+template < typename T > concept typable = requires 
+{ 
+    typename T::value_type; 
+};
 
 //  ================================================================================================
 
-template < typename T > [[nodiscard]] inline constexpr T max_v1(T x, T y) requires integral < T >
+template < typename T > [[nodiscard]] auto max_v1(T x, T y) requires integral < T >
 {
-	return (x < y ? y : x);
+	return x < y ? y : x;
 }
 
-[[nodiscard]] inline constexpr integral auto max_v2(integral auto x, integral auto y)
+[[nodiscard]] auto max_v2(integral auto x, integral auto y)
 {
-	return (x < y ? y : x);
+	return x < y ? y : x;
 }
 
-template < integral T > [[nodiscard]] inline constexpr integral auto max_v3(T x, T y)
+template < integral T > [[nodiscard]] auto max_v3(T x, T y)
 {
-	return (x < y ? y : x);
+	return x < y ? y : x;
 }
 
 //  ================================================================================================
 
-template < typename T > requires std::regular < T > class Container {};
+template < typename T > requires std::regular < T > struct Entity {};
 
 //  ================================================================================================
 
 int main()
 {
-    static_assert(max_v1(100, 200) == 200);
-//  static_assert(max_v1(1.0, 2.0) == 2.0); // error
+    assert(max_v1(1, 2) == 2);
+    assert(max_v2(1, 2) == 2);
+    assert(max_v3(1, 2) == 2);
 
-    static_assert(max_v2(100, 200) == 200);
-//  static_assert(max_v2(1.0, 2.0) == 2.0); // error
+//  ------------------------------------------------------------------------------------------------
+ 
+//  assert(max_v1("aaaaa"s, "bbbbb"s) == "bbbbb"s); // error
+//  assert(max_v2("aaaaa"s, "bbbbb"s) == "bbbbb"s); // error
+//  assert(max_v3("aaaaa"s, "bbbbb"s) == "bbbbb"s); // error
 
-    static_assert(max_v3(100, 200) == 200);
-//  static_assert(max_v3(1.0, 2.0) == 2.0); // error
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
-
-    [[maybe_unused]] constexpr Container < int   > container_1;
-//  [[maybe_unused]] constexpr Container < int & > container_2; // error
-
-    return 0;
+    [[maybe_unused]] Entity < int   > entity_1;
+//  [[maybe_unused]] Entity < int & > entity_2; // error
 }

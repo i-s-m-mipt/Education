@@ -1,25 +1,28 @@
+#include <cassert>
 #include <iostream>
+#include <string>
+
+using namespace std::literals;
 
 //  ================================================================================================
 
-void print_v1() 
-{
-	std::cout << std::endl; 
-}
+void print_v1() {}
 
-template < typename T, typename ... Ts > inline void print_v1(T arg, Ts ... args)
+template < typename T, typename ... Ts > void print_v1(T arg, Ts ... args)
 {
-	std::cout << arg << ' '; print_v1(args...);
+	std::cout << arg << ' '; 
+	
+	print_v1(args...); // support: cppinsights.io
 }
 
 //  ================================================================================================
 
-template < typename T > inline void print_v2(T arg)
+template < typename T > void print_v2(T arg)
 {
 	std::cout << arg << ' ';
 }
 
-template < typename T, typename ... Ts > inline void print_v2(T arg, Ts ... args)
+template < typename T, typename ... Ts > void print_v2(T arg, Ts ... args)
 {
 	print_v2(arg);
 
@@ -28,83 +31,66 @@ template < typename T, typename ... Ts > inline void print_v2(T arg, Ts ... args
 
 //  ================================================================================================
 
-class Point
-{
-public:
-
-	explicit Point(double x, double y) : m_x(x), m_y(y) {}
-
-private:
-
-	double m_x;
-	double m_y;
-
-}; // class Point
+template < typename ... Ts > void print_v3(Ts ... args) 
+{ 
+	print_v1(args + args...); // support: cppinsights.io
+}
 
 //  ================================================================================================
 
-template < typename T, typename ... Ts > [[nodiscard]] inline T * make_object(Ts ... args)
+template < typename ... Ts > [[nodiscard]] auto reduce_v1(Ts ... args)
 {
-	std::cout << sizeof...(args) << std::endl;
+	return (... + args); // support: cppinsights.io
+}
+
+template < typename ... Ts > [[nodiscard]] auto reduce_v2(Ts ... args)
+{
+	return (args + ...); // support: cppinsights.io
+}
+
+template < typename ... Ts > [[nodiscard]] auto reduce_v3(Ts ... args)
+{
+	return (0 + ... + args); // support: cppinsights.io
+}
+
+template < typename ... Ts > [[nodiscard]] auto reduce_v4(Ts ... args)
+{
+	return (args + ... + 0); // support: cppinsights.io
+}
+
+//  ================================================================================================
+
+struct Entity 
+{ 
+	int data_1 = 0; 
+	int data_2 = 0; 
+};
+
+//  ================================================================================================
+
+template < typename T, typename ... Ts > [[nodiscard]] auto make_object(Ts ... args)
+{
+	std::cout << "sizeof...(args) = " << sizeof...(args) << '\n';
 
 	return new T(args...);
 }
 
 //  ================================================================================================
 
-template < typename ... Ts > [[nodiscard]] inline auto sum_v1(Ts ... args)
-{
-	return (... + args); // detail: (((arg_1 + arg_2) + arg_3) + ...)
-}
-
-template < typename ... Ts > [[nodiscard]] inline auto sum_v2(Ts ... args)
-{
-	return (args + ...); // detail: (... + (arg_n-2 + (arg_n-1 + arg_n)))
-}
-
-template < typename ... Ts > [[nodiscard]] inline auto sum_v3(Ts ... args)
-{
-	return (42 + ... + args); // detail: (((42 + arg_1) + arg_2) + ...)
-}
-
-template < typename ... Ts > [[nodiscard]] inline auto sum_v4(Ts ... args)
-{
-	return (args + ... + 42); // detail: (... + (arg_n-1 + (arg_n + 42)))
-}
-
-//  ================================================================================================
-
-template < typename ... Ts > inline void f(Ts ... args)
-{
-//	print_v1( args + 42... ); // error
-	print_v1((args + 42)...);
-	print_v1( args + 42 ...);
-}
-
-template < typename ... Ts > inline void g(Ts ... args) { print_v1(args + args...); }
-
-//  ================================================================================================
-
 int main()
 {
-	print_v1('a', 42, 3.14);
-	print_v2('a', 42, 3.14); std::cout << std::endl;
+	std::cout << "args = { "; print_v1(1, "aaaaa"s); std::cout << "}\n";
+	std::cout << "args = { "; print_v2(1, "aaaaa"s); std::cout << "}\n";
+	std::cout << "args = { "; print_v3(1, "aaaaa"s); std::cout << "}\n";
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	delete make_object < Point > (1.0, 1.0);
+	assert(reduce_v1(1, 2) == 3);
+	assert(reduce_v2(1, 2) == 3);
+	assert(reduce_v3(1, 2) == 3);
+	assert(reduce_v4(1, 2) == 3);
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	std::cout << sum_v1(1, 2, 3) << std::endl;
-	std::cout << sum_v2(1, 2, 3) << std::endl;
-	std::cout << sum_v3(1, 2, 3) << std::endl;
-	std::cout << sum_v4(1, 2, 3) << std::endl;
-
-//  ================================================================================================
-
-	f(1, 2, 3);
-	g(1, 2, 3);
-
-	return 0;
+	delete make_object < Entity > (1, 1);
 }
