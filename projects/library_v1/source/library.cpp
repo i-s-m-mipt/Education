@@ -1,12 +1,9 @@
-#include <iostream>
+#include "library.hpp"
 
 namespace library_v1
 {
-	[[nodiscard]] int f(int x)
-	{
-		std::cout << "Hello, static library!" << std::endl;
-
-		return x;
+	[[nodiscard]] int test(int x)
+	{ 
+		return x; 
 	}
-
-} // namespace library_v1
+}
