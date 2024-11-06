@@ -17,18 +17,21 @@ int main()
 
     try
     {
-        std::cout << boost::multiprecision::checked_uint128_t(0) - 1 << std::endl;
+        std::ignore = boost::multiprecision::checked_uint128_t(0) - 1;
     }
-    catch (const std::exception & exception)
+    catch (const std::range_error & exception)
     {
-        std::cerr << exception.what() << '\n';
+        std::cerr << "main : " << exception.what() << '\n';
     }
 
 //  ================================================================================================
 
-    boost::multiprecision::cpp_int result = 1; for (auto i = 1; i < 101; ++i) result *= i; 
+    boost::multiprecision::cpp_int result = 1; 
+    
+    for (auto i = 1; i <= 100; ++i) 
+    {
+        result *= i; 
+    }
    
-    std::cout << result << std::endl;
-
-    return 0;
+    std::cout << "100! = " << result << '\n';
 }

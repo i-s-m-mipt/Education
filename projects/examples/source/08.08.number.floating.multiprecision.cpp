@@ -8,7 +8,7 @@
 
 //  ================================================================================================
 
-template < typename T > [[nodiscard]] inline constexpr T area(T radius) noexcept
+template < typename T > [[nodiscard]] auto area(T radius)
 {
 	return boost::math::constants::pi < T > () * radius * radius;
 }
@@ -19,9 +19,9 @@ int main()
 {
     using float_100 = boost::multiprecision::cpp_bin_float_100;
 
-    constexpr auto precision = std::numeric_limits < float_100 > ::digits10;
+    auto max_precision = std::numeric_limits < float_100 > ::digits10;
 
-    std::cout << std::setprecision(precision) << std::fixed;
+    std::cout << std::setprecision(max_precision) << std::fixed;
 
     std::cout << float_100(3.14      ) << std::endl;
     std::cout << float_100(1.0  / 3.0) << std::endl;
@@ -33,13 +33,11 @@ int main()
 
     std::cout << boost::multiprecision::log(f) << std::endl;
 
-    std::cout << boost::math::tgamma(float_100(1000)) << std::endl;
+    std::cout << boost::math::tgamma(float_100(1'000)) << std::endl;
 
 //  ================================================================================================
 
     std::cout << area(          1.0f) << std::endl;
     std::cout << area(          1.0 ) << std::endl;
     std::cout << area(float_100(1.0)) << std::endl;
-
-    return 0;
 }

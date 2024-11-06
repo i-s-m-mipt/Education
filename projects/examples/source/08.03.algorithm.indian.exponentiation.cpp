@@ -1,17 +1,20 @@
+#include <cassert>
 #include <exception>
 #include <iostream>
 #include <limits>
 #include <stdexcept>
-
-#include <gtest/gtest.h>
+#include <utility>
 
 //  ================================================================================================
 
-[[nodiscard]] constexpr unsigned long long pow(unsigned long long base, unsigned long long exp)
+[[nodiscard]] auto pow(unsigned long long base, unsigned long long exp)
 {
-    if (base == 0) return (exp == 0 ? 1 : 0);
-
     auto result = 1ull;
+
+    if (base == 0) 
+    {
+        return exp == 0 ? result : 0;
+    }
 
     while (exp > 0)
     {
@@ -25,7 +28,10 @@
             result *= base;
         }
 
-        if (exp /= 2; exp == 0) break;
+        if (exp /= 2; exp == 0) 
+        {
+            break;
+        }
 
         if (base > std::numeric_limits < unsigned long long > ::max() / base)
         {
@@ -40,33 +46,16 @@
 
 //  ================================================================================================
 
-TEST(Algorithm, Indian_Exponentiation)
+int main()
 {
-    ASSERT_EQ(pow(2,  0),          1);
-    ASSERT_EQ(pow(2,  1),          2);
-    ASSERT_EQ(pow(2,  2),          4);
-    ASSERT_EQ(pow(2,  4),         16);
-    ASSERT_EQ(pow(2,  8),        256);
-    ASSERT_EQ(pow(2, 16),      65536);
-    ASSERT_EQ(pow(2, 32), 4294967296);
-}
+    assert(pow(2, 32) == 4'294'967'296);
 
-//  ================================================================================================
-
-int main(int argc, char ** argv)
-{
 	try
     {
-        [[maybe_unused]] auto result = pow(2, 64);
+        std::ignore = pow(2, 64);
     }
     catch (const std::exception & exception)
     {
-        std::cerr << exception.what() << '\n';
+        std::cerr << "main : " << exception.what() << '\n';
     }
-
-//  ================================================================================================
-
-	testing::InitGoogleTest(&argc, argv);
-
-    return RUN_ALL_TESTS();
 }

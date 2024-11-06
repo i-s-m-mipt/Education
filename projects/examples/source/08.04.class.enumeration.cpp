@@ -1,61 +1,57 @@
 #include <cassert>
 #include <cstdint>
 #include <iostream>
+#include <utility>
 
 //  ================================================================================================
 
-enum class Color { R, G, B, quantity };
+enum class Color : std::uint8_t 
+{ 
+	R, G, B, quantity 
+};
 
 //  ================================================================================================
 
-void f(Color color)
+void test(Color color)
 {
 	switch (color)
 	{
-		case Color::R: { std::cout << "R"; break; }
-		case Color::G: { std::cout << "G"; break; }
-		case Color::B: { std::cout << "B"; break; }
+		case Color::R: { std::clog << "(1)"; break; }
+		case Color::G: { std::clog << "(2)"; break; }
+		case Color::B: { std::clog << "(3)"; break; }
 
 		[[unlikely]] default:
 		{
-			std::cout << "default"; break;
+			std::clog << "(4)"; break;
 		}
 	}
 
-	std::cout << std::endl;
+	std::clog << '\n';
 }
 
 //  ================================================================================================
 
-enum class Message : std::uint16_t { empty, debug, error, fatal };
-
-//  ================================================================================================
-
-enum State : std::uint16_t
+enum State : std::uint8_t
 {
-	alpha = 0x01,
-	betta = 0x02,
-	gamma = 0x04,
-	delta = 0x08
-
-}; // enum State : std::uint16_t
-
-inline constexpr void g(std::uint16_t state) noexcept { assert(state & delta || state & gamma); }
+	fast = 0x01,
+	slow = 0x02,
+};
 
 //  ================================================================================================
 
 int main()
 {
-	std::cout << "Enter unsigned integer: "; unsigned int color{}; std::cin >> color;
+	std::cout << "Enter 1 unsigned integer : "; unsigned int color; std::cin >> color;
 
-	if (color < static_cast < unsigned int > (Color::quantity)) f(static_cast < Color > (color));
+	if (color < static_cast < unsigned int > (Color::quantity)) 
+	{
+		test(static_cast < Color > (color));
+	}
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	constexpr State state_1 = alpha;
-	constexpr State state_2 = gamma;
+	auto state = fast | slow;
 
-	g(state_1 | state_2); // support: std::ios_base
-	
-	return 0;
+	[[maybe_unused]] auto is_fast = static_cast < bool > (state & fast);
+	[[maybe_unused]] auto is_slow = static_cast < bool > (state & slow);
 }

@@ -1,22 +1,24 @@
 #include <bitset>
+#include <cassert>
 #include <cmath>
 #include <iomanip>
 #include <iostream>
 
-#include <gtest/gtest.h>
-
 //  ================================================================================================
 
-[[nodiscard]] inline constexpr unsigned int gray_encode(unsigned int n) noexcept
+[[nodiscard]] auto encode(unsigned int x)
 {
-    return n ^ (n >> 1);
+    return x ^ (x >> 1);
 }
 
-[[nodiscard]] inline constexpr unsigned int gray_decode(unsigned int code) noexcept
+[[nodiscard]] auto decode(unsigned int code)
 {
-    for (unsigned int bit = 1 << 31; bit > 1; bit >>= 1)
+    for (auto bit = 1u << 31; bit > 1; bit >>= 1)
     {
-        if (code & bit) code ^= bit >> 1;
+        if (code & bit) 
+        {
+            code ^= bit >> 1;
+        }
     }
 
     return code;
@@ -24,34 +26,18 @@
 
 //  ================================================================================================
 
-TEST(Algorithm, Binary_Gray_Code)
+int main()
 {
-    constexpr std::size_t size = 5;
+    std::cout << '\n';
 
-    for (unsigned int n = 0; n < static_cast < unsigned int > (std::pow(2, size)); ++n)
+    for (unsigned int n = 0; n < static_cast < unsigned int > (std::pow(2, 5)); ++n)
     {
-        ASSERT_EQ(n, gray_decode(gray_encode(n)));
-    }
-}
+        std::cout << "n = " << std::setw(2) << std::setfill('0') << std::right << n << ' ';
 
-//  ================================================================================================
+        std::cout << "code = " << std::bitset < 5 > (encode(n)) << '\n';
 
-int main(int argc, char ** argv)
-{
-    constexpr std::size_t size = 5;
-
-    using binary = std::bitset < size > ;
-
-    for (unsigned int n = 0; n < static_cast < unsigned int > (std::pow(2, size)); ++n)
-    {
-        std::cout << std::setw(2) << std::right << std::setfill('0') << n << ' ';
-
-        std::cout << binary(gray_encode(n)) << std::endl;
+        assert(decode(encode(n)) == n);
     }
 
-//  ================================================================================================
-
-    testing::InitGoogleTest(&argc, argv);
-
-    return RUN_ALL_TESTS();
+    std::cout << '\n';
 }
