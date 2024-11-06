@@ -18,7 +18,7 @@ int main()
 
 	if (std::fstream fout("X/x.txt", std::ios::out); !fout)
 	{
-		throw std::runtime_error("invalid file stream");
+		throw std::runtime_error("invalid stream");
 	}
 
 	std::filesystem::copy("X/x.txt", "X/y.txt");

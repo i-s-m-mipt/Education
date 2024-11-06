@@ -79,6 +79,6 @@ int main() // support: locale -a
 
 	if (state != std::ios_base::goodbit) 
 	{
-		throw std::runtime_error("invalid format");
+		throw std::runtime_error("invalid data");
 	}
 }

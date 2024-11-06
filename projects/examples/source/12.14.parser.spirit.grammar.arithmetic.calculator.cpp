@@ -96,7 +96,7 @@ struct Calculator
 
             default: 
             { 
-                throw std::runtime_error("invalid sign"); 
+                throw std::runtime_error("invalid data"); 
             }
         }
     }
@@ -112,7 +112,7 @@ struct Calculator
 
             default: 
             {
-                throw std::runtime_error("invalid step");
+                throw std::runtime_error("invalid data");
             }
         }
     }

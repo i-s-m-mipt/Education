@@ -20,7 +20,7 @@ void save(const std::filesystem::path & path, const nlohmann::json & json)
 	}
 	else 
     {
-        throw std::runtime_error("invalid file stream");
+        throw std::runtime_error("invalid stream");
     }
 }
 
@@ -34,7 +34,7 @@ auto load(const std::filesystem::path & path)
 	}
 	else 
     {
-        throw std::runtime_error("invalid file stream");
+        throw std::runtime_error("invalid stream");
     }
 }
 

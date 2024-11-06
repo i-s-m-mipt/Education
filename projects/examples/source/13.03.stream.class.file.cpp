@@ -23,7 +23,7 @@ public:
         }
         else 
         {
-            throw std::runtime_error("invalid file stream");
+            throw std::runtime_error("invalid stream");
         }
     }
 

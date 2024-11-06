@@ -48,14 +48,14 @@ private:
 		{
 			if (!std::isdigit(string[0]) && std::size(string) == 1)
 			{
-				throw std::runtime_error("invalid input");
+				throw std::runtime_error("invalid data");
 			}
 
 			std::ranges::for_each(std::next(std::begin(string)), std::end(string), [](auto c)
 			{ 
 				if (!std::isdigit(c)) 
 				{
-					throw std::runtime_error("invalid input"); 
+					throw std::runtime_error("invalid data"); 
 				}
 			});
 
@@ -79,7 +79,7 @@ private:
 		}
 		else 
 		{
-			throw std::runtime_error("invalid input");
+			throw std::runtime_error("invalid data");
 		}
 	}
 
@@ -250,9 +250,9 @@ public:
 
 	auto & operator/=(Big_Int other)
 	{
-		if (other.m_n_digits == 0 || (other.m_n_digits == 1 && other.m_digits.front() == 0))
+		if (other.m_n_digits == 1 && other.m_digits.front() == 0)
 		{
-			throw std::runtime_error("invalid division");
+			throw std::runtime_error("invalid operand");
 		}
 
 		Big_Int result; result.m_n_digits = m_n_digits;
@@ -345,7 +345,7 @@ public:
 	{
 		if (x.m_is_negative) 
 		{
-			throw std::runtime_error("invalid sign");
+			throw std::runtime_error("invalid operand");
 		}
 
 		auto position = (static_cast < int > (x.m_n_digits) + 1) / 2;

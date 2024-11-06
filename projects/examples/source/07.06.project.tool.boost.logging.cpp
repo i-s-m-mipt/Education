@@ -103,7 +103,7 @@ private:
 		{
 			if (!s_logger.add_attribute(attribute.first, attribute.second).second)
 			{
-				throw std::runtime_error("invalid attribute [" + attribute.first + "]");
+				throw std::runtime_error("invalid attribute");
 			}
 		}
 

@@ -43,7 +43,7 @@ public:
 			
 			default: 
 			{
-				throw std::runtime_error("invalid order");
+				throw std::runtime_error("invalid data");
 			}
 		}
 	}
