@@ -1,3 +1,4 @@
+#include <cassert>
 #include <iterator>
 #include <string>
 #include <string_view>
@@ -11,82 +12,57 @@ using namespace std::literals;
 
 #include <boost/spirit/home/x3.hpp>
 
-#include <gtest/gtest.h>
-
-//  ================================================================================================
-
-TEST(Parser, Variable)
+int main()
 {
-    const auto data = "1"sv;
+    auto skip = boost::spirit::x3::ascii::space;
 
-    const auto rule = boost::spirit::x3::int_;
+    auto data_1 = "1"sv; auto begin_1 = std::cbegin(data_1), end_1 = std::cend(data_1);
 
-    const auto skip = boost::spirit::x3::ascii::space;
+    auto rule_1 = boost::spirit::x3::int_;
 
-    int value{};
+    auto value = 0;
 
-    boost::spirit::x3::phrase_parse(std::cbegin(data), std::cend(data), rule, skip, value);
+    boost::spirit::x3::phrase_parse(begin_1, end_1, rule_1, skip, value);
 
-    ASSERT_EQ(value, 1);
-}
+    assert(value == 1);
+    
+//  -------------------------------------------------------------------------------------
 
-//  ================================================================================================
+    auto data_2 = "1 2"sv; auto begin_2 = std::cbegin(data_2), end_2 = std::cend(data_2);
 
-TEST(Parser, Pair)
-{
-    const auto data = "1 2"sv;
-
-    const auto rule = boost::spirit::x3::int_ >> boost::spirit::x3::int_;
-
-    const auto skip = boost::spirit::x3::ascii::space;
+    auto rule_2 = boost::spirit::x3::int_ >> boost::spirit::x3::int_;
 
     std::pair < int, int > pair;
 
-    boost::spirit::x3::phrase_parse(std::cbegin(data), std::cend(data), rule, skip, pair);
+    boost::spirit::x3::phrase_parse(begin_2, end_2, rule_2, skip, pair);
 
-    ASSERT_EQ(pair, std::pair(1, 2));
-}
+    assert(pair == std::make_pair(1, 2));
 
-//  ================================================================================================
+//  ----------------------------------------------------------------------------------------
 
-TEST(Parser, Tuple)
-{
-    const auto data = "(1, 2)"sv;
+    auto data_3 = "(1, 2)"sv; auto begin_3 = std::cbegin(data_3), end_3 = std::cend(data_3);
 
-    const auto rule = '(' >> boost::spirit::x3::int_ >> ',' >> boost::spirit::x3::int_ >> ')';
-
-    const auto skip = boost::spirit::x3::ascii::space;
+    auto rule_3 = '(' >> boost::spirit::x3::int_ >> ',' >> boost::spirit::x3::int_ >> ')';
 
     std::tuple < int, int > tuple;
 
-    boost::spirit::x3::phrase_parse(std::cbegin(data), std::cend(data), rule, skip, tuple);
+    boost::spirit::x3::phrase_parse(begin_3, end_3, rule_3, skip, tuple);
 
-    ASSERT_EQ(tuple, std::tuple(1, 2));
-}
+    assert(tuple == std::make_tuple(1, 2));
 
-//  ================================================================================================
+//  -----------------------------------------------------------------------------------
 
-TEST(Parser, Attribute)
-{
-    const auto data = "1"sv;
+    auto data_4 = "1"sv; auto begin_4 = std::cbegin(data_4), end_4 = std::cend(data_4);
 
-    const auto test = [](auto && context)
-    { 
-        ASSERT_EQ(boost::spirit::x3::_attr(context), 1); 
-    };
+    auto rule_4 = boost::spirit::x3::int_
+    [
+        (
+            [](auto && context)
+            { 
+                assert(boost::spirit::x3::_attr(context) == 1); 
+            }
+        )
+    ];
 
-    const auto rule = boost::spirit::x3::int_[test];
-
-    const auto skip = boost::spirit::x3::ascii::space;
-
-    boost::spirit::x3::phrase_parse(std::cbegin(data), std::cend(data), rule, skip);
-}
-
-//  ================================================================================================
-
-int main(int argc, char ** argv)
-{
-    testing::InitGoogleTest(&argc, argv); 
-    
-    return RUN_ALL_TESTS();
+    boost::spirit::x3::phrase_parse(begin_4, end_4, rule_4, skip);
 }

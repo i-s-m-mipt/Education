@@ -16,38 +16,39 @@ using namespace std::literals;
 
 struct case_insensitive_traits : public std::char_traits < char > 
 {
-    [[nodiscard]] static bool eq(char c1, char c2) noexcept 
-    { 
-        return std::toupper(c1) == std::toupper(c2); 
-    }
+    [[nodiscard]] static auto eq(char c1, char c2) { return std::toupper(c1) == std::toupper(c2); }
+    [[nodiscard]] static auto lt(char c1, char c2) { return std::toupper(c1) <  std::toupper(c2); }
 
-    [[nodiscard]] static bool lt(char c1, char c2) noexcept 
-    { 
-        return std::toupper(c1) <  std::toupper(c2); 
-    }
-
-    [[nodiscard]] static int compare(const char * string_1, 
-                                     const char * string_2, std::size_t n) noexcept
+    [[nodiscard]] static auto compare
+    (
+        const char * string_1, 
+        const char * string_2, std::size_t size
+    ) 
     {
-        for (std::size_t i = 0; i < n; ++i) 
+        for (auto i = 0uz; i < size; ++i) 
         {
-            if (!eq(string_1[i], string_2[i])) return lt(string_1[i], string_2[i]) ? -1 : +1;
+            if (!eq(string_1[i], string_2[i])) 
+            {
+                return lt(string_1[i], string_2[i]) ? -1 : +1;
+            }
         }
 
         return 0;
     }
     
-    [[nodiscard]] static const char * find(const char * string, std::size_t n, char c) noexcept
+    [[nodiscard]] static const char * find(const char * string, std::size_t size, char c)
     {
-        for (std::size_t i = 0; i < n; ++i) 
+        for (auto i = 0uz; i < size; ++i) 
         {
-            if (eq(string[i], c)) return &(string[i]);
+            if (eq(string[i], c)) 
+            {
+                return &(string[i]);
+            }
         }
 
         return nullptr;
     }
-
-}; // struct case_insensitive_traits : public std::char_traits < char > 
+};
 
 //  ================================================================================================
 
@@ -55,33 +56,33 @@ using cistring_t = std::basic_string < char, case_insensitive_traits > ;
 
 //  ================================================================================================
 
-inline std::ostream & operator<<(std::ostream & stream, const cistring_t & cistring)
+auto & operator<<(std::ostream & stream, const cistring_t & cistring)
 {
-    return (stream << std::string(cistring.data(), std::size(cistring)));
+    return stream << std::string(cistring.data(), std::size(cistring));
 }
 
 //  ================================================================================================
 
-template < typename T1, typename T2 > 
-
-[[nodiscard]] inline constexpr std::ptrdiff_t distance_in_bytes(const T1 * ptr_1, 
-                                                                const T2 * ptr_2) noexcept
+template < typename T1, typename T2 > [[nodiscard]] auto distance(T1 * ptr_1, T2 * ptr_2)
 {
-    return (std::bit_cast < const std::byte * > (ptr_1) - 
-            std::bit_cast < const std::byte * > (ptr_2));
+    return 
+    (
+        std::bit_cast < std::byte * > (ptr_1) - 
+        std::bit_cast < std::byte * > (ptr_2)
+    );
 }
 
 //  ================================================================================================
 
-inline void print(std::string_view view) { std::cout << view << std::endl; }
+void test_v1(std::string_view) {}
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state)
+void test_v2(benchmark::State & state)
 {
-    const std::string string(65536, 'a');
+    std::string string(65536, 'a');
 
-    for (auto _ : state)
+    for (auto value : state)
     {
         benchmark::DoNotOptimize(string.substr(0, state.range(0)));	
     }
@@ -91,13 +92,13 @@ void test_1(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state)
+void test_v3(benchmark::State & state)
 {
-    const std::string string(65536, 'a');
+    std::string string(65536, 'a');
 
-    const std::string_view view(string);
+    std::string_view view(string);
 
-    for (auto _ : state)
+    for (auto value : state)
     {
         benchmark::DoNotOptimize(view.substr(0, state.range(0)));	
     }
@@ -107,89 +108,94 @@ void test_2(benchmark::State & state)
 
 //  ================================================================================================
 
-BENCHMARK(test_1)->DenseRange(8192, 65537, 8192)->Complexity();
-BENCHMARK(test_2)->DenseRange(8192, 65537, 8192)->Complexity();
+BENCHMARK(test_v2)->DenseRange(8192, 65537, 8192)->Complexity();
+BENCHMARK(test_v3)->DenseRange(8192, 65537, 8192)->Complexity();
 
 //  ================================================================================================
 
 int main(int argc, char ** argv)
 {
-    std::cout << "Enter string: "; std::string string_1; std::cin >> string_1;
-    std::cout << "Enter string: "; std::string string_2; 
+    std::cout << '\n';
+
+    std::cout << "Enter 1 string : "; std::string string_1; std::cin >> string_1;
+
+    std::cout << "Enter 1 string : "; std::string string_2; 
     
     std::getline(std::cin >> std::ws, string_2);
 
-    std::cout << std::quoted(string_1) << ' ' << std::quoted(string_2) << std::endl;
+    std::cout << '\n';
+
+    std::cout << "std::quoted(string_1) = " << std::quoted(string_1) << '\n';
+
+    std::cout << "std::quoted(string_2) = " << std::quoted(string_2) << '\n'<< '\n';
 
 //  ================================================================================================
 
-    const auto string_3 = "Hello, world!"s;
+    auto string_3 = "aaaaabbbbb"s;
 
-    if (const auto index = string_3.find(','); index != std::string::npos)
+    if (auto index = string_3.find('b'); index != std::string::npos)
     {
-        assert(string_3.substr(0, index) == "Hello");
+        assert(string_3.substr(0, index) == "aaaaa");
     }
 
-    assert(string_3.starts_with("Hello") && string_3.ends_with('!'));
+    assert(string_3.starts_with("aaaaa") && string_3.ends_with("bbbbb"));
 
-    auto string_4 = "43"s; string_4.erase(1); string_4.append("2");
-
-    assert(std::stoi(string_4) == 42 && string_4 == std::to_string(42));
+    assert(std::stoi("1") == 1 && "1" == std::to_string(1));
 
 //  ================================================================================================
 
-    [[maybe_unused]] constexpr char char_array[]{ 'h', 'e', 'l', 'l', 'o'       };
+    [[maybe_unused]] char   buffer_1[]{ 'a', 'a', 'a', 'a', 'a' };
 
-    [[maybe_unused]] constexpr char c_string_1[]{ 'h', 'e', 'l', 'l', 'o', '\0' };
+    [[maybe_unused]] char c_string_1[]{ 'a', 'a', 'a', 'a', 'a', '\0' };
     
-    [[maybe_unused]] constexpr char c_string_2[] = "hello";
+    [[maybe_unused]] char c_string_2[] = "aaaaa";
 
-    [[maybe_unused]] constexpr auto c_string_3   = "hello";
+    [[maybe_unused]] auto c_string_3   = "aaaaa";
 
-    assert(std::strlen(string_3.c_str()) == 13);
-
-//  ================================================================================================
-
-    std::cout << "Enter string: "; char buffer[256]{};
-
-    std::cin.getline(buffer, std::size(buffer));
-
-    std::cout << buffer << std::endl;
-
-//  std::cout << char_array << std::endl; // bad
+    assert(std::strlen(string_3.c_str()) == 10);
 
 //  ================================================================================================
 
-    assert(cistring_t("HELLO") == cistring_t("hello"));
+    std::cout << "Enter 1 string : "; char buffer_2[1'000]{};
+
+    std::cin.getline(buffer_2, std::size(buffer_2));
+
+    std::cout << '\n';
+
+//  std::cout << "buffer_1 = " << buffer_1 << '\n'; // bad
+
+    std::cout << "buffer_2 = " << buffer_2 << '\n' << '\n';
 
 //  ================================================================================================
 
-    const auto string_5 = "hello"s, string_6 = "abcdefghijklmnopqrstuvwxyz"s;
-
-    std::cout << distance_in_bytes(&string_5.front(), &string_5) << std::endl;
-    std::cout << distance_in_bytes(&string_6.front(), &string_6) << std::endl;
+    assert(cistring_t("AAAAA") == cistring_t("aaaaa"));
 
 //  ================================================================================================
 
-    constexpr auto string_view = "Hello, world!"sv;
+    auto string_4 = "aaaaa"s, string_5 = std::string(1'000'000, 'a');
 
-    print(string_3);
+    assert(distance(&string_4.front(), &string_4) == 16);
+    assert(distance(&string_5.front(), &string_5) != 16);
+
+//  ================================================================================================
+
+    auto string_view = "aaaaa"sv;
+
+    test_v1(string_3);
     
-    print(string_view);
+    test_v1(string_view);
 
-    print(std::string_view(std::begin(string_3), std::next(std::begin(string_3), 5)));
+    test_v1(std::string_view(std::begin(string_3), std::next(std::begin(string_3), 5)));
 
-//  const std::string_view bad_view_1 = "hello"s + "world"s; // bad
+//  std::string_view bad_view_1 = "aaaaa"s + "bbbbb"s; // bad
 
-//  const std::string_view bad_view_3 = string_4; string_4 = "hello"; // bad
+//  std::string_view bad_view_3 = string_4; string_4 = "aaaaa"; // bad
 
-//  const std::string_view bad_view_2 = []() constexpr { return "hello"s; }(); // bad
+//  std::string_view bad_view_2 = [](){ return "aaaaa"s; }(); // bad
 
 //  ================================================================================================
 
     benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
-
-    return 0;
 }

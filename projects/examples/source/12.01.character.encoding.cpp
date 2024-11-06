@@ -4,17 +4,6 @@
 #include <iostream>
 #include <type_traits>
 
-//  ================================================================================================
-
-[[nodiscard]] inline constexpr bool is_little_endian_system() noexcept
-{
-	constexpr char16_t test = 0x0102;
-
-	return (std::bit_cast < const char * > (&test))[0] == 0x02;
-}
-
-//  ================================================================================================
-
 int main()
 {
 	auto c = 'a';
@@ -33,17 +22,23 @@ int main()
 	{
 		std::cout << static_cast < char > (i);
 
-		if ((i + 1) % 64 == 0) std::cout << std::endl;
+		if ((i + 1) % 64 == 0) 
+		{
+			std::cout << '\n';
+		}
 	}
 
 	std::cout << std::endl;
 
-	[[maybe_unused]] constexpr   signed char sc = 'a';
-	[[maybe_unused]] constexpr unsigned char uc = 'a';
+	[[maybe_unused]]   signed char sc = 'a';
+	[[maybe_unused]] unsigned char uc = 'a';
 
 //  ================================================================================================
 
-	for (c = '!'; c <= '~'; ++c) std::cout << c;
+	for (c = '!'; c <= '~'; ++c) 
+	{
+		std::cout << c;
+	}
 
 	std::cout << std::endl;
 	
@@ -51,19 +46,21 @@ int main()
 
 //  ================================================================================================
 
-//	constexpr wchar_t wc = L'a'; // bad
+//	wchar_t wc = L'a'; // bad
 
 	std::cout << sizeof(wchar_t) << std::endl;
 
-	constexpr auto c8 = u8'a'; // detail: char8_t
-
-	c = c8; // support: UTF-8
+	auto c8 = u8'a'; c = c8; // support: UTF-8
 
 //  ================================================================================================
 
-	std::cout << std::boolalpha << (std::endian::native == std::endian::little) << std::endl;
+	auto x = static_cast < char16_t > (0x1234);
 
-	std::cout << std::boolalpha << is_little_endian_system() << std::endl;
+	auto is_little_endian_1 = *std::bit_cast < char * > (&x) == 0x34;
 
-	return 0;
+	std::cout << std::boolalpha << "is_little_endian_1 = " << is_little_endian_1 << '\n';
+
+	auto is_little_endian_2 = std::endian::native == std::endian::little;
+
+	std::cout << std::boolalpha << "is_little_endian_2 = " << is_little_endian_2 << '\n';
 }

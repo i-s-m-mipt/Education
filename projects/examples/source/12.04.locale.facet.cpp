@@ -6,15 +6,15 @@
 
 int main() // support: locale -a
 {
-	const auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+	auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 
-	const auto data = std::localtime(&time);
+	auto data = std::localtime(&time);
 
-	const auto format = "%A %x";
+	auto format = "%A %x";
 
 //  ================================================================================================
 	
-	const std::locale locale_1("en_US.utf8"); 
+	std::locale locale_1("en_US.utf8"); 
     
     std::cout.imbue(locale_1);
 
@@ -33,7 +33,7 @@ int main() // support: locale -a
 
 //  ================================================================================================
 
-	const std::locale locale_2("ru_RU.utf8");
+	std::locale locale_2("ru_RU.utf8");
 
 	std::cout.imbue(locale_2);
 
@@ -54,25 +54,29 @@ int main() // support: locale -a
 
 	const auto & time_get_C = std::use_facet < std::time_get < char > > (std::locale::classic());
 
-	const auto dateorder = time_get_C.date_order();
+	auto dateorder = time_get_C.date_order();
 
-	std::cout << "dateorder: "
+	std::cout << "dateorder : "
 			  << (dateorder == std::time_base::no_order || 
 			      dateorder == std::time_base::mdy ? "mdy" :
 				  dateorder == std::time_base::dmy ? "dmy" :
 				  dateorder == std::time_base::ymd ? "ymd" :
-				  dateorder == std::time_base::ydm ? "ydm" : "unknown") << std::endl;
+				  dateorder == std::time_base::ydm ? "ydm" : "unknown") << '\n';
 
-	std::cout << "Enter date (Day MM/DD/YYYY): ";
+	std::cout << "Enter 1 date (Day MM/DD/YYYY) : ";
 
 	auto state = std::ios_base::goodbit; tm input;
 
-	time_get_C.get(std::istreambuf_iterator < char > (std::cin), 
-				   std::istreambuf_iterator < char > (        ),
+	time_get_C.get
+	(
+		std::istreambuf_iterator < char > (std::cin), 
+		std::istreambuf_iterator < char > (        ),
 		
-		std::cin, state, &input, format, format + std::strlen(format));
+		std::cin, state, &input, format, format + std::strlen(format)
+	);
 
-	if (state != std::ios_base::goodbit) std::cerr << "invalid format\n";
-
-    return 0;
+	if (state != std::ios_base::goodbit) 
+	{
+		std::cerr << "main : invalid format\n";
+	}
 }

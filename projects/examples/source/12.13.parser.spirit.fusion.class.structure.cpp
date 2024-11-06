@@ -1,3 +1,4 @@
+#include <cassert>
 #include <exception>
 #include <iterator>
 #include <stdexcept>
@@ -9,47 +10,27 @@ using namespace std::literals;
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/spirit/home/x3.hpp>
 
-#include <gtest/gtest.h>
-
 //  ================================================================================================
 
-struct System { std::string name; int data{}; }; 
+struct Entity 
+{ 
+    int data_1 = 0; 
+    int data_2 = 0; 
+};
 
-//  ================================================================================================
-
-[[nodiscard]] bool operator==(const System & lhs, const System & rhs) noexcept
-{
-    return 
-    (
-        lhs.name == rhs.name && 
-        lhs.data == rhs.data
-    );
-}
-
-//  ================================================================================================
-
-BOOST_FUSION_ADAPT_STRUCT(System, name, data)
+BOOST_FUSION_ADAPT_STRUCT(Entity, data_1, data_2)
 
 //  ================================================================================================
 
 namespace parser
 {
-    const boost::spirit::x3::rule < struct rule_tag, System > rule;
-    
-    const auto name_def = boost::spirit::x3::lexeme
-    [
-        '"' 
-            >> *(boost::spirit::x3::char_ - '"') >> 
-        '"'
-    ];
+    boost::spirit::x3::rule < struct rule_tag, Entity > rule;
 
-    const auto data_def = boost::spirit::x3::int_;
-
-    const auto rule_def = 
+    auto rule_def = 
     (
         '{' 
-            >> name_def >> ',' 
-            >> data_def >> 
+            >> boost::spirit::x3::int_ >> ',' 
+            >> boost::spirit::x3::int_ >> 
         '}'
     );
 
@@ -58,29 +39,33 @@ namespace parser
 
 //  ================================================================================================
 
-[[nodiscard]] System test(std::string_view data)
+[[nodiscard]] auto parse(std::string_view data)
 {
-    System system;
+    auto begin = std::cbegin(data), end = std::cend(data);
 
-    const auto skip = boost::spirit::x3::ascii::space;
+    auto skip = boost::spirit::x3::ascii::space;
 
-    boost::spirit::x3::phrase_parse(std::cbegin(data), std::cend(data), parser::rule, skip, system);
+    Entity entity;
 
-    return system;
+    auto result = boost::spirit::x3::phrase_parse(begin, end, parser::rule, skip, entity);
+
+    if (!result || begin != end)
+    {
+        throw std::runtime_error("invalid data");
+    }
+
+    return entity;
 }
 
 //  ================================================================================================
 
-TEST(Parser, System)
+int main()
 {
-    ASSERT_EQ(test(R"({ "system", 1 })"), System("system", 1));
-}
+    auto entity = parse(R"({ 1, 2 })");
 
-//  ================================================================================================
-
-int main(int argc, char ** argv)
-{
-    testing::InitGoogleTest(&argc, argv);
-
-    return RUN_ALL_TESTS();
+    assert
+    (
+        entity.data_1 == 1 && 
+        entity.data_2 == 2
+    );
 }

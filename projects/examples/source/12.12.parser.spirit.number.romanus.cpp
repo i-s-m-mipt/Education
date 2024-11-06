@@ -1,3 +1,4 @@
+#include <cassert>
 #include <exception>
 #include <iterator>
 #include <stdexcept>
@@ -8,13 +9,11 @@ using namespace std::literals;
 
 #include <boost/spirit/home/x3.hpp>
 
-#include <gtest/gtest.h>
-
 //  ================================================================================================
 
 namespace parser
 {
-    struct Huns : boost::spirit::x3::symbols < int >
+    struct Huns : public boost::spirit::x3::symbols < int >
     {
         Huns()
         {
@@ -30,9 +29,9 @@ namespace parser
         }
     };
 
-//  ================================================================================================
+//  -------------------------------------------------------
 
-    struct Tens : boost::spirit::x3::symbols < int >
+    struct Tens : public boost::spirit::x3::symbols < int >
     {
         Tens()
         {
@@ -48,9 +47,9 @@ namespace parser
         }
     };
     
-//  ================================================================================================
+//  -------------------------------------------------------
 
-    struct Ones : boost::spirit::x3::symbols < int >
+    struct Ones : public boost::spirit::x3::symbols < int >
     {
         Ones()
         {
@@ -66,23 +65,23 @@ namespace parser
         }
     };
 
-//  ================================================================================================
+//  ------------------------------------------------------
 
-    const boost::spirit::x3::rule < class rule_tag, int > rule;
-    
+    boost::spirit::x3::rule < struct rule_tag, int > rule;
+
     using boost::spirit::x3::_val;
 
-    const auto set_0 = [](auto && context){ _val(context) = 0; };
+    auto set_0 = [](auto && context){ _val(context) = 0; };
 
-    const auto add_M = [](auto && context){ _val(context) += 1'000; };
+    auto add_M = [](auto && context){ _val(context) += 1'000; };
 
-    const auto add_x = [](auto && context){ _val(context) += boost::spirit::x3::_attr(context); };
+    auto add_x = [](auto && context){ _val(context) += boost::spirit::x3::_attr(context); };
 
-    const Huns huns;
-    const Tens tens;
-    const Ones ones;
+    Huns huns;
+    Tens tens;
+    Ones ones;
 
-    const auto rule_def = 
+    auto rule_def = 
     (
         boost::spirit::x3::eps       [set_0] >>
        *boost::spirit::x3::char_('M')[add_M] >> 
@@ -98,29 +97,27 @@ namespace parser
 
 //  ================================================================================================
 
-[[nodiscard]] int test(std::string_view data)
+[[nodiscard]] auto parse(std::string_view data)
 {
-    int value{};
+    auto begin = std::cbegin(data), end = std::cend(data);
+
+    auto skip = boost::spirit::x3::ascii::space;
+
+    int value;
+
+    auto result = boost::spirit::x3::phrase_parse(begin, end, parser::rule, skip, value);
+
+    if (!result || begin != end)
+    {
+        throw std::runtime_error("invalid data");
+    }
     
-    const auto skip = boost::spirit::x3::ascii::space;
-
-    boost::spirit::x3::phrase_parse(std::cbegin(data), std::cend(data), parser::rule, skip, value);
-
     return value;
 }
 
 //  ================================================================================================
 
-TEST(Parser, Romanus)
+int main()
 {
-    ASSERT_EQ(test("MCMLXX"), 1970);
-}
-
-//  ================================================================================================
-
-int main(int argc, char ** argv)
-{
-    testing::InitGoogleTest(&argc, argv);
-
-    return RUN_ALL_TESTS();
+    assert(parse("MCMLXX") == 1970);
 }

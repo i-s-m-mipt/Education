@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cassert>
 #include <iostream>
 #include <iterator>
 #include <regex>
@@ -6,106 +7,89 @@
 
 using namespace std::literals;
 
-#include <gtest/gtest.h>
-
 //  ================================================================================================
 
-[[nodiscard]] inline bool match_identifier(const std::string & string)
+[[nodiscard]] auto match(const std::string & string)
 {
 	return std::regex_match(string, std::regex(R"([_[:alpha:]]\w*)"));
 }
 
 //  ================================================================================================
 
-[[nodiscard]] inline std::smatch search_post_code(const std::string & string)
+[[nodiscard]] auto search(const std::string & string)
 {
     std::smatch matches;
     
-    std::regex_search(string, matches, std::regex(R"(\w{2}\d{5}(-\d{4})?)"));
+    std::regex_search(string, matches, std::regex(R"([a-z]{2}\d{5}(-\d{4})?)"));
 
     return matches;
 }
 
 //  ================================================================================================
 
-[[nodiscard]] inline std::string replace_substring(const std::string & string)
+[[nodiscard]] auto replace(const std::string & string)
 {
-    return std::regex_replace(string, std::regex(R"(\b(sub)([^ ]+))"), R"(sub-$2)");
+    return std::regex_replace(string, std::regex(R"(\b([a-z])([^ ]+))"), R"($1-$2)");
 }
 
 //  ================================================================================================
 
-TEST(Parser, Regex_Match)
+int main()
 {
-    ASSERT_TRUE(match_identifier("hello")         );
-	ASSERT_TRUE(match_identifier("12345") == false);
-	ASSERT_TRUE(match_identifier("_name")         );
-	ASSERT_TRUE(match_identifier("_3.14") == false);
-    ASSERT_TRUE(match_identifier("A1234")         );
-}
+    assert( match("aaaaa"));
+	assert(!match("12345"));
+	assert( match("_aaaa"));
+	assert( match("_2345"));
 
-//  ================================================================================================
+//  ------------------------------------------------------
 
-TEST(Parser, Regex_Search)
-{
-    ASSERT_EQ(search_post_code("_NY12345______")[0], "NY12345"     );
-    ASSERT_EQ(search_post_code("_NY1234506789_")[0], "NY12345"     );
-    ASSERT_EQ(search_post_code("_NY12345-6789_")[0], "NY12345-6789");
-    ASSERT_EQ(search_post_code("_NY12345-6789_")[1],        "-6789");
+    assert(search("_aa12345______")[0] == "aa12345"     );
+    assert(search("_aa12345_6789_")[0] == "aa12345"     );
+    assert(search("_aa12345-6789_")[0] == "aa12345-6789");
+    assert(search("_aa12345-6789_")[1] ==        "-6789");
 
-    ASSERT_TRUE(std::empty(search_post_code("_$1$2$3$4$_")));
-    ASSERT_TRUE(std::empty(search_post_code("NY1234-6789")));
-}
+    assert(search("___12345-6789_").size() == 0);
 
-//  ================================================================================================
+//  -------------------------------------------------
 
-TEST(Parser, Regex_Replace)
-{
-    ASSERT_EQ(replace_substring("subsequence in the substring"), "sub-sequence in the sub-string");
-}
+    assert(replace("aaaaa 12345") == "a-aaaa 12345");
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------
 
-int main(int argc, char ** argv)
-{
-    const auto data = "123ABC456DEF789GHI"s; 
-
-    auto begin = std::cbegin(data), end = std::cend(data);
+    auto data = "123aaaaa456BBBBB789"s; auto begin = std::cbegin(data), end = std::cend(data);
 
     std::smatch matches;
     
-    const std::regex pattern(R"([a-z]{2}([a-z])?)", std::regex_constants::icase);
+    std::regex pattern(R"([a-z]{4}([a-z]{1}))", std::regex_constants::icase);
+
+    std::cout << "matches = { ";
 
     for (; std::regex_search(begin, end, matches, pattern); begin = matches.suffix().first)
     {
         std::cout << matches[0] << ' '; // support: boost::tokenizer
     } 
 
-    std::cout << std::endl; begin = std::cbegin(data);
+    std::cout << "}\n"; 
+    
+    begin = std::cbegin(data);
 
-//  ================================================================================================
+//  ----------------------------------------------------------
 
-    {
-        const std::sregex_iterator first(begin, end, pattern), last; 
+    std::sregex_iterator first_1(begin, end, pattern), last_1; 
 
-	    std::ranges::for_each(first, last, [](auto && matches){ std::cout << matches[0] << ' '; });
+    std::cout << "matches = { ";
 
-        std::cout << std::endl;
-    }
+	std::ranges::for_each(first_1, last_1, [](auto && matches){ std::cout << matches[0] << ' '; });
 
-//  ================================================================================================
+    std::cout << "}\n";
 
-    {
-        const std::sregex_token_iterator first(begin, end, pattern, { -1, 0, 1 }), last;
+//  ------------------------------------------------------------------------------
 
-        std::ranges::for_each(first, last, [](auto && match){ std::cout << match << ' '; });
+    std::sregex_token_iterator first_2(begin, end, pattern, { -1, 0, 1 }), last_2;
 
-        std::cout << std::endl;
-    }
+    std::cout << "matches = { ";
 
-//  ================================================================================================
+    std::ranges::for_each(first_2, last_2, [](auto && match){ std::cout << match << ' '; });
 
-    testing::InitGoogleTest(&argc, argv);
-
-    return RUN_ALL_TESTS();
+    std::cout << "}\n";
 }
