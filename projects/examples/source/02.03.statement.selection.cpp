@@ -2,17 +2,19 @@
 
 int main()
 {
-    std::cout << "Enter 1 integer : "; int x{}; std::cin >> x;
+    std::cout << "Enter 1 integer : "; int x; std::cin >> x;
 
-    std::cout << "Selection v1 : ";
+//  ------------------------------------------------------------------------------------------------
+
+    std::cout << "Selection (1) : ";
 
     std::cout << (x == 1 ? "(1)" : "(2)");
 
-    std::cout << std::endl;
+    std::cout << '\n';
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-    std::cout << "Selection v2 : ";
+    std::cout << "Selection (2) : ";
 
     if (auto y = x; 1 == y) // support: compiler-explorer.com
     {
@@ -27,11 +29,11 @@ int main()
         std::cout << "(3)";
     }
 
-    std::cout << std::endl;
+    std::cout << '\n';
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-    std::cout << "Selection v3 : ";
+    std::cout << "Selection (3) : ";
 
     switch (auto z = x; z) // support: compiler-explorer.com
     {
@@ -55,7 +57,5 @@ int main()
         }
     }
 
-    std::cout << std::endl;
-
-    return 0;
+    std::cout << '\n';
 }

@@ -4,36 +4,39 @@
 
 int main()
 {
-	[[maybe_unused]]       int        x = 1;
-	[[maybe_unused]] const int        y = 1;
+	auto x = 1; const auto y = 2;
 	
-//	[[maybe_unused]]       int & ref__i    ; // error
-//	[[maybe_unused]]       int & ref__y = y; // error
+//  ------------------------------------------------------------------------------------------------
 
-	[[maybe_unused]]       int & ref__x = x; ref__x = 2; assert(x == 2);
-	[[maybe_unused]] const int & ref_cy = y;
+//	[[maybe_unused]]       int & r_i    ; // error
+//	[[maybe_unused]]       int & r_y = y; // error
 
-//	ref_cy = 2; // error
+	[[maybe_unused]]       int & r_x = x; // support: compiler-explorer.com
+	[[maybe_unused]] const int & rcy = y;
 
-//	[[maybe_unused]]       int & ref__v = 1; // error
-	[[maybe_unused]] const int & ref_cv = 1;
+	r_x = 2; assert(x == 2);
 
-//  ================================================================================================
+//	rcy = 3; // error
 
-	[[maybe_unused]]       auto & ref_1 = x;
-	[[maybe_unused]]       auto & ref_2 = y;
-	[[maybe_unused]] const auto & ref_3 = x;
-	[[maybe_unused]] const auto & ref_4 = y;
+//	[[maybe_unused]]       int & r_v = 1; // error
+	[[maybe_unused]] const int & rcv = 1;
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-//	std::vector < int & > bad_vector; // error
+	[[maybe_unused]]       auto & ar_x_1 = x;
+	[[maybe_unused]]       auto & ar_y_1 = y;
+	[[maybe_unused]] const auto & ar_x_2 = x;
+	[[maybe_unused]] const auto & ar_y_2 = y;
 
-	std::vector < std::reference_wrapper < int > > good_vector;
+//  ------------------------------------------------------------------------------------------------
 
-	good_vector.push_back(x);
+//	std::vector < int & > vector_1; // error
 
-	good_vector.back().get() = 3; assert(x == 3);
+	std::vector < std::reference_wrapper < int > > vector_2;
 
-	return 0;
+	vector_2.push_back(x);
+
+	vector_2.back().get() = 3; 
+	
+	assert(x == 3);
 }

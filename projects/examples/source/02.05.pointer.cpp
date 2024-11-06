@@ -3,18 +3,41 @@
 
 int main()
 {
-	int       i =  1;
-	int * ptr_i = &i; // support: compiler-explorer.com
+	auto x = 1; const auto y = 2;
+	
+//  ------------------------------------------------------------------------------------------------
 
-	std::cout << "ptr_i = " << ptr_i << std::endl;
+	[[maybe_unused]] int * p_x = &x; // support: compiler-explorer.com
 
-	assert(*ptr_i == i);
+//	[[maybe_unused]] int * p_y = &y; // error
 
-//	[[maybe_unused]] int * pointer = &i, value = &i; // error
+	std::cout << "p_x = " << p_x << '\n';
 
-//  ================================================================================================
+	assert(*p_x == x);
 
-//	[[maybe_unused]] int * null_ptr_1 =    0; // bad
+//	[[maybe_unused]] int * ptr = &i, z = &i; // error
+
+//  ------------------------------------------------------------------------------------------------
+
+	[[maybe_unused]]       int * const cp_x = &x;
+//	[[maybe_unused]]       int * const cp_y = &y; // error
+
+	[[maybe_unused]] const int *        pcx = &x;
+	[[maybe_unused]] const int *        pcy = &y;
+
+	[[maybe_unused]] const int * const cpcx = &x;
+	[[maybe_unused]] const int * const cpcy = &y;
+
+//  ------------------------------------------------------------------------------------------------
+
+	[[maybe_unused]]       auto ap_x_1 = &x;
+	[[maybe_unused]]       auto ap_y_1 = &y;
+	[[maybe_unused]] const auto ap_x_2 = &x;
+	[[maybe_unused]] const auto ap_y_2 = &y;
+
+//  ------------------------------------------------------------------------------------------------
+
+//	[[maybe_unused]] int * null_ptr_1 = 0; // bad
 
 //	[[maybe_unused]] int * null_ptr_2 = NULL; // bad
 
@@ -22,31 +45,8 @@ int main()
 
 //	*null_ptr_3 = 1; // error
 
-	if (null_ptr_3) *null_ptr_3 = 1;
-
-//  ================================================================================================
-
-	[[maybe_unused]] 	   int               x =  1; 
-	[[maybe_unused]] const int               y =  1;
-
-	[[maybe_unused]] 	   int *        ptr__x = &x; 
-//	[[maybe_unused]]       int *        ptr__y = &y; // error
-
-	[[maybe_unused]]       int * const cptr__x = &x;
-//	[[maybe_unused]]       int * const cptr__y = &y; // error
-
-	[[maybe_unused]] const int *        ptr_cx = &x;
-	[[maybe_unused]] const int *        ptr_cy = &y;
-
-	[[maybe_unused]] const int * const cptr_cx = &x;
-	[[maybe_unused]] const int * const cptr_cy = &y;
-
-//  ================================================================================================
-
-	[[maybe_unused]]       auto ptr_1 = &x;
-	[[maybe_unused]]       auto ptr_2 = &y;
-	[[maybe_unused]] const auto ptr_3 = &x;
-	[[maybe_unused]] const auto ptr_4 = &y;
-
-	return 0;
+	if (null_ptr_3) 
+	{
+		std::cout << "*null_ptr_3 = " << *null_ptr_3 << '\n';
+	}
 }

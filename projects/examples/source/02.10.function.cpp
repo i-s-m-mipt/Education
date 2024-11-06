@@ -3,117 +3,132 @@
 #include <iostream>
 #include <span>
 #include <string>
+#include <utility>
 #include <vector>
 
 //  ================================================================================================
 
-[[nodiscard]] int f(int x);
+[[nodiscard]] auto test_v1(int x);
 
-[[nodiscard]] int g(int x, int y, int z = 3) 
+[[nodiscard]] auto test_v1(int x) 
+{
+	return x; 
+}
+
+void test_v2([[maybe_unused]] int x, [[maybe_unused]] int y = 0) 
 { 
-	return (x + y + z); 
+	std::clog << "test_v2\n"; 
 }
 
 //  ================================================================================================
 
-void update(int * x, [[maybe_unused]] const int * y) { if (x && y) *x = *y; }
-void update(int & x, [[maybe_unused]] const int & y) {              x =  y; }
+void test_v3(int * x, const int * y) { if (x && y) { *x = *y; } }
+void test_v4(int & x, const int & y) {                x =  y;   }
 
 //  ================================================================================================
 
-[[nodiscard]] bool test(const std::string & string) 
+void test_v5(const int * , std::size_t)
 {
-	return std::ranges::is_sorted(string);
+	std::clog << "test_v5 (2)\n";
 }
 
-[[nodiscard]] bool test(const int * array, std::size_t size)
+void test_v5(std::span < const int > )
 {
-	return std::ranges::is_sorted(array, array + size);
+	std::clog << "test_v5 (3)\n";
 }
 
-[[nodiscard]] bool test(std::span < const int > span)
+void test_v5(const std::vector < int > &)
 {
-	return std::ranges::is_sorted(span);
+	std::clog << "test_v5 (4)\n";
 }
 
-[[nodiscard]] bool test(const std::vector < int > & vector)
+void test_v5(const std::string &) 
 {
-	return std::ranges::is_sorted(vector);
-}
-
-//  ================================================================================================
-
-//  [[nodiscard]] int * get_dangling_ptr() { auto local = 1; return &local; } // error
-//  [[nodiscard]] int & get_dangling_ref() { auto local = 1; return  local; } // error
-
-//  ================================================================================================
-
-void h()
-{
-	static auto s = 1; std::cout << "s = " << s++ << std::endl; // support: compiler-explorer.com
+	std::clog << "test_v5 (1)\n";
 }
 
 //  ================================================================================================
 
-[[nodiscard]] inline auto max(int x, int y)
+//  [[nodiscard]] auto * test_v6() { auto x = 1; return &x; } // error
+//  [[nodiscard]] auto & test_v7() { auto x = 1; return  x; } // error
+
+//  ================================================================================================
+
+[[nodiscard]] const auto & test_v8()
+{
+	static auto state = 0; // support: compiler-explorer.com
+
+	return ++state;
+}
+
+//  ================================================================================================
+
+[[nodiscard]] inline auto max_v1(int x, int y)
 { 
-	return (x > y ? x : y); 
+	return x > y ? x : y; 
 }
 
-[[nodiscard]] inline int factorial(int n) 
-{ 
-	return (n < 2 ? 1 : n * factorial(n - 1)); 
+[[nodiscard]] __attribute__ ((__noinline__)) auto max_v2(int x, int y)
+{
+	return x > y ? x : y;
 }
 
 //  ================================================================================================
 
 int main()
 {
-	auto x = 1, y = 2;
+	[[maybe_unused]] auto result = test_v1(1);
 
-//	f(x); // error
+	std::ignore = test_v1(1);
 
-	assert(g(f(x), f(y)) == 6); // support: compiler-explorer.com
+//	test_v1(1); // error
 
-//  ================================================================================================
+	test_v2(1); // support: compiler-explorer.com
 
-	x = 1; y = 2; update(&x, &y); assert(x == 2 && y == 2);
-	x = 1; y = 2; update( x,  y); assert(x == 2 && y == 2);
+//  -------------------------------------------------------------------
 
-//  ================================================================================================
+	auto x1 = 1, y1 = 2; test_v3(&x1, &y1); assert(x1 == 2 && y1 == 2);
+	auto x2 = 1, y2 = 2; test_v4( x2,  y2); assert(x2 == 2 && y2 == 2);
 
-	assert(test(std::string("aaa")));
+//  -------------------------------------------------------------------
 
-	const std::size_t size = 5;
+	int array_1[5]{};
 
-	const int         array_1                [size] { 1, 2, 3, 4, 5 };
-	const int * const array_2 = new const int[size] { 1, 2, 3, 4, 5 };
+	test_v5(array_1, std::size(array_1));
 
-	assert(test(  array_1, size  )); 
-	assert(test(  array_2, size  )); 
-	assert(test({ array_1       }));
-	assert(test({ array_2, size })); 
+	test_v5(std::span < const int > (array_1));
+
+	auto size = 5uz;
+
+	auto array_2 = new int[size]{};
+
+	test_v5(array_2, size); 
+
+	test_v5(std::span < const int > (array_2, size)); 
 	
 	delete[] array_2;
 
-	assert(test(std::vector < int > ({ 1, 2, 3, 4, 5 })));
+	test_v5(std::vector < int > (size, 0));
 
-//	assert(test(1)); // error
+	test_v5("aaaaa");
 
-//  ================================================================================================
+//	test_v5(1); // error
 
-//	assert(*get_dangling_ptr() == 1); // error
-//	assert( get_dangling_ref() == 1); // error
+//  ---------------------------------
 
-	h(); h(); h();
+//	assert(*test_v6() == 1); // error
+//	assert( test_v7() == 1); // error
 
-//  ================================================================================================
+	assert( test_v8() == 1);
+	assert( test_v8() == 2);
+	assert( test_v8() == 3);
 
-	assert(max(1, 2) == 2 && factorial(5) == 120); // support: compiler-explorer.com
+//  ---------------------------
 
-	return 0;
+	volatile auto x = 1, y = 2;
+
+	assert(max_v1(x, y) == 2); // support: compiler-explorer.com
+	assert(max_v2(x, y) == 2); // support: compiler-explorer.com
+	assert(max_v1(1, 2) == 2); // support: compiler-explorer.com
+	assert(max_v2(1, 2) == 2); // support: compiler-explorer.com
 }
-
-//  ================================================================================================
-
-[[nodiscard]] int f(int x) { return x; }

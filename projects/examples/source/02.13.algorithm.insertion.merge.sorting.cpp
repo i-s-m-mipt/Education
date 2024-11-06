@@ -7,11 +7,11 @@
 
 //  ================================================================================================
 
-void block_sort(std::vector < int > & vector, std::size_t l, std::size_t r)
+void sort(std::vector < int > & vector, std::size_t left, std::size_t right)
 {
-	for (auto i = l + 1; i < r; ++i) 
+	for (auto i = left + 1; i < right; ++i) 
 	{
-		for (auto j = i; j > l; --j)
+		for (auto j = i; j > left; --j)
 		{
 			if (vector[j - 1] < vector[j]) 
 			{
@@ -23,13 +23,13 @@ void block_sort(std::vector < int > & vector, std::size_t l, std::size_t r)
 
 //  ================================================================================================
 
-void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t m, std::size_t r)
+void merge(std::vector < int > & vector, std::size_t left, std::size_t middle, std::size_t right)
 {
-	std::vector < int > copy(r - l, 0);
+	std::vector < int > copy(right - left, 0);
 
-	for (auto i = l, j = m; auto & element : copy) 
+	for (auto i = left, j = middle; auto & element : copy) 
 	{
-		if (i < m && ((j < r && vector[i] >= vector[j]) || (j == r)))
+		if (i < middle && ((j < right && vector[i] >= vector[j]) || j == right))
 		{
 			element = vector[i++];
 		}
@@ -39,40 +39,46 @@ void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t m, std:
 		}
 	}
 
-	for (std::size_t i = 0; auto element : copy) vector[l + i++] = element;
+	for (auto i = 0uz; auto element : copy) 
+	{
+		vector[left + i++] = element;
+	}
 }
 
 //  ================================================================================================
 
-void merge_sort(std::vector < int > & vector, std::size_t l, std::size_t r)
+void split(std::vector < int > & vector, std::size_t left, std::size_t right)
 {
-	if (static const std::size_t block = 64; r - l <= block)
+	if (right - left <= 64)
 	{
-		block_sort(vector, l, r);
+		sort(vector, left, right);
 	}
 	else
 	{
-		const auto m = std::midpoint(l, r); 
+		auto middle = std::midpoint(left, right); 
 		
-		merge_sort(vector, l, m   );
-		merge_sort(vector,    m, r);
-		merge_sort(vector, l, m, r);
+		split(vector, left, middle       );
+		split(vector,       middle, right);
+		merge(vector, left, middle, right);
 	}
+}
+
+//  ================================================================================================
+
+void timsort(std::vector < int > & vector, std::size_t left, std::size_t right)
+{
+	split(vector, left, right);
 }
 
 //  ================================================================================================
 
 int main()
 {
-	const std::size_t size = 1'000;
-
-	std::vector < int > vector(size, 0);
+	std::vector < int > vector(1'000, 0);
 
 	std::ranges::iota(vector, 1);
 
-	merge_sort(vector, 0, size);
+	timsort(vector, 0, std::size(vector));
 
 	assert(std::ranges::is_sorted(vector, std::ranges::greater()));
-
-	return 0;
 }
