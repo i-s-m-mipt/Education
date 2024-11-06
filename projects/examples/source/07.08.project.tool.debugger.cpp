@@ -4,27 +4,28 @@
 
 //  ================================================================================================
 
-[[nodiscard]] constexpr bool binary_search(const std::vector < int > & vector, int key) noexcept
+[[nodiscard]] auto find(const std::vector < int > & vector, int key)
 {
-	std::size_t l = 0, r = std::size(vector);
+	auto result = false;
 
-	if (r == 0) return false;
-
-	if (r == 1) return (vector[0] == key);
-
-	while (l < r)
+	if (auto size = std::size(vector); size > 0)
 	{
-		const auto m = std::midpoint(l, r); vector[m] < key ? l = m + 1 : r = m;
-	}
+		auto l = 0uz, r = size - 1, m = 0uz;
 
-	return (vector[l] == key);
+		while (l < r)
+		{		
+			vector[m = std::midpoint(l, r)] < key ? l = m + 1 : r = m;
+		}
+
+		result = vector[l] == key;
+	}
+	
+	return result;
 }
 
 //  ================================================================================================
 
 int main()
 {
-	assert(binary_search({1, 3, 4, 5, 6, 7, 8 }, 7));
-
-	return 0;
+	assert(find({ 1, 2, 3, 4, 5 }, 1));
 }

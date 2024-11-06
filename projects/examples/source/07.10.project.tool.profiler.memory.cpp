@@ -1,33 +1,25 @@
+#include <algorithm>
 #include <chrono>
 #include <cstdlib>
 #include <iostream>
-#include <numeric>
 #include <thread>
 
 using namespace std::literals;
 
-//  ================================================================================================
-
-void f(std::size_t size)
-{
-	const auto array = new int[size]{};
-
-	std::iota(array, array + size, 1);
-
-	std::this_thread::sleep_for(1s);
-
-//  delete[] array; // bad
-}
-
-//  ================================================================================================
-
 int main()
 {
-	f(1'000'000);
-	f(1'000'000);
-	f(1'000'000);
-	f(1'000'000);
-	f(1'000'000);
+	auto size_1 = 5uz, size_2 = 1'000'000uz;
 
-	return 0;
+	for (auto i = 0uz; i < size_1; ++i)
+	{
+		auto array = new int[size_2]{};
+
+		array[size_2] = 1;
+
+		std::this_thread::sleep_for(2s);
+
+//  	delete[] array; // bad
+	}
+
+	std::cout << "Enter any character to continue : "; char c; std::cin >> c;
 }

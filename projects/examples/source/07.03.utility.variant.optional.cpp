@@ -10,105 +10,110 @@
 
 //  ================================================================================================
 
-class C { public: constexpr explicit C(int) {} };
-
-//  ================================================================================================
-
-class A { public: ~A() { std::cout << "destructor" << std::endl; } };
-
-class B {};
-
-//  ================================================================================================
-
-[[nodiscard]] inline constexpr std::variant < std::monostate, int, double > handle(int x) noexcept
+[[nodiscard]] auto test_v1(int x)
 {
-	if (x < 0) return std::monostate(); else if (x == 0) return x; else return std::sqrt(x);
+	std::variant < int, std::string > result(x);
+
+	if (x != 1)
+	{
+		result = "aaaaa";
+	}
+
+	return result;
 }
 
 //  ================================================================================================
 
-[[nodiscard]] inline std::optional < std::string > create(bool b)
+struct Entity_v1 { explicit Entity_v1(int) {} };
+
+struct Entity_v2 
+{ 
+   ~Entity_v2() 
+    { 
+		std::clog << "Entity_v2::~Entity_v2\n"; 
+	} 
+};
+
+struct Entity_v3 {};
+
+//  ================================================================================================
+
+[[nodiscard]] auto test_v2(int x)
 {
-	return (b ? std::optional < std::string > ("object") : std::nullopt);
+	return x == 1 ? std::optional < int > (x) : std::nullopt;
 }
 
 //  ================================================================================================
 
 int main()
 {
-	constexpr auto epsilon = 0.000001;
+	std::variant < int, std::string > variant_1;
 
-	std::variant < char, int, double > variant_1;
+	variant_1 = test_v1(1);
 
-	variant_1 = 42;
+	assert(variant_1.index() == 0);
+	
+	assert(std::get < int > (variant_1) == 1);
 
-	std::get < int > (variant_1) += 42;
-
-	if (const auto ptr = std::get_if < int > (&variant_1); ptr)
+	if (auto object = std::get_if < int > (&variant_1); object)
 	{
-		*ptr = 42;
+		assert(*object == 1);
 	}
 
-//	constexpr std::variant < C, int > variant_2; // error
+	assert(std::holds_alternative < int > (variant_1));
 
-	constexpr std::variant < std::monostate, C, int > variant_3;
+//  ------------------------------------------------------------------------------------------------
 
-	constexpr std::variant < char, int, double > variant_4(3.14);
+//	std::variant < Entity_v1, int > variant_2; // error
 
-	assert(std::abs(std::get < double > (variant_4) - 3.14) < epsilon);
+	std::variant < std::monostate, Entity_v1, int > variant_3;
 
-//	constexpr std::variant < char, double > variant_5(42); // error
+//  ------------------------------------------------------------------------------------------------
 
-	constexpr std::variant < char, double > variant_6(std::in_place_type < double > , 42);
+	std::variant < int, std::string > variant_4(std::in_place_type < int > , 1);
 
-	constexpr std::variant < char, double > variant_7(std::in_place_index < 1 > , 42);
+	std::variant < int, std::string > variant_5(std::in_place_index < 0 > , 1);
 
-	constexpr std::variant < int, int > variant_8(std::in_place_index < 0 > , 42);
+//  ------------------------------------------------------------------------------------------------
 
-	assert(variant_8.index() == 0);
+	std::variant < Entity_v2, Entity_v3 > variant_6;
 
-	std::variant < A, B > variant_9;
+	variant_6 = Entity_v3();
 
-	variant_9 = B();
+//  ------------------------------------------------------------------------------------------------
 
-	if (constexpr auto result = handle(42); std::holds_alternative < double > (result))
-	{
-		assert(std::abs(std::get < double > (result) - std::sqrt(42)) < epsilon);
-	}
+	std::optional < int > optional_1;
 
-//  ================================================================================================
+	optional_1 = test_v2(1);
 
-	constexpr std::optional < int > optional_1;
+    assert(optional_1.has_value());
 
-    assert(!optional_1.has_value());
+	assert(optional_1.value() == 1);
 
-    auto optional_2 = std::make_optional(42);
+	assert(optional_1.value_or(2) == 1);
 
-    optional_2.reset();
+//  ------------------------------------------------------------------------------------------------
 
-    const std::optional < std::string > optional_3(std::in_place, 5, 'a');
+    auto optional_2 = std::make_optional(1);
 
-    assert(*optional_3 == "aaaaa");
+	assert(*optional_2 == 1);
 
-    assert(create(false).value_or("empty") == "empty");
+//  ------------------------------------------------------------------------------------------------
 
-    if (const auto object = create(true); object)
-    {
-        assert(*object == "object");
-    }
+    std::optional < std::string > optional_3(std::in_place, 5, 'a');
 
-//  ================================================================================================
+    assert(optional_3->substr(1, 3) == "aaa");
 
-  	constexpr boost::logic::tribool tribool = boost::logic::indeterminate;
+//  ------------------------------------------------------------------------------------------------
+
+  	boost::logic::tribool tribool = boost::logic::indeterminate;
 
   	if (tribool || !tribool)
     {
-		std::cout << "true or false" << std::endl;
+		std::cout << "tribool = true or false\n";
 	}
  	else
 	{
-		std::cout << "indeterminate" << std::endl;
+		std::cout << "tribool = indeterminate\n";
 	}
-
-	return 0;
 }

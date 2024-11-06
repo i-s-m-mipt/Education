@@ -7,73 +7,80 @@
 
 //  ================================================================================================
 
-[[nodiscard]] inline constexpr int factorial(int n) noexcept 
-{ 
-    return (n < 2 ? 1 : n * factorial(n - 1)); 
+[[nodiscard]] auto is_even(int x) 
+{
+    if (x % 2 == 0)
+    {
+        return testing::AssertionSuccess();
+    }
+    else
+    {
+        return testing::AssertionFailure() << x << " is odd";
+    }
 }
 
-TEST(Factorial, Results)
-{
-    EXPECT_EQ(factorial(0),     1);
-    EXPECT_EQ(factorial(1),     1);
-    EXPECT_EQ(factorial(2),     2);
-    EXPECT_EQ(factorial(3),     6);
-    EXPECT_EQ(factorial(5),   120);
-    EXPECT_EQ(factorial(8), 40320);
+//  ---------------------------------------------------------
 
-    ASSERT_EQ(factorial(4),    25);
+TEST(Expect, Is_Even)
+{
+    EXPECT_TRUE(is_even(1));
+    EXPECT_TRUE(is_even(2));
+}
+
+TEST(Assert, Is_Even)
+{
+    ASSERT_TRUE(is_even(1));
+    ASSERT_TRUE(is_even(2));
 }
 
 //  ================================================================================================
 
-[[nodiscard]] testing::AssertionResult is_even(int n) 
+TEST(Assert, Miscellaneous) 
 {
-    return (n % 2 == 0 ? testing::AssertionSuccess() : 
-                         testing::AssertionFailure() << n << " is odd");
+    ASSERT_NEAR(1.0, 1.0, 1e-6);
+
+    ASSERT_THAT("aaaaa", testing::StartsWith("a"));
 }
-
-TEST(Miscellaneous, Expectations) 
-{ 
-    EXPECT_TRUE(is_even(43));
-
-    EXPECT_THAT("Hello, world!", testing::StartsWith("Hello"));
-
-    EXPECT_THAT("data.txt", testing::MatchesRegex("([a-z]+)\\.txt"));
-
-    EXPECT_DOUBLE_EQ(3.14, 3.15) << "not equal doubles";
-
-    EXPECT_NEAR(3.14, 3.14, std::numeric_limits < double > ::epsilon());
-} 
 
 //  ================================================================================================
 
-class Fixture : public testing::Test 
+struct Fixture : public testing::Test 
 {
-public:
+    Fixture() = default;
+   ~Fixture() = default;
 
-    Fixture() noexcept {}
-   ~Fixture() noexcept {}
-
-    void    SetUp() override { data.push_back(42); }
-    void TearDown() override { data.clear      (); }
+//  -------------------------
 
     std::vector < int > data;
+};
 
-}; // class Fixture : public testing::Test 
+//  -------------------------------------------------
 
-TEST_F(Fixture, Size) 
+TEST_F(Fixture, Data) 
 {
-    ASSERT_EQ(std::size(data), 1); data.push_back(43);
+    ASSERT_EQ(std::size(data), 0); data.push_back(1);
+    ASSERT_EQ(std::size(data), 1); data.push_back(2);
     ASSERT_EQ(std::size(data), 2);
 }
 
 //  ================================================================================================
 
-class Parameters : public Fixture, public testing::WithParamInterface < int > {};
+struct Parameters : public Fixture, public testing::WithParamInterface < int > {};
 
-TEST_P(Parameters, Resize) { data.resize(GetParam(), 0); ASSERT_EQ(std::size(data), GetParam()); }
+//  ------------------------------------------------------------------------------
 
-INSTANTIATE_TEST_CASE_P(Test, Parameters, testing::Values(0, 1, 2, 4, 8));
+TEST_P(Parameters, Size) 
+{ 
+    auto size = GetParam();
+
+    data.resize(size, 0); 
+    
+    ASSERT_EQ(std::size(data), size); 
+}
+
+//  -------------------------------------------------------------------------
+
+INSTANTIATE_TEST_CASE_P(Fixture, Parameters, testing::Values(1, 2, 3, 4, 5));
 
 //  ================================================================================================
 

@@ -8,33 +8,35 @@ template < typename T, typename C = std::vector < T > > class Stack
 {
 public:
 
-	constexpr void push(T value)
+	void push(T value)
 	{
-		m_container.push_back(std::move(value));
+		m_data.push_back(std::move(value));
 	}
 
-	[[nodiscard]] constexpr T top() const noexcept
+	[[nodiscard]] auto top() const
 	{ 
-		return m_container.back();
+		return m_data.back();
 	}
 
-	constexpr void pop() noexcept
+	void pop()
 	{ 
-		m_container.pop_back();
+		m_data.pop_back();
 	}
 
-//	[[nodiscard]] constexpr T pop() { ... } // bad
+//	[[nodiscard]] auto pop() // bad
+//	{
+//		auto copy = top(); pop(); return copy;
+//	}
 
-	[[nodiscard]] constexpr std::size_t size() const noexcept
+	[[nodiscard]] auto size() const
 	{ 
-		return m_container.size(); 
+		return std::size(m_data); 
 	}
 
 private:
 
-	C m_container;
-
-}; // template < typename T, typename C = std::vector < T > > class Stack
+	C m_data;
+};
 
 //  ================================================================================================
 
@@ -42,9 +44,9 @@ int main()
 {
 	Stack < int > stack; 
 	
-	stack.push(42);
+	stack.push(1);
 
-//	auto value = stack.pop(); // bad
+	std::ignore = stack.top(); stack.pop();
 
-	return 0;
+//	std::ignore = stack.pop(); // bad
 }

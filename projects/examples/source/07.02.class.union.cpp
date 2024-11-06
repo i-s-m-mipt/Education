@@ -1,56 +1,37 @@
-#include <cmath>
-#include <iostream>
+#include <cassert>
 
 //  ================================================================================================
 
-union U
-{
-	char c1[1]; // detail: 1(B)
-	char c2[2]; // detail: 2(B)
-	char c3[3]; // detail: 3(B)
-	
-	int i = 0;  // detail: 4(B)
-
-}; // union U
+union Entity 
+{ 
+	char string_1[1]; 
+	char string_2[2];
+	char string_3[3]; int data = 0; 
+};
 
 //  ================================================================================================
 
-struct Result
-{
-	bool has_error = false;
-
-	union
+struct Variant 
+{ 
+	union 
 	{ 
-		int error_code; double result = 0.0; // support: enum class
-	};
-
-}; // struct Result
-
-//  ================================================================================================
-
-[[nodiscard]] inline Result try_log(double x) noexcept
-{
-	Result result { true, -1 };
-
-	if (x > 0.0)
-	{
-		result.has_error = false; result.result = std::log(x);
-	}
-
-	return result;
-}
+		int error; int value = 0; 
+	}; 
+	
+	bool has_error = false; 
+};
 
 //  ================================================================================================
 
-inline void print(const Result & result)
+[[nodiscard]] auto test(int x)
 {
-	if (result.has_error)
+	if (x < 0) 
 	{
-		std::cout << "error: " << result.error_code << std::endl;
+		return Variant({ .error = 1, .has_error = true });
 	}
 	else
 	{
-		std::cout << "result: " << result.result << std::endl;
+		return Variant({ .value = x });
 	}
 }
 
@@ -58,25 +39,25 @@ inline void print(const Result & result)
 
 int main()
 {
-	U u;
+	Entity entity;
 
-	u.c1[0] = 'a';
+	entity.string_1[0] = 'a';
 
-	std::cout << u.c1[0] << std::endl;
+	assert(entity.string_1[0] == 'a');
+//	assert(entity.string_2[0] == 'a'); // bad
+//	assert(entity.string_3[0] == 'a'); // bad
 
-//	std::cout << u.c2[0] << std::endl; // bad
-//	std::cout << u.c3[1] << std::endl; // bad
-
-	u.i = 0; 
+	entity.data = 0; 
 	
-	u.c3[1] = 1;
+	entity.string_3[1] = 1;
 
-	std::cout << u.i << std::endl;
+	assert(entity.data == 256);
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	print(try_log(1.0));
-	print(try_log(0.0));
+	auto x = 1;
 
-	return 0;
+	auto variant = test(x);
+	
+	assert(!variant.has_error && variant.value == x);
 }

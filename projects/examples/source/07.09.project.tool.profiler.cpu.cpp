@@ -1,38 +1,29 @@
+#include <cassert>
 #include <cmath>
-#include <cstdlib>
-#include <iostream>
 
 //  ================================================================================================
 
-[[nodiscard]] double f(std::size_t size) noexcept
+[[nodiscard]] auto equal(double x, double y, double epsilon = 1e-6)
 {
-	auto result = 0.0;
-
-	for (std::size_t i = 0; i < size; ++i)
-	{
-		for (std::size_t j = 0; j < size; ++j)
-		{
-			const auto argument = 1.0 * i / size;
-
-			const auto l = std::pow(std::sin(argument), 2.0);
-			const auto r = std::pow(std::cos(argument), 2.0);
-
-			result += (l + r);
-		}
-	}
-
-	return result;
+	return std::abs(x - y) < epsilon;
 }
 
 //  ================================================================================================
 
 int main()
 {
-	std::cout << f(    1) << std::endl;
-	std::cout << f(   10) << std::endl;
-	std::cout << f(  100) << std::endl;
-	std::cout << f( 1000) << std::endl;
-	std::cout << f(10000) << std::endl;
+	auto size = 1'000'000uz;
 
-	return 0;
+	auto result = 0.0;
+
+	for (auto i = 0uz; i < size; ++i)
+	{
+		result += 
+		(
+			std::pow(std::sin(1.0 * i / size), 2.0) +
+			std::pow(std::cos(1.0 * i / size), 2.0)
+		);
+	}
+
+	assert(equal(result, static_cast < double > (size)));
 }

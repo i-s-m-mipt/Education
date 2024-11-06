@@ -18,142 +18,171 @@
 
 //  ================================================================================================
 
-[[nodiscard]] inline constexpr int factorial(int n) noexcept 
-{ 
-    return (n < 2 ? 1 : n * factorial(n - 1)); 
+[[nodiscard]] auto is_even(int x) 
+{
+    return x % 2 == 0;
 }
 
-BOOST_AUTO_TEST_CASE(factorial_test)
+BOOST_AUTO_TEST_CASE(Test_v1)
 {
-    BOOST_TEST(factorial(0) ==     1);
-    BOOST_TEST(factorial(1) ==     1);
-    BOOST_TEST(factorial(2) ==     2);
-    BOOST_TEST(factorial(3) ==     6);
-    BOOST_TEST(factorial(5) ==   120);
-    BOOST_TEST(factorial(8) == 40320);
-
-    BOOST_TEST(factorial(4) ==    25);
+    BOOST_TEST(is_even(1));
+    BOOST_TEST(is_even(2));
 }
 
 //  ================================================================================================
 
-BOOST_AUTO_TEST_CASE(expectations_test) 
+BOOST_AUTO_TEST_CASE(Test_v2) 
 {
-    BOOST_TEST("aaa" < "bbb", boost::test_tools::lexicographic());
+    BOOST_TEST(1.0 == 1.0, boost::test_tools::tolerance(1e-6));
 
-    BOOST_TEST(3.14 == 3.14,  boost::test_tools::tolerance(0.001));
+    BOOST_TEST("aaaaa" < "bbbbb", boost::test_tools::lexicographic());
 } 
 
 //  ================================================================================================
 
-BOOST_DATA_TEST_CASE(ranges_test, boost::unit_test::data::xrange(1, 3, 1) * 
-                                  boost::unit_test::data::xrange(1, 4, 1), value_1, value_2)
+BOOST_DATA_TEST_CASE
+(
+    Test_v3, 
+
+    boost::unit_test::data::xrange(1, 3, 1) * 
+    boost::unit_test::data::xrange(1, 4, 1), 
+
+    x, y
+)
 {
-    std::cout << value_1 << " x " << value_2 << std::endl;
-}
-
-BOOST_DATA_TEST_CASE(random_test, (boost::unit_test::data::random((
-
-    boost::unit_test::data::seed         = std::random_device{}(),
-    boost::unit_test::data::engine       = std::mt19937_64     (),
-    boost::unit_test::data::distribution = std::uniform_real_distribution(0.0, 1.0))) ^ 
-    
-    boost::unit_test::data::xrange(10)), sample, index)
-{
-    std::cout << index << " : " << std::setprecision(3) << std::fixed << sample << std::endl;
-
-    BOOST_TEST(sample < 0.7);
+    std::cout << "pair = { " << x << ", " << y << " }\n";
 }
 
 //  ================================================================================================
 
-class Dataset 
-{
-public:
+BOOST_DATA_TEST_CASE
+(
+    Test_v4, 
 
+    boost::unit_test::data::xrange(5) ^ boost::unit_test::data::random
+    ((
+        boost::unit_test::data::seed = std::random_device()(),
+            
+        boost::unit_test::data::engine = std::mt19937_64(),
+
+        boost::unit_test::data::distribution = std::uniform_real_distribution(0.0, 1.0)
+    )),
+
+    index, sample
+)
+{
+    std::cout << "index = " << index << "; sample = ";
+    
+    std::cout << std::setprecision(3) << std::fixed << sample << ";\n";
+
+    BOOST_TEST(sample < 0.5);
+}
+
+//  ================================================================================================
+
+struct Dataset 
+{
     class iterator
     {
     public:
 
         using iterator_category = std::forward_iterator_tag;
 
-        constexpr iterator() noexcept : m_x(1), m_y(1) {}
+//      --------------------------------------------------------------------------------------------
 
-    public:
+        iterator() : m_x(1), m_y(1) {}
 
-        constexpr iterator & operator++() noexcept 
+//      --------------------------------------------------------------------------------------------
+
+        const auto operator++(int) 
 		{ 
-			m_x += m_y; std::swap(m_x, m_y); return *this;
+			auto copy(*this); 
+            
+            m_x += m_y; std::swap(m_x, m_y);  
+            
+            return copy; 
 		}
 
-		constexpr iterator operator++(int) noexcept 
+        auto & operator++() 
 		{ 
-			auto previous = *this; ++(*this); return previous; 
-		}
+			m_x += m_y; std::swap(m_x, m_y); 
+            
+            return *this;
+		}		
 
-        [[nodiscard]] constexpr int operator*() const noexcept
+        [[nodiscard]] auto operator*() const
         { 
             return m_y; 
         } 
 
-		[[nodiscard]] constexpr bool operator==(const iterator & other) const noexcept 
+		[[nodiscard]] auto operator==(const iterator & other) const
 		{ 
-			return (m_x == other.m_x && m_y == other.m_y); 
+			return m_x == other.m_x && m_y == other.m_y; 
 		}
 
     private:
 
-        int m_x, m_y;
+        int m_x = 1;
+        int m_y = 1;
+    };
 
-    }; // class iterator 
+//  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] constexpr iterator begin() const noexcept { return iterator(); }
+    [[nodiscard]] auto begin() const
+    { 
+        return iterator(); 
+    }
 
-    [[nodiscard]] boost::unit_test::data::size_t size() const noexcept 
+//  ------------------------------------------------------------------------------------------------
+
+    [[nodiscard]] auto size() const
     { 
         return boost::unit_test::data::BOOST_TEST_DS_INFINITE_SIZE;
     }
 
-    static constexpr auto arity = 1;
+//  ------------------------------------------------------------------------------------------------
 
-}; // class Dataset 
+    static constexpr auto arity = 1;
+}; 
 
 //  ================================================================================================
 
 namespace boost::unit_test::data::monomorphic 
 {
-    template <> struct is_dataset < Dataset > : std::true_type {};
+    template <> struct is_dataset < Dataset > : public std::true_type {};
 }
 
 //  ================================================================================================
 
-BOOST_DATA_TEST_CASE(fibonacci_test, Dataset() ^ boost::unit_test::data::make( { 1, 2, 3, 5, 9 } ), sample, expected)
+BOOST_DATA_TEST_CASE
+(
+    Test_v5, Dataset() ^ boost::unit_test::data::make({ 1, 2, 3, 5, 8 }), sample, expected
+)
 {
     BOOST_TEST(sample == expected);
 }
 
 //  ================================================================================================
 
-using test_types = boost::mpl::list < bool, char, int, double > ;
+using list_t = boost::mpl::list < bool, char, int, double > ;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(template_test, T, test_types) // support: static_assert
+BOOST_AUTO_TEST_CASE_TEMPLATE(Test_v6, T, list_t)
 {
     BOOST_TEST(sizeof(T) == 4);
 }
 
 //  ================================================================================================
 
-void free_test_function(int parameter)
+void test(int x)
 {
-    BOOST_TEST(parameter < 4);
+    BOOST_TEST(x < 4);
 }
 
-boost::unit_test::test_suite * init_unit_test_suite(int, char**)
+boost::unit_test::test_suite * init_unit_test_suite(int, char **)
 {
-    const std::vector < int > parameters { 1, 2, 3, 4, 5 };
+    std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-    const auto test_case = BOOST_PARAM_TEST_CASE(&free_test_function, std::cbegin(parameters), 
-                                                                      std::cend  (parameters));
+    auto test_case = BOOST_PARAM_TEST_CASE(&test, std::cbegin(vector), std::cend(vector));
 
     boost::unit_test::framework::master_test_suite().add(test_case);
 
@@ -164,20 +193,19 @@ boost::unit_test::test_suite * init_unit_test_suite(int, char**)
 
 //  ================================================================================================
 
-class Fixture
+struct Fixture
 {
-public:
-
     Fixture() { BOOST_TEST_MESSAGE("Fixture:: Fixture"); }
    ~Fixture() { BOOST_TEST_MESSAGE("Fixture::~Fixture"); } 
 
-public:
+//  ------------------------------------------------------
 
     std::vector < int > data;
+};
 
-}; // class Fixture
+//  ================================================================================================
 
-BOOST_FIXTURE_TEST_CASE(fixture_test, Fixture)
+BOOST_FIXTURE_TEST_CASE(Test_v7, Fixture)
 {
     BOOST_TEST(std::size(data) == 0); data.push_back(42);
     BOOST_TEST(std::size(data) == 1); data.push_back(42);

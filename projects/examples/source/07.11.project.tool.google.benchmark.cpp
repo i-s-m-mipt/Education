@@ -3,7 +3,6 @@
 #include <exception>
 #include <iostream>
 #include <iterator>
-#include <numeric>
 #include <stdexcept>
 #include <utility>
 #include <vector>
@@ -12,13 +11,13 @@
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state) 
+void test_v1(benchmark::State & state) 
 {
-    for (auto _ : state)
+    for (auto value : state)
     {
         auto result = 0.0;
 
-        for (std::size_t i = 0; i < 1000; ++i) 
+        for (auto i = 0uz; i < 1000; ++i) 
         {
             result += std::sin(i);
         }
@@ -29,22 +28,22 @@ void test_1(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state) 
+void test_v2(benchmark::State & state) 
 {
-    for (auto _ : state)
+    for (auto value : state)
     {
         auto result = 0.0;
 
         try 
         {
-            for (std::size_t i = 0; i < 1000; ++i) 
+            for (auto i = 0uz; i < 1000; ++i) 
             {
                 result += std::sin(i);
             }
         }
         catch (const std::exception & exception)
         {
-            std::cerr << exception.what() << '\n';
+            std::cerr << "test_v2 : " << exception.what() << '\n';
         }
 
         benchmark::DoNotOptimize(result);
@@ -53,22 +52,28 @@ void test_2(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_3(benchmark::State & state)
+void test_v3(benchmark::State & state)
 {
-    for (auto _ : state)
+    for (auto value : state)
     {
         auto result = 0.0;
 
         try
         {
-            for (std::size_t i = 0; ; ++i)
+            for (auto i = 0uz; ; ++i)
             {
                 result += std::sin(i);
 
-                if (i >= 1000) throw std::runtime_error("error");
+                if (i >= 1'000) 
+                {
+                    throw std::runtime_error("error");
+                }
             }
         }
-        catch (...) {}
+        catch (const std::exception & exception)
+        {
+            std::cerr << "test_v3 : " << exception.what() << '\n';
+        }
 
         benchmark::DoNotOptimize(result);
     }
@@ -76,9 +81,9 @@ void test_3(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_4(benchmark::State & state) 
+void test_v4(benchmark::State & state) 
 {
-    for (auto _ : state) 
+    for (auto value : state) 
     {
         std::vector < int > vector_1d(state.range(0), 0);
 
@@ -88,9 +93,9 @@ void test_4(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_5(benchmark::State & state)
+void test_v5(benchmark::State & state)
 {
-    for (auto _ : state) 
+    for (auto value : state) 
     {
         std::vector < std::vector < int > > vector_2d(state.range(0), 
                       std::vector < int >            (state.range(1), 0));
@@ -103,13 +108,13 @@ void test_5(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_6(benchmark::State & state)
+void test_v6(benchmark::State & state)
 {
     std::vector < int > vector(state.range(0), 0);
 
-    std::iota(std::begin(vector), std::end(vector), 1);
+    std::ranges::iota(vector, 1);
 
-    for (auto _ : state) 
+    for (auto value : state) 
     {
         benchmark::DoNotOptimize(std::ranges::lower_bound(std::as_const(vector), 0));
     }
@@ -119,9 +124,9 @@ void test_6(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_7(benchmark::State & state)
+void test_v7(benchmark::State & state)
 {
-    for (auto _ : state) 
+    for (auto value : state) 
     {
         state.SkipWithError("test failed");
 
@@ -131,31 +136,32 @@ void test_7(benchmark::State & state)
 
 //  ================================================================================================
 
-BENCHMARK(test_1);
+BENCHMARK(test_v1);
 
-BENCHMARK(test_2);
+BENCHMARK(test_v2);
 
-BENCHMARK(test_3);
+BENCHMARK(test_v3);
 
-BENCHMARK(test_4)->Arg(1);
+BENCHMARK(test_v4)->Arg(1);
 
-BENCHMARK(test_4)->DenseRange(0, 1024, 256);
+BENCHMARK(test_v4)->DenseRange(0, 1024, 256);
 
-BENCHMARK(test_4)->RangeMultiplier(2)->Range(128, 1024);
+BENCHMARK(test_v4)->RangeMultiplier(2)->Range(128, 1024);
 
-BENCHMARK(test_5)->Args({ 1, 2 })->Args({ 2, 4 })->Args({ 3, 6 });
+BENCHMARK(test_v5)->Args({ 1, 2 })->Args({ 2, 4 })->Args({ 3, 6 });
 
-void make_arguments(benchmark::internal::Benchmark * benchmark) 
+void make_args(benchmark::internal::Benchmark * benchmark) 
 {
-    for (auto i = 1; i < 4; ++i) benchmark->Args({ i, i * 2 });
+    for (auto i = 1; i < 4; ++i) 
+    {
+        benchmark->Args({ i, i * 2 });
+    }
 }
 
-BENCHMARK(test_5)->Apply(make_arguments);
+BENCHMARK(test_v5)->Apply(make_args);
 
-BENCHMARK(test_6)->RangeMultiplier(2)->Range(1024, 1024 << 16)->Complexity();
+BENCHMARK(test_v6)->RangeMultiplier(2)->Range(1024, 1024 << 16)->Complexity();
 
-BENCHMARK(test_7);
-
-//  ================================================================================================
+BENCHMARK(test_v7);
 
 BENCHMARK_MAIN();
