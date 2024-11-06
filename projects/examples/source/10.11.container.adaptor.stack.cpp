@@ -17,7 +17,7 @@ public:
         m_data.emplace(value, max);
     }
 
-    [[nodiscard]] auto top() const
+    auto top() const
     { 
         return m_data.top().first; 
     }
@@ -27,12 +27,12 @@ public:
         m_data.pop(); 
     }
  
-    [[nodiscard]] auto size() const
+    auto size() const
     { 
         return std::size(m_data); 
     }
  
-    [[nodiscard]] auto max() const
+    auto max() const
     { 
         return m_data.top().second; 
     }
@@ -64,7 +64,7 @@ public:
         }
     }
 
-    [[nodiscard]] auto top() const
+    auto top() const
     {
         return m_data.top() > m_max ? m_max : m_data.top();
     }
@@ -79,12 +79,12 @@ public:
         m_data.pop();
     }
 
-    [[nodiscard]] auto size() const
+    auto size() const
     { 
         return std::size(m_data); 
     }
  
-    [[nodiscard]] auto max() const
+    auto max() const
     { 
         return m_max; 
     }

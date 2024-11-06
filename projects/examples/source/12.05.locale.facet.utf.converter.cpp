@@ -14,7 +14,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto convert_v1(const std::string & string)
+auto convert_v1(const std::string & string)
 {
 	boost::locale::generator generator;
 
@@ -25,7 +25,7 @@
 	return boost::locale::conv::to_utf < char > (string, locale);
 }
 
-[[nodiscard]] auto convert_v2(const std::string & string)
+auto convert_v2(const std::string & string)
 {
 	boost::locale::generator generator;
 
@@ -50,14 +50,14 @@ template < typename S > void print(const S & string)
 
 //  ================================================================================================
 
-//  [[nodiscard]] auto convert_v3(const std::wstring & wstring)
+//  auto convert_v3(const std::wstring & wstring)
 //  {
 //  	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // bad
 //
 //  	return converter.to_bytes(wstring);
 //  }
 
-//  [[nodiscard]] auto convert_v4(const std::string & string)
+//  auto convert_v4(const std::string & string)
 //  {
 //  	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // bad
 //
@@ -66,7 +66,7 @@ template < typename S > void print(const S & string)
 
 //  ================================================================================================
 
-[[nodiscard]] auto convert_v5(std::string_view string, const std::locale & locale) 
+auto convert_v5(std::string_view string, const std::locale & locale) 
 {
 	std::vector < wchar_t > buffer(std::size(string), L'\0');
 
@@ -81,7 +81,7 @@ template < typename S > void print(const S & string)
 
 //  --------------------------------------------------------------------------------
 
-[[nodiscard]] auto convert_v6(std::wstring_view wstring, const std::locale & locale)
+auto convert_v6(std::wstring_view wstring, const std::locale & locale)
 {
 	std::vector < char > buffer(std::size(wstring), '\0');
 
@@ -96,7 +96,7 @@ template < typename S > void print(const S & string)
 
 //  ================================================================================================
 
-[[nodiscard]] const auto & transliteration() 
+const auto & transliteration() 
 {
     static std::unordered_map < char32_t, std::u32string > table
     { 

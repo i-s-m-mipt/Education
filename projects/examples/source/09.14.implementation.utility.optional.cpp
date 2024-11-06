@@ -116,9 +116,9 @@ private:
 
 public:
 
-    [[nodiscard]] auto empty   (      ) const { return !m_data; }
-    [[nodiscard]] auto value   (      ) const { return *m_data; }
-    [[nodiscard]] auto value_or(T data) const
+    auto empty   (      ) const { return !m_data; }
+    auto value   (      ) const { return *m_data; }
+    auto value_or(T data) const
     { 
         return m_data ? *m_data : data; 
     }

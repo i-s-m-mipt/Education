@@ -35,7 +35,7 @@ public:
 
 public:
 
-	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = default_alignment) 
+	void * allocate(std::size_t size, std::size_t alignment = default_alignment) 
 	{
 		void * first = get_byte(m_begin) + m_offset;
 
@@ -77,12 +77,12 @@ public:
 
 private:
 
-	[[nodiscard]] std::byte * get_byte(void * ptr) const
+	std::byte * get_byte(void * ptr) const
 	{
 		return static_cast < std::byte * > (ptr);
 	}
 
-	[[nodiscard]] Header * get_header(void * ptr) const
+	Header * get_header(void * ptr) const
 	{
 		return static_cast < Header * > (ptr);
 	}

@@ -59,11 +59,11 @@ public:
 
 //  --------------------------------------------------------------------
 
-	[[nodiscard]] constexpr const auto & head() const { return m_head; }
-	[[nodiscard]] constexpr       auto & head()       { return m_head; }
+	constexpr const auto & head() const { return m_head; }
+	constexpr       auto & head()       { return m_head; }
 
-	[[nodiscard]] constexpr const auto & tail() const { return m_tail; }
-	[[nodiscard]] constexpr       auto & tail()       { return m_tail; }
+	constexpr const auto & tail() const { return m_tail; }
+	constexpr       auto & tail()       { return m_tail; }
 
 private:
 
@@ -72,7 +72,7 @@ private:
 
 //  ================================================================================================
 
-template < typename ... Ts > [[nodiscard]] constexpr auto make_tuple(Ts && ... args)
+template < typename ... Ts > constexpr auto make_tuple(Ts && ... args)
 {
 	return Tuple < Ts ... > (std::forward < Ts > (args)...);
 }
@@ -81,7 +81,7 @@ template < typename ... Ts > [[nodiscard]] constexpr auto make_tuple(Ts && ... a
 
 template < std::size_t I > struct Get 
 {
-	template < typename T, typename ... Ts > [[nodiscard]] static constexpr const auto & apply
+	template < typename T, typename ... Ts > static constexpr const auto & apply
 	(
 		const Tuple < T, Ts ...> & tuple
 	)
@@ -89,7 +89,7 @@ template < std::size_t I > struct Get
 		return Get < I - 1 > ::apply(tuple.tail());
 	}
 
-	template < typename T, typename ... Ts > [[nodiscard]] static constexpr auto & apply
+	template < typename T, typename ... Ts > static constexpr auto & apply
 	(
 		Tuple < T, Ts ...> & tuple
 	)
@@ -102,7 +102,7 @@ template < std::size_t I > struct Get
 
 template <> struct Get < 0 >
 {
-	template < typename T, typename ... Ts > [[nodiscard]] static constexpr const auto & apply
+	template < typename T, typename ... Ts > static constexpr const auto & apply
 	(
 		const Tuple < T, Ts ... > & tuple
 	)
@@ -110,7 +110,7 @@ template <> struct Get < 0 >
 		return tuple.head();
 	}
 
-	template < typename T, typename ... Ts > [[nodiscard]] static constexpr auto & apply
+	template < typename T, typename ... Ts > static constexpr auto & apply
 	(
 		Tuple < T, Ts ... > & tuple
 	)
@@ -125,23 +125,19 @@ template
 < 
 	std::size_t I, typename ... Ts 
 > 
-[[nodiscard]] constexpr const auto & get(const Tuple < Ts ... > & tuple)
+constexpr const auto & get(const Tuple < Ts ... > & tuple)
 {
 	return Get < I > ::apply(tuple);
 }
 
-template 
-< 
-	std::size_t I, typename ... Ts 
-> 
-[[nodiscard]] constexpr auto & get(Tuple < Ts ... > & tuple)
+template < std::size_t I, typename ... Ts > constexpr auto & get(Tuple < Ts ... > & tuple)
 {
 	return Get < I > ::apply(tuple);
 }
 
 //  ================================================================================================
 
-[[nodiscard]] constexpr auto operator==(const Tuple <> & , const Tuple <> &)
+constexpr auto operator==(const Tuple <> & , const Tuple <> &)
 {
 	return true;
 }
@@ -151,7 +147,7 @@ template
 	typename ... Ts, 
 	typename ... Us 
 > 
-[[nodiscard]] constexpr auto operator==
+constexpr auto operator==
 (
 	const Tuple < Ts ... > & lhs, 
 	const Tuple < Us ... > & rhs
@@ -162,7 +158,7 @@ template
 
 //  ================================================================================================
 
-[[nodiscard]] constexpr auto operator<=>(const Tuple <> & , const Tuple <> &)
+constexpr auto operator<=>(const Tuple <> & , const Tuple <> &)
 {
 	return std::strong_ordering::equivalent;
 }
@@ -172,7 +168,7 @@ template
 	typename ... Ts, 
 	typename ... Us 
 > 
-[[nodiscard]] constexpr auto operator<=>
+constexpr auto operator<=>
 (
 	const Tuple < Ts ... > & lhs, 
 	const Tuple < Us ... > & rhs

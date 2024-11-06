@@ -12,14 +12,14 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] const auto & operator[](std::size_t index) const 
+    const auto & operator[](std::size_t index) const 
     {
         std::clog << "Vector::operator[] (1)\n";
 
         return m_data[index];
     }
 
-    [[nodiscard]] auto & operator[](std::size_t index)
+    auto & operator[](std::size_t index)
     {
         std::clog << "Vector::operator[] (2)\n";
 

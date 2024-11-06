@@ -39,7 +39,7 @@ public:
         swap(m_data, other.m_data); 
     }
 
-    [[nodiscard]] auto release()
+    auto release()
     {
         return std::exchange(m_data, nullptr);
     }
@@ -56,7 +56,7 @@ public:
 
 //  --------------------------------------------
 
-    [[nodiscard]] auto & operator*() const
+    auto & operator*() const
     { 
         return *m_data; 
     }
@@ -68,7 +68,7 @@ private:
 
 //  ================================================================================================
 
-template < typename T, typename ... Ts > [[nodiscard]] auto make_unique(Ts && ... args)
+template < typename T, typename ... Ts > auto make_unique(Ts && ... args)
 {
     return Unique < T > (new T(std::forward < Ts > (args)...)); 
 }

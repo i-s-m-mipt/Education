@@ -13,7 +13,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] double determinant_v1(const boost::numeric::ublas::matrix < double > & matrix)
+double determinant_v1(const boost::numeric::ublas::matrix < double > & matrix)
 {
     if (auto size = matrix.size1(); size == matrix.size2() && size != 0)
     {
@@ -54,7 +54,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto determinant_v2(const boost::numeric::ublas::matrix < double > & matrix)
+auto determinant_v2(const boost::numeric::ublas::matrix < double > & matrix)
 {    
     if (auto size = matrix.size1(); size == matrix.size2() && size != 0)
     {
@@ -98,7 +98,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] boost::numeric::ublas::matrix < double > make_matrix(std::size_t size)
+boost::numeric::ublas::matrix < double > make_matrix(std::size_t size)
 {
     boost::numeric::ublas::matrix < double > matrix(size, size);
 
@@ -119,7 +119,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto equal(double x, double y, double epsilon = 1e-6)
+auto equal(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }

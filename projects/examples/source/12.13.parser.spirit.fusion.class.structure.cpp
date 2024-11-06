@@ -39,7 +39,7 @@ namespace parser
 
 //  ================================================================================================
 
-[[nodiscard]] auto parse(std::string_view data)
+auto parse(std::string_view data)
 {
     auto begin = std::cbegin(data), end = std::cend(data);
 

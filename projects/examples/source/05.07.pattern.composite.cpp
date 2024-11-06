@@ -9,13 +9,13 @@ struct Entity
 
 //  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] virtual std::size_t size() const = 0;
+    virtual std::size_t size() const = 0;
 };
 
 //  ================================================================================================
 
-struct Client : public Entity { [[nodiscard]] std::size_t size() const override { return 1; }; };
-struct Server : public Entity { [[nodiscard]] std::size_t size() const override { return 2; }; };
+struct Client : public Entity { std::size_t size() const override { return 1; }; };
+struct Server : public Entity { std::size_t size() const override { return 2; }; };
 
 //  ================================================================================================
 
@@ -36,7 +36,7 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] std::size_t size() const override
+    std::size_t size() const override
     {
         auto size = 0uz;
 
@@ -65,7 +65,7 @@ private:
 
 //  ================================================================================================
 
-[[nodiscard]] Entity * make_composite(std::size_t n_clients, std::size_t n_servers)
+Entity * make_composite(std::size_t n_clients, std::size_t n_servers)
 {
     auto composite = new Composite;
 

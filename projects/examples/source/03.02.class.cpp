@@ -51,7 +51,7 @@ public:
 
 //  ----------------------------------------------------
 
-	[[nodiscard]] auto data() const
+	auto data() const
 	{ 
 		return m_data; 
 	}
@@ -67,7 +67,7 @@ public:
 
 //  ----------------------------------------------------
 
-	[[nodiscard]] const auto & data_as_string() const
+	const auto & data_as_string() const
 	{
 //		m_data = s_data; // error
 

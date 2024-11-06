@@ -8,22 +8,22 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto equal_v1(double x, double y)
+auto equal_v1(double x, double y)
 {
 	return std::abs(x - y) < std::numeric_limits < double > ::epsilon();
 }
 
-[[nodiscard]] auto equal_v2(double x, double y, double epsilon = 1e-6)
+auto equal_v2(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }
 
-[[nodiscard]] auto equal_v3(double x, double y, double scale)
+auto equal_v3(double x, double y, double scale)
 {
 	return std::abs(x - y) < std::max(std::abs(x), std::abs(y)) * scale;
 }
 
-[[nodiscard]] auto equal_v4(double x, double y, double scale, double epsilon)
+auto equal_v4(double x, double y, double scale, double epsilon)
 {
 	return std::abs(x - y) < epsilon ? true : equal_v3(x, y, scale);
 }

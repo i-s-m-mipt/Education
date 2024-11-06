@@ -23,7 +23,7 @@ public:
 
 public:
 
-	[[nodiscard]] auto empty()
+	auto empty()
 	{
 		char c; m_sin >> c;
 
@@ -37,7 +37,7 @@ public:
 		}
 	}
 
-	[[nodiscard]] auto get()
+	auto get()
 	{
 		if (m_is_full) 
 		{ 
@@ -61,7 +61,7 @@ public:
 
 				return Token(value);
 			}
-			[[unlikely]] default:
+			default:
 			{
 				if (std::string string(1, c); std::isalpha(c))
 				{
@@ -120,7 +120,7 @@ public:
 
 private:
 
-	[[nodiscard]] double statement(Stream & stream)
+	double statement(Stream & stream)
 	{
 		auto token = stream.get();
 
@@ -135,7 +135,7 @@ private:
 		return expression(stream);
 	}
 
-	[[nodiscard]] double declaration(Stream & stream)
+	double declaration(Stream & stream)
 	{
 		auto name = std::get < std::string > (stream.get());
 
@@ -144,7 +144,7 @@ private:
 		return m_variables[name];
 	}
 
-	[[nodiscard]] double expression(Stream & stream) const
+	double expression(Stream & stream) const
 	{
 		auto left = term(stream);
 
@@ -157,7 +157,7 @@ private:
 					case '+': { left += term(stream); break; }
 					case '-': { left -= term(stream); break; }
 
-					[[unlikely]] default: 
+					default: 
 					{ 
 						stream.putback(token); 
 						
@@ -172,7 +172,7 @@ private:
 		}
 	}
 
-	[[nodiscard]] double term(Stream & stream) const
+	double term(Stream & stream) const
 	{
 		auto left = primary(stream);
 
@@ -185,7 +185,7 @@ private:
 					case '*': { left *= term(stream); break; }
 					case '/': { left /= term(stream); break; }
 
-					[[unlikely]] default: 
+					default: 
 					{ 
 						stream.putback(token); 
 						
@@ -200,7 +200,7 @@ private:
 		}
 	}
 
-	[[nodiscard]] double primary(Stream & stream) const
+	double primary(Stream & stream) const
 	{
 		auto token = stream.get();
 
@@ -225,7 +225,7 @@ private:
 				case '+': { return        primary(stream); }
 				case '-': { return -1.0 * primary(stream); }
 				
-				[[unlikely]] default: 
+				default: 
 				{
 					throw std::runtime_error("invalid primary");
 				}

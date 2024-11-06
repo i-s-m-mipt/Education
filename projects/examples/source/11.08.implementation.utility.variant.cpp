@@ -110,7 +110,7 @@ namespace detail
 
 //      ---------------------------------------------------------
 
-        template < typename T > [[nodiscard]] auto buffer() const
+        template < typename T > auto buffer() const
         {
             return std::bit_cast < T * > (&m_buffer);
         }
@@ -165,7 +165,7 @@ namespace detail
 
     private:
 
-        [[nodiscard]] auto & derived()
+        auto & derived()
         {
             return *static_cast < D * > (this); 
         }
@@ -258,12 +258,12 @@ private:
 
 public:
 
-    template < typename T > [[nodiscard]] auto holds_alternative() const
+    template < typename T > auto holds_alternative() const
     {
         return this->current_index == detail::Selector < derived_t, T, Ts ... > ::index;
     }
 
-    template < typename T > [[nodiscard]] const auto & get() const
+    template < typename T > const auto & get() const
     {
         if (!holds_alternative < T > ()) 
         {
@@ -273,7 +273,7 @@ public:
         return *this->template buffer < T > ();
     }  
 
-    template < typename T > [[nodiscard]] auto & get()
+    template < typename T > auto & get()
     {
         if (!holds_alternative < T > ()) 
         {

@@ -9,14 +9,14 @@ using namespace std::literals;
 
 //  ================================================================================================
 
-[[nodiscard]] auto match(const std::string & string)
+auto match(const std::string & string)
 {
 	return std::regex_match(string, std::regex(R"([_[:alpha:]]\w*)"));
 }
 
 //  ================================================================================================
 
-[[nodiscard]] auto search(const std::string & string)
+auto search(const std::string & string)
 {
     std::smatch matches;
     
@@ -27,7 +27,7 @@ using namespace std::literals;
 
 //  ================================================================================================
 
-[[nodiscard]] auto replace(const std::string & string)
+auto replace(const std::string & string)
 {
     return std::regex_replace(string, std::regex(R"(\b([a-z])([^ ]+))"), R"($1-$2)");
 }

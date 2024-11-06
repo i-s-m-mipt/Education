@@ -9,7 +9,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto generator_v1() 
+auto generator_v1() 
 { 
 	static auto state = 0; 
 	
@@ -22,7 +22,7 @@ class Generator_v2
 {
 public:
 
-	[[nodiscard]] auto operator()() 
+	auto operator()() 
 	{ 
 		return ++m_state; 
 	}
@@ -43,7 +43,7 @@ public:
 		m_sum += x; 
 	}
 
-	[[nodiscard]] auto get() const 
+	auto get() const 
 	{ 
 		return m_sum; 
 	}
@@ -64,7 +64,7 @@ public:
 		m_sum += x; ++m_counter;
 	}
 
-	[[nodiscard]] auto get() const 
+	auto get() const 
 	{ 
 		return m_sum / m_counter; 
 	}

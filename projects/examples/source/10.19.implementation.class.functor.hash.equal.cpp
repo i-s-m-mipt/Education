@@ -13,7 +13,7 @@ struct Entity
 
 struct Hash
 {
-	[[nodiscard]] auto operator()(const Entity & entity) const
+	auto operator()(const Entity & entity) const
 	{
 		return std::hash < int > ()(entity.data);
 	}
@@ -23,7 +23,7 @@ struct Hash
 
 struct Equal
 {
-	[[nodiscard]] auto operator()(const Entity & lhs, const Entity & rhs) const
+	auto operator()(const Entity & lhs, const Entity & rhs) const
 	{
 		return lhs.data == rhs.data;
 	}

@@ -7,7 +7,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto pow(unsigned long long base, unsigned long long exp)
+auto pow(unsigned long long base, unsigned long long exp)
 {
     auto result = 1ull;
 

@@ -20,7 +20,7 @@ void test(Color color)
 		case Color::G: { std::clog << "(2)"; break; }
 		case Color::B: { std::clog << "(3)"; break; }
 
-		[[unlikely]] default:
+		default:
 		{
 			std::clog << "(4)"; break;
 		}

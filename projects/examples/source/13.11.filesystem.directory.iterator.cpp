@@ -6,7 +6,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto type(const std::filesystem::file_status & status)
+auto type(const std::filesystem::file_status & status)
 {
     if (std::filesystem::is_block_file    (status)) { return 'b'; }
     if (std::filesystem::is_character_file(status)) { return 'c'; }
@@ -22,7 +22,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto permissions(std::filesystem::perms permissions)
+auto permissions(std::filesystem::perms permissions)
 {
     auto verify = [permissions](auto bit, auto c) 
     { 
@@ -39,7 +39,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto size(const std::filesystem::path & path)
+auto size(const std::filesystem::path & path)
 {
 	auto result = 0uz;
 
@@ -59,7 +59,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto size(const std::filesystem::directory_entry & entry)
+auto size(const std::filesystem::directory_entry & entry)
 {
     auto result = 0uz;
 

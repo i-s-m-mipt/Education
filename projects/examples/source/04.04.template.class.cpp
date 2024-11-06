@@ -13,11 +13,11 @@ public:
 
 	void push(T value);
 
-	[[nodiscard]] auto top() const;
+	auto top() const;
 
 	void pop();
 
-	[[nodiscard]] auto size() const 
+	auto size() const 
 	{ 
 		return std::size(m_data); 
 	}
@@ -34,7 +34,7 @@ template < typename T, typename C > void Stack_v1 < T, C > ::push(T value)
 	m_data.push_back(std::move(value));
 }
 
-template < typename T, typename C > [[nodiscard]] auto Stack_v1 < T, C > ::top() const
+template < typename T, typename C > auto Stack_v1 < T, C > ::top() const
 {
 	return m_data.back();
 }
@@ -55,7 +55,7 @@ public:
 		m_data.push_back(std::move(value));
 	}
 
-	[[nodiscard]] auto top() const
+	auto top() const
 	{
 		return m_data.back();
 	}
@@ -65,7 +65,7 @@ public:
 		m_data.pop_back();
 	}
 
-	[[nodiscard]] auto size() const
+	auto size() const
 	{ 
 		return std::size(m_data); 
 	}
@@ -82,7 +82,7 @@ template
 	template < typename E > typename C1,
 	template < typename E > typename C2, typename T 
 >		   
-[[nodiscard]] auto copy(const C1 < T > & container_from)
+auto copy(const C1 < T > & container_from)
 {
 	return C2 < T > (std::cbegin(container_from), std::cend(container_from));
 }

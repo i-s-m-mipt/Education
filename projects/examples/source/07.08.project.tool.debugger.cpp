@@ -4,7 +4,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto find(const std::vector < int > & vector, int key)
+auto find(const std::vector < int > & vector, int key)
 {
 	auto result = false;
 

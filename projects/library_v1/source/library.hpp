@@ -2,5 +2,5 @@
 
 namespace library_v1
 {
-	[[nodiscard]] int test(int x);
+	int test(int x);
 }

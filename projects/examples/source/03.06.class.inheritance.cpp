@@ -20,7 +20,7 @@ public:
 
 protected:
 
-	[[nodiscard]] auto data() const
+	auto data() const
 	{ 
 		return m_data; 
 	}

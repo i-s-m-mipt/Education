@@ -38,11 +38,7 @@ template < std::size_t D, typename C, typename I > void fill_array(const C & con
 
 //  ================================================================================================
 
-template 
-< 
-	typename T, std::size_t D, typename C 
-> 
-[[nodiscard]] auto make_array(const C & container)
+template < typename T, std::size_t D, typename C > auto make_array(const C & container)
 {
 	std::vector < typename boost::multi_array < T, D > ::index > shape(D, 0);
 

@@ -41,7 +41,7 @@ public:
 			case Order::fast: { m_entity.state = State::fast; break; }
 			case Order::slow: { m_entity.state = State::slow; break; }
 			
-			[[unlikely]] default: 
+			default: 
 			{
 				throw std::runtime_error("invalid order");
 			}

@@ -29,7 +29,7 @@ public:
 		reduce();
 	}
 
-	[[nodiscard]] explicit operator double() const
+	explicit operator double() const
 	{ 
 		return 1.0 * m_num / m_den; 
 	}
@@ -117,29 +117,29 @@ private:
 
 //  ================================================================================================
 
-[[nodiscard]] auto operator+(Ratio lhs, Ratio rhs) { return lhs += rhs; }
-[[nodiscard]] auto operator-(Ratio lhs, Ratio rhs) { return lhs -= rhs; }
-[[nodiscard]] auto operator*(Ratio lhs, Ratio rhs) { return lhs *= rhs; }
-[[nodiscard]] auto operator/(Ratio lhs, Ratio rhs) { return lhs /= rhs; }
+auto operator+(Ratio lhs, Ratio rhs) { return lhs += rhs; }
+auto operator-(Ratio lhs, Ratio rhs) { return lhs -= rhs; }
+auto operator*(Ratio lhs, Ratio rhs) { return lhs *= rhs; }
+auto operator/(Ratio lhs, Ratio rhs) { return lhs /= rhs; }
 
 //  ================================================================================================
 
-[[nodiscard]] auto operator< (Ratio lhs, Ratio rhs)
+auto operator< (Ratio lhs, Ratio rhs)
 {
 	return static_cast < double > (lhs) < static_cast < double > (rhs);
 }
 
-[[nodiscard]] auto operator> (Ratio lhs, Ratio rhs) { return  (rhs < lhs); }
-[[nodiscard]] auto operator<=(Ratio lhs, Ratio rhs) { return !(lhs > rhs); }
-[[nodiscard]] auto operator>=(Ratio lhs, Ratio rhs) { return !(lhs < rhs); }
-[[nodiscard]] auto operator==(Ratio lhs, Ratio rhs)
+auto operator> (Ratio lhs, Ratio rhs) { return  (rhs < lhs); }
+auto operator<=(Ratio lhs, Ratio rhs) { return !(lhs > rhs); }
+auto operator>=(Ratio lhs, Ratio rhs) { return !(lhs < rhs); }
+auto operator==(Ratio lhs, Ratio rhs)
 {
 	return !(lhs < rhs) && !(rhs < lhs);
 }
 
 //  ================================================================================================
 
-[[nodiscard]] auto equal(double x, double y, double epsilon = 1e-6)
+auto equal(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }

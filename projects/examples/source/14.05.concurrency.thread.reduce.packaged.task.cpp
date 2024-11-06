@@ -14,7 +14,7 @@
 
 template < std::ranges::view V > struct Block
 {
-	[[nodiscard]] auto operator()(V view) const
+	auto operator()(V view) const
 	{
 		return std::reduce
 		(
@@ -26,7 +26,7 @@ template < std::ranges::view V > struct Block
 
 //  ================================================================================================
 
-template < std::ranges::view V, typename T > [[nodiscard]] auto reduce(V view, T sum)
+template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 {
 	auto begin = std::ranges::cbegin(view), end = std::ranges::cend(view);
 

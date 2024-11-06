@@ -81,7 +81,7 @@ public:
 	(
 		const char * scope, bool has_trace = true
 	) 
-	noexcept : m_scope(scope), m_has_trace(has_trace)
+	: m_scope(scope), m_has_trace(has_trace)
 	{
 		try
 		{
@@ -98,7 +98,7 @@ public:
 		}
 	}
 
-   ~Logger() noexcept
+   ~Logger()
 	{
 		if (m_has_trace) 
 		{
@@ -203,14 +203,14 @@ private:
 
 public:
 
-	[[nodiscard]] auto scope() const noexcept 
+	auto scope() const 
 	{ 
 		return m_scope; 
 	}
 
-//  --------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------
 
-	void write(Severity severity, const std::string & message) const noexcept
+	void write(Severity severity, const std::string & message) const
 	{
 		try
 		{
@@ -235,7 +235,7 @@ public:
 
 private:
 
-	static void catch_handler(std::string_view scope, std::string_view message) noexcept
+	static void catch_handler(std::string_view scope, std::string_view message)
 	{
 		try 
 		{ 

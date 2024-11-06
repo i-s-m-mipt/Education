@@ -8,21 +8,21 @@
 
 //  ================================================================================================
 
-[[nodiscard]] constexpr int factorial_v1(int x)
+constexpr unsigned int factorial_v1(unsigned int x)
 {
-	return x <= 1 ? 1 : x * factorial_v1(x - 1);
+	return x > 1 ? x * factorial_v1(x - 1) : 1;
 }
 
-[[nodiscard]] consteval int factorial_v2(int x)
+consteval unsigned int factorial_v2(unsigned int x)
 {
-	return x <= 1 ? 1 : x * factorial_v2(x - 1);
+	return x > 1 ? x * factorial_v2(x - 1) : 1;
 }
 
 //  ================================================================================================
 
-[[nodiscard]] consteval auto is_prime(int x)
+consteval auto is_prime(unsigned int x)
 {
-	for (auto d = 2; d * d < x; ++d)
+	for (auto d = 2u; d * d < x; ++d)
 	{
 		if (x % d == 0) 
 		{
@@ -35,7 +35,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] consteval auto test_v1()
+consteval auto test_v1()
 {
 //	[[maybe_unused]] auto object = new auto(1); // error
 
@@ -46,7 +46,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] constexpr auto test_v2(int) 
+constexpr auto test_v2(int) 
 { 
 	return std::is_constant_evaluated(); 
 }
@@ -71,21 +71,21 @@ int main()
 {
 	constexpr auto x = 5; auto y = 5;
 
+//  -----------------------------------------------------
+
+	[[maybe_unused]] constexpr auto z1 = factorial_v1(x);
+//	[[maybe_unused]] constexpr auto z2 = factorial_v1(y); // error
+
+	[[maybe_unused]]           auto z3 = factorial_v1(x); // support: compiler-explorer.com
+	[[maybe_unused]]           auto z4 = factorial_v1(y);
+
+	[[maybe_unused]] constexpr auto z5 = factorial_v2(x);
+//	[[maybe_unused]] constexpr auto z6 = factorial_v2(y); // error
+
+	[[maybe_unused]]           auto z7 = factorial_v2(x);
+//	[[maybe_unused]]           auto z8 = factorial_v2(y); // error
+
 //  --------------------------------------------------------------
-
-	[[maybe_unused]] constexpr auto factorial_1 = factorial_v1(x);
-//	[[maybe_unused]] constexpr auto factorial_2 = factorial_v1(y); // error
-
-	[[maybe_unused]]           auto factorial_3 = factorial_v1(x); // support: compiler-explorer.com
-	[[maybe_unused]]           auto factorial_4 = factorial_v1(y);
-
-	[[maybe_unused]] constexpr auto factorial_5 = factorial_v2(x);
-//	[[maybe_unused]] constexpr auto factorial_6 = factorial_v2(y); // error
-
-	[[maybe_unused]]           auto factorial_7 = factorial_v2(x);
-//	[[maybe_unused]]           auto factorial_8 = factorial_v2(y); // error
-
-//  -----------------------------------------------------------------------
 
 	static_assert(is_prime(x) && test_v1() == 15);
 

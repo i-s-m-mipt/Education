@@ -15,7 +15,7 @@ struct Vector
 
 //  ================================================================================================
 
-[[nodiscard]] auto operator*(const Vector & a, const Vector & b)
+auto operator*(const Vector & a, const Vector & b)
 {
 	return Vector
 	( 
@@ -27,7 +27,7 @@ struct Vector
 
 //  ================================================================================================
 
-[[nodiscard]] auto evaluate(std::size_t size)
+auto evaluate(std::size_t size)
 {
 	std::random_device device;
 
@@ -63,7 +63,7 @@ struct Vector
 
 //  ================================================================================================
 
-[[nodiscard]] auto equal(double x, double y, double epsilon = 1e-6)
+auto equal(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }

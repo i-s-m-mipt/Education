@@ -6,12 +6,12 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto encode(unsigned int x)
+auto encode(unsigned int x)
 {
     return x ^ (x >> 1);
 }
 
-[[nodiscard]] auto decode(unsigned int code)
+auto decode(unsigned int code)
 {
     for (auto bit = 1u << 31; bit > 1; bit >>= 1)
     {

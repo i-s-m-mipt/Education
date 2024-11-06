@@ -51,7 +51,7 @@ protected:
 
 public:
 
-	[[nodiscard]] static void * operator new(std::size_t size)
+	static void * operator new(std::size_t size)
 	{
 		std::clog << "Entity_v3::operator new\n";
 

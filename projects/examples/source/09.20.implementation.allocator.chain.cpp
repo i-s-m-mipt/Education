@@ -52,7 +52,7 @@ public:
 
 public:
 
-	[[nodiscard]] void * allocate()
+	void * allocate()
 	{
 		if (m_head == nullptr)
 		{
@@ -103,17 +103,17 @@ public:
 
 private:
 
-	[[nodiscard]] std::byte * get_byte(void * ptr) const
+	std::byte * get_byte(void * ptr) const
 	{
 		return static_cast < std::byte * > (ptr);
 	}
 
-	[[nodiscard]] Node * get_node(void * ptr) const
+	Node * get_node(void * ptr) const
 	{ 
 		return static_cast < Node * > (ptr); 
 	}
 
-	[[nodiscard]] auto allocate_nodes() const
+	auto allocate_nodes() const
 	{
 		auto node = get_node(::operator new(m_size, std::align_val_t(default_alignment)));
 		

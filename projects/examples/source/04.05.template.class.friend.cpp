@@ -25,7 +25,7 @@ public:
 		reduce();
 	}
 
-	[[nodiscard]] explicit operator double() const 
+	explicit operator double() const 
 	{ 
 		return 1.0 * m_num / m_den; 
 	}
@@ -58,21 +58,21 @@ public:
 		return *this += other.m_num *= -1; 
 	}
 
-//  ------------------------------------------------------------------------------------------------
+//  -------------------------------------------
 
-	[[nodiscard]] friend auto operator+(Ratio lhs, Ratio rhs) 
+	friend auto operator+(Ratio lhs, Ratio rhs) 
 	{ 
 		return lhs += rhs; 
 	}
 
-//  ------------------------------------------------------------------------------------------------
+//  --------------------------------------------
 
-	[[nodiscard]] friend auto operator< (Ratio lhs, Ratio rhs)
+	friend auto operator< (Ratio lhs, Ratio rhs)
 	{
 		return static_cast < double > (lhs) < static_cast < double > (rhs);
 	}
 
-	[[nodiscard]] friend auto operator==(Ratio lhs, Ratio rhs)
+	friend auto operator==(Ratio lhs, Ratio rhs)
 	{
 		return !(lhs < rhs) && !(rhs < lhs);
 	}
@@ -85,7 +85,7 @@ private:
 
 //  ================================================================================================
 
-template < typename U > [[nodiscard]] auto operator-(Ratio < U > lhs, Ratio < U > rhs)
+template < typename U > auto operator-(Ratio < U > lhs, Ratio < U > rhs)
 { 
 	return lhs -= rhs;
 }

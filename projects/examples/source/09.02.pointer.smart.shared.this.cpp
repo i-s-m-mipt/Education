@@ -6,7 +6,7 @@
 
 struct Entity_v1
 {
-    [[nodiscard]] auto get()
+    auto get()
     { 
         return std::shared_ptr < Entity_v1 > (this); 
     }
@@ -16,7 +16,7 @@ struct Entity_v1
 
 struct Entity_v2 : public std::enable_shared_from_this < Entity_v2 >
 {
-    [[nodiscard]] auto get()
+    auto get()
     { 
         return shared_from_this(); 
     }
@@ -36,12 +36,12 @@ public:
 
 //  ------------------------------------
 
-    [[nodiscard]] auto get()
+    auto get()
     { 
         return shared_from_this(); 
     }
 
-    [[nodiscard]] static auto make()
+    static auto make()
     {
         return std::make_shared < Entity_v3 > (Key());
     }

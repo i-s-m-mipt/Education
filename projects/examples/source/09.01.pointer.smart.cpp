@@ -24,7 +24,7 @@ public:
 
 //  ------------------------------
 
-	[[nodiscard]] auto get() const
+	auto get() const
 	{ 
 		return m_data; 
 	}
@@ -97,7 +97,7 @@ struct Router : public Entity
 
 //  ================================================================================================
 
-template < typename E > [[nodiscard]] auto make_entity()
+template < typename E > auto make_entity()
 {
 	return std::unique_ptr < Entity > (std::make_unique < E > ());
 }

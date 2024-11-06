@@ -151,9 +151,9 @@ private:
 
 //  ================================================================================================
 
-[[nodiscard]] auto test_v1() { return Vector(); }
+auto test_v1() { return Vector(); }
 
-[[nodiscard]] auto test_v2() 
+auto test_v2() 
 { 
 	Vector vector; 
 	

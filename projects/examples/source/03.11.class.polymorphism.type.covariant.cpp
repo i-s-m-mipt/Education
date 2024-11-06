@@ -15,9 +15,9 @@ struct Entity_v2
 {
 	virtual ~Entity_v2() = default;
 
-//  ------------------------------------------------------------------------------------------------
+//  --------------------------------
 
-	[[nodiscard]] virtual Entity_v1 * test() const
+	virtual Entity_v1 * test() const
 	{ 
 		std::clog << "Entity_v2::test\n";
 
@@ -29,7 +29,7 @@ struct Entity_v2
 
 struct Client_v2 : public Entity_v2
 {
-	[[nodiscard]] Client_v1 * test() const override 
+	Client_v1 * test() const override 
 	{ 
 		std::clog << "Client_v2::test\n";
 

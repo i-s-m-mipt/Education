@@ -13,14 +13,14 @@ struct Weight
 
 namespace literals
 {
-	[[nodiscard]] auto operator""_kg(unsigned long long kilograms)
+	auto operator""_kg(unsigned long long kilograms)
 	{
 		return Weight(kilograms);
 	}
 
 //  ------------------------------------------------------------------------------------------------
 
-	[[nodiscard]] auto operator""_deg_to_rad(long double degrees)
+	auto operator""_deg_to_rad(long double degrees)
 	{
 		return degrees * std::numbers::pi_v < long double > / 180.0;
 	}
@@ -29,12 +29,12 @@ namespace literals
 
 	namespace detail
 	{
-		[[nodiscard]] int pow(int x, unsigned int y)
+		int pow(int x, unsigned int y)
 		{
 			return y > 0 ? x * pow(x, y - 1) : 1;
 		}
 
-		template < char D, char ... Ds > [[nodiscard]] int b3_handler()
+		template < char D, char ... Ds > int b3_handler()
 		{
 			if constexpr (auto x = D - '0'; sizeof...(Ds) > 0)
 			{
@@ -49,7 +49,7 @@ namespace literals
 	
 //  ------------------------------------------------------------------------------------------------
 
-	template < char ... Ds > [[nodiscard]] auto operator""_b3()
+	template < char ... Ds > auto operator""_b3()
 	{
 		return detail::b3_handler < Ds... > ();
 	}

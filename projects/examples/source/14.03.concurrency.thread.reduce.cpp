@@ -25,7 +25,7 @@ template < std::ranges::view V, typename T > struct Task
 
 //  ================================================================================================
 
-template < std::ranges::view V, typename T > [[nodiscard]] auto reduce(V view, T sum)
+template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 {
     auto begin = std::ranges::cbegin(view), end = std::ranges::cend(view);
 

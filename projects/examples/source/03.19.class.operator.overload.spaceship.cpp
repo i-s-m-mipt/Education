@@ -12,7 +12,7 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] auto operator<=>(const Entity_v1 & rhs) const 
+    auto operator<=>(const Entity_v1 & rhs) const 
     { 
         return m_data <=> rhs.m_data; 
     }
@@ -36,7 +36,7 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] auto operator<=>(const Entity_v2 & rhs) const = default; 
+    auto operator<=>(const Entity_v2 & rhs) const = default; 
 
 private:
 

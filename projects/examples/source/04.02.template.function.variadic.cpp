@@ -38,22 +38,22 @@ template < typename ... Ts > void print_v3(Ts ... args)
 
 //  ================================================================================================
 
-template < typename ... Ts > [[nodiscard]] auto reduce_v1(Ts ... args)
+template < typename ... Ts > auto reduce_v1(Ts ... args)
 {
 	return (... + args); // support: cppinsights.io
 }
 
-template < typename ... Ts > [[nodiscard]] auto reduce_v2(Ts ... args)
+template < typename ... Ts > auto reduce_v2(Ts ... args)
 {
 	return (args + ...); // support: cppinsights.io
 }
 
-template < typename ... Ts > [[nodiscard]] auto reduce_v3(Ts ... args)
+template < typename ... Ts > auto reduce_v3(Ts ... args)
 {
 	return (0 + ... + args); // support: cppinsights.io
 }
 
-template < typename ... Ts > [[nodiscard]] auto reduce_v4(Ts ... args)
+template < typename ... Ts > auto reduce_v4(Ts ... args)
 {
 	return (args + ... + 0); // support: cppinsights.io
 }
@@ -68,7 +68,7 @@ struct Entity
 
 //  ================================================================================================
 
-template < typename T, typename ... Ts > [[nodiscard]] auto make_object(Ts ... args)
+template < typename T, typename ... Ts > auto make_object(Ts ... args)
 {
 	std::cout << "sizeof...(args) = " << sizeof...(args) << '\n';
 

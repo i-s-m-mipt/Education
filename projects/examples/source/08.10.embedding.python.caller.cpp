@@ -33,18 +33,16 @@ class Python : private boost::noncopyable
 {
 public:
 
-	Python() noexcept { acquire(); }
-   ~Python() noexcept { release(); }
-
-//  ------------------------------------------------------------------------------------------------
+	Python() { acquire(); }
+   ~Python() { release(); }
 
 private:
 
-	void acquire() noexcept
+	void acquire()
 	{
-		try
-		{
-			std::call_once(s_status, []() 
+		std::call_once
+		(
+			s_status, []() 
 			{
 				if (!Py_IsInitialized()) 
 				{
@@ -56,95 +54,56 @@ private:
 
 					PyList_Insert(system_path, 0, PyUnicode_FromString(working_directory));
 				}
-			});
+			}
+		);
 
-			s_mutex.lock(); s_state = PyGILState_Ensure();
+		s_mutex.lock(); 
+			
+		s_state = PyGILState_Ensure();
 
-			m_global = boost::python::import("__main__").attr("__dict__");
+		m_local = boost::python::import("__main__").attr("__dict__");
 
-			boost::python::exec("import sys\nsys.path.append(\".\")", m_global, m_global);
-		}
-		catch (const boost::python::error_already_set &)
-		{
-			catch_handler(FUNCTION, Python::exception());
-		}
-		catch (const std::exception & exception)
-		{
-			catch_handler(FUNCTION, exception.what());
-		}
+		boost::python::exec("import sys\nsys.path.append(\".\")", m_local, m_local);
 	}
 
-	void release() noexcept
+	void release()
 	{
-		try
-		{
-			PyGILState_Release(s_state); s_mutex.unlock();
-		}
-		catch (const boost::python::error_already_set &)
-		{
-			catch_handler(FUNCTION, Python::exception());
-		}
-		catch (const std::exception & exception)
-		{
-			catch_handler(FUNCTION, exception.what());
-		}
+		PyGILState_Release(s_state); 
+		
+		s_mutex.unlock();
 	}
 
 public:
 
-	[[nodiscard]] const auto & global() const noexcept
+	const auto & local() const
 	{
-		return m_global;
+		return m_local;
 	}
 
-//  -----------------------------------------------------
+//  ------------------------------
 
-	[[nodiscard]] static std::string exception() noexcept
+	static std::string exception()
 	{
-		try
-		{
-			PyObject * error;
-			PyObject * value;
-			PyObject * stack;
+		PyObject * error;
+		PyObject * value;
+		PyObject * stack;
 
-			PyErr_Fetch             (&error, &value, &stack);
-			PyErr_NormalizeException(&error, &value, &stack);
+		PyErr_Fetch             (&error, &value, &stack);
+		PyErr_NormalizeException(&error, &value, &stack);
 
-			boost::python::handle <> handle_error(error);
+		boost::python::handle <> handle_error(error);
 
-			boost::python::handle <> handle_value(boost::python::allow_null(value));
-			boost::python::handle <> handle_stack(boost::python::allow_null(stack));
+		boost::python::handle <> handle_value(boost::python::allow_null(value));
+		boost::python::handle <> handle_stack(boost::python::allow_null(stack));
 
-			return boost::python::extract < std::string > 
-			(
-				handle_value ? boost::python::str(handle_value) : 
-						   	   boost::python::str(handle_error)
-			);
-		}
-		catch (const boost::python::error_already_set &)
-		{
-			catch_handler(FUNCTION, "invalid exception");
-		}
-		catch (const std::exception & exception)
-		{
-			catch_handler(FUNCTION, exception.what());
-		}
-
-		return "unknown exception";
+		return boost::python::extract < std::string > 
+		(
+			handle_value ? boost::python::str(handle_value) : 
+					   	   boost::python::str(handle_error)
+		);
 	}
 
 private:
-
-	static void catch_handler(std::string_view scope, std::string_view message) noexcept
-	{
-		try 
-		{ 
-			std::cerr << scope << " : " << message << '\n'; 
-		}
-		catch (...) {}
-	}
-
-//  ---------------------------------------
 
 	static inline std::once_flag s_status;
 
@@ -154,12 +113,12 @@ private:
 
 //  ---------------------------------------
 
-	boost::python::api::object m_global;
+	boost::python::api::object m_local;
 };
 
 //  ================================================================================================
 
-[[nodiscard]] auto make_dictionary(std::size_t size, std::size_t length)
+auto make_dictionary(std::size_t size, std::size_t length)
 {
 	std::random_device device;
 
@@ -182,7 +141,7 @@ private:
 
 //  ================================================================================================
 
-[[nodiscard]] std::size_t hash(std::string_view string)
+std::size_t hash(std::string_view string)
 {
 	std::uint32_t hash = std::size(string);
 
@@ -198,47 +157,51 @@ private:
 
 int main()
 {
-    try
+    Python python;
+
+//  ----------------------------------------------------------------------------------------
+
+	try
     {
-        Python python;
-
-//      --------------------------------------------------------------------------------------
-
-        boost::python::exec("from script import factorial", python.global(), python.global());
-		boost::python::exec("from script import make_plot", python.global(), python.global());
-
-//      --------------------------------------------------------------------------------------
-
-		auto result = python.global()["factorial"](100);
+        boost::python::exec("from script import factorial", python.local(), python.local());
+		
+		auto result = python.local()["factorial"](100);
 		
 		std::cout << "100! = " << boost::python::extract < std::string > (result)() << '\n';
+	}
+	catch (const boost::python::error_already_set &)
+	{
+		std::cerr << "main : " << Python::exception() << '\n';
+	}
 
-//      ------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------------------
 
-        auto size = 1'000'000uz;
+    auto size = 1'000'000uz;
 
-        std::unordered_set < std::size_t > hashes; auto index = 0uz; std::string points;
+    std::unordered_set < std::size_t > hashes; auto index = 0uz; std::string points;
 
-        for (const auto & word : make_dictionary(size + 1, 10))
+    for (const auto & word : make_dictionary(size + 1, 10))
+    {
+        if (hashes.insert(hash(word)); index++ % (size / 50) == 0)
         {
-            if (hashes.insert(hash(word)); index++ % (size / 50) == 0)
-            {
-                points += (std::to_string(index - 1) + ',');
+            points += (std::to_string(index - 1) + ',');
 
-                points += (std::to_string(index - std::size(hashes)) + ',');
-            }
+            points += (std::to_string(index - std::size(hashes)) + ',');
         }
+    }
 
-        points.pop_back();
+    points.pop_back();
 
-		python.global()["make_plot"](points.c_str(), "hash");
+//  ----------------------------------------------------------------------------------------
+
+	try
+	{
+		boost::python::exec("from script import make_plot", python.local(), python.local());
+
+		python.local()["make_plot"](points.c_str(), "hash");
     }
     catch (const boost::python::error_already_set &)
 	{
 		std::cerr << "main : " << Python::exception() << '\n';
 	}
-    catch (const std::exception & exception)
-    {
-        std::cerr << "main : " << exception.what() << '\n';
-    }
 }

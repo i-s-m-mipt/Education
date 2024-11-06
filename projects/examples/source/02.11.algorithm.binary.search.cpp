@@ -5,7 +5,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto find(const int * array, std::size_t size, int key)
+auto find(const int * array, std::size_t size, int key)
 {
 	auto result = false;
 

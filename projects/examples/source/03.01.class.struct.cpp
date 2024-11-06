@@ -13,7 +13,7 @@ struct Entity
 
 //  ================================================================================================
 
-[[nodiscard]] auto make_entity(int data_1, int data_2) 
+auto make_entity(int data_1, int data_2) 
 { 
 	return Entity
 	(

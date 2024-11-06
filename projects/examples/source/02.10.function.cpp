@@ -49,12 +49,12 @@ void test_v5(const std::string &)
 
 //  ================================================================================================
 
-//  [[nodiscard]] auto * test_v6() { auto x = 1; return &x; } // error
-//  [[nodiscard]] auto & test_v7() { auto x = 1; return  x; } // error
+//  auto * test_v6() { auto x = 1; return &x; } // error
+//  auto & test_v7() { auto x = 1; return  x; } // error
 
 //  ================================================================================================
 
-[[nodiscard]] const auto & test_v8()
+const auto & test_v8()
 {
 	static auto state = 0; // support: compiler-explorer.com
 
@@ -63,12 +63,12 @@ void test_v5(const std::string &)
 
 //  ================================================================================================
 
-[[nodiscard]] inline auto max_v1(int x, int y)
+inline auto max_v1(int x, int y)
 { 
 	return x > y ? x : y; 
 }
 
-[[nodiscard]] __attribute__ ((__noinline__)) auto max_v2(int x, int y)
+__attribute__ ((__noinline__)) auto max_v2(int x, int y)
 {
 	return x > y ? x : y;
 }

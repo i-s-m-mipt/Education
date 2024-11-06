@@ -82,26 +82,26 @@ namespace parser
 
 struct Calculator
 {
-    [[nodiscard]] double operator()(double value) const 
+    double operator()(double value) const 
     { 
         return value; 
     }
 
-    [[nodiscard]] double operator()(const detail::Sign & sign) const
+    double operator()(const detail::Sign & sign) const
     {
         switch (auto rhs = boost::apply_visitor(*this, sign.operand); sign.operation)
         {
             case '+': { return        rhs; }
             case '-': { return -1.0 * rhs; }
 
-            [[unlikely]] default: 
+            default: 
             { 
                 throw std::runtime_error("invalid sign"); 
             }
         }
     }
 
-    [[nodiscard]] double operator()(const detail::Step & step, double lhs) const
+    double operator()(const detail::Step & step, double lhs) const
     {
         switch (auto rhs = boost::apply_visitor(*this, step.operand); step.operation)
         {
@@ -110,14 +110,14 @@ struct Calculator
             case '*': { return lhs * rhs; }
             case '/': { return lhs / rhs; }
 
-            [[unlikely]] default: 
+            default: 
             {
                 throw std::runtime_error("invalid step");
             }
         }
     }
 
-    [[nodiscard]] double operator()(const detail::List & list) const
+    double operator()(const detail::List & list) const
     {
         auto state = boost::apply_visitor(*this, list.head);
         
@@ -132,7 +132,7 @@ struct Calculator
 
 //  ================================================================================================
 
-[[nodiscard]] auto parse(std::string_view data)
+auto parse(std::string_view data)
 {
     auto begin = std::cbegin(data), end = std::cend(data);
 
@@ -152,7 +152,7 @@ struct Calculator
 
 //  ================================================================================================
 
-[[nodiscard]] auto equal(double x, double y, double epsilon = 1e-6)
+auto equal(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }

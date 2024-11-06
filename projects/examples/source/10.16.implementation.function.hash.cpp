@@ -9,7 +9,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto hash_v1(const std::string & string)
+auto hash_v1(const std::string & string)
 {
 	auto seed = 0uz;
 
@@ -23,7 +23,7 @@
 
 //  ================================================================================================
 
-template < typename T, typename ... Ts > [[nodiscard]] auto hash_v2(T arg, Ts ... args)
+template < typename T, typename ... Ts > auto hash_v2(T arg, Ts ... args)
 {
 	auto seed = std::hash < T > ()(arg); 
 
@@ -45,7 +45,7 @@ struct Entity
 
 //  ================================================================================================
 
-[[nodiscard]] auto hash_value(const Entity & entity)
+auto hash_value(const Entity & entity)
 {
 	auto seed = 0uz;
 

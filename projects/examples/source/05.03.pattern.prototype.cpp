@@ -8,7 +8,7 @@ struct Entity
 
 //  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] virtual Entity * copy() const = 0;
+    virtual Entity * copy() const = 0;
 
     virtual void test() const = 0;
 };
@@ -17,7 +17,7 @@ struct Entity
 
 struct Client : public Entity
 {
-    [[nodiscard]] Entity * copy() const override 
+    Entity * copy() const override 
     { 
         return new Client(*this); 
     } 
@@ -32,7 +32,7 @@ struct Client : public Entity
 
 struct Server : public Entity
 {
-    [[nodiscard]] Entity * copy() const override 
+    Entity * copy() const override 
     { 
         return new Server(*this); 
     } 
@@ -47,8 +47,8 @@ struct Server : public Entity
 
 struct Factory
 {
-    [[nodiscard]] static auto make_client() { static Client prototype; return prototype.copy(); }
-    [[nodiscard]] static auto make_server() { static Server prototype; return prototype.copy(); }
+    static auto make_client() { static Client prototype; return prototype.copy(); }
+    static auto make_server() { static Server prototype; return prototype.copy(); }
 };
 
 //  ================================================================================================

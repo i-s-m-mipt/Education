@@ -19,7 +19,7 @@ public:
 
 //  -------------------------------
 
-    [[nodiscard]] auto make() const
+    auto make() const
     { 
         m_entity = new Entity();
 

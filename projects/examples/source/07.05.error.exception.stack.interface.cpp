@@ -13,7 +13,7 @@ public:
 		m_data.push_back(std::move(value));
 	}
 
-	[[nodiscard]] auto top() const
+	auto top() const
 	{ 
 		return m_data.back();
 	}
@@ -23,12 +23,12 @@ public:
 		m_data.pop_back();
 	}
 
-//	[[nodiscard]] auto pop() // bad
+//	auto pop() // bad
 //	{
 //		auto copy = top(); pop(); return copy;
 //	}
 
-	[[nodiscard]] auto size() const
+	auto size() const
 	{ 
 		return std::size(m_data); 
 	}

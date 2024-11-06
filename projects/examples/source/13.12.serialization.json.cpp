@@ -26,7 +26,7 @@ void save(const std::filesystem::path & path, const nlohmann::json & json)
 
 //  ================================================================================================
 
-[[nodiscard]] auto load(const std::filesystem::path & path)
+auto load(const std::filesystem::path & path)
 {
 	if (std::fstream fin(path.string(), std::ios::in); fin)
 	{

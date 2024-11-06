@@ -39,17 +39,17 @@ template < typename T > concept typable = requires
 
 //  ================================================================================================
 
-template < typename T > [[nodiscard]] auto max_v1(T x, T y) requires integral < T >
+template < typename T > auto max_v1(T x, T y) requires integral < T >
 {
 	return x < y ? y : x;
 }
 
-[[nodiscard]] auto max_v2(integral auto x, integral auto y)
+auto max_v2(integral auto x, integral auto y)
 {
 	return x < y ? y : x;
 }
 
-template < integral T > [[nodiscard]] auto max_v3(T x, T y)
+template < integral T > auto max_v3(T x, T y)
 {
 	return x < y ? y : x;
 }

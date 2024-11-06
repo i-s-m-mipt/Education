@@ -10,7 +10,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto test_v1(int x)
+auto test_v1(int x)
 {
 	std::variant < int, std::string > result(x);
 
@@ -38,7 +38,7 @@ struct Entity_v3 {};
 
 //  ================================================================================================
 
-[[nodiscard]] auto test_v2(int x)
+auto test_v2(int x)
 {
 	return x == 1 ? std::optional < int > (x) : std::nullopt;
 }

@@ -15,7 +15,7 @@ using signal_t = std::vector < std::complex < double > > ;
 
 //  ================================================================================================
 
-[[nodiscard]] auto generate(std::size_t size)
+auto generate(std::size_t size)
 {
     signal_t signal(size, signal_t::value_type(0));
 
@@ -29,7 +29,7 @@ using signal_t = std::vector < std::complex < double > > ;
 
 //  ================================================================================================
 
-[[nodiscard]] auto transform(const signal_t & signal)
+auto transform(const signal_t & signal)
 {
     auto size = std::size(signal);
 
@@ -62,16 +62,12 @@ auto & operator<<(std::ostream & stream, const signal_t & signal)
 
 //  ================================================================================================
 
-[[nodiscard]] auto equal(double x, double y, double epsilon = 1e-6)
+auto equal(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }
 
-[[nodiscard]] auto equal
-(
-    std::complex < double > x, 
-    std::complex < double > y, double epsilon = 1e-6
-)
+auto equal(std::complex < double > x, std::complex < double > y, double epsilon = 1e-6)
 {
     return 
     (

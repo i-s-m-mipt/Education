@@ -9,12 +9,7 @@
 
 //  ================================================================================================
 
-template 
-< 
-	typename F1, 
-	typename F2, typename B
-> 
-[[nodiscard]] auto bind(F1 && f1, F2 && f2, B && binder)
+template < typename F1, typename F2, typename B > auto bind(F1 && f1, F2 && f2, B && binder)
 {
 	return [=] < typename T > (T && x) 
 	{ 

@@ -16,10 +16,10 @@ using namespace std::literals;
 
 struct case_insensitive_traits : public std::char_traits < char > 
 {
-    [[nodiscard]] static auto eq(char c1, char c2) { return std::toupper(c1) == std::toupper(c2); }
-    [[nodiscard]] static auto lt(char c1, char c2) { return std::toupper(c1) <  std::toupper(c2); }
+    static auto eq(char c1, char c2) { return std::toupper(c1) == std::toupper(c2); }
+    static auto lt(char c1, char c2) { return std::toupper(c1) <  std::toupper(c2); }
 
-    [[nodiscard]] static auto compare
+    static auto compare
     (
         const char * string_1, 
         const char * string_2, std::size_t size
@@ -36,7 +36,7 @@ struct case_insensitive_traits : public std::char_traits < char >
         return 0;
     }
     
-    [[nodiscard]] static const char * find(const char * string, std::size_t size, char c)
+    static const char * find(const char * string, std::size_t size, char c)
     {
         for (auto i = 0uz; i < size; ++i) 
         {
@@ -63,7 +63,7 @@ auto & operator<<(std::ostream & stream, const cistring_t & cistring)
 
 //  ================================================================================================
 
-template < typename T1, typename T2 > [[nodiscard]] auto distance(T1 * ptr_1, T2 * ptr_2)
+template < typename T1, typename T2 > auto distance(T1 * ptr_1, T2 * ptr_2)
 {
     return 
     (

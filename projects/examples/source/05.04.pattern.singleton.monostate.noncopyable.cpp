@@ -18,7 +18,7 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] static auto & instance() 
+    static auto & instance() 
     { 
         static Singleton singleton; 
         
@@ -39,7 +39,7 @@ class Monostate
 {
 public:
 
-    [[nodiscard]] auto data() const
+    auto data() const
     { 
         return s_data; 
     }

@@ -18,7 +18,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto is_even(int x) 
+auto is_even(int x) 
 {
     return x % 2 == 0;
 }
@@ -110,12 +110,12 @@ struct Dataset
             return *this;
 		}		
 
-        [[nodiscard]] auto operator*() const
+        auto operator*() const
         { 
             return m_y; 
         } 
 
-		[[nodiscard]] auto operator==(const iterator & other) const
+		auto operator==(const iterator & other) const
 		{ 
 			return m_x == other.m_x && m_y == other.m_y; 
 		}
@@ -128,14 +128,14 @@ struct Dataset
 
 //  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] auto begin() const
+    auto begin() const
     { 
         return iterator(); 
     }
 
 //  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] auto size() const
+    auto size() const
     { 
         return boost::unit_test::data::BOOST_TEST_DS_INFINITE_SIZE;
     }

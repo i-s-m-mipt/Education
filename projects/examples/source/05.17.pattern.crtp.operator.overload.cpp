@@ -14,10 +14,10 @@ protected:
 
 public:
 
-    [[nodiscard]] friend auto operator> (const T & lhs, const T & rhs) { return  (rhs < lhs); }
-    [[nodiscard]] friend auto operator<=(const T & lhs, const T & rhs) { return !(lhs > rhs); }
-    [[nodiscard]] friend auto operator>=(const T & lhs, const T & rhs) { return !(lhs < rhs); }
-    [[nodiscard]] friend auto operator==(const T & lhs, const T & rhs)
+    friend auto operator> (const T & lhs, const T & rhs) { return  (rhs < lhs); }
+    friend auto operator<=(const T & lhs, const T & rhs) { return !(lhs > rhs); }
+    friend auto operator>=(const T & lhs, const T & rhs) { return !(lhs < rhs); }
+    friend auto operator==(const T & lhs, const T & rhs)
     {
         return !(lhs < rhs) && !(rhs < lhs);
     }
@@ -31,13 +31,9 @@ public:
 
     explicit Entity_v1(int data) : m_data(data) {}
 
-//  ------------------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------
 
-    [[nodiscard]] friend auto operator<
-    (
-        const Entity_v1 & lhs, 
-        const Entity_v1 & rhs
-    )
+    friend auto operator<(const Entity_v1 & lhs, const Entity_v1 & rhs)
     {
         return lhs.m_data < rhs.m_data;
     }
@@ -60,11 +56,7 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] friend auto operator<
-    (
-        const Entity_v2 & lhs, 
-        const Entity_v2 & rhs
-    )
+    friend auto operator<(const Entity_v2 & lhs, const Entity_v2 & rhs)
     {
         return lhs.m_data < rhs.m_data;
     }

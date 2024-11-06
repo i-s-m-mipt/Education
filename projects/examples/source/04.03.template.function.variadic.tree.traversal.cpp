@@ -11,7 +11,7 @@ template < typename T > struct Node
 
 //  ================================================================================================
 
-template < typename R, typename ... Ns > [[nodiscard]] auto traverse(R root, Ns ... nodes)
+template < typename R, typename ... Ns > auto traverse(R root, Ns ... nodes)
 {
 	return (root ->* ... ->* nodes); // support: cppinsights.io
 }

@@ -29,7 +29,7 @@ template < typename E > void test_v2(E && entity)
 
 //  ================================================================================================
 
-template < typename F, typename ... Ts > [[nodiscard]] decltype(auto) invoke(F && f, Ts && ... args) 
+template < typename F, typename ... Ts > decltype(auto) invoke(F && f, Ts && ... args) 
 { 
 	return f(std::forward < Ts > (args)...);
 }

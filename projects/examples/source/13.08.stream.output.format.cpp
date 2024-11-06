@@ -15,7 +15,7 @@ struct Entity
 
 template <> struct std::formatter < Entity > : public std::formatter < std::string_view >
 {
-    [[nodiscard]] auto format(const Entity & entity, std::format_context & context) const
+    auto format(const Entity & entity, std::format_context & context) const
     {
         std::string buffer;
 

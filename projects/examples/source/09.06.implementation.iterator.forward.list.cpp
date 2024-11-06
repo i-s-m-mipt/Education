@@ -42,17 +42,17 @@ public:
 			return *this;
 		}
 
-		[[nodiscard]] auto & operator*() const
+		auto & operator*() const
 		{ 
 			return m_node->value; 
 		}
 
-		[[nodiscard]] auto operator->() const
+		auto operator->() const
 		{ 
 			return &(m_node->value); 
 		}
 
-		[[nodiscard]] auto operator==(const Iterator & other) const
+		auto operator==(const Iterator & other) const
 		{ 
 			return m_node == other.m_node; 
 		}
@@ -64,8 +64,8 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-	[[nodiscard]] auto begin() const { return Iterator(m_head); }
-	[[nodiscard]] auto end  () const { return Iterator(      ); }
+	auto begin() const { return Iterator(m_head); }
+	auto end  () const { return Iterator(      ); }
 
 //  ------------------------------------------------------------------------------------------------
 

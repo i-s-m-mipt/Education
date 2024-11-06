@@ -41,7 +41,7 @@ template
 	typename T1, typename R1, 
 	typename T2, typename R2 
 >
-[[nodiscard]] constexpr auto operator+(Duration < T1, R1 > lhs, Duration < T2, R2 > rhs)
+constexpr auto operator+(Duration < T1, R1 > lhs, Duration < T2, R2 > rhs)
 {
 	using unit_t = Ratio < 1, add_t < R1, R2 > ::den > ;
 

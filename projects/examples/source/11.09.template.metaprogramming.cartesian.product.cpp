@@ -8,11 +8,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto next
-(
-		  std::vector < std::size_t > & steps,
-	const std::vector < std::size_t > & sizes
-)
+auto next(std::vector < std::size_t > & steps, const std::vector < std::size_t > & sizes)
 {
 	auto has_next = false;
 
@@ -45,7 +41,7 @@ template < typename F, typename T, std::size_t ... Is > void apply
 
 //  ================================================================================================
 
-template < std::forward_iterator ... Is > [[nodiscard]] auto generate(std::pair < Is, Is > ... args)
+template < std::forward_iterator ... Is > auto generate(std::pair < Is, Is > ... args)
 {
 	std::vector < std::tuple < typename std::iterator_traits < Is > ::value_type ... > > result;
 

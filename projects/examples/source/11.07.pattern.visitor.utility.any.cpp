@@ -13,7 +13,7 @@
 
 //  ================================================================================================
 
-template < typename T, typename F > [[nodiscard]] auto make_visitor(F && f)
+template < typename T, typename F > auto make_visitor(F && f)
 {
     return std::make_pair
     (

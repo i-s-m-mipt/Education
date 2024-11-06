@@ -14,18 +14,14 @@
 
 //  ================================================================================================
 
-template 
-< 
-	typename F, typename ... Ts 
->
-[[nodiscard]] decltype(auto) async_invoke(F && f, Ts && ... args)
+template < typename F, typename ... Ts > decltype(auto) async_invoke(F && f, Ts && ... args)
 {
 	return std::async(std::launch::async, std::forward < F > (f), std::forward < Ts > (args)...);
 }
 
 //  ================================================================================================
 
-template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T sum)
+template < std::ranges::view V, typename T > T reduce(V view, T sum)
 {
 	auto begin = std::ranges::cbegin(view), end = std::ranges::cend(view);
 

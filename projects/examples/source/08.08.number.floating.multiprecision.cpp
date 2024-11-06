@@ -8,7 +8,7 @@
 
 //  ================================================================================================
 
-template < typename T > [[nodiscard]] auto area(T radius)
+template < typename T > auto area(T radius)
 {
 	return boost::math::constants::pi < T > () * radius * radius;
 }

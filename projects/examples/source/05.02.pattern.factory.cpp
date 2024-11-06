@@ -17,7 +17,7 @@ struct Server : public Entity { void test() const override { std::clog << "Serve
 
 //  ================================================================================================
 
-template < typename E > [[nodiscard]] Entity * make_entity()
+template < typename E > Entity * make_entity()
 { 
     return new E(); 
 }
@@ -30,8 +30,8 @@ public:
 
     struct Factory
     {
-        [[nodiscard]] static Entity * make_v1() { return new Router(1); }
-        [[nodiscard]] static Entity * make_v2() { return new Router(2); }
+        static Entity * make_v1() { return new Router(1); }
+        static Entity * make_v2() { return new Router(2); }
     };
 
 //  ------------------------------------------------------------------------------------------------
@@ -56,28 +56,13 @@ struct Factory
 {
     virtual ~Factory() = default; 
 
-    [[nodiscard]] virtual Entity * make() const = 0;  
+    virtual Entity * make() const = 0;  
 };
 
 //  ================================================================================================
 
-struct Factory_Client : public Factory
-{
-    [[nodiscard]] Entity * make() const override 
-    { 
-        return new Client(); 
-    } 
-};
-
-//  ================================================================================================
-
-struct Factory_Server : public Factory
-{
-    [[nodiscard]] Entity * make() const override 
-    { 
-        return new Server(); 
-    }
-};
+struct Factory_Client : public Factory { Entity * make() const override { return new Client(); } };
+struct Factory_Server : public Factory { Entity * make() const override { return new Server(); } };
 
 //  ================================================================================================
 

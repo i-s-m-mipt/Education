@@ -298,7 +298,7 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-	[[nodiscard]] friend auto multiply(const Big_Int & x, const Big_Int & y)
+	friend auto multiply(const Big_Int & x, const Big_Int & y)
 	{
 		auto n = std::max(x.m_n_digits, y.m_n_digits);
 
@@ -341,7 +341,7 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-	[[nodiscard]] friend auto sqrt(const Big_Int & x)
+	friend auto sqrt(const Big_Int & x)
 	{
 		if (x.m_is_negative) 
 		{
@@ -378,14 +378,14 @@ public:
 
 //  ---------------------------------------------------------------------------------------
 
-	[[nodiscard]] friend Big_Int operator+(Big_Int lhs, Big_Int rhs) { return lhs += rhs; }
-	[[nodiscard]] friend Big_Int operator-(Big_Int lhs, Big_Int rhs) { return lhs -= rhs; }
-	[[nodiscard]] friend Big_Int operator*(Big_Int lhs, Big_Int rhs) { return lhs *= rhs; }
-	[[nodiscard]] friend Big_Int operator/(Big_Int lhs, Big_Int rhs) { return lhs /= rhs; }
+	friend Big_Int operator+(Big_Int lhs, Big_Int rhs) { return lhs += rhs; }
+	friend Big_Int operator-(Big_Int lhs, Big_Int rhs) { return lhs -= rhs; }
+	friend Big_Int operator*(Big_Int lhs, Big_Int rhs) { return lhs *= rhs; }
+	friend Big_Int operator/(Big_Int lhs, Big_Int rhs) { return lhs /= rhs; }
 
 //  ---------------------------------------------------------------------------------------
 
-	[[nodiscard]] friend bool operator< (const Big_Int & lhs, const Big_Int & rhs)
+	friend bool operator< (const Big_Int & lhs, const Big_Int & rhs)
 	{
 		if ( lhs.m_is_negative && !rhs.m_is_negative) { return lhs.m_is_negative; }
 		if (!lhs.m_is_negative &&  rhs.m_is_negative) { return rhs.m_is_negative; }
@@ -399,22 +399,22 @@ public:
 		}
 	}
 
-	[[nodiscard]] friend bool operator> (const Big_Int & lhs, const Big_Int & rhs)
+	friend bool operator> (const Big_Int & lhs, const Big_Int & rhs)
 	{
 		return  (rhs < lhs);
 	}
 
-	[[nodiscard]] friend bool operator<=(const Big_Int & lhs, const Big_Int & rhs)
+	friend bool operator<=(const Big_Int & lhs, const Big_Int & rhs)
 	{
 		return !(rhs < lhs);
 	}
 
-	[[nodiscard]] friend bool operator>=(const Big_Int & lhs, const Big_Int & rhs)
+	friend bool operator>=(const Big_Int & lhs, const Big_Int & rhs)
 	{
 		return !(lhs < rhs);
 	}
 
-	[[nodiscard]] friend bool operator==(const Big_Int & lhs, const Big_Int & rhs)
+	friend bool operator==(const Big_Int & lhs, const Big_Int & rhs)
 	{
 		if ((lhs.m_is_negative != rhs.m_is_negative) || (lhs.m_n_digits != rhs.m_n_digits))
 		{
@@ -434,7 +434,7 @@ public:
 
 private:
 
-	[[nodiscard]] bool less(const Big_Int & other) const
+	bool less(const Big_Int & other) const
 	{
 		if (m_n_digits != other.m_n_digits) 
 		{

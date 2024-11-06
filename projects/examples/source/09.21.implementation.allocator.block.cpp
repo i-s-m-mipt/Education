@@ -59,7 +59,7 @@ public:
 
 public:
 
-    [[nodiscard]] void * allocate(std::size_t size)
+    void * allocate(std::size_t size)
     {
 	    void * end = get_byte(m_begin) + sizeof(Header) + size, * next = end;
 
@@ -146,22 +146,22 @@ public:
 
 private:
 
-    [[nodiscard]] std::byte * get_byte(void * ptr) const
+    std::byte * get_byte(void * ptr) const
 	{
 		return static_cast < std::byte * > (ptr);
 	}
 
-    [[nodiscard]] Node * get_node(void * ptr) const
+    Node * get_node(void * ptr) const
 	{
 		return static_cast < Node * > (ptr);
 	}
 
-    [[nodiscard]] Header * get_header(void * ptr) const
+    Header * get_header(void * ptr) const
 	{
 		return static_cast < Header * > (ptr);
 	}
 
-    [[nodiscard]] std::pair < Node * , Node * > find_first(std::size_t size) const
+    std::pair < Node * , Node * > find_first(std::size_t size) const
     {
         Node * current = m_head, * previous = nullptr;
 

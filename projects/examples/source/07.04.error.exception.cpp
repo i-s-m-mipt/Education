@@ -18,7 +18,7 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-	[[nodiscard]] const char * what() const noexcept override 
+	const char * what() const noexcept override 
 	{ 
 		return "error"; 
 	}
@@ -139,7 +139,7 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-	[[nodiscard]] auto data() const noexcept
+	auto data() const noexcept
 	{
 		return m_data;
 	}
@@ -164,11 +164,7 @@ template < typename T > void swap(T & x, T & y) noexcept
 
 //  ================================================================================================
 
-template 
-< 
-	typename F, typename ... Ts 
-> 
-[[nodiscard]] decltype(auto) invoke(F && f, Ts && ... args) noexcept
+template < typename F, typename ... Ts > decltype(auto) invoke(F && f, Ts && ... args) noexcept
 (
 	noexcept(f(std::declval < Ts > ()...))
 )

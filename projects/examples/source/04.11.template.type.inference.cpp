@@ -8,11 +8,11 @@ struct Entity {};
 
 //  ================================================================================================
 
-[[nodiscard]]       auto & make_entity_v1() { static       Entity entity; return entity; }
-[[nodiscard]] const auto & make_entity_v2() { static const Entity entity; return entity; }
+      auto & make_entity_v1() { static       Entity entity; return entity; }
+const auto & make_entity_v2() { static const Entity entity; return entity; }
 
-[[nodiscard]]       auto   make_entity_v3() { return Entity(); }
-[[nodiscard]] const auto   make_entity_v4() { return Entity(); }
+      auto   make_entity_v3() { return Entity(); }
+const auto   make_entity_v4() { return Entity(); }
 
 //  ================================================================================================
 

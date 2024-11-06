@@ -4,7 +4,7 @@
 
 namespace library_v2
 {
-	API [[nodiscard]] int test_v1(int x) 
+	API int test_v1(int x) 
 	{ 
 		return x; 
 	}

@@ -132,7 +132,7 @@ public:
 
 //  --------------------------------------------
 
-    [[nodiscard]] auto & operator*() const
+    auto & operator*() const
     { 
         return *m_data; 
     }
@@ -144,7 +144,7 @@ private:
 
 //  ================================================================================================
 
-template < typename T, typename ... Ts > [[nodiscard]] auto make_shared(Ts && ... args)
+template < typename T, typename ... Ts > auto make_shared(Ts && ... args)
 {
     std::clog << "make_shared\n";
 }

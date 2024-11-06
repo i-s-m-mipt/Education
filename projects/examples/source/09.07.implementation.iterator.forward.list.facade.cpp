@@ -34,12 +34,12 @@ public:
 			m_node = m_node->next; 
 		}
 
-		[[nodiscard]] auto & dereference() const
+		auto & dereference() const
 		{ 
 			return m_node->value; 
 		}
 
-		[[nodiscard]] auto equal(const Iterator & other) const
+		auto equal(const Iterator & other) const
 		{ 
 			return m_node == other.m_node; 
 		};
@@ -51,8 +51,8 @@ public:
 
 //  ------------------------------------------------------------------------------------------------
 
-	[[nodiscard]] auto begin() const { return Iterator(m_head); }
-	[[nodiscard]] auto end  () const { return Iterator(      ); }
+	auto begin() const { return Iterator(m_head); }
+	auto end  () const { return Iterator(      ); }
 
 //  ------------------------------------------------------------------------------------------------
 

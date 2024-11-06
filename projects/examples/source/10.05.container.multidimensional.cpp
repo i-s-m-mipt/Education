@@ -19,7 +19,7 @@ public:
 
 //      --------------------------------------------------
 
-		[[nodiscard]] auto & operator[](std::size_t index)
+		auto & operator[](std::size_t index)
 		{ 
 			return m_array[index]; 
 		}
@@ -31,7 +31,7 @@ public:
 
 //  ------------------------------------------------------
 
-	[[nodiscard]] auto operator[](std::size_t index)
+	auto operator[](std::size_t index)
 	{ 
 		return Row(m_array[index]); 
 	}

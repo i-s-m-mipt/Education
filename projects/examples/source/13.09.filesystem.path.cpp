@@ -4,7 +4,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto operator""_p(const char * string, std::size_t size)
+auto operator""_p(const char * string, std::size_t size)
 {
 	return std::filesystem::path(std::string(string, size));
 }

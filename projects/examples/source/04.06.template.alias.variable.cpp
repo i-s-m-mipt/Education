@@ -12,14 +12,14 @@ template < typename T > using Buffer = Array < T, 1024 > ;
 
 template < typename T > T pi = T(3.141592653589793238462643383279502884L);
 
-template < typename T > [[nodiscard]] auto area(T radius)
+template < typename T > auto area(T radius)
 {
 	return pi < T > * radius * radius;
 }
 
 //  ================================================================================================
 
-[[nodiscard]] auto equal(double x, double y, double epsilon = 1e-6)
+auto equal(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }

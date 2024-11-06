@@ -103,8 +103,8 @@ template < typename D, typename B > class is_derived
 {
 private:
 
-	[[nodiscard]] static std::int32_t test(...);
-	[[nodiscard]] static std::int64_t test(B *);
+	static std::int32_t test(...);
+	static std::int64_t test(B *);
 
 public:
 
@@ -128,7 +128,7 @@ class Bad
 	Bad() = default; 
 };
 
-[[nodiscard]] int test(Bad);
+int test(Bad);
 
 //  ================================================================================================
 
@@ -136,9 +136,9 @@ template < typename B > class is_polymorphic
 {
 private:
 
-	template < typename T > [[nodiscard]] static std::false_type test(...);
+	template < typename T > static std::false_type test(...);
 
-    template < typename T > [[nodiscard]] static std:: true_type test
+    template < typename T > static std:: true_type test
 	(
 		int, decltype(dynamic_cast < void * > (declval < T * > ())) = nullptr
 	);
@@ -160,9 +160,9 @@ private:
 
 //  ------------------------------------------------------------------------------------------------
 
-	template < typename T, typename U > [[nodiscard]] static std::false_type test(...);
+	template < typename T, typename U > static std::false_type test(...);
 
-    template < typename T, typename U > [[nodiscard]] static std:: true_type test
+    template < typename T, typename U > static std:: true_type test
 	(
 		int, decltype(helper < U > (declval < T > ())) = 0
 	);

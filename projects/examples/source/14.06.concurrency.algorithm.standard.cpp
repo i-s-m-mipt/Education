@@ -13,7 +13,7 @@
 
 //  ================================================================================================
 
-[[nodiscard]] auto make_vector(std::size_t size)
+auto make_vector(std::size_t size)
 {
 	std::vector < double > vector(size, 0.0);
 
