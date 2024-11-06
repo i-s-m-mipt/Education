@@ -15,52 +15,67 @@ using namespace std::literals;
 
 //  ================================================================================================
 
-class Functor
+class Task
 {
 public:
 
-	explicit Functor(int & value) noexcept: m_value(value) {}
+	explicit Task(int & data): m_data(data) {}
 
-	void operator()() const noexcept
+//  ------------------------------------------------------
+
+	void operator()() const
 	{
-		for (std::size_t i = 0; i < 1'000'000; ++i) ++m_value;
+		for (auto i = 0uz; i < 1'000'000; ++i) 
+        {
+            ++m_data;
+        }
 	}
 
 private:
 
-	int & m_value;
-
-}; // class Functor
-
-//  ================================================================================================
-
-constexpr void f(int & x, int y) noexcept { x = y; }
+	int & m_data;
+};
 
 //  ================================================================================================
 
-class C { public: void print() const { std::cout << "C::print" << std::endl; } };
+void test(int & x, int y) 
+{ 
+    x = y; 
+}
 
 //  ================================================================================================
 
-class Scoped_Thread : boost::noncopyable
+struct Entity 
+{ 
+    void test() const
+    { 
+        std::clog << "Entity::test\n"; 
+    } 
+};
+
+//  ================================================================================================
+
+class Scoped_Thread : private boost::noncopyable
 {
 public:
 
 	explicit Scoped_Thread(std::thread thread) : m_thread(std::move(thread))
 	{
-		if (!m_thread.joinable()) throw std::runtime_error("invalid thread");
+		if (!m_thread.joinable()) 
+        {
+            throw std::runtime_error("invalid thread");
+        }
 	}
 
-   ~Scoped_Thread() noexcept
+   ~Scoped_Thread()
 	{
-		try { m_thread.join(); } catch (...) { std::abort(); }
+		m_thread.join();
 	}
 
 private:
 
 	std::thread m_thread;
-
-}; // class Scoped_Thread : boost::noncopyable
+}; 
 
 //  ================================================================================================
 
@@ -77,25 +92,25 @@ int main()
 
 //  ================================================================================================
 
-    auto x = 42;
+    auto x = 1;
 
-//  std::thread(Functor(x)).detach(); // bad
+//  std::thread(Task(x)).detach(); // bad
 
-//  std::thread(f, x, 43).join(); // bad
+//  std::thread(test, x, 2).join(); // bad
 
-    std::thread(f, std::ref(x), 43).join();
+    std::thread(test, std::ref(x), 2).join();
 
-    assert(x == 43);
-
-//  ================================================================================================
-
-    const C c;
-
-    std::thread(&C::print, &c).join();
+    assert(x == 2);
 
 //  ================================================================================================
 
-    const Scoped_Thread scoped_thread(std::thread(f, std::ref(x), 42));
+    Entity entity;
+
+    std::thread(&Entity::test, &entity).join();
+
+//  ================================================================================================
+
+    Scoped_Thread scoped_thread(std::thread(test, std::ref(x), 3));
 
 //  ================================================================================================
 
@@ -103,12 +118,15 @@ int main()
 
     std::vector < std::thread > threads;
 
-	for (std::size_t i = 0; i < std::thread::hardware_concurrency(); ++i)
+	for (auto i = 0uz; i < std::thread::hardware_concurrency(); ++i)
 	{
 		threads.emplace_back([](){});
 	}
 
-	for (auto & thread : threads) thread.join();
+	for (auto & thread : threads) 
+    {
+        thread.join();
+    }
 
 //  ================================================================================================
 
@@ -119,9 +137,9 @@ int main()
             std::cout << "jthread_1::callback" << std::endl;
         });
 
-        for (std::size_t i = 0; i < 10; ++i)
+        for (auto i = 0uz; i < 10; ++i)
         {
-            std::cout << "jthread_1: " << i << std::endl;
+            std::cout << "jthread_1 : " << i << std::endl;
 
             std::this_thread::sleep_for(0.1s);
         }
@@ -131,13 +149,16 @@ int main()
 
     std::jthread jthread_2([](std::stop_token token)
     {
-        for (std::size_t i = 0; i < 10; ++i)
+        for (auto i = 0uz; i < 10; ++i)
         {
-            std::cout << "jthread_2: " << i << std::endl;
+            std::cout << "jthread_2 : " << i << std::endl;
 
             std::this_thread::sleep_for(0.1s);
 
-            if (token.stop_requested()) return;
+            if (token.stop_requested()) 
+            {
+                return;
+            }
         }
     });
 
@@ -147,6 +168,4 @@ int main()
 
     jthread_1.get_stop_source().request_stop();
     jthread_2.get_stop_source().request_stop();
-
-    return 0;
 }

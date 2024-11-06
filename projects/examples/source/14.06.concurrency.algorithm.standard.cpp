@@ -13,15 +13,15 @@
 
 //  ================================================================================================
 
-[[nodiscard]] inline std::vector < double > make_vector(std::size_t size)
+[[nodiscard]] auto make_vector(std::size_t size)
 {
-	std::vector < double > vector(size);
+	std::vector < double > vector(size, 0.0);
 
-	std::mt19937_64 engine(42);
+	std::mt19937_64 engine;
 
 	std::uniform_real_distribution distribution(0.0, 1.0);
 
-	const auto generator = [&engine, &distribution](){ return distribution(engine); };
+	auto generator = [&engine, &distribution](){ return distribution(engine); };
 
 	std::ranges::generate(vector, generator);
 
@@ -30,59 +30,62 @@
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state)
+void test_v1(benchmark::State & state)
 {
     auto vector = make_vector(state.range(0));
 
-    for (auto _ : state)
+    for (auto value : state)
     {
-        std::for_each(std::execution::seq, std::begin(vector), std::end(vector),
-
-			[](auto & x) constexpr noexcept { x = std::sin(std::cos(x)); });
+        std::for_each
+        (
+            std::execution::seq, std::begin(vector), std::end(vector), [](auto & x) 
+            { 
+                x = std::pow(std::sin(x), 2.0) + std::pow(std::cos(x), 2.0); 
+            }
+        );
     }
 }
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state)
+void test_v2(benchmark::State & state)
 {
     auto vector = make_vector(state.range(0));
 
-    for (auto _ : state)
+    for (auto value : state)
     {
-        std::for_each(std::execution::par, std::begin(vector), std::end(vector),
-
-			[](auto & x) constexpr noexcept { x = std::sin(std::cos(x)); });
+        std::for_each
+        (
+            std::execution::par, std::begin(vector), std::end(vector), [](auto & x) 
+            { 
+                x = std::pow(std::sin(x), 2.0) + std::pow(std::cos(x), 2.0); 
+            }
+        );
     }
 }
 
 //  ================================================================================================
 
-void test_3(benchmark::State & state)
+void test_v3(benchmark::State & state)
 {
     auto vector = make_vector(state.range(0));
-
-    for (auto _ : state)
+    
+    for (auto value : state)
     {
-        std::for_each(std::execution::par_unseq, std::begin(vector), std::end(vector),
-
-			[](auto & x) constexpr noexcept { x = std::sin(std::cos(x)); });
+        std::for_each
+        (
+            std::execution::par_unseq, std::begin(vector), std::end(vector), [](auto & x) 
+            { 
+                x = std::pow(std::sin(x), 2.0) + std::pow(std::cos(x), 2.0);
+            }
+        );
     }
 }
 
 //  ================================================================================================
 
-BENCHMARK(test_1)->DenseRange(1'000'000, 5'000'000, 1'000'000);
-BENCHMARK(test_2)->DenseRange(1'000'000, 5'000'000, 1'000'000);
-BENCHMARK(test_3)->DenseRange(1'000'000, 5'000'000, 1'000'000);
+BENCHMARK(test_v1)->DenseRange(1'000'000, 5'000'000, 1'000'000);
+BENCHMARK(test_v2)->DenseRange(1'000'000, 5'000'000, 1'000'000);
+BENCHMARK(test_v3)->DenseRange(1'000'000, 5'000'000, 1'000'000);
 
-//  ================================================================================================
-
-int main(int argc, char ** argv)
-{
-	benchmark::Initialize(&argc, argv);
-
-	benchmark::RunSpecifiedBenchmarks();
-
-    return 0;
-}
+BENCHMARK_MAIN();

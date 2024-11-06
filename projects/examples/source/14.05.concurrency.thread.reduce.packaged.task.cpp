@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <concepts>
@@ -11,76 +12,71 @@
 
 //  ================================================================================================
 
-template < std::ranges::view V > class Block
+template < std::ranges::view V > struct Block
 {
-public:
-
-    explicit Block(V view) noexcept : m_view(view) {}
-
-	[[nodiscard]] auto operator()() const
+	[[nodiscard]] auto operator()(V view) const
 	{
-		return std::reduce(std::ranges::cbegin(m_view), std::ranges::cend(m_view));
+		return std::reduce
+		(
+			std::ranges::cbegin(view), 
+			std::ranges::cend  (view)
+		);
 	}
-
-private:
-
-    const V m_view;
-
-}; // template < std::ranges::view V > class Block
+};
 
 //  ================================================================================================
 
-template < std::ranges::view V, typename T > [[nodiscard]] T reduce(V view, T sum)
+template < std::ranges::view V, typename T > [[nodiscard]] auto reduce(V view, T sum)
 {
-	const auto begin = std::ranges::cbegin(view), end = std::ranges::cend(view);
+	auto begin = std::ranges::cbegin(view), end = std::ranges::cend(view);
 
-	std::size_t size = std::distance(begin, end);
-
-	if (!size) return sum;
-
-	const std::size_t min_size = 100; // demo
-
-	const std::size_t max_threads = (size + min_size - 1) / min_size;
-
-	const std::size_t hardware = std::thread::hardware_concurrency();
-
-	const std::size_t n_threads = std::min(hardware != 0 ? hardware : 2, max_threads);
-
-	size /= n_threads;
-
-	std::vector < std::pair < std::future < T > , std::jthread > > results(n_threads - 1);
-
-	auto first = begin;
-
-	for (auto & result : results)
+	if (auto size = 1uz * std::distance(begin, end); size > 0) 
 	{
-		const auto last = std::next(first, size);
+		auto min_size = 100uz;
 
-		std::packaged_task task { Block(std::ranges::subrange(first, last)) };
+		auto max_threads = (size + min_size - 1) / min_size;
 
-		result.first = task.get_future(); result.second = std::jthread(std::move(task));
+		auto hardware = 1uz * std::thread::hardware_concurrency();
 
-		first = last;
+		auto n_threads = std::min(hardware != 0 ? hardware : 2uz, max_threads);
+
+		auto block_size = size / n_threads;
+
+		std::vector < std::pair < std::future < T > , std::jthread > > results(n_threads - 1);
+
+		auto first = begin, last = std::next(first, block_size);
+
+		for (auto & result : results)
+		{
+			auto range = std::ranges::subrange(first, last);
+
+			std::packaged_task task((Block < decltype(range) > ()));
+
+			result.first = task.get_future(); result.second = std::jthread(std::move(task), range);
+
+			first = last; last = std::next(first, block_size);
+		}
+
+		auto range = std::ranges::subrange(first, end);
+
+		sum += Block < decltype(range) > ()(range);
+
+		for (auto & result : results) 
+		{
+			sum += result.first.get();
+		}
 	}
 
-	sum += Block(std::ranges::subrange(first, end))();
-
-	for (auto & result : results) sum += result.first.get();
-
-	return sum;
+	return sum;	
 }
 
 //  ================================================================================================
 
 int main()
 {
-	constexpr std::size_t size = 1000;
+	std::vector < int > vector(1'000, 0);
 
-	std::vector < int > vector(size, 0);
-
-	std::iota(std::begin(vector), std::end(vector), 1);
+	std::ranges::iota(vector, 1);
 
 	assert(reduce(std::views::all(vector), 0) == 500'500);
-
-	return 0;
 }
