@@ -42,6 +42,8 @@ public:
 
         base_t::finish_vertex(vertex, graph);
     }
+    
+//  ------------------------------------------------------------------------------------------------
 
     template < typename E, typename G > void examine_edge(E edge, const G & graph)
     {
@@ -82,8 +84,7 @@ public:
 
         base_t::finish_edge(edge, graph);
     }
-
-}; // class Visitor : public boost::default_dfs_visitor
+};
 
 //  ================================================================================================
 
@@ -101,9 +102,7 @@ int main()
     boost::add_edge(4, 0, graph);
     boost::add_edge(4, 1, graph);
 
-    const auto visitor = boost::visitor(Visitor());
+    auto visitor = boost::visitor(Visitor());
 
-    boost::depth_first_search(graph, visitor.root_vertex(0)); // complexity: O(V + E)
-
-    return 0;
+    boost::depth_first_search(graph, visitor.root_vertex(0));
 }

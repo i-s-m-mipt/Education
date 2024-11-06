@@ -1,4 +1,5 @@
 #include <cassert>
+#include <cstdint>
 #include <exception>
 #include <functional>
 #include <stdexcept>
@@ -8,76 +9,90 @@
 
 //  ================================================================================================
 
-struct Computer { enum class State { stop, slow, fast } state = State::stop; };
-
-//  ================================================================================================
-
-enum class Command
+struct Entity 
 {
-	stop,
-	slow,
-	fast,
+	enum class Order : std::uint8_t { fast, slow };
+	enum class State : std::uint8_t { fast, slow };
 
-}; // enum class Command
+//  ------------------------------------------------------------------------------------------------
+	
+	State state = State::slow; 	
+}; 
 
 //  ================================================================================================
 
-class Executor
+class Command
 {
 public:
 
-	constexpr void execute() const
-	{
-		switch (m_command)
-		{
-			case Command::stop: m_computer.state = Computer::State::stop; break;
-			case Command::slow: m_computer.state = Computer::State::slow; break;
-			case Command::fast: m_computer.state = Computer::State::fast; break;
+	using Order = Entity::Order;
+	using State = Entity::State;
+	
+//  -------------------------------------------------------------------------------------
 
-			default: throw std::runtime_error("invalid command");
+	explicit Command(Entity & entity, Order order) : m_entity(entity), m_order(order) {}
+
+//  -------------------------------------------------------------------------------------
+
+	void apply() const
+	{
+		switch (m_order)
+		{
+			case Order::fast: { m_entity.state = State::fast; break; }
+			case Order::slow: { m_entity.state = State::slow; break; }
+			
+			[[unlikely]] default: 
+			{
+				throw std::runtime_error("invalid order");
+			}
 		}
 	}
 
-	Computer & m_computer; Command m_command;
+private:
 
-}; // class Executor
+	Entity & m_entity; Order m_order = Order::slow;
+};
 
 //  ================================================================================================
 
 int main()
 {
-	Computer computer_1;
-	Computer computer_2;
+	Entity entity_1;
+	Entity entity_2;
 
-	std::vector < Executor > executors =
+	using Order = Entity::Order;
+
+	std::vector < Command > commands_1
+	(
+		{
+			Command(entity_1, Order::fast), 
+			Command(entity_1, Order::fast),
+			Command(entity_2, Order::fast),
+			Command(entity_1, Order::slow),
+			Command(entity_2, Order::slow)
+		}
+	);
+
+	for (auto command : commands_1) 
 	{
-		{ computer_1, Command::slow },
-		{ computer_1, Command::fast },
-		{ computer_2, Command::slow },
-		{ computer_1, Command::stop },
-		{ computer_2, Command::stop }
-	};
+		command.apply();
+	}
 
-	for (const auto & executor : executors) executor.execute();
+	assert(entity_1.state == Entity::State::slow);
+	assert(entity_2.state == Entity::State::slow);
 
-	assert(computer_1.state == Computer::State::stop);
-	assert(computer_2.state == Computer::State::stop);
+//  ----------------------------------------------
 
-//  ================================================================================================
+	Entity entity_3;
 
-	Computer computer_3;
+	std::unordered_map < Order, std::function < void(void) > > commands_2
+	(
+		{
+			std::make_pair(Order::fast, [&entity_3](){ entity_3.state = Entity::State::fast; }),
+			std::make_pair(Order::slow, [&entity_3](){ entity_3.state = Entity::State::slow; })
+		}
+	);
 
-	std::unordered_map < Command, std::function < void(void) > > commands =
-	{
-		{ Command::stop, [&computer_3]() constexpr noexcept { computer_3.state = Computer::State::stop; }},
-		{ Command::slow, [&computer_3]() constexpr noexcept { computer_3.state = Computer::State::slow; }},
-		{ Command::fast, [&computer_3]() constexpr noexcept { computer_3.state = Computer::State::fast; }}
-	};
-
-	commands.at(Command::slow)(); assert(computer_3.state == Computer::State::slow);
-	commands.at(Command::fast)(); assert(computer_3.state == Computer::State::fast);
-	commands.at(Command::slow)(); assert(computer_3.state == Computer::State::slow);
-	commands.at(Command::stop)(); assert(computer_3.state == Computer::State::stop);
-
-	return 0;
+	commands_2.at(Order::fast)(); assert(entity_3.state == Entity::State::fast);
+	commands_2.at(Order::slow)(); assert(entity_3.state == Entity::State::slow);
 }

@@ -1,4 +1,5 @@
 #include <concepts>
+#include <iomanip>
 #include <iostream>
 #include <iterator>
 #include <tuple>
@@ -7,10 +8,13 @@
 
 //  ================================================================================================
 
-[[nodiscard]] constexpr bool increase(std::vector < std::size_t > & steps,
-								const std::vector < std::size_t > & sizes) noexcept
+[[nodiscard]] auto next
+(
+		  std::vector < std::size_t > & steps,
+	const std::vector < std::size_t > & sizes
+)
 {
-	auto is_increased = false;
+	auto has_next = false;
 
 	for (int i = static_cast < int > (std::size(steps)) - 1; i >= 0; --i)
 	{
@@ -20,44 +24,52 @@
 		}
 		else
 		{
-			is_increased = true; break;
+			has_next = true; break;
 		}
 	}
 
-	return is_increased;
+	return has_next;
 }
 
 //  ================================================================================================
 
-template < typename F, std::size_t ... Is > constexpr void apply(F && f, 
+template < typename F, typename T, std::size_t ... Is > void apply
+(
+	F && f, T && tuple, const std::vector < std::size_t > & steps,
 
-	const std::integer_sequence < std::size_t, Is ... > , 
-	const std::vector           < std::size_t         > & steps, const auto & tuple)
+	std::integer_sequence < std::size_t, Is ... >
+)
 {
-	f(*(std::next((std::get < Is > (tuple)).first, steps[Is]))...);
+	f(*(std::next(std::get < Is > (tuple).first, steps[Is]))...);
 }
 
 //  ================================================================================================
 
-template < std::forward_iterator ... Ts > 
-
-[[nodiscard]] constexpr auto combine(std::pair < Ts, Ts > ... args)
+template < std::forward_iterator ... Is > [[nodiscard]] auto generate(std::pair < Is, Is > ... args)
 {
-	std::vector < std::tuple < typename std::iterator_traits < Ts > ::value_type ... > > result;
+	std::vector < std::tuple < typename std::iterator_traits < Is > ::value_type ... > > result;
 
-	const auto push = [&result](auto && ... args) constexpr { result.emplace_back(args...); };
+	std::vector < std::size_t > steps(sizeof...(args), 0);
 
-	const auto size = sizeof...(args);
-	
-	std::vector steps (size, std::size_t(0));
-
-	std::vector sizes { static_cast < std::size_t > (std::distance(args.first , args.second))... };
+	std::vector < std::size_t > sizes
+	(
+		{ 
+			static_cast < std::size_t > (std::distance(args.first , args.second))... 
+		}
+	);
 
 	do
 	{
-		apply(push, std::make_integer_sequence < std::size_t, size > (), steps, std::tie(args...));
+		apply
+		(
+			[&result](auto && ... args)
+			{ 
+				result.emplace_back(args...); 
+			}, 
+			std::tie(args...), steps, std::make_integer_sequence < std::size_t, sizeof...(args) > ()
+		);
 	} 
-	while (increase(steps, sizes));
+	while (next(steps, sizes));
 
 	return result;
 }
@@ -66,20 +78,27 @@ template < std::forward_iterator ... Ts >
 
 int main()
 {
-    std::vector vector_1 { 'a', 'b', 'c' };
-	std::vector vector_2 { 100, 200, 300 };
-	std::vector vector_3 { 1.0, 2.0, 3.0 };
+    std::vector < int > vector_1({ 1, 2, 3, 4, 5 });
+	std::vector < int > vector_2({ 1, 2, 3, 4, 5 });
 
-	const auto cartesian_product = combine(
-		
-		std::make_pair(std::begin(vector_1), std::end(vector_1)),
-		std::make_pair(std::begin(vector_2), std::end(vector_2)),
-		std::make_pair(std::begin(vector_3), std::end(vector_3)));
+//  ---------------------------------------------------------------
 
-	for (const auto & [x, y, z] : cartesian_product)
+	auto result = generate
+	(	
+		std::make_pair(std::cbegin(vector_1), std::cend(vector_1)),
+		std::make_pair(std::cbegin(vector_2), std::cend(vector_2))
+	);
+
+//  ---------------------------------------------------------------
+
+	std::cout << '\n';
+
+	std::cout << std::setprecision(1) << std::fixed;
+
+	for (const auto & [x, y] : result)
 	{
-		std::cout << "{ " << x << ", " << y << ", " << z << " }" << std::endl;
+		std::cout << "pair = { " << x << ", " << y << " }\n";
 	}
 
-	return 0;
+	std::cout << '\n';
 }

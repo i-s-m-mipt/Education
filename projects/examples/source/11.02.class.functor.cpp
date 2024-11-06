@@ -9,21 +9,28 @@
 
 //  ================================================================================================
 
-[[nodiscard]] inline int f() noexcept { static auto state = 0; return (state++); }
+[[nodiscard]] auto generator_v1() 
+{ 
+	static auto state = 0; 
+	
+	return ++state; 
+}
 
 //  ================================================================================================
 
-class C
+class Generator_v2
 {
 public:
 
-	[[nodiscard]] constexpr int operator()() const noexcept { return (m_state++); }
+	[[nodiscard]] auto operator()() 
+	{ 
+		return ++m_state; 
+	}
 
 private:
 
-	mutable int m_state = 0;
-
-}; // class C
+	int m_state = 0;
+};
 
 //  ================================================================================================
 
@@ -31,15 +38,20 @@ template < typename T > class Sum
 {
 public:
 
-	constexpr void operator()(T x) noexcept { s += x; }
+	void operator()(T x) 
+	{ 
+		m_sum += x; 
+	}
 
-	[[nodiscard]] constexpr T result() const noexcept { return s; }
+	[[nodiscard]] auto get() const 
+	{ 
+		return m_sum; 
+	}
 
 private:
 
-	T s = T();
-
-}; // template < typename T > class Sum
+	T m_sum = T(0);
+};
 
 //  ================================================================================================
 
@@ -47,49 +59,49 @@ template < typename T > class Mean
 {
 public:
 
-	constexpr void operator()(T x) noexcept { ++n; s += x; }
+	void operator()(T x) 
+	{ 
+		m_sum += x; ++m_counter;
+	}
 
-	[[nodiscard]] constexpr T result() const noexcept { return (s / n); }
+	[[nodiscard]] auto get() const 
+	{ 
+		return m_sum / m_counter; 
+	}
 
 private:
 
-	std::size_t n = 0; T s = T();
-
-}; // class Mean
+	T m_sum = T(0); std::size_t m_counter = 0;
+};
 
 //  ================================================================================================
 
 int main()
 {
-	std::vector < int > vector_1 { 1, 4, 2, 5, 3 };
+	std::vector < int > vector_1({ 1, 2, 3, 4, 5 });
 
-	std::ranges::sort(vector_1                );
 	std::ranges::sort(vector_1, std::greater());
 
 //  ================================================================================================
 
-	const std::set < int, std::greater < int > > set { 1, 4, 2, 5, 3 };
+	std::set < int, std::greater < int > > set({ 1, 2, 3, 4, 5 });
 
-	for (const auto element : set) std::cout << element << ' ';
-
-	std::cout << std::endl;
+	assert(*std::cbegin(set) == 5 && *std::cend(set) == 1);
 
 //  ================================================================================================
 
-	constexpr std::size_t size = 5;
-
-	constexpr C c;
+	auto size = 5uz;
 
 	std::vector < int > vector_2(size, 0); 
 	std::vector < int > vector_3(size, 0); 
 
-	std::ranges::generate(vector_2, f);
-	std::ranges::generate(vector_3, c);
+	std::ranges::generate(vector_2, generator_v1  );
+	std::ranges::generate(vector_3, Generator_v2());
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (auto i = 0uz; i < size; ++i)
 	{
-		assert(vector_2[i] == static_cast < int > (i));
-		assert(vector_3[i] == static_cast < int > (i));
+		assert(vector_2[i] == static_cast < int > (i + 1));
+		assert(vector_3[i] == static_cast < int > (i + 1));
 	}
 
 //  ================================================================================================
@@ -99,18 +111,22 @@ int main()
 	sum = std::ranges::for_each(std::as_const(vector_2), sum).fun;
 	sum = std::ranges::for_each(std::as_const(vector_3), sum).fun;
 
-	assert(sum.result() == 20);
+	assert(sum.get() == 30);
 
 //  ================================================================================================
 
-	std::ranges::transform(std::as_const(vector_2), 
-						   std::   begin(vector_2), std::negate());
+	std::ranges::transform(std::as_const(vector_2), std::begin(vector_2), std::negate());
 
-	std::ranges::transform(std::as_const(vector_2), 
-						   std::as_const(vector_3), 
-						   std::   begin(vector_3), std::  plus());
+	std::ranges::transform
+	(
+		std::as_const(vector_2), 
+		std::as_const(vector_3), std::begin(vector_3), std::plus()
+	);
 
-	for (const auto element : vector_3) assert(element == 0);
+	for (auto element : vector_3) 
+	{
+		assert(element == 0);
+	}
 
 //  ================================================================================================
 
@@ -118,7 +134,5 @@ int main()
 
 	mean = std::ranges::for_each(std::as_const(vector_1), mean).fun;
 
-	assert(mean.result() == 3); 
-
-	return 0;
+	assert(mean.get() == 3); 
 }

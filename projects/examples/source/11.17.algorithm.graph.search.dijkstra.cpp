@@ -24,13 +24,14 @@ int main()
 
 	std::array < unsigned int, 5 > distances;
 
-    const auto map = boost::distance_map(std::begin(distances));
+    auto map = boost::distance_map(std::begin(distances));
 
-	boost::dijkstra_shortest_paths(graph, 0, map); // complexity: O(E * log(V))
+	boost::dijkstra_shortest_paths(graph, 0, map);
 
-	for (auto distance : distances) std::cout << distance << ' ';
+	for (auto distance : distances) 
+    {
+        std::cout << distance << ' ';
+    }
 
     std::cout << std::endl;
-
-    return 0;
 }

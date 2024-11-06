@@ -1,59 +1,49 @@
+#include <algorithm>
 #include <cassert>
 #include <functional>
 #include <iostream>
-#include <type_traits>
+#include <utility>
 
 //  ================================================================================================
 
-[[nodiscard]] inline constexpr int f(int x) noexcept
+void test_v1() 
 { 
-	return (x + 1); 
+	std::clog << "test_v1\n"; 
 }
 
-[[nodiscard]] inline constexpr auto g(int (*f)(int), int x)
-{
-	return f(x);
-}
-
-template < typename ... Ts > [[nodiscard]] inline constexpr auto h(int (*f)(Ts ...), Ts ... args)
-{
-	return f(args...);
+void test_v2(void(*function)()) 
+{ 
+	std::clog << "test_v2\n"; 
+	
+	function(); 
 }
 
 //  ================================================================================================
 
-template < typename F, typename ... Ts > 
+[[nodiscard]] auto test_v3(int x, int y) 
+{ 
+	return x + y; 
+}
 
-[[nodiscard]] inline constexpr decltype(auto) invoke(F && f, Ts && ... args)
+template < typename F, typename ... Ts > [[nodiscard]] decltype(auto) invoke(F && f, Ts && ... args)
 {
-	return f(std::forward < Ts > (args)...); // support: std::invoke
+	return f(std::forward < Ts > (args)...);
 }
 
 //  ================================================================================================
 
 int main()
 {
-	using     f_t = int   (int) noexcept;
-	using ptr_f_t = int(*)(int) noexcept;
+	static_assert(std::is_same_v < decltype( test_v1), void   () > );
+	static_assert(std::is_same_v < decltype(&test_v1), void(*)() > );
 
-	static_assert(std::is_same_v < decltype( f),     f_t > );
-	static_assert(std::is_same_v < decltype(&f), ptr_f_t > );
+	auto function = &test_v1;
 
-	const auto ptr_f = &f; // detail: int(*)(int)
+	(*function)();
+	  function ();
 
-	assert((*ptr_f)(0) == 1);
-	assert(  ptr_f (0) == 1);
+	test_v2(test_v1);
 
-//  ================================================================================================
-
-	assert(  f (0) == 1);
-	assert(g(f, 0) == 1);
-	assert(h(f, 0) == 1);
-
-//  ================================================================================================
-
-	assert(     invoke(f, 0) == 1);
-	assert(std::invoke(f, 0) == 1);
-
-	return 0;
+	assert(		invoke(test_v3, 1, 2) == 3);
+	assert(std::invoke(test_v3, 1, 2) == 3);
 }

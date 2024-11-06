@@ -9,7 +9,7 @@
 
 int main()
 {
-	const std::vector < int > vector { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	std::vector < int > vector({ 1, 2, 3, 4, 5, 6, 7, 8, 9 });
 
 //  ================================================================================================
 
@@ -34,6 +34,4 @@ int main()
 	std::ranges::copy(vector, std::inserter(set, std::end(set)));
 
 	assert(std::size(set) == std::size(vector));
-
-	return 0;
 }

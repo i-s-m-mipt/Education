@@ -6,71 +6,46 @@
 
 //  ================================================================================================
 
-class Mobile { public: [[nodiscard]] constexpr int run() const noexcept { return 42; }; };
-class Tablet { public: [[nodiscard]] constexpr int run() const noexcept { return 42; }; };
-class Laptop { public: [[nodiscard]] constexpr int run() const noexcept { return 43; }; };
+struct Client { void test() const { std::clog << "Client::test\n"; }; };
+struct Server { void test() const { std::clog << "Server::test\n"; }; };
 
 //  ================================================================================================
 
-using Computer = std::variant < Mobile, Tablet, Laptop > ;
+using System = std::variant < Client, Server > ;
 
 //  ================================================================================================
 
-class Tester
+struct Router
 {
-public:
-
-    void operator()(const Mobile & mobile) const
-    {
-        if (mobile.run() != 42) throw std::runtime_error("invalid Mobile");
-    }
-
-    void operator()(const Tablet & tablet) const
-    {
-        if (tablet.run() != 42) throw std::runtime_error("invalid Tablet");
-    }
-
-    void operator()(const Laptop & laptop) const
-    {
-        if (laptop.run() != 42) throw std::runtime_error("invalid Laptop");
-    }
-
-}; // class Tester
+    void operator()(const Client & client) const { client.test(); }
+    void operator()(const Server & server) const { server.test(); }
+};
 
 //  ================================================================================================
 
-template < typename ... Bases > class Visitor : public Bases ... { public: using Bases::operator()...; };
+template < typename ... Bs > struct Visitor : public Bs ... 
+{ 
+    using Bs::operator()...; 
+};
 
 //  ================================================================================================
 
 int main()
 {
-    constexpr Computer computer_1 = Mobile();
-    constexpr Computer computer_2 = Tablet();
-    constexpr Computer computer_3 = Laptop();
+    System system_1 = Client();
+    System system_2 = Server();
 
-    constexpr Visitor < Tester > visitor(Tester{});
+    Visitor < Router > visitor;
+   
+    std::visit(visitor, system_1);
+    std::visit(visitor, system_2);
 
-    try
-    {
-        std::visit(visitor, computer_1);
-        std::visit(visitor, computer_2);
-        std::visit(visitor, computer_3);
-    }
-    catch (const std::exception & exception)
-    {
-        std::cerr << "Tester error: " << exception.what() << '\n';
-    }
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
+    auto lambda = [](auto x){ return x; };
 
-    assert(std::visit([](auto x) constexpr noexcept { return x; }, std::variant < int > (42)) == 42);
+    Visitor < decltype(lambda) > handle(lambda);
 
-    constexpr auto lambda = [](auto x) constexpr noexcept { return x; };
-
-    Visitor < decltype(lambda) > test(lambda);
-
-    assert(std::visit(test, std::variant < int > (42)) == 42);
-
-    return 0;
+    assert(std::visit(lambda, std::variant < int > (1)) == 1);
+    assert(std::visit(handle, std::variant < int > (1)) == 1);
 }

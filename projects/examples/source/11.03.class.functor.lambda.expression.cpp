@@ -6,90 +6,90 @@
 #include <iterator>
 #include <memory>
 #include <set>
+#include <string>
 #include <utility>
 #include <vector>
 
 //  ================================================================================================
 
-class C
+struct Entity
 {
-public:
+	void test() const
+	{ 
+		[this](){ std::clog << "Entity::test : data = " << data << '\n'; }(); 
+	}
 
-	void f() const { [this](){std::cout << m_data << std::endl; }(); }
-
-private:
-
-	const int m_data = 42;
-
-}; // class C
+	int data = 0;
+};
 
 //  ================================================================================================
 
 int main()
 {
-	constexpr auto lambda_1 = [](){}; // support: cppinsights.io
+	auto lambda_1 = [](){}; // support: cppinsights.io
 
-	std::cout << typeid(lambda_1).name() << std::endl;
+	auto lambda_2 = [](auto x) constexpr noexcept { return x; };
 
-//  ================================================================================================
-
-	auto z1 = 0, z2 = 0;
-
-	[&z1, z2](auto x)         constexpr noexcept { z1 = z2 + x; }(42);
-	[ z1, z2](auto x) mutable constexpr noexcept { z1 = z2 + x; }(42);
-
-	assert(z1 == 42);
-
-//	[&](auto x) constexpr noexcept { z1 = z2 + x; }(42); // bad
+	std::cout << "typeid(lambda_1).name() = " << typeid(lambda_1).name() << '\n';
+	std::cout << "typeid(lambda_2).name() = " << typeid(lambda_2).name() << '\n';
 
 //  ================================================================================================
 
-	auto unique_pointer = std::make_unique < int > (42);
+	auto x = 1, y = 2, z = 0;
 
-	[ptr = std::move(unique_pointer)]() constexpr noexcept { assert(*ptr == 42); }(); 
+	[x, y, &z]()         { z = x + y; }();
+	[x, y,  z]() mutable { z = x + y; }();
 
-//  ================================================================================================
+	assert(z == 3);
 
-	std::array < std::function < int(int, int) > , 4 > operations;
-
-	operations[0] = [](auto x, auto y) constexpr noexcept { return (x + y); };
-	operations[1] = [](auto x, auto y) constexpr noexcept { return (x - y); };
-	operations[2] = [](auto x, auto y) constexpr noexcept { return (x * y); };
-	operations[3] = [](auto x, auto y) constexpr noexcept { return (x / y); };
-
-	constexpr auto x = 1, y = 2;
-
-	assert(operations.at(0)(x, y) == (x + y));
+//	[&](){ z = x + y; }(); // bad
 
 //  ================================================================================================
 
-	constexpr auto lambda_2 = [] < typename T > (T x, T y)  constexpr noexcept { return (x + y); };
+	auto unique_ptr_1 = std::make_unique < int > (1);
 
-	lambda_2(100, 200);
-	lambda_2(1.0, 2.0);
-//	lambda_2(100, 2.0); // error
+	[unique_ptr_2 = std::move(unique_ptr_1)](){ assert(*unique_ptr_2 == 1); }(); 
 
 //  ================================================================================================
 
-	constexpr std::size_t size = 5;
+	std::array < std::function < int(int, int) > , 5 > functions;
 
-	std::vector < int > vector(size, 0);
+	functions[0] = [](auto x, auto y){ return x + y; };
+	functions[1] = [](auto x, auto y){ return x - y; };
+	functions[2] = [](auto x, auto y){ return x * y; };
+	functions[3] = [](auto x, auto y){ return x / y; };
+	functions[4] = [](auto x, auto y){ return x % y; };
 
-	auto lambda_3 = [z1](auto & x) constexpr noexcept {        x += z1 ; };
-	auto lambda_4 = [z1](auto   x) constexpr noexcept { assert(x == z1); };
-
-	std::ranges::for_each(              vector , lambda_3);
-	std::ranges::for_each(std::as_const(vector), lambda_4);
+	assert(functions.at(0)(x, y) == (x + y));
 
 //  ================================================================================================
 
-	constexpr auto lambda_5 = [](auto lhs, auto rhs) constexpr noexcept { return (lhs > rhs); };
+	auto lambda_3 = [] < typename T > (T x, T y){ return x + y; };
 
-	const std::set < int, decltype(lambda_5) > set { 1, 4, 2, 5, 3 };
+	lambda_3(1, 2);
 
-	for (const auto element : set) std::cout << element << ' ';
+//	lambda_3(1, 2.0); // error
+
+//  ================================================================================================
+
+	std::vector < int > vector(5, 0);
+
+	auto lambda_4 = [z](auto & x){        x += z ; };
+	auto lambda_5 = [z](auto   x){ assert(x == z); };
+
+	std::ranges::for_each(              vector , lambda_4);
+	std::ranges::for_each(std::as_const(vector), lambda_5);
+
+//  ================================================================================================
+
+	auto lambda_6 = [](auto lhs, auto rhs){ return lhs > rhs; };
+
+	std::set < int, decltype(lambda_6) > set({ 5, 4, 3, 2, 1 });
+
+	for (auto element : set) 
+	{
+		std::cout << element << ' ';
+	}
 
 	std::cout << std::endl;
-
-	return 0;
 }

@@ -1,4 +1,5 @@
 #include <bit>
+#include <cassert>
 #include <cstddef>
 #include <exception>
 #include <iostream>
@@ -11,7 +12,7 @@
 #include <utility>
 #include <variant>
 
-#include <gtest/gtest.h>
+using namespace std::literals;
 
 //  ================================================================================================
 
@@ -19,30 +20,33 @@ namespace detail
 {
     template < typename ... Ts > struct List {};
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-    template < typename     L  > struct Size {};
+    template < typename     T  > struct Size {};
 
     template < typename ... Ts > struct Size < List < Ts ... > >
     {
         static constexpr auto value = sizeof...(Ts);
     };
 
-    template < typename L > inline constexpr auto  size_v = Size < L > ::value;
+    template < typename L > constexpr auto size_v = Size < L > ::value;
 
-    template < typename L > inline constexpr auto empty_v = (size_v < L > == 0);
+    template < typename L > constexpr auto empty_v = size_v < L > == 0;
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-    template <             typename     L  > struct Front {};
+    template <             typename     T  > struct Front {};
 
-    template < typename T, typename ... Ts > struct Front < List < T, Ts ... > > { using type = T; };
+    template < typename T, typename ... Ts > struct Front < List < T, Ts ... > > 
+    { 
+        using type = T; 
+    };
 
     template < typename L > using front = typename Front < L > ::type;
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-    template <             typename     L  > struct Pop_Front {};
+    template <             typename     T  > struct Pop_Front {};
 
     template < typename T, typename ... Ts > struct Pop_Front < List < T, Ts ... > >
     {
@@ -51,9 +55,9 @@ namespace detail
 
     template < typename L > using pop_front = typename Pop_Front < L > ::type;
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-    template < typename L, bool E = empty_v < L > > struct Max_Type {};
+    template < typename L, bool C = empty_v < L > > struct Max_Type {};
 
     template < typename L > struct Max_Type < L, true  > { using type = char; };
 
@@ -68,107 +72,92 @@ namespace detail
     public:
 
         using type = std::conditional_t < (sizeof(contender) >= sizeof(best)), contender, best > ;
-
-    }; // template < typename L > class Max_Type < L, false >
+    };
 
     template < typename L > using max_type = typename Max_Type < L > ::type;
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-    template < typename L, typename T, auto N = 0, bool E = empty_v < L > > struct Index;
+    template < typename L, typename T, std::size_t I = 0, bool C = empty_v < L > > struct Index;
 
-    template < typename L, typename T, auto N > struct Index < L, T, N, true  > {};
+    template < typename L, typename T, std::size_t I > struct Index < L, T, I, true  > {};
 
-    template < typename L, typename T, auto N > struct Index < L, T, N, false > :
+    template < typename L, typename T, std::size_t I > struct Index < L, T, I, false > 
+    :
+        std::conditional_t 
+        < 
+            std::is_same_v < front < L > , T > ,
 
-        public std::conditional_t < std::is_same_v < front < L > , T > ,
+            std::integral_constant < std::size_t, I > , 
 
-            std::integral_constant < std::size_t, N > , Index < pop_front < L > , T, N + 1 > > {};
+            Index < pop_front < L > , T, I + 1 > 
+        > 
+    {};
 
-    template < typename L, typename T > inline constexpr auto index_v = Index < L, T > ::value;
+    template < typename L, typename T > constexpr auto index_v = Index < L, T > ::value;
+}
 
-} // namespace detail
+//  ------------------------------------------------------------------------------------------------
+
+namespace detail
+{
+    template < typename ... Ts > class Recorder
+    {
+    protected:
+
+        Recorder() = default;
+       ~Recorder() = default;
+
+//      ---------------------------------------------------------
+
+        template < typename T > [[nodiscard]] auto buffer() const
+        {
+            return std::bit_cast < T * > (&m_buffer);
+        }
+
+//      ---------------------------------------------------------------------------
+
+        alignas(Ts...) std::byte m_buffer[sizeof(max_type < List < Ts ... > > )]{}; 
+
+//      ---------------------------------------------------------------------------
+
+        std::size_t current_index = 0; 
+    }; 
+}
 
 //  ================================================================================================
 
 namespace detail
 {
-    template < typename ... Ts > class Storage
+    template < typename D, typename T, typename ... Ts > class Selector
     {
     protected:
 
-        Storage() noexcept = default;
-       ~Storage() noexcept = default;
-
-    protected:
-
-        template < typename T > [[nodiscard]] T * buffer_as() const noexcept
-        {
-            return std::bit_cast < T * > (&m_buffer); // support: std::launder
-        }
+        Selector() = default;
+       ~Selector() = default;
 
     public:
 
-        std::size_t current_index = 0;
-
-    private:
-
-        alignas(Ts...) std::byte m_buffer[sizeof(max_type < List < Ts ... > > )]{};
-        
-    }; // template < typename ... Ts > class Storage 
-
-} // namespace detail
-
-//  ================================================================================================
-
-namespace detail
-{
-    template < typename D, typename T, typename ... Ts > class Selection
-    {
-    protected:
-
-        Selection() noexcept = default;
-       ~Selection() noexcept = default;
-
-    public:
-
-        explicit Selection(const T & value) 
+        explicit Selector(T value) 
         { 
-            std::construct_at(derived().template buffer_as < T > (), value); update();
+            std::construct_at(derived().template buffer < T > (), std::move(value)); 
+            
+            update();
         }
 
-        explicit Selection(T && value) noexcept 
-        { 
-            std::construct_at(derived().template buffer_as < T > (), std::move(value)); update();
-        }
-        
-        D & operator=(const T & value)
+        auto & operator=(T value)
         {
             if (derived().current_index == index) 
             {
-                *(derived().template buffer_as < T > ()) = value;
+                *derived().template buffer < T > () = std::move(value);
             }
             else 
             {
                 derived().destroy(); 
                 
-                std::construct_at(derived().template buffer_as < T > (), value); update();
-            }
-
-            return derived();
-        }
-
-        D & operator=(T && value) noexcept
-        {
-            if (derived().current_index == index) 
-            {
-                *(derived().template buffer_as < T > ()) = std::move(value);
-            }
-            else 
-            {
-                derived().destroy(); 
+                std::construct_at(derived().template buffer < T > (), std::move(value)); 
                 
-                std::construct_at(derived().template buffer_as < T > (), std::move(value)); update();
+                update();
             }
 
             return derived();
@@ -176,174 +165,209 @@ namespace detail
 
     private:
 
-        [[nodiscard]] D & derived() noexcept { return *(static_cast < D * > (this)); }
+        [[nodiscard]] auto & derived()
+        {
+            return *static_cast < D * > (this); 
+        }
 
-        void update() noexcept { derived().current_index = index; }
+        void update() 
+        { 
+            derived().current_index = index; 
+        }
 
     protected:
 
-        void destroy() noexcept
+        void destroy()
         {
-            if (derived().current_index == index) derived().template buffer_as < T > ()->~T();
+            if (derived().current_index == index) 
+            {
+                derived().template buffer < T > ()->~T();
+            }
         }
+
+//      --------------------------------------------------------------------------------------------
 
         static constexpr auto index = index_v < List < Ts ... > , T > + 1;
-
-    }; // template < typename D, typename T, typename ... Ts > class Selection
-
-} // namespace detail
+    };
+}
 
 //  ================================================================================================
 
-template < typename ... Ts > class Variant : private detail::Storage < Ts ... > , 
-
-    private detail::Selection < Variant < Ts ... > , Ts, Ts ... > ...
+template < typename ... Ts > class Variant 
+: 
+    private detail::Recorder           < Ts ... > , 
+    private detail::Selector < Variant < Ts ... > , Ts, Ts ... > ...
 {
 public:
 
-    template < typename ... Us > using List = detail::List < Us ... > ;
+    using derived_t = Variant < Ts ... > ;
 
-    using Derived = Variant < Ts ... > ;
+//  ----------------------------------------------------------------
 
-    using detail::Selection < Derived, Ts, Ts ... > ::Selection...;
-    using detail::Selection < Derived, Ts, Ts ... > ::operator=...;
+    using detail::Selector < derived_t, Ts, Ts ... > ::Selector ...;
+    using detail::Selector < derived_t, Ts, Ts ... > ::operator=...;
 
-public:
+//  -------------------------------------------------------------------------------------------
 
-    Variant() { *this = detail::front < List < Ts ... > > (); }
-
-    Variant(const Variant & other) 
-    {
-        if (!other.empty()) other.visit([this](const auto & value){ *this = value; });
+    Variant() 
+    { 
+        *this = detail::front < detail::List < Ts ... > > (); 
     }
 
-    Variant(Variant && other) noexcept
+    Variant(const Variant & other) : detail::Selector < derived_t, Ts, Ts ... > ::Selector()...
     {
-        if (!other.empty()) other.visit([this](auto && value){ *this = std::move(value); });
+        other.visit([this](auto && value){ *this = value; });
     }
 
-    Variant & operator=(const Variant & other)
+    Variant(Variant && other)
     {
-        if (!other.empty())
-        {
-            other.visit([this](const auto & value){ *this = value; });
-        }
-        else destroy();
-            
-        return *this;
+        other.visit([this](auto && value){ *this = std::move(value); });
     }
 
-    Variant & operator=(Variant && other)
+    auto & operator=(Variant other)
     {
-        if (!other.empty())
-        {
-            other.visit([this](auto && value){ *this = std::move(value); });
-        }
-        else destroy();
-            
-        return *this;
+        swap(other);
+
+		return *this;
     }
 
-    ~Variant() noexcept { destroy(); }
-
-public:
-
-    [[nodiscard]] bool empty() const noexcept { return this->current_index == 0; }
-
-    template < typename V > void visit(V && visitor) const
-    {
-        do_visit(std::forward < V > (visitor), List < Ts ... > ());
+   ~Variant() 
+    { 
+        destroy(); 
     }
 
-    template < typename T > [[nodiscard]] bool has() const noexcept
-    {
-        return (this->current_index == detail::Selection < Derived, T, Ts ... > ::index);
-    }
+//  -------------------------------------------------------------------------------------------
 
-    template < typename T > [[nodiscard]] const T & get() const
-    {
-        if (!has < T > ()) throw std::runtime_error("invalid type");
+    void swap(Variant & other)
+	{
+		using std::swap; 
 
-        return *(this->template buffer_as < T > ());
-    }  
+        swap(this->m_buffer, other.m_buffer);
+
+		swap(this->current_index, other.current_index);
+	}
 
 private:
 
-    template < typename V, typename U, typename ... Us > 
-    
-    void do_visit(V && visitor, List < U, Us ... > ) const
+    void destroy()
     {
-        if (this->template has < U > ()) 
+        (detail::Selector < derived_t, Ts, Ts ... > ::destroy(), ... );
+
+        this->current_index = 0;
+    }
+
+public:
+
+    template < typename T > [[nodiscard]] auto holds_alternative() const
+    {
+        return this->current_index == detail::Selector < derived_t, T, Ts ... > ::index;
+    }
+
+    template < typename T > [[nodiscard]] const auto & get() const
+    {
+        if (!holds_alternative < T > ()) 
+        {
+            throw std::runtime_error("invalid type");
+        }
+
+        return *this->template buffer < T > ();
+    }  
+
+    template < typename T > [[nodiscard]] auto & get()
+    {
+        if (!holds_alternative < T > ()) 
+        {
+            throw std::runtime_error("invalid type");
+        }
+
+        return *this->template buffer < T > ();
+    }  
+
+    template < typename V > void visit(V && visitor) const
+    {
+        visit_implementation(std::forward < V > (visitor), detail::List < Ts ... > ());
+    }
+
+private:
+
+    template 
+    < 
+        typename V, typename U, typename ... Us 
+    > 
+    void visit_implementation(V && visitor, detail::List < U, Us ... > ) const
+    {
+        if (this->template holds_alternative < U > ()) 
         {
             visitor(this->template get < U > ());
         }
         else if constexpr (sizeof...(Us) > 0) 
         {
-            do_visit(std::forward < V > (visitor), List < Us ... > ());
+            visit_implementation(std::forward < V > (visitor), detail::List < Us ... > ());
         }
-        else throw std::runtime_error("invalid type");
-    }
-
-    void destroy() noexcept
-    {
-        (detail::Selection < Derived, Ts, Ts ... > ::destroy(), ... );
-
-        this->current_index = 0;
+        else 
+        {
+            throw std::runtime_error("invalid type");
+        }
     }
 
 private:
 
-    template < typename D, typename U, typename ... Us > friend class detail::Selection;
-
-}; // template < typename ... Ts > class Variant : ...
-
-//  ================================================================================================
-
-class C { public: constexpr explicit C(int) {} };
+    template < typename D, typename U, typename ... Us > friend class detail::Selector;
+};
 
 //  ================================================================================================
 
-TEST(Variant, Functions)
+struct Entity 
+{ 
+    explicit Entity(int) {} 
+};
+
+//  ================================================================================================
+
+int main()
 {
-    Variant < char, int, double > variant_1;
+    Variant < int, std::string > variant_1, variant_2(2);
 
-    variant_1 = 'a'; ASSERT_TRUE(variant_1.has < char   > () && variant_1.get < char   > () == 'a');
-    variant_1 = 100; ASSERT_TRUE(variant_1.has < int    > () && variant_1.get < int    > () == 100);
-    variant_1 = 1.0; ASSERT_TRUE(variant_1.has < double > () && variant_1.get < double > () == 1.0);
+//  --------------------------------------------------------------------------------
 
-    Variant < char, int, double > variant_2(42);
+    assert(variant_1.holds_alternative < int > () && variant_1.get < int > () == 0);
+    assert(variant_2.holds_alternative < int > () && variant_2.get < int > () == 2);
 
-    variant_1 = variant_2;
-
-    ASSERT_TRUE(variant_1.has < int > () && variant_1.get < int > () == 42);
-
-//  Variant < C, int > variant_3; // error
-
-    Variant < std::monostate, int > variant_4;
-}
-
-//  ================================================================================================
-
-int main(int argc, char ** argv)
-{
-    Variant < char, int, double > variant(3.14);
+//  --------------------------------------------------------------------------------
 
     try
     {
-        std::ignore = variant.get < int > ();
+        variant_1.get < std::string > () = "aaaaa";
     }
-    catch(const std::exception & exception)
+    catch (const std::exception & exception)
     {
-        std::cerr << exception.what() << '\n';
+        std::cerr << "main : " << exception.what() << '\n';
     }
 
-    variant = 42;
+//  -------------------------------------------------------------
 
-    variant.visit([](auto x){ std::cout << x << std::endl; });
+    Variant < int, std::string > variant_3(variant_2);
 
-//  ================================================================================================
+    Variant < int, std::string > variant_4(std::move(variant_3));
 
-    testing::InitGoogleTest(&argc, argv);
+    variant_3 = variant_2; 
+    
+    variant_4 = std::move(variant_3);
 
-    return RUN_ALL_TESTS();
+    variant_4 = 4;
+
+//  --------------------------------------------------------------------------------
+
+    assert(variant_3.holds_alternative < int > () && variant_3.get < int > () == 2);
+    assert(variant_4.holds_alternative < int > () && variant_4.get < int > () == 4);    
+
+//  ---------------------------------------------------------------------------------------
+
+    variant_4.visit([](const auto & data){ std::cout << "variant_4 = " << data << '\n'; });
+
+//  ---------------------------------------------------------------------------------------
+
+//  Variant < Entity, int > variant_5; // error
+
+    Variant < std::monostate, int > variant_6;
 }

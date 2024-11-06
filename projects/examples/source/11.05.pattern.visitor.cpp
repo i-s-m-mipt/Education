@@ -5,120 +5,87 @@
 
 //  ================================================================================================
 
-class Visitor
+struct Visitor
 {
-public:
+    virtual ~Visitor() = default; 
 
-    virtual ~Visitor() noexcept = default; 
+//  ------------------------------------------------------------------------------------------------
 
-    virtual void visit(const class Mobile * mobile) const = 0;
-    virtual void visit(const class Tablet * tablet) const = 0;
-    virtual void visit(const class Laptop * laptop) const = 0;
-
-}; // class Visitor
+    virtual void visit(const struct Client * client) const = 0;
+    virtual void visit(const struct Server * server) const = 0;
+};
 
 //  ================================================================================================
 
-class Computer
+struct Entity
 {
-public:
+    virtual ~Entity() = default; 
 
-    virtual ~Computer() noexcept = default; 
+//  ------------------------------------------------------------------------------------------------
 
-    [[nodiscard]] virtual int run() const noexcept = 0; 
+    virtual void test() const = 0; 
 
-    virtual void visit_by(Visitor * visitor) const = 0;
-
-}; // class Computer 
+    virtual void visit_by(Visitor & visitor) const = 0;
+};
 
 //  ================================================================================================
 
-class Mobile : public Computer 
+struct Client : public Entity 
 {
-public:
-
-    [[nodiscard]] int run() const noexcept override { return 42; };
-
-    void visit_by(Visitor * visitor) const override
+    void test() const override 
     { 
-        return visitor->visit(this);
+        std::clog << "Client::test\n"; 
     }
 
-}; // class Mobile : public Computer 
-
-//  ================================================================================================
-
-class Tablet : public Computer
-{
-public:
-
-    [[nodiscard]] int run() const noexcept override { return 42; };
-
-    void visit_by(Visitor * visitor) const override
-    {
-        return visitor->visit(this);
-    }
-
-}; // class Tablet : public Computer 
-
-//  ================================================================================================
-
-class Laptop : public Computer
-{
-public:
-
-    [[nodiscard]] int run() const noexcept override { return 43; };
-
-    void visit_by(Visitor * visitor) const override
-    {
-        return visitor->visit(this);
-    }
-
-}; // class Laptop : public Computer 
-
-//  ================================================================================================
-
-class Tester : public Visitor
-{
-public:
-
-    void visit(const Mobile * mobile) const override 
+    void visit_by(Visitor & visitor) const override
     { 
-        if (mobile->run() != 42) throw std::runtime_error("invalid Mobile");
+        visitor.visit(this);
+    }
+};
+
+//  ================================================================================================
+
+struct Server : public Entity
+{
+    void test() const override 
+    { 
+        std::clog << "Server::test\n"; 
     }
 
-    void visit(const Tablet * tablet) const override 
+    void visit_by(Visitor & visitor) const override
     {
-        if (tablet->run() != 42) throw std::runtime_error("invalid Tablet");
+        visitor.visit(this);
+    }
+};
+
+//  ================================================================================================
+
+struct Router : public Visitor
+{
+    void visit(const Client * client) const override 
+    { 
+        std::clog << "Router::visit (1)\n"; 
+
+        client->test();
     }
 
-    void visit(const Laptop * laptop) const override 
+    void visit(const Server * server) const override 
     {
-        if (laptop->run() != 42) throw std::runtime_error("invalid Laptop");
-    }
+        std::clog << "Router::visit (2)\n"; 
 
-}; // class Tester : public Visitor
+        server->test();
+    }
+};
 
 //  ================================================================================================
 
 int main()
 {
-    const std::shared_ptr < const Computer > computer_1 = std::make_shared < const Mobile > ();
-    const std::shared_ptr < const Computer > computer_2 = std::make_shared < const Tablet > ();
-    const std::shared_ptr < const Computer > computer_3 = std::make_shared < const Laptop > ();
+    std::shared_ptr < Entity > entity_1 = std::make_shared < Client > ();
+    std::shared_ptr < Entity > entity_2 = std::make_shared < Server > ();
 
-    Tester tester;
+    Router router;
 
-    try
-    {
-        computer_1->visit_by(&tester);
-        computer_2->visit_by(&tester);
-        computer_3->visit_by(&tester);
-    }
-    catch (const std::exception & exception)
-    {
-        std::cerr << "Tester error: " << exception.what() << '\n';
-    }
-
-	return 0;
+    entity_1->visit_by(router);
+    entity_2->visit_by(router);
 }

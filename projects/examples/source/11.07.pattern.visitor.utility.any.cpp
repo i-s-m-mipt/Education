@@ -13,52 +13,46 @@
 
 //  ================================================================================================
 
-template < typename T, typename F > [[nodiscard]] inline auto make_visitor(F && f)
+template < typename T, typename F > [[nodiscard]] auto make_visitor(F && f)
 {
-    return std::make_pair(std::type_index(typeid(T)), [f] < typename U > (U && any) 
-    { 
-        f(std::any_cast < T > (std::forward < U > (any))); 
-    });
+    return std::make_pair
+    (
+        std::type_index(typeid(T)), [f](const auto & any)
+        { 
+            f(std::any_cast < T > (any)); 
+        }
+    );
 }
 
 //  ================================================================================================
 
-void handle(const std::any & any)
+void visit(const std::any & any)
 {
-    using type_b =   bool; 
-    using type_c =   char; 
-    using type_i =    int; 
-    using type_d = double;
+    static auto visitor = [](auto x){ std::cout << x << '\n'; };
 
     static std::unordered_map < std::type_index, std::function < void(const std::any &) > > visitors
-    {
-        make_visitor < type_b > ([](type_b x){ std::cout << x << std::endl; }),
-        make_visitor < type_c > ([](type_c x){ std::cout << x << std::endl; }),
-        make_visitor < type_i > ([](type_i x){ std::cout << x << std::endl; }),
-        make_visitor < type_d > ([](type_d x){ std::cout << x << std::endl; })
-    };
+    (
+        {
+            make_visitor < char   > (visitor),
+            make_visitor < int    > (visitor),
+            make_visitor < double > (visitor)
+        }
+    );
 
     if (auto iterator = visitors.find(std::type_index(any.type())); iterator != std::cend(visitors))
     {
         iterator->second(any);
     }
-    else throw std::runtime_error("invalid type");
 }
 
 //  ================================================================================================
 
 int main()
 {
-    const std::vector < std::any > vector { true, 'a', 42, 3.14, "hello" };
+    std::vector < std::any > vector({ 'a', 1, 1.0, "aaaaa" });
 
-    try
+    for (const auto & element : vector) 
     {
-        for (const auto & element : vector) handle(element);
+        visit(element);
     }
-    catch (const std::exception & exception)
-    {
-        std::cerr << exception.what() << '\n';
-    }
-
-    return 0;
 }

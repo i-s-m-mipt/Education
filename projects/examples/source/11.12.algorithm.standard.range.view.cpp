@@ -11,21 +11,23 @@
 #include <utility>
 #include <vector>
 
-//  ================================================================================================
-
-struct Human { double height{}, weight{}; };
+using namespace std::literals;
 
 //  ================================================================================================
 
-template < typename T > class Range : private std::vector < T >
+struct Entity 
+{ 
+	int data = 0; 
+};
+
+//  ================================================================================================
+
+template < typename T > struct Range : private std::vector < T >
 {
-public:
-
     using std::vector < T > ::begin;
 	using std::vector < T > ::  end;
 	using std::vector < T > :: size;
-
-}; // template < typename T > class Range : private std::vector < T >
+};
 
 //  ================================================================================================
 
@@ -42,24 +44,30 @@ static_assert(std::ranges::random_access_range < std::      vector < int > > );
 
 int main()
 {
-	std::vector < int > vector { 0, 1, 2, 3, 4 };
+	std::vector < int > vector(5, 0);
 
-	for (auto && element : vector) ++element; // support: cppinsights.io
+	for (int i = 0; auto && element : vector) // support: cppinsights.io
+	{
+		element = ++i; 
+	}
 
 //  ================================================================================================
 
-	const std::map < int, int > map { { 1, 10 }, { 2, 20 }, { 3, 30 } };
+	std::map < int, int > map { { 1, 10 }, { 2, 20 }, { 3, 30 } };
 
-	for (const auto [key, value] : map) // support: cppinsights.io
+	for (auto [key, value] : map)
 	{
 		std::cout << key << ", " << value << std::endl;
 	}
 
 //  ================================================================================================
 
-	constexpr int array[]{ 1, 2, 3, 4, 5 };
+	int array[]{ 1, 2, 3, 4, 5 };
 
-	for (const auto element : array) std::cout << element << ' ';
+	for (auto element : array) 
+	{
+		std::cout << element << ' ';
+	}
 
 	std::cout << std::endl;
 
@@ -71,30 +79,29 @@ int main()
 
 	std::ranges::sort(vector);
 
-	std::vector < Human > humans = 
-	{ 
-		{ 175.0, 80.0 }, 
-		{ 180.0, 85.0 }, 
-		{ 185.0, 90.0 } 
-	};
+	assert(std::ranges::is_sorted(vector));
 
-	std::ranges::sort(humans, std::ranges::greater(), &Human::weight);
+	std::vector < Entity > entities({ { 1 }, { 2 }, { 3 } });
+
+	std::ranges::sort(entities, std::ranges::greater(), &Entity::data);
+
+	assert(std::ranges::is_sorted(entities, std::ranges::greater(), &Entity::data));
 
 //  ================================================================================================
 
-	for (const auto x : std::views::transform(std::views::filter(vector,
+	auto lambda_1 = [](auto x){ return x % 2; };
+	auto lambda_2 = [](auto x){ return x + 1; };
 
-		[](auto x) constexpr noexcept { return (x % 2); }),
-		[](auto x) constexpr noexcept { return (x + 1); }))
+	for (auto element : std::views::transform(std::views::filter(vector, lambda_1), lambda_2))
 	{
-		std::cout << x << ' ';
+		std::cout << element << ' ';
 	}
 
 	std::cout << std::endl;
 
 //  ================================================================================================
 
-	for (const auto key : std::views::reverse(std::views::keys(map)))
+	for (auto key : std::views::reverse(std::views::keys(map)))
 	{
 		std::cout << key << ' ';
 	}
@@ -103,43 +110,29 @@ int main()
 
 //  ================================================================================================
 
-	for (const auto x : std::views::iota(1) | std::views::take(5))
+	for (auto element : std::views::iota(1) | std::views::take(5) | std::views::drop(1))
 	{
-		std::cout << x << ' ';
-	}
-
-	std::cout << std::endl;
-
-//  ================================================================================================
- 
-    for (const auto x : std::views::iota     (1, 6)
-                      | std::views::filter   ([](auto x) constexpr noexcept { return (x % 2); })
-                      | std::views::transform([](auto x) constexpr noexcept { return (x * x); })
-				      | std::views::drop     (1))
-	{
-		std::cout << x << ' ';
-	}
-
-    std::cout << std::endl;
-
-//  ================================================================================================
-
-	for (const std::string data = "1,2,3,4,5"; auto x : std::views::split(data, ','))
-	{
-		std::cout << std::string(std::cbegin(x), std::cend(x)) << ' ';
+		std::cout << element << ' ';
 	}
 
 	std::cout << std::endl;
 
 //  ================================================================================================
 
-	constexpr auto lambda = []() constexpr { return std::vector({ 1, 2, 3, 4, 5 }); };
+	for (auto string = "1,2,3,4,5"s; auto substring : std::views::split(string, ','))
+	{
+		std::cout << std::string(std::cbegin(substring), std::cend(substring)) << ' ';
+	}
 
-    constexpr auto dangling_iterator = std::ranges::max_element(lambda());
+	std::cout << std::endl;
+
+//  ================================================================================================
+
+	auto lambda = [](){ return std::vector({ 1, 2, 3, 4, 5 }); };
+
+    auto dangling_iterator = std::ranges::max_element(lambda());
 	
-    static_assert(std::is_same_v < const std::ranges::dangling, decltype(dangling_iterator) > );
+    static_assert(std::is_same_v < std::ranges::dangling, decltype(dangling_iterator) > );
 
 //	assert(*dangling_iterator == 5); // error
-
-	return 0;
 }

@@ -43,6 +43,8 @@ public:
         return base_t::finish_vertex(vertex, graph);
     }
 
+//  ------------------------------------------------------------------------------------------------
+
     template < typename E, typename G > auto examine_edge(E edge, const G & graph)
     {
         std::cout << edge.m_source << " >> " << 
@@ -66,6 +68,8 @@ public:
 
         return base_t::non_tree_edge(edge, graph);
     }
+    
+//  ------------------------------------------------------------------------------------------------
 
     template < typename E, typename G > auto gray_target(E edge, const G & graph)
     {
@@ -82,8 +86,7 @@ public:
 
         return base_t::black_target(edge, graph);
     }
-
-}; // class Visitor : public boost::default_dfs_visitor
+};
 
 //  ================================================================================================
 
@@ -101,9 +104,7 @@ int main()
     boost::add_edge(4, 0, graph);
     boost::add_edge(4, 1, graph);
 
-    const auto visitor = boost::visitor(Visitor());
+    auto visitor = boost::visitor(Visitor());
 
-    boost::breadth_first_search(graph, 0, visitor); // complexity: O(V + E)
-
-    return 0;
+    boost::breadth_first_search(graph, 0, visitor);
 }
