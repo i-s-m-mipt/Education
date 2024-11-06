@@ -13,15 +13,15 @@
 int main()
 {
 	auto size = 1'000'000uz;
-
+	
 	auto result = 0.0;
 
 	for (auto i = 0uz; i < size; ++i)
 	{
 		result += 
 		(
-			std::pow(std::sin(1.0 * i / size), 2.0) +
-			std::pow(std::cos(1.0 * i / size), 2.0)
+			std::pow(std::sin(1.0 * i), 2.0) +
+			std::pow(std::cos(1.0 * i), 2.0)
 		);
 	}
 

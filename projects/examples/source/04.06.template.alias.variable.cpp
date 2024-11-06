@@ -30,11 +30,7 @@ int main()
 {
 	[[maybe_unused]] Buffer < int > buffer;
 
-//  ------------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------
 
-	assert(area(1) == 3);
-
-	assert(equal(pi < double > , area(1.0)));
-
-	assert(equal(pi < double > , std::numbers::pi));
+	assert(area(1) == 3 && equal(area(1.0), pi < double > ));
 }

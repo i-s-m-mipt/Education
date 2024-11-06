@@ -119,12 +119,12 @@ int main()
 		{
 			result += 
 			(
-				std::pow(std::sin(i), 2.0) +
-				std::pow(std::cos(i), 2.0)
+				std::pow(std::sin(1.0 * i), 2.0) +
+				std::pow(std::cos(1.0 * i), 2.0)
 			);
 		}
 
-		assert(equal(result, size));
+		assert(equal(result, static_cast < double > (size)));
 	}
 
 //  ================================================================================================
