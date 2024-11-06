@@ -15,60 +15,66 @@ class Redirector
 {
 public:
 
-    explicit Redirector (const std::string & file) : fout(file, std::ios::out)
+    explicit Redirector(const std::string & path) : m_fout(path, std::ios::out)
     {
-        if (fout) m_old_buffer = std::cout.rdbuf(fout.rdbuf());
+        if (m_fout) 
+        {
+            m_buffer = std::cout.rdbuf(m_fout.rdbuf());
+        }
+        else 
+        {
+            throw std::runtime_error("invalid file stream");
+        }
     }
 
-   ~Redirector() noexcept 
+   ~Redirector() 
     { 
-        try { if (m_old_buffer) std::cout.rdbuf(m_old_buffer); } catch(...) { std::abort(); } 
+        if (m_buffer) 
+        {
+            std::cout.rdbuf(m_buffer); 
+        }
     }
 
 private:
 
-    std::fstream fout;
-
-    std::streambuf * m_old_buffer;
-
-}; // class Redirector
+    std::fstream m_fout; std::streambuf * m_buffer = nullptr;
+};
 
 //  ================================================================================================
 
-struct S { char c{}; int i{}; std::string s; };
+struct Entity 
+{ 
+    int data_1 = 0; std::string data_2; 
+};
 
 //  ================================================================================================
 
-std::ofstream & operator<<(std::ofstream & fout, const S & s) // support: std::ios::binary
+auto & operator<<(std::ofstream & fout, const Entity & entity)
 {
-    fout.write(&s.c, sizeof(s.c));
+    fout.write(std::bit_cast < char * > (&entity.data_1), sizeof(entity.data_1));
 
-    fout.write(std::bit_cast < const char * > (&s.i), sizeof(s.i));
+    auto size = std::size(entity.data_2);
 
-    const auto size = std::size(s.s);
+    fout.write(std::bit_cast < char * > (&size), sizeof(size));
 
-    fout.write(std::bit_cast < const char * > (&size), sizeof(size));
-
-    fout.write(std::data(s.s), std::size(s.s));
+    fout.write(std::data(entity.data_2), std::size(entity.data_2));
 
     return fout;
 }
 
 //  ================================================================================================
 
-std::ifstream & operator>>(std::ifstream & fin, S & s) // support: std::ios::binary
+auto & operator>>(std::ifstream & fin, Entity & entity)
 {
-    fin.read(&s.c, sizeof(s.c));
+    fin.read(std::bit_cast < char * > (&entity.data_1), sizeof(entity.data_1));
 
-    fin.read(std::bit_cast < char * > (&s.i), sizeof(s.i));
-
-    std::size_t size = 0;
+    auto size = 0uz;
 
     fin.read(std::bit_cast < char * > (&size), sizeof(size));
 
-    s.s.resize(size);
+    entity.data_2.resize(size);
 
-    fin.read(std::bit_cast < char * > (&s.s.front()), size);
+    fin.read(std::bit_cast < char * > (&entity.data_2.front()), size);
 
     return fin;
 }
@@ -77,44 +83,48 @@ std::ifstream & operator>>(std::ifstream & fin, S & s) // support: std::ios::bin
 
 int main()
 {
-    constexpr auto file = "13.03.stream.class.file.example.data";
+    auto path = "13.03.stream.class.file.example.data";
 
-    constexpr std::size_t size = 5;
+    auto size = 5uz;
 
 //  ================================================================================================
 
+    if (std::fstream fout(path, std::ios::out); fout)
     {
-        std::fstream fout(file, std::ios::out);
-
-        for (std::size_t i = 0; i < size; ++i)
+        for (auto i = 0uz; i < size; ++i)
         {
-            fout << std::string(size, 'a' + i) << std::endl;
+            fout << std::string(size, 'a') << std::endl;
         }
 
-        fout.seekp(2 * (size + 1), std::ios::beg); // support: LF
+        fout.seekp(2 * (size + 1), std::ios::beg);
 
-        fout << "hello";
+        fout << "bbbbb";
+    }
+    else 
+    {
+        std::cerr << "main : invalid file stream\n";
     }
 
 //  ================================================================================================
 
-    if (std::fstream fin(file, std::ios::in); fin)
+    if (std::fstream fin(path, std::ios::in); fin)
     {
         fin.seekg(2 * (size + 1), std::ios::beg);
 
-        std::string input; std::getline(fin, input); assert(input == "hello");
+        std::string input; std::getline(fin, input); assert(input == "bbbbb");
 
         fin.seekg(0, std::ios::end); 
 
-        assert(fin.tellg() == size * (size + 1));
+        assert(static_cast < std::size_t > (fin.tellg()) == size * (size + 1));
     }
-    else std::cerr << "invalid file stream\n";
+    else 
+    {
+        std::cerr << "main : invalid file stream\n";
+    }
 
 //  ================================================================================================
 
-    std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
+    std::cout << "Enter any character to continue : "; char c; std::cin >> c;
 
-    std::filesystem::remove(file);
-
-    return 0;
+    std::filesystem::remove(path);
 }

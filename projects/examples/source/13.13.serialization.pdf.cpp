@@ -9,19 +9,17 @@
 
 int main()
 {
-    constexpr auto file = "13.13.serialization.pdf.example.pdf";
-
-    [[maybe_unused]] PDFHummus::EStatusCode status;
+    const auto path = "13.13.serialization.pdf.example.pdf";
 
 //  ================================================================================================
 
     PDFWriter writer;
     
-    status = writer.StartPDF(file, ePDFVersion17);
+    std::ignore = writer.StartPDF(path, ePDFVersion17);
 
-    const auto page = std::make_unique < PDFPage > ();
+    auto page = std::make_unique < PDFPage > ();
 
-    [[maybe_unused]] constexpr auto width = 595, height = 842, ppi = 72;
+    const auto width = 595, height = 842;
 
     page->SetMediaBox(PDFRectangle(0, 0, width, height)); 
 
@@ -37,13 +35,13 @@ int main()
 
 //  ================================================================================================
 
-    constexpr auto image_height = 380, image_ppi = 96, delta = 10;
+    const auto delta = 10, image_height = 380, ppi = 72, image_ppi = 96;
 
     Image_Options image_options;
 
     image_options.transformationMethod = AbstractContentContext::eMatrix;
 
-    constexpr auto zoom = 1.0;
+    const auto zoom = 1.0;
 
     image_options.matrix[0] = image_options.matrix[3] = zoom;
 
@@ -55,7 +53,7 @@ int main()
 
     auto font = writer.GetFontForFile("consolas.ttf");
 
-    constexpr auto font_size = 14;
+    const auto font_size = 14;
 
     line -= (delta + font_size);
 
@@ -65,29 +63,30 @@ int main()
 
 //  ================================================================================================
 
-    constexpr auto rectangle_height = font_size + 4, rectangle_width = 100;
+    auto rectangle_height = font_size + 4, rectangle_width = 100;
 
     line -= (delta + rectangle_height);
 
-    Graphic_Options graphic_options(AbstractContentContext::eStroke,
-                                    AbstractContentContext::eRGB,
-                                    AbstractContentContext::ColorValueForName("Red"), 2.0);
+    Graphic_Options graphic_options
+    (
+        AbstractContentContext::eStroke,
+        AbstractContentContext::eRGB,
+        AbstractContentContext::ColorValueForName("Red"), 2.0
+    );
 
     context->DrawRectangle(delta, line, rectangle_width, rectangle_height, graphic_options);
 
 //  ================================================================================================
     
-    status = writer.EndPageContentContext(context);
+    std::ignore = writer.EndPageContentContext(context);
 
-    status = writer.WritePage(page.get());
+    std::ignore = writer.WritePage(page.get());
 
-    status = writer.EndPDF();
+    std::ignore = writer.EndPDF();
 
 //  ================================================================================================
 
-    std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
+    std::cout << "Enter any character to continue : "; char c; std::cin >> c;
 
-    std::filesystem::remove(file);
-
-    return 0;
+    std::filesystem::remove(path);
 }

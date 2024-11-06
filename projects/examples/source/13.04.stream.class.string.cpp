@@ -9,7 +9,7 @@ int main()
 
     stream << std::showbase;
 
-	stream << std::setw(8) << std::right << std::setfill('_') << std::oct << 42;
+	stream << std::setw(8) << std::setfill('_') << std::right << std::oct << 42;
 
 	assert(stream.str() == "_____052");
 
@@ -17,21 +17,19 @@ int main()
 
 	stream.seekp(0);
 
-	stream << std::setw(8) << std::right << std::setfill('_') << std::hex << 42;
+	stream << std::setw(8) << std::setfill('_') << std::right << std::hex << 42;
 
 	assert(stream.str() == "____0x2a");
 
 //  ================================================================================================
 
-    for (char c{}; stream.get(c); )
+    for (char c; stream.get(c); )
     {
         if (c == '0')
         {
-            stream.unget(); int x{}; stream >> std::hex >> x; assert(x == 42);
+            stream.unget(); int x; stream >> std::hex >> x; assert(x == 42);
         }
     }
 
     assert(stream.eof());
-
-	return 0;
 }

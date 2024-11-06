@@ -4,12 +4,15 @@
 #include <fstream>
 #include <string>
 
-int main()
+void transform(const std::string & path_1, const std::string & path_2)
 {
-	if (std::fstream fin("13.07.algorithm.erase.comment.test.txt", std::ios::in); fin)
+    if (std::fstream fin(path_1, std::ios::in); fin)
     {
-        std::string code { std::istreambuf_iterator < char > (fin),
-		                   std::istreambuf_iterator < char > (   ) };
+        std::string code 
+        { 
+            std::istreambuf_iterator < char > (fin),
+		    std::istreambuf_iterator < char > (   ) 
+        };
 
         for (auto current = std::begin(code); current != std::end(code); ++current) 
         {
@@ -18,9 +21,9 @@ int main()
                 for (++current; !((*current == '\'') && (*std::prev(current) != '\\')); ++current);
             }
 
-            if (*current == '"')
+            if (*current == '\"')
             {
-                for (++current; !((*current == '"') && (*std::prev(current) != '\\')); ++current);
+                for (++current; !((*current == '\"') && (*std::prev(current) != '\\')); ++current);
             }
                 
             if (*current == '/') 
@@ -43,18 +46,35 @@ int main()
                 }
             }
 
-            if (current == std::end(code)) break;
+            if (current == std::end(code)) 
+            {
+                break;
+            }
         }
 
-        constexpr auto result = "13.07.algorithm.erase.comment.result.txt";
-
-        std::fstream(result, std::ios::out) << code;
-
-        std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
-
-        std::filesystem::remove(result);
+        if (std::fstream fout(path_2, std::ios::out); fout)
+        {
+            fout << code;
+        }
+        else 
+        {
+            std::cerr << "main : invalid file stream\n";
+        }
     }
-    else std::cerr << "invalid file stream\n";
+    else 
+    {
+        std::cerr << "main : invalid file stream\n";
+    }
+}
 
-	return 0;
+int main()
+{
+    auto path_1 = "13.07.algorithm.erase.comment.source.txt";
+	auto path_2 = "13.07.algorithm.erase.comment.result.txt";
+
+    transform(path_1, path_2);
+
+    std::cout << "Enter any character to continue : "; char c; std::cin >> c;
+
+    std::filesystem::remove(path_2);
 }

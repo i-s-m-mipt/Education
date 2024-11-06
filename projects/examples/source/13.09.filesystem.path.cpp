@@ -4,9 +4,9 @@
 
 //  ================================================================================================
 
-[[nodiscard]] std::filesystem::path operator""_p(const char * ptr, std::size_t size)
+[[nodiscard]] auto operator""_p(const char * string, std::size_t size)
 {
-	return std::filesystem::path(std::string(ptr, size));
+	return std::filesystem::path(std::string(string, size));
 }
 
 //  ================================================================================================
@@ -24,15 +24,15 @@ int main()
 
 //  ================================================================================================
 
-    try // support: std::filesystem::filesystem_error
+    try
 	{
         const auto path_2 = "directory/stem.extension"_p;
 
-		std::cout << std::filesystem::canonical(path_2) << std::endl;
+		std::cout << std::filesystem::canonical(path_2) << '\n';
 	}
-	catch (const std::exception & exception)
+	catch (const std::filesystem::filesystem_error & exception)
 	{
-		std::cerr << exception.what() << '\n'; 
+		std::cerr << "main : " << exception.what() << '\n'; 
 	}
 
 //  ================================================================================================
@@ -53,6 +53,4 @@ int main()
 	std::cout << "filename       = " << path_3.filename      ().string() << std::endl;
 	std::cout << "stem           = " << path_3.stem          ().string() << std::endl;
 	std::cout << "extension      = " << path_3.extension     ().string() << std::endl;
-
-	return 0;
 }

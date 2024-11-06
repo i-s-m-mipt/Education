@@ -12,93 +12,89 @@
 
 //  ================================================================================================
 
-void save(const std::filesystem::path & path, const nlohmann::json & object)
+void save(const std::filesystem::path & path, const nlohmann::json & json)
 {
 	if (std::fstream fout(path.string(), std::ios::out); fout)
 	{
-		fout << std::setw(4) << object;
+		fout << std::setw(4) << json;
 	}
-	else throw std::runtime_error("invalid file");
+	else 
+    {
+        throw std::runtime_error("invalid file stream");
+    }
 }
 
 //  ================================================================================================
 
-[[nodiscard]] nlohmann::json load(const std::filesystem::path & path)
+[[nodiscard]] auto load(const std::filesystem::path & path)
 {
 	if (std::fstream fin(path.string(), std::ios::in); fin)
 	{
 		return nlohmann::json::parse(fin);
 	}
-	else throw std::runtime_error("invalid file");
+	else 
+    {
+        throw std::runtime_error("invalid file stream");
+    }
 }
 
 //  ================================================================================================
 
-struct Example 
-{ 
-    bool b{}; 
-
-    std::vector < int > vector;
-    
-    struct S { std::string string; double d{}; } s;
-
-}; // struct Example 
-
-//  ================================================================================================
-
-struct Key
+struct Entity 
 {
-	static constexpr auto b      = "b";
-    static constexpr auto vector = "vector";
-    static constexpr auto s      = "s";
-    static constexpr auto string = "string";
-    static constexpr auto d      = "d";
+    struct Key
+    {
+        static constexpr auto data_1 = "data_1";
+        static constexpr auto data_2 = "data_2";
+        static constexpr auto data_3 = "data_3";
+        static constexpr auto data_4 = "data_4";
+    };
 
-}; // struct Key
+    struct Nested 
+    {
+        std::vector < int > data_4; 
+    };
+
+    int data_1 = 0; std::string data_2; Nested data_3;
+};
 
 //  ================================================================================================
 
 int main()
 {
-    const Example example { true, { 1, 2, 3, 4, 5 }, { "hello", 3.14 } };
+    Entity entity(1, "entity", { { 1, 2, 3, 4, 5 } });
 
-    constexpr auto file = "13.12.serialization.json.example.json";
-
-//  ================================================================================================
-
-    {
-        nlohmann::json object; // support: boost::property_tree
-
-        object[Key::b] = example.b;
-
-        object[Key::vector] = example.vector;
-
-        object[Key::s][Key::string] = example.s.string;
-
-        object[Key::s][Key::d] = example.s.d;
-
-        save(file, object);
-    }
+    const auto path = "13.12.serialization.json.entity.json";
 
 //  ================================================================================================
 
-    {
-        const auto object = load(file);
+    nlohmann::json json_1; // support: boost::property_tree
 
-        assert(object[Key::b].get < bool > () == example.b);
+    json_1[Entity::Key::data_1] = entity.data_1;
+    json_1[Entity::Key::data_2] = entity.data_2;
+    json_1[Entity::Key::data_3]
+          [Entity::Key::data_4] = entity.data_3.data_4;
 
-        assert(object[Key::vector].get < std::vector < int > > () == example.vector);
-
-        assert(object[Key::s][Key::string].get < std::string > () == example.s.string);
-
-        assert(object[Key::s][Key::d].get < double > () == example.s.d);
-    }
+    save(path, json_1);
 
 //  ================================================================================================
 
-    std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
+    auto json_2 = load(path);
 
-    std::filesystem::remove(file);
+    using data_1_t = int;
 
-	return 0;
+    using data_2_t = std::string;
+
+    using data_4_t = std::vector < int > ;
+
+    assert(json_2[Entity::Key::data_1].get < data_1_t > () == entity.data_1);
+    assert(json_2[Entity::Key::data_2].get < data_2_t > () == entity.data_2);
+    assert(json_2[Entity::Key::data_3]
+                 [Entity::Key::data_4].get < data_4_t > () == entity.data_3.data_4);
+
+//  ================================================================================================
+
+    std::cout << "Enter any character to continue : "; char c; std::cin >> c;
+
+    std::filesystem::remove(path);
 }

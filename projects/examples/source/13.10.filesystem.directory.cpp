@@ -1,19 +1,25 @@
+#include <exception>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 
 int main()
 {
 	const auto path = std::filesystem::current_path();
 
-	std::filesystem::create_directory(path / "directory"      );
+	std::filesystem::create_directory(path / "directory");
+
 	std::filesystem::create_directory(path / "directory", path);
 
 	std::filesystem::create_directories("X/Y/Z");
 
 //  ================================================================================================
 
-	std::fstream("X/x.txt", std::ios::out);
+	if (std::fstream fout("X/x.txt", std::ios::out); !fout)
+	{
+		throw std::runtime_error("invalid file stream");
+	}
 
 	std::filesystem::copy("X/x.txt", "X/y.txt");
 
@@ -25,14 +31,13 @@ int main()
 
 //  ================================================================================================
 
-    std::cout << "Enter any character to continue: "; char c{}; std::cin >> c;
+    std::cout << "Enter any character to continue : "; char c; std::cin >> c;
 
 	std::filesystem::remove_all("X");
+	
 	std::filesystem::remove_all("Z");
 
 	std::filesystem::remove_all(path / "directory");
 
 //  std::filesystem::remove_all("C:/"); // bad
-
-	return 0;
 }

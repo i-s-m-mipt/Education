@@ -5,90 +5,86 @@
 
 //  ================================================================================================
 
-struct Formatter { std::size_t precision{}; };
+struct Formatter 
+{ 
+    std::size_t precision = 0; 
+};
 
 //  ================================================================================================
 
-inline std::ostream & operator<<(std::ostream & stream, Formatter f)
+auto & operator<<(std::ostream & stream, Formatter formatter)
 {
     stream.setf(std::ios_base::showpos);
     stream.setf(std::ios_base::fixed  );
 
-    stream.precision(f.precision);
+    stream.precision(formatter.precision);
     
     return stream;
 }
 
 //  ================================================================================================
 
-template < typename ... Ts > void print_v1(const Ts & ... args)
+template < typename ... Ts > void print_v1(Ts ... args)
 {
     (std::cout << ... << args) << std::endl;
 }
 
 //  ================================================================================================
 
-template < typename T > class Spaced
+template < typename T > struct Helper 
+{ 
+    const T & data; 
+};
+
+template < typename T > auto & operator<<(std::ostream & stream, Helper < T > helper)
 {
-public:
-
-    explicit Spaced(const T & reference) noexcept : m_reference(reference) {}
-
-    friend std::ostream & operator<<(std::ostream & stream, Spaced < T > spaced)
-    {
-        return (stream << spaced.m_reference << ' ');
-    }
-
-private:
-
-    const T & m_reference;
-
-}; // template < typename T > class Spaced
+    return stream << helper.data << ' ';
+}
 
 //  ================================================================================================
 
-template < typename ... Ts > void print_v2(const Ts & ... args)
+template < typename ... Ts > void print_v2(Ts ... args)
 {
-    (std::cout << ... << Spaced(args)) << std::endl;
+    (std::cout << ... << Helper(args)) << std::endl;
 }
 
 //  ================================================================================================
 
 int main()
 {
-    const auto old_exceptions = std::cin.exceptions();
+    auto old_exceptions = std::cin.exceptions();
 
     std::cin.exceptions(std::ios::eofbit | std::ios::badbit);
 
     try
     {
-        std::cout << "Enter some integers: "; int x{}; for (; std::cin >> x; );
+        std::cout << "Enter 1 or more integers : "; int x; for (; std::cin >> x; );
 
         if (std::cin.fail()) 
         {
-            std::cin.clear(); char c{}; std::cin >> c;
+            std::cin.clear(); char c; std::cin >> c;
 
-            std::cout << "Invalid character: " << c << std::endl;
+            std::cout << "c = " << c << '\n';
         }
     }
-    catch(const std::ios_base::failure & exception)
+    catch (const std::ios_base::failure & exception)
     {
-        std::cerr << exception.what() << '\n';
-
-        std::cin.clear();
+        std::cerr << "main : " << exception.what() << '\n';
     }
+
+    std::cin.clear();
     
     std::cin.exceptions(old_exceptions);
 
 //  ================================================================================================
 
-    std::cout << Formatter { 6 } << 3.14 << std::endl;
-    std::cout <<                    2.72 << std::endl;
+    auto x = 1.0, y = 2.0;
+
+    std::cout << "x = " << Formatter(3) << x << '\n';
+    std::cout << "y = " << Formatter(6) << y << '\n';
 
 //  ================================================================================================
 
-    print_v1('a', 42, 3.14);
-    print_v2('a', 42, 3.14);
-
-    return 0;
+    print_v1('a', 1, 1.0);
+    print_v2('a', 1, 1.0);
 }

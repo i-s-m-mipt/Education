@@ -6,39 +6,42 @@
 
 //  ================================================================================================
 
-[[nodiscard]] char entry_type(const std::filesystem::file_status & status) noexcept
+[[nodiscard]] auto type(const std::filesystem::file_status & status)
 {
-         if (std::filesystem::is_block_file    (status)) { return 'b'; }
-    else if (std::filesystem::is_character_file(status)) { return 'c'; }
-    else if (std::filesystem::is_directory     (status)) { return 'd'; }
-    else if (std::filesystem::is_fifo          (status)) { return 'p'; }
-    else if (std::filesystem::is_other         (status)) { return 'o'; }
-    else if (std::filesystem::is_regular_file  (status)) { return 'f'; }
-    else if (std::filesystem::is_socket        (status)) { return 's'; }
-    else if (std::filesystem::is_symlink       (status)) { return 'l'; }
+    if (std::filesystem::is_block_file    (status)) { return 'b'; }
+    if (std::filesystem::is_character_file(status)) { return 'c'; }
+    if (std::filesystem::is_directory     (status)) { return 'd'; }
+    if (std::filesystem::is_fifo          (status)) { return 'p'; }
+    if (std::filesystem::is_other         (status)) { return 'o'; }
+    if (std::filesystem::is_regular_file  (status)) { return 'f'; }
+    if (std::filesystem::is_socket        (status)) { return 's'; }
+    if (std::filesystem::is_symlink       (status)) { return 'l'; }
 
     return '?';
 }
 
 //  ================================================================================================
 
-[[nodiscard]] std::string entry_permissions(std::filesystem::perms permissions)
+[[nodiscard]] auto permissions(std::filesystem::perms permissions)
 {
-    auto verify = [permissions](auto bit, auto c) constexpr noexcept 
+    auto verify = [permissions](auto bit, auto c) 
     { 
         return (permissions & bit) == std::filesystem::perms::none ? '-' : c; 
     };
 
-    return { verify(std::filesystem::perms::owner_read , 'r'),
-             verify(std::filesystem::perms::owner_write, 'w'),
-             verify(std::filesystem::perms::owner_exec , 'x') };
+    return std::string
+    { 
+        verify(std::filesystem::perms::owner_read , 'r'),
+        verify(std::filesystem::perms::owner_write, 'w'),
+        verify(std::filesystem::perms::owner_exec , 'x') 
+    };
 }
 
 //  ================================================================================================
 
-[[nodiscard]] std::size_t directory_size(const std::filesystem::path & path)
+[[nodiscard]] auto size(const std::filesystem::path & path)
 {
-	std::size_t size = 0;
+	auto result = 0uz;
 
 	if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
 	{
@@ -46,61 +49,63 @@
 		{
 			if (!std::filesystem::is_directory(entry.status()))
 			{
-				size += std::filesystem::file_size(entry);
+				result += std::filesystem::file_size(entry);
 			}
 		}
 	}
 
-	return size;
+	return result;
 }
 
 //  ================================================================================================
 
-[[nodiscard]] std::string entry_size(const std::filesystem::directory_entry & entry)
+[[nodiscard]] auto size(const std::filesystem::directory_entry & entry)
 {
-    std::size_t size{};
+    auto result = 0uz;
 
     if (std::filesystem::is_regular_file(entry.status()))
     {
-        size = std::filesystem::file_size(entry);
+        result = std::filesystem::file_size(entry);
     }
     else
     {
-        size = directory_size(entry.path());
+        result = size(entry.path());
     }
 
     std::stringstream sout;
 
-    sout << std::setw(5) << std::right << std::setfill(' ');
+    sout << std::setw(5) << std::setfill(' ') << std::right;
 
-         if (size >= 1'073'741'824) { sout << (size / 1'073'741'824) << 'G'; } 
-    else if (size >= 1'048'576    ) { sout << (size / 1'048'576    ) << 'M'; } 
-    else if (size >= 1'024        ) { sout << (size / 1'024        ) << 'K'; } 
-    else                            { sout << (size                ) << 'B'; }
+    char letters[]{ 'B', 'K', 'M', 'G' };
+
+    auto index = 0uz;
+
+    for (; index < 3 && result >= 1'024; result /= 1'024, ++index);
+
+    sout << result << letters[index];
     
     return sout.str();
 }
 
 //  ================================================================================================
 
-void view_directory(const std::filesystem::path & path)
+void view(const std::filesystem::path & path)
 {
 	if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
 	{
-        constexpr auto separator = " | ";
-
-		for (const auto & entry : std::filesystem::directory_iterator(path))
+        for (const auto & entry : std::filesystem::directory_iterator(path))
 		{
-            std::cout << entry_type       (entry.status()              ) << separator;
-            std::cout << entry_permissions(entry.status().permissions()) << separator;
+            std::cout << type(entry.status()) << " | ";
 
-            std::cout << entry_size(entry) << separator;
+            std::cout << permissions(entry.status().permissions()) << " | ";
 
-            const auto time_point = std::chrono::file_clock::to_sys(entry.last_write_time());
+            std::cout << size(entry) << " | ";
 
-            std::cout << std::chrono::floor < std::chrono::seconds > (time_point) << separator;
+            auto time_point = std::chrono::file_clock::to_sys(entry.last_write_time());
 
-			std::cout << entry.path().filename().string() << std::endl;
+            std::cout << std::chrono::floor < std::chrono::seconds > (time_point) << " | ";
+
+			std::cout << entry.path().filename().string() << '\n';
 		}
 	}
 }
@@ -109,7 +114,5 @@ void view_directory(const std::filesystem::path & path)
 
 int main()
 {
-	view_directory(std::filesystem::current_path());
-
-	return 0;
+	view(std::filesystem::current_path());
 }

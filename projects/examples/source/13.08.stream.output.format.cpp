@@ -1,67 +1,62 @@
-#include <cstdint>
+#include <cassert>
 #include <format>
-#include <iostream>
 #include <iterator>
 #include <string>
+#include <string_view>
 
 //  ================================================================================================
 
-struct Color { std::uint8_t r{}, g{}, b{}; };
+struct Entity 
+{ 
+    int data_1 = 0; std::string data_2;
+};
 
 //  ================================================================================================
 
-/*
-template <> struct std::formatter < Color > 
+template <> struct std::formatter < Entity > : public std::formatter < std::string_view >
 {
-    [[nodiscard]] constexpr auto parse(std::format_parse_context & context) 
+    [[nodiscard]] auto format(const Entity & entity, std::format_context & context) const
     {
-        return std::begin(context);
-    }
+        std::string buffer;
 
-    [[nodiscard]] auto format(const Color & color, std::format_context & context) 
-    {
-        return std::format_to(context.out(), "({}, {}, {})", color.r, color.g, color.b);
+        std::format_to(std::back_inserter(buffer), "{}, \"{}\"", entity.data_1, entity.data_2);
+        
+        return std::formatter < std::string_view > ::format("{ " + buffer + " }", context);
     }
-
-}; // template <> struct std::formatter < Color > 
-*/
+};
 
 //  ================================================================================================
 
 int main()
 {
-    std::cout << std::format("Answer is {}", 42) << std::endl; // support: Python
+    auto x = 1, y = 2;
+
+    assert(std::format("x = {}", x) == "x = 1");
 
     std::string buffer;
 
-    std::format_to(std::back_inserter(buffer), "Answer is {}", 42);
+    std::format_to(std::back_inserter(buffer), "y = {}", y);
 
-    std::cout << buffer << std::endl;
+    assert(buffer == "y = 2");
 
-    std::cout << std::format("{0}, {1}!", "Hello", "world") << std::endl;
-
-//  ================================================================================================
-
-    std::cout << std::format("{:_<8}", 42) << std::endl;
-    std::cout << std::format("{:_>8}", 42) << std::endl;
-    std::cout << std::format("{:_^8}", 42) << std::endl;
-
-    std::cout << std::format("{:08b}", 42) << std::endl;
-    std::cout << std::format("{:08o}", 42) << std::endl;
-    std::cout << std::format("{:08d}", 42) << std::endl;
-    std::cout << std::format("{:08x}", 42) << std::endl;
+    assert(std::format("x = {0}, y = {1}", x, y) == "x = 1, y = 2");
 
 //  ================================================================================================
 
-    constexpr auto d = 0.123456789;
-
-    std::cout << std::format("{:.5}", d) << std::endl;
+    assert(std::format("{: <3}", x) == "1  ");
+    assert(std::format("{: ^3}", x) == " 1 ");
+    assert(std::format("{: >3}", x) == "  1");
+    
+    assert(std::format("{:03b}", x) == "001");
+    assert(std::format("{:03o}", x) == "001");
+    assert(std::format("{:03d}", x) == "001");
+    assert(std::format("{:03x}", x) == "001");
 
 //  ================================================================================================
 
-    [[maybe_unused]] constexpr Color color { 127, 127, 127 };
+    assert(std::format("{:.6}", 0.123'456'789) == "0.123457");
 
-//  std::cout << std::format("{}", color) << std::endl; // support: GCC
+//  ================================================================================================
 
-    return 0;
+    assert(std::format("entity = {}", Entity(1, "entity")) == "entity = { 1, \"entity\" }");
 }
