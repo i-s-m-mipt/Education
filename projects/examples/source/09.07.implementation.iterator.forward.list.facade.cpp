@@ -10,7 +10,10 @@ template < typename T > class List
 {
 private:
 
-	struct Node { T value{}; std::shared_ptr < Node > next; };
+	struct Node 
+	{ 
+		T value = T(); std::shared_ptr < Node > next; 
+	};
 
 public:
 
@@ -18,31 +21,40 @@ public:
 	{
 	public:
 
-		constexpr explicit Iterator(std::shared_ptr < Node > node = nullptr) noexcept : m_node(node) {}
+		explicit Iterator(std::shared_ptr < Node > node = nullptr) : m_node(node) {}
 
-		friend class boost::iterator_core_access;
+//      --------------------------------------------------------------------------------------------
 
-	public:
+		friend boost::iterator_core_access;
 
-		constexpr void increment() noexcept { m_node = m_node->next; }
+//      --------------------------------------------------------------------------------------------
 
-		[[nodiscard]] constexpr T & dereference() const noexcept { return m_node->value; }
-
-		[[nodiscard]] constexpr bool equal(const Iterator & other) const noexcept
+		void increment() 
 		{ 
-			return (m_node == other.m_node); 
+			m_node = m_node->next; 
+		}
+
+		[[nodiscard]] auto & dereference() const
+		{ 
+			return m_node->value; 
+		}
+
+		[[nodiscard]] auto equal(const Iterator & other) const
+		{ 
+			return m_node == other.m_node; 
 		};
 
 	private:
 
 		std::shared_ptr < Node > m_node;
+	};
 
-	}; // class Iterator
+//  ------------------------------------------------------------------------------------------------
 
-public:
+	[[nodiscard]] auto begin() const { return Iterator(m_head); }
+	[[nodiscard]] auto end  () const { return Iterator(      ); }
 
-	[[nodiscard]] constexpr Iterator begin() const noexcept { return Iterator(m_head); }
-	[[nodiscard]] constexpr Iterator end  () const noexcept { return Iterator(      ); }
+//  ------------------------------------------------------------------------------------------------
 
 	void push_back(T value)
 	{
@@ -59,8 +71,7 @@ public:
 private:
 
 	std::shared_ptr < Node > m_head;
-
-}; // template < typename T > class List
+};
 
 //  ================================================================================================
 
@@ -74,16 +85,7 @@ int main()
 	list.push_back(4);
 	list.push_back(5);
 
-	for (auto iterator = std::begin(list); iterator != std::end(list); ++iterator)
-	{
-		std::cout << *iterator << ' ';
-	}
+	for (auto iterator = std::cbegin(list); iterator != std::cend(list); ++iterator);
 
-	std::cout << std::endl;
-
-	for (const auto element : list) std::cout << element << ' ';
-
-	std::cout << std::endl;
-
-	return 0;
+	for ([[maybe_unused]] auto element : list);
 }

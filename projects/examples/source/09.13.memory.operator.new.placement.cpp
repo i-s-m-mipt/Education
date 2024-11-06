@@ -7,150 +7,150 @@
 
 //  ================================================================================================
 
-class C
+class Entity_v1
 {
 public:
 
-	explicit C(std::size_t index) : m_index(index)
+	explicit Entity_v1(int data) : m_data(data)
 	{
-		std::cout << "C:: C called, index: " << m_index << std::endl;
+		std::clog << "Entity_v1:: Entity_v1 : m_data = " << m_data << '\n';
 	}
 
-   ~C()
+   ~Entity_v1()
 	{
-		std::cout << "C::~C called, index: " << m_index << std::endl;
+		std::clog << "Entity_v1::~Entity_v1 : m_data = " << m_data << '\n';
 	}
 
 private:
 
-	const std::size_t m_index;
-
-}; // class C
+	int m_data = 0;
+};
 
 //  ================================================================================================
 
-union U
+union Entity_v2
 {
-	U() : string_1() {}
+	Entity_v2() : data_1() {}
 
-   ~U() {}
+   ~Entity_v2() {}
 
-	std::string string_1;
-	std::string string_2;
+//  ------------------------------------------------------------------------------------------------
 
-}; // union U
+	std::string data_1; 
+	std::string data_2;
+};
 
 //  ================================================================================================
 
-template < typename T > class Manager
+template < typename D > class Entity_v3
 {
 protected:
 
-	constexpr  Manager()          = default;
-    constexpr ~Manager() noexcept = default;
+    Entity_v3() = default;
+   ~Entity_v3() = default;
 
 public:
 
-	[[nodiscard]] void * operator new(std::size_t size) // detail: static
+	[[nodiscard]] static void * operator new(std::size_t size)
 	{
-		std::cout << "Manager::operator new called" << std::endl;
+		std::clog << "Entity_v3::operator new\n";
 
 		return ::operator new(size);
 	}
 
-	void operator delete(void * pointer, std::size_t) // detail: static
+	static void operator delete(void * ptr, std::size_t)
 	{
-		std::cout << "Manager::operator delete called" << std::endl;
+		std::clog << "Entity_v3::operator delete\n";
 
-		return ::operator delete(pointer);
+		::operator delete(ptr);
 	}
-
-}; // template < typename T > class Manager
-
-//  ================================================================================================
-
-class User : private Manager < User >
-{
-public:
-
-	using Manager < User > ::operator new   ;
-	using Manager < User > ::operator delete;
-
-public:
-
-	User() { std::cout << "User:: User called" << std::endl; }
-   ~User() { std::cout << "User::~User called" << std::endl; }
-
-}; // class User : private Manager < User > 
+};
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state)
+struct Client : private Entity_v3 < Client >
 {
-    for (auto _ : state)
+	using base_t = Entity_v3 < Client > ;
+
+	using base_t::operator new;
+	
+	using base_t::operator delete;
+
+//  ------------------------------------------------------------------------------------------------
+
+	Client() { std::clog << "Client:: Client\n"; }
+   ~Client() { std::clog << "Client::~Client\n"; }
+};
+
+//  ================================================================================================
+
+void test(benchmark::State & state)
+{
+    for (auto value : state)
     {
-		auto ptr = ::operator new   (     state.range(0)); benchmark::DoNotOptimize(ptr);
-		           ::operator delete(ptr, state.range(0));
+		auto ptr = ::operator new(state.range(0)); 
+		
+		benchmark::DoNotOptimize(ptr);
+		
+		::operator delete(ptr, state.range(0));
     }
 }
 
 //  ================================================================================================
 
-BENCHMARK(test_1)->RangeMultiplier(2)->Range(1024 * 1024, 1024 * 1024 * 1024);
+BENCHMARK(test)->RangeMultiplier(2)->Range(1024 * 1024, 1024 * 1024 * 1024);
 
 //  ================================================================================================
 
 int main(int argc, char ** argv)
 {
-	assert(sizeof(C) == sizeof(std::size_t));
+	assert(sizeof(Entity_v1) == sizeof(int));
 
-	constexpr std::size_t size = 5;
+	auto size = 5uz;
 
-	const auto ptr = static_cast < C * > (::operator new(sizeof(C) * size));
+	auto entities = static_cast < Entity_v1 * > (::operator new(sizeof(Entity_v1) * size));
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (auto i = 0uz; i < size; ++i)
 	{
-		new (ptr + i) C(i);
+		new (entities + i) Entity_v1(static_cast < int > (i + 1));
 	}
 
-	constexpr std::size_t offset = size / 2;
+	auto offset = size / 2;
 
-	(ptr + offset)->~C();
+	(entities + offset)->~Entity_v1();
 
-	new (ptr + offset) C(42);
+	new (entities + offset) Entity_v1(static_cast < int > (size + 1));
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (auto i = 0uz; i < size; ++i)
 	{
-		ptr[i].~C();
+		entities[i].~Entity_v1();
 	}
 
-	::operator delete(ptr, sizeof(C) * size);
+	::operator delete(entities, sizeof(Entity_v1) * size);
 
 //  ================================================================================================
 
-	std::cout << sizeof(U) << std::endl;
+	std::cout << "sizeof(Entity_v2) = " << sizeof(Entity_v2) << '\n';
 
-	U u; // support: std::variant
+	Entity_v2 entity_v2;
 
-	u.string_1 = "hello";
+	entity_v2.data_1 = "aaaaa";
 
-	u.string_1.~basic_string();
+	entity_v2.data_1.~basic_string();
 
-	new (&u.string_2) std::string;
+	new (&entity_v2.data_2) std::string;
 
-	u.string_2 = "world";
+	entity_v2.data_2 = "bbbbb";
 
-	u.string_2.~basic_string();
+	entity_v2.data_2.~basic_string();
 
 //  ================================================================================================
 	
-	delete(new const User);
+	delete(new Client);
 
 //  ================================================================================================
 
 	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
-
-	return 0;
 }

@@ -1,7 +1,6 @@
+#include <cassert>
 #include <new>
 #include <utility>
-
-#include <gtest/gtest.h>
 
 //  ================================================================================================
 
@@ -9,125 +8,151 @@ template < typename T > class Optional
 {
 public:
 
-    Optional() noexcept = default;
+    Optional() = default;
 
-    explicit Optional(T value) { initialize(value); }
+    explicit Optional(T data) 
+    { 
+        initialize(data); 
+    }
 
     Optional(const Optional & other) 
     {
-        if (!other.empty()) initialize(*other.m_ptr);
+        if (!other.empty()) 
+        {
+            initialize(*other.m_data);
+        }
     }
 
-    Optional(Optional && other) noexcept : m_ptr(other.m_ptr)
+    Optional(Optional && other) : m_data(other.m_data)
     {
-        other.m_ptr = nullptr;
+        other.m_data = nullptr;
     }
 
-    Optional & operator=(const Optional & other) 
+    auto & operator=(const Optional & other) 
     {
         if (this != &other)
         {
-            if (destroy(); !other.empty()) construct(*other.m_ptr); else deallocate();
+            if (destroy(); !other.empty()) 
+            {
+                construct(*other.m_data); 
+            }
+            else 
+            {
+                deallocate();
+            }
         }
 
         return *this;
     }
 
-    Optional & operator=(Optional && other) noexcept
+    auto & operator=(Optional && other)
     {
         if (this != &other)
 		{
-            uninitialize(); m_ptr = other.m_ptr; other.m_ptr = nullptr;
+            uninitialize(); m_data = other.m_data; other.m_data = nullptr;
 		}
 
 		return *this;
     } 
 
-    Optional & operator=(T value) 
+    auto & operator=(T data) 
     {
-        destroy(); construct(value); return *this;
+        destroy(); construct(data); 
+        
+        return *this;
     }
 
-   ~Optional() noexcept { uninitialize(); }
+   ~Optional() 
+    { 
+        uninitialize(); 
+    }
 
 private:
 
-    void initialize(T value) { allocate(); construct(value); }
+    void initialize(T data) 
+    { 
+        allocate(); 
+        
+        construct(data); 
+    }
 
     void allocate() 
     { 
-        m_ptr = static_cast < T * > (::operator new(sizeof(T), std::align_val_t(alignof(T)))); 
+        m_data = static_cast < T * > (::operator new(sizeof(T), std::align_val_t(alignof(T)))); 
     }
 
-    void construct(T value) 
+    void construct(T data) 
     {
-        if (!m_ptr) allocate(); 
+        if (!m_data) 
+        {
+            allocate(); 
+        }
         
-        new(m_ptr) T(value); 
+        new(m_data) T(data); 
     }
 
-    void uninitialize() { destroy(); deallocate(); }
-
-    void destroy() noexcept { if (m_ptr) m_ptr->~T(); }
-
-    void deallocate() noexcept
+    void uninitialize() 
     { 
-        ::operator delete(m_ptr, sizeof(T), std::align_val_t(alignof(T))); m_ptr = nullptr;
+        destroy(); 
+        
+        deallocate(); 
+    }
+
+    void destroy() 
+    { 
+        if (m_data) 
+        {
+            m_data->~T();
+        } 
+    }
+
+    void deallocate()
+    { 
+        if (m_data)
+        {
+            ::operator delete(m_data, sizeof(T), std::align_val_t(alignof(T))); m_data = nullptr;
+        }
     }
 
 public:
 
-    [[nodiscard]] bool      empty   (       ) const noexcept { return !m_ptr; }
-    [[nodiscard]] const T & value   (       ) const noexcept { return *m_ptr; }
-    [[nodiscard]]       T   value_or(T value) const noexcept 
+    [[nodiscard]] auto empty   (      ) const { return !m_data; }
+    [[nodiscard]] auto value   (      ) const { return *m_data; }
+    [[nodiscard]] auto value_or(T data) const
     { 
-        return (m_ptr ? *m_ptr : value); 
+        return m_data ? *m_data : data; 
     }
 
 private:
 
-    T * m_ptr = nullptr; // support: std::aligned_storage_t
-
-}; // template < typename T > class Optional 
+    T * m_data = nullptr;
+}; 
 
 //  ================================================================================================
 
-TEST(Optional, Functions)
+int main()
 {
-    const Optional < int > optional_1    ; ASSERT_TRUE(!optional_1.empty());
-    const Optional < int > optional_2(42); ASSERT_TRUE( optional_2.empty());
+    Optional < int > optional_1, optional_2(2);
 
-    ASSERT_EQ(optional_1.value_or(42), 42);
-    ASSERT_EQ(optional_2.value_or(42), 42);
+//  -----------------------------------------------------------
 
-//  ================================================================================================
+    assert( optional_1.empty() && optional_1.value_or(0) == 0);
+    assert(!optional_2.empty() && optional_2.value_or(0) == 2);
+
+//  -----------------------------------------------------------
     
-    Optional < int > optional_3(optional_2); 
-    
-    ASSERT_TRUE(optional_3.empty() && optional_3.value() == 42 &&  optional_2.empty());
+    Optional < int > optional_3(optional_2);
 
     Optional < int > optional_4(std::move(optional_3));
 
-    ASSERT_TRUE(optional_4.empty() && optional_4.value() == 42 && !optional_3.empty());
-
     optional_3 = optional_2; 
     
-    ASSERT_TRUE(optional_3.empty() && optional_3.value() == 42);
-
     optional_4 = std::move(optional_3);
 
-    ASSERT_TRUE(optional_4.empty() && optional_4.value() == 42 && !optional_3.empty());
+    optional_4 = 4;
 
-    optional_4 = 43;
+//  -----------------------------------------------------------
 
-    ASSERT_TRUE(optional_4.empty() && optional_4.value() == 43);
-}
-
-//  ================================================================================================
-
-int main(int argc, char ** argv)
-{
-    testing::InitGoogleTest(&argc, argv);
-
-    return RUN_ALL_TESTS();
+    assert( optional_3.empty() && optional_3.value_or(0) == 0);
+    assert(!optional_4.empty() && optional_4.value_or(0) == 4);
 }

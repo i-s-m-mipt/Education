@@ -15,15 +15,16 @@
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state)
+void test_v1(benchmark::State & state)
 {
-	constexpr std::size_t size = 1000;
-
-	for (auto _ : state)
+	for (auto value : state)
 	{
         std::list < int > list;
 
-		for (std::size_t i = 0; i < size; ++i) list.push_back(42);
+		for (auto i = 0uz; i < 1'000; ++i) 
+        {
+            list.push_back(1);
+        }
 
         benchmark::DoNotOptimize(list);
 	}
@@ -31,15 +32,16 @@ void test_1(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state)
+void test_v2(benchmark::State & state)
 {
-	constexpr std::size_t size = 1000;
-
-	for (auto _ : state)
+	for (auto value : state)
 	{
         std::pmr::list < int > list;
 
-		for (std::size_t i = 0; i < size; ++i) list.push_back(42);
+		for (auto i = 0uz; i < 1'000; ++i) 
+        {
+            list.push_back(1);
+        }
 
         benchmark::DoNotOptimize(list);
 	}
@@ -47,11 +49,9 @@ void test_2(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_3(benchmark::State & state)
+void test_v3(benchmark::State & state)
 {
-	constexpr std::size_t size = 1000;
-
-	for (auto _ : state)
+	for (auto value : state)
 	{
         std::pmr::monotonic_buffer_resource arena;
 
@@ -59,7 +59,10 @@ void test_3(benchmark::State & state)
 
         std::pmr::list < int > list(allocator);
 
-		for (std::size_t i = 0; i < size; ++i) list.push_back(42);
+		for (auto i = 0uz; i < 1'000; ++i) 
+        {
+            list.push_back(1);
+        }
 
         benchmark::DoNotOptimize(list);
 	}
@@ -67,13 +70,11 @@ void test_3(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_4(benchmark::State & state)
+void test_v4(benchmark::State & state)
 {
-	constexpr std::size_t size = 1000;
-
-	for (auto _ : state)
+	for (auto value : state)
 	{
-        std::array < std::byte, size * 32 > buffer;
+        std::array < std::byte, 32'000 > buffer;
 
         std::pmr::monotonic_buffer_resource arena(std::data(buffer), std::size(buffer));
 
@@ -81,7 +82,10 @@ void test_4(benchmark::State & state)
 
         std::pmr::list < int > list(allocator);
 
-		for (std::size_t i = 0; i < size; ++i) list.push_back(42);
+		for (auto i = 0uz; i < 1'000; ++i) 
+        {
+            list.push_back(1);
+        }
 
         benchmark::DoNotOptimize(list);
 	}
@@ -91,15 +95,16 @@ void test_4(benchmark::State & state)
 
 #define BOOST_POOL_NO_MT
 
-void test_5(benchmark::State & state) // support: Valgrind
+void test_v5(benchmark::State & state) // support: Valgrind
 {
-	constexpr std::size_t size = 1000;
-
-	for (auto _ : state)
+	for (auto value : state)
 	{
         std::list < int, boost::fast_pool_allocator < int > > list;
 
-		for (std::size_t i = 0; i < size; ++i) list.push_back(42);
+		for (auto i = 0uz; i < 1'000; ++i) 
+        {
+            list.push_back(1);
+        }
 
         benchmark::DoNotOptimize(list);
 	}
@@ -107,32 +112,37 @@ void test_5(benchmark::State & state) // support: Valgrind
 
 //  ================================================================================================
 
-BENCHMARK(test_1);
-BENCHMARK(test_2);
-BENCHMARK(test_3);
-BENCHMARK(test_4);
-BENCHMARK(test_5);
+BENCHMARK(test_v1);
+BENCHMARK(test_v2);
+BENCHMARK(test_v3);
+BENCHMARK(test_v4);
+BENCHMARK(test_v5);
 
 //  ================================================================================================
 
 int main(int argc, char ** argv)
 {
-    std::array < char, 64 > buffer{};
+    std::array < char, 64 > buffer;
 
     std::ranges::fill(buffer, '_');
 
     std::pmr::monotonic_buffer_resource arena(std::data(buffer), std::size(buffer));
 
-    constexpr std::size_t n_letters = 26;
+    auto size = 26uz;
 
     std::pmr::vector < char > letters(&arena);
 
-    for (std::size_t i = 0; i < n_letters; ++i)
+    letters.reserve(size);
+
+    for (auto i = 0uz; i < size; ++i)
     {
         letters.push_back(static_cast < char > ('a' + i));
     }
 
-    for (const auto element : buffer) std::cout << element;
+    for (auto element : buffer) 
+    {
+        std::cout << element;
+    }
 
     std::cout << std::endl;
 
@@ -140,9 +150,9 @@ int main(int argc, char ** argv)
 
     auto resource = std::pmr::new_delete_resource();
 
-    const auto pointer = resource->allocate(1);
+    auto ptr = resource->allocate(1);
 
-    resource->deallocate(pointer, 1);
+    resource->deallocate(ptr, 1);
 
 //  ================================================================================================
 
@@ -162,6 +172,4 @@ int main(int argc, char ** argv)
 	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
-
-	return 0;
 }

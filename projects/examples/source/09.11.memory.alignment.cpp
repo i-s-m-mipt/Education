@@ -8,111 +8,89 @@
 
 //  ================================================================================================
 
-struct S1 // detail: C___IIIISS__
-{
-	char  c{}; // detail: 1(B)
-	int   i{}; // detail: 4(B)
-	short s{}; // detail: 2(B)
-
-}; // struct S1
+struct            Entity_v1 { std::uint8_t x = 0; std::uint32_t y = 0; std::uint16_t z = 0; };
+struct            Entity_v2 { std::uint8_t x = 0; std::uint16_t z = 0; std::uint32_t y = 0; };
+struct alignas(8) Entity_v3 { std::uint8_t x = 0; std::uint16_t z = 0; std::uint32_t y = 0; };
 
 //  ================================================================================================
 
-struct S2 // detail: C_SSIIII
+template < typename T > void print(const std::string & name)
 {
-	char  c{}; // detail: 1(B)
-	short s{}; // detail: 2(B)
-	int   i{}; // detail: 4(B)
-
-}; // struct S2
+	std::cout << "alignof(" + name + ") = " << alignof(T) << '\n';
+	std::cout << " sizeof(" + name + ") = " <<  sizeof(T) << '\n';
+}
 
 //  ================================================================================================
 
-struct alignas(double) S3
+struct             Entity_v5 { std::uint8_t x = 0; };
+struct alignas(64) Entity_v6 { std::uint8_t x = 0; };
+
+//  ================================================================================================
+
+void test_v1(benchmark::State & state)
 {
-	char  c{}; // detail: 1(B)
-	short s{}; // detail: 2(B)
-	int   i{}; // detail: 4(B)
+	auto size = 64uz;
 	
-}; // struct alignas(double) S3
-
-//  ================================================================================================
-
-struct alignas(32) S4 { double data[4]{}; };
-
-//  ================================================================================================
-
-struct alignas( 1) S5 { std::uint8_t x{}; };
-struct alignas(64) S6 { std::uint8_t x{}; };
-
-//  ================================================================================================
-
-void test_1(benchmark::State & state)
-{
-	constexpr std::size_t size = 64;
-
-    for (auto _ : state)
+    for (auto value : state)
     {
-        auto array = new S5[size]{}; 
+        auto entities = new Entity_v5[size]{}; 
 
-		for (std::size_t i = 1; i < size; ++i) array[i].x = array[i - 1].x + 1;
+		for (auto i = 1uz; i < size; ++i) 
+		{
+			entities[i].x = entities[i - 1].x + 1;
+		}
 
-		benchmark::DoNotOptimize(array);
+		benchmark::DoNotOptimize(entities);
     }
 }
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state)
+void test_v2(benchmark::State & state)
 {
-	constexpr std::size_t size = 64;
+	auto size = 64uz;
 
-    for (auto _ : state)
+    for (auto value : state)
     {
-        auto array = new S6[size]{}; 
+        auto entities = new Entity_v6[size]{}; 
 
-		for (std::size_t i = 1; i < size; ++i) array[i].x = array[i - 1].x + 1;
+		for (auto i = 1uz; i < size; ++i) 
+		{
+			entities[i].x = entities[i - 1].x + 1;
+		}
 
-		benchmark::DoNotOptimize(array);
+		benchmark::DoNotOptimize(entities);
     }
 }
 
 //  ================================================================================================
 
-BENCHMARK(test_1);
-BENCHMARK(test_2);
+BENCHMARK(test_v1);
+BENCHMARK(test_v2);
 
 //  ================================================================================================
 
 int main(int argc, char ** argv)
 {
-	std::cout << "char: " << alignof(char) << ' ' << sizeof(char) << std::endl;
-	std::cout << "int*: " << alignof(int*) << ' ' << sizeof(int*) << std::endl;
-
 	static_assert(std::alignment_of_v < double > == 8);
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	std::cout << "S1: " << alignof(S1) << ' ' << sizeof(S1) << std::endl;
-	std::cout << "S2: " << alignof(S2) << ' ' << sizeof(S2) << std::endl;
-	std::cout << "S3: " << alignof(S3) << ' ' << sizeof(S3) << std::endl;
-	std::cout << "S4: " << alignof(S4) << ' ' << sizeof(S4) << std::endl;
+	print < Entity_v1 > ("Entity_v1");
+	print < Entity_v2 > ("Entity_v2");
+	print < Entity_v3 > ("Entity_v3");
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	constexpr std::size_t size = 5;
+	alignas(16) int array_1[]{ 1, 2, 3, 4, 5 };
+	alignas(64) int array_2[]{ 1, 2, 3, 4, 5 };
 
-	alignas(16) constexpr int array_1[size]{};
-	alignas(64) constexpr int array_2[size]{};
+	std::cout << "array_1 = " << std::hex << array_1 << '\n';
+	std::cout << "array_1 = " << std::hex << array_2 << '\n';
 
-	std::cout << std::hex << array_1 << std::endl;
-	std::cout << std::hex << array_2 << std::endl;
-
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
 	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
-
-	return 0;
 }

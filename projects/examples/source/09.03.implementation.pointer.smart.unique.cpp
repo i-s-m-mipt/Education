@@ -11,58 +11,64 @@ template < typename T > class Unique : private boost::noncopyable
 {
 public:
 
-    Unique() noexcept = default;
-
-    explicit Unique(T * data) noexcept : m_data(data) {}
+    explicit Unique(T * data = nullptr) : m_data(data) {}
         
-    Unique(Unique && other) noexcept : Unique() { swap(other); }
-
-    Unique & operator=(Unique && other) noexcept
+    Unique(Unique && other) : Unique() 
     { 
-        reset(other.release()); return *this;
+        swap(other); 
     }
 
-   ~Unique() noexcept { reset(); }
-
-public:
+    auto & operator=(Unique && other)
+    { 
+        reset(other.release()); 
         
-    void swap(Unique & other) noexcept
+        return *this;
+    }
+
+   ~Unique() 
+    { 
+        reset(); 
+    }
+
+//  ----------------------------------
+        
+    void swap(Unique & other)
     { 
         using std::swap; 
 
         swap(m_data, other.m_data); 
     }
 
-    [[nodiscard]] T * release() noexcept
+    [[nodiscard]] auto release()
     {
         return std::exchange(m_data, nullptr);
     }
 
-    void reset(T * ptr = nullptr) noexcept 
+    void reset(T * data = nullptr) 
     {
-        delete std::exchange(m_data, ptr);
+        if (m_data)
+        {
+            delete m_data;
+        }
+
+        std::exchange(m_data, data);
     }
 
-public:
+//  --------------------------------------------
 
-    [[nodiscard]] T & operator*() const noexcept { return *m_data; }
+    [[nodiscard]] auto & operator*() const
+    { 
+        return *m_data; 
+    }
      
 private:
 
     T * m_data = nullptr;
-
-}; // template < typename T > class Unique : private boost::noncopyable
-
-//  ================================================================================================
-
-template < typename T > inline void swap(Unique < T > & x, Unique < T > & y) noexcept
-{
-    x.swap(y);
-}
+};
 
 //  ================================================================================================
 
-template < typename T, typename ... Ts > [[nodiscard]] inline Unique < T > make_unique(Ts && ... args)
+template < typename T, typename ... Ts > [[nodiscard]] auto make_unique(Ts && ... args)
 {
     return Unique < T > (new T(std::forward < Ts > (args)...)); 
 }
@@ -71,12 +77,10 @@ template < typename T, typename ... Ts > [[nodiscard]] inline Unique < T > make_
 
 int main()
 {
-    auto unique_1 = make_unique < const int > (42);
-    auto unique_2 = make_unique < const int > (43);
+    auto unique_1 = make_unique < int > (1);
+    auto unique_2 = make_unique < int > (2);
 
     unique_2 = std::move(unique_1);
 
-    assert(*unique_2 == 42);
-
-    return 0;
+    assert(*unique_2 == 1);
 }

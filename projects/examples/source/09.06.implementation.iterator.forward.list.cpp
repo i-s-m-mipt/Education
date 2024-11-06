@@ -1,4 +1,3 @@
-#include <iostream>
 #include <iterator>
 #include <memory>
 
@@ -8,7 +7,10 @@ template < typename T > class List
 {
 private:
 
-	struct Node { T value{}; std::shared_ptr < Node > next; };
+	struct Node 
+	{ 
+		T value = T(); std::shared_ptr < Node > next; 
+	};
 
 public:
 
@@ -18,38 +20,54 @@ public:
 
 		using iterator_category = std::forward_iterator_tag;
 
-		constexpr explicit Iterator(std::shared_ptr < Node > node = nullptr) noexcept : m_node(node) {}
+//      --------------------------------------------------------------------------------------------
 
-	public:
+		explicit Iterator(std::shared_ptr < Node > node = nullptr) : m_node(node) {}
 
-		constexpr Iterator & operator++() noexcept 
+//      --------------------------------------------------------------------------------------------
+
+		const auto operator++(int) 
 		{ 
-			m_node = m_node->next; return *this;
+			auto copy(*this); 
+			
+			m_node = m_node->next; 
+			
+			return copy; 
 		}
 
-		constexpr const Iterator operator++(int) noexcept 
+		auto & operator++() 
 		{ 
-			auto prev = *this; ++(*this); return prev; 
+			m_node = m_node->next; 
+			
+			return *this;
 		}
 
-		[[nodiscard]] constexpr T & operator* () const noexcept { return  (m_node->value); }
-		[[nodiscard]] constexpr T * operator->() const noexcept { return &(m_node->value); }
-
-		[[nodiscard]] constexpr bool operator==(const Iterator & other) const noexcept 
+		[[nodiscard]] auto & operator*() const
 		{ 
-			return (m_node == other.m_node); 
+			return m_node->value; 
+		}
+
+		[[nodiscard]] auto operator->() const
+		{ 
+			return &(m_node->value); 
+		}
+
+		[[nodiscard]] auto operator==(const Iterator & other) const
+		{ 
+			return m_node == other.m_node; 
 		}
 
 	private:
 
 		std::shared_ptr < Node > m_node;
+	}; 
 
-	}; // class Iterator
+//  ------------------------------------------------------------------------------------------------
 
-public:
+	[[nodiscard]] auto begin() const { return Iterator(m_head); }
+	[[nodiscard]] auto end  () const { return Iterator(      ); }
 
-	[[nodiscard]] constexpr Iterator begin() const noexcept { return Iterator(m_head); }
-	[[nodiscard]] constexpr Iterator end  () const noexcept { return Iterator(      ); }
+//  ------------------------------------------------------------------------------------------------
 
 	void push_back(T value)
 	{
@@ -66,8 +84,7 @@ public:
 private:
 
 	std::shared_ptr < Node > m_head;
-
-}; // template < typename T > class List
+};
 
 //  ================================================================================================
 
@@ -81,16 +98,7 @@ int main()
 	list.push_back(4);
 	list.push_back(5);
 
-	for (auto iterator = std::begin(list); iterator != std::end(list); ++iterator)
-	{
-		std::cout << *iterator << ' ';
-	}
+	for (auto iterator = std::cbegin(list); iterator != std::cend(list); ++iterator);
 
-	std::cout << std::endl;
-
-	for (const auto element : list) std::cout << element << ' ';
-
-	std::cout << std::endl;
-
-	return 0;
+	for ([[maybe_unused]] auto element : list);
 }

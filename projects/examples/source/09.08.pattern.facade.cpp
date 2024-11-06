@@ -2,73 +2,66 @@
 
 //  ================================================================================================
 
-class CPU
+struct Client
 {
-public:
-
-    void make_slow() const { std::cout << "CPU is slow" << std::endl; }
-    void make_fast() const { std::cout << "CPU is fast" << std::endl; }
-
-}; // class CPU
+    void test_v1() const { std::clog << "Client::test_v1\n"; }
+    void test_v2() const { std::clog << "Client::test_v2\n"; }
+};
 
 //  ================================================================================================
 
-class GPU
+struct Server
 {
-public:
-
-    void make_slow() const { std::cout << "GPU is slow" << std::endl; }
-    void make_fast() const { std::cout << "GPU is fast" << std::endl; }
-
-}; // class GPU 
+    void test_v1() const { std::clog << "Server::test_v1\n"; }
+    void test_v2() const { std::clog << "Server::test_v2\n"; }
+};
 
 //  ================================================================================================
 
-class RAM
+class Facade 
 {
 public:
 
-    void make_slow() const { std::cout << "RAM is slow" << std::endl; }
-    void make_fast() const { std::cout << "RAM is fast" << std::endl; }
+    explicit Facade
+    (
+        Client & client, 
+        Server & server
+    )
+    : 
+        m_client(client), 
+        m_server(server) 
+    {}
 
-}; // class RAM 
+//  ------------------------------------------------
 
-//  ================================================================================================
-
-class Computer 
-{
-public:
-
-    void make_slow() const
+    void test_v1() const
     {
-        m_cpu.make_slow();
-        m_gpu.make_slow();
-        m_ram.make_slow();
+        m_client.test_v1();
+        m_server.test_v1();
     }
 
-    void make_fast() const
+    void test_v2() const
     {
-        m_cpu.make_fast();
-        m_gpu.make_fast();
-        m_ram.make_fast();
+        m_client.test_v2();
+        m_server.test_v2();
     }
 
 private:
 
-    CPU m_cpu;
-    GPU m_gpu;
-    RAM m_ram;
-
-}; // class Computer 
+    Client & m_client;
+    Server & m_server;
+};
 
 //  ================================================================================================
 
 int main() 
 {
-    const Computer computer;
+    Client client;
+    
+    Server server;
 
-    computer.make_fast();
-    computer.make_slow();
+    Facade facade(client, server);
 
-    return 0;
+    facade.test_v1();
+    facade.test_v2();
 }

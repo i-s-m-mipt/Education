@@ -1,4 +1,4 @@
-#include <iostream>
+#include <cassert>
 #include <memory>
 #include <string>
 #include <vector>
@@ -7,31 +7,31 @@ int main()
 {
 	std::allocator < int > allocator_int;
 
-	const auto ptr_int = allocator_int.allocate(1);
+	auto object_1 = allocator_int.allocate(1);
 
-	*ptr_int = 42;
+	*object_1 = 1;
 
-	allocator_int.deallocate(ptr_int, 1);
+	assert(*object_1 == 1);
 
-//  ================================================================================================
+	allocator_int.deallocate(object_1, 1);
 
 	std::vector < int, std::allocator < int > > vector;
+
+//  ================================================================================================
 
 	std::allocator < std::string > allocator_string;
 
 	std::allocator_traits < decltype(allocator_string) > allocator_traits;
 
-	const auto ptr_string = allocator_traits.allocate(allocator_string, 1);
+	auto object_2 = allocator_traits.allocate(allocator_string, 1);
 
-//	std::cout << *ptr_string << std::endl; // bad
+//	assert(std::empty(*object_2)); // bad
 
-	allocator_traits.construct(allocator_string, ptr_string, "Hello, world!");
+	allocator_traits.construct(allocator_string, object_2, "aaaaa");
 
-	std::cout << *ptr_string << std::endl;
+	assert(*object_2 == "aaaaa");
 
-	allocator_traits.destroy(allocator_string, ptr_string);
+	allocator_traits.destroy(allocator_string, object_2);
 
-	allocator_traits.deallocate(allocator_string, ptr_string, 1);
-
-	return 0;
+	allocator_traits.deallocate(allocator_string, object_2, 1);
 }

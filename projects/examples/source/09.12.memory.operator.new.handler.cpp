@@ -6,50 +6,41 @@
 
 //  ================================================================================================
 
-inline void cleanup()
-{
-    std::cerr << "cleanup: bad allocation\n";
-}
+void test_v1() { std::cerr << "test_v1\n"; }
 
-inline void handler()
-{
-    std::cerr << "handler: bad allocation\n";
-
-    std::exit(-1); // suport: std::abort()
-}
+void test_v2() { std::cerr << "test_v2\n"; std::exit(-1); }
 
 //  ================================================================================================
 
 int main()
 {
-    std::atexit         (cleanup);
-    std::set_new_handler(handler);
+    std::atexit(test_v1);
+    
+    std::set_new_handler(test_v2);
 
 //  ================================================================================================
 
     try
     {
-        while (true)
+        while (true) 
         {
-            new const int[100'000'000]{};
+            new int[1'000'000'000]{};
         }
     }
     catch (const std::bad_alloc & exception)
     {
-        std::cerr << "message: " << exception.what() << '\n';
+        std::cerr << "main : " << exception.what() << '\n';
     }
 
 //  ================================================================================================
 
     while (true)
     {
-        if (const auto array = new (std::nothrow) const int[100'000'000]{}; !array)
+        if (auto array = new (std::nothrow) int[1'000'000'000]{}; !array)
         {
-            std::cerr << "pointer: bad allocation\n";
+            std::cerr << "main : bad allocation\n";
 
             break;
         }
     }
-
-	return 0;
 }

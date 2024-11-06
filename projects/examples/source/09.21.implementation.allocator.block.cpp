@@ -19,9 +19,15 @@ class Block_Allocator : private boost::noncopyable
 {
 private:
 
-    struct Node { std::size_t size = 0; Node * next = nullptr; };
+    struct Node 
+    { 
+        std::size_t size = 0; Node * next = nullptr; 
+    };
 
-	struct alignas(std::max_align_t) Header { std::size_t size = 0; };
+	struct alignas(std::max_align_t) Header 
+    { 
+        std::size_t size = 0; 
+    };
 
 public:
 	
@@ -29,23 +35,33 @@ public:
     {
         if (m_size >= sizeof(Node) + 1) 
         {
-            m_begin = ::operator new(m_size, default_alignment);
+            m_begin = ::operator new(m_size, std::align_val_t(default_alignment));
 
-	        m_head = get_node(m_begin); *m_head = { m_size - sizeof(Header), nullptr };
+	        m_head = get_node(m_begin); 
+            
+            m_head->size = m_size - sizeof(Header);
+            
+            m_head->next = nullptr;
         }
-        else throw std::runtime_error("invalid size");
+        else 
+        {
+            throw std::runtime_error("invalid size");
+        }
     }
 	
-   ~Block_Allocator() noexcept
+   ~Block_Allocator()
     {
-        ::operator delete(m_begin, m_size, default_alignment);
+        if (m_begin)
+        {
+            ::operator delete(m_begin, m_size, std::align_val_t(default_alignment));
+        }
     }
 
 public:
 
-    [[nodiscard]] void * allocate(std::size_t size) noexcept
+    [[nodiscard]] void * allocate(std::size_t size)
     {
-	    void * const end = get_byte(m_begin) + sizeof(Header) + size, * next = end;
+	    void * end = get_byte(m_begin) + sizeof(Header) + size, * next = end;
 
 	    auto space = 2 * alignof(Header);
 
@@ -53,13 +69,13 @@ public:
         {
             auto padding = get_byte(next) - get_byte(end);
 
-            if (const auto [current, previous] = find_first(size + padding); current)
+            if (auto [current, previous] = find_first(size + padding); current)
             {
                 if (current->size >= size + padding + sizeof(Node) + 1)
                 {
-                    const auto block_size = sizeof(Header) + size + padding;
+                    auto block_size = sizeof(Header) + size + padding;
 
-                    const auto new_node = get_node(get_byte(current) + block_size);
+                    auto new_node = get_node(get_byte(current) + block_size);
 
                     new_node->size = current->size - block_size;
                        
@@ -79,20 +95,20 @@ public:
                     previous->next = current->next;
                 }
 
-                const auto header = get_header(current); header->size = size + padding;
+                auto header = get_header(current); header->size = size + padding;
 
                 return get_byte(current) + sizeof(Header);
             }
-            else return nullptr;
         }
-        else return nullptr;
+
+        return nullptr;
     }
 
-    void deallocate(void * ptr) noexcept
+    void deallocate(void * ptr)
     {
-        const auto header = get_header(get_byte(ptr) - sizeof(Header));
+        auto header = get_header(get_byte(ptr) - sizeof(Header));
 
-        const auto node = get_node(header); node->size = header->size;
+        auto node = get_node(header); node->size = header->size;
 
         Node * previous = nullptr;
         
@@ -116,7 +132,7 @@ public:
         merge(previous, node);
     }
 
-    void print() const 
+    void print() const
     { 
         std::cout << std::bit_cast < std::size_t > (m_head);
 
@@ -130,17 +146,17 @@ public:
 
 private:
 
-    [[nodiscard]] std::byte * get_byte(void * ptr) const noexcept
+    [[nodiscard]] std::byte * get_byte(void * ptr) const
 	{
 		return static_cast < std::byte * > (ptr);
 	}
 
-    [[nodiscard]] Node * get_node(void * ptr) const noexcept
+    [[nodiscard]] Node * get_node(void * ptr) const
 	{
 		return static_cast < Node * > (ptr);
 	}
 
-    [[nodiscard]] Header * get_header(void * ptr) const noexcept
+    [[nodiscard]] Header * get_header(void * ptr) const
 	{
 		return static_cast < Header * > (ptr);
 	}
@@ -149,69 +165,83 @@ private:
     {
         Node * current = m_head, * previous = nullptr;
 
-	    for (; current && size > current->size; previous = current, current = current->next) {}
+	    for (; current && size > current->size; previous = current, current = current->next);
 
         return std::make_pair(current, previous);
     }
 
-	void merge(Node * previous, Node * node) const noexcept
+	void merge(Node * previous, Node * node) const
     {
 	    if (node->next && get_byte(node) + node->size + sizeof(Header) == get_byte(node->next))
 	    {
 		    node->size += node->next->size + sizeof(Header);
+
 		    node->next  = node->next->next;
 	    }
 
 	    if (previous && get_byte(previous) + previous->size + sizeof(Header) == get_byte(node))
 	    {
 		    previous->size += node->size + sizeof(Header);
+
 		    previous->next  = node->next;
 	    }
     }
 
 public:
 
-	static constexpr std::align_val_t default_alignment { alignof(std::max_align_t) };
+	static constexpr auto default_alignment = alignof(std::max_align_t);
 
 private:
 
-    const std::size_t m_size;
-
-private:
+    std::size_t m_size = 0;
 
     void * m_begin = nullptr;
     Node * m_head  = nullptr;
-
-}; // class Block_Allocator : private boost::noncopyable
+};
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state)
+void test_v1(benchmark::State & state)
 {
-	constexpr std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
+	auto kb = 1'024uz, mb = kb * kb, gb = kb * kb * kb;
 
     std::mt19937_64 engine(state.range(0));
 
     std::uniform_int_distribution distribution(1, 16);
 
-    std::vector < void * > pointers(kb, nullptr);
+    std::vector < void * > ptrs(kb, nullptr);
 
-	for (auto _ : state)
+	for (auto value : state)
 	{
 		Block_Allocator allocator(16 * gb);
 
-		for (std::size_t i = 0; i < kb; i +=  1) pointers[i] = allocator.  allocate(distribution(engine) * mb);
-		for (std::size_t i = 0; i < kb; i += 32)               allocator.deallocate(pointers[i]              );
-		for (std::size_t i = 0; i < kb; i += 32) pointers[i] = allocator.  allocate(distribution(engine) * mb);
-		for (std::size_t i = 0; i < kb; i +=  1)               allocator.deallocate(pointers[i]              );
+		for (auto i = 0uz; i < kb; ++i) 
+        { 
+            ptrs[i] = allocator.allocate(distribution(engine) * mb); 
+        }
+
+		for (auto i = 0uz; i < kb; i += 32) 
+        { 
+            allocator.deallocate(ptrs[i]); 
+        }
+
+		for (auto i = 0uz; i < kb; i += 32) 
+        { 
+            ptrs[i] = allocator.allocate(distribution(engine) * mb); 
+        }
+
+		for (auto i = 0uz; i < kb; ++i) 
+        { 
+            allocator.deallocate(ptrs[i]); 
+        }
 	}
 }
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state)
+void test_v2(benchmark::State & state)
 {
-	constexpr std::size_t kb = 1024, mb = kb * kb;
+	auto kb = 1'024uz, mb = kb * kb;
 
     std::mt19937_64 engine(state.range(0));
 
@@ -219,53 +249,63 @@ void test_2(benchmark::State & state)
 
     std::vector < std::pair < void * , std::size_t > > blocks(kb);
 
-	for (auto _ : state)
+	for (auto value : state)
 	{
-		for (std::size_t i = 0; i < kb; i +=  1) 
+		for (auto i = 0uz; i < kb; ++i) 
         {
-            auto size = distribution(engine) * mb; blocks[i] = { ::operator new(size), size };
+            auto size = distribution(engine) * mb; 
+            
+            blocks[i].first = ::operator new(size); blocks[i].second = size;
         }
         
-		for (std::size_t i = 0; i < kb; i += 32) ::operator delete(blocks[i].first, blocks[i].second);
-
-		for (std::size_t i = 0; i < kb; i += 32)
+		for (auto i = 0uz; i < kb; i += 32) 
         {
-            auto size = distribution(engine) * mb; blocks[i] = { ::operator new(size), size };
+            ::operator delete(blocks[i].first, blocks[i].second);
+        }
+
+		for (auto i = 0uz; i < kb; i += 32)
+        {
+            auto size = distribution(engine) * mb; 
+            
+            blocks[i].first = ::operator new(size); blocks[i].second = size;
         } 
         
-		for (std::size_t i = 0; i < kb; i +=  1) ::operator delete(blocks[i].first, blocks[i].second);
+		for (auto i = 0uz; i < kb; ++i) 
+        {
+            ::operator delete(blocks[i].first, blocks[i].second);
+        }
 	}
 }
 
 //  ================================================================================================
 
-BENCHMARK(test_1)->Arg(42);
-BENCHMARK(test_2)->Arg(42);
+BENCHMARK(test_v1)->Arg(42);
+BENCHMARK(test_v2)->Arg(42);
 
 //  ================================================================================================
 
 int main(int argc, char ** argv)
 {
-    Block_Allocator allocator(1024);                           allocator.print(); // detail: X
-
-	[[maybe_unused]] auto ptr_A = allocator.  allocate(   16); allocator.print(); // detail: X + 32
-	[[maybe_unused]] auto ptr_B = allocator.  allocate(   32); allocator.print(); // detail: X + 32 + 48
-	[[maybe_unused]] auto ptr_C = allocator.  allocate(   32); allocator.print(); // detail: X + 32 + 48 + 48
-    [[maybe_unused]] auto ptr_D = allocator.  allocate(   16); allocator.print(); // detail: X + 32 + 48 + 48 + 32
-
-	                              allocator.deallocate(ptr_B); allocator.print(); // detail: X + 32
-                                  allocator.deallocate(ptr_C); allocator.print(); // detail: X + 32
-
-	[[maybe_unused]] auto ptr_E = allocator.  allocate(   16); allocator.print(); // detail: X + 32 + 32
-	[[maybe_unused]] auto ptr_F = allocator.  allocate(   32); allocator.print(); // detail: X + 32 + 48 + 48 + 32
+    Block_Allocator allocator(1024);
     
-    // detail: HAHBBHCCHDD -> HA000000HDD -> HAHEHFF0HDD
+    allocator.print(); 
+
+	[[maybe_unused]] auto ptr_1 = allocator.allocate(16); allocator.print();
+	[[maybe_unused]] auto ptr_2 = allocator.allocate(32); allocator.print();
+	[[maybe_unused]] auto ptr_3 = allocator.allocate(32); allocator.print();
+    [[maybe_unused]] auto ptr_4 = allocator.allocate(16); allocator.print();
+
+	allocator.deallocate(ptr_2); allocator.print();
+    allocator.deallocate(ptr_3); allocator.print();
+
+	[[maybe_unused]] auto ptr_5 = allocator.allocate(16); allocator.print();
+	[[maybe_unused]] auto ptr_6 = allocator.allocate(32); allocator.print();
+    
+    // detail: H1H5H660H44
 
 //  ================================================================================================
 
 	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
-
-	return 0;
 }

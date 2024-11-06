@@ -16,17 +16,20 @@ public:
 
 	explicit Arena(std::size_t size) : m_size(size)
 	{
-		m_begin = ::operator new(m_size, default_alignment);
+		m_begin = ::operator new(m_size, std::align_val_t(default_alignment));
 	}
 
-   ~Arena() noexcept
+   ~Arena()
 	{
-		::operator delete(m_begin, default_alignment);
+		if (m_begin)
+		{
+			::operator delete(m_begin, m_size, std::align_val_t(default_alignment));
+		}
 	}
 
 public:
 
-	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t))
+	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = default_alignment)
 	{
 		void * first = get_byte(m_begin) + m_offset;
 
@@ -38,42 +41,41 @@ public:
 			
 			return first;
 		}
-		else throw std::runtime_error("invalid size");
+		else 
+		{
+			return nullptr;
+		}
 	}
 
-    void deallocate(void *, std::size_t) const noexcept {}
+    void deallocate(void * , std::size_t) const {}
 
 	void print() const
 	{
-		std::cout << m_begin << ": ";
+		std::cout << m_begin << " : ";
 
-		std::cout << std::setw(4) << std::right << std::setfill('0') << m_offset;
+		std::cout << std::setw(4) << std::setfill('0') << std::right << m_offset;
 
 		std::cout << " / " << m_size << std::endl;
 	}
 
 private:
 
-	[[nodiscard]] std::byte * get_byte(void * ptr) const noexcept
+	[[nodiscard]] std::byte * get_byte(void * ptr) const
 	{
 		return static_cast < std::byte * > (ptr);
 	}
 
 public:
 
-	static constexpr std::align_val_t default_alignment { alignof(std::max_align_t) };
+	static constexpr auto default_alignment = alignof(std::max_align_t);
 
 private:
 	
-	const std::size_t m_size;
-
-private:
-
+	std::size_t m_size   = 0;
 	std::size_t m_offset = 0;
 
 	void * m_begin = nullptr;
-
-}; // class Arena_Allocator : private boost::noncopyable
+};
 
 //  ================================================================================================
 
@@ -85,43 +87,37 @@ public:
 
 public:
 
-    explicit Allocator(Arena & arena) noexcept : m_arena(&arena) {}
+    explicit Allocator(Arena & arena) : m_arena(&arena) {}
 
     template < typename U > Allocator(const Allocator < U > & other) : m_arena(other.m_arena) {}
 
-    [[nodiscard]] T * allocate(std::size_t size) const noexcept
+    [[nodiscard]] auto allocate(std::size_t size) const
     { 
         return static_cast < T * > (m_arena->allocate(size * sizeof(T), alignof(T))); 
     }
 
-    void deallocate(T * ptr, std::size_t size) const noexcept
+    void deallocate(T * ptr, std::size_t size) const
     {
         m_arena->deallocate(ptr, size * sizeof(T)); 
     }
 
 private:
 
-    Arena * const m_arena = nullptr;
-
-}; // template < typename T > class Allocator
+    Arena * m_arena = nullptr;
+};
 
 //  ================================================================================================
 
 int main()
 {
-	Arena arena(1024);
+	Arena arena(1'000);
 
     Allocator < int > allocator(arena);
 
     arena.print();
 
-    std::vector < int, Allocator < int > > vector(10, 42, allocator);
+    std::vector < int, Allocator < int > > vector(5, 0, allocator);
 
+    arena.print(); vector.push_back(1);
     arena.print();
-
-    vector.push_back(42);
-
-    arena.print();
-
-	return 0;
 }

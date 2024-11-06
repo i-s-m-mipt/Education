@@ -9,55 +9,61 @@
 
 //  ================================================================================================
 
-template < auto N > class Fixed_Allocator : private boost::noncopyable
+template < std::size_t S > class Fixed_Allocator : private boost::noncopyable
 {
 public:
 
-	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t)) noexcept
+	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = default_alignment)
 	{
 		void * first = m_begin + m_offset;
 
-		auto space = N - m_offset;
+		auto space = S - m_offset;
 
 		if (first = std::align(alignment, size, first, space); first)
 		{
-			m_offset = N - space + size; 
+			m_offset = S - space + size; 
 			
 			return first;
 		}
-		else return nullptr;
+		else 
+		{
+			return nullptr;
+		}
 	}
 
 	void print() const
 	{
-		std::cout << m_begin << ": ";
+		std::cout << m_begin << " : ";
 
-		std::cout << std::setw(4) << std::right << std::setfill('0') << m_offset;
+		std::cout << std::setw(4) << std::setfill('0') << std::right << m_offset;
 
-		std::cout << " / " << N << std::endl;
+		std::cout << " / " << S << std::endl;
 	}
+
+public:
+
+	static constexpr auto default_alignment = alignof(std::max_align_t);
 
 private:
 	
 	std::size_t m_offset = 0;
 
-    alignas(std::max_align_t) std::byte m_buffer[N];
+    alignas(std::max_align_t) std::byte m_buffer[S]{};
 
     std::byte * m_begin = m_buffer;
-
-}; // class Fixed_Allocator : private boost::noncopyable
+};
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state)
+void test_v1(benchmark::State & state)
 {
-	constexpr std::size_t kb = 1024, mb = kb * kb;
+	auto kb = 1'024uz;
 
-	for (auto _ : state)
+	for (auto value : state)
 	{
-		Fixed_Allocator < mb > allocator;
+		Fixed_Allocator < 1'024 * 1'024 > allocator;
 
-		for (std::size_t i = 0; i < kb; ++i)
+		for (auto i = 0uz; i < kb; ++i)
 		{
 			benchmark::DoNotOptimize(allocator.allocate(kb));
 		}
@@ -66,23 +72,30 @@ void test_1(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state)
+void test_v2(benchmark::State & state)
 {
-	constexpr std::size_t kb = 1024;
+	auto kb = 1'024uz;
 
-	std::vector < void * > pointers(kb, nullptr);
+	std::vector < void * > ptrs(kb, nullptr);
 
-	for (auto _ : state)
+	for (auto value : state)
 	{
-		for (std::size_t i = 0; i < kb; ++i) pointers[i] = ::operator new   (kb         );
-		for (std::size_t i = 0; i < kb; ++i)               ::operator delete(pointers[i]);
+		for (auto i = 0uz; i < kb; ++i) 
+		{
+			ptrs[i] = ::operator new(kb);
+		}
+
+		for (auto i = 0uz; i < kb; ++i) 
+		{
+			::operator delete(ptrs[i]);
+		}
 	}
 }
 
 //  ================================================================================================
 
-BENCHMARK(test_1);
-BENCHMARK(test_2);
+BENCHMARK(test_v1);
+BENCHMARK(test_v2);
 
 //  ================================================================================================
 
@@ -90,21 +103,20 @@ int main(int argc, char ** argv)
 {
 	Fixed_Allocator < 1024 > allocator; 
 
-	std::cout << allocator.allocate(  1, 4) << ' '; allocator.print(); // detail: A
-	std::cout << allocator.allocate(  2, 2) << ' '; allocator.print(); // detail: B
-	std::cout << allocator.allocate( 10   ) << ' '; allocator.print(); // detail: C
-	std::cout << allocator.allocate(  4   ) << ' '; allocator.print(); // detail: D
+	allocator.print();
 
-	// detail: A0BB 0000 | CCCC CCCC | CC00 0000 | DDDD 0000 | ...
+	[[maybe_unused]] auto ptr_1 = allocator.allocate(  1, 4); allocator.print();
+	[[maybe_unused]] auto ptr_2 = allocator.allocate(  2, 2); allocator.print();
+	[[maybe_unused]] auto ptr_3 = allocator.allocate( 10   ); allocator.print();
+	[[maybe_unused]] auto ptr_4 = allocator.allocate(  4   ); allocator.print();
+	[[maybe_unused]] auto ptr_5 = allocator.allocate(988   ); allocator.print();
+	[[maybe_unused]] auto ptr_6 = allocator.allocate(  1   ); allocator.print();
 
-	std::cout << allocator.allocate(988   ) << ' '; allocator.print();
-	std::cout << allocator.allocate(  1   ) << ' '; allocator.print(); // detail: 0
+	// detail: 1022 0000 | 3333 3333 | 3300 0000 | 4444 0000 | 5555 5555 | ...	
 
 //  ================================================================================================
 
 	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
-
-	return 0;
 }

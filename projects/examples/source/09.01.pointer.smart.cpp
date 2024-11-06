@@ -8,90 +8,103 @@
 
 //  ================================================================================================
 
-template < typename T > class Resource : private boost::noncopyable
+template < typename T > class RAII : private boost::noncopyable
 {
 public:
 
-	constexpr explicit Resource(T value) : m_ptr(new T(value)) {}
+	explicit RAII(T data) : m_data(new T(data)) {}
 
-	constexpr ~Resource() noexcept { if (m_ptr) delete m_ptr; }
+   ~RAII() 
+	{ 
+		if (m_data) 
+		{
+			delete m_data; 
+		}
+	}
 
-	[[nodiscard]] constexpr T * get() const noexcept { return m_ptr; }
+//  ------------------------------
+
+	[[nodiscard]] auto get() const
+	{ 
+		return m_data; 
+	}
 
 private:
 
-	T * const m_ptr;
-
-}; // template < typename T > class Resource : private boost::noncopyable 
-
-//  ================================================================================================
-
-inline void f(std::shared_ptr < const int > , int) noexcept {}
-
-[[nodiscard]] inline constexpr int bad(bool make_error = true) 
-{
-	if (make_error) throw std::runtime_error("error");
-
-	return 0;
-}
-
-//  ================================================================================================
-
-class B;
-
-class A
-{
-public:
-
-   ~A() noexcept { try { std::cout << "A destroyed" << std::endl; } catch (...) {} }
-
-	std::shared_ptr < B > b;
-
-}; // class A
-
-//  ================================================================================================
-
-class B
-{
-public:
-
-   ~B() noexcept { try { std::cout << "B destroyed" << std::endl; } catch (...) {} }
-
-//  std::shared_ptr < A > bad_a; // bad
-
-	std::weak_ptr < A > a;
-
-}; // class B
-
-//  ================================================================================================
-
-class Base 
-{
-public:
-
-	virtual ~Base() noexcept = default; 
-
-	virtual void print() const { std::cout << "Base" << std::endl; }
-
-}; // class Base 
-
-//  ================================================================================================
-
-class Derived : public Base 
-{
-public: void print() const override { std::cout << "Derived" << std::endl; }
+	T * m_data = nullptr;
 }; 
 
 //  ================================================================================================
 
-[[nodiscard]] inline std::unique_ptr < const Base > produce()
+void test_v1(std::shared_ptr < int > , int) {}
+
+[[noreturn]] int test_v2() 
 {
-	return std::make_unique < const Derived > ();
+	throw std::runtime_error("error");
 }
 
-inline void consume(std::unique_ptr < const Base > base)
+//  ================================================================================================
+
+struct Client
 {
-	base->print();
+   ~Client() 
+    { 
+		std::clog << "Client::~Client\n";
+	}
+
+//  -----------------------------------------
+
+	std::shared_ptr < struct Server > server;
+};
+
+//  ================================================================================================
+
+struct Server
+{
+   ~Server() 
+    { 
+		std::clog << "Server::~Server\n";
+	}
+
+//  --------------------------------
+
+	std::weak_ptr < Client > client;
+};
+
+//  ================================================================================================
+
+struct Entity 
+{
+	virtual ~Entity() = default; 
+
+//  -------------------------------------
+
+	virtual void test() const
+	{ 
+		std::clog << "Base::Entity\n"; 
+	}
+};
+
+//  ================================================================================================
+
+struct Router : public Entity 
+{
+	void test() const override 
+	{ 
+		std::cout << "Router::test\n"; 
+	}
+}; 
+
+//  ================================================================================================
+
+template < typename E > [[nodiscard]] auto make_entity()
+{
+	return std::unique_ptr < Entity > (std::make_unique < E > ());
+}
+
+void test_v3(std::unique_ptr < Entity > entity)
+{
+	entity->test();
 }
 
 //  ================================================================================================
@@ -100,64 +113,70 @@ int main()
 {
 	try
 	{
-		const Resource < int > resource(42);
-
+		RAII < int > raii(1); 
+		
 		throw std::runtime_error("error");
 	}
-	catch (...) {}
+	catch (const std::exception & exception)
+    {
+        std::cerr << "main : " << exception.what() << '\n';
+    }
 
 //  ================================================================================================
 
-	const std::shared_ptr < const int > shared_ptr_1;
+	std::shared_ptr < int > shared_ptr_1;
 
 	if (shared_ptr_1)
 	{
 		std::cout << shared_ptr_1 << std::endl;
 	}
 
-	std::shared_ptr < const int > shared_ptr_2(new const auto(42)); 
+	std::shared_ptr < int > shared_ptr_2(new auto(1)); 
 
-	std::shared_ptr < const int > shared_ptr_3(shared_ptr_2);
+	std::shared_ptr < int > shared_ptr_3(shared_ptr_2);
 
 	assert(shared_ptr_2.use_count() == 2 && *shared_ptr_2 == 42);
 	assert(shared_ptr_3.use_count() == 2 && *shared_ptr_3 == 42);
 
-	shared_ptr_3.reset(new const auto(42));
+	shared_ptr_3.reset(new auto(1));
 
 	assert(shared_ptr_2.use_count() == 1 && *shared_ptr_2 == 42);
 	assert(shared_ptr_3.use_count() == 1 && *shared_ptr_3 == 42);
 
 //  ================================================================================================
 
-	const auto ptr = new const auto(42);
+	auto object = new auto(1);
 
-//	const std::shared_ptr < const int > shared_ptr_4(ptr); // bad
+//	std::shared_ptr < int > shared_ptr_4(object); // bad
 
-	delete ptr;
+	delete object;
 
 //  ================================================================================================
 
-//	f(std::shared_ptr < const int > (new const auto(42)), bad()); // bad
+//	test_v1(std::shared_ptr < int > (new auto(1)), test_v2()); // bad
 
-	const auto shared_ptr_5 = std::make_shared < const int > (42);
+	auto shared_ptr_5 = std::make_shared < int > (1);
 
 	try
 	{
-		f(std::make_shared < const int > (42), bad());
+		test_v1(std::make_shared < int > (1), test_v2());
 	}
-	catch (...) {}
+	catch (const std::exception & exception)
+    {
+        std::cerr << "main : " << exception.what() << '\n';
+    }
 
 //  ================================================================================================
 
-	constexpr std::size_t size = 5;
+	auto size = 5uz;
 
-//	const std::shared_ptr < int > shared_ptr_6(new int[size]{}); // bad
+//	std::shared_ptr < int > shared_ptr_6(new int[size]{}); // bad
 
 	std::shared_ptr < int > shared_ptr_7(new int[size]{}, std::default_delete < int[] > ());
 
 //	*(shared_ptr_7++) = 42; // error
 
-	const auto shared_ptr_8 = std::make_shared < int[] > (size, 0); // support: std::array
+	auto shared_ptr_8 = std::make_shared < int[] > (size, 0);
 
 	shared_ptr_8[0] = 42;
 
@@ -178,21 +197,19 @@ int main()
 //  ================================================================================================
 
 	{
-		const auto a    = std::make_shared < A > (); 
-		           a->b = std::make_shared < B > ();
+		auto client         = std::make_shared < Client > (); 
+		     client->server = std::make_shared < Server > ();
 
-		a->b->a = a;
+		client->server->client = client;
 	}
 
 //  ================================================================================================
 
-	auto unique_pointer_1 = std::make_unique < const int > (42);
+	auto unique_ptr_1 = std::make_unique < int > (1);
 
-	auto unique_pointer_2 = std::move(unique_pointer_1);
+	auto unique_ptr_2 = std::move(unique_ptr_1);
 
-	auto unique_pointer_3 = produce(); 
+	auto unique_ptr_3 = make_entity < Router > (); 
 
-	consume(std::move(unique_pointer_3));
-
-	return 0;
+	test_v3(std::move(unique_ptr_3));
 }

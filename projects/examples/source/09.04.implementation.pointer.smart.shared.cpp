@@ -1,5 +1,6 @@
 #include <cassert>
 #include <cstddef>
+#include <iostream>
 #include <type_traits>
 #include <utility>
 
@@ -13,29 +14,31 @@ namespace detail
     {
     protected:
 
-        RCCB_base() noexcept = default;
+                 RCCB_base() = default;
 
-        virtual ~RCCB_base() noexcept = default;
+        virtual ~RCCB_base() = default;
 
     public:
 
-        void create_reference() noexcept { ++m_counter; }
-        void remove_reference() noexcept 
+        void increase() { ++m_counter; }
+
+        void decrease() 
         { 
-            if (--m_counter == 0) clear(); 
+            if (--m_counter == 0) 
+            {
+                clear(); 
+            }
         }
 
     private:
 
-        virtual void clear() noexcept = 0; // support: NVI
+        virtual void clear() = 0;
 
-    private:
+//      ----------------------------------
 
-        std::size_t m_counter = 0; // support: std::atomic < std::size_t >
-
-    }; // class RCCB_base : private boost::noncopyable
-
-} // namespace detail
+        std::size_t m_counter = 0;
+    };
+}
 
 //  ================================================================================================
 
@@ -45,25 +48,28 @@ namespace detail
     {
     public:
 
-        explicit RCCB(T * data) noexcept : m_data(data)
+        explicit RCCB(T * data) : m_data(data)
         {
-            create_reference();
+            increase();
         }
 
     private:
 
-        void clear() noexcept override
+        void clear() override
         {
-            delete m_data; delete this;
+            if (m_data)
+            {
+                delete m_data;
+            }
+            
+            delete this;
         }
 
-    private:
+//      ---------------------
 
         T * m_data = nullptr;
-
-    }; // template < typename T > class RCCB : public RCCB_base
-
-} // namespace detail
+    };
+}
 
 //  ================================================================================================
 
@@ -71,38 +77,52 @@ template < typename T > class Shared
 {
 public:
 
-    Shared() noexcept = default;
-
-    explicit Shared(T * data) : m_data(data)
+    explicit Shared(T * data = nullptr) : m_data(data)
     {
-        try_make_rccb();
+        if (m_data)
+        {
+            m_rccb = new detail::RCCB < T > (m_data);
+        }
     }
 
-    Shared(const Shared < T > & other) noexcept : m_data(other.m_data), m_rccb(other.m_rccb)
+    Shared(const Shared < T > & other) : m_data(other.m_data), m_rccb(other.m_rccb)
     {
-        if (m_rccb) m_rccb->create_reference();
+        if (m_rccb) 
+        {
+            m_rccb->increase();
+        }
     }
 
-    Shared(Shared < T > && other) noexcept : Shared()
+    Shared(Shared < T > && other) : Shared()
 	{
 		swap(other);
 	}
 
-    Shared & operator=(const Shared & other) noexcept
+    auto & operator=(const Shared & other)
     {
-        Shared(other).swap(*this); return *this;
+        Shared(other).swap(*this); 
+        
+        return *this;
     }
 
-    Shared & operator=(Shared && other) noexcept
+    auto & operator=(Shared && other)
     {
-        Shared(std::move(other)).swap(*this); return *this;
+        Shared(std::move(other)).swap(*this); 
+        
+        return *this;
     }
 
-   ~Shared() noexcept { if (m_rccb) m_rccb->remove_reference(); }
+   ~Shared() 
+    { 
+        if (m_rccb) 
+        {
+            m_rccb->decrease();
+        } 
+    }
 
-public:
+//  ----------------------------------
 
-    void swap(Shared & other) noexcept
+    void swap(Shared & other)
     {
         using std::swap; 
 
@@ -110,48 +130,34 @@ public:
         swap(m_rccb, other.m_rccb);
     }
 
-public:
+//  --------------------------------------------
 
-    [[nodiscard]] T & operator*() const noexcept { return *m_data; }
-
-private:
-
-    void try_make_rccb()
-    {
-        try { m_rccb = new detail::RCCB < T > (m_data); } catch (...) { delete m_data; }
+    [[nodiscard]] auto & operator*() const
+    { 
+        return *m_data; 
     }
 
 private:
 
     T * m_data = nullptr; detail::RCCB_base * m_rccb = nullptr;
-
-}; // template < typename T > class Shared
-
-//  ================================================================================================
-
-template < typename T > inline void swap(Shared < T > & x, Shared < T > & y) noexcept
-{
-    x.swap(y);
-}
+};
 
 //  ================================================================================================
 
-template < typename T, typename ... Ts > [[nodiscard]] inline Shared < T > make_shared(Ts && ... args)
+template < typename T, typename ... Ts > [[nodiscard]] auto make_shared(Ts && ... args)
 {
-    // ...
+    std::clog << "make_shared\n";
 }
 
 //  ================================================================================================
 
 int main()
 {
-    Shared < const int > shared_1(new const auto(42));
-    Shared < const int > shared_2(new const auto(43));
+    Shared < int > shared_1(new auto(1));
+    Shared < int > shared_2(new auto(2));
 
     shared_2 = shared_1;
 
-    assert(*shared_1 == 42);
-    assert(*shared_2 == 42);
-
-    return 0;
+    assert(*shared_1 == 1);
+    assert(*shared_2 == 1);
 }

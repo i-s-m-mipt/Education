@@ -4,80 +4,88 @@
 
 //  ================================================================================================
 
-class Fail
+struct Entity_v1
 {
-public: [[nodiscard]] std::shared_ptr < Fail > get() { return std::shared_ptr < Fail > (this); }
+    [[nodiscard]] auto get()
+    { 
+        return std::shared_ptr < Entity_v1 > (this); 
+    }
+}; 
+
+//  ================================================================================================
+
+struct Entity_v2 : public std::enable_shared_from_this < Entity_v2 >
+{
+    [[nodiscard]] auto get()
+    { 
+        return shared_from_this(); 
+    }
 };
 
 //  ================================================================================================
 
-class Good : private std::enable_shared_from_this < Good > // support: CRTP
-{
-public: [[nodiscard]] std::shared_ptr < Good > get() { return shared_from_this(); }
-};
-
-//  ================================================================================================
-
-class Best : private std::enable_shared_from_this < Best >
+class Entity_v3 : public std::enable_shared_from_this < Entity_v3 >
 {
 private:
 
-    struct Key {}; // support: PassKey
+    struct Key {};
 
 public:
 
-    Best(Key) {};
+    explicit Entity_v3(Key) {};
 
-    [[nodiscard]] static std::shared_ptr < Best > create() // support: Factory
-    {
-        return std::make_shared < Best > (Key());
+//  ------------------------------------
+
+    [[nodiscard]] auto get()
+    { 
+        return shared_from_this(); 
     }
 
-    [[nodiscard]] std::shared_ptr < Best > get() { return shared_from_this(); }
-
-}; // class Best : private std::enable_shared_from_this < Best >
+    [[nodiscard]] static auto make()
+    {
+        return std::make_shared < Entity_v3 > (Key());
+    }
+};
 
 //  ================================================================================================
 
 int main()
 {
-    auto fail_1 = std::make_shared < Fail > ();
+    auto entity_v1_1 = std::make_shared < Entity_v1 > ();
 
-//  auto fail_2 = fail_1->get(); // bad
+//  auto entity_v1_2 = entity_v1_1->get(); // bad
     
-    assert(fail_1.use_count() == 1);
-//  assert(fail_2.use_count() == 1);
+    assert(entity_v1_1.use_count() == 1);
+//  assert(entity_v1_2.use_count() == 1);
 
 //  ================================================================================================
 
-    auto good_1 = std::make_shared < Good > ();
+    auto entity_v2_1 = std::make_shared < Entity_v2 > ();
 
-    auto good_2 = good_1->get();
+    auto entity_v2_2 = entity_v2_1->get();
 
-    assert(good_1.use_count() == 2);
-    assert(good_2.use_count() == 2);
+    assert(entity_v2_1.use_count() == 2);
+    assert(entity_v2_2.use_count() == 2);
 
     try
     {
-        Good good;
+        Entity_v2 entity_v2_3;
 
-        auto good_3 = good.get();
+        auto entity_v2_4 = entity_v2_3.get();
     }
     catch (const std::bad_weak_ptr & exception)
     {
-        std::cerr << exception.what() << '\n';
+        std::cerr << "main : " << exception.what() << '\n';
     }
 
 //  ================================================================================================
 
-    auto best_1 = Best::create();
+    auto entity_v3_1 = Entity_v3::make();
 
-    auto best_2 = best_1->get();
+    auto entity_v3_2 = entity_v3_1->get();
 
-    assert(best_1.use_count() == 2);
-    assert(best_2.use_count() == 2);
+    assert(entity_v3_1.use_count() == 2);
+    assert(entity_v3_2.use_count() == 2);
 
-//  Best best(Key()); // error
-
-    return 0;
+//  Entity_v3 entity_v3(Key()); // error
 }

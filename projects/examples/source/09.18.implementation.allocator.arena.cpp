@@ -15,17 +15,20 @@ public:
 
 	explicit Arena_Allocator(std::size_t size) : m_size(size)
 	{
-		m_begin = ::operator new(m_size, default_alignment);
+		m_begin = ::operator new(m_size, std::align_val_t(default_alignment));
 	}
 
-   ~Arena_Allocator() noexcept
+   ~Arena_Allocator()
 	{
-		::operator delete(m_begin, m_size, default_alignment);
+		if (m_begin)
+		{
+			::operator delete(m_begin, m_size, std::align_val_t(default_alignment));
+		}
 	}
 
 public:
 
-	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = alignof(std::max_align_t)) noexcept
+	[[nodiscard]] void * allocate(std::size_t size, std::size_t alignment = default_alignment) 
 	{
 		void * first = get_byte(m_begin) + m_offset;
 
@@ -37,52 +40,51 @@ public:
 			
 			return first;
 		}
-		else return nullptr;
+		else 
+		{
+			return nullptr;
+		}
 	}
 
 	void print() const
 	{
-		std::cout << m_begin << ": ";
+		std::cout << m_begin << " : ";
 
-		std::cout << std::setw(4) << std::right << std::setfill('0') << m_offset;
+		std::cout << std::setw(4) << std::setfill('0') << std::right << m_offset;
 
 		std::cout << " / " << m_size << std::endl;
 	}
 
 private:
 
-	[[nodiscard]] std::byte * get_byte(void * ptr) const noexcept
+	[[nodiscard]] std::byte * get_byte(void * ptr) const
 	{
 		return static_cast < std::byte * > (ptr);
 	}
 
 public:
 
-	static constexpr std::align_val_t default_alignment { alignof(std::max_align_t) };
+	static constexpr auto default_alignment = alignof(std::max_align_t);
 
 private:
 	
-	const std::size_t m_size;
-
-private:
-
+	std::size_t m_size   = 0;
 	std::size_t m_offset = 0;
 
 	void * m_begin = nullptr;
-
-}; // class Arena_Allocator : private boost::noncopyable
+};
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state)
+void test_v1(benchmark::State & state)
 {
-	constexpr std::size_t kb = 1024, mb = kb * kb, gb = kb * kb * kb;
+	auto kb = 1'024uz, mb = kb * kb, gb = kb * kb * kb;
 
-	for (auto _ : state)
+	for (auto value : state)
 	{
 		Arena_Allocator allocator(gb);
 
-		for (std::size_t i = 0; i < kb; ++i)
+		for (auto i = 0uz; i < kb; ++i)
 		{
 			benchmark::DoNotOptimize(allocator.allocate(mb));
 		}
@@ -91,23 +93,30 @@ void test_1(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state)
+void test_v2(benchmark::State & state)
 {
-	constexpr std::size_t kb = 1024, mb = kb * kb;
+	auto kb = 1'024uz, mb = kb * kb;
 
-	std::vector < void * > pointers(kb, nullptr);
+	std::vector < void * > ptrs(kb, nullptr);
 
-	for (auto _ : state)
+	for (auto value : state)
 	{
-		for (std::size_t i = 0; i < kb; ++i) pointers[i] = ::operator    new(             mb);
-		for (std::size_t i = 0; i < kb; ++i)               ::operator delete(pointers[i], mb);
+		for (auto i = 0uz; i < kb; ++i) 
+		{ 
+			ptrs[i] = ::operator new(mb); 
+		}
+
+		for (auto i = 0uz; i < kb; ++i) 
+		{ 
+			::operator delete(ptrs[i], mb); 
+		}
 	}
 }
 
 //  ================================================================================================
 
-BENCHMARK(test_1);
-BENCHMARK(test_2);
+BENCHMARK(test_v1);
+BENCHMARK(test_v2);
 
 //  ================================================================================================
 
@@ -115,21 +124,20 @@ int main(int argc, char ** argv)
 {
 	Arena_Allocator allocator(1024); 
 
-	std::cout << allocator.allocate(  1, 4) << ' '; allocator.print(); // detail: A
-	std::cout << allocator.allocate(  2, 2) << ' '; allocator.print(); // detail: B
-	std::cout << allocator.allocate( 10   ) << ' '; allocator.print(); // detail: C
-	std::cout << allocator.allocate(  4   ) << ' '; allocator.print(); // detail: D
+	allocator.print();
 
-	// detail: A0BB 0000 | CCCC CCCC | CC00 0000 | DDDD 0000 | ...
+	[[maybe_unused]] auto ptr_1 = allocator.allocate(  1, 4); allocator.print();
+	[[maybe_unused]] auto ptr_2 = allocator.allocate(  2, 2); allocator.print();
+	[[maybe_unused]] auto ptr_3 = allocator.allocate( 10   ); allocator.print();
+	[[maybe_unused]] auto ptr_4 = allocator.allocate(  4   ); allocator.print();
+	[[maybe_unused]] auto ptr_5 = allocator.allocate(988   ); allocator.print();
+	[[maybe_unused]] auto ptr_6 = allocator.allocate(  1   ); allocator.print();
 
-	std::cout << allocator.allocate(988   ) << ' '; allocator.print();
-	std::cout << allocator.allocate(  1   ) << ' '; allocator.print(); // detail: 0
+	// detail: 1022 0000 | 3333 3333 | 3300 0000 | 4444 0000 | 5555 5555 | ...	
 
 //  ================================================================================================
 
 	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
-
-	return 0;
 }
