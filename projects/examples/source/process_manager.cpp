@@ -26,6 +26,4 @@ int main()
 	}
 
 	std::cout << process.exit_code() << std::endl;
-
-	return 0;
 } 

@@ -12,6 +12,4 @@ int main(int argc, char ** argv)
     std::cout << argv[0] << ' ' << argv[1] << ' ' << argv[2] << std::endl;
 
     std::this_thread::sleep_for(10s);
-
-    return 0;
 }
