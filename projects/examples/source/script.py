@@ -2,7 +2,7 @@ import math
 
 import matplotlib.pyplot as plot
 
-def factorial(n: int) -> str: return str(math.factorial(n))
+def factorial(x: int) -> str: return str(math.factorial(x))
 
 def make_plot(raw_points: str, label: str):
 
