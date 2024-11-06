@@ -15,9 +15,9 @@ template < typename T > void swap(T & x, T & y)
 
 //  ================================================================================================
 
-struct Bad 
+class Bad 
 { 
-    Bad() = delete; 
+	Bad() = default; 
 };
 
 template < typename T > struct Entity
@@ -51,7 +51,7 @@ int main()
     static_assert((sizeof(int) == 4),   "sizeof(int) != 4");
 
     [[maybe_unused]] Entity < int > entity_1;
-//  [[maybe_unused]] Entity < Bad > entity_2; // error
+ // [[maybe_unused]] Entity < Bad > entity_2; // error
 
 //  ================================================================================================
 
