@@ -8,14 +8,14 @@ template < typename D > struct Entity
 
 //  ------------------------------------------------------------------------------------------------
 
-	void test_v1() const
+	void test() const
 	{
-		static_cast < const D * > (this)->test_v2();
+		static_cast < const D * > (this)->test_implementation();
 	}
 
-	void test_v2() const
+	void test_implementation() const
 	{ 
-		std::clog << "Entity::test_v2\n"; 
+		std::clog << "Entity::test_implementation\n"; 
 	}
 };
 
@@ -25,9 +25,9 @@ struct Client : public Entity < Client > {};
 
 struct Server : public Entity < Server >
 {
-	void test_v2() const
+	void test_implementation() const
 	{ 
-		std::clog << "Server::test_v2\n"; 
+		std::clog << "Server::test_implementation\n"; 
 	}
 }; 
 
@@ -35,13 +35,13 @@ struct Server : public Entity < Server >
 
 template < typename E > void test(const E & entity)
 { 
-	entity.test_v1(); 
+	entity.test(); 
 }
 
 //  ================================================================================================
 
 int main()
 {
-	Client client; test(client);
-	Server server; test(server);
+	Client().test();
+	Server().test();
 }
