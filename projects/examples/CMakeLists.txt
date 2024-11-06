@@ -1,9 +1,16 @@
 cmake_minimum_required(VERSION 3.27)
 
+# =======================================================================================================================
+
 project(examples VERSION 24.02.06 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+# =======================================================================================================================
+
+set(CMAKE_CXX_STANDARD 23)
+
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# =======================================================================================================================
 
 find_package(Boost         1.84 REQUIRED COMPONENTS filesystem locale log python system timer unit_test_framework)
 find_package(Python3       3.11 REQUIRED COMPONENTS Interpreter Development)
@@ -14,6 +21,8 @@ find_package(PDFHummus          REQUIRED COMPONENTS)
 find_package(TBB                REQUIRED COMPONENTS tbb)
 find_package(SFML               REQUIRED COMPONENTS graphics system window)
 
+# =======================================================================================================================
+
 include_directories(        ${Boost_INCLUDE_DIRS})
 include_directories(      ${Python3_INCLUDE_DIRS})
 include_directories(${nlohmann_json_INCLUDE_DIRS})
@@ -23,7 +32,10 @@ include_directories(    ${PDFHummus_INCLUDE_DIRS})
 include_directories(          ${TBB_INCLUDE_DIRS})
 include_directories(         ${SFML_INCLUDE_DIRS})
 
+# ======================================================================================================================
+
 set(debug
+
 #   01.01.introduction
     01.02.introduction.function.main
     01.03.introduction.standard
@@ -39,7 +51,7 @@ set(debug
     02.09.reference.lvalue
     02.10.function
     02.11.algorithm.binary.search
-    02.12.algorithm.lexicographic.order
+    02.12.algorithm.recursive.sequence
     02.13.algorithm.insertion.merge.sorting
     03.01.class.struct
     03.02.class
@@ -56,12 +68,11 @@ set(debug
     03.13.class.optimization
 #   03.14.expression.classification
     03.15.reference.lvalue.rvalue
-    03.16.reference.lvalue.rvalue.function.overload
-    03.17.implementation.container.vector
-    03.18.class.operator.overload
-    03.19.class.operator.overload.output
-    03.20.class.operator.overload.spaceship
-    03.21.class.operator.overload.optimization
+    03.16.implementation.container.vector
+    03.17.class.operator.overload
+    03.18.class.operator.overload.output
+    03.19.class.operator.overload.spaceship
+    03.20.class.operator.overload.optimization
     04.01.template.function
     04.02.template.function.variadic
     04.03.template.function.variadic.tree.traversal
@@ -72,8 +83,8 @@ set(debug
     04.08.template.metaprogramming.constexpr
     04.09.template.metaprogramming.constexpr.hybrid
     04.10.reference.lvalue.rvalue.forwarding
-    04.11.pattern.sfinae
-    04.12.template.type.inference
+    04.11.template.type.inference
+    04.12.pattern.sfinae
     04.13.implementation.template.type.trait
     04.14.implementation.template.type.concept
     04.15.implementation.utility.tlist
@@ -110,7 +121,6 @@ set(debug
 #   06.09.project.module
 #   06.10.project.module.source
 #   06.11.project.module.submodule
-#   06.12.project.library
 #   06.13.project.library.static
 #   06.14.project.library.shared
     07.01.error.assertion.termination
@@ -126,18 +136,21 @@ set(debug
     08.02.algorithm.binary.gray.code
     08.03.algorithm.indian.exponentiation
     08.04.class.enumeration
-    08.05.number.floating.point
-    08.06.number.floating.point.multiprecision
-    08.07.number.complex
-#   08.09.algorithm.monte.carlo
-    08.11.time.chrono
-    08.12.time.chrono.calendar
-    08.13.implementation.operator.literal
+    08.05.number.floating
+    08.06.number.complex
+    08.07.number.integral.multiprecision
+    08.08.number.floating.multiprecision
+    08.09.implementation.class.big.int
+    08.10.embedding.python.caller
+#   08.11.embedding.python.script
+#   08.13.algorithm.monte.carlo
+    08.15.time.chrono
+    08.16.time.chrono.calendar
+    08.17.implementation.operator.literal
     09.01.pointer.smart
     09.02.pointer.smart.shared.this
     09.03.implementation.pointer.smart.unique
     09.04.implementation.pointer.smart.shared
-#   09.05.iterator.classification
     09.06.implementation.iterator.forward.list
     09.07.implementation.iterator.forward.list.facade
     09.08.pattern.facade
@@ -203,7 +216,7 @@ set(debug
     13.04.stream.class.string
     13.05.stream.iterator.buffer.input.output
     13.06.algorithm.erase.comment
-#   13.07.algorithm.erase.comment.test
+#   13.07.algorithm.erase.comment.source
     13.08.stream.output.format
     13.09.filesystem.path
     13.10.filesystem.directory
@@ -215,17 +228,58 @@ set(debug
     14.03.concurrency.thread.reduce
     14.04.concurrency.thread.reduce.async
     14.05.concurrency.thread.reduce.packaged.task
-    16.02.implementation.class.big.int
-    16.03.number.integer.multiprecision
-    16.04.embedding.python.caller
-#   16.05.embedding.python.script
 )
 
+# =======================================================================================================================
+
+foreach(entry IN LISTS debug)
+
+    add_executable         (${entry} source/${entry}.cpp)
+
+    target_link_libraries  (${entry} PRIVATE      ${Boost_LIBRARIES})
+    target_link_libraries  (${entry} PRIVATE    ${Python3_LIBRARIES})
+    target_link_libraries  (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
+    target_link_libraries  (${entry} PRIVATE    PDFHummus::PDFWriter)
+    target_link_libraries  (${entry} PRIVATE                     tbb)
+
+    target_compile_options (${entry} PRIVATE -Wall -Wextra -pedantic -O0 -m64)
+
+endforeach()
+
+# =======================================================================================================================
+
+add_executable             (06.12.project.library source/06.12.project.library.cpp)
+
+target_include_directories (06.12.project.library PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
+
+target_link_libraries      (06.12.project.library PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/library_v1/liblibrary_v1.a)
+
+target_link_libraries      (06.12.project.library PRIVATE ${Boost_LIBRARIES})
+
+target_compile_options     (06.12.project.library PRIVATE -Wall -Wextra -pedantic -O0 -m64)
+
+# =======================================================================================================================
+
+add_executable             (07.08.project.tool.debugger source/07.08.project.tool.debugger.cpp)
+
+target_compile_options     (07.08.project.tool.debugger PRIVATE -Wall -Wextra -pedantic -O0 -m64 -g)
+
+# =======================================================================================================================
+
+add_executable             (09.05.iterator.classification source/09.05.iterator.classification.cpp)
+
+target_compile_options     (09.05.iterator.classification PRIVATE -Wall -Wextra -pedantic -O0 -m64) 
+
+target_compile_definitions (09.05.iterator.classification PRIVATE _GLIBCXX_DEBUG)
+
+# =======================================================================================================================
+
 set(release
+
     07.11.project.tool.google.benchmark
-    08.01.number.integer
-    08.08.number.random.generation
-    08.10.algorithm.monte.carlo.simplex
+    08.01.number.integral
+    08.12.number.random.generation
+    08.14.algorithm.monte.carlo.simplex
     09.11.memory.alignment
     09.13.memory.operator.new.placement
     09.18.implementation.allocator.arena
@@ -239,68 +293,43 @@ set(release
     10.15.container.red.black.tree
     12.03.character.string.view
     14.06.concurrency.algorithm.standard
-#   16.01.embedding.assembler
 )
 
-foreach(entry IN LISTS debug)
-    add_executable            (${entry} source/${entry}.cpp)
-    target_link_libraries     (${entry} PRIVATE      ${Boost_LIBRARIES})
-    target_link_libraries     (${entry} PRIVATE    ${Python3_LIBRARIES})
-    target_link_libraries     (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
-    target_link_libraries     (${entry} PRIVATE    PDFHummus::PDFWriter)
-    target_link_libraries     (${entry} PRIVATE                     tbb)
-    target_compile_options    (${entry} PRIVATE -Wall -Wextra -pedantic -O0)
-    set_target_properties     (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-endforeach()
-
-add_executable            (07.08.project.tool.debugger source/07.08.project.tool.debugger.cpp)
-target_compile_options    (07.08.project.tool.debugger PRIVATE -Wall -Wextra -pedantic -O0 -g)
-set_target_properties     (07.08.project.tool.debugger PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
-
-add_executable            (09.05.iterator.classification source/09.05.iterator.classification.cpp)
-target_compile_options    (09.05.iterator.classification PRIVATE -Wall -Wextra -pedantic -O0) 
-target_compile_definitions(09.05.iterator.classification PRIVATE _GLIBCXX_DEBUG)
-set_target_properties     (09.05.iterator.classification PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+# =======================================================================================================================
 
 foreach(entry IN LISTS release)
-    add_executable            (${entry} source/${entry}.cpp)
-    target_link_libraries     (${entry} PRIVATE      ${Boost_LIBRARIES})
-    target_link_libraries     (${entry} PRIVATE    ${Python3_LIBRARIES})
-    target_link_libraries     (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
-    target_link_libraries     (${entry} PRIVATE    benchmark::benchmark)
-    target_link_libraries     (${entry} PRIVATE    PDFHummus::PDFWriter)
-    target_link_libraries     (${entry} PRIVATE                     tbb)
-    target_compile_options    (${entry} PRIVATE -Wall -pedantic -Wextra -O3) 
-    set_target_properties     (${entry} PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+
+    add_executable         (${entry} source/${entry}.cpp)
+
+    target_link_libraries  (${entry} PRIVATE      ${Boost_LIBRARIES})
+    target_link_libraries  (${entry} PRIVATE    ${Python3_LIBRARIES})
+    target_link_libraries  (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
+    target_link_libraries  (${entry} PRIVATE    benchmark::benchmark)
+    target_link_libraries  (${entry} PRIVATE    PDFHummus::PDFWriter)
+    target_link_libraries  (${entry} PRIVATE                     tbb)
+
+    target_compile_options (${entry} PRIVATE -Wall -pedantic -Wextra -O3 -m64)
+
 endforeach()
 
-add_executable            (06.04.project source/06.04.project.source.main.cpp 
-                                         source/06.03.project.source.cpp)
-target_precompile_headers (06.04.project PRIVATE source/06.06.project.header.precompiled.hpp)
-target_compile_options    (06.04.project PRIVATE -Wall -Wextra -pedantic -O0) 
-set_target_properties     (06.04.project PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+# =======================================================================================================================
 
-add_executable            (06.12.project.library source/06.12.project.library.cpp)
-target_include_directories(06.12.project.library PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
-target_link_libraries     (06.12.project.library PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/library_v1/liblibrary_v1.a)
-target_link_libraries     (06.12.project.library PRIVATE ${Boost_LIBRARIES})
-target_compile_options    (06.12.project.library PRIVATE -Wall -Wextra -pedantic -O0) 
-set_target_properties     (06.12.project.library PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+add_executable         (17.01.multimedia.modeling.physics source/17.01.multimedia.modeling.physics/main.cpp
+                                                          source/17.01.multimedia.modeling.physics/system.cpp
+                                                          source/17.01.multimedia.modeling.physics/particle.cpp
+                                                          source/17.01.multimedia.modeling.physics/link.cpp 
+                                                          source/17.01.multimedia.modeling.physics/pressure.cpp)
 
-add_executable            (17.01.multimedia.modeling.physics source/17.01.multimedia.modeling.physics/main.cpp
-                                                             source/17.01.multimedia.modeling.physics/system.cpp
-                                                             source/17.01.multimedia.modeling.physics/particle.cpp
-                                                             source/17.01.multimedia.modeling.physics/link.cpp 
-                                                             source/17.01.multimedia.modeling.physics/pressure.cpp)
+target_link_libraries  (17.01.multimedia.modeling.physics PRIVATE sfml-graphics sfml-system sfml-window)
 
-target_compile_options    (17.01.multimedia.modeling.physics PRIVATE -Wall -Wextra -pedantic -O3)
-target_link_libraries     (17.01.multimedia.modeling.physics PRIVATE sfml-graphics sfml-system sfml-window)
-set_target_properties     (17.01.multimedia.modeling.physics PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+target_compile_options (17.01.multimedia.modeling.physics PRIVATE -Wall -Wextra -pedantic -O3 -m64)
 
-add_executable            (17.02.multimedia.modeling.fractal source/17.02.multimedia.modeling.fractal/main.cpp
+# =======================================================================================================================
+
+add_executable         (17.02.multimedia.modeling.fractal source/17.02.multimedia.modeling.fractal/main.cpp
                                                              source/17.02.multimedia.modeling.fractal/calculator.cpp
                                                              source/17.02.multimedia.modeling.fractal/visualizer.cpp)
 
-target_compile_options    (17.02.multimedia.modeling.fractal PRIVATE -Wall -Wextra -pedantic -O3)
-target_link_libraries     (17.02.multimedia.modeling.fractal PRIVATE sfml-graphics sfml-system sfml-window)
-set_target_properties     (17.02.multimedia.modeling.fractal PROPERTIES COMPILE_FLAGS -m64 LINK_FLAGS -m64)
+target_link_libraries  (17.02.multimedia.modeling.fractal PRIVATE sfml-graphics sfml-system sfml-window)
+
+target_compile_options (17.02.multimedia.modeling.fractal PRIVATE -Wall -Wextra -pedantic -O3 -m64)
