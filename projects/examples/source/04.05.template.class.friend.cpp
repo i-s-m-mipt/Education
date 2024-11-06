@@ -42,7 +42,7 @@ private:
 
 public:
 
-	auto & operator+=(Ratio other)
+	auto & operator+=(const Ratio & other)
 	{
 		auto lcm = std::lcm(m_den, other.m_den);
 
@@ -53,26 +53,26 @@ public:
 		return *this;
 	}
 
-	auto & operator-=(Ratio other) 
+	auto & operator-=(const Ratio & other) 
 	{ 
-		return *this += other.m_num *= -1; 
+		return *this += other.m_num * -1; 
 	}
 
-//  -------------------------------------------
+//  ------------------------------------------------------------
 
-	friend auto operator+(Ratio lhs, Ratio rhs) 
+	friend auto operator+ (const Ratio & lhs, const Ratio & rhs) 
 	{ 
-		return lhs += rhs; 
+		return Ratio(lhs) += rhs; 
 	}
 
-//  --------------------------------------------
+//  ------------------------------------------------------------
 
-	friend auto operator< (Ratio lhs, Ratio rhs)
+	friend auto operator< (const Ratio & lhs, const Ratio & rhs)
 	{
 		return static_cast < double > (lhs) < static_cast < double > (rhs);
 	}
 
-	friend auto operator==(Ratio lhs, Ratio rhs)
+	friend auto operator==(const Ratio & lhs, const Ratio & rhs)
 	{
 		return !(lhs < rhs) && !(rhs < lhs);
 	}
@@ -85,9 +85,9 @@ private:
 
 //  ================================================================================================
 
-template < typename U > auto operator-(Ratio < U > lhs, Ratio < U > rhs)
+template < typename U > auto operator-(const Ratio < U > & lhs, const Ratio < U > & rhs)
 { 
-	return lhs -= rhs;
+	return Ratio < U > (lhs) -= rhs;
 }
 
 //  ================================================================================================

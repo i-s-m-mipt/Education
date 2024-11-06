@@ -82,9 +82,9 @@ template
 	template < typename E > typename C1,
 	template < typename E > typename C2, typename T 
 >		   
-auto copy(const C1 < T > & container_from)
+auto copy(const C1 < T > & container)
 {
-	return C2 < T > (std::cbegin(container_from), std::cend(container_from));
+	return C2 < T > (std::cbegin(container), std::cend(container));
 }
 
 //  ================================================================================================

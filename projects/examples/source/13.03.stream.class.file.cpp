@@ -49,21 +49,6 @@ struct Entity
 
 //  ================================================================================================
 
-auto & operator<<(std::ofstream & fout, const Entity & entity)
-{
-    fout.write(std::bit_cast < char * > (&entity.data_1), sizeof(entity.data_1));
-
-    auto size = std::size(entity.data_2);
-
-    fout.write(std::bit_cast < char * > (&size), sizeof(size));
-
-    fout.write(std::data(entity.data_2), std::size(entity.data_2));
-
-    return fout;
-}
-
-//  ================================================================================================
-
 auto & operator>>(std::ifstream & fin, Entity & entity)
 {
     fin.read(std::bit_cast < char * > (&entity.data_1), sizeof(entity.data_1));
@@ -77,6 +62,21 @@ auto & operator>>(std::ifstream & fin, Entity & entity)
     fin.read(std::bit_cast < char * > (&entity.data_2.front()), size);
 
     return fin;
+}
+
+//  ================================================================================================
+
+auto & operator<<(std::ofstream & fout, const Entity & entity)
+{
+    fout.write(std::bit_cast < char * > (&entity.data_1), sizeof(entity.data_1));
+
+    auto size = std::size(entity.data_2);
+
+    fout.write(std::bit_cast < char * > (&size), sizeof(size));
+
+    fout.write(std::data(entity.data_2), std::size(entity.data_2));
+
+    return fout;
 }
 
 //  ================================================================================================

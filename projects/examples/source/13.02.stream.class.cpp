@@ -12,7 +12,7 @@ struct Formatter
 
 //  ================================================================================================
 
-auto & operator<<(std::ostream & stream, Formatter formatter)
+auto & operator<<(std::ostream & stream, const Formatter & formatter)
 {
     stream.setf(std::ios_base::showpos);
     stream.setf(std::ios_base::fixed  );
@@ -36,7 +36,7 @@ template < typename T > struct Helper
     const T & data; 
 };
 
-template < typename T > auto & operator<<(std::ostream & stream, Helper < T > helper)
+template < typename T > auto & operator<<(std::ostream & stream, const Helper < T > & helper)
 {
     return stream << helper.data << ' ';
 }

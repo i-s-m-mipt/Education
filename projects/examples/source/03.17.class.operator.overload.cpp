@@ -62,14 +62,14 @@ public:
 		return stream;
 	}
 
-	friend auto & operator<<(std::ostream & stream, Ratio ratio)
+	friend auto & operator<<(std::ostream & stream, const Ratio & ratio)
 	{
 		return stream << ratio.m_num << '/' << ratio.m_den;
 	}
 
 //  ------------------------------------------------------------------------------------------------
 
-	auto & operator+=(Ratio other)
+	auto & operator+=(const Ratio & other)
 	{
 		auto lcm = std::lcm(m_den, other.m_den);
 
@@ -82,12 +82,12 @@ public:
 		return *this;
 	}
 
-	auto & operator-=(Ratio other) 
+	auto & operator-=(const Ratio & other) 
 	{ 
-		return *this += other.m_num *= -1; 
+		return *this += other.m_num * -1; 
 	}
 
-	auto & operator*=(Ratio other)
+	auto & operator*=(const Ratio & other)
 	{
 		m_num *= other.m_num;
 		m_den *= other.m_den;
@@ -97,7 +97,7 @@ public:
 		return *this;
 	}
 	
-	auto & operator/=(Ratio other) 
+	auto & operator/=(const Ratio & other) 
 	{ 
 		return *this *= Ratio(other.m_den, other.m_num); 
 	}
@@ -117,22 +117,22 @@ private:
 
 //  ================================================================================================
 
-auto operator+(Ratio lhs, Ratio rhs) { return lhs += rhs; }
-auto operator-(Ratio lhs, Ratio rhs) { return lhs -= rhs; }
-auto operator*(Ratio lhs, Ratio rhs) { return lhs *= rhs; }
-auto operator/(Ratio lhs, Ratio rhs) { return lhs /= rhs; }
+auto operator+ (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) += rhs; }
+auto operator- (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) -= rhs; }
+auto operator* (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) *= rhs; }
+auto operator/ (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) /= rhs; }
 
 //  ================================================================================================
 
-auto operator< (Ratio lhs, Ratio rhs)
+auto operator< (const Ratio & lhs, const Ratio & rhs)
 {
 	return static_cast < double > (lhs) < static_cast < double > (rhs);
 }
 
-auto operator> (Ratio lhs, Ratio rhs) { return  (rhs < lhs); }
-auto operator<=(Ratio lhs, Ratio rhs) { return !(lhs > rhs); }
-auto operator>=(Ratio lhs, Ratio rhs) { return !(lhs < rhs); }
-auto operator==(Ratio lhs, Ratio rhs)
+auto operator> (const Ratio & lhs, const Ratio & rhs) { return  (rhs < lhs); }
+auto operator<=(const Ratio & lhs, const Ratio & rhs) { return !(lhs > rhs); }
+auto operator>=(const Ratio & lhs, const Ratio & rhs) { return !(lhs < rhs); }
+auto operator==(const Ratio & lhs, const Ratio & rhs)
 {
 	return !(lhs < rhs) && !(rhs < lhs);
 }
