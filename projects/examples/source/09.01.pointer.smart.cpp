@@ -111,18 +111,11 @@ void test_v3(std::unique_ptr < Entity > entity)
 
 int main()
 {
-	try
 	{
-		RAII < int > raii(1); 
-		
-		throw std::runtime_error("error");
+		RAII < int > raii(1);
 	}
-	catch (const std::exception & exception)
-    {
-        std::cerr << "main : " << exception.what() << '\n';
-    }
 
-//  ================================================================================================
+//  -------------------------------------
 
 	std::shared_ptr < int > shared_ptr_1;
 
@@ -161,10 +154,7 @@ int main()
 	{
 		test_v1(std::make_shared < int > (1), test_v2());
 	}
-	catch (const std::exception & exception)
-    {
-        std::cerr << "main : " << exception.what() << '\n';
-    }
+	catch (...) {}
 
 //  ================================================================================================
 

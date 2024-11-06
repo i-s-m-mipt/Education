@@ -49,13 +49,4 @@ auto pow(unsigned long long base, unsigned long long exp)
 int main()
 {
     assert(pow(2, 32) == 4'294'967'296);
-
-	try
-    {
-        std::ignore = pow(2, 64);
-    }
-    catch (const std::exception & exception)
-    {
-        std::cerr << "main : " << exception.what() << '\n';
-    }
 }

@@ -47,20 +47,14 @@ template < std::ranges::view V, typename T > T reduce(V view, T sum)
 
 int main()
 {
-    auto future = std::async(std::launch::deferred, [](){ return 1; });
+	auto policy_1 = std::launch::async, policy_2 = std::launch::deferred;
 
-    assert(future.get() == 1);
+//  ---------------------------------------------------------------------
 
-    try
-    {
-        std::async(std::launch::async, [](){ throw std::runtime_error("error"); }).get();
-    }
-    catch (const std::exception & exception)
-    {
-        std::cerr << "main : " << exception.what() << '\n';
-    }
+    assert(std::async(policy_1, [](){ return 1; }).get() == 1);
+	assert(std::async(policy_2, [](){ return 2; }).get() == 2);
 
-//  ================================================================================================
+//  -----------------------------------------------------------
 
 	std::vector < int > vector(1'000, 0);
 

@@ -335,17 +335,6 @@ int main()
 
 //  --------------------------------------------------------------------------------
 
-    try
-    {
-        variant_1.get < std::string > () = "aaaaa";
-    }
-    catch (const std::exception & exception)
-    {
-        std::cerr << "main : " << exception.what() << '\n';
-    }
-
-//  -------------------------------------------------------------
-
     Variant < int, std::string > variant_3(variant_2);
 
     Variant < int, std::string > variant_4(std::move(variant_3));

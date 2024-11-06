@@ -77,20 +77,9 @@ private:
 
 public:
 
-	explicit Logger
-	(
-		const char * scope, bool has_trace = true
-	) 
-	: m_scope(scope), m_has_trace(has_trace)
+	explicit Logger(const char * scope, bool has_trace) : m_scope(scope), m_has_trace(has_trace)
 	{
-		try
-		{
-			std::call_once(s_status, Logger::initialize);
-		}
-		catch (const std::exception & exception)
-		{
-			catch_handler(FUNCTION, exception.what()); std::abort();
-		}
+		std::call_once(s_status, Logger::initialize);
 
 		if (m_has_trace) 
 		{
@@ -212,39 +201,21 @@ public:
 
 	void write(Severity severity, const std::string & message) const
 	{
-		try
+		auto record = s_logger.open_record(boost::log::keywords::severity = severity);
+
+		if (record)
 		{
-			auto record = s_logger.open_record(boost::log::keywords::severity = severity);
+			boost::log::record_ostream(record) << m_scope << " : " << message;
 
-			if (record)
-			{
-				boost::log::record_ostream(record) << m_scope << " : " << message;
-
-				s_logger.push_record(std::move(record));
-			}
-			else 
-			{
-				throw std::runtime_error("invalid record");
-			}
+			s_logger.push_record(std::move(record));
 		}
-		catch (const std::exception & exception)
+		else 
 		{
-			catch_handler(FUNCTION, exception.what());
+			throw std::runtime_error("invalid record");
 		}
 	}
 
 private:
-
-	static void catch_handler(std::string_view scope, std::string_view message)
-	{
-		try 
-		{ 
-			std::cerr << scope << " : " << message << '\n'; 
-		} 
-		catch (...) {}
-	}
-
-//  ------------------------------------------------------------------------------------
 
 	static inline std::unordered_map < Attribute, attribute_pair_t > s_attributes
 	{
@@ -277,18 +248,7 @@ private:
 
 //  ================================================================================================
 
-template < typename E > void catch_handler(const Logger & logger, const std::exception & exception)
-{
-	static_assert(std::is_base_of_v < std::exception, E > , "invalid exception type");
-
-	logger.write(Logger::Severity::error, exception.what());
-
-	throw E(logger.scope() + " exception"s);
-}
-
-//  ================================================================================================
-
-#define LOGGER(logger) Logger logger(FUNCTION)
+#define LOGGER(logger) Logger logger(FUNCTION, true)
 
 #define LOGGER_WRITE_DEBUG(logger, message) logger.write(Logger::Severity::debug, message);
 #define LOGGER_WRITE_TRACE(logger, message) logger.write(Logger::Severity::trace, message);
@@ -300,17 +260,8 @@ template < typename E > void catch_handler(const Logger & logger, const std::exc
 void test_v1()
 {
 	LOGGER(logger);
-
-	try
-	{
-		LOGGER_WRITE_ERROR(logger, "error"); 
 		
-		throw std::runtime_error("error");
-	}
-	catch (const std::exception & exception)
-	{
-		catch_handler < std::runtime_error > (logger, exception);
-	}
+	throw std::runtime_error("error");
 }
 
 //  ================================================================================================
