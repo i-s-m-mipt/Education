@@ -1,48 +1,42 @@
-#include <cassert>
+#include <string>
 
 //  ================================================================================================
 
-class System 
+struct Entity 
 { 
-public: 
-	
-	static inline const int m_data_1 = 1; 
-				  const int m_data_2 = 2; 
-
-}; // class System 
+	static inline auto s_data = 0; int data = 0;
+};
 
 //  ================================================================================================
 
-class Server_v11 : public         System {}; 
-class Server_v12 : public virtual System {}; 
+struct Client_v1 : public         Entity {};
+struct Client_v2 : public virtual Entity {};
 
-class Server_v21 : public         System {}; 
-class Server_v22 : public virtual System {}; 
+struct Server_v1 : public         Entity {}; 
+struct Server_v2 : public virtual Entity {};
 
 //  ================================================================================================
 
-class Server_v31 : public Server_v11, public Server_v21 { public: Server_v31() {} };
-class Server_v32 : public Server_v12, public Server_v22 { public: Server_v32() {} };
+struct Router_v1 : public Client_v1, public Server_v1 { Router_v1() {} };
+struct Router_v2 : public Client_v2, public Server_v2 { Router_v2() {} };
 
 //  ================================================================================================
 
 int main()
 {
-	Server_v31 server_v31; // support: compiler-explorer.com
+	Router_v1 router_v1; // support: compiler-explorer.com
 
-	assert(server_v31.m_data_1 == 1);
-//	assert(server_v31.m_data_2 == 2); // error
+	router_v1.s_data = 1;
+//	router_v1.  data = 1; // error
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	Server_v32 server_v32; // support: compiler-explorer.com
+	Router_v2 router_v2; // support: compiler-explorer.com
 
-	assert(server_v32.m_data_1 == 1);
-	assert(server_v32.m_data_2 == 2);
+	router_v2.s_data = 1;
+	router_v2.  data = 1;
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	Server_v22 server_v22; // support: compiler-explorer.com
-
-	return 0;
+	Client_v2 client_v2; // support: compiler-explorer.com
 }

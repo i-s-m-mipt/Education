@@ -1,134 +1,123 @@
 #include <cassert>
 #include <iostream>
 #include <string>
+#include <utility>
 
 //  ================================================================================================
 
-class System
+class Entity
 {
 public:
 
-	System(const std::string & name) : m_name(name) {}
+	Entity() = default;
 
-public:
+	Entity(int data) : m_data(data) {}
 
-	void test_v1() const { std::clog << "System::test_v1\n"; }
-	void test_v2() const { std::clog << "System::test_v2\n"; }
+//  ------------------------------------------------------------------------------------------------
+
+	void test_v1() const { std::clog << "Entity::test_v1\n"; }
+	void test_v2() const { std::clog << "Entity::test_v2\n"; }
 
 protected:
 
-	[[nodiscard]] const std::string & get_name() const 
+	[[nodiscard]] auto data() const
 	{ 
-		return m_name; 
+		return m_data; 
 	}
 
 private:
 
-	const std::string m_name;
-
-}; // class System
+	int m_data = 0;
+};
 
 //  ================================================================================================
 
-class Server : public System
+class Client : public Entity
 {
 public:
 
-	Server(const std::string & name, int data) : System(name), m_data(data)
+	Client(int data_1, int data_2) : Entity(data_1), m_data(data_2)
 	{
-		assert(get_name() == name);
+		assert(this->data() == data_1);
 	}
 
-public:
+//  ------------------------------------------------------------------------------------------------
 
 	void test_v1() const
 	{
-		std::clog << "Server::test_v1\n";
+		std::clog << "Client::test_v1\n";
 
 //		test_v1(); // error
 
-		System::test_v1();
+		Entity::test_v1();
 	}
 
-	using System::get_name;
+//  ------------------------------------------------------------------------------------------------
+
+	using Entity::data;
 
 private:
 
-	const int m_data = 0;
-
-}; // class Server : public System
+	int m_data = 0;
+};
 
 //  ================================================================================================
 
-class Client_v1 : private System 
+struct Server_v1 : private Entity 
 {
-public:
-
-	Client_v1(const std::string & name) : System(name) {}
-
-public:
-
-	void test() const 
+	void test() const
 	{ 
 		test_v1(); 
 		test_v2(); 
 	}
-
-}; // class Client_v1 : private System 
+};
 
 //  ================================================================================================
 
-class Client_v2 
+class Server_v2 
 {
 public:
 
-	Client_v2(const std::string & name) : m_system(name) {}
-
-public:
-
-	void test() const 
+	void test() const
 	{ 
-		m_system.test_v1(); 
-		m_system.test_v2(); 
+		m_entity.test_v1(); 
+		m_entity.test_v2(); 
 	}
 
 private: 
 
-	const System m_system; 
-
-}; // class Client_v2
+	Entity m_entity; 
+};
 
 //  ================================================================================================
 
 int main()
 {
-	const System system("system");
+	Entity entity(1);
 
-//	const auto system_name = system.get_name(); // error
+//	assert(entity.data() == 1); // error
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	const Server server("server", 1);
+	Client client(1, 1);
 
-	server.test_v1();
-	server.test_v2();
+	client.test_v1();
+	client.test_v2();
 
-	const auto server_name = server.get_name();
+	assert(client.data() == 1);
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	Client_v1 client_v1("client_v1");
+	Server_v1 server_v1;
 	
-//	client_v1.test_v1(); // error
-//	client_v1.test_v2(); // error
+//	server_v1.test_v1(); // error
+//	server_v1.test_v2(); // error
 
-	client_v1.test();
+	server_v1.test();
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	Client_v2 client_v2("client_v2");
+	Server_v2 server_v2;
 
-	client_v2.test();
-
-	return 0;
+	server_v2.test();
 }

@@ -1,72 +1,39 @@
-#include <cassert>
+#include <iostream>
 
 //  ================================================================================================
 
-class B;
-
-class A
-{
-public:
-
-	friend inline void test([[maybe_unused]] const A & a);
-
-	friend B;
-
-private:
-
-	const int m_data = 1; 
-	
-}; // class A
+struct Client_v1 { static void test(); };
+struct Client_v2 { static void test(); };
 
 //  ================================================================================================
 
-class C
+class Entity
 {
-public:
+	friend void            test();
 
-	inline void test([[maybe_unused]] const A & a, 
-					 [[maybe_unused]] const B & b) const;
+	friend void Client_v1::test();
 
-private:
+	friend      Client_v2;
 
-	const int m_data = 1; 
-	
-}; // class C
+//  ------------------------------------------------------------------------------------------------
+
+	static void test()
+	{
+		std::clog << "Entity::test\n";
+	} 	
+};
 
 //  ================================================================================================
 
-class B
-{
-public:
-
-	       inline void    test([[maybe_unused]] const A & a) const;
-	friend inline void C::test([[maybe_unused]] const A & a, 
-							   [[maybe_unused]] const B & b) const;
-
-private:
-
-	const int m_data = 1; 
-	
-}; // class B
-
-//  ================================================================================================
-
-inline void    test([[maybe_unused]] const A & a)       { assert(a.m_data == 1); }
-inline void B::test([[maybe_unused]] const A & a) const { assert(a.m_data == 1); }
-inline void C::test([[maybe_unused]] const A & a, 
-				    [[maybe_unused]] const B & b) const 
-{
-//	assert(a.m_data == 1); // error
-	assert(b.m_data == 1); 
-}
+void            test() { Entity::test(); }
+void Client_v1::test() { Entity::test(); }
+void Client_v2::test() { Entity::test(); }
 
 //  ================================================================================================
 
 int main()
 {
-	    test(A()     );
-	B().test(A()     );
-	C().test(A(), B());
-
-	return 0;
+			   test();
+	Client_v1::test();
+	Client_v2::test();
 }

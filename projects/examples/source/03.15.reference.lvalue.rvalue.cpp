@@ -2,54 +2,77 @@
 
 //  ================================================================================================
 
-[[nodiscard]] inline int   get_prvalue() {                    return 42; }
-[[nodiscard]] inline int & get__lvalue() { static int x = 42; return  x; }
+struct Entity
+{
+	void test() const &  { std::clog << "Entity::test (1)\n"; }
+	void test() const && { std::clog << "Entity::test (2)\n"; }
+};
+
+//  ================================================================================================
+
+[[nodiscard]]       auto & make_entity_v1() { static       Entity entity; return entity; }
+[[nodiscard]] const auto & make_entity_v2() { static const Entity entity; return entity; }
+
+[[nodiscard]]       auto   make_entity_v3() { return Entity(); }
+[[nodiscard]] const auto   make_entity_v4() { return Entity(); }
+
+//  ================================================================================================
+
+void test(      Entity & ) { std::clog << "test (1)\n"; }
+void test(const Entity & ) { std::clog << "test (2)\n"; }
+void test(      Entity &&) { std::clog << "test (3)\n"; }
+void test(const Entity &&) { std::clog << "test (4)\n"; }
 
 //  ================================================================================================
 
 int main()
 {
-	[[maybe_unused]] double d = 3.14; [[maybe_unused]] const int i = 42;
+	[[maybe_unused]]       Entity &  lr__entity_1 = make_entity_v1();
+//	[[maybe_unused]]       Entity &  lr__entity_2 = make_entity_v2(); // error
+//	[[maybe_unused]]       Entity &  lr__entity_3 = make_entity_v3(); // error
+//	[[maybe_unused]]       Entity &  lr__entity_4 = make_entity_v4(); // error
 
-//  ================================================================================================
+	[[maybe_unused]] const Entity &  lr_centity_1 = make_entity_v1();
+	[[maybe_unused]] const Entity &  lr_centity_2 = make_entity_v2();
+	[[maybe_unused]] const Entity &  lr_centity_3 = make_entity_v3();
+	[[maybe_unused]] const Entity &  lr_centity_4 = make_entity_v4();
 
-//	[[maybe_unused]] int & lvalue_1 = get_prvalue(); // error
+//	[[maybe_unused]]       Entity && rr__entity_1 = make_entity_v1(); // error
+//	[[maybe_unused]]       Entity && rr__entity_2 = make_entity_v2(); // error
+	[[maybe_unused]]       Entity && rr__entity_3 = make_entity_v3();
+//	[[maybe_unused]]       Entity && rr__entity_4 = make_entity_v4(); // error
 
-	[[maybe_unused]] int & lvalue_2 = get__lvalue();
+//	[[maybe_unused]] const Entity && rr_centity_1 = make_entity_v1(); // error
+//	[[maybe_unused]] const Entity && rr_centity_2 = make_entity_v2(); // error
+	[[maybe_unused]] const Entity && rr_centity_3 = make_entity_v3();
+	[[maybe_unused]] const Entity && rr_centity_4 = make_entity_v4();
 
-//	[[maybe_unused]] int & lvalue_3 = d; // error
+//  ------------------------------------------------------------------------------------------------
 
-//	[[maybe_unused]] int & lvalue_4 = i; // error
+	auto d = 1.0;
 
-//  ================================================================================================
+//	[[maybe_unused]]       int &  lr__d = d; // error
+	[[maybe_unused]] const int &  lr_cd = d;
+	[[maybe_unused]]       int && rr__d = d;
+	[[maybe_unused]] const int && rr_cd = d;
 
-	[[maybe_unused]] int && rvalue_1 = get_prvalue();
+//  ------------------------------------------------------------------------------------------------
 
-//	[[maybe_unused]] int && rvalue_2 = get__lvalue(); // error
+	Entity entity_1;
 
-	[[maybe_unused]] int && rvalue_3 = d;
+	test(entity_1);
 
-//	[[maybe_unused]] int && rvalue_4 = i; // error
-
-//  ================================================================================================
+	const Entity entity_2; 
 	
-	[[maybe_unused]] const int & const_lvalue_1 = get_prvalue();
+	test(entity_2);
 
-	[[maybe_unused]] const int & const_lvalue_2 = get__lvalue();
+	Entity entity_3;
 
-	[[maybe_unused]] const int & const_lvalue_3 = d;
+	test(std::move(entity_3));
 
-	[[maybe_unused]] const int & const_lvalue_4 = i;
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
-	
-	[[maybe_unused]] const int && const_rvalue_1 = get_prvalue();
+	entity_1.test();
 
-//	[[maybe_unused]] const int && const_rvalue_2 = get__lvalue(); // error
-
-	[[maybe_unused]] const int && const_rvalue_3 = d;
-
-//	[[maybe_unused]] const int && const_rvalue_4 = i; // error
-
-	return 0;
+	Entity().test();
 }

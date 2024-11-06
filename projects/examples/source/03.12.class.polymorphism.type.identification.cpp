@@ -1,102 +1,75 @@
 #include <any>
+#include <cassert>
 #include <iostream>
+#include <string>
 #include <typeinfo>
+#include <utility>
+
+using namespace std::literals;
 
 #include <boost/type_index.hpp>
 
 //  ================================================================================================
 
-class System 
+struct Entity 
 {
-public:
+	virtual ~Entity() = default;
+};
 
-	virtual ~System() = default;
-
-	virtual void test() const = 0;
-
-}; // class System 
-
-//  ================================================================================================
-
-class Server : public System { void test() const override {	std::clog << "Server::test\n"; } };
-class Client : public System { void test() const override { std::clog << "Client::test\n"; } };
+struct Client : public Entity {};
+struct Server : public Entity {};
 
 //  ================================================================================================
 
 int main()
 {
-	const System * system = new const Server();
+	[[maybe_unused]] auto x = 1; 
+	
+	[[maybe_unused]] auto & r_x = x;
 
-	[[maybe_unused]] const auto server_1 = dynamic_cast < const Server * > (system);
+	[[maybe_unused]] auto y = r_x; 
 
-	delete system;
+	[[maybe_unused]] decltype(x) z = 1;
 
-	system = new const Client();
+	[[maybe_unused]] decltype((y)) r_y_1 = y;
 
-	if (const auto server_2 = dynamic_cast < const Server * > (system); !server_2)
-	{
-		std::cout << "invalid dynamic cast\n"; 
-	}
+	[[maybe_unused]] decltype(auto) r_y_2 = r_y_1;
 
-	delete system;
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
+	Entity * entity = new Client(); 
 
-	auto x = 1;
+	assert(dynamic_cast < Client * > (entity)); // support: compiler-explorer.com
 
-	[[maybe_unused]] decltype( x )     y = x;
-	[[maybe_unused]] decltype((x)) ref_x = x;
+//  ------------------------------------------------------------------------------------------------
 
-	const auto & ref_cx = x;
+	std::cout << "typeid(      x).name() = " << typeid(      x).name() << '\n';
+	std::cout << "typeid(    r_x).name() = " << typeid(    r_x).name() << '\n';
+	std::cout << "typeid( entity).name() = " << typeid( entity).name() << '\n';
+	std::cout << "typeid(*entity).name() = " << typeid(*entity).name() << '\n';
 
-	[[maybe_unused]]          auto  z1 = ref_cx; 
-	[[maybe_unused]] decltype(auto) z2 = ref_cx;
-
-//  ================================================================================================
-
-	std::cout << typeid(x).name() << std::endl;
-
-	const std::string string = "aaaaa";
-
-	std::cout << typeid(string).name() << std::endl;
-
-	system = new const Server();
-
-	const auto & type_info = typeid(*system);
-
-	std::cout << type_info.name() << std::endl;
-
-	delete system;
-
-	const auto & reference = Server();
-
-	std::cout << typeid(reference).name() << std::endl;
-
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
 	using boost::typeindex::type_id_with_cvr;
 
-	std::cout << type_id_with_cvr < decltype(reference) > ().pretty_name() << std::endl;
+	assert(type_id_with_cvr < decltype(      x) > ().pretty_name() ==    "int" );
+	assert(type_id_with_cvr < decltype(    r_x) > ().pretty_name() ==    "int&");
+	assert(type_id_with_cvr < decltype( entity) > ().pretty_name() == "Entity*");
+	assert(type_id_with_cvr < decltype(*entity) > ().pretty_name() == "Entity&");
 
-//  ================================================================================================
+	delete entity;
 
-	if (std::any any = std::make_any < decltype(x) > (x); any.has_value())
-	{
-		std::cout << any.type().name() << " : ";
+//  ------------------------------------------------------------------------------------------------
+
+	auto any = std::make_any < int > (1);
+
+	assert(std::string(any.type().name()) == typeid(int).name());
+
+	assert(std::any_cast < int > (any) == 1);
 		
-		if (any.type() == typeid(int))
-		{
-			std::cout << std::any_cast < int > (any) << std::endl;
-		}
-		else
-		{
-			std::cout << "unknown type\n";
-		}
-	}
-	else 
-	{
-		any = 1.0;
-	}
+	any = "aaaaa"s;
 
-	return 0;
+	assert(std::string(any.type().name()) == typeid(std::string).name());
+
+	assert(std::any_cast < std::string > (any) == "aaaaa");
 }

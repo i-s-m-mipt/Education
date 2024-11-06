@@ -4,65 +4,73 @@
 
 //  ================================================================================================
 
-class Computer
+class Entity
 {
 public:
 
-	using integer_t = unsigned int;
-
-	class Tester
+	struct Nested
 	{
-	public:
+		static void test(Entity & entity) 
+		{
+			entity.m_data = s_data;
+		}
+	};
 
-		[[nodiscard]] int test(const Computer & computer) const { return 1; }
+//  ------------------------------------------------------------------------------------------------
 
-	}; // class Tester
+//	Entity() { m_name = ""; m_data = 0; } // error
 
-//  ================================================================================================
+//	Entity() : m_name("") { m_data = 0; } // bad
 
-	Computer() : m_name(""), m_data(0)
-	{
-//		m_name = ""; // error
-	}
+//	Entity() : m_data(0), m_name("") {} // error
 
-	Computer(const std::string & name, integer_t data) : m_name(name)
+	Entity() : m_name(""), m_data(0) {}
+
+	Entity(const std::string & name, int data) : m_name(name)
 	{
 		set_data(data);
 	}
 
-	Computer(const std::string & name) : Computer(name, 0) {}
+	Entity(const std::string & name) : Entity(name, 0) {}
 
-   ~Computer()
+   ~Entity()
 	{
-		std::cout << "Computer::~Computer" << std::endl;
+		std::clog << "Entity::~Entity\n";
 	}
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	[[nodiscard]] int test_v1() const
+	void test_v1() const
 	{
-//		m_data = m_data_limit; // error
+		std::clog << "Entity::test_v1\n";
 
-		return 1;
+//		m_data = s_data; // error
 	}
 
-	[[nodiscard]] int test_v2() const;
+	void test_v2() const;
 
-//  ================================================================================================
+//  ----------------------------------------------------
 
-	[[nodiscard]] integer_t data() const { return m_data; }
+	[[nodiscard]] auto data() const
+	{ 
+		return m_data; 
+	}
 
-//	void set_data(integer_t data) { m_data = data; } // bad
+//	void set_data(int data) { m_data = data; } // bad
 
-	void set_data(integer_t data)
+	void set_data(int data)
 	{
-		m_data = (data > m_data_limit ? m_data_limit : data); 
+		m_data = data < s_data ? s_data : data; 
 		
 		m_is_cache_valid = false;
 	}
 
-	[[nodiscard]] const std::string & data_as_string() const
+//  ----------------------------------------------------
+
+	[[nodiscard]] const auto & data_as_string() const
 	{
+//		m_data = s_data; // error
+
 		if (!m_is_cache_valid)
 		{
 			m_data_as_string = std::to_string(m_data);
@@ -73,88 +81,81 @@ public:
 		return m_data_as_string;
 	}
 
-//  ================================================================================================
+//  --------------------------------------------------
 
-	[[nodiscard]] static integer_t test_v3()
+	static void test_v3()
 	{
-//		m_data = m_data_limit; // error
+		std::clog << "Entity::test_v3\n";
 
-		return 3;
+//		m_data = s_data; // error
 	}
 
-//  ================================================================================================
-
-	static inline const integer_t m_data_limit = 1;
-
-//  ================================================================================================
+	static inline auto s_data = 0;
 
 private:
 
-	const std::string m_name;
+	const std::string m_name; 
+	
+	int m_data = 0;
 
-	integer_t m_data = 0;
-
-//  ================================================================================================
-
-	mutable std::string m_data_as_string;
+//  --------------------------------------
 
 	mutable bool m_is_cache_valid = false;
 
-}; // class Computer
+	mutable std::string m_data_as_string;
+};
 
 //  ================================================================================================
 
-[[nodiscard]] int Computer::test_v2() const { return 2; }
+void Entity::test_v2() const
+{ 
+	std::clog << "Entity::test_v2\n"; 
+}
 
 //  ================================================================================================
 
 int main()
 {
-	Computer computer_1;
+	Entity entity_1;
 
-//	computer_1.m_data = 1; // error
+//	entity_1.m_data = 1; // error
 
-	assert(computer_1.test_v1() == 1);
-	assert(computer_1.test_v2() == 2);
+	entity_1.test_v1();
+	entity_1.test_v2();
 
-	computer_1.set_data(1); 
+	entity_1.set_data(1); 
 	
-	assert(computer_1.data          () ==  1 );
-	assert(computer_1.data_as_string() == "1");
+	assert(entity_1.data() == 1);
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	const Computer computer_2;
+	const Entity entity_2;
 
-	assert(computer_2.test_v1() == 1);
-	assert(computer_2.test_v2() == 2);
+//  entity_2.set_data(1); // error
 
-//  computer_2.set_data(1); // error
+	assert(entity_2.data() == 0);
 
-	assert(computer_2.data          () ==  0 );
-	assert(computer_2.data_as_string() == "0");
+	assert(entity_2.data_as_string() == "0");
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	const Computer computer_3;
+	Entity entity_3;
 
-	const Computer computer_4("Computer", 1);
+	Entity entity_4("entity_4", 1);
 	
-	const Computer computer_5("Computer");
+	Entity entity_5("entity_5");
 
-//	const Computer computer_6(); // error
+//	Entity entity_6(); // error
 
 	{
-		const Computer computer_7;
+		Entity entity_7;
 	}
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	assert(Computer::m_data_limit == 1);
+	assert(Entity::s_data == 0);
 
-	assert(Computer::test_v3() == 3);
+	Entity::test_v3();
 
-	assert(Computer::Tester().test(computer_1) == 1);
-
-	return 0;
+	Entity::Nested::test(entity_1);
 }

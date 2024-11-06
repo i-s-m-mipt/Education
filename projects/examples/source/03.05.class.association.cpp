@@ -2,7 +2,19 @@
 
 //  ================================================================================================
 
-class Client;
+class Client
+{
+public:
+
+	void add_server(class Server * server)
+	{
+		m_servers.push_back(server);
+	}
+
+private:
+
+	std::vector < class Server * > m_servers;
+};
 
 //  ================================================================================================
 
@@ -10,48 +22,28 @@ class Server
 {
 public:
 
-	void connect(const Client * client)
+	void add_client(Client * client)
 	{
 		m_clients.push_back(client);
 	}
 
 private:
 
-	std::vector < const Client * > m_clients;
-
-}; // class Server
-
-//  ================================================================================================
-
-class Client
-{
-public:
-
-	void connect(const Server * server)
-	{
-		m_servers.push_back(server);
-	}
-
-private:
-
-	std::vector < const Server * > m_servers;
-
-}; // class Client
+	std::vector < Client * > m_clients;
+};
 
 //  ================================================================================================
 
 int main()
 {
-	const std::size_t size = 5;
+	auto size = 5uz;
 
-	std::vector < Server > servers(size);
 	std::vector < Client > clients(size);
+	std::vector < Server > servers(size);
 	
-	for (std::size_t i = 0; i < size; ++i)
+	for (auto i = 0uz; i < size; ++i)
 	{
-		servers[i].connect(&clients[i]);
-		clients[i].connect(&servers[i]);
+		clients[i].add_server(&servers[i]);
+		servers[i].add_client(&clients[i]);
 	}
-
-	return 0;
 }

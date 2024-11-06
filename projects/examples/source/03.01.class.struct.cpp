@@ -1,66 +1,74 @@
 #include <cassert>
+#include <iterator>
+#include <string>
 #include <vector>
 
 //  ================================================================================================
 
-struct Data { int x{}, y{}, z{}; };
+struct Entity 
+{ 
+	int data_1 = 0; 
+	int data_2 = 0; 
+};
 
 //  ================================================================================================
 
-[[nodiscard]] inline Data make_data(int x, int y, int z) 
+[[nodiscard]] auto make_entity(int data_1, int data_2) 
 { 
-	return Data { x, y, z }; 
+	return Entity
+	(
+		data_1 < 0 ? 0 : data_1, 
+		data_2 < 0 ? 0 : data_2
+	); 
 }
 
 //  ================================================================================================
 
 int main()
 {
-	[[maybe_unused]] Data data_1, data_2{};
+	[[maybe_unused]] Entity entity_1 = {};
 	
-	[[maybe_unused]] Data data_3 { 1 }, data_4 { 1, 2 }, data_5 { 1, 2, 3 };
+	[[maybe_unused]] Entity entity_2 = { 2 };
 	
-	[[maybe_unused]] Data data_6 { .x = 1, .z = 3 };
+	[[maybe_unused]] Entity entity_3 = { 3, 3 };
 	
-//	[[maybe_unused]] Data data_7 { .y = 2, .x = 1 }; // error
+	[[maybe_unused]] Entity entity_4 = { .data_1 = 4 };
 
-//  ================================================================================================
+	[[maybe_unused]] Entity entity_5 = { .data_1 = 5, .data_2 = 5 };
 
-	data_1.x = 1;
+	[[maybe_unused]] Entity entity_6 = { .data_2 = 6 };
 
-	const auto ptr = &data_1;
+//	[[maybe_unused]] Entity entity_7 = { .data_2 = 7, .data_1 = 7 }; // error
 
-//	(*ptr).y = 2; // bad
+//  ------------------------------------------------------------------------------------------------
 
-	ptr->y = 2;
+	entity_1.data_1 = 1;
 
-	auto & ref = data_1.z;
+	auto p_entity_1 = &entity_1;
 
-	ref = 3;
+//	(*p_entity_1).data_1 = 1; // bad
 
-//  ================================================================================================
+	p_entity_1->data_1 = 1;
+
+	auto & r_entity_1 = entity_1;
+
+	r_entity_1.data_1 = 1;
+
+//  ------------------------------------------------------------------------------------------------
 
 	assert
 	(
-		static_cast < void * > (&data_1  ) == 
-		static_cast < void * > (&data_1.x)
+		static_cast < void * > (&entity_1       ) == 
+		static_cast < void * > (&entity_1.data_1)
 	);
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	data_1 = { 1, 2, 3 };
+	[[maybe_unused]] const Entity entity_8;
 
-	data_1 = { .x = 1, .z = 3 };
+//	entity_8 = { 8, 8 }; // error
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	[[maybe_unused]] const Data data_8;
-
-//	data_8.x = 1; // error
-
-//  ================================================================================================
-
-	std::vector < Data > vector { {}, { 1, 2, 3 }, make_data(1, 2, 3) };
-
-	return 0;
+	std::vector < Entity > entities({ { 1, 1 }, make_entity(2, 2), entity_3 });
 }

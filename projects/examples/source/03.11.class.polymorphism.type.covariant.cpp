@@ -2,57 +2,48 @@
 
 //  ================================================================================================
 
-class System_v1 
-{
-public:
+struct Entity_v1 
+{ 
+	virtual ~Entity_v1() = default; 
+};
 
-	virtual ~System_v1() = default;
-
-}; // class System_v1 
-
-class Server_v1 : public System_v1 {};
+struct Client_v1 : public Entity_v1 {};
 
 //  ================================================================================================
 
-class System_v2 
+struct Entity_v2 
 {
-public:
+	virtual ~Entity_v2() = default;
 
-	virtual ~System_v2() = default;
+//  ------------------------------------------------------------------------------------------------
 
-	[[nodiscard]] virtual const System_v1 * test() const 
+	[[nodiscard]] virtual Entity_v1 * test() const
 	{ 
-		std::clog << "System_v2::test\n";
+		std::clog << "Entity_v2::test\n";
 
-		return new const System_v1(); 
+		return new Entity_v1(); 
 	}
-
-}; // class System_v2
+};
 
 //  ================================================================================================
 
-class Server_v2 : public System_v2
+struct Client_v2 : public Entity_v2
 {
-public:
-
-	[[nodiscard]] const Server_v1 * test() const override 
+	[[nodiscard]] Client_v1 * test() const override 
 	{ 
-		std::clog << "Server_v2::test\n";
+		std::clog << "Client_v2::test\n";
 
-		return new const Server_v1(); 
+		return new Client_v1(); 
 	}
-
-}; // class Server_v2 : public System_v2
+};
 
 //  ================================================================================================
 
 int main()
 {
-	const System_v2 * const system_v2 = new const Server_v2();
+	Entity_v2 * entity_v2 = new Client_v2();
 
-	delete system_v2->test();
+	delete entity_v2->test();
 
-	delete system_v2;
-
-	return 0;
+	delete entity_v2;
 }

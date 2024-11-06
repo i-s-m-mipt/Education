@@ -1,80 +1,69 @@
-class Computer_v1
-{
-private:
-
-    class Key_v1 { private: Key_v1() = default; friend class User; };
-    class Key_v2 { private: Key_v2() = default; friend class User; };
-    class Key_v3 { private: Key_v3() = default;                    };
-
-private:
-
-    friend class User;
-
-private:
-
-    void test_v1(Key_v1) const {}
-    void test_v2(Key_v2) const {}
-    void test_v3(Key_v3) const {}
-
-}; // class Computer_v1
+#include <iostream>
 
 //  ================================================================================================
 
-class Computer_v2
+class Entity_v1
 {
-private:
+    class Key_v1 { Key_v1() = default; friend struct Client; };
 
-    friend class Attorney;
+    class Key_v2 { Key_v2() = default; };
 
-private:
+//  ------------------------------------------------------------------------------------------------
 
-    void test_v1() const {}
-    void test_v2() const {}
-    void test_v3() const {}
+    friend struct Client;
 
-}; // class Computer_v2
+//  ------------------------------------------------------------------------------------------------
+
+    static void test(Key_v1) { std::clog << "Entity_v1::test (1)\n"; }
+    static void test(Key_v2) { std::clog << "Entity_v1::test (2)\n"; }
+};
 
 //  ================================================================================================
 
-class Attorney 
+class Entity_v2
 {
-private:
+    friend class Entity_v3;
 
-    static void test_v1(const Computer_v2 & computer) { computer.test_v1(); }
-    static void test_v2(const Computer_v2 & computer) { computer.test_v2(); }
+//  ------------------------------------------------------------------------------------------------
 
-    friend class User;
-
-}; // class Attorney 
+    static void test_v1() { std::clog << "Entity_v2::test_v1\n"; }
+    static void test_v2() { std::clog << "Entity_v2::test_v2\n"; }
+};
 
 //  ================================================================================================
 
-class User
+class Entity_v3 
 {
-public:
+    friend struct Client;
 
-    void test(const Computer_v1 & computer) const
+//  ------------------------------------------------------------------------------------------------
+
+    static void test_v1() { Entity_v2::test_v1(); }
+
+    static void test_v2() {}
+};
+
+//  ================================================================================================
+
+struct Client
+{
+    static void test_v1()
     {
-        computer.test_v1({});
-        computer.test_v2({});
-//      computer.test_v3({}); // error
+        Entity_v1::test(Entity_v1::Key_v1());
+//      Entity_v1::test(Entity_v1::Key_v2()); // error
     }
 
-    void test(const Computer_v2 & computer) const
+    static void test_v2()
     {
-        Attorney::test_v1(computer);
-        Attorney::test_v2(computer);
-//      Attorney::test_v3(computer); // error
+        Entity_v3::test_v1();
+        Entity_v3::test_v2();
     }
-
-}; // class User
+};
 
 //  ================================================================================================
 
 int main()
 {
-    User().test(Computer_v1());
-    User().test(Computer_v2());
-
-    return 0;
+    Client::test_v1();
+    Client::test_v2();
 }

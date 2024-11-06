@@ -3,120 +3,128 @@
 
 //  ================================================================================================
 
-class System 
+struct Entity 
 {
-public:
-
-	System()
+	Entity()
 	{
 //		test_v1(); // bad
 	}
 
-// ~System() = default; // error
+// ~Entity() = default; // error
 
-	virtual ~System() = default;
+	virtual ~Entity() = default;
 
-public:
+//  ------------------------------------------------------------------------------------------------
 
-	virtual void test_v1() const 
+	virtual void test_v1() const
 	{ 
-		std::clog << "System::test_v1\n"; 
+		std::clog << "Entity::test_v1\n"; 
 	}
 
 	virtual void test_v2() const = 0;
 
 //	virtual void test_v3() const = 0 // error
 //	{
-//		std::clog << "System::test_v3\n";
+//		std::clog << "Entity::test_v3\n";
 //	}
 
-private:
+	void * data = nullptr;
+};
 
-	const int * m_system_data = nullptr;
+//  ================================================================================================
 
-}; // class System
-
-void System::test_v2() const 
+void Entity::test_v2() const
 { 
-	std::clog << "System::test_v2\n"; 
+	std::clog << "Entity::test_v2\n"; 
 }
 
 //  ================================================================================================
 
-class Server : public System
+struct Client : public Entity
 {
-public:
-
 	void test_v1() const override final 
 	{ 
-		std::clog << "Server::test_v1\n"; 
+		std::clog << "Client::test_v1\n";                    
 	}
 
+	void test_v2() const override 
+	{ 
+		std::clog << "Client::test_v2\n"; Entity::test_v2(); 
+	}
+
+//  ------------------------------------------------------------------------------------------------
+
+	void * data = nullptr;
+};
+
+//  ================================================================================================
+
+struct Server final : public Entity 
+{
 	void test_v2() const override 
 	{ 
 		std::clog << "Server::test_v2\n"; 
 
-		System::test_v2();
+		Entity::test_v2();
 	}
 
-private:
+//  ------------------------------------------------------------------------------------------------
 
-	const int * m_server_data = nullptr;
-
-}; // class Server final : public System
+	void * data = nullptr;
+};
 
 //  ================================================================================================
 
-class Client final : public System 
+struct Router : private Entity 
 {
-public:
-
 	void test_v2() const override 
 	{ 
-		std::clog << "Client::test_v2\n"; 
+		std::clog << "Router::test_v2\n"; 
 
-		System::test_v2();
+		Entity::test_v2();
 	}
-
-private:
-
-	const int * m_client_data = nullptr;
-
-}; // class Client final : public System 
+};
 
 //  ================================================================================================
 
 int main()
 {
-	const Server server;
+	Client client;
 
-	[[maybe_unused]] const System * system_1 = &server;
-	[[maybe_unused]] const System & system_2 =  server;
-//	[[maybe_unused]] const System   system_3 =  server; // error
+	[[maybe_unused]] Entity * entity_1 = &client;
+	[[maybe_unused]] Entity & entity_2 =  client;
+//	[[maybe_unused]] Entity   entity_3 =  client; // error
 
-	system_1->test_v1(); // support: compiler-explorer.com
+	entity_1->test_v1(); // support: compiler-explorer.com
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	std::vector < const System * > systems 
-	{ 
-		new const Server(), 
-		new const Client() 
-	};
+	std::vector < Entity * > entities 
+	(
+		{ 
+			new Client(), 
+			new Server() 
+		}
+	);
 
-	for (const auto system : systems) 
+	for (auto entity : entities) 
 	{
-		system->test_v1();
-		system->test_v2();
+		entity->test_v1();
+		entity->test_v2();
 
-		delete system;
+		delete entity;
 	}
+	
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
+	Router router;
 
-	std::cout << "sizeof(System) = " << sizeof(System) << '\n';
-	std::cout << "sizeof(Server) = " << sizeof(Server) << '\n';
+//	[[maybe_unused]] Entity * entity_4 = &router; // error
+
+//  ------------------------------------------------------------------------------------------------
+
+	std::cout << "sizeof(Entity) = " << sizeof(Entity) << '\n';
 	std::cout << "sizeof(Client) = " << sizeof(Client) << '\n';
-
-	return 0;
+	std::cout << "sizeof(Server) = " << sizeof(Server) << '\n';
+	std::cout << "sizeof(Router) = " << sizeof(Router) << '\n';
 }
