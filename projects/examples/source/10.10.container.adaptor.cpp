@@ -50,6 +50,4 @@ int main()
 	priority_queue.pop();
 
 	assert(priority_queue.top() == 2);
-
-	return 0;
 }

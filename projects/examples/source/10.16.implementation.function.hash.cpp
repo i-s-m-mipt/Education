@@ -1,3 +1,4 @@
+#include <cassert>
 #include <functional>
 #include <iostream>
 #include <iterator>
@@ -8,13 +9,13 @@
 
 //  ================================================================================================
 
-[[nodiscard]] inline constexpr std::size_t hash(const std::string & string) noexcept
+[[nodiscard]] auto hash_v1(const std::string & string)
 {
-	std::size_t seed = 0;
+	auto seed = 0uz;
 
-	for (const auto element : string) 
+	for (auto element : string) 
 	{
-		(seed *= 31) += static_cast < std::size_t > (element); // support: Java
+		(seed *= 31) += static_cast < std::size_t > (element);
 	}
 
 	return seed;
@@ -22,46 +23,34 @@
 
 //  ================================================================================================
 
-namespace detail
+template < typename T, typename ... Ts > [[nodiscard]] auto hash_v2(T arg, Ts ... args)
 {
-	template < typename T > inline void bind(std::size_t & seed, const T & value) noexcept
+	auto seed = std::hash < T > ()(arg); 
+
+	if constexpr (sizeof...(args) > 0)
 	{
-		(seed *= 31) += std::hash < T > ()(value); // support: operator^
+		seed += hash_v2(args...) * 31;
 	}
-
-	template < typename T > inline void hash(std::size_t & seed, const T & value) noexcept
-	{
-		bind(seed, value);
-	}
-
-	template < typename T, typename ... Ts > 
-
-	inline void hash(std::size_t & seed, const T & value, const Ts & ... args) noexcept
-	{
-		bind(seed, value); hash(seed, args...);
-	}
-
-} // namespace detail
-
-//  ================================================================================================
-
-template < typename ... Ts > 
-
-[[nodiscard]] inline std::size_t combined_hash(const Ts & ... args) noexcept
-{
-	std::size_t seed = 0; detail::hash(seed, args...); return seed;
+	
+	return seed;
 }
 
 //  ================================================================================================
 
-struct S { std::string string_1, string_2; };
+struct Entity 
+{ 
+	int data_1 = 0; 
+	int data_2 = 0; 
+};
 
-[[nodiscard]] inline std::size_t hash_value(const S & s) noexcept
+//  ================================================================================================
+
+[[nodiscard]] auto hash_value(const Entity & entity)
 {
-	std::size_t seed = 0;
+	auto seed = 0uz;
 
-	boost::hash_combine(seed, s.string_1);
-	boost::hash_combine(seed, s.string_2);
+	boost::hash_combine(seed, entity.data_1);
+	boost::hash_combine(seed, entity.data_2);
 
 	return seed;
 }
@@ -70,26 +59,21 @@ struct S { std::string string_1, string_2; };
 
 int main()
 {
-	std::cout << hash("Hello, world!") << std::endl;
+	std::cout << hash_v1("aaaaa") << '\n';
+
+	std::cout << std::hash < std::string > ()("aaaaa") << '\n';
 
 //  ================================================================================================
 
-	std::cout <<   std::hash < std::string > ()("Hello, world!") << std::endl;
-	std::cout << boost::hash < std::string > ()("Hello, world!") << std::endl;
+	Entity entity(1, 1);
+
+	std::cout << hash_v2(entity.data_1, entity.data_2) << '\n';
+
+	std::cout << boost::hash < Entity > ()(entity) << '\n';
 
 //  ================================================================================================
 
-	const S s { "hello", "world" };
+	std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-	std::cout << combined_hash(s.string_1, s.string_2) << std::endl;
-
-	std::cout << boost::hash < S > ()(s) << std::endl;
-
-//  ================================================================================================
-
-	const std::vector < std::string > vector { "hello", "world" };
-
-	std::cout << boost::hash_range(std::cbegin(vector), std::cend(vector)) << std::endl;
-
-	return 0;
+	std::cout << boost::hash_range(std::cbegin(vector), std::cend(vector)) << '\n';
 }

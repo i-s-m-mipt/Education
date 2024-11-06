@@ -5,7 +5,6 @@
 #include <forward_list>
 #include <iterator>
 #include <list>
-#include <numeric>
 #include <vector>
 
 #include <benchmark/benchmark.h>
@@ -16,19 +15,24 @@ using Clock = std::chrono::steady_clock;
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state) 
+void test_v1(benchmark::State & state) 
 {
-    for (auto _ : state)
+    for (auto value : state)
     {
         std::array < int, 100'000 > array;
 
-        std::iota(std::begin(array), std::end(array), 1); 
+        std::ranges::iota(array, 1); 
 
-        const auto start = Clock::now();
+        auto start = Clock::now();
 
         std::ranges::sort(array, std::greater());
 
-        state.SetIterationTime(std::chrono::duration_cast < std::chrono::duration < double > > (Clock::now() - start).count());
+        auto delta = Clock::now() - start;
+
+        state.SetIterationTime
+        (
+            std::chrono::duration_cast < std::chrono::duration < double > > (delta).count()
+        );
 
         benchmark::DoNotOptimize(array);
     }
@@ -36,19 +40,24 @@ void test_1(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state) 
+void test_v2(benchmark::State & state) 
 {
-    for (auto _ : state)
+    for (auto value : state)
     {
-        std::vector < int > vector(state.range(0));
+        std::vector < int > vector(100'000, 0);
 
-        std::iota(std::begin(vector), std::end(vector), 1); 
+        std::ranges::iota(vector, 1); 
 
-        const auto start = Clock::now();
+        auto start = Clock::now();
 
         std::ranges::sort(vector, std::greater());
 
-        state.SetIterationTime(std::chrono::duration_cast < std::chrono::duration < double > > (Clock::now() - start).count());
+        auto delta = Clock::now() - start;
+
+        state.SetIterationTime
+        (
+            std::chrono::duration_cast < std::chrono::duration < double > > (delta).count()
+        );
 
         benchmark::DoNotOptimize(vector);
     }
@@ -56,19 +65,24 @@ void test_2(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_3(benchmark::State & state) 
+void test_v3(benchmark::State & state) 
 {
-    for (auto _ : state)
+    for (auto value : state)
     {
-        std::deque < int > deque(state.range(0));
+        std::deque < int > deque(100'000, 0);
 
-        std::iota(std::begin(deque), std::end(deque), 1); 
+        std::ranges::iota(deque, 1); 
 
-        const auto start = Clock::now();
+        auto start = Clock::now();
 
         std::ranges::sort(deque, std::greater());
 
-        state.SetIterationTime(std::chrono::duration_cast < std::chrono::duration < double > > (Clock::now() - start).count());
+        auto delta = Clock::now() - start;
+
+        state.SetIterationTime
+        (
+            std::chrono::duration_cast < std::chrono::duration < double > > (delta).count()
+        );
 
         benchmark::DoNotOptimize(deque);
     }
@@ -76,19 +90,24 @@ void test_3(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_4(benchmark::State & state) 
+void test_v4(benchmark::State & state) 
 {
-    for (auto _ : state)
+    for (auto value : state)
     {
-        std::list < int > list(state.range(0));
+        std::list < int > list(100'000, 0);
 
-        std::iota(std::begin(list), std::end(list), 1); 
+        std::ranges::iota(list, 1); 
 
-        const auto start = Clock::now();
+        auto start = Clock::now();
 
         list.sort(std::greater());
 
-        state.SetIterationTime(std::chrono::duration_cast < std::chrono::duration < double > > (Clock::now() - start).count());
+        auto delta = Clock::now() - start;
+
+        state.SetIterationTime
+        (
+            std::chrono::duration_cast < std::chrono::duration < double > > (delta).count()
+        );
 
         benchmark::DoNotOptimize(list);
     }
@@ -96,32 +115,35 @@ void test_4(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_5(benchmark::State & state) 
+void test_v5(benchmark::State & state) 
 {
-    for (auto _ : state)
+    for (auto value : state)
     {
-        std::forward_list < int > forward_list(state.range(0));
+        std::forward_list < int > forward_list(100'000, 0);
 
-        std::iota(std::begin(forward_list), std::end(forward_list), 1); 
+        std::ranges::iota(forward_list, 1); 
 
-        const auto start = Clock::now();
+        auto start = Clock::now();
 
         forward_list.sort(std::greater());
 
-        state.SetIterationTime(std::chrono::duration_cast < std::chrono::duration < double > > (Clock::now() - start).count());
+        auto delta = Clock::now() - start;
 
+        state.SetIterationTime
+        (
+            std::chrono::duration_cast < std::chrono::duration < double > > (delta).count()
+        );
+        
         benchmark::DoNotOptimize(forward_list);
     }
 }
 
 //  ================================================================================================
 
-BENCHMARK(test_1); 
-BENCHMARK(test_2)->Arg(100'000);
-BENCHMARK(test_3)->Arg(100'000);
-BENCHMARK(test_4)->Arg(100'000);
-BENCHMARK(test_5)->Arg(100'000);
-
-//  ================================================================================================
+BENCHMARK(test_v1); 
+BENCHMARK(test_v2);
+BENCHMARK(test_v3);
+BENCHMARK(test_v4);
+BENCHMARK(test_v5);
 
 BENCHMARK_MAIN();

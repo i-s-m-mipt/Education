@@ -1,101 +1,71 @@
 #include <cassert>
 #include <iostream>
-#include <iterator>
 #include <string>
 #include <vector>
 
-#include <boost/container_hash/hash.hpp>
 #include <boost/flyweight.hpp>
 
 //  ================================================================================================
 
-struct Data { int array[1000]{}; };
-
-//  ================================================================================================
-
-struct Hash
+struct Entity
 {
-    [[nodiscard]] std::size_t operator()(const Data & data) const noexcept
-    {
-        std::size_t seed = 0;
+    using data_1_t = int;
 
-        for (const auto element : data.array) boost::hash_combine(seed, element);
+    using data_2_t = std::string;
 
-        return seed;
-    }
+//  ------------------------------------------------------------------------------------------------
 
-}; // struct Hash
+    template < typename T > using tag_t = boost::flyweights::tag < T > ;
 
-//  ================================================================================================
+    struct data_1_tag {};
+    struct data_2_tag {};
 
-struct Equal
-{
-    [[nodiscard]] bool operator()(const Data & lhs, const Data & rhs) const noexcept
-    {
-        for (std::size_t i = 0; i < std::size(lhs.array); ++i)
-        {
-            if (lhs.array[i] != rhs.array[i]) return false;
-        }
+//  ------------------------------------------------------------------------------------------------
 
-        return true;
-    }
+    explicit Entity(data_1_t data_1, const data_2_t & data_2) 
+    : 
+        flyweight_data_1(data_1), 
+        flyweight_data_2(data_2) 
+    {}
 
-}; // struct Equal
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
-
-class Storage 
-{
-public:
-
-    using container = boost::flyweights::hashed_factory < Hash, Equal > ;
-
-    struct X {};
-    struct Y {};
-
-    template < typename T > using tag = boost::flyweights::tag < T > ;
-
-    explicit Storage(const Data & x, const Data & y) : m_x(x), m_y(y) {}
-
-    boost::flyweight < Data, container, tag < X > > m_x;
-    boost::flyweight < Data, container, tag < Y > > m_y;
-
-}; // class Storage
+    boost::flyweight < data_1_t, tag_t < data_1_tag > > flyweight_data_1;
+    boost::flyweight < data_2_t, tag_t < data_2_tag > > flyweight_data_2;
+};
 
 //  ================================================================================================
 
 int main() 
 {
-    constexpr std::size_t size = 100'000;
+    auto size_1 = 1'000'000uz, size_2 = 1'000uz;
 
-    std::vector < Storage > storages; storages.reserve(size);
+    std::vector < Entity > entities; 
+    
+    entities.reserve(size_1);
 
-    for (std::size_t i = 0; i < size; ++i) // detail: ~800(MB)
+    for (auto i = 0uz; i < size_1; ++i)
     {
-        storages.emplace_back(Data { static_cast < int > (i) }, 
-                              Data { static_cast < int > (i) });
+        entities.emplace_back(1, std::string(size_2, 'a'));
     }
 
-    std::cout << "Enter any character to continue: "; char c1{}; std::cin >> c1;
+    std::cout << "Enter any character to continue : "; char c; std::cin >> c;
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-    storages.clear();
+    auto & entity = entities.front();
 
-    for (std::size_t i = 0; i < size; ++i) // detail: ~400(MB)
+    for (auto i = 1uz; i < size_1; ++i)
     {
-        storages.emplace_back(Data { static_cast < int > (i) }, Data{});
+        assert(&entity.flyweight_data_1.get() == &entities[i].flyweight_data_1.get());
+        assert(&entity.flyweight_data_2.get() == &entities[i].flyweight_data_2.get());
     }
 
-    std::cout << "Enter any character to continue: "; char c2{}; std::cin >> c2;
+    entity = Entity(2, std::string(size_2, 'b'));
 
-//  ================================================================================================
-
-    const Storage storage_1(Data { 1 }, Data{});
-    const Storage storage_2(Data { 2 }, Data{});
-
-    assert(&storage_1.m_x.get() != &storage_2.m_x.get());
-    assert(&storage_1.m_y.get() == &storage_2.m_y.get());
-
-    return 0;
+    for (auto i = 1uz; i < size_1; ++i)
+    {
+        assert(&entity.flyweight_data_1.get() != &entities[i].flyweight_data_1.get());
+        assert(&entity.flyweight_data_2.get() != &entities[i].flyweight_data_2.get());
+    }
 }

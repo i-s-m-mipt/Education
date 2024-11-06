@@ -7,7 +7,7 @@
 
 //  ================================================================================================
 
-template < typename T, auto N > class Array_2D 
+template < typename T, std::size_t S > class Array_2D 
 {
 public:
 
@@ -15,45 +15,47 @@ public:
 	{
 	public:
 
-		constexpr explicit Row(T * array) noexcept : m_array(array) {}
+		explicit Row(T * array) : m_array(array) {}
 
-		[[nodiscard]] constexpr T & operator[](std::size_t index) noexcept
-		{
-			return m_array[index];
+//      --------------------------------------------------
+
+		[[nodiscard]] auto & operator[](std::size_t index)
+		{ 
+			return m_array[index]; 
 		}
 
 	private:
 
-		T * const m_array;
+		T * m_array = nullptr;
+	};
 
-	}; // class Row 
+//  ------------------------------------------------------
 
-	[[nodiscard]] constexpr Row operator[](std::size_t index) noexcept 
-	{
-		return Row(m_array[index]);
+	[[nodiscard]] auto operator[](std::size_t index)
+	{ 
+		return Row(m_array[index]); 
 	}
 
 private:
 
-	T m_array[N][N]{};
-
-}; // template < auto N > class Array_2D
+	T m_array[S][S]{};
+};
 
 //  ================================================================================================
 
 int main()
 {
-	constexpr std::size_t size = 5;
+	const auto size = 5uz;
 
 //  ================================================================================================
 
 	[[maybe_unused]] int array_2D_v1[size][size]{};
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (auto i = 0uz; i < size; ++i)
 	{
-		for (std::size_t j = 0; j < size; ++j)
+		for (auto j = 0uz; j < size; ++j)
 		{
-			array_2D_v1[i][j] = 42;
+			array_2D_v1[i][j] = 1;
 		}
 	}
 
@@ -61,32 +63,32 @@ int main()
 
 	Array_2D < int, size > array_2D_v2;
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (auto i = 0uz; i < size; ++i)
 	{
-		for (std::size_t j = 0; j < size; ++j)
+		for (auto j = 0uz; j < size; ++j)
 		{
-			array_2D_v2[i][j] = 42; // support: operator()
+			array_2D_v2[i][j] = 42;
 		}
 	}
 
 //  ================================================================================================
 
-	const auto array_2D_v3 = new int*[size]{};
+	auto array_2D_v3 = new int*[size]{};
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (auto i = 0uz; i < size; ++i)
 	{
 		array_2D_v3[i] = new int[size]{};
 	}
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (auto i = 0uz; i < size; ++i)
 	{
-		for (std::size_t j = 0; j < size; ++j)
+		for (auto j = 0uz; j < size; ++j)
 		{
 			array_2D_v3[i][j] = 42;
 		}
 	}
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (auto i = 0uz; i < size; ++i)
 	{
 		delete[] array_2D_v3[i];
 	}
@@ -95,11 +97,11 @@ int main()
 
 //  ================================================================================================
 
-	const auto array_2D_v4 = new int[size * size]{};
+	auto array_2D_v4 = new int[size * size]{};
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (auto i = 0uz; i < size; ++i)
 	{
-		for (std::size_t j = 0; j < size; ++j)
+		for (auto j = 0uz; j < size; ++j)
 		{
 			array_2D_v4[i * size + j] = 42;
 		}
@@ -111,9 +113,9 @@ int main()
 
 	std::array < std::array < int, size > , size > array_2D_v5;
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (auto i = 0uz; i < size; ++i)
 	{
-		for (std::size_t j = 0; j < size; ++j)
+		for (auto j = 0uz; j < size; ++j)
 		{
 			array_2D_v5[i][j] = 42;
 		}
@@ -121,11 +123,11 @@ int main()
 
 //  ================================================================================================
 
-	std::vector array_2D_v6(size, std::vector < int > (size));
+	std::vector < std::vector < int > > array_2D_v6(size, std::vector < int > (size, 0));
 
-	for (std::size_t i = 0; i < size; ++i)
+	for (auto i = 0uz; i < size; ++i)
 	{
-		for (std::size_t j = 0; j < size; ++j)
+		for (auto j = 0uz; j < size; ++j)
 		{
 			array_2D_v6[i][j] = 42;
 		}
@@ -133,21 +135,23 @@ int main()
 
 //  ================================================================================================
 
-	constexpr std::size_t size_1 = 3;
-	constexpr std::size_t size_2 = 4;
-	constexpr std::size_t size_3 = 5;
+	auto size_1 = 3uz;
+	auto size_2 = 4uz;
+	auto size_3 = 5uz;
 
 	boost::multi_array < int, 3 > array_2D_v7(boost::extents[size_1][size_2][size_3]);
 
 	auto index = 0;
 
-	for (std::size_t i = 0; i < size_1; ++i)
+	for (auto i = 0uz; i < size_1; ++i)
 	{
-		for (std::size_t j = 0; j < size_2; ++j)
+		for (auto j = 0uz; j < size_2; ++j)
 		{
-			for (std::size_t k = 0; k < size_3; ++k)
+			for (auto k = 0uz; k < size_3; ++k)
 			{
-				std::cout << std::setw(2) << std::right << (array_2D_v7[i][j][k] = ++index) << ' ';
+				std::cout << std::setw(2) << std::setfill(' ') << std::right;
+				
+				std::cout << (array_2D_v7[i][j][k] = ++index) << ' ';
 			}
 
 			std::cout << std::endl;
@@ -162,18 +166,16 @@ int main()
 
 	auto view = array_2D_v7[boost::indices[range_t(0, 2)][1][range_t(0, 5, 2)]];
 
-	constexpr std::size_t view_size_1 = 2;
-	constexpr std::size_t view_size_2 = 3;
+	auto view_size_1 = 2uz;
+	auto view_size_2 = 3uz;
 
-	for (std::size_t i = 0; i < view_size_1; ++i)
+	for (auto i = 0uz; i < view_size_1; ++i)
 	{
-		for (std::size_t k = 0; k < view_size_2; ++k)
+		for (auto k = 0uz; k < view_size_2; ++k)
 		{
-			std::cout << std::setw(2) << std::right << view[i][k] << ' ';
+			std::cout << std::setw(2) << std::setfill(' ') << std::right << view[i][k] << ' ';
 		}
 
 		std::cout << std::endl;
 	}
-
-	return 0;
 }

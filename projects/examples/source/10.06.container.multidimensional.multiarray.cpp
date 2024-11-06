@@ -8,38 +8,49 @@
 
 //  ================================================================================================
 
-template < auto N, typename C, typename FI > inline void fill_shape(const C & container, FI shape) noexcept
+template < std::size_t D, typename C, typename I > void fill_shape(const C & container, I shape)
 {
-	if constexpr (*shape = std::size(container); N > 1)
+	if constexpr (*shape = std::size(container); D > 1)
 	{
-		fill_shape < N - 1 > (*(std::begin(container)), ++shape);
+		fill_shape < D - 1 > (*(std::begin(container)), ++shape);
 	}
 }
 
 //  ================================================================================================
 
-template < auto N, typename C, typename FI > inline void fill_array(const C & container, FI array) noexcept
+template < std::size_t D, typename C, typename I > void fill_array(const C & container, I array)
 {
-	if constexpr (N > 1)
+	if constexpr (D > 1)
 	{
-		for (const auto & element : container) fill_array < N - 1 > (element, (array++)->begin());
+		for (const auto & element : container) 
+		{
+			fill_array < D - 1 > (element, (array++)->begin());
+		}
 	}
 	else
 	{
-		for (const auto & element : container) *(array++) = element;
+		for (const auto & element : container) 
+		{
+			*(array++) = element;
+		}
 	}
 }
 
 //  ================================================================================================
 
-template < typename T, auto N, typename C > [[nodiscard]] auto make_array(const C & c)
+template 
+< 
+	typename T, std::size_t D, typename C 
+> 
+[[nodiscard]] auto make_array(const C & container)
 {
-	using array_t = boost::multi_array < T, N > ;
+	std::vector < typename boost::multi_array < T, D > ::index > shape(D, 0);
 
-	std::vector shape(N, typename array_t::index(0));
-
-	fill_shape < N > (c, std::begin(shape)); array_t array(shape); // detail: 3 x 4 x 5
-	fill_array < N > (c, std::begin(array));
+	fill_shape < D > (container, std::begin(shape)); 
+	
+	boost::multi_array < T, D > array(shape);
+	
+	fill_array < D > (container, std::begin(array));
 
 	return array;
 }
@@ -48,9 +59,9 @@ template < typename T, auto N, typename C > [[nodiscard]] auto make_array(const 
 
 int main()
 {
-	constexpr std::size_t size_1 = 3;
-	constexpr std::size_t size_2 = 4;
-	constexpr std::size_t size_3 = 5;
+	auto size_1 = 3uz;
+	auto size_2 = 4uz;
+	auto size_3 = 5uz;
 
 //  ================================================================================================
 
@@ -62,13 +73,15 @@ int main()
 
 	auto counter = 0;
 
-	for (std::size_t i = 0; i < size_1; ++i)
+	for (auto i = 0uz; i < size_1; ++i)
 	{
-		for (std::size_t j = 0; j < size_2; ++j)
+		for (auto j = 0uz; j < size_2; ++j)
 		{
-			for (std::size_t k = 0; k < size_3; ++k)
+			for (auto k = 0uz; k < size_3; ++k)
 			{
-				std::cout << std::setw(2) << std::right << (vector_3D[i][j][k] = ++counter) << " ";
+				std::cout << std::setw(2) << std::setfill(' ') << std::right;
+				
+				std::cout << (vector_3D[i][j][k] = ++counter) << " ";
 			}
 
 			std::cout << std::endl;
@@ -79,17 +92,19 @@ int main()
 
 //  ================================================================================================
 
-	const auto array = make_array < int, 3 > (vector_3D);
+	auto array = make_array < int, 3 > (vector_3D);
 
 	std::cout << typeid(array).name() << std::endl << std::endl;
 
-	for (std::size_t i = 0; i < size_1; ++i)
+	for (auto i = 0uz; i < size_1; ++i)
 	{
-		for (std::size_t j = 0; j < size_2; ++j)
+		for (auto j = 0uz; j < size_2; ++j)
 		{
-			for (std::size_t k = 0; k < size_3; ++k)
+			for (auto k = 0uz; k < size_3; ++k)
 			{
-				std::cout << std::setw(2) << std::right << array[i][j][k] << " ";
+				std::cout << std::setw(2) << std::setfill(' ') << std::right;
+				
+				std::cout << array[i][j][k] << " ";
 			}
 
 			std::cout << std::endl;
@@ -97,6 +112,4 @@ int main()
 
 		std::cout << std::endl;
 	}
-
-	return 0;
 }

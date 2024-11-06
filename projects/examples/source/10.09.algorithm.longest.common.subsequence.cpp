@@ -1,24 +1,21 @@
 #include <algorithm>
+#include <cassert>
 #include <cmath>
-#include <iostream>
 #include <iterator>
 #include <vector>
 
 //  ================================================================================================
 
-template < typename T > [[nodiscard]] constexpr std::vector < T > longest_common_subsequence(
-	
-	const std::vector < T > & sequence_1, 
-	const std::vector < T > & sequence_2) 
+[[nodiscard]] auto find(const std::vector < int > & vector_1, const std::vector < int > & vector_2) 
 {
-	std::vector < std::vector < int > > table(std::size(sequence_1) + 1, 
-                  std::vector < int >        (std::size(sequence_2) + 1, 0));
+	std::vector < std::vector < std::size_t > > table(std::size(vector_1) + 1, 
+                  std::vector < std::size_t >        (std::size(vector_2) + 1, 0));
 
-	for (std::size_t i = 1; i < std::size(sequence_1) + 1; ++i)
+	for (auto i = 1uz; i < std::size(vector_1) + 1; ++i)
 	{
-		for (std::size_t j = 1; j < std::size(sequence_2) + 1; ++j)
+		for (auto j = 1uz; j < std::size(vector_2) + 1; ++j)
 		{
-			if (sequence_1[i - 1] == sequence_2[j - 1])
+			if (vector_1[i - 1] == vector_2[j - 1])
 			{
 				table[i][j] = table[i - 1][j - 1] + 1;
 			}
@@ -29,15 +26,18 @@ template < typename T > [[nodiscard]] constexpr std::vector < T > longest_common
 		}
 	}
 
-	std::vector < T > result; result.reserve(std::min(std::size(sequence_1), std::size(sequence_2)));
+	std::vector < int > result;
 
-	for (int i = std::size(sequence_1) - 1, j = std::size(sequence_2) - 1; i >= 0 && j >= 0; )
+	for (int i = std::size(vector_1) - 1, j = std::size(vector_2) - 1; i >= 0 && j >= 0; )
 	{
-		if (sequence_1[i] == sequence_2[j])
+		if (vector_1[i] == vector_2[j])
 		{
-			result.push_back(sequence_1[i]); --i; --j;
+			result.push_back(vector_1[i]); --i; --j;
 		}
-		else (table[i][j + 1] > table[i + 1][j] ? --i : --j);
+		else 
+		{
+			table[i][j + 1] > table[i + 1][j] ? --i : --j;
+		}
 	}
 
 	std::ranges::reverse(result);
@@ -49,16 +49,5 @@ template < typename T > [[nodiscard]] constexpr std::vector < T > longest_common
 
 int main()
 {
-
-	const std::vector < int > sequence_1 { 1, 2, 3, 3, 3 };
-	const std::vector < int > sequence_2 { 1, 1, 2, 2, 3 };
-
-	for (const auto element : longest_common_subsequence(sequence_1, sequence_2))
-	{
-		std::cout << element << ' ';
-	}
-
-	std::cout << std::endl;
-
-	return 0;
+	assert(find({ 1, 2, 3, 4, 5 }, { 1, 2, 3 }) == std::vector < int > ({ 1, 2, 3 }));
 }

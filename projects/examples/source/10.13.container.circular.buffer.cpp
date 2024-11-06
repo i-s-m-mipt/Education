@@ -1,4 +1,5 @@
 #include <cassert>
+#include <concepts>
 #include <iostream>
 #include <iterator>
 
@@ -6,21 +7,21 @@
 
 //  ================================================================================================
 
-template < typename I > inline void print(I first, I last)
+template < std::forward_iterator I > void print(I first, I last)
 {
 	for (auto iterator = first; iterator != last; ++iterator)
 	{
 		std::cout << *iterator << ' ';
 	}
 
-	std::cout << std::endl;
+	std::cout << '\n';
 }
 
 //  ================================================================================================
 
 int main()
 {
-	constexpr std::size_t capacity = 3;
+	auto capacity = 3uz;
 
 	boost::circular_buffer < int > buffer(capacity);
 
@@ -53,6 +54,4 @@ int main()
 
 	array_1 = buffer.array_one(); assert(array_1.second == 3);
 	array_2 = buffer.array_two(); assert(array_2.second == 0);
-
-	return 0;
 }

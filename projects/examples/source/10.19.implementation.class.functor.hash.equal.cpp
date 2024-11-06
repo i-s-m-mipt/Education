@@ -4,51 +4,40 @@
 
 //  ================================================================================================
 
-class Person
-{
-public:
-
-	constexpr explicit Person(const std::string & name) : m_name(name) {}
-
-	[[nodiscard]] constexpr const std::string & name() const noexcept { return m_name; }
-
-private:
-
-	const std::string m_name;
-
-}; // class Person
+struct Entity 
+{ 
+	int data = 0; 
+};
 
 //  ================================================================================================
 
 struct Hash
 {
-	[[nodiscard]] std::size_t operator()(const Person & person) const noexcept
+	[[nodiscard]] auto operator()(const Entity & entity) const
 	{
-		return std::hash < std::string > ()(person.name());
+		return std::hash < int > ()(entity.data);
 	}
-
-}; // struct Hash
+};
 
 //  ================================================================================================
 
 struct Equal
 {
-	[[nodiscard]] bool operator()(const Person & lhs, const Person & rhs) const noexcept
+	[[nodiscard]] auto operator()(const Entity & lhs, const Entity & rhs) const
 	{
-		return (lhs.name() == rhs.name());
+		return lhs.data == rhs.data;
 	}
-
-}; // struct Equal
+};
 
 //  ================================================================================================
 
 int main()
 {
-	std::cout << Hash()(Person("Matthias")) << std::endl;
+	auto hash = Hash()(Entity(1));
 
-	std::unordered_set < Person, Hash, Equal > persons;
+	std::cout << "hash = " << hash << '\n';
 
-	persons.emplace("Matthias");
+	std::unordered_set < Entity, Hash, Equal > entities;
 
-	return 0;
+	entities.emplace(1);
 }

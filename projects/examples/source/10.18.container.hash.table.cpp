@@ -20,18 +20,18 @@ void print(const std::unordered_set < int > & unordered_set)
 	
 	if (std::is_same_v < category_t, std::bidirectional_iterator_tag > )
 	{
-		std::cout << "chaining method : doubly-linked list" << std::endl;
+		std::cout << "chaining method : doubly-linked list\n";
 	}
 	else
 	{
-		std::cout << "chaining method : singly-linked list" << std::endl;
+		std::cout << "chaining method : singly-linked list\n";
 	}
 
 	std::cout << std::endl;
 
-	for (std::size_t i = 0; i < unordered_set.bucket_count(); ++i)
+	for (auto i = 0uz; i < unordered_set.bucket_count(); ++i)
 	{
-		std::cout << "bucket[" << std::setw(3) << std::right << std::setfill('0') << i << "]: ";
+		std::cout << "bucket[" << std::setw(3) << std::setfill('0') << std::right << i << "]: ";
 
 		for (auto iterator = unordered_set.begin(i); iterator != unordered_set.end(i); ++iterator)
 		{
@@ -50,19 +50,17 @@ int main()
 {
 	std::unordered_set < int > unordered_set;
 
-	unordered_set.rehash(64); // detail: >= 64
+	unordered_set.rehash(64);
 
 	std::mt19937_64 engine{ std::random_device()() };
 
 	std::uniform_int_distribution distribution(100, 999);
 
-	for (std::size_t i = 0; i < unordered_set.bucket_count(); ++i)
+	for (auto i = 0uz; i < unordered_set.bucket_count(); ++i)
 	{
-		unordered_set.insert(distribution(engine)); // complexity: O(1) - O(N)
+		unordered_set.insert(distribution(engine));
 	}
 
-	print(unordered_set); unordered_set.rehash(65); // complexity: O(N); detail: >= 128
+	print(unordered_set); unordered_set.rehash(65);
 	print(unordered_set);
-
-	return 0;
 }

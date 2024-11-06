@@ -1,131 +1,132 @@
+#include <cassert>
 #include <cmath>
 #include <iterator>
 #include <stack>
 #include <utility>
 
-#include <gtest/gtest.h>
-
 //  ================================================================================================
 
-template < typename T > class Stack_v1 // complexity: T ~ O(1), S ~ O(N)
+template < typename T > class Stack_v1
 {
 public:
 
-    constexpr void push(T value)
+    void push(T value)
     {
-        const auto new_min = (std::empty(m_stack) ? value : std::min(value, m_stack.top().second));
+        auto max = std::empty(m_data) ? value : std::max(value, m_data.top().second);
 
-        m_stack.emplace(value, new_min);
+        m_data.emplace(value, max);
     }
 
-    [[nodiscard]] constexpr T top() const noexcept { return m_stack.top().first; }
+    [[nodiscard]] auto top() const
+    { 
+        return m_data.top().first; 
+    }
  
-    constexpr void pop() noexcept { m_stack.pop(); }
+    void pop() 
+    { 
+        m_data.pop(); 
+    }
  
-    [[nodiscard]] constexpr std::size_t size() const noexcept { return m_stack.size(); }
+    [[nodiscard]] auto size() const
+    { 
+        return std::size(m_data); 
+    }
  
-    [[nodiscard]] constexpr T min() const noexcept { return m_stack.top().second; }
+    [[nodiscard]] auto max() const
+    { 
+        return m_data.top().second; 
+    }
 
 private:
 
-    std::stack < std::pair < T, T > > m_stack;
-
-}; // template < typename T > class Stack_v1
+    std::stack < std::pair < T, T > > m_data;
+};
 
 //  ================================================================================================
 
-template < typename T > class Stack_v2 // complexity: T ~ O(1), S ~ O(1)
+template < typename T > class Stack_v2
 {
 public:
 
-    constexpr void push(T value)
+    void push(T value)
     {
-        if (std::empty(m_stack)) 
+        if (std::empty(m_data)) 
         {
-            m_stack.push(value); m_min = m_stack.top();
+            m_data.push(value); m_max = m_data.top();
         }
-        else if (value < m_min) 
+        else if (value > m_max) 
         {
-            m_stack.push(2 * value - m_min); m_min = value;
+            m_data.push(2 * value - m_max); m_max = value;
         }
         else 
         {
-            m_stack.push(value);
+            m_data.push(value);
         }
     }
 
-    [[nodiscard]] constexpr T top() const noexcept
+    [[nodiscard]] auto top() const
     {
-        return (m_stack.top() < m_min ? m_min : m_stack.top());
+        return m_data.top() > m_max ? m_max : m_data.top();
     }
 
-    constexpr void pop() noexcept
+    void pop()
     {
-        if (auto t = m_stack.top(); t < m_min) 
+        if (auto t = m_data.top(); t > m_max) 
         {
-            (m_min *= 2) -= t;
+            (m_max *= 2) -= t;
         }
 
-        m_stack.pop();
+        m_data.pop();
     }
 
-    [[nodiscard]] constexpr std::size_t size() const noexcept { return m_stack.size(); }
+    [[nodiscard]] auto size() const
+    { 
+        return std::size(m_data); 
+    }
  
-    [[nodiscard]] constexpr T min() const noexcept { return m_min; }
+    [[nodiscard]] auto max() const
+    { 
+        return m_max; 
+    }
  
 private:
 
-    std::stack < T > m_stack; 
-    
-    T m_min;
-
-}; // template < typename T > requires std::is_arithmetic_v < T > class Stack_v2 
+    std::stack < T > m_data; T m_max = T();
+};
 
 //  ================================================================================================
 
-TEST(Stack_v1, Functions)
+int main()
 {
     Stack_v1 < int > stack_v1;
 
-    stack_v1.push(3); ASSERT_EQ(stack_v1.top(), 3); ASSERT_EQ(stack_v1.min(), 3);
-    stack_v1.push(5); ASSERT_EQ(stack_v1.top(), 5); ASSERT_EQ(stack_v1.min(), 3);
-    stack_v1.push(2); ASSERT_EQ(stack_v1.top(), 2); ASSERT_EQ(stack_v1.min(), 2);
-    stack_v1.push(1); ASSERT_EQ(stack_v1.top(), 1); ASSERT_EQ(stack_v1.min(), 1);
-    stack_v1.push(1); ASSERT_EQ(stack_v1.top(), 1); ASSERT_EQ(stack_v1.min(), 1);
+//  ---------------------------------------------------------------------------
 
-//  ================================================================================================
+    stack_v1.push(1); assert(stack_v1.top() == 1); assert(stack_v1.max() == 1);
+    stack_v1.push(3); assert(stack_v1.top() == 3); assert(stack_v1.max() == 3);
+    stack_v1.push(2); assert(stack_v1.top() == 2); assert(stack_v1.max() == 3);
 
-    stack_v1.pop  (); ASSERT_EQ(stack_v1.top(), 1); ASSERT_EQ(stack_v1.min(), 1);
-    stack_v1.pop  (); ASSERT_EQ(stack_v1.top(), 2); ASSERT_EQ(stack_v1.min(), 2);
-    stack_v1.pop  (); ASSERT_EQ(stack_v1.top(), 5); ASSERT_EQ(stack_v1.min(), 3);
-    stack_v1.pop  (); ASSERT_EQ(stack_v1.top(), 3); ASSERT_EQ(stack_v1.min(), 3);
-}
+//  ---------------------------------------------------------------------------
 
-//  ================================================================================================
+                      assert(stack_v1.top() == 2); assert(stack_v1.max() == 3);
+    stack_v1.pop ( ); assert(stack_v1.top() == 3); assert(stack_v1.max() == 3);
+    stack_v1.pop ( ); assert(stack_v1.top() == 1); assert(stack_v1.max() == 1);
+    stack_v1.pop ( );
 
-TEST(Stack_v2, Functions)
-{
+//  ---------------------------------------------------------------------------
+
     Stack_v2 < int > stack_v2;
    
-    stack_v2.push(3); ASSERT_EQ(stack_v2.top(), 3); ASSERT_EQ(stack_v2.min(), 3);
-    stack_v2.push(5); ASSERT_EQ(stack_v2.top(), 5); ASSERT_EQ(stack_v2.min(), 3);
-    stack_v2.push(2); ASSERT_EQ(stack_v2.top(), 2); ASSERT_EQ(stack_v2.min(), 2);
-    stack_v2.push(1); ASSERT_EQ(stack_v2.top(), 1); ASSERT_EQ(stack_v2.min(), 1);
-    stack_v2.push(1); ASSERT_EQ(stack_v2.top(), 1); ASSERT_EQ(stack_v2.min(), 1);
+//  ---------------------------------------------------------------------------
 
-//  ================================================================================================
+    stack_v2.push(1); assert(stack_v2.top() == 1); assert(stack_v2.max() == 1);
+    stack_v2.push(3); assert(stack_v2.top() == 3); assert(stack_v2.max() == 3);
+    stack_v2.push(2); assert(stack_v2.top() == 2); assert(stack_v2.max() == 3);
 
-    stack_v2.pop  (); ASSERT_EQ(stack_v2.top(), 1); ASSERT_EQ(stack_v2.min(), 1);
-    stack_v2.pop  (); ASSERT_EQ(stack_v2.top(), 2); ASSERT_EQ(stack_v2.min(), 2);
-    stack_v2.pop  (); ASSERT_EQ(stack_v2.top(), 5); ASSERT_EQ(stack_v2.min(), 3);
-    stack_v2.pop  (); ASSERT_EQ(stack_v2.top(), 3); ASSERT_EQ(stack_v2.min(), 3);
-}
+//  ---------------------------------------------------------------------------
 
-//  ================================================================================================
-
-int main(int argc, char ** argv)
-{
-    testing::InitGoogleTest(&argc, argv);
-
-    return RUN_ALL_TESTS();
+                      assert(stack_v2.top() == 2); assert(stack_v2.max() == 3);
+    stack_v2.pop ( ); assert(stack_v2.top() == 3); assert(stack_v2.max() == 3);
+    stack_v2.pop ( ); assert(stack_v2.top() == 1); assert(stack_v2.max() == 1);
+    stack_v2.pop ( );
 }

@@ -6,30 +6,22 @@
 #include <iostream>
 #include <iterator>
 #include <list>
+#include <string>
 #include <utility>
 #include <vector>
 
 //  ================================================================================================
 
-class Data
-{
-public:
-
-	constexpr Data() noexcept = default;
-
-	constexpr explicit Data(char c, int i, double d) noexcept : m_c(c), m_i(i), m_d(d) {}
-
-private:
-
-	char m_c{}; int m_i{}; double m_d{};
-
-}; // class Data
+struct Entity 
+{ 
+	int data = 0; 
+};
 
 //  ================================================================================================
 
 int main()
 {
-	constexpr std::size_t size = 5;
+	auto size = 5uz;
 
 	std::vector < int > vector;
 
@@ -53,11 +45,14 @@ int main()
 
 	try
 	{
-		assert(vector.at(666) == 0);
+		assert(vector.at(1'000) == 0);
 	}
-	catch (...) {}
+	catch (const std::out_of_range & exception) 
+	{
+		std::cerr << "main : " << exception.what() << '\n';
+	}
 
-	for (std::size_t i = 0; i < std::size(vector); ++i)
+	for (auto i = 0uz; i < std::size(vector); ++i)
 	{
 //		assert(vector.at(i) == 0); // bad
 		assert(vector   [i] == 0);
@@ -65,7 +60,7 @@ int main()
 
 //  ================================================================================================
 
-//	for (auto i = std:: size(vector) - 1; i >= 0; --i) {} // bad
+//	for (auto i = std:: size(vector) - 1; i >= 0; --i); // bad
 
 	for (auto i = std::ssize(vector) - 1; i >= 0; --i)
 	{
@@ -81,89 +76,92 @@ int main()
 
 //  ================================================================================================
 
-	constexpr int static_array[size]{};
+	int static_array[5]{};
 
-//	assert(static_array.size() == size); // error
+//	assert(static_array.size() == 5); // error
 
-	assert(std::size (static_array) == size);
+	assert(std::size (static_array) == 5);
 
 	assert(std::begin(static_array) == static_array);
 
 //  ================================================================================================
 
-	std::vector < Data > vector_1(size);
-	std::vector < Data > vector_2(std::cbegin(vector_1), std::cend(vector_1));
+	std::vector < Entity > entities_1(size, Entity());
 
-//	*std::cbegin(v) = 42; // error
+	std::vector < Entity > entities_2(std::cbegin(entities_1), std::cend(entities_1));
 
-	std::vector < Data > vector_3(std::make_move_iterator(std::begin(vector_1)),
-								  std::make_move_iterator(std::end  (vector_1)));
+	std::vector < Entity > entities_3
+	(
+		std::make_move_iterator(std::begin(entities_2)),
+		std::make_move_iterator(std::end  (entities_2))
+	);
 
 //  ================================================================================================
 	
-	vector_3.insert(std::cend(vector_3), std::cbegin(vector_2), std::next(std::cbegin(vector_2), 2));
+	entities_3.insert
+	(
+		std::cend(entities_3), std::cbegin(entities_1), std::next(std::cbegin(entities_1))
+	);
 
-	assert(std::size(vector_3) == size + 2);
+	assert(std::size(entities_3) == size + 1);
 
-	vector_3.erase(std::cbegin(vector_3), std::prev(std::cend(vector_3), 2));
+	entities_3.erase(std::cbegin(entities_3), std::prev(std::cend(entities_3), 2));
 
-	assert(std::size(vector_3) == 2);
+	assert(std::size(entities_3) == 2);
 
-	Data data('a', 42, 3.14);
+	Entity entity(1);
 
-	vector_1.push_back(std::move(data));
+	entities_3.push_back(std::move(entity));
 
-	vector_1.emplace_back('a', 42, 3.14);
-
-//  ================================================================================================
-
-	[[maybe_unused]] constexpr auto single_value { 42 }; // detail: int
-
-	const auto initializer_list = { 1, 2, 3, 4, 5 }; // detail: std::initializer_list < int >
-
-	vector = initializer_list;
+	entities_3.emplace_back(1);
 
 //  ================================================================================================
 
-	const auto middle = std::size(vector) / 2;
+	[[maybe_unused]] auto value { 1 };
 
-	vector.push_back(42); // complexity: O(1)
-	vector. pop_back(  ); // complexity: O(1)
+//	[[maybe_unused]] auto initializer_list_1   { 1, 2, 3, 4, 5 }; // error
 
-	vector.insert(          std::cbegin(vector),          42); // complexity: O(N)
-	vector.insert(std::next(std::cbegin(vector), middle), 42); // complexity: O(N)
+	[[maybe_unused]] auto initializer_list_2 = { 1, 2, 3, 4, 5 };
 
-	vector.erase (          std::cbegin(vector)             ); // complexity: O(N)
-	vector.erase (std::next(std::cbegin(vector), middle)    ); // complexity: O(N)
+	vector = { 1, 2, 3, 4, 5 };
 
-	[[maybe_unused]] const auto vector_value = vector[middle]; // complexity: O(1)
+//  ================================================================================================
+
+	auto middle = std::size(vector) / 2;
+
+	vector.push_back(42); vector.pop_back();
+
+	vector.insert(          std::cbegin(vector),          42);
+	vector.insert(std::next(std::cbegin(vector), middle), 42);
+
+	vector.erase (          std::cbegin(vector)             );
+	vector.erase (std::next(std::cbegin(vector), middle)    );
+
+	std::ignore = vector[middle];
 
 //  ================================================================================================
 
 	std::deque < int > deque(std::cbegin(vector), std::cend(vector));
 
-	deque. push_back(42); // complexity: O(1)
-	deque.  pop_back(  ); // complexity: O(1)
+	deque.push_back (42); deque.pop_back ();
+	deque.push_front(42); deque.pop_front();
 
-	deque.push_front(42); // complexity: O(1)
-	deque. pop_front(  ); // complexity: O(1)
+	deque.insert(std::next(std::cbegin(deque), middle), 42);
+	deque.erase (std::next(std::cbegin(deque), middle)    );
 
-	deque.insert(std::next(std::cbegin(deque), middle), 42); // complexity: O(N)
-	deque.erase (std::next(std::cbegin(deque), middle)    ); // complexity: O(N)
-
-	[[maybe_unused]] const auto deque_value = deque[middle]; // complexity: O(1)
+	std::ignore = deque[middle];
 
 //  ================================================================================================
 
-	constexpr std::array < int, size > array { 1, 2, 3, 4, 5 };
+	std::array < int, 5 > array({ 1, 2, 3, 4, 5 });
 
-	[[maybe_unused]] const auto array_value = array[middle]; // complexity: O(1)
+	std::ignore = array[middle];
 
-	[[maybe_unused]] constexpr auto array_from_static_array = std::to_array(static_array);
+	std::ignore = std::to_array(static_array);
 
 //  ================================================================================================
 
-	std::list < int > list_1 { 8, 0, 6, 2, 4, 4, 2, 6, 0, 8 };
+	std::list < int > list_1({ 8, 0, 6, 2, 4, 4, 2, 6, 0, 8 });
 
 //	std::ranges::sort(list_1); // error
 	
@@ -173,7 +171,7 @@ int main()
 
 //  ================================================================================================
 
-	std::list < int > list_2 { 9, 7, 5, 3, 1, 42 };
+	std::list < int > list_2({ 9, 7, 5, 3, 1, 42 });
 
 	list_2.reverse();
 
@@ -187,13 +185,16 @@ int main()
 		          std::begin(list_1),
 		std::next(std::begin(list_1), std::size(list_1) / 2));
 
-	for (const auto element : list_2) std::cout << element << ' ';
+	for (auto element : list_2) 
+	{
+		std::cout << element << ' ';
+	}
 
 	std::cout << std::endl;
 
 //  ================================================================================================
 
-	std::forward_list < int > forward_list { 1, 2, 3, 4, 5 };
+	std::forward_list < int > forward_list({ 1, 2, 3, 4, 5 });
 
 	forward_list.insert_after(forward_list.before_begin(), 42);
 
@@ -201,7 +202,10 @@ int main()
 
 	forward_list.erase_after(std::begin(forward_list)); 
 
-	for (const auto element : forward_list) std::cout << element << ' ';
+	for (auto element : forward_list) 
+	{
+		std::cout << element << ' ';
+	}
 
 	std::cout << std::endl;
 
@@ -209,7 +213,7 @@ int main()
 
 //  ================================================================================================
 
-	std::list < int > list_for_sort { 2, 4, 1, 5, 3 };
+	std::list < int > list_for_sort({ 2, 4, 1, 5, 3 });
 
 //	std::ranges::sort(list_for_sort); // error
 
@@ -218,9 +222,10 @@ int main()
 
 	std::ranges::sort(wrapper);
 
-	for (const auto element : wrapper) std::cout << element << ' ';
+	for (auto element : wrapper) 
+	{
+		std::cout << element << ' ';
+	}
 
 	std::cout << std::endl;
-
-	return 0;
 }

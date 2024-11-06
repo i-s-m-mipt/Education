@@ -1,3 +1,5 @@
+#include <cassert>
+#include <cmath>
 #include <exception>
 #include <random>
 #include <stdexcept>
@@ -7,29 +9,30 @@
 #include <boost/numeric/ublas/lu.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 
-#include <gtest/gtest.h>
-
 #include <benchmark/benchmark.h>
 
 //  ================================================================================================
 
 [[nodiscard]] double determinant_v1(const boost::numeric::ublas::matrix < double > & matrix)
 {
-    if (const auto size = matrix.size1(); size == matrix.size2() && size != 0)
+    if (auto size = matrix.size1(); size == matrix.size2() && size != 0)
     {
-        if (size == 1) return matrix(0, 0); else
+        if (size > 1)
         {
             auto determinant = 0.0;
     
-            for (std::size_t i = 0; i < size; ++i) 
+            for (auto i = 0uz; i < size; ++i) 
             {
                 boost::numeric::ublas::matrix < double > minor(size - 1, size - 1);
 
-                for (std::size_t j = 1; j < size; ++j) 
+                for (auto j = 1uz; j < size; ++j) 
                 {
-                    for (std::size_t k = 0, c = 0; k < size; ++k) 
+                    for (auto k = 0uz, c = 0uz; k < size; ++k) 
                     {
-                        if (k != i) minor(j - 1, c++) = matrix(j, k);
+                        if (k != i) 
+                        {
+                            minor(j - 1, c++) = matrix(j, k);
+                        }
                     }
                 }
 
@@ -38,17 +41,24 @@
 
             return determinant;
         }
+        else
+        {
+            return matrix(0, 0);
+        }
     }
-    else throw std::runtime_error("invalid size");
+    else 
+    {
+        throw std::runtime_error("invalid size");
+    }
 }
 
 //  ================================================================================================
 
-[[nodiscard]] double determinant_v2(const boost::numeric::ublas::matrix < double > & matrix)
+[[nodiscard]] auto determinant_v2(const boost::numeric::ublas::matrix < double > & matrix)
 {    
-    if (const auto size = matrix.size1(); size == matrix.size2() && size != 0)
+    if (auto size = matrix.size1(); size == matrix.size2() && size != 0)
     {
-        if (size == 1) return matrix(0, 0); else
+        if (size > 1)
         {
             boost::numeric::ublas::matrix < double > copy(matrix);
     
@@ -58,24 +68,37 @@
             {
                 auto determinant = 1.0;
 
-                for (std::size_t i = 0; i < copy.size1(); ++i)
+                for (auto i = 0uz; i < copy.size1(); ++i)
                 {
-                    if (permutation(i) != i) determinant *= -1.0;
+                    if (permutation(i) != i) 
+                    {
+                        determinant *= -1.0;
+                    }
 
                     determinant *= copy(i, i);
                 }
 
                 return determinant;
             }
-            else return 0.0;
+            else 
+            {
+                return 0.0;
+            }
+        }
+        else
+        {
+            return matrix(0, 0);
         }
     }
-    else throw std::runtime_error("invalid size");
+    else 
+    {
+        throw std::runtime_error("invalid size");
+    }
 }
 
 //  ================================================================================================
 
-[[nodiscard]] boost::numeric::ublas::matrix < double > make_random_matrix(std::size_t size)
+[[nodiscard]] boost::numeric::ublas::matrix < double > make_matrix(std::size_t size)
 {
     boost::numeric::ublas::matrix < double > matrix(size, size);
 
@@ -83,9 +106,9 @@
 
     std::uniform_real_distribution distribution(0.0, 10.0);
 
-    for (std::size_t i = 0; i < matrix.size1(); ++i)
+    for (auto i = 0uz; i < matrix.size1(); ++i)
     {
-        for (std::size_t j = 0; j < matrix.size2(); ++j)
+        for (auto j = 0uz; j < matrix.size2(); ++j)
         {
             matrix(i, j) = distribution(engine);
         }
@@ -96,23 +119,18 @@
 
 //  ================================================================================================
 
-TEST(Algorithm, Determinant)
+[[nodiscard]] auto equal(double x, double y, double epsilon = 1e-6)
 {
-    const auto matrix = make_random_matrix(3);
-
-    constexpr auto epsilon = 0.001;
-
-    ASSERT_NEAR(determinant_v1(matrix), -181.125, epsilon);
-    ASSERT_NEAR(determinant_v2(matrix), -181.125, epsilon);
+	return std::abs(x - y) < epsilon;
 }
 
 //  ================================================================================================
 
-void test_1(benchmark::State & state)
+void test_v1(benchmark::State & state)
 {
-    const auto matrix = make_random_matrix(state.range(0));
+    auto matrix = make_matrix(state.range(0));
 
-    for (auto _ : state)
+    for (auto value : state)
     {
 		benchmark::DoNotOptimize(determinant_v1(matrix));	
     }
@@ -120,11 +138,11 @@ void test_1(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_2(benchmark::State & state)
+void test_v2(benchmark::State & state)
 {
-    const auto matrix = make_random_matrix(state.range(0));
-
-    for (auto _ : state)
+    auto matrix = make_matrix(state.range(0));
+    
+    for (auto value : state)
     {
 		benchmark::DoNotOptimize(determinant_v2(matrix));	
     }
@@ -132,18 +150,25 @@ void test_2(benchmark::State & state)
 
 //  ================================================================================================
 
-BENCHMARK(test_1)->DenseRange(1, 9, 1); 
-BENCHMARK(test_2)->DenseRange(1, 9, 1);  
+BENCHMARK(test_v1)->DenseRange(1, 9, 1); 
+BENCHMARK(test_v2)->DenseRange(1, 9, 1);  
 
 //  ================================================================================================
 
 int main(int argc, char ** argv)
 {
-    testing::InitGoogleTest(&argc, argv);
+    auto matrix = make_matrix(3);
 
-	benchmark::Initialize  (&argc, argv);
+    assert
+    (
+        equal
+        (
+            determinant_v1(matrix), 
+            determinant_v2(matrix)
+        )
+    );
+
+	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
-
-    return RUN_ALL_TESTS();
 }

@@ -1,5 +1,4 @@
 #include <cassert>
-#include <iostream>
 #include <iterator>
 #include <string>
 
@@ -12,90 +11,79 @@
 
 //  ================================================================================================
 
-struct Computer { std::string name; std::size_t size{}; };
+struct Entity 
+{ 
+	int data_1 = 0; 
+	int data_2 = 0; 
+};
 
 //  ================================================================================================
 
-using computers_container_t = boost::multi_index::multi_index_container < Computer, 
+template < typename T, typename M > using HNU = boost::multi_index:: hashed_non_unique < T, M > ;
+template < typename T, typename M > using ONU = boost::multi_index::ordered_non_unique < T, M > ;
 
-	boost::multi_index::        indexed_by <
-	boost::multi_index:: hashed_non_unique < 
-	boost::multi_index::               tag < class HNU_name                         >   , 
-	boost::multi_index::            member < Computer, std::string, &Computer::name > > ,
-	boost::multi_index:: hashed_non_unique < 
-	boost::multi_index::               tag < class HNU_size                         >   , 
-	boost::multi_index::            member < Computer, std::size_t, &Computer::size > > ,
-	boost::multi_index::ordered_non_unique < 
-	boost::multi_index::               tag < class ONU_name                         >   , 
-	boost::multi_index::            member < Computer, std::string, &Computer::name > > ,
-	boost::multi_index::ordered_non_unique < 
-	boost::multi_index::               tag < class ONU_size                         >   , 
-	boost::multi_index::            member < Computer, std::size_t, &Computer::size > > ,
-	boost::multi_index::     random_access < 
-	boost::multi_index::               tag < class RA > > > > ;
+template < typename T > using tag_t = boost::multi_index::tag < T > ;
+
+template 
+< 
+	typename C, typename T, T C::*P 
+> 
+using member_t = boost::multi_index::member < C, T, P > ;
+
+//  ================================================================================================
+
+using multi_index_container_t = boost::multi_index::multi_index_container 
+< 
+	Entity, boost::multi_index::indexed_by 
+	<
+		HNU < tag_t < struct data_1_tag > , member_t < Entity, int, &Entity::data_1 > > ,
+		ONU < tag_t < struct data_2_tag > , member_t < Entity, int, &Entity::data_2 > >
+	>
+> ; 
 
 //  ================================================================================================
 
 int main()
 {
-	computers_container_t computers;
+	multi_index_container_t multi_index_container({ { 1, 1 }, { 2, 2 }, { 3, 3 } });
 
-	computers.insert({ "alpha", 4 });
-	computers.insert({ "betta", 2 });
-	computers.insert({ "gamma", 4 });
-	computers.insert({ "delta", 8 });
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
+	auto & HNU_data_1_index = multi_index_container.get < data_1_tag > ();
+	auto & ONU_data_2_index = multi_index_container.get < data_2_tag > ();
 
-	auto & HNU_name_index = computers.get < HNU_name > ();
-	auto & HNU_size_index = computers.get < HNU_size > ();
-	auto & ONU_name_index = computers.get < ONU_name > ();
-	auto & ONU_size_index = computers.get < ONU_size > ();
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
+	auto modifier = [](auto && entity){ entity.data_1 = entity.data_2 = 1; };
 
-	assert(HNU_name_index.contains("alpha"));
+	assert(HNU_data_1_index.modify(HNU_data_1_index.find(2), modifier));
 
-//  ================================================================================================
+	assert(HNU_data_1_index.count(1) == 2);
 
-	constexpr auto lambda = [](auto && computer) constexpr { computer.name = "bravo"; };
+//  ------------------------------------------------------------------------------------------------
 
-	HNU_size_index.modify(HNU_size_index.find(2), lambda);
-
-	assert(HNU_size_index.find(2)->name == "bravo");
-
-//  ================================================================================================
-
-	assert(ONU_name_index.contains("alpha"));
-
-//  ================================================================================================
-
-	for (auto begin  = ONU_size_index.lower_bound(4); 
-		      begin != ONU_size_index.upper_bound(4); ++begin)
+	for (auto [begin, end] = ONU_data_2_index.equal_range(1); begin != end; ++begin)
 	{
-		assert(begin->size == 4);
+		assert
+		(
+			begin->data_1 == 1 &&
+			begin->data_2 == 1
+		);
 	}
 
-//  ================================================================================================
-
-	assert(computers.get < RA > ()[0].name == "alpha");
-
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 	
-	boost::bimap < std::string, std::size_t > bimap; // support: boost::bimaps::(multi)set_of
+	boost::bimap < int, int > bimap; // support: boost::bimaps::(multi)set_of
 
-	bimap.insert({ "alpha", 4 });
-	bimap.insert({ "betta", 2 });
-	bimap.insert({ "gamma", 4 });
-	bimap.insert({ "delta", 8 });
+	bimap.insert({ 1, 1 });
+	bimap.insert({ 2, 2 });
+	bimap.insert({ 3, 3 });
 
-	assert(bimap.left. count("alpha") == 1); // complexity: O(log(N))
-	assert(bimap.right.count(      4) == 1); // complexity: O(log(N))
+	assert(bimap.left .count(1) == 1);
+	assert(bimap.right.count(1) == 1);
 
-	for (const auto & element : bimap)
+	for (const auto & element : bimap) 
 	{
-		std::cout << element.left << " has size of " << element.right << std::endl;
+		assert(element.left == element.right);
 	}
-
-	return 0;
 }

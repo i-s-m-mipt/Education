@@ -1,41 +1,43 @@
 #include <cassert>
+#include <iostream>
 #include <memory>
+#include <string>
 #include <vector>
 
 //  ================================================================================================
 
-class Lazy_Loader
+class Entity
 {
 public:
 
-	void lazy_load() 
+	void make_data() 
 	{
-		if (!m_data) m_data = std::make_unique < int > (42);
+		if (m_data == nullptr) 
+		{
+			m_data = std::make_unique < int > (1);
+		}
 	}
 
 private:
 
 	std::unique_ptr < int > m_data;
-
-}; // class Lazy_Loader
+};
 
 //  ================================================================================================
 
 int main()
 {
-	constexpr std::size_t size = 64;
+	bool array[5]{};
 
-	constexpr bool array[size]{};
+	assert(sizeof(array) == std::size(array));
 
-	assert(sizeof(array) == size);
+	std::vector < bool > vector(1'000'000'000, false); 
 
-	std::vector < bool > vector(size); 
-
-	constexpr std::size_t middle = size / 2;
-
-	vector[middle] = true;
+	vector.front() = true;
  
-	[[maybe_unused]] const auto value = vector[middle]; // support: Proxy
-	
-	return 0;
+	auto proxy = vector.front();
+
+	assert(static_cast < bool > (proxy) == true);
+
+	std::cout << "Enter any character to continue : "; char c; std::cin >> c;
 }
