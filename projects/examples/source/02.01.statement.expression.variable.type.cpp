@@ -86,9 +86,9 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-//	typedef const unsigned long int type_alias_v1; // bad
+//	typedef const unsigned long type_alias_v1; // bad
 
-	using type_alias_v2 = const unsigned long int;
+	using type_alias_v2 = const unsigned long;
 
 	[[maybe_unused]] type_alias_v2 cui = 1;
 
