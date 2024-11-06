@@ -6,15 +6,9 @@
 
 //  ================================================================================================
 
-void handler_v1() 
-{ 
-    std::clog << "handler_v1\n"; std::set_new_handler(nullptr); 
-}
+void handler_v1() { std::clog << "handler_v1\n"; std::set_new_handler(nullptr); }
 
-void handler_v2() 
-{ 
-    std::clog << "handler_v2\n"; 
-}
+void handler_v2() { std::clog << "handler_v2\n"; }
 
 //  ================================================================================================
 
