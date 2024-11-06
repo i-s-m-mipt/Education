@@ -102,7 +102,7 @@ int main()
     }
     else 
     {
-        std::cerr << "main : invalid file stream\n";
+        throw std::runtime_error("invalid stream");
     }
 
 //  ================================================================================================
@@ -119,7 +119,7 @@ int main()
     }
     else 
     {
-        std::cerr << "main : invalid file stream\n";
+        throw std::runtime_error("invalid stream");
     }
 
 //  ================================================================================================

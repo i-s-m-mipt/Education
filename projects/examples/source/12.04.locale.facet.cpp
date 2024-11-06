@@ -1,8 +1,10 @@
 #include <chrono>
 #include <cstring>
+#include <exception>
 #include <iostream>
 #include <iterator>
 #include <locale>
+#include <stdexcept>
 
 int main() // support: locale -a
 {
@@ -77,6 +79,6 @@ int main() // support: locale -a
 
 	if (state != std::ios_base::goodbit) 
 	{
-		std::cerr << "main : invalid format\n";
+		throw std::runtime_error("invalid format");
 	}
 }

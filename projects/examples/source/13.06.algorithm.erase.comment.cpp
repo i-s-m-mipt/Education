@@ -1,7 +1,9 @@
+#include <exception>
 #include <filesystem>
 #include <iostream>
 #include <iterator>
 #include <fstream>
+#include <stdexcept>
 #include <string>
 
 void transform(const std::string & path_1, const std::string & path_2)
@@ -58,12 +60,12 @@ void transform(const std::string & path_1, const std::string & path_2)
         }
         else 
         {
-            std::cerr << "main : invalid file stream\n";
+            throw std::runtime_error("invalid stream");
         }
     }
     else 
     {
-        std::cerr << "main : invalid file stream\n";
+        throw std::runtime_error("invalid stream");
     }
 }
 
