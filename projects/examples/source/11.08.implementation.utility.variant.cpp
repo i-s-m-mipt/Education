@@ -108,7 +108,7 @@ namespace detail
         Recorder() = default;
        ~Recorder() = default;
 
-//      ---------------------------------------------------------
+//      ---------------------------------------------
 
         template < typename T > auto buffer() const
         {
@@ -121,7 +121,7 @@ namespace detail
 
 //      ---------------------------------------------------------------------------
 
-        std::size_t current_index = 0; 
+        std::size_t index = 0; 
     }; 
 }
 
@@ -147,7 +147,7 @@ namespace detail
 
         auto & operator=(T value)
         {
-            if (derived().current_index == index) 
+            if (derived().index == s_index) 
             {
                 *derived().template buffer < T > () = std::move(value);
             }
@@ -172,14 +172,14 @@ namespace detail
 
         void update() 
         { 
-            derived().current_index = index; 
+            derived().index = s_index; 
         }
 
     protected:
 
         void destroy()
         {
-            if (derived().current_index == index) 
+            if (derived().index == s_index) 
             {
                 derived().template buffer < T > ()->~T();
             }
@@ -187,7 +187,7 @@ namespace detail
 
 //      --------------------------------------------------------------------------------------------
 
-        static constexpr auto index = index_v < List < Ts ... > , T > + 1;
+        static constexpr auto s_index = index_v < List < Ts ... > , T > + 1;
     };
 }
 
@@ -244,7 +244,7 @@ public:
 
         swap(this->m_buffer, other.m_buffer);
 
-		swap(this->current_index, other.current_index);
+		swap(this->index, other.index);
 	}
 
 private:
@@ -253,29 +253,19 @@ private:
     {
         (detail::Selector < derived_t, Ts, Ts ... > ::destroy(), ... );
 
-        this->current_index = 0;
+        this->index = 0;
     }
 
 public:
 
-    template < typename T > auto holds_alternative() const
+    template < typename T > auto has() const
     {
-        return this->current_index == detail::Selector < derived_t, T, Ts ... > ::index;
+        return this->index == detail::Selector < derived_t, T, Ts ... > ::s_index;
     }
 
-    template < typename T > const auto & get() const
+    template < typename T > auto get() const
     {
-        if (!holds_alternative < T > ()) 
-        {
-            throw std::runtime_error("invalid type");
-        }
-
-        return *this->template buffer < T > ();
-    }  
-
-    template < typename T > auto & get()
-    {
-        if (!holds_alternative < T > ()) 
+        if (!has < T > ()) 
         {
             throw std::runtime_error("invalid type");
         }
@@ -296,7 +286,7 @@ private:
     > 
     void visit_implementation(V && visitor, detail::List < U, Us ... > ) const
     {
-        if (this->template holds_alternative < U > ()) 
+        if (this->template has < U > ()) 
         {
             visitor(this->template get < U > ());
         }
@@ -326,14 +316,11 @@ struct Entity
 
 int main()
 {
-    Variant < int, std::string > variant_1, variant_2(2);
+    Variant < int, std::string > variant_1;
+    
+    Variant < int, std::string > variant_2(2);
 
-//  --------------------------------------------------------------------------------
-
-    assert(variant_1.holds_alternative < int > () && variant_1.get < int > () == 0);
-    assert(variant_2.holds_alternative < int > () && variant_2.get < int > () == 2);
-
-//  --------------------------------------------------------------------------------
+//  --------------------------------------------------
 
     Variant < int, std::string > variant_3(variant_2);
 
@@ -345,10 +332,9 @@ int main()
 
     variant_4 = 4;
 
-//  --------------------------------------------------------------------------------
+//  ------------------------------------------------------------------
 
-    assert(variant_3.holds_alternative < int > () && variant_3.get < int > () == 2);
-    assert(variant_4.holds_alternative < int > () && variant_4.get < int > () == 4);    
+    assert(variant_4.has < int > () && variant_4.get < int > () == 4);    
 
 //  ---------------------------------------------------------------------------------------
 
@@ -358,5 +344,5 @@ int main()
 
 //  Variant < Entity, int > variant_5; // error
 
-    Variant < std::monostate, int > variant_6;
+    Variant < std::monostate, Entity, int > variant_6;
 }

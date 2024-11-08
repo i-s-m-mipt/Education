@@ -24,7 +24,7 @@ public:
 		m_tail(std::forward < Ts > (tail)...) 
 	{}
 
-	constexpr Tuple(const Tuple &  other) 
+	constexpr Tuple(const Tuple & other) 
 	: 
 		m_head(other.m_head), 
 		m_tail(other.m_tail) 
@@ -43,7 +43,7 @@ public:
 		return *this; 
 	}
 
-//  ------------------------------------------------------------------------------------------------
+//  ----------------------------------------
 
 	constexpr void swap(Tuple & other) const
 	{
@@ -57,13 +57,19 @@ public:
 		}
 	}
 
-//  --------------------------------------------------------------------
+//  -----------------------------------------------------
 
-	constexpr const auto & head() const { return m_head; }
-	constexpr       auto & head()       { return m_head; }
-
-	constexpr const auto & tail() const { return m_tail; }
-	constexpr       auto & tail()       { return m_tail; }
+	template < std::size_t I > constexpr auto get() const
+	{
+		if constexpr (I > 0)
+		{
+			return m_tail.template get < I - 1 > ();
+		}
+		else
+		{
+			return m_head;
+		}
+	}
 
 private:
 
@@ -79,127 +85,13 @@ template < typename ... Ts > constexpr auto make_tuple(Ts && ... args)
 
 //  ================================================================================================
 
-template < std::size_t I > struct Get 
-{
-	template < typename T, typename ... Ts > static constexpr const auto & apply
-	(
-		const Tuple < T, Ts ...> & tuple
-	)
-	{
-		return Get < I - 1 > ::apply(tuple.tail());
-	}
-
-	template < typename T, typename ... Ts > static constexpr auto & apply
-	(
-		Tuple < T, Ts ...> & tuple
-	)
-	{
-		return Get < I - 1 > ::apply(tuple.tail());
-	}
-};
-
-//  ================================================================================================
-
-template <> struct Get < 0 >
-{
-	template < typename T, typename ... Ts > static constexpr const auto & apply
-	(
-		const Tuple < T, Ts ... > & tuple
-	)
-	{
-		return tuple.head();
-	}
-
-	template < typename T, typename ... Ts > static constexpr auto & apply
-	(
-		Tuple < T, Ts ... > & tuple
-	)
-	{
-		return tuple.head();
-	}
-};
-
-//  ================================================================================================
-
-template 
-< 
-	std::size_t I, typename ... Ts 
-> 
-constexpr const auto & get(const Tuple < Ts ... > & tuple)
-{
-	return Get < I > ::apply(tuple);
-}
-
-template < std::size_t I, typename ... Ts > constexpr auto & get(Tuple < Ts ... > & tuple)
-{
-	return Get < I > ::apply(tuple);
-}
-
-//  ================================================================================================
-
-constexpr auto operator==(const Tuple <> & , const Tuple <> &)
-{
-	return true;
-}
-
-template 
-< 
-	typename ... Ts, 
-	typename ... Us 
-> 
-constexpr auto operator==
-(
-	const Tuple < Ts ... > & lhs, 
-	const Tuple < Us ... > & rhs
-)
-{
-	return lhs.head() == rhs.head() && lhs.tail() == rhs.tail();
-}
-
-//  ================================================================================================
-
-constexpr auto operator<=>(const Tuple <> & , const Tuple <> &)
-{
-	return std::strong_ordering::equivalent;
-}
-
-template 
-< 
-	typename ... Ts, 
-	typename ... Us 
-> 
-constexpr auto operator<=>
-(
-	const Tuple < Ts ... > & lhs, 
-	const Tuple < Us ... > & rhs
-)
-{
-	if (lhs.head() == rhs.head())
-	{
-		return lhs.tail() <=> rhs.tail();
-	}
-	else
-	{
-		if (lhs.head() < rhs.head())
-		{
-			return std::strong_ordering::less;
-		}
-		else
-		{
-			return std::strong_ordering::greater;
-		}
-	}
-}
-
-//  ================================================================================================
-
 template < typename T, std::size_t I > struct Helper
 {
     static void print(std::ostream & stream, const T & tuple)
     {
         Helper < T, I - 1 > ::print(stream, tuple);
 
-        stream << " " << get < I - 1 > (tuple);
+        stream << " " << tuple.template get < I - 1 > ();
     }
 };
     
@@ -207,7 +99,7 @@ template < typename T > struct Helper < T, 1 >
 {
     static void print(std::ostream & stream, const T & tuple)
     {
-        stream << get < 0 > (tuple);
+        stream << tuple.template get < 0 > ();
     }
 };
 
@@ -239,39 +131,29 @@ auto & operator<<(std::ostream & stream, const Tuple < Ts ... > & tuple)
 
 int main()
 {
-	constexpr auto tuple_c = make_tuple('a', 1, 1.0);
+	Tuple < int, int, int > tuple_1;
 
-//  -------------------------------------------------
-
-	static_assert(get < 1 > (tuple_c) == 1);
+	Tuple < int, int, int > tuple_2(1, 2, 3);
 
 //  -----------------------------------------
 
-	auto tuple_1 = ::make_tuple(1, "aaaaa"s);
-	
-	auto tuple_2 = tuple_1;
+	Tuple < int, int, int > tuple_3(tuple_2);
 
-//  ------------------------
+    Tuple < int, int, int > tuple_4(std::move(tuple_3));
 
-	get < 0 > (tuple_2) = 2;
-
-	get < 1 > (tuple_2) = "bbbbb"s;
-
-//  -------------------------------
-
-	auto f = false, t = true;
+    tuple_3 = tuple_2; 
+    
+    tuple_4 = std::move(tuple_3);
 
 //  ----------------------------------
 
-	assert((tuple_1 <  tuple_2) == t);
-    assert((tuple_1 >  tuple_2) == f);
-    assert((tuple_1 <= tuple_2) == t);
-    assert((tuple_1 >= tuple_2) == f);
-    assert((tuple_1 == tuple_2) == f);
-    assert((tuple_1 != tuple_2) == t);
+	assert(tuple_4.get < 0 > () == 1);
 
 //  ---------------------------------------------
 
-	std::cout << "tuple_1 = " << tuple_1 << '\n';
-	std::cout << "tuple_2 = " << tuple_2 << '\n';
+	std::cout << "tuple_4 = " << tuple_4 << '\n';
+
+//  -----------------------------------------------
+
+	constexpr auto tuple_5 = ::make_tuple(1, 2, 3);	
 }

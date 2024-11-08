@@ -153,11 +153,21 @@ template < typename T, typename ... Ts > auto make_shared(Ts && ... args)
 
 int main()
 {
-    Shared < int > shared_1(new auto(1));
+    Shared < int > shared_1;
+
     Shared < int > shared_2(new auto(2));
 
-    shared_2 = shared_1;
+//  -------------------------------------------
 
-    assert(*shared_1 == 1);
-    assert(*shared_2 == 1);
+    Shared < int > shared_3(shared_2); // error
+
+    Shared < int > shared_4(std::move(shared_3));
+
+    shared_3 = shared_2; // error
+    
+    shared_4 = std::move(shared_3);
+
+//  -------------------------------
+
+    assert(*shared_4 == 2);
 }

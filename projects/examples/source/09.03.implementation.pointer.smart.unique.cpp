@@ -30,14 +30,16 @@ public:
         reset(); 
     }
 
-//  ----------------------------------
-        
+//  -------------------------
+
     void swap(Unique & other)
     { 
         using std::swap; 
 
         swap(m_data, other.m_data); 
     }
+
+//  --------------
 
     auto release()
     {
@@ -77,10 +79,29 @@ template < typename T, typename ... Ts > auto make_unique(Ts && ... args)
 
 int main()
 {
-    auto unique_1 = make_unique < int > (1);
-    auto unique_2 = make_unique < int > (2);
+    Unique < int > unique_1;
 
-    unique_2 = std::move(unique_1);
+    Unique < int > unique_2(new auto(2));
 
-    assert(*unique_2 == 1);
+//  -------------------------------------------
+
+//  Unique < int > unique_3(unique_2); // error
+
+    Unique < int > unique_4(std::move(unique_2));
+
+//  unique_3 = unique_2; // error
+    
+    unique_4 = std::move(unique_2);
+
+//  -------------------------------
+
+    unique_4.reset(new auto(4));
+
+//  ----------------------------
+
+    assert(*unique_4 == 4);
+
+//  ------------------------------------------
+
+    auto unique_5 = ::make_unique < int > (5);
 }

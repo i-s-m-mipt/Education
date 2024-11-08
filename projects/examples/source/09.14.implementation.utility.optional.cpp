@@ -132,15 +132,12 @@ private:
 
 int main()
 {
-    Optional < int > optional_1, optional_2(2);
-
-//  -----------------------------------------------------------
-
-    assert( optional_1.empty() && optional_1.value_or(0) == 0);
-    assert(!optional_2.empty() && optional_2.value_or(0) == 2);
-
-//  -----------------------------------------------------------
+    Optional < int > optional_1;
     
+    Optional < int > optional_2(2);
+
+//  ----------------------------------------
+
     Optional < int > optional_3(optional_2);
 
     Optional < int > optional_4(std::move(optional_3));
@@ -153,6 +150,5 @@ int main()
 
 //  -----------------------------------------------------------
 
-    assert( optional_3.empty() && optional_3.value_or(0) == 0);
     assert(!optional_4.empty() && optional_4.value_or(0) == 4);
 }
