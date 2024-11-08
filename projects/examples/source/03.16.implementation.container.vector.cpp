@@ -69,19 +69,19 @@ public:
 //
 //		if (this != &other)
 //		{
-//			auto new_data = other.m_size ? new int[other.m_size]{} : nullptr;
+//			auto data = other.m_size ? new int[other.m_size]{} : nullptr;
 //
-//			auto new_size = other.m_size;
+//			auto size = other.m_size;
 //
-//			std::ranges::copy(other.m_data, other.m_data + other.m_size, new_data);
+//			std::ranges::copy(other.m_data, other.m_data + other.m_size, data);
 //
 //			if (m_data)
 //			{
 //				delete[] m_data;
 //			}
 //
-//			m_data = new_data;
-//			m_size = new_size;
+//			m_data = data;
+//			m_size = size;
 //		}
 //
 //		return *this;
@@ -170,15 +170,15 @@ int main()
 
 	Vector vector_2(5);
 
+//  --------------------------
+
 	Vector vector_3(vector_2);
 
 	Vector vector_4(std::move(vector_3));
 
-//  -------------------------------------
+	vector_3 = vector_2;
 
-	vector_1 = vector_2;
-
-	vector_3 = std::move(vector_4);
+	vector_4 = std::move(vector_3);
 
 //  -------------------------------
 
