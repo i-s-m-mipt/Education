@@ -89,7 +89,7 @@ int main()
 
 	std::cout << std::setprecision(1) << std::fixed;
 
-	for (const auto & [x, y] : result)
+	for (auto [x, y] : result)
 	{
 		std::cout << "pair = { " << x << ", " << y << " }\n";
 	}
