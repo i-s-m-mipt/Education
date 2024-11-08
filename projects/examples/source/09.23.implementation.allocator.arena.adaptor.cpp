@@ -67,7 +67,7 @@ private:
 
 public:
 
-	static constexpr auto default_alignment = alignof(std::max_align_t);
+	static inline auto default_alignment = alignof(std::max_align_t);
 
 private:
 	

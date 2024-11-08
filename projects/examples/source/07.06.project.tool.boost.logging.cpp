@@ -1,13 +1,3 @@
-#if (!defined(FUNCTION))
-#  if (defined(_MSC_VER) || defined(__GNUC__))
-#    define FUNCTION __FUNCTION__
-#  else
-#    define FUNCTION __func__
-#  endif
-#else
-#  error "invalid macro definition"
-#endif
-
 #include <cstdint>
 #include <cstdlib>
 #include <exception>
@@ -248,7 +238,7 @@ private:
 
 //  ================================================================================================
 
-#define LOGGER(logger) Logger logger(FUNCTION, true)
+#define LOGGER(logger) Logger logger(__func__, true)
 
 #define LOGGER_WRITE_DEBUG(logger, message) logger.write(Logger::Severity::debug, message);
 #define LOGGER_WRITE_TRACE(logger, message) logger.write(Logger::Severity::trace, message);

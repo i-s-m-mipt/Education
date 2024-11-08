@@ -177,9 +177,9 @@ private:
 
 		for (auto i = 0uz; i < m_n_digits; ++i)
 		{
-			if (m_digits[i] += other.m_digits[i]; m_digits[i] >= Big_Int::radix)
+			if (m_digits[i] += other.m_digits[i]; m_digits[i] >= Big_Int::base)
 			{
-				if (m_digits[i] -= Big_Int::radix; i < size - 1)
+				if (m_digits[i] -= Big_Int::base; i < size - 1)
 				{
 					++m_digits[i + 1];
 				}
@@ -201,7 +201,7 @@ private:
 		{
 			if (m_digits[i] -= other.m_digits[i]; m_digits[i] < 0)
 			{
-				m_digits[i] += Big_Int::radix;
+				m_digits[i] += Big_Int::base;
 
 				m_digits[i + 1]--;
 			}
@@ -233,9 +233,9 @@ public:
 			{
 				result.m_digits[i + j] += (m_digits[i] * other.m_digits[j] + r);
 
-				r = result.m_digits[i + j] / Big_Int::radix;
+				r = result.m_digits[i + j] / Big_Int::base;
 
-				result.m_digits[i + j] -= (r * Big_Int::radix);
+				result.m_digits[i + j] -= (r * Big_Int::base);
 			}
 		}
 
@@ -263,9 +263,9 @@ public:
 
 		for (auto i = static_cast < int > (m_n_digits) - 1; i >= 0; --i)
 		{
-			current *= Big_Int::radix; current.m_digits[0] = m_digits[i];
+			current *= Big_Int::base; current.m_digits[0] = m_digits[i];
 
-			digit_t l = 0, r = Big_Int::radix, value = 0;
+			digit_t l = 0, r = Big_Int::base, value = 0;
 
 			while (l <= r)
 			{
@@ -325,14 +325,14 @@ public:
 		auto p2 = multiply(xr,      yr     );
 		auto p3 = multiply(xl + xr, yl + yr);
 
-		Big_Int radix = Big_Int::radix;
+		Big_Int base = Big_Int::base;
 
 		for (auto i = 1uz; i < k; ++i) 
 		{
-			radix *= Big_Int::radix;
+			base *= Big_Int::base;
 		}
 
-		auto result = (p1 * radix * radix + (p3 - p2 - p1) * radix + p2);
+		auto result = (p1 * base * base + (p3 - p2 - p1) * base + p2);
 
 		result.m_is_negative = x.m_is_negative ^ y.m_is_negative; 
 
@@ -354,13 +354,13 @@ public:
     	
     	for (--position; position >= 0; --position)
     	{
-      		digit_t l = 0, r = Big_Int::radix, value = 0;
+      		digit_t l = 0, r = Big_Int::base, value = 0;
 
       		while (l <= r)
       		{
         		if (auto m = result.m_digits[position] = std::midpoint(l, r); result * result <= x)
         		{
-          			l = m + 1; value = std::min(m, Big_Int::radix - 1);
+          			l = m + 1; value = std::min(m, Big_Int::base - 1);
         		}
         		else
 				{
@@ -454,11 +454,11 @@ private:
 
 private:
 
-	static constexpr auto size = 1'000uz;
+	static inline auto size = 1'000uz;
 
-	static constexpr auto step = std::numeric_limits < digit_t > ::digits10 / 2;
+	static inline auto step = std::numeric_limits < digit_t > ::digits10 / 2;
 
-	static constexpr auto radix = static_cast < digit_t > (std::pow(10, step));
+	static inline auto base = static_cast < digit_t > (std::pow(10, step));
 
 private:
 
