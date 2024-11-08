@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <iostream>
 #include <type_traits>
+#include <vector>
 
 #include <benchmark/benchmark.h>
 
@@ -29,18 +30,18 @@ struct alignas(64) Entity_v6 { std::uint8_t x = 0; };
 
 void test_v1(benchmark::State & state)
 {
-	auto size = 64uz;
+	std::vector < Entity_v5 > entities_v5(1'000);
 	
     for (auto value : state)
     {
-        auto entities = new Entity_v5[size]{}; 
+		entities_v5.front().x = 1;
 
-		for (auto i = 1uz; i < size; ++i) 
+		for (auto i = 1uz; i < std::size(entities_v5); ++i) 
 		{
-			entities[i].x = entities[i - 1].x + 1;
+			entities_v5[i].x = entities_v5[i - 1].x + 1;
 		}
 
-		benchmark::DoNotOptimize(entities);
+		benchmark::DoNotOptimize(entities_v5);
     }
 }
 
@@ -48,18 +49,18 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state)
 {
-	auto size = 64uz;
-
+	std::vector < Entity_v6 > entities_v6(1'000);
+	
     for (auto value : state)
     {
-        auto entities = new Entity_v6[size]{}; 
+		entities_v6.front().x = 1;
 
-		for (auto i = 1uz; i < size; ++i) 
+		for (auto i = 1uz; i < std::size(entities_v6); ++i) 
 		{
-			entities[i].x = entities[i - 1].x + 1;
+			entities_v6[i].x = entities_v6[i - 1].x + 1;
 		}
 
-		benchmark::DoNotOptimize(entities);
+		benchmark::DoNotOptimize(entities_v6);
     }
 }
 

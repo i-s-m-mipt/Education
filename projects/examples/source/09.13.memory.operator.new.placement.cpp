@@ -76,7 +76,7 @@ struct Client : private Entity_v3 < Client >
 	
 	using base_t::operator delete;
 
-//  ------------------------------------------------------------------------------------------------
+//  ----------------------------------------------
 
 	Client() { std::clog << "Client:: Client\n"; }
    ~Client() { std::clog << "Client::~Client\n"; }

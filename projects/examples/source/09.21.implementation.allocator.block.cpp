@@ -75,15 +75,15 @@ public:
                 {
                     auto block_size = sizeof(Header) + size + padding;
 
-                    auto new_node = get_node(get_byte(current) + block_size);
+                    auto node = get_node(get_byte(current) + block_size);
 
-                    new_node->size = current->size - block_size;
+                    node->size = current->size - block_size;
                        
-                    new_node->next = current->next; current->next = new_node;
+                    node->next = current->next; current->next = node;
                 }
                 else
                 {
-                    padding += current->size - (size + padding);
+                    padding += current->size - size - padding;
                 }
 
                 if (!previous)
@@ -106,9 +106,7 @@ public:
 
     void deallocate(void * ptr)
     {
-        auto header = get_header(get_byte(ptr) - sizeof(Header));
-
-        auto node = get_node(header); node->size = header->size;
+        auto node = get_node(get_byte(ptr) - sizeof(Header));
 
         Node * previous = nullptr;
         
@@ -172,18 +170,18 @@ private:
 
 	void merge(Node * previous, Node * node) const
     {
-	    if (node->next && get_byte(node) + node->size + sizeof(Header) == get_byte(node->next))
+	    if (node->next && get_byte(node) + sizeof(Header) + node->size == get_byte(node->next))
 	    {
-		    node->size += node->next->size + sizeof(Header);
+		    node->size += sizeof(Header) + node->next->size;
 
-		    node->next  = node->next->next;
+		    node->next = node->next->next;
 	    }
 
-	    if (previous && get_byte(previous) + previous->size + sizeof(Header) == get_byte(node))
+	    if (previous && get_byte(previous) + sizeof(Header) + previous->size == get_byte(node))
 	    {
-		    previous->size += node->size + sizeof(Header);
+		    previous->size += sizeof(Header) + node->size;
 
-		    previous->next  = node->next;
+		    previous->next = node->next;
 	    }
     }
 
@@ -286,7 +284,7 @@ BENCHMARK(test_v2)->Arg(42);
 
 int main(int argc, char ** argv)
 {
-    Block_Allocator allocator(1024);
+    Block_Allocator allocator(1'024);
     
     allocator.print(); 
 

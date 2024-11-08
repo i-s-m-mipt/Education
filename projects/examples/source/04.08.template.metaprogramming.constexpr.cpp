@@ -92,6 +92,7 @@ int main()
 //  ----------------------------------------------------
 
 	constexpr auto is_constant_evaluated_1 = test_v2(x);
+	
 		      auto is_constant_evaluated_2 = test_v2(y);
 
 	assert(is_constant_evaluated_1 && !is_constant_evaluated_2);

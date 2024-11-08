@@ -52,7 +52,7 @@ template < typename ... Ts > void print_v2(Ts ... args)
 
 int main()
 {
-    auto old_exceptions = std::cin.exceptions();
+    auto exceptions = std::cin.exceptions();
 
     std::cin.exceptions(std::ios::eofbit | std::ios::badbit);
 
@@ -74,7 +74,7 @@ int main()
 
     std::cin.clear();
     
-    std::cin.exceptions(old_exceptions);
+    std::cin.exceptions(exceptions);
 
 //  ================================================================================================
 
