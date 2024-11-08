@@ -149,22 +149,23 @@ template <> struct Entity < int, std::string >
 
 int main()
 {
-	Stack_v1 < int > stack;
+	Stack_v1 < int > stack_v1_1;
 
-	stack.push(1);
-	stack.push(2);
-	stack.push(3);
+	stack_v1_1.push(1);
+	stack_v1_1.push(2);
+	stack_v1_1.push(3);
 
-	assert(stack.size() == 3 && stack.top() == 3);
+	assert(stack_v1_1.size() == 3 && stack_v1_1.top() == 3);
 
-	stack.pop();
+	stack_v1_1.pop();
 
-	assert(stack.size() == 2 && stack.top() == 2);
+	assert(stack_v1_1.size() == 2 && stack_v1_1.top() == 2);
 
 //  ------------------------------------------------------------------------------------------------
 
-	Stack_v1 < double, std::deque < double > > deque_stack_v1;
-	Stack_v2 < double, std::deque            > deque_stack_v2;
+	Stack_v1 < double, std::deque < double > > stack_v1_2;
+	
+	Stack_v2 < double, std::deque > stack_v2;
 
 //  ------------------------------------------------------------------------------------------------
 
@@ -173,8 +174,6 @@ int main()
 	auto deque = copy < std::vector, std::deque > (vector_1);
 
 //  ------------------------------------------------------------------------------------------------
-
-	Stack_v2 new_stack = deque_stack_v2;
 
 	[[maybe_unused]] Pair pair { 1, 2 };
 
