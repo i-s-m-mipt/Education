@@ -43,9 +43,9 @@ public:
 		return *this; 
 	}
 
-//  ----------------------------------------
+//  ----------------------------------
 
-	constexpr void swap(Tuple & other) const
+	constexpr void swap(Tuple & other)
 	{
 		using std::swap; 
 
@@ -131,11 +131,11 @@ auto & operator<<(std::ostream & stream, const Tuple < Ts ... > & tuple)
 
 int main()
 {
-	Tuple < int, int, int > tuple_1;
+	[[maybe_unused]] Tuple < int, int, int > tuple_1;
 
-	Tuple < int, int, int > tuple_2(1, 2, 3);
+	[[maybe_unused]] Tuple < int, int, int > tuple_2(1, 2, 3);
 
-//  -----------------------------------------
+//  ----------------------------------------------------------
 
 	Tuple < int, int, int > tuple_3(tuple_2);
 
@@ -153,7 +153,7 @@ int main()
 
 	std::cout << "tuple_4 = " << tuple_4 << '\n';
 
-//  -----------------------------------------------
+//  ----------------------------------------------------------------
 
-	constexpr auto tuple_5 = ::make_tuple(1, 2, 3);	
+	[[maybe_unused]] constexpr auto tuple_5 = ::make_tuple(1, 2, 3);	
 }

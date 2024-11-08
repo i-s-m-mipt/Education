@@ -55,55 +55,43 @@ auto & operator<<(std::ostream & stream, const std::tuple < Ts ... > & tuple)
 
 int main()
 {
-    constexpr auto tuple_c = std::make_tuple('a', 1, 1.0);
+    std::tuple < int, int, int > tuple_1(1, 2, 3);
 
-//  ------------------------------------------------------
+//  ----------------------------------------------
 
-    using tuple_t = decltype(tuple_c);
-
-    static_assert(std::tuple_size_v < tuple_t > == 3);
-
-    static_assert(std::is_same_v < std::tuple_element_t < 1, tuple_t > , const int > );
-
-    static_assert(std::get < 1 > (tuple_c) == std::get < int > (tuple_c));
-
-//  ----------------------------------------------------------------------
-
-    auto tuple_1 = std::make_tuple(1, "aaaaa"s);
-    
-    auto tuple_2 = tuple_1;
-    
-//  -----------------------------
-
-	std::get < 0 > (tuple_2) = 2;
-
-	std::get < 1 > (tuple_2) = "bbbbb"s;
-
-//  ------------------------------------
-
-    auto f = false, t = true;
-
-//  ----------------------------------
-
-    assert((tuple_1 <  tuple_2) == t);
-    assert((tuple_1 >  tuple_2) == f);
-    assert((tuple_1 <= tuple_2) == t);
-    assert((tuple_1 >= tuple_2) == f);
-    assert((tuple_1 == tuple_2) == f);
-    assert((tuple_1 != tuple_2) == t);
+    assert(std::get < 0 > (tuple_1) == 1);
 
 //  ---------------------------------------------
 
     std::cout << "tuple_1 = " << tuple_1 << '\n';
-	std::cout << "tuple_2 = " << tuple_2 << '\n';
 
-//  ---------------------------------------------------------------
+//  -------------------------------------------------------------
 
-    auto x = 0; std::tie(x, std::ignore) = tuple_1; assert(x == 1);
+    auto x1 = 0, y1 = 0; std::tie(x1, y1, std::ignore) = tuple_1; 
 
-    assert(std::tuple_cat(tuple_1, tuple_2) == std::make_tuple(1, "aaaaa"s, 2, "bbbbb"s));
+    auto [x2, y2, z2] = tuple_1; // support: cppinsights.io
 
-    const auto & [data_1, data_2] = tuple_2; // support: cppinsights.io
+    assert(x1 == 1 && y1 == 2);
 
-    assert(data_1 == 2 && data_2 == "bbbbb");
+    assert(x2 == 1 && y2 == 2 && z2 == 3);
+
+//  -------------------------------------------------------------
+
+    assert(std::tuple_cat(tuple_1, std::tuple <> ()) == tuple_1);
+
+//  -------------------------------------------------------------
+
+    constexpr auto tuple_2 = std::make_tuple(1, 2, 3);
+
+//  --------------------------------------------------
+
+    using tuple_t = decltype(tuple_2);
+
+//  --------------------------------------------------
+
+    static_assert(std::tuple_size_v < tuple_t > == 3);
+
+    static_assert(std::is_same_v < std::tuple_element_t < 0, tuple_t > , const int > );
+
+    static_assert(std::get < 0 > (tuple_2) == 1);
 }
