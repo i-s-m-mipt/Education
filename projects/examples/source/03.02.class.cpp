@@ -8,23 +8,27 @@ using namespace std::literals;
 
 class Entity
 {
-public:
+private:
 
-	struct Nested
-	{
-		static void test(Entity & entity) 
+	struct Data_Cache 
+	{ 
+		void update(const Entity & entity)
 		{
-			entity.m_data = s_data_1;
+			data = std::to_string(entity.m_data);
+
+			is_invalid = false;
 		}
+
+		std::string data; bool is_invalid = true;
 	};
 
-//  ------------------------------------------------------------------------------------------------
+public:
 
 //	Entity() { m_name = ""; m_data = 0; } // error
 
 //	Entity() : m_name("") { m_data = 0; } // bad
 
-//	Entity() : m_data(0), m_name("") {} // error
+//	Entity() : m_data(0), m_name("") {} // warning
 
 	Entity() : m_name(""), m_data(0) {}
 
@@ -40,77 +44,70 @@ public:
 		std::clog << "Entity::~Entity\n";
 	}
 
-//  --------------------
+//  -------------------------------------
 
 	void test_v1() const
 	{
 		std::clog << "Entity::test_v1\n";
 
-//		m_data = s_data_1; // error
+//		m_data = s_data; // error
 	}
 
 	void test_v2() const;
 
-//  ---------------------
+//  --------------------------------------------
 
-	auto data() const
-	{ 
-		return m_data; 
-	}
+	const auto & name() const { return m_name; }
+
+		  auto   data() const { return m_data; }
+
+//  -------------------------------------------------
 
 //	void set_data(int data) { m_data = data; } // bad
 
 	void set_data(int data)
 	{
-		m_data = data < s_data_1 ? s_data_1 : data; 
+		m_data = data < s_data ? s_data : data; 
 		
-		m_data_cache.clear();
+		m_data_cache.is_invalid = true;
 	}
 
 //  -----------------------------------
 
 	const auto & data_as_string() const
 	{
-//		m_data = s_data_1; // error
-
-		if (m_data_cache.empty())
+		if (m_data_cache.is_invalid)
 		{
-			m_data_cache = std::to_string(m_data);
+			m_data_cache.update(*this);
 		}
-
-		return m_data_cache;
+		
+		return m_data_cache.data;
 	}
 
-//  ---------------------
+//  -----------------------------
 
 	static void test_v3()
 	{
 		std::clog << "Entity::test_v3\n";
 
-//		m_data = s_data_1; // error
+//		m_data = s_data; // error
 	}
 
-//  --------------------------------------
-
-	static inline       auto s_data_1 = 0;
-
-	static        const auto s_data_2 = 0;
-
-//	static        const auto s_data_3 = "aaaaa"s; // error
-
-	static inline const auto s_data_4 = "aaaaa"s;
-
 private:
+
+	static inline auto s_data = 0;
+
+//  ------------------------------
 
 	const std::string m_name; 
 
 //  -------------------------
-	
+
 	int m_data = 0;
 
-//  ---------------------------------
+//  --------------------------------
 
-	mutable std::string m_data_cache;
+	mutable Data_Cache m_data_cache;
 };
 
 //  ================================================================================================
@@ -128,14 +125,11 @@ int main()
 
 //	entity_1.m_data = 1; // error
 
-	entity_1.test_v1();
-	entity_1.test_v2();
-
 	entity_1.set_data(1); 
 	
 	assert(entity_1.data() == 1);
 
-//  ------------------------------------------------------------------------------------------------
+//  -----------------------------
 
 	const Entity entity_2;
 
@@ -145,7 +139,7 @@ int main()
 
 	assert(entity_2.data_as_string() == "0");
 
-//  ------------------------------------------------------------------------------------------------
+//  -----------------------------------------
 
 	Entity entity_3;
 
@@ -159,11 +153,7 @@ int main()
 		Entity entity_7;
 	}
 
-//  ------------------------------------------------------------------------------------------------
-
-	assert(Entity::s_data_1 == 0);
+//  ------------------
 
 	Entity::test_v3();
-
-	Entity::Nested::test(entity_1);
 }
