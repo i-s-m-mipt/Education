@@ -47,8 +47,8 @@ public:
 //  -------------------------------------
 
 	void test_v1() const
-	{
-		std::clog << "Entity::test_v1\n";
+	{ 
+		std::clog << "Entity::test_v1\n"; 
 
 //		m_data = s_data; // error
 	}
@@ -60,6 +60,18 @@ public:
 	const auto & name() const { return m_name; }
 
 		  auto   data() const { return m_data; }
+
+//  --------------------------------------------
+
+	const auto & data_as_string() const
+	{
+		if (m_data_cache.is_invalid)
+		{
+			m_data_cache.update(*this);
+		}
+		
+		return m_data_cache.data;
+	}
 
 //  -------------------------------------------------
 
@@ -73,18 +85,6 @@ public:
 	}
 
 //  -----------------------------------
-
-	const auto & data_as_string() const
-	{
-		if (m_data_cache.is_invalid)
-		{
-			m_data_cache.update(*this);
-		}
-		
-		return m_data_cache.data;
-	}
-
-//  -----------------------------
 
 	static void test_v3()
 	{
