@@ -127,11 +127,11 @@ private:
 		m_head = allocate_nodes(); ++m_offset; m_chains.push_back(m_head);
 	}
 
-public:
-
-	static inline auto default_alignment = alignof(std::max_align_t);
-
 private:
+
+	static inline const auto default_alignment = alignof(std::max_align_t);
+
+//  -----------------------------------------------------------------------
 
 	std::size_t m_size      = 0;
 	std::size_t m_size_node = 0;

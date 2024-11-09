@@ -44,10 +44,10 @@ struct Entity
 {
     struct Key
     {
-        static inline auto data_1 = "data_1";
-        static inline auto data_2 = "data_2";
-        static inline auto data_3 = "data_3";
-        static inline auto data_4 = "data_4";
+        static inline const auto data_1 = "data_1";
+        static inline const auto data_2 = "data_2";
+        static inline const auto data_3 = "data_3";
+        static inline const auto data_4 = "data_4";
     };
 
     struct Nested 

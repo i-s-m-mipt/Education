@@ -40,11 +40,11 @@ public:
 		std::cout << " / " << S << std::endl;
 	}
 
-public:
-
-	static inline auto default_alignment = alignof(std::max_align_t);
-
 private:
+
+	static inline const auto default_alignment = alignof(std::max_align_t);
+
+//  -----------------------------------------------------------------------
 	
 	std::size_t m_offset = 0;
 

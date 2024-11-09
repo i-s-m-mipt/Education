@@ -140,9 +140,9 @@ struct Dataset
         return boost::unit_test::data::BOOST_TEST_DS_INFINITE_SIZE;
     }
 
-//  -----------------------------
+//  ---------------------------------------------------------------
 
-    static inline auto arity = 1;
+    static inline const auto arity = 1;
 }; 
 
 //  ================================================================================================
