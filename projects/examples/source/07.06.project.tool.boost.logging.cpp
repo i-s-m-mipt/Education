@@ -182,13 +182,6 @@ private:
 
 public:
 
-	auto scope() const 
-	{ 
-		return m_scope; 
-	}
-
-//  ----------------------------------------------------------------
-
 	void write(Severity severity, const std::string & message) const
 	{
 		auto record = s_logger.open_record(boost::log::keywords::severity = severity);
