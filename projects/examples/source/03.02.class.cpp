@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 
+using namespace std::literals;
+
 //  ================================================================================================
 
 class Entity
@@ -12,7 +14,7 @@ public:
 	{
 		static void test(Entity & entity) 
 		{
-			entity.m_data = s_data;
+			entity.m_data = s_data_1;
 		}
 	};
 
@@ -38,18 +40,18 @@ public:
 		std::clog << "Entity::~Entity\n";
 	}
 
-//  ------------------------------------------------------------------------------------------------
+//  --------------------
 
 	void test_v1() const
 	{
 		std::clog << "Entity::test_v1\n";
 
-//		m_data = s_data; // error
+//		m_data = s_data_1; // error
 	}
 
 	void test_v2() const;
 
-//  ----------------------------------------------------
+//  ---------------------
 
 	auto data() const
 	{ 
@@ -60,49 +62,55 @@ public:
 
 	void set_data(int data)
 	{
-		m_data = data < s_data ? s_data : data; 
+		m_data = data < s_data_1 ? s_data_1 : data; 
 		
-		m_is_cache_valid = false;
+		m_data_cache.clear();
 	}
 
-//  ----------------------------------------------------
+//  -----------------------------------
 
 	const auto & data_as_string() const
 	{
-//		m_data = s_data; // error
+//		m_data = s_data_1; // error
 
-		if (!m_is_cache_valid)
+		if (m_data_cache.empty())
 		{
-			m_data_as_string = std::to_string(m_data);
-
-			m_is_cache_valid = true;
+			m_data_cache = std::to_string(m_data);
 		}
 
-		return m_data_as_string;
+		return m_data_cache;
 	}
 
-//  --------------------------------------------------
+//  ---------------------
 
 	static void test_v3()
 	{
 		std::clog << "Entity::test_v3\n";
 
-//		m_data = s_data; // error
+//		m_data = s_data_1; // error
 	}
 
-	static inline auto s_data = 0;
+//  --------------------------------------
+
+	static inline       auto s_data_1 = 0;
+
+	static        const auto s_data_2 = 0;
+
+//	static        const auto s_data_3 = "aaaaa"s; // error
+
+	static inline const auto s_data_4 = "aaaaa"s;
 
 private:
 
 	const std::string m_name; 
+
+//  -------------------------
 	
 	int m_data = 0;
 
-//  --------------------------------------
+//  ---------------------------------
 
-	mutable bool m_is_cache_valid = false;
-
-	mutable std::string m_data_as_string;
+	mutable std::string m_data_cache;
 };
 
 //  ================================================================================================
@@ -153,7 +161,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-	assert(Entity::s_data == 0);
+	assert(Entity::s_data_1 == 0);
 
 	Entity::test_v3();
 
