@@ -55,9 +55,9 @@ auto & operator<<(std::ostream & stream, const std::tuple < Ts ... > & tuple)
 
 int main()
 {
-    std::tuple < int, int, int > tuple_1(1, 2, 3);
+    std::tuple < int, std::string > tuple_1(1, "aaaaa");
 
-//  ----------------------------------------------
+//  ----------------------------------------------------
 
     assert(std::get < 0 > (tuple_1) == 1);
 
@@ -65,15 +65,13 @@ int main()
 
     std::cout << "tuple_1 = " << tuple_1 << '\n';
 
-//  -------------------------------------------------------------
+//  ------------------------------------------------------------------
 
-    auto x1 = 0, y1 = 0; std::tie(x1, y1, std::ignore) = tuple_1; 
+    auto x1 = 0; std::tie(x1, std::ignore) = tuple_1; assert(x1 == 1);
 
-    auto [x2, y2, z2] = tuple_1; // support: cppinsights.io
+    const auto & [x2, string] = tuple_1; // support: cppinsights.io
 
-    assert(x1 == 1 && y1 == 2);
-
-    assert(x2 == 1 && y2 == 2 && z2 == 3);
+    assert(x2 == 1 && string == "aaaaa");
 
 //  -------------------------------------------------------------
 

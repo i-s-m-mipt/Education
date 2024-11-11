@@ -131,15 +131,15 @@ auto & operator<<(std::ostream & stream, const Tuple < Ts ... > & tuple)
 
 int main()
 {
-	[[maybe_unused]] Tuple < int, int, int > tuple_1;
+	[[maybe_unused]] Tuple < int, std::string > tuple_1;
 
-	[[maybe_unused]] Tuple < int, int, int > tuple_2(1, 2, 3);
+	[[maybe_unused]] Tuple < int, std::string > tuple_2(1, "aaaaa");
 
-//  ----------------------------------------------------------
+//  ----------------------------------------------------------------
 
-	Tuple < int, int, int > tuple_3(tuple_2);
+	Tuple < int, std::string > tuple_3(tuple_2);
 
-    Tuple < int, int, int > tuple_4(std::move(tuple_3));
+    Tuple < int, std::string > tuple_4(std::move(tuple_3));
 
     tuple_3 = tuple_2; 
     
