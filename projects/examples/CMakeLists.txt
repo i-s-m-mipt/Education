@@ -93,7 +93,7 @@ set(debug
     05.01.pattern.builder
     05.02.pattern.factory
     05.03.pattern.prototype
-    05.04.pattern.singleton.monostate.noncopyable
+    05.04.pattern.singleton
     05.05.pattern.adapter
     05.06.pattern.bridge
     05.07.pattern.composite
