@@ -454,13 +454,13 @@ private:
 
 private:
 
-	static inline const auto size = 1'000uz;
+	static inline auto size = 1'000uz;
 
-	static inline const auto step = std::numeric_limits < digit_t > ::digits10 / 2;
+	static inline auto step = std::numeric_limits < digit_t > ::digits10 / 2;
 
-	static inline const auto base = static_cast < digit_t > (std::pow(10, step));
+	static inline auto base = static_cast < digit_t > (std::pow(10, step));
 
-//  -----------------------------------------------------------------------------
+//  -----------------------------------------------------------------------
 
 	bool m_is_negative = false;
 

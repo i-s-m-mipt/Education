@@ -200,7 +200,7 @@ public:
 
 private:
 
-	static inline const std::unordered_map < Attribute, attribute_pair_t > s_attributes
+	static inline std::unordered_map < Attribute, attribute_pair_t > s_attributes
 	{
 		{ Attribute::line   , { "line"   , boost::log::attributes::counter < std::size_t > () } },
 		{ Attribute::time   , { "time"   , boost::log::attributes::utc_clock               () } },
@@ -208,7 +208,7 @@ private:
 		{ Attribute::thread , { "thread" , boost::log::attributes::current_thread_id       () } }
 	};
 
-	static inline const std::unordered_map < Severity, std::string_view > s_severities
+	static inline std::unordered_map < Severity, std::string_view > s_severities
 	{
 		{ Logger::Severity::debug, "debug" },
 		{ Logger::Severity::trace, "trace" },

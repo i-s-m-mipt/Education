@@ -42,57 +42,55 @@ auto load(const std::filesystem::path & path)
 
 struct Entity 
 {
-    struct Key
-    {
-        static inline const auto data_1 = "data_1";
-        static inline const auto data_2 = "data_2";
-        static inline const auto data_3 = "data_3";
-        static inline const auto data_4 = "data_4";
-    };
-
     struct Nested 
     {
-        std::vector < int > data_4; 
+        std::vector < int > data_3; 
     };
 
-    int data_1 = 0; std::string data_2; Nested data_3;
+//  --------------------------------------------------
+
+    int data_1 = 0; std::string data_2; Nested nested;
 };
 
 //  ================================================================================================
 
 int main()
 {
-    Entity entity(1, "entity", { { 1, 2, 3, 4, 5 } });
+    Entity entity(1, "aaaaa", { { 1, 2, 3, 4, 5 } });
 
-    const auto path = "13.12.serialization.json.entity.json";
+    auto path = "13.12.serialization.json.entity.json";
 
-//  ================================================================================================
+//  --------------------------------------------------------
 
-    nlohmann::json json_1; // support: boost::property_tree
+    nlohmann::json json_11; // support: boost::property_tree
 
-    json_1[Entity::Key::data_1] = entity.data_1;
-    json_1[Entity::Key::data_2] = entity.data_2;
-    json_1[Entity::Key::data_3]
-          [Entity::Key::data_4] = entity.data_3.data_4;
+    json_11["data_1"] = entity.data_1;
+    json_11["data_2"] = entity.data_2;
 
-    save(path, json_1);
+    auto & json_12 = json_11["nested"];
 
-//  ================================================================================================
+    json_12["data_3"] = entity.nested.data_3;
 
-    auto json_2 = load(path);
+    save(path, json_11);
+
+//  --------------------------
+
+    auto json_21 = load(path);
 
     using data_1_t = int;
 
     using data_2_t = std::string;
 
-    using data_4_t = std::vector < int > ;
+    using data_3_t = std::vector < int > ;
 
-    assert(json_2[Entity::Key::data_1].get < data_1_t > () == entity.data_1);
-    assert(json_2[Entity::Key::data_2].get < data_2_t > () == entity.data_2);
-    assert(json_2[Entity::Key::data_3]
-                 [Entity::Key::data_4].get < data_4_t > () == entity.data_3.data_4);
+    assert(json_21["data_1"].get < data_1_t > () == entity.data_1);
+    assert(json_21["data_2"].get < data_2_t > () == entity.data_2);
 
-//  ================================================================================================
+    auto & json_22 = json_21["nested"];
+
+    assert(json_22["data_3"].get < data_3_t > () == entity.nested.data_3);
+
+//  -------------------------------------------------------------------------
 
     std::cout << "Enter any character to continue : "; char c; std::cin >> c;
 
