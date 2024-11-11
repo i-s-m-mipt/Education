@@ -23,9 +23,9 @@ import demo;
 
 #define PREFIX "test_"
 
-#define FUNCTION(name) void test_##name() \
-{                                         \
-	std::clog << PREFIX << #name << '\n'; \
+#define FUNCTION(version) void test_##version() \
+{                                               \
+	std::clog << PREFIX << #version << '\n';    \
 }                                                    
 
 FUNCTION(v6) // support: cppinsights.io
