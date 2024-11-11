@@ -37,10 +37,10 @@ public:
 
     void update_data(int data) 
     { 
-        m_data = data; notify_all();
+        m_data = data; notify_observers();
     }
 
-    void notify_all() const
+    void notify_observers() const
     { 
         for (auto observer : m_observers)
         {
