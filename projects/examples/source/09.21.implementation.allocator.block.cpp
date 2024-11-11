@@ -187,9 +187,9 @@ private:
 
 private:
 
-	static inline const auto default_alignment = alignof(std::max_align_t);
+	static inline auto default_alignment = alignof(std::max_align_t);
 
-//  -----------------------------------------------------------------------
+//  -----------------------------------------------------------------
 
     std::size_t m_size = 0;
 
