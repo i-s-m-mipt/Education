@@ -17,7 +17,7 @@ public:
     
     void set(int data) 
     { 
-        m_data = data < 0 ? 0 : data;
+        m_data = data;
     }
 
 private:

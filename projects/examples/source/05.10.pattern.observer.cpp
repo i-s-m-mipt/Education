@@ -28,13 +28,16 @@ public:
         }
     }
 
-//  ------------------------------------------------------------------------------------------------
+//  --------------------------------------
 
-    void set_data(int data) 
+    void add_observer(Observer * observer) 
     { 
-        m_data = data < 0 ? 0 : data; 
-        
-        notify_all();
+        m_observers.push_back(observer); 
+    }
+
+    void update_data(int data) 
+    { 
+        m_data = data; notify_all();
     }
 
     void notify_all() const
@@ -46,11 +49,6 @@ public:
                 observer->test(m_data);
             }
         }
-    }
-
-    void add_observer(Observer * observer) 
-    { 
-        m_observers.push_back(observer); 
     }
 
 private:
@@ -84,6 +82,6 @@ int main()
 {
     Entity entity;
 
-    entity.add_observer(new Client()); entity.set_data(1);
-    entity.add_observer(new Server()); entity.set_data(2);    
+    entity.add_observer(new Client()); entity.update_data(1);
+    entity.add_observer(new Server()); entity.update_data(2);    
 }
