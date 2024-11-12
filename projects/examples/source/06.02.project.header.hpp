@@ -33,11 +33,11 @@ template < typename T > void test_v5()
 
 //  ================================================================================================
 
-struct Entity_v1 
+struct Entity 
 { 
 	static void test_v1()
 	{ 
-		std::clog << "Entity_v1::test_v1\n"; 
+		std::clog << "Entity::test_v1\n"; 
 	} 
 
 	static void test_v2();
@@ -56,7 +56,7 @@ namespace education
 {
 	namespace examples
 	{
-		struct Entity_v2 {};
+		struct Entity {};
 	}
 }
 
@@ -64,7 +64,7 @@ namespace education
 {
 	namespace examples
 	{
-		void test(Entity_v2);
+		void test(Entity);
 	}
 }
 

@@ -11,9 +11,9 @@ void test_v1()
 
 //  ================================================================================================
 
-void Entity_v1::test_v2()
+void Entity::test_v2()
 {
-	std::clog << "Entity_v1::test_v2\n";
+	std::clog << "Entity::test_v2\n";
 }
 
 //  ================================================================================================
@@ -33,8 +33,8 @@ extern const int global_x4 = 4;
 
 namespace education::examples
 {
-	void test(Entity_v2)
+	void test(Entity)
 	{
-		std::clog << "test\n";
+		std::clog << "education::examples::test\n";
 	}
 }
