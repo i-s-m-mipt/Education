@@ -240,8 +240,8 @@ int main()
 
 	assert((rational_1 ++           ) == rational_t(+1, 1));
 	assert((           ++ rational_2) == rational_t(+3, 1));
-	assert((rational_1 --           ) == rational_t(+3, 1));
-	assert((           -- rational_2) == rational_t(+1, 1));
+	assert((rational_1 --           ) == rational_t(+2, 1));
+	assert((           -- rational_2) == rational_t(+2, 1));
 
 //  --------------------------------------------------------
 
