@@ -1,16 +1,16 @@
 #include <iostream>
 
-//  ================================================================================================
+//  ==========================================================
 
 struct Client 
 { 
-	void test()
+	void test() const
 	{ 
 		std::clog << "Client::test\n"; 
 	} 
 };
 
-//  ================================================================================================
+//  ==========================================================
 
 struct Entity
 {
@@ -19,15 +19,15 @@ struct Entity
 	virtual void test() const = 0;	
 };
 
-//  ================================================================================================
+//  ==========================================================
 
-class Adapter : public Entity
+class Adapter_v1 : public Entity
 {
 public:
 
-	explicit Adapter(Client & client) : m_client(client) {}
+	explicit Adapter_v1(Client & client) : m_client(client) {}
 
-//  ------------------------------------------------------------------------------------------------
+//  ----------------------------------------------------------
 
 	void test() const override 
 	{ 
@@ -39,15 +39,29 @@ private:
 	Client & m_client;
 };
 
-//  ================================================================================================
+//  ==========================================================
+
+class Adapter_v2 : public Entity, private Client
+{
+	void test() const override 
+	{ 
+		Client::test(); 
+	}
+};
+
+//  ==========================================================
 
 int main()
 {	
 	Client client;
 
-	Entity * entity = new Adapter(client);
+	Entity * entity_1 = new Adapter_v1(client);
 
-	entity->test(); 
+	Entity * entity_2 = new Adapter_v2;
+
+	entity_1->test(); 
+	entity_2->test(); 
 	
-	delete entity;
+	delete entity_1;
+	delete entity_2;
 }
