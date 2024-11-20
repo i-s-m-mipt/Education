@@ -16,14 +16,14 @@ public:
 
 	explicit Arena(std::size_t size) : m_size(size)
 	{
-		m_begin = ::operator new(m_size, std::align_val_t(default_alignment));
+		m_begin = operator new(m_size, std::align_val_t(default_alignment));
 	}
 
    ~Arena()
 	{
 		if (m_begin)
 		{
-			::operator delete(m_begin, m_size, std::align_val_t(default_alignment));
+			operator delete(m_begin, m_size, std::align_val_t(default_alignment));
 		}
 	}
 

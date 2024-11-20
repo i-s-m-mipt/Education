@@ -35,7 +35,7 @@ public:
     {
         if (m_size >= sizeof(Node) + 1) 
         {
-            m_begin = ::operator new(m_size, std::align_val_t(default_alignment));
+            m_begin = operator new(m_size, std::align_val_t(default_alignment));
 
 	        m_head = get_node(m_begin); 
             
@@ -53,7 +53,7 @@ public:
     {
         if (m_begin)
         {
-            ::operator delete(m_begin, m_size, std::align_val_t(default_alignment));
+            operator delete(m_begin, m_size, std::align_val_t(default_alignment));
         }
     }
 
@@ -253,24 +253,24 @@ void test_v2(benchmark::State & state)
         {
             auto size = distribution(engine) * mb; 
             
-            blocks[i].first = ::operator new(size); blocks[i].second = size;
+            blocks[i].first = operator new(size); blocks[i].second = size;
         }
         
 		for (auto i = 0uz; i < kb; i += 32) 
         {
-            ::operator delete(blocks[i].first, blocks[i].second);
+            operator delete(blocks[i].first, blocks[i].second);
         }
 
 		for (auto i = 0uz; i < kb; i += 32)
         {
             auto size = distribution(engine) * mb; 
             
-            blocks[i].first = ::operator new(size); blocks[i].second = size;
+            blocks[i].first = operator new(size); blocks[i].second = size;
         } 
         
 		for (auto i = 0uz; i < kb; ++i) 
         {
-            ::operator delete(blocks[i].first, blocks[i].second);
+            operator delete(blocks[i].first, blocks[i].second);
         }
 	}
 }

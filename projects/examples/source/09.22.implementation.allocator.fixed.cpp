@@ -82,12 +82,12 @@ void test_v2(benchmark::State & state)
 	{
 		for (auto i = 0uz; i < kb; ++i) 
 		{
-			ptrs[i] = ::operator new(kb);
+			ptrs[i] = operator new(kb);
 		}
 
 		for (auto i = 0uz; i < kb; ++i) 
 		{
-			::operator delete(ptrs[i]);
+			operator delete(ptrs[i]);
 		}
 	}
 }

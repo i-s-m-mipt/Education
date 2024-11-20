@@ -78,7 +78,7 @@ private:
 
     void allocate() 
     { 
-        m_data = static_cast < T * > (::operator new(sizeof(T), std::align_val_t(alignof(T)))); 
+        m_data = static_cast < T * > (operator new(sizeof(T), std::align_val_t(alignof(T)))); 
     }
 
     void construct(T data) 
@@ -110,7 +110,7 @@ private:
     { 
         if (m_data)
         {
-            ::operator delete(m_data, sizeof(T), std::align_val_t(alignof(T))); m_data = nullptr;
+            operator delete(m_data, sizeof(T), std::align_val_t(alignof(T))); m_data = nullptr;
         }
     }
 

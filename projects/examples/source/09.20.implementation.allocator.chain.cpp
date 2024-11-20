@@ -45,7 +45,7 @@ public:
 		{
 			if (chain)
 			{
-				::operator delete(chain, m_size, std::align_val_t(default_alignment));
+				operator delete(chain, m_size, std::align_val_t(default_alignment));
 			}
 		}
 	}
@@ -115,7 +115,7 @@ private:
 
 	auto allocate_nodes() const
 	{
-		auto node = get_node(::operator new(m_size, std::align_val_t(default_alignment)));
+		auto node = get_node(operator new(m_size, std::align_val_t(default_alignment)));
 		
 		node->next = nullptr; 
 		
@@ -189,22 +189,22 @@ void test_v2(benchmark::State & state)
 	{
 		for (auto i = 0uz; i < kb; ++i) 
 		{ 
-			ptrs[i] = ::operator new(mb); 
+			ptrs[i] = operator new(mb); 
 		}
 
 		for (auto i = 0uz; i < kb; i += 2) 
 		{ 
-			::operator delete(ptrs[i], mb); 
+			operator delete(ptrs[i], mb); 
 		}
 
 		for (auto i = 0uz; i < kb; i += 2) 
 		{ 
-			ptrs[i] = ::operator new(mb);
+			ptrs[i] = operator new(mb);
 		}
 
 		for (auto i = 0uz; i < kb; ++i) 
 		{ 
-			::operator delete(ptrs[i], mb); 
+			operator delete(ptrs[i], mb); 
 		}
 	}
 }

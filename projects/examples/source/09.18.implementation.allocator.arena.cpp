@@ -15,14 +15,14 @@ public:
 
 	explicit Arena_Allocator(std::size_t size) : m_size(size)
 	{
-		m_begin = ::operator new(m_size, std::align_val_t(default_alignment));
+		m_begin = operator new(m_size, std::align_val_t(default_alignment));
 	}
 
    ~Arena_Allocator()
 	{
 		if (m_begin)
 		{
-			::operator delete(m_begin, m_size, std::align_val_t(default_alignment));
+			operator delete(m_begin, m_size, std::align_val_t(default_alignment));
 		}
 	}
 
@@ -103,12 +103,12 @@ void test_v2(benchmark::State & state)
 	{
 		for (auto i = 0uz; i < kb; ++i) 
 		{ 
-			ptrs[i] = ::operator new(mb); 
+			ptrs[i] = operator new(mb); 
 		}
 
 		for (auto i = 0uz; i < kb; ++i) 
 		{ 
-			::operator delete(ptrs[i], mb); 
+			operator delete(ptrs[i], mb); 
 		}
 	}
 }

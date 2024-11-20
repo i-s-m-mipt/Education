@@ -101,7 +101,7 @@ int main()
 
     assert(*unique_4 == 4);
 
-//  ------------------------------------------
+//  ----------------------------------------
 
-    auto unique_5 = ::make_unique < int > (5);
+    auto unique_5 = make_unique < int > (5);
 }

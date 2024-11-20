@@ -88,11 +88,11 @@ void test(benchmark::State & state)
 {
     for (auto value : state)
     {
-		auto ptr = ::operator new(state.range(0)); 
+		auto ptr = operator new(state.range(0)); 
 		
 		benchmark::DoNotOptimize(ptr);
 		
-		::operator delete(ptr, state.range(0));
+		operator delete(ptr, state.range(0));
     }
 }
 
@@ -108,7 +108,7 @@ int main(int argc, char ** argv)
 
 	auto size = 5uz;
 
-	auto entities = static_cast < Entity_v1 * > (::operator new(sizeof(Entity_v1) * size));
+	auto entities = static_cast < Entity_v1 * > (operator new(sizeof(Entity_v1) * size));
 
 	for (auto i = 0uz; i < size; ++i)
 	{
@@ -126,7 +126,7 @@ int main(int argc, char ** argv)
 		entities[i].~Entity_v1();
 	}
 
-	::operator delete(entities, sizeof(Entity_v1) * size);
+	operator delete(entities, sizeof(Entity_v1) * size);
 
 //  ================================================================================================
 
