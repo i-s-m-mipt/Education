@@ -1,13 +1,10 @@
 #include <iostream>
+#include <vector>
 
 //  ================================================================================================
 
 template < typename D > struct Entity
 {
-	virtual ~Entity() = default;
-
-//  ------------------------------------------------------------------------------------------------
-
 	void test() const
 	{
 		static_cast < const D * > (this)->test_implementation();
@@ -33,15 +30,17 @@ struct Server : public Entity < Server >
 
 //  ================================================================================================
 
-template < typename E > void test(const E & entity)
-{ 
-	entity.test(); 
+template < typename D > void test(const Entity < D > & entity) 
+{
+	entity.test();
 }
 
 //  ================================================================================================
 
 int main()
 {
-	Client().test();
-	Server().test();
+	Client client; test(client);
+	Server server; test(server);
+
+//	std::vector < Entity * > entities; // error
 }

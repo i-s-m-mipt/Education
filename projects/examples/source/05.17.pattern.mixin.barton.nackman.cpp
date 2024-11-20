@@ -10,7 +10,6 @@ template < typename T > class Comparable
 protected:
 
     Comparable() = default;
-   ~Comparable() = default;
 
 public:
 
@@ -54,7 +53,7 @@ public:
 
     explicit Entity_v2(int data) : m_data(data) {}
 
-//  ------------------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------
 
     friend auto operator<(const Entity_v2 & lhs, const Entity_v2 & rhs)
     {
@@ -84,7 +83,7 @@ int main()
     assert((entity_v1_1 == entity_v1_2) == f);
     assert((entity_v1_1 != entity_v1_2) == t);
 
-//  ------------------------------------------------------------------------------------------------
+//  ------------------------------------------
 
     Entity_v2 entity_v2_1(1);
     Entity_v2 entity_v2_2(2);
