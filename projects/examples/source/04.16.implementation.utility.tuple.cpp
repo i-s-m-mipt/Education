@@ -153,7 +153,7 @@ int main()
 
 	std::cout << "tuple_4 = " << tuple_4 << '\n';
 
-//  ----------------------------------------------------------------
+//  --------------------------------------------------------------
 
-	[[maybe_unused]] constexpr auto tuple_5 = ::make_tuple(1, 2, 3);	
+	[[maybe_unused]] constexpr auto tuple_5 = make_tuple(1, 2, 3);	
 }
