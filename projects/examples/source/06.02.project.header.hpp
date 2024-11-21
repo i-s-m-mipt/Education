@@ -4,81 +4,83 @@
 #pragma once
 
 #include <iostream>
+#include <utility>
 
-//  ================================================================================================
+#include <boost/noncopyable.hpp>
 
-void test_v1();
+//  ====================================================
+
 void test_v2();
+void test_v3();
 
-//  ================================================================================================
+//  ====================================================
 
-//  void test_v3() // error
+//  void test_v4() // error
 //  { 
-//	    std::clog << "test_v3\n"; 
+//	    std::clog << "test_v4\n"; 
 //  } 
 
-//  ================================================================================================
+//  ====================================================
 
-inline void test_v4()
+inline void test_v5()
 { 
-    std::clog << "test_v4\n"; 
+    std::clog << "test_v5\n"; 
 }
 
-//  ================================================================================================
+//  ====================================================
 
-template < typename T > void test_v5()
+class Entity : private boost::noncopyable
 {
-	std::clog << "test_v5\n";
-}
+public:
 
-//  ================================================================================================
+    Entity();
 
-struct Entity 
-{ 
-	static void test_v1()
-	{ 
-		std::clog << "Entity::test_v1\n"; 
-	} 
+    Entity(Entity && other) : m_pimpl(other.m_pimpl)
+    {
+        other.m_pimpl = nullptr;
+    }
 
-	static void test_v2();
+    auto & operator=(Entity && other)
+    {
+        m_pimpl = std::exchange(other.m_pimpl, nullptr); 
+        
+        return *this;
+    }
+
+   ~Entity();
+
+//  ------------------
+
+    void test() const;
+
+private:
+
+	struct Implementation;
+
+//  -----------------------------------
+
+    Implementation * m_pimpl = nullptr;
 };
 
-//  ================================================================================================
+//  ====================================================
+
+template < typename T > void test_v6()
+{
+	std::clog << "test_v6\n";
+}
+
+//  ====================================================
 
 extern       int global_x1;
+
 extern       int global_x2;
+
 extern const int global_x3;
+
 extern const int global_x4;
 
-//  ================================================================================================
+       const int global_x5 = 5;
 
-namespace education
-{
-	namespace examples
-	{
-		struct Entity {};
-	}
-}
-
-namespace education
-{
-	namespace examples
-	{
-		void test(Entity);
-	}
-}
-
-//  ================================================================================================
-
-namespace constants
-{
-//					 auto x1 = 1; // error
-
-//		   const     auto x2 = 2; // bad
-
-	inline const     auto x3 = 3;
-	
-		   constexpr auto x4 = 4;
-}
+inline const int global_x6 = 6;
 
 #endif

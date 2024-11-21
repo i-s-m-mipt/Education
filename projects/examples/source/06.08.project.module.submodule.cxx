@@ -1,11 +1,13 @@
 module;
 
+import <iostream>;
+
 export module demo.submodule;
 
 export namespace demo
 {
-	int test_v1(int x) 
+	void test_v3() 
 	{ 
-		return x; 
+		std::clog << "demo::test_v3\n";
 	}
 }
