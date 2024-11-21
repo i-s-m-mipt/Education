@@ -10,7 +10,7 @@ auto equal(double x, double y, double epsilon = 1e-6)
 
 //  ================================================================================================
 
-int main()
+int main() // support: valgrind --tool=callgrind ./07.09.project.tool.profiler.cpu
 {
 	auto size = 1'000'000uz;
 	

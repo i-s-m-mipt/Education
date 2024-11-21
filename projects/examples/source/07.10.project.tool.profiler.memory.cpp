@@ -6,7 +6,7 @@
 
 using namespace std::literals;
 
-int main()
+int main() // support: valgrind --leak-check=yes ./07.10.project.tool.profiler.memory
 {
 	auto size_1 = 5uz, size_2 = 1'000'000uz;
 
