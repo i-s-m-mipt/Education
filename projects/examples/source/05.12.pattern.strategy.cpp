@@ -16,11 +16,11 @@ struct Slow : public Strategy { void test() const override { std::clog << "Slow:
 
 //  ================================================================================================
 
-class Entity_v1
+class Entity
 {
 public:
 
-    explicit Entity_v1(Strategy & strategy) : m_strategy(strategy) {}
+    explicit Entity(Strategy & strategy) : m_strategy(strategy) {}
 
 //  -----------------------------------------------------------------
 
@@ -34,28 +34,15 @@ private:
     Strategy & m_strategy;
 };
 
-//  ===============================
-
-struct Entity_v2 : private Strategy
-{
-    void test() const
-    { 
-        Strategy::test(); 
-    }
-};
-
 //  ================================================================================================
 
 int main()
 {
     Strategy * strategy = new Fast();
 
-    Entity_v1 entity_v1(*strategy);
-
-    Entity_v2 entity_v2;
+    Entity entity(*strategy);
     
-    entity_v1.test();
-    entity_v2.test();
+    entity.test();
 
     delete strategy;
 }
