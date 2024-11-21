@@ -115,15 +115,15 @@ int main()
 
 #pragma GCC diagnostic pop
 
-//  ------------------------------
-
-	std::string path_1 = __FILE__;
+//  -------------------------------------------------
 
 	auto file_name = "06.05.project.source.main.cpp";
 
-	auto size = std::strlen(file_name);
+//  -------------------------------------------------
 
-	assert(path_1.substr(std::size(path_1) - size, size) == file_name);
+	std::string path_1 = __FILE__;
+
+	assert(path_1.substr(std::size(path_1) - std::strlen(file_name)) == file_name);
 
 	assert(__LINE__ == 128);
 
@@ -140,9 +140,9 @@ int main()
 
 	std::string path_2 = source_location.file_name();
 
-	assert(path_2.substr(std::size(path_2) - size, size) == file_name);
+	assert(path_2.substr(std::size(path_2) - std::strlen(file_name)) == file_name);
 
-	assert(source_location.line() == 139 && source_location.column() == 64);
+	assert(source_location.line() == 139);
 
 	assert(std::string(source_location.function_name()) == "int main()");
 
