@@ -387,15 +387,15 @@ public:
 
 	friend bool operator< (const Big_Int & lhs, const Big_Int & rhs)
 	{
-		if ( lhs.m_is_negative && !rhs.m_is_negative) { return lhs.m_is_negative; }
-		if (!lhs.m_is_negative &&  rhs.m_is_negative) { return rhs.m_is_negative; }
-		if (!lhs.m_is_negative && !rhs.m_is_negative) 
+		if (lhs.m_is_negative != rhs.m_is_negative) { return lhs.m_is_negative; }
+
+		if (lhs.m_is_negative && rhs.m_is_negative) 
 		{
-			return lhs.less(rhs);
+			return rhs.less(lhs);
 		}
 		else
 		{
-			return rhs.less(lhs);
+			return lhs.less(rhs);
 		}
 	}
 
@@ -473,67 +473,71 @@ private:
 
 int main()
 {
-	Big_Int big_int_1 = "+73640854127382725310948206095647"sv;
+	Big_Int big_int_01 = "+73640854127382725310948206095647"sv;
 
-	Big_Int big_int_2 = "-46090058756232818791046807807190"sv;
+	Big_Int big_int_02 = "-46090058756232818791046807807190"sv;
 
-	Big_Int big_int_3 = "+27550795371149906519901398288457"sv;
+	Big_Int big_int_03 = "+27550795371149906519901398288457"sv;
 
-	Big_Int big_int_4 = big_int_1;
+	Big_Int big_int_04 = big_int_01;
 
-	Big_Int big_int_5 = "-3394111293590239892710602762023649092547630961329778427474301930"sv;
+	Big_Int big_int_05 = "-3394111293590239892710602762023649092547630961329778427474301930"sv;
 
-	Big_Int big_int_6 = "-46090058756232818791046807807189"sv;
+	Big_Int big_int_06 = "-46090058756232818791046807807189"sv;
 
-	Big_Int big_int_7 = "+119730912883615544101995013902837"sv;
+	Big_Int big_int_07 = "+73640854127382725310948206095648"sv;
 
-	Big_Int big_int_8 = -1;
+	Big_Int big_int_08 = big_int_02;
 
-	Big_Int big_int_9 = "+8581424947372244"sv;
+	Big_Int big_int_09 = "+119730912883615544101995013902837"sv;
 
-//  ----------------------------------------------
+	Big_Int big_int_10 = -1;
 
-	assert((big_int_1 += big_int_2) == big_int_3);
-	assert((big_int_1 -= big_int_2) == big_int_4);
-	assert((big_int_1 *= big_int_2) == big_int_5);
-	assert((big_int_1 /= big_int_2) == big_int_4);
+	Big_Int big_int_11 = "+8581424947372244"sv;
 
-//  ----------------------------------------------
+//  -------------------------------------------------
 
-	assert((big_int_1 ++          ) == big_int_4);
-	assert((          ++ big_int_2) == big_int_6);
-	assert((big_int_2 --          ) == big_int_6);
-	assert((          -- big_int_1) == big_int_4);
+	assert((big_int_01 += big_int_02) == big_int_03);
+	assert((big_int_01 -= big_int_02) == big_int_04);
+	assert((big_int_01 *= big_int_02) == big_int_05);
+	assert((big_int_01 /= big_int_02) == big_int_04);
+
+//  -------------------------------------------------
+
+	assert((big_int_01 ++           ) == big_int_04);
+	assert((           ++ big_int_02) == big_int_06);
+	assert((big_int_01 --           ) == big_int_07);
+	assert((           -- big_int_02) == big_int_08);
 	
-//  ----------------------------------------------
+//  -------------------------------------------------
 
-	assert((big_int_1 +  big_int_2) == big_int_3);
-	assert((big_int_1 -  big_int_2) == big_int_7);
-	assert((big_int_1 *  big_int_2) == big_int_5);
-	assert((big_int_1 /  big_int_2) == big_int_8);
+	assert((big_int_01 +  big_int_02) == big_int_03);
+	assert((big_int_01 -  big_int_02) == big_int_09);
+	assert((big_int_01 *  big_int_02) == big_int_05);
+	assert((big_int_01 /  big_int_02) == big_int_10);
 
-//  ----------------------------------------------
+//  -------------------------------------------------
 
 	auto f = false, t = true;
 
-//  --------------------------------------
+//  ----------------------------------------
 
-	assert((big_int_1 <  big_int_2) == f);
-	assert((big_int_1 >  big_int_2) == t);
-	assert((big_int_1 <= big_int_2) == f);
-	assert((big_int_1 >= big_int_2) == t);
-	assert((big_int_1 == big_int_2) == f);
-	assert((big_int_1 != big_int_2) == t);
+	assert((big_int_01 <  big_int_02) == f);
+	assert((big_int_01 >  big_int_02) == t);
+	assert((big_int_01 <= big_int_02) == f);
+	assert((big_int_01 >= big_int_02) == t);
+	assert((big_int_01 == big_int_02) == f);
+	assert((big_int_01 != big_int_02) == t);
 
-//  ----------------------------------------------------
+//  -------------------------------------------------------
 
-	assert(multiply(big_int_1, big_int_2) == big_int_5);
+	assert(multiply(big_int_01, big_int_02) == big_int_05);
 
-//  ----------------------------------------------------
+//  -------------------------------------------------------
 
-	assert(sqrt(big_int_1) == big_int_9);
+	assert(sqrt(big_int_01) == big_int_11);
 
-//  -------------------------------------
+//  ---------------------------------------
 
 	Big_Int result = 1; 
 		
