@@ -1,12 +1,14 @@
+#include <iostream>
+
 #include <boost/dll.hpp>
 
 #define API extern "C" BOOST_SYMBOL_EXPORT
 
 namespace library_v2
 {
-	API int test_v1(int x) 
+	API void test_v1() 
 	{ 
-		return x; 
+		std::clog << "library_v2::test_v1\n"; 
 	}
 }
 
