@@ -1,4 +1,5 @@
-#include <cassert>
+#include <functional>
+#include <vector>
 
 #include <boost/dll.hpp>
 
@@ -6,12 +7,25 @@
 
 int main()
 {
-	assert(library_v1::test(1) == 1);
+	library_v1::test();
 
-//  -------------------------------------------------------------------------
+//  -------------------------------
 
 	auto path = "liblibrary_v2.so";
 
-	assert(boost::dll::import_symbol < int(int) > (path, "test_v1")(1) == 1);
-	assert(boost::dll::import_alias  < int(int) > (path, "test_v2")(1) == 1);
+//  ---------------------------------------------------
+
+	std::vector < std::function < void() > > functions;
+
+	functions.push_back(boost::dll::import_symbol < void() > (path, "test_v1"));
+	functions.push_back(boost::dll::import_symbol < void() > (path, "test_v2"));
+	
+	for (const auto & function : functions)
+	{
+		function();
+	}
+
+//  --------------------------------------------------------
+
+	boost::dll::import_alias < void() > (path, "test_v3")();
 }
