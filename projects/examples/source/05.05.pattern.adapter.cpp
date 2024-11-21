@@ -41,7 +41,7 @@ private:
 
 //  ==========================================================
 
-class Adapter_v2 : public Entity, private Client
+struct Adapter_v2 : public Entity, private Client
 {
 	void test() const override 
 	{ 

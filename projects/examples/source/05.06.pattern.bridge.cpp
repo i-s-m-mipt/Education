@@ -11,8 +11,23 @@ struct Entity_v1
 
 //  ================================================================================================
 
-struct Client_v1 : public Entity_v1 { void test() const override { std::clog << "Client_v1::test\n"; } };
-struct Client_v2 : public Entity_v1 { void test() const override { std::clog << "Client_v2::test\n"; } };
+struct Client_v1 : public Entity_v1 
+{ 
+    void test() const override 
+    { 
+        std::clog << "Client_v1::test\n"; 
+    } 
+};
+
+//  =====================================
+
+struct Client_v2 : public Entity_v1 
+{ 
+    void test() const override 
+    { 
+        std::clog << "Client_v2::test\n"; 
+    } 
+};
 
 //  ================================================================================================
 
@@ -24,7 +39,7 @@ public:
 
     virtual ~Entity_v2() = default; 
 
-//  ------------------------------------------------------------------------------------------------
+//  -------------------------------
 
     virtual void test() const = 0;
 
@@ -39,7 +54,7 @@ struct Server_v1 : public Entity_v2
 {
     explicit Server_v1(Entity_v1 & entity_v1) : Entity_v2(entity_v1) {}
 
-//  ------------------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------
 
     void test() const override 
     {
@@ -55,7 +70,7 @@ struct Server_v2 : public Entity_v2
 {
     explicit Server_v2(Entity_v1 & entity_v1) : Entity_v2(entity_v1) {}
 
-//  ------------------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------
 
     void test() const override 
     { 

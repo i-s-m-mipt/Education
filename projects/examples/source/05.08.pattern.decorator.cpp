@@ -34,7 +34,7 @@ struct Decorated_Entity : public Decorator
 {
     explicit Decorated_Entity(Entity & entity) : Decorator(entity) {}
 
-//  ------------------------------------------------------------------------------------------------
+//  -----------------------------------------------------------------
 
     void test() const override
     { 
