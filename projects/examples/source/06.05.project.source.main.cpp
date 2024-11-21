@@ -189,13 +189,11 @@ int main()
 
 	using namespace std::literals;
 
-	[[maybe_unused]] auto string_1 = "aaaaa";
+	auto string_1 = "aaaaa"s;
 
-	[[maybe_unused]] auto string_2 = "aaaaa"s;
+	auto string_2 = std::operator""s("aaaaa", 5);
 
-	[[maybe_unused]] auto string_3 = std::operator""s("aaaaa", 5);
-
-//  --------------------------------------------------------------
+//  ---------------------------------------------
 
 	demo::test_v1();
 	demo::test_v2();
