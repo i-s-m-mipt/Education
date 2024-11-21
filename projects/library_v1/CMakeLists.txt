@@ -22,4 +22,4 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 add_library            (library_v1 STATIC source/library.cpp)
 
-target_compile_options (library_v1 PRIVATE -Wall -Wextra -pedantic -O0 -m64)
+target_compile_options (library_v1 PRIVATE -Wall -Wextra -pedantic -O0)

@@ -104,25 +104,23 @@ set(debug
     05.12.pattern.strategy
     05.13.pattern.template.method
     05.14.template.polymorphism
-    05.15.pattern.crtp
-    05.16.pattern.crtp.observer
-    05.17.pattern.crtp.operator.overload
-    05.18.pattern.crtp.mixin
-    05.19.pattern.crtp.mixin.constructor
-    05.20.pattern.crtp.mixin.inheritance.variadic
+    05.15.pattern.mixin.crtp
+    05.16.pattern.mixin.singleton
+    05.17.pattern.mixin.barton.nackman
+    05.18.pattern.mixin.invertion
+    05.19.pattern.mixin.initialization
+    05.20.pattern.mixin.inheritance.variadic
 #   06.01.project.translation
 #   06.02.project.header
-#   06.03.project.source
-#   06.04.project.source.main
-    06.05.pattern.pimpl
-#   06.06.project.header.precompiled
-#   06.07.project.source.precompiled
-#   06.08.project.tool.cmake
-#   06.09.project.module
-#   06.10.project.module.source
-#   06.11.project.module.submodule
-#   06.13.project.library.static
-#   06.14.project.library.shared
+#   06.03.project.header.precompiled
+#   06.04.project.source
+#   06.05.project.source.main
+#   06.06.project.module
+#   06.07.project.module.source
+#   06.08.project.module.submodule
+#   06.09.project.tool.cmake
+#   06.10.project.library.static
+#   06.11.project.library.shared
     07.01.error.assertion.termination
     07.02.class.union
     07.03.utility.variant.optional
@@ -242,7 +240,7 @@ foreach(entry IN LISTS debug)
     target_link_libraries  (${entry} PRIVATE    PDFHummus::PDFWriter)
     target_link_libraries  (${entry} PRIVATE                     tbb)
 
-    target_compile_options (${entry} PRIVATE -Wall -Wextra -pedantic -O0 -m64)
+    target_compile_options (${entry} PRIVATE -Wall -Wextra -pedantic -O0)
 
 endforeach()
 
@@ -256,19 +254,19 @@ target_link_libraries      (06.12.project.library PRIVATE ${CMAKE_SOURCE_DIR}/..
 
 target_link_libraries      (06.12.project.library PRIVATE ${Boost_LIBRARIES})
 
-target_compile_options     (06.12.project.library PRIVATE -Wall -Wextra -pedantic -O0 -m64)
+target_compile_options     (06.12.project.library PRIVATE -Wall -Wextra -pedantic -O0)
 
 # =======================================================================================================================
 
 add_executable             (07.08.project.tool.debugger source/07.08.project.tool.debugger.cpp)
 
-target_compile_options     (07.08.project.tool.debugger PRIVATE -Wall -Wextra -pedantic -O0 -m64 -g)
+target_compile_options     (07.08.project.tool.debugger PRIVATE -Wall -Wextra -pedantic -O0 -ggdb)
 
 # =======================================================================================================================
 
 add_executable             (09.05.iterator.classification source/09.05.iterator.classification.cpp)
 
-target_compile_options     (09.05.iterator.classification PRIVATE -Wall -Wextra -pedantic -O0 -m64) 
+target_compile_options     (09.05.iterator.classification PRIVATE -Wall -Wextra -pedantic -O0) 
 
 target_compile_definitions (09.05.iterator.classification PRIVATE _GLIBCXX_DEBUG)
 
@@ -308,7 +306,7 @@ foreach(entry IN LISTS release)
     target_link_libraries  (${entry} PRIVATE    PDFHummus::PDFWriter)
     target_link_libraries  (${entry} PRIVATE                     tbb)
 
-    target_compile_options (${entry} PRIVATE -Wall -pedantic -Wextra -O3 -m64)
+    target_compile_options (${entry} PRIVATE -Wall -pedantic -Wextra -O3)
 
 endforeach()
 
@@ -322,14 +320,14 @@ add_executable         (17.01.multimedia.modeling.physics source/17.01.multimedi
 
 target_link_libraries  (17.01.multimedia.modeling.physics PRIVATE sfml-graphics sfml-system sfml-window)
 
-target_compile_options (17.01.multimedia.modeling.physics PRIVATE -Wall -Wextra -pedantic -O3 -m64)
+target_compile_options (17.01.multimedia.modeling.physics PRIVATE -Wall -Wextra -pedantic -O3)
 
 # =======================================================================================================================
 
 add_executable         (17.02.multimedia.modeling.fractal source/17.02.multimedia.modeling.fractal/main.cpp
-                                                             source/17.02.multimedia.modeling.fractal/calculator.cpp
-                                                             source/17.02.multimedia.modeling.fractal/visualizer.cpp)
+                                                          source/17.02.multimedia.modeling.fractal/calculator.cpp
+                                                          source/17.02.multimedia.modeling.fractal/visualizer.cpp)
 
 target_link_libraries  (17.02.multimedia.modeling.fractal PRIVATE sfml-graphics sfml-system sfml-window)
 
-target_compile_options (17.02.multimedia.modeling.fractal PRIVATE -Wall -Wextra -pedantic -O3 -m64)
+target_compile_options (17.02.multimedia.modeling.fractal PRIVATE -Wall -Wextra -pedantic -O3)
