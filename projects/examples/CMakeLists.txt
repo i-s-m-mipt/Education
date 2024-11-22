@@ -57,7 +57,7 @@ set(debug
     03.02.class
     03.03.class.friend
     03.04.pattern.attorney.client.passkey
-    03.05.class.association
+    03.05.class.relationship
     03.06.class.inheritance
     03.07.class.inheritance.multiple
 #   03.08.class.inheritance.multiple.diamond
