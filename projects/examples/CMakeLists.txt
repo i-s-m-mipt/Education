@@ -1,30 +1,37 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.28)
 
-# =======================================================================================================================
+################################################
 
 project(examples VERSION 24.02.06 LANGUAGES CXX)
 
-# =======================================================================================================================
+################################################
 
 set(CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# =======================================================================================================================
+#####################################
 
-find_package(Boost         1.84 REQUIRED COMPONENTS filesystem locale log python system timer unit_test_framework)
-find_package(Python3       3.11 REQUIRED COMPONENTS Interpreter Development)
-find_package(nlohmann_json 3.11 REQUIRED COMPONENTS)
-find_package(GTest         1.14 REQUIRED COMPONENTS)
+set(Boost_USE_STATIC_LIBS ON)
+
+set(Boost_USE_STATIC_RUNTIME ON)
+
+#####################################################################################################################
+
+find_package(Boost         1.85 REQUIRED COMPONENTS filesystem locale log python312 system timer unit_test_framework)
+find_package(ICU                REQUIRED COMPONENTS i18n uc)
+find_package(GTest         1.15 REQUIRED COMPONENTS)
 find_package(benchmark          REQUIRED COMPONENTS)
+find_package(Python        3.10 REQUIRED COMPONENTS Interpreter Development)
+find_package(nlohmann_json 3.10 REQUIRED COMPONENTS)
 find_package(PDFHummus          REQUIRED COMPONENTS)
 find_package(TBB                REQUIRED COMPONENTS tbb)
 find_package(SFML               REQUIRED COMPONENTS graphics system window)
 
-# =======================================================================================================================
+###########################################################################
 
 include_directories(        ${Boost_INCLUDE_DIRS})
-include_directories(      ${Python3_INCLUDE_DIRS})
+include_directories(       ${Python_INCLUDE_DIRS})
 include_directories(${nlohmann_json_INCLUDE_DIRS})
 include_directories(        ${GTEST_INCLUDE_DIRS})
 include_directories(    ${benchmark_INCLUDE_DIRS})
@@ -32,7 +39,7 @@ include_directories(    ${PDFHummus_INCLUDE_DIRS})
 include_directories(          ${TBB_INCLUDE_DIRS})
 include_directories(         ${SFML_INCLUDE_DIRS})
 
-# ======================================================================================================================
+##################################################
 
 set(debug
 
@@ -125,12 +132,12 @@ set(debug
     07.02.class.union
     07.03.utility.variant.optional
     07.04.error.exception
-    07.05.error.exception.stack.interface
-    07.06.project.tool.boost.logging
-    07.07.project.tool.boost.testing
-    07.09.project.tool.profiler.cpu
-    07.10.project.tool.profiler.memory
-    07.12.project.tool.google.testing
+    07.05.error.exception.noexcept
+    07.06.error.exception.stack.interface
+    07.08.project.tool.profiler.cpu
+    07.09.project.tool.profiler.memory
+    07.10.project.tool.boost.logging
+    07.11.project.tool.boost.testing
     08.02.algorithm.binary.gray.code
     08.03.algorithm.indian.exponentiation
     08.04.class.enumeration
@@ -139,7 +146,6 @@ set(debug
     08.07.number.integral.multiprecision
     08.08.number.floating.multiprecision
     08.09.implementation.class.big.int
-    08.10.embedding.python.caller
 #   08.11.embedding.python.script
 #   08.13.algorithm.monte.carlo
     08.15.time.chrono
@@ -198,7 +204,6 @@ set(debug
     12.01.character.encoding
 #   12.02.character.encoding.unicode.utf
     12.04.locale.facet
-    12.05.locale.facet.utf.converter
 #   12.06.parser.regex.ecma.script
     12.07.parser.regex
 #   12.08.parser.grammar.arithmetic
@@ -220,7 +225,6 @@ set(debug
     13.10.filesystem.directory
     13.11.filesystem.directory.iterator
     13.12.serialization.json
-    13.13.serialization.pdf
 #   14.01.concurrency.process.thread
     14.02.concurrency.thread
     14.03.concurrency.thread.reduce
@@ -228,25 +232,25 @@ set(debug
     14.05.concurrency.thread.reduce.packaged.task
 )
 
-# =======================================================================================================================
+#################################################
 
 foreach(entry IN LISTS debug)
 
     add_executable         (${entry} source/${entry}.cpp)
 
-    target_link_libraries  (${entry} PRIVATE      ${Boost_LIBRARIES})
-    target_link_libraries  (${entry} PRIVATE    ${Python3_LIBRARIES})
-    target_link_libraries  (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
-    target_link_libraries  (${entry} PRIVATE    PDFHummus::PDFWriter)
-    target_link_libraries  (${entry} PRIVATE                     tbb)
+    target_link_libraries  (${entry} PRIVATE ${Boost_LIBRARIES})
+    
+    target_link_libraries  (${entry} PRIVATE tbb)
 
     target_compile_options (${entry} PRIVATE -Wall -Wextra -pedantic -O0)
 
 endforeach()
 
-# =======================================================================================================================
+###################################################################################
 
 add_executable             (06.12.project.library source/06.12.project.library.cpp)
+
+target_compile_options     (06.12.project.library PRIVATE -Wall -Wextra -pedantic -O0)
 
 target_include_directories (06.12.project.library PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
 
@@ -254,15 +258,31 @@ target_link_libraries      (06.12.project.library PRIVATE ${CMAKE_SOURCE_DIR}/..
 
 target_link_libraries      (06.12.project.library PRIVATE ${Boost_LIBRARIES})
 
-target_compile_options     (06.12.project.library PRIVATE -Wall -Wextra -pedantic -O0)
+###############################################################################################
 
-# =======================================================================================================================
+add_executable             (07.07.project.tool.debugger source/07.07.project.tool.debugger.cpp)
 
-add_executable             (07.08.project.tool.debugger source/07.08.project.tool.debugger.cpp)
+target_compile_options     (07.07.project.tool.debugger PRIVATE -Wall -Wextra -pedantic -O0 -ggdb)
 
-target_compile_options     (07.08.project.tool.debugger PRIVATE -Wall -Wextra -pedantic -O0 -ggdb)
+###########################################################################################################
 
-# =======================================================================================================================
+add_executable             (07.12.project.tool.google.testing source/07.12.project.tool.google.testing.cpp)
+
+target_compile_options     (07.12.project.tool.google.testing PRIVATE -Wall -Wextra -pedantic -O0)
+
+target_link_libraries      (07.12.project.tool.google.testing PRIVATE ${GTEST_BOTH_LIBRARIES})
+
+###################################################################################################
+
+add_executable             (08.10.embedding.python.caller source/08.10.embedding.python.caller.cpp)
+
+target_compile_options     (08.10.embedding.python.caller PRIVATE -Wall -Wextra -pedantic -O0)
+
+target_link_libraries      (08.10.embedding.python.caller PRIVATE  ${Boost_LIBRARIES})
+
+target_link_libraries      (08.10.embedding.python.caller PRIVATE ${Python_LIBRARIES})
+
+###################################################################################################
 
 add_executable             (09.05.iterator.classification source/09.05.iterator.classification.cpp)
 
@@ -270,11 +290,29 @@ target_compile_options     (09.05.iterator.classification PRIVATE -Wall -Wextra 
 
 target_compile_definitions (09.05.iterator.classification PRIVATE _GLIBCXX_DEBUG)
 
-# =======================================================================================================================
+#########################################################################################################
+
+add_executable             (12.05.locale.facet.utf.converter source/12.05.locale.facet.utf.converter.cpp)
+
+target_compile_options     (12.05.locale.facet.utf.converter PRIVATE -Wall -Wextra -pedantic -O0)
+
+target_link_libraries      (12.05.locale.facet.utf.converter PRIVATE ${Boost_LIBRARIES})
+
+target_link_libraries      (12.05.locale.facet.utf.converter PRIVATE   ${ICU_LIBRARIES})
+
+########################################################################################
+
+add_executable             (13.13.serialization.pdf source/13.13.serialization.pdf.cpp)
+
+target_compile_options     (13.13.serialization.pdf PRIVATE -Wall -Wextra -pedantic -O0)
+
+target_link_libraries      (13.13.serialization.pdf PRIVATE PDFHummus::PDFWriter)
+
+#################################################################################
 
 set(release
 
-    07.11.project.tool.google.benchmark
+    07.13.project.tool.google.benchmark
     08.01.number.integral
     08.12.number.random.generation
     08.14.algorithm.monte.carlo.simplex
@@ -293,24 +331,23 @@ set(release
     14.06.concurrency.algorithm.standard
 )
 
-# =======================================================================================================================
+########################################
 
 foreach(entry IN LISTS release)
 
     add_executable         (${entry} source/${entry}.cpp)
 
-    target_link_libraries  (${entry} PRIVATE      ${Boost_LIBRARIES})
-    target_link_libraries  (${entry} PRIVATE    ${Python3_LIBRARIES})
-    target_link_libraries  (${entry} PRIVATE ${GTEST_BOTH_LIBRARIES})
-    target_link_libraries  (${entry} PRIVATE    benchmark::benchmark)
-    target_link_libraries  (${entry} PRIVATE    PDFHummus::PDFWriter)
-    target_link_libraries  (${entry} PRIVATE                     tbb)
-
     target_compile_options (${entry} PRIVATE -Wall -pedantic -Wextra -O3)
+
+    target_link_libraries  (${entry} PRIVATE ${Boost_LIBRARIES})
+
+    target_link_libraries  (${entry} PRIVATE benchmark::benchmark)
+
+    target_link_libraries  (${entry} PRIVATE tbb)
 
 endforeach()
 
-# =======================================================================================================================
+###########################################################################################################
 
 add_executable         (17.01.multimedia.modeling.physics source/17.01.multimedia.modeling.physics/main.cpp
                                                           source/17.01.multimedia.modeling.physics/system.cpp
@@ -318,16 +355,16 @@ add_executable         (17.01.multimedia.modeling.physics source/17.01.multimedi
                                                           source/17.01.multimedia.modeling.physics/link.cpp 
                                                           source/17.01.multimedia.modeling.physics/pressure.cpp)
 
-target_link_libraries  (17.01.multimedia.modeling.physics PRIVATE sfml-graphics sfml-system sfml-window)
-
 target_compile_options (17.01.multimedia.modeling.physics PRIVATE -Wall -Wextra -pedantic -O3)
 
-# =======================================================================================================================
+target_link_libraries  (17.01.multimedia.modeling.physics PRIVATE sfml-graphics sfml-system sfml-window)
+
+###########################################################################################################
 
 add_executable         (17.02.multimedia.modeling.fractal source/17.02.multimedia.modeling.fractal/main.cpp
                                                           source/17.02.multimedia.modeling.fractal/calculator.cpp
                                                           source/17.02.multimedia.modeling.fractal/visualizer.cpp)
 
-target_link_libraries  (17.02.multimedia.modeling.fractal PRIVATE sfml-graphics sfml-system sfml-window)
-
 target_compile_options (17.02.multimedia.modeling.fractal PRIVATE -Wall -Wextra -pedantic -O3)
+
+target_link_libraries  (17.02.multimedia.modeling.fractal PRIVATE sfml-graphics sfml-system sfml-window)
