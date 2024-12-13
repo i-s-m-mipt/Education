@@ -5,39 +5,45 @@
 
 //  ================================================================================================
 
-struct Visitor
+class Visitor
 {
+public:
+
     virtual ~Visitor() = default; 
 
-//  ------------------------------------------------------------------------------------------------
+//  ----------------------------------------------------------
 
-    virtual void visit(const struct Client * client) const = 0;
-    virtual void visit(const struct Server * server) const = 0;
+    virtual void visit(const class Client * client) const = 0;
+    virtual void visit(const class Server * server) const = 0;
 };
 
 //  ================================================================================================
 
-struct Entity
+class Entity
 {
+public:
+
     virtual ~Entity() = default; 
 
-//  ------------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------
 
     virtual void test() const = 0; 
 
-    virtual void visit_by(Visitor & visitor) const = 0;
+    virtual void visit_by(const Visitor & visitor) const = 0;
 };
 
 //  ================================================================================================
 
-struct Client : public Entity 
+class Client : public Entity 
 {
+public:
+
     void test() const override 
     { 
         std::clog << "Client::test\n"; 
     }
 
-    void visit_by(Visitor & visitor) const override
+    void visit_by(const Visitor & visitor) const override
     { 
         visitor.visit(this);
     }
@@ -45,14 +51,16 @@ struct Client : public Entity
 
 //  ================================================================================================
 
-struct Server : public Entity
+class Server : public Entity
 {
+public:
+
     void test() const override 
     { 
         std::clog << "Server::test\n"; 
     }
 
-    void visit_by(Visitor & visitor) const override
+    void visit_by(const Visitor & visitor) const override
     {
         visitor.visit(this);
     }
@@ -60,8 +68,10 @@ struct Server : public Entity
 
 //  ================================================================================================
 
-struct Router : public Visitor
+class Router : public Visitor
 {
+public:
+
     void visit(const Client * client) const override 
     { 
         std::clog << "Router::visit (1)\n"; 

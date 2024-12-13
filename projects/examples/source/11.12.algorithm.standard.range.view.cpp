@@ -22,8 +22,10 @@ struct Entity
 
 //  ================================================================================================
 
-template < typename T > struct Range : private std::vector < T >
+template < typename T > class Range : private std::vector < T >
 {
+public:
+
     using std::vector < T > ::begin;
 	using std::vector < T > ::  end;
 	using std::vector < T > :: size;

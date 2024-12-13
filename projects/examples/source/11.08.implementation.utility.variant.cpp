@@ -78,13 +78,13 @@ namespace detail
 
 //  ------------------------------------------------------------------------------------------------
 
-    template < typename L, typename T, std::size_t I = 0, bool C = empty_v < L > > struct Index;
+    template < typename L, typename T, std::size_t I = 0, bool C = empty_v < L > > class Index;
 
-    template < typename L, typename T, std::size_t I > struct Index < L, T, I, true  > {};
+    template < typename L, typename T, std::size_t I > class Index < L, T, I, true  > {};
 
-    template < typename L, typename T, std::size_t I > struct Index < L, T, I, false > 
+    template < typename L, typename T, std::size_t I > class Index < L, T, I, false > 
     :
-        std::conditional_t 
+        public std::conditional_t 
         < 
             std::is_same_v < front < L > , T > ,
 
@@ -108,18 +108,16 @@ namespace detail
         Recorder() = default;
        ~Recorder() = default;
 
-//      ---------------------------------------------
+    //  ---------------------------------------------------------------------------
 
         template < typename T > auto buffer() const
         {
             return std::bit_cast < T * > (&m_buffer);
         }
 
-//      ---------------------------------------------------------------------------
+    //  ---------------------------------------------------------------------------
 
         alignas(Ts...) std::byte m_buffer[sizeof(max_type < List < Ts ... > > )]{}; 
-
-//      ---------------------------------------------------------------------------
 
         std::size_t index = 0; 
     }; 
@@ -131,11 +129,6 @@ namespace detail
 {
     template < typename D, typename T, typename ... Ts > class Selector
     {
-    protected:
-
-        Selector() = default;
-       ~Selector() = default;
-
     public:
 
         explicit Selector(T value) 
@@ -155,13 +148,32 @@ namespace detail
             {
                 derived().destroy(); 
                 
-                std::construct_at(derived().template buffer < T > (), std::move(value)); 
+                std::construct_at(derived().template buffer < T > (), std::move(value));
                 
                 update();
             }
 
             return derived();
         }
+
+    protected:
+
+        Selector() = default;
+       ~Selector() = default;
+
+    //  --------------------------------------------------------------------------------
+
+        void destroy()
+        {
+            if (derived().index == s_index) 
+            {
+                derived().template buffer < T > ()->~T();
+            }
+        }
+
+    //  --------------------------------------------------------------------------------
+
+        static constexpr auto s_index = index_v < List < Ts ... > , T > + 1;
 
     private:
 
@@ -174,20 +186,6 @@ namespace detail
         { 
             derived().index = s_index; 
         }
-
-    protected:
-
-        void destroy()
-        {
-            if (derived().index == s_index) 
-            {
-                derived().template buffer < T > ()->~T();
-            }
-        }
-
-//      --------------------------------------------------------------------------------------------
-
-        static constexpr auto s_index = index_v < List < Ts ... > , T > + 1;
     };
 }
 
@@ -202,7 +200,7 @@ public:
 
     using derived_t = Variant < Ts ... > ;
 
-//  ----------------------------------------------------------------
+//  -------------------------------------------------------------------------------------------
 
     using detail::Selector < derived_t, Ts, Ts ... > ::Selector ...;
     using detail::Selector < derived_t, Ts, Ts ... > ::operator=...;
@@ -240,23 +238,12 @@ public:
 
     void swap(Variant & other)
 	{
-		using std::swap; 
+        std::swap(this->m_buffer, other.m_buffer);
 
-        swap(this->m_buffer, other.m_buffer);
-
-		swap(this->index, other.index);
+		std::swap(this->index, other.index);
 	}
 
-private:
-
-    void destroy()
-    {
-        (detail::Selector < derived_t, Ts, Ts ... > ::destroy(), ... );
-
-        this->index = 0;
-    }
-
-public:
+//  -------------------------------------------------------------------------------------------
 
     template < typename T > auto has() const
     {
@@ -280,6 +267,17 @@ public:
 
 private:
 
+    template < typename D, typename U, typename ... Us > friend class detail::Selector;
+
+//  -------------------------------------------------------------------------------------------
+
+    void destroy()
+    {
+        (detail::Selector < derived_t, Ts, Ts ... > ::destroy(), ... ); this->index = 0;
+    }
+
+//  -------------------------------------------------------------------------------------------
+
     template 
     < 
         typename V, typename U, typename ... Us 
@@ -299,16 +297,14 @@ private:
             throw std::runtime_error("invalid type");
         }
     }
-
-private:
-
-    template < typename D, typename U, typename ... Us > friend class detail::Selector;
 };
 
 //  ================================================================================================
 
-struct Entity 
+class Entity 
 { 
+public:
+
     explicit Entity(int) {} 
 };
 
