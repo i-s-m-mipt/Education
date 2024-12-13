@@ -9,8 +9,10 @@ using namespace std::literals;
 
 //  ================================================================================================
 
-template < typename T, std::size_t I > struct Helper
+template < typename T, std::size_t I > class Helper
 {
+public:
+
     static void print(std::ostream & stream, const T & tuple)
     {
         Helper < T, I - 1 > ::print(stream, tuple);
@@ -19,8 +21,10 @@ template < typename T, std::size_t I > struct Helper
     }
 };
     
-template < typename T > struct Helper < T, 1 >
+template < typename T > class Helper < T, 1 >
 {
+public:
+
     static void print(std::ostream & stream, const T & tuple)
     {
         stream << std::get < 0 > (tuple);

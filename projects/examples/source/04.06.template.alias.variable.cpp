@@ -4,7 +4,7 @@
 
 //  ================================================================================================
 
-template < typename T, std::size_t S > class Array {};
+template < typename T, std::size_t S > struct Array {};
 
 template < typename T > using Buffer = Array < T, 1024 > ;
 

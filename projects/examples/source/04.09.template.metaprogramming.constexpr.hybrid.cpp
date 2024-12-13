@@ -7,21 +7,21 @@ template < int N, int D = 1 > struct Ratio
 	static constexpr auto num = N;
 	static constexpr auto den = D;
 
+//  ---------------------------------
+
 	using type = Ratio < num, den > ;
 };
 
 //  ================================================================================================
 
-template < typename R1, typename R2 > class Add
+template < typename R1, typename R2 > struct Add
 {
-private:
-
 	static constexpr auto num = R1::num * R2::den + R2::num * R1::den;
 
 	static constexpr auto den = R1::den * R2::den;
 
-public:
-
+//  ------------------------------------------------------------------
+	
 	using type = Ratio < num, den > ;
 };
 

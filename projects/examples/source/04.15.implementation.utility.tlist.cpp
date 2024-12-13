@@ -96,9 +96,9 @@ template < typename L > using pop_back = typename Pop_Back < L > ::type;
 
 //  ================================================================================================
 
-template < typename L, std::size_t I > struct Nth : public Nth < pop_front < L > , I - 1 > {};
+template < typename L, std::size_t I > class Nth : public Nth < pop_front < L > , I - 1 > {};
 
-template < typename L > struct Nth < L, 0 > : public Front < L > {};
+template < typename L > class Nth < L, 0 > : public Front < L > {};
 
 template < typename L, std::size_t I > using nth = typename Nth < L, I > ::type;
 

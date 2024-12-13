@@ -25,22 +25,14 @@ public:
 		reduce();
 	}
 
+//  --------------------------------
+
 	explicit operator double() const 
 	{ 
 		return 1.0 * m_num / m_den; 
 	}
 
-private:
-
-	void reduce()
-	{
-		auto gcd = std::gcd(m_num, m_den);
-
-		m_num /= gcd;
-		m_den /= gcd;
-	}
-
-public:
+//  --------------------------------------
 
 	auto & operator+=(const Ratio & other)
 	{
@@ -78,6 +70,16 @@ public:
 	}
 
 private:
+
+	void reduce()
+	{
+		auto gcd = std::gcd(m_num, m_den);
+
+		m_num /= gcd;
+		m_den /= gcd;
+	}
+
+//  ---------------
 
 	T m_num = T(0);
 	T m_den = T(1);

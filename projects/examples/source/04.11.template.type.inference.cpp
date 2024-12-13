@@ -2,11 +2,11 @@
 
 #include <boost/type_index.hpp>
 
-//  ================================================================================================
+///////////////////////////////
 
 struct Entity {};
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////
 
       auto & make_entity_v1() { static       Entity entity; return entity; }
 const auto & make_entity_v2() { static const Entity entity; return entity; }
@@ -14,7 +14,7 @@ const auto & make_entity_v2() { static const Entity entity; return entity; }
       auto   make_entity_v3() { return Entity(); }
 const auto   make_entity_v4() { return Entity(); }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename E > void test_v1(E entity) 
 {
@@ -44,7 +44,7 @@ template < typename E > void test_v4(E && entity)
 	std::clog << boost::typeindex::type_id_with_cvr < decltype(entity) > ().pretty_name() << '\n';
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -89,7 +89,7 @@ int main()
 	test_v4(rr__entity);
 	test_v4(rr_centity);
 	
-//  --------------------
+//  ---------------------------
 
 	std::clog << '\n';
 

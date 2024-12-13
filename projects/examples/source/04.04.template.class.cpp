@@ -105,40 +105,50 @@ template < typename U > struct Outer < T > ::Inner {};
 
 //  ================================================================================================
 
-template < typename T1, typename T2 > struct Entity
+template < typename T1, typename T2 > class Entity
 {
+public:
+
 	void test() const
 	{ 
 		std::clog << "Entity::test (1)\n"; 
 	}
 };
 
-template < typename T > struct Entity < T, T >
+template < typename T > class Entity < T, T >
 {
+public:
+
 	void test() const 
 	{ 
 		std::clog << "Entity::test (2)\n"; 
 	}
 };
 
-template < typename T > struct Entity < T, int >
+template < typename T > class Entity < T, int >
 {
+public:
+
 	void test() const 
 	{ 
 		std::clog << "Entity::test (3)\n"; 
 	}
 };
 
-template < typename T1, typename T2 > struct Entity < T1 * , T2 * >
+template < typename T1, typename T2 > class Entity < T1 * , T2 * >
 {
+public:
+
 	void test() const 
 	{ 
 		std::clog << "Entity::test (4)\n"; 
 	}
 };
 
-template <> struct Entity < int, std::string >
+template <> class Entity < int, std::string >
 {
+public:
+
 	void test() const 
 	{ 
 		std::clog << "Entity::test (5)\n"; 
