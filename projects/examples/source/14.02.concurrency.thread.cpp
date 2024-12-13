@@ -21,7 +21,7 @@ public:
 
 	explicit Task(int & data): m_data(data) {}
 
-//  ------------------------------------------------------
+//  ------------------------------------------
 
 	void operator()() const
 	{
@@ -45,8 +45,10 @@ void test(int & x, int y)
 
 //  ================================================================================================
 
-struct Entity 
+class Entity 
 { 
+public:
+
     void test() const
     { 
         std::clog << "Entity::test\n"; 

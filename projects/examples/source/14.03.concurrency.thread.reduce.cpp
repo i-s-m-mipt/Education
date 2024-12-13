@@ -11,8 +11,10 @@
 
 //  ================================================================================================
 
-template < std::ranges::view V, typename T > struct Task
+template < std::ranges::view V, typename T > class Task
 {
+public:
+
 	void operator()(V view, T & sum) const
 	{
 		sum = std::reduce

@@ -12,8 +12,10 @@
 
 //  ================================================================================================
 
-template < std::ranges::view V > struct Block
+template < std::ranges::view V > class Task
 {
+public:
+
 	auto operator()(V view) const
 	{
 		return std::reduce
@@ -50,20 +52,20 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 		{
 			auto range = std::ranges::subrange(first, last);
 
-			Block < decltype(range) > block;
+			Task < decltype(range) > task;
 
-			std::packaged_task task(block);
+			std::packaged_task packaged_task(task);
 
-			result.first = task.get_future(); 
+			result.first = packaged_task.get_future(); 
 			
-			result.second = std::jthread(std::move(task), range);
+			result.second = std::jthread(std::move(packaged_task), range);
 
 			first = last; last = std::next(first, block_size);
 		}
 
 		auto range = std::ranges::subrange(first, end);
 
-		sum += Block < decltype(range) > ()(range);
+		sum += Task < decltype(range) > ()(range);
 
 		for (auto & result : results) 
 		{
