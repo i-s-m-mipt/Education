@@ -13,8 +13,10 @@ struct Entity
 
 //  ================================================================================================
 
-template <> struct std::formatter < Entity > : public std::formatter < std::string_view >
+template <> class std::formatter < Entity > : public std::formatter < std::string_view >
 {
+public:
+
     auto format(const Entity & entity, std::format_context & context) const
     {
         std::string buffer;

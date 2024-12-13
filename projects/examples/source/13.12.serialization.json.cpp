@@ -42,40 +42,32 @@ auto load(const std::filesystem::path & path)
 
 struct Entity 
 {
-    struct Nested 
-    {
-        std::vector < int > data_3; 
-    };
-
-//  --------------------------------------------------
-
-    int data_1 = 0; std::string data_2; Nested nested;
+    int data_1 = 0; std::string data_2; std::vector < int > data_3;
 };
 
 //  ================================================================================================
 
 int main()
 {
-    Entity entity(1, "aaaaa", { { 1, 2, 3, 4, 5 } });
+    Entity entity { 1, "aaaaa", { 1, 2, 3, 4, 5 } };
 
     auto path = "13.12.serialization.json.entity.json";
 
-//  --------------------------------------------------------
+//  -------------------------------------------------------------------------
 
-    nlohmann::json json_11; // support: boost::property_tree
+    nlohmann::json json_1; // support: boost::property_tree
 
-    json_11["data_1"] = entity.data_1;
-    json_11["data_2"] = entity.data_2;
+    json_1["data_1"] = entity.data_1;
+    json_1["data_2"] = entity.data_2;
+    json_1["data_3"] = entity.data_3;
 
-    auto & json_12 = json_11["nested"];
+    json_1["x"]["y"] = 1;
 
-    json_12["data_3"] = entity.nested.data_3;
+    save(path, json_1);
 
-    save(path, json_11);
+//  -------------------------------------------------------------------------
 
-//  --------------------------
-
-    auto json_21 = load(path);
+    auto json_2 = load(path);
 
     using data_1_t = int;
 
@@ -83,12 +75,11 @@ int main()
 
     using data_3_t = std::vector < int > ;
 
-    assert(json_21["data_1"].get < data_1_t > () == entity.data_1);
-    assert(json_21["data_2"].get < data_2_t > () == entity.data_2);
+    assert(json_2["data_1"].get < data_1_t > () == entity.data_1);
+    assert(json_2["data_2"].get < data_2_t > () == entity.data_2);
+    assert(json_2["data_3"].get < data_3_t > () == entity.data_3);
 
-    auto & json_22 = json_21["nested"];
-
-    assert(json_22["data_3"].get < data_3_t > () == entity.nested.data_3);
+    assert(json_2["x"]["y"].get < int > () == 1);
 
 //  -------------------------------------------------------------------------
 
