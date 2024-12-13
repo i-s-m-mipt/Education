@@ -41,10 +41,7 @@ void test_v2(benchmark::State & state)
                 result += std::sin(i);
             }
         }
-        catch (const std::exception & exception)
-        {
-            std::cerr << "test_v2 : " << exception.what() << '\n';
-        }
+        catch (...) {}
 
         benchmark::DoNotOptimize(result);
     }
@@ -70,10 +67,7 @@ void test_v3(benchmark::State & state)
                 }
             }
         }
-        catch (const std::exception & exception)
-        {
-            std::cerr << "test_v3 : " << exception.what() << '\n';
-        }
+        catch (...) {}
 
         benchmark::DoNotOptimize(result);
     }

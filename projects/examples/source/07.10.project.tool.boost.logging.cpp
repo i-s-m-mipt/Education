@@ -39,18 +39,6 @@ using namespace std::literals;
 
 class Logger : private boost::noncopyable
 {
-private:
-
-	enum class Attribute : std::uint8_t
-	{
-		line,
-		time,
-		thread,
-		process,
-	};
-
-	using attribute_pair_t = std::pair < std::string, boost::log::attribute > ;
-
 public:
 
 	enum class Severity : std::uint8_t
@@ -61,11 +49,7 @@ public:
 		fatal,
 	};
 
-private:
-
-	using sink_t = boost::log::sinks::synchronous_sink < boost::log::sinks::text_file_backend > ;
-
-public:
+//  --------------------------------------------------------------------------------------------
 
 	explicit Logger(const char * scope, bool has_trace) : m_scope(scope), m_has_trace(has_trace)
 	{
@@ -85,7 +69,43 @@ public:
 		}
 	}
 
+//  ----------------------------------------------------------------
+
+	void write(Severity severity, const std::string & message) const
+	{
+		auto record = s_logger.open_record(boost::log::keywords::severity = severity);
+
+		if (record)
+		{
+			boost::log::record_ostream(record) << m_scope << " : " << message;
+
+			s_logger.push_record(std::move(record));
+		}
+		else 
+		{
+			throw std::runtime_error("invalid record");
+		}
+	}
+
 private:
+
+	enum class Attribute : std::uint8_t
+	{
+		line,
+		time,
+		thread,
+		process,
+	};
+
+//  ---------------------------------------------------------------------------
+
+	using attribute_pair_t = std::pair < std::string, boost::log::attribute > ;
+
+//  ---------------------------------------------------------------------------------------------
+
+	using sink_t = boost::log::sinks::synchronous_sink < boost::log::sinks::text_file_backend > ;
+
+//  ---------------------------------------------------------------------------------------------
 
 	static void initialize()
 	{
@@ -99,6 +119,8 @@ private:
 
 		boost::log::core::get()->add_sink(make_sink());
 	}
+
+//  -----------------------------------------------
 
 	static boost::shared_ptr < sink_t > make_sink()
 	{
@@ -137,10 +159,9 @@ private:
 		return fout_sink;
 	}
 
-	static void format
-	(
-		const boost::log::record_view & record_view, boost::log::formatting_ostream & stream
-	)
+//  ------------------------------------------------------------------------------------------------
+
+	static void format(boost::log::record_view record_view, boost::log::formatting_ostream & stream)
 	{
 		const auto & attribute_value_set = record_view.attribute_values();
 
@@ -180,25 +201,15 @@ private:
 		stream << record_view[boost::log::expressions::message];
 	}
 
-public:
+//  --------------------------------------------------------
 
-	void write(Severity severity, const std::string & message) const
-	{
-		auto record = s_logger.open_record(boost::log::keywords::severity = severity);
+	const char * m_scope = nullptr; bool m_has_trace = true;
 
-		if (record)
-		{
-			boost::log::record_ostream(record) << m_scope << " : " << message;
+//  --------------------------------------------------------
 
-			s_logger.push_record(std::move(record));
-		}
-		else 
-		{
-			throw std::runtime_error("invalid record");
-		}
-	}
+	static inline std::once_flag s_status;
 
-private:
+	static inline boost::log::sources::severity_logger_mt < Severity > s_logger;
 
 	static inline std::unordered_map < Attribute, attribute_pair_t > s_attributes
 	{
@@ -215,16 +226,6 @@ private:
 		{ Logger::Severity::error, "error" },
 		{ Logger::Severity::fatal, "fatal" }
 	};
-
-//  --------------------------------------
-
-	static inline std::once_flag s_status;
-
-	static inline boost::log::sources::severity_logger_mt < Severity > s_logger;
-
-//  ----------------------------------------------------------------------------
-
-	const char * m_scope = nullptr; bool m_has_trace = true;
 };
 
 //  ================================================================================================

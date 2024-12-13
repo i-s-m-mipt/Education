@@ -16,7 +16,7 @@ public:
 
 	explicit Error(int error) : m_error(error) {}
 
-//  ------------------------------------------------------------------------------------------------
+//  ---------------------------------------------
 
 	const char * what() const noexcept override 
 	{ 
@@ -95,81 +95,6 @@ void test_v3()
 	}
 
 	std::clog << "test_v3 (2)\n";
-}
-
-//  ================================================================================================
-
-class Entity
-{
-public:
-
-	explicit Entity(int data) try : m_data(data)
-	{
-		std::clog << "Entity::Entity\n";
-
-		throw std::runtime_error("error");
-	}
-	catch (...)
-	{
-		uninitialize();
-	}
-
-   ~Entity() noexcept
-	{
-		uninitialize();
-	}
-
-private:
-
-	void uninitialize() const noexcept
-	{ 
-		try
-		{
-			std::clog << "Entity::uninitialize\n"; 
-		}
-		catch (...) {}
-	}
-
-public:
-
-	void swap(Entity & other) noexcept
-	{
-		std::swap(m_data, other.m_data);
-	}
-
-//  ------------------------------------------------------------------------------------------------
-
-	auto data() const noexcept
-	{
-		return m_data;
-	}
-
-private:
-
-	int m_data = 0;
-};
-
-//  ================================================================================================
-
-template < typename T > void swap(T & x, T & y) noexcept
-(
-	std::is_nothrow_move_constructible_v < T > &&
-	std::is_nothrow_move_assignable_v    < T > 
-)
-{
-	auto z = std::move(y);
-	     y = std::move(x);
-		 x = std::move(z);
-}
-
-//  ================================================================================================
-
-template < typename F, typename ... Ts > decltype(auto) invoke(F && f, Ts && ... args) noexcept
-(
-	noexcept(f(std::declval < Ts > ()...))
-)
-{
-	return f(std::forward < Ts > (args)...);
 }
 
 //  ================================================================================================

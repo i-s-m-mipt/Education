@@ -24,17 +24,19 @@ auto test_v1(int x)
 
 //  ================================================================================================
 
-struct Entity_v1 { explicit Entity_v1(int) {} };
+class Entity_v1 { public: explicit Entity_v1(int) {} };
 
-struct Entity_v2 
+class Entity_v2 
 { 
+public:
+
    ~Entity_v2() 
     { 
 		std::clog << "Entity_v2::~Entity_v2\n"; 
 	} 
 };
 
-struct Entity_v3 {};
+class Entity_v3 {};
 
 //  ================================================================================================
 

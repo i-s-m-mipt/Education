@@ -6,8 +6,6 @@
 #include <utility>
 #include <vector>
 
-#define BOOST_TEST_MODULE boost_testing
-
 #include <boost/mpl/list.hpp>
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
@@ -16,7 +14,7 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_suite.hpp>
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////
 
 auto is_even(int x) 
 {
@@ -25,11 +23,11 @@ auto is_even(int x)
 
 BOOST_AUTO_TEST_CASE(Test_v1)
 {
-    BOOST_TEST(is_even(1));
-    BOOST_TEST(is_even(2));
+    BOOST_TEST(is_even(1)); std::clog << "Test_v1 (1)\n";
+    BOOST_TEST(is_even(2)); std::clog << "Test_v1 (2)\n";
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////
 
 BOOST_AUTO_TEST_CASE(Test_v2) 
 {
@@ -38,7 +36,7 @@ BOOST_AUTO_TEST_CASE(Test_v2)
     BOOST_TEST("aaaaa" < "bbbbb", boost::test_tools::lexicographic());
 } 
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////
 
 BOOST_DATA_TEST_CASE
 (
@@ -53,7 +51,7 @@ BOOST_DATA_TEST_CASE
     std::cout << "pair = { " << x << ", " << y << " }\n";
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////
 
 BOOST_DATA_TEST_CASE
 (
@@ -78,21 +76,23 @@ BOOST_DATA_TEST_CASE
     BOOST_TEST(sample < 0.5);
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////
 
-struct Dataset 
+class Dataset 
 {
+public:
+
     class iterator
     {
     public:
 
         using iterator_category = std::forward_iterator_tag;
 
-//      ----------------------------------------------------
+    //  ---------------------------------------------------------------
 
         iterator() : m_x(1), m_y(1) {}
 
-//      ------------------------------
+    //  ---------------------------------------------------------------
 
         const auto operator++(int) 
 		{ 
@@ -126,14 +126,14 @@ struct Dataset
         int m_y = 1;
     };
 
-//  ------------------
+//  ---------------------------------------------------------------
 
     auto begin() const
     { 
         return iterator(); 
     }
 
-//  -----------------
+//  ---------------------------------------------------------------
 
     auto size() const
     { 
@@ -141,14 +141,14 @@ struct Dataset
     }
 }; 
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////
 
 namespace boost::unit_test::data::monomorphic 
 {
-    template <> struct is_dataset < Dataset > : public std::true_type {};
+    template <> class is_dataset < Dataset > : public std::true_type {};
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////
 
 BOOST_DATA_TEST_CASE
 (
@@ -158,7 +158,7 @@ BOOST_DATA_TEST_CASE
     BOOST_TEST(sample == expected);
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////
 
 using list_t = boost::mpl::list < bool, char, int, double > ;
 
@@ -167,7 +167,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(Test_v6, T, list_t)
     BOOST_TEST(sizeof(T) == 4);
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////
 
 void test(int x)
 {
@@ -187,23 +187,20 @@ boost::unit_test::test_suite * init_unit_test_suite(int, char **)
     return nullptr;
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////
 
-struct Fixture
+class Fixture
 {
-    Fixture() { BOOST_TEST_MESSAGE("Fixture:: Fixture"); }
-   ~Fixture() { BOOST_TEST_MESSAGE("Fixture::~Fixture"); } 
-
-//  ------------------------------------------------------
+public:
 
     std::vector < int > data;
 };
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////
 
 BOOST_FIXTURE_TEST_CASE(Test_v7, Fixture)
 {
-    BOOST_TEST(std::size(data) == 0); data.push_back(1);
-    BOOST_TEST(std::size(data) == 1); data.push_back(2);
-    BOOST_TEST(std::size(data) == 2);
+    BOOST_TEST(std::size(data), 0); data.push_back(1);
+    BOOST_TEST(std::size(data), 1); data.push_back(2);
+    BOOST_TEST(std::size(data), 2);
 }
