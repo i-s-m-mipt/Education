@@ -57,11 +57,11 @@ namespace detail
 
 //  ------------------------------------------------------------------------------------------------
 
-    template < typename L, bool C = empty_v < L > > struct Max_Type {};
+    template < typename L, bool C = empty_v < L > > class Max_Type {};
 
-    template < typename L > struct Max_Type < L, true  > { using type = char; };
+    template < typename L > class Max_Type < L, true  > { public: using type = char; };
 
-    template < typename L > struct Max_Type < L, false >
+    template < typename L > class Max_Type < L, false >
     {
     private:
 
