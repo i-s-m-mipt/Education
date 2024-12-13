@@ -67,7 +67,7 @@ private:
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-Entity * make_composite(std::size_t n_clients, std::size_t n_servers)
+auto make_composite(std::size_t n_clients, std::size_t n_servers) -> Entity *
 {
     auto composite = new Composite;
 

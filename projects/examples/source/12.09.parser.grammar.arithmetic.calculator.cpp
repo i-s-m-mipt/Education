@@ -118,7 +118,7 @@ public:
 
 private:
 
-	double statement(Stream & stream)
+	auto statement(Stream & stream) -> double
 	{
 		auto token = stream.get();
 
@@ -133,7 +133,7 @@ private:
 		return expression(stream);
 	}
 
-	double declaration(Stream & stream)
+	auto declaration(Stream & stream) -> double
 	{
 		auto name = std::get < std::string > (stream.get());
 
@@ -142,7 +142,7 @@ private:
 		return m_variables[name];
 	}
 
-	double expression(Stream & stream) const
+	auto expression(Stream & stream) const -> double
 	{
 		auto left = term(stream);
 
@@ -170,7 +170,7 @@ private:
 		}
 	}
 
-	double term(Stream & stream) const
+	auto term(Stream & stream) const -> double
 	{
 		auto left = primary(stream);
 
@@ -198,7 +198,7 @@ private:
 		}
 	}
 
-	double primary(Stream & stream) const
+	auto primary(Stream & stream) const -> double
 	{
 		auto token = stream.get();
 

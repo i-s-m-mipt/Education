@@ -40,7 +40,7 @@ public:
 
 ///////////////////////////////////////////////////////////
 
-template < typename E > Entity * make_entity()
+template < typename E > auto make_entity() -> Entity *
 { 
     return new E(); 
 }
@@ -55,8 +55,8 @@ public:
     {
     public:
 
-        static Entity * make_v1() { return new Router(1); }
-        static Entity * make_v2() { return new Router(2); }
+        static auto make_v1() -> Entity * { return new Router(1); }
+        static auto make_v2() -> Entity * { return new Router(2); }
     };
 
 //  -------------------------------------------------------

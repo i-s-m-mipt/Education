@@ -120,7 +120,7 @@ private:
 
 //  -----------------------------------------------
 
-	static boost::shared_ptr < sink_t > make_sink()
+	static auto make_sink() -> boost::shared_ptr < sink_t >
 	{
 		auto rotation = boost::log::sinks::file::rotation_at_time_interval
 		(

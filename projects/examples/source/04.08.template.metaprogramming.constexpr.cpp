@@ -8,12 +8,12 @@
 
 //  ================================================================================================
 
-constexpr unsigned int factorial_v1(unsigned int x)
+constexpr auto factorial_v1(unsigned int x) -> unsigned int
 {
 	return x > 1 ? x * factorial_v1(x - 1) : 1;
 }
 
-consteval unsigned int factorial_v2(unsigned int x)
+consteval auto factorial_v2(unsigned int x) -> unsigned int
 {
 	return x > 1 ? x * factorial_v2(x - 1) : 1;
 }

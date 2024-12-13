@@ -13,7 +13,7 @@ template < std::size_t S > class Fixed_Allocator : private boost::noncopyable
 {
 public:
 
-	void * allocate(std::size_t size, std::size_t alignment = default_alignment)
+	auto allocate(std::size_t size, std::size_t alignment = default_alignment) -> void *
 	{
 		void * first = m_begin + m_offset;
 

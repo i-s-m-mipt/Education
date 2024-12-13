@@ -35,7 +35,7 @@ public:
 
 //  -----------------------------------------------------------------------------------------
 
-	static std::string exception()
+	static auto exception()
 	{
 		PyObject * error;
 		PyObject * value;
@@ -53,7 +53,7 @@ public:
 		(
 			handle_value ? boost::python::str(handle_value) : 
 					   	   boost::python::str(handle_error)
-		);
+		)();
 	}
 
 private:
@@ -125,7 +125,7 @@ auto make_dictionary(std::size_t size, std::size_t length)
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-std::size_t hash(std::string_view string)
+auto hash(std::string_view string) -> std::size_t
 {
 	std::uint32_t hash = std::size(string);
 

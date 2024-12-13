@@ -45,7 +45,7 @@ public:
 
 //  -----------------
 
-	void * allocate()
+	auto allocate() -> void *
 	{
 		if (m_head == nullptr)
 		{
@@ -105,12 +105,12 @@ private:
 
 //  --------------------------------------
 
-	std::byte * get_byte(void * ptr) const
+	auto get_byte(void * ptr) const -> std::byte *
 	{
 		return static_cast < std::byte * > (ptr);
 	}
 
-	Node * get_node(void * ptr) const
+	auto get_node(void * ptr) const -> Node *
 	{ 
 		return static_cast < Node * > (ptr); 
 	}

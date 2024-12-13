@@ -46,7 +46,7 @@ template < typename D > class Entity_v3
 {
 public:
 
-	static void * operator new(std::size_t size)
+	static auto operator new(std::size_t size) -> void *
 	{
 		std::clog << "Entity_v3::operator new\n";
 

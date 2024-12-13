@@ -177,6 +177,103 @@ public:
 
 //  -----------------------------------------------------------------------------------------------
 
+	friend auto & operator>>(std::istream & stream, Big_Int & big_int)
+	{
+		std::string string; stream >> string; big_int = Big_Int(string); 
+		
+		return stream;
+	}
+
+	friend auto & operator<<(std::ostream & stream, const Big_Int & big_int)
+	{
+		if (big_int.m_is_negative) 
+		{
+			stream << '-';
+		}
+
+		stream << big_int.m_digits[big_int.m_n_digits - 1];
+
+		for (auto i = static_cast < int > (big_int.m_n_digits) - 2; i >= 0; --i)
+		{
+			stream << std::setw(step) << std::setfill('0') << std::right << big_int.m_digits[i];
+		}
+
+		return stream;
+	}
+
+//  -----------------------------------------------------------------------------------------------
+
+	friend auto operator+ (const Big_Int & lhs, const Big_Int & rhs) 
+	{ 
+		return Big_Int(lhs) += rhs; 
+	}
+
+	friend auto operator- (const Big_Int & lhs, const Big_Int & rhs) 
+	{ 
+		return Big_Int(lhs) -= rhs; 
+	}
+
+	friend auto operator* (const Big_Int & lhs, const Big_Int & rhs) -> Big_Int
+	{ 
+		return Big_Int(lhs) *= rhs; 
+	}
+
+	friend auto operator/ (const Big_Int & lhs, const Big_Int & rhs) 
+	{ 
+		return Big_Int(lhs) /= rhs; 
+	}
+
+//  -----------------------------------------------------------------------------------------------
+
+	friend auto operator< (const Big_Int & lhs, const Big_Int & rhs)
+	{
+		if (lhs.m_is_negative != rhs.m_is_negative) { return lhs.m_is_negative; }
+
+		if (lhs.m_is_negative && rhs.m_is_negative) 
+		{
+			return rhs.less(lhs);
+		}
+		else
+		{
+			return lhs.less(rhs);
+		}
+	}
+
+	friend auto operator> (const Big_Int & lhs, const Big_Int & rhs)
+	{
+		return  (rhs < lhs);
+	}
+
+	friend auto operator<=(const Big_Int & lhs, const Big_Int & rhs) -> bool
+	{
+		return !(rhs < lhs);
+	}
+
+	friend auto operator>=(const Big_Int & lhs, const Big_Int & rhs)
+	{
+		return !(lhs < rhs);
+	}
+
+	friend auto operator==(const Big_Int & lhs, const Big_Int & rhs)
+	{
+		if ((lhs.m_is_negative != rhs.m_is_negative) || (lhs.m_n_digits != rhs.m_n_digits))
+		{
+			return false;
+		}
+
+		for (auto i = 0uz; i < lhs.m_n_digits; ++i)
+		{
+			if (lhs.m_digits[i] != rhs.m_digits[i]) 
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+//  -----------------------------------------------------------------------------------------------
+
 	friend auto multiply(const Big_Int & x, const Big_Int & y)
 	{
 		auto n = std::max(x.m_n_digits, y.m_n_digits);
@@ -255,88 +352,6 @@ public:
 		return result; 
 	}
 
-//  -----------------------------------------------------------------------------------------------
-
-	friend auto & operator>>(std::istream & stream, Big_Int & big_int)
-	{
-		std::string string; stream >> string; big_int = Big_Int(string); 
-		
-		return stream;
-	}
-
-	friend auto & operator<<(std::ostream & stream, const Big_Int & big_int)
-	{
-		if (big_int.m_is_negative) 
-		{
-			stream << '-';
-		}
-
-		stream << big_int.m_digits[big_int.m_n_digits - 1];
-
-		for (auto i = static_cast < int > (big_int.m_n_digits) - 2; i >= 0; --i)
-		{
-			stream << std::setw(step) << std::setfill('0') << std::right << big_int.m_digits[i];
-		}
-
-		return stream;
-	}
-
-//  -----------------------------------------------------------------------------------------------
-
-	friend Big_Int operator+(Big_Int lhs, Big_Int rhs) { return lhs += rhs; }
-	friend Big_Int operator-(Big_Int lhs, Big_Int rhs) { return lhs -= rhs; }
-	friend Big_Int operator*(Big_Int lhs, Big_Int rhs) { return lhs *= rhs; }
-	friend Big_Int operator/(Big_Int lhs, Big_Int rhs) { return lhs /= rhs; }
-
-//  -----------------------------------------------------------------------------------------------
-
-	friend bool operator< (const Big_Int & lhs, const Big_Int & rhs)
-	{
-		if (lhs.m_is_negative != rhs.m_is_negative) { return lhs.m_is_negative; }
-
-		if (lhs.m_is_negative && rhs.m_is_negative) 
-		{
-			return rhs.less(lhs);
-		}
-		else
-		{
-			return lhs.less(rhs);
-		}
-	}
-
-	friend bool operator> (const Big_Int & lhs, const Big_Int & rhs)
-	{
-		return  (rhs < lhs);
-	}
-
-	friend bool operator<=(const Big_Int & lhs, const Big_Int & rhs)
-	{
-		return !(rhs < lhs);
-	}
-
-	friend bool operator>=(const Big_Int & lhs, const Big_Int & rhs)
-	{
-		return !(lhs < rhs);
-	}
-
-	friend bool operator==(const Big_Int & lhs, const Big_Int & rhs)
-	{
-		if ((lhs.m_is_negative != rhs.m_is_negative) || (lhs.m_n_digits != rhs.m_n_digits))
-		{
-			return false;
-		}
-
-		for (auto i = 0uz; i < lhs.m_n_digits; ++i)
-		{
-			if (lhs.m_digits[i] != rhs.m_digits[i]) 
-			{
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 private:
 
 	void parse(const std::string & string)
@@ -389,7 +404,7 @@ private:
 
 //  -----------------------------------------------------------------------------------------------
 
-	Big_Int & add(const Big_Int & other)
+	auto add(const Big_Int & other) -> Big_Int &
 	{
 		m_n_digits = std::max(m_n_digits, other.m_n_digits);
 
@@ -413,7 +428,7 @@ private:
 		return *this;
 	}
 
-	Big_Int & subtract(const Big_Int & other)
+	auto subtract(const Big_Int & other) -> Big_Int &
 	{
 		for (auto i = 0uz; i < m_n_digits; ++i)
 		{
@@ -432,7 +447,7 @@ private:
 
 //  -----------------------------------------------------------------------------------------------
 
-	bool less(const Big_Int & other) const
+	auto less(const Big_Int & other) const -> bool
 	{
 		if (m_n_digits != other.m_n_digits) 
 		{

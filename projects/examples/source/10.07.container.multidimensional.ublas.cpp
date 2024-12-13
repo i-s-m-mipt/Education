@@ -13,7 +13,7 @@
 
 //  ================================================================================================
 
-double determinant_v1(const boost::numeric::ublas::matrix < double > & matrix)
+auto determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) -> double
 {
     if (auto size = matrix.size1(); size == matrix.size2() && size != 0)
     {
@@ -98,7 +98,7 @@ auto determinant_v2(const boost::numeric::ublas::matrix < double > & matrix)
 
 //  ================================================================================================
 
-boost::numeric::ublas::matrix < double > make_matrix(std::size_t size)
+auto make_matrix(std::size_t size)
 {
     boost::numeric::ublas::matrix < double > matrix(size, size);
 

@@ -21,7 +21,7 @@ template < typename F, typename ... Ts > decltype(auto) async_invoke(F && f, Ts 
 
 //  ================================================================================================
 
-template < std::ranges::view V, typename T > T reduce(V view, T sum)
+template < std::ranges::view V, typename T > auto reduce(V view, T sum) -> T
 {
 	auto begin = std::ranges::cbegin(view), end = std::ranges::cend(view);
 

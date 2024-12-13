@@ -38,7 +38,7 @@ public:
         return 0;
     }
 
-    static const char * find(const char * string, std::size_t size, char c)
+    static auto find(const char * string, std::size_t size, char c) -> const char *
     {
         for (auto i = 0uz; i < size; ++i) 
         {

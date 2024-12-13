@@ -73,7 +73,7 @@ private:
 	{ 
 	public:
 
-		const std::string & data_as_string(const Entity & entity)
+		auto data_as_string(const Entity & entity) -> const std::string &
 		{
 			if (m_is_invalid)
 			{

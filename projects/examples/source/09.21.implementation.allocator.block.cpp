@@ -47,7 +47,7 @@ public:
 
 //  ------------------------------------------------------------------------------
 
-    void * allocate(std::size_t size)
+    auto allocate(std::size_t size) -> void *
     {
 	    void * end = get_byte(m_begin) + sizeof(Header) + size, * next = end;
 
@@ -148,24 +148,24 @@ private:
 
 //  --------------------------------------
 
-    std::byte * get_byte(void * ptr) const
+    auto get_byte(void * ptr) const -> std::byte *
 	{
 		return static_cast < std::byte * > (ptr);
 	}
 
-    Node * get_node(void * ptr) const
+    auto get_node(void * ptr) const -> Node *
 	{
 		return static_cast < Node * > (ptr);
 	}
 
-    Header * get_header(void * ptr) const
+    auto get_header(void * ptr) const -> Header *
 	{
 		return static_cast < Header * > (ptr);
 	}
 
 //  ----------------------------------------------------------------
 
-    std::pair < Node * , Node * > find_first(std::size_t size) const
+    auto find_first(std::size_t size) const -> std::pair < Node * , Node * >
     {
         Node * current = m_head, * previous = nullptr;
 

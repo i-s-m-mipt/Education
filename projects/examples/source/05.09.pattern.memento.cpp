@@ -57,12 +57,12 @@ private:
 
 //  -----------------------------------------------------------------
 
-    friend Delta operator-(const State & lhs, const State & rhs) 
+    friend auto operator-(const State & lhs, const State & rhs) -> Delta
     { 
         return Delta(lhs.data - rhs.data); 
     }
 
-    friend State operator+(const State & lhs, const Delta & rhs) 
+    friend auto operator+(const State & lhs, const Delta & rhs) -> State
     { 
         return State(lhs.data + rhs.data); 
     }

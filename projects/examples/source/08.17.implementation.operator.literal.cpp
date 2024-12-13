@@ -29,12 +29,12 @@ namespace literals
 
 	namespace detail
 	{
-		int pow(int x, unsigned int y)
+		auto pow(int x, unsigned int y) -> int
 		{
 			return y > 0 ? x * pow(x, y - 1) : 1;
 		}
 
-		template < char D, char ... Ds > int b3_handler()
+		template < char D, char ... Ds > auto b3_handler() -> int
 		{
 			if constexpr (auto x = D - '0'; sizeof...(Ds) > 0)
 			{

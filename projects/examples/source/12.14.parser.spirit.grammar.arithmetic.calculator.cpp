@@ -84,12 +84,12 @@ class Calculator
 {
 public:
 
-    double operator()(double value) const 
+    auto operator()(double value) const -> double
     { 
         return value; 
     }
 
-    double operator()(const detail::Sign & sign) const
+    auto operator()(const detail::Sign & sign) const -> double
     {
         switch (auto rhs = boost::apply_visitor(*this, sign.operand); sign.operation)
         {
@@ -103,7 +103,7 @@ public:
         }
     }
 
-    double operator()(const detail::Step & step, double lhs) const
+    auto operator()(const detail::Step & step, double lhs) const -> double
     {
         switch (auto rhs = boost::apply_visitor(*this, step.operand); step.operation)
         {
@@ -119,7 +119,7 @@ public:
         }
     }
 
-    double operator()(const detail::List & list) const
+    auto operator()(const detail::List & list) const -> double
     {
         auto state = boost::apply_visitor(*this, list.head);
         

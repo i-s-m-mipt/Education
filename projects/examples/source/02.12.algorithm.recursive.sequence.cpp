@@ -3,7 +3,7 @@
 
 //  ================================================================================================
 
-std::size_t count_v1(std::size_t size, std::size_t n_left = 0, std::size_t n_right = 0)
+auto count_v1(std::size_t size, std::size_t n_left = 0, std::size_t n_right = 0) -> std::size_t
 {
 	if (auto counter = 0uz; n_left < size || n_right < size)
 	{
@@ -25,7 +25,7 @@ std::size_t count_v1(std::size_t size, std::size_t n_left = 0, std::size_t n_rig
 
 //  ================================================================================================
 
-std::size_t count_v2(std::size_t size, std::size_t n_left = 0, std::size_t n_right = 0)
+auto count_v2(std::size_t size, std::size_t n_left = 0, std::size_t n_right = 0) -> std::size_t
 {
 	if (auto counter = 0uz; n_left < size)
 	{
