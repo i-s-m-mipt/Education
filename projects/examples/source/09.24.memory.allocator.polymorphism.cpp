@@ -120,7 +120,7 @@ BENCHMARK(test_v5);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv)
+int main()
 {
     std::array < char, 64 > buffer;
 
@@ -168,8 +168,6 @@ int main(int argc, char ** argv)
     std::vector < int, boost::pool_allocator < int > > vector;
 
 //  ================================================================================================
-
-	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
 }

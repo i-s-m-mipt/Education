@@ -17,18 +17,6 @@
 
 class Block_Allocator : private boost::noncopyable
 {
-private:
-
-    struct Node 
-    { 
-        std::size_t size = 0; Node * next = nullptr; 
-    };
-
-	struct alignas(std::max_align_t) Header 
-    { 
-        std::size_t size = 0; 
-    };
-
 public:
 	
     explicit Block_Allocator(std::size_t size) : m_size(size)
@@ -57,7 +45,7 @@ public:
         }
     }
 
-public:
+//  ------------------------------------------------------------------------------
 
     void * allocate(std::size_t size)
     {
@@ -130,6 +118,8 @@ public:
         merge(previous, node);
     }
 
+//  --------------------------
+
     void print() const
     { 
         std::cout << std::bit_cast < std::size_t > (m_head);
@@ -143,6 +133,20 @@ public:
     }
 
 private:
+
+    struct Node 
+    { 
+        std::size_t size = 0; Node * next = nullptr; 
+    };
+
+//  ------------------------------------------------
+
+	struct alignas(std::max_align_t) Header 
+    { 
+        std::size_t size = 0; 
+    };
+
+//  --------------------------------------
 
     std::byte * get_byte(void * ptr) const
 	{
@@ -159,6 +163,8 @@ private:
 		return static_cast < Header * > (ptr);
 	}
 
+//  ----------------------------------------------------------------
+
     std::pair < Node * , Node * > find_first(std::size_t size) const
     {
         Node * current = m_head, * previous = nullptr;
@@ -167,6 +173,8 @@ private:
 
         return std::make_pair(current, previous);
     }
+
+//  ----------------------------------------------
 
 	void merge(Node * previous, Node * node) const
     {
@@ -185,16 +193,15 @@ private:
 	    }
     }
 
-private:
-
-	static inline auto default_alignment = alignof(std::max_align_t);
-
-//  -----------------------------------------------------------------
+//  -----------------------
 
     std::size_t m_size = 0;
 
-    void * m_begin = nullptr;
-    Node * m_head  = nullptr;
+    void * m_begin = nullptr; Node * m_head = nullptr;
+
+//  -----------------------------------------------------------------
+
+    static inline auto default_alignment = alignof(std::max_align_t);
 };
 
 //  ================================================================================================
@@ -282,7 +289,7 @@ BENCHMARK(test_v2)->Arg(42);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv)
+int main()
 {
     Block_Allocator allocator(1'024);
     
@@ -293,17 +300,15 @@ int main(int argc, char ** argv)
 	[[maybe_unused]] auto ptr_3 = allocator.allocate(32); allocator.print();
     [[maybe_unused]] auto ptr_4 = allocator.allocate(16); allocator.print();
 
-	allocator.deallocate(ptr_2); allocator.print();
-    allocator.deallocate(ptr_3); allocator.print();
+	allocator.deallocate (ptr_2);                         allocator.print();
+    allocator.deallocate (ptr_3);                         allocator.print();
 
 	[[maybe_unused]] auto ptr_5 = allocator.allocate(16); allocator.print();
 	[[maybe_unused]] auto ptr_6 = allocator.allocate(32); allocator.print();
     
-    // detail: H1H5H660H44
+//  detail: H1H5H660H44
 
-//  ================================================================================================
-
-	benchmark::Initialize(&argc, argv);
+//  ------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }

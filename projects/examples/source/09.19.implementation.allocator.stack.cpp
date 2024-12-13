@@ -10,14 +10,10 @@
 
 #include <benchmark/benchmark.h>
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 class Stack_Allocator : private boost::noncopyable
 {
-private:
-
-	using Header = std::uint8_t;
-
 public:
 
 	explicit Stack_Allocator(std::size_t size) : m_size(size)
@@ -33,7 +29,7 @@ public:
 		}
 	}
 
-public:
+	///////////////////////////////////////////////////////////////////////////////////////////
 
 	void * allocate(std::size_t size, std::size_t alignment = default_alignment) 
 	{
@@ -66,6 +62,8 @@ public:
 		m_offset = get_byte(ptr) - get_byte(m_begin) - *header;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////////////////
+
 	void print() const
 	{
 		std::cout << m_begin << " : ";
@@ -77,6 +75,10 @@ public:
 
 private:
 
+	using Header = std::uint8_t;
+
+	/////////////////////////////////////////////
+
 	std::byte * get_byte(void * ptr) const
 	{
 		return static_cast < std::byte * > (ptr);
@@ -87,19 +89,18 @@ private:
 		return static_cast < Header * > (ptr);
 	}
 
-private:
+	/////////////////////////////////////////////
 
-	static inline auto default_alignment = alignof(std::max_align_t);
-
-//  -----------------------------------------------------------------
-
-	std::size_t m_size   = 0;
-	std::size_t m_offset = 0;
+	std::size_t m_size = 0, m_offset = 0;
 
 	void * m_begin = nullptr;
+
+	/////////////////////////////////////////////////////////////////
+
+	static inline auto default_alignment = alignof(std::max_align_t);
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state)
 {
@@ -123,7 +124,9 @@ void test_v1(benchmark::State & state)
 	}
 }
 
-//  ================================================================================================
+BENCHMARK(test_v1);
+
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state)
 {
@@ -145,14 +148,11 @@ void test_v2(benchmark::State & state)
 	}
 }
 
-//  ================================================================================================
-
-BENCHMARK(test_v1);
 BENCHMARK(test_v2);
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////
 
-int main(int argc, char ** argv)
+int main()
 {
 	Stack_Allocator allocator(1024);
 
@@ -163,17 +163,15 @@ int main(int argc, char ** argv)
 	[[maybe_unused]] auto ptr_3 = allocator.allocate(10   ); allocator.print();
 	[[maybe_unused]] auto ptr_4 = allocator.allocate( 4   ); allocator.print();
 
-	allocator.deallocate(ptr_4); allocator.print();
-	allocator.deallocate(ptr_3); allocator.print();
+	allocator.deallocate (ptr_4); 							 allocator.print();
+	allocator.deallocate (ptr_3); 							 allocator.print();
 
 	[[maybe_unused]] auto ptr_5 = allocator.allocate( 3, 4); allocator.print();
 	[[maybe_unused]] auto ptr_6 = allocator.allocate( 8   ); allocator.print(); 
 
 	// detail: 000H 1H22 | 000H 555H | 6666 6666 | ...
 
-//  ================================================================================================
-
-	benchmark::Initialize(&argc, argv);
+	///////////////////////////////////////////////////////////////////////////
 
 	benchmark::RunSpecifiedBenchmarks();
 }

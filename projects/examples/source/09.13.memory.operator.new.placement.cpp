@@ -44,11 +44,6 @@ union Entity_v2
 
 template < typename D > class Entity_v3
 {
-protected:
-
-    Entity_v3() = default;
-   ~Entity_v3() = default;
-
 public:
 
 	static void * operator new(std::size_t size)
@@ -64,22 +59,29 @@ public:
 
 		::operator delete(ptr);
 	}
+
+protected:
+
+    Entity_v3() = default;
+   ~Entity_v3() = default;
 };
 
 //  ================================================================================================
 
-struct Client : private Entity_v3 < Client >
+class Client : private Entity_v3 < Client >
 {
+private:
+
 	using base_t = Entity_v3 < Client > ;
 
-	using base_t::operator new;
-	
-	using base_t::operator delete;
-
-//  ----------------------------------------------
+public:
 
 	Client() { std::clog << "Client:: Client\n"; }
    ~Client() { std::clog << "Client::~Client\n"; }
+
+//  ----------------------------------------------------
+
+    using base_t::operator new, base_t::operator delete;
 };
 
 //  ================================================================================================
@@ -102,7 +104,7 @@ BENCHMARK(test)->RangeMultiplier(2)->Range(1024 * 1024, 1024 * 1024 * 1024);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv)
+int main()
 {
 	assert(sizeof(Entity_v1) == sizeof(int));
 
@@ -149,8 +151,6 @@ int main(int argc, char ** argv)
 	delete(new Client);
 
 //  ================================================================================================
-
-	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
 }

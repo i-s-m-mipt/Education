@@ -27,7 +27,7 @@ public:
 		}
 	}
 
-public:
+//  ------------------------------------------------------------------------------
 
 	void * allocate(std::size_t size, std::size_t alignment = default_alignment)
 	{
@@ -49,6 +49,8 @@ public:
 
     void deallocate(void * , std::size_t) const {}
 
+//  ------------------------------------------------------------------------------
+
 	void print() const
 	{
 		std::cout << m_begin << " : ";
@@ -65,16 +67,15 @@ private:
 		return static_cast < std::byte * > (ptr);
 	}
 
-private:
+//  ------------------------------------------------------------------------------
 
-	static inline auto default_alignment = alignof(std::max_align_t);
-
-//  -----------------------------------------------------------------
-	
-	std::size_t m_size   = 0;
-	std::size_t m_offset = 0;
+	std::size_t m_size = 0, m_offset = 0;
 
 	void * m_begin = nullptr;
+
+//  ------------------------------------------------------------------------------
+
+	static inline auto default_alignment = alignof(std::max_align_t);
 };
 
 //  ================================================================================================
@@ -85,11 +86,13 @@ public:
 
     using value_type = T;
 
-public:
+//  --------------------------------------------------------------------------------------------
 
     explicit Allocator(Arena & arena) : m_arena(&arena) {}
 
     template < typename U > Allocator(const Allocator < U > & other) : m_arena(other.m_arena) {}
+
+//  --------------------------------------------------------------------------------------------
 
     auto allocate(std::size_t size) const
     { 

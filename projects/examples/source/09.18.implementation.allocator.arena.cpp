@@ -26,7 +26,7 @@ public:
 		}
 	}
 
-public:
+//  ----------------------------------------------------------------------------
 
 	void * allocate(std::size_t size, std::size_t alignment = default_alignment) 
 	{
@@ -46,6 +46,8 @@ public:
 		}
 	}
 
+//  ------------------
+
 	void print() const
 	{
 		std::cout << m_begin << " : ";
@@ -62,16 +64,15 @@ private:
 		return static_cast < std::byte * > (ptr);
 	}
 
-private:
+//  -------------------------------------
 
-	static inline auto default_alignment = alignof(std::max_align_t);
-
-//  -----------------------------------------------------------------
-	
-	std::size_t m_size   = 0;
-	std::size_t m_offset = 0;
+	std::size_t m_size = 0, m_offset = 0;
 
 	void * m_begin = nullptr;
+
+//  -----------------------------------------------------------------
+
+	static inline auto default_alignment = alignof(std::max_align_t);
 };
 
 //  ================================================================================================
@@ -120,7 +121,7 @@ BENCHMARK(test_v2);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv)
+int main()
 {
 	Arena_Allocator allocator(1024); 
 
@@ -133,11 +134,9 @@ int main(int argc, char ** argv)
 	[[maybe_unused]] auto ptr_5 = allocator.allocate(988   ); allocator.print();
 	[[maybe_unused]] auto ptr_6 = allocator.allocate(  1   ); allocator.print();
 
-	// detail: 1022 0000 | 3333 3333 | 3300 0000 | 4444 0000 | 5555 5555 | ...	
+//  detail: 1022 0000 | 3333 3333 | 3300 0000 | 4444 0000 | 5555 5555 | ...	
 
-//  ================================================================================================
-
-	benchmark::Initialize(&argc, argv);
+//  ------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }

@@ -67,6 +67,15 @@ public:
         uninitialize(); 
     }
 
+//  -----------------------------------------------
+
+    auto empty   (      ) const { return !m_data; }
+    auto value   (      ) const { return *m_data; }
+    auto value_or(T data) const
+    { 
+        return m_data ? *m_data : data; 
+    }
+
 private:
 
     void initialize(T data) 
@@ -114,16 +123,7 @@ private:
         }
     }
 
-public:
-
-    auto empty   (      ) const { return !m_data; }
-    auto value   (      ) const { return *m_data; }
-    auto value_or(T data) const
-    { 
-        return m_data ? *m_data : data; 
-    }
-
-private:
+//  ---------------------
 
     T * m_data = nullptr;
 }; 

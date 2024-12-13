@@ -71,7 +71,7 @@ BENCHMARK(test_v2);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv)
+int main()
 {
 	static_assert(std::alignment_of_v < double > == 8);
 
@@ -90,8 +90,6 @@ int main(int argc, char ** argv)
 	std::cout << "array_1 = " << std::hex << array_2 << '\n';
 
 //  ------------------------------------------------------------------------------------------------
-
-	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
 }

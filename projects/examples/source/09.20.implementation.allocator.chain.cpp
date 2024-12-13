@@ -16,13 +16,6 @@
 
 class Chain_Allocator : private boost::noncopyable
 {
-private:
-
-	struct Node 
-	{ 
-		Node * next = nullptr; 
-	};
-	
 public:
 
 	explicit Chain_Allocator(std::size_t size, std::size_t size_node) 
@@ -50,7 +43,7 @@ public:
 		}
 	}
 
-public:
+//  -----------------
 
 	void * allocate()
 	{
@@ -96,12 +89,21 @@ public:
 		node->next = m_head; m_head = node;
 	}
 
+//  ------------------
+
 	void print() const
 	{ 
 		std::cout << std::bit_cast < std::size_t > (m_head) << std::endl; 
 	}
 
 private:
+
+	struct Node 
+	{ 
+		Node * next = nullptr; 
+	};
+
+//  --------------------------------------
 
 	std::byte * get_byte(void * ptr) const
 	{
@@ -112,6 +114,8 @@ private:
 	{ 
 		return static_cast < Node * > (ptr); 
 	}
+
+//  ---------------------------
 
 	auto allocate_nodes() const
 	{
@@ -127,23 +131,20 @@ private:
 		m_head = allocate_nodes(); ++m_offset; m_chains.push_back(m_head);
 	}
 
-private:
+//  ------------------------------------------------------
 
-	static inline auto default_alignment = alignof(std::max_align_t);
+	std::size_t m_size = 0, m_size_node = 0, m_offset = 0;
+
+	void * m_begin = nullptr; Node * m_head = nullptr;
+
+	std::vector < void * > m_chains;
 
 //  -----------------------------------------------------------------
 
-	std::size_t m_size      = 0;
-	std::size_t m_size_node = 0;
-	std::size_t m_offset    = 0;
-
-	void * m_begin = nullptr;
-	Node * m_head  = nullptr;
-
-	std::vector < void * > m_chains;
+	static inline auto default_alignment = alignof(std::max_align_t);
 };
 
-//  ================================================================================================
+//  ==================================
 
 void test_v1(benchmark::State & state)
 {
@@ -216,7 +217,7 @@ BENCHMARK(test_v2);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv)
+int main()
 {
 	Chain_Allocator allocator(32, 8);
 	
@@ -228,16 +229,14 @@ int main(int argc, char ** argv)
 	[[maybe_unused]] auto ptr_4 = allocator.allocate(); allocator.print();
 	[[maybe_unused]] auto ptr_5 = allocator.allocate(); allocator.print();
 
-	allocator.deallocate(ptr_2); allocator.print();
-	allocator.deallocate(ptr_3); allocator.print();
+	allocator.deallocate (ptr_2);                       allocator.print();
+	allocator.deallocate (ptr_3);                       allocator.print();
 
 	[[maybe_unused]] auto ptr_6 = allocator.allocate(); allocator.print();
 
-	// detail: 1111 1111 | 6666 6666 | 0000 0000 | 4444 4444 || 5555 5555 | ...
+//  detail: 1111 1111 | 6666 6666 | 0000 0000 | 4444 4444 || 5555 5555 | ...
 
-//  ================================================================================================
-
-	benchmark::Initialize(&argc, argv);
+//  ------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }
