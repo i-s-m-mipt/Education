@@ -35,7 +35,7 @@ public:
 		parse(std::to_string(number)); 
 	}
 
-	Big_Int(std::string_view string) : Big_Int() 
+	Big_Int(const std::string & string) : Big_Int() 
 	{ 
 		parse(string); 
 	}
@@ -339,7 +339,7 @@ public:
 
 private:
 
-	void parse(std::string_view string)
+	void parse(const std::string & string)
 	{
 		if (string[0] == '+' || string[0] == '-' || std::isdigit(string[0]))
 		{
@@ -471,27 +471,27 @@ private:
 
 int main()
 {
-	Big_Int big_int_01 = "+73640854127382725310948206095647"sv;
+	Big_Int big_int_01 = "+73640854127382725310948206095647"s;
 
-	Big_Int big_int_02 = "-46090058756232818791046807807190"sv;
+	Big_Int big_int_02 = "-46090058756232818791046807807190"s;
 
-	Big_Int big_int_03 = "+27550795371149906519901398288457"sv;
+	Big_Int big_int_03 = "+27550795371149906519901398288457"s;
 
 	Big_Int big_int_04 = big_int_01;
 
-	Big_Int big_int_05 = "-3394111293590239892710602762023649092547630961329778427474301930"sv;
+	Big_Int big_int_05 = "-3394111293590239892710602762023649092547630961329778427474301930"s;
 
-	Big_Int big_int_06 = "-46090058756232818791046807807189"sv;
+	Big_Int big_int_06 = "-46090058756232818791046807807189"s;
 
-	Big_Int big_int_07 = "+73640854127382725310948206095648"sv;
+	Big_Int big_int_07 = "+73640854127382725310948206095648"s;
 
 	Big_Int big_int_08 = big_int_02;
 
-	Big_Int big_int_09 = "+119730912883615544101995013902837"sv;
+	Big_Int big_int_09 = "+119730912883615544101995013902837"s;
 
 	Big_Int big_int_10 = -1;
 
-	Big_Int big_int_11 = "+8581424947372244"sv;
+	Big_Int big_int_11 = "+8581424947372244"s;
 
 //  -------------------------------------------------------------------------------------------
 

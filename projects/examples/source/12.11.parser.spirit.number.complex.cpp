@@ -4,8 +4,6 @@
 #include <string>
 #include <string_view>
 
-using namespace std::literals;
-
 #include <boost/spirit/home/x3.hpp>
 
 //  ================================================================================================
@@ -47,8 +45,8 @@ auto parse(std::string_view data)
 
 int main()
 {
-    assert(parse("(1, 2)"sv) == std::complex < int > (1, 2));
-    assert(parse("(1   )"sv) == std::complex < int > (1, 0));
-    assert(parse(" 1, 2 "sv) == std::complex < int > (1, 2));
-    assert(parse(" 1    "sv) == std::complex < int > (1, 0));
+    assert(parse("(1, 2)") == std::complex < int > (1, 2));
+    assert(parse("(1   )") == std::complex < int > (1, 0));
+    assert(parse(" 1, 2 ") == std::complex < int > (1, 2));
+    assert(parse(" 1    ") == std::complex < int > (1, 0));
 }

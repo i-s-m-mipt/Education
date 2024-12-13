@@ -5,8 +5,6 @@
 #include <tuple>
 #include <type_traits>
 
-using namespace std::literals;
-
 //  ================================================================================================
 
 template < typename T, std::size_t I > class Helper

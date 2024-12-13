@@ -5,8 +5,6 @@
 #include <string>
 #include <string_view>
 
-using namespace std::literals;
-
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/spirit/home/x3.hpp>
 

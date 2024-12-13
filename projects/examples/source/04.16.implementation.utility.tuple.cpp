@@ -6,8 +6,6 @@
 #include <type_traits>
 #include <utility>
 
-using namespace std::literals;
-
 /////////////////////////////////////////////////////////////////////////
 
 template <             typename ... Ts > class Tuple {};

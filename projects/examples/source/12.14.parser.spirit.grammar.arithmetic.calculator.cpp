@@ -7,8 +7,6 @@
 #include <string_view>
 #include <vector>
 
-using namespace std::literals;
-
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>

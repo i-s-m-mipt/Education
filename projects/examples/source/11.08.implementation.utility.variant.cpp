@@ -12,8 +12,6 @@
 #include <utility>
 #include <variant>
 
-using namespace std::literals;
-
 //  ================================================================================================
 
 namespace detail
