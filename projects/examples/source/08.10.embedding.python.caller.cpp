@@ -1,13 +1,3 @@
-#if (!defined(FUNCTION))
-#  if (defined(_MSC_VER) || defined(__GNUC__))
-#    define FUNCTION __FUNCTION__
-#  else
-#    define FUNCTION __func__
-#  endif
-#else
-#  error "invalid macro definition"
-#endif
-
 #include <cstdint>
 #include <cstdlib>
 #include <exception>
@@ -27,7 +17,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/python.hpp>
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 class Python : private boost::noncopyable
 {
@@ -36,51 +26,14 @@ public:
 	Python() { acquire(); }
    ~Python() { release(); }
 
-private:
-
-	void acquire()
-	{
-		std::call_once
-		(
-			s_status, []() 
-			{
-				if (!Py_IsInitialized()) 
-				{
-					Py_Initialize();
-
-					auto working_directory = std::filesystem::absolute(".").string().c_str();
-
-					auto system_path = PySys_GetObject("path");
-
-					PyList_Insert(system_path, 0, PyUnicode_FromString(working_directory));
-				}
-			}
-		);
-
-		s_mutex.lock(); 
-			
-		s_state = PyGILState_Ensure();
-
-		m_local = boost::python::import("__main__").attr("__dict__");
-
-		boost::python::exec("import sys\nsys.path.append(\".\")", m_local, m_local);
-	}
-
-	void release()
-	{
-		PyGILState_Release(s_state); 
-		
-		s_mutex.unlock();
-	}
-
-public:
+//  -----------------------------------------------------------------------------------------
 
 	const auto & local() const
 	{
 		return m_local;
 	}
 
-//  ------------------------------
+//  -----------------------------------------------------------------------------------------
 
 	static std::string exception()
 	{
@@ -105,18 +58,49 @@ public:
 
 private:
 
+	void acquire()
+	{
+		std::call_once
+		(
+			s_status, []() 
+			{
+				if (Py_IsInitialized() == 0) 
+				{
+					Py_Initialize();
+				}
+			}
+		);
+
+		s_mutex.lock(); 
+			
+		s_state = PyGILState_Ensure();
+
+		m_local = boost::python::import("__main__").attr("__dict__");
+
+		boost::python::exec("import sys\nsys.path.append(\".\")", m_local, m_local);
+	}
+
+	void release()
+	{
+		PyGILState_Release(s_state); 
+		
+		s_mutex.unlock();
+	}
+
+//  -----------------------------------------------------------------------------------------
+
+	boost::python::api::object m_local;
+
+//  -----------------------------------------------------------------------------------------
+
 	static inline std::once_flag s_status;
 
 	static inline std::mutex s_mutex;
 	
 	static inline PyGILState_STATE s_state;
-
-//  ---------------------------------------
-
-	boost::python::api::object m_local;
 };
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 auto make_dictionary(std::size_t size, std::size_t length)
 {
@@ -139,7 +123,7 @@ auto make_dictionary(std::size_t size, std::size_t length)
 	return dictionary;
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 std::size_t hash(std::string_view string)
 {
@@ -153,7 +137,7 @@ std::size_t hash(std::string_view string)
 	return hash;
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {

@@ -21,10 +21,7 @@ void print(std::span < const std::byte > bytes)
 
     for (auto i = 0uz; i < sizeof(int); ++i)
     {
-        if (auto byte = std::to_integer < int > (bytes[i]); byte != 0)
-        {
-            std::cout << std::hex << byte << ' ';
-        }
+        std::cout << std::hex << std::to_integer < int > (bytes[i]) << ' ';
     }
         
     std::cout << std::endl;
@@ -123,7 +120,7 @@ BENCHMARK(test_v4);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv)
+int main()
 {
     std::cout << std::showbase;
 
@@ -136,7 +133,7 @@ int main(int argc, char ** argv)
     [[maybe_unused]] auto dec = 42;
     [[maybe_unused]] auto hex = 0x2a;
 
-//  ================================================================================================
+    ////////////////////////////////////////////
 
     static_assert((0x1234 &  0x00ff) == 0x0034);
     static_assert((0x1234 & ~0x00ff) == 0x1200);
@@ -145,16 +142,16 @@ int main(int argc, char ** argv)
     static_assert((0x3400 >> 0x0008) == 0x0034);
     static_assert((0x0012 << 0x0008) == 0x1200);
 
-//  ================================================================================================
+    ////////////////////////////////////////////
 
     static_assert(1 << 2 == 4);
     static_assert(4 >> 2 == 1);
 
-//  ================================================================================================
+    //////////////////////////////////////////////////////////////
 
     auto x = 1, y = 2; x ^= y ^= x ^= y; assert(x == 2 && y == 1);
 
-//  ================================================================================================
+    //////////////////////////////////////////////////////////////
 
     static_assert(sizeof(std::uint16_t) == 2);
 	static_assert(sizeof(std::uint32_t) == 4);
@@ -169,7 +166,7 @@ int main(int argc, char ** argv)
     bitset |= 0b0010; assert(bitset == 0b1111);
     bitset &= 0b0011; assert(bitset == 0b0011);
 
-    std::cout << std::bitset < 8 > (42) << std::endl; // output: 00101010
+    std::cout << std::bitset < 8 > (42) << std::endl;
    
     assert(std::bitset < 8 > (       42 ).to_string() == "00101010");
     assert(std::bitset < 8 > ("00101010").to_ullong() ==        42 );
@@ -234,8 +231,6 @@ int main(int argc, char ** argv)
     }
 
 //  ================================================================================================
-
-    benchmark::Initialize(&argc, argv);
 
     benchmark::RunSpecifiedBenchmarks();
 }
