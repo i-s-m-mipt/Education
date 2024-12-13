@@ -155,7 +155,7 @@ BENCHMARK(test_v2)->DenseRange(1, 9, 1);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv)
+int main()
 {
     auto matrix = make_matrix(3);
 
@@ -167,8 +167,6 @@ int main(int argc, char ** argv)
             determinant_v2(matrix)
         )
     );
-
-	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
 }

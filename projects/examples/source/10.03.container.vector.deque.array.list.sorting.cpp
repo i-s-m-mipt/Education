@@ -9,11 +9,7 @@
 
 #include <benchmark/benchmark.h>
 
-//  ================================================================================================
-
-using Clock = std::chrono::steady_clock;
-
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state) 
 {
@@ -23,11 +19,11 @@ void test_v1(benchmark::State & state)
 
         std::ranges::iota(array, 1); 
 
-        auto start = Clock::now();
+        auto start = std::chrono::steady_clock::now();
 
         std::ranges::sort(array, std::greater());
 
-        auto delta = Clock::now() - start;
+        auto delta = std::chrono::steady_clock::now() - start;
 
         state.SetIterationTime
         (
@@ -38,7 +34,7 @@ void test_v1(benchmark::State & state)
     }
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state) 
 {
@@ -48,11 +44,11 @@ void test_v2(benchmark::State & state)
 
         std::ranges::iota(vector, 1); 
 
-        auto start = Clock::now();
+        auto start = std::chrono::steady_clock::now();
 
         std::ranges::sort(vector, std::greater());
 
-        auto delta = Clock::now() - start;
+        auto delta = std::chrono::steady_clock::now() - start;
 
         state.SetIterationTime
         (
@@ -63,7 +59,7 @@ void test_v2(benchmark::State & state)
     }
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v3(benchmark::State & state) 
 {
@@ -73,11 +69,11 @@ void test_v3(benchmark::State & state)
 
         std::ranges::iota(deque, 1); 
 
-        auto start = Clock::now();
+        auto start = std::chrono::steady_clock::now();
 
         std::ranges::sort(deque, std::greater());
 
-        auto delta = Clock::now() - start;
+        auto delta = std::chrono::steady_clock::now() - start;
 
         state.SetIterationTime
         (
@@ -88,7 +84,7 @@ void test_v3(benchmark::State & state)
     }
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v4(benchmark::State & state) 
 {
@@ -98,11 +94,11 @@ void test_v4(benchmark::State & state)
 
         std::ranges::iota(list, 1); 
 
-        auto start = Clock::now();
+        auto start = std::chrono::steady_clock::now();
 
         list.sort(std::greater());
 
-        auto delta = Clock::now() - start;
+        auto delta = std::chrono::steady_clock::now() - start;
 
         state.SetIterationTime
         (
@@ -113,7 +109,7 @@ void test_v4(benchmark::State & state)
     }
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v5(benchmark::State & state) 
 {
@@ -123,11 +119,11 @@ void test_v5(benchmark::State & state)
 
         std::ranges::iota(forward_list, 1); 
 
-        auto start = Clock::now();
+        auto start = std::chrono::steady_clock::now();
 
         forward_list.sort(std::greater());
 
-        auto delta = Clock::now() - start;
+        auto delta = std::chrono::steady_clock::now() - start;
 
         state.SetIterationTime
         (
@@ -138,7 +134,7 @@ void test_v5(benchmark::State & state)
     }
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test_v1); 
 BENCHMARK(test_v2);

@@ -5,36 +5,43 @@
 
 #include <boost/flyweight.hpp>
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////
 
-struct Entity
+class Entity
 {
+public:
+
     using data_1_t = int;
 
     using data_2_t = std::string;
 
-//  ------------------------------------------------------------------------------------------------
+//  --------------------------------------------------------------------
+
+    explicit Entity(data_1_t data_1, const data_2_t & data_2) 
+    : 
+        m_flyweight_1(data_1), 
+        m_flyweight_2(data_2) 
+    {}
+
+//  --------------------------------------------------------------------
+
+    const auto & flyweight_1() const { return m_flyweight_1; }
+    const auto & flyweight_2() const { return m_flyweight_2; }
+
+private:
 
     template < typename T > using tag_t = boost::flyweights::tag < T > ;
 
     struct data_1_tag {};
     struct data_2_tag {};
 
-//  ------------------------------------------------------------------------------------------------
+//  --------------------------------------------------------------------
 
-    explicit Entity(data_1_t data_1, const data_2_t & data_2) 
-    : 
-        flyweight_data_1(data_1), 
-        flyweight_data_2(data_2) 
-    {}
-
-//  ------------------------------------------------------------------------------------------------
-
-    boost::flyweight < data_1_t, tag_t < data_1_tag > > flyweight_data_1;
-    boost::flyweight < data_2_t, tag_t < data_2_tag > > flyweight_data_2;
+    boost::flyweight < data_1_t, tag_t < data_1_tag > > m_flyweight_1;
+    boost::flyweight < data_2_t, tag_t < data_2_tag > > m_flyweight_2;
 };
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////
 
 int main() 
 {
@@ -51,21 +58,21 @@ int main()
 
     std::cout << "Enter any character to continue : "; char c; std::cin >> c;
 
-//  ------------------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------
 
     auto & entity = entities.front();
 
     for (auto i = 1uz; i < size_1; ++i)
     {
-        assert(&entity.flyweight_data_1.get() == &entities[i].flyweight_data_1.get());
-        assert(&entity.flyweight_data_2.get() == &entities[i].flyweight_data_2.get());
+        assert(&entity.flyweight_1().get() == &entities[i].flyweight_1().get());
+        assert(&entity.flyweight_2().get() == &entities[i].flyweight_2().get());
     }
 
     entity = Entity(2, std::string(size_2, 'b'));
 
     for (auto i = 1uz; i < size_1; ++i)
     {
-        assert(&entity.flyweight_data_1.get() != &entities[i].flyweight_data_1.get());
-        assert(&entity.flyweight_data_2.get() != &entities[i].flyweight_data_2.get());
+        assert(&entity.flyweight_1().get() != &entities[i].flyweight_1().get());
+        assert(&entity.flyweight_2().get() != &entities[i].flyweight_2().get());
     }
 }

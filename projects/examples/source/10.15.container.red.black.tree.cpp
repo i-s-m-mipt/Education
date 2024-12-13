@@ -56,7 +56,7 @@ BENCHMARK(test_v2);
 
 //  ================================================================================================
 
-int main(int argc, char ** argv)
+int main()
 {
 	std::set < int > set { 1, 4, 2, 5, 3 };
 
@@ -111,8 +111,6 @@ int main(int argc, char ** argv)
 	assert(std::size(map) == 1 && map.at("bbbbb") == 2);
 
 //  ================================================================================================
-
-	benchmark::Initialize(&argc, argv);
 
 	benchmark::RunSpecifiedBenchmarks();
 }

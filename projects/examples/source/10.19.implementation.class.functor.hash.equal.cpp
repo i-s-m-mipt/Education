@@ -11,8 +11,10 @@ struct Entity
 
 //  ================================================================================================
 
-struct Hash
+class Hash
 {
+public:
+
 	auto operator()(const Entity & entity) const
 	{
 		return std::hash < int > ()(entity.data);
@@ -21,8 +23,10 @@ struct Hash
 
 //  ================================================================================================
 
-struct Equal
+class Equal
 {
+public:
+
 	auto operator()(const Entity & lhs, const Entity & rhs) const
 	{
 		return lhs.data == rhs.data;
