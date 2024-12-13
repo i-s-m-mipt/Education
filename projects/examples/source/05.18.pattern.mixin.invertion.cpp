@@ -22,7 +22,7 @@ public:
 
 private:
 
-    int m_data = 0;
+    value_type m_data = 0;
 };
 
 /////////////////////////////////////////////////
