@@ -17,17 +17,19 @@ using namespace std::literals;
 
 namespace detail
 {
-    struct Operand : public boost::spirit::x3::variant 
+    class Operand : public boost::spirit::x3::variant 
     < 
         double, boost::spirit::x3::forward_ast < struct Sign > , 
                 boost::spirit::x3::forward_ast < struct List > 
     >
     {
-        using base_type::base_type;
-        using base_type::operator=;
+    public:
+    
+        using base_type::base_type, base_type::operator=;
     };
 
     struct Sign { char operation = '\0'; Operand operand; };
+    
     struct Step { char operation = '\0'; Operand operand; };
 
     struct List 
@@ -80,8 +82,10 @@ namespace parser
 
 //  ================================================================================================
 
-struct Calculator
+class Calculator
 {
+public:
+
     double operator()(double value) const 
     { 
         return value; 

@@ -11,17 +11,17 @@ using namespace std::literals;
 
 //  ================================================================================================
 
+using Token = std::variant < char, double, std::string > ;
+
+//  ================================================================================================
+
 class Stream
 {
 public:
 
-	using Token = std::variant < char, double, std::string > ;
-
-public:
-
 	explicit Stream(const std::string & data) : m_sin(data + ';') {}
 
-public:
+//  ----------------------------------------------------------------
 
 	auto empty()
 	{
@@ -92,7 +92,7 @@ public:
 
 private:
 
-	Token m_token; bool m_is_full = false; std::stringstream m_sin;
+	std::stringstream m_sin; bool m_is_full = false; Token m_token;
 };
 
 //  ================================================================================================
@@ -240,7 +240,7 @@ private:
 		return m_variables.at(std::get < std::string > (token));
 	}
 
-private:
+//  -------------------------------------------------------
 
 	std::unordered_map < std::string, double > m_variables;
 };

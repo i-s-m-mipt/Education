@@ -14,8 +14,10 @@ using namespace std::literals;
 
 //  ================================================================================================
 
-struct case_insensitive_traits : public std::char_traits < char > 
+class case_insensitive_traits : public std::char_traits < char > 
 {
+public:
+
     static auto eq(char c1, char c2) { return std::toupper(c1) == std::toupper(c2); }
     static auto lt(char c1, char c2) { return std::toupper(c1) <  std::toupper(c2); }
 
@@ -35,7 +37,7 @@ struct case_insensitive_traits : public std::char_traits < char >
 
         return 0;
     }
-    
+
     static const char * find(const char * string, std::size_t size, char c)
     {
         for (auto i = 0uz; i < size; ++i) 
@@ -113,7 +115,7 @@ BENCHMARK(test_v3)->DenseRange(8192, 65537, 8192)->Complexity();
 
 //  ================================================================================================
 
-int main(int argc, char ** argv)
+int main()
 {
     std::cout << '\n';
 
@@ -166,18 +168,18 @@ int main(int argc, char ** argv)
 
     std::cout << "buffer_2 = " << buffer_2 << '\n' << '\n';
 
-//  ================================================================================================
+//  -------------------------------------------------------
 
     assert(cistring_t("AAAAA") == cistring_t("aaaaa"));
 
-//  ================================================================================================
+//  -----------------------------------------------------------------
 
     auto string_4 = "aaaaa"s, string_5 = std::string(1'000'000, 'a');
 
     assert(distance(&string_4.front(), &string_4) == 16);
     assert(distance(&string_5.front(), &string_5) != 16);
 
-//  ================================================================================================
+//  -----------------------------------------------------
 
     auto string_view = "aaaaa"sv;
 
@@ -193,9 +195,7 @@ int main(int argc, char ** argv)
 
 //  std::string_view bad_view_2 = [](){ return "aaaaa"s; }(); // bad
 
-//  ================================================================================================
-
-    benchmark::Initialize(&argc, argv);
+//  ----------------------------------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }

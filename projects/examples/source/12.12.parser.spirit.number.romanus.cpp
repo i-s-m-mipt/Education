@@ -13,8 +13,10 @@ using namespace std::literals;
 
 namespace parser
 {
-    struct Huns : public boost::spirit::x3::symbols < int >
+    class Huns : public boost::spirit::x3::symbols < int >
     {
+    public:
+
         Huns()
         {
             add("C"   , 100);
@@ -29,10 +31,12 @@ namespace parser
         }
     };
 
-//  -------------------------------------------------------
+//  ------------------------------------------------------
 
-    struct Tens : public boost::spirit::x3::symbols < int >
+    class Tens : public boost::spirit::x3::symbols < int >
     {
+    public:
+
         Tens()
         {
             add("X"   , 10);
@@ -47,10 +51,12 @@ namespace parser
         }
     };
     
-//  -------------------------------------------------------
+//  ------------------------------------------------------
 
-    struct Ones : public boost::spirit::x3::symbols < int >
+    class Ones : public boost::spirit::x3::symbols < int >
     {
+    public:
+
         Ones()
         {
             add("I"   , 1);
