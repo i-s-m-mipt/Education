@@ -2,8 +2,10 @@
 
 //  ================================================================================================
 
-struct Entity
+class Entity
 {
+public:
+
 	void test() const &  { std::clog << "Entity::test (1)\n"; }
 	void test() const && { std::clog << "Entity::test (2)\n"; }
 };

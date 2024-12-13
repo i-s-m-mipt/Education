@@ -4,7 +4,7 @@
 
 using namespace std::literals;
 
-//  ===========================================================================
+///////////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
@@ -14,7 +14,7 @@ public:
 
 //	Entity() : m_data_1(s_data_1), m_data_3(0), m_data_2(0) {} // error
 
-//  -------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
 
 	Entity(const int & data_1, int data_2, int data_3) 
 	: 
@@ -25,34 +25,29 @@ public:
 
 	Entity(const int & data_1, int data_2) : Entity(data_1, data_2, 0) {}
 
-//  ---------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
 
    ~Entity()
 	{
 		std::clog << "Entity::~Entity\n";
 	}
 
-//  ----------------------------------------
+//  ---------------------------------------------------------------------------
 
 	auto data_1() const { return m_data_1; }
 	auto data_2() const { return m_data_2; }
 	auto data_3() const { return m_data_3; }
 
-//  ----------------------------------------
+//  ---------------------------------------------------------------------------
 
 	const auto & data_as_string() const
 	{
 	//	m_data_3 = 0; // error
-
-		if (m_cached_data.is_invalid)
-		{
-			m_cached_data.update(*this);
-		}
 				
-		return m_cached_data.string;
+		return m_cached_data.data_as_string(*this);
 	}
 
-//  -----------------------------------------------------
+//  ---------------------------------------------------------------------------
 
 //	void set_data_3(int data) { m_data_3 = data; } // bad
 
@@ -60,10 +55,10 @@ public:
 	{ 
 		m_data_3 = data; 
 		
-		m_cached_data.is_invalid = true; 
+		m_cached_data.set_invalid(); 
 	}
 
-//  ------------------------------------
+//  ---------------------------------------------------------------------------
 
 	static void test()
 	{
@@ -74,24 +69,50 @@ public:
 
 private:
 
-	struct Cached_Data 
+	class Cached_Data 
 	{ 
-		void update(const Entity & entity)
-		{
-			string = 
-			(
-				std::to_string(entity.m_data_1) + '/' +
-				std::to_string(entity.m_data_2) + '/' +
-				std::to_string(entity.m_data_3)
-			);
+	public:
 
-			is_invalid = false;
+		const std::string & data_as_string(const Entity & entity)
+		{
+			if (m_is_invalid)
+			{
+				m_string = 
+				(
+					std::to_string(entity.m_data_1) + '/' +
+					std::to_string(entity.m_data_2) + '/' +
+					std::to_string(entity.m_data_3)
+				);
+
+				m_is_invalid = false;
+			}
+			
+			return m_string;
 		}
 
-		std::string string; bool is_invalid = true;
+		void set_invalid()
+		{
+			m_is_invalid = true;
+		}
+
+	private:
+
+		std::string m_string; bool m_is_invalid = true;
 	};
 
-//  -----------------------------------------------
+//  ---------------------------------------------------------------------------
+
+	const int & m_data_1 = 0;
+
+	const int   m_data_2 = 0;
+
+		  int   m_data_3 = 0;
+
+//  ---------------------------------------------------------------------------
+
+	mutable Cached_Data m_cached_data;
+
+//  ---------------------------------------------------------------------------
 
 	static inline       auto s_data_1 = 0;
 
@@ -100,21 +121,9 @@ private:
 //	static        const auto s_data_3 = "aaaaa"s; // error
 
 	static inline const auto s_data_4 = "aaaaa"s;
-
-//  ---------------------------------------------
-
-	const int & m_data_1 = 0;
-
-	const int   m_data_2 = 0; 
-
-		  int   m_data_3 = 0;
-
-//  ----------------------------------
-
-	mutable Cached_Data m_cached_data;
 };
 
-//  ===========================================================================
+///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -148,7 +157,7 @@ int main()
 
 //	Entity entity_6(); // warning
 
-//  --------------------------------
+//  ---------------------------------------------
 
 	entity_1.test(); Entity::test();
 }

@@ -3,8 +3,10 @@
 
 //  ================================================================================================
 
-struct Entity 
+class Entity 
 {
+public:
+
 	Entity()
 	{
 //		test_v1(); // bad
@@ -14,7 +16,7 @@ struct Entity
 
 	virtual ~Entity() = default;
 
-//  ------------------------------------------------------------------------------------------------
+//  -----------------------------------------
 
 	virtual void test_v1() const
 	{ 
@@ -28,6 +30,8 @@ struct Entity
 //		std::clog << "Entity::test_v3\n";
 //	}
 
+private:
+
 	void * data = nullptr;
 };
 
@@ -40,8 +44,10 @@ void Entity::test_v2() const
 
 //  ================================================================================================
 
-struct Client : public Entity
+class Client : public Entity
 {
+public:
+
 	void test_v1() const override final 
 	{ 
 		std::clog << "Client::test_v1\n";                    
@@ -52,15 +58,17 @@ struct Client : public Entity
 		std::clog << "Client::test_v2\n"; Entity::test_v2(); 
 	}
 
-//  ------------------------------------------------------------------------------------------------
+private:
 
 	void * data = nullptr;
 };
 
 //  ================================================================================================
 
-struct Server final : public Entity 
+class Server final : public Entity 
 {
+public:
+
 	void test_v2() const override 
 	{ 
 		std::clog << "Server::test_v2\n"; 
@@ -68,15 +76,17 @@ struct Server final : public Entity
 		Entity::test_v2();
 	}
 
-//  ------------------------------------------------------------------------------------------------
+private:
 
 	void * data = nullptr;
 };
 
 //  ================================================================================================
 
-struct Router : private Entity 
+class Router : private Entity 
 {
+public:
+
 	void test_v2() const override 
 	{ 
 		std::clog << "Router::test_v2\n"; 
@@ -97,7 +107,7 @@ int main()
 
 	entity_1->test_v1(); // support: compiler-explorer.com
 
-//  ------------------------------------------------------------------------------------------------
+//  ------------------------------------------------------
 
 	std::vector < Entity * > entities 
 	{ 
@@ -113,13 +123,13 @@ int main()
 		delete entity;
 	}
 	
-//  ------------------------------------------------------------------------------------------------
+//  --------------
 
 	Router router;
 
 //	[[maybe_unused]] Entity * entity_4 = &router; // error
 
-//  ------------------------------------------------------------------------------------------------
+//  -----------------------------------------------------------
 
 	std::cout << "sizeof(Entity) = " << sizeof(Entity) << '\n';
 	std::cout << "sizeof(Client) = " << sizeof(Client) << '\n';

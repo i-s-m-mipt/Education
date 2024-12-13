@@ -13,7 +13,7 @@ public:
 
 	Entity(int data) : m_data(data) {}
 
-//  ------------------------------------------------------------------------------------------------
+//  ----------------------------------------------------------
 
 	void test_v1() const { std::clog << "Entity::test_v1\n"; }
 	void test_v2() const { std::clog << "Entity::test_v2\n"; }
@@ -38,10 +38,10 @@ public:
 
 	Client(int data_1, int data_2) : Entity(data_1), m_data(data_2)
 	{
-		assert(this->data() == data_1);
+		assert(data() == data_1);
 	}
 
-//  ------------------------------------------------------------------------------------------------
+//  --------------------
 
 	void test_v1() const
 	{
@@ -52,7 +52,7 @@ public:
 		Entity::test_v1();
 	}
 
-//  ------------------------------------------------------------------------------------------------
+//  ----------------------
 
 	using Entity::data;
 
@@ -63,8 +63,10 @@ private:
 
 //  ================================================================================================
 
-struct Server_v1 : private Entity 
+class Server_v1 : private Entity 
 {
+public:
+
 	void test() const
 	{ 
 		test_v1(); 

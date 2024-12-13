@@ -2,10 +2,12 @@
 #include <iostream>
 #include <vector>
 
-//  =======================================================
+///////////////////////////////////////////////////////////
 
-struct Entity
+class Entity
 {
+public:
+
 	void test() const
 	{
 		std::clog << "Entity::test\n";
@@ -16,16 +18,16 @@ struct Entity
 	int data = 0; static inline auto s_data = 0;
 };
 
-//  =======================================================
+///////////////////////////////////////////////////////////
 
 struct Client { std::vector < struct Server * > servers; };
 struct Server { std::vector < struct Client * > clients; };
 
-//  =======================================================
+///////////////////////////////////////////////////////////
 
 int main()
 {
-	Entity entity;
+	Entity entity; 
 
 	assert(entity.data == 0 && Entity::s_data == 0);
 
@@ -41,4 +43,8 @@ int main()
 		clients[i].servers.push_back(&servers[i]);
 		servers[i].clients.push_back(&clients[i]);
 	}
+
+//  ------------------------------------------------
+
+	entity.test();
 }

@@ -11,13 +11,15 @@ using namespace std::literals;
 
 //  ================================================================================================
 
-struct Entity 
+class Entity 
 {
+public:
+
 	virtual ~Entity() = default;
 };
 
-struct Client : public Entity {};
-struct Server : public Entity {};
+class Client : public Entity {};
+class Server : public Entity {};
 
 //  ================================================================================================
 

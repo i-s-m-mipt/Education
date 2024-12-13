@@ -29,45 +29,14 @@ public:
 		reduce();
 	}
 
+//  --------------------------------
+
 	explicit operator double() const
 	{ 
 		return 1.0 * m_num / m_den; 
 	}
 
-private:
-
-	void reduce()
-	{
-		auto gcd = std::gcd(m_num, m_den);
-
-		m_num /= gcd;
-		m_den /= gcd;
-	}
-
-public:
-
-	friend auto & operator>>(std::istream & stream, Ratio & ratio)
-	{
-		int num; char c; int den;
-
-		stream >> num >> c >> den;
-
-		if (c != '/') 
-		{
-			std::cerr << "operator>> : invalid input\n";
-		}
-
-		ratio = Ratio(num, den);
-		
-		return stream;
-	}
-
-	friend auto & operator<<(std::ostream & stream, const Ratio & ratio)
-	{
-		return stream << ratio.m_num << '/' << ratio.m_den;
-	}
-
-//  ------------------------------------------------------------------------------------------------
+//  --------------------------------------
 
 	auto & operator+=(const Ratio & other)
 	{
@@ -102,40 +71,73 @@ public:
 		return *this *= Ratio(other.m_den, other.m_num); 
 	}
 
-//  -----------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------
 
 	const auto   operator++(int) { auto copy(*this); *this += 1; return  copy; } 
 	      auto & operator++(   ) {                   *this += 1; return *this; }
 	const auto   operator--(int) { auto copy(*this); *this -= 1; return  copy; } 
-	      auto & operator--(   ) {                   *this -= 1; return *this; } 
+	      auto & operator--(   ) {                   *this -= 1; return *this; }
+
+//  ---------------------------------------------------------------------------- 
+
+	friend auto & operator>>(std::istream & stream, Ratio & ratio)
+	{
+		int num; char c; int den;
+
+		stream >> num >> c >> den;
+
+		if (c != '/') 
+		{
+			std::cerr << "operator>> : invalid input\n";
+		}
+
+		ratio = Ratio(num, den);
+		
+		return stream;
+	}
+
+	friend auto & operator<<(std::ostream & stream, const Ratio & ratio)
+	{
+		return stream << ratio.m_num << '/' << ratio.m_den;
+	}
+
+//  ------------------------------------------------------------------------------------------
+
+	friend auto operator+ (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) += rhs; }
+	friend auto operator- (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) -= rhs; }
+	friend auto operator* (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) *= rhs; }
+	friend auto operator/ (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) /= rhs; }
+
+//  ------------------------------------------------------------------------------------------
+
+	friend auto operator< (const Ratio & lhs, const Ratio & rhs)
+	{
+		return static_cast < double > (lhs) < static_cast < double > (rhs);
+	}
+
+	friend auto operator> (const Ratio & lhs, const Ratio & rhs) { return  (rhs < lhs); }
+	friend auto operator<=(const Ratio & lhs, const Ratio & rhs) { return !(lhs > rhs); }
+	friend auto operator>=(const Ratio & lhs, const Ratio & rhs) { return !(lhs < rhs); }
+	friend auto operator==(const Ratio & lhs, const Ratio & rhs)
+	{
+		return !(lhs < rhs) && !(rhs < lhs);
+	}
 
 private:
+
+	void reduce()
+	{
+		auto gcd = std::gcd(m_num, m_den);
+
+		m_num /= gcd;
+		m_den /= gcd;
+	}
+
+//  --------------
 
 	int m_num = 0;
 	int m_den = 1;
 };
-
-//  ================================================================================================
-
-auto operator+ (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) += rhs; }
-auto operator- (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) -= rhs; }
-auto operator* (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) *= rhs; }
-auto operator/ (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) /= rhs; }
-
-//  ================================================================================================
-
-auto operator< (const Ratio & lhs, const Ratio & rhs)
-{
-	return static_cast < double > (lhs) < static_cast < double > (rhs);
-}
-
-auto operator> (const Ratio & lhs, const Ratio & rhs) { return  (rhs < lhs); }
-auto operator<=(const Ratio & lhs, const Ratio & rhs) { return !(lhs > rhs); }
-auto operator>=(const Ratio & lhs, const Ratio & rhs) { return !(lhs < rhs); }
-auto operator==(const Ratio & lhs, const Ratio & rhs)
-{
-	return !(lhs < rhs) && !(rhs < lhs);
-}
 
 //  ================================================================================================
 
