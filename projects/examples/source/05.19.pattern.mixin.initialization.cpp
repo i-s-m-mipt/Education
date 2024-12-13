@@ -1,34 +1,40 @@
 #include <iostream>
 
-//  ============================================================
+////////////////////////////////////////////////////////////////
 
-struct Entity
+class Entity
 {
+public:
+
     virtual ~Entity() = default; 
+
+//  ------------------------------------
 
     virtual void initialize() const = 0;
 };
 
-//  ============================================================
+////////////////////////////////////////////////////////////////
 
 class Client : public Entity
 {
-protected:
-
-    explicit Client(int) {}; 
-
 public:
 
     void initialize() const override 
     { 
         std::clog << "Client::initialize\n"; 
     }
+
+protected:
+
+    explicit Client(int) {}; 
 };
 
-//  ============================================================
+////////////////////////////////////////////////////////////////
 
-template < typename B > struct Router : private B
+template < typename B > class Router : private B
 {
+public:
+
     template < typename ... Ts > explicit Router(Ts && ... args) 
     : 
         B(std::forward < Ts > (args)...)
@@ -37,7 +43,7 @@ template < typename B > struct Router : private B
     }
 };
 
-//  ============================================================
+////////////////////////////////////////////////////////////////
 
 int main()
 {

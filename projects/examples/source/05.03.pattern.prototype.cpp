@@ -1,22 +1,26 @@
 #include <iostream>
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////
 
-struct Entity
+class Entity
 {    
+public:
+
     virtual ~Entity() = default; 
 
-//  ------------------------------------------------------------------------------------------------
+//  ----------------------------------
 
     virtual Entity * copy() const = 0;
 
-    virtual void test() const = 0;
+    virtual void     test() const = 0;
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////
 
-struct Client : public Entity
+class Client : public Entity
 {
+public:
+
     Entity * copy() const override 
     { 
         return new Client(*this); 
@@ -28,10 +32,12 @@ struct Client : public Entity
     };
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////
 
-struct Server : public Entity
+class Server : public Entity
 {
+public:
+
     Entity * copy() const override 
     { 
         return new Server(*this); 
@@ -43,15 +49,17 @@ struct Server : public Entity
     };
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////
 
-struct Factory
+class Factory
 {
+public:
+
     static auto make_client() { static Client prototype; return prototype.copy(); }
     static auto make_server() { static Server prototype; return prototype.copy(); }
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {

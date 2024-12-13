@@ -1,10 +1,12 @@
 #include <iostream>
 #include <vector>
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////
 
-template < typename D > struct Entity
+template < typename D > class Entity
 {
+public:
+
 	void test() const
 	{
 		static_cast < const D * > (this)->test_implementation();
@@ -16,26 +18,28 @@ template < typename D > struct Entity
 	}
 };
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////
 
-struct Client : public Entity < Client > {};
+class Client : public Entity < Client > {};
 
-struct Server : public Entity < Server >
+class Server : public Entity < Server >
 {
+public:
+
 	void test_implementation() const
 	{ 
 		std::clog << "Server::test_implementation\n"; 
 	}
 }; 
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////
 
 template < typename D > void test(const Entity < D > & entity) 
 {
 	entity.test();
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////
 
 int main()
 {

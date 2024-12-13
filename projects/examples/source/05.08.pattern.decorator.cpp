@@ -1,21 +1,25 @@
 #include <iostream>
 #include <string>
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct Entity 
+class Entity 
 {
+public:
+
     virtual ~Entity() = default; 
+
+//  ------------------------------
 
     virtual void test() const = 0;
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct Client : public Entity { void test() const override { std::clog << "Client::test\n"; } };
-struct Server : public Entity { void test() const override { std::clog << "Server::test\n"; } };
+class Client : public Entity { public: void test() const override { std::clog << "Client::test\n"; } };
+class Server : public Entity { public: void test() const override { std::clog << "Server::test\n"; } };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Decorator : public Entity
 {
@@ -28,10 +32,12 @@ protected:
     Entity & m_entity;
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct Decorated_Entity : public Decorator
+class Decorated_Entity : public Decorator
 {
+public:
+
     explicit Decorated_Entity(Entity & entity) : Decorator(entity) {}
 
 //  -----------------------------------------------------------------
@@ -42,7 +48,7 @@ struct Decorated_Entity : public Decorator
     }
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {

@@ -3,14 +3,10 @@
 
 #include <boost/noncopyable.hpp>
 
-//  ====================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 class Singleton
 {
-private:
-
-    Singleton() = default;
-
 public:
 
     Singleton            (const Singleton &) = delete;
@@ -24,7 +20,7 @@ public:
         std::clog << "Singleton::test\n"; 
     }
 
-//  -------------------------------------
+//  --------------------------------------------------
 
     static auto & instance() 
     { 
@@ -32,32 +28,36 @@ public:
         
         return singleton; 
     }
+
+private:
+
+    Singleton() = default;
 };
 
-//  ====================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 class Noncopyable
 {
-protected:
-
-    Noncopyable() = default;
-
 public:
 
     Noncopyable            (const Noncopyable &) = delete;
 
     Noncopyable & operator=(const Noncopyable &) = delete;
+
+protected:
+
+    Noncopyable() = default;
 };
 
-//  ====================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
-struct Unique_v1 : private Noncopyable {};
+class Unique_v1 : private Noncopyable {};
 
-struct Unique_v2 : private Noncopyable
+class Unique_v2 : private Noncopyable
 {
-    Unique_v2() = default;
+public:
 
-//  ------------------------------------------------------------------------------------
+    Unique_v2() = default;
 
 //  Unique_v2([[maybe_unused]] const Unique_v2 & other) : Noncopyable(other) {} // error
 
@@ -66,27 +66,25 @@ struct Unique_v2 : private Noncopyable
         std::clog << "Unique_v2::Unique_v2\n";
     }
 
-//  ----------------------------------------------------------
-
     auto & operator=([[maybe_unused]] const Unique_v2 & other)
     {
         std::clog << "Unique_v2::operator=\n";
 
-//      Noncopyable::operator=(other); // error
+    //  Noncopyable::operator=(other); // error
 
         return *this;
     }
 };
 
-struct Unique_v3 : private boost::noncopyable {};
+class Unique_v3 : private boost::noncopyable {};
 
-//  ====================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
     Singleton::instance().test();
 
-//  ---------------------------------------
+//  --------------------------------------------------------------
 
     [[maybe_unused]] Unique_v1 unique_v1_1;
 

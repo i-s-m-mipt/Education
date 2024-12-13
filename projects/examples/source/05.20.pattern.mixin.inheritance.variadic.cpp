@@ -1,11 +1,11 @@
 #include <iostream>
 
-//  ====================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
-struct Client_v1 { explicit Client_v1(int) {} };
-struct Server_v1 { explicit Server_v1(int) {} };
+class Client_v1 { public: explicit Client_v1(int) {} };
+class Server_v1 { public: explicit Server_v1(int) {} };
 
-//  ====================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename ... Bs > class Router_v1 : public Bs ...
 {
@@ -23,12 +23,12 @@ private:
     int m_data = 0;
 };
 
-//  ====================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > struct Client_v2 { explicit Client_v2(int) {} };
-template < typename T > struct Server_v2 { explicit Server_v2(int) {} };
+template < typename T > class Client_v2 { public: explicit Client_v2(int) {} };
+template < typename T > class Server_v2 { public: explicit Server_v2(int) {} };
 
-//  ====================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 template < template < typename T > typename ... Bs > class Router_v2 
 : 
@@ -48,7 +48,7 @@ private:
     int m_data = 0;
 };
 
-//  ====================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {

@@ -1,40 +1,65 @@
 #include <iostream>
 #include <string>
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////
 
-struct Entity
+class Entity
 {
+public:
+
     virtual ~Entity() = default;
+
+//  ------------------------------
 
     virtual void test() const = 0;
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////
 
-struct Client : public Entity { void test() const override { std::clog << "Client::test\n"; } };
-struct Server : public Entity { void test() const override { std::clog << "Server::test\n"; } };
+class Client : public Entity 
+{ 
+public: 
+    
+    void test() const override 
+    { 
+        std::clog << "Client::test\n"; 
+    } 
+};
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////
+
+class Server : public Entity 
+{ 
+public: 
+    
+    void test() const override 
+    { 
+        std::clog << "Server::test\n"; 
+    } 
+};
+
+///////////////////////////////////////////////////////////
 
 template < typename E > Entity * make_entity()
 { 
     return new E(); 
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////
 
 class Router : public Entity
 {
 public:
 
-    struct Factory
+    class Factory
     {
+    public:
+
         static Entity * make_v1() { return new Router(1); }
         static Entity * make_v2() { return new Router(2); }
     };
 
-//  ------------------------------------------------------------------------------------------------
+//  -------------------------------------------------------
 
     void test() const override 
     { 
@@ -45,12 +70,12 @@ private:
 
     explicit Router(int data) : m_data(data) {};
 
-//  ------------------------------------------------------------------------------------------------
+//  -------------------------------------------------------
 
     int m_data = 0;
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////
 
 struct Factory
 {
@@ -59,12 +84,31 @@ struct Factory
     virtual Entity * make() const = 0;  
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////
 
-struct Factory_Client : public Factory { Entity * make() const override { return new Client(); } };
-struct Factory_Server : public Factory { Entity * make() const override { return new Server(); } };
+class Factory_Client : public Factory 
+{ 
+public: 
+    
+    Entity * make() const override 
+    { 
+        return new Client(); 
+    } 
+};
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////
+
+class Factory_Server : public Factory 
+{ 
+public: 
+    
+    Entity * make() const override 
+    { 
+        return new Server(); 
+    } 
+};
+
+///////////////////////////////////////////////////////////
 
 int main()
 {
@@ -74,7 +118,7 @@ int main()
     
     delete entity_v1;
 
-//  ------------------------------------------------------------------------------------------------
+//  --------------------------------------------
 
     auto entity_v2 = Router::Factory::make_v1(); 
 
@@ -82,7 +126,7 @@ int main()
     
     delete entity_v2;
 
-//  ------------------------------------------------------------------------------------------------
+//  --------------------------------------------
 
     Factory * factory = new Factory_Server();
 
