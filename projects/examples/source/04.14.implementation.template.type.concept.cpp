@@ -1,5 +1,4 @@
 #include <cassert>
-#include <cmath>
 #include <concepts>
 #include <string>
 #include <type_traits>

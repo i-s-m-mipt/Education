@@ -1,6 +1,5 @@
 #include <cstddef>
 #include <iostream>
-#include <typeinfo>
 #include <type_traits>
 
 #include <boost/type_index.hpp>

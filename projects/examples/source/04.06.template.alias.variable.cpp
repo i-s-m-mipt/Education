@@ -1,6 +1,6 @@
 #include <cassert>
+#include <cstddef>
 #include <cmath>
-#include <numbers>
 
 //  ================================================================================================
 
@@ -10,7 +10,7 @@ template < typename T > using Buffer = Array < T, 1024 > ;
 
 //  ================================================================================================
 
-template < typename T > T pi = T(3.141592653589793238462643383279502884L);
+template < typename T > T pi = T(3.141592653589793238462643383279502884l);
 
 template < typename T > auto area(T radius)
 {

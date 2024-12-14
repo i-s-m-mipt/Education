@@ -1,9 +1,8 @@
 #include <cassert>
-#include <compare>
+#include <cstddef>
 #include <iostream>
 #include <ostream>
 #include <string>
-#include <type_traits>
 #include <utility>
 
 /////////////////////////////////////////////////////////////////////////

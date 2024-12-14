@@ -1,8 +1,7 @@
 #include <algorithm>
 #include <cassert>
-#include <iomanip>
+#include <functional>
 #include <iostream>
-#include <iterator>
 #include <type_traits>
 #include <vector>
 
