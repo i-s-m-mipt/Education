@@ -38,7 +38,7 @@ namespace parser
 
 auto parse(std::string_view data)
 {
-    auto begin = std::cbegin(data), end = std::cend(data);
+    auto begin = std::begin(data), end = std::end(data);
 
     auto skip = boost::spirit::x3::ascii::space;
 

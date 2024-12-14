@@ -3,7 +3,6 @@
 #include <ios>
 #include <iostream>
 #include <iterator>
-#include <utility>
 #include <vector>
 
 int main()
@@ -37,7 +36,7 @@ int main()
 
 	std::ranges::sort(vector);
 
-	std::ranges::copy(std::as_const(vector), std::ostream_iterator < int > (std::cout, " "));
+	std::ranges::copy(vector, std::ostream_iterator < int > (std::cout, " "));
 
 	std::cout << std::endl;
 }

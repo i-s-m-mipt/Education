@@ -19,8 +19,8 @@ public:
 	{
 		sum = std::reduce
 		(
-			std::ranges::cbegin(view), 
-			std::ranges::cend  (view)
+			std::ranges::begin(view), 
+			std::ranges::end  (view)
 		);
 	}
 };
@@ -29,7 +29,7 @@ public:
 
 template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 {
-    auto begin = std::ranges::cbegin(view), end = std::ranges::cend(view);
+    auto begin = std::ranges::begin(view), end = std::ranges::end(view);
 
 	if (auto size = 1uz * std::distance(begin, end); size > 0) 
 	{
@@ -67,7 +67,7 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 			Task < decltype(range), T > ()(range, std::ref(results[n_threads - 1]));
 		}
 
-		sum += std::reduce(std::cbegin(results), std::cend(results), T(0));
+		sum += std::reduce(std::begin(results), std::end(results), T(0));
 	}
 	
 	return sum;

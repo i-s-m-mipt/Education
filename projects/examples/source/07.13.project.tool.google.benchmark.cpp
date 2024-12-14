@@ -3,7 +3,6 @@
 #include <exception>
 #include <numeric>
 #include <stdexcept>
-#include <utility>
 #include <vector>
 
 #include <benchmark/benchmark.h>
@@ -121,7 +120,7 @@ void test_v6(benchmark::State & state)
 
     for (auto value : state) 
     {
-        benchmark::DoNotOptimize(std::ranges::lower_bound(std::as_const(vector), 0));
+        benchmark::DoNotOptimize(std::ranges::lower_bound(vector, 0));
     }
 
     state.SetComplexityN(state.range(0));

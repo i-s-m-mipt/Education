@@ -75,7 +75,7 @@ int main()
 
 //  ================================================================================================
 
-	set.insert(std::cbegin(set), 0);
+	set.insert(std::begin(set), 0);
 
 	assert(!set.insert(1).second); // support: std::multiset
 

@@ -85,7 +85,7 @@ template
 >		   
 auto copy(const C1 < T > & container)
 {
-	return C2 < T > (std::cbegin(container), std::cend(container));
+	return C2 < T > (std::begin(container), std::end(container));
 }
 
 //  ================================================================================================

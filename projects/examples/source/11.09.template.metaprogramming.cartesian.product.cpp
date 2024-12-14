@@ -80,8 +80,8 @@ int main()
 
 	auto result = generate
 	(	
-		std::make_pair(std::cbegin(vector_1), std::cend(vector_1)),
-		std::make_pair(std::cbegin(vector_2), std::cend(vector_2))
+		std::make_pair(std::begin(vector_1), std::end(vector_1)),
+		std::make_pair(std::begin(vector_2), std::end(vector_2))
 	);
 
 //  ---------------------------------------------------------------

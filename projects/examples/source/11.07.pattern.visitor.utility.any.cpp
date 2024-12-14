@@ -34,7 +34,7 @@ void visit(const std::any & any)
         make_visitor < double > (visitor)
     };
 
-    if (auto iterator = visitors.find(std::type_index(any.type())); iterator != std::cend(visitors))
+    if (auto iterator = visitors.find(std::type_index(any.type())); iterator != std::end(visitors))
     {
         iterator->second(any);
     }

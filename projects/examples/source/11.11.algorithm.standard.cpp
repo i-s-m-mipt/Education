@@ -44,14 +44,14 @@ int main()
 
 //  ================================================================================================
 
-	auto element = std::find(std::cbegin(vector_1), std::cend(vector_1), 0);
+	auto element = std::find(std::begin(vector_1), std::end(vector_1), 0);
 
-	if (element != std::cend(vector_1))
+	if (element != std::end(vector_1))
 	{
 		assert(*element == 0);
 	}
 
-	auto [min, max] = std::minmax_element(std::cbegin(vector_1), std::cend(vector_1));
+	auto [min, max] = std::minmax_element(std::begin(vector_1), std::end(vector_1));
 
 	std::uniform_int_distribution distribution(*min, *max);
 
@@ -79,18 +79,18 @@ int main()
 
 	vector_3.resize(std::size  (vector_2));
 
-	std::sample    (std::cbegin(vector_1), 
-				    std::cend  (vector_1), 
-				    std:: begin(vector_3), 
-				    std::size  (vector_2), engine);
+	std::sample    (std::begin(vector_1), 
+				    std::end  (vector_1), 
+				    std::begin(vector_3), 
+				    std::size (vector_2), engine);
 
-	std::transform (std::cbegin(vector_2), 
-				    std::cend  (vector_2), 
-				    std::cbegin(vector_3), 
-				    std:: begin(vector_3), std::plus());
+	std::transform (std::begin(vector_2), 
+				    std::end  (vector_2), 
+				    std::begin(vector_3), 
+				    std::begin(vector_3), std::plus());
 
-	std::for_each  (std::cbegin(vector_3), 
-				    std::cend  (vector_3), [](auto x){ std::cout << x <<  ' '; });
+	std::for_each  (std::begin(vector_3), 
+				    std::end  (vector_3), [](auto x){ std::cout << x <<  ' '; });
 
 	std::cout << std::endl;
 }

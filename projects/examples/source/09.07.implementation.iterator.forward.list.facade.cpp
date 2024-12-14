@@ -84,7 +84,7 @@ int main()
 	list.push_back(4);
 	list.push_back(5);
 
-	for (auto iterator = std::cbegin(list); iterator != std::cend(list); ++iterator);
+	for (auto iterator = std::begin(list); iterator != std::end(list); ++iterator);
 
 	for ([[maybe_unused]] auto element : list);
 }

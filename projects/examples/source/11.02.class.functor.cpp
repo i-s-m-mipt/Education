@@ -4,7 +4,6 @@
 #include <functional>
 #include <iterator>
 #include <set>
-#include <utility>
 #include <vector>
 
 //  ================================================================================================
@@ -86,7 +85,7 @@ int main()
 
 	std::set < int, std::greater < int > > set { 1, 2, 3, 4, 5 };
 
-	assert(*std::cbegin(set) == 5 && *std::cend(set) == 1);
+	assert(*std::begin(set) == 5 && *std::end(set) == 1);
 
 //  ================================================================================================
 
@@ -108,20 +107,15 @@ int main()
 
 	Sum < int > sum;
 
-	sum = std::ranges::for_each(std::as_const(vector_2), sum).fun;
-	sum = std::ranges::for_each(std::as_const(vector_3), sum).fun;
+	sum = std::ranges::for_each(vector_2, sum).fun;
+	sum = std::ranges::for_each(vector_3, sum).fun;
 
 	assert(sum.get() == 30);
 
 //  ================================================================================================
 
-	std::ranges::transform(std::as_const(vector_2), std::begin(vector_2), std::negate());
-
-	std::ranges::transform
-	(
-		std::as_const(vector_2), 
-		std::as_const(vector_3), std::begin(vector_3), std::plus()
-	);
+	std::ranges::transform(vector_2,           std::begin(vector_2), std::negate());
+	std::ranges::transform(vector_2, vector_3, std::begin(vector_3), std::plus  ());
 
 	for (auto element : vector_3) 
 	{
@@ -132,7 +126,7 @@ int main()
 
 	Mean < decltype(vector_1)::value_type > mean;
 
-	mean = std::ranges::for_each(std::as_const(vector_1), mean).fun;
+	mean = std::ranges::for_each(vector_1, mean).fun;
 
 	assert(mean.get() == 3); 
 }

@@ -76,11 +76,8 @@ int main()
 
 	std::vector < int > vector(5, 0);
 
-	auto lambda_4 = [z](auto & x){        x += z ; };
-	auto lambda_5 = [z](auto   x){ assert(x == z); };
-
-	std::ranges::for_each(              vector , lambda_4);
-	std::ranges::for_each(std::as_const(vector), lambda_5);
+	std::ranges::for_each(vector, [z](auto & x){        x += z ; });
+	std::ranges::for_each(vector, [z](auto   x){ assert(x == z); });
 
 //  ================================================================================================
 

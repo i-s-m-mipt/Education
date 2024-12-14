@@ -9,7 +9,6 @@
 #include <ranges>
 #include <string>
 #include <type_traits>
-#include <utility>
 #include <vector>
 
 using namespace std::literals;
@@ -78,7 +77,7 @@ int main()
 
 	assert(*std::ranges::begin(vector) == 1 && std::ranges::size(vector) == 5);
 
-	std::ranges::transform(std::as_const(vector), std::begin(vector), std::negate());
+	std::ranges::transform(vector, std::begin(vector), std::negate());
 
 	std::ranges::sort(vector);
 
@@ -126,16 +125,17 @@ int main()
 
 	for (auto string = "1,2,3,4,5"s; auto substring : std::ranges::views::split(string, ','))
 	{
-		std::cout << std::string(std::cbegin(substring), std::cend(substring)) << ' ';
+		std::cout << std::string(std::begin(substring), std::end(substring)) << ' ';
 	}
 
 	std::cout << std::endl;
 
 //  ================================================================================================
 
-	auto lambda = [](){ return std::vector < int > { 1, 2, 3, 4, 5 }; };
-
-    auto dangling_iterator = std::ranges::max_element(lambda());
+    auto dangling_iterator = std::ranges::max_element
+	(
+		[](){ return std::vector < int > { 1, 2, 3, 4, 5 }; }()
+	);
 	
     static_assert(std::is_same_v < std::ranges::dangling, decltype(dangling_iterator) > );
 

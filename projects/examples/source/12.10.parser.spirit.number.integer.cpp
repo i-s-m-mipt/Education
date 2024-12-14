@@ -15,7 +15,7 @@ int main()
 {
     auto skip = boost::spirit::x3::ascii::space;
 
-    auto data_1 = "1"sv; auto begin_1 = std::cbegin(data_1), end_1 = std::cend(data_1);
+    auto data_1 = "1"sv; auto begin_1 = std::begin(data_1), end_1 = std::end(data_1);
 
     auto rule_1 = boost::spirit::x3::int_;
 
@@ -27,7 +27,7 @@ int main()
     
 //  -------------------------------------------------------------------------------------
 
-    auto data_2 = "1 2"sv; auto begin_2 = std::cbegin(data_2), end_2 = std::cend(data_2);
+    auto data_2 = "1 2"sv; auto begin_2 = std::begin(data_2), end_2 = std::end(data_2);
 
     auto rule_2 = boost::spirit::x3::int_ >> boost::spirit::x3::int_;
 
@@ -39,7 +39,7 @@ int main()
 
 //  ----------------------------------------------------------------------------------------
 
-    auto data_3 = "(1, 2)"sv; auto begin_3 = std::cbegin(data_3), end_3 = std::cend(data_3);
+    auto data_3 = "(1, 2)"sv; auto begin_3 = std::begin(data_3), end_3 = std::end(data_3);
 
     auto rule_3 = '(' >> boost::spirit::x3::int_ >> ',' >> boost::spirit::x3::int_ >> ')';
 
@@ -51,7 +51,7 @@ int main()
 
 //  -----------------------------------------------------------------------------------
 
-    auto data_4 = "1"sv; auto begin_4 = std::cbegin(data_4), end_4 = std::cend(data_4);
+    auto data_4 = "1"sv; auto begin_4 = std::begin(data_4), end_4 = std::end(data_4);
 
     auto rule_4 = boost::spirit::x3::int_
     [

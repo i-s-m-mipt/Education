@@ -90,7 +90,7 @@ int main()
 
 	std::vector < Entity > entities_1(size, Entity());
 
-	std::vector < Entity > entities_2(std::cbegin(entities_1), std::cend(entities_1));
+	std::vector < Entity > entities_2(std::begin(entities_1), std::end(entities_1));
 
 	std::vector < Entity > entities_3
 	(
@@ -102,12 +102,12 @@ int main()
 	
 	entities_3.insert
 	(
-		std::cend(entities_3), std::cbegin(entities_1), std::next(std::cbegin(entities_1))
+		std::end(entities_3), std::begin(entities_1), std::next(std::begin(entities_1))
 	);
 
 	assert(std::size(entities_3) == size + 1);
 
-	entities_3.erase(std::cbegin(entities_3), std::prev(std::cend(entities_3), 2));
+	entities_3.erase(std::begin(entities_3), std::prev(std::end(entities_3), 2));
 
 	assert(std::size(entities_3) == 2);
 
@@ -133,23 +133,23 @@ int main()
 
 	vector.push_back(42); vector.pop_back();
 
-	vector.insert(          std::cbegin(vector),          42);
-	vector.insert(std::next(std::cbegin(vector), middle), 42);
+	vector.insert(          std::begin(vector),          42);
+	vector.insert(std::next(std::begin(vector), middle), 42);
 
-	vector.erase (          std::cbegin(vector)             );
-	vector.erase (std::next(std::cbegin(vector), middle)    );
+	vector.erase (          std::begin(vector)             );
+	vector.erase (std::next(std::begin(vector), middle)    );
 
 	std::ignore = vector[middle];
 
 //  ================================================================================================
 
-	std::deque < int > deque(std::cbegin(vector), std::cend(vector));
+	std::deque < int > deque(std::begin(vector), std::end(vector));
 
 	deque.push_back (42); deque.pop_back ();
 	deque.push_front(42); deque.pop_front();
 
-	deque.insert(std::next(std::cbegin(deque), middle), 42);
-	deque.erase (std::next(std::cbegin(deque), middle)    );
+	deque.insert(std::next(std::begin(deque), middle), 42);
+	deque.erase (std::next(std::begin(deque), middle)    );
 
 	std::ignore = deque[middle];
 
@@ -219,8 +219,10 @@ int main()
 
 //	std::ranges::sort(list_for_sort); // error
 
-	std::vector < std::reference_wrapper < int > > wrapper(std::begin(list_for_sort), 
-														   std::end  (list_for_sort));
+	std::vector < std::reference_wrapper < int > > wrapper
+	(
+		std::begin(list_for_sort), std::end(list_for_sort)
+	);
 
 	std::ranges::sort(wrapper);
 

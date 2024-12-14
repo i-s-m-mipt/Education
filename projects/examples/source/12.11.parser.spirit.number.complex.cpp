@@ -11,7 +11,7 @@
 
 auto parse(std::string_view data)
 {
-    auto begin = std::cbegin(data), end = std::cend(data);
+    auto begin = std::begin(data), end = std::end(data);
 
     int value_1, value_2;
 
