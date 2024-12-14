@@ -47,6 +47,6 @@ int main()
 
 	if (null_ptr_3) 
 	{
-		std::cout << "*null_ptr_3 = " << *null_ptr_3 << '\n';
+		std::cout << "null_ptr_3 = " << null_ptr_3 << '\n';
 	}
 }

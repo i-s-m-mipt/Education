@@ -30,7 +30,7 @@ int main()
 
 	std::cout << "std::is_signed_v < char > = " << std::boolalpha;
 
-	std::cout <<  std::is_signed_v < char >     << '\n';
+	std::cout <<  std::is_signed_v < char > << '\n';
 
 //	[[maybe_unused]]   signed           int   si; // bad
 //	[[maybe_unused]]   signed      long int  sli; // bad
