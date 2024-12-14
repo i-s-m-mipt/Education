@@ -1,5 +1,6 @@
 #include <exception>
 #include <filesystem>
+#include <ios>
 #include <iostream>
 #include <iterator>
 #include <fstream>

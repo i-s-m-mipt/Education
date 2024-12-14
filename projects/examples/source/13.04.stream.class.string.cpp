@@ -1,6 +1,5 @@
 #include <cassert>
 #include <iomanip>
-#include <iostream>
 #include <sstream>
 
 int main()

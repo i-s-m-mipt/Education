@@ -1,6 +1,8 @@
 #include <cassert>
+#include <cstddef>
 #include <filesystem>
 #include <iostream>
+#include <string>
 
 //  ================================================================================================
 

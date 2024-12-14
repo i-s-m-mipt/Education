@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cstdio>
+#include <ios>
 #include <iostream>
 #include <iterator>
 #include <utility>
@@ -7,7 +8,7 @@
 
 int main()
 {
-	std::ios::sync_with_stdio(false); // support: cstdio
+	std::ios::sync_with_stdio(false);
 
 //  ================================================================================================
 
