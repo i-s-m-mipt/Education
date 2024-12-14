@@ -15,7 +15,7 @@ int main()
 {
     std::cout << std::filesystem::current_path() << std::endl;
 
-	const auto path_1 = "../output/./13.09.filesystem.path"_p;
+	auto path_1 = "../output/./13.09.filesystem.path"_p;
 
 	assert(std::filesystem::exists(path_1));
 
@@ -26,7 +26,7 @@ int main()
 
     try
 	{
-        const auto path_2 = "directory/stem.extension"_p;
+        auto path_2 = "directory/stem.extension"_p;
 
 		std::cout << std::filesystem::canonical(path_2) << '\n';
 	}
@@ -43,7 +43,7 @@ int main()
 
 //  ================================================================================================
 
-    const auto path_3 = std::filesystem::current_path() / "13.09.filesystem.path";
+    auto path_3 = std::filesystem::current_path() / "13.09.filesystem.path";
 
     std::cout << "root_name      = " << path_3.root_name     ().string() << std::endl;
 	std::cout << "root_directory = " << path_3.root_directory().string() << std::endl;

@@ -9,7 +9,7 @@
 
 int main()
 {
-    const auto path = "13.13.serialization.pdf.example.pdf";
+    auto path = "13.13.serialization.pdf.example.pdf";
 
 //  ================================================================================================
 
@@ -19,7 +19,7 @@ int main()
 
     auto page = std::make_unique < PDFPage > ();
 
-    const auto width = 595, height = 842;
+    auto width = 595, height = 842;
 
     page->SetMediaBox(PDFRectangle(0, 0, width, height)); 
 
@@ -35,13 +35,13 @@ int main()
 
 //  ================================================================================================
 
-    const auto delta = 10, image_height = 380, ppi = 72, image_ppi = 96;
+    auto delta = 10, image_height = 380, ppi = 72, image_ppi = 96;
 
     Image_Options image_options;
 
     image_options.transformationMethod = AbstractContentContext::eMatrix;
 
-    const auto zoom = 1.0;
+    auto zoom = 1.0;
 
     image_options.matrix[0] = image_options.matrix[3] = zoom;
 
@@ -53,7 +53,7 @@ int main()
 
     auto font = writer.GetFontForFile("consolas.ttf");
 
-    const auto font_size = 14;
+    auto font_size = 14;
 
     line -= (delta + font_size);
 

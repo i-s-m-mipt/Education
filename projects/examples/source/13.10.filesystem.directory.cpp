@@ -6,7 +6,7 @@
 
 int main()
 {
-	const auto path = std::filesystem::current_path();
+	auto path = std::filesystem::current_path();
 
 	std::filesystem::create_directory(path / "directory");
 
