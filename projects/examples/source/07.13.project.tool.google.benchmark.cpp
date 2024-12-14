@@ -1,8 +1,7 @@
 #include <algorithm>
 #include <cmath>
 #include <exception>
-#include <iostream>
-#include <iterator>
+#include <numeric>
 #include <stdexcept>
 #include <utility>
 #include <vector>

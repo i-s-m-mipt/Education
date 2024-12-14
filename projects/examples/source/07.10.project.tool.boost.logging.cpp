@@ -1,14 +1,12 @@
+#include <cstddef>
 #include <cstdint>
-#include <cstdlib>
 #include <exception>
 #include <iomanip>
-#include <iostream>
 #include <mutex>
 #include <stdexcept>
 #include <string>
-#include <string_view>
-#include <type_traits>
 #include <unordered_map>
+#include <utility>
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/log/attributes.hpp>
@@ -217,7 +215,7 @@ private:
 		{ Attribute::thread , { "thread" , boost::log::attributes::current_thread_id       () } }
 	};
 
-	static inline std::unordered_map < Severity, std::string_view > s_severities
+	static inline std::unordered_map < Severity, std::string > s_severities
 	{
 		{ Logger::Severity::debug, "debug" },
 		{ Logger::Severity::trace, "trace" },
