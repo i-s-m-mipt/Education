@@ -4,6 +4,7 @@
 #include <istream>
 #include <numeric>
 #include <ostream>
+#include <vector>
 
 #include <boost/rational.hpp> // support: gmp_rational
 
