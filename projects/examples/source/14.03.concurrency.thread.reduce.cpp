@@ -2,11 +2,11 @@
 #include <cassert>
 #include <cmath>
 #include <concepts>
+#include <functional>
 #include <iterator>
 #include <numeric>
 #include <ranges>
 #include <thread>
-#include <utility>
 #include <vector>
 
 //  ================================================================================================
@@ -81,5 +81,5 @@ int main()
 
 	std::ranges::iota(vector, 1);
 
-	assert(reduce(std::views::all(vector), 0) == 500'500);
+	assert(reduce(std::ranges::views::all(vector), 0) == 500'500);
 }

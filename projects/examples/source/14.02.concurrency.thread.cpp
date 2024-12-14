@@ -1,6 +1,5 @@
 #include <cassert>
 #include <chrono>
-#include <cstdlib>
 #include <exception>
 #include <functional>
 #include <iostream>
