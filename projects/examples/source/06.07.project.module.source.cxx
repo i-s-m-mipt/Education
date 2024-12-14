@@ -1,8 +1,6 @@
-module;
+module demo;
 
 import <iostream>;
-
-module demo;
 
 namespace demo
 {

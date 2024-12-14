@@ -2,11 +2,11 @@ module;
 
 #define DEBUG(data) std::cout << __func__ << " : " << data << '\n'
 
-import <iostream>;
-
 export module demo;
 
 export import demo.submodule;
+
+import <iostream>;
 
 export namespace demo
 {
@@ -17,5 +17,5 @@ export namespace demo
 
 namespace demo
 {
-	void test_v4() { std::clog << "demo::test_v4\n"; }
+	void test_v3() { std::clog << "demo::test_v3\n"; }
 }
