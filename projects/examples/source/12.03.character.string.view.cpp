@@ -1,5 +1,7 @@
+#include <bit>
 #include <cassert>
 #include <cctype>
+#include <cstddef>
 #include <cstring>
 #include <iomanip>
 #include <iostream>

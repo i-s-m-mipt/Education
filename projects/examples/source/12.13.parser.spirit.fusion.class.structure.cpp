@@ -2,7 +2,6 @@
 #include <exception>
 #include <iterator>
 #include <stdexcept>
-#include <string>
 #include <string_view>
 
 #include <boost/fusion/include/adapt_struct.hpp>

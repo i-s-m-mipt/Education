@@ -1,6 +1,7 @@
 #include <cctype>
 #include <exception>
 #include <iostream>
+#include <istream>
 #include <sstream>
 #include <stdexcept>
 #include <string>

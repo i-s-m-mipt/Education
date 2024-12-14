@@ -1,7 +1,8 @@
 #include <cassert>
 #include <complex>
+#include <exception>
 #include <iterator>
-#include <string>
+#include <stdexcept>
 #include <string_view>
 
 #include <boost/spirit/home/x3.hpp>
