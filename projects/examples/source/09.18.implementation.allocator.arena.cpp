@@ -2,6 +2,8 @@
 #include <iomanip>
 #include <iostream>
 #include <memory>
+#include <new>
+#include <vector>
 
 #include <boost/noncopyable.hpp>
 

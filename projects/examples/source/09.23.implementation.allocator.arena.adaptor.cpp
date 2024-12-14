@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <iostream>
 #include <memory>
+#include <new>
 #include <stdexcept>
 #include <vector>
 

@@ -1,6 +1,6 @@
 #include <cassert>
+#include <cstddef>
 #include <iostream>
-#include <new>
 #include <string>
 
 #include <benchmark/benchmark.h>

@@ -3,9 +3,9 @@
 #include <exception>
 #include <iostream>
 #include <memory>
+#include <new>
 #include <random>
 #include <stdexcept>
-#include <string>
 #include <utility>
 #include <vector>
 

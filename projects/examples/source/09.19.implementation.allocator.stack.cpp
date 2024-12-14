@@ -4,7 +4,8 @@
 #include <iostream>
 #include <iterator>
 #include <memory>
-#include <string>
+#include <new>
+#include <vector>
 
 #include <boost/noncopyable.hpp>
 

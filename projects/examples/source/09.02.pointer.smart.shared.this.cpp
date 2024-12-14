@@ -1,6 +1,8 @@
 #include <cassert>
+#include <exception>
 #include <iostream>
 #include <memory>
+#include <stdexcept>
 
 ///////////////////////////////////////////////////////////////////
 

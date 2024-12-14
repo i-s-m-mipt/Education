@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 #include <stdexcept>
+#include <utility>
 
 #include <boost/noncopyable.hpp>
 
