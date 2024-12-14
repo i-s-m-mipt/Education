@@ -29,7 +29,7 @@ public:
 
    ~Entity()
 	{
-		std::clog << "Entity::~Entity\n";
+		std::cout << "Entity::~Entity\n";
 	}
 
 //  ---------------------------------------------------------------------------
@@ -62,9 +62,9 @@ public:
 
 	static void test()
 	{
-		std::clog << "Entity::test : s_data_1 = " << s_data_1 << '\n';
+		std::cout << "Entity::test : s_data_1 = " << s_data_1 << '\n';
 		
-//		std::clog << "Entity::test : m_data_3 = " << m_data_3 << '\n'; // error
+//		std::cout << "Entity::test : m_data_3 = " << m_data_3 << '\n'; // error
 	}
 
 private:

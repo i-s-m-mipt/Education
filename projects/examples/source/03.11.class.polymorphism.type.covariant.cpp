@@ -23,7 +23,7 @@ public:
 
 	virtual Entity_v1 * test() const
 	{ 
-		std::clog << "Entity_v2::test\n";
+		std::cout << "Entity_v2::test\n";
 
 		return new Entity_v1(); 
 	}
@@ -37,7 +37,7 @@ public:
 
 	Client_v1 * test() const override 
 	{ 
-		std::clog << "Client_v2::test\n";
+		std::cout << "Client_v2::test\n";
 
 		return new Client_v1(); 
 	}

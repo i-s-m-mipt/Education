@@ -15,14 +15,14 @@ public:
 
     const auto & operator[](std::size_t index) const 
     {
-        std::clog << "Vector::operator[] (1)\n";
+        std::cout << "Vector::operator[] (1)\n";
 
         return m_data[index];
     }
 
     auto & operator[](std::size_t index)
     {
-        std::clog << "Vector::operator[] (2)\n";
+        std::cout << "Vector::operator[] (2)\n";
 
         return const_cast < int & > (static_cast < const Vector & > (*this)[index]);
     }

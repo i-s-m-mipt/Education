@@ -10,7 +10,7 @@ public:
 
 	void test() const
 	{
-		std::clog << "Entity::test\n";
+		std::cout << "Entity::test\n";
 	}
 
 //  --------------------------------------------

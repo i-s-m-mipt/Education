@@ -16,8 +16,8 @@ private:
 
 //  --------------------------------------------------------------------
 
-    static void test(Key_v1) { std::clog << "Entity_v1::test (1)\n"; }
-    static void test(Key_v2) { std::clog << "Entity_v1::test (2)\n"; }
+    static void test(Key_v1) { std::cout << "Entity_v1::test (1)\n"; }
+    static void test(Key_v2) { std::cout << "Entity_v1::test (2)\n"; }
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -30,8 +30,8 @@ private:
 
 //  --------------------------------------------------------------
 
-    static void test_v1() { std::clog << "Entity_v2::test_v1\n"; }
-    static void test_v2() { std::clog << "Entity_v2::test_v2\n"; } 
+    static void test_v1() { std::cout << "Entity_v2::test_v1\n"; }
+    static void test_v2() { std::cout << "Entity_v2::test_v2\n"; } 
 };
 
 ////////////////////////////////////////////////////////////////////////

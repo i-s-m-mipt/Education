@@ -13,8 +13,8 @@ public:
 
 //  ----------------------------------------------------------
 
-	void test_v1() const { std::clog << "Entity::test_v1\n"; }
-	void test_v2() const { std::clog << "Entity::test_v2\n"; }
+	void test_v1() const { std::cout << "Entity::test_v1\n"; }
+	void test_v2() const { std::cout << "Entity::test_v2\n"; }
 
 protected:
 
@@ -43,7 +43,7 @@ public:
 
 	void test_v1() const
 	{
-		std::clog << "Client::test_v1\n";
+		std::cout << "Client::test_v1\n";
 
 //		test_v1(); // error
 

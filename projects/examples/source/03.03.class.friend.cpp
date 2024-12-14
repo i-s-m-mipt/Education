@@ -21,7 +21,7 @@ private:
 
 	static void test()
 	{
-		std::clog << "Entity::test\n";
+		std::cout << "Entity::test\n";
 	} 	
 };
 
