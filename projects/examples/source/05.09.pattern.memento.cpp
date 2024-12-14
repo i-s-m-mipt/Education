@@ -3,15 +3,15 @@
 #include <tuple>
 #include <vector>
 
-/////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
-class Entity 
+class Memento 
 {
 public:
 
-    explicit Entity(int data = 0) : m_states(1, State(data)) {}
+    explicit Memento(int data = 0) : m_states(1, State(data)) {}
 
-//  -----------------------------------------------------------------
+//  --------------------------------------------------------------------
 
     auto get() const
     {
@@ -55,7 +55,7 @@ private:
 
     struct Delta { int data = 0; };
 
-//  -----------------------------------------------------------------
+//  --------------------------------------------------------------------
 
     friend auto operator-(const State & lhs, const State & rhs) -> Delta
     { 
@@ -67,22 +67,22 @@ private:
         return State(lhs.data + rhs.data); 
     }
 
-//  -----------------------------------------------------------------
+//  --------------------------------------------------------------------
 
     std::vector < State > m_states;
 
     std::vector < Delta > m_deltas;
 };
 
-/////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 int main() 
 {
-    Entity entity; 
+    Memento memento; 
     
-    entity.set(1); entity.save();
-    entity.set(2); entity.save();
+    memento.set(1); memento.save();
+    memento.set(2); memento.save();
     
-    entity.load_v1(1); assert(entity.get() == 1);
-    entity.load_v2(2); assert(entity.get() == 2);
+    memento.load_v1(1); assert(memento.get() == 1);
+    memento.load_v2(2); assert(memento.get() == 2);
 }
