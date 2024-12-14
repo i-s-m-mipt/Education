@@ -2,6 +2,7 @@
 #include <cassert>
 #include <cctype>
 #include <cmath>
+#include <cstddef>
 #include <exception>
 #include <iomanip>
 #include <iostream>
@@ -12,8 +13,7 @@
 #include <ostream>
 #include <stdexcept>
 #include <string>
-#include <string_view>
-#include <type_traits>
+#include <utility>
 #include <vector>
 
 using namespace std::literals;

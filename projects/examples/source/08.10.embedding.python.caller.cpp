@@ -1,18 +1,12 @@
 #include <cstdint>
-#include <cstdlib>
-#include <exception>
-#include <filesystem>
+#include <cstddef>
 #include <iostream>
-#include <iterator>
 #include <mutex>
 #include <random>
 #include <set>
-#include <stdexcept>
 #include <string>
-#include <string_view>
 #include <thread>
 #include <unordered_set>
-#include <utility>
 
 #include <boost/noncopyable.hpp>
 #include <boost/python.hpp>
@@ -125,7 +119,7 @@ auto make_dictionary(std::size_t size, std::size_t length)
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-auto hash(std::string_view string) -> std::size_t
+auto hash(const std::string & string) -> std::size_t
 {
 	std::uint32_t hash = std::size(string);
 

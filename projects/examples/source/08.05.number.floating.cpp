@@ -1,4 +1,3 @@
-#include <cassert>
 #include <cerrno>
 #include <cmath>
 #include <iomanip>
