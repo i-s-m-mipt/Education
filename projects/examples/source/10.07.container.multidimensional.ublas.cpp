@@ -1,9 +1,9 @@
 #include <cassert>
 #include <cmath>
+#include <cstddef>
 #include <exception>
 #include <random>
 #include <stdexcept>
-#include <string>
 
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/lu.hpp>

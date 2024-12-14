@@ -1,4 +1,4 @@
-#include <cassert>
+#include <cstddef>
 #include <functional>
 #include <iostream>
 #include <iterator>

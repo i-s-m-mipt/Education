@@ -2,11 +2,13 @@
 #include <array>
 #include <cassert>
 #include <deque>
+#include <exception>
 #include <forward_list>
+#include <initializer_list>
 #include <iostream>
 #include <iterator>
 #include <list>
-#include <string>
+#include <stdexcept>
 #include <utility>
 #include <vector>
 

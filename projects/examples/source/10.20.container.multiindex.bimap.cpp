@@ -1,6 +1,4 @@
 #include <cassert>
-#include <iterator>
-#include <string>
 
 #include <boost/bimap.hpp>
 #include <boost/multi_index_container.hpp>

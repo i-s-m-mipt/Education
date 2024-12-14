@@ -3,8 +3,9 @@
 #include <chrono>
 #include <deque>
 #include <forward_list>
-#include <iterator>
+#include <functional>
 #include <list>
+#include <numeric>
 #include <vector>
 
 #include <benchmark/benchmark.h>
