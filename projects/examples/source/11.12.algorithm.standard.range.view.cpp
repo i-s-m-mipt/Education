@@ -92,10 +92,9 @@ int main()
 
 //  ================================================================================================
 
-	auto lambda_1 = [](auto x){ return x % 2; };
-	auto lambda_2 = [](auto x){ return x + 1; };
+	auto lambda = [](auto x){ return x + 1; };
 
-	for (auto element : std::views::transform(std::views::filter(vector, lambda_1), lambda_2))
+	for (auto element : std::ranges::views::transform(vector, lambda))
 	{
 		std::cout << element << ' ';
 	}
@@ -104,7 +103,7 @@ int main()
 
 //  ================================================================================================
 
-	for (auto key : std::views::reverse(std::views::keys(map)))
+	for (auto key : std::ranges::views::reverse(std::ranges::views::keys(map)))
 	{
 		std::cout << key << ' ';
 	}
@@ -113,7 +112,10 @@ int main()
 
 //  ================================================================================================
 
-	for (auto element : std::views::iota(1) | std::views::take(5) | std::views::drop(1))
+	for (auto element : std::ranges::views::iota(1) | 
+						std::ranges::views::take(5) | 
+						std::ranges::views::drop(1)
+		)
 	{
 		std::cout << element << ' ';
 	}
@@ -122,7 +124,7 @@ int main()
 
 //  ================================================================================================
 
-	for (auto string = "1,2,3,4,5"s; auto substring : std::views::split(string, ','))
+	for (auto string = "1,2,3,4,5"s; auto substring : std::ranges::views::split(string, ','))
 	{
 		std::cout << std::string(std::cbegin(substring), std::cend(substring)) << ' ';
 	}
