@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cassert>
-#include <iterator>
+#include <cstddef>
+#include <functional>
 #include <numeric>
 #include <utility>
 #include <vector>
