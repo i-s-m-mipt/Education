@@ -5,19 +5,18 @@
 #include <type_traits>
 #include <utility>
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
 public:
 
-    Entity() noexcept = default;
-
-	explicit Entity(int data) try : m_data(data)
+	explicit Entity(int data = 0) try : m_data(data)
 	{
-		std::clog << "Entity::Entity\n";
-
-		throw std::runtime_error("error");
+		if (m_data == 0)
+		{
+			throw std::runtime_error("error");
+		}
 	}
 	catch (...)
 	{
@@ -26,17 +25,19 @@ public:
 
    ~Entity() noexcept
 	{
+	//	throw std::runtime_error("error"); // error
+
 		uninitialize();
 	}
 
-//  ----------------------------------------------
+//  ------------------------------------------------
 
 	void swap(Entity & other) noexcept
 	{
 		std::swap(m_data, other.m_data);
 	}
 
-//  ----------------------------------------------
+//  ------------------------------------------------
 
 	auto data() const noexcept
 	{
@@ -49,17 +50,17 @@ private:
 	{ 
 		try
 		{
-			std::clog << "Entity::uninitialize\n";
+			std::cout << "Entity::uninitialize\n";
 		}
 		catch (...) {}
 	}
 
-//  ----------------------------------------------
+//  ------------------------------------------------
 
 	int m_data = 0;
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T > void swap(T & x, T & y) noexcept
 (
@@ -72,52 +73,66 @@ template < typename T > void swap(T & x, T & y) noexcept
 		 x = std::move(z);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename F, typename ... Ts > decltype(auto) invoke(F && f, Ts && ... args) noexcept
-(
-	noexcept(f(std::declval < Ts > ()...))
-)
+template 
+< 
+	typename F, typename ... Ts 
+> 
+decltype(auto) invoke(F && f, Ts && ... args) noexcept(noexcept(f(std::declval < Ts > ()...)))
 {
 	return f(std::forward < Ts > (args)...);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
-void test_v1() { std::clog << "test_v1\n"; }
+void test_v1() { std::cout << "test_v1\n"; }
 
 void test_v2() 
 {
-    Entity entity_1; test_v1();
-    Entity entity_2;
+    Entity entity_1(1); test_v1();
+    Entity entity_2(2);
 }
 
 void test_v3() noexcept
 {
-    Entity entity_1; test_v1();
-    Entity entity_2;
+    Entity entity_1(1); test_v1();
+    Entity entity_2(2);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
+	try
+	{
+		Entity entity;
+	}
+	catch(const std::exception & exception)
+	{
+		std::cerr << "main : " << exception.what() << '\n';
+	}
+
+//  -------------------------------------------------------
+
     Entity entity_1(1);
     Entity entity_2(2);
+
+//  -------------------------------------------------------
 
     entity_1.swap(entity_2);
 
     assert(entity_1.data() == 2);
     assert(entity_2.data() == 1);
 
-//  ---------------------------------------------
+//  -------------------------------------------------------
 
     invoke(swap < Entity > , entity_1, entity_2);
 
     assert(entity_1.data() == 1);
     assert(entity_2.data() == 2);
 
-//  ---------------------------------------------
+//  -------------------------------------------------------
 
     test_v2(); // support: compiler-explorer.com
     test_v3(); // support: compiler-explorer.com

@@ -22,14 +22,14 @@ auto is_even(int x)
 
 TEST(Expect, Is_Even)
 {
-    EXPECT_TRUE(is_even(1)); std::clog << "Test::Expect::Is_Even (1)\n";
-    EXPECT_TRUE(is_even(2)); std::clog << "Test::Expect::Is_Even (2)\n";
+    EXPECT_TRUE(is_even(1)); std::cout << "Test::Expect::Is_Even (1)\n";
+    EXPECT_TRUE(is_even(2)); std::cout << "Test::Expect::Is_Even (2)\n";
 }
 
 TEST(Assert, Is_Even)
 {
-    ASSERT_TRUE(is_even(1)); std::clog << "Test::Assert::Is_Even (1)\n";
-    ASSERT_TRUE(is_even(2)); std::clog << "Test::Assert::Is_Even (2)\n";
+    ASSERT_TRUE(is_even(1)); std::cout << "Test::Assert::Is_Even (1)\n";
+    ASSERT_TRUE(is_even(2)); std::cout << "Test::Assert::Is_Even (2)\n";
 }
 
 /////////////////////////////////////////////////////////////////////////////////

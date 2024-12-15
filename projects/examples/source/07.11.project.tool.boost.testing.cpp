@@ -23,8 +23,8 @@ auto is_even(int x)
 
 BOOST_AUTO_TEST_CASE(Test_v1)
 {
-    BOOST_TEST(is_even(1)); std::clog << "Test_v1 (1)\n";
-    BOOST_TEST(is_even(2)); std::clog << "Test_v1 (2)\n";
+    BOOST_TEST(is_even(1)); std::cout << "Test_v1 (1)\n";
+    BOOST_TEST(is_even(2)); std::cout << "Test_v1 (2)\n";
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +48,7 @@ BOOST_DATA_TEST_CASE
     x, y
 )
 {
-    std::cout << "pair = { " << x << ", " << y << " }\n";
+    std::cout << "Test_v3 : x = " << x << " y = " << y << '\n';
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -69,9 +69,9 @@ BOOST_DATA_TEST_CASE
     index, sample
 )
 {
-    std::cout << "index = " << index << "; sample = ";
+    std::cout << "Test_v4 : index = " << index << " sample = ";
     
-    std::cout << std::setprecision(3) << std::fixed << sample << ";\n";
+    std::cout << std::setprecision(3) << std::fixed << sample << '\n';
 
     BOOST_TEST(sample < 0.5);
 }

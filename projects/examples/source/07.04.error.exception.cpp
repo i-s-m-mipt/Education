@@ -28,11 +28,11 @@ private:
 
 [[noreturn]] void test_v1()
 {
-	std::clog << "test_v1 (1)\n";
+	std::cout << "test_v1 (1)\n";
 
 	try
 	{
-		std::clog << "test_v1 (2)\n";
+		std::cout << "test_v1 (2)\n";
 		
 //		throw 1; // bad
 
@@ -40,7 +40,7 @@ private:
 
 //		throw std::system_error(std::make_error_code(std::errc::no_message), "error");
 
-		std::clog << "test_v1 (3)\n";
+		std::cout << "test_v1 (3)\n";
 	}
 	catch (const Error & error)
 	{
@@ -51,14 +51,14 @@ private:
 		throw;
 	}
 
-	std::clog << "test_v1 (4)\n";
+	std::cout << "test_v1 (4)\n";
 }
 
 //  ================================================================================================
 
 void test_v2()
 {
-	std::clog << "test_v2 (1)\n";
+	std::cout << "test_v2 (1)\n";
 
 	auto size = 5uz;
 
@@ -70,14 +70,14 @@ void test_v2()
 
 //	delete[] array; // bad
 
-	std::clog << "test_v2 (2)\n";
+	std::cout << "test_v2 (2)\n";
 }
 
 //  ================================================================================================
 
 void test_v3()
 {
-	std::clog << "test_v3 (1)\n";
+	std::cout << "test_v3 (1)\n";
 
 	try
 	{
@@ -85,12 +85,12 @@ void test_v3()
 	}
 	catch (const std::exception & exception)
 	{
-		std::cerr << "test_v2 : " << exception.what() << '\n';
+		std::cerr << "test_v3 : " << exception.what() << '\n';
 
 		throw std::runtime_error("error");
 	}
 
-	std::clog << "test_v3 (2)\n";
+	std::cout << "test_v3 (2)\n";
 }
 
 //  ================================================================================================

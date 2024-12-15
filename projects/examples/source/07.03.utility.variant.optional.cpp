@@ -31,7 +31,7 @@ public:
 
    ~Entity_v2() 
     { 
-		std::clog << "Entity_v2::~Entity_v2\n"; 
+		std::cout << "Entity_v2::~Entity_v2\n"; 
 	} 
 };
 
