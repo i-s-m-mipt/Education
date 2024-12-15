@@ -29,22 +29,22 @@ void test_v4(int & x, const int & y) {                x =  y;   }
 
 void test_v5(const int * , std::size_t)
 {
-	std::cout << "test_v5 (2)\n";
+	std::cout << "test_v5 (1)\n";
 }
 
 void test_v5(std::span < const int > )
 {
-	std::cout << "test_v5 (3)\n";
+	std::cout << "test_v5 (2)\n";
 }
 
 void test_v5(const std::vector < int > &)
 {
-	std::cout << "test_v5 (4)\n";
+	std::cout << "test_v5 (3)\n";
 }
 
 void test_v5(const std::string &) 
 {
-	std::cout << "test_v5 (1)\n";
+	std::cout << "test_v5 (4)\n";
 }
 
 //  ================================================================================================

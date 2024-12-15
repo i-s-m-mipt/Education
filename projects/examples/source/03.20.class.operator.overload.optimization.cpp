@@ -36,7 +36,7 @@ private:
 
 int main()
 {
-    const auto x = 1;
+    auto x = 1;
 
     const auto & r_x = x;
 

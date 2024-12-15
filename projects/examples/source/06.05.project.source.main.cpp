@@ -123,7 +123,7 @@ int main()
 
 	assert(path_1.substr(std::size(path_1) - std::strlen(file_name)) == file_name);
 
-	assert(__LINE__ == 128);
+	assert(__LINE__ == 126);
 
 	assert(std::string(__func__) == "main");
 
@@ -140,7 +140,7 @@ int main()
 
 	assert(path_2.substr(std::size(path_2) - std::strlen(file_name)) == file_name);
 
-	assert(source_location.line() == 139);
+	assert(source_location.line() == 137);
 
 	assert(std::string(source_location.function_name()) == "int main()");
 
