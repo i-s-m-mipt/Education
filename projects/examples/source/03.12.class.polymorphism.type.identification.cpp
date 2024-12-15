@@ -40,6 +40,8 @@ int main()
 
 	Entity * entity = new Client(); 
 
+//	assert( static_cast < Client * > (entity)); // bad
+
 	assert(dynamic_cast < Client * > (entity)); // support: compiler-explorer.com
 
 //  ------------------------------------------------------------------------------------------------
