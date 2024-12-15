@@ -17,14 +17,14 @@ void test_v3();
 
 //  void test_v4() // error
 //  { 
-//	    std::clog << "test_v4\n"; 
+//	    std::cout << "test_v4\n"; 
 //  } 
 
 ////////////////////////////////////////////////////////
 
 inline void test_v5()
 { 
-    std::clog << "test_v5\n"; 
+    std::cout << "test_v5\n"; 
 }
 
 ////////////////////////////////////////////////////////
@@ -66,7 +66,7 @@ private:
 
 template < typename T > void test_v6()
 {
-	std::clog << "test_v6\n";
+	std::cout << "test_v6\n";
 }
 
 ////////////////////////////////////////////////////////

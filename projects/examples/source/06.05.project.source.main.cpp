@@ -14,7 +14,7 @@ import demo;
 
 //  void test_v2() // error
 //  { 
-//	    std::clog << "test_v2\n"; 
+//	    std::cout << "test_v2\n"; 
 //  } 
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -23,7 +23,7 @@ import demo;
 
 #define FUNCTION(version) void test_##version() \
 {                                               \
-	std::clog << PREFIX << #version << '\n';    \
+	std::cout << PREFIX << #version << '\n';    \
 }                                                    
 
 FUNCTION(v1) // support: cppinsights.io
@@ -64,7 +64,7 @@ namespace education::examples
 {
 	void test(Entity)
 	{
-		std::clog << "education::examples::test\n";
+		std::cout << "education::examples::test\n";
 	}
 }
 
@@ -74,7 +74,7 @@ namespace education
 	{
 		void test()
 		{
-			std::clog << "library_v1::test\n";
+			std::cout << "education::library_v1::test\n";
 		}
 	}
 
@@ -82,7 +82,7 @@ namespace education
 	{
 		void test()
 		{
-			std::clog << "library_v2::test\n";
+			std::cout << "education::library_v2::test\n";
 		}
 	}
 }

@@ -6,6 +6,6 @@ export namespace demo
 {
 	void test_v4() 
 	{ 
-		std::clog << "demo::test_v4\n";
+		std::cout << "demo::test_v4\n";
 	}
 }

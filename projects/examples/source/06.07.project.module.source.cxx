@@ -6,6 +6,6 @@ namespace demo
 {
 	void test_v2() 
 	{ 
-		std::clog << "demo::test_v2\n";
+		std::cout << "demo::test_v2\n";
 	}
 }

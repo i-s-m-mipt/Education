@@ -8,7 +8,7 @@ import demo.submodule;
 
 void test_v2()
 {
-	std::clog << "test_v2\n";
+	std::cout << "test_v2\n";
 }
 
 //////////////////////////////////////////////////////
@@ -19,7 +19,7 @@ public:
 
     void test() const
     { 
-        std::clog << "Entity::Implementation::test\n"; 
+        std::cout << "Entity::Implementation::test\n"; 
     }
 };
 
