@@ -7,9 +7,9 @@ struct Entity {};
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-void test_v1(      Entity & ) { std::clog << "test_v1 (1)\n"; }
-void test_v1(const Entity & ) { std::clog << "test_v1 (2)\n"; }
-void test_v1(      Entity &&) { std::clog << "test_v1 (3)\n"; }
+void test_v1(      Entity & ) { std::cout << "test_v1 (1)\n"; }
+void test_v1(const Entity & ) { std::cout << "test_v1 (2)\n"; }
+void test_v1(      Entity &&) { std::cout << "test_v1 (3)\n"; }
 
 //////////////////////////////////////////////////////////////////////////////////////
 

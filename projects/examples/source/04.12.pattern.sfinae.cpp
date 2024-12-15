@@ -13,16 +13,23 @@ public:
 	
 	explicit Entity_v1(const std::string & data) : m_data(data) 
 	{
-		std::clog << "Entity_v1::Entity_v1 (1)\n";
+		std::cout << "Entity_v1::Entity_v1 (1)\n";
 	}
 
 	explicit Entity_v1(std::string && data) : m_data(std::move(data)) 
 	{
-		std::clog << "Entity_v1::Entity_v1 (2)\n";
+		std::cout << "Entity_v1::Entity_v1 (2)\n";
 	}
 	
-	Entity_v1(const Entity_v1 &  other) : m_data(          other.m_data ) {}
-	Entity_v1(      Entity_v1 && other) : m_data(std::move(other.m_data)) {}
+	Entity_v1(const Entity_v1 & other) : m_data(other.m_data) 
+	{
+		std::cout << "Entity_v1::Entity_v1 (3)\n";
+	}
+
+	Entity_v1(Entity_v1 && other) : m_data(std::move(other.m_data)) 
+	{
+		std::cout << "Entity_v1::Entity_v1 (4)\n";
+	}
 
 private:
 
@@ -37,11 +44,18 @@ public:
 	
     template < typename S > explicit Entity_v2(S && data) : m_data(std::forward < S > (data)) 
 	{
-		std::clog << "Entity_v2::Entity_v2\n";
+		std::cout << "Entity_v2::Entity_v2 (1)\n";
 	}
 	
-	Entity_v2(const Entity_v2 &  other) : m_data(          other.m_data ) {}
-	Entity_v2(      Entity_v2 && other) : m_data(std::move(other.m_data)) {}
+	Entity_v2(const Entity_v2 & other) : m_data(other.m_data) 
+	{
+		std::cout << "Entity_v2::Entity_v2 (2)\n";
+	}
+
+	Entity_v2(Entity_v2 && other) : m_data(std::move(other.m_data)) 
+	{
+		std::cout << "Entity_v2::Entity_v2 (3)\n";
+	}
 
 private:
 
@@ -63,11 +77,18 @@ public:
 	>
 	explicit Entity_v3(S && data) : m_data(std::forward < S > (data))
 	{
-		std::clog << "Entity_v3::Entity_v3\n";
+		std::cout << "Entity_v3::Entity_v3 (1)\n";
 	}
 	
-	Entity_v3(const Entity_v3 &  other) : m_data(          other.m_data ) {}
-	Entity_v3(      Entity_v3 && other) : m_data(std::move(other.m_data)) {}
+	Entity_v3(const Entity_v3 & other) : m_data(other.m_data) 
+	{
+		std::cout << "Entity_v3::Entity_v3 (2)\n";
+	}
+
+	Entity_v3(Entity_v3 && other) : m_data(std::move(other.m_data)) 
+	{
+		std::cout << "Entity_v3::Entity_v3 (3)\n";
+	}
 
 private:
 
@@ -86,11 +107,18 @@ public:
 	) 
 	requires std::is_convertible_v < S, std::string > : m_data(std::forward < S > (data))
 	{
-		std::clog << "Entity_v4::Entity_v4\n";
+		std::cout << "Entity_v4::Entity_v4 (1)\n";
 	}
 	
-	Entity_v4(const Entity_v4 &  other) : m_data(          other.m_data ) {}
-	Entity_v4(      Entity_v4 && other) : m_data(std::move(other.m_data)) {}
+	Entity_v4(const Entity_v4 &  other) : m_data(other.m_data) 
+	{
+		std::cout << "Entity_v4::Entity_v4 (2)\n";
+	}
+
+	Entity_v4(Entity_v4 && other) : m_data(std::move(other.m_data)) 
+	{
+		std::cout << "Entity_v4::Entity_v4 (3)\n";
+	}
 
 private:
 

@@ -4,39 +4,46 @@
 
 using namespace std::literals;
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////
 
-void print_v1() {}
+void test_v1() {}
 
-template < typename T, typename ... Ts > void print_v1(T arg, Ts ... args)
+template < typename T, typename ... Ts > void test_v1(T arg, Ts ... args)
 {
-	std::cout << arg << ' '; 
+	std::cout << "test_v1 : arg = " << arg << " sizeof...(args) = " << sizeof...(args) << '\n';
 	
-	print_v1(args...); // support: cppinsights.io
+	test_v1(args...); // support: cppinsights.io
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > void print_v2(T arg)
+template < typename T > void test_v2(T arg)
 {
-	std::cout << arg << ' ';
+	std::cout << "test_v2 : arg = " << arg << ' ';
 }
 
-template < typename T, typename ... Ts > void print_v2(T arg, Ts ... args)
+template < typename T, typename ... Ts > void test_v2(T arg, Ts ... args)
 {
-	print_v2(arg);
+	test_v2(arg);
 
-	print_v2(args...);
+	std::cout << "sizeof...(args) = " << sizeof...(args) << '\n';
+
+	test_v2(args...);
+
+	if (sizeof...(args) == 1)
+	{
+		std::cout << "sizeof...(args) = 0\n";
+	}
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename ... Ts > void print_v3(Ts ... args) 
+template < typename ... Ts > void test_v3(Ts ... args) 
 { 
-	print_v1(args + args...); // support: cppinsights.io
+	test_v1(args + args...); // support: cppinsights.io
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename ... Ts > auto reduce_v1(Ts ... args)
 {
@@ -58,7 +65,7 @@ template < typename ... Ts > auto reduce_v4(Ts ... args)
 	return (args + ... + 0); // support: cppinsights.io
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 struct Entity 
 { 
@@ -66,31 +73,29 @@ struct Entity
 	int data_2 = 0; 
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T, typename ... Ts > auto make_object(Ts ... args)
 {
-	std::cout << "sizeof...(args) = " << sizeof...(args) << '\n';
-
 	return new T(args...);
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::cout << "args = { "; print_v1(1, "aaaaa"s); std::cout << "}\n";
-	std::cout << "args = { "; print_v2(1, "aaaaa"s); std::cout << "}\n";
-	std::cout << "args = { "; print_v3(1, "aaaaa"s); std::cout << "}\n";
+	test_v1(1, 2, 3);
+	test_v2(1, 2, 3);
+	test_v3(1, 2, 3);
 
-//  ------------------------------------------------------------------------------------------------
+//  -------------------------------------
 
 	assert(reduce_v1(1, 2) == 3);
 	assert(reduce_v2(1, 2) == 3);
 	assert(reduce_v3(1, 2) == 3);
 	assert(reduce_v4(1, 2) == 3);
 
-//  ------------------------------------------------------------------------------------------------
+//  -------------------------------------
 
 	delete make_object < Entity > (1, 1);
 }

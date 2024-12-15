@@ -112,7 +112,7 @@ public:
 
 	void test() const
 	{ 
-		std::clog << "Entity::test (1)\n"; 
+		std::cout << "Entity::test (1)\n"; 
 	}
 };
 
@@ -122,7 +122,7 @@ public:
 
 	void test() const 
 	{ 
-		std::clog << "Entity::test (2)\n"; 
+		std::cout << "Entity::test (2)\n"; 
 	}
 };
 
@@ -132,7 +132,7 @@ public:
 
 	void test() const 
 	{ 
-		std::clog << "Entity::test (3)\n"; 
+		std::cout << "Entity::test (3)\n"; 
 	}
 };
 
@@ -142,7 +142,7 @@ public:
 
 	void test() const 
 	{ 
-		std::clog << "Entity::test (4)\n"; 
+		std::cout << "Entity::test (4)\n"; 
 	}
 };
 
@@ -152,7 +152,7 @@ public:
 
 	void test() const 
 	{ 
-		std::clog << "Entity::test (5)\n"; 
+		std::cout << "Entity::test (5)\n"; 
 	}
 };
 

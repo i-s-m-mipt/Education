@@ -1,8 +1,5 @@
 #include <cstddef>
-#include <iostream>
 #include <type_traits>
-
-#include <boost/type_index.hpp>
 
 //  ================================================================================================
 
@@ -146,12 +143,6 @@ int main()
 
 //  using      back_t_0 =      back < list_0 > ; // error
 //  using  pop_back_t_0 =  pop_back < list_0 > ; // error
-
-//  ------------------------------------------------------------------------------------------------
-
-    std::cout << boost::typeindex::type_id_with_cvr < list_0 > ().pretty_name() << std::endl;
-    std::cout << boost::typeindex::type_id_with_cvr < list_1 > ().pretty_name() << std::endl;
-    std::cout << boost::typeindex::type_id_with_cvr < list_2 > ().pretty_name() << std::endl;
 
 //  ------------------------------------------------------------------------------------------------
 

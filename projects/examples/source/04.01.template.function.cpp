@@ -50,68 +50,68 @@ auto max_v8(auto x, auto y) // support: cppinsights.io
 
 template < typename T > void test_v1(T)
 {
-	std::clog << "test_v1 (1)\n";
+	std::cout << "test_v1 (1)\n";
 }
 
 template <> void test_v1 < int > (int)
 {
-	std::clog << "test_v1 (2)\n";
+	std::cout << "test_v1 (2)\n";
 }
 
 void test_v1(int) 
 { 
-	std::clog << "test_v1 (3)\n"; 
+	std::cout << "test_v1 (3)\n"; 
 }
 
 void test_v1(double) 
 { 
-	std::clog << "test_v1 (4)\n"; 
+	std::cout << "test_v1 (4)\n"; 
 }
 
 //  ================================================================================================
 
 template < typename T1, typename T2 > void test_v2()
 {
-	std::clog << "test_v2 (1)\n";
+	std::cout << "test_v2 (1)\n";
 }
 
 //  template < typename T > void test_v2 < int, T > () // error
 //  {
-//	  std::clog << "test_v2 (2)\n";
+//	  std::cout << "test_v2 (2)\n";
 //  }
 
 //  ================================================================================================
 
 template < typename T > void test_v3(T)
 {
-	std::clog << "test_v3 (1)\n";
+	std::cout << "test_v3 (1)\n";
 }
 
 template < typename T > void test_v3(T *)
 {
-	std::clog << "test_v3 (2)\n";
+	std::cout << "test_v3 (2)\n";
 }
 
 template <> void test_v3 < int > (int *)
 { 
-	std::clog << "test_v3 (3)\n";
+	std::cout << "test_v3 (3)\n";
 } 
 
 //  ================================================================================================
 
 template < typename T > void test_v4(T)
 {
-	std::clog << "test_v4 (1)\n";
+	std::cout << "test_v4 (1)\n";
 }
 
 template <> void test_v4 < int * > (int *)
 { 
-	std::clog << "test_v4 (2)\n";
+	std::cout << "test_v4 (2)\n";
 } 
 
 template < typename T > void test_v4(T *)
 {
-	std::clog << "test_v4 (3)\n";
+	std::cout << "test_v4 (3)\n";
 }
 
 //  ================================================================================================
