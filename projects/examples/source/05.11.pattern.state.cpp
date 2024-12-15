@@ -73,22 +73,22 @@ private:
 
 void Fast::set_fast([[maybe_unused]] Entity * entity) const
 {
-    std::clog << "Fast::fast\n";
+    std::cout << "Fast::set_fast\n";
 }
 
 void Fast::set_slow([[maybe_unused]] Entity * entity) const
 {
-    std::clog << "Fast::slow\n"; entity->set_state(new Slow()); 
+    std::cout << "Fast::set_slow\n"; entity->set_state(new Slow()); 
 }
 
 void Slow::set_fast([[maybe_unused]] Entity * entity) const
 {
-    std::clog << "Slow::fast\n"; entity->set_state(new Fast());
+    std::cout << "Slow::set_fast\n"; entity->set_state(new Fast());
 }
 
 void Slow::set_slow([[maybe_unused]] Entity * entity) const
 {
-    std::clog << "Slow::slow\n";
+    std::cout << "Slow::set_slow\n";
 }
 
 /////////////////////////////////////////////////////////////////////////

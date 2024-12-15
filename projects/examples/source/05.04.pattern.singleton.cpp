@@ -16,7 +16,7 @@ public:
 
     void test() const
     { 
-        std::clog << "Singleton::test\n"; 
+        std::cout << "Singleton::test\n"; 
     }
 
 //  --------------------------------------------------
@@ -58,16 +58,19 @@ public:
 
     Unique_v2() = default;
 
-//  Unique_v2([[maybe_unused]] const Unique_v2 & other) : Noncopyable(other) {} // error
+//  Unique_v2([[maybe_unused]] const Unique_v2 & other) : Noncopyable(other) // error
+//  {
+//      std::cout << "Unique_v2::Unique_v2 (1)\n";
+//  } 
 
     Unique_v2([[maybe_unused]] const Unique_v2 & other) : Noncopyable()
     {
-        std::clog << "Unique_v2::Unique_v2\n";
+        std::cout << "Unique_v2::Unique_v2 (2)\n";
     }
 
     auto & operator=([[maybe_unused]] const Unique_v2 & other)
     {
-        std::clog << "Unique_v2::operator=\n";
+        std::cout << "Unique_v2::operator=\n";
 
     //  Noncopyable::operator=(other); // error
 

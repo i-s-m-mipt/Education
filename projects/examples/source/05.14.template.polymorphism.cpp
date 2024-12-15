@@ -21,7 +21,7 @@ public:
 
 	void test() const override 
 	{ 
-		std::clog << "Client_v1::test\n"; 
+		std::cout << "Client_v1::test\n"; 
 	} 
 };
 
@@ -33,7 +33,7 @@ public:
 
 	void test() const override 
 	{ 
-		std::clog << "Server_v1::test\n"; 
+		std::cout << "Server_v1::test\n"; 
 	} 
 };
 
@@ -46,8 +46,8 @@ void test_v1(const Entity & entity)
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-class Client_v2 { public: void test() const { std::clog << "Client_v2::test\n"; } };
-class Server_v2 { public: void test() const { std::clog << "Server_v2::test\n"; } };
+class Client_v2 { public: void test() const { std::cout << "Client_v2::test\n"; } };
+class Server_v2 { public: void test() const { std::cout << "Server_v2::test\n"; } };
 
 ////////////////////////////////////////////////////////////////////////////////////
 

@@ -28,7 +28,7 @@ public:
 
     void test() const override 
     { 
-        std::clog << "Client::test\n"; 
+        std::cout << "Client::test\n"; 
     };
 };
 
@@ -45,7 +45,7 @@ public:
 
     void test() const override 
     { 
-        std::clog << "Server::test\n"; 
+        std::cout << "Server::test\n"; 
     };
 };
 

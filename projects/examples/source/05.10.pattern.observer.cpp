@@ -67,7 +67,7 @@ public:
 
     void test(int data) const override
     {
-        std::clog << "Client::test : data = " << data << '\n';
+        std::cout << "Client::test : data = " << data << '\n';
     }
 };
 
@@ -79,7 +79,7 @@ public:
 
     void test(int data) const override
     {
-        std::clog << "Server::test : data = " << data << '\n';
+        std::cout << "Server::test : data = " << data << '\n';
     }
 };
 

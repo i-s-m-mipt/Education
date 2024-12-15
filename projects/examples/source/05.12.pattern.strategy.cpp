@@ -15,8 +15,8 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class Fast : public Strategy { public: void test() const override { std::clog << "Fast::test\n"; } };
-class Slow : public Strategy { public: void test() const override { std::clog << "Slow::test\n"; } };
+class Fast : public Strategy { public: void test() const override { std::cout << "Fast::test\n"; } };
+class Slow : public Strategy { public: void test() const override { std::cout << "Slow::test\n"; } };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 

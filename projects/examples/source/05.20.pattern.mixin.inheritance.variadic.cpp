@@ -16,7 +16,7 @@ public:
     : 
         Bs(std::forward < Ts > (args))..., m_data(data)
     {
-        std::clog << "Router_v1::Router_v1 : sizeof...(Bs) = " << sizeof...(Bs) << '\n';
+        std::cout << "Router_v1::Router_v1 : sizeof...(Bs) = " << sizeof...(Bs) << '\n';
     }
 
 private:
@@ -41,7 +41,7 @@ public:
     : 
         Bs < Router_v2 > (std::forward < Ts > (args))..., m_data(data)
     {
-        std::clog << "Router_v2::Router_v2 : sizeof...(Bs) = " << sizeof...(Bs) << '\n';
+        std::cout << "Router_v2::Router_v2 : sizeof...(Bs) = " << sizeof...(Bs) << '\n';
     }
 
 private:

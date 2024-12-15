@@ -8,7 +8,7 @@ public:
 
 	void test() const
 	{ 
-		std::clog << "Client::test\n"; 
+		std::cout << "Client::test\n"; 
 	} 
 };
 

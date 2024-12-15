@@ -15,8 +15,8 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class Client : public Entity { public: void test() const override { std::clog << "Client::test\n"; } };
-class Server : public Entity { public: void test() const override { std::clog << "Server::test\n"; } };
+class Client : public Entity { public: void test() const override { std::cout << "Client::test\n"; } };
+class Server : public Entity { public: void test() const override { std::cout << "Server::test\n"; } };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -43,7 +43,7 @@ public:
 
     void test() const override
     { 
-        std::clog << "Decorated::Entity::"; m_entity.test();
+        std::cout << "Decorated::Entity::"; m_entity.test();
     }
 };
 

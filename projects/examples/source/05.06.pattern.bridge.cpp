@@ -21,7 +21,7 @@ public:
 
     void test() const override 
     { 
-        std::clog << "Client_v1::test\n"; 
+        std::cout << "Client_v1::test\n"; 
     } 
 };
 
@@ -33,7 +33,7 @@ public:
 
     void test() const override 
     { 
-        std::clog << "Client_v2::test\n"; 
+        std::cout << "Client_v2::test\n"; 
     } 
 };
 
@@ -68,7 +68,7 @@ public:
 
     void test() const override 
     {
-        std::clog << "Server_v1::test\n";
+        std::cout << "Server_v1::test\n";
 
         m_bridge.test(); 
     }
@@ -86,7 +86,7 @@ public:
 
     void test() const override 
     { 
-        std::clog << "Server_v2::test\n";
+        std::cout << "Server_v2::test\n";
 
         m_bridge.test(); 
     }

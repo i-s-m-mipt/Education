@@ -33,7 +33,7 @@ public:
 
 	void test() const
 	{
-		std::clog << "Entity_v1::test\n";
+		std::cout << "Entity_v1::test\n";
 	}
 
 private:
@@ -53,7 +53,7 @@ public:
 
 	void test() const
 	{
-		std::clog << "Entity_v2::test\n";
+		std::cout << "Entity_v2::test\n";
 	}
 
 private:
@@ -84,7 +84,7 @@ private:
 
 	void initialize() const
 	{
-		std::clog << "Counter::initialize : s_counter = " << ++s_counter << " / " << S << '\n';
+		std::cout << "Counter::initialize : s_counter = " << ++s_counter << " / " << S << '\n';
 	}
 
 //  -----------------------------------

@@ -20,8 +20,8 @@ public:
 
 private:
 
-	void test_v1() const { std::clog << "Entity::test_v1\n"; }
-	void test_v3() const { std::clog << "Entity::test_v3\n"; }
+	void test_v1() const { std::cout << "Entity::test_v1\n"; }
+	void test_v3() const { std::cout << "Entity::test_v3\n"; }
 
 //  ----------------------------------------------------------
 
@@ -35,8 +35,8 @@ class Client : public Entity
 { 
 private:
 
-	void test_v2() const override { std::clog << "Client::test_v2\n"; }
-	void test_v4() const override { std::clog << "Client::test_v4\n"; }  
+	void test_v2() const override { std::cout << "Client::test_v2\n"; }
+	void test_v4() const override { std::cout << "Client::test_v4\n"; }  
 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -45,8 +45,8 @@ class Server : public Entity
 {
 private:
 
-	void test_v2() const override { std::clog << "Server::test_v2\n"; }
-	void test_v4() const override { std::clog << "Server::test_v4\n"; } 
+	void test_v2() const override { std::cout << "Server::test_v2\n"; }
+	void test_v4() const override { std::cout << "Server::test_v4\n"; } 
 };
 
 ///////////////////////////////////////////////////////////////////////

@@ -22,7 +22,7 @@ public:
 
     void initialize() const override 
     { 
-        std::clog << "Client::initialize\n"; 
+        std::cout << "Client::initialize\n"; 
     }
 
 protected:
