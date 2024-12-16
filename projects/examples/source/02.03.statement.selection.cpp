@@ -6,7 +6,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-    std::cout << "Selection (1) : ";
+    std::cout << "selection (1) : ";
 
     std::cout << (x == 1 ? "(1)" : "(2)");
 
@@ -14,7 +14,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-    std::cout << "Selection (2) : ";
+    std::cout << "selection (2) : ";
 
     if (auto y = x; 1 == y) // support: compiler-explorer.com
     {
@@ -33,7 +33,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-    std::cout << "Selection (3) : ";
+    std::cout << "selection (3) : ";
 
     switch (auto z = x; z) // support: compiler-explorer.com
     {
