@@ -1,29 +1,14 @@
 #include <cassert>
 #include <chrono>
 #include <cmath>
+#include <ctime>
 #include <iomanip>
 #include <iostream>
 #include <string>
 
 #include <boost/timer/timer.hpp>
 
-//  ================================================================================================
-
-template < typename C > void print(const std::string & name)
-{
-	std::cout << name << " : tick = ";
-	
-	std::cout << std::setprecision(9) << std::fixed << 1.0 * C::period::num / C::period::den;
-		
-	if (C::is_steady) 
-	{
-		std::cout << " / steady";
-	}
-
-	std::cout << '\n';
-}
-
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 class Chronometer
 {
@@ -35,7 +20,7 @@ public:
 
 	explicit Chronometer(const std::string & name) : m_name(name), m_begin(clock_t::now())
 	{
-		std::cout << "Chronometer " << m_name << " launched ... \n";
+		std::cout << "Chronometer " << std::quoted(m_name) << " started ... \n";
 	}
 
    ~Chronometer() 
@@ -43,7 +28,7 @@ public:
 		elapsed();
 	}
 
-//  --------------------
+//  --------------------------------------------------------------------------------------
 
 	void elapsed() const
 	{
@@ -51,7 +36,7 @@ public:
 
 		auto delta = std::chrono::duration_cast < std::chrono::microseconds > (duration);
 
-		std::cout << "Chronometer " << m_name << " elapsed ";
+		std::cout << "Chronometer " << std::quoted(m_name) << " elapsed ";
 
 		std::cout << std::setprecision(6) << std::fixed << delta.count() / 1'000'000.0;
 
@@ -63,54 +48,61 @@ private:
 	const std::string m_name; clock_t::time_point m_begin;
 };
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	print < std::chrono::system_clock > ("system");
-	print < std::chrono::steady_clock > ("steady");
-
-//  ------------------------------------------------------------------------------------------------
+	std::cout << "system clock : tick = ";
 	
-	std::cout << std::chrono::system_clock::time_point() << std::endl;
+	std::cout << std::chrono::system_clock::period::num << '/';
+	
+	std::cout << std::chrono::system_clock::period::den << " (seconds)\n";
 
-	auto now = std::chrono::system_clock::now();
+	assert(!std::chrono::system_clock::is_steady);
 
-	std::cout << now << ' ' << std::chrono::system_clock::to_time_t(now) << std::endl;
+//  ------------------------------------------------------------------------
+	
+	auto epoch = std::chrono::system_clock::time_point();
 
-//  ------------------------------------------------------------------------------------------------
+	std::cout << "epoch = " << epoch << '\n';
 
-	std::chrono::duration < long long, std::ratio < 1, 1000 > > duration_1(42);
+	auto local = std::chrono::system_clock::now();
+	
+	std::cout << "local = " << local << '\n';
 
-	std::chrono::milliseconds duration_2(42);
+	assert(std::chrono::system_clock::to_time_t(local) == time(nullptr));
 
-	auto duration_3 = std::chrono::hours(100) + std::chrono::minutes(200);
+//  ------------------------------------------------------------------------
 
-	std::cout << duration_3.count() << std::endl;
+	std::chrono::duration < int, std::ratio < 1, 1000 > > duration_1(1'000);
 
-	std::cout << std::chrono::seconds(duration_3) << std::endl;
+	std::chrono::milliseconds duration_2(1'000);
 
-	std::cout << std::chrono::duration_cast < std::chrono::days > (duration_3) << std::endl;
+	auto duration_3 = std::chrono::hours(1) + std::chrono::minutes(1);
 
-	std::cout << now - std::chrono::days(10) << std::endl;
+	assert(duration_3.count() == 61);
 
-	std::cout << now - std::chrono::system_clock::time_point() << std::endl;
+	assert(std::chrono::seconds(duration_3).count() == 3'660);
 
-//  ------------------------------------------------------------------------------------------------
+	auto delta = std::chrono::floor < std::chrono::days > (local - epoch);
+
+	std::cout << "delta = " << delta.count() << " (days)\n";
+
+//  ------------------------------------------------------------------------
 
 	auto size = 1'000'000uz;
 
-//  ------------------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------
 
 	{
-		Chronometer chronometer("test"); // support: Google.Benchmark
+		Chronometer chronometer("test");
 
 		auto result = 0.0;
 
@@ -126,9 +118,9 @@ int main()
 		assert(equal(result, static_cast < double > (size)));
 	}
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------
 
-	boost::timer::cpu_timer timer; // support: Google.Benchmark
+	boost::timer::cpu_timer timer;
 
 	auto result = 0.0;
 
@@ -143,5 +135,5 @@ int main()
 
 	assert(equal(result, size));
 
-	std::cout << "timer :" << timer.format() << '\n';
+	std::cout << "timer :" << timer.format();
 }

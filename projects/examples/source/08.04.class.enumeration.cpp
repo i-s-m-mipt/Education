@@ -1,33 +1,36 @@
+#include <cassert>
 #include <cstdint>
 #include <iostream>
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////
 
 enum class Color : std::uint8_t 
 { 
 	R, G, B, quantity 
 };
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////
 
 void test(Color color)
 {
+	std::cout << "test : selection : ";
+
 	switch (color)
 	{
-		case Color::R: { std::clog << "(1)"; break; }
-		case Color::G: { std::clog << "(2)"; break; }
-		case Color::B: { std::clog << "(3)"; break; }
+		case Color::R: { std::cout << "(1)"; break; }
+		case Color::G: { std::cout << "(2)"; break; }
+		case Color::B: { std::cout << "(3)"; break; }
 
 		default:
 		{
-			std::clog << "(4)"; break;
+			std::cout << "(4)"; break;
 		}
 	}
 
-	std::clog << '\n';
+	std::cout << '\n';
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////
 
 enum State : std::uint8_t
 {
@@ -35,7 +38,7 @@ enum State : std::uint8_t
 	slow = 0x02,
 };
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -46,10 +49,10 @@ int main()
 		test(static_cast < Color > (color));
 	}
 
-//  ------------------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------------
 
 	auto state = fast | slow;
 
-	[[maybe_unused]] auto is_fast = static_cast < bool > (state & fast);
-	[[maybe_unused]] auto is_slow = static_cast < bool > (state & slow);
+	assert(static_cast < bool > (state & fast));
+	assert(static_cast < bool > (state & slow));
 }

@@ -67,9 +67,9 @@ int main()
 
 	for (auto i = 0uz; i < std::size(values); ++i)
 	{
-		std::cout << std::setw(2) << std::setfill(' ') << std::right << i << " : ";
+		std::cout << "i = " << std::setw(2) << std::setfill('0') << std::right << i << " : ";
 
-		std::cout << std::string(values[i] / 1000, '*') << std::endl;
+		std::cout << std::string(values[i] / 1000, '*') << '\n';
 	}
 
 //  ================================================================================================

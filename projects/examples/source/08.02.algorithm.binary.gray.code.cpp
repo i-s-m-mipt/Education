@@ -4,12 +4,14 @@
 #include <iomanip>
 #include <iostream>
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 auto encode(unsigned int x)
 {
     return x ^ (x >> 1);
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////
 
 auto decode(unsigned int code)
 {
@@ -24,20 +26,22 @@ auto decode(unsigned int code)
     return code;
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::cout << '\n';
+    constexpr auto size = 4uz;
 
-    for (unsigned int n = 0; n < static_cast < unsigned int > (std::pow(2, 5)); ++n)
+//  ---------------------------------------------------------------------------------------
+
+    for (unsigned int x = 0; x < static_cast < unsigned int > (std::pow(2, size)); ++x)
     {
-        std::cout << "n = " << std::setw(2) << std::setfill('0') << std::right << n << ' ';
+        std::cout << "x = " << std::setw(2) << std::setfill('0') << std::right << x << ' ';
 
-        std::cout << "code = " << std::bitset < 5 > (encode(n)) << '\n';
+        auto code = encode(x);
 
-        assert(decode(encode(n)) == n);
+        std::cout << "code = " << std::bitset < size > (code) << '\n';
+
+        assert(decode(code) == x);
     }
-
-    std::cout << '\n';
 }

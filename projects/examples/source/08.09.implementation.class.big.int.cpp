@@ -177,32 +177,6 @@ public:
 
 //  -----------------------------------------------------------------------------------------------
 
-	friend auto & operator>>(std::istream & stream, Big_Int & big_int)
-	{
-		std::string string; stream >> string; big_int = Big_Int(string); 
-		
-		return stream;
-	}
-
-	friend auto & operator<<(std::ostream & stream, const Big_Int & big_int)
-	{
-		if (big_int.m_is_negative) 
-		{
-			stream << '-';
-		}
-
-		stream << big_int.m_digits[big_int.m_n_digits - 1];
-
-		for (auto i = static_cast < int > (big_int.m_n_digits) - 2; i >= 0; --i)
-		{
-			stream << std::setw(step) << std::setfill('0') << std::right << big_int.m_digits[i];
-		}
-
-		return stream;
-	}
-
-//  -----------------------------------------------------------------------------------------------
-
 	friend auto operator+ (const Big_Int & lhs, const Big_Int & rhs) 
 	{ 
 		return Big_Int(lhs) += rhs; 
@@ -270,6 +244,32 @@ public:
 		}
 
 		return true;
+	}
+
+//  -----------------------------------------------------------------------------------------------
+
+	friend auto & operator>>(std::istream & stream, Big_Int & big_int)
+	{
+		std::string string; stream >> string; big_int = Big_Int(string); 
+		
+		return stream;
+	}
+
+	friend auto & operator<<(std::ostream & stream, const Big_Int & big_int)
+	{
+		if (big_int.m_is_negative) 
+		{
+			stream << '-';
+		}
+
+		stream << big_int.m_digits[big_int.m_n_digits - 1];
+
+		for (auto i = static_cast < int > (big_int.m_n_digits) - 2; i >= 0; --i)
+		{
+			stream << std::setw(step) << std::setfill('0') << std::right << big_int.m_digits[i];
+		}
+
+		return stream;
 	}
 
 //  -----------------------------------------------------------------------------------------------
@@ -541,6 +541,12 @@ int main()
 	assert((big_int_01 >= big_int_02) == t);
 	assert((big_int_01 == big_int_02) == f);
 	assert((big_int_01 != big_int_02) == t);
+
+//  -------------------------------------------------------------------------------------------
+
+	std::cout << "Enter 1 Big_Int : "; Big_Int big_int_12; std::cin >> big_int_12; 
+	
+	std::cout << "Entered Big_Int : " << big_int_12 << '\n';
 
 //  -------------------------------------------------------------------------------------------
 

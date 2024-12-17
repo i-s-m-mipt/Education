@@ -4,43 +4,41 @@
 
 using namespace std::literals;
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 int main()
 {
-	std::chrono::hh_mm_ss time(10h + 20min + 30s);
+	auto local = std::chrono::floor < std::chrono::seconds > (std::chrono::system_clock::now());
 
-	std::cout << time << std::endl;
+//  --------------------------------------------------------------------------------------------
 
-	assert(time.hours() == 10h && time.minutes() == 20min && time.seconds() == 30s);
+	auto duration = local - std::chrono::floor < std::chrono::days > (local);
 
-	std::cout << time.to_duration() << std::endl;
+	std::chrono::hh_mm_ss hh_mm_ss(duration);
 
-//  ================================================================================================
+	std::cout << "hh_mm_ss = " << hh_mm_ss << '\n';
 
-	std::chrono::year_month_day date(1970y, std::chrono::January, 1d);
+	assert(hh_mm_ss.to_duration() == duration);
 
-	std::cout << date << std::endl;
+//  --------------------------------------------------------------------------------------------
 
-	std::cout << std::chrono::sys_days(date) << std::endl;
+	auto time_point = std::chrono::floor < std::chrono::days > (local);
 
-	assert(!(std::chrono::year(1970) / 1 / 32).ok());
+	std::chrono::year_month_day year_month_day(time_point);
 
-//  ================================================================================================
+	std::cout << "year_month_day = " << year_month_day << '\n';
 
-	auto now = std::chrono::floor < std::chrono::hours > (std::chrono::system_clock::now());
+	assert(std::chrono::sys_days(year_month_day) == time_point);
 
-	auto delta = now - std::chrono::sys_days(std::chrono::year(1970) / 1 / 1);
+//  --------------------------------------------------------------------------------------------
 
-	std::cout << std::chrono::floor < std::chrono::days > (delta) << std::endl;
+	auto weekday = std::chrono::year_month_weekday(year_month_day).weekday();
 
-//  ================================================================================================
+	std::cout << "weekday = " << weekday << '\n';
 
-	std::cout << std::chrono::year_month_weekday(date).weekday() << std::endl;
+//  --------------------------------------------------------------------------------------------
 
-//  ================================================================================================
-
-	std::cout << now << std::endl;
-
-	std::cout << std::chrono::zoned_time("Europe/London", now) << std::endl;
-	std::cout << std::chrono::zoned_time("Europe/Berlin", now) << std::endl;
-	std::cout << std::chrono::zoned_time("Europe/Moscow", now) << std::endl;
+	std::cout << "local (GMT) = " << std::chrono::zoned_time("Europe/London", local) << '\n';
+	std::cout << "local (CET) = " << std::chrono::zoned_time("Europe/Berlin", local) << '\n';
+	std::cout << "local (MSK) = " << std::chrono::zoned_time("Europe/Moscow", local) << '\n';
 }

@@ -1,34 +1,16 @@
 #include <cassert>
 #include <cmath>
-#include <cstddef>
 #include <complex>
-#include <iomanip>
-#include <iostream>
 #include <numbers>
-#include <ostream>
 #include <vector>
 
 using namespace std::literals;
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////
 
 using signal_t = std::vector < std::complex < double > > ;
 
-//  ================================================================================================
-
-auto generate(std::size_t size)
-{
-    signal_t signal(size, signal_t::value_type(0));
-
-    for (auto i = 0uz; i < size; ++i)
-    {
-        signal[i] = std::sin(2.0 * i * std::numbers::pi / size);
-    }
-
-    return signal;
-}
-
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////
 
 auto transform(const signal_t & signal)
 {
@@ -47,26 +29,14 @@ auto transform(const signal_t & signal)
     return result;
 }
 
-//  ================================================================================================
-
-auto & operator<<(std::ostream & stream, const signal_t & signal)
-{
-    stream << "{ ";
-
-    for (auto element : signal) 
-    {
-        std::cout << std::showpos << std::setprecision(3) << std::fixed << element.real() << ' ';
-    }
-
-    return stream << '}';
-}
-
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 auto equal(std::complex < double > x, std::complex < double > y, double epsilon = 1e-6)
 {
@@ -77,18 +47,18 @@ auto equal(std::complex < double > x, std::complex < double > y, double epsilon 
     );
 }
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
     std::complex < double > complex(1.0, 1.0);
     
-//  ------------------------------------------
+//  ------------------------------------------------------------------------------------
 
     assert(equal(complex.real(), 1.0));
     assert(equal(complex.imag(), 1.0));
 
-//  ---------------------------------------------
+//  ------------------------------------------------------------------------------------
 
     assert(equal(std::abs (complex), 1.414'214));
     assert(equal(std::norm(complex), 2.000'000));
@@ -114,13 +84,20 @@ int main()
 
     assert(equal(std::polar(p1, p2), std::complex < double > (+0.540'302, +0.841'471)));
 
-//  ------------------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
-    auto signal = generate(8);
+    auto result = transform
+    (
+        { 
+            0.0 + 0.0i, 
+            0.0 + 1.0i, 
+            1.0 + 0.0i, 
+            1.0 + 1.0i 
+        }
+    );
 
-    std::cout << "signal = " << signal << '\n';
-
-    auto result = transform(signal);
-
-    std::cout << "result = " << result << '\n';
+    assert(equal(result.at(0), +2.0 + 2.0i));
+    assert(equal(result.at(1), -1.0 + 1.0i));
+    assert(equal(result.at(2), +0.0 - 2.0i));
+    assert(equal(result.at(3), -1.0 - 1.0i));
 }
