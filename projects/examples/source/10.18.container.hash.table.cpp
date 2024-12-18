@@ -1,60 +1,49 @@
 #include <iomanip>
 #include <iostream>
-#include <iterator>
 #include <random>
-#include <type_traits>
 #include <unordered_set>
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
-void print(const std::unordered_set < int > & unordered_set)
+void test(const std::unordered_set < int > & unordered_set)
 {
-	std::cout << "N objects       : " << unordered_set.            size() << std::endl;
-	std::cout << "N objects (max) : " << unordered_set.        max_size() << std::endl;
-	std::cout << "M buckets       : " << unordered_set.    bucket_count() << std::endl;
-	std::cout << "M buckets (max) : " << unordered_set.max_bucket_count() << std::endl;
-	std::cout << "L = N / M       : " << unordered_set.     load_factor() << std::endl;
-	std::cout << "L = N / M (max) : " << unordered_set. max_load_factor() << std::endl;
+	std::cout << "N objects       = " << unordered_set.            size() << '\n';
+	std::cout << "N objects (max) = " << unordered_set.        max_size() << '\n';
+	std::cout << "M buckets       = " << unordered_set.    bucket_count() << '\n';
+	std::cout << "M buckets (max) = " << unordered_set.max_bucket_count() << '\n';
+	std::cout << "L = N / M       = " << unordered_set.     load_factor() << '\n';
+	std::cout << "L = N / M (max) = " << unordered_set. max_load_factor() << '\n';
 
-	using category_t = typename std::unordered_set < int > ::iterator::iterator_category;
-	
-	if (std::is_same_v < category_t, std::bidirectional_iterator_tag > )
-	{
-		std::cout << "chaining method : doubly-linked list\n";
-	}
-	else
-	{
-		std::cout << "chaining method : singly-linked list\n";
-	}
+//  ----------------------------------------------------------------------------------------------
 
-	std::cout << std::endl;
+	using iterator_category_t = typename std::unordered_set < int > ::iterator::iterator_category;
+
+//  ----------------------------------------------------------------------------------------------
 
 	for (auto i = 0uz; i < unordered_set.bucket_count(); ++i)
 	{
-		std::cout << "bucket[" << std::setw(3) << std::setfill('0') << std::right << i << "]: ";
+		std::cout << "bucket[" << std::setw(3) << std::setfill('0') << std::right << i << "] = {";
 
 		for (auto iterator = unordered_set.begin(i); iterator != unordered_set.end(i); ++iterator)
 		{
-			std::cout << *iterator << ' ';
+			std::cout << ' ' << *iterator;
 		}
 
-		std::cout << std::endl;
+		std::cout << (unordered_set.bucket_size(i) > 0 ? " " : "") << "}\n";
 	}
-
-	std::cout << std::endl;
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
 	std::unordered_set < int > unordered_set;
 
-	unordered_set.rehash(64);
+	test(unordered_set); unordered_set.rehash(32);
 
-	std::random_device device;
+	test(unordered_set);
 
-	std::mt19937_64 engine(device());
+	std::default_random_engine engine;
 
 	std::uniform_int_distribution distribution(100, 999);
 
@@ -63,6 +52,7 @@ int main()
 		unordered_set.insert(distribution(engine));
 	}
 
-	print(unordered_set); unordered_set.rehash(65);
-	print(unordered_set);
+	test(unordered_set); unordered_set.rehash(64);
+	
+	test(unordered_set);
 }

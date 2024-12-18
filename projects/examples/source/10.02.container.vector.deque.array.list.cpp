@@ -41,8 +41,6 @@ int main()
 	vector.pop_back      (); assert(std::size(vector) == size     && vector.capacity() == size + 1);
 	vector.shrink_to_fit (); assert(std::size(vector) == size     && vector.capacity() == size    );
 
-	std::cout << vector.max_size() << std::endl; // support: std::length_error
-
 //  ================================================================================================
 
 	try
@@ -183,16 +181,14 @@ int main()
 
 	list_1.merge(list_2);
 
-	list_2.splice(std::begin(list_2), list_1, 
+	list_2.splice
+	(
+				  std::begin(list_2), list_1, 
 		          std::begin(list_1),
-		std::next(std::begin(list_1), std::size(list_1) / 2));
+		std::next(std::begin(list_1), std::size(list_1) / 2)
+	);
 
-	for (auto element : list_2) 
-	{
-		std::cout << element << ' ';
-	}
-
-	std::cout << std::endl;
+	assert(list_2 == std::list < int > ({ 0, 1, 2, 3, 4 }));
 
 //  ================================================================================================
 
@@ -204,12 +200,7 @@ int main()
 
 	forward_list.erase_after(std::begin(forward_list)); 
 
-	for (auto element : forward_list) 
-	{
-		std::cout << element << ' ';
-	}
-
-	std::cout << std::endl;
+	assert(forward_list == std::forward_list < int > ({ 42, 1, 2, 3, 4, 5 }));
 
 //	assert(std::size(forward_list) == 6); // error
 
@@ -226,10 +217,10 @@ int main()
 
 	std::ranges::sort(wrapper);
 
-	for (auto element : wrapper) 
-	{
-		std::cout << element << ' ';
-	}
+	std::vector < int > result { 1, 2, 3, 4, 5 };
 
-	std::cout << std::endl;
+	for (auto i = 0uz; i < std::size(wrapper); ++i)
+	{
+		assert(wrapper[i] == result[i]);
+	}
 }

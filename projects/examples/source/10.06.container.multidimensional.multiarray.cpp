@@ -1,13 +1,10 @@
 #include <cstddef>
-#include <iomanip>
-#include <iostream>
 #include <iterator>
-#include <typeinfo>
 #include <vector>
 
 #include <boost/multi_array.hpp>
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < std::size_t D, typename C, typename I > void fill_shape(const C & container, I shape)
 {
@@ -17,7 +14,7 @@ template < std::size_t D, typename C, typename I > void fill_shape(const C & con
 	}
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < std::size_t D, typename C, typename I > void fill_array(const C & container, I array)
 {
@@ -37,7 +34,7 @@ template < std::size_t D, typename C, typename I > void fill_array(const C & con
 	}
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T, std::size_t D, typename C > auto make_array(const C & container)
 {
@@ -52,7 +49,7 @@ template < typename T, std::size_t D, typename C > auto make_array(const C & con
 	return array;
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -60,15 +57,13 @@ int main()
 	auto size_2 = 4uz;
 	auto size_3 = 5uz;
 
-//  ================================================================================================
+//  ---------------------------------------------------------------------------
 
 	std::vector < std::vector < std::vector < int > > > vector_3D(size_1,
 		          std::vector < std::vector < int > >            (size_2,
 			                    std::vector < int >              (size_3, 0)));
 
-	std::cout << "std::vector < std::vector < std::vector < int > > > " << std::endl << std::endl;
-
-	auto counter = 0;
+	auto value = 0;
 
 	for (auto i = 0uz; i < size_1; ++i)
 	{
@@ -76,37 +71,23 @@ int main()
 		{
 			for (auto k = 0uz; k < size_3; ++k)
 			{
-				std::cout << std::setw(2) << std::setfill(' ') << std::right;
-				
-				std::cout << (vector_3D[i][j][k] = ++counter) << " ";
+				vector_3D[i][j][k] = ++value;
 			}
-
-			std::cout << std::endl;
 		}
-
-		std::cout << std::endl;
 	}
 
-//  ================================================================================================
+//  ---------------------------------------------------------------------------
 
 	auto array = make_array < int, 3 > (vector_3D);
 
-	std::cout << typeid(array).name() << std::endl << std::endl;
-
 	for (auto i = 0uz; i < size_1; ++i)
 	{
 		for (auto j = 0uz; j < size_2; ++j)
 		{
 			for (auto k = 0uz; k < size_3; ++k)
 			{
-				std::cout << std::setw(2) << std::setfill(' ') << std::right;
-				
-				std::cout << array[i][j][k] << " ";
+				assert(array[i][j][k] == vector_3D[i][j][k]);;
 			}
-
-			std::cout << std::endl;
 		}
-
-		std::cout << std::endl;
 	}
 }

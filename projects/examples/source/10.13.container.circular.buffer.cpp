@@ -1,23 +1,9 @@
 #include <cassert>
-#include <concepts>
-#include <iostream>
 #include <iterator>
 
 #include <boost/circular_buffer.hpp>
 
-//  ================================================================================================
-
-template < std::forward_iterator I > void print(I first, I last)
-{
-	for (auto iterator = first; iterator != last; ++iterator)
-	{
-		std::cout << *iterator << ' ';
-	}
-
-	std::cout << '\n';
-}
-
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -27,19 +13,17 @@ int main()
 
 	assert(std::size(buffer) == 0 && buffer.capacity() == capacity);
 
-//  ================================================================================================
+//  ----------------------------------------------------------------
 
-	buffer.push_back(0); print(std::begin(buffer), std::end(buffer));
-	buffer.push_back(1); print(std::begin(buffer), std::end(buffer));
-	buffer.push_back(2); print(std::begin(buffer), std::end(buffer));
-	buffer.push_back(3); print(std::begin(buffer), std::end(buffer));
-	buffer.push_back(4); print(std::begin(buffer), std::end(buffer));
+	buffer.push_back(0);
+	buffer.push_back(1);
+	buffer.push_back(2);
+	buffer.push_back(3);
+	buffer.push_back(4); 
 
-	assert(buffer[0] == 2);
-	assert(buffer[1] == 3);
-	assert(buffer[2] == 4);
+	assert(buffer[0] == 2 && buffer[1] == 3 && buffer[2] == 4);
 
-//  ================================================================================================
+//  ----------------------------------------------------------------
 
 	assert(!buffer.is_linearized());
 
