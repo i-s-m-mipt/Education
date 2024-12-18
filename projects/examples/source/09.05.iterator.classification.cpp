@@ -1,6 +1,5 @@
 #include <cassert>
 #include <concepts>
-#include <iostream>
 #include <iterator>
 #include <type_traits>
 #include <vector>
