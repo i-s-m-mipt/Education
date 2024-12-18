@@ -1,6 +1,5 @@
 #include <cassert>
 #include <cstddef>
-#include <iostream>
 #include <utility>
 
 #include <boost/noncopyable.hpp>
@@ -138,13 +137,6 @@ private:
 
     T * m_data = nullptr; detail::RCCB_base * m_rccb = nullptr;
 };
-
-///////////////////////////////////////////////////////////////////////////////////
-
-template < typename T, typename ... Ts > auto make_shared(Ts && ... args)
-{
-    std::clog << "make_shared\n";
-}
 
 ///////////////////////////////////////////////////////////////////////////////////
 

@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <format>
 #include <iomanip>
 #include <iostream>
 #include <memory>
@@ -9,7 +10,7 @@
 
 #include <benchmark/benchmark.h>
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < std::size_t S > class Fixed_Allocator : private boost::noncopyable
 {
@@ -33,15 +34,19 @@ public:
 		}
 	}
 
-//  ------------------
+//  ------------------------------------------------------------------------------------------------
 
-	void print() const
+	void test() const
 	{
-		std::cout << m_begin << " : ";
+		std::cout << "Fixed_Allocator::test : ";
 
-		std::cout << std::setw(4) << std::setfill('0') << std::right << m_offset;
+		std::cout << "S = " << S << ' ';
 
-		std::cout << " / " << S << std::endl;
+		std::cout << "m_begin = " << std::format("{:018}", static_cast < void * > (m_begin)) << ' ';
+
+		std::cout << "m_offset = " << std::setw(4) << std::setfill('0') << std::right;
+		
+		std::cout <<  m_offset << '\n';
 	}
 
 private:
@@ -52,12 +57,12 @@ private:
 
     std::byte * m_begin = m_buffer;
 
-//  -----------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------------
 
 	static inline auto default_alignment = alignof(std::max_align_t);
 };
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state)
 {
@@ -74,7 +79,7 @@ void test_v1(benchmark::State & state)
 	}
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state)
 {
@@ -96,29 +101,25 @@ void test_v2(benchmark::State & state)
 	}
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test_v1);
 BENCHMARK(test_v2);
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Fixed_Allocator < 1024 > allocator; 
+	Fixed_Allocator < 1'024 > allocator; 
 
-	allocator.print();
+	allocator.test();
 
-	[[maybe_unused]] auto ptr_1 = allocator.allocate(  1, 4); allocator.print();
-	[[maybe_unused]] auto ptr_2 = allocator.allocate(  2, 2); allocator.print();
-	[[maybe_unused]] auto ptr_3 = allocator.allocate( 10   ); allocator.print();
-	[[maybe_unused]] auto ptr_4 = allocator.allocate(  4   ); allocator.print();
-	[[maybe_unused]] auto ptr_5 = allocator.allocate(988   ); allocator.print();
-	[[maybe_unused]] auto ptr_6 = allocator.allocate(  1   ); allocator.print();
+	[[maybe_unused]] auto ptr_1 = allocator.allocate(1, 1); allocator.test();
+	[[maybe_unused]] auto ptr_2 = allocator.allocate(2, 2); allocator.test();
+	[[maybe_unused]] auto ptr_3 = allocator.allocate(4, 4); allocator.test();
+	[[maybe_unused]] auto ptr_4 = allocator.allocate(8, 8); allocator.test();
 
-//  detail: 1022 0000 | 3333 3333 | 3300 0000 | 4444 0000 | 5555 5555 | ...	
-
-//  ------------------------------------
+//  -------------------------------------------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }

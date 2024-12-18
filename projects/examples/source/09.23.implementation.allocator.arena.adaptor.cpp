@@ -1,5 +1,6 @@
 #include <cstddef>
 #include <exception>
+#include <format>
 #include <iomanip>
 #include <iostream>
 #include <memory>
@@ -9,7 +10,7 @@
 
 #include <boost/noncopyable.hpp>
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Arena : private boost::noncopyable
 {
@@ -28,7 +29,7 @@ public:
 		}
 	}
 
-//  ------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 	auto allocate(std::size_t size, std::size_t alignment = default_alignment) -> void *
 	{
@@ -50,15 +51,19 @@ public:
 
     void deallocate(void * , std::size_t) const {}
 
-//  ------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
-	void print() const
+	void test() const
 	{
-		std::cout << m_begin << " : ";
+		std::cout << "Arena::test : ";
 
-		std::cout << std::setw(4) << std::setfill('0') << std::right << m_offset;
+		std::cout << "m_size = " << m_size << ' ';
 
-		std::cout << " / " << m_size << std::endl;
+		std::cout << "m_begin = " << std::format("{:018}", m_begin) << ' ';
+
+		std::cout << "m_offset = " << std::setw(4) << std::setfill('0') << std::right;
+		
+		std::cout <<  m_offset << '\n';
 	}
 
 private:
@@ -68,18 +73,18 @@ private:
 		return static_cast < std::byte * > (ptr);
 	}
 
-//  ------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 	std::size_t m_size = 0, m_offset = 0;
 
 	void * m_begin = nullptr;
 
-//  ------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 	static inline auto default_alignment = alignof(std::max_align_t);
 };
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T > class Allocator
 {
@@ -110,18 +115,18 @@ private:
     Arena * m_arena = nullptr;
 };
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Arena arena(1'000);
+	Arena arena(1'024);
 
     Allocator < int > allocator(arena);
 
-    arena.print();
+    arena.test();
 
     std::vector < int, Allocator < int > > vector(5, 0, allocator);
 
-    arena.print(); vector.push_back(1);
-    arena.print();
+    arena.test(); vector.push_back(1);
+    arena.test();
 }

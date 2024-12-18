@@ -52,7 +52,7 @@ public:
 
    ~Client() 
     { 
-		std::clog << "Client::~Client\n";
+		std::cout << "Client::~Client\n";
 	}
 
 //  ----------------------------------------
@@ -68,7 +68,7 @@ public:
 
    ~Server() 
     { 
-		std::clog << "Server::~Server\n";
+		std::cout << "Server::~Server\n";
 	}
 
 //  --------------------------------------
@@ -88,7 +88,7 @@ public:
 
 	virtual void test() const
 	{ 
-		std::clog << "Base::Entity\n"; 
+		std::cout << "Entity::test\n"; 
 	}
 };
 
@@ -130,7 +130,7 @@ int main()
 
 	if (shared_ptr_1)
 	{
-		std::cout << shared_ptr_1 << std::endl;
+		std::cout << "shared_ptr_1 = " << shared_ptr_1 << '\n';
 	}
 
 	std::shared_ptr < int > shared_ptr_2(new auto(1)); 

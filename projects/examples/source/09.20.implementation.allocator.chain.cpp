@@ -1,6 +1,7 @@
-#include <bit>
 #include <cstddef>
 #include <exception>
+#include <format>
+#include <iomanip>
 #include <iostream>
 #include <iterator>
 #include <memory>
@@ -12,7 +13,7 @@
 
 #include <benchmark/benchmark.h>
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Chain_Allocator : private boost::noncopyable
 {
@@ -43,7 +44,7 @@ public:
 		}
 	}
 
-//  -----------------
+//  -----------------------------------------------------------------------------------------------
 
 	auto allocate() -> void *
 	{
@@ -89,11 +90,19 @@ public:
 		node->next = m_head; m_head = node;
 	}
 
-//  ------------------
+//  -----------------------------------------------------------------------------------------------
 
-	void print() const
+	void test() const
 	{ 
-		std::cout << std::bit_cast < std::size_t > (m_head) << std::endl; 
+		std::cout << "Chain_Allocator::test : ";
+
+		std::cout << "m_size = " << m_size << ' ' << "m_size_node = " << m_size_node << ' ';
+
+		std::cout << "m_begin = " << std::format("{:018}", m_begin) << ' ';
+
+		std::cout << "m_head = "  << std::format("{:018}", static_cast < void * > (m_head)) << ' '; 
+
+		std::cout << "m_offset = " << m_offset << '\n';
 	}
 
 private:
@@ -103,7 +112,7 @@ private:
 		Node * next = nullptr; 
 	};
 
-//  --------------------------------------
+//  -----------------------------------------------------------------------------------------------
 
 	auto get_byte(void * ptr) const -> std::byte *
 	{
@@ -115,7 +124,7 @@ private:
 		return static_cast < Node * > (ptr); 
 	}
 
-//  ---------------------------
+//  -----------------------------------------------------------------------------------------------
 
 	auto allocate_nodes() const
 	{
@@ -131,7 +140,7 @@ private:
 		m_head = allocate_nodes(); ++m_offset; m_chains.push_back(m_head);
 	}
 
-//  ------------------------------------------------------
+//  -----------------------------------------------------------------------------------------------
 
 	std::size_t m_size = 0, m_size_node = 0, m_offset = 0;
 
@@ -139,12 +148,12 @@ private:
 
 	std::vector < void * > m_chains;
 
-//  -----------------------------------------------------------------
+//  -----------------------------------------------------------------------------------------------
 
 	static inline auto default_alignment = alignof(std::max_align_t);
 };
 
-//  ==================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state)
 {
@@ -178,7 +187,7 @@ void test_v1(benchmark::State & state)
 	}
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state)
 {
@@ -210,33 +219,31 @@ void test_v2(benchmark::State & state)
 	}
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test_v1);
 BENCHMARK(test_v2);
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
 	Chain_Allocator allocator(32, 8);
 	
-	allocator.print();
+	allocator.test();
 
-	[[maybe_unused]] auto ptr_1 = allocator.allocate(); allocator.print();
-	[[maybe_unused]] auto ptr_2 = allocator.allocate(); allocator.print();
-	[[maybe_unused]] auto ptr_3 = allocator.allocate(); allocator.print();
-	[[maybe_unused]] auto ptr_4 = allocator.allocate(); allocator.print();
-	[[maybe_unused]] auto ptr_5 = allocator.allocate(); allocator.print();
+	[[maybe_unused]] auto ptr_1 = allocator.allocate(); allocator.test();
+	[[maybe_unused]] auto ptr_2 = allocator.allocate(); allocator.test();
+	[[maybe_unused]] auto ptr_3 = allocator.allocate(); allocator.test();
+	[[maybe_unused]] auto ptr_4 = allocator.allocate(); allocator.test();
+	[[maybe_unused]] auto ptr_5 = allocator.allocate(); allocator.test();
 
-	allocator.deallocate (ptr_2);                       allocator.print();
-	allocator.deallocate (ptr_3);                       allocator.print();
+	allocator.deallocate (ptr_2);                       allocator.test();
+	allocator.deallocate (ptr_3);                       allocator.test();
 
-	[[maybe_unused]] auto ptr_6 = allocator.allocate(); allocator.print();
+	[[maybe_unused]] auto ptr_6 = allocator.allocate(); allocator.test();
 
-//  detail: 1111 1111 | 6666 6666 | 0000 0000 | 4444 4444 || 5555 5555 | ...
-
-//  ------------------------------------
+//  ---------------------------------------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }

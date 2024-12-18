@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <format>
 #include <iomanip>
 #include <iostream>
 #include <memory>
@@ -9,7 +10,7 @@
 
 #include <benchmark/benchmark.h>
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 class Arena_Allocator : private boost::noncopyable
 {
@@ -28,7 +29,7 @@ public:
 		}
 	}
 
-//  ----------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 	auto allocate(std::size_t size, std::size_t alignment = default_alignment) -> void * 
 	{
@@ -48,15 +49,19 @@ public:
 		}
 	}
 
-//  ------------------
+//  ------------------------------------------------------------------------------------
 
-	void print() const
+	void test() const
 	{
-		std::cout << m_begin << " : ";
+		std::cout << "Arena_Allocator::test : ";
 
-		std::cout << std::setw(4) << std::setfill('0') << std::right << m_offset;
+		std::cout << "m_size = " << m_size << ' ';
 
-		std::cout << " / " << m_size << std::endl;
+		std::cout << "m_begin = " << std::format("{:018}", m_begin) << ' ';
+
+		std::cout << "m_offset = " << std::setw(4) << std::setfill('0') << std::right;
+		
+		std::cout <<  m_offset << '\n';
 	}
 
 private:
@@ -66,18 +71,18 @@ private:
 		return static_cast < std::byte * > (ptr);
 	}
 
-//  -------------------------------------
+//  ------------------------------------------------------------------------------------
 
-	std::size_t m_size = 0, m_offset = 0;
-
+	std::size_t m_size = 0, m_offset = 0; 
+	
 	void * m_begin = nullptr;
 
-//  -----------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 	static inline auto default_alignment = alignof(std::max_align_t);
 };
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state)
 {
@@ -94,7 +99,7 @@ void test_v1(benchmark::State & state)
 	}
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state)
 {
@@ -116,29 +121,25 @@ void test_v2(benchmark::State & state)
 	}
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test_v1);
 BENCHMARK(test_v2);
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Arena_Allocator allocator(1024); 
+	Arena_Allocator allocator(1'024); 
 
-	allocator.print();
+	allocator.test();
 
-	[[maybe_unused]] auto ptr_1 = allocator.allocate(  1, 4); allocator.print();
-	[[maybe_unused]] auto ptr_2 = allocator.allocate(  2, 2); allocator.print();
-	[[maybe_unused]] auto ptr_3 = allocator.allocate( 10   ); allocator.print();
-	[[maybe_unused]] auto ptr_4 = allocator.allocate(  4   ); allocator.print();
-	[[maybe_unused]] auto ptr_5 = allocator.allocate(988   ); allocator.print();
-	[[maybe_unused]] auto ptr_6 = allocator.allocate(  1   ); allocator.print();
+	[[maybe_unused]] auto ptr_1 = allocator.allocate(1, 1); allocator.test();
+	[[maybe_unused]] auto ptr_2 = allocator.allocate(2, 2); allocator.test();
+	[[maybe_unused]] auto ptr_3 = allocator.allocate(4, 4); allocator.test();
+	[[maybe_unused]] auto ptr_4 = allocator.allocate(8, 8); allocator.test();
 
-//  detail: 1022 0000 | 3333 3333 | 3300 0000 | 4444 0000 | 5555 5555 | ...	
-
-//  ------------------------------------
+//  -------------------------------------------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }

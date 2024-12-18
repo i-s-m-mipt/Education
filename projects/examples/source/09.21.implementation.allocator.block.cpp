@@ -1,6 +1,6 @@
-#include <bit>
 #include <cstddef>
 #include <exception>
+#include <format>
 #include <iostream>
 #include <memory>
 #include <new>
@@ -13,7 +13,7 @@
 
 #include <benchmark/benchmark.h>
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Block_Allocator : private boost::noncopyable
 {
@@ -45,7 +45,7 @@ public:
         }
     }
 
-//  ------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------------------
 
     auto allocate(std::size_t size) -> void *
     {
@@ -118,18 +118,26 @@ public:
         merge(previous, node);
     }
 
-//  --------------------------
+//  -----------------------------------------------------------------------------------------------
 
-    void print() const
+    void test() const
     { 
-        std::cout << std::bit_cast < std::size_t > (m_head);
+        std::cout << "Chain_Allocator::test : ";
+
+        std::cout << "m_size = " << m_size << ' ';
+
+        std::cout << "m_begin = " << std::format("{:018}", m_begin) << ' ';
+
+        std::cout << "m_head = "  << std::format("{:018}", static_cast < void * > (m_head)) << ' '; 
 
         if (m_head->next)
         {
-            std::cout << ' ' << std::bit_cast < std::size_t > (m_head->next);
+            std::cout << "m_head->next = ";
+            
+            std::cout << std::format("{:018}", static_cast < void * > (m_head->next));
         }
 
-        std::cout << std::endl;
+        std::cout << '\n';
     }
 
 private:
@@ -139,14 +147,14 @@ private:
         std::size_t size = 0; Node * next = nullptr; 
     };
 
-//  ------------------------------------------------
+//  -----------------------------------------------------------------------------------------------
 
 	struct alignas(std::max_align_t) Header 
     { 
         std::size_t size = 0; 
     };
 
-//  --------------------------------------
+//  -----------------------------------------------------------------------------------------------
 
     auto get_byte(void * ptr) const -> std::byte *
 	{
@@ -163,7 +171,7 @@ private:
 		return static_cast < Header * > (ptr);
 	}
 
-//  ----------------------------------------------------------------
+//  -----------------------------------------------------------------------------------------------
 
     auto find_first(std::size_t size) const -> std::pair < Node * , Node * >
     {
@@ -174,7 +182,7 @@ private:
         return std::make_pair(current, previous);
     }
 
-//  ----------------------------------------------
+//  -----------------------------------------------------------------------------------------------
 
 	void merge(Node * previous, Node * node) const
     {
@@ -193,18 +201,18 @@ private:
 	    }
     }
 
-//  -----------------------
+//  -----------------------------------------------------------------------------------------------
 
     std::size_t m_size = 0;
 
     void * m_begin = nullptr; Node * m_head = nullptr;
 
-//  -----------------------------------------------------------------
+//  -----------------------------------------------------------------------------------------------
 
     static inline auto default_alignment = alignof(std::max_align_t);
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state)
 {
@@ -242,7 +250,7 @@ void test_v1(benchmark::State & state)
 	}
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state)
 {
@@ -282,33 +290,30 @@ void test_v2(benchmark::State & state)
 	}
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test_v1)->Arg(42);
 BENCHMARK(test_v2)->Arg(42);
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
     Block_Allocator allocator(1'024);
     
-    allocator.print(); 
+    allocator.test(); 
 
-	[[maybe_unused]] auto ptr_1 = allocator.allocate(16); allocator.print();
-	[[maybe_unused]] auto ptr_2 = allocator.allocate(32); allocator.print();
-	[[maybe_unused]] auto ptr_3 = allocator.allocate(32); allocator.print();
-    [[maybe_unused]] auto ptr_4 = allocator.allocate(16); allocator.print();
+	[[maybe_unused]] auto ptr_1 = allocator.allocate(1); allocator.test();
+	[[maybe_unused]] auto ptr_2 = allocator.allocate(2); allocator.test();
+	[[maybe_unused]] auto ptr_3 = allocator.allocate(3); allocator.test();
+    [[maybe_unused]] auto ptr_4 = allocator.allocate(4); allocator.test();
 
-	allocator.deallocate (ptr_2);                         allocator.print();
-    allocator.deallocate (ptr_3);                         allocator.print();
+	allocator.deallocate (ptr_3);                        allocator.test();
+    allocator.deallocate (ptr_2);                        allocator.test();
 
-	[[maybe_unused]] auto ptr_5 = allocator.allocate(16); allocator.print();
-	[[maybe_unused]] auto ptr_6 = allocator.allocate(32); allocator.print();
-    
-//  detail: H1H5H660H44
+	[[maybe_unused]] auto ptr_5 = allocator.allocate(5); allocator.test();
 
-//  ------------------------------------
+//  ----------------------------------------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }

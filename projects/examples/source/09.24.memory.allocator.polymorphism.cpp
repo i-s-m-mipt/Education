@@ -2,11 +2,13 @@
 #include <array>
 #include <cassert>
 #include <cstddef>
-#include <iostream>
 #include <iterator>
 #include <list>
 #include <memory_resource>
+#include <string>
 #include <vector>
+
+using namespace std::literals;
 
 #include <boost/pool/object_pool.hpp>
 #include <boost/pool/pool_alloc.hpp>
@@ -122,7 +124,7 @@ BENCHMARK(test_v5);
 
 int main()
 {
-    std::array < char, 64 > buffer;
+    std::array < char, 32 > buffer;
 
     std::ranges::fill(buffer, '_');
 
@@ -139,12 +141,12 @@ int main()
         letters.push_back(static_cast < char > ('a' + i));
     }
 
-    for (auto element : buffer) 
-    {
-        std::cout << element;
-    }
+    auto result = "abcdefghijklmnopqrstuvwxyz______"s;
 
-    std::cout << std::endl;
+    for (auto i = 0uz; i < std::size(buffer); ++i) 
+    {
+        assert(buffer[i] == result[i]);
+    }
 
 //  ================================================================================================
 

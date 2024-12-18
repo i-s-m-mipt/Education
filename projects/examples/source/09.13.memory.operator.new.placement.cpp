@@ -13,12 +13,12 @@ public:
 
 	explicit Entity_v1(int data) : m_data(data)
 	{
-		std::clog << "Entity_v1:: Entity_v1 : m_data = " << m_data << '\n';
+		std::cout << "Entity_v1:: Entity_v1 : m_data = " << m_data << '\n';
 	}
 
    ~Entity_v1()
 	{
-		std::clog << "Entity_v1::~Entity_v1 : m_data = " << m_data << '\n';
+		std::cout << "Entity_v1::~Entity_v1 : m_data = " << m_data << '\n';
 	}
 
 private:
@@ -48,14 +48,14 @@ public:
 
 	static auto operator new(std::size_t size) -> void *
 	{
-		std::clog << "Entity_v3::operator new\n";
+		std::cout << "Entity_v3::operator new\n";
 
 		return ::operator new(size);
 	}
 
 	static void operator delete(void * ptr, std::size_t)
 	{
-		std::clog << "Entity_v3::operator delete\n";
+		std::cout << "Entity_v3::operator delete\n";
 
 		::operator delete(ptr);
 	}
@@ -76,8 +76,8 @@ private:
 
 public:
 
-	Client() { std::clog << "Client:: Client\n"; }
-   ~Client() { std::clog << "Client::~Client\n"; }
+	Client() { std::cout << "Client:: Client\n"; }
+   ~Client() { std::cout << "Client::~Client\n"; }
 
 //  ----------------------------------------------------
 
@@ -131,8 +131,6 @@ int main()
 	operator delete(entities, sizeof(Entity_v1) * size);
 
 //  ================================================================================================
-
-	std::cout << "sizeof(Entity_v2) = " << sizeof(Entity_v2) << '\n';
 
 	Entity_v2 entity_v2;
 

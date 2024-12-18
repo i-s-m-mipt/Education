@@ -1,5 +1,6 @@
 #include <cstddef>
 #include <cstdint>
+#include <format>
 #include <iomanip>
 #include <iostream>
 #include <iterator>
@@ -30,7 +31,7 @@ public:
 		}
 	}
 
-	///////////////////////////////////////////////////////////////////////////////////////////
+//  -------------------------------------------------------------------------------------------
 
 	auto allocate(std::size_t size, std::size_t alignment = default_alignment) -> void *
 	{
@@ -63,22 +64,26 @@ public:
 		m_offset = get_byte(ptr) - get_byte(m_begin) - *header;
 	}
 
-	///////////////////////////////////////////////////////////////////////////////////////////
+//  -------------------------------------------------------------------------------------------
 
-	void print() const
+	void test() const
 	{
-		std::cout << m_begin << " : ";
+		std::cout << "Stack_Allocator::test : ";
 
-		std::cout << std::setw(4) << std::setfill('0') << std::right << m_offset;
+		std::cout << "m_size = " << m_size << ' ';
 
-		std::cout << " / " << m_size << std::endl;
+		std::cout << "m_begin = " << std::format("{:018}", m_begin) << ' ';
+
+		std::cout << "m_offset = " << std::setw(4) << std::setfill('0') << std::right;
+		
+		std::cout <<  m_offset << '\n';
 	}
 
 private:
 
 	using Header = std::uint8_t;
 
-	/////////////////////////////////////////////
+//  -------------------------------------------------------------------------------------------
 
 	auto get_byte(void * ptr) const -> std::byte *
 	{
@@ -90,13 +95,13 @@ private:
 		return static_cast < Header * > (ptr);
 	}
 
-	/////////////////////////////////////////////
+//  -------------------------------------------------------------------------------------------
 
-	std::size_t m_size = 0, m_offset = 0;
-
+	std::size_t m_size = 0, m_offset = 0; 
+	
 	void * m_begin = nullptr;
 
-	/////////////////////////////////////////////////////////////////
+//  -------------------------------------------------------------------------------------------
 
 	static inline auto default_alignment = alignof(std::max_align_t);
 };
@@ -156,24 +161,20 @@ BENCHMARK(test_v2);
 
 int main()
 {
-	Stack_Allocator allocator(1024);
+	Stack_Allocator allocator(1'024);
 
-	allocator.print();
+	allocator.test();
 
-	[[maybe_unused]] auto ptr_1 = allocator.allocate( 1, 4); allocator.print();
-	[[maybe_unused]] auto ptr_2 = allocator.allocate( 2, 2); allocator.print();
-	[[maybe_unused]] auto ptr_3 = allocator.allocate(10   ); allocator.print();
-	[[maybe_unused]] auto ptr_4 = allocator.allocate( 4   ); allocator.print();
+	[[maybe_unused]] auto ptr_1 = allocator.allocate(1, 1); allocator.test();
+	[[maybe_unused]] auto ptr_2 = allocator.allocate(2, 2); allocator.test();
+	[[maybe_unused]] auto ptr_3 = allocator.allocate(4, 4); allocator.test();
+	[[maybe_unused]] auto ptr_4 = allocator.allocate(8, 8); allocator.test();
 
-	allocator.deallocate (ptr_4); 							 allocator.print();
-	allocator.deallocate (ptr_3); 							 allocator.print();
+	allocator.deallocate (ptr_4); 							allocator.test();
 
-	[[maybe_unused]] auto ptr_5 = allocator.allocate( 3, 4); allocator.print();
-	[[maybe_unused]] auto ptr_6 = allocator.allocate( 8   ); allocator.print(); 
+	[[maybe_unused]] auto ptr_5 = allocator.allocate(8, 8); allocator.test(); 
 
-	// detail: 000H 1H22 | 000H 555H | 6666 6666 | ...
-
-	///////////////////////////////////////////////////////////////////////////
+//  --------------------------------------------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }

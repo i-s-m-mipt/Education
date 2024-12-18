@@ -110,5 +110,5 @@ int main()
 
 	vector.resize(1'000);
 
-	std::cout << "*begin = " << *begin << '\n'; // support: -D_GLIBCXX_DEBUG
+	[[maybe_unused]] auto x = *begin; // support: -D_GLIBCXX_DEBUG
 }
