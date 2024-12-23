@@ -1,6 +1,8 @@
 #include <iomanip>
 #include <iostream>
+#include <iterator>
 #include <random>
+#include <type_traits>
 #include <unordered_set>
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -17,6 +19,8 @@ void test(const std::unordered_set < int > & unordered_set)
 //  ----------------------------------------------------------------------------------------------
 
 	using iterator_category_t = typename std::unordered_set < int > ::iterator::iterator_category;
+
+	static_assert(std::is_same_v < iterator_category_t, std::forward_iterator_tag > );
 
 //  ----------------------------------------------------------------------------------------------
 
