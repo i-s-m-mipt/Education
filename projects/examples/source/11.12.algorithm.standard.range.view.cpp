@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cassert>
+#include <concepts>
 #include <forward_list>
 #include <functional>
 #include <iostream>
@@ -46,42 +47,40 @@ static_assert(std::ranges::random_access_range < std::      vector < int > > );
 
 int main()
 {
+	int array[5]{};
+
+	for (auto i = 0; auto && element : array) // support: cppinsights.io
+	{
+		element = ++i;
+	}
+
+//  ------------------------------------------------------------------------------------------------
+
 	std::vector < int > vector(5, 0);
 
-	for (int i = 0; auto && element : vector) // support: cppinsights.io
+	for (auto i = 0; auto && element : vector)
 	{
 		element = ++i; 
 	}
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	std::map < int, int > map { { 1, 10 }, { 2, 20 }, { 3, 30 } };
+	std::map < int, int > map { { 1, 0 }, { 2, 0 }, { 3, 0 } };
 
-	for (auto [key, value] : map)
+	for (auto i = 0; auto && [key, element] : map)
 	{
-		std::cout << key << ", " << value << std::endl;
+		element = ++i;
 	}
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	int array[]{ 1, 2, 3, 4, 5 };
+	assert(*std::ranges::begin(array) == 1 && std::ranges::size(array) == 5);
 
-	for (auto element : array) 
-	{
-		std::cout << element << ' ';
-	}
+	std::ranges::sort(array, std::ranges::greater());
 
-	std::cout << std::endl;
+	assert(std::ranges::is_sorted(array, std::ranges::greater()));
 
-//  ================================================================================================
-
-	assert(*std::ranges::begin(vector) == 1 && std::ranges::size(vector) == 5);
-
-	std::ranges::transform(vector, std::begin(vector), std::negate());
-
-	std::ranges::sort(vector);
-
-	assert(std::ranges::is_sorted(vector));
+//  ------------------------------------------------------------------------------------------------
 
 	std::vector < Entity > entities { { 1 }, { 2 }, { 3 } };
 
@@ -89,48 +88,31 @@ int main()
 
 	assert(std::ranges::is_sorted(entities, std::ranges::greater(), &Entity::data));
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
-	auto lambda = [](auto x){ return x + 1; };
+	for ([[maybe_unused]] auto element : std::ranges::views::iota(1, 5)); 
 
-	for (auto element : std::ranges::views::transform(vector, lambda))
-	{
-		std::cout << element << ' ';
-	}
+	for ([[maybe_unused]] auto element : std::ranges::views::iota(1) | std::ranges::views::take(5));
 
-	std::cout << std::endl;
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
+	std::cout << "Enter 1 or more integers and 1 non-integer : ";
 
-	for (auto key : std::ranges::views::reverse(std::ranges::views::keys(map)))
-	{
-		std::cout << key << ' ';
-	}
+	for ([[maybe_unused]] auto element : std::views::istream < int > (std::cin));
 
-	std::cout << std::endl;
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
+	auto string = "1,2,3,4,5"s;
 
-	for (auto element : std::ranges::views::iota(1) | 
-						std::ranges::views::take(5) | 
-						std::ranges::views::drop(1)
-		)
-	{
-		std::cout << element << ' ';
-	}
+	for ([[maybe_unused]] auto element : std::ranges::views::split(string, ','));
 
-	std::cout << std::endl;
+//  ------------------------------------------------------------------------------------------------
 
-//  ================================================================================================
+	auto lambda = [](auto x){ return x; };
 
-	for (auto string = "1,2,3,4,5"s; auto substring : std::ranges::views::split(string, ','))
-	{
-		std::cout << std::string(std::begin(substring), std::end(substring)) << ' ';
-	}
+	for ([[maybe_unused]] auto element : std::ranges::views::transform(vector, lambda));
 
-	std::cout << std::endl;
-
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------------------
 
     auto dangling_iterator = std::ranges::max_element
 	(

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <memory>
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////
 
 class Visitor
 {
@@ -15,7 +15,7 @@ public:
     virtual void visit(const class Server * server) const = 0;
 };
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
@@ -30,7 +30,7 @@ public:
     virtual void visit_by(const Visitor & visitor) const = 0;
 };
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////
 
 class Client : public Entity 
 {
@@ -38,7 +38,7 @@ public:
 
     void test() const override 
     { 
-        std::clog << "Client::test\n"; 
+        std::cout << "Client::test\n"; 
     }
 
     void visit_by(const Visitor & visitor) const override
@@ -47,7 +47,7 @@ public:
     }
 };
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////
 
 class Server : public Entity
 {
@@ -55,7 +55,7 @@ public:
 
     void test() const override 
     { 
-        std::clog << "Server::test\n"; 
+        std::cout << "Server::test\n"; 
     }
 
     void visit_by(const Visitor & visitor) const override
@@ -64,7 +64,7 @@ public:
     }
 };
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////
 
 class Router : public Visitor
 {
@@ -72,20 +72,20 @@ public:
 
     void visit(const Client * client) const override 
     { 
-        std::clog << "Router::visit (1)\n"; 
+        std::cout << "Router::visit (1)\n"; 
 
         client->test();
     }
 
     void visit(const Server * server) const override 
     {
-        std::clog << "Router::visit (2)\n"; 
+        std::cout << "Router::visit (2)\n"; 
 
         server->test();
     }
 };
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////
 
 int main()
 {

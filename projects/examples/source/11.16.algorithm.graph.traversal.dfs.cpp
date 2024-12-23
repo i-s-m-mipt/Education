@@ -5,7 +5,7 @@
 #include <boost/graph/named_function_params.hpp>
 #include <boost/graph/visitors.hpp>
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 class Visitor : public boost::default_dfs_visitor
 {
@@ -13,76 +13,71 @@ public:
 
     template < typename V, typename G > void initialize_vertex(V vertex, const G & graph)
     {
-        std::cout << vertex << " (initialize vertex)" << std::endl;
+        std::cout << "Visitor::initialize_vertex : vertex = " << vertex << '\n';
 
         boost::default_dfs_visitor::initialize_vertex(vertex, graph);
     }
     
     template < typename V, typename G > void start_vertex(V vertex, const G & graph)
     {
-        std::cout << vertex << " (start vertex)" << std::endl;
+        std::cout << "Visitor::start_vertex : vertex = " << vertex << '\n';
 
         boost::default_dfs_visitor::start_vertex(vertex, graph);
     }
 
     template < typename V, typename G > void discover_vertex(V vertex, const G & graph)
     {
-        std::cout << vertex << " (discover vertex)" << std::endl;
+        std::cout << "Visitor::discover_vertex : vertex = " << vertex << '\n';
 
         boost::default_dfs_visitor::discover_vertex(vertex, graph);
     }
 
     template < typename V, typename G > void finish_vertex(V vertex, const G & graph)
     {
-        std::cout << vertex << " (finish vertex)" << std::endl;
+        std::cout << "Visitor::finish_vertex : vertex = " << vertex << '\n';
 
         boost::default_dfs_visitor::finish_vertex(vertex, graph);
     }
     
-//  -------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------
 
     template < typename E, typename G > void examine_edge(E edge, const G & graph)
     {
-        std::cout << edge.m_source << " >> " << 
-                     edge.m_target << " (examine edge)" << std::endl;
+        std::cout << "Visitor::examine_edge : edge = " << edge << '\n';
 
         boost::default_dfs_visitor::examine_edge(edge, graph);
     }
 
     template < typename E, typename G > void tree_edge(E edge, const G & graph)
     {
-        std::cout << edge.m_source << " >> " << 
-                     edge.m_target << " (tree edge)" << std::endl;
+        std::cout << "Visitor::tree_edge : edge = " << edge << '\n';
 
         boost::default_dfs_visitor::tree_edge(edge, graph);
     }
 
     template < typename E, typename G > void back_edge(E edge, const G & graph)
     {
-        std::cout << edge.m_source << " >> " << 
-                     edge.m_target << " (back edge)" << std::endl;
+        std::cout << "Visitor::back_edge : edge = " << edge << '\n';
 
         boost::default_dfs_visitor::back_edge(edge, graph);
     }
 
     template < typename E, typename G > void forward_or_cross_edge(E edge, const G & graph)
     {
-        std::cout << edge.m_source << " >> " << 
-                     edge.m_target << " (forward or cross edge)" << std::endl;
+        std::cout << "Visitor::forward_or_cross_edge : edge = " << edge << '\n';
 
         boost::default_dfs_visitor::forward_or_cross_edge(edge, graph);
     }
 
     template < typename E, typename G > void finish_edge(E edge, const G & graph)
     {
-        std::cout << edge.m_source << " >> " << 
-                     edge.m_target << " (finish edge)" << std::endl;
+        std::cout << "Visitor::finish_edge : edge = " << edge << '\n';
 
         boost::default_dfs_visitor::finish_edge(edge, graph);
     }
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {

@@ -1,13 +1,12 @@
+#include <cassert>
 #include <concepts>
 #include <cstddef>
-#include <iomanip>
-#include <iostream>
 #include <iterator>
 #include <tuple>
 #include <utility>
 #include <vector>
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 auto next(std::vector < std::size_t > & steps, const std::vector < std::size_t > & sizes)
 {
@@ -28,7 +27,7 @@ auto next(std::vector < std::size_t > & steps, const std::vector < std::size_t >
 	return has_next;
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename F, typename T, std::size_t ... Is > void apply
 (
@@ -40,7 +39,7 @@ template < typename F, typename T, std::size_t ... Is > void apply
 	f(*(std::next(std::get < Is > (tuple).first, steps[Is]))...);
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < std::forward_iterator ... Is > auto generate(std::pair < Is, Is > ... args)
 {
@@ -69,31 +68,28 @@ template < std::forward_iterator ... Is > auto generate(std::pair < Is, Is > ...
 	return result;
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::vector < int > vector_1 { 1, 2, 3, 4, 5 };
-	std::vector < int > vector_2 { 1, 2, 3, 4, 5 };
-
-//  ---------------------------------------------------------------
+    std::vector < int > vector { 1, 2, 3, 4, 5 };
 
 	auto result = generate
 	(	
-		std::make_pair(std::begin(vector_1), std::end(vector_1)),
-		std::make_pair(std::begin(vector_2), std::end(vector_2))
+		std::make_pair(std::begin(vector), std::end(vector)),
+		std::make_pair(std::begin(vector), std::end(vector))
 	);
 
-//  ---------------------------------------------------------------
+	auto size = std::size(vector);
 
-	std::cout << '\n';
-
-	std::cout << std::setprecision(1) << std::fixed;
-
-	for (auto [x, y] : result)
+	for (auto i = 0uz; i < size; ++i)
 	{
-		std::cout << "pair = { " << x << ", " << y << " }\n";
-	}
+		for (auto j = 0uz; j < size; ++j)
+		{
+			auto tuple = result[i * size + j];
 
-	std::cout << '\n';
+			assert(std::get < 0 > (tuple) == vector[i]);
+			assert(std::get < 1 > (tuple) == vector[j]);
+		}
+	}
 }

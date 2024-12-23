@@ -1,5 +1,5 @@
 #include <array>
-#include <iostream>
+#include <cassert>
 #include <iterator>
 
 #include <boost/graph/adjacency_list.hpp>
@@ -7,9 +7,14 @@
 
 int main()
 {
-    boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS, boost::no_property, 
-        
-        boost::property < boost::edge_weight_t, unsigned int > > graph;
+    using edge_property_t = boost::property < boost::edge_weight_t, unsigned int > ;
+
+    boost::adjacency_list 
+    < 
+        boost::vecS, 
+        boost::vecS, boost::directedS, boost::no_property, edge_property_t 
+    >
+    graph;
 
     boost::add_edge(0, 2, 1, graph);
     boost::add_edge(1, 1, 2, graph);
@@ -27,10 +32,7 @@ int main()
 
 	boost::dijkstra_shortest_paths(graph, 0, map);
 
-	for (auto distance : distances) 
-    {
-        std::cout << distance << ' ';
-    }
+    std::array < unsigned int, 5 > result { 0, 5, 1, 6, 13 };
 
-    std::cout << std::endl;
+	assert(distances == result);
 }
