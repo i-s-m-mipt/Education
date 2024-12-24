@@ -119,21 +119,19 @@ BENCHMARK(test_v3)->DenseRange(8192, 65537, 8192)->Complexity();
 
 int main()
 {
-    std::cout << '\n';
-
     std::cout << "Enter 1 string : "; std::string string_1; std::cin >> string_1;
+
+    std::cout << "Entered string : " << string_1 << '\n';
+
+//  ------------------------------------------------------------------------------------
 
     std::cout << "Enter 1 string : "; std::string string_2; 
     
     std::getline(std::cin >> std::ws, string_2);
 
-    std::cout << '\n';
+    std::cout << "Entered string : " << string_2 << '\n';
 
-    std::cout << "std::quoted(string_1) = " << std::quoted(string_1) << '\n';
-
-    std::cout << "std::quoted(string_2) = " << std::quoted(string_2) << '\n'<< '\n';
-
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------
 
     auto string_3 = "aaaaabbbbb"s;
 
@@ -146,7 +144,7 @@ int main()
 
     assert(std::stoi("1") == 1 && "1" == std::to_string(1));
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------
 
     [[maybe_unused]] char   buffer_1[]{ 'a', 'a', 'a', 'a', 'a' };
 
@@ -158,30 +156,28 @@ int main()
 
     assert(std::strlen(string_3.c_str()) == 10);
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------
 
     std::cout << "Enter 1 string : "; char buffer_2[1'000]{};
 
     std::cin.getline(buffer_2, std::size(buffer_2));
 
-    std::cout << '\n';
+//  std::cout << "Entered string : " << buffer_1 << '\n'; // bad
 
-//  std::cout << "buffer_1 = " << buffer_1 << '\n'; // bad
+    std::cout << "Entered string : " << buffer_2 << '\n';
 
-    std::cout << "buffer_2 = " << buffer_2 << '\n' << '\n';
-
-//  -------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
     assert(cistring_t("AAAAA") == cistring_t("aaaaa"));
 
-//  -----------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
     auto string_4 = "aaaaa"s, string_5 = std::string(1'000'000, 'a');
 
     assert(distance(&string_4.front(), &string_4) == 16);
     assert(distance(&string_5.front(), &string_5) != 16);
 
-//  -----------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
     auto string_view = "aaaaa"sv;
 
@@ -197,7 +193,7 @@ int main()
 
 //  std::string_view bad_view_2 = [](){ return "aaaaa"s; }(); // bad
 
-//  ----------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }

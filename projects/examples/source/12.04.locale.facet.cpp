@@ -1,3 +1,4 @@
+#include <cassert>
 #include <chrono>
 #include <cstring>
 #include <ctime>
@@ -8,64 +9,68 @@
 #include <locale>
 #include <stdexcept>
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 int main() // support: locale -a
 {
 	auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 
-	auto data = std::localtime(&time);
+	auto date = std::localtime(&time);
 
 	auto format = "%A %x";
 
-//  ================================================================================================
+//  -----------------------------------------------------------------------------------------------
 	
 	std::locale locale_1("en_US.utf8"); 
     
     std::cout.imbue(locale_1);
 
-	std::cout << 1'000'000'000 << std::endl;
+	assert((std::use_facet < std::  numpunct < char        > > (locale_1).thousands_sep()) == ',');
 
-	std::cout << std::use_facet < std::numpunct   < char        > > (locale_1).thousands_sep();
-	std::cout << std::use_facet < std::moneypunct < char, false > > (locale_1).curr_symbol  ();
-
-	std::cout << std::endl;
+	assert((std::use_facet < std::moneypunct < char, false > > (locale_1).curr_symbol  ()) == "$");
 
 	const auto & time_put_1 = std::use_facet < std::time_put < char > > (locale_1);
 
-	time_put_1.put(std::cout, std::cout, ' ', data, format, format + std::strlen(format));
+	std::cout << "date (en_US.utf8) = ";
 
-	std::cout << std::endl;
+	time_put_1.put(std::cout, std::cout, ' ', date, format, format + std::strlen(format));
 
-//  ================================================================================================
+	std::cout << '\n';
+
+//  -----------------------------------------------------------------------------------------------
 
 	std::locale locale_2("ru_RU.utf8");
 
 	std::cout.imbue(locale_2);
 
-	std::cout << 1'000'000'000 << std::endl;
+	assert((std::use_facet < std::  numpunct < char        > > (locale_2).thousands_sep()) == ' ');
 
-	std::cout << std::use_facet < std::numpunct   < char        > > (locale_2).thousands_sep();
-	std::cout << std::use_facet < std::moneypunct < char, false > > (locale_2).curr_symbol  ();
-
-	std::cout << std::endl;
+	assert((std::use_facet < std::moneypunct < char, false > > (locale_2).curr_symbol  ()) == "₽");
 
 	const auto & time_put_2 = std::use_facet < std::time_put < char > > (locale_2);
 
-	time_put_2.put(std::cout, std::cout, ' ', data, format, format + std::strlen(format));
+	std::cout << "date (ru_RU.utf8) = ";
 
-	std::cout << std::endl;
+	time_put_2.put(std::cout, std::cout, ' ', date, format, format + std::strlen(format));
 
-//  ================================================================================================
+	std::cout << '\n';
+
+//  -----------------------------------------------------------------------------------------------
 
 	const auto & time_get_C = std::use_facet < std::time_get < char > > (std::locale::classic());
 
-	auto dateorder = time_get_C.date_order();
+	switch (std::cout << "time_get_C.date_order() = "; time_get_C.date_order())
+	{
+		case std::time_base::dmy: { std::cout << "dmy\n"; break; }
+		case std::time_base::mdy: { std::cout << "mdy\n"; break; }
+		case std::time_base::ymd: { std::cout << "ymd\n"; break; }
+		case std::time_base::ydm: { std::cout << "ydm\n"; break; }
 
-	std::cout << "dateorder : "
-			  << (dateorder == std::time_base::no_order || 
-			      dateorder == std::time_base::mdy ? "mdy" :
-				  dateorder == std::time_base::dmy ? "dmy" :
-				  dateorder == std::time_base::ymd ? "ymd" :
-				  dateorder == std::time_base::ydm ? "ydm" : "unknown") << '\n';
+		default:
+		{
+			std::cout << "unknown\n"; break;
+		}
+	}
 
 	std::cout << "Enter 1 date (Day MM/DD/YYYY) : ";
 

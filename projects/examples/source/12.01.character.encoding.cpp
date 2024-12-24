@@ -1,66 +1,39 @@
-#include <bit>
 #include <cassert>
 #include <ios>
 #include <iostream>
 #include <type_traits>
 
+//////////////////////////////////////////////////////////////////
+
 int main()
 {
+	assert(sizeof(char) == 1);
+
 	auto c = 'a';
 
 	assert(static_cast < int > (c) == 97);
 
-	assert(sizeof(char) == 1); // support: std::byte
+//	c = 'я'; // error
 
-//  ================================================================================================
+	std::cout << "std::is_signed_v < char > = " << std::boolalpha;
 
-	std::cout << std::boolalpha << std::is_signed_v < char > << std::endl;
-
-//	c = 255; // error
+	std::cout <<  std::is_signed_v < char > << '\n';
 	
-	for (auto i = 0; i < 256; ++i) 
-	{
-		std::cout << static_cast < char > (i);
+	assert('1' - '0' == 1);
 
-		if ((i + 1) % 64 == 0) 
-		{
-			std::cout << '\n';
-		}
-	}
+//  --------------------------------------------------------------
 
-	std::cout << std::endl;
+	std::cout << "sizeof(wchar_t) = " << sizeof(wchar_t) << '\n';
 
-	[[maybe_unused]]   signed char sc = 'a';
-	[[maybe_unused]] unsigned char uc = 'a';
+	auto wc = L'a';
 
-//  ================================================================================================
+	std::wcout << "wc = " << wc << '\n';
 
-	for (c = '!'; c <= '~'; ++c) 
-	{
-		std::cout << c;
-	}
+//  --------------------------------------------------------------
 
-	std::cout << std::endl;
-	
-	assert('8' - '0' == 8);
+	assert(sizeof(char8_t) == 1);
 
-//  ================================================================================================
+	[[maybe_unused]] auto c8 = u8'a'; 	
 
-//	wchar_t wc = L'a'; // bad
-
-	std::cout << sizeof(wchar_t) << std::endl;
-
-	auto c8 = u8'a'; c = c8; // support: UTF-8
-
-//  ================================================================================================
-
-	auto x = static_cast < char16_t > (0x1234);
-
-	auto is_little_endian_1 = *std::bit_cast < char * > (&x) == 0x34;
-
-	std::cout << std::boolalpha << "is_little_endian_1 = " << is_little_endian_1 << '\n';
-
-	auto is_little_endian_2 = std::endian::native == std::endian::little;
-
-	std::cout << std::boolalpha << "is_little_endian_2 = " << is_little_endian_2 << '\n';
+//	std::cout << "c8 = " << c8 << '\n'; // error
 }

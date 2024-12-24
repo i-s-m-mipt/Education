@@ -1,3 +1,4 @@
+#include <cassert>
 #include <codecvt>
 #include <iomanip>
 #include <iostream>
@@ -9,7 +10,7 @@
 
 #include <boost/locale.hpp>
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////
 
 auto convert_v1(const std::string & string)
 {
@@ -22,6 +23,8 @@ auto convert_v1(const std::string & string)
 	return boost::locale::conv::to_utf < char > (string, locale);
 }
 
+///////////////////////////////////////////////////////////////////////////////////
+
 auto convert_v2(const std::string & string)
 {
 	boost::locale::generator generator;
@@ -33,19 +36,7 @@ auto convert_v2(const std::string & string)
 	return boost::locale::conv::from_utf < char > (string, locale);
 }
 
-//  ================================================================================================
-
-template < typename S > void print(const S & string)
-{
-    for (auto element : string) 
-    { 
-        std::cout << static_cast < int > (element) << ' '; 
-    }
-
-    std::cout << '\n';
-}
-
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////
 
 //  auto convert_v3(const std::wstring & wstring)
 //  {
@@ -54,6 +45,8 @@ template < typename S > void print(const S & string)
 //  	return converter.to_bytes(wstring);
 //  }
 
+///////////////////////////////////////////////////////////////////////////////////
+
 //  auto convert_v4(const std::string & string)
 //  {
 //  	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // bad
@@ -61,7 +54,7 @@ template < typename S > void print(const S & string)
 //  	return converter.from_bytes(string);
 //  }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////
 
 auto convert_v5(std::string_view string, const std::locale & locale) 
 {
@@ -76,7 +69,7 @@ auto convert_v5(std::string_view string, const std::locale & locale)
 	return std::wstring(std::data(buffer), std::size(buffer));
 }
 
-//  --------------------------------------------------------------------------------
+///////////////////////////////////////////////////////////////////////////////////
 
 auto convert_v6(std::wstring_view wstring, const std::locale & locale)
 {
@@ -91,7 +84,7 @@ auto convert_v6(std::wstring_view wstring, const std::locale & locale)
 	return std::string(std::data(buffer), std::size(buffer));
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////
 
 const auto & transliteration() 
 {
@@ -134,46 +127,39 @@ const auto & transliteration()
     return table;
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::cout << boost::locale::util::get_system_locale() << std::endl;
+    std::cout << "boost::locale::util::get_system_locale() = ";
 
-	std::cout << "Enter 1 string : "; std::string string; std::cin >> string;
+    std::cout <<  boost::locale::util::get_system_locale() << '\n';
+
+//  -------------------------------------------------------------------------------
+
+	std::string string = "ааааа";
+
+    std::cout << "std::size(string) = " << std::size(string) << '\n';
+
+//  -------------------------------------------------------------------------------
 
     auto u8string = convert_v1(string);
 
-//  ================================================================================================
+    assert(std::size(u8string) == 10);
 
-    std::cout << std::hex;
+    assert(((u8string[0] & 0xFF) << 8 | (u8string[1] & 0xFF)) == 53'424);
 
-	std::cout << (static_cast < int > (  string[0]) & 0xFF) << ' ';
-    std::cout << (static_cast < int > (  string[1]) & 0xFF) << ' ';
-	std::cout << (static_cast < int > (u8string[0]) & 0xFF) << ' ';
-	std::cout << (static_cast < int > (u8string[1]) & 0xFF) << std::endl;
+//  -------------------------------------------------------------------------------
 
-    std::cout << std::dec;
-
-    std::cout <<   string << ' ' << std::size(  string) << std::endl;
-    std::cout << u8string << ' ' << std::size(u8string) << std::endl;
-
-//  ================================================================================================
-
-    auto u16string = boost::locale::conv::utf_to_utf < char16_t, char > (u8string);
     auto u32string = boost::locale::conv::utf_to_utf < char32_t, char > (u8string);
 
-	print( u8string);
-	print(u16string);
-	print(u32string);
+    assert(std::size(u32string) == 5);
+	
+    assert(static_cast < int > (u32string.front()) == 1'072);
 
-//  ================================================================================================
+//  -------------------------------------------------------------------------------
 
-	u8string = boost::locale::conv::utf_to_utf < char, char32_t > (u32string);
+    u8string = boost::locale::conv::utf_to_utf < char, char32_t > (u32string);
 
-	std::cout << convert_v2(u8string) << std::endl;
-
-//  ================================================================================================
-
-	std::cout << convert_v2("∃y ∀x ¬(x ≺ y)") << std::endl;
+	assert(convert_v2(u8string) == string);
 }
