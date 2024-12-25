@@ -50,7 +50,7 @@ public:
 
     void test() const
     { 
-        std::clog << "Entity::test\n"; 
+        std::cout << "Entity::test\n"; 
     } 
 };
 
@@ -82,10 +82,9 @@ private:
 
 int main()
 {
-    std::thread thread([](){ std::cout << "Hello, world!" << std::endl; });
+    std::thread thread([](){});
 
-    std::cout << std::this_thread::get_id() << std::endl;
-    std::cout <<           thread. get_id() << std::endl;
+    [[maybe_unused]] auto thread_id = thread.get_id();
 
     thread.join();
 
@@ -131,28 +130,13 @@ int main()
 
 //  ================================================================================================
 
-    std::jthread jthread_1([](std::stop_token token)
+    std::jthread jthread([](std::stop_token token)
     {
-        std::stop_callback callback(token, []()
-        {
-            std::cout << "jthread_1::callback" << std::endl;
-        });
+        std::stop_callback callback(token, [](){ std::cout << "jthread : callback\n"; });
 
         for (auto i = 0uz; i < 10; ++i)
         {
-            std::cout << "jthread_1 : " << i << std::endl;
-
-            std::this_thread::sleep_for(0.1s);
-        }
-    });
-
-//  ================================================================================================
-
-    std::jthread jthread_2([](std::stop_token token)
-    {
-        for (auto i = 0uz; i < 10; ++i)
-        {
-            std::cout << "jthread_2 : " << i << std::endl;
+            std::cout << "jthread : i = " << i << '\n';
 
             std::this_thread::sleep_for(0.1s);
 
@@ -167,6 +151,5 @@ int main()
 
     std::this_thread::sleep_for(0.5s);
 
-    jthread_1.get_stop_source().request_stop();
-    jthread_2.get_stop_source().request_stop();
+    jthread.get_stop_source().request_stop();
 }
