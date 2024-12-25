@@ -52,7 +52,7 @@ int main()
 {
     Entity entity { 1, "aaaaa", { 1, 2, 3, 4, 5 } };
 
-    auto path = "13.12.serialization.json.entity.json";
+    auto path = "13.12.serialization.json.example.json";
 
 //  -------------------------------------------------------------------------
 

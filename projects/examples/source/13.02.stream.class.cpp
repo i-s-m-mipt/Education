@@ -3,52 +3,54 @@
 #include <iostream>
 #include <ostream>
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////
 
 struct Formatter 
 { 
     std::size_t precision = 0; 
 };
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////
 
 auto & operator<<(std::ostream & stream, const Formatter & formatter)
 {
-    stream.setf(std::ios_base::showpos);
-    stream.setf(std::ios_base::fixed  );
-
     stream.precision(formatter.precision);
+
+    stream.setf(std::ios_base::fixed);
+
+    stream.setf(std::ios_base::showpos);
     
     return stream;
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////
 
-template < typename ... Ts > void print_v1(Ts ... args)
-{
-    (std::cout << ... << args) << std::endl;
-}
-
-//  ================================================================================================
-
-template < typename T > struct Helper 
+template < typename T > class Helper 
 { 
-    const T & data; 
+public:
+
+    explicit Helper(const T & data) : m_data(data) {}
+
+//  ----------------------------------------------------------------------
+
+    friend auto & operator<<(std::ostream & stream, const Helper & helper)
+    {
+        return stream << "test : arg = " << helper.m_data << '\n';
+    }
+
+private:
+
+    const T & m_data;
 };
 
-template < typename T > auto & operator<<(std::ostream & stream, const Helper < T > & helper)
+//////////////////////////////////////////////////////////////////////////
+
+template < typename ... Ts > void test(Ts ... args)
 {
-    return stream << helper.data << ' ';
+    (std::cout << ... << Helper(args));
 }
 
-//  ================================================================================================
-
-template < typename ... Ts > void print_v2(Ts ... args)
-{
-    (std::cout << ... << Helper(args)) << std::endl;
-}
-
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -58,7 +60,9 @@ int main()
 
     try
     {
-        std::cout << "Enter 1 or more integers : "; int x; for (; std::cin >> x; );
+        std::cout << "Enter 1 or more integers and 1 non-integer : \n";
+        
+        int x; while (std::cin >> x);
 
         if (std::cin.fail()) 
         {
@@ -76,15 +80,18 @@ int main()
     
     std::cin.exceptions(exceptions);
 
-//  ================================================================================================
+//  -------------------------------------------------------------------
+
+    auto flags = std::cout.flags();
 
     auto x = 1.0, y = 2.0;
 
     std::cout << "x = " << Formatter(3) << x << '\n';
     std::cout << "y = " << Formatter(6) << y << '\n';
 
-//  ================================================================================================
+    std::cout.flags(flags);
 
-    print_v1('a', 1, 1.0);
-    print_v2('a', 1, 1.0);
+//  -------------------------------------------------------------------
+
+    test(1, 2, 3);
 }

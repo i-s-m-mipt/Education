@@ -75,7 +75,7 @@ auto size(const std::filesystem::directory_entry & entry)
 
     std::stringstream sout;
 
-    sout << std::setw(5) << std::setfill(' ') << std::right;
+    sout << std::setw(4) << std::setfill(' ') << std::right;
 
     char letters[]{ 'B', 'K', 'M', 'G' };
 
