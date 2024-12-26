@@ -544,9 +544,9 @@ int main()
 
 //  -------------------------------------------------------------------------------------------
 
-	std::cout << "Enter 1 Big_Int : "; Big_Int big_int_12; std::cin >> big_int_12; 
+	std::cout << "main : enter 1 Big_Int : "; Big_Int big_int_12; std::cin >> big_int_12; 
 	
-	std::cout << "Entered Big_Int : " << big_int_12 << '\n';
+	std::cout << "main : big_int_12 = " << big_int_12 << '\n';
 
 //  -------------------------------------------------------------------------------------------
 
@@ -565,5 +565,5 @@ int main()
 		result *= i;
 	}
 
-	std::cout << "100! = " << result << '\n';
+	std::cout << "main : 100! = " << result << '\n';
 }

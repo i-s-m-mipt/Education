@@ -61,5 +61,5 @@ int main()
 
 //  --------------------------------------------------------------------------------------------
 
-	boost::write_graphviz(std::cout, custom_graph);
+	std::cout << "main : custom_graph = "; boost::write_graphviz(std::cout, custom_graph);
 }

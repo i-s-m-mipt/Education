@@ -102,13 +102,15 @@ public:
 
 	void test()
 	{
-		std::cout << "Enter 1 or more expressions : \n";
+		std::cout << "Calculator::test : enter 1 or more expressions : \n";
 
 		for (std::string line; std::getline(std::cin >> std::ws, line); )
 		{
 			if (Stream stream(line); !stream.empty())
 			{
-				std::cout << "result = " << statement(stream) << '\n';
+				auto result = statement(stream);
+
+				std::cout << "Calculator::test : result = " << result << '\n';
 			}
 			else 
 			{

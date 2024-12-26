@@ -125,15 +125,15 @@ int main()
         throw std::runtime_error("invalid stream");
     }
 
-    std::cout << "Enter any character to continue : "; char c1; std::cin >> c1;
+    std::cout << "main : enter any character to continue : "; char c1; std::cin >> c1;
 
 //  ---------------------------------------------------------------------------
 
     {
-        Redirector redirector(path); std::cout << "aaaaa\n";
+        Redirector redirector(path); std::cout << "main : trace\n";
     }
 
-    std::cout << "Enter any character to continue : "; char c2; std::cin >> c2;
+    std::cout << "main : enter any character to continue : "; char c2; std::cin >> c2;
 
 //  ---------------------------------------------------------------------------
 

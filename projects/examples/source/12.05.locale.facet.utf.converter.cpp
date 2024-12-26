@@ -131,15 +131,15 @@ const auto & transliteration()
 
 int main()
 {
-    std::cout << "boost::locale::util::get_system_locale() = ";
+    auto system_locale = boost::locale::util::get_system_locale();
 
-    std::cout <<  boost::locale::util::get_system_locale() << '\n';
+    std::cout << "main : system_locale = " << system_locale << '\n';
 
 //  -------------------------------------------------------------------------------
 
 	std::string string = "ааааа";
 
-    std::cout << "std::size(string) = " << std::size(string) << '\n';
+    std::cout << "main : std::size(string) = " << std::size(string) << '\n';
 
 //  -------------------------------------------------------------------------------
 
@@ -147,7 +147,7 @@ int main()
 
     assert(std::size(u8string) == 10);
 
-    assert(((u8string[0] & 0xFF) << 8 | (u8string[1] & 0xFF)) == 53'424);
+    assert(((u8string[0] & 0xff) << 8 | (u8string[1] & 0xff)) == 53'424);
 
 //  -------------------------------------------------------------------------------
 

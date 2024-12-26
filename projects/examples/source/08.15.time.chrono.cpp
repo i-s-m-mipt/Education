@@ -10,6 +10,18 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+template 
+< 
+	std::intmax_t N, 
+	std::intmax_t D 
+> 
+auto & operator<<(std::ostream & stream, const std::ratio < N, D > & ratio)
+{
+	return stream << ratio.num << '/' << ratio.den << " (seconds)";
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 class Chronometer
 {
 public:
@@ -18,10 +30,7 @@ public:
 
 //  --------------------------------------------------------------------------------------
 
-	explicit Chronometer(const std::string & name) : m_name(name), m_begin(clock_t::now())
-	{
-		std::cout << "Chronometer " << std::quoted(m_name) << " started ... \n";
-	}
+	Chronometer(const std::string & scope) : m_scope(scope), m_begin(clock_t::now()) {}
 
    ~Chronometer() 
 	{
@@ -36,7 +45,7 @@ public:
 
 		auto delta = std::chrono::duration_cast < std::chrono::microseconds > (duration);
 
-		std::cout << "Chronometer " << std::quoted(m_name) << " elapsed ";
+		std::cout << m_scope << " : chronometer : ";
 
 		std::cout << std::setprecision(6) << std::fixed << delta.count() / 1'000'000.0;
 
@@ -45,7 +54,7 @@ public:
 
 private:
 
-	const std::string m_name; clock_t::time_point m_begin;
+	const std::string m_scope; clock_t::time_point m_begin;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,23 +68,21 @@ auto equal(double x, double y, double epsilon = 1e-6)
 
 int main()
 {
-	std::cout << "system clock : tick = ";
-	
-	std::cout << std::chrono::system_clock::period::num << '/';
-	
-	std::cout << std::chrono::system_clock::period::den << " (seconds)\n";
-
 	assert(!std::chrono::system_clock::is_steady);
+
+	auto system_clock_period = std::chrono::system_clock::period();
+	
+	std::cout << "main : system_clock_period = " << system_clock_period << '\n';
 
 //  ------------------------------------------------------------------------
 	
 	auto epoch = std::chrono::system_clock::time_point();
 
-	std::cout << "epoch = " << epoch << '\n';
+	std::cout << "main : epoch = " << epoch << '\n';
 
 	auto local = std::chrono::system_clock::now();
 	
-	std::cout << "local = " << local << '\n';
+	std::cout << "main : local = " << local << '\n';
 
 	assert(std::chrono::system_clock::to_time_t(local) == time(nullptr));
 
@@ -93,7 +100,7 @@ int main()
 
 	auto delta = std::chrono::floor < std::chrono::days > (local - epoch);
 
-	std::cout << "delta = " << delta.count() << " (days)\n";
+	std::cout << "main : delta = " << delta.count() << " (days)\n";
 
 //  ------------------------------------------------------------------------
 
@@ -102,7 +109,7 @@ int main()
 //  ------------------------------------------------------------------------
 
 	{
-		Chronometer chronometer("test");
+		Chronometer chronometer("main");
 
 		auto result = 0.0;
 
@@ -120,7 +127,7 @@ int main()
 
 //  ------------------------------------------------------------------------
 
-	boost::timer::cpu_timer timer;
+	boost::timer::cpu_timer cpu_timer;
 
 	auto result = 0.0;
 
@@ -135,5 +142,5 @@ int main()
 
 	assert(equal(result, size));
 
-	std::cout << "timer :" << timer.format();
+	std::cout << "main : cpu_timer :" << cpu_timer.format();
 }

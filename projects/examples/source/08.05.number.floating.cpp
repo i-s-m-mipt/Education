@@ -38,7 +38,7 @@ auto equal_v4(double x, double y, double epsilon, double scale)
 
 int main()
 {
-	std::cout << "0.000001 = " << std::scientific << std::defaultfloat << 1.0e-6 << '\n';
+	std::cout << "main : 0.000001 = " << std::scientific << std::defaultfloat << 1.0e-6 << '\n';
 
 //  -------------------------------------------------------------------------------------
 
@@ -48,7 +48,7 @@ int main()
 
 	for (auto precision = 0; precision <= max_precision; ++precision)
 	{
-		std::cout << "precision = ";
+		std::cout << "main : precision = ";
 
 		std::cout << std::setw(2) << std::setfill('0') << std::right << precision << ' ';
 
@@ -63,14 +63,14 @@ int main()
 
 	if (std::numeric_limits < double > ::has_infinity)
 	{
-		std::cout << "std::numeric_limits < double > ::infinity() = ";
+		std::cout << "main : std::numeric_limits < double > ::infinity() = ";
 
-		std::cout <<  std::numeric_limits < double > ::infinity() << '\n';
+		std::cout <<         std::numeric_limits < double > ::infinity() << '\n';
 	}
 
 //  -------------------------------------------------------------------------------------
 
-	std::cout << "std::log(-1) = " << std::log(-1) << '\n';
+	std::cout << "main : std::log(-1) = " << std::log(-1) << '\n';
 	
 	std::cout << "main : " << std::strerror(errno) << '\n';
 

@@ -48,9 +48,9 @@ int main()
 
 	std::mt19937_64 engine(device());
 
-	std::normal_distribution distribution(20.0, 5.0);
+	std::normal_distribution distribution(25.0, 8.0);
 
-	std::vector < std::size_t > values(40, 0);
+	std::vector < std::size_t > values(50, 0);
 
 	for (auto i = 0uz; i < 1'000'000; ++i)
 	{
@@ -67,9 +67,11 @@ int main()
 
 	for (auto i = 0uz; i < std::size(values); ++i)
 	{
-		std::cout << "i = " << std::setw(2) << std::setfill('0') << std::right << i << " : ";
+		std::cout << "main : values[";
+		
+		std::cout << std::setw(2) << std::setfill('0') << std::right << i << "] : ";
 
-		std::cout << std::string(values[i] / 1000, '*') << '\n';
+		std::cout << std::string(values[i] / 1000, '+') << '\n';
 	}
 
 //  ================================================================================================

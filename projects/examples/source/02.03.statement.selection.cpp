@@ -2,11 +2,11 @@
 
 int main()
 {
-    std::cout << "Enter 1 integer : "; int x; std::cin >> x;
+    std::cout << "main : enter 1 integer : "; int x; std::cin >> x;
 
 //  ------------------------------------------------------------------------------------------------
 
-    std::cout << "selection (1) : ";
+    std::cout << "main : selection (1) : ";
 
     std::cout << (x == 1 ? "(1)" : "(2)");
 
@@ -14,7 +14,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-    std::cout << "selection (2) : ";
+    std::cout << "main : selection (2) : ";
 
     if (auto y = x; 1 == y) // support: compiler-explorer.com
     {
@@ -33,7 +33,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-    std::cout << "selection (3) : ";
+    std::cout << "main : selection (3) : ";
 
     switch (auto z = x; z) // support: compiler-explorer.com
     {

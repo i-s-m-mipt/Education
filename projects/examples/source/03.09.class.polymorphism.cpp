@@ -55,7 +55,9 @@ public:
 
 	void test_v2() const override 
 	{ 
-		std::cout << "Client::test_v2\n"; Entity::test_v2(); 
+		std::cout << "Client::test_v2\n"; 
+		
+		Entity::test_v2(); 
 	}
 
 private:
@@ -131,8 +133,8 @@ int main()
 
 //  -----------------------------------------------------------
 
-	std::cout << "sizeof(Entity) = " << sizeof(Entity) << '\n';
-	std::cout << "sizeof(Client) = " << sizeof(Client) << '\n';
-	std::cout << "sizeof(Server) = " << sizeof(Server) << '\n';
-	std::cout << "sizeof(Router) = " << sizeof(Router) << '\n';
+	std::cout << "main : sizeof(Entity) = " << sizeof(Entity) << '\n';
+	std::cout << "main : sizeof(Client) = " << sizeof(Client) << '\n';
+	std::cout << "main : sizeof(Server) = " << sizeof(Server) << '\n';
+	std::cout << "main : sizeof(Router) = " << sizeof(Router) << '\n';
 }

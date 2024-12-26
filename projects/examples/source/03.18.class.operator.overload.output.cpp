@@ -42,7 +42,7 @@ int main()
 {
     Entity * entity = new Client();
 
-    std::cout << "*entity = " << *entity << '\n';
+    std::cout << "main : *entity = " << *entity << '\n';
 
     delete entity;
 }

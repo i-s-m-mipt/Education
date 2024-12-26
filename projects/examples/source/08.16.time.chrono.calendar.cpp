@@ -16,7 +16,7 @@ int main()
 
 	std::chrono::hh_mm_ss hh_mm_ss(duration);
 
-	std::cout << "hh_mm_ss = " << hh_mm_ss << '\n';
+	std::cout << "main : hh_mm_ss = " << hh_mm_ss << '\n';
 
 	assert(hh_mm_ss.to_duration() == duration);
 
@@ -26,7 +26,7 @@ int main()
 
 	std::chrono::year_month_day year_month_day(time_point);
 
-	std::cout << "year_month_day = " << year_month_day << '\n';
+	std::cout << "main : year_month_day = " << year_month_day << '\n';
 
 	assert(std::chrono::sys_days(year_month_day) == time_point);
 
@@ -34,11 +34,11 @@ int main()
 
 	auto weekday = std::chrono::year_month_weekday(year_month_day).weekday();
 
-	std::cout << "weekday = " << weekday << '\n';
+	std::cout << "main : weekday = " << weekday << '\n';
 
 //  --------------------------------------------------------------------------------------------
 
-	std::cout << "local (GMT) = " << std::chrono::zoned_time("Europe/London", local) << '\n';
-	std::cout << "local (CET) = " << std::chrono::zoned_time("Europe/Berlin", local) << '\n';
-	std::cout << "local (MSK) = " << std::chrono::zoned_time("Europe/Moscow", local) << '\n';
+	std::cout << "main : local (GMT) = " << std::chrono::zoned_time("Europe/London", local) << '\n';
+	std::cout << "main : local (CET) = " << std::chrono::zoned_time("Europe/Berlin", local) << '\n';
+	std::cout << "main : local (MSK) = " << std::chrono::zoned_time("Europe/Moscow", local) << '\n';
 }

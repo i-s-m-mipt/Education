@@ -128,11 +128,6 @@ int main()
 
 	std::shared_ptr < int > shared_ptr_1;
 
-	if (shared_ptr_1)
-	{
-		std::cout << "shared_ptr_1 = " << shared_ptr_1 << '\n';
-	}
-
 	std::shared_ptr < int > shared_ptr_2(new auto(1)); 
 
 	std::shared_ptr < int > shared_ptr_3(shared_ptr_2);

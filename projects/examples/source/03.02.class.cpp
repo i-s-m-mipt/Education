@@ -10,9 +10,15 @@ class Entity
 {
 public:
 
-	Entity() : m_data_1(s_data_1), m_data_2(0), m_data_3(0) {}
+	Entity() : m_data_1(s_data_1), m_data_2(0), m_data_3(0)
+	{
+		std::cout << "Entity::Entity (1)\n";
+	}
 
-//	Entity() : m_data_1(s_data_1), m_data_3(0), m_data_2(0) {} // error
+//	Entity() : m_data_1(s_data_1), m_data_3(0), m_data_2(0) // error
+//	{
+//		std::cout << "Entity::Entity (2)\n";
+//	}
 
 //  ---------------------------------------------------------------------------
 
@@ -21,9 +27,14 @@ public:
 		m_data_1(data_1), 
 		m_data_2(data_2),
 		m_data_3(data_3)
-	{}
+	{
+		std::cout << "Entity::Entity (3)\n";
+	}
 
-	Entity(const int & data_1, int data_2) : Entity(data_1, data_2, 0) {}
+	Entity(const int & data_1, int data_2) : Entity(data_1, data_2, 0) 
+	{
+		std::cout << "Entity::Entity (4)\n";
+	}
 
 //  ---------------------------------------------------------------------------
 
@@ -42,7 +53,7 @@ public:
 
 	const auto & data_as_string() const
 	{
-	//	m_data_3 = 0; // error
+	//	m_data_3 = 1; // error
 				
 		return m_cached_data.data_as_string(*this);
 	}
@@ -62,9 +73,11 @@ public:
 
 	static void test()
 	{
-		std::cout << "Entity::test : s_data_1 = " << s_data_1 << '\n';
-		
-//		std::cout << "Entity::test : m_data_3 = " << m_data_3 << '\n'; // error
+		std::cout << "Entity::test\n";
+
+	//	m_data_3 = 1; // error
+
+		s_data_1 = 1;
 	}
 
 private:

@@ -96,7 +96,7 @@ void view(const std::filesystem::path & path)
 	{
         for (const auto & entry : std::filesystem::directory_iterator(path))
 		{
-            std::cout << type(entry.status()) << " | ";
+            std::cout << "view : " << type(entry.status()) << " | ";
 
             std::cout << permissions(entry.status().permissions()) << " | ";
 

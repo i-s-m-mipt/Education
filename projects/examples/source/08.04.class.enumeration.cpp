@@ -11,27 +11,6 @@ enum class Color : std::uint8_t
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-void test(Color color)
-{
-	std::cout << "test : selection : ";
-
-	switch (color)
-	{
-		case Color::R: { std::cout << "(1)"; break; }
-		case Color::G: { std::cout << "(2)"; break; }
-		case Color::B: { std::cout << "(3)"; break; }
-
-		default:
-		{
-			std::cout << "(4)"; break;
-		}
-	}
-
-	std::cout << '\n';
-}
-
-//////////////////////////////////////////////////////////////////////////////////////
-
 enum State : std::uint8_t
 {
 	fast = 0x01,
@@ -42,11 +21,25 @@ enum State : std::uint8_t
 
 int main()
 {
-	std::cout << "Enter 1 unsigned integer : "; unsigned int color; std::cin >> color;
+	std::cout << "main : enter 1 unsigned integer : "; unsigned int color; std::cin >> color;
 
 	if (color < static_cast < unsigned int > (Color::quantity)) 
 	{
-		test(static_cast < Color > (color));
+		std::cout << "main : selection : ";
+
+		switch (Color(color))
+		{
+			case Color::R: { std::cout << "(1)"; break; }
+			case Color::G: { std::cout << "(2)"; break; }
+			case Color::B: { std::cout << "(3)"; break; }
+
+			default:
+			{
+				std::cout << "(4)"; break;
+			}
+		}
+
+		std::cout << '\n';
 	}
 
 //  ----------------------------------------------------------------------------------

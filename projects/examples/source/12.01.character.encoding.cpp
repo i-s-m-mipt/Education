@@ -3,7 +3,7 @@
 #include <iostream>
 #include <type_traits>
 
-//////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -15,25 +15,25 @@ int main()
 
 //	c = 'я'; // error
 
-	std::cout << "std::is_signed_v < char > = " << std::boolalpha;
+	auto is_char_signed = std::is_signed_v < char > ;
 
-	std::cout <<  std::is_signed_v < char > << '\n';
+	std::cout << "main : is_char_signed = " << std::boolalpha << is_char_signed << '\n';
 	
 	assert('1' - '0' == 1);
 
-//  --------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
-	std::cout << "sizeof(wchar_t) = " << sizeof(wchar_t) << '\n';
+	std::cout << "main : sizeof(wchar_t) = " << sizeof(wchar_t) << '\n';
 
 	auto wc = L'a';
 
 	std::wcout << "wc = " << wc << '\n';
 
-//  --------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 	assert(sizeof(char8_t) == 1);
 
 	[[maybe_unused]] auto c8 = u8'a'; 	
 
-//	std::cout << "c8 = " << c8 << '\n'; // error
+//	std::cout << "main : c8 = " << c8 << '\n'; // error
 }

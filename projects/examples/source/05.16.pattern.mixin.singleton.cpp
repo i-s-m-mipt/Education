@@ -84,7 +84,10 @@ private:
 
 	void initialize() const
 	{
-		std::cout << "Counter::initialize : s_counter = " << ++s_counter << " / " << S << '\n';
+		if (++s_counter > S)
+		{
+			std::cerr << "Counter::initialize : invalid instance\n";
+		}
 	}
 
 //  -----------------------------------

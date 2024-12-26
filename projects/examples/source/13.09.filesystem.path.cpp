@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <iostream>
 #include <string>
+#include <utility>
 
 ////////////////////////////////////////////////////////////////
 
@@ -37,13 +38,13 @@ int main()
 
 //  ------------------------------------------------------------
 
-	std::cout << "path_2 = " << path_2 << '\n';
+	std::cout << "main : path_2 = " << path_2 << '\n';
 
-	std::cout << "path_3 = " << path_3 << '\n';
+	std::cout << "main : path_3 = " << path_3 << '\n';
 
-	std::cout << "path_4 = " << path_4 << '\n';
+	std::cout << "main : path_4 = " << path_4 << '\n';
 
-	std::cout << "path_5 = " << path_5 << '\n';
+	std::cout << "main : path_5 = " << path_5 << '\n';
 
 //  ------------------------------------------------------------
 
@@ -51,7 +52,7 @@ int main()
 	{
         auto path_6 = "directory"_p / "stem.extension"_p;
 
-		auto path_7 = std::filesystem::canonical(path_6);
+		std::ignore = std::filesystem::canonical(path_6);
 	}
 	catch (const std::filesystem::filesystem_error & exception)
 	{

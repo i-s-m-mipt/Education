@@ -60,15 +60,13 @@ int main()
 
     try
     {
-        std::cout << "Enter 1 or more integers and 1 non-integer : \n";
+        std::cout << "main : enter 1 or more integers and 1 non-integer : \n";
         
         int x; while (std::cin >> x);
 
         if (std::cin.fail()) 
         {
             std::cin.clear(); char c; std::cin >> c;
-
-            std::cout << "c = " << c << '\n';
         }
     }
     catch (const std::ios_base::failure & exception)
@@ -86,8 +84,8 @@ int main()
 
     auto x = 1.0, y = 2.0;
 
-    std::cout << "x = " << Formatter(3) << x << '\n';
-    std::cout << "y = " << Formatter(6) << y << '\n';
+    std::cout << "main : x = " << Formatter(3) << x << '\n';
+    std::cout << "main : y = " << Formatter(6) << y << '\n';
 
     std::cout.flags(flags);
 

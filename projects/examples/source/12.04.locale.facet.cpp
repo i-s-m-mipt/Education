@@ -31,7 +31,7 @@ int main() // support: locale -a
 
 	const auto & time_put_1 = std::use_facet < std::time_put < char > > (locale_1);
 
-	std::cout << "date (en_US.utf8) = ";
+	std::cout << "main : date (en_US.utf8) = ";
 
 	time_put_1.put(std::cout, std::cout, ' ', date, format, format + std::strlen(format));
 
@@ -49,7 +49,7 @@ int main() // support: locale -a
 
 	const auto & time_put_2 = std::use_facet < std::time_put < char > > (locale_2);
 
-	std::cout << "date (ru_RU.utf8) = ";
+	std::cout << "main : date (ru_RU.utf8) = ";
 
 	time_put_2.put(std::cout, std::cout, ' ', date, format, format + std::strlen(format));
 
@@ -59,7 +59,7 @@ int main() // support: locale -a
 
 	const auto & time_get_C = std::use_facet < std::time_get < char > > (std::locale::classic());
 
-	switch (std::cout << "time_get_C.date_order() = "; time_get_C.date_order())
+	switch (std::cout << "main : time_get_C.date_order() = "; time_get_C.date_order())
 	{
 		case std::time_base::dmy: { std::cout << "dmy\n"; break; }
 		case std::time_base::mdy: { std::cout << "mdy\n"; break; }
@@ -72,7 +72,7 @@ int main() // support: locale -a
 		}
 	}
 
-	std::cout << "Enter 1 date (Day MM/DD/YYYY) : ";
+	std::cout << "main : enter 1 date (Day MM/DD/YYYY) : ";
 
 	auto state = std::ios_base::goodbit; tm input;
 

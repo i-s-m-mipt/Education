@@ -145,7 +145,7 @@ int main()
 		
 		auto result = python.local()["factorial"](100);
 		
-		std::cout << "100! = " << boost::python::extract < std::string > (result)() << '\n';
+		std::cout << "main : 100! = " << boost::python::extract < std::string > (result)() << '\n';
 	}
 	catch (const boost::python::error_already_set &)
 	{

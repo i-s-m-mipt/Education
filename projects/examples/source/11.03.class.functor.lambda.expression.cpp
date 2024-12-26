@@ -14,9 +14,9 @@ class Entity
 {
 public:
 
-	void test() const
+	void test()
 	{ 
-		[this](){ std::cout << "Entity::test : m_data = " << m_data << '\n'; }(); 
+		[this](){ m_data = 1; }(); 
 	}
 
 private:
@@ -32,8 +32,8 @@ int main()
 
 	auto lambda_2 = [](auto x) constexpr noexcept { return x; };
 
-	std::cout << "typeid(lambda_1).name() = " << typeid(lambda_1).name() << '\n';
-	std::cout << "typeid(lambda_2).name() = " << typeid(lambda_2).name() << '\n';
+	std::cout << "main : typeid(lambda_1).name() = " << typeid(lambda_1).name() << '\n';
+	std::cout << "main : typeid(lambda_2).name() = " << typeid(lambda_2).name() << '\n';
 
 //  -----------------------------------------------------------------------------
 

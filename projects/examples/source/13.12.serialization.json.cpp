@@ -84,7 +84,7 @@ int main()
 
 //  -------------------------------------------------------------------------
 
-    std::cout << "Enter any character to continue : "; char c; std::cin >> c;
+    std::cout << "main : enter any character to continue : "; char c; std::cin >> c;
 
     std::filesystem::remove(path);
 }

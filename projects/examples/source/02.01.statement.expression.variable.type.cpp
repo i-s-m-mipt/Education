@@ -6,19 +6,19 @@
 #include <iostream>
 #include <type_traits>
 
-///////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	bool   b; std::cout << "sizeof(b) = " << sizeof(b) << '\n';
-	char   c; std::cout << "sizeof(c) = " << sizeof(c) << '\n';
-	short  s; std::cout << "sizeof(s) = " << sizeof(s) << '\n';
-	int    i; std::cout << "sizeof(i) = " << sizeof(i) << '\n';
-	long   l; std::cout << "sizeof(l) = " << sizeof(l) << '\n';
-	float  f; std::cout << "sizeof(f) = " << sizeof(f) << '\n';
-	double d; std::cout << "sizeof(d) = " << sizeof(d) << '\n';
+	bool   b; std::cout << "main : sizeof(b) = " << sizeof(b) << '\n';
+	char   c; std::cout << "main : sizeof(c) = " << sizeof(c) << '\n';
+	short  s; std::cout << "main : sizeof(s) = " << sizeof(s) << '\n';
+	int    i; std::cout << "main : sizeof(i) = " << sizeof(i) << '\n';
+	long   l; std::cout << "main : sizeof(l) = " << sizeof(l) << '\n';
+	float  f; std::cout << "main : sizeof(f) = " << sizeof(f) << '\n';
+	double d; std::cout << "main : sizeof(d) = " << sizeof(d) << '\n';
 
-//  -------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 //	c = 'я'; // error
 
@@ -26,11 +26,11 @@ int main()
 
 //	d = 1.000'000'000'000'000'123'456'789; // error
 
-//  -------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
-	std::cout << "std::is_signed_v < char > = " << std::boolalpha;
+	auto is_char_signed = std::is_signed_v < char > ;
 
-	std::cout <<  std::is_signed_v < char > << '\n';
+	std::cout << "main : is_char_signed = " << std::boolalpha << is_char_signed << '\n';
 
 //	[[maybe_unused]]   signed           int   si; // bad
 //	[[maybe_unused]]   signed      long int  sli; // bad
@@ -40,10 +40,10 @@ int main()
 	[[maybe_unused]] unsigned      long int  uli;
 	[[maybe_unused]] unsigned long long int ulli;
 
-	long long	ll; std::cout << "sizeof(ll) = " << sizeof(ll) << '\n';
-	long double ld; std::cout << "sizeof(ld) = " << sizeof(ld) << '\n';
+	long long	ll; std::cout << "main : sizeof(ll) = " << sizeof(ll) << '\n';
+	long double ld; std::cout << "main : sizeof(ld) = " << sizeof(ld) << '\n';
 
-//  -------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 //	[[maybe_unused]] int x1; // bad
 
@@ -51,7 +51,7 @@ int main()
 
 	[[maybe_unused]] int x3{}, x4 = 1, x5(1), x6 { 1 }, x7 = { 1 };
 
-//  -------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 //	[[maybe_unused]] auto y1; // error
 
@@ -65,7 +65,7 @@ int main()
 
 //	[[maybe_unused]] auto y8 = 1, y9 = 1.0; // error
 
-//  -------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 //	[[maybe_unused]] int z1 = 1.0; // bad
 
@@ -77,19 +77,19 @@ int main()
 
 //	[[maybe_unused]] int z5 { static_cast < int > ("aaaaa") }; // error
 
-//  -------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 	d = i = c = b = 1; // support: cppinsights.io
 	
 	assert(std::abs(d - 1.0) < 1e-6);
 
-//  -------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 	[[maybe_unused]] const volatile auto cvi = 1; // support: compiler-explorer.com
 
 //	cvi = 2; // error
 
-//  -------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 //	typedef unsigned long long type_alias_v1; // bad
 
@@ -101,7 +101,7 @@ int main()
 
 	[[maybe_unused]] auto size_2 = 5uz;
 
-//  -------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------
 
 	static_assert(sizeof(std::uint16_t) == 2);
 	static_assert(sizeof(std::uint32_t) == 4);

@@ -15,8 +15,27 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class Client : public Entity { public: void test() const override { std::cout << "Client::test\n"; } };
-class Server : public Entity { public: void test() const override { std::cout << "Server::test\n"; } };
+class Client : public Entity 
+{ 
+public: 
+    
+    void test() const override 
+    { 
+        std::cout << "Client::test\n"; 
+    } 
+};
+
+////////////////////////////////////////////////////////////
+
+class Server : public Entity 
+{ 
+public: 
+    
+    void test() const override 
+    { 
+        std::cout << "Server::test\n"; 
+    } 
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -43,7 +62,9 @@ public:
 
     void test() const override
     { 
-        std::cout << "Decorated::Entity::"; m_entity.test();
+        std::cout << "Decorated_Entity::test : "; 
+        
+        m_entity.test();
     }
 };
 

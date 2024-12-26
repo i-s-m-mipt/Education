@@ -66,7 +66,7 @@ public:
 
 //	auto & operator=(const Vector & other) // bad
 //	{
-//		std::cout << "Vector::operator= (1)\n";
+//		std::cout << "Vector::operator= (2)\n";
 //
 //		if (this != &other)
 //		{
@@ -92,7 +92,7 @@ public:
 
 //	auto & operator=(Vector && other) // bad
 //	{
-//		std::cout << "Vector::operator= (2)\n";
+//		std::cout << "Vector::operator= (3)\n";
 //
 //		if (this != &other)
 //		{
@@ -116,7 +116,7 @@ public:
 
 	auto & operator=(Vector other)
 	{
-		std::cout << "Vector::operator= (3)\n";
+		std::cout << "Vector::operator= (4)\n";
 
 		swap(other);
 

@@ -13,13 +13,13 @@ int main()
 
 //  --------------------------------------------------------------------------
 
-	std::cout << "Enter 1 or more characters and Ctrl + D : ";
+	std::cout << "main : enter 1 or more characters and Ctrl + D : ";
 
 	std::cout.flush();
 
 	std::ostreambuf_iterator < char > ostreambuf_iterator(std::cout);
 
-	for (auto element : "\nEntered characters : ")
+	for (auto element : "\nmain : std::cout.streambuf = ")
 	{
 		*ostreambuf_iterator++ = element;
 	}
@@ -37,7 +37,7 @@ int main()
 
 //  --------------------------------------------------------------------------
 
-	std::cout << "Enter 1 or more integers and 1 non-integer : ";
+	std::cout << "main : enter 1 or more integers and 1 non-integer : ";
 
 	std::vector < int > vector;
 
@@ -52,7 +52,7 @@ int main()
 
 	std::cin.clear(); char c; std::cin >> c;
 
-	std::cout << "vector = { ";
+	std::cout << "main : vector = { ";
 
 	std::ranges::copy(vector, std::ostream_iterator < int > (std::cout, " "));
 

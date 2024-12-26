@@ -108,9 +108,9 @@ int main()
 {
     std::cout << std::showbase;
 
-    std::cout << "255 (oct) = " << std::oct << 255 << '\n';
-    std::cout << "255 (dec) = " << std::dec << 255 << '\n';
-    std::cout << "255 (hex) = " << std::hex << 255 << '\n';
+    std::cout << "main : 255 (oct) = " << std::oct << 255 << '\n';
+    std::cout << "main : 255 (dec) = " << std::dec << 255 << '\n';
+    std::cout << "main : 255 (hex) = " << std::hex << 255 << '\n';
 
 //  ----------------------------------------------------------------------------------
 
@@ -147,7 +147,7 @@ int main()
     static_assert( std::bitset < 8 > (      255 ).to_string() == "11111111");
     static_assert( std::bitset < 8 > ("11111111").to_ullong() ==       255 );
 
-    std::cout << "255 (bin) = " << std::bitset < 8 > (255) << '\n';
+    std::cout << "main : 255 (bin) = " << std::bitset < 8 > (255) << '\n';
 
 //  ----------------------------------------------------------------------------------
 
@@ -160,9 +160,9 @@ int main()
 
 //  ----------------------------------------------------------------------------------
 
-    std::cout << "(std::endian::native == std::endian::little) = " << std::boolalpha;
+    std::cout << "main : std::endian::native = std::endian::";
 
-    std::cout <<  (std::endian::native == std::endian::little) << '\n';
+    std::cout << (std::endian::native == std::endian::little ? "little" : "big") << '\n';
     
 //  ----------------------------------------------------------------------------------
 
@@ -172,7 +172,7 @@ int main()
 
     auto p_value_byte = std::bit_cast < std::byte * > (p_value);
 
-    std::cout << "0x01020304 = { ";
+    std::cout << "main : 0x01020304 = { ";
 
     for (auto i = 0uz; i < sizeof(unsigned int); ++i)
     {

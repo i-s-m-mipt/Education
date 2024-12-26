@@ -45,7 +45,7 @@ public:
 	{
 		std::cout << "Client::test_v1\n";
 
-//		test_v1(); // error
+	//	test_v1(); // error
 
 		Entity::test_v1();
 	}

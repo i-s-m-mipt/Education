@@ -7,28 +7,33 @@
 #include <utility>
 #include <vector>
 
+///////////////////////////////////////////////////
+
 int main()
 {
-	std::cout << "Enter 1 unsigned integer : "; std::size_t n; std::cin >> n;
+	auto size = 5uz;
 
-	std::vector < int > vector(n, 0);
+	std::vector < int > vector(size, 0);
 
-	std::ranges::iota(vector, 1);
-
-//  ------------------------------------------------------------------------------------------------
-
-	for (auto i = 0uz; i < n - 1; ++i)
+	for (auto i = size; i > 0; --i)
 	{
-		for (auto j = i + 1; j < n; ++j)
+		vector[size - i] = static_cast < int > (i);
+	}
+
+//  -----------------------------------------------
+
+	for (auto i = 0uz; i < size - 1; ++i)
+	{
+		for (auto j = i + 1; j < size; ++j)
 		{
-			if (vector[i] < vector[j]) 
+			if (vector[i] > vector[j]) 
 			{
 				std::swap(vector[i], vector[j]);
 			}
 		}
 	}
 
-//  ------------------------------------------------------------------------------------------------
+//  -----------------------------------------------
 
-	assert(std::ranges::is_sorted(vector, std::ranges::greater()));
+	assert(std::ranges::is_sorted(vector));
 }

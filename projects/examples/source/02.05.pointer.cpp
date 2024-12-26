@@ -11,7 +11,7 @@ int main()
 
 //	[[maybe_unused]] int * p_y = &y; // error
 
-	std::cout << "p_x = " << p_x << '\n';
+	std::cout << "main : p_x = " << p_x << '\n';
 
 	assert(*p_x == x);
 
@@ -44,9 +44,4 @@ int main()
 	[[maybe_unused]] int * null_ptr_3 = nullptr;
 
 //	*null_ptr_3 = 1; // error
-
-	if (null_ptr_3) 
-	{
-		std::cout << "null_ptr_3 = " << null_ptr_3 << '\n';
-	}
 }

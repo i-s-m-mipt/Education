@@ -127,8 +127,8 @@ int main()
 
 	assert(std::string(__func__) == "main");
 
-	std::cout << "__DATE__ = " << __DATE__ << '\n';
-	std::cout << "__TIME__ = " << __TIME__ << '\n';
+	[[maybe_unused]] auto date = __DATE__;
+	[[maybe_unused]] auto time = __TIME__;
 
 	DEBUG("trace"); // support: cppinsights.io
 

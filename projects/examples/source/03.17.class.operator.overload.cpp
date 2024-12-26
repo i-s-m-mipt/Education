@@ -210,9 +210,9 @@ int main()
 
 //  ----------------------------------------------------------------------------------
 
-	std::cout << "Enter 1 Ratio : "; Ratio ratio_5; std::cin >> ratio_5; 
+	std::cout << "main : enter 1 Ratio : "; Ratio ratio_5; std::cin >> ratio_5; 
 	
-	std::cout << "Entered Ratio : " << ratio_5 << '\n';
+	std::cout << "main : ratio_5 = " << ratio_5 << '\n';
 
 //  ----------------------------------------------------------------------------------
 
@@ -258,7 +258,7 @@ int main()
 
 //  ----------------------------------------------------------------------------------
 
-	std::cout << "Enter 1 rational : "; rational_t rational_3; std::cin >> rational_3; 
+	std::cout << "main : enter 1 rational_t : "; rational_t rational_3; std::cin >> rational_3; 
 	
-	std::cout << "Entered rational : " << rational_3 << '\n';
+	std::cout << "main : rational_3 = " << rational_3 << '\n';
 }

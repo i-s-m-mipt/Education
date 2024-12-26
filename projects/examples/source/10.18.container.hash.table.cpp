@@ -9,12 +9,9 @@
 
 void test(const std::unordered_set < int > & unordered_set)
 {
-	std::cout << "N objects       = " << unordered_set.            size() << '\n';
-	std::cout << "N objects (max) = " << unordered_set.        max_size() << '\n';
-	std::cout << "M buckets       = " << unordered_set.    bucket_count() << '\n';
-	std::cout << "M buckets (max) = " << unordered_set.max_bucket_count() << '\n';
-	std::cout << "L = N / M       = " << unordered_set.     load_factor() << '\n';
-	std::cout << "L = N / M (max) = " << unordered_set. max_load_factor() << '\n';
+	std::cout << "test : unordered_set.load_factor() = ";
+	
+	std::cout << static_cast < int > (unordered_set.load_factor() * 100) << "%\n";
 
 //  ----------------------------------------------------------------------------------------------
 
@@ -26,7 +23,9 @@ void test(const std::unordered_set < int > & unordered_set)
 
 	for (auto i = 0uz; i < unordered_set.bucket_count(); ++i)
 	{
-		std::cout << "bucket[" << std::setw(3) << std::setfill('0') << std::right << i << "] = {";
+		std::cout << "test : buckets[";
+		
+		std::cout << std::setw(3) << std::setfill('0') << std::right << i << "] = {";
 
 		for (auto iterator = unordered_set.begin(i); iterator != unordered_set.end(i); ++iterator)
 		{

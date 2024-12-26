@@ -64,7 +64,7 @@ int main()
 
     std::cout << std::setprecision(max_precision) << std::fixed;
 
-    std::cout << "d_gamma_p_1 = " << d_gamma_p_1 << '\n';
+    std::cout << "main : d_gamma_p_1 = " << d_gamma_p_1 << '\n';
 
-    std::cout << "d_gamma_p_2 = " << boost::math::gamma_p_derivative(2.0, z) << '\n';
+    std::cout << "main : d_gamma_p_2 = " << boost::math::gamma_p_derivative(2.0, z) << '\n';
 }

@@ -26,19 +26,20 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-	std::cout << "Enter 1 unsigned integer : "; std::size_t n; std::cin >> n;
+	auto size = 5uz; auto buffer = new int[size]; 
 
-	auto buffer = new int[n]; 
-
-	std::ranges::iota(buffer, buffer + n, 1);
+	for (auto i = size; i > 0; --i)
+	{
+		buffer[size - i] = static_cast < int > (i);
+	}
 
 //  ------------------------------------------------------------------------------------------------
 
-	for (auto i = 0uz; i < n - 1; ++i)
+	for (auto i = 0uz; i < size - 1; ++i)
 	{
-		for (auto j = i + 1; j < n; ++j)
+		for (auto j = i + 1; j < size; ++j)
 		{
-			if (buffer[i] < buffer[j]) 
+			if (buffer[i] > buffer[j]) 
 			{
 				std::swap(buffer[i], buffer[j]);
 			}
@@ -47,7 +48,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------	
 
-	assert(std::ranges::is_sorted(buffer, buffer + n, std::ranges::greater()));
+	assert(std::ranges::is_sorted(buffer, buffer + size));
 
 //  ------------------------------------------------------------------------------------------------
 

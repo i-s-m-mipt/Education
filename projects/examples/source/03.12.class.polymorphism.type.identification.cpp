@@ -46,10 +46,10 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-	std::cout << "typeid(      x).name() = " << typeid(      x).name() << '\n';
-	std::cout << "typeid(    r_x).name() = " << typeid(    r_x).name() << '\n';
-	std::cout << "typeid( entity).name() = " << typeid( entity).name() << '\n';
-	std::cout << "typeid(*entity).name() = " << typeid(*entity).name() << '\n';
+	std::cout << "main : typeid(      x).name() = " << typeid(      x).name() << '\n';
+	std::cout << "main : typeid(    r_x).name() = " << typeid(    r_x).name() << '\n';
+	std::cout << "main : typeid( entity).name() = " << typeid( entity).name() << '\n';
+	std::cout << "main : typeid(*entity).name() = " << typeid(*entity).name() << '\n';
 
 //  ------------------------------------------------------------------------------------------------
 
