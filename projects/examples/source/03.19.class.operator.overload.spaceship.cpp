@@ -7,7 +7,7 @@ class Entity_v1
 {
 public:
 
-    explicit Entity_v1(int data) : m_data(data) {}
+    Entity_v1(int data) : m_data(data) {}
 
 //  ---------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ class Entity_v2
 {
 public:
 
-    explicit Entity_v2(int data_1, int data_2) 
+    Entity_v2(int data_1, int data_2) 
     : 
         m_data_1(data_1), 
         m_data_2(data_2) 

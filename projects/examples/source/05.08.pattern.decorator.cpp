@@ -43,7 +43,7 @@ class Decorator : public Entity
 {
 public:
 
-    explicit Decorator(Entity & entity): m_entity(entity) {}
+    Decorator(Entity & entity): m_entity(entity) {}
 
 protected:
 
@@ -56,7 +56,7 @@ class Decorated_Entity : public Decorator
 {
 public:
 
-    explicit Decorated_Entity(Entity & entity) : Decorator(entity) {}
+    Decorated_Entity(Entity & entity) : Decorator(entity) {}
 
 //  -----------------------------------------------------------------
 

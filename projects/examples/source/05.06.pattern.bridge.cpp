@@ -43,7 +43,7 @@ class Entity_v2
 {
 public:
 
-    explicit Entity_v2(Entity_v1 & entity_v1) : m_bridge(entity_v1) {}
+    Entity_v2(Entity_v1 & entity_v1) : m_bridge(entity_v1) {}
 
     virtual ~Entity_v2() = default; 
 
@@ -62,7 +62,7 @@ class Server_v1 : public Entity_v2
 {
 public:
 
-    explicit Server_v1(Entity_v1 & entity_v1) : Entity_v2(entity_v1) {}
+    Server_v1(Entity_v1 & entity_v1) : Entity_v2(entity_v1) {}
 
 //  -------------------------------------------------------------------
 
@@ -80,7 +80,7 @@ class Server_v2 : public Entity_v2
 {
 public:
 
-    explicit Server_v2(Entity_v1 & entity_v1) : Entity_v2(entity_v1) {}
+    Server_v2(Entity_v1 & entity_v1) : Entity_v2(entity_v1) {}
 
 //  -------------------------------------------------------------------
 

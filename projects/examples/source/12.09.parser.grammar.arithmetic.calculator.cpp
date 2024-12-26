@@ -18,7 +18,7 @@ class Stream
 {
 public:
 
-	explicit Stream(const std::string & data) : m_sin(data + ';') {}
+	Stream(const std::string & data) : m_sin(data + ';') {}
 
 //  ----------------------------------------------------------------
 

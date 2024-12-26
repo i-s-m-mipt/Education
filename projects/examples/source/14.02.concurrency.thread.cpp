@@ -18,7 +18,7 @@ class Task
 {
 public:
 
-	explicit Task(int & data): m_data(data) {}
+	Task(int & data): m_data(data) {}
 
 //  ------------------------------------------
 
@@ -60,7 +60,7 @@ class Scoped_Thread : private boost::noncopyable
 {
 public:
 
-	explicit Scoped_Thread(std::thread thread) : m_thread(std::move(thread))
+	Scoped_Thread(std::thread thread) : m_thread(std::move(thread))
 	{
 		if (!m_thread.joinable()) 
         {

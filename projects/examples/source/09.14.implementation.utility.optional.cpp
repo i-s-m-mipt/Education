@@ -10,7 +10,7 @@ public:
 
     Optional() = default;
 
-    explicit Optional(T data) 
+    Optional(T data) 
     { 
         initialize(data); 
     }

@@ -55,7 +55,7 @@ class Redirector
 {
 public:
 
-    explicit Redirector(const std::string & path) : m_fout(path, std::ios::out)
+    Redirector(const std::string & path) : m_fout(path, std::ios::out)
     {
         if (m_fout) 
         {

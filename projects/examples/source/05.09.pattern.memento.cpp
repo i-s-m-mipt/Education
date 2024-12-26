@@ -8,7 +8,7 @@ class Memento
 {
 public:
 
-    explicit Memento(int data = 0) : m_states(1, State(data)) {}
+    Memento(int data = 0) : m_states(1, State(data)) {}
 
 //  --------------------------------------------------------------------
 

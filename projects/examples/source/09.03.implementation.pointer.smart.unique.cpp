@@ -9,7 +9,7 @@ template < typename T > class Unique : private boost::noncopyable
 {
 public:
 
-    explicit Unique(T * data = nullptr) : m_data(data) {}
+    Unique(T * data = nullptr) : m_data(data) {}
         
     Unique(Unique && other) : Unique() 
     { 

@@ -46,7 +46,7 @@ namespace detail
     {
     public:
 
-        explicit RCCB(T * data) : m_data(data)
+        RCCB(T * data) : m_data(data)
         {
             increase();
         }
@@ -75,7 +75,7 @@ template < typename T > class Shared
 {
 public:
 
-    explicit Shared(T * data = nullptr) : m_data(data)
+    Shared(T * data = nullptr) : m_data(data)
     {
         if (m_data)
         {

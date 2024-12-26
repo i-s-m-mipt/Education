@@ -129,7 +129,7 @@ namespace detail
     {
     public:
 
-        explicit Selector(T value) 
+        Selector(T value) 
         { 
             std::construct_at(derived().template buffer < T > (), std::move(value)); 
             
@@ -320,7 +320,7 @@ class Entity
 { 
 public:
 
-    explicit Entity(int) {} 
+    Entity(int) {} 
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -14,7 +14,7 @@ public:
 	{
 	public:
 
-		explicit Row(T * array) : m_array(array) {}
+		Row(T * array) : m_array(array) {}
 
 	//  -------------------------------------------
 

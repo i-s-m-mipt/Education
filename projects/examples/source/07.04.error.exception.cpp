@@ -10,9 +10,9 @@ class Error : public std::exception
 {
 public:
 
-	explicit Error(int error) : m_error(error) {}
+	Error(int error) : m_error(error) {}
 
-//  ---------------------------------------------
+//  -------------------------------------------
 
 	const char * what() const noexcept override 
 	{ 

@@ -11,7 +11,7 @@ class Entity_v1
 {
 public:
 
-	explicit Entity_v1(int data) : m_data(data)
+	Entity_v1(int data) : m_data(data)
 	{
 		std::cout << "Entity_v1:: Entity_v1 : m_data = " << m_data << '\n';
 	}

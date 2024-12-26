@@ -16,7 +16,7 @@ class Arena : private boost::noncopyable
 {
 public:
 
-	explicit Arena(std::size_t size) : m_size(size)
+	Arena(std::size_t size) : m_size(size)
 	{
 		m_begin = operator new(m_size, std::align_val_t(default_alignment));
 	}
@@ -94,7 +94,7 @@ public:
 
 //  --------------------------------------------------------------------------------------------
 
-    explicit Allocator(Arena & arena) : m_arena(&arena) {}
+    Allocator(Arena & arena) : m_arena(&arena) {}
 
     template < typename U > Allocator(const Allocator < U > & other) : m_arena(other.m_arena) {}
 

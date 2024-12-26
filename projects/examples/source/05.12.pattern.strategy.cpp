@@ -43,7 +43,7 @@ class Entity
 {
 public:
 
-    explicit Entity(Strategy & strategy) : m_strategy(strategy) {}
+    Entity(Strategy & strategy) : m_strategy(strategy) {}
 
 //  --------------------------------------------------------------
 

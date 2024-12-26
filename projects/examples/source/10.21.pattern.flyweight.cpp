@@ -17,7 +17,7 @@ public:
 
 //  --------------------------------------------------------------------
 
-    explicit Entity(data_1_t data_1, const data_2_t & data_2) 
+    Entity(data_1_t data_1, const data_2_t & data_2) 
     : 
         m_flyweight_1(data_1), 
         m_flyweight_2(data_2) 

@@ -18,7 +18,7 @@ class Stack_Allocator : private boost::noncopyable
 {
 public:
 
-	explicit Stack_Allocator(std::size_t size) : m_size(size)
+	Stack_Allocator(std::size_t size) : m_size(size)
 	{
 		m_begin = operator new(m_size, std::align_val_t(default_alignment));
 	}

@@ -27,7 +27,7 @@ public:
 
 protected:
 
-    explicit Client(int) {}; 
+    Client(int) {}; 
 };
 
 ////////////////////////////////////////////////////////////////
@@ -36,9 +36,7 @@ template < typename B > class Router : private B
 {
 public:
 
-    template < typename ... Ts > explicit Router(Ts && ... args) 
-    : 
-        B(std::forward < Ts > (args)...)
+    template < typename ... Ts > Router(Ts && ... args) : B(std::forward < Ts > (args)...)
     {
         this->initialize();
     }

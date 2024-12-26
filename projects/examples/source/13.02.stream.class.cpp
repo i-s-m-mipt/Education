@@ -29,7 +29,7 @@ template < typename T > class Helper
 { 
 public:
 
-    explicit Helper(const T & data) : m_data(data) {}
+    Helper(const T & data) : m_data(data) {}
 
 //  ----------------------------------------------------------------------
 

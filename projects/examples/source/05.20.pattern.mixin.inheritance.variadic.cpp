@@ -2,8 +2,8 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 
-class Client_v1 { public: explicit Client_v1(int) {} };
-class Server_v1 { public: explicit Server_v1(int) {} };
+class Client_v1 { public: Client_v1(int) {} };
+class Server_v1 { public: Server_v1(int) {} };
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -11,7 +11,7 @@ template < typename ... Bs > class Router_v1 : public Bs ...
 {
 public:
 
-    template < typename ... Ts > explicit Router_v1(int data, Ts && ... args) 
+    template < typename ... Ts > Router_v1(int data, Ts && ... args) 
     : 
         Bs(std::forward < Ts > (args))..., m_data(data)
     {}
@@ -23,8 +23,8 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////
 
-template < typename T > class Client_v2 { public: explicit Client_v2(int) {} };
-template < typename T > class Server_v2 { public: explicit Server_v2(int) {} };
+template < typename T > class Client_v2 { public: Client_v2(int) {} };
+template < typename T > class Server_v2 { public: Server_v2(int) {} };
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -34,7 +34,7 @@ template < template < typename T > typename ... Bs > class Router_v2
 {
 public:
 
-    template < typename ... Ts > explicit Router_v2(int data, Ts && ... args) 
+    template < typename ... Ts > Router_v2(int data, Ts && ... args) 
     : 
         Bs < Router_v2 > (std::forward < Ts > (args))..., m_data(data)
     {}

@@ -31,7 +31,7 @@ class Adapter_v1 : public Entity
 {
 public:
 
-	explicit Adapter_v1(Client & client) : m_client(client) {}
+	Adapter_v1(Client & client) : m_client(client) {}
 
 //  ----------------------------------------------------------
 

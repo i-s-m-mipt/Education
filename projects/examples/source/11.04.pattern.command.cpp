@@ -30,7 +30,7 @@ public:
 	
 //  ------------------------------------------------------------------------------------
 
-	explicit Command(Entity & entity, Order order) : m_entity(entity), m_order(order) {}
+	Command(Entity & entity, Order order) : m_entity(entity), m_order(order) {}
 
 //  ------------------------------------------------------------------------------------
 

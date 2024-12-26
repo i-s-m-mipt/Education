@@ -11,12 +11,12 @@ class Entity_v1
 {
 public:
 	
-	explicit Entity_v1(const std::string & data) : m_data(data) 
+	Entity_v1(const std::string & data) : m_data(data) 
 	{
 		std::cout << "Entity_v1::Entity_v1 (1)\n";
 	}
 
-	explicit Entity_v1(std::string && data) : m_data(std::move(data)) 
+	Entity_v1(std::string && data) : m_data(std::move(data)) 
 	{
 		std::cout << "Entity_v1::Entity_v1 (2)\n";
 	}
@@ -42,7 +42,7 @@ class Entity_v2
 {
 public:
 	
-    template < typename S > explicit Entity_v2(S && data) : m_data(std::forward < S > (data)) 
+    template < typename S > Entity_v2(S && data) : m_data(std::forward < S > (data)) 
 	{
 		std::cout << "Entity_v2::Entity_v2 (1)\n";
 	}
@@ -75,7 +75,7 @@ public:
 			std::is_convertible_v < S, std::string > , void 
 		> 
 	>
-	explicit Entity_v3(S && data) : m_data(std::forward < S > (data))
+	Entity_v3(S && data) : m_data(std::forward < S > (data))
 	{
 		std::cout << "Entity_v3::Entity_v3 (1)\n";
 	}
@@ -101,11 +101,9 @@ class Entity_v4
 {
 public:
 	
-    template < typename S > explicit Entity_v4
-	(
-		S && data
-	) 
-	requires std::is_convertible_v < S, std::string > : m_data(std::forward < S > (data))
+    template < typename S > Entity_v4(S && data) requires std::is_convertible_v < S, std::string > 
+	: 
+		m_data(std::forward < S > (data))
 	{
 		std::cout << "Entity_v4::Entity_v4 (1)\n";
 	}

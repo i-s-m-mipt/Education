@@ -47,7 +47,7 @@ public:
 
 //  --------------------------------------------------------------------------------------------
 
-	explicit Logger(const char * scope, bool has_trace) : m_scope(scope), m_has_trace(has_trace)
+	Logger(const char * scope, bool has_trace) : m_scope(scope), m_has_trace(has_trace)
 	{
 		std::call_once(s_status, Logger::initialize);
 

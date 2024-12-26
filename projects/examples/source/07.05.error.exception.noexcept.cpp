@@ -11,7 +11,7 @@ class Entity
 {
 public:
 
-	explicit Entity(int data = 0) try : m_data(data)
+	Entity(int data = 0) try : m_data(data)
 	{
 		if (m_data == 0)
 		{

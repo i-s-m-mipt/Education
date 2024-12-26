@@ -24,7 +24,7 @@ auto test_v1(int x)
 
 //  ================================================================================================
 
-class Entity_v1 { public: explicit Entity_v1(int) {} };
+class Entity_v1 { public: Entity_v1(int) {} };
 
 class Entity_v2 
 { 

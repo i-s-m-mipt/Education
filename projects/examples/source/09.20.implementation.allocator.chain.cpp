@@ -19,9 +19,7 @@ class Chain_Allocator : private boost::noncopyable
 {
 public:
 
-	explicit Chain_Allocator(std::size_t size, std::size_t size_node) 
-	: 
-		m_size(size), m_size_node(size_node)
+	Chain_Allocator(std::size_t size, std::size_t size_node) : m_size(size), m_size_node(size_node)
 	{
 		if (m_size % m_size_node == 0 && m_size_node >= sizeof(Node))
 		{

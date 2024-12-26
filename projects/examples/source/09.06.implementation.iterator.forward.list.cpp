@@ -22,7 +22,7 @@ public:
 
 //      ---------------------------------------------------------------------------------
 
-		explicit Iterator(std::shared_ptr < Node > node = nullptr) : m_node(node) {}
+		Iterator(std::shared_ptr < Node > node = nullptr) : m_node(node) {}
 
 //      ---------------------------------------------------------------------------------
 

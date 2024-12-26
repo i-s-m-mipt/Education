@@ -19,7 +19,7 @@ class Block_Allocator : private boost::noncopyable
 {
 public:
 	
-    explicit Block_Allocator(std::size_t size) : m_size(size)
+    Block_Allocator(std::size_t size) : m_size(size)
     {
         if (m_size >= sizeof(Node) + 1) 
         {

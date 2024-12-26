@@ -9,7 +9,7 @@ class Vector
 {
 public:
 
-    explicit Vector(std::size_t size) : m_data(size, 0) {}
+    Vector(std::size_t size) : m_data(size, 0) {}
 
 //  --------------------------------------------------------------------------------
 
