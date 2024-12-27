@@ -59,6 +59,8 @@ BOOST_DATA_TEST_CASE
 
     boost::unit_test::data::xrange(5) ^ boost::unit_test::data::random
     ((            
+        boost::unit_test::data::seed = 1,
+        
         boost::unit_test::data::engine = std::default_random_engine(),
 
         boost::unit_test::data::distribution = std::uniform_real_distribution(0.0, 1.0)
