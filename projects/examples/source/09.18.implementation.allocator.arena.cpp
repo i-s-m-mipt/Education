@@ -1,6 +1,5 @@
 #include <cstddef>
 #include <format>
-#include <iomanip>
 #include <iostream>
 #include <memory>
 #include <new>
@@ -53,15 +52,11 @@ public:
 
 	void test() const
 	{
-		std::cout << "Arena_Allocator::test : ";
+		std::cout << "Arena_Allocator::test : m_size = " << m_size    << ' ';
 
-		std::cout << "m_size = " << m_size << ' ';
+		std::cout << "m_begin = "  << std::format("{:018}", m_begin ) << ' ';
 
-		std::cout << "m_begin = " << std::format("{:018}", m_begin) << ' ';
-
-		std::cout << "m_offset = " << std::setw(4) << std::setfill('0') << std::right;
-		
-		std::cout <<  m_offset << '\n';
+		std::cout << "m_offset = " << std::format("{:0>4}", m_offset) << '\n';
 	}
 
 private:

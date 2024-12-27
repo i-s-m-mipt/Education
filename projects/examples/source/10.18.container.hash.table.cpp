@@ -1,4 +1,4 @@
-#include <iomanip>
+#include <format>
 #include <iostream>
 #include <iterator>
 #include <random>
@@ -25,9 +25,7 @@ void test(const std::unordered_set < std::string > & unordered_set)
 
 	for (auto i = 0uz; i < unordered_set.bucket_count(); ++i)
 	{
-		std::cout << "test : buckets[";
-		
-		std::cout << std::setw(3) << std::setfill('0') << std::right << i << "] = {";
+		std::cout << "test : buckets[" << std::format("{:0>3}", i) << "] = {";
 
 		for (auto iterator = unordered_set.begin(i); iterator != unordered_set.end(i); ++iterator)
 		{

@@ -1,7 +1,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <exception>
-#include <iomanip>
+#include <format>
 #include <mutex>
 #include <stdexcept>
 #include <string>
@@ -53,7 +53,7 @@ public:
 
 		if (m_has_trace) 
 		{
-			write(Severity::trace, "EXECUTION ... ");
+			write(Severity::trace, "execution ... ");
 		}
 	}
 
@@ -61,7 +61,7 @@ public:
 	{
 		if (m_has_trace) 
 		{
-			write(Severity::trace, "EXECUTION COMPLETE");
+			write(Severity::trace, "execution complete");
 		}
 	}
 
@@ -163,11 +163,7 @@ private:
 
 		const auto & line = attribute_value_set[s_attributes.at(Attribute::line).first];
 
-		stream << std::setw(8) << std::setfill('0') << std::right;
-		
-		stream << std::dec << boost::log::extract_or_throw < std::size_t > (line);
-		
-		stream << std::setfill(' ') << " | ";
+		stream << std::format("{:0>8}", boost::log::extract_or_throw < std::size_t > (line)) << " | ";
 
 		auto date_time_expression = boost::log::expressions::format_date_time 
 		< 

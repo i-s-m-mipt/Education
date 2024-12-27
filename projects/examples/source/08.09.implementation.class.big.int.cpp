@@ -4,7 +4,7 @@
 #include <cmath>
 #include <cstddef>
 #include <exception>
-#include <iomanip>
+#include <format>
 #include <iostream>
 #include <istream>
 #include <iterator>
@@ -266,7 +266,7 @@ public:
 
 		for (auto i = static_cast < int > (big_int.m_n_digits) - 2; i >= 0; --i)
 		{
-			stream << std::setw(step) << std::setfill('0') << std::right << big_int.m_digits[i];
+			stream << std::format("{:0>{}}", big_int.m_digits[i], step);
 		}
 
 		return stream;

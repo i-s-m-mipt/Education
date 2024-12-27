@@ -1,6 +1,4 @@
 #include <cmath>
-#include <iomanip>
-#include <iostream>
 #include <limits>
 #include <string>
 
@@ -36,8 +34,6 @@ int main()
 {
     auto max_precision = std::numeric_limits < float_100_t > ::digits10;
 
-//  ---------------------------------------------------------------------------------
-
     auto x = float_100_t("0." + std::string(max_precision, '3'));
 
     auto y = float_100_t(1.0) / 3.0;
@@ -46,25 +42,25 @@ int main()
 
     auto z = boost::math::constants::pi < float_100_t > () / 2;
 
-//  ---------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------
 
-    auto d_sin = derivative
+    auto d11 = derivative
     (
         [](const auto & x){ return boost::multiprecision::sin(x); }, z
     );
 
-    assert(equal < float_100_t > (d_sin, 0.0));
+    auto d12 = float_100_t(0.0);
 
-//  ---------------------------------------------------------------------------------
+    assert(equal(d11, d12));
 
-    auto d_gamma_p_1 = derivative
+//  ------------------------------------------------------------------------
+
+    auto d21 = derivative
     (
-        [](const auto & x){ return boost::math::gamma_p(2.0, x); }, z
+        [](const auto & x){ return boost::math::gamma_p (2.0, x); }, z
     );
 
-    std::cout << std::setprecision(max_precision) << std::fixed;
+    auto d22 = boost::math::gamma_p_derivative(2.0, z);
 
-    std::cout << "main : d_gamma_p_1 = " << d_gamma_p_1 << '\n';
-
-    std::cout << "main : d_gamma_p_2 = " << boost::math::gamma_p_derivative(2.0, z) << '\n';
+    assert(equal(d21, d22, float_100_t("0." + std::string(55, '0') + '1')));
 }

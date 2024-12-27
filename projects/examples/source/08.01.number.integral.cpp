@@ -3,7 +3,7 @@
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
-#include <iomanip>
+#include <format>
 #include <ios>
 #include <iostream>
 #include <type_traits>
@@ -106,18 +106,17 @@ BENCHMARK(test_v4);
 
 int main()
 {
-    std::cout << std::showbase;
-
-    std::cout << "main : 255 (oct) = " << std::oct << 255 << '\n';
-    std::cout << "main : 255 (dec) = " << std::dec << 255 << '\n';
-    std::cout << "main : 255 (hex) = " << std::hex << 255 << '\n';
+    [[maybe_unused]] auto x1 = 0b11111111, x2 = 0377, x3 = 255, x4 = 0xff;
 
 //  ----------------------------------------------------------------------------------
 
-    [[maybe_unused]] auto x_bin = 0b11111111;
-    [[maybe_unused]] auto x_oct = 0377;
-    [[maybe_unused]] auto x_dec = 255;
-    [[maybe_unused]] auto x_hex = 0xff;
+    assert(std::format("{:#b}", 255) == "0b11111111");
+
+    assert(std::format("{:#o}", 255) == "0377");
+
+    assert(std::format("{:#d}", 255) == "255");
+
+    assert(std::format("{:#x}", 255) == "0xff");
 
 //  ----------------------------------------------------------------------------------
 
@@ -130,33 +129,31 @@ int main()
 
 //  ----------------------------------------------------------------------------------
 
-    static_assert(1 << 2 == 4);
-    static_assert(4 >> 2 == 1);
+    assert(1 << 2 == 4 && 4 >> 2 == 1);
 
 //  ----------------------------------------------------------------------------------
 
     auto x = 1, y = 2; x ^= y ^= x ^= y; assert(x == 2 && y == 1);
 
 //  ----------------------------------------------------------------------------------
-
-    std::bitset < 8 > bitset(0b11111111); // support: boost::dynamic_bitset
         
-    static_assert((std::bitset < 8 > (0b01) & std::bitset < 8 > (0b10)) == 0b00);
-    static_assert((std::bitset < 8 > (0b01) | std::bitset < 8 > (0b10)) == 0b11);
-
-    static_assert( std::bitset < 8 > (      255 ).to_string() == "11111111");
-    static_assert( std::bitset < 8 > ("11111111").to_ullong() ==       255 );
-
-    std::cout << "main : 255 (bin) = " << std::bitset < 8 > (255) << '\n';
+    assert((std::bitset < 8 > (0b01) & std::bitset < 8 > (0b10)) == 0b00);
+    assert((std::bitset < 8 > (0b01) | std::bitset < 8 > (0b10)) == 0b11);
 
 //  ----------------------------------------------------------------------------------
 
-    static_assert(std::bit_floor(3u) == 2 && std::bit_ceil(3u) == 4);
+    assert(std::bitset < 8 > (255).to_string() == "11111111");
+
+    assert(std::bitset < 8 > ("11111111").to_ullong() == 255);
 
 //  ----------------------------------------------------------------------------------
 
-    static_assert((std::byte { 0b01 } & std::byte { 0b10 }) == std::byte { 0b00 });
-    static_assert((std::byte { 0b01 } | std::byte { 0b10 }) == std::byte { 0b11 });
+    assert(std::bit_floor(3u) == 2 && std::bit_ceil(3u) == 4);
+
+//  ----------------------------------------------------------------------------------
+
+    assert((std::byte { 0b01 } & std::byte { 0b10 }) == std::byte { 0b00 });
+    assert((std::byte { 0b01 } | std::byte { 0b10 }) == std::byte { 0b11 });
 
 //  ----------------------------------------------------------------------------------
 
@@ -176,7 +173,7 @@ int main()
 
     for (auto i = 0uz; i < sizeof(unsigned int); ++i)
     {
-        std::cout << std::hex << std::to_integer < int > (*(p_value_byte + i)) << ' ';
+        std::cout << std::format("{:#04x}", std::to_integer < int > (*(p_value_byte + i))) << ' ';
     }
 
     std::cout << "}\n";

@@ -1,4 +1,5 @@
 #include <cassert>
+#include <format>
 #include <iomanip>
 #include <sstream>
 
@@ -8,17 +9,17 @@ int main()
 
     stream << std::showbase;
 
-	stream << std::setw(8) << std::setfill('_') << std::right << std::oct << 42;
+	stream << std::format("{:_>#8o}", 255);
 
-	assert(stream.str() == "_____052");
+	assert(stream.str() == "____0377");
 
 //  ================================================================================================
 
 	stream.seekp(0);
 
-	stream << std::setw(8) << std::setfill('_') << std::right << std::hex << 42;
+	stream << std::format("{:_>#8x}", 255);
 
-	assert(stream.str() == "____0x2a");
+	assert(stream.str() == "____0xff");
 
 //  ================================================================================================
 
@@ -26,7 +27,7 @@ int main()
     {
         if (c == '0')
         {
-            stream.unget(); int x; stream >> std::hex >> x; assert(x == 42);
+            stream.unget(); int x; stream >> std::hex >> x; assert(x == 255);
         }
     }
 

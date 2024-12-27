@@ -1,7 +1,6 @@
 #include <cstddef>
 #include <exception>
 #include <format>
-#include <iomanip>
 #include <iostream>
 #include <iterator>
 #include <memory>
@@ -94,13 +93,13 @@ public:
 	{ 
 		std::cout << "Chain_Allocator::test : ";
 
-		std::cout << "m_size = " << m_size << ' ' << "m_size_node = " << m_size_node << ' ';
+		std::cout << "m_size = "    << m_size << ' ' << "m_size_node = " << m_size_node;
 
-		std::cout << "m_begin = " << std::format("{:018}", m_begin) << ' ';
+		std::cout << " m_begin = "  << std::format("{:018}", m_begin);
 
-		std::cout << "m_head = "  << std::format("{:018}", static_cast < void * > (m_head)) << ' '; 
+		std::cout << " m_head = "   << std::format("{:018}", static_cast < void * > (m_head)); 
 
-		std::cout << "m_offset = " << m_offset << '\n';
+		std::cout << " m_offset = " << m_offset << '\n';
 	}
 
 private:

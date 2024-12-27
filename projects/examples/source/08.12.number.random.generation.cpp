@@ -1,7 +1,7 @@
 #include <cassert>
 #include <cmath>
 #include <cstddef>
-#include <iomanip>
+#include <format>
 #include <iostream>
 #include <random>
 #include <string>
@@ -65,9 +65,7 @@ int main()
 
 	for (auto i = 0uz; i < std::size(values); ++i)
 	{
-		std::cout << "main : values[";
-		
-		std::cout << std::setw(2) << std::setfill('0') << std::right << i << "] : ";
+		std::cout << "main : values[" << std::format("{:0>2}", i) << "] : ";
 
 		std::cout << std::string(values[i] / 1000, '+') << '\n';
 	}

@@ -2,9 +2,10 @@
 #include <cerrno>
 #include <cmath>
 #include <cstring>
-#include <iomanip>
+#include <format>
 #include <iostream>
 #include <limits>
+#include <utility>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -48,29 +49,43 @@ int main()
 
 	for (auto precision = 0; precision <= max_precision; ++precision)
 	{
-		std::cout << "main : precision = ";
+		std::cout << "main : precision = " << std::format("{:0>2}", precision);
 
-		std::cout << std::setw(2) << std::setfill('0') << std::right << precision << ' ';
-
-		std::cout << "d = ";
-		
-		std::cout << std::setprecision(precision) << std::fixed << 1.0 << '\n';
+		std::cout << " d = " << std::format("{:.{}f}", 1.0, precision) << '\n';
 	}
 
-	std::cout << std::setprecision(precision);
+	std::cout.precision(precision);
 
 //  -------------------------------------------------------------------------------------
 
 	if (std::numeric_limits < double > ::has_infinity)
 	{
-		std::cout << "main : std::numeric_limits < double > ::infinity() = ";
+		auto infinity = std::numeric_limits < double > ::infinity();
 
-		std::cout <<         std::numeric_limits < double > ::infinity() << '\n';
+		std::cout << "main : infinity = " << infinity << '\n';
 	}
 
 //  -------------------------------------------------------------------------------------
 
-	std::cout << "main : std::log(-1) = " << std::log(-1) << '\n';
+	if (std::numeric_limits < double > ::has_quiet_NaN)
+	{
+		auto quiet_NaN = std::numeric_limits < double > ::quiet_NaN();
+
+		std::cout << "main : quiet_NaN = " << quiet_NaN << '\n';
+	}
+
+//  -------------------------------------------------------------------------------------
+
+	if (std::numeric_limits < double > ::has_signaling_NaN)
+	{
+		auto signaling_NaN = std::numeric_limits < double > ::signaling_NaN();
+
+		std::cout << "main : signaling_NaN = " << signaling_NaN << '\n';
+	}
+
+//  -------------------------------------------------------------------------------------
+
+	std::ignore = std::log(-1);
 	
 	std::cout << "main : " << std::strerror(errno) << '\n';
 

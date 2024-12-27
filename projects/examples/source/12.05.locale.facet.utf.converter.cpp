@@ -1,6 +1,5 @@
 #include <cassert>
 #include <codecvt>
-#include <iomanip>
 #include <iostream>
 #include <locale>
 #include <string>

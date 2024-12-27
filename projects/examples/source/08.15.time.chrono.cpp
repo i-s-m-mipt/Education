@@ -2,7 +2,7 @@
 #include <chrono>
 #include <cmath>
 #include <ctime>
-#include <iomanip>
+#include <format>
 #include <iostream>
 #include <string>
 
@@ -47,9 +47,7 @@ public:
 
 		std::cout << m_scope << " : chronometer : ";
 
-		std::cout << std::setprecision(6) << std::fixed << delta.count() / 1'000'000.0;
-
-		std::cout << " (seconds)\n";
+		std::cout << std::format("{:.6f}", delta.count() / 1'000'000.0) << " (seconds)\n";
 	}
 
 private:

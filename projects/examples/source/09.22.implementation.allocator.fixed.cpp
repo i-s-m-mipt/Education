@@ -1,6 +1,5 @@
 #include <cstddef>
 #include <format>
-#include <iomanip>
 #include <iostream>
 #include <memory>
 #include <new>
@@ -38,15 +37,11 @@ public:
 
 	void test() const
 	{
-		std::cout << "Fixed_Allocator::test : ";
+		std::cout << "Fixed_Allocator::test : S = " << S;
 
-		std::cout << "S = " << S << ' ';
+		std::cout << " m_begin = "  << std::format("{:018}", static_cast < void * > (m_begin));
 
-		std::cout << "m_begin = " << std::format("{:018}", static_cast < void * > (m_begin)) << ' ';
-
-		std::cout << "m_offset = " << std::setw(4) << std::setfill('0') << std::right;
-		
-		std::cout <<  m_offset << '\n';
+		std::cout << " m_offset = " << std::format("{:0>4}", m_offset) << '\n';
 	}
 
 private:

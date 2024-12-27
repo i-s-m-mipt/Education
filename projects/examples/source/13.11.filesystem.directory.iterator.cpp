@@ -1,6 +1,6 @@
 #include <chrono>
 #include <filesystem>
-#include <iomanip>
+#include <format>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -73,19 +73,13 @@ auto size(const std::filesystem::directory_entry & entry)
         result = size(entry.path());
     }
 
-    std::stringstream sout;
-
-    sout << std::setw(4) << std::setfill(' ') << std::right;
-
     char letters[]{ 'B', 'K', 'M', 'G' };
 
     auto index = 0uz;
 
     for (; index < 3 && result >= 1'024; result /= 1'024, ++index);
 
-    sout << result << letters[index];
-    
-    return sout.str();
+    return (std::stringstream() << std::format("{: >4}", result) << letters[index]).str();
 }
 
 //  ================================================================================================

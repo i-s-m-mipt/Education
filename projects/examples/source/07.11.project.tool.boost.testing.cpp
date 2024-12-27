@@ -1,7 +1,8 @@
-#include <iomanip>
+#include <format>
 #include <iostream>
 #include <iterator>
 #include <random>
+#include <string>
 #include <type_traits>
 #include <utility>
 #include <vector>
@@ -69,9 +70,9 @@ BOOST_DATA_TEST_CASE
     index, sample
 )
 {
-    std::cout << "Test_v4 : index = " << index << " sample = ";
+    std::cout << "Test_v4 : index = " << index;
     
-    std::cout << std::setprecision(3) << std::fixed << sample << '\n';
+    std::cout << " sample = " << std::format("{:.3f}", sample) << '\n';
 
     BOOST_TEST(sample < 0.5);
 }
@@ -160,7 +161,7 @@ BOOST_DATA_TEST_CASE
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-using list_t = boost::mpl::list < bool, char, int, double > ;
+using list_t = boost::mpl::list < int, std::string > ;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(Test_v6, T, list_t)
 {
@@ -200,7 +201,7 @@ public:
 
 BOOST_FIXTURE_TEST_CASE(Test_v7, Fixture)
 {
-    BOOST_TEST(std::size(data), 0); data.push_back(1);
-    BOOST_TEST(std::size(data), 1); data.push_back(2);
-    BOOST_TEST(std::size(data), 2);
+    BOOST_TEST(std::size(data) == 0); data.push_back(1);
+    BOOST_TEST(std::size(data) == 1); data.push_back(2);
+    BOOST_TEST(std::size(data) == 2);
 }
