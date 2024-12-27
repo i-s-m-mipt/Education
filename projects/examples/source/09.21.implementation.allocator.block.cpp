@@ -218,7 +218,7 @@ void test_v1(benchmark::State & state)
 {
 	auto kb = 1'024uz, mb = kb * kb, gb = kb * kb * kb;
 
-    std::mt19937_64 engine(state.range(0));
+    std::default_random_engine engine;
 
     std::uniform_int_distribution distribution(1, 16);
 
@@ -256,7 +256,7 @@ void test_v2(benchmark::State & state)
 {
 	auto kb = 1'024uz, mb = kb * kb;
 
-    std::mt19937_64 engine(state.range(0));
+    std::default_random_engine engine;
 
     std::uniform_int_distribution distribution(1, 16);
 
@@ -292,8 +292,8 @@ void test_v2(benchmark::State & state)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-BENCHMARK(test_v1)->Arg(42);
-BENCHMARK(test_v2)->Arg(42);
+BENCHMARK(test_v1);
+BENCHMARK(test_v2);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

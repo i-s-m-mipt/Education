@@ -28,9 +28,7 @@ auto operator*(const Vector & a, const Vector & b)
 
 auto evaluate(std::size_t size)
 {
-	std::random_device device;
-
-	std::mt19937_64 engine(device());
+	std::default_random_engine engine;
 
 	std::uniform_real_distribution < double > distribution(0.0, 2.0 * std::numbers::pi);
 

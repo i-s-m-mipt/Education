@@ -102,9 +102,9 @@ auto make_matrix(std::size_t size)
 {
     boost::numeric::ublas::matrix < double > matrix(size, size);
 
-    std::mt19937_64 engine(42);
+    std::default_random_engine engine;
 
-    std::uniform_real_distribution distribution(0.0, 10.0);
+    std::uniform_real_distribution distribution(0.0, 1.0);
 
     for (auto i = 0uz; i < matrix.size1(); ++i)
     {

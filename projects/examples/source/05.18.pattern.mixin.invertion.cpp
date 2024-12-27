@@ -6,7 +6,7 @@ class Entity
 {
 public:
 
-    using value_type = int;
+    using data_t = int;
 
 //  -----------------------
 
@@ -22,7 +22,7 @@ public:
 
 private:
 
-    value_type m_data = 0;
+    data_t m_data = 0;
 };
 
 /////////////////////////////////////////////////
@@ -31,13 +31,13 @@ template < typename B > class Undoable : public B
 {
 public:
 
-    using value_type = typename B::value_type;
+    using data_t = typename B::data_t;
 
 //  ---------------------------------------------
 
-    void set(value_type value) 
+    void set(data_t data) 
     { 
-        prev = B::get(); B::set(value); 
+        prev = B::get(); B::set(data); 
     }
 
     void undo() 
@@ -47,7 +47,7 @@ public:
     
 private:
     
-    value_type prev = value_type();
+    data_t prev = data_t();
 };
 
 /////////////////////////////////////////////////
@@ -56,13 +56,13 @@ template < typename B > class Redoable : public B
 {
 public:
 
-    using value_type = typename B::value_type;
+    using data_t = typename B::data_t;
 
 //  ---------------------------------------------
 
-    void set(value_type value) 
+    void set(data_t data) 
     { 
-        next = value; B::set(value); 
+        next = data; B::set(data); 
     }
 
     void redo() 
@@ -72,7 +72,7 @@ public:
     
 private:
     
-    value_type next = value_type(); 
+    data_t next = data_t(); 
 };
 
 /////////////////////////////////////////////////

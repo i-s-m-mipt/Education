@@ -14,7 +14,7 @@ auto make_vector(std::size_t size)
 {
 	std::vector < double > vector(size, 0.0);
 
-	std::mt19937_64 engine;
+	std::default_random_engine engine;
 
 	std::uniform_real_distribution distribution(0.0, 1.0);
 

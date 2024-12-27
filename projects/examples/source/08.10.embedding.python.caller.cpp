@@ -98,11 +98,9 @@ private:
 
 auto make_dictionary(std::size_t size, std::size_t length)
 {
-	std::random_device device;
+    std::default_random_engine engine;
 
-    std::mt19937_64 engine(device());
-
-	std::uniform_int_distribution <> distribution(97, 122);
+	std::uniform_int_distribution distribution(97, 122);
 	
 	std::set < std::string > dictionary;
     

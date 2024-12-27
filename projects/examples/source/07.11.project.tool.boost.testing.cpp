@@ -58,10 +58,8 @@ BOOST_DATA_TEST_CASE
     Test_v4, 
 
     boost::unit_test::data::xrange(5) ^ boost::unit_test::data::random
-    ((
-        boost::unit_test::data::seed = std::random_device()(),
-            
-        boost::unit_test::data::engine = std::mt19937_64(),
+    ((            
+        boost::unit_test::data::engine = std::default_random_engine(),
 
         boost::unit_test::data::distribution = std::uniform_real_distribution(0.0, 1.0)
     )),
