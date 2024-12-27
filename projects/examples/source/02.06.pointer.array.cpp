@@ -51,9 +51,9 @@ int main()
 
 	auto size = 5uz; int buffer[1'000]{};
 
-	for (auto i = size; i > 0; --i)
+	for (auto i = 0uz, j = size; j > 0; ++i, --j)
 	{
-		buffer[size - i] = static_cast < int > (i);
+		buffer[i] = static_cast < int > (j);
 	}
 
 //  ------------------------------------------------------------------------------------------------

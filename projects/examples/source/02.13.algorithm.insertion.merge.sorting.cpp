@@ -14,7 +14,7 @@ void sort(std::vector < int > & vector, std::size_t left, std::size_t right)
 	{
 		for (auto j = i; j > left; --j)
 		{
-			if (vector[j - 1] < vector[j]) 
+			if (vector[j - 1] > vector[j]) 
 			{
 				std::swap(vector[j], vector[j - 1]);
 			}
@@ -30,7 +30,7 @@ void merge(std::vector < int > & vector, std::size_t left, std::size_t middle, s
 
 	for (auto i = left, j = middle; auto & element : copy) 
 	{
-		if (i < middle && ((j < right && vector[i] >= vector[j]) || j == right))
+		if (i < middle && ((j < right && vector[i] <= vector[j]) || j == right))
 		{
 			element = vector[i++];
 		}
@@ -75,11 +75,16 @@ void timsort(std::vector < int > & vector, std::size_t left, std::size_t right)
 
 int main()
 {
-	std::vector < int > vector(1'000, 0);
+	auto size = 1'000uz;
 
-	std::ranges::iota(vector, 1);
+	std::vector < int > vector(size, 0);
 
-	timsort(vector, 0, std::size(vector));
+	for (auto i = 0uz, j = size; j > 0; ++i, --j)
+	{
+		vector[i] = static_cast < int > (j);
+	}
 
-	assert(std::ranges::is_sorted(vector, std::ranges::greater()));
+	timsort(vector, 0, size);
+
+	assert(std::ranges::is_sorted(vector));
 }
