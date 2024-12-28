@@ -56,17 +56,6 @@ public:
 
 //  ================================================================================================
 
-using cistring_t = std::basic_string < char, case_insensitive_traits > ;
-
-//  ================================================================================================
-
-auto & operator<<(std::ostream & stream, const cistring_t & cistring)
-{
-    return stream << std::string(cistring.data(), std::size(cistring));
-}
-
-//  ================================================================================================
-
 template < typename T1, typename T2 > auto distance(T1 * ptr_1, T2 * ptr_2)
 {
     return 
@@ -161,6 +150,8 @@ int main()
     std::cout << "main : buffer_2 = " << buffer_2 << '\n';
 
 //  ------------------------------------------------------------------------------------
+
+    using cistring_t = std::basic_string < char, case_insensitive_traits > ;
 
     assert(cistring_t("AAAAA") == cistring_t("aaaaa"));
 
