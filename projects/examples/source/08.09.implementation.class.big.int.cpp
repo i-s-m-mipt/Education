@@ -144,13 +144,13 @@ public:
 		{
 			current *= Big_Int::base; current.m_digits[0] = m_digits[i];
 
-			digit_t l = 0, r = Big_Int::base, value = 0;
+			digit_t l = 0, r = Big_Int::base, digit = 0;
 
 			while (l <= r)
 			{
 				if (auto m = std::midpoint(l, r); other * m <= current)
 				{
-					l = m + 1; value = m;
+					l = m + 1; digit = m;
 				}
 				else
 				{
@@ -158,7 +158,7 @@ public:
 				}
 			}
 
-			result.m_digits[i] = value; current -= other * value;
+			result.m_digits[i] = digit; current -= other * digit;
 		}
 
 		swap(result); 
@@ -330,13 +330,13 @@ public:
     	
     	for (--position; position >= 0; --position)
     	{
-      		digit_t l = 0, r = Big_Int::base, value = 0;
+      		digit_t l = 0, r = Big_Int::base, digit = 0;
 
       		while (l <= r)
       		{
         		if (auto m = result.m_digits[position] = std::midpoint(l, r); result * result <= x)
         		{
-          			l = m + 1; value = std::min(m, Big_Int::base - 1);
+          			l = m + 1; digit = std::min(m, Big_Int::base - 1);
         		}
         		else
 				{
@@ -344,7 +344,7 @@ public:
 				}				
       		}
 
-      		result.m_digits[position] = value;
+      		result.m_digits[position] = digit;
     	}
 
 		result.reduce(); 

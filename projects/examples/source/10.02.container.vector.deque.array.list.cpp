@@ -117,7 +117,7 @@ int main()
 
 //  ================================================================================================
 
-	[[maybe_unused]] auto value { 1 };
+	[[maybe_unused]] auto x { 1 };
 
 //	[[maybe_unused]] auto initializer_list_1   { 1, 2, 3, 4, 5 }; // error
 

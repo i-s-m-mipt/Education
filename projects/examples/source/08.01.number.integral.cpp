@@ -35,7 +35,7 @@ void test_v1(benchmark::State & state)
 {
     std::vector < Entity_v1 > entities(1'000);
 
-    for (auto value : state)
+    for (auto element : state)
     {
         entities[0].x = entities[0].y = 0;
 
@@ -54,7 +54,7 @@ void test_v2(benchmark::State & state)
 {
     std::vector < Entity_v2 > entities(1'000);
 
-    for (auto value : state)
+    for (auto element : state)
     {
         entities[0].x = entities[0].y = 0;
         
@@ -71,7 +71,7 @@ void test_v2(benchmark::State & state)
 
 void test_v3(benchmark::State & state) // support: compiler-explorer.com
 {
-    for (auto value : state)
+    for (auto element : state)
     {
         auto d = 1.0; 
         
@@ -83,7 +83,7 @@ void test_v3(benchmark::State & state) // support: compiler-explorer.com
 
 void test_v4(benchmark::State & state) // support: compiler-explorer.com
 {
-    for (auto value : state)
+    for (auto element : state)
     {
         auto d = 1.0;
 
@@ -159,17 +159,17 @@ int main()
     
 //  ----------------------------------------------------------------------------------
 
-    auto   value = 0x01020304;
+    auto   data = 0x01020304;
 
-    auto p_value = &value;
+    auto p_data = &data;
 
-    auto p_value_byte = std::bit_cast < std::byte * > (p_value);
+    auto p_data_byte = std::bit_cast < std::byte * > (p_data);
 
-    std::cout << "main : 0x01020304 = { ";
+    std::cout << "main : data = 0x01020304 = { ";
 
     for (auto i = 0uz; i < sizeof(unsigned int); ++i)
     {
-        std::cout << std::format("{:#04x}", std::to_integer < int > (*(p_value_byte + i))) << ' ';
+        std::cout << std::format("{:#04x}", std::to_integer < int > (*(p_data_byte + i))) << ' ';
     }
 
     std::cout << "}\n";

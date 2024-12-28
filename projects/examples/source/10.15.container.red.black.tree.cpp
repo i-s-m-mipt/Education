@@ -14,7 +14,7 @@
 
 void test_v1(benchmark::State & state)
 {
-    for (auto value : state)
+    for (auto element : state)
     {
 		auto size = 100'000;
 
@@ -35,7 +35,7 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state)
 {
-    for (auto value : state)
+    for (auto element : state)
     {
         std::set < int, std::greater < int > > set;
 

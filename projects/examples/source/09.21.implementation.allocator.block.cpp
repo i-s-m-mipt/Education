@@ -224,7 +224,7 @@ void test_v1(benchmark::State & state)
 
     std::vector < void * > ptrs(kb, nullptr);
 
-	for (auto value : state)
+	for (auto element : state)
 	{
 		Block_Allocator allocator(16 * gb);
 
@@ -262,7 +262,7 @@ void test_v2(benchmark::State & state)
 
     std::vector < std::pair < void * , std::size_t > > blocks(kb);
 
-	for (auto value : state)
+	for (auto element : state)
 	{
 		for (auto i = 0uz; i < kb; ++i) 
         {

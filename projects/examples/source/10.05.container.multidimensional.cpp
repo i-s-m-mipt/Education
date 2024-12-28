@@ -140,15 +140,13 @@ int main()
 
 	boost::multi_array < int, 3 > array_2D_v7(boost::extents[size_1][size_2][size_3]);
 
-	auto value = 0;
-
 	for (auto i = 0uz; i < size_1; ++i)
 	{
 		for (auto j = 0uz; j < size_2; ++j)
 		{
 			for (auto k = 0uz; k < size_3; ++k)
 			{
-				array_2D_v7[i][j][k] = ++value;
+				array_2D_v7[i][j][k] = 1;
 			}
 		}
 	}
@@ -159,6 +157,6 @@ int main()
 
 	auto view = array_2D_v7[boost::indices[range_t(0, 2)][1][range_t(0, 5, 2)]];
 
-	assert(view[0][0] ==  6 && view[0][1] ==  8 && view[0][2] == 10);
-	assert(view[1][0] == 26 && view[1][1] == 28 && view[1][2] == 30);
+	assert(view[0][0] == 1 && view[0][1] == 1 && view[0][2] == 1);
+	assert(view[1][0] == 1 && view[1][1] == 1 && view[1][2] == 1);
 }

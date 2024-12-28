@@ -23,7 +23,7 @@ void test_v1(benchmark::State & state)
 {
 	std::vector < Entity_v5 > entities_v5(1'000);
 	
-    for (auto value : state)
+    for (auto element : state)
     {
 		entities_v5.front().x = 1;
 
@@ -42,7 +42,7 @@ void test_v2(benchmark::State & state)
 {
 	std::vector < Entity_v6 > entities_v6(1'000);
 	
-    for (auto value : state)
+    for (auto element : state)
     {
 		entities_v6.front().x = 1;
 

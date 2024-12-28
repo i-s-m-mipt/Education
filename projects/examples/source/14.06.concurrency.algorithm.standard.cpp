@@ -31,7 +31,7 @@ void test_v1(benchmark::State & state)
 {
     auto vector = make_vector(state.range(0));
 
-    for (auto value : state)
+    for (auto element : state)
     {
         std::for_each
         (
@@ -49,7 +49,7 @@ void test_v2(benchmark::State & state)
 {
     auto vector = make_vector(state.range(0));
 
-    for (auto value : state)
+    for (auto element : state)
     {
         std::for_each
         (
@@ -67,7 +67,7 @@ void test_v3(benchmark::State & state)
 {
     auto vector = make_vector(state.range(0));
     
-    for (auto value : state)
+    for (auto element : state)
     {
         std::for_each
         (

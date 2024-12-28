@@ -130,7 +130,7 @@ void test_v1(benchmark::State & state)
 {
     auto matrix = make_matrix(state.range(0));
 
-    for (auto value : state)
+    for (auto element : state)
     {
 		benchmark::DoNotOptimize(determinant_v1(matrix));	
     }
@@ -142,7 +142,7 @@ void test_v2(benchmark::State & state)
 {
     auto matrix = make_matrix(state.range(0));
     
-    for (auto value : state)
+    for (auto element : state)
     {
 		benchmark::DoNotOptimize(determinant_v2(matrix));	
     }

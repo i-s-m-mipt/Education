@@ -19,11 +19,11 @@ int main()
 
     auto rule_1 = boost::spirit::x3::int_;
 
-    auto value = 0;
+    auto x = 0;
 
-    boost::spirit::x3::phrase_parse(begin_1, end_1, rule_1, skip, value);
+    boost::spirit::x3::phrase_parse(begin_1, end_1, rule_1, skip, x);
 
-    assert(value == 1);
+    assert(x == 1);
     
 //  -------------------------------------------------------------------------------------
 

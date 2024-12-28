@@ -158,7 +158,7 @@ void test_v1(benchmark::State & state)
 
 	std::vector < void * > ptrs(kb, nullptr);
 
-	for (auto value : state)
+	for (auto element : state)
 	{
 		Chain_Allocator allocator(gb, mb);
 
@@ -192,7 +192,7 @@ void test_v2(benchmark::State & state)
 
 	std::vector < void * > ptrs(kb, nullptr);
 
-	for (auto value : state)
+	for (auto element : state)
 	{
 		for (auto i = 0uz; i < kb; ++i) 
 		{ 

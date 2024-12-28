@@ -11,7 +11,7 @@
 
 void test_v1(benchmark::State & state) 
 {
-    for (auto value : state)
+    for (auto element : state)
     {
         auto result = 0.0;
 
@@ -32,7 +32,7 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state) 
 {
-    for (auto value : state)
+    for (auto element : state)
     {
         auto result = 0.0;
 
@@ -57,7 +57,7 @@ void test_v2(benchmark::State & state)
 
 void test_v3(benchmark::State & state)
 {
-    for (auto value : state)
+    for (auto element : state)
     {
         auto result = 0.0;
 
@@ -87,7 +87,7 @@ void test_v3(benchmark::State & state)
 
 void test_v4(benchmark::State & state) 
 {
-    for (auto value : state) 
+    for (auto element : state) 
     {
         std::vector < int > vector_1d(state.range(0), 0);
 
@@ -99,7 +99,7 @@ void test_v4(benchmark::State & state)
 
 void test_v5(benchmark::State & state)
 {
-    for (auto value : state) 
+    for (auto element : state) 
     {
         std::vector < std::vector < int > > vector_2d(state.range(0), 
                       std::vector < int >            (state.range(1), 0));
@@ -118,7 +118,7 @@ void test_v6(benchmark::State & state)
 
     std::ranges::iota(vector, 1);
 
-    for (auto value : state) 
+    for (auto element : state) 
     {
         benchmark::DoNotOptimize(std::ranges::lower_bound(vector, 0));
     }
@@ -130,7 +130,7 @@ void test_v6(benchmark::State & state)
 
 void test_v7(benchmark::State & state)
 {
-    for (auto value : state) 
+    for (auto element : state) 
     {
         state.SkipWithError("test failed");
 

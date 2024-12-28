@@ -63,15 +63,13 @@ int main()
 		          std::vector < std::vector < int > >            (size_2,
 			                    std::vector < int >              (size_3, 0)));
 
-	auto value = 0;
-
 	for (auto i = 0uz; i < size_1; ++i)
 	{
 		for (auto j = 0uz; j < size_2; ++j)
 		{
 			for (auto k = 0uz; k < size_3; ++k)
 			{
-				vector_3D[i][j][k] = ++value;
+				vector_3D[i][j][k] = 1;
 			}
 		}
 	}

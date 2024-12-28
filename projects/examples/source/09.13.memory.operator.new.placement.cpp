@@ -88,7 +88,7 @@ public:
 
 void test(benchmark::State & state)
 {
-    for (auto value : state)
+    for (auto element : state)
     {
 		auto ptr = operator new(state.range(0)); 
 		

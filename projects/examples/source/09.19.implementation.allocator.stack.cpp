@@ -109,7 +109,7 @@ void test_v1(benchmark::State & state)
 
 	std::vector < void * > ptrs(kb, nullptr);
 
-	for (auto value : state)
+	for (auto element : state)
 	{
 		Stack_Allocator allocator(2 * gb);
 
@@ -133,7 +133,7 @@ void test_v2(benchmark::State & state)
 
 	std::vector < void * > ptrs(kb, nullptr);
 
-	for (auto value : state)
+	for (auto element : state)
 	{
 		for (auto i = 0uz; i < kb; ++i)
 		{

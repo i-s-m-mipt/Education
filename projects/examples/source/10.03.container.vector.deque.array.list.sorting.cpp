@@ -14,7 +14,7 @@
 
 void test_v1(benchmark::State & state) 
 {
-    for (auto value : state)
+    for (auto element : state)
     {
         std::array < int, 100'000 > array;
 
@@ -39,7 +39,7 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state) 
 {
-    for (auto value : state)
+    for (auto element : state)
     {
         std::vector < int > vector(100'000, 0);
 
@@ -64,7 +64,7 @@ void test_v2(benchmark::State & state)
 
 void test_v3(benchmark::State & state) 
 {
-    for (auto value : state)
+    for (auto element : state)
     {
         std::deque < int > deque(100'000, 0);
 
@@ -89,7 +89,7 @@ void test_v3(benchmark::State & state)
 
 void test_v4(benchmark::State & state) 
 {
-    for (auto value : state)
+    for (auto element : state)
     {
         std::list < int > list(100'000, 0);
 
@@ -114,7 +114,7 @@ void test_v4(benchmark::State & state)
 
 void test_v5(benchmark::State & state) 
 {
-    for (auto value : state)
+    for (auto element : state)
     {
         std::forward_list < int > forward_list(100'000, 0);
 

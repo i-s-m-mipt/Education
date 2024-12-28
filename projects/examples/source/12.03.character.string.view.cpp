@@ -75,7 +75,7 @@ void test_v2(benchmark::State & state)
 {
     std::string string(65536, 'a');
 
-    for (auto value : state)
+    for (auto element : state)
     {
         benchmark::DoNotOptimize(string.substr(0, state.range(0)));	
     }
@@ -91,7 +91,7 @@ void test_v3(benchmark::State & state)
 
     std::string_view view(string);
 
-    for (auto value : state)
+    for (auto element : state)
     {
         benchmark::DoNotOptimize(view.substr(0, state.range(0)));	
     }

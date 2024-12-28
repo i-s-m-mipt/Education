@@ -83,9 +83,9 @@ class Calculator
 {
 public:
 
-    auto operator()(double value) const -> double
+    auto operator()(double d) const -> double
     { 
-        return value; 
+        return d; 
     }
 
     auto operator()(const detail::Sign & sign) const -> double

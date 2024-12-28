@@ -19,7 +19,7 @@ using namespace std::literals;
 
 void test_v1(benchmark::State & state)
 {
-	for (auto value : state)
+	for (auto element : state)
 	{
         std::list < int > list;
 
@@ -36,7 +36,7 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state)
 {
-	for (auto value : state)
+	for (auto element : state)
 	{
         std::pmr::list < int > list;
 
@@ -53,7 +53,7 @@ void test_v2(benchmark::State & state)
 
 void test_v3(benchmark::State & state)
 {
-	for (auto value : state)
+	for (auto element : state)
 	{
         std::pmr::monotonic_buffer_resource arena;
 
@@ -74,7 +74,7 @@ void test_v3(benchmark::State & state)
 
 void test_v4(benchmark::State & state)
 {
-	for (auto value : state)
+	for (auto element : state)
 	{
         std::array < std::byte, 32'000 > buffer;
 
@@ -99,7 +99,7 @@ void test_v4(benchmark::State & state)
 
 void test_v5(benchmark::State & state) // support: Valgrind
 {
-	for (auto value : state)
+	for (auto element : state)
 	{
         std::list < int, boost::fast_pool_allocator < int > > list;
 

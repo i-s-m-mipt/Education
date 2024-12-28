@@ -13,21 +13,21 @@ auto parse(std::string_view data)
 {
     auto begin = std::begin(data), end = std::end(data);
 
-    int value_1, value_2;
+    auto x = 0, y = 0;
 
     using boost::spirit::x3::_attr;
 
-    auto set_value_1 = [&value_1](auto && context){ value_1 = _attr(context); };
-    auto set_value_2 = [&value_2](auto && context){ value_2 = _attr(context); };
+    auto set_x = [&x](auto && context){ x = _attr(context); };
+    auto set_y = [&y](auto && context){ y = _attr(context); };
 
     using boost::spirit::x3::double_;
 
     auto rule = 
     (
-        '(' >> double_[set_value_1] >> ',' >> double_[set_value_2] >> ')' |
-        '(' >> double_[set_value_1]                                >> ')' |
-               double_[set_value_1] >> ',' >> double_[set_value_2]        |
-               double_[set_value_1]
+        '(' >> double_[set_x] >> ',' >> double_[set_y] >> ')' |
+        '(' >> double_[set_x]                          >> ')' |
+               double_[set_x] >> ',' >> double_[set_y]        |
+               double_[set_x]
     );
 
     auto skip = boost::spirit::x3::ascii::space;
@@ -39,7 +39,7 @@ auto parse(std::string_view data)
         throw std::runtime_error("invalid data");
     }
     
-    return std::complex < int > (value_1, value_2);
+    return std::complex < int > (x, y);
 }
 
 //  ================================================================================================

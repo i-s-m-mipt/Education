@@ -106,16 +106,16 @@ auto parse(std::string_view data)
 
     auto skip = boost::spirit::x3::ascii::space;
 
-    int value;
+    auto x = 0;
 
-    auto result = boost::spirit::x3::phrase_parse(begin, end, parser::rule, skip, value);
+    auto result = boost::spirit::x3::phrase_parse(begin, end, parser::rule, skip, x);
 
     if (!result || begin != end)
     {
         throw std::runtime_error("invalid data");
     }
     
-    return value;
+    return x;
 }
 
 //  ================================================================================================

@@ -83,7 +83,7 @@ void test_v1(benchmark::State & state)
 {
 	auto kb = 1'024uz, mb = kb * kb, gb = kb * kb * kb;
 
-	for (auto value : state)
+	for (auto element : state)
 	{
 		Arena_Allocator allocator(gb);
 
@@ -102,7 +102,7 @@ void test_v2(benchmark::State & state)
 
 	std::vector < void * > ptrs(kb, nullptr);
 
-	for (auto value : state)
+	for (auto element : state)
 	{
 		for (auto i = 0uz; i < kb; ++i) 
 		{ 
