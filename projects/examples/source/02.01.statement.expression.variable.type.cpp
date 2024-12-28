@@ -10,21 +10,21 @@
 
 int main()
 {
-	bool   b; std::cout << "main : sizeof(b) = " << sizeof(b) << '\n';
-	char   c; std::cout << "main : sizeof(c) = " << sizeof(c) << '\n';
-	short  s; std::cout << "main : sizeof(s) = " << sizeof(s) << '\n';
-	int    i; std::cout << "main : sizeof(i) = " << sizeof(i) << '\n';
-	long   l; std::cout << "main : sizeof(l) = " << sizeof(l) << '\n';
-	float  f; std::cout << "main : sizeof(f) = " << sizeof(f) << '\n';
-	double d; std::cout << "main : sizeof(d) = " << sizeof(d) << '\n';
+	std::cout << "main : sizeof(bool  ) = " << sizeof(bool  ) << '\n';
+	std::cout << "main : sizeof(char  ) = " << sizeof(char  ) << '\n';
+	std::cout << "main : sizeof(short ) = " << sizeof(short ) << '\n';
+	std::cout << "main : sizeof(int   ) = " << sizeof(int   ) << '\n';
+	std::cout << "main : sizeof(long  ) = " << sizeof(long  ) << '\n';
+	std::cout << "main : sizeof(float ) = " << sizeof(float ) << '\n';
+	std::cout << "main : sizeof(double) = " << sizeof(double) << '\n';
 
 //  ------------------------------------------------------------------------------------
 
-//	c = 'я'; // error
+//	char c = 'а'; // error
 
-//	i = 2'147'483'647 + 1; // error
+//	int i = 2'147'483'647 + 1; // error
 
-//	d = 1.000'000'000'000'000'123'456'789; // error
+//	double d = 1.000'000'000'000'000'123'456'789; // error
 
 //  ------------------------------------------------------------------------------------
 
@@ -40,8 +40,7 @@ int main()
 	[[maybe_unused]] unsigned      long int  uli;
 	[[maybe_unused]] unsigned long long int ulli;
 
-	long long	ll; std::cout << "main : sizeof(ll) = " << sizeof(ll) << '\n';
-	long double ld; std::cout << "main : sizeof(ld) = " << sizeof(ld) << '\n';
+	std::cout << "main : sizeof(long double) = " << sizeof(long double) << '\n';
 
 //  ------------------------------------------------------------------------------------
 
@@ -79,12 +78,6 @@ int main()
 
 //  ------------------------------------------------------------------------------------
 
-	d = i = c = b = 1; // support: cppinsights.io
-	
-	assert(std::abs(d - 1.0) < 1e-6);
-
-//  ------------------------------------------------------------------------------------
-
 	[[maybe_unused]] const volatile auto cvi = 1; // support: compiler-explorer.com
 
 //	cvi = 2; // error
@@ -103,7 +96,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------
 
-	static_assert(sizeof(std::uint16_t) == 2);
-	static_assert(sizeof(std::uint32_t) == 4);
-	static_assert(sizeof(std::uint64_t) == 8);
+	assert(sizeof(std::int16_t) == 2 && sizeof(std::int_least16_t) >= 2);
+	assert(sizeof(std::int32_t) == 4 && sizeof(std::int_least32_t) >= 4);
+	assert(sizeof(std::int64_t) == 8 && sizeof(std::int_least64_t) >= 8);
 }

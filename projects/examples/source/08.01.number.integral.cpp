@@ -33,8 +33,6 @@ struct Entity_v2 { std::uint32_t x      = 0, y      = 0; };
 
 void test_v1(benchmark::State & state)
 {
-    static_assert(sizeof(Entity_v1) == 4);
-
     std::vector < Entity_v1 > entities(1'000);
 
     for (auto value : state)
@@ -54,8 +52,6 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state)
 {
-    static_assert(sizeof(Entity_v2) == 8);
-
     std::vector < Entity_v2 > entities(1'000);
 
     for (auto value : state)
@@ -195,11 +191,9 @@ int main()
 
 //  ----------------------------------------------------------------------------------
 
-    static_assert(sizeof(std::uint16_t) == 2);
-	static_assert(sizeof(std::uint32_t) == 4);
-	static_assert(sizeof(std::uint64_t) == 8);
-
-    static_assert(std::is_same_v < int, std::int32_t > );
+    assert(sizeof(std::int16_t) == 2 && sizeof(std::int_least16_t) >= 2);
+	assert(sizeof(std::int32_t) == 4 && sizeof(std::int_least32_t) >= 4);
+	assert(sizeof(std::int64_t) == 8 && sizeof(std::int_least64_t) >= 8);
 
 //  ----------------------------------------------------------------------------------
 

@@ -25,7 +25,7 @@ int main()
 
 //  --------------------------------------
 
-	static_assert(sizeof(Client) == 1);
-	static_assert(sizeof(Server) == 1);	
-	static_assert(sizeof(Router) == 2);
+	static_assert(sizeof(Client   ) == 1);
+	static_assert(sizeof(Server   ) == 1);	
+	static_assert(sizeof(Router   ) == 2);
 }
