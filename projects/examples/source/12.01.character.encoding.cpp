@@ -1,5 +1,5 @@
 #include <cassert>
-#include <ios>
+#include <format>
 #include <iostream>
 #include <type_traits>
 
@@ -15,9 +15,9 @@ int main()
 
 //	c = 'я'; // error
 
-	auto is_char_signed = std::is_signed_v < char > ;
+	auto is_signed_char = std::is_signed_v < char > ;
 
-	std::cout << "main : is_char_signed = " << std::boolalpha << is_char_signed << '\n';
+	std::cout << "main : is_signed_char = " << std::format("{}", is_signed_char) << '\n';
 	
 	assert('1' - '0' == 1);
 

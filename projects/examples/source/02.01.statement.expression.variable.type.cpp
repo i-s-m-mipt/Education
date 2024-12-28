@@ -2,7 +2,7 @@
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
-#include <ios>
+#include <format>
 #include <iostream>
 #include <type_traits>
 
@@ -28,9 +28,9 @@ int main()
 
 //  ------------------------------------------------------------------------------------
 
-	auto is_char_signed = std::is_signed_v < char > ;
+	auto is_signed_char = std::is_signed_v < char > ;
 
-	std::cout << "main : is_char_signed = " << std::boolalpha << is_char_signed << '\n';
+	std::cout << "main : is_signed_char = " << std::format("{}", is_signed_char) << '\n';
 
 //	[[maybe_unused]]   signed           int   si; // bad
 //	[[maybe_unused]]   signed      long int  sli; // bad
