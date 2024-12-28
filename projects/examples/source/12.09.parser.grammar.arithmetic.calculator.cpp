@@ -102,7 +102,7 @@ public:
 
 	void test()
 	{
-		std::cout << "Calculator::test : enter 1 or more expressions : \n";
+		std::cout << "Calculator::test : enter expressions : \n";
 
 		for (std::string line; std::getline(std::cin >> std::ws, line); )
 		{

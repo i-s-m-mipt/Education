@@ -72,7 +72,7 @@ int main() // support: locale -a
 		}
 	}
 
-	std::cout << "main : enter 1 date (Day MM/DD/YYYY) : ";
+	std::cout << "main : enter date (Day MM/DD/YYYY) : ";
 
 	auto state = std::ios_base::goodbit; tm input;
 

@@ -2,7 +2,7 @@
 
 int main()
 {
-    std::cout << "main : enter 1 integer : "; int x; std::cin >> x;
+    std::cout << "main : enter integer : "; int x; std::cin >> x;
 
 //  -----------------------------------------------------------------------
 

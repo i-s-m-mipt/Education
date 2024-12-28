@@ -544,7 +544,7 @@ int main()
 
 //  -------------------------------------------------------------------------------------------
 
-	std::cout << "main : enter 1 Big_Int : "; Big_Int big_int_12; std::cin >> big_int_12; 
+	std::cout << "main : enter Big_Int : "; Big_Int big_int_12; std::cin >> big_int_12; 
 	
 	std::cout << "main : big_int_12 = " << big_int_12 << '\n';
 
