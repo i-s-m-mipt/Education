@@ -30,7 +30,7 @@ auto equal_v3(double x, double y, double scale)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-auto equal_v4(double x, double y, double epsilon, double scale)
+auto equal_v4(double x, double y, double scale, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon ? true : equal_v3(x, y, scale);
 }
@@ -91,17 +91,23 @@ int main()
 
 //  -------------------------------------------------------------------------------------
 
+	assert( equal_v1(1.0, 1.0));
+
 	assert( equal_v2(1.0, 1.000'001));
 	
 //	assert( equal_v2(1e-6, 1e-9)); // bad
 	
-//	assert(!equal_v2(1'000.0, 1'000.000'001)); // bad
+//	assert(!equal_v2(1'000.0, 1'000.001)); // bad
+
+	assert(!equal_v3(1e-6, 1e-9, 1e-6));
+
+	assert( equal_v3(1'000.0, 1'000.001, 1e-6));
 
 	auto d = 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1;
 
     assert( equal_v3(d, 1.0, 1e-6));
 
-//  assert(!equal_v3(d - 1.0, 0.0, 1e-6)); // bad
+// 	assert(!equal_v3(d - 1.0, 0.0, 1e-6)); // bad
 
-	assert( equal_v4(d - 1.0, 0.0, 1e-9, 1e-6));
+	assert( equal_v4(d - 1.0, 0.0, 1e-6));
 }
