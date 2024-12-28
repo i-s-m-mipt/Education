@@ -54,7 +54,9 @@ constexpr auto test_v2(int)
 
 template < typename T, typename ... Ts > void test_v3(T arg, Ts ... args)
 {
-	std::cout << "test_v3 : arg = " << arg << " sizeof...(args) = " << sizeof...(args) << '\n';
+	std::cout << "test_v3 : arg = " << arg << ' ';
+	
+	std::cout << "sizeof...(args) = " << sizeof...(args) << '\n';
 
 	if constexpr (sizeof...(args) > 0) 
 	{

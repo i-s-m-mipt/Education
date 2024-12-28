@@ -60,7 +60,7 @@ int main()
 
     try
     {
-        std::cout << "main : enter 1 or more integers and 1 non-integer : \n";
+        std::cout << "main : enter 1 or more integers and 1 non-integer : ";
         
         int x; while (std::cin >> x);
 

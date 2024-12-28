@@ -70,9 +70,9 @@ BOOST_DATA_TEST_CASE
     index, sample
 )
 {
-    std::cout << "Test_v4 : index = " << index;
+    std::cout << "Test_v4 : index = " << index << ' ';
     
-    std::cout << " sample = " << std::format("{:.3f}", sample) << '\n';
+    std::cout << "sample = " << std::format("{:.3f}", sample) << '\n';
 
     BOOST_TEST(sample < 0.5);
 }

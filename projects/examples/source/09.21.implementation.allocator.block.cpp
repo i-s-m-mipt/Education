@@ -124,7 +124,7 @@ public:
     { 
         std::cout << "Chain_Allocator::test : ";
 
-        std::cout << "m_size = " << m_size << ' ';
+        std::cout << "m_size = "  << m_size << ' ';
 
         std::cout << "m_begin = " << std::format("{:018}", m_begin) << ' ';
 

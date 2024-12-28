@@ -157,9 +157,9 @@ int main()
 
 //  ----------------------------------------------------------------------------------
 
-    std::cout << "main : std::endian::native = std::endian::";
+    auto is_endian_little = std::endian::native == std::endian::little;
 
-    std::cout << (std::endian::native == std::endian::little ? "little" : "big") << '\n';
+    std::cout << "main : is_endian_little = " << std::format("{}", is_endian_little) << '\n';
     
 //  ----------------------------------------------------------------------------------
 

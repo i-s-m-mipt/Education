@@ -16,7 +16,7 @@ public:
     {
         Helper < T, I - 1 > ::print(stream, tuple);
 
-        stream << " " << std::get < I - 1 > (tuple);
+        stream << ' ' << std::get < I - 1 > (tuple);
     }
 };
     

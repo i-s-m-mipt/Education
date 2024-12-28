@@ -52,9 +52,9 @@ public:
 
 	void test() const
 	{
-		std::cout << "Arena_Allocator::test : m_size = " << m_size    << ' ';
+		std::cout << "Arena_Allocator::test : m_size = " << m_size << ' ';
 
-		std::cout << "m_begin = "  << std::format("{:018}", m_begin ) << ' ';
+		std::cout << "m_begin = "  << std::format("{:018}", m_begin) << ' ';
 
 		std::cout << "m_offset = " << std::format("{:0>4}", m_offset) << '\n';
 	}

@@ -10,7 +10,9 @@ void test_v1() {}
 
 template < typename T, typename ... Ts > void test_v1(T arg, Ts ... args)
 {
-	std::cout << "test_v1 : arg = " << arg << " sizeof...(args) = " << sizeof...(args) << '\n';
+	std::cout << "test_v1 : arg = " << arg << ' ';
+	
+	std::cout << "sizeof...(args) = " << sizeof...(args) << '\n';
 	
 	test_v1(args...); // support: cppinsights.io
 }

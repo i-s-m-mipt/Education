@@ -49,9 +49,9 @@ int main()
 
 	for (auto i = 0uz; i < size; ++i)
 	{
-		std::cout << "main : iteration (06) : i = " << i;
+		std::cout << "main : iteration (06) : i = " << i << ' ';
 
-		std::cout << " break? (y/n) "; char c; std::cin >> c; 
+		std::cout << "break? (y/n) "; char c; std::cin >> c; 
 		
 		if (c == 'y') 
 		{
@@ -67,9 +67,11 @@ int main()
 		{
 			for (auto k = 0uz; k < size; ++k)
 			{
-				std::cout << "main : iteration (07) : i = " << i << " j = " << j << " k = " << k;
+				std::cout << "main : iteration (07) : ";
+				
+				std::cout << "i = " << i << " j = " << j << " k = " << k << ' ';
 
-				std::cout << " break? (y/n) "; char c; std::cin >> c; 
+				std::cout << "break? (y/n) "; char c; std::cin >> c; 
 		
 				if (c == 'y') 
 				{

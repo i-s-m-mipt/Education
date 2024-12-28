@@ -7,8 +7,6 @@ int main()
 {
 	std::stringstream stream;
 
-    stream << std::showbase;
-
 	stream << std::format("{:_>#8o}", 255);
 
 	assert(stream.str() == "____0377");

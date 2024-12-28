@@ -86,7 +86,7 @@ template < typename T, std::size_t I > struct Helper
     {
         Helper < T, I - 1 > ::print(stream, tuple);
 
-        stream << " " << tuple.template get < I - 1 > ();
+        stream << ' ' << tuple.template get < I - 1 > ();
     }
 };
     

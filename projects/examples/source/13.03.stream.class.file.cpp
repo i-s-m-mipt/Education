@@ -99,7 +99,7 @@ int main()
 
         fout.seekp((size - 1) * (size + 1), std::ios::beg);
 
-        fout << "bbbbb\n" << Entity(1, "aaaaa");
+        fout << "bbbbb\n" << Entity(1, "aaaaa") << '\n';
     }
     else 
     {

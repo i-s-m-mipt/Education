@@ -49,9 +49,9 @@ int main()
 
 	for (auto precision = 0; precision <= max_precision; ++precision)
 	{
-		std::cout << "main : precision = " << std::format("{:0>2}", precision);
+		std::cout << "main : precision = " << std::format("{:0>2}", precision) << ' ';
 
-		std::cout << " d = " << std::format("{:.{}f}", 1.0, precision) << '\n';
+		std::cout << "d = " << std::format("{:.{}f}", 1.0, precision) << '\n';
 	}
 
 	std::cout.precision(precision);

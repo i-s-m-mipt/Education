@@ -29,17 +29,15 @@ int main()
 
 		switch (Color(color))
 		{
-			case Color::R: { std::cout << "(1)"; break; }
-			case Color::G: { std::cout << "(2)"; break; }
-			case Color::B: { std::cout << "(3)"; break; }
+			case Color::R: { std::cout << "(1)\n"; break; }
+			case Color::G: { std::cout << "(2)\n"; break; }
+			case Color::B: { std::cout << "(3)\n"; break; }
 
 			default:
 			{
-				std::cout << "(4)"; break;
+				std::cout << "(4)\n"; break;
 			}
 		}
-
-		std::cout << '\n';
 	}
 
 //  ----------------------------------------------------------------------------------

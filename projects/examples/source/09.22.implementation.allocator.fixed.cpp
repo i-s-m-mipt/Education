@@ -37,11 +37,13 @@ public:
 
 	void test() const
 	{
-		std::cout << "Fixed_Allocator::test : S = " << S;
+		std::cout << "Fixed_Allocator::test : S = " << S << ' ';
 
-		std::cout << " m_begin = "  << std::format("{:018}", static_cast < void * > (m_begin));
+		auto begin = static_cast < void * > (m_begin);
 
-		std::cout << " m_offset = " << std::format("{:0>4}", m_offset) << '\n';
+		std::cout << "m_begin = "  << std::format("{:018}", begin) << ' ';
+
+		std::cout << "m_offset = " << std::format("{:0>4}", m_offset) << '\n';
 	}
 
 private:
