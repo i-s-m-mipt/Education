@@ -250,7 +250,9 @@ public:
 
 	friend auto & operator>>(std::istream & stream, Big_Int & big_int)
 	{
-		std::string string; stream >> string; big_int = Big_Int(string); 
+		std::string string; stream >> string; 
+		
+		big_int = Big_Int(string); 
 		
 		return stream;
 	}

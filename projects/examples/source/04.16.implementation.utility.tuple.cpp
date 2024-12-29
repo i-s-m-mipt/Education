@@ -5,7 +5,7 @@
 #include <string>
 #include <utility>
 
-/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 template <             typename ... Ts > class Tuple {};
 
@@ -40,7 +40,7 @@ public:
 		return *this; 
 	}
 
-//  --------------------------------------------------------------
+//  --------------------------------------------------------------------
 
 	constexpr void swap(Tuple & other)
 	{
@@ -52,7 +52,7 @@ public:
 		}
 	}
 
-//  --------------------------------------------------------------
+//  --------------------------------------------------------------------
 
 	template < std::size_t I > constexpr auto get() const
 	{
@@ -66,63 +66,50 @@ public:
 		}
 	}
 
+//  --------------------------------------------------------------------
+
+	friend auto & operator>>(std::istream & stream, Tuple & tuple)
+	{
+		stream >> tuple.m_head;
+
+		if constexpr (sizeof...(Ts) > 0)
+		{ 
+			stream >> tuple.m_tail;
+		}
+
+		return stream;
+	}
+
+	friend auto & operator<<(std::ostream & stream, const Tuple & tuple)
+	{
+		stream << "{ "; tuple.write(stream); return stream << '}';
+	}
+
+//  --------------------------------------------------------------------
+
+	void write(std::ostream & stream) const
+	{
+		stream << m_head << ' ';
+
+		if constexpr (sizeof...(Ts) > 0)
+		{
+			m_tail.write(stream);
+		}
+	}
+
 private:
 
 	T m_head; Tuple < Ts ... > m_tail;
 };
 
-/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 template < typename ... Ts > constexpr auto make_tuple(Ts && ... args)
 {
 	return Tuple < Ts ... > (std::forward < Ts > (args)...);
 }
 
-/////////////////////////////////////////////////////////////////////////
-
-template < typename T, std::size_t I > struct Helper
-{
-    static void print(std::ostream & stream, const T & tuple)
-    {
-        Helper < T, I - 1 > ::print(stream, tuple);
-
-        stream << ' ' << tuple.template get < I - 1 > ();
-    }
-};
-    
-template < typename T > struct Helper < T, 1 >
-{
-    static void print(std::ostream & stream, const T & tuple)
-    {
-        stream << tuple.template get < 0 > ();
-    }
-};
-
-/////////////////////////////////////////////////////////////////////////
-
-template 
-< 
-    typename ... Ts 
-> 
-auto & operator<<(std::ostream & stream, const Tuple < Ts ... > & tuple)
-{
-    if constexpr (sizeof...(Ts) > 0)
-    {
-        stream << "{ ";
-
-        Helper < decltype(tuple), sizeof...(Ts) > ::print(stream, tuple);
-
-        stream << " }";
-    }
-	else
-    {
-        stream << "{}";
-    }
-    
-    return stream;
-}
-
-/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -146,9 +133,13 @@ int main()
 
 //  ----------------------------------------------------------------
 
-	std::cout << "main : tuple_4 = " << tuple_4 << '\n';
+	std::cout << "main : enter Tuple < int, std::string > : "; 
+	
+	Tuple < int, std::string > tuple_5; std::cin >> tuple_5; 
+	
+	std::cout << "main : tuple_5 = " << tuple_5 << '\n';
 
 //  ----------------------------------------------------------------
 
-	[[maybe_unused]] constexpr auto tuple_5 = make_tuple(1, 2, 3);	
+	[[maybe_unused]] constexpr auto tuple_6 = make_tuple(1, 2, 3);	
 }

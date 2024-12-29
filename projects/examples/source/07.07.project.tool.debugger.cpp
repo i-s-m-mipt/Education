@@ -6,8 +6,6 @@
 
 auto find(const std::vector < int > & vector, int key)
 {
-	auto result = false;
-
 	if (auto size = std::size(vector); size > 0)
 	{
 		auto l = 0uz, r = size - 1, m = 0uz;
@@ -17,10 +15,10 @@ auto find(const std::vector < int > & vector, int key)
 			vector[m = std::midpoint(l, r)] < key ? l = m + 1 : r = m;
 		}
 
-		result = vector[l] == key;
+		return vector[l] == key;
 	}
 	
-	return result;
+	return false;
 }
 
 //  ================================================================================================

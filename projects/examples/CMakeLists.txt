@@ -77,8 +77,8 @@ set(debug
     03.15.reference.lvalue.rvalue
     03.16.implementation.container.vector
     03.17.class.operator.overload
-    03.18.class.operator.overload.output
-    03.19.class.operator.overload.spaceship
+    03.18.class.operator.overload.compare
+    03.19.class.operator.overload.input.output
     03.20.class.operator.overload.optimization
     04.01.template.function
     04.02.template.function.variadic
