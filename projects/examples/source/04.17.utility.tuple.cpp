@@ -101,13 +101,9 @@ int main()
 
 //  -----------------------------------------------------------------------------------
 
-    using tuple_t = decltype(tuple_3);
+    static_assert(std::tuple_size_v < decltype(tuple_3) > == 3);
 
-//  -----------------------------------------------------------------------------------
-
-    static_assert(std::tuple_size_v < tuple_t > == 3);
-
-    static_assert(std::is_same_v < std::tuple_element_t < 0, tuple_t > , const int > );
+    static_assert(std::is_same_v < std::tuple_element_t < 0, decltype(tuple_3) > , const int > );
 
     static_assert(std::get < 0 > (tuple_3) == 1);
 }

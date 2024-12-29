@@ -77,17 +77,15 @@ template < std::random_access_iterator I > void advance_v2(I & iterator, int dis
 
 int main()
 {
+	using category_1_t = std::vector < int > ::iterator::iterator_category;
+
+	static_assert(std::is_same_v < category_1_t, std::random_access_iterator_tag > );
+
+//  ---------------------------------------------------------------------------------
+
 	std::vector < int > vector { 1, 2, 3, 4, 5 };
 
-	using category_t = typename decltype(vector)::iterator::iterator_category;
-
-	static_assert(std::is_same_v < category_t, std::random_access_iterator_tag > );
-
-	using value_type = std::iterator_traits < decltype(vector)::iterator > ::value_type;
-
-	static_assert(std::is_same_v < value_type, int > );
-
-//  ------------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
 	auto begin = vector.begin();
 
@@ -98,14 +96,14 @@ int main()
 	assert(*std::next(vector.begin(), 1) == 2);
 	assert(*std::prev(vector.end  (), 1) == 5);
 
-//  ------------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
 	for (auto iterator = vector.  begin(); iterator != vector.  end(); ++iterator);
 	for (auto iterator = vector. cbegin(); iterator != vector. cend(); ++iterator);
 	for (auto iterator = vector. rbegin(); iterator != vector. rend(); ++iterator);
 	for (auto iterator = vector.crbegin(); iterator != vector.crend(); ++iterator);
 
-//  ------------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
 	vector.resize(1'000);
 

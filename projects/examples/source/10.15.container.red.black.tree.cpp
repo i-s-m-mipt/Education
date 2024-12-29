@@ -57,15 +57,17 @@ BENCHMARK(test_v2);
 
 int main()
 {
-	std::set < int > set { 5, 4, 3, 2, 1 };
-
-	using category_t = typename decltype(set)::iterator::iterator_category;
+	using category_t = std::set < int > ::iterator::iterator_category;
 
 	static_assert(std::is_same_v < category_t, std::bidirectional_iterator_tag > );
 
-	assert(*std::begin(set) == 1 && *std::prev(std::end(set)) == 5);
+//  -------------------------------------------------------------------------------
+
+	std::set < int > set { 5, 4, 3, 2, 1 };
 
 //  -------------------------------------------------------------------------------
+
+	assert(*std::begin(set) == 1 && *std::prev(std::end(set)) == 5);
 
 	set.insert(std::begin(set), 0);
 

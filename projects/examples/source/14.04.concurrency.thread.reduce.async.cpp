@@ -26,9 +26,9 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum) -> T
 	{
 		auto middle = std::next(begin, size / 2);
 
-        std::ranges::subrange left(begin, middle);
+        std::ranges::subrange range(begin, middle);
 
-		auto result_1 = std::async(reduce < decltype(left), T > , left, sum);
+		auto result_1 = std::async(reduce < decltype(range), T > , range, sum);
 
 		auto result_2 = reduce(std::ranges::subrange(middle, end), T(0));
 

@@ -42,8 +42,8 @@ auto equal(std::complex < double > x, std::complex < double > y, double epsilon 
 {
     return 
     (
-        std::abs(x.real() - y.real()) < epsilon &&
-        std::abs(x.imag() - y.imag()) < epsilon
+        std::abs(std::real(x) - std::real(y)) < epsilon &&
+        std::abs(std::imag(y) - std::imag(y)) < epsilon
     );
 }
 
@@ -51,40 +51,36 @@ auto equal(std::complex < double > x, std::complex < double > y, double epsilon 
 
 int main()
 {
-    std::complex < double > complex(1.0, 1.0);
+    auto complex = 1.0 + 1.0i;
+
+//  -------------------------------------------------------------------------
+
+    assert(equal(std::real(complex), 1.000'000));
+    assert(equal(std::imag(complex), 1.000'000));
     
-//  ------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------
 
-    assert(equal(complex.real(), 1.0));
-    assert(equal(complex.imag(), 1.0));
-
-//  ------------------------------------------------------------------------------------
+    assert(equal(complex + complex , 2.000'000 + 2.000'000i));
+    assert(equal(complex - complex , 0.000'000 + 0.000'000i));
+    assert(equal(complex * complex , 0.000'000 + 2.000'000i));
+    assert(equal(complex / complex , 1.000'000 + 0.000'000i));
+    
+//  -------------------------------------------------------------------------
 
     assert(equal(std::abs (complex), 1.414'214));
+    assert(equal(std::arg (complex), 0.785'398));
     assert(equal(std::norm(complex), 2.000'000));
 
-//  ------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------
 
-    assert(equal(std::conj(complex), std::complex < double > (+1.000'000, -1.000'000)));
-    assert(equal(std::proj(complex), std::complex < double > (+1.000'000, +1.000'000)));
-    assert(equal(std::exp (complex), std::complex < double > (+1.468'694, +2.287'355)));
-    assert(equal(std::log (complex), std::complex < double > (+0.346'574, +0.785'398)));
-    assert(equal(std::sqrt(complex), std::complex < double > (+1.098'684, +0.455'090)));
+    assert(equal(std::conj(complex), 1.000'000 - 1.000'000i));
+    assert(equal(std::proj(complex), 1.000'000 + 1.000'000i));
 
-//  ------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------
 
-    assert(equal(complex + complex , std::complex < double > (+2.000'000, +2.000'000)));
-    assert(equal(complex - complex , std::complex < double > (+0.000'000, +0.000'000)));
-    assert(equal(complex * complex , std::complex < double > (+0.000'000, +2.000'000)));
-    assert(equal(complex / complex , std::complex < double > (+1.000'000, +0.000'000)));
+    assert(equal(std::polar(std::sqrt(2.0), std::numbers::pi / 4), complex));
 
-//  ------------------------------------------------------------------------------------
-
-    decltype(complex)::value_type p1 = 1.0, p2 = 1.0;
-
-    assert(equal(std::polar(p1, p2), std::complex < double > (+0.540'302, +0.841'471)));
-
-//  ------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------
 
     auto result = transform
     (

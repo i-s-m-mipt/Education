@@ -66,37 +66,6 @@ public:
 		}
 	}
 
-//  --------------------------------------------------------------------
-
-	friend auto & operator>>(std::istream & stream, Tuple & tuple)
-	{
-		stream >> tuple.m_head;
-
-		if constexpr (sizeof...(Ts) > 0)
-		{ 
-			stream >> tuple.m_tail;
-		}
-
-		return stream;
-	}
-
-	friend auto & operator<<(std::ostream & stream, const Tuple & tuple)
-	{
-		stream << "{ "; tuple.write(stream); return stream << '}';
-	}
-
-//  --------------------------------------------------------------------
-
-	void write(std::ostream & stream) const
-	{
-		stream << m_head << ' ';
-
-		if constexpr (sizeof...(Ts) > 0)
-		{
-			m_tail.write(stream);
-		}
-	}
-
 private:
 
 	T m_head; Tuple < Ts ... > m_tail;
@@ -133,13 +102,5 @@ int main()
 
 //  ----------------------------------------------------------------
 
-	std::cout << "main : enter Tuple < int, std::string > : "; 
-	
-	Tuple < int, std::string > tuple_5; std::cin >> tuple_5; 
-	
-	std::cout << "main : tuple_5 = " << tuple_5 << '\n';
-
-//  ----------------------------------------------------------------
-
-	[[maybe_unused]] constexpr auto tuple_6 = make_tuple(1, 2, 3);	
+	[[maybe_unused]] constexpr auto tuple_5 = make_tuple(1, 2, 3);	
 }

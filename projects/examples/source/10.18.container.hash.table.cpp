@@ -11,12 +11,6 @@
 
 void test(const std::unordered_set < std::string > & unordered_set)
 {
-	using iterator_category_t = decltype(std::begin(unordered_set))::iterator_category;
-
-	static_assert(std::is_same_v < iterator_category_t, std::forward_iterator_tag > );
-
-//  ----------------------------------------------------------------------------------------------
-	
 	std::cout << "test : unordered_set.load_factor() = ";
 	
 	std::cout << static_cast < int > (unordered_set.load_factor() * 100) << "%\n";
@@ -61,6 +55,12 @@ auto make_dictionary(std::size_t size, std::size_t length)
 
 int main()
 {
+	using category_t = std::unordered_set < int > ::iterator::iterator_category;
+
+	static_assert(std::is_same_v < category_t, std::forward_iterator_tag > );
+
+//  ----------------------------------------------------------------------------
+
 	std::unordered_set < std::string > unordered_set;
 
 	test(unordered_set); unordered_set.rehash(32);
