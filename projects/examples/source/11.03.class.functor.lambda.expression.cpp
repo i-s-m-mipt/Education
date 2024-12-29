@@ -32,8 +32,8 @@ int main()
 
 	auto lambda_2 = [](auto x) constexpr noexcept { return x; };
 
-	std::cout << "main : typeid(lambda_1).name() = " << typeid(lambda_1).name() << '\n';
-	std::cout << "main : typeid(lambda_2).name() = " << typeid(lambda_2).name() << '\n';
+	std::cout << "main : typeid(lambda_1) = " << typeid(lambda_1).name() << '\n';
+	std::cout << "main : typeid(lambda_2) = " << typeid(lambda_2).name() << '\n';
 
 //  -----------------------------------------------------------------------------
 

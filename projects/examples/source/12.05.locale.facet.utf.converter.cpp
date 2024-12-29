@@ -138,7 +138,9 @@ int main()
 
 	std::string string = "ааааа";
 
-    std::cout << "main : std::size(string) = " << std::size(string) << '\n';
+    auto size = std::size(string);
+
+    std::cout << "main : size = " << size << '\n';
 
 //  -------------------------------------------------------------------------------
 

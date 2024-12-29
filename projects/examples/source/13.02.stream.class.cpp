@@ -27,14 +27,14 @@ auto & operator<<(std::ostream & stream, const Formatter & formatter)
 
 template < typename T > struct Helper 
 {
-    const T & m_data;
+    const T & data;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T > auto & operator<<(std::ostream & stream, const Helper < T > & helper)
 {
-    return stream << "test : arg = " << helper.m_data << '\n';
+    return stream << "test : arg = " << helper.data << '\n';
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////

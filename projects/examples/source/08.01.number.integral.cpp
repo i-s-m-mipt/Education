@@ -102,17 +102,13 @@ BENCHMARK(test_v4);
 
 int main()
 {
-    [[maybe_unused]] auto x1 = 0b11111111, x2 = 0377, x3 = 255, x4 = 0xff;
+    assert(std::format("{:#b}", 0b11111111) == "0b11111111");
 
-//  ----------------------------------------------------------------------------------
-
-    assert(std::format("{:#b}", 255) == "0b11111111");
-
-    assert(std::format("{:#o}", 255) == "0377");
+    assert(std::format("{:#o}", 0377) == "0377");
 
     assert(std::format("{:#d}", 255) == "255");
 
-    assert(std::format("{:#x}", 255) == "0xff");
+    assert(std::format("{:#x}", 0xff) == "0xff");
 
 //  ----------------------------------------------------------------------------------
 
@@ -165,7 +161,7 @@ int main()
 
     auto p_data_byte = std::bit_cast < std::byte * > (p_data);
 
-    std::cout << "main : data = 0x01020304 = { ";
+    std::cout << "main : data = { ";
 
     for (auto i = 0uz; i < sizeof(unsigned int); ++i)
     {

@@ -141,9 +141,9 @@ int main()
     {
         boost::python::exec("from script import factorial", python.local(), python.local());
 		
-		auto result = python.local()["factorial"](100);
+		auto result = boost::python::extract < std::string > (python.local()["factorial"](100))();
 		
-		std::cout << "main : 100! = " << boost::python::extract < std::string > (result)() << '\n';
+		std::cout << "main : result = " << result << '\n';
 	}
 	catch (const boost::python::error_already_set &)
 	{

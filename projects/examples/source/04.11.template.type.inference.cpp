@@ -19,28 +19,28 @@ const auto   make_entity_v4() { return Entity(); }
 
 template < typename E > void test_v1(E entity) 
 {
-	std::cout << "test_v1 : decltype(entity) = ";
+	std::cout << "test_v1 : typeid(entity) = ";
 
 	std::cout << boost::typeindex::type_id_with_cvr < decltype(entity) > ().pretty_name() << '\n';
 }
 
 template < typename E > void test_v2(E & entity) 
 {
-	std::cout << "test_v2 : decltype(entity) = ";
+	std::cout << "test_v2 : typeid(entity) = ";
 
 	std::cout << boost::typeindex::type_id_with_cvr < decltype(entity) > ().pretty_name() << '\n';
 }
 
 template < typename E > void test_v3(const E & entity) 
 {
-	std::cout << "test_v3 : decltype(entity) = ";
+	std::cout << "test_v3 : typeid(entity) = ";
 
 	std::cout << boost::typeindex::type_id_with_cvr < decltype(entity) > ().pretty_name() << '\n';
 }
 
 template < typename E > void test_v4(E && entity) 
 {
-	std::cout << "test_v4 : decltype(entity) = ";
+	std::cout << "test_v4 : typeid(entity) = ";
 
 	std::cout << boost::typeindex::type_id_with_cvr < decltype(entity) > ().pretty_name() << '\n';
 }

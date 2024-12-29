@@ -33,5 +33,5 @@ int main()
         result *= i; 
     }
    
-    std::cout << "main : 100! = " << result << '\n';
+    std::cout << "main : result = " << result << '\n';
 }

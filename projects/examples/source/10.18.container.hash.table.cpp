@@ -11,9 +11,9 @@
 
 void test(const std::unordered_set < std::string > & unordered_set)
 {
-	std::cout << "test : unordered_set.load_factor() = ";
-	
-	std::cout << static_cast < int > (unordered_set.load_factor() * 100) << "%\n";
+	auto load_factor = static_cast < int > (std::round(unordered_set.load_factor() * 100));
+
+	std::cout << "test : load_factor = " << load_factor << "%\n";
 
 //  ----------------------------------------------------------------------------------------------
 
