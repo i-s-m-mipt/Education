@@ -56,7 +56,7 @@ int main()
         entities.emplace_back(1, std::string(size_2, 'a'));
     }
 
-    std::cout << "main : enter any character to continue : "; char c; std::cin >> c;
+    std::cout << "main : enter char to continue : "; char c; std::cin >> c;
 
 //  ----------------------------------------------------------------------------
 

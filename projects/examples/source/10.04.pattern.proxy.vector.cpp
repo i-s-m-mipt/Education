@@ -38,5 +38,5 @@ int main()
 
 	assert(static_cast < bool > (proxy) == true);
 
-	std::cout << "main : enter any character to continue : "; char c; std::cin >> c;
+	std::cout << "main : enter char to continue : "; char c; std::cin >> c;
 }

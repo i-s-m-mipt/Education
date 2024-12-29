@@ -34,10 +34,10 @@ protected:
 
     virtual void write(std::ostream & stream) const 
     { 
-        stream << "Entity::m_data = " << m_data;
+        stream << "{ " << m_data << " }";
     }
 
-private:
+//  ----------------------------------------------------------------------
 
     int m_data = 0;
 };
@@ -50,12 +50,12 @@ public:
 
     void read (std::istream & stream) override
     {
-        Entity::read (stream); stream >> m_data;
+        Entity::read(stream); stream >> m_data;
     }
 
     void write(std::ostream & stream) const override 
     { 
-        Entity::write(stream); stream << "\nClient::m_data = " << m_data; 
+        stream << "{ " << Entity::m_data << ' ' << m_data << " }"; 
     }
 
 private:

@@ -13,7 +13,7 @@ int main()
 
 //  --------------------------------------------------------------------------
 
-	std::cout << "main : enter characters and Ctrl + D : ";
+	std::cout << "main : enter chars and Ctrl + D : ";
 
 	std::cout.flush();
 
@@ -37,7 +37,7 @@ int main()
 
 //  --------------------------------------------------------------------------
 
-	std::cout << "main : enter integers and non-integer : ";
+	std::cout << "main : enter ints and non-int : ";
 
 	std::vector < int > vector;
 

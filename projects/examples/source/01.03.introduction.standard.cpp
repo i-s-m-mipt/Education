@@ -10,11 +10,11 @@
 
 using namespace std::literals;
 
-////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::cout << "main : enter 2 integers : "; int x, y; std::cin >> x >> y;
+	std::cout << "main : enter 2 ints : "; int x, y; std::cin >> x >> y;
 
 	std::cout << "main : x = " << x << " y = " << y << '\n';
 

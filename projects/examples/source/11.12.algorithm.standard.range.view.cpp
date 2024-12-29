@@ -96,7 +96,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-	std::cout << "main : enter integers and non-integer : ";
+	std::cout << "main : enter ints and non-int : ";
 
 	for ([[maybe_unused]] auto element : std::views::istream < int > (std::cin));
 

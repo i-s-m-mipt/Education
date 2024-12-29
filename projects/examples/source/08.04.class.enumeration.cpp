@@ -21,9 +21,9 @@ enum State : std::uint8_t
 
 int main()
 {
-	std::cout << "main : enter unsigned integer : "; unsigned int color; std::cin >> color;
+	std::cout << "main : enter int : "; int color; std::cin >> color;
 
-	if (color < static_cast < unsigned int > (Color::quantity)) 
+	if (color > 0 && color < static_cast < int > (Color::quantity)) 
 	{
 		std::cout << "main : selection : ";
 

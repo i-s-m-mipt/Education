@@ -54,7 +54,7 @@ int main()
 
     try
     {
-        std::cout << "main : enter integers and non-integer : ";
+        std::cout << "main : enter ints and non-int : ";
         
         int x; while (std::cin >> x);
 

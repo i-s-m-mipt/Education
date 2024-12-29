@@ -1,4 +1,5 @@
 #include <cassert>
+#include <format>
 #include <iostream>
 
 int main()
@@ -11,7 +12,7 @@ int main()
 
 //	[[maybe_unused]] int * p_y = &y; // error
 
-	std::cout << "main : p_x = " << p_x << '\n';
+	std::cout << "main : p_x = " << std::format("{:018}", static_cast < void * > (p_x)) << '\n';
 
 	assert(*p_x == x);
 
