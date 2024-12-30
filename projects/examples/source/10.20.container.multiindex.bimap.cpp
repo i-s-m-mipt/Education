@@ -52,11 +52,14 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-	auto modifier = [](auto && entity){ entity.data_1 = entity.data_2 = 1; };
+	if (auto iterator = HNU_data_1_index.find(2); iterator != std::end(HNU_data_1_index))
+	{
+		auto modifier = [](auto && entity){ entity.data_1 = entity.data_2 = 1; };
 
-	assert(HNU_data_1_index.modify(HNU_data_1_index.find(2), modifier));
+		assert(HNU_data_1_index.modify(HNU_data_1_index.find(2), modifier));
 
-	assert(HNU_data_1_index.count(1) == 2);
+		assert(HNU_data_1_index.count(2) == 0);
+	}
 
 //  ------------------------------------------------------------------------------------------------
 
