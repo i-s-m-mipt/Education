@@ -168,7 +168,7 @@ int main()
 
 	std::shared_ptr < int > shared_ptr_7(new int[size]{}, std::default_delete < int[] > ());
 
-//	*(shared_ptr_7++) = 42; // error
+//	*shared_ptr_7++ = 42; // error
 
 	auto shared_ptr_8 = std::make_shared < int[] > (size, 0);
 

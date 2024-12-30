@@ -46,7 +46,7 @@ public:
         {
             if (eq(string[i], c)) 
             {
-                return &(string[i]);
+                return &string[i];
             }
         }
 
