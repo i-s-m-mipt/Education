@@ -127,7 +127,7 @@ int main()
 
 	assert(__LINE__ == 126);
 
-	assert(std::string(__func__) == "main");
+	assert(__func__ == "main"s);
 
 	[[maybe_unused]] auto date = __DATE__;
 	[[maybe_unused]] auto time = __TIME__;
