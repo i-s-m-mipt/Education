@@ -122,7 +122,8 @@ int main()
 
 //  -------------------------------------------------------------------------------------
 
-	std::vector < std::vector < int > > array_2D_v6(size, std::vector < int > (size, 0));
+	std::vector < std::vector < int > > array_2D_v6(size, 
+				  std::vector < int > 			   (size, 0));
 
 	for (auto i = 0uz; i < size; ++i)
 	{

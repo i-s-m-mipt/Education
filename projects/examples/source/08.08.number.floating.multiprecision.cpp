@@ -42,10 +42,7 @@ int main()
 
 //  ----------------------------------------------------------------------------------------------
 
-    auto d11 = derivative
-    (
-        [](const auto & x){ return boost::multiprecision::sin(x); }, z
-    );
+    auto d11 = derivative([](const auto & x){ return boost::multiprecision::sin(x); }, z);
 
     auto d12 = float_100_t(0.0);
 
@@ -53,10 +50,7 @@ int main()
 
 //  ----------------------------------------------------------------------------------------------
 
-    auto d21 = derivative
-    (
-        [](const auto & x){ return boost::math::gamma_p (2.0, x); }, z
-    );
+    auto d21 = derivative([](const auto & x){ return boost::math::gamma_p (2.0, x); }, z);
 
     auto d22 = boost::math::gamma_p_derivative(2.0, z);
 

@@ -4,6 +4,8 @@
 #include <source_location>
 #include <string>
 
+using namespace std::literals;
+
 #include "06.02.project.header.hpp"
 
 #include "06.03.project.header.precompiled.hpp"
@@ -142,7 +144,7 @@ int main()
 
 	assert(source_location.line() == 137);
 
-	assert(std::string(source_location.function_name()) == "int main()");
+	assert(source_location.function_name() == "int main()"s);
 
 //  -------------------------------------------------------------------------------
 

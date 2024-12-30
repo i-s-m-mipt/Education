@@ -66,13 +66,15 @@ int main()
 	Entity entity_2;
 
 	std::vector < Command > commands_1
-	{
-		Command(entity_1, Order::fast), 
-		Command(entity_1, Order::fast),
-		Command(entity_2, Order::fast),
-		Command(entity_1, Order::slow),
-		Command(entity_2, Order::slow)
-	};
+	(
+		{
+			Command(entity_1, Order::fast), 
+			Command(entity_1, Order::fast),
+			Command(entity_2, Order::fast),
+			Command(entity_1, Order::slow),
+			Command(entity_2, Order::slow)
+		}
+	);
 
 	for (auto command : commands_1) 
 	{
@@ -87,10 +89,12 @@ int main()
 	Entity entity_3;
 
 	std::unordered_map < Order, std::function < void(void) > > commands_2
-	{
-		std::make_pair(Order::fast, [&entity_3](){ entity_3.state = State::fast; }),
-		std::make_pair(Order::slow, [&entity_3](){ entity_3.state = State::slow; })
-	};
+	(
+		{
+			std::make_pair(Order::fast, [&entity_3](){ entity_3.state = State::fast; }),
+			std::make_pair(Order::slow, [&entity_3](){ entity_3.state = State::slow; })
+		}
+	);
 
 	commands_2.at(Order::fast)(); assert(entity_3.state == State::fast);
 	commands_2.at(Order::slow)(); assert(entity_3.state == State::slow);

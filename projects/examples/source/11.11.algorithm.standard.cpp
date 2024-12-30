@@ -76,15 +76,21 @@ int main()
 
 	vector_3.resize(std::size (vector_2));
 
-	std::sample    (std::begin(vector_1), 
-				    std::end  (vector_1), 
-				    std::begin(vector_3), 
-				    std::size (vector_2), engine);
+	std::sample
+	(
+		std::begin(vector_1), 
+		std::end  (vector_1), 
+		std::begin(vector_3), 
+		std::size (vector_2), engine
+	);
 
-	std::transform (std::begin(vector_2), 
-				    std::end  (vector_2), 
-				    std::begin(vector_3), 
-				    std::begin(vector_3), std::plus());
+	std::transform 
+	(
+		std::begin(vector_2), 
+		std::end  (vector_2), 
+		std::begin(vector_3), 
+		std::begin(vector_3), std::plus()
+	);
 
 	assert(vector_3 == std::vector < int > ({ 3, 3, 2 }));
 }

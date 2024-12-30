@@ -65,7 +65,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-	std::map < int, int > map { { 1, 0 }, { 2, 0 }, { 3, 0 } };
+	std::map < int, int > map({ { 1, 0 }, { 2, 0 }, { 3, 0 } });
 
 	for (auto i = 0; auto && [key, element] : map)
 	{
@@ -82,7 +82,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-	std::vector < Entity > entities { { 1 }, { 2 }, { 3 } };
+	std::vector < Entity > entities({ { 1 }, { 2 }, { 3 } });
 
 	std::ranges::sort(entities, std::ranges::greater(), &Entity::data);
 
@@ -116,7 +116,7 @@ int main()
 
     auto dangling_iterator = std::ranges::max_element
 	(
-		[](){ return std::vector < int > { 1, 2, 3, 4, 5 }; }()
+		[](){ return std::vector < int >({ 1, 2, 3, 4, 5 }); }()
 	);
 	
     static_assert(std::is_same_v < decltype(dangling_iterator), std::ranges::dangling > );

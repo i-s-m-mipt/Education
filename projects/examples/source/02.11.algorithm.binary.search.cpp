@@ -1,32 +1,29 @@
 #include <cassert>
-#include <cstddef>
-#include <iterator>
 #include <numeric>
+#include <vector>
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////
 
-auto find(const int * array, std::size_t size, int key)
+auto find(const std::vector < int > & vector, int key)
 {
-	if (size > 0)
+	if (auto size = std::size(vector); size > 0)
 	{
 		auto l = 0uz, r = size - 1, m = 0uz;
 
 		while (l < r)
 		{		
-			array[m = std::midpoint(l, r)] < key ? l = m + 1 : r = m;
+			vector[m = std::midpoint(l, r)] < key ? l = m + 1 : r = m;
 		}
 
-		return array[l] == key;
+		return vector[l] == key;
 	}
 	
 	return false;
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	int array[]{ 1, 2, 3, 4, 5 };
-
-	assert(find(array, std::size(array), 1));
+	assert(find({ 1, 2, 3, 4, 5 }, 1));
 }

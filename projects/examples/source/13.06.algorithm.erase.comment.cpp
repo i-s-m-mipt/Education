@@ -19,12 +19,12 @@ void transform(const std::string & path_1, const std::string & path_2)
         {
             if (*current == '\'')
             {
-                for (++current; !((*current == '\'') && (*std::prev(current) != '\\')); ++current);
+                for (++current; !(*current == '\'' && *std::prev(current) != '\\'); ++current);
             }
 
             if (*current == '\"')
             {
-                for (++current; !((*current == '\"') && (*std::prev(current) != '\\')); ++current);
+                for (++current; !(*current == '\"' && *std::prev(current) != '\\'); ++current);
             }
                 
             if (*current == '/') 
@@ -41,7 +41,7 @@ void transform(const std::string & path_1, const std::string & path_2)
                 {
                     auto last = std::next(current, 3);
 
-                    for (; !((*last == '/') && (*std::prev(last) == '*')); ++last);
+                    for (; !(*last == '/' && *std::prev(last) == '*'); ++last);
 
                     current = code.erase(current, ++last);
                 }

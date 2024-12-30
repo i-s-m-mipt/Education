@@ -12,7 +12,7 @@ auto next(std::vector < std::size_t > & steps, const std::vector < std::size_t >
 {
 	auto has_next = false;
 
-	for (int i = static_cast < int > (std::size(steps)) - 1; i >= 0; --i)
+	for (auto i = static_cast < int > (std::size(steps)) - 1; i >= 0; --i)
 	{
 		if (steps[i]++; steps[i] == sizes[i])
 		{
@@ -36,7 +36,7 @@ template < typename F, typename T, std::size_t ... Is > void apply
 	std::integer_sequence < std::size_t, Is ... >
 )
 {
-	f(*(std::next(std::get < Is > (tuple).first, steps[Is]))...);
+	f(*std::next(std::get < Is > (tuple).first, steps[Is])...);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,9 +48,9 @@ template < std::forward_iterator ... Is > auto generate(std::pair < Is, Is > ...
 	std::vector < std::size_t > steps(sizeof...(args), 0);
 
 	std::vector < std::size_t > sizes
-	{ 
-		static_cast < std::size_t > (std::distance(args.first , args.second))... 
-	};
+	(
+		{ static_cast < std::size_t > (std::distance(args.first , args.second))... }
+	);
 
 	do
 	{
@@ -72,7 +72,7 @@ template < std::forward_iterator ... Is > auto generate(std::pair < Is, Is > ...
 
 int main()
 {
-    std::vector < int > vector { 1, 2, 3, 4, 5 };
+    std::vector < int > vector({ 1, 2, 3, 4, 5 });
 
 	auto result = generate
 	(	

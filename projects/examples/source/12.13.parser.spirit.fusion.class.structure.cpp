@@ -26,7 +26,7 @@ namespace parser
     auto rule_def = 
     (
         '{' 
-            >> boost::spirit::x3::int_ >> ',' 
+            >> boost::spirit::x3::int_ 
             >> boost::spirit::x3::int_ >> 
         '}'
     );
@@ -58,7 +58,7 @@ auto parse(std::string_view data)
 
 int main()
 {
-    auto entity = parse(R"({ 1, 2 })");
+    auto entity = parse(R"({ 1 2 })");
 
     assert
     (

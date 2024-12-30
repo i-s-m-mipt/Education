@@ -125,10 +125,12 @@ private:
 	{
 		auto token = stream.get();
 
-		if (std::holds_alternative < std::string > (token) && 
-			std::get               < std::string > (token) == "set")
+		if (std::holds_alternative < std::string > (token))
 		{
-			return declaration(stream);
+			if (std::get < std::string > (token) == "set")
+			{
+				return declaration(stream);
+			}
 		}
 		
 		stream.putback(token); 
@@ -215,8 +217,12 @@ private:
 					
 					token = stream.get(); 
 
-					if (!std::holds_alternative < char > (token) || 
-						 std::get               < char > (token) != ')')
+					if (!std::holds_alternative < char > (token))
+					{
+						throw std::runtime_error("invalid token");
+					}
+
+					if (std::get < char > (token) != ')')
 					{
 						throw std::runtime_error("invalid token");
 					}

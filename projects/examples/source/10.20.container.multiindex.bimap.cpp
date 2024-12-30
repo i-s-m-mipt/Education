@@ -43,7 +43,7 @@ using multi_index_container_t = boost::multi_index::multi_index_container
 
 int main()
 {
-	multi_index_container_t multi_index_container { { 1, 1 }, { 2, 2 }, { 3, 3 } };
+	multi_index_container_t multi_index_container({ { 1, 1 }, { 2, 2 }, { 3, 3 } });
 
 //  ------------------------------------------------------------------------------------------------
 

@@ -10,12 +10,9 @@ public:
 
 	Ratio(T num = T(0), T den = T(1)) : m_num(num), m_den(den)
 	{
-		if (m_den == T(0)) 
-		{ 
-			std::cerr << "Ratio::Ratio : invalid denominator\n"; 
-		}
+		if (m_den == T(0)) { std::cerr << "Ratio::Ratio : invalid denominator\n"; }
 
-		if (m_den < T(0))
+		if (m_den <  T(0))
 		{
 			m_num *= -1;
 			m_den *= -1;
@@ -37,7 +34,9 @@ public:
 	{
 		auto lcm = std::lcm(m_den, other.m_den);
 
-		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den); m_den = lcm;
+		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den); 
+		
+		m_den = lcm;
 
 		reduce();
 

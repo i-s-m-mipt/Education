@@ -77,13 +77,13 @@ private:
 
 int main()
 {
-	std::vector < int > vector_1 { 1, 2, 3, 4, 5 };
+	std::vector < int > vector_1({ 1, 2, 3, 4, 5 });
 
 	std::ranges::sort(vector_1, std::greater());
 
 //  ================================================================================================
 
-	std::set < int, std::greater < int > > set { 1, 2, 3, 4, 5 };
+	std::set < int, std::greater < int > > set({ 1, 2, 3, 4, 5 });
 
 	assert(*std::begin(set) == 5 && *std::end(set) == 1);
 

@@ -75,7 +75,7 @@ int main()
 
 //  ----------------------------------------------------------------------
 
-	std::vector < int > vector { 1, 2, 3, 4, 5 };
+	std::vector < int > vector({ 1, 2, 3, 4, 5 });
 
 	std::ignore = boost::hash_range(std::begin(vector), std::end(vector));
 }

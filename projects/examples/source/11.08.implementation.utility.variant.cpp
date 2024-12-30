@@ -117,7 +117,7 @@ namespace detail
 
         alignas(Ts...) std::byte m_buffer[sizeof(max_type < List < Ts ... > > )]{}; 
 
-        std::size_t index = 0; 
+        std::size_t m_index = 0; 
     }; 
 }
 
@@ -138,7 +138,7 @@ namespace detail
 
         auto & operator=(T value)
         {
-            if (derived().index == s_index) 
+            if (derived().m_index == s_index) 
             {
                 *derived().template buffer < T > () = std::move(value);
             }
@@ -163,7 +163,7 @@ namespace detail
 
         void destroy()
         {
-            if (derived().index == s_index) 
+            if (derived().m_index == s_index) 
             {
                 derived().template buffer < T > ()->~T();
             }
@@ -182,7 +182,7 @@ namespace detail
 
         void update() 
         { 
-            derived().index = s_index; 
+            derived().m_index = s_index; 
         }
     };
 }
@@ -238,14 +238,14 @@ public:
 	{
         std::swap(this->m_buffer, other.m_buffer);
 
-		std::swap(this->index, other.index);
+		std::swap(this->m_index, other.m_index);
 	}
 
 //  ----------------------------------------------------------------------------------------------
 
     template < typename T > auto has() const
     {
-        return this->index == detail::Selector < derived_t, T, Ts ... > ::s_index;
+        return this->m_index == detail::Selector < derived_t, T, Ts ... > ::s_index;
     }
 
     template < typename T > auto get() const
@@ -271,7 +271,9 @@ private:
 
     void destroy()
     {
-        (detail::Selector < derived_t, Ts, Ts ... > ::destroy(), ... ); this->index = 0;
+        (detail::Selector < derived_t, Ts, Ts ... > ::destroy(), ... ); 
+        
+        this->m_index = 0;
     }
 
 //  ----------------------------------------------------------------------------------------------

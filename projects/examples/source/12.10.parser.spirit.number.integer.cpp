@@ -39,9 +39,9 @@ int main()
 
 //  ----------------------------------------------------------------------------------------
 
-    auto data_3 = "(1, 2)"sv; auto begin_3 = std::begin(data_3), end_3 = std::end(data_3);
+    auto data_3 = "{ 1 2 }"sv; auto begin_3 = std::begin(data_3), end_3 = std::end(data_3);
 
-    auto rule_3 = '(' >> boost::spirit::x3::int_ >> ',' >> boost::spirit::x3::int_ >> ')';
+    auto rule_3 = '{' >> boost::spirit::x3::int_ >> boost::spirit::x3::int_ >> '}';
 
     std::tuple < int, int > tuple;
 

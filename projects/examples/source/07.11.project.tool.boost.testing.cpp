@@ -177,7 +177,7 @@ void test(int x)
 
 boost::unit_test::test_suite * init_unit_test_suite(int, char **)
 {
-    std::vector < int > vector { 1, 2, 3, 4, 5 };
+    std::vector < int > vector({ 1, 2, 3, 4, 5 });
 
     auto test_case = BOOST_PARAM_TEST_CASE(&test, std::begin(vector), std::end(vector));
 

@@ -49,7 +49,7 @@ public:
 
 		auto operator->() const
 		{ 
-			return &(m_node->value); 
+			return &m_node->value; 
 		}
 
 		auto operator==(const Iterator & other) const

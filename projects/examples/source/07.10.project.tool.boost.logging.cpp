@@ -169,9 +169,7 @@ private:
 		< 
 			boost::posix_time::ptime 
 		> 
-		(
-			s_attributes.at(Attribute::time).first, "%Y %B %e %H:%M:%S.%f"
-		);
+		(s_attributes.at(Attribute::time).first, "%Y %B %e %H:%M:%S.%f");
 
 		(boost::log::expressions::stream << date_time_expression)(record_view, stream);
 

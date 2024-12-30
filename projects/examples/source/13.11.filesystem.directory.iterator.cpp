@@ -31,11 +31,13 @@ auto permissions(std::filesystem::perms permissions)
     };
 
     return std::string
-    { 
-        verify(std::filesystem::perms::owner_read , 'r'),
-        verify(std::filesystem::perms::owner_write, 'w'),
-        verify(std::filesystem::perms::owner_exec , 'x') 
-    };
+    (
+        { 
+            verify(std::filesystem::perms::owner_read , 'r'),
+            verify(std::filesystem::perms::owner_write, 'w'),
+            verify(std::filesystem::perms::owner_exec , 'x') 
+        }
+    );
 }
 
 //  ================================================================================================

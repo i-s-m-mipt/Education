@@ -44,13 +44,9 @@ int main()
 
 //  assert(nullptr); // error
 
-//  --------------------------
-
-           assert(1 + 1 == 2);
-    static_assert(1 + 1 == 2);
-
-           assert((sizeof(int) == 4) && "sizeof(int) != 4");
-    static_assert((sizeof(int) == 4),   "sizeof(int) != 4");
+//  ---------------------------------------------------------------
+           
+    static_assert(sizeof(int) == 4, "sizeof(int) != 4");
 
     [[maybe_unused]] Entity < int > entity_1;
  // [[maybe_unused]] Entity < Bad > entity_2; // error

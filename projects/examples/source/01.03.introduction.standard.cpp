@@ -24,7 +24,7 @@ int main()
 	
 	assert(string.substr(1, 3).contains('a'));
 
-	std::vector < int > vector { 1, 2, 3, 4, 5 }; 
+	std::vector < int > vector({ 1, 2, 3, 4, 5 }); 
 	
 	vector.push_back(1);
 

@@ -122,5 +122,5 @@ auto parse(std::string_view data)
 
 int main()
 {
-    assert(parse("MCMLXX") == 1970);
+    assert(parse("MCMLXX") == 1'970);
 }

@@ -53,23 +53,20 @@ namespace parser
 
     auto rule_1_def = rule_2 >> *
     (        
-        (boost::spirit::x3::char_('+') >> rule_2) | 
-        (boost::spirit::x3::char_('-') >> rule_2)
+        boost::spirit::x3::char_('+') >> rule_2 | 
+        boost::spirit::x3::char_('-') >> rule_2
     );
 
     auto rule_2_def = rule_3 >> *
     (
-        (boost::spirit::x3::char_('*') >> rule_3) | 
-        (boost::spirit::x3::char_('/') >> rule_3)
+        boost::spirit::x3::char_('*') >> rule_3 | 
+        boost::spirit::x3::char_('/') >> rule_3
     );
 
     auto rule_3_def = 
     (
-        (boost::spirit::x3::char_('+') >> rule_3) | 
-        (boost::spirit::x3::char_('-') >> rule_3) | boost::spirit::x3::double_ | 
-        (
-            '(' >> rule_1 >> ')'
-        )
+        boost::spirit::x3::char_('+') >> rule_3 | 
+        boost::spirit::x3::char_('-') >> rule_3 | boost::spirit::x3::double_ | '(' >> rule_1 >> ')'
     );
 
     BOOST_SPIRIT_DEFINE(rule_1, rule_2, rule_3);
@@ -148,7 +145,9 @@ auto parse(std::string_view data)
         throw std::runtime_error("invalid data");
     }
 
-    return Calculator()(list);
+    static Calculator calculator;
+
+    return calculator(list);
 }
 
 //  ================================================================================================

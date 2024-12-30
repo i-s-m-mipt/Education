@@ -48,8 +48,11 @@ auto evaluate(std::size_t size)
 		auto b = (PB * PC).z;
 		auto c = (PC * PA).z;
 
-		if ((a >= 0.0 && b >= 0.0 && c >= 0.0) ||
-			(a <= 0.0 && b <= 0.0 && c <= 0.0))
+		if 
+		(
+			(a >= 0.0 && b >= 0.0 && c >= 0.0) ||
+			(a <= 0.0 && b <= 0.0 && c <= 0.0)
+		)
 		{
 			++counter;
 		}

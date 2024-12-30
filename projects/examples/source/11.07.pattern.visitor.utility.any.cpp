@@ -34,14 +34,16 @@ int main()
 //  -----------------------------------------------------------------------------------------
 
     std::unordered_map < std::type_index, std::function < void(const std::any &) > > visitors
-    {
-        std::make_pair(std::type_index(typeid(data_1_t)), Visitor < data_1_t > ()),
-        std::make_pair(std::type_index(typeid(data_2_t)), Visitor < data_2_t > ())
-    };
+    (
+        {
+            std::make_pair(std::type_index(typeid(data_1_t)), Visitor < data_1_t > ()),
+            std::make_pair(std::type_index(typeid(data_2_t)), Visitor < data_2_t > ())
+        }
+    );
 
 //  -----------------------------------------------------------------------------------------
 
-    for (const auto & element : std::vector < std::any > { 1, "aaaaa"s }) 
+    for (const auto & element : std::vector < std::any > ({ 1, "aaaaa"s })) 
     {
         auto iterator = visitors.find(std::type_index(element.type()));
 

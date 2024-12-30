@@ -5,6 +5,8 @@
 #include <stdexcept>
 #include <string_view>
 
+using namespace std::literals;
+
 #include <boost/spirit/home/x3.hpp>
 
 //  ================================================================================================
@@ -13,7 +15,7 @@ auto parse(std::string_view data)
 {
     auto begin = std::begin(data), end = std::end(data);
 
-    auto x = 0, y = 0;
+    auto x = 0.0, y = 0.0;
 
     using boost::spirit::x3::_attr;
 
@@ -26,7 +28,6 @@ auto parse(std::string_view data)
     (
         '(' >> double_[set_x] >> ',' >> double_[set_y] >> ')' |
         '(' >> double_[set_x]                          >> ')' |
-               double_[set_x] >> ',' >> double_[set_y]        |
                double_[set_x]
     );
 
@@ -39,15 +40,14 @@ auto parse(std::string_view data)
         throw std::runtime_error("invalid data");
     }
     
-    return std::complex < int > (x, y);
+    return std::complex < double > (x, y);
 }
 
 //  ================================================================================================
 
 int main()
 {
-    assert(parse("(1, 2)") == std::complex < int > (1, 2));
-    assert(parse("(1   )") == std::complex < int > (1, 0));
-    assert(parse(" 1, 2 ") == std::complex < int > (1, 2));
-    assert(parse(" 1    ") == std::complex < int > (1, 0));
+    assert(parse("(1.0, 2.0)") == 1.0 + 2.0i);
+    assert(parse("(1.0     )") == 1.0 + 0.0i);
+    assert(parse(" 1.0      ") == 1.0 + 0.0i);
 }

@@ -46,7 +46,7 @@ int main()
 
     image_options.matrix[0] = image_options.matrix[3] = zoom;
 
-    line -= (delta + zoom * image_height * ppi / image_ppi);
+    line -= delta + zoom * image_height * ppi / image_ppi;
     
     context->DrawImage(delta, line, "matthias.jpg", image_options);
 
@@ -56,7 +56,7 @@ int main()
 
     auto font_size = 14;
 
-    line -= (delta + font_size);
+    line -= delta + font_size;
 
     Text_Options text_options(font, font_size, AbstractContentContext::eGray, 0);
 
@@ -66,12 +66,14 @@ int main()
 
     auto rectangle_height = font_size + 4, rectangle_width = 100;
 
-    line -= (delta + rectangle_height);
+    line -= delta + rectangle_height;
 
     Graphic_Options graphic_options
     (
         AbstractContentContext::eStroke,
+        
         AbstractContentContext::eRGB,
+
         AbstractContentContext::ColorValueForName("Red"), 2.0
     );
 

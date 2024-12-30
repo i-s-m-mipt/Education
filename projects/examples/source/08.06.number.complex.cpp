@@ -84,12 +84,7 @@ int main()
 
     auto result = transform
     (
-        { 
-            0.0 + 0.0i, 
-            0.0 + 1.0i, 
-            1.0 + 0.0i, 
-            1.0 + 1.0i 
-        }
+        { 0.0 + 0.0i, 0.0 + 1.0i, 1.0 + 0.0i, 1.0 + 1.0i }
     );
 
     assert(equal(result.at(0), +2.0 + 2.0i));

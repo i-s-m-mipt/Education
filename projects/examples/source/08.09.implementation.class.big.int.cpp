@@ -53,12 +53,15 @@ public:
 
 	auto & operator+=(Big_Int other)
 	{
-		if ((!m_is_negative && !other.m_is_negative) ||
-			( m_is_negative &&  other.m_is_negative))
+		if 
+		(
+			(!m_is_negative && !other.m_is_negative) ||
+			( m_is_negative &&  other.m_is_negative)
+		)
 		{
 			this->add(other);
 		}
-		else if (!m_is_negative &&  other.m_is_negative)
+		else if (!m_is_negative && other.m_is_negative)
 		{
 			if (this->less(other))
 			{
@@ -110,11 +113,11 @@ public:
 
 			for (auto j = 0uz; (j < other.m_n_digits) || r; ++j)
 			{
-				result.m_digits[i + j] += (m_digits[i] * other.m_digits[j] + r);
+				result.m_digits[i + j] += m_digits[i] * other.m_digits[j] + r;
 
 				r = result.m_digits[i + j] / Big_Int::base;
 
-				result.m_digits[i + j] -= (r * Big_Int::base);
+				result.m_digits[i + j] -= r * Big_Int::base;
 			}
 		}
 
@@ -230,7 +233,7 @@ public:
 
 	friend auto operator==(const Big_Int & lhs, const Big_Int & rhs)
 	{
-		if ((lhs.m_is_negative != rhs.m_is_negative) || (lhs.m_n_digits != rhs.m_n_digits))
+		if (lhs.m_is_negative != rhs.m_is_negative || lhs.m_n_digits != rhs.m_n_digits)
 		{
 			return false;
 		}
@@ -310,7 +313,7 @@ public:
 			base *= Big_Int::base;
 		}
 
-		auto result = (p1 * base * base + (p3 - p2 - p1) * base + p2);
+		auto result = p1 * base * base + (p3 - p2 - p1) * base + p2;
 
 		result.m_is_negative = x.m_is_negative ^ y.m_is_negative; 
 
@@ -365,15 +368,18 @@ private:
 				throw std::runtime_error("invalid data");
 			}
 
-			std::ranges::for_each(std::next(std::begin(string)), std::end(string), [](auto c)
-			{ 
-				if (!std::isdigit(c)) 
-				{
-					throw std::runtime_error("invalid data"); 
+			std::ranges::for_each
+			(
+				std::next(std::begin(string)), std::end(string), [](auto c)
+				{ 
+					if (!std::isdigit(c)) 
+					{
+						throw std::runtime_error("invalid data"); 
+					}
 				}
-			});
+			);
 
-			m_is_negative = (string[0] == '-'); m_n_digits = 0;
+			m_is_negative = string[0] == '-'; m_n_digits = 0;
 
 			for (auto i = static_cast < int > (std::size(string)) - 1; i >= 0; i -= step)
 			{

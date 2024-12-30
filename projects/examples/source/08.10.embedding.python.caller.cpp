@@ -43,11 +43,13 @@ public:
 		boost::python::handle <> handle_value(boost::python::allow_null(value));
 		boost::python::handle <> handle_stack(boost::python::allow_null(stack));
 
-		return boost::python::extract < std::string > 
+		auto result =  
 		(
 			handle_value ? boost::python::str(handle_value) : 
 					   	   boost::python::str(handle_error)
-		)();
+		);
+
+		return boost::python::extract < std::string > (result)();
 	}
 
 private:
@@ -123,7 +125,7 @@ auto hash(const std::string & string) -> std::size_t
 
 	for (const auto element : string)
 	{
-		hash = ((hash << 5) ^ (hash >> 27)) ^ element;
+		hash = hash << 5 ^ hash >> 27 ^ element;
 	}
 
 	return hash;
@@ -141,9 +143,11 @@ int main()
     {
         boost::python::exec("from script import factorial", python.local(), python.local());
 		
-		auto result = boost::python::extract < std::string > (python.local()["factorial"](100))();
+		auto result = python.local()["factorial"](100);
 		
-		std::cout << "main : result = " << result << '\n';
+		std::cout << "main : result = ";
+		
+		std::cout << boost::python::extract < std::string > (result)() << '\n';
 	}
 	catch (const boost::python::error_already_set &)
 	{

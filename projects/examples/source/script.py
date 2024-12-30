@@ -16,6 +16,6 @@ def make_plot(raw_points: str, label: str):
     plot.xlabel("words")
     plot.ylabel("collisions")
 
-    plot.grid()
+    plot.grid  ()
     plot.legend()
-    plot.show()
+    plot.show  ()

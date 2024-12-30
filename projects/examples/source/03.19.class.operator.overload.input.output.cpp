@@ -50,12 +50,12 @@ public:
 
     void read (std::istream & stream) override
     {
-        Entity::read(stream); stream >> m_data;
+        Entity::read(stream); stream >> Client::m_data;
     }
 
     void write(std::ostream & stream) const override 
     { 
-        stream << "{ " << Entity::m_data << ' ' << m_data << " }"; 
+        stream << "{ " << Entity::m_data << ' ' << Client::m_data << " }"; 
     }
 
 private:

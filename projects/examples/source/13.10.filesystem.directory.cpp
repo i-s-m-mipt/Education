@@ -30,9 +30,9 @@ int main()
 
 	std::filesystem::rename("Y", "Z");
 
-//  ================================================================================================
+	std::cout << "main : enter char to continue : "; char c; std::cin >> c;
 
-    std::cout << "main : enter char to continue : "; char c; std::cin >> c;
+//  ================================================================================================
 
 	std::filesystem::remove_all("X");
 	

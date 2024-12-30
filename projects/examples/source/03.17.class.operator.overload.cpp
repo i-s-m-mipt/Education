@@ -16,12 +16,9 @@ public:
 
 	/* explicit */ Ratio(int num = 0, int den = 1) : m_num(num), m_den(den)
 	{
-		if (m_den == 0) 
-		{ 
-			std::cerr << "Ratio::Ratio : invalid denominator\n"; 
-		}
+		if (m_den == 0) { std::cerr << "Ratio::Ratio : invalid denominator\n"; }
 
-		if (m_den < 0)
+		if (m_den <  0)
 		{
 			m_num *= -1;
 			m_den *= -1;
@@ -157,8 +154,8 @@ int main()
 
 //  ----------------------------------------------------------------------------------
 
-	assert(equal(std::abs(static_cast < double > (ratio_1)), 0.0));
-	assert(equal(std::abs(static_cast < double > (ratio_2)), 2.0));
+	assert(equal(static_cast < double > (ratio_1), 0.0));
+	assert(equal(static_cast < double > (ratio_2), 2.0));
 
 //  ----------------------------------------------------------------------------------
 
@@ -223,8 +220,8 @@ int main()
 	
 //  ----------------------------------------------------------------------------------
 
-	assert(equal(std::abs(boost::rational_cast < double > (rational_1)), 1.0));
-	assert(equal(std::abs(boost::rational_cast < double > (rational_2)), 2.0));
+	assert(equal(boost::rational_cast < double > (rational_1), 1.0));
+	assert(equal(boost::rational_cast < double > (rational_2), 2.0));
 
 //  ----------------------------------------------------------------------------------
 

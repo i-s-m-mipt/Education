@@ -119,7 +119,9 @@ private:
     { 
         if (m_data)
         {
-            operator delete(m_data, sizeof(T), std::align_val_t(alignof(T))); m_data = nullptr;
+            operator delete(m_data, sizeof(T), std::align_val_t(alignof(T))); 
+            
+            m_data = nullptr;
         }
     }
 

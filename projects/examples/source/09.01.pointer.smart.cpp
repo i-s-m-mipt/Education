@@ -106,9 +106,9 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename E > auto make_entity()
+template < typename E > auto make_entity() -> std::unique_ptr < Entity >
 {
-	return std::unique_ptr < Entity > (std::make_unique < E > ());
+	return std::make_unique < E > ();
 }
 
 void test_v3(std::unique_ptr < Entity > entity)

@@ -10,7 +10,7 @@ template < std::size_t D, typename C, typename I > void fill_shape(const C & con
 {
 	if constexpr (*shape = std::size(container); D > 1)
 	{
-		fill_shape < D - 1 > (*(std::begin(container)), ++shape);
+		fill_shape < D - 1 > (*std::begin(container), ++shape);
 	}
 }
 
@@ -29,7 +29,7 @@ template < std::size_t D, typename C, typename I > void fill_array(const C & con
 	{
 		for (const auto & element : container) 
 		{
-			*(array++) = element;
+			*array++ = element;
 		}
 	}
 }
