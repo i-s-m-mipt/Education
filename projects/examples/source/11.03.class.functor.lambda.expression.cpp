@@ -83,7 +83,7 @@ int main()
 
 	auto lambda_6 = [](auto lhs, auto rhs){ return lhs < rhs; };
 
-	std::set < int, decltype(lambda_6) > set { 5, 4, 3, 2, 1 };
+	std::set < int, decltype(lambda_6) > set({ 5, 4, 3, 2, 1 });
 
 	assert(*std::begin(set) == 1 && *std::prev(std::end(set)) == 5);
 }
