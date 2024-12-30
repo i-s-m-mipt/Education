@@ -49,44 +49,36 @@ int main()
 {
 	int array[5]{};
 
-	for (auto i = 0; auto && element : array) // support: cppinsights.io
+	for (auto x = 0; auto && element : array) // support: cppinsights.io
 	{
-		element = ++i;
+		element = ++x;
 	}
 
 //  ------------------------------------------------------------------------------------------------
 
 	std::vector < int > vector(5, 0);
 
-	for (auto i = 0; auto && element : vector)
+	for (auto x = 0; auto && element : vector)
 	{
-		element = ++i; 
+		element = ++x;
 	}
 
 //  ------------------------------------------------------------------------------------------------
 
 	std::map < int, int > map({ { 1, 0 }, { 2, 0 }, { 3, 0 } });
 
-	for (auto i = 0; auto && [key, element] : map)
+	for (auto x = 0; auto && [key, value] : map)
 	{
-		element = ++i;
+		value = ++x;
 	}
 
 //  ------------------------------------------------------------------------------------------------
 
-	assert(*std::ranges::begin(array) == 1 && std::ranges::size(array) == 5);
+	std::vector < Entity > entities({ { 3 }, { 2 }, { 1 } });
 
-	std::ranges::sort(array, std::ranges::greater());
+	std::ranges::sort(entities, std::ranges::less(), &Entity::data);
 
-	assert(std::ranges::is_sorted(array, std::ranges::greater()));
-
-//  ------------------------------------------------------------------------------------------------
-
-	std::vector < Entity > entities({ { 1 }, { 2 }, { 3 } });
-
-	std::ranges::sort(entities, std::ranges::greater(), &Entity::data);
-
-	assert(std::ranges::is_sorted(entities, std::ranges::greater(), &Entity::data));
+	assert(std::ranges::is_sorted(entities, std::ranges::less(), &Entity::data));
 
 //  ------------------------------------------------------------------------------------------------
 

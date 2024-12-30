@@ -85,5 +85,5 @@ int main()
 
 	std::set < int, decltype(lambda_6) > set({ 5, 4, 3, 2, 1 });
 
-	assert(*std::begin(set) == 1 && *std::prev(std::end(set)) == 5);
+	assert(std::ranges::is_sorted(set));
 }

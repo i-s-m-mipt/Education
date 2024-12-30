@@ -15,10 +15,10 @@ int main()
 
 	std::vector < int > vector(size, 0);
 
-	for (auto i = 0uz, j = size; j > 0; ++i, --j)
-	{
-		vector[i] = static_cast < int > (j);
-	}
+	for (auto x = size; auto & element : vector)
+    {
+        element = static_cast < int > (x--);
+    }
 
 //  -----------------------------------------------
 

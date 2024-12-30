@@ -49,12 +49,14 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-	auto size = 5uz; int buffer[1'000]{};
+	auto size = 5uz; 
+	
+	int buffer[1'000]{};
 
-	for (auto i = 0uz, j = size; j > 0; ++i, --j)
-	{
-		buffer[i] = static_cast < int > (j);
-	}
+	for (auto x = size; auto & element : std::ranges::subrange(buffer, buffer + size))
+    {
+        element = static_cast < int > (x--);
+    }
 
 //  ------------------------------------------------------------------------------------------------
 

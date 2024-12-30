@@ -26,12 +26,14 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-	auto size = 5uz; auto buffer = new int[size]; 
+	auto size = 5uz; 
+	
+	auto buffer = new int[size]; 
 
-	for (auto i = 0uz, j = size; j > 0; ++i, --j)
-	{
-		buffer[i] = static_cast < int > (j);
-	}
+	for (auto x = size; auto & element : std::ranges::subrange(buffer, buffer + size))
+    {
+        element = static_cast < int > (x--);
+    }
 
 //  ------------------------------------------------------------------------------------------------
 

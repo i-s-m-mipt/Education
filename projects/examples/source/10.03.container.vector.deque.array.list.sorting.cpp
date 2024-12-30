@@ -18,11 +18,14 @@ void test_v1(benchmark::State & state)
     {
         std::array < int, 100'000 > array;
 
-        std::ranges::iota(array, 1); 
+        for (auto x = std::size(array); auto & element : array)
+        {
+            element = static_cast < int > (x--);
+        }  
 
         auto start = std::chrono::steady_clock::now();
 
-        std::ranges::sort(array, std::greater());
+        std::ranges::sort(array);
 
         auto delta = std::chrono::steady_clock::now() - start;
 
@@ -43,11 +46,14 @@ void test_v2(benchmark::State & state)
     {
         std::vector < int > vector(100'000, 0);
 
-        std::ranges::iota(vector, 1); 
+        for (auto x = std::size(vector); auto & element : vector)
+        {
+            element = static_cast < int > (x--);
+        }  
 
         auto start = std::chrono::steady_clock::now();
 
-        std::ranges::sort(vector, std::greater());
+        std::ranges::sort(vector);
 
         auto delta = std::chrono::steady_clock::now() - start;
 
@@ -68,11 +74,14 @@ void test_v3(benchmark::State & state)
     {
         std::deque < int > deque(100'000, 0);
 
-        std::ranges::iota(deque, 1); 
+        for (auto x = std::size(deque); auto & element : deque)
+        {
+            element = static_cast < int > (x--);
+        }  
 
         auto start = std::chrono::steady_clock::now();
 
-        std::ranges::sort(deque, std::greater());
+        std::ranges::sort(deque);
 
         auto delta = std::chrono::steady_clock::now() - start;
 
@@ -93,11 +102,14 @@ void test_v4(benchmark::State & state)
     {
         std::list < int > list(100'000, 0);
 
-        std::ranges::iota(list, 1); 
+        for (auto x = std::size(list); auto & element : list)
+        {
+            element = static_cast < int > (x--);
+        }
 
         auto start = std::chrono::steady_clock::now();
 
-        list.sort(std::greater());
+        list.sort();
 
         auto delta = std::chrono::steady_clock::now() - start;
 
@@ -116,13 +128,18 @@ void test_v5(benchmark::State & state)
 {
     for (auto element : state)
     {
-        std::forward_list < int > forward_list(100'000, 0);
+        auto size = 100'000uz;
 
-        std::ranges::iota(forward_list, 1); 
+        std::forward_list < int > forward_list(size, 0);
+
+        for (auto x = size; auto & element : forward_list)
+        {
+            element = static_cast < int > (x--);
+        } 
 
         auto start = std::chrono::steady_clock::now();
 
-        forward_list.sort(std::greater());
+        forward_list.sort();
 
         auto delta = std::chrono::steady_clock::now() - start;
 
