@@ -75,7 +75,11 @@ int main()
 
     transform(path_1, path_2);
 
+//  -----------------------------------------------------------------------
+
     std::cout << "main : enter char to continue : "; char c; std::cin >> c;
+
+//  -----------------------------------------------------------------------
 
     std::filesystem::remove(path_2);
 }

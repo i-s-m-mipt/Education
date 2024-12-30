@@ -86,5 +86,7 @@ int main()
 
     std::cout << "main : enter char to continue : "; char c; std::cin >> c;
 
+//  -----------------------------------------------------------------------
+
     std::filesystem::remove(path);
 }

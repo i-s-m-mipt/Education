@@ -30,6 +30,8 @@ int main()
 
 	assert(sizeof(array) == std::size(array));
 
+//  -----------------------------------------------------------------------
+
 	std::vector < bool > vector(1'000'000'000, false); 
 
 	vector.front() = true;
@@ -37,6 +39,8 @@ int main()
 	auto proxy = vector.front();
 
 	assert(static_cast < bool > (proxy) == true);
+
+//  -----------------------------------------------------------------------
 
 	std::cout << "main : enter char to continue : "; char c; std::cin >> c;
 }
