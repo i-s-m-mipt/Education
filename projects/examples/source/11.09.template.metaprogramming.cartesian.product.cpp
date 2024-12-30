@@ -14,7 +14,9 @@ auto next(std::vector < std::size_t > & steps, const std::vector < std::size_t >
 
 	for (auto i = static_cast < int > (std::size(steps)) - 1; i >= 0; --i)
 	{
-		if (steps[i]++; steps[i] == sizes[i])
+		steps[i]++;
+		
+		if (steps[i] == sizes[i])
 		{
 			steps[i] = 0;
 		}

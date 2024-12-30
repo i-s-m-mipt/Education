@@ -102,9 +102,7 @@ public:
 
 	friend auto & operator>>(std::istream & stream, Ratio & ratio)
 	{
-		int num; char c; int den;
-
-		stream >> num >> c >> den;
+		int num; char c; int den; stream >> num >> c >> den;
 
 		if (c != '/') 
 		{

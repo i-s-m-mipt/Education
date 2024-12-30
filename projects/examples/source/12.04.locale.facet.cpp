@@ -59,9 +59,9 @@ int main() // support: locale -a
 
 	const auto & time_get_C = std::use_facet < std::time_get < char > > (std::locale::classic());
 
-	auto dateorder = time_get_C.date_order();
+	std::cout << "main : dateorder = std::time_base::";
 
-	switch (std::cout << "main : dateorder = std::time_base::"; dateorder)
+	switch (auto dateorder = time_get_C.date_order(); dateorder)
 	{
 		case std::time_base::dmy: { std::cout << "dmy\n"; break; }
 		case std::time_base::mdy: { std::cout << "mdy\n"; break; }

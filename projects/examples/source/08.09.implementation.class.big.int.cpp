@@ -151,7 +151,9 @@ public:
 
 			while (l <= r)
 			{
-				if (auto m = std::midpoint(l, r); other * m <= current)
+				auto m = std::midpoint(l, r);
+				
+				if (other * m <= current)
 				{
 					l = m + 1; digit = m;
 				}
@@ -339,7 +341,9 @@ public:
 
       		while (l <= r)
       		{
-        		if (auto m = result.m_digits[position] = std::midpoint(l, r); result * result <= x)
+				auto m = result.m_digits[position] = std::midpoint(l, r);
+
+        		if (result * result <= x)
         		{
           			l = m + 1; digit = std::min(m, Big_Int::base - 1);
         		}
@@ -418,9 +422,13 @@ private:
 
 		for (auto i = 0uz; i < m_n_digits; ++i)
 		{
-			if (m_digits[i] += other.m_digits[i]; m_digits[i] >= Big_Int::base)
+			m_digits[i] += other.m_digits[i];
+
+			if (m_digits[i] >= Big_Int::base)
 			{
-				if (m_digits[i] -= Big_Int::base; i < size - 1)
+				m_digits[i] -= Big_Int::base;
+
+				if (i < size - 1)
 				{
 					++m_digits[i + 1];
 				}
@@ -440,7 +448,9 @@ private:
 	{
 		for (auto i = 0uz; i < m_n_digits; ++i)
 		{
-			if (m_digits[i] -= other.m_digits[i]; m_digits[i] < 0)
+			m_digits[i] -= other.m_digits[i];
+
+			if (m_digits[i] < 0)
 			{
 				m_digits[i] += Big_Int::base;
 

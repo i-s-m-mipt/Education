@@ -87,7 +87,9 @@ public:
 
     auto operator()(const detail::Sign & sign) const -> double
     {
-        switch (auto rhs = boost::apply_visitor(*this, sign.operand); sign.operation)
+        auto rhs = boost::apply_visitor(*this, sign.operand);
+
+        switch (sign.operation)
         {
             case '+': { return        rhs; }
             case '-': { return -1.0 * rhs; }
@@ -101,7 +103,9 @@ public:
 
     auto operator()(const detail::Step & step, double lhs) const -> double
     {
-        switch (auto rhs = boost::apply_visitor(*this, step.operand); step.operation)
+        auto rhs = boost::apply_visitor(*this, step.operand);
+
+        switch (step.operation)
         {
             case '+': { return lhs + rhs; }
             case '-': { return lhs - rhs; }

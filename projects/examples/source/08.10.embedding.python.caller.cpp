@@ -56,16 +56,7 @@ private:
 
 	void acquire()
 	{
-		std::call_once
-		(
-			s_status, []() 
-			{
-				if (Py_IsInitialized() == 0) 
-				{
-					Py_Initialize();
-				}
-			}
-		);
+		std::call_once(s_status, [](){ Py_Initialize(); });
 
 		s_mutex.lock(); 
 			
@@ -123,7 +114,7 @@ auto hash(const std::string & string) -> std::size_t
 {
 	std::uint32_t hash = std::size(string);
 
-	for (const auto element : string)
+	for (auto element : string)
 	{
 		hash = hash << 5 ^ hash >> 27 ^ element;
 	}
@@ -156,13 +147,17 @@ int main()
 
 //  ----------------------------------------------------------------------------------------
 
-    auto size = 1'000'000uz;
-
-    std::unordered_set < std::size_t > hashes; auto index = 0uz; std::string points;
+	auto size = 1'000'000uz, index = 0uz;
+	
+    std::unordered_set < std::size_t > hashes; 
+	
+	std::string points;
 
     for (const auto & word : make_dictionary(size + 1, 10))
     {
-        if (hashes.insert(hash(word)); index++ % (size / 50) == 0)
+		hashes.insert(hash(word));
+		
+        if (index++ % (size / 50) == 0)
         {
             points += (std::to_string(index - 1) + ',');
 

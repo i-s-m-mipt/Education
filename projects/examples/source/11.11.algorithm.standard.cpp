@@ -41,11 +41,11 @@ int main()
 
 //  --------------------------------------------------------------------------------
 
-	auto element = std::find(std::begin(vector_1), std::end(vector_1), 0);
+	auto iterator = std::find(std::begin(vector_1), std::end(vector_1), 0);
 
-	if (element != std::end(vector_1))
+	if (iterator != std::end(vector_1))
 	{
-		assert(*element == 0);
+		assert(*iterator == 0);
 	}
 
 	auto [min, max] = std::minmax_element(std::begin(vector_1), std::end(vector_1));

@@ -102,7 +102,9 @@ public:
         {
             if (node < current)
             {
-                if (node->next = current; !previous)
+                node->next = current;
+                
+                if (!previous)
                 {
                     m_head = node;
                 }

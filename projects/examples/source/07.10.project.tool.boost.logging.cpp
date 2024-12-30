@@ -69,9 +69,7 @@ public:
 
 	void write(Severity severity, const std::string & message) const
 	{
-		auto record = s_logger.open_record(boost::log::keywords::severity = severity);
-
-		if (record)
+		if (auto record = s_logger.open_record(boost::log::keywords::severity = severity); record)
 		{
 			boost::log::record_ostream(record) << m_scope << " : " << message;
 

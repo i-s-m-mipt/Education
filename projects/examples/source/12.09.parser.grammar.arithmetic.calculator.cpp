@@ -62,8 +62,10 @@ public:
 			}
 			default:
 			{
-				if (std::string string(1, c); std::isalpha(c))
+				if (std::isalpha(c))
 				{
+					std::string string(1, c);
+					
 					while (m_sin.get(c) && (std::isalpha(c) || std::isdigit(c))) 
 					{
 						string += c;

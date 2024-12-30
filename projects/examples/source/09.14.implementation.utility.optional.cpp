@@ -32,7 +32,9 @@ public:
     {
         if (this != &other)
         {
-            if (destroy(); !other.empty()) 
+            destroy();
+            
+            if (!other.empty()) 
             {
                 construct(*other.m_data); 
             }

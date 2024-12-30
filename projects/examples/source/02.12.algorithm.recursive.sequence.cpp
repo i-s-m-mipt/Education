@@ -6,7 +6,9 @@
 
 auto count_v1(std::size_t size, std::size_t n_left = 0, std::size_t n_right = 0) -> std::size_t
 {
-	if (auto counter = 0uz; n_left < size || n_right < size)
+	auto counter = 0uz;
+
+	if (n_left < size || n_right < size)
 	{
 		if (n_left < size) 
 		{ 
@@ -17,28 +19,26 @@ auto count_v1(std::size_t size, std::size_t n_left = 0, std::size_t n_right = 0)
 		{ 
 			counter += count_v1(size, n_left, n_right + 1); 
 		}
-
-		return counter;
 	}
 	
-	return 1;
+	return counter > 0 ? counter : 1;
 }
 
 //  ================================================================================================
 
 auto count_v2(std::size_t size, std::size_t n_left = 0, std::size_t n_right = 0) -> std::size_t
 {
-	if (auto counter = 0uz; n_left < size)
+	auto counter = 0uz;
+
+	if (n_left < size)
 	{
 		for (auto i = size; i > std::max(n_left, n_right + 1) - 1; --i) 
 		{
 			counter += count_v2(size, i, n_right + 1);
 		}
-
-		return counter;
 	}
 
-	return 1;
+	return counter > 0 ? counter : 1;
 }
 
 //  ================================================================================================

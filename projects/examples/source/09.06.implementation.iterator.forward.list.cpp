@@ -71,13 +71,15 @@ public:
 
 	void push_back(T value)
 	{
-		if (auto node = std::make_shared < Node > (value, nullptr); !m_head)
+		auto node = std::make_shared < Node > (value, nullptr);
+
+		if (m_head)
 		{
-			m_head = node;
+			auto last = m_head; for (; last->next; last = last->next); last->next = node;
 		}
 		else
 		{
-			auto last = m_head; for (; last->next; last = last->next); last->next = node;
+			m_head = node;
 		}
 	}
 

@@ -45,7 +45,7 @@ public:
 
 	auto allocate() -> void *
 	{
-		if (m_head == nullptr)
+		if (!m_head)
 		{
 			if (m_offset == std::size(m_chains))
 			{
