@@ -59,9 +59,9 @@ int main()
 
 //  ---------------------------------------------------------------------------
 
-	std::vector < std::vector < std::vector < int > > > vector_3D(size_1,
-		          std::vector < std::vector < int > >            (size_2,
-			                    std::vector < int >              (size_3, 0)));
+	std::vector < std::vector < std::vector < int > > > vector(size_1,
+		          std::vector < std::vector < int > >         (size_2,
+			                    std::vector < int >           (size_3, 0)));
 
 	for (auto i = 0uz; i < size_1; ++i)
 	{
@@ -69,14 +69,14 @@ int main()
 		{
 			for (auto k = 0uz; k < size_3; ++k)
 			{
-				vector_3D[i][j][k] = 1;
+				vector[i][j][k] = 1;
 			}
 		}
 	}
 
 //  ---------------------------------------------------------------------------
 
-	auto array = make_array < int, 3 > (vector_3D);
+	auto array = make_array < int, 3 > (vector);
 
 	for (auto i = 0uz; i < size_1; ++i)
 	{
@@ -84,7 +84,7 @@ int main()
 		{
 			for (auto k = 0uz; k < size_3; ++k)
 			{
-				assert(array[i][j][k] == vector_3D[i][j][k]);;
+				assert(array[i][j][k] == vector[i][j][k]);;
 			}
 		}
 	}
