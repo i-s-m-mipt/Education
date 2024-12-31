@@ -51,10 +51,12 @@ public:
 		{ 
 			return &m_node->value; 
 		}
+	
+	//  ---------------------------------------------------------------------------------
 
-		auto operator==(const Iterator & other) const
+		friend auto operator==(const Iterator & lhs, const Iterator & rhs)
 		{ 
-			return m_node == other.m_node; 
+			return lhs.m_node == rhs.m_node; 
 		}
 
 	private:

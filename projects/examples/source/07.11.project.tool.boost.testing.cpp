@@ -89,11 +89,11 @@ public:
 
         using iterator_category = std::forward_iterator_tag;
 
-    //  ---------------------------------------------------------------
+    //  ------------------------------------------------------------------
 
         iterator() : m_x(1), m_y(1) {}
 
-    //  ---------------------------------------------------------------
+    //  ------------------------------------------------------------------
 
         const auto operator++(int) 
 		{ 
@@ -114,11 +114,13 @@ public:
         auto operator*() const
         { 
             return m_y; 
-        } 
+        }
 
-		auto operator==(const iterator & other) const
+    //  ------------------------------------------------------------------
+
+		friend auto operator==(const iterator & lhs, const iterator & rhs)
 		{ 
-			return m_x == other.m_x && m_y == other.m_y; 
+			return lhs.m_x == rhs.m_x && lhs.m_y == rhs.m_y; 
 		}
 
     private:
