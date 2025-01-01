@@ -127,8 +127,8 @@ private:
 		(
 			boost::log::keywords::file_name           = "%y.%m.%d.%H.%M.%S.log",
 			boost::log::keywords::time_based_rotation = rotation,
-			boost::log::keywords::rotation_size       = 32 * 1024 * 1024,
-			boost::log::keywords::max_size            = 64 * 1024 * 1024
+			boost::log::keywords::rotation_size       = 32 * 1'024 * 1'024,
+			boost::log::keywords::max_size            = 64 * 1'024 * 1'024
 		);
 
 		fout_sink->locked_backend()->set_file_collector
@@ -136,8 +136,8 @@ private:
 			boost::log::sinks::file::make_collector
 			(			
 				boost::log::keywords::target         = "loggers",
-				boost::log::keywords::max_size       = 128 * 1024 * 1024,
-				boost::log::keywords::min_free_space = 128 * 1024 * 1024
+				boost::log::keywords::max_size       = 128 * 1'024 * 1'024,
+				boost::log::keywords::min_free_space = 128 * 1'024 * 1'024
 			)
 		);
 

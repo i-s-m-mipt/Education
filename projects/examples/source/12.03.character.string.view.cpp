@@ -73,7 +73,7 @@ void test_v1(std::string_view) {}
 
 void test_v2(benchmark::State & state)
 {
-    std::string string(65536, 'a');
+    std::string string(65'536, 'a');
 
     for (auto element : state)
     {
@@ -87,7 +87,7 @@ void test_v2(benchmark::State & state)
 
 void test_v3(benchmark::State & state)
 {
-    std::string string(65536, 'a');
+    std::string string(65'536, 'a');
 
     std::string_view view(string);
 
@@ -101,8 +101,8 @@ void test_v3(benchmark::State & state)
 
 //  ================================================================================================
 
-BENCHMARK(test_v2)->DenseRange(8192, 65537, 8192)->Complexity();
-BENCHMARK(test_v3)->DenseRange(8192, 65537, 8192)->Complexity();
+BENCHMARK(test_v2)->DenseRange(8'192, 65'537, 8'192)->Complexity();
+BENCHMARK(test_v3)->DenseRange(8'192, 65'537, 8'192)->Complexity();
 
 //  ================================================================================================
 

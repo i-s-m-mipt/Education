@@ -148,9 +148,9 @@ BENCHMARK(test_v3);
 
 BENCHMARK(test_v4)->Arg(1);
 
-BENCHMARK(test_v4)->DenseRange(0, 1024, 256);
+BENCHMARK(test_v4)->DenseRange(0, 1'024, 256);
 
-BENCHMARK(test_v4)->RangeMultiplier(2)->Range(128, 1024);
+BENCHMARK(test_v4)->RangeMultiplier(2)->Range(128, 1'024);
 
 BENCHMARK(test_v5)->Args({ 1, 2 })->Args({ 2, 4 })->Args({ 3, 6 });
 
@@ -164,7 +164,7 @@ void make_args(benchmark::internal::Benchmark * benchmark)
 
 BENCHMARK(test_v5)->Apply(make_args);
 
-BENCHMARK(test_v6)->RangeMultiplier(2)->Range(1024, 1024 << 16)->Complexity();
+BENCHMARK(test_v6)->RangeMultiplier(2)->Range(1'024, 1'024 << 16)->Complexity();
 
 BENCHMARK(test_v7);
 
