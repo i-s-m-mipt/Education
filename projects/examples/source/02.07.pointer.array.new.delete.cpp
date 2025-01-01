@@ -8,9 +8,9 @@
 
 int main()
 {
-	auto object = new auto(0);  
+	auto object = new auto(1);  
 
-	*object = 1; assert(*object == 1);
+	*object = 2; assert(*object == 2);
 	
 	delete object;
 
