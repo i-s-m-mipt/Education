@@ -157,7 +157,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------
 
-    auto string_4 = "aaaaa"s, string_5 = std::string(1'000'000, 'a');
+    auto string_4 = "aaaaa"s, string_5 = std::string(1'000, 'a');
 
     assert(distance(&string_4.front(), &string_4) == 16);
     assert(distance(&string_5.front(), &string_5) != 16);

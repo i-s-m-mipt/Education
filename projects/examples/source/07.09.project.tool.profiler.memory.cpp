@@ -2,20 +2,15 @@
 #include <iostream>
 #include <thread>
 
-int main() // support: valgrind --leak-check=yes ./07.10.project.tool.profiler.memory
+int main() // support: valgrind --leak-check=yes ./07.09.project.tool.profiler.memory
 {
-	auto size_1 = 5uz, size_2 = 1'000'000uz;
+	auto size = 5uz;
 
-	for (auto i = 0uz; i < size_1; ++i)
-	{
-		auto array = new int[size_2]{};
+	auto array = new int[size]{};
 
-		array[size_2] = 1;
+	array[size] = 1;
 
-		std::this_thread::sleep_for(std::chrono::seconds(2));
-
-//  	delete[] array; // bad
-	}
+//  delete[] array; // bad
 
 //  -----------------------------------------------------------------------
 

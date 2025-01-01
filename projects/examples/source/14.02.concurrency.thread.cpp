@@ -24,7 +24,7 @@ public:
 
 	void operator()() const
 	{
-		for (auto i = 0uz; i < 1'000'000; ++i) 
+		for (auto i = 0uz; i < 1'000; ++i) 
         {
             ++m_data;
         }

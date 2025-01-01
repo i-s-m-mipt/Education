@@ -217,6 +217,4 @@ int main()
 	{
 		assert(wrapper[i] == result[i]);
 	}
-
-	benchmark::RunSpecifiedBenchmarks();
 }

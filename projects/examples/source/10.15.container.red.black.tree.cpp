@@ -17,7 +17,7 @@ void test_v1(benchmark::State & state)
 {
     for (auto element : state)
     {
-		auto size = 100'000uz;
+		auto size = 1'000uz;
 
         std::vector < int > vector; 
 		
@@ -42,7 +42,7 @@ void test_v2(benchmark::State & state)
     {
         std::set < int > set;
 
-		for (auto x = 100'000; x > 0; --x) 
+		for (auto x = 1'000; x > 0; --x) 
 		{
 			set.insert(x);
 		}
@@ -61,7 +61,7 @@ void test_v3(benchmark::State & state)
 
 		auto iterator = std::begin(set);
 
-		for (auto x = 100'000; x > 0; --x) 
+		for (auto x = 1'000; x > 0; --x) 
 		{
 			set.insert(iterator, x);
 
@@ -82,7 +82,7 @@ void test_v4(benchmark::State & state)
 
 		auto iterator = std::begin(set);
 
-		for (auto x = 100'000; x > 0; --x) 
+		for (auto x = 1'000; x > 0; --x) 
 		{
 			set.insert(iterator, x);
 

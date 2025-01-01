@@ -114,7 +114,7 @@ private:
 
 int main()
 {
-	Arena arena(1'024);
+	Arena arena(1'000);
 
     Allocator < int > allocator(arena);
 

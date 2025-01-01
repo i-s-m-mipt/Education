@@ -102,16 +102,12 @@ int main()
 
 //  ------------------------------------------------------------------------
 
-	auto size = 1'000'000uz;
-
-//  ------------------------------------------------------------------------
-
 	{
 		Chronometer chronometer("main");
 
 		auto result = 0.0;
 
-		for (auto i = 0uz; i < size; ++i)
+		for (auto i = 0uz; i < 1'000'000; ++i)
 		{
 			result += 
 			(
@@ -120,7 +116,7 @@ int main()
 			);
 		}
 
-		assert(equal(result, static_cast < double > (size)));
+		assert(equal(result, 1'000'000.0));
 	}
 
 //  ------------------------------------------------------------------------
@@ -129,7 +125,7 @@ int main()
 
 	auto result = 0.0;
 
-	for (auto i = 0uz; i < size; ++i)
+	for (auto i = 0uz; i < 1'000'000; ++i)
 	{
 		result += 
 		(
@@ -138,7 +134,7 @@ int main()
 		);
 	}
 
-	assert(equal(result, size));
+	assert(equal(result, 1'000'000.0));
 
 	std::cout << "main : cpu_timer :" << cpu_timer.format();
 }

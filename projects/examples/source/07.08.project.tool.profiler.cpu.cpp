@@ -11,12 +11,10 @@ auto equal(double x, double y, double epsilon = 1e-6)
 //  ================================================================================================
 
 int main() // support: valgrind --tool=callgrind ./07.09.project.tool.profiler.cpu
-{
-	auto size = 1'000'000uz;
-	
+{	
 	auto result = 0.0;
 
-	for (auto i = 0uz; i < size; ++i)
+	for (auto i = 0uz; i < 1'000; ++i)
 	{
 		result += 
 		(
@@ -25,5 +23,5 @@ int main() // support: valgrind --tool=callgrind ./07.09.project.tool.profiler.c
 		);
 	}
 
-	assert(equal(result, static_cast < double > (size)));
+	assert(equal(result, 1'000.0));
 }

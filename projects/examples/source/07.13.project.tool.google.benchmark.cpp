@@ -89,9 +89,9 @@ void test_v4(benchmark::State & state)
 {
     for (auto element : state) 
     {
-        std::vector < int > vector_1d(state.range(0), 0);
+        std::vector < int > vector(state.range(0), 0);
 
-        benchmark::DoNotOptimize(vector_1d);
+        benchmark::DoNotOptimize(vector);
     }
 }
 
@@ -101,10 +101,10 @@ void test_v5(benchmark::State & state)
 {
     for (auto element : state) 
     {
-        std::vector < std::vector < int > > vector_2d(state.range(0), 
-                      std::vector < int >            (state.range(1), 0));
+        std::vector < std::vector < int > > vector(state.range(0), 
+                      std::vector < int >         (state.range(1), 0));
 
-        benchmark::DoNotOptimize(vector_2d);
+        benchmark::DoNotOptimize(vector);
     }
 
     state.SetComplexityN(state.range(0));
@@ -148,7 +148,7 @@ BENCHMARK(test_v3);
 
 BENCHMARK(test_v4)->Arg(1);
 
-BENCHMARK(test_v4)->DenseRange(0, 1'024, 256);
+BENCHMARK(test_v4)->DenseRange(0, 5'000, 1'000);
 
 BENCHMARK(test_v4)->RangeMultiplier(2)->Range(128, 1'024);
 
