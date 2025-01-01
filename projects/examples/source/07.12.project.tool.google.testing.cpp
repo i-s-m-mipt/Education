@@ -53,7 +53,7 @@ public:
 TEST_F(Fixture, Data) 
 {
     ASSERT_EQ(std::size(data), 0); data.push_back(1);
-    ASSERT_EQ(std::size(data), 1); data.push_back(2);
+    ASSERT_EQ(std::size(data), 1); data.push_back(1);
     ASSERT_EQ(std::size(data), 2); 
 }
 
