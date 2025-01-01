@@ -84,7 +84,7 @@ int main()
 {
 	[[maybe_unused]] Tuple < int, std::string > tuple_1;
 
-	[[maybe_unused]] Tuple < int, std::string > tuple_2(1, "aaaaa");
+	[[maybe_unused]] Tuple < int, std::string > tuple_2(2, "bbbbb");
 
 //  ----------------------------------------------------------------
 
@@ -98,7 +98,7 @@ int main()
 
 //  ----------------------------------------------------------------
 
-	assert(tuple_4.get < 0 > () == 1);
+	assert(tuple_4.get < 0 > () == 2);
 
 //  ----------------------------------------------------------------
 

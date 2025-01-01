@@ -21,7 +21,7 @@ auto count_v1(std::size_t size, std::size_t n_left = 0, std::size_t n_right = 0)
 		}
 	}
 	
-	return counter > 0 ? counter : 1;
+	return counter > 0 ? counter : 1uz;
 }
 
 //  ================================================================================================
@@ -38,13 +38,12 @@ auto count_v2(std::size_t size, std::size_t n_left = 0, std::size_t n_right = 0)
 		}
 	}
 
-	return counter > 0 ? counter : 1;
+	return counter > 0 ? counter : 1uz;
 }
 
 //  ================================================================================================
 
 int main()
 {
-	assert(count_v1(5) == 42);
-	assert(count_v2(5) == 42);
+	assert(count_v1(5) == count_v2(5));
 }

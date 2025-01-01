@@ -128,17 +128,17 @@ int main()
 
 	std::shared_ptr < int > shared_ptr_1;
 
-	std::shared_ptr < int > shared_ptr_2(new auto(1)); 
+	std::shared_ptr < int > shared_ptr_2(new auto(2)); 
 
 	std::shared_ptr < int > shared_ptr_3(shared_ptr_2);
 
-	assert(shared_ptr_2.use_count() == 2 && *shared_ptr_2 == 42);
-	assert(shared_ptr_3.use_count() == 2 && *shared_ptr_3 == 42);
+	assert(shared_ptr_2.use_count() == 2 && *shared_ptr_2 == 2);
+	assert(shared_ptr_3.use_count() == 2 && *shared_ptr_3 == 2);
 
-	shared_ptr_3.reset(new auto(1));
+	shared_ptr_3.reset(new auto(3));
 
-	assert(shared_ptr_2.use_count() == 1 && *shared_ptr_2 == 42);
-	assert(shared_ptr_3.use_count() == 1 && *shared_ptr_3 == 42);
+	assert(shared_ptr_2.use_count() == 1 && *shared_ptr_2 == 2);
+	assert(shared_ptr_3.use_count() == 1 && *shared_ptr_3 == 3);
 
 //  ----------------------------------------------------------------------------------------
 
@@ -152,7 +152,7 @@ int main()
 
 //	test_v1(std::shared_ptr < int > (new auto(1)), test_v2()); // bad
 
-	auto shared_ptr_5 = std::make_shared < int > (1);
+	auto shared_ptr_5 = std::make_shared < int > (5);
 
 	try
 	{
@@ -168,21 +168,21 @@ int main()
 
 	std::shared_ptr < int > shared_ptr_7(new int[size]{}, std::default_delete < int[] > ());
 
-//	*shared_ptr_7++ = 42; // error
+//	*shared_ptr_7++ = 2; // error
 
 	auto shared_ptr_8 = std::make_shared < int[] > (size, 0);
 
-	shared_ptr_8[0] = 42;
+	shared_ptr_8[0] = 1;
 
 //  ----------------------------------------------------------------------------------------
 
-	auto shared_ptr_9 = std::make_shared < int > (42);
+	auto shared_ptr_9 = std::make_shared < int > (9);
 
 	std::weak_ptr < int > weak_ptr = shared_ptr_9;
 
 	assert(weak_ptr.use_count() == 1);
 
-	*weak_ptr.lock() = 42;
+	*weak_ptr.lock() = 1;
 
 	shared_ptr_9.reset();
 

@@ -49,15 +49,15 @@ int main()
 
 //  --------------------------------------------------------------------------------------------
 
-	auto vertex_u = boost::add_vertex(custom_graph);
-	auto vertex_v = boost::add_vertex(custom_graph); 
+	auto vertex_4 = boost::add_vertex(custom_graph);
+	auto vertex_5 = boost::add_vertex(custom_graph); 
 
-	custom_graph[vertex_u] = 1;
-	custom_graph[vertex_v] = 1;
+	custom_graph[vertex_4] = 4;
+	custom_graph[vertex_5] = 5;
 
-	auto edge_u_v = boost::add_edge(vertex_u, vertex_v, custom_graph).first; 
+	auto edge_4_5 = boost::add_edge(vertex_4, vertex_5, custom_graph).first; 
 
-	custom_graph[edge_u_v] = 1;
+	custom_graph[edge_4_5] = 9;
 
 //  --------------------------------------------------------------------------------------------
 

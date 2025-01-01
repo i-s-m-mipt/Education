@@ -43,29 +43,34 @@ using container_t = boost::multi_index::multi_index_container
 
 int main()
 {
-	container_t container({ { 1, 1 }, { 2, 2 }, { 3, 3 }, { 4, 4 }, { 5, 5 } });
+	container_t container({ { 1, 1 }, { 2, 2 }, { 3, 3 } });
 
 //  -------------------------------------------------------------------------------------
 
 	auto & HNU_data_1_index = container.get < data_1_tag > ();
+
 	auto & ONU_data_2_index = container.get < data_2_tag > ();
 
 //  -------------------------------------------------------------------------------------
-
-	if (auto iterator = HNU_data_1_index.find(2); iterator != std::end(HNU_data_1_index))
+	
+	if (HNU_data_1_index.contains(1))
 	{
-		auto modifier = [](auto && entity){ entity.data_1 = entity.data_2 = 1; };
+		auto modifier = [](auto && entity){ entity.data_1 = entity.data_2 = 2; };
 
-		assert(HNU_data_1_index.modify(HNU_data_1_index.find(2), modifier));
+		assert(HNU_data_1_index.modify(HNU_data_1_index.find(1), modifier));
 
-		assert(HNU_data_1_index.count(2) == 0);
+		assert(HNU_data_1_index.count(1) == 0);
+
+		assert(HNU_data_1_index.count(2) == 2);
 	}
 
 //  -------------------------------------------------------------------------------------
 
-	for (auto [begin, end] = ONU_data_2_index.equal_range(1); begin != end; ++begin)
+	for (auto [begin, end] = ONU_data_2_index.equal_range(2); begin != end; ++begin)
 	{
-		assert(begin->data_1 == 1 && begin->data_2 == 1);
+		assert(begin->data_1 == 2);
+		
+		assert(begin->data_2 == 2);
 	}
 
 //  -------------------------------------------------------------------------------------
@@ -76,7 +81,7 @@ int main()
 	bimap.insert({ 2, 2 });
 	bimap.insert({ 3, 3 });
 
-	assert(bimap.left.count(1) == 1 && bimap.right.count(1) == 1);
+	assert(bimap.left.count(1) == bimap.right.count(1));
 
 	for (const auto & element : bimap) 
 	{

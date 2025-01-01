@@ -60,11 +60,9 @@ void test_v2()
 {
 	std::cout << "test_v2 (1)\n";
 
-	auto size = 5uz;
+//	auto array = new int[5]{}; // bad
 
-//	auto array = new int[size]{}; // bad
-
-	std::vector < int > vector(size, 0);
+	std::vector < int > vector(5, 0);
 
 	test_v1();
 

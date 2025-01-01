@@ -274,9 +274,9 @@ int main()
 
 //  -------------------------------------------------------------------------------------------
 
-	static_assert( is_same_v < enable_if_t   < 1 + 1 == 2, int         > , int    > );
-//	static_assert(!is_same_v < enable_if_t   < 1 + 1 != 2, int         > , int    > ); // error
+	static_assert( is_same_v < enable_if_t   < 1 + 2 == 3, int         > , int    > );
+//	static_assert(!is_same_v < enable_if_t   < 1 + 2 != 3, int         > , int    > ); // error
 
-	static_assert( is_same_v < conditional_t < 1 + 1 == 2, int, double > , int    > );
-	static_assert( is_same_v < conditional_t < 1 + 1 != 2, int, double > , double > );
+	static_assert( is_same_v < conditional_t < 1 + 2 == 3, int, double > , int    > );
+	static_assert( is_same_v < conditional_t < 1 + 2 != 3, int, double > , double > );
 }

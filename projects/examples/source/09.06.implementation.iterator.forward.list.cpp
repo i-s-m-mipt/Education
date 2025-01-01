@@ -99,8 +99,6 @@ int main()
 	list.push_back(1);
 	list.push_back(2);
 	list.push_back(3);
-	list.push_back(4);
-	list.push_back(5);
 
 	for (auto iterator = std::begin(list); iterator != std::end(list); ++iterator);
 

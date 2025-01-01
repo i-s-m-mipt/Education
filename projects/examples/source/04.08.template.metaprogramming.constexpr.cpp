@@ -9,12 +9,12 @@
 
 constexpr auto factorial_v1(unsigned int x) -> unsigned int
 {
-	return x > 1 ? x * factorial_v1(x - 1) : 1;
+	return x > 1 ? x * factorial_v1(x - 1) : 1u;
 }
 
 consteval auto factorial_v2(unsigned int x) -> unsigned int
 {
-	return x > 1 ? x * factorial_v2(x - 1) : 1;
+	return x > 1 ? x * factorial_v2(x - 1) : 1u;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ consteval auto is_prime(unsigned int x)
 
 consteval auto test_v1()
 {
-//	[[maybe_unused]] auto object = new auto(1); // error
+//	[[maybe_unused]] auto object = new auto(0); // error
 
 	std::vector < int > vector({ 1, 2, 3, 4, 5 });
 

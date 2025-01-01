@@ -6,11 +6,11 @@
 
 template < typename T, std::size_t S > struct Array {};
 
-template < typename T > using Buffer = Array < T, 1024 > ;
+template < typename T > using Buffer = Array < T, 1'024 > ;
 
 //  ================================================================================================
 
-template < typename T > T pi = T(3.141592653589793238462643383279502884l);
+template < typename T > T pi = T(3.141'592'653'589'793'238'462'643'383'279'502'884l);
 
 template < typename T > auto area(T radius)
 {

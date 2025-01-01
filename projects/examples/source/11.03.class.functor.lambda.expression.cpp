@@ -37,14 +37,14 @@ int main()
 
 //  -----------------------------------------------------------------------------
 
-	auto x = 1, y = 2, z = 0;
+	auto x = 1, y = 2, result = 0;
 
-	[x, y, &z]()         { z = x + y; }();
-	[x, y,  z]() mutable { z = x + y; }();
+	[x, y, &result]()         { result = x + y; }();
+	[x, y,  result]() mutable { result = x + y; }();
 
-	assert(z == 3);
+	assert(result == 3);
 
-//	[&](){ z = x + y; }(); // bad
+//	[&](){ result = x + y; }(); // bad
 
 //  -----------------------------------------------------------------------------
 
@@ -68,16 +68,16 @@ int main()
 
 	auto lambda_3 = [] < typename T > (T x, T y){ return x + y; };
 
-	lambda_3(1, 2);
+	std::ignore = lambda_3(1, 2);
 
-//	lambda_3(1, 2.0); // error
+//	std::ignore = lambda_3(1, 2.0); // error
 
 //  -----------------------------------------------------------------------------
 
 	std::vector < int > vector(5, 0);
 
-	std::ranges::for_each(vector, [z](auto & x){        x += z ; });
-	std::ranges::for_each(vector, [z](auto   x){ assert(x == z); });
+	std::ranges::for_each(vector, [result](auto & x){       (x += result); });
+	std::ranges::for_each(vector, [result](auto   x){ assert(x == result); });
 
 //  -----------------------------------------------------------------------------
 

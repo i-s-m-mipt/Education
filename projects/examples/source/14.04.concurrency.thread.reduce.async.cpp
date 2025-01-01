@@ -44,14 +44,12 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum) -> T
 
 int main()
 {
-	auto policy_1 = std::launch::async, policy_2 = std::launch::deferred;
 
-//  ---------------------------------------------------------------------
+    assert(std::async(std::launch::async,    [](){ return 1; }).get() == 1);
 
-    assert(std::async(policy_1, [](){ return 1; }).get() == 1);
-	assert(std::async(policy_2, [](){ return 2; }).get() == 2);
+	assert(std::async(std::launch::deferred, [](){ return 2; }).get() == 2);
 
-//  -----------------------------------------------------------
+//  ------------------------------------------------------------------------
 
 	std::vector < int > vector(1'000, 0);
 

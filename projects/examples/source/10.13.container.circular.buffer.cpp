@@ -15,13 +15,13 @@ int main()
 
 //  ----------------------------------------------------------------
 
-	buffer.push_back(0);
 	buffer.push_back(1);
 	buffer.push_back(2);
 	buffer.push_back(3);
 	buffer.push_back(4); 
+	buffer.push_back(5);
 
-	assert(buffer[0] == 2 && buffer[1] == 3 && buffer[2] == 4);
+	assert(buffer[0] == 3 && buffer[1] == 4 && buffer[2] == 5);
 
 //  ----------------------------------------------------------------
 

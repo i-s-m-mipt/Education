@@ -33,7 +33,7 @@ int main()
 
 //  --------------------------------------------------------------------------------
 
-	std::ranges::iota(vector_1, 0);
+	std::ranges::iota(vector_1, 1);
 
 	std::default_random_engine engine;
 
@@ -58,19 +58,19 @@ int main()
 
 //  --------------------------------------------------------------------------------
 
-	auto is_even = [](auto x){ return x % 2 == 0; };
-	auto is_five = [](auto x){ return x     == 5; };
+	auto is_four = [](auto x){ return x == 4; };
+	auto is_five = [](auto x){ return x == 5; };
 
-	auto is_even_or_five = bind(is_even, is_five, std::logical_or <> ());
+	auto is_four_or_five = bind(is_four, is_five, std::logical_or <> ());
 
 	[[maybe_unused]] auto tail_begin = std::remove_if
 	(
-		std::begin(vector_2), std::end(vector_2), is_even_or_five
+		std::begin(vector_2), std::end(vector_2), is_four_or_five
 	);
 
 //	vector_2.erase(tail_begin, std::end(vector_2)); // bad
 
-	std::erase_if(vector_2, is_even_or_five);
+	std::erase_if(vector_2, is_four_or_five);
 
 //  --------------------------------------------------------------------------------
 
@@ -92,5 +92,5 @@ int main()
 		std::begin(vector_3), std::plus()
 	);
 
-	assert(vector_3 == std::vector < int > ({ 3, 3, 2 }));
+	assert(vector_3 == std::vector < int > ({ 7, 4, 7, 4, 3 }));
 }

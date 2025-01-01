@@ -111,7 +111,7 @@ int main()
 
 	entities_3.push_back(std::move(entity));
 
-	entities_3.emplace_back(1);
+	entities_3.emplace(std::end(entities_3), 1);
 
 //  ================================================================================================
 
@@ -127,13 +127,13 @@ int main()
 
 	auto middle = std::size(vector) / 2;
 
-	vector.push_back(42); vector.pop_back();
+	vector.push_back(1); vector.pop_back();
 
-	vector.insert(          std::begin(vector),          42);
-	vector.insert(std::next(std::begin(vector), middle), 42);
+	vector.insert(          std::begin(vector),          1);
+	vector.insert(std::next(std::begin(vector), middle), 1);
 
-	vector.erase (          std::begin(vector)             );
-	vector.erase (std::next(std::begin(vector), middle)    );
+	vector.erase (          std::begin(vector)            );
+	vector.erase (std::next(std::begin(vector), middle)   );
 
 	std::ignore = vector[middle];
 
@@ -141,11 +141,11 @@ int main()
 
 	std::deque < int > deque(std::begin(vector), std::end(vector));
 
-	deque.push_back (42); deque.pop_back ();
-	deque.push_front(42); deque.pop_front();
+	deque.push_back (1); deque.pop_back ();
+	deque.push_front(1); deque.pop_front();
 
-	deque.insert(std::next(std::begin(deque), middle), 42);
-	deque.erase (std::next(std::begin(deque), middle)    );
+	deque.insert(std::next(std::begin(deque), middle), 1);
+	deque.erase (std::next(std::begin(deque), middle)   );
 
 	std::ignore = deque[middle];
 
@@ -159,21 +159,21 @@ int main()
 
 //  ================================================================================================
 
-	std::list < int > list_1({ 8, 0, 6, 2, 4, 4, 2, 6, 0, 8 });
+	std::list < int > list_1({ 5, 3, 1, 5, 3, 1 });
 
 //	std::ranges::sort(list_1); // error
 	
 	list_1.sort();
 
-	assert(list_1.unique() == 5);
+	assert(list_1.unique() == 3);
 
 //  ================================================================================================
 
-	std::list < int > list_2({ 9, 7, 5, 3, 1, 42 });
+	std::list < int > list_2({ 4, 2, 0 });
 
 	list_2.reverse();
 
-	assert(list_2.remove(42) == 1);
+	assert(list_2.remove(0) == 1);
 
 //  ================================================================================================
 
@@ -183,28 +183,26 @@ int main()
 	(
 				  std::begin(list_2), list_1, 
 		          std::begin(list_1),
-		std::next(std::begin(list_1), std::size(list_1) / 2)
+		std::next(std::begin(list_1), std::size(list_1) / 2 + 1)
 	);
 
-	assert(list_2 == std::list < int > ({ 0, 1, 2, 3, 4 }));
+	assert(list_2 == std::list < int > ({ 1, 2, 3 }));
 
 //  ================================================================================================
 
 	std::forward_list < int > forward_list({ 1, 2, 3, 4, 5 });
 
-	forward_list.insert_after(forward_list.before_begin(), 42);
-
-	forward_list.push_front(42);
+	forward_list.insert_after(forward_list.before_begin(), 1);
 
 	forward_list.erase_after(std::begin(forward_list)); 
 
-	assert(forward_list == std::forward_list < int > ({ 42, 1, 2, 3, 4, 5 }));
+	assert(forward_list == std::forward_list < int > ({ 1, 2, 3, 4, 5 }));
 
 //	assert(std::size(forward_list) == 6); // error
 
 //  ================================================================================================
 
-	std::list < int > list_for_sort({ 2, 4, 1, 5, 3 });
+	std::list < int > list_for_sort({ 5, 4, 3, 2, 1 });
 
 //	std::ranges::sort(list_for_sort); // error
 

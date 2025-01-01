@@ -48,6 +48,6 @@ private:
 
 int main()
 {
-    Router_v1 < Client_v1, Server_v1 > router_v1_1(1, 2, 3);
-    Router_v2 < Client_v2, Server_v2 > router_v2_1(1, 2, 3);
+    Router_v1 < Client_v1, Server_v1 > router_v1_1(1, 1, 1);
+    Router_v2 < Client_v2, Server_v2 > router_v2_1(1, 1, 1);
 }

@@ -97,21 +97,21 @@ int main()
 
 //  -------------------------------------------------------------------------------
 
-	[[maybe_unused]] auto x = 1, y = 1;
+	[[maybe_unused]] auto x = 1, y = 2;
 
 //	assert(SQUARE_v1(x + x) == 3); // bad
 
 	assert(SQUARE_v2(x + x) == 4);
 
-//	assert(SQUARE_v2(x++) == 2 && x == 3); // error
+//	assert(SQUARE_v2(++x) == 6 && x == 3); // error
 
-//	assert(SQUARE_v2(++y) == 6 && y == 3); // error
+//	assert(SQUARE_v2(y++) == 6 && y == 4); // error
 
 //  -------------------------------------------------------------------------------
 
 #pragma GCC diagnostic ignored "-Wunused-variable"
 
-	auto z = 1;
+	auto z = 3;
 
 #pragma GCC diagnostic pop
 
@@ -142,7 +142,7 @@ int main()
 
 	assert(path_2.substr(std::size(path_2) - std::strlen(file_name)) == file_name);
 
-	assert(source_location.line() == 137);
+	assert(source_location.line() == 139);
 
 	assert(source_location.function_name() == "int main()"s);
 

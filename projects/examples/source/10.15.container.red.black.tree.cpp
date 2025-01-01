@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cassert>
 #include <functional>
+#include <iostream>
 #include <iterator>
 #include <map>
 #include <set>
@@ -52,8 +53,52 @@ void test_v2(benchmark::State & state)
 
 ///////////////////////////////////////////////////////////////////////////////////
 
+void test_v3(benchmark::State & state)
+{
+    for (auto element : state)
+    {
+        std::set < int > set;
+
+		auto iterator = std::begin(set);
+
+		for (auto x = 100'000; x > 0; --x) 
+		{
+			set.insert(iterator, x);
+
+			iterator = std::begin(set);
+		}
+
+		benchmark::DoNotOptimize(set);	
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+
+void test_v4(benchmark::State & state)
+{
+    for (auto element : state)
+    {
+        std::set < int > set;
+
+		auto iterator = std::begin(set);
+
+		for (auto x = 100'000; x > 0; --x) 
+		{
+			set.insert(iterator, x);
+
+			iterator = std::end(set);
+		}
+
+		benchmark::DoNotOptimize(set);	
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+
 BENCHMARK(test_v1); 
 BENCHMARK(test_v2); 
+BENCHMARK(test_v3);
+BENCHMARK(test_v4);
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -65,46 +110,57 @@ int main()
 
 //  -------------------------------------------------------------------------------
 
-	std::set < int > set({ 5, 4, 3, 2, 1 });
-
-//  -------------------------------------------------------------------------------
-
+	std::set < int > set({ 5, 4, 3, 2, 1 }); 
+	
 	assert(std::ranges::is_sorted(set));
 
-	set.insert(std::begin(set), 0);
+//  -------------------------------------------------------------------------------
 
-	assert(!set.insert(1).second); // support: std::multiset
+	assert( set.count(1) == 1 && set.find(1) != std::end(set) && set.contains(1));
 
-	assert( set.erase(3) == 1);
-	assert( set.count(3) == 0);
+	assert( set.erase(1) == 1 && set.insert(1).second);
 
-	assert(!set.contains(3)); // support: std::set::find
-
-	assert(*set.lower_bound(3) == 4 && *set.upper_bound(3) == 4);
-	assert(*set.lower_bound(4) == 4 && *set.upper_bound(4) == 5);
+	assert(*set.lower_bound(1) == 1);
+	
+	assert(*set.upper_bound(1) == 2);
 
 //  -------------------------------------------------------------------------------
 
-//	*std::begin(set) = 42; // error
+//	*std::begin(set) = 2; // error
 
-	auto node = set.extract(1); node.value() = 3; set.insert(std::move(node));
+	auto node = set.extract(1); node.value() = 2; set.insert(std::move(node));
 
 //  -------------------------------------------------------------------------------
 
-	std::map < std::string, int > map; 
+	std::map < int, std::string > map; 
 
-	map.insert(std::make_pair("aaaaa", 1));
+	try
+	{
+		assert(map.at(1) == "aaaaa");
+	}
+	catch (const std::out_of_range & exception) 
+	{
+		std::cerr << "main : " << exception.what() << '\n';
+	}
 
-//	std::begin(map)->first = "bbbbb"; // error
+	map[1] = "aaaaa";
 
-	map["bbbbb"] = map.at("aaaaa"); map.erase("aaaaa");
+	map.emplace(std::make_pair(2, std::string(5, 'b')));
+ 
+    map.emplace(3, std::string(5, 'c'));
 
-//	assert(!map.    emplace("bbbbb", 2).second); // bad
-	assert(!map.try_emplace("bbbbb", 2).second);
+//	map.emplace(4, 5, 'd'); // error
+ 
+    map.emplace
+	(
+		std::piecewise_construct, 
+		
+		std::forward_as_tuple(5), 
 
-	assert(!map.insert_or_assign("bbbbb", 2).second);
+		std::forward_as_tuple(5, 'e')
+	);
 
-	assert(std::size(map) == 1 && map.at("bbbbb") == 2);
+    map.try_emplace(6, 5, 'f');
 
 //  -------------------------------------------------------------------------------
 

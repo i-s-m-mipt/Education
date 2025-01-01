@@ -86,7 +86,7 @@ int main()
 
 //  ------------------------------------------------------------------------
 
-	std::chrono::duration < int, std::ratio < 1, 1000 > > duration_1(1'000);
+	std::chrono::duration < int, std::ratio < 1, 1'000 > > duration_1(1'000);
 
 	std::chrono::milliseconds duration_2(1'000);
 

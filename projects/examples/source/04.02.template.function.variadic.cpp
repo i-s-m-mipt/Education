@@ -92,10 +92,10 @@ int main()
 
 //  -------------------------------------
 
-	assert(reduce_v1(1, 2) == 3);
-	assert(reduce_v2(1, 2) == 3);
-	assert(reduce_v3(1, 2) == 3);
-	assert(reduce_v4(1, 2) == 3);
+	assert(reduce_v1(1, 2, 3) == 6);
+	assert(reduce_v2(1, 2, 3) == 6);
+	assert(reduce_v3(1, 2, 3) == 6);
+	assert(reduce_v4(1, 2, 3) == 6);
 
 //  -------------------------------------
 
