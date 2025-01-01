@@ -19,7 +19,7 @@ struct Entity
 	int data = 0; 
 };
 
-//  ================================================================================================
+/////////////////////////////////////////////
 
 int main()
 {
@@ -107,9 +107,7 @@ int main()
 
 	assert(std::size(entities_3) == 2);
 
-	Entity entity(1);
-
-	entities_3.push_back(std::move(entity));
+	entities_3.insert (std::end(entities_3), Entity(1));
 
 	entities_3.emplace(std::end(entities_3), 1);
 
@@ -219,4 +217,6 @@ int main()
 	{
 		assert(wrapper[i] == result[i]);
 	}
+
+	benchmark::RunSpecifiedBenchmarks();
 }
