@@ -43,7 +43,7 @@ using container_t = boost::multi_index::multi_index_container
 
 int main()
 {
-	container_t container({ { 1, 1 }, { 2, 2 }, { 3, 3 } });
+	container_t container({ { 1, 1 }, { 2, 2 }, { 3, 3 }, { 4, 4 }, { 5, 5 } });
 
 //  -------------------------------------------------------------------------------------
 
@@ -78,8 +78,6 @@ int main()
 	boost::bimap < int, int > bimap; // support: boost::bimaps::(multi)set_of
 
 	bimap.insert({ 1, 1 });
-	bimap.insert({ 2, 2 });
-	bimap.insert({ 3, 3 });
 
 	assert(bimap.left.count(1) == bimap.right.count(1));
 

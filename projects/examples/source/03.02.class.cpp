@@ -164,9 +164,9 @@ int main()
 
 	Entity entity_3;
 
-	Entity entity_4(1, 1, 1);
+	Entity entity_4(4, 4, 4);
 	
-	Entity entity_5(1, 1);
+	Entity entity_5(5, 5);
 
 //	Entity entity_6(); // warning
 
