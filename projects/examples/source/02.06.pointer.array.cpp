@@ -32,6 +32,7 @@ int main()
 	auto middle = std::size(array_1) / 2;
 
 	*(array_1 + middle) = 3;
+
 //	*(array_1 - middle) = 3; // error
 
 	assert(array_1[middle] == 3);
@@ -44,7 +45,7 @@ int main()
 
 	for (auto ptr = array_1; ptr != array_1 + std::size(array_1); ++ptr) 
 	{
-		*ptr = 1;
+		*ptr = ptr == array_1 ? 1 : *(ptr - 1) + 1;
 	}
 
 //  ------------------------------------------------------------------------------------------------
@@ -53,10 +54,10 @@ int main()
 	
 	int buffer[1'000]{};
 
-	for (auto i = size; auto & element : std::ranges::subrange(buffer, buffer + size))
-    {
-        element = i--;
-    }
+	for (auto i = 0uz; i < size; ++i)
+	{
+		buffer[i] = size - i;
+	}
 
 //  ------------------------------------------------------------------------------------------------
 

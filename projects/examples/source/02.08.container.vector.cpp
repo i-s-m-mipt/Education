@@ -15,10 +15,10 @@ int main()
 
 	std::vector < int > vector(size, 0);
 
-	for (auto i = size; auto & element : vector)
-    {
-        element = i--;
-    }
+	for (auto i = 0uz; i < size; ++i)
+	{
+		vector[i] = size - i;
+	}
 
 //  -----------------------------------------------
 

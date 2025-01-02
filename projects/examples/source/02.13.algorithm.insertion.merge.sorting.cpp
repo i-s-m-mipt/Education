@@ -28,21 +28,21 @@ void merge(std::vector < int > & vector, std::size_t left, std::size_t middle, s
 {
 	std::vector < int > copy(right - left, 0);
 
-	for (auto i = left, j = middle; auto & element : copy) 
+	for (auto i = left, j = middle, k = 0uz; k < std::size(copy); ++k) 
 	{
 		if (i < middle && ((j < right && vector[i] <= vector[j]) || j == right))
 		{
-			element = vector[i++];
+			copy[k] = vector[i++];
 		}
 		else
 		{
-			element = vector[j++];
+			copy[k] = vector[j++];
 		}
 	}
 
-	for (auto i = 0uz; auto element : copy) 
+	for (auto i = 0uz, j = 0uz; j < std::size(copy); ++j) 
 	{
-		vector[left + i++] = element;
+		vector[left + i++] = copy[j];
 	}
 }
 
@@ -79,10 +79,10 @@ int main()
 
 	std::vector < int > vector(size, 0);
 
-	for (auto i = size; auto & element : vector)
-    {
-        element = i--;
-    }
+	for (auto i = 0uz; i < size; ++i)
+	{
+		vector[i] = size - i;
+	}
 
 	timsort(vector, 0, size);
 

@@ -30,10 +30,10 @@ int main()
 	
 	auto buffer = new int[size]; 
 
-	for (auto i = size; auto & element : std::ranges::subrange(buffer, buffer + size))
-    {
-        element = i--;
-    }
+	for (auto i = 0uz; i < size; ++i)
+	{
+		buffer[i] = size - i;
+	}
 
 //  ------------------------------------------------------------------------------------------------
 

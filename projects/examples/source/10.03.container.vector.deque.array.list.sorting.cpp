@@ -16,12 +16,14 @@ void test_v1(benchmark::State & state)
 {
     for (auto element : state)
     {
-        std::array < int, 100'000 > array;
+        const auto size = 100'000uz;
 
-        for (auto i = std::size(array); auto & element : array)
+        std::array < int, size > array;
+
+        for (auto i = 0uz; i < size; ++i)
         {
-            element = i--;
-        }  
+            array[i] = size - i;
+        }
 
         auto begin = std::chrono::steady_clock::now();
 
@@ -44,12 +46,14 @@ void test_v2(benchmark::State & state)
 {
     for (auto element : state)
     {
-        std::vector < int > vector(100'000, 0);
+        auto size = 100'000uz;
 
-        for (auto i = std::size(vector); auto & element : vector)
+        std::vector < int > vector(size, 0);
+
+        for (auto i = 0uz; i < size; ++i)
         {
-            element = i--;
-        }  
+            vector[i] = size - i;
+        }
 
         auto begin = std::chrono::steady_clock::now();
 
@@ -72,12 +76,14 @@ void test_v3(benchmark::State & state)
 {
     for (auto element : state)
     {
-        std::deque < int > deque(100'000, 0);
+        auto size = 100'000uz;
 
-        for (auto i = std::size(deque); auto & element : deque)
+        std::deque < int > deque(size, 0);
+
+        for (auto i = 0uz; i < size; ++i)
         {
-            element = i--;
-        }  
+            deque[i] = size - i;
+        } 
 
         auto begin = std::chrono::steady_clock::now();
 
@@ -100,12 +106,14 @@ void test_v4(benchmark::State & state)
 {
     for (auto element : state)
     {
-        std::list < int > list(100'000, 0);
+        auto size = 100'000uz;
 
-        for (auto i = std::size(list); auto & element : list)
+        std::list < int > list(size, 0);
+
+        for (auto state = size; auto & element : list)
         {
-            element = i--;
-        }
+            element = state--;
+        } 
 
         auto begin = std::chrono::steady_clock::now();
 
@@ -132,9 +140,9 @@ void test_v5(benchmark::State & state)
 
         std::forward_list < int > forward_list(size, 0);
 
-        for (auto i = size; auto & element : forward_list)
+        for (auto state = size; auto & element : forward_list)
         {
-            element = i--;
+            element = state--;
         } 
 
         auto begin = std::chrono::steady_clock::now();
