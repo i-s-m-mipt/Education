@@ -8,7 +8,10 @@ class Memento
 {
 public:
 
-    Memento(int data = 0) : m_states(1, State(data)) {}
+    Memento(int data) : m_states(1, State(data)) 
+    {
+        m_deltas.push_back(m_states.front() - State());
+    }
 
 //  --------------------------------------------------------------------
 
@@ -77,10 +80,11 @@ private:
 
 int main() 
 {
-    Memento memento; 
+    Memento memento(1); 
     
-    memento.set(1); memento.save();
-    memento.set(2); memento.save();
+    memento.save(); memento.set(2);
+
+    memento.save();
     
     memento.load_v1(1); assert(memento.get() == 1);
     memento.load_v2(2); assert(memento.get() == 2);
