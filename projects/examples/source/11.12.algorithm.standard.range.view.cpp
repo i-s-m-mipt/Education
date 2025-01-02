@@ -34,14 +34,14 @@ public:
 
 //  ================================================================================================
 
-static_assert(std::ranges::      range < Range < int > > );
-static_assert(std::ranges::sized_range < Range < int > > );
+static_assert( std::ranges::      range < Range < int > > );
+static_assert( std::ranges::sized_range < Range < int > > );
 
-static_assert(std::ranges::sized_range < std::forward_list < int > > == false);
+static_assert(!std::ranges::sized_range < std::forward_list < int > > );
 
-static_assert(std::ranges::      forward_range < std::forward_list < int > > );
-static_assert(std::ranges::bidirectional_range < std::        list < int > > );
-static_assert(std::ranges::random_access_range < std::      vector < int > > );
+static_assert( std::ranges::      forward_range < std::forward_list < int > > );
+static_assert( std::ranges::bidirectional_range < std::        list < int > > );
+static_assert( std::ranges::random_access_range < std::      vector < int > > );
 
 //  ================================================================================================
 
