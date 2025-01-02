@@ -75,7 +75,7 @@ auto size(const std::filesystem::directory_entry & entry)
         result = size(entry.path());
     }
 
-    char letters[]{ 'B', 'K', 'M', 'G' };
+    char units[]{ 'B', 'K', 'M', 'G' };
 
     auto index = 0uz;
 
@@ -84,7 +84,7 @@ auto size(const std::filesystem::directory_entry & entry)
         result /= 1'024; ++index;
     }
 
-    return (std::stringstream() << std::format("{: >4}", result) << letters[index]).str();
+    return (std::stringstream() << std::format("{: >4}", result) << units[index]).str();
 }
 
 //  ================================================================================================
