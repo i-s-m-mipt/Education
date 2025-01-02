@@ -385,7 +385,7 @@ private:
 
 			m_is_negative = string[0] == '-'; m_n_digits = 0;
 
-			for (auto i = static_cast < int > (std::size(string)) - 1; i >= 0; i -= step)
+			for (auto i = std::ssize(string) - 1; i >= 0; i -= step)
 			{
 				auto begin = i - step + 1;
 

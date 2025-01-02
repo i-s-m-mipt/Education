@@ -12,7 +12,7 @@ auto next(std::vector < std::size_t > & steps, const std::vector < std::size_t >
 {
 	auto has_next = false;
 
-	for (auto i = static_cast < int > (std::size(steps)) - 1; i >= 0; --i)
+	for (auto i = std::ssize(steps) - 1; i >= 0; --i)
 	{
 		steps[i]++;
 		
