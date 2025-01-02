@@ -20,7 +20,7 @@ void test_v1(benchmark::State & state)
 
         for (auto i = std::size(array); auto & element : array)
         {
-            element = static_cast < int > (i--);
+            element = i--;
         }  
 
         auto start = std::chrono::steady_clock::now();
@@ -48,7 +48,7 @@ void test_v2(benchmark::State & state)
 
         for (auto i = std::size(vector); auto & element : vector)
         {
-            element = static_cast < int > (i--);
+            element = i--;
         }  
 
         auto start = std::chrono::steady_clock::now();
@@ -76,7 +76,7 @@ void test_v3(benchmark::State & state)
 
         for (auto i = std::size(deque); auto & element : deque)
         {
-            element = static_cast < int > (i--);
+            element = i--;
         }  
 
         auto start = std::chrono::steady_clock::now();
@@ -104,7 +104,7 @@ void test_v4(benchmark::State & state)
 
         for (auto i = std::size(list); auto & element : list)
         {
-            element = static_cast < int > (i--);
+            element = i--;
         }
 
         auto start = std::chrono::steady_clock::now();
@@ -134,7 +134,7 @@ void test_v5(benchmark::State & state)
 
         for (auto i = size; auto & element : forward_list)
         {
-            element = static_cast < int > (i--);
+            element = i--;
         } 
 
         auto start = std::chrono::steady_clock::now();

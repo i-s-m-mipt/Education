@@ -156,9 +156,7 @@ int main()
 
     auto u32string = boost::locale::conv::utf_to_utf < char32_t, char > (u8string);
 
-    assert(std::size(u32string) == 5);
-	
-    assert(static_cast < int > (u32string.front()) == 1'072);
+    assert(std::size(u32string) == 5 && u32string.front() == 1'072);
 
 //  -------------------------------------------------------------------------------
 

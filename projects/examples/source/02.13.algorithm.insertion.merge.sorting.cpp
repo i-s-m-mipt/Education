@@ -81,7 +81,7 @@ int main()
 
 	for (auto i = size; auto & element : vector)
     {
-        element = static_cast < int > (i--);
+        element = i--;
     }
 
 	timsort(vector, 0, size);

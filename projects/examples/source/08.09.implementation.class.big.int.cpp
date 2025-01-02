@@ -394,9 +394,7 @@ private:
 					start = m_is_negative ? 1 : 0;
 				}
 
-				auto digit = string.substr(start, i - start + 1);
-
-				m_digits[m_n_digits++] = std::stoll(static_cast < std::string > (digit));
+				m_digits[m_n_digits++] = std::stoll(string.substr(start, i - start + 1));
 			}
 
 			reduce();

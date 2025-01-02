@@ -44,7 +44,7 @@ public:
 		{
 			auto header = get_header(get_byte(block) - sizeof(Header));
 
-			*header = static_cast < Header > (std::distance(get_byte(first), get_byte(block)));
+			*header = std::distance(get_byte(first), get_byte(block));
 
 			m_offset = get_byte(block) - get_byte(m_begin) + size;
 

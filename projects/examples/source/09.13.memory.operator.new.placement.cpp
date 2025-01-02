@@ -114,14 +114,14 @@ int main()
 
 	for (auto i = 0uz; i < size; ++i)
 	{
-		new (entities + i) Entity_v1(static_cast < int > (i + 1));
+		new (entities + i) Entity_v1(i + 1);
 	}
 
 	auto offset = size / 2;
 
 	(entities + offset)->~Entity_v1();
 
-	new (entities + offset) Entity_v1(static_cast < int > (size + 1));
+	new (entities + offset) Entity_v1(size + 1);
 
 	for (auto i = 0uz; i < size; ++i)
 	{

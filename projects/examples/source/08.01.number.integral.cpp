@@ -41,7 +41,7 @@ void test_v1(benchmark::State & state)
 
         for (auto i = 1uz; i < std::size(entities); ++i)
         {
-            entities[i].x = static_cast < std::uint32_t > (i);
+            entities[i].x = i;
 
             entities[i].y = entities[i].x + entities[i - 1].y;
         }
@@ -60,7 +60,7 @@ void test_v2(benchmark::State & state)
         
         for (auto i = 1uz; i < std::size(entities); ++i)
         {
-            entities[i].x = static_cast < std::uint32_t > (i);
+            entities[i].x = i;
 
             entities[i].y = entities[i].x + entities[i - 1].y;
         }

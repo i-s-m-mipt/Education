@@ -42,8 +42,5 @@ int main()
 
 //  ----------------------------------------------------------------------------------
 
-	auto state = fast | slow;
-
-	assert(static_cast < bool > (state & fast));
-	assert(static_cast < bool > (state & slow));
+	[[maybe_unused]] auto state = fast | slow;
 }

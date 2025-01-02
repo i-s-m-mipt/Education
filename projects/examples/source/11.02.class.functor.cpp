@@ -101,8 +101,8 @@ int main()
 
 	for (auto i = 0uz; i < size; ++i)
 	{
-		assert(vector_2[i] == static_cast < int > (i + 1));
-		assert(vector_3[i] == static_cast < int > (i + 1));
+		assert(vector_2[i] == static_cast < int > (i) + 1);
+		assert(vector_3[i] == static_cast < int > (i) + 1);
 	}
 
 //  ================================================================================================

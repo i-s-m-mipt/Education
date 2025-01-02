@@ -132,13 +132,13 @@ int main()
 
     auto size = 26uz;
 
-    std::pmr::vector < char > letters(&arena);
+    std::pmr::vector < char > vector_1(&arena);
 
-    letters.reserve(size);
+    vector_1.reserve(size);
 
     for (auto i = 0uz; i < size; ++i)
     {
-        letters.push_back(static_cast < char > ('a' + i));
+        vector_1.push_back('a' + i);
     }
 
     auto result = "abcdefghijklmnopqrstuvwxyz______"s;
@@ -167,7 +167,7 @@ int main()
 
 //  ================================================================================================
 
-    std::vector < int, boost::pool_allocator < int > > vector;
+    std::vector < int, boost::pool_allocator < int > > vector_2;
 
 //  ================================================================================================
 

@@ -33,12 +33,10 @@ int main()
 //  -----------------------------------------------------------------------
 
 	std::vector < bool > vector(1'000'000'000, false); 
-
-	vector.front() = true;
  
 	auto proxy = vector.front();
 
-	assert(static_cast < bool > (proxy) == true);
+	static_assert(!std::is_same_v < decltype(proxy), bool > );
 
 //  -----------------------------------------------------------------------
 

@@ -55,7 +55,7 @@ int main()
 
 	for (auto i = size; auto & element : std::ranges::subrange(buffer, buffer + size))
     {
-        element = static_cast < int > (i--);
+        element = i--;
     }
 
 //  ------------------------------------------------------------------------------------------------

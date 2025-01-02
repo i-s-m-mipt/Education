@@ -15,7 +15,7 @@ auto hash_v1(const std::string & string)
 
 	for (auto element : string) 
 	{
-		(seed *= 31) += static_cast < std::size_t > (element);
+		(seed *= 31) += element;
 	}
 
 	return seed;
