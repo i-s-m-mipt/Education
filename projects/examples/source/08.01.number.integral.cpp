@@ -37,8 +37,6 @@ void test_v1(benchmark::State & state)
 
     for (auto element : state)
     {
-        entities[0].x = entities[0].y = 0;
-
         for (auto i = 1uz; i < std::size(entities); ++i)
         {
             entities[i].x = i;
@@ -55,9 +53,7 @@ void test_v2(benchmark::State & state)
     std::vector < Entity_v2 > entities(1'000);
 
     for (auto element : state)
-    {
-        entities[0].x = entities[0].y = 0;
-        
+    {        
         for (auto i = 1uz; i < std::size(entities); ++i)
         {
             entities[i].x = i;

@@ -10,7 +10,7 @@ class Error : public std::exception
 {
 public:
 
-	Error(int error) : m_error(error) {}
+	Error(int data) : m_data(data) {}
 
 //  -------------------------------------------
 
@@ -21,7 +21,7 @@ public:
 
 private:
 
-	int m_error = 0;
+	int m_data = 0;
 };
 
 //  ================================================================================================

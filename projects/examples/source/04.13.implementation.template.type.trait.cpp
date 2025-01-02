@@ -261,7 +261,7 @@ int main()
 	static_assert(!is_derived_v < Server, Entity > );
 //	static_assert( is_derived_v < Client, Client > ); // bad
 
-	[[maybe_unused]] decltype(test(declval < Bad > ())) x = 0;
+	[[maybe_unused]] decltype(test(declval < Bad > ())) x = 1;
 
 	static_assert( is_polymorphic_v < Entity > );
 	static_assert( is_polymorphic_v < Client > );
