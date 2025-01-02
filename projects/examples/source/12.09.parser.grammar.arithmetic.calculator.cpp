@@ -104,9 +104,9 @@ public:
 
 	void test()
 	{
-		std::cout << "Calculator::test : enter expressions : \n";
+		std::cout << "Calculator::test : enter expressions : \n"; std::string line;
 
-		for (std::string line; std::getline(std::cin >> std::ws, line); )
+		while (std::getline(std::cin >> std::ws, line))
 		{
 			if (Stream stream(line); !stream.empty())
 			{
@@ -116,8 +116,8 @@ public:
 			}
 			else 
 			{
-				break;	
-			}		
+				break;
+			}
 		}
 	}
 
@@ -151,9 +151,9 @@ private:
 
 	auto expression(Stream & stream) const -> double
 	{
-		auto left = term(stream);
+		auto left = term(stream); auto token = stream.get();
 
-		for (auto token = stream.get(); true; token = stream.get())
+		while (true)
 		{
 			if (std::holds_alternative < char > (token))
 			{
@@ -174,14 +174,16 @@ private:
 			{
 				throw std::runtime_error("invalid expression");
 			}
+
+			token = stream.get();
 		}
 	}
 
 	auto term(Stream & stream) const -> double
 	{
-		auto left = primary(stream);
+		auto left = primary(stream); auto token = stream.get();
 
-		for (auto token = stream.get(); true; token = stream.get())
+		while (true)
 		{
 			if (std::holds_alternative < char > (token))
 			{
@@ -202,6 +204,8 @@ private:
 			{
 				throw std::runtime_error("invalid term");
 			}
+
+			token = stream.get();
 		}
 	}
 

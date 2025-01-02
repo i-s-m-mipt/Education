@@ -17,15 +17,11 @@ void test_v1(benchmark::State & state)
 {
     for (auto element : state)
     {
-		auto size = 1'000uz;
-
         std::vector < int > vector; 
-		
-		vector.reserve(size);
 
-		for (auto x = static_cast < int > (size); x > 0; --x) 
+		for (auto i = 1'000; i > 0; --i) 
 		{
-			vector.push_back(x);
+			vector.push_back(i);
 		}
 
 		std::ranges::sort(vector);
@@ -42,9 +38,9 @@ void test_v2(benchmark::State & state)
     {
         std::set < int > set;
 
-		for (auto x = 1'000; x > 0; --x) 
+		for (auto i = 1'000; i > 0; --i) 
 		{
-			set.insert(x);
+			set.insert(i);
 		}
 
 		benchmark::DoNotOptimize(set);	
@@ -61,9 +57,9 @@ void test_v3(benchmark::State & state)
 
 		auto iterator = std::begin(set);
 
-		for (auto x = 1'000; x > 0; --x) 
+		for (auto i = 1'000; i > 0; --i) 
 		{
-			set.insert(iterator, x);
+			set.insert(iterator, i);
 
 			iterator = std::begin(set);
 		}
@@ -82,9 +78,9 @@ void test_v4(benchmark::State & state)
 
 		auto iterator = std::begin(set);
 
-		for (auto x = 1'000; x > 0; --x) 
+		for (auto i = 1'000; i > 0; --i) 
 		{
-			set.insert(iterator, x);
+			set.insert(iterator, i);
 
 			iterator = std::end(set);
 		}

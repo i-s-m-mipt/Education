@@ -43,9 +43,9 @@ int main()
 
 //  ---------------------------------------------------------------------------------------------
 
-	for (auto precision = 1; precision <= std::numeric_limits < double > ::digits10; ++precision)
+	for (auto i = 1uz; i <= std::numeric_limits < double > ::digits10; ++i)
 	{
-		assert(std::format("{:.{}f}", 1.0, precision) == "1." + std::string(precision, '0'));
+		assert(std::format("{:.{}f}", 1.0, i) == "1." + std::string(i, '0'));
 	}
 
 //  ---------------------------------------------------------------------------------------------

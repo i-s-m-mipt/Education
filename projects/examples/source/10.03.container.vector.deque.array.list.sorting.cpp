@@ -18,9 +18,9 @@ void test_v1(benchmark::State & state)
     {
         std::array < int, 100'000 > array;
 
-        for (auto x = std::size(array); auto & element : array)
+        for (auto i = std::size(array); auto & element : array)
         {
-            element = static_cast < int > (x--);
+            element = static_cast < int > (i--);
         }  
 
         auto start = std::chrono::steady_clock::now();
@@ -46,9 +46,9 @@ void test_v2(benchmark::State & state)
     {
         std::vector < int > vector(100'000, 0);
 
-        for (auto x = std::size(vector); auto & element : vector)
+        for (auto i = std::size(vector); auto & element : vector)
         {
-            element = static_cast < int > (x--);
+            element = static_cast < int > (i--);
         }  
 
         auto start = std::chrono::steady_clock::now();
@@ -74,9 +74,9 @@ void test_v3(benchmark::State & state)
     {
         std::deque < int > deque(100'000, 0);
 
-        for (auto x = std::size(deque); auto & element : deque)
+        for (auto i = std::size(deque); auto & element : deque)
         {
-            element = static_cast < int > (x--);
+            element = static_cast < int > (i--);
         }  
 
         auto start = std::chrono::steady_clock::now();
@@ -102,9 +102,9 @@ void test_v4(benchmark::State & state)
     {
         std::list < int > list(100'000, 0);
 
-        for (auto x = std::size(list); auto & element : list)
+        for (auto i = std::size(list); auto & element : list)
         {
-            element = static_cast < int > (x--);
+            element = static_cast < int > (i--);
         }
 
         auto start = std::chrono::steady_clock::now();
@@ -132,9 +132,9 @@ void test_v5(benchmark::State & state)
 
         std::forward_list < int > forward_list(size, 0);
 
-        for (auto x = size; auto & element : forward_list)
+        for (auto i = size; auto & element : forward_list)
         {
-            element = static_cast < int > (x--);
+            element = static_cast < int > (i--);
         } 
 
         auto start = std::chrono::steady_clock::now();

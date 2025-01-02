@@ -331,17 +331,17 @@ public:
 			throw std::runtime_error("invalid operand");
 		}
 
-		auto position = (static_cast < int > (x.m_n_digits) + 1) / 2;
-
-    	Big_Int result; result.m_n_digits = position;
+    	Big_Int result; 
+		
+		result.m_n_digits = (x.m_n_digits + 1) / 2;
     	
-    	for (--position; position >= 0; --position)
+    	for (auto i = static_cast < int > (result.m_n_digits) - 1; i >= 0; --i)
     	{
       		digit_t l = 0, r = Big_Int::base, digit = 0;
 
       		while (l <= r)
       		{
-				auto m = result.m_digits[position] = std::midpoint(l, r);
+				auto m = result.m_digits[i] = std::midpoint(l, r);
 
         		if (result * result <= x)
         		{
@@ -353,7 +353,7 @@ public:
 				}				
       		}
 
-      		result.m_digits[position] = digit;
+      		result.m_digits[i] = digit;
     	}
 
 		result.reduce(); 
@@ -411,7 +411,10 @@ private:
 
 	void reduce()
 	{
-		for (; m_n_digits > 1 && !m_digits[m_n_digits - 1]; --m_n_digits);
+		while (m_n_digits > 1 && !m_digits[m_n_digits - 1]) 
+		{
+			--m_n_digits;
+		}
 	}
 
 //  -----------------------------------------------------------------------------------------------

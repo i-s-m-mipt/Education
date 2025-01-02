@@ -15,9 +15,9 @@ int main()
 
 	std::vector < int > vector(size, 0);
 
-	for (auto x = size; auto & element : vector)
+	for (auto i = size; auto & element : vector)
     {
-        element = static_cast < int > (x--);
+        element = static_cast < int > (i--);
     }
 
 //  -----------------------------------------------

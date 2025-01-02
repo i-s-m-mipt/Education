@@ -21,9 +21,9 @@ consteval auto factorial_v2(unsigned int x) -> unsigned int
 
 consteval auto is_prime(unsigned int x)
 {
-	for (auto d = 2u; d * d < x; ++d)
+	for (auto i = 2u; i * i < x; ++i)
 	{
-		if (x % d == 0) 
+		if (x % i == 0) 
 		{
 			return false;
 		}

@@ -70,10 +70,12 @@ int main()
 
     std::vector < std::string > result;
 
-    for (; std::regex_search(begin, end, matches, pattern); begin = matches.suffix().first)
+    while (std::regex_search(begin, end, matches, pattern))
     {
         result.push_back(matches[0]); // support: boost::tokenizer
-    } 
+
+        begin = matches.suffix().first;
+    }
 
     assert(result == std::vector < std::string > ({ "aaaaa", "BBBBB" })); 
 

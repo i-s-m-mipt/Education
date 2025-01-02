@@ -79,7 +79,10 @@ auto size(const std::filesystem::directory_entry & entry)
 
     auto index = 0uz;
 
-    for (; index < 3 && result >= 1'024; result /= 1'024, ++index);
+    while (index < 3 && result >= 1'024)
+    {
+        result /= 1'024; ++index;
+    }
 
     return (std::stringstream() << std::format("{: >4}", result) << letters[index]).str();
 }

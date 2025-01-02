@@ -9,8 +9,11 @@
 template < typename I > void advance(I & iterator, int distance, std::forward_iterator_tag)
 {
 	if (distance > 0) 
-	{ 
-		for (; --distance >= 0; ++iterator); 
+	{
+		while (--distance >= 0)
+		{
+			++iterator;
+		}
 	}
 }
 
@@ -20,11 +23,17 @@ template < typename I > void advance(I & iterator, int distance, std::bidirectio
 {
 	if (distance > 0)
 	{
-		for (; --distance >= 0; ++iterator); 
+		while (--distance >= 0)
+		{
+			++iterator;
+		} 
 	}
 	else
 	{
-		for (; ++distance <= 0; --iterator); 
+		while (++distance <= 0)
+		{
+			--iterator;
+		}
 	}
 }
 
@@ -48,7 +57,10 @@ template < std::forward_iterator I > void advance_v2(I & iterator, int distance)
 {
 	if (distance > 0) 
 	{ 
-		for (; --distance >= 0; ++iterator); 
+		while (--distance >= 0)
+		{
+			++iterator;
+		}
 	}
 }
 
@@ -58,11 +70,17 @@ template < std::bidirectional_iterator I > void advance_v2(I & iterator, int dis
 {
 	if (distance > 0)
 	{
-		for (; --distance >= 0; ++iterator); 
+		while (--distance >= 0)
+		{
+			++iterator;
+		}
 	}
 	else
 	{
-		for (; ++distance <= 0; --iterator); 
+		while (++distance <= 0)
+		{
+			--iterator;
+		}
 	}
 }
 

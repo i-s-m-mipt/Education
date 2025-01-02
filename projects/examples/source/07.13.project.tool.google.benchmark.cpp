@@ -63,7 +63,7 @@ void test_v3(benchmark::State & state)
 
         try
         {
-            for (auto i = 0uz; ; ++i)
+            for (auto i = 0uz; true; ++i)
             {
                 result += 
                 (

@@ -22,7 +22,7 @@ int main()
 
 //  ---------------------------------------------------------------------------------------------
 
-	for (auto i = 0uz; [[maybe_unused]] auto x = i < size; ++i) 
+	for (auto i = 0uz; [[maybe_unused]] auto j = i < size; ++i) 
 	{
 		std::cout << "main : iteration (03) : i = " << i << '\n';
 	}

@@ -13,41 +13,55 @@ void transform(const std::string & path_1, const std::string & path_2)
     {
         std::istreambuf_iterator < char > begin(fin), end;
 
-        std::string code(begin, end);
+        std::string data(begin, end);
 
-        for (auto current = std::begin(code); current != std::end(code); ++current) 
+        for (auto iterator = std::begin(data); iterator != std::end(data); ++iterator) 
         {
-            if (*current == '\'')
+            if (*iterator == '\'')
             {
-                for (++current; !(*current == '\'' && *std::prev(current) != '\\'); ++current);
+                do
+                {
+                    ++iterator;
+                } 
+                while (!(*iterator == '\'' && *std::prev(iterator) != '\\'));
             }
 
-            if (*current == '\"')
+            if (*iterator == '\"')
             {
-                for (++current; !(*current == '\"' && *std::prev(current) != '\\'); ++current);
+                do
+                {
+                    ++iterator;
+                } 
+                while (!(*iterator == '\"' && *std::prev(iterator) != '\\'));
             }
                 
-            if (*current == '/') 
+            if (*iterator == '/') 
             {
-                if (*std::next(current) == '/')
+                if (*std::next(iterator) == '/')
                 {
-                    auto last = std::next(current, 2);
+                    auto last = std::next(iterator, 2);
 
-                    for (; last != std::end(code) && *last != '\n'; ++last);
+                    while (last != std::end(data) && *last != '\n')
+                    {
+                        ++last;
+                    }
 
-                    current = code.erase(current, last);
+                    iterator = data.erase(iterator, last);
                 }
-                else if (*std::next(current) == '*')
+                else if (*std::next(iterator) == '*')
                 {
-                    auto last = std::next(current, 3);
+                    auto last = std::next(iterator, 3);
 
-                    for (; !(*last == '/' && *std::prev(last) == '*'); ++last);
+                    while (!(*last == '/' && *std::prev(last) == '*'))
+                    {
+                        ++last;
+                    }
 
-                    current = code.erase(current, ++last);
+                    iterator = data.erase(iterator, ++last);
                 }
             }
 
-            if (current == std::end(code)) 
+            if (iterator == std::end(data)) 
             {
                 break;
             }
@@ -55,7 +69,7 @@ void transform(const std::string & path_1, const std::string & path_2)
 
         if (std::fstream fout(path_2, std::ios::out); fout)
         {
-            fout << code;
+            fout << data;
         }
         else 
         {

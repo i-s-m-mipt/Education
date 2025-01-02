@@ -49,27 +49,27 @@ int main()
 {
 	int array[5]{};
 
-	for (auto x = 0; auto && element : array) // support: cppinsights.io
+	for (auto i = 0; auto && element : array) // support: cppinsights.io
 	{
-		element = ++x;
+		element = ++i;
 	}
 
 //  ------------------------------------------------------------------------------------------------
 
 	std::vector < int > vector(5, 0);
 
-	for (auto x = 0; auto && element : vector)
+	for (auto i = 0; auto && element : vector)
 	{
-		element = ++x;
+		element = ++i;
 	}
 
 //  ------------------------------------------------------------------------------------------------
 
 	std::map < int, int > map({ { 1, 0 }, { 2, 0 }, { 3, 0 } });
 
-	for (auto x = 0; auto && [key, value] : map)
+	for (auto i = 0; auto && [key, value] : map)
 	{
-		value = ++x;
+		value = ++i;
 	}
 
 //  ------------------------------------------------------------------------------------------------

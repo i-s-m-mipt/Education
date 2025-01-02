@@ -77,7 +77,14 @@ public:
 
 		if (m_head)
 		{
-			auto last = m_head; for (; last->next; last = last->next); last->next = node;
+			auto last = m_head; 
+			
+			while (last->next) 
+			{
+				last = last->next;
+			} 
+			
+			last->next = node;
 		}
 		else
 		{

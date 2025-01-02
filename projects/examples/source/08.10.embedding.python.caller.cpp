@@ -91,18 +91,22 @@ private:
 
 auto make_dictionary(std::size_t size, std::size_t length)
 {
-    std::default_random_engine engine;
+	std::set < std::string > dictionary;
+
+	std::string word(length, '_');
+
+	std::default_random_engine engine;
 
 	std::uniform_int_distribution distribution(97, 122);
-	
-	std::set < std::string > dictionary;
     
-	for (std::string word(length, '_'); std::size(dictionary) < size; dictionary.insert(word))
+	while (std::size(dictionary) < size)
     {
         for (auto & element : word) 
 		{
 			element = distribution(engine);
 		}
+
+		dictionary.insert(word);
     }
 
 	return dictionary;

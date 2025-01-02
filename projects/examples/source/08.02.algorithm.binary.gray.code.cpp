@@ -9,17 +9,14 @@ auto encode(unsigned int x)
 
 ///////////////////////////////////////////////////////////////////
 
-auto decode(unsigned int code)
+auto decode(unsigned int x)
 {
-    for (auto bit = 1u << 31; bit > 1; bit >>= 1)
+    for (auto i = 1u << 31; i > 1; i >>= 1)
     {
-        if (code & bit) 
-        {
-            code ^= bit >> 1;
-        }
+        x = x & i ? x ^ i >> 1 : x;
     }
 
-    return code;
+    return x;
 }
 
 ///////////////////////////////////////////////////////////////////

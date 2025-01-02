@@ -55,9 +55,9 @@ int main()
 	
 	if (HNU_data_1_index.contains(1))
 	{
-		auto modifier = [](auto && entity){ entity.data_1 = entity.data_2 = 2; };
+		auto lambda = [](auto && entity){ entity.data_1 = entity.data_2 = 2; };
 
-		assert(HNU_data_1_index.modify(HNU_data_1_index.find(1), modifier));
+		assert(HNU_data_1_index.modify(HNU_data_1_index.find(1), lambda));
 
 		assert(HNU_data_1_index.count(1) == 0);
 
@@ -66,12 +66,9 @@ int main()
 
 //  -------------------------------------------------------------------------------------
 
-	for (auto [begin, end] = ONU_data_2_index.equal_range(2); begin != end; ++begin)
-	{
-		assert(begin->data_1 == 2);
-		
-		assert(begin->data_2 == 2);
-	}
+	assert(ONU_data_2_index.lower_bound(2)->data_2 == 2);
+
+	assert(ONU_data_2_index.upper_bound(2)->data_2 == 3);
 
 //  -------------------------------------------------------------------------------------
 	

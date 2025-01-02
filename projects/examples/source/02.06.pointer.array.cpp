@@ -44,7 +44,7 @@ int main()
 
 	for (auto ptr = array_1; ptr != array_1 + std::size(array_1); ++ptr) 
 	{
-		*ptr = 0;
+		*ptr = 1;
 	}
 
 //  ------------------------------------------------------------------------------------------------
@@ -53,9 +53,9 @@ int main()
 	
 	int buffer[1'000]{};
 
-	for (auto x = size; auto & element : std::ranges::subrange(buffer, buffer + size))
+	for (auto i = size; auto & element : std::ranges::subrange(buffer, buffer + size))
     {
-        element = static_cast < int > (x--);
+        element = static_cast < int > (i--);
     }
 
 //  ------------------------------------------------------------------------------------------------

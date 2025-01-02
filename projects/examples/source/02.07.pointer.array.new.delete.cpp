@@ -30,9 +30,9 @@ int main()
 	
 	auto buffer = new int[size]; 
 
-	for (auto x = size; auto & element : std::ranges::subrange(buffer, buffer + size))
+	for (auto i = size; auto & element : std::ranges::subrange(buffer, buffer + size))
     {
-        element = static_cast < int > (x--);
+        element = static_cast < int > (i--);
     }
 
 //  ------------------------------------------------------------------------------------------------

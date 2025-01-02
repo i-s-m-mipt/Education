@@ -96,9 +96,9 @@ public:
     {
         auto node = get_node(get_byte(ptr) - sizeof(Header));
 
-        Node * previous = nullptr;
+        Node * previous = nullptr, * current = m_head;
         
-        for (auto current = m_head; current; previous = current, current = current->next)
+        while (current)
         {
             if (node < current)
             {
@@ -115,6 +115,8 @@ public:
 
                 break;
             }
+
+            previous = current; current = current->next;
         }
 
         merge(previous, node);
@@ -179,7 +181,10 @@ private:
     {
         Node * current = m_head, * previous = nullptr;
 
-	    for (; current && size > current->size; previous = current, current = current->next);
+	    while (current && size > current->size)
+        {
+            previous = current; current = current->next;
+        }
 
         return std::make_pair(current, previous);
     }
