@@ -387,14 +387,14 @@ private:
 
 			for (auto i = static_cast < int > (std::size(string)) - 1; i >= 0; i -= step)
 			{
-				auto start = i - step + 1;
+				auto begin = i - step + 1;
 
-				if (start <= 0) 
+				if (begin <= 0) 
 				{
-					start = m_is_negative ? 1 : 0;
+					begin = m_is_negative ? 1 : 0;
 				}
 
-				m_digits[m_n_digits++] = std::stoll(string.substr(start, i - start + 1));
+				m_digits[m_n_digits++] = std::stoll(string.substr(begin, i - begin + 1));
 			}
 
 			reduce();

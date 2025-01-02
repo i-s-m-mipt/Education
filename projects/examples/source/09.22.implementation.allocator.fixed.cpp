@@ -17,15 +17,15 @@ public:
 
 	auto allocate(std::size_t size, std::size_t alignment = default_alignment) -> void *
 	{
-		void * first = m_begin + m_offset;
+		void * begin = m_begin + m_offset;
 
 		auto space = S - m_offset;
 
-		if (first = std::align(alignment, size, first, space); first)
+		if (begin = std::align(alignment, size, begin, space); begin)
 		{
 			m_offset = S - space + size; 
 			
-			return first;
+			return begin;
 		}
 		else 
 		{

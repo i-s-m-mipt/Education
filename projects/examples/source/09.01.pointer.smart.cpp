@@ -162,17 +162,15 @@ int main()
 
 //  ----------------------------------------------------------------------------------------
 
-	auto size = 5uz;
+//	std::shared_ptr < int > shared_ptr_6(new int[5]{}); // bad
 
-//	std::shared_ptr < int > shared_ptr_6(new int[size]{}); // bad
+	std::shared_ptr < int > shared_ptr_7(new int[5]{}, std::default_delete < int[] > ());
 
-	std::shared_ptr < int > shared_ptr_7(new int[size]{}, std::default_delete < int[] > ());
+//	assert(*shared_ptr_7++ == 0); // error
 
-//	*shared_ptr_7++ = 2; // error
+	auto shared_ptr_8 = std::make_shared < int[] > (5, 0);
 
-	auto shared_ptr_8 = std::make_shared < int[] > (size, 0);
-
-	shared_ptr_8[0] = 1;
+	assert(shared_ptr_8[0] == 0);
 
 //  ----------------------------------------------------------------------------------------
 

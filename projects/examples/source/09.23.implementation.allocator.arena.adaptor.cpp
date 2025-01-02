@@ -32,15 +32,15 @@ public:
 
 	auto allocate(std::size_t size, std::size_t alignment = default_alignment) -> void *
 	{
-		void * first = get_byte(m_begin) + m_offset;
+		void * begin = get_byte(m_begin) + m_offset;
 
 		auto space = m_size - m_offset;
 
-		if (first = std::align(alignment, size, first, space); first)
+		if (begin = std::align(alignment, size, begin, space); begin)
 		{
 			m_offset = m_size - space + size; 
 			
-			return first;
+			return begin;
 		}
 		else 
 		{

@@ -46,11 +46,11 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 
 		std::vector < std::pair < std::future < T > , std::jthread > > results(n_threads - 1);
 
-		auto first = begin, last = std::next(first, block_size);
+		auto block_begin = begin, block_end = std::next(block_begin, block_size);
 
 		for (auto & result : results)
 		{
-			auto range = std::ranges::subrange(first, last);
+			auto range = std::ranges::subrange(block_begin, block_end);
 
 			Task < decltype(range) > task;
 
@@ -60,10 +60,10 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 			
 			result.second = std::jthread(std::move(packaged_task), range);
 
-			first = last; last = std::next(first, block_size);
+			block_begin = block_end; block_end = std::next(block_begin, block_size);
 		}
 
-		auto range = std::ranges::subrange(first, end);
+		auto range = std::ranges::subrange(block_begin, end);
 
 		sum += Task < decltype(range) > ()(range);
 

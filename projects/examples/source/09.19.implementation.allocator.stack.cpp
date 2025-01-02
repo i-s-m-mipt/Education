@@ -34,9 +34,9 @@ public:
 
 	auto allocate(std::size_t size, std::size_t alignment = default_alignment) -> void *
 	{
-		void * first = get_byte(m_begin) + m_offset;
+		void * begin = get_byte(m_begin) + m_offset;
 
-		void * block = get_byte(first) + sizeof(Header);
+		void * block = get_byte(begin) + sizeof(Header);
 
 		auto space = m_size - m_offset - sizeof(Header);
 
@@ -44,7 +44,7 @@ public:
 		{
 			auto header = get_header(get_byte(block) - sizeof(Header));
 
-			*header = std::distance(get_byte(first), get_byte(block));
+			*header = std::distance(get_byte(begin), get_byte(block));
 
 			m_offset = get_byte(block) - get_byte(m_begin) + size;
 

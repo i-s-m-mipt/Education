@@ -23,11 +23,11 @@ void test_v1(benchmark::State & state)
             element = i--;
         }  
 
-        auto start = std::chrono::steady_clock::now();
+        auto begin = std::chrono::steady_clock::now();
 
         std::ranges::sort(array);
 
-        auto delta = std::chrono::steady_clock::now() - start;
+        auto delta = std::chrono::steady_clock::now() - begin;
 
         state.SetIterationTime
         (
@@ -51,11 +51,11 @@ void test_v2(benchmark::State & state)
             element = i--;
         }  
 
-        auto start = std::chrono::steady_clock::now();
+        auto begin = std::chrono::steady_clock::now();
 
         std::ranges::sort(vector);
 
-        auto delta = std::chrono::steady_clock::now() - start;
+        auto delta = std::chrono::steady_clock::now() - begin;
 
         state.SetIterationTime
         (
@@ -79,11 +79,11 @@ void test_v3(benchmark::State & state)
             element = i--;
         }  
 
-        auto start = std::chrono::steady_clock::now();
+        auto begin = std::chrono::steady_clock::now();
 
         std::ranges::sort(deque);
 
-        auto delta = std::chrono::steady_clock::now() - start;
+        auto delta = std::chrono::steady_clock::now() - begin;
 
         state.SetIterationTime
         (
@@ -107,11 +107,11 @@ void test_v4(benchmark::State & state)
             element = i--;
         }
 
-        auto start = std::chrono::steady_clock::now();
+        auto begin = std::chrono::steady_clock::now();
 
         list.sort();
 
-        auto delta = std::chrono::steady_clock::now() - start;
+        auto delta = std::chrono::steady_clock::now() - begin;
 
         state.SetIterationTime
         (
@@ -137,11 +137,11 @@ void test_v5(benchmark::State & state)
             element = i--;
         } 
 
-        auto start = std::chrono::steady_clock::now();
+        auto begin = std::chrono::steady_clock::now();
 
         forward_list.sort();
 
-        auto delta = std::chrono::steady_clock::now() - start;
+        auto delta = std::chrono::steady_clock::now() - begin;
 
         state.SetIterationTime
         (
