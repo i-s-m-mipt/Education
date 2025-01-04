@@ -8,29 +8,38 @@
 
 //  using namespace std; // bad
 
-using namespace std::literals;
-
-////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::cout << "main : enter 2 ints : "; int x, y; std::cin >> x >> y;
+	{
+		std::cout << "main : enter 2 ints : "; int x, y; std::cin >> x >> y;
 
-	std::cout << "main : x = " << x << " y = " << y << '\n';
+		std::cout << "main : x = " << x << " y = " << y << '\n';
+	}
 
-	static_assert(std::abs(std::sin(std::numbers::pi) - 0.0) < 1e-6);
-
-	auto string = "aaaaa"s; 
+//  ------------------------------------------------------------------------
 	
-	assert(string.substr(1, 3).contains('a'));
+	{
+		assert(std::abs(std::sin(std::numbers::pi / 2) - 1.0) < 1e-6);
+	}
 
-	std::vector < int > vector({ 1, 2, 3, 4, 5 }); 
+//  ------------------------------------------------------------------------
+
+	{
+		std::string string = "aaaaa"; 
+
+		string.append("bbbbb");
 	
-	vector.push_back(1);
+		assert(string.starts_with('a') && string.substr(4, 2) == "ab");
+	}
 
-	assert(std::size(vector) == 6 && vector.front() == vector.back());
-
-	std::ranges::sort(vector); 
+//  ------------------------------------------------------------------------	
+	{
+		std::vector < int > vector = { 1, 2, 3, 4, 5 }; 
 	
-	assert(std::ranges::is_sorted(vector));
+		vector.push_back(6);
+
+		assert(std::size(vector) == 6 && std::ranges::is_sorted(vector));
+	}
 }
