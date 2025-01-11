@@ -7,20 +7,16 @@
 #include <utility>
 #include <vector>
 
-///////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 int main()
 {
-	auto size = 5uz;
-
-	std::vector < int > vector(size, 0);
+	auto size = 5uz; std::vector < int > vector(size, 0);
 
 	for (auto i = 0uz; i < size; ++i)
 	{
 		vector[i] = size - i;
 	}
-
-//  -----------------------------------------------
 
 	for (auto i = 0uz; i < size - 1; ++i)
 	{
@@ -32,8 +28,6 @@ int main()
 			}
 		}
 	}
-
-//  -----------------------------------------------
 
 	assert(std::ranges::is_sorted(vector));
 }
