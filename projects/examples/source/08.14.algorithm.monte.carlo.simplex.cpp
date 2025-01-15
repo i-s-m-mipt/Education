@@ -26,8 +26,17 @@ auto operator*(const Vector & a, const Vector & b)
 
 //  ================================================================================================
 
-auto evaluate(std::size_t size)
+auto equal(double x, double y, double epsilon = 1e-6)
 {
+	return std::abs(x - y) < epsilon;
+}
+
+//  ================================================================================================
+
+int main()
+{
+	auto size = 100'000'000uz;
+
 	std::default_random_engine engine;
 
 	std::uniform_real_distribution < double > distribution(0.0, 2.0 * std::numbers::pi);
@@ -39,9 +48,11 @@ auto evaluate(std::size_t size)
 	for (auto i = 0uz; i < size; ++i)
 	{
 		auto w_B = distribution(engine);
+		
 		auto w_C = distribution(engine);
 
 		Vector PB(std::cos(w_B), std::sin(w_B), 0.0);
+
 		Vector PC(std::cos(w_C), std::sin(w_C), 0.0);
 
 		auto a = (PA * PB).z;
@@ -58,19 +69,5 @@ auto evaluate(std::size_t size)
 		}
 	}
 
-	return 1.0 * counter / size;
-}
-
-//  ================================================================================================
-
-auto equal(double x, double y, double epsilon = 1e-6)
-{
-	return std::abs(x - y) < epsilon;
-}
-
-//  ================================================================================================
-
-int main()
-{
-	assert(equal(evaluate(100'000'000), 0.250, 1e-3));
+	assert(equal(1.0 * counter / size, 0.250, 1e-3));
 }
