@@ -12,6 +12,8 @@ public:
 		static_cast < const D * > (this)->test_implementation();
 	}
 
+protected:
+
 	void test_implementation() const
 	{ 
 		std::cout << "Entity::test_implementation\n"; 

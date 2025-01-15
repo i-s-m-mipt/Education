@@ -103,5 +103,6 @@ int main()
     entity_v2->test(); 
     
     delete entity_v1;
+    
     delete entity_v2;
 }
