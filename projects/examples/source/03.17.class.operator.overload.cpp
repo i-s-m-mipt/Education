@@ -72,8 +72,11 @@ public:
 //  ------------------------------------------------------------------------------------------
 
 	const auto   operator++(int) { auto copy(*this); *this += 1; return  copy; } 
+
 	      auto & operator++(   ) {                   *this += 1; return *this; }
+
 	const auto   operator--(int) { auto copy(*this); *this -= 1; return  copy; } 
+
 	      auto & operator--(   ) {                   *this -= 1; return *this; }
 
 //  ------------------------------------------------------------------------------------------
@@ -126,12 +129,14 @@ private:
 		auto gcd = std::gcd(m_num, m_den);
 
 		m_num /= gcd;
+
 		m_den /= gcd;
 	}
 
 //  ------------------------------------------------------------------------------------------
 
 	int m_num = 0;
+
 	int m_den = 1;
 };
 
@@ -153,6 +158,7 @@ int main()
 //  ----------------------------------------------------------------------------------
 
 	assert(equal(static_cast < double > (ratio_1), 0.0));
+
 	assert(equal(static_cast < double > (ratio_2), 2.0));
 
 //  ----------------------------------------------------------------------------------
@@ -219,6 +225,7 @@ int main()
 //  ----------------------------------------------------------------------------------
 
 	assert(equal(boost::rational_cast < double > (rational_1), 1.0));
+	
 	assert(equal(boost::rational_cast < double > (rational_2), 2.0));
 
 //  ----------------------------------------------------------------------------------

@@ -30,7 +30,7 @@ int main()
 
 	[[maybe_unused]] auto y = r_x; 
 
-	[[maybe_unused]] decltype(x) z = 1;
+	[[maybe_unused]] decltype(x) z = 3;
 
 	[[maybe_unused]] decltype((y)) r_y_1 = y;
 

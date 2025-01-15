@@ -8,15 +8,18 @@ class Entity
 public:
 
 	void test() const &  { std::cout << "Entity::test (1)\n"; }
+
 	void test() const && { std::cout << "Entity::test (2)\n"; }
 };
 
 //  ================================================================================================
 
       auto & make_entity_v1() { static       Entity entity; return entity; }
+
 const auto & make_entity_v2() { static const Entity entity; return entity; }
 
       auto   make_entity_v3() { return Entity(); }
+	  
 const auto   make_entity_v4() { return Entity(); }
 
 //  ================================================================================================

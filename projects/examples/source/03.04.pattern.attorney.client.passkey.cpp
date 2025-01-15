@@ -17,6 +17,7 @@ private:
 //  --------------------------------------------------------------------
 
     static void test(Key_v1) { std::cout << "Entity_v1::test (1)\n"; }
+    
     static void test(Key_v2) { std::cout << "Entity_v1::test (2)\n"; }
 };
 
@@ -31,6 +32,7 @@ private:
 //  --------------------------------------------------------------
 
     static void test_v1() { std::cout << "Entity_v2::test_v1\n"; }
+
     static void test_v2() { std::cout << "Entity_v2::test_v2\n"; } 
 };
 
@@ -58,12 +60,14 @@ public:
     static void test_v1()
     {
         Entity_v1::test(Entity_v1::Key_v1());
+
     //  Entity_v1::test(Entity_v1::Key_v2()); // error
     }
 
     static void test_v2()
     {
         Entity_v3::test_v1();
+
         Entity_v3::test_v2();
     }
 };
@@ -73,5 +77,6 @@ public:
 int main()
 {
     Client::test_v1();
+
     Client::test_v2();
 }

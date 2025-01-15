@@ -8,14 +8,17 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 
 class Client_v1 : public         Entity {};
+
 class Client_v2 : public virtual Entity {};
 
 class Server_v1 : public         Entity {}; 
+
 class Server_v2 : public virtual Entity {};
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class Router_v1 : public Client_v1, public Server_v1 { public: Router_v1() {} };
+
 class Router_v2 : public Client_v2, public Server_v2 { public: Router_v2() {} };
 
 ////////////////////////////////////////////////////////////////////////////////

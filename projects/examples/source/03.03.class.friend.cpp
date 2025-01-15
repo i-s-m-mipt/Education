@@ -3,6 +3,7 @@
 ////////////////////////////////////////////////
 
 class Client_v1 { public: static void test(); };
+
 class Client_v2 { public: static void test(); };
 
 ////////////////////////////////////////////////
@@ -28,7 +29,9 @@ private:
 ////////////////////////////////////////////////
 
 void            test() { Entity::test(); }
+
 void Client_v1::test() { Entity::test(); }
+
 void Client_v2::test() { Entity::test(); }
 
 ////////////////////////////////////////////////
@@ -36,6 +39,8 @@ void Client_v2::test() { Entity::test(); }
 int main()
 {
 			   test();
+			   
 	Client_v1::test();
+
 	Client_v2::test();
 }

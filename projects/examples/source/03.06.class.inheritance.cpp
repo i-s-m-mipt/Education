@@ -14,6 +14,7 @@ public:
 //  ----------------------------------------------------------
 
 	void test_v1() const { std::cout << "Entity::test_v1\n"; }
+
 	void test_v2() const { std::cout << "Entity::test_v2\n"; }
 
 protected:
@@ -68,6 +69,7 @@ public:
 	void test() const
 	{ 
 		test_v1(); 
+
 		test_v2(); 
 	}
 };
@@ -81,6 +83,7 @@ public:
 	void test() const
 	{ 
 		m_entity.test_v1(); 
+
 		m_entity.test_v2(); 
 	}
 
@@ -102,6 +105,7 @@ int main()
 	Client client(1, 1);
 
 	client.test_v1();
+
 	client.test_v2();
 
 	assert(client.data() == 1);
@@ -111,6 +115,7 @@ int main()
 	Server_v1 server_v1;
 	
 //	server_v1.test_v1(); // error
+
 //	server_v1.test_v2(); // error
 
 	server_v1.test();
