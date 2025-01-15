@@ -26,6 +26,8 @@ private:
 
 int main()
 {
+	Entity().make_data();
+	
 	bool array[5]{};
 
 	assert(sizeof(array) == std::size(array));

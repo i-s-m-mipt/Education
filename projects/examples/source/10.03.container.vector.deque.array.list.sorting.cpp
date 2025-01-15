@@ -16,7 +16,7 @@ void test_v1(benchmark::State & state)
 {
     for (auto element : state)
     {
-        const auto size = 100'000uz;
+        constexpr auto size = 100'000uz;
 
         std::array < int, size > array;
 

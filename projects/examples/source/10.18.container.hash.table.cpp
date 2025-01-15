@@ -64,7 +64,7 @@ int main()
 	static_assert(std::is_same_v < category_t, std::forward_iterator_tag > );
 
 //  ----------------------------------------------------------------------------
-
+	
 	std::unordered_set < std::string > unordered_set;
 
 	test(unordered_set); unordered_set.rehash(32);
