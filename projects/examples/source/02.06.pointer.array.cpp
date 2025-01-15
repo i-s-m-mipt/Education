@@ -7,7 +7,7 @@
 #include <numeric>
 #include <utility>
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -23,7 +23,7 @@ int main()
 //		[[maybe_unused]] int array_5[0]{}; // error
 	}
 	
-//  ==================================================================
+//  ---------------------------------------------------------------------------
 
 	{
 		int array[5]{ 1, 2, 3, 4, 5 };
@@ -46,27 +46,16 @@ int main()
 		}
 	}
 
-//  ==================================================================
+//  ---------------------------------------------------------------------------
 
 	{
-		auto size = 5uz; 
-		
-		int array[1'000]{};
+		std::cout << "main : enter size : "; auto size = 0uz; std::cin >> size;
+
+		int array[1'000]{}; assert(size < std::size(array));
 
 		for (auto i = 0uz; i < size; ++i)
 		{
-			array[i] = size - i;
-		}
-
-		for (auto i = 0uz; i < size - 1; ++i)
-		{
-			for (auto j = i + 1; j < size; ++j)
-			{
-				if (array[i] > array[j]) 
-				{
-					std::swap(array[i], array[j]);
-				}
-			}
+			array[i] = i + 1;
 		}
 
 		assert(std::ranges::is_sorted(array, array + size));

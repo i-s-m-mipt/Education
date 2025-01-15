@@ -6,7 +6,7 @@
 #include <numeric>
 #include <utility>
 
-////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -18,7 +18,7 @@ int main()
 		delete object;
 	}
 	
-//  ========================================================
+//  ---------------------------------------------------------------------------
 
 	{
 		auto array = new int[5]{};
@@ -30,25 +30,16 @@ int main()
 //		delete array; // error
 	}
 
-//  ========================================================
+//  ---------------------------------------------------------------------------
 
 	{
-		auto size = 5uz; auto array = new int[size]; 
+		std::cout << "main : enter size : "; auto size = 0uz; std::cin >> size;
+
+		auto array = new int[size]; 
 
 		for (auto i = 0uz; i < size; ++i)
 		{
-			array[i] = size - i;
-		}
-
-		for (auto i = 0uz; i < size - 1; ++i)
-		{
-			for (auto j = i + 1; j < size; ++j)
-			{
-				if (array[i] > array[j]) 
-				{
-					std::swap(array[i], array[j]);
-				}
-			}
+			array[i] = i + 1;
 		}
 
 		assert(std::ranges::is_sorted(array, array + size));

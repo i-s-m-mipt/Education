@@ -6,7 +6,7 @@
 #include <utility>
 #include <vector>
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 void sort(std::vector < int > & vector, std::size_t left, std::size_t right)
 {
@@ -22,7 +22,7 @@ void sort(std::vector < int > & vector, std::size_t left, std::size_t right)
 	}
 }
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 void merge(std::vector < int > & vector, std::size_t left, std::size_t middle, std::size_t right)
 {
@@ -46,7 +46,7 @@ void merge(std::vector < int > & vector, std::size_t left, std::size_t middle, s
 	}
 }
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 void split(std::vector < int > & vector, std::size_t left, std::size_t right)
 {
@@ -59,19 +59,21 @@ void split(std::vector < int > & vector, std::size_t left, std::size_t right)
 		auto middle = std::midpoint(left, right); 
 		
 		split(vector, left, middle       );
+		
 		split(vector,       middle, right);
+
 		merge(vector, left, middle, right);
 	}
 }
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 void timsort(std::vector < int > & vector, std::size_t left, std::size_t right)
 {
 	split(vector, left, right);
 }
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
