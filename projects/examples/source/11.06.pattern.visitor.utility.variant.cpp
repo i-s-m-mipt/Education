@@ -34,13 +34,11 @@ public:
 
 int main()
 {
-    Entity entity_1 = Client();
-    Entity entity_2 = Server();
+    Entity entity = Client();
 
     Visitor < Router > visitor;
    
-    std::visit(visitor, entity_1);
-    std::visit(visitor, entity_2);
+    std::visit(visitor, entity);
 
 //  ----------------------------------------------------------
 

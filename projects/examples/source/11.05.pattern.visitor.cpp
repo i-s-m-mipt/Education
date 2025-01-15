@@ -89,11 +89,9 @@ public:
 
 int main()
 {
-    std::shared_ptr < Entity > entity_1 = std::make_shared < Client > ();
-    std::shared_ptr < Entity > entity_2 = std::make_shared < Server > ();
+    std::shared_ptr < Entity > entity = std::make_shared < Client > ();
 
     Router router;
 
-    entity_1->visit_by(router);
-    entity_2->visit_by(router);
+    entity->visit_by(router);
 }

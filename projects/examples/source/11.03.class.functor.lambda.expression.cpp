@@ -52,6 +52,8 @@ int main()
 
 	[unique_ptr_2 = std::move(unique_ptr_1)](){ assert(*unique_ptr_2 == 1); }(); 
 
+	Entity().test();
+
 //  -----------------------------------------------------------------------------
 
 	std::array < std::function < int(int, int) > , 5 > functions;
