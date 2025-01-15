@@ -67,11 +67,11 @@ template < typename T1, typename T2 > auto distance(T1 * ptr_1, T2 * ptr_2)
 
 //  ================================================================================================
 
-void test_v1(std::string_view) {}
+void test(std::string_view) {}
 
 //  ================================================================================================
 
-void test_v2(benchmark::State & state)
+void test_v1(benchmark::State & state)
 {
     std::string string(65'536, 'a');
 
@@ -85,7 +85,7 @@ void test_v2(benchmark::State & state)
 
 //  ================================================================================================
 
-void test_v3(benchmark::State & state)
+void test_v2(benchmark::State & state)
 {
     std::string string(65'536, 'a');
 
@@ -101,8 +101,8 @@ void test_v3(benchmark::State & state)
 
 //  ================================================================================================
 
+BENCHMARK(test_v1)->DenseRange(8'192, 65'537, 8'192)->Complexity();
 BENCHMARK(test_v2)->DenseRange(8'192, 65'537, 8'192)->Complexity();
-BENCHMARK(test_v3)->DenseRange(8'192, 65'537, 8'192)->Complexity();
 
 //  ================================================================================================
 
@@ -166,11 +166,11 @@ int main()
 
     auto string_view = "aaaaa"sv;
 
-    test_v1(string_3);
+    test(string_3);
     
-    test_v1(string_view);
+    test(string_view);
 
-    test_v1(std::string_view(std::begin(string_3), std::next(std::begin(string_3), 5)));
+    test(std::string_view(std::begin(string_3), std::next(std::begin(string_3), 5)));
 
 //  std::string_view bad_view_1 = "aaaaa"s + "bbbbb"s; // bad
 
