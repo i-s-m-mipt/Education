@@ -101,18 +101,21 @@ int main()
 
 //  ---------------------------------------------------------------------------------
 
-	std::vector < int > vector({ 1, 2, 3, 4, 5 });
+	std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
 //  ---------------------------------------------------------------------------------
 
 	auto begin = vector.begin();
 
-	std::advance(begin, 1);
+	     advance_v1(begin, 1); assert(*begin == 2);
 
-	assert(*begin == 2);
+	     advance_v2(begin, 1); assert(*begin == 3);
 
-	assert(*std::next(vector.begin(), 1) == 2);
-	assert(*std::prev(vector.end  (), 1) == 5);
+	std::advance   (begin, 1); assert(*begin == 4);
+
+	assert(*std::next(begin, 1) == 5);
+
+	assert(*std::prev(begin, 1) == 3);
 
 //  ---------------------------------------------------------------------------------
 

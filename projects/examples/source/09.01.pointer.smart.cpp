@@ -23,13 +23,6 @@ public:
 		}
 	}
 
-//  -----------------------------------------------------------
-
-	auto get() const
-	{ 
-		return m_data; 
-	}
-
 private:
 
 	T * m_data = nullptr;
@@ -102,19 +95,7 @@ public:
 	{ 
 		std::cout << "Router::test\n"; 
 	}
-}; 
-
-////////////////////////////////////////////////////////////////////////////////////////////
-
-template < typename E > auto make_entity() -> std::unique_ptr < Entity >
-{
-	return std::make_unique < E > ();
-}
-
-void test_v3(std::unique_ptr < Entity > entity)
-{
-	entity->test();
-}
+};
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -202,7 +183,7 @@ int main()
 
 	auto unique_ptr_2 = std::move(unique_ptr_1);
 
-	auto unique_ptr_3 = make_entity < Router > (); 
+	std::unique_ptr < Entity > unique_ptr_3 = std::make_unique < Router > (); 
 
-	test_v3(std::move(unique_ptr_3));
+	unique_ptr_3->test();
 }

@@ -9,7 +9,7 @@ private:
 
 	struct Node 
 	{ 
-		T value = T(); std::shared_ptr < Node > next; 
+		T data = T(); std::shared_ptr < Node > next; 
 	};
 	
 public:
@@ -44,12 +44,12 @@ public:
 
 		auto & operator*() const
 		{ 
-			return m_node->value; 
+			return m_node->data; 
 		}
 
 		auto operator->() const
 		{ 
-			return &m_node->value; 
+			return &m_node->data; 
 		}
 	
 	//  ---------------------------------------------------------------------------------
@@ -71,9 +71,9 @@ public:
 
 //  -------------------------------------------------------------------------------------
 
-	void push_back(T value)
+	void push_back(T data)
 	{
-		auto node = std::make_shared < Node > (value, nullptr);
+		auto node = std::make_shared < Node > (data, nullptr);
 
 		if (m_head)
 		{
