@@ -29,7 +29,7 @@ auto make_vector(std::size_t size)
 
 void test_v1(benchmark::State & state)
 {
-    auto vector = make_vector(state.range(0));
+    auto vector = make_vector(1'000'000);
 
     for (auto element : state)
     {
@@ -47,7 +47,7 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state)
 {
-    auto vector = make_vector(state.range(0));
+    auto vector = make_vector(1'000'000);
 
     for (auto element : state)
     {
@@ -65,7 +65,7 @@ void test_v2(benchmark::State & state)
 
 void test_v3(benchmark::State & state)
 {
-    auto vector = make_vector(state.range(0));
+    auto vector = make_vector(1'000'000);
     
     for (auto element : state)
     {
@@ -81,8 +81,8 @@ void test_v3(benchmark::State & state)
 
 //  ================================================================================================
 
-BENCHMARK(test_v1)->DenseRange(1'000'000, 5'000'000, 1'000'000);
-BENCHMARK(test_v2)->DenseRange(1'000'000, 5'000'000, 1'000'000);
-BENCHMARK(test_v3)->DenseRange(1'000'000, 5'000'000, 1'000'000);
+BENCHMARK(test_v1);
+BENCHMARK(test_v2);
+BENCHMARK(test_v3);
 
 BENCHMARK_MAIN();
