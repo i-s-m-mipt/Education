@@ -10,20 +10,6 @@
 
 //  ================================================================================================
 
-auto test_v1(int x)
-{
-	std::variant < int, std::string > result(x);
-
-	if (x != 1)
-	{
-		result = "aaaaa";
-	}
-
-	return result;
-}
-
-//  ================================================================================================
-
 class Entity_v1 { public: Entity_v1(int) {} };
 
 class Entity_v2 
@@ -40,18 +26,9 @@ class Entity_v3 {};
 
 //  ================================================================================================
 
-auto test_v2(int x)
-{
-	return x == 1 ? std::optional < int > (x) : std::nullopt;
-}
-
-//  ================================================================================================
-
 int main()
 {
-	std::variant < int, std::string > variant_1;
-
-	variant_1 = test_v1(1);
+	std::variant < int, std::string > variant_1 = 1;
 
 	assert(variant_1.index() == 0);
 	
@@ -84,9 +61,7 @@ int main()
 
 //  -----------------------------------------------------------------------------
 
-	std::optional < int > optional_1;
-
-	optional_1 = test_v2(1);
+	std::optional < int > optional_1 = 1;
 
     assert(optional_1.has_value());
 

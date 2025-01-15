@@ -27,11 +27,6 @@ public:
 //		auto copy = top(); pop(); return copy;
 //	}
 
-	auto size() const
-	{ 
-		return std::size(m_data); 
-	}
-
 private:
 
 	C m_data;
@@ -45,7 +40,7 @@ int main()
 	
 	stack.push(1);
 
-	std::ignore = stack.top(); stack.pop();
-
 //	std::ignore = stack.pop(); // bad
+
+	std::ignore = stack.top(); stack.pop();
 }

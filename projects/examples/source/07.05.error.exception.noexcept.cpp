@@ -64,8 +64,7 @@ private:
 
 template < typename T > void swap(T & x, T & y) noexcept
 (
-	std::is_nothrow_move_constructible_v < T > &&
-	std::is_nothrow_move_assignable_v    < T > 
+	std::is_nothrow_move_constructible_v < T > && std::is_nothrow_move_assignable_v < T > 
 )
 {
 	auto z = std::move(y);
@@ -91,12 +90,14 @@ void test_v1() { std::cout << "test_v1\n"; }
 void test_v2() 
 {
     Entity entity_1(1); test_v1();
+
     Entity entity_2(2);
 }
 
 void test_v3() noexcept
 {
     Entity entity_1(1); test_v1();
+
     Entity entity_2(2);
 }
 
@@ -104,6 +105,8 @@ void test_v3() noexcept
 
 int main()
 {
+	assert(noexcept(Entity::data));
+
 	try
 	{
 		Entity entity;
@@ -116,6 +119,7 @@ int main()
 //  -------------------------------------------------------
 
     Entity entity_1(1);
+
     Entity entity_2(2);
 
 //  -------------------------------------------------------
@@ -123,6 +127,7 @@ int main()
     entity_1.swap(entity_2);
 
     assert(entity_1.data() == 2);
+
     assert(entity_2.data() == 1);
 
 //  -------------------------------------------------------
@@ -130,10 +135,12 @@ int main()
     invoke(swap < Entity > , entity_1, entity_2);
 
     assert(entity_1.data() == 1);
+
     assert(entity_2.data() == 2);
 
 //  -------------------------------------------------------
 
     test_v2(); // support: compiler-explorer.com
+
     test_v3(); // support: compiler-explorer.com
 }

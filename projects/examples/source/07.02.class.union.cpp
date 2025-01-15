@@ -27,11 +27,11 @@ auto test(int x)
 {
 	if (x < 0) 
 	{
-		return Variant({ .error = 1, .has_error = true });
+		return Variant { .error = 1, .has_error = true };
 	}
 	else
 	{
-		return Variant({ .value = x });
+		return Variant { .value = x };
 	}
 }
 
