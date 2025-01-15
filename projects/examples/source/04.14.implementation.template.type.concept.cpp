@@ -2,6 +2,7 @@
 #include <concepts>
 #include <string>
 #include <type_traits>
+#include <vector>
 
 using namespace std::literals;
 
@@ -61,6 +62,20 @@ template < typename T > requires std::regular < T > struct Entity {};
 
 int main()
 {
+    static_assert( integral       < int > && !integral       < double > );
+
+    static_assert(!floating_point < int > &&  floating_point < double > );
+
+    static_assert( arithmetic     < int > &&  arithmetic     < double > );
+
+    static_assert(addable < int > && !addable < int * > );    
+
+    static_assert(equable < int > && !equable < Entity < int > > );
+
+    static_assert(ordable < int > && !ordable < Entity < int > > );
+
+    static_assert(typable < std::vector < int > > );
+
     assert(max_v1(1, 2) == 2);
     assert(max_v2(1, 2) == 2);
     assert(max_v3(1, 2) == 2);

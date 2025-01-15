@@ -127,40 +127,51 @@ private:
 
 int main()
 {
-	auto data_1 = "aaaaa"s;
-
-	Entity_v1 entity_v1_1(               data_1 );
-	Entity_v1 entity_v1_2(         	   "aaaaa"s );
-	Entity_v1 entity_v1_3(          entity_v1_1 );
-	Entity_v1 entity_v1_4(std::move(entity_v1_1));
+	auto data = "aaaaa"s;
 
 //  ----------------------------------------------
 
-	auto data_2 = "bbbbb"s;
+	Entity_v1 entity_v1_1(data);
 
-	const Entity_v2 entity_v2_1(data_2);
+	Entity_v1 entity_v1_2("bbbbb"s);
 
-    Entity_v2 entity_v2_2(               data_2 );
-	Entity_v2 entity_v2_3(             "bbbbb"s );
-//	Entity_v2 entity_v2_4(          entity_v2_2 ); // error
-    Entity_v2 entity_v2_5(          entity_v2_1 );
-	Entity_v2 entity_v2_6(std::move(entity_v2_2));
+	Entity_v1 entity_v1_3(entity_v1_1);
+
+	Entity_v1 entity_v1_4(std::move(entity_v1_2));
 
 //  ----------------------------------------------
 
-	auto data_3 = "ccccc"s;
+    Entity_v2 entity_v2_1(data);
 
-	Entity_v3 entity_v3_1(               data_3 );
-	Entity_v3 entity_v3_2(             "ccccc"s );
-	Entity_v3 entity_v3_3(          entity_v3_1 );
-	Entity_v3 entity_v3_4(std::move(entity_v3_1));
+	Entity_v2 entity_v2_2("bbbbb"s);
+
+//	Entity_v2 entity_v2_3(entity_v2_1); // error
+
+	Entity_v2 entity_v2_4(std::move(entity_v2_2));
 
 //  ----------------------------------------------
 
-	auto data_4 = "ddddd"s;
+	const Entity_v2 entity_v2_5(data);
 
-	Entity_v4 entity_v4_1(               data_4 );
-	Entity_v4 entity_v4_2(             "ddddd"s );
-	Entity_v4 entity_v4_3(          entity_v4_1 );
-	Entity_v4 entity_v4_4(std::move(entity_v4_1));
+    Entity_v2 entity_v2_6(entity_v2_5);
+
+//  ----------------------------------------------
+
+	Entity_v3 entity_v3_1(data);
+
+	Entity_v3 entity_v3_2("bbbbb"s);
+
+	Entity_v3 entity_v3_3(entity_v3_1);
+
+	Entity_v3 entity_v3_4(std::move(entity_v3_2));
+
+//  ----------------------------------------------
+
+	Entity_v4 entity_v4_1(data);
+
+	Entity_v4 entity_v4_2("bbbbb"s);
+
+	Entity_v4 entity_v4_3(entity_v4_1);
+
+	Entity_v4 entity_v4_4(std::move(entity_v4_2));
 }

@@ -6,7 +6,7 @@
 
 template < typename T, std::size_t S > struct Array {};
 
-template < typename T > using Buffer = Array < T, 1'000 > ;
+template < typename T > using Buffer = Array < T, 5 > ;
 
 //  ================================================================================================
 

@@ -75,7 +75,7 @@ template < typename T1, typename T2 > void test_v2()
 	std::cout << "test_v2 (1)\n";
 }
 
-//  template < typename T > void test_v2 < int, T > () // error
+//  template < typename T > void test_v2 < T, double > () // error
 //  {
 //	  std::cout << "test_v2 (2)\n";
 //  }
@@ -146,6 +146,7 @@ int main()
 	assert(max_v1(1, 2) == 2);
 
 	assert(equal(max_v1(1.0, 2.0), 2.0));
+
 //	assert(equal(max_v1(1  , 2.0), 2.0)); // error
 
 	assert(equal(max_v1(static_cast < double > (1), 2.0), 2.0));
@@ -166,6 +167,7 @@ int main()
 	assert(equal(max_v8(1, 2.0), 2.0));
 
 	assert(equal(std::max(1.0, 2.0), 2.0));
+	
 //	assert(equal(std::max(1  , 2.0), 2.0)); // error
 
 //  ------------------------------------------------
@@ -184,9 +186,16 @@ int main()
 
 //  -------------------------
 
+	test_v2 < int, int > ();
+
+//	test_v2 < int, double > (); // error
+
+//  -------------------------
+
 	int * ptr = nullptr; 
 	
 	test_v3(ptr);
+
 	test_v4(ptr);
 
 //  -------------------------------

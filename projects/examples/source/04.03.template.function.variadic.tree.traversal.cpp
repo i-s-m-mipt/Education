@@ -1,21 +1,21 @@
 #include <cassert>
 #include <vector>
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////
 
 template < typename T > struct Node 
 { 
-	T value = T(); Node * left = nullptr, * right = nullptr; 
+	T data = T(); Node * left = nullptr, * right = nullptr; 
 };
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////
 
 template < typename R, typename ... Ns > auto traverse(R root, Ns ... nodes)
 {
 	return (root ->* ... ->* nodes); // support: cppinsights.io
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -23,7 +23,7 @@ int main()
 
 	for (auto i = 0uz; i < std::size(nodes); ++i)
 	{
-		nodes[i].value = static_cast < int > (i) + 1;
+		nodes[i].data = static_cast < int > (i) + 1;
 	}
 
 	Node < int > * root = nullptr;
@@ -36,5 +36,5 @@ int main()
 
 	auto left = &Node < int > ::left, right = &Node < int > ::right;
 
-	assert(traverse(root, left, right, left, right)->value == 5);
+	assert(traverse(root, left, right, left, right)->data == 5);
 }

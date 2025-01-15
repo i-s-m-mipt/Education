@@ -38,9 +38,9 @@ consteval auto test_v1()
 {
 //	[[maybe_unused]] auto object = new auto(1); // error
 
-	std::vector < int > vector({ 1, 2, 3, 4, 5 });
+	std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-	return std::ranges::fold_left(vector, 0, std::plus <> ());
+	return std::size(vector);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +72,7 @@ constinit auto global_x = 1;
 
 int main()
 {
-	constexpr auto x = 5; auto y = 5;
+	constexpr auto x = 1; auto y = 2;
 
 //  ---------------------------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ int main()
 
 //  ---------------------------------------------------------------------------------------
 
-	static_assert(is_prime(x) && test_v1() == 15);
+	static_assert(!is_prime(x) && test_v1() == 5);
 
 //  ---------------------------------------------------------------------------------------
 

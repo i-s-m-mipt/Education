@@ -5,6 +5,7 @@
 template < int N, int D = 1 > struct Ratio
 {
 	static constexpr auto num = N;
+	
 	static constexpr auto den = D;
 
 //  ---------------------------------

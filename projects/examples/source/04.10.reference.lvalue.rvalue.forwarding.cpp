@@ -40,13 +40,19 @@ int main()
 {
 	Entity entity_1;
 
+	test_v2(entity_1);
+
 	test_v3(entity_1);
 
 	const Entity entity_2;
 
+	test_v2(entity_2);
+
 	test_v3(entity_2);
 
 	Entity entity_3;
+
+	test_v2(std::move(entity_3));
 	
 	test_v3(std::move(entity_3));
 }

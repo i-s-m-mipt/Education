@@ -49,28 +49,6 @@ template < typename T, typename C > void Stack_v1 < T, C > ::pop()
 
 template < typename T, template < typename E > typename C = std::vector > class Stack_v2 
 {
-public:
-
-	void push(T value)
-	{
-		m_data.push_back(std::move(value));
-	}
-
-	auto top() const
-	{
-		return m_data.back();
-	}
-
-	void pop()
-	{
-		m_data.pop_back();
-	}
-
-	auto size() const
-	{ 
-		return std::size(m_data); 
-	}
-
 private:
 
 	C < T > m_data;
@@ -163,14 +141,12 @@ int main()
 	Stack_v1 < int > stack_v1_1;
 
 	stack_v1_1.push(1);
-	stack_v1_1.push(2);
-	stack_v1_1.push(3);
 
-	assert(stack_v1_1.size() == 3 && stack_v1_1.top() == 3);
+	assert(stack_v1_1.size() == 1 && stack_v1_1.top() == 1);
 
 	stack_v1_1.pop();
 
-	assert(stack_v1_1.size() == 2 && stack_v1_1.top() == 2);
+	assert(stack_v1_1.size() == 0);
 
 //  ------------------------------------------------------------------------------------------------
 
