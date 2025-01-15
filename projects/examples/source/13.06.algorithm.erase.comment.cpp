@@ -85,15 +85,12 @@ void transform(const std::string & path_1, const std::string & path_2)
 int main()
 {
     auto path_1 = "13.07.algorithm.erase.comment.source.txt";
+
 	auto path_2 = "13.07.algorithm.erase.comment.result.txt";
 
     transform(path_1, path_2);
 
-//  -----------------------------------------------------------------------
-
     std::cout << "main : enter char to continue : "; char c; std::cin >> c;
-
-//  -----------------------------------------------------------------------
 
     std::filesystem::remove(path_2);
 }
