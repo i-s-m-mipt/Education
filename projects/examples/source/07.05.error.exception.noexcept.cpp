@@ -105,7 +105,7 @@ void test_v3() noexcept
 
 int main()
 {
-	assert(noexcept(Entity::data));
+	static_assert(noexcept(std::declval < Entity > ().data()));
 
 	try
 	{
