@@ -23,12 +23,14 @@ auto is_even(int x)
 TEST(Expect, Is_Even)
 {
     EXPECT_TRUE(is_even(1)); std::cout << "Test::Expect::Is_Even (1)\n";
+
     EXPECT_TRUE(is_even(2)); std::cout << "Test::Expect::Is_Even (2)\n";
 }
 
 TEST(Assert, Is_Even)
 {
     ASSERT_TRUE(is_even(1)); std::cout << "Test::Assert::Is_Even (1)\n";
+
     ASSERT_TRUE(is_even(2)); std::cout << "Test::Assert::Is_Even (2)\n";
 }
 
@@ -53,7 +55,9 @@ public:
 TEST_F(Fixture, Data) 
 {
     ASSERT_EQ(std::size(data), 0); data.push_back(1);
+
     ASSERT_EQ(std::size(data), 1); data.push_back(1);
+
     ASSERT_EQ(std::size(data), 2); 
 }
 
@@ -63,11 +67,11 @@ class Parameters : public Fixture, public testing::WithParamInterface < int > {}
 
 TEST_P(Parameters, Data) 
 { 
-    auto value = GetParam();
+    auto x = GetParam();
 
-    data.push_back(value); 
+    data.push_back(x); 
     
-    ASSERT_EQ(data.back(), value); 
+    ASSERT_EQ(data.back(), x); 
 }
 
 INSTANTIATE_TEST_CASE_P(Fixture, Parameters, testing::Values(1, 2, 3, 4, 5));

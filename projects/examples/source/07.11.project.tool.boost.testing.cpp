@@ -25,6 +25,7 @@ auto is_even(int x)
 BOOST_AUTO_TEST_CASE(Test_v1)
 {
     BOOST_TEST(is_even(1)); std::cout << "Test_v1 (1)\n";
+
     BOOST_TEST(is_even(2)); std::cout << "Test_v1 (2)\n";
 }
 
@@ -43,8 +44,7 @@ BOOST_DATA_TEST_CASE
 (
     Test_v3, 
 
-    boost::unit_test::data::xrange(1, 3, 1) * 
-    boost::unit_test::data::xrange(1, 4, 1), 
+    boost::unit_test::data::xrange(1, 3, 1) * boost::unit_test::data::xrange(1, 4, 1), 
 
     x, y
 )
@@ -204,6 +204,8 @@ public:
 BOOST_FIXTURE_TEST_CASE(Test_v7, Fixture)
 {
     BOOST_TEST(std::size(data) == 0); data.push_back(1);
+    
     BOOST_TEST(std::size(data) == 1); data.push_back(1);
+
     BOOST_TEST(std::size(data) == 2);
 }

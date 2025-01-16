@@ -68,7 +68,9 @@ template < typename T > void swap(T & x, T & y) noexcept
 )
 {
 	auto z = std::move(y);
+
 	     y = std::move(x);
+
 		 x = std::move(z);
 }
 
@@ -105,42 +107,48 @@ void test_v3() noexcept
 
 int main()
 {
-	static_assert(noexcept(std::declval < Entity > ().data()));
-
-	try
 	{
-		Entity entity;
-	}
-	catch(const std::exception & exception)
-	{
-		std::cerr << "main : " << exception.what() << '\n';
+		static_assert(noexcept(std::declval < Entity > ().data()));
 	}
 
-//  -------------------------------------------------------
+//  ---------------------------------------------------------------
 
-    Entity entity_1(1);
+	{
+		try
+		{
+			Entity entity;
+		}
+		catch(const std::exception & exception)
+		{
+			std::cerr << "main : " << exception.what() << '\n';
+		}
+	}
 
-    Entity entity_2(2);
+//  ---------------------------------------------------------------
 
-//  -------------------------------------------------------
+	{
+		Entity entity_1(1), entity_2(2);
 
-    entity_1.swap(entity_2);
+    	entity_1.swap(entity_2);
 
-    assert(entity_1.data() == 2);
+    	assert(entity_1.data() == 2 && entity_2.data() == 1);
+	}
 
-    assert(entity_2.data() == 1);
+//  ---------------------------------------------------------------
 
-//  -------------------------------------------------------
+	{	
+		Entity entity_1(1), entity_2(2);
 
-    invoke(swap < Entity > , entity_1, entity_2);
+		invoke(swap < Entity > , entity_1, entity_2);
 
-    assert(entity_1.data() == 1);
+    	assert(entity_1.data() == 2 && entity_2.data() == 1);
+	}
 
-    assert(entity_2.data() == 2);
+//  ---------------------------------------------------------------
 
-//  -------------------------------------------------------
+	{
+		test_v2(); // support: compiler-explorer.com
 
-    test_v2(); // support: compiler-explorer.com
-
-    test_v3(); // support: compiler-explorer.com
+    	test_v3(); // support: compiler-explorer.com
+	}
 }

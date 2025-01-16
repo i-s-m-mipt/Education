@@ -221,8 +221,11 @@ private:
 #define LOGGER(logger) Logger logger(__func__, true)
 
 #define LOGGER_WRITE_DEBUG(logger, message) logger.write(Logger::Severity::debug, message);
+
 #define LOGGER_WRITE_TRACE(logger, message) logger.write(Logger::Severity::trace, message);
+
 #define LOGGER_WRITE_ERROR(logger, message) logger.write(Logger::Severity::error, message);
+
 #define LOGGER_WRITE_FATAL(logger, message) logger.write(Logger::Severity::fatal, message);
 
 //  ================================================================================================
@@ -237,6 +240,7 @@ void test_v1()
 //  ================================================================================================
 
 void test_v2() { LOGGER(logger); test_v1(); }
+
 void test_v3() { LOGGER(logger); test_v2(); }
 
 //  ================================================================================================

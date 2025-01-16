@@ -1,15 +1,17 @@
 #include <cassert>
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////
 
 union Entity // support: compiler-explorer.com
 { 
 	char string_1[1]; 
+
 	char string_2[2];
+
 	char string_3[3]; int data = 0; 
 };
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////
 
 struct Variant 
 { 
@@ -21,7 +23,7 @@ struct Variant
 	bool has_error = false; 
 };
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////
 
 auto test(int x)
 {
@@ -35,29 +37,35 @@ auto test(int x)
 	}
 }
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////
 
 int main()
 {
-	Entity entity;
+	{
+		Entity entity;
 
-	entity.string_1[0] = 'a';
+		entity.string_1[0] = 'a';
 
-	assert(entity.string_1[0] == 'a');
-//	assert(entity.string_2[0] == 'a'); // bad
-//	assert(entity.string_3[0] == 'a'); // bad
+		assert(entity.string_1[0] == 'a');
 
-	entity.data = 0; 
+//		assert(entity.string_2[0] == 'a'); // bad
+
+//		assert(entity.string_3[0] == 'a'); // bad
+
+		entity.data = 0; 
+		
+		entity.string_3[1] = 1;
+
+		assert(entity.data == 256);
+	}
+
+//  -----------------------------------------------------
+
+	{
+		auto x = 1;
+
+		auto variant = test(x);
 	
-	entity.string_3[1] = 1;
-
-	assert(entity.data == 256);
-
-//  ---------------------------
-
-	auto x = 1;
-
-	auto variant = test(x);
-	
-	assert(!variant.has_error && variant.value == x);
+		assert(!variant.has_error && variant.value == x);
+	}
 }

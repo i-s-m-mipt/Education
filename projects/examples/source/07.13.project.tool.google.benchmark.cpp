@@ -17,11 +17,7 @@ void test_v1(benchmark::State & state)
 
 		for (auto i = 0uz; i < 1'000; ++i)
 		{
-			result += 
-			(
-				std::pow(std::sin(1.0 * i), 2.0) +
-				std::pow(std::cos(1.0 * i), 2.0)
-			);
+			result += std::pow(std::sin(i), 2.0) + std::pow(std::cos(i), 2.0);
 		}
 
         benchmark::DoNotOptimize(result);
@@ -40,11 +36,7 @@ void test_v2(benchmark::State & state)
         {
             for (auto i = 0uz; i < 1'000; ++i)
             {
-                result += 
-                (
-                    std::pow(std::sin(1.0 * i), 2.0) +
-                    std::pow(std::cos(1.0 * i), 2.0)
-                );
+                result += std::pow(std::sin(i), 2.0) + std::pow(std::cos(i), 2.0);
             }
         }
         catch (...) {}
@@ -65,11 +57,7 @@ void test_v3(benchmark::State & state)
         {
             for (auto i = 0uz; true; ++i)
             {
-                result += 
-                (
-                    std::pow(std::sin(1.0 * i), 2.0) +
-                    std::pow(std::cos(1.0 * i), 2.0)
-                );
+                result += std::pow(std::sin(i), 2.0) + std::pow(std::cos(i), 2.0);
 
                 if (i >= 1'000) 
                 {

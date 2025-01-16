@@ -38,38 +38,44 @@ void test_v2() { std::cout << "test_v2\n"; }
 
 int main()
 {
-    auto object = new auto(1);
-
-    assert(object);
-
-    delete object;
-
-//  assert(nullptr); // error
-
-//  ------------------------------------------------------------------------
-           
-    static_assert(sizeof(int) == 4, "sizeof(int) != 4");
-
-    auto x = 1, y = 2; swap(x, y);
-
-    [[maybe_unused]] Entity < int > entity_1;
-
- // [[maybe_unused]] Entity < Bad > entity_2; // error
-
-//  ------------------------------------------------------------------------
-
-    std::atexit(test_v1);
-
-    std::atexit(test_v2);
-
-    std::cout << "main : terminate normally? (y/n) "; char c; std::cin >> c;
-
-    if (c == 'y') 
     {
-        std::exit(0); 
+        auto object = new auto(1);
+
+        assert(object);
+
+        delete object;
+
+//      assert(nullptr); // error
     }
-    else 
+
+//  ----------------------------------------------------------------------------
+
     {
-        std::abort();
+        static_assert(sizeof(int) == 4, "sizeof(int) != 4");
+
+        auto x = 1, y = 2; swap(x, y);
+
+        [[maybe_unused]] Entity < int > entity_1;
+
+ //     [[maybe_unused]] Entity < Bad > entity_2; // error
+    }
+
+//  ----------------------------------------------------------------------------
+
+    {
+        std::atexit(test_v1);
+
+        std::atexit(test_v2);
+
+        std::cout << "main : terminate normally? (y/n) "; char c; std::cin >> c;
+
+        if (c == 'y') 
+        {
+            std::exit(0); 
+        }
+        else 
+        {
+            std::abort();
+        }
     }
 }
