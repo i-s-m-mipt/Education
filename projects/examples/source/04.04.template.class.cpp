@@ -18,11 +18,6 @@ public:
 
 	void pop();
 
-	auto size() const 
-	{ 
-		return std::size(m_data); 
-	}
-
 private:
 
 	C m_data;
@@ -140,13 +135,11 @@ int main()
 {
 	Stack_v1 < int > stack_v1_1;
 
-	stack_v1_1.push(1);
-
-	assert(stack_v1_1.size() == 1 && stack_v1_1.top() == 1);
-
+	stack_v1_1.push(1); 
+	
+	assert(stack_v1_1.top() == 1); 
+	
 	stack_v1_1.pop();
-
-	assert(stack_v1_1.size() == 0);
 
 //  ------------------------------------------------------------------------------------------------
 

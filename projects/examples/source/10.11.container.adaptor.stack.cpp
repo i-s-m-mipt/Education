@@ -27,11 +27,6 @@ public:
         m_data.pop(); 
     }
  
-    auto size() const
-    { 
-        return std::size(m_data); 
-    }
- 
     auto max() const
     { 
         return m_data.top().second; 
@@ -77,11 +72,6 @@ public:
         }
 
         m_data.pop();
-    }
-
-    auto size() const
-    { 
-        return std::size(m_data); 
     }
  
     auto max() const

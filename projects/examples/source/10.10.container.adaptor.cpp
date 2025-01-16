@@ -11,8 +11,6 @@ int main()
 	stack.push(2);
 	stack.push(3);
 
-	assert(std::size(stack) == 3);
-
 	assert(stack.top() == 3);
 
 	stack.pop();
@@ -27,8 +25,6 @@ int main()
 	queue.push(2);
 	queue.push(3);
 
-	assert(std::size(queue) == 3);
-
 	assert(queue.front() == 1); assert(queue.back() == 3);
 
 	queue.pop();
@@ -42,8 +38,6 @@ int main()
 	priority_queue.push(2);
 	priority_queue.push(3);
 	priority_queue.push(1);
-
-	assert(std::size(priority_queue) == 3);
 
 	assert(priority_queue.top() == 3);
 
