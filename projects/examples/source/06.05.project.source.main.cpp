@@ -93,115 +93,141 @@ namespace education
 
 int main()
 {
-	test_v1();
+	{
+		test_v1();
 
-//  -------------------------------------------------------------------------------
+		[[maybe_unused]] auto x = 1, y = 2;
 
-	[[maybe_unused]] auto x = 1, y = 2;
+//		assert(SQUARE_v1(x + x) == 3); // bad
 
-//	assert(SQUARE_v1(x + x) == 3); // bad
+		assert(SQUARE_v2(x + x) == 4);
 
-	assert(SQUARE_v2(x + x) == 4);
+//		assert(SQUARE_v2(++x) == 6 && x == 3); // error
 
-//	assert(SQUARE_v2(++x) == 6 && x == 3); // error
+//		assert(SQUARE_v2(y++) == 6 && y == 4); // error
+	}
 
-//	assert(SQUARE_v2(y++) == 6 && y == 4); // error
-
-//  -------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 
 #pragma GCC diagnostic ignored "-Wunused-variable"
 
-	auto z = 3;
+	{
+		auto x = 1;
+	}
 
 #pragma GCC diagnostic pop
 
-//  -------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 
-	auto file_name = "06.05.project.source.main.cpp";
+	{
+		std::string path_1 = __FILE__;
 
-//  -------------------------------------------------------------------------------
+		auto file_name = "06.05.project.source.main.cpp";
 
-	std::string path_1 = __FILE__;
+		assert(path_1.substr(std::size(path_1) - std::strlen(file_name)) == file_name);
 
-	assert(path_1.substr(std::size(path_1) - std::strlen(file_name)) == file_name);
+		assert(__LINE__ == 129);
 
-	assert(__LINE__ == 126);
+		assert(__func__ == "main"s);
 
-	assert(__func__ == "main"s);
+		[[maybe_unused]] auto date = __DATE__;
 
-	[[maybe_unused]] auto date = __DATE__;
-	[[maybe_unused]] auto time = __TIME__;
+		[[maybe_unused]] auto time = __TIME__;
 
-	DEBUG("trace"); // support: cppinsights.io
+		DEBUG("trace"); // support: cppinsights.io
+	}
 
-//  ------------------------------------------------------------------------------- 
+//  ----------------------------------------------------------------------------------- 
 
-	constexpr auto source_location = std::source_location::current();
+	{
+		constexpr auto source_location = std::source_location::current();
 
-	std::string path_2 = source_location.file_name();
+		std::string path_2 = source_location.file_name();
 
-	assert(path_2.substr(std::size(path_2) - std::strlen(file_name)) == file_name);
+		auto file_name = "06.05.project.source.main.cpp";
 
-	assert(source_location.line() == 139);
+		assert(path_2.substr(std::size(path_2) - std::strlen(file_name)) == file_name);
 
-	assert(source_location.function_name() == "int main()"s);
+		assert(source_location.line() == 143);
 
-//  -------------------------------------------------------------------------------
+		assert(source_location.function_name() == "int main()"s);
+	}
 
-	test_v2();
+//  -----------------------------------------------------------------------------------
+
+	{
+		test_v2();
 	
-//	test_v3(); // error
+//		test_v3(); // error
 
-//	test_v4(); // error
+//		test_v4(); // error
 
-	test_v5();
+		test_v5();
 
-	Entity().test();
+		Entity().test();
 
-	test_v6 < int > ();
+		test_v6 < int > ();
+	}
 
-//  -------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 
-	assert(global_x1 == 1);
-//	assert(global_x2 == 2); // error
-//	assert(global_x3 == 3); // error
-	assert(global_x4 == 4);
-	assert(global_x5 == 5);
-	assert(global_x6 == 6);
+	{
+		assert(global_x1 == 1);
 
-//  -------------------------------------------------------------------------------
+//		assert(global_x2 == 2); // error
 
-	::education::examples::test(::education::examples::Entity());
+//		assert(global_x3 == 3); // error
 
-	namespace ee = education::examples;
+		assert(global_x4 == 4);
 
-	ee::test(ee::Entity());
+		assert(global_x5 == 5);
 
-		test(ee::Entity());
+		assert(global_x6 == 6);
+	}
 
-	education::library_v1::test();
-	education::library_v2::test();
+//  -----------------------------------------------------------------------------------
 
-	education::test();
+	{
+		::education::examples::test(::education::examples::Entity());
 
-//  -------------------------------------------------------------------------------
+		namespace ee = education::examples;
 
-//	using namespace std; // bad
+		ee::test(ee::Entity());
 
-	using namespace std::literals;
+			test(ee::Entity());
 
-	auto string_1 = "aaaaa"s;
+		education::library_v1::test();
 
-	auto string_2 = std::operator""s("aaaaa", 5);
+		education::library_v2::test();
 
-//  -------------------------------------------------------------------------------
+		education::test();
+	}
 
-	demo::test_v1();
-	demo::test_v2();
-//	demo::test_v3(); // error
-	demo::test_v4();
+//  -----------------------------------------------------------------------------------
 
-//  -------------------------------------------------------------------------------
+	{
+//		using namespace std; // bad
+
+		using namespace std::literals;
+
+		auto string_1 = "aaaaa"s;
+
+		auto string_2 = std::operator""s("aaaaa", 5);
+	}
+
+//  -----------------------------------------------------------------------------------
+
+	{
+		demo::test_v1();
+
+		demo::test_v2();
+
+//		demo::test_v3(); // error
+
+		demo::test_v4();
+	}
+
+//  -----------------------------------------------------------------------------------
 
 	return EXIT_SUCCESS;
 }
