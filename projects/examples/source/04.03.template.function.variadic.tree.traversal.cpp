@@ -23,7 +23,7 @@ int main()
 
 	for (auto i = 0uz; i < std::size(nodes); ++i)
 	{
-		nodes[i].data = static_cast < int > (i) + 1;
+		nodes[i].data = i + 1;
 	}
 
 	Node < int > * root = nullptr;

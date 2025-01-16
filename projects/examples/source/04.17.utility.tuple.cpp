@@ -7,6 +7,8 @@
 #include <tuple>
 #include <type_traits>
 
+using namespace std::literals;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T, std::size_t I = 0 > class Helper_v1
@@ -69,41 +71,43 @@ auto & operator<<(std::ostream & stream, const std::tuple < Ts ... > & tuple)
 
 int main()
 {
-    std::tuple < int, std::string > tuple_1(1, "aaaaa");
+    {
+        static_assert(std::get < 0 > (std::make_tuple(1, 2, 3)) == 1);
+    }
 
-//  -----------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
-    assert(std::get < 0 > (tuple_1) == 1);
-
-//  -----------------------------------------------------------------------------------
-
-    std::cout << "main : enter std::tuple < int, std::string > : "; 
+    {
+        std::cout << "main : enter std::tuple < int, std::string > : "; 
 	
-	std::tuple < int, std::string > tuple_2; std::cin >> tuple_2; 
+	    std::tuple < int, std::string > tuple; std::cin >> tuple; 
 	
-	std::cout << "main : tuple_2 = " << tuple_2 << '\n';
+	    std::cout << "main : tuple = " << tuple << '\n';
+    }
 
-//  -----------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
-    auto x1 = 0; std::tie(x1, std::ignore) = tuple_1; assert(x1 == 1);
+    {
+        auto tuple = std::make_tuple(1, "aaaaa"s);
 
-    const auto & [x2, string] = tuple_1; // support: cppinsights.io
+        auto x = 0; std::tie(x, std::ignore) = tuple; 
+        
+        assert(x == 1);
 
-    assert(x2 == 1 && string == "aaaaa");
+        const auto & [y, string] = tuple; // support: cppinsights.io
 
-//  -----------------------------------------------------------------------------------
+        assert(y == 1 && string == "aaaaa");
 
-    assert(std::tuple_cat(tuple_1, std::tuple <> ()) == tuple_1);
+        assert(std::tuple_cat(tuple, std::tuple <> ()) == tuple);
+    }
 
-//  -----------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
-    constexpr auto tuple_3 = std::make_tuple(1, 2, 3);
+    {
+        using tuple_t = std::tuple < int, std::string > ;
 
-//  -----------------------------------------------------------------------------------
+        static_assert(std::tuple_size_v < tuple_t > == 2);
 
-    static_assert(std::tuple_size_v < decltype(tuple_3) > == 3);
-
-    static_assert(std::is_same_v < std::tuple_element_t < 0, decltype(tuple_3) > , const int > );
-
-    static_assert(std::get < 0 > (tuple_3) == 1);
+        static_assert(std::is_same_v < std::tuple_element_t < 0, tuple_t > , int > );
+    }
 }

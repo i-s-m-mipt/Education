@@ -72,39 +72,55 @@ constinit auto global_x = 1;
 
 int main()
 {
-	constexpr auto x = 1; auto y = 2;
+	{
+		constexpr auto x = 1; auto y = 2;
 
-//  ---------------------------------------------------------------------------------------
+		[[maybe_unused]] constexpr auto result_1 = factorial_v1(x);
 
-	[[maybe_unused]] constexpr auto z1 = factorial_v1(x);
-//	[[maybe_unused]] constexpr auto z2 = factorial_v1(y); // error
+//		[[maybe_unused]] constexpr auto result_2 = factorial_v1(y); // error
 
-	[[maybe_unused]]           auto z3 = factorial_v1(x); // support: compiler-explorer.com
-	[[maybe_unused]]           auto z4 = factorial_v1(y);
+		[[maybe_unused]]           auto result_3 = factorial_v1(x);
 
-	[[maybe_unused]] constexpr auto z5 = factorial_v2(x);
-//	[[maybe_unused]] constexpr auto z6 = factorial_v2(y); // error
+		[[maybe_unused]]           auto result_4 = factorial_v1(y);
 
-	[[maybe_unused]]           auto z7 = factorial_v2(x);
-//	[[maybe_unused]]           auto z8 = factorial_v2(y); // error
+		[[maybe_unused]] constexpr auto result_5 = factorial_v2(x);
 
-//  ---------------------------------------------------------------------------------------
+//		[[maybe_unused]] constexpr auto result_6 = factorial_v2(y); // error
 
-	static_assert(!is_prime(x) && test_v1() == 5);
+		[[maybe_unused]]           auto result_7 = factorial_v2(x);
 
-//  ---------------------------------------------------------------------------------------
+//		[[maybe_unused]]           auto result_8 = factorial_v2(y); // error
+	}
 
-	constexpr auto is_constant_evaluated_1 = test_v2(x);
+//  ------------------------------------------------------------------------
+
+	{
+		constexpr auto x = 1;
+
+		assert(!is_prime(x) && test_v1() == 5);
+	}
+
+//  ------------------------------------------------------------------------
+
+	{
+		constexpr auto x = 1; auto y = 2;
+
+		constexpr auto is_constant_evaluated_1 = test_v2(x);
 	
-		      auto is_constant_evaluated_2 = test_v2(y);
+		      	  auto is_constant_evaluated_2 = test_v2(y);
 
-	assert(is_constant_evaluated_1 && !is_constant_evaluated_2);
+		assert(is_constant_evaluated_1 && !is_constant_evaluated_2);
+	}
 
-//  ---------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------
 
-	test_v3(1, 2, 3);
+	{
+		test_v3(1, 2, 3);
+	}
 
-//  ---------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------
 
-	assert(++global_x == 2);
+	{
+		assert(++global_x == 2);
+	}
 }

@@ -133,50 +133,61 @@ public:
 
 int main()
 {
-	Stack_v1 < int > stack_v1_1;
+	{
+		Stack_v1 < int > stack_v1;
 
-	stack_v1_1.push(1); 
+		stack_v1.push(1); 
 	
-	assert(stack_v1_1.top() == 1); 
+		assert(stack_v1.top() == 1); 
 	
-	stack_v1_1.pop();
-
-//  ------------------------------------------------------------------------------------------------
-
-	Stack_v1 < double, std::deque < double > > stack_v1_2;
+		stack_v1.pop();
+	}
 	
-	Stack_v2 < double, std::deque > stack_v2;
+//  ---------------------------------------------------------------------------
 
-//  ------------------------------------------------------------------------------------------------
+	{
+		Stack_v1 < double, std::deque < double > > stack_v1;
+	
+		Stack_v2 < double, std::deque > stack_v2;
+	}
 
-	std::vector < int > vector_1 = { 1, 2, 3, 4, 5 };
+//  ---------------------------------------------------------------------------
 
-	auto deque = copy < std::vector, std::deque > (vector_1);
+	{
+		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-//  ------------------------------------------------------------------------------------------------
+		auto deque = copy < std::vector, std::deque > (vector);
+	}
 
-	[[maybe_unused]] Pair pair(1, 1);
+//  ---------------------------------------------------------------------------
 
-	std::vector vector_2 = { 1, 2, 3, 4, 5 };
+	{
+		[[maybe_unused]] Pair pair(1, 1);
 
-//  ------------------------------------------------------------------------------------------------
+		std::vector vector = { 1, 2, 3, 4, 5 };
+	}
 
-	[[maybe_unused]] typename Outer < int > ::template Inner < int > inner;
+//  ---------------------------------------------------------------------------
 
-//  ------------------------------------------------------------------------------------------------
+	{
+		[[maybe_unused]] typename Outer < int > ::template Inner < int > inner;
+	}
 
-	using type_1 = int;
+//  ---------------------------------------------------------------------------
 
-	using type_2 = std::string;
+	{
+		using type_1 = int;
 
-	using type_3 = double;
+		using type_2 = std::string;
 
-	Entity < type_1   , type_3   > ().test();
-	Entity < type_2   , type_2   > ().test();
-	Entity < type_2   , type_1   > ().test();
-	Entity < type_1 * , type_2 * > ().test();
-	Entity < type_1   , type_2   > ().test();
+		using type_3 = double;
 
-//	Entity < type_1   , type_1   > ().test(); // error
-//	Entity < type_1 * , type_1 * > ().test(); // error
+		Entity < type_1   , type_3   > ().test();
+		Entity < type_2   , type_2   > ().test();
+		Entity < type_2   , type_1   > ().test();
+		Entity < type_1 * , type_2 * > ().test();
+		Entity < type_1   , type_2   > ().test();
+//		Entity < type_1   , type_1   > ().test(); // error
+//		Entity < type_1 * , type_1 * > ().test(); // error
+	}
 }

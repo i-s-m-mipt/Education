@@ -86,18 +86,24 @@ template < typename T, typename ... Ts > auto make_object(Ts ... args)
 
 int main()
 {
-	test_v1(1, 2, 3);
-	test_v2(1, 2, 3);
-	test_v3(1, 2, 3);
+	{
+		test_v1(1, 2, 3);
+		test_v2(1, 2, 3);
+		test_v3(1, 2, 3);
+	}
+	
+//  -----------------------------------------
 
-//  -------------------------------------
+	{
+		assert(reduce_v1(1, 2, 3) == 6);
+		assert(reduce_v2(1, 2, 3) == 6);
+		assert(reduce_v3(1, 2, 3) == 6);
+		assert(reduce_v4(1, 2, 3) == 6);
+	}
+	
+//  -----------------------------------------
 
-	assert(reduce_v1(1, 2, 3) == 6);
-	assert(reduce_v2(1, 2, 3) == 6);
-	assert(reduce_v3(1, 2, 3) == 6);
-	assert(reduce_v4(1, 2, 3) == 6);
-
-//  -------------------------------------
-
-	delete make_object < Entity > (1, 1);
+	{
+		delete make_object < Entity > (1, 1);
+	}	
 }

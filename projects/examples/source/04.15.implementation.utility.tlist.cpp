@@ -1,11 +1,11 @@
 #include <cstddef>
 #include <type_traits>
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename ... Ts > struct List {};
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename     T  > struct Size {};
 
@@ -18,7 +18,7 @@ template < typename L > constexpr auto size_v = Size < L > ::value;
 
 template < typename L > constexpr auto empty_v = size_v < L > == 0;
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <             typename     T  > struct Front {};
 
@@ -26,7 +26,7 @@ template < typename T, typename ... Ts > struct Front < List < T, Ts ... > > { u
 
 template < typename L > using front = typename Front < L > ::type;
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T, typename     U  > struct Push_Front {};
 
@@ -37,7 +37,7 @@ template < typename T, typename ... Ts > struct Push_Front < T, List < Ts ... > 
 
 template < typename T, typename L > using push_front = typename Push_Front < T, L > ::type;
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <             typename     T  > struct Pop_Front {};
 
@@ -48,7 +48,7 @@ template < typename T, typename ... Ts > struct Pop_Front < List < T, Ts ... > >
 
 template < typename L > using pop_front = typename Pop_Front < L > ::type;
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <             typename     T  > struct Back {};
 
@@ -61,7 +61,7 @@ template < typename T, typename ... Ts > struct Back < List < T, Ts ... > >
 
 template < typename L > using back = typename Back < L > ::type;
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T, typename L, bool C = empty_v < L > > struct Push_Back {};
 
@@ -77,7 +77,7 @@ template < typename T, typename L > struct Push_Back < T, L, true >
 
 template < typename T, typename L > using push_back = typename Push_Back < T, L > ::type;
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <             typename     T  > struct Pop_Back {};
 
@@ -90,7 +90,7 @@ template < typename T, typename ... Ts > struct Pop_Back < List < T, Ts ... > >
 
 template < typename L > using pop_back = typename Pop_Back < L > ::type;
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename L, std::size_t I > class Nth : public Nth < pop_front < L > , I - 1 > {};
 
@@ -98,7 +98,7 @@ template < typename L > class Nth < L, 0 > : public Front < L > {};
 
 template < typename L, std::size_t I > using nth = typename Nth < L, I > ::type;
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename L, bool C = empty_v < L > > class Max_Type {};
 
@@ -119,47 +119,45 @@ public:
 
 template < typename L > using max_type = typename Max_Type < L > ::type;
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    using list_0 = List <          > ; 
-    using list_1 = List < int      > ;
-    using list_2 = List < int, int > ;
+    {
+        static_assert(size_v < List < int > > == 1 && !empty_v < List < int > > );
+    }
 
-    using list_3 = push_back < int, list_2 > ;
+//  --------------------------------------------------------------------------------------------
 
-//  ------------------------------------------------------------------------------------------------
+    {
+        static_assert(std::is_same_v <      front <      List < int > > , int > );
 
-    static_assert(size_v < list_0 > == 0 &&  empty_v < list_0 > );
-    static_assert(size_v < list_1 > == 1 && !empty_v < list_1 > );
-    static_assert(size_v < list_2 > == 2 && !empty_v < list_2 > );
-    static_assert(size_v < list_3 > == 3 && !empty_v < list_3 > );
+        static_assert(std::is_same_v < push_front < int, List < int > > , List < int, int > > );
 
-//  ------------------------------------------------------------------------------------------------
+        static_assert(std::is_same_v <  pop_front <      List < int > > , List <> > );
+    }
 
-//  using     front_t_0 =     front < list_0 > ; // error
-//  using pop_front_t_0 = pop_front < list_0 > ; // error
+//  --------------------------------------------------------------------------------------------
 
-//  using      back_t_0 =      back < list_0 > ; // error
-//  using  pop_back_t_0 =  pop_back < list_0 > ; // error
+    {
+        static_assert(std::is_same_v <       back <      List < int > > , int > );
 
-//  ------------------------------------------------------------------------------------------------
+        static_assert(std::is_same_v <  push_back < int, List < int > > , List < int, int > > );
 
-    static_assert(std::is_same_v < front < push_front < int, list_2 > > , int > );
-    static_assert(std::is_same_v < front <  pop_front <      list_2 > > , int > );
+        static_assert(std::is_same_v <   pop_back <      List < int > > , List <> > );
+    }
 
-    static_assert(std::is_same_v <  back <  push_back < int, list_2 > > , int > );
-    static_assert(std::is_same_v <  back <   pop_back <      list_2 > > , int > );
+//  --------------------------------------------------------------------------------------------
 
-//  ------------------------------------------------------------------------------------------------
+    {
+        static_assert(std::is_same_v < nth < List < int, int >, 0 > , int > );
 
-    static_assert(std::is_same_v < nth < list_3, 0 > , int > );
-    static_assert(std::is_same_v < nth < list_3, 1 > , int > );
-    static_assert(std::is_same_v < nth < list_3, 2 > , int > );
-//  static_assert(std::is_same_v < nth < list_3, 3 > , int > ); // error
+        static_assert(std::is_same_v < nth < List < int, int >, 1 > , int > );
+    }
 
-//  ------------------------------------------------------------------------------------------------
+//  --------------------------------------------------------------------------------------------
 
-    static_assert(std::is_same_v < max_type < list_3 > , int > );
+    {
+        static_assert(std::is_same_v < max_type < List < int, double > > , double > );
+    }
 }

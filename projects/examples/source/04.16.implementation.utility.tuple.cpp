@@ -82,25 +82,23 @@ template < typename ... Ts > constexpr auto make_tuple(Ts && ... args)
 
 int main()
 {
-	[[maybe_unused]] Tuple < int, std::string > tuple_1;
+	{
+		Tuple < int, std::string > tuple_1;
 
-	[[maybe_unused]] Tuple < int, std::string > tuple_2(2, "bbbbb");
+		Tuple < int, std::string > tuple_2(2, "bbbbb");
 
-//  ----------------------------------------------------------------
+		Tuple < int, std::string > tuple_3(tuple_2);
 
-	Tuple < int, std::string > tuple_3(tuple_2);
+    	Tuple < int, std::string > tuple_4(std::move(tuple_3));
 
-    Tuple < int, std::string > tuple_4(std::move(tuple_3));
-
-    tuple_3 = tuple_2; 
+    	tuple_3 = tuple_2; 
     
-    tuple_4 = std::move(tuple_3);
+    	tuple_4 = std::move(tuple_3);
+	}
 
-//  ----------------------------------------------------------------
+//  -----------------------------------------------------------
 
-	assert(tuple_4.get < 0 > () == 2);
-
-//  ----------------------------------------------------------------
-
-	[[maybe_unused]] constexpr auto tuple_5 = make_tuple(1, 2, 3);	
+	{
+		static_assert(make_tuple(1, 2, 3).get < 0 > () == 1);
+	}
 }
