@@ -11,6 +11,7 @@ public:
 //  ------------------------------------------------
 
     virtual void set_fast(class Entity *) const = 0;
+
     virtual void set_slow(class Entity *) const = 0;
 };
 
@@ -21,6 +22,7 @@ class Fast : public State
 public:
 
     void set_fast([[maybe_unused]] class Entity * entity) const override;
+
     void set_slow([[maybe_unused]] class Entity * entity) const override; 
 };
 
@@ -31,6 +33,7 @@ class Slow : public State
 public:
 
     void set_fast([[maybe_unused]] class Entity * entity) const override;
+
     void set_slow([[maybe_unused]] class Entity * entity) const override; 
 };
 
@@ -62,6 +65,7 @@ public:
 //  --------------------------------------------
 
     void set_fast() { m_state->set_fast(this); }
+    
     void set_slow() { m_state->set_slow(this); }
 
 private:

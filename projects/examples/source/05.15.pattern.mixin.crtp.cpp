@@ -45,8 +45,9 @@ template < typename D > void test(const Entity < D > & entity)
 
 int main()
 {
-	Client client; test(client);
-	Server server; test(server);
+	test(Client());
+	
+	test(Server());
 
 //	std::vector < Entity * > entities; // error
 }

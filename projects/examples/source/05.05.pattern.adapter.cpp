@@ -61,17 +61,23 @@ public:
 
 int main()
 {	
-	Client client;
+	{
+		Client client;
 
-	Entity * entity_1 = new Adapter_v1(client);
+		Entity * entity = new Adapter_v1(client);
 
-	entity_1->test();
+		entity->test();
 
-	delete entity_1;
-
-	Entity * entity_2 = new Adapter_v2;
-
-	entity_2->test(); 
+		delete entity;
+	}
 	
-	delete entity_2;
+//  ---------------------------------------------
+
+	{
+		Entity * entity = new Adapter_v2;
+
+		entity->test(); 
+	
+		delete entity;
+	}
 }

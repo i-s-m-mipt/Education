@@ -47,6 +47,7 @@ void test_v1(const Entity & entity)
 ////////////////////////////////////////////////////////////////////////////////////
 
 class Client_v2 { public: void test() const { std::cout << "Client_v2::test\n"; } };
+
 class Server_v2 { public: void test() const { std::cout << "Server_v2::test\n"; } };
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -60,13 +61,19 @@ template < typename E > void test_v2(const E & entity)
 
 int main()
 {
-	Entity * entity = new Client_v1();
+	{
+		Entity * entity = new Client_v1();
 
-	test_v1(*entity);
+		test_v1(*entity);
 
-	delete entity;
-
-	Client_v2 client_v2; 
+		delete entity;
+	}
 	
-	test_v2(client_v2);
+//  --------------------------------------
+
+	{
+		Client_v2 client_v2; 
+	
+		test_v2(client_v2);
+	}
 }

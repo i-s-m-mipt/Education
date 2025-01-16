@@ -3,6 +3,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 class Client_v1 { public: Client_v1(int) {} };
+
 class Server_v1 { public: Server_v1(int) {} };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -24,6 +25,7 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 
 template < typename T > class Client_v2 { public: Client_v2(int) {} };
+
 template < typename T > class Server_v2 { public: Server_v2(int) {} };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -49,5 +51,6 @@ private:
 int main()
 {
     Router_v1 < Client_v1, Server_v1 > router_v1_1(1, 1, 1);
+    
     Router_v2 < Client_v2, Server_v2 > router_v2_1(1, 1, 1);
 }

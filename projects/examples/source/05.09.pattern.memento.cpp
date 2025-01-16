@@ -87,5 +87,6 @@ int main()
     memento.save();
     
     memento.load_v1(1); assert(memento.get() == 1);
+    
     memento.load_v2(2); assert(memento.get() == 2);
 }

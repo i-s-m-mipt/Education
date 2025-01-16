@@ -90,5 +90,6 @@ int main()
     Entity entity;
 
     entity.add_observer(new Client()); entity.update_data(1);
+    
     entity.add_observer(new Server()); entity.update_data(2);    
 }

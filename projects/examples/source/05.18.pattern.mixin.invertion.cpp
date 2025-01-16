@@ -81,10 +81,11 @@ int main()
 {
     Redoable < Undoable < Entity > > entity;
 
-    entity.set(1); 
-    entity.set(2);
+    entity.set(1); entity.set(2);
 
     assert(entity.get() == 2); entity.undo();
+
     assert(entity.get() == 1); entity.redo();
+
     assert(entity.get() == 2);
 }

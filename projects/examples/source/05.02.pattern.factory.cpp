@@ -111,27 +111,33 @@ public:
 
 int main()
 {
-    auto entity_v1 = make_entity < Client > (); 
+    {
+        auto entity = make_entity < Client > (); 
 
-    entity_v1->test(); 
+        entity->test(); 
     
-    delete entity_v1;
-
-//  --------------------------------------------
-
-    auto entity_v2 = Router::Factory::make_v1(); 
-
-    entity_v2->test(); 
+        delete entity;
+    }
     
-    delete entity_v2;
+//  ---------------------------------------------
 
-//  --------------------------------------------
+    {
+        auto entity = Router::Factory::make_v1(); 
 
-    Factory * factory = new Factory_Server();
-
-    auto entity_v3 = factory->make(); 
-
-    entity_v3->test(); 
+        entity->test(); 
     
-    delete entity_v3; delete factory;
+        delete entity;
+    }
+
+//  ---------------------------------------------
+
+    {
+        Factory * factory = new Factory_Server();
+
+        auto entity = factory->make(); 
+
+        entity->test(); 
+    
+        delete entity; delete factory;
+    }
 }

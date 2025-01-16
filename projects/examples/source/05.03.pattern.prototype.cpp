@@ -56,6 +56,7 @@ class Factory
 public:
 
     static auto make_client() { static Client prototype; return prototype.copy(); }
+    
     static auto make_server() { static Server prototype; return prototype.copy(); }
 };
 

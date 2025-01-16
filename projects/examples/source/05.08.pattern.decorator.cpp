@@ -77,8 +77,10 @@ int main()
     Entity * entity_2 = new Decorated_Entity(*entity_1);
 
     entity_1->test();
+
     entity_2->test(); 
      
-    delete entity_1;   
+    delete entity_1;  
+     
     delete entity_2; 
 }

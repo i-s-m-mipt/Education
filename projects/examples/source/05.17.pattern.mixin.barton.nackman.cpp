@@ -9,8 +9,11 @@ template < typename T > class Comparable
 public:
 
     friend auto operator> (const T & lhs, const T & rhs) { return  (rhs < lhs); }
+
     friend auto operator<=(const T & lhs, const T & rhs) { return !(lhs > rhs); }
+
     friend auto operator>=(const T & lhs, const T & rhs) { return !(lhs < rhs); }
+
     friend auto operator==(const T & lhs, const T & rhs)
     {
         return !(lhs < rhs) && !(rhs < lhs);
@@ -68,29 +71,31 @@ private:
 
 int main() 
 {    
-    auto f = false, t = true;
+    {
+        Entity_v1 entity_v1_1(1), entity_v1_2(2);
 
-//  ------------------------------------------
+        auto f = false, t = true;
 
-    Entity_v1 entity_v1_1(1);
-    Entity_v1 entity_v1_2(2);
+        assert((entity_v1_1 <  entity_v1_2) == t);
+        assert((entity_v1_1 >  entity_v1_2) == f);
+        assert((entity_v1_1 <= entity_v1_2) == t);
+        assert((entity_v1_1 >= entity_v1_2) == f);
+        assert((entity_v1_1 == entity_v1_2) == f);
+        assert((entity_v1_1 != entity_v1_2) == t);
+    }
 
-    assert((entity_v1_1 <  entity_v1_2) == t);
-    assert((entity_v1_1 >  entity_v1_2) == f);
-    assert((entity_v1_1 <= entity_v1_2) == t);
-    assert((entity_v1_1 >= entity_v1_2) == f);
-    assert((entity_v1_1 == entity_v1_2) == f);
-    assert((entity_v1_1 != entity_v1_2) == t);
+//  ----------------------------------------------
 
-//  ------------------------------------------
+    {
+        Entity_v2 entity_v2_1(1), entity_v2_2(2);
 
-    Entity_v2 entity_v2_1(1);
-    Entity_v2 entity_v2_2(2);
+        auto f = false, t = true;
 
-    assert((entity_v2_1 <  entity_v2_2) == t);
-    assert((entity_v2_1 >  entity_v2_2) == f);
-    assert((entity_v2_1 <= entity_v2_2) == t);
-    assert((entity_v2_1 >= entity_v2_2) == f);
-    assert((entity_v2_1 == entity_v2_2) == f);
-    assert((entity_v2_1 != entity_v2_2) == t);
+        assert((entity_v2_1 <  entity_v2_2) == t);
+        assert((entity_v2_1 >  entity_v2_2) == f);
+        assert((entity_v2_1 <= entity_v2_2) == t);
+        assert((entity_v2_1 >= entity_v2_2) == f);
+        assert((entity_v2_1 == entity_v2_2) == f);
+        assert((entity_v2_1 != entity_v2_2) == t);
+    }
 }

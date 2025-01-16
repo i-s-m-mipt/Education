@@ -72,7 +72,9 @@ template < typename D, std::size_t S > class Counter
 protected:
 
 	Counter(                         ) { initialize(); }
+
 	Counter(const Counter < D, S > & ) { initialize(); }
+
 	Counter(      Counter < D, S > &&) { initialize(); }
 
    ~Counter() 
@@ -98,21 +100,26 @@ private:
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T > struct Entity_v3 : private Counter < Entity_v3 < T > , 5 > {};
+
 template < typename T > struct Entity_v4 : private Counter < Entity_v4 < T > , 5 > {};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Entity_v1::instance().test();
+	{
+		Entity_v1::instance().test();
 
-	Singleton < Entity_v2 > ::instance().test();
+		Singleton < Entity_v2 > ::instance().test();
+	}
 
-//  --------------------------------------------
+//  ------------------------------------------------
 
-	Entity_v3 < int > entity_v3_1;
+	{
+		Entity_v3 < int > entity_v3_1;
 	
-	Entity_v3 < int > entity_v3_2(entity_v3_1);
+		Entity_v3 < int > entity_v3_2(entity_v3_1);
 
-	Entity_v4 < int > entity_v4;
+		Entity_v4 < int > entity_v4;
+	}
 }

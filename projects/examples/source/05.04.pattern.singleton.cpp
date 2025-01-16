@@ -84,19 +84,23 @@ class Unique_v3 : private boost::noncopyable {};
 
 int main()
 {
-    Singleton::instance().test();
+    {
+        Singleton::instance().test();
+    }
 
-//  --------------------------------------------------------------
+//  ------------------------------------------------------------------
 
-    [[maybe_unused]] Unique_v1 unique_v1_1;
+    {
+        [[maybe_unused]] Unique_v1 unique_v1_1;
 
-//  [[maybe_unused]] Unique_v1 unique_v1_2 = unique_v1_1; // error
+//      [[maybe_unused]] Unique_v1 unique_v1_2 = unique_v1_1; // error
 
-    [[maybe_unused]] Unique_v2 unique_v2_1;
+        [[maybe_unused]] Unique_v2 unique_v2_1;
 
-    [[maybe_unused]] Unique_v2 unique_v2_2 = unique_v2_1;
+        [[maybe_unused]] Unique_v2 unique_v2_2 = unique_v2_1;
 
-    [[maybe_unused]] Unique_v3 unique_v3_1;
+        [[maybe_unused]] Unique_v3 unique_v3_1;
 
-//  [[maybe_unused]] Unique_v3 unique_v3_2 = unique_v3_1; // error
+//      [[maybe_unused]] Unique_v3 unique_v3_2 = unique_v3_1; // error
+    }
 }
