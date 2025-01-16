@@ -82,7 +82,7 @@ __attribute__ ((__noinline__)) auto max_v2(int x, int y)
 int main()
 {
 	{
-		[[maybe_unused]] auto x = test_v1(1);
+		[[maybe_unused]] auto result = test_v1(1);
 
 		std::ignore = test_v1(1);
 

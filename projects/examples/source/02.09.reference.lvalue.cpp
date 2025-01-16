@@ -45,13 +45,13 @@ int main()
 	{
 		auto x = 1;
 
-//		std::vector < int & > vector_1; // error
+//		std::vector < int & > vector; // error
 
-		std::vector < std::reference_wrapper < int > > vector_2;
+		std::vector < std::reference_wrapper < int > > vector;
 
-		vector_2.push_back(x);
+		vector.push_back(x);
 
-		vector_2.back().get() = 2; 
+		vector.back().get() = 2; 
 	
 		assert(x == 2);
 	}
