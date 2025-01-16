@@ -8,7 +8,7 @@
 
 #include <boost/timer/timer.hpp>
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 template 
 < 
@@ -20,7 +20,7 @@ auto & operator<<(std::ostream & stream, const std::ratio < N, D > & ratio)
 	return stream << ratio.num << '/' << ratio.den << " (seconds)";
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 class Chronometer
 {
@@ -55,86 +55,90 @@ private:
 	const std::string m_scope; clock_t::time_point m_begin;
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+auto test(std::size_t size)
+{
+	auto result = 0.0;
+
+	for (auto i = 0uz; i < size; ++i)
+	{
+		result += std::pow(std::sin(i), 2.0) + std::pow(std::cos(i), 2.0);
+	}
+
+	return result;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	assert(!std::chrono::system_clock::is_steady);
+	{
+		assert(!std::chrono::system_clock::is_steady);
 
-	auto system_clock_period = std::chrono::system_clock::period();
+		auto system_clock_period = std::chrono::system_clock::period();
 	
-	std::cout << "main : system_clock_period = " << system_clock_period << '\n';
+		std::cout << "main : system_clock_period = " << system_clock_period << '\n';
+	}
 
-//  ------------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
+
+	{
+		auto epoch = std::chrono::system_clock::time_point();
+
+		std::cout << "main : epoch = " << epoch << '\n';
+
+		auto local = std::chrono::system_clock::now();
 	
-	auto epoch = std::chrono::system_clock::time_point();
+		std::cout << "main : local = " << local << '\n';
 
-	std::cout << "main : epoch = " << epoch << '\n';
+		assert(std::chrono::system_clock::to_time_t(local) == time(nullptr));
+	}
 
-	auto local = std::chrono::system_clock::now();
-	
-	std::cout << "main : local = " << local << '\n';
+//  --------------------------------------------------------------------------------
 
-	assert(std::chrono::system_clock::to_time_t(local) == time(nullptr));
+	{
+		std::chrono::duration < int, std::ratio < 1, 1'000 > > duration_1(1'000);
 
-//  ------------------------------------------------------------------------
+		std::chrono::milliseconds duration_2(1'000);
 
-	std::chrono::duration < int, std::ratio < 1, 1'000 > > duration_1(1'000);
+		auto duration_3 = std::chrono::hours(1) + std::chrono::minutes(1);
 
-	std::chrono::milliseconds duration_2(1'000);
+		assert(duration_3.count() == 61);
 
-	auto duration_3 = std::chrono::hours(1) + std::chrono::minutes(1);
+		assert(std::chrono::seconds(duration_3).count() == 3'660);
 
-	assert(duration_3.count() == 61);
+		auto local = std::chrono::system_clock::now();
 
-	assert(std::chrono::seconds(duration_3).count() == 3'660);
+		auto epoch = std::chrono::system_clock::time_point();
 
-	auto delta = std::chrono::floor < std::chrono::days > (local - epoch);
+		auto delta = std::chrono::floor < std::chrono::days > (local - epoch);
 
-	std::cout << "main : delta = " << delta.count() << " (days)\n";
+		std::cout << "main : delta = " << delta.count() << " (days)\n";
+	}
 
-//  ------------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
 	{
 		Chronometer chronometer("main");
 
-		auto result = 0.0;
-
-		for (auto i = 0uz; i < 1'000'000; ++i)
-		{
-			result += 
-			(
-				std::pow(std::sin(1.0 * i), 2.0) +
-				std::pow(std::cos(1.0 * i), 2.0)
-			);
-		}
-
-		assert(equal(result, 1'000'000.0));
+		assert(equal(test(1'000'000), 1'000'000.0));
 	}
 
-//  ------------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
-	boost::timer::cpu_timer cpu_timer;
-
-	auto result = 0.0;
-
-	for (auto i = 0uz; i < 1'000'000; ++i)
 	{
-		result += 
-		(
-			std::pow(std::sin(1.0 * i), 2.0) +
-			std::pow(std::cos(1.0 * i), 2.0)
-		);
+		boost::timer::cpu_timer cpu_timer;
+
+		assert(equal(test(1'000'000), 1'000'000.0));
+
+		std::cout << "main : cpu_timer :" << cpu_timer.format();
 	}
-
-	assert(equal(result, 1'000'000.0));
-
-	std::cout << "main : cpu_timer :" << cpu_timer.format();
 }

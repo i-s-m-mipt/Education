@@ -7,46 +7,48 @@
 #include <string>
 #include <vector>
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::random_device device;
-
-	std::mt19937_64 engine(device());
-
-	std::normal_distribution distribution(25.0, 8.0);
-
-	std::vector < std::size_t > numbers(50, 0);
-
-	for (auto i = 0uz; i < 1'000'000; ++i)
 	{
-		if (auto number = distribution(engine); number > 0.0)
-		{
-			auto index = static_cast < std::size_t > (std::floor(number));
+		std::random_device device;
 
-			if (index < std::size(numbers)) 
+		std::mt19937_64 engine(device());
+
+		std::normal_distribution distribution(25.0, 8.0);
+
+		std::vector < std::size_t > numbers(50, 0);
+
+		for (auto i = 0uz; i < 1'000'000; ++i)
+		{
+			if (auto number = distribution(engine); number > 0.0)
 			{
-				++numbers[index];
+				auto index = static_cast < std::size_t > (std::floor(number));
+
+				if (index < std::size(numbers)) 
+				{
+					++numbers[index];
+				}
 			}
+		}
+
+		for (auto i = 0uz; i < std::size(numbers); ++i)
+		{
+			std::cout << "main : numbers[" << std::format("{:0>2}", i) << "] : ";
+
+			std::cout << std::string(numbers[i] / 1'000, '+') << '\n';
 		}
 	}
 
-	for (auto i = 0uz; i < std::size(numbers); ++i)
-	{
-		std::cout << "main : numbers[" << std::format("{:0>2}", i) << "] : ";
-
-		std::cout << std::string(numbers[i] / 1'000, '+') << '\n';
-	}
-
-//  ================================================================================================
+//  -----------------------------------------------------------------------------
 
 	{
 		auto size = 100'000'000uz;
@@ -59,9 +61,7 @@ int main()
 
 		for (auto i = 0uz; i < size; ++i)
 		{
-			auto x = distribution(engine);
-
-			auto y = distribution(engine);
+			auto x = distribution(engine), y = distribution(engine);
 
 			if (x * x + y * y < 1.0) 
 			{

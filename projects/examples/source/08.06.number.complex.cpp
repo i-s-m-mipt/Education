@@ -51,31 +51,39 @@ auto equal(std::complex < double > x, std::complex < double > y, double epsilon 
 
 int main()
 {
-    auto complex = 1.0 + 1.0i;
+    {
+        auto complex = 1.0 + 1.0i;
 
-    assert(equal(std::real(complex), 1.000'000));
-    assert(equal(std::imag(complex), 1.000'000));
+        assert(equal(std::real(complex), 1.000'000));
 
-    assert(equal(complex + complex , 2.000'000 + 2.000'000i));
-    assert(equal(complex - complex , 0.000'000 + 0.000'000i));
-    assert(equal(complex * complex , 0.000'000 + 2.000'000i));
-    assert(equal(complex / complex , 1.000'000 + 0.000'000i));
+        assert(equal(std::imag(complex), 1.000'000));
 
-    assert(equal(std::abs (complex), 1.414'214));
-    assert(equal(std::arg (complex), 0.785'398));
-    assert(equal(std::norm(complex), 2.000'000));
+        assert(equal(complex + complex , 2.000'000 + 2.000'000i));
+        assert(equal(complex - complex , 0.000'000 + 0.000'000i));
+        assert(equal(complex * complex , 0.000'000 + 2.000'000i));
+        assert(equal(complex / complex , 1.000'000 + 0.000'000i));
 
-    assert(equal(std::conj(complex), 1.000'000 - 1.000'000i));
-    assert(equal(std::proj(complex), 1.000'000 + 1.000'000i));
+        assert(equal(std::abs (complex), 1.414'214));
+        
+        assert(equal(std::arg (complex), 0.785'398));
 
-    assert(equal(std::polar(std::sqrt(2.0), std::numbers::pi / 4), complex));
+        assert(equal(std::norm(complex), 2.000'000));
 
-//  -------------------------------------------------------------------------
+        assert(equal(std::conj(complex), 1.000'000 - 1.000'000i));
 
-    auto result = transform({ 0.0 + 0.0i, 0.0 + 1.0i, 1.0 + 0.0i, 1.0 + 1.0i });
+        assert(equal(std::proj(complex), 1.000'000 + 1.000'000i));
 
-    assert(equal(result.at(0), +2.0 + 2.0i));
-    assert(equal(result.at(1), -1.0 + 1.0i));
-    assert(equal(result.at(2), +0.0 - 2.0i));
-    assert(equal(result.at(3), -1.0 - 1.0i));
+        assert(equal(std::polar(std::sqrt(2.0), std::numbers::pi / 4), complex));
+    }
+    
+//  --------------------------------------------------------------------------------
+
+    {
+        auto result = transform({ 0.0 + 0.0i, 0.0 + 1.0i, 1.0 + 0.0i, 1.0 + 1.0i });
+
+        assert(equal(result.at(0), +2.0 + 2.0i));
+        assert(equal(result.at(1), -1.0 + 1.0i));
+        assert(equal(result.at(2), +0.0 - 2.0i));
+        assert(equal(result.at(3), -1.0 - 1.0i));
+    }
 }
