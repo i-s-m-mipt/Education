@@ -27,7 +27,7 @@ template < typename F, typename ... Ts > decltype(auto) async_invoke(F && f, Ts 
 
 template < std::ranges::view V, typename T > auto reduce(V view, T sum) -> T
 {
-	auto begin = std::ranges::begin(view), end = std::ranges::end(view);
+	auto begin = std::begin(view), end = std::end(view);
 
 	if (auto size = 1uz * std::distance(begin, end), min_size = 100uz; size > min_size)
 	{

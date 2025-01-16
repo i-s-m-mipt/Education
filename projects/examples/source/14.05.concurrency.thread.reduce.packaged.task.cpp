@@ -18,11 +18,7 @@ public:
 
 	auto operator()(V view) const
 	{
-		return std::reduce
-		(
-			std::ranges::begin(view), 
-			std::ranges::end  (view)
-		);
+		return std::reduce(std::begin(view), std::end(view));
 	}
 };
 
@@ -30,7 +26,7 @@ public:
 
 template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 {
-	auto begin = std::ranges::begin(view), end = std::ranges::end(view);
+	auto begin = std::begin(view), end = std::end(view);
 
 	if (auto size = 1uz * std::distance(begin, end); size > 0) 
 	{
