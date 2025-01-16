@@ -1,3 +1,4 @@
+#include <cassert>
 #include <iostream>
 #include <utility>
 
@@ -29,6 +30,13 @@ template < typename E > void test_v3(E && entity)
 
 //////////////////////////////////////////////////////////////////////////////////////
 
+auto test_v4(int x, int y) 
+{ 
+	return x + y; 
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+
 template < typename F, typename ... Ts > decltype(auto) invoke(F && f, Ts && ... args) 
 { 
 	return f(std::forward < Ts > (args)...);
@@ -55,4 +63,6 @@ int main()
 	test_v2(std::move(entity_3));
 	
 	test_v3(std::move(entity_3));
+
+	assert(invoke(test_v4, 1, 2) == 3);
 }
