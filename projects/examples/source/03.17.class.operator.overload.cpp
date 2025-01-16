@@ -151,116 +151,110 @@ auto equal(double x, double y, double epsilon = 1e-6)
 
 int main()
 {
-	[[maybe_unused]] Ratio ratio_1, ratio_2(2), ratio_3 = 3, ratio_4(4, 1);
+	{
+		[[maybe_unused]] Ratio ratio_1, ratio_2(2), ratio_3 = 3, ratio_4(4, 1);
 
-//	std::vector < int > vector = 1; // error
+//		std::vector < int > vector = 1; // error
+	}
 
-//  ----------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
 
-	assert(equal(static_cast < double > (ratio_1), 0.0));
+	{
+		Ratio ratio_1 = 1, ratio_2 = 2;
 
-	assert(equal(static_cast < double > (ratio_2), 2.0));
+		assert(equal(static_cast < double > (ratio_1), 1.0));
 
-//  ----------------------------------------------------------------------------------
+//		assert(ratio_1.operator+=(ratio_2) == Ratio(3, 1)); // bad
 
-//	assert(ratio_1.operator+=(ratio_2) == Ratio(+2, 1)); // bad
+		assert((ratio_1 += ratio_2) == Ratio(3, 1));
+		assert((ratio_1 +=       1) == Ratio(4, 1));
+//		assert((      1 += ratio_2) == Ratio(3, 1)); // error
+//		assert((      1 +=       1) == Ratio(2, 1)); // error
 
-	assert((ratio_1 += ratio_2) == Ratio(+2, 1));
-	assert((ratio_1 +=       1) == Ratio(+3, 1));
-//	assert((      1 += ratio_2) == Ratio(+3, 1)); // error
-//	assert((      1 +=       1) == Ratio(+2, 1)); // error
+		assert((ratio_1 -= ratio_2) == Ratio(2, 1));
+		assert((ratio_1 *= ratio_2) == Ratio(4, 1));
+		assert((ratio_1 /= ratio_2) == Ratio(2, 1));
 
-	assert((ratio_1 -= ratio_2) == Ratio(+1, 1));
-	assert((ratio_1 *= ratio_2) == Ratio(+2, 1));
-	assert((ratio_1 /= ratio_2) == Ratio(+1, 1));
+		assert((ratio_1 ++        ) == Ratio(2, 1));
+		assert((        ++ ratio_2) == Ratio(3, 1));
+		assert((ratio_1 --        ) == Ratio(3, 1));
+		assert((        -- ratio_2) == Ratio(2, 1));
 
-//  ----------------------------------------------------------------------------------
+//		ratio_1++++; // error
 
-	assert((ratio_1 ++        ) == Ratio(+1, 1));
-	assert((        ++ ratio_2) == Ratio(+3, 1));
-	assert((ratio_1 --        ) == Ratio(+2, 1));
-	assert((        -- ratio_2) == Ratio(+2, 1));
+//		assert(operator+(ratio_1, ratio_2) == Ratio(4, 1)); // bad
 
-//	ratio_1++++; // error
+		assert((ratio_1 +  ratio_2) == Ratio(4, 1));
+		assert((ratio_1 +        1) == Ratio(3, 1));
+		assert((      1 +  ratio_2) == Ratio(3, 1));
+		assert((      1 +        1) == Ratio(2, 1));
 
-//  ----------------------------------------------------------------------------------
+		assert((ratio_1 -  ratio_2) == Ratio(0, 1));
+		assert((ratio_1 *  ratio_2) == Ratio(4, 1));
+		assert((ratio_1 /  ratio_2) == Ratio(1, 1));
 
-//	assert(operator+(ratio_1, ratio_2) == Ratio(+3, 1)); // bad
+		auto f = false, t = true;
 
-	assert((ratio_1 +  ratio_2) == Ratio(+3, 1));
-	assert((ratio_1 +        1) == Ratio(+2, 1));
-	assert((      1 +  ratio_2) == Ratio(+3, 1));
-	assert((      1 +        1) == Ratio(+2, 1));
+		assert((ratio_1 <  ratio_2) == f);
+		assert((ratio_1 >  ratio_2) == f);
+		assert((ratio_1 <= ratio_2) == t);
+		assert((ratio_1 >= ratio_2) == t);
+		assert((ratio_1 == ratio_2) == t);
+		assert((ratio_1 != ratio_2) == f);
+	}
 
-	assert((ratio_1 -  ratio_2) == Ratio(-1, 1));
-	assert((ratio_1 *  ratio_2) == Ratio(+2, 1));
-	assert((ratio_1 /  ratio_2) == Ratio(+1, 2));
+//  ---------------------------------------------------------------------------
 
-//  ----------------------------------------------------------------------------------
-
-	auto f = false, t = true;
-
-//  ----------------------------------------------------------------------------------
-
-	assert((ratio_1 <  ratio_2) == t);
-	assert((ratio_1 >  ratio_2) == f);
-	assert((ratio_1 <= ratio_2) == t);
-	assert((ratio_1 >= ratio_2) == f);
-	assert((ratio_1 == ratio_2) == f);
-	assert((ratio_1 != ratio_2) == t);
-
-//  ----------------------------------------------------------------------------------
-
-	std::cout << "main : enter Ratio : "; Ratio ratio_5; std::cin >> ratio_5; 
+	{
+		std::cout << "main : enter Ratio : "; Ratio ratio; std::cin >> ratio; 
 	
-	std::cout << "main : ratio_5 = " << ratio_5 << '\n';
+		std::cout << "main : ratio = " << ratio << '\n';
+	}
 
-//  ----------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
 
-	using rational_t = boost::rational < int > ;
+	{
+		boost::rational < int > rational_1 = 1, rational_2 = 2;
 
-	rational_t rational_1(1, 1);
-	rational_t rational_2(2, 1);
+		assert(equal(boost::rational_cast < double > (rational_1), 1.0));
+
+		assert((rational_1 += rational_2) == boost::rational < int > (3, 1));
+		assert((rational_1 +=          1) == boost::rational < int > (4, 1));
+		assert((rational_1 -= rational_2) == boost::rational < int > (2, 1));
+		assert((rational_1 *= rational_2) == boost::rational < int > (4, 1));
+		assert((rational_1 /= rational_2) == boost::rational < int > (2, 1));
+
+		assert((rational_1 ++           ) == boost::rational < int > (2, 1));
+		assert((           ++ rational_2) == boost::rational < int > (3, 1));
+		assert((rational_1 --           ) == boost::rational < int > (3, 1));
+		assert((           -- rational_2) == boost::rational < int > (2, 1));
+
+		assert((rational_1 +  rational_2) == boost::rational < int > (4, 1));
+		assert((rational_1 +           1) == boost::rational < int > (3, 1));
+		assert((         1 +  rational_2) == boost::rational < int > (3, 1));
+		assert((         1 +           1) == boost::rational < int > (2, 1));
+
+		assert((rational_1 -  rational_2) == boost::rational < int > (0, 1));
+		assert((rational_1 *  rational_2) == boost::rational < int > (4, 1));
+		assert((rational_1 /  rational_2) == boost::rational < int > (1, 1));
+
+		auto f = false, t = true;
+
+		assert((rational_1 <  rational_2) == f);
+		assert((rational_1 >  rational_2) == f);
+		assert((rational_1 <= rational_2) == t);
+		assert((rational_1 >= rational_2) == t);
+		assert((rational_1 == rational_2) == t);
+		assert((rational_1 != rational_2) == f);
+	}
+
+//  ---------------------------------------------------------------------------
+
+	{
+		std::cout << "main : enter boost::rational < int > : "; 
+		
+		boost::rational < int > rational; std::cin >> rational; 
 	
-//  ----------------------------------------------------------------------------------
-
-	assert(equal(boost::rational_cast < double > (rational_1), 1.0));
-	
-	assert(equal(boost::rational_cast < double > (rational_2), 2.0));
-
-//  ----------------------------------------------------------------------------------
-
-	assert((rational_1 += rational_2) == rational_t(+3, 1));
-	assert((rational_1 -= rational_2) == rational_t(+1, 1));
-	assert((rational_1 *= rational_2) == rational_t(+2, 1));
-	assert((rational_1 /= rational_2) == rational_t(+1, 1));
-
-//  ----------------------------------------------------------------------------------
-
-	assert((rational_1 ++           ) == rational_t(+1, 1));
-	assert((           ++ rational_2) == rational_t(+3, 1));
-	assert((rational_1 --           ) == rational_t(+2, 1));
-	assert((           -- rational_2) == rational_t(+2, 1));
-
-//  ----------------------------------------------------------------------------------
-
-	assert((rational_1 +  rational_2) == rational_t( 3, 1));
-	assert((rational_1 -  rational_2) == rational_t(-1, 1));
-	assert((rational_1 *  rational_2) == rational_t( 2, 1));
-	assert((rational_1 /  rational_2) == rational_t( 1, 2));
-
-//  ----------------------------------------------------------------------------------
-
-	assert((rational_1 <  rational_2) == t);
-	assert((rational_1 >  rational_2) == f);
-	assert((rational_1 <= rational_2) == t);
-	assert((rational_1 >= rational_2) == f);
-	assert((rational_1 == rational_2) == f);
-	assert((rational_1 != rational_2) == t);
-
-//  ----------------------------------------------------------------------------------
-
-	std::cout << "main : enter rational_t : "; rational_t rational_3; std::cin >> rational_3; 
-	
-	std::cout << "main : rational_3 = " << rational_3 << '\n';
+		std::cout << "main : rational = " << rational << '\n';
+	}
 }

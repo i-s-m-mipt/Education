@@ -1,4 +1,8 @@
-class Entity 
+#include <cassert>
+
+////////////////////////////////////////////////////////////////////////////////
+
+class Entity
 { 
 public: 
 
@@ -25,19 +29,15 @@ class Router_v2 : public Client_v2, public Server_v2 { public: Router_v2() {} };
 
 int main()
 {
+	Client_v1 client_v1; // support: compiler-explorer.com
+
+	Client_v2 client_v2; // support: compiler-explorer.com
+
 	Router_v1 router_v1; // support: compiler-explorer.com
-
-	router_v1.s_data = 1;
-//	router_v1.  data = 1; // error
-
-//  ------------------------------------------------------
 
 	Router_v2 router_v2; // support: compiler-explorer.com
 
-	router_v2.s_data = 1;
-	router_v2.  data = 1;
+//	assert(router_v1.data == 0 && Router_v1::s_data == 0); // error
 
-//  ------------------------------------------------------
-
-	Client_v2 client_v2; // support: compiler-explorer.com
+	assert(router_v2.data == 0 && Router_v2::s_data == 0);
 }

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 class Entity 
 {
@@ -35,14 +35,14 @@ private:
 	void * data = nullptr;
 };
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 void Entity::test_v2() const
 { 
 	std::cout << "Entity::test_v2\n"; 
 }
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 class Client : public Entity
 {
@@ -65,7 +65,7 @@ private:
 	void * data = nullptr;
 };
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 class Server final : public Entity 
 {
@@ -83,7 +83,7 @@ private:
 	void * data = nullptr;
 };
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 class Router : private Entity 
 {
@@ -97,45 +97,51 @@ public:
 	}
 };
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Client client;
-
-	[[maybe_unused]] Entity * entity_1 = &client;
-	[[maybe_unused]] Entity & entity_2 =  client;
-//	[[maybe_unused]] Entity   entity_3 =  client; // error
-
-	entity_1->test_v1(); // support: compiler-explorer.com
-
-//  ------------------------------------------------------------------
-
-	std::vector < Entity * > entities({ new Client(), new Server() });
-
-//  ------------------------------------------------------------------
-
-	for (auto entity : entities) 
 	{
-		entity->test_v1();
-		entity->test_v2();
-	}
+		Client client;
 
-	for (auto entity : entities) 
-	{
-		delete entity;
-	}
+		[[maybe_unused]] Entity * entity_1 = &client;
 	
-//  ------------------------------------------------------------------
+		[[maybe_unused]] Entity & entity_2 =  client;
 
-	Router router;
+//		[[maybe_unused]] Entity   entity_3 =  client; // error
 
-//	[[maybe_unused]] Entity * entity_4 = &router; // error
+		entity_1->test_v1(); // support: compiler-explorer.com
+	}
 
-//  ------------------------------------------------------------------
+//  -----------------------------------------------------------------------
 
-	std::cout << "main : sizeof(Entity) = " << sizeof(Entity) << '\n';
-	std::cout << "main : sizeof(Client) = " << sizeof(Client) << '\n';
-	std::cout << "main : sizeof(Server) = " << sizeof(Server) << '\n';
-	std::cout << "main : sizeof(Router) = " << sizeof(Router) << '\n';
+	{
+		std::vector < Entity * > entities = { new Client(), new Server() };
+
+		for (auto entity : entities) 
+		{
+			entity->test_v1();
+
+			entity->test_v2();
+
+			delete entity;
+		}
+	}
+
+//  -----------------------------------------------------------------------
+
+	{
+		Router router;
+
+//		[[maybe_unused]] Entity * entity_4 = &router; // error
+	}
+
+//  -----------------------------------------------------------------------
+
+	{
+		std::cout << "main : sizeof(Entity) = " << sizeof(Entity) << '\n';
+		std::cout << "main : sizeof(Client) = " << sizeof(Client) << '\n';
+		std::cout << "main : sizeof(Server) = " << sizeof(Server) << '\n';
+		std::cout << "main : sizeof(Router) = " << sizeof(Router) << '\n';
+	}
 }

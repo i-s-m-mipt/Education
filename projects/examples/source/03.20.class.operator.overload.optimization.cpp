@@ -36,15 +36,17 @@ private:
 
 int main()
 {
-    auto x = 1;
+    {
+        auto x = 1; const auto & r_x = x;
 
-    const auto & r_x = x;
-
-    const_cast < int & > (r_x) = 2; 
+        const_cast < int & > (r_x) = 2; 
     
-    assert(x == 2);
+        assert(x == 2);
+    }
 
-//  --------------------------------------------------------
+//  ------------------------------------------------------------
 
-    Vector vector(5); vector[0] = 1; assert(vector[0] == 1);
+    {
+        Vector vector(5); vector[0] = 1; assert(vector[0] == 1);
+    }
 }
