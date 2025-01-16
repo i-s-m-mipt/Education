@@ -62,5 +62,5 @@ int main()
 
 //  --------------------------------------------------------------------------
 
-	std::vector < Entity > entities({ { 1, 1 }, make_entity(2, 2), entity_3 });
+	std::vector < Entity > entities = { { 1, 1 }, make_entity(2, 2), entity_3 };
 }

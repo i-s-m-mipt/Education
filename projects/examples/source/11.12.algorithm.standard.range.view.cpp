@@ -65,7 +65,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-	std::map < int, int > map({ { 1, 0 }, { 2, 0 }, { 3, 0 } });
+	std::map < int, int > map = { { 1, 0 }, { 2, 0 }, { 3, 0 } };
 
 	for (auto state = 0; auto && [key, element] : map)
 	{
@@ -74,7 +74,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-	std::vector < Entity > entities({ { 3 }, { 2 }, { 1 } });
+	std::vector < Entity > entities = { { 3 }, { 2 }, { 1 } };
 
 	std::ranges::sort(entities, std::ranges::less(), &Entity::data);
 

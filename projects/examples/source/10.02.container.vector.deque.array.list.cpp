@@ -149,7 +149,7 @@ int main()
 
 //  ================================================================================================
 
-	std::array < int, 5 > array({ 1, 2, 3, 4, 5 });
+	std::array < int, 5 > array = { 1, 2, 3, 4, 5 };
 
 	std::ignore = array[middle];
 
@@ -157,7 +157,7 @@ int main()
 
 //  ================================================================================================
 
-	std::list < int > list_1({ 5, 3, 1, 5, 3, 1 });
+	std::list < int > list_1 = { 5, 3, 1, 5, 3, 1 };
 
 //	std::ranges::sort(list_1); // error
 	
@@ -167,7 +167,7 @@ int main()
 
 //  ================================================================================================
 
-	std::list < int > list_2({ 4, 2, 0 });
+	std::list < int > list_2 = { 4, 2, 0 };
 
 	list_2.reverse();
 
@@ -188,7 +188,7 @@ int main()
 
 //  ================================================================================================
 
-	std::forward_list < int > forward_list({ 1, 2, 3, 4, 5 });
+	std::forward_list < int > forward_list = { 1, 2, 3, 4, 5 };
 
 	forward_list.insert_after(forward_list.before_begin(), 1);
 
@@ -200,7 +200,7 @@ int main()
 
 //  ================================================================================================
 
-	std::list < int > list_for_sort({ 5, 4, 3, 2, 1 });
+	std::list < int > list_for_sort = { 5, 4, 3, 2, 1 };
 
 //	std::ranges::sort(list_for_sort); // error
 
@@ -211,7 +211,7 @@ int main()
 
 	std::ranges::sort(wrapper);
 
-	std::vector < int > result({ 1, 2, 3, 4, 5 });
+	std::vector < int > result = { 1, 2, 3, 4, 5 };
 
 	for (auto i = 0uz; i < std::size(wrapper); ++i)
 	{

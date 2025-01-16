@@ -23,21 +23,19 @@ auto type(const std::filesystem::file_status & status)
 
 //  ================================================================================================
 
-auto permissions(std::filesystem::perms permissions)
+auto permissions(std::filesystem::perms permissions) -> std::string
 {
     auto verify = [permissions](auto bit, auto c) 
     { 
         return (permissions & bit) == std::filesystem::perms::none ? '-' : c; 
     };
 
-    return std::string
-    (
-        { 
-            verify(std::filesystem::perms::owner_read , 'r'),
-            verify(std::filesystem::perms::owner_write, 'w'),
-            verify(std::filesystem::perms::owner_exec , 'x') 
-        }
-    );
+    return
+    { 
+        verify(std::filesystem::perms::owner_read , 'r'),
+        verify(std::filesystem::perms::owner_write, 'w'),
+        verify(std::filesystem::perms::owner_exec , 'x') 
+    };
 }
 
 //  ================================================================================================

@@ -7,7 +7,7 @@
 
 int main() 
 {
-    std::valarray < int > valarray_1({ 1, 2, 3, 4, 5 });
+    std::valarray < int > valarray_1 = { 1, 2, 3, 4, 5 };
 
     std::valarray < int > valarray_2(valarray_1.shift(1));
 

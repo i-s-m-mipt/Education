@@ -77,7 +77,7 @@ private:
 
 int main()
 {
-	std::vector < int > vector_1({ 1, 2, 3, 4, 5 });
+	std::vector < int > vector_1 = { 1, 2, 3, 4, 5 };
 
 	std::ranges::sort(vector_1, std::ranges::greater());
 
@@ -85,7 +85,7 @@ int main()
 
 //  ================================================================================================
 
-	std::set < int, std::ranges::greater > set({ 1, 2, 3, 4, 5 });
+	std::set < int, std::ranges::greater > set = { 1, 2, 3, 4, 5 };
 
 	assert(std::ranges::is_sorted(set, std::ranges::greater()));
 

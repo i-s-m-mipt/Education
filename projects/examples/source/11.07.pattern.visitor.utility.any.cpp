@@ -33,13 +33,11 @@ int main()
 
 //  -----------------------------------------------------------------------------------------
 
-    std::unordered_map < std::type_index, std::function < void(const std::any &) > > visitors
-    (
-        {
-            std::make_pair(std::type_index(typeid(data_1_t)), Visitor < data_1_t > ()),
-            std::make_pair(std::type_index(typeid(data_2_t)), Visitor < data_2_t > ())
-        }
-    );
+    std::unordered_map < std::type_index, std::function < void(const std::any &) > > visitors = 
+    {
+        std::make_pair(std::type_index(typeid(data_1_t)), Visitor < data_1_t > ()),
+        std::make_pair(std::type_index(typeid(data_2_t)), Visitor < data_2_t > ())
+    };
 
 //  -----------------------------------------------------------------------------------------
 
