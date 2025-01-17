@@ -219,33 +219,38 @@ void test_v2(benchmark::State & state)
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test_v1);
+
 BENCHMARK(test_v2);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Chain_Allocator allocator(32, 8);
+	{
+		Chain_Allocator allocator(32, 8);
 	
-	allocator.test();
+		allocator.test();
 
-	[[maybe_unused]] auto ptr_1 = allocator.allocate(); allocator.test();
+		[[maybe_unused]] auto ptr_1 = allocator.allocate(); allocator.test();
 
-	[[maybe_unused]] auto ptr_2 = allocator.allocate(); allocator.test();
+		[[maybe_unused]] auto ptr_2 = allocator.allocate(); allocator.test();
 
-	[[maybe_unused]] auto ptr_3 = allocator.allocate(); allocator.test();
+		[[maybe_unused]] auto ptr_3 = allocator.allocate(); allocator.test();
 
-	[[maybe_unused]] auto ptr_4 = allocator.allocate(); allocator.test();
+		[[maybe_unused]] auto ptr_4 = allocator.allocate(); allocator.test();
 
-	[[maybe_unused]] auto ptr_5 = allocator.allocate(); allocator.test();
+		[[maybe_unused]] auto ptr_5 = allocator.allocate(); allocator.test();
 
-	allocator.deallocate (ptr_2);                       allocator.test();
-	
-	allocator.deallocate (ptr_3);                       allocator.test();
+		allocator.deallocate (ptr_2);                       allocator.test();
+		
+		allocator.deallocate (ptr_3);                       allocator.test();
 
-	[[maybe_unused]] auto ptr_6 = allocator.allocate(); allocator.test();
+		[[maybe_unused]] auto ptr_6 = allocator.allocate(); allocator.test();
+	}
 
-//  ---------------------------------------------------------------------
+//  -------------------------------------------------------------------------
 
-	benchmark::RunSpecifiedBenchmarks();
+	{
+		benchmark::RunSpecifiedBenchmarks();
+	}
 }

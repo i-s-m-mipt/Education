@@ -12,13 +12,9 @@
 
 int main()
 {
-    auto path = "13.13.serialization.pdf.example.pdf";
-
-//  ----------------------------------------------------------------------------------------
-
     PDFWriter writer;
     
-    std::ignore = writer.StartPDF(path, ePDFVersion17);
+    std::ignore = writer.StartPDF("13.13.serialization.pdf.example.pdf", ePDFVersion17);
 
     auto page = std::make_unique < PDFPage > ();
 
@@ -95,5 +91,5 @@ int main()
 
 //  ----------------------------------------------------------------------------------------
 
-    std::filesystem::remove(path);
+    std::filesystem::remove("13.13.serialization.pdf.example.pdf");
 }

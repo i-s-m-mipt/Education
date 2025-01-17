@@ -126,19 +126,23 @@ BENCHMARK(test_v2);
 
 int main()
 {
-	Arena_Allocator allocator(1'024); 
+	{
+		Arena_Allocator allocator(1'024); 
 
-	allocator.test();
+		allocator.test();
 
-	[[maybe_unused]] auto ptr_1 = allocator.allocate(1, 1); allocator.test();
-	
-	[[maybe_unused]] auto ptr_2 = allocator.allocate(2, 2); allocator.test();
+		[[maybe_unused]] auto ptr_1 = allocator.allocate(1, 1); allocator.test();
+		
+		[[maybe_unused]] auto ptr_2 = allocator.allocate(2, 2); allocator.test();
 
-	[[maybe_unused]] auto ptr_3 = allocator.allocate(4, 4); allocator.test();
+		[[maybe_unused]] auto ptr_3 = allocator.allocate(4, 4); allocator.test();
 
-	[[maybe_unused]] auto ptr_4 = allocator.allocate(8, 8); allocator.test();
+		[[maybe_unused]] auto ptr_4 = allocator.allocate(8, 8); allocator.test();
+	}
 
-//  -------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------
 
-	benchmark::RunSpecifiedBenchmarks();
+	{
+        benchmark::RunSpecifiedBenchmarks();
+    }
 }

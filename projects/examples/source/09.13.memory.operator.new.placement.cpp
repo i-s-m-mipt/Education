@@ -157,5 +157,7 @@ int main()
 
 //  -----------------------------------------------------------------------------------------
 
-	benchmark::RunSpecifiedBenchmarks();
+	{
+        benchmark::RunSpecifiedBenchmarks();
+    }
 }
