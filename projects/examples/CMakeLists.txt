@@ -345,6 +345,8 @@ foreach(entry IN LISTS release)
 
     target_link_libraries  (${entry} PRIVATE tbb)
 
+    target_link_libraries  (${entry} PRIVATE /usr/lib/gcc/x86_64-linux-gnu/13/libatomic.a)
+
 endforeach()
 
 ###########################################################################################################
