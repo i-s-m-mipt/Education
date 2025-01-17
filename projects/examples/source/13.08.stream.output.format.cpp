@@ -19,11 +19,11 @@ public:
 
     auto format(const Entity & entity, std::format_context & context) const
     {
-        std::string buffer;
+        std::string string;
 
-        std::format_to(std::back_inserter(buffer), "{} {}", entity.data_1, entity.data_2);
+        std::format_to(std::back_inserter(string), "{} {}", entity.data_1, entity.data_2);
         
-        return std::formatter < std::string_view > ::format("{ " + buffer + " }", context);
+        return std::formatter < std::string_view > ::format("{ " + string + " }", context);
     }
 };
 

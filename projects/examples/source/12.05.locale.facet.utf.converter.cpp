@@ -59,32 +59,32 @@ auto convert_v2(const std::string & string)
 
 auto convert_v5(std::string_view string, const std::locale & locale) 
 {
-	std::vector < wchar_t > buffer(std::size(string), L'\0');
+	std::vector < wchar_t > vector(std::size(string), L'\0');
 
 	std::use_facet < std::ctype < wchar_t > > (locale).widen
     (
 		std::data(string), 
         
-        std::data(string) + std::size(string), std::data(buffer)
+        std::data(string) + std::size(string), std::data(vector)
     );
 
-	return std::wstring(std::data(buffer), std::size(buffer));
+	return std::wstring(std::data(vector), std::size(vector));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
 auto convert_v6(std::wstring_view wstring, const std::locale & locale)
 {
-	std::vector < char > buffer(std::size(wstring), '\0');
+	std::vector < char > vector(std::size(wstring), '\0');
 
 	std::use_facet < std::ctype < wchar_t > > (locale).narrow
     (
 		std::data(wstring),
         
-		std::data(wstring) + std::size(wstring), '?', std::data(buffer)
+		std::data(wstring) + std::size(wstring), '?', std::data(vector)
     );
 
-	return std::string(std::data(buffer), std::size(buffer));
+	return std::string(std::data(vector), std::size(vector));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////

@@ -50,9 +50,9 @@ private:
 
 	std::size_t m_offset = 0;
 
-    alignas(std::max_align_t) std::byte m_buffer[S]{};
+    alignas(std::max_align_t) std::byte m_array[S]{};
 
-    std::byte * m_begin = m_buffer;
+    std::byte * m_begin = m_array;
 
 //  ------------------------------------------------------------------------------------------------
 

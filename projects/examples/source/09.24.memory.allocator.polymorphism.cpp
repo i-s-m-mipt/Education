@@ -76,9 +76,9 @@ void test_v4(benchmark::State & state)
 {
 	for (auto element : state)
 	{
-        std::array < std::byte, 32'000 > buffer;
+        std::array < std::byte, 32'000 > array;
 
-        std::pmr::monotonic_buffer_resource arena(std::data(buffer), std::size(buffer));
+        std::pmr::monotonic_buffer_resource arena(std::data(array), std::size(array));
 
         std::pmr::polymorphic_allocator < int > allocator(&arena);
 
@@ -129,11 +129,11 @@ BENCHMARK(test_v5);
 int main()
 {
     {
-        std::array < char, 32 > buffer;
+        std::array < char, 32 > array;
 
-        std::ranges::fill(buffer, '_');
+        std::ranges::fill(array, '_');
 
-        std::pmr::monotonic_buffer_resource arena(std::data(buffer), std::size(buffer));
+        std::pmr::monotonic_buffer_resource arena(std::data(array), std::size(array));
 
         auto size = 26uz;
 
@@ -148,9 +148,9 @@ int main()
 
         auto result = "abcdefghijklmnopqrstuvwxyz______"s;
 
-        for (auto i = 0uz; i < std::size(buffer); ++i) 
+        for (auto i = 0uz; i < std::size(array); ++i) 
         {
-            assert(buffer[i] == result[i]);
+            assert(array[i] == result[i]);
         }
     }
 

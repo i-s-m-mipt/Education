@@ -108,14 +108,14 @@ namespace detail
 
     //  ---------------------------------------------------------------------------
 
-        template < typename T > auto buffer() const
+        template < typename T > auto array() const
         {
-            return std::bit_cast < T * > (&m_buffer);
+            return std::bit_cast < T * > (&m_array);
         }
 
     //  ---------------------------------------------------------------------------
 
-        alignas(Ts...) std::byte m_buffer[sizeof(max_type < List < Ts ... > > )]{}; 
+        alignas(Ts...) std::byte m_array[sizeof(max_type < List < Ts ... > > )]{}; 
 
         std::size_t m_index = 0; 
     }; 
@@ -131,7 +131,7 @@ namespace detail
 
         Selector(T data) 
         { 
-            std::construct_at(derived().template buffer < T > (), std::move(data)); 
+            std::construct_at(derived().template array < T > (), std::move(data)); 
             
             update();
         }
@@ -140,13 +140,13 @@ namespace detail
         {
             if (derived().m_index == s_index) 
             {
-                *derived().template buffer < T > () = std::move(data);
+                *derived().template array < T > () = std::move(data);
             }
             else 
             {
                 derived().destroy(); 
                 
-                std::construct_at(derived().template buffer < T > (), std::move(data));
+                std::construct_at(derived().template array < T > (), std::move(data));
                 
                 update();
             }
@@ -166,7 +166,7 @@ namespace detail
         {
             if (derived().m_index == s_index) 
             {
-                derived().template buffer < T > ()->~T();
+                derived().template array < T > ()->~T();
             }
         }
 
@@ -237,7 +237,7 @@ public:
 
     void swap(Variant & other)
 	{
-        std::swap(this->m_buffer, other.m_buffer);
+        std::swap(this->m_array, other.m_array);
 
 		std::swap(this->m_index, other.m_index);
 	}
@@ -256,7 +256,7 @@ public:
             throw std::runtime_error("invalid type");
         }
 
-        return *this->template buffer < T > ();
+        return *this->template array < T > ();
     }  
 
     template < typename V > auto visit(V && visitor) const
