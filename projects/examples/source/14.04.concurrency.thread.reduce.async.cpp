@@ -51,19 +51,25 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum) -> T
 
 int main()
 {
-    assert(std::async(std::launch::async,    [](){ return 1; }).get() == 1);
+	{
+		assert(std::async(std::launch::async,    [](){ return 1; }).get() == 1);
 
-	assert(std::async(std::launch::deferred, [](){ return 2; }).get() == 2);
+		assert(std::async(std::launch::deferred, [](){ return 2; }).get() == 2);
+	}
 
-//  ------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------
 
-	assert(async_invoke(test, 1, 2).get() == 3);
+	{
+		assert(async_invoke(test, 1, 2).get() == 3);
+	}
 
-//  ------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------
 
-	std::vector < int > vector(1'000, 0);
+	{
+		std::vector < int > vector(1'000, 0);
 
-	std::ranges::iota(vector, 1);
+		std::ranges::iota(vector, 1);
 
-	assert(reduce(std::ranges::views::all(vector), 0) == 500'500);
+		assert(reduce(std::ranges::views::all(vector), 0) == 500'500);
+	}
 }

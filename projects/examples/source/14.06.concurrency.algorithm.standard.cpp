@@ -82,7 +82,9 @@ void test_v3(benchmark::State & state)
 //  ================================================================================================
 
 BENCHMARK(test_v1);
+
 BENCHMARK(test_v2);
+
 BENCHMARK(test_v3);
 
 BENCHMARK_MAIN();
