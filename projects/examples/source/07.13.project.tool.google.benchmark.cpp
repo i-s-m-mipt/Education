@@ -89,8 +89,10 @@ void test_v5(benchmark::State & state)
 {
     for (auto element : state) 
     {
-        std::vector < std::vector < int > > vector(state.range(0), 
-                      std::vector < int >         (state.range(1), 0));
+        std::vector < std::vector < int > > vector
+        (
+            state.range(0), std::vector < int > (state.range(1), 0)
+        );
 
         benchmark::DoNotOptimize(vector);
     }
