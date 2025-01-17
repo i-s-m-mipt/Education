@@ -6,7 +6,7 @@
 #include <set>
 #include <vector>
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////
 
 auto generator_v1() 
 { 
@@ -15,7 +15,7 @@ auto generator_v1()
 	return ++state; 
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////
 
 class Generator_v2
 {
@@ -31,28 +31,7 @@ private:
 	int m_state = 0;
 };
 
-//  ================================================================================================
-
-template < typename T > class Sum
-{
-public:
-
-	void operator()(T x) 
-	{ 
-		m_sum += x; 
-	}
-
-	auto get() const 
-	{ 
-		return m_sum; 
-	}
-
-private:
-
-	T m_sum = T(0);
-};
-
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////
 
 template < typename T > class Mean
 {
@@ -73,62 +52,62 @@ private:
 	T m_sum = T(0); std::size_t m_counter = 0;
 };
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::vector < int > vector_1 = { 1, 2, 3, 4, 5 };
-
-	std::ranges::sort(vector_1, std::ranges::greater());
-
-	assert(std::ranges::is_sorted(vector_1, std::ranges::greater()));
-
-//  ================================================================================================
-
-	std::set < int, std::ranges::greater > set = { 1, 2, 3, 4, 5 };
-
-	assert(std::ranges::is_sorted(set, std::ranges::greater()));
-
-//  ================================================================================================
-
-	auto size = 5uz;
-
-	std::vector < int > vector_2(size, 0); 
-	std::vector < int > vector_3(size, 0); 
-
-	std::ranges::generate(vector_2, generator_v1  );
-	std::ranges::generate(vector_3, Generator_v2());
-
-	for (auto i = 0uz; i < size; ++i)
 	{
-		assert(vector_2[i] == static_cast < int > (i) + 1);
-		assert(vector_3[i] == static_cast < int > (i) + 1);
+		std::vector < int > vector = { 1, 2, 3, 4, 5 };
+
+		std::ranges::sort(vector, std::ranges::greater());
+
+		assert(std::ranges::is_sorted(vector, std::ranges::greater()));
+	}
+	
+//  ----------------------------------------------------------------------
+
+	{
+		std::set < int, std::ranges::greater > set = { 1, 2, 3, 4, 5 };
+
+		assert(std::ranges::is_sorted(set, std::ranges::greater()));
+	}	
+
+//  ----------------------------------------------------------------------
+
+	{
+		std::vector < int > vector = { 1, 2, 3, 4, 5 };
+
+		std::ranges::transform(vector, std::begin(vector), std::negate());
+
+		assert(vector == std::vector < int > ({ -1, -2, -3, -4, -5 }));
 	}
 
-//  ================================================================================================
+//  ----------------------------------------------------------------------
 
-	Sum < int > sum;
-
-	sum = std::ranges::for_each(vector_2, sum).fun;
-	sum = std::ranges::for_each(vector_3, sum).fun;
-
-	assert(sum.get() == 30);
-
-//  ================================================================================================
-
-	std::ranges::transform(vector_2,           std::begin(vector_2), std::negate());
-	std::ranges::transform(vector_2, vector_3, std::begin(vector_3), std::plus  ());
-
-	for (auto element : vector_3) 
 	{
-		assert(element == 0);
+		auto size = 5uz;
+
+		std::vector < int > vector_1(size, 0), vector_2(size, 0); 
+
+		std::ranges::generate(vector_1, generator_v1);
+
+		std::ranges::generate(vector_2, Generator_v2());
+
+		for (auto i = 0uz; i < size; ++i)
+		{
+			assert(vector_1[i] == vector_2[i]);
+		}
 	}
 
-//  ================================================================================================
+//  ----------------------------------------------------------------------
 
-	Mean < decltype(vector_1)::value_type > mean;
+	{
+		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-	mean = std::ranges::for_each(vector_1, mean).fun;
+		Mean < decltype(vector)::value_type > mean;
 
-	assert(mean.get() == 3); 
+		mean = std::ranges::for_each(vector, mean).fun;
+
+		assert(mean.get() == 3); 
+	}
 }

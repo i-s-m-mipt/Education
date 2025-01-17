@@ -13,11 +13,7 @@ template < typename F1, typename F2, typename B > auto bind(F1 && f1, F2 && f2, 
 {
 	return [=] < typename T > (T && x) 
 	{ 
-		return binder
-		(
-			f1(std::forward < T > (x)), 
-			f2(std::forward < T > (x))
-		); 
+		return binder(f1(std::forward < T > (x)), f2(std::forward < T > (x))); 
 	};
 }
 
@@ -25,72 +21,72 @@ template < typename F1, typename F2, typename B > auto bind(F1 && f1, F2 && f2, 
 
 int main()
 {
-	auto size = 5uz;
-
-	std::vector < int > vector_1(size, 0);
-	std::vector < int > vector_2(size, 0);
-	std::vector < int > vector_3;
-
-//  --------------------------------------------------------------------------------
-
-	std::ranges::iota(vector_1, 1);
-
-	std::default_random_engine engine;
-
-	std::shuffle(std::begin(vector_1), std::end(vector_1), engine);
-
-//  --------------------------------------------------------------------------------
-
-	auto iterator = std::find(std::begin(vector_1), std::end(vector_1), 0);
-
-	if (iterator != std::end(vector_1))
 	{
-		assert(*iterator == 0);
+		std::vector < int > vector(5, 0);
+
+		std::ranges::iota(vector, 1);
+
+		std::default_random_engine engine;
+
+		std::shuffle(std::begin(vector), std::end(vector), engine);
+
+		std::uniform_int_distribution distribution(1, 5);
+
+		auto generator = [&engine, &distribution](){ return distribution(engine); };
+
+		std::generate(std::begin(vector), std::end(vector), generator);
 	}
 
-	auto [min, max] = std::minmax_element(std::begin(vector_1), std::end(vector_1));
+//  --------------------------------------------------------------------------------
 
-	std::uniform_int_distribution distribution(*min, *max);
+	{
+		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-	auto generator = [&engine, &distribution](){ return distribution(engine); };
+		auto iterator = std::find(std::begin(vector), std::end(vector), 0);
 
-	std::generate(std::begin(vector_2), std::end(vector_2), generator);
+		assert(iterator == std::end(vector));
+
+		auto [min, max] = std::minmax_element(std::begin(vector), std::end(vector));
+
+		assert(*min == 1 && *max == 5);
+	}
 
 //  --------------------------------------------------------------------------------
 
-	auto is_four = [](auto x){ return x == 4; };
-	auto is_five = [](auto x){ return x == 5; };
+	{
+		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-	auto is_four_or_five = bind(is_four, is_five, std::logical_or <> ());
+		std::default_random_engine engine;
 
-	[[maybe_unused]] auto tail_begin = std::remove_if
-	(
-		std::begin(vector_2), std::end(vector_2), is_four_or_five
-	);
+		std::shuffle(std::begin(vector), std::end(vector), engine);
 
-//	vector_2.erase(tail_begin, std::end(vector_2)); // bad
+		auto position = std::size(vector) / 2;
 
-	std::erase_if(vector_2, is_four_or_five);
+		auto iterator = std::next(std::begin(vector), position);
+
+		std::nth_element(std::begin(vector), iterator, std::end(vector));
+
+		for (auto i = 0uz; i < std::size(vector); ++i)
+		{
+			if (i < position) { assert(vector[i] <= vector[position]); }
+
+			if (i > position) { assert(vector[i] >= vector[position]); }
+		}
+	}
 
 //  --------------------------------------------------------------------------------
 
-	vector_3.resize(std::size (vector_2));
+	{
+		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-	std::sample
-	(
-		std::begin(vector_1), 
-		std::end  (vector_1), 
-		std::begin(vector_3), 
-		std::size (vector_2), engine
-	);
+		auto iterator = std::remove(std::begin(vector), std::end(vector), 0);
 
-	std::transform 
-	(
-		std::begin(vector_2), 
-		std::end  (vector_2), 
-		std::begin(vector_3), 
-		std::begin(vector_3), std::plus()
-	);
+		vector.erase(iterator, std::end(vector));
 
-	assert(vector_3 == std::vector < int > ({ 7, 4, 7, 4, 3 }));
+		auto is_four = [](auto x){ return x == 4; };
+
+		auto is_five = [](auto x){ return x == 5; };
+
+		std::erase_if(vector, bind(is_four, is_five, std::logical_or <> ()));
+	}
 }

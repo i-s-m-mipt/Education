@@ -5,6 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 class Client { public: void test() const { std::cout << "Client::test\n"; }; };
+
 class Server { public: void test() const { std::cout << "Server::test\n"; }; };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -18,6 +19,7 @@ class Router
 public:
 
     void operator()(const Client & client) const { client.test(); }
+
     void operator()(const Server & server) const { server.test(); }
 };
 
@@ -34,18 +36,19 @@ public:
 
 int main()
 {
-    Entity entity = Client();
+    {   
+        std::visit(Visitor < Router > (), Entity(Client()));
+    }
+    
+//  --------------------------------------------------------
 
-    Visitor < Router > visitor;
-   
-    std::visit(visitor, entity);
+    {
+        auto lambda = [](auto x){ return x; };
 
-//  ----------------------------------------------------------
+        Visitor < decltype(lambda) > visitor(lambda);
 
-    auto lambda = [](auto x){ return x; };
+        std::variant < int > variant = 1;
 
-    Visitor < decltype(lambda) > handle(lambda);
-
-    assert(std::visit(lambda, std::variant < int > (1)) == 1);
-    assert(std::visit(handle, std::variant < int > (1)) == 1);
+        assert(std::visit(visitor, variant) == 1);
+    }
 }

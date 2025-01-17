@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 
-/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
@@ -24,68 +24,83 @@ private:
 	int m_data = 0;
 };
 
-/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	auto lambda_1 = [](){}; // support: cppinsights.io
+	{
+		auto lambda_1 = [](){}; // support: cppinsights.io
 
-	auto lambda_2 = [](auto x) constexpr noexcept { return x; };
+		auto lambda_2 = [](auto x) constexpr noexcept { return x; };
 
-	std::cout << "main : typeid(lambda_1) = " << typeid(lambda_1).name() << '\n';
-	std::cout << "main : typeid(lambda_2) = " << typeid(lambda_2).name() << '\n';
+		std::cout << "main : typeid(lambda_1) = " << typeid(lambda_1).name() << '\n';
 
-//  -----------------------------------------------------------------------------
+		std::cout << "main : typeid(lambda_2) = " << typeid(lambda_2).name() << '\n';
+	}
+	
+//  ---------------------------------------------------------------------------------
 
-	auto x = 1, y = 2, result = 0;
+	{
+		auto x = 1, y = 2;
 
-	[x, y, &result]()         { result = x + y; }();
-	[x, y,  result]() mutable { result = x + y; }();
+		[&x, y]() mutable { x = ++y; }(); assert(x == 3 && y == 2);
 
-	assert(result == 3);
+//		[&](){ x = y; }(); // bad
 
-//	[&](){ result = x + y; }(); // bad
+		auto unique_ptr_1 = std::make_unique < int > (1);
 
-//  -----------------------------------------------------------------------------
+		[unique_ptr_2 = std::move(unique_ptr_1)](){ assert(*unique_ptr_2 == 1); }();
 
-	auto unique_ptr_1 = std::make_unique < int > (1);
+		Entity().test();
+	}
 
-	[unique_ptr_2 = std::move(unique_ptr_1)](){ assert(*unique_ptr_2 == 1); }(); 
+//  ---------------------------------------------------------------------------------
 
-	Entity().test();
+	{
+		std::array < std::function < int(int, int) > , 5 > functions;
 
-//  -----------------------------------------------------------------------------
+		functions[0] = [](auto x, auto y){ return x + y; };
 
-	std::array < std::function < int(int, int) > , 5 > functions;
+		functions[1] = [](auto x, auto y){ return x - y; };
 
-	functions[0] = [](auto x, auto y){ return x + y; };
-	functions[1] = [](auto x, auto y){ return x - y; };
-	functions[2] = [](auto x, auto y){ return x * y; };
-	functions[3] = [](auto x, auto y){ return x / y; };
-	functions[4] = [](auto x, auto y){ return x % y; };
+		functions[2] = [](auto x, auto y){ return x * y; };
 
-	assert(functions.at(0)(x, y) == (x + y));
+		functions[3] = [](auto x, auto y){ return x / y; };
 
-//  -----------------------------------------------------------------------------
+		functions[4] = [](auto x, auto y){ return x % y; };
 
-	auto lambda_3 = [] < typename T > (T x, T y){ return x + y; };
+		auto x = 1, y = 2;
 
-	std::ignore = lambda_3(1, 2);
+		assert(functions.at(0)(x, y) == (x + y));
+	}
 
-//	std::ignore = lambda_3(1, 2.0); // error
+//  ---------------------------------------------------------------------------------
 
-//  -----------------------------------------------------------------------------
+	{
+		auto lambda = [] < typename T > (T x, T y){ return x + y; };
 
-	std::vector < int > vector(5, 0);
+		std::ignore = lambda(1, 2);
 
-	std::ranges::for_each(vector, [result](auto & x){       (x += result); }); // TODO result
-	std::ranges::for_each(vector, [result](auto   x){ assert(x == result); });
+//		std::ignore = lambda(1, 2.0); // error
+	}
 
-//  -----------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
-	auto lambda_6 = [](auto lhs, auto rhs){ return lhs < rhs; };
+	{
+		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-	std::set < int, decltype(lambda_6) > set = { 5, 4, 3, 2, 1 };
+		std::ranges::transform(vector, std::begin(vector), [](auto x){ return -x; });
 
-	assert(std::ranges::is_sorted(set));
+		assert(vector == std::vector < int > ({ -1, -2, -3, -4, -5 }));
+	}
+
+//  ---------------------------------------------------------------------------------
+
+	{
+		auto lambda = [](auto lhs, auto rhs){ return lhs < rhs; };
+
+		std::set < int, decltype(lambda) > set = { 5, 4, 3, 2, 1 };
+
+		assert(std::ranges::is_sorted(set));
+	}	
 }

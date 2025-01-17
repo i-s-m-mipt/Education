@@ -6,60 +6,55 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 int main()
 {
-	boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS > default_graph;
+	{
+		boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS > graph;
 
-//  --------------------------------------------------------------------------------------------
+		auto vertex_1 = boost::add_vertex(graph);
+		
+		auto vertex_2 = boost::add_vertex(graph);
 
-	auto vertex_1 = boost::add_vertex(default_graph);
-	auto vertex_2 = boost::add_vertex(default_graph);
-	auto vertex_3 = boost::add_vertex(default_graph);
+		auto vertex_3 = boost::add_vertex(graph);
 
-	auto vertices = boost::vertices(default_graph);
+		auto vertices = boost::vertices(graph);
 
-	std::ranges::for_each(vertices.first, vertices.second, []([[maybe_unused]] auto vertex){});
+		std::ranges::for_each(vertices.first, vertices.second, []([[maybe_unused]] auto vertex){});
 
-//  --------------------------------------------------------------------------------------------
+		assert(boost::add_edge(vertex_1, vertex_2, graph).second);
 
-	assert(boost::add_edge(vertex_1, vertex_2, default_graph).second);
-	assert(boost::add_edge(vertex_2, vertex_1, default_graph).second);
-	assert(boost::add_edge(vertex_2, vertex_3, default_graph).second);
-	assert(boost::add_edge(vertex_3, vertex_1, default_graph).second);
+		assert(boost::add_edge(vertex_2, vertex_1, graph).second);
 
-	auto edges = boost::edges(default_graph);
+		assert(boost::add_edge(vertex_2, vertex_3, graph).second);
 
-	std::ranges::for_each(edges.first, edges.second, []([[maybe_unused]] auto edge){});
+		assert(boost::add_edge(vertex_3, vertex_1, graph).second);
 
-//  --------------------------------------------------------------------------------------------
+		auto edges = boost::edges(graph);
 
-	auto [begin, end] = boost::adjacent_vertices(vertex_2, default_graph);
+		std::ranges::for_each(edges.first, edges.second, []([[maybe_unused]] auto edge){});
 
-	assert(std::distance(begin, end) == 2);
+		auto [begin, end] = boost::adjacent_vertices(vertex_2, graph);
 
-//  --------------------------------------------------------------------------------------------
+		assert(std::distance(begin, end) == 2);
 
-	auto out_edges = boost::out_edges(vertex_2, default_graph);
+		auto out_edges = boost::out_edges(vertex_2, graph);
 
-	std::ranges::for_each(out_edges.first, out_edges.second, []([[maybe_unused]] auto edge){});
+		std::ranges::for_each(out_edges.first, out_edges.second, []([[maybe_unused]] auto edge){});
+	}
 
-//  --------------------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------------------
 
-	boost::adjacency_list < boost::setS, boost::vecS, boost::directedS, int, int > custom_graph;
+	{
+		boost::adjacency_list < boost::setS, boost::vecS, boost::directedS, int, int > graph;
 
-//  --------------------------------------------------------------------------------------------
+		auto vertex_1 = boost::add_vertex(graph); graph[vertex_1] = 1;
 
-	auto vertex_4 = boost::add_vertex(custom_graph);
-	auto vertex_5 = boost::add_vertex(custom_graph); 
+		auto vertex_2 = boost::add_vertex(graph); graph[vertex_2] = 2;		
 
-	custom_graph[vertex_4] = 4;
-	custom_graph[vertex_5] = 5;
+		auto edge = boost::add_edge(vertex_1, vertex_2, graph).first; graph[edge] = 3;
 
-	auto edge_4_5 = boost::add_edge(vertex_4, vertex_5, custom_graph).first; 
-
-	custom_graph[edge_4_5] = 9;
-
-//  --------------------------------------------------------------------------------------------
-
-	std::cout << "main : custom_graph = "; boost::write_graphviz(std::cout, custom_graph);
+		std::cout << "main : graph = "; boost::write_graphviz(std::cout, graph);
+	}
 }

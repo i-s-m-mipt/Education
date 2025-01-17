@@ -330,33 +330,37 @@ public:
 
 int main()
 {
-    Variant < int, std::string > variant_1;
+    {
+        Variant < int, std::string > variant_1;
     
-    Variant < int, std::string > variant_2(2);
+        Variant < int, std::string > variant_2(2);
+
+        Variant < int, std::string > variant_3(variant_2);
+
+        Variant < int, std::string > variant_4(std::move(variant_3));
+
+        variant_3 = variant_2; 
+        
+        variant_4 = std::move(variant_3);
+
+        variant_4 = 4;
+    }
 
 //  ------------------------------------------------------------------
 
-    Variant < int, std::string > variant_3(variant_2);
+    {
+        Variant < int, std::string > variant = 1;
 
-    Variant < int, std::string > variant_4(std::move(variant_3));
+        assert(variant.has < int > () && variant.get < int > () == 1);
 
-    variant_3 = variant_2; 
-    
-    variant_4 = std::move(variant_3);
-
-    variant_4 = 4;
+        variant.visit(Visitor());
+    }
 
 //  ------------------------------------------------------------------
 
-    assert(variant_4.has < int > () && variant_4.get < int > () == 4);    
+    {
+//      Variant < Entity, int > variant; // error
 
-//  ------------------------------------------------------------------
-
-    variant_4.visit(Visitor());
-
-//  ------------------------------------------------------------------
-
-//  Variant < Entity, int > variant_5; // error
-
-    Variant < std::monostate, Entity, int > variant_6;
+        Variant < std::monostate, Entity, int > variant;
+    }
 }

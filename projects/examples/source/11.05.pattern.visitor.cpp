@@ -12,6 +12,7 @@ public:
 //  ----------------------------------------------------------
 
     virtual void visit(const class Client * client) const = 0;
+    
     virtual void visit(const class Server * server) const = 0;
 };
 

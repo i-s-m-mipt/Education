@@ -91,6 +91,7 @@ int main()
 			auto tuple = result[i * size + j];
 
 			assert(std::get < 0 > (tuple) == vector[i]);
+			
 			assert(std::get < 1 > (tuple) == vector[j]);
 		}
 	}

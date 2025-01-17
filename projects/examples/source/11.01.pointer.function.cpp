@@ -34,19 +34,21 @@ template < typename F, typename ... Ts > decltype(auto) invoke(F && f, Ts && ...
 
 int main()
 {
-	static_assert(std::is_same_v < decltype( test_v1), void   () > );
+	{
+		static_assert(std::is_same_v < decltype( test_v1), void   () > );
 
-	static_assert(std::is_same_v < decltype(&test_v1), void(*)() > );
+		static_assert(std::is_same_v < decltype(&test_v1), void(*)() > );
 
-	auto function = &test_v1;
+		auto function = &test_v1; (*function)();
 
-	(*function)();
-	
-	  function ();
+		test_v2(test_v1);
+	}
 
-	test_v2(test_v1);
+//  ---------------------------------------------------------------------
 
-	assert(		invoke(test_v3, 1, 2) == 3);
+	{
+		assert(		invoke(test_v3, 1, 2) == 3);
 
-	assert(std::invoke(test_v3, 1, 2) == 3);
+		assert(std::invoke(test_v3, 1, 2) == 3);
+	}
 }

@@ -6,31 +6,41 @@
 #include <set>
 #include <vector>
 
+/////////////////////////////////////////////////////////////////////
+
 int main()
 {
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+	{
+		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-//  ================================================================================================
+		std::deque < int > deque;
 
-	std::deque < int > deque;
+		std::ranges::copy(vector, std::front_inserter(deque));
 
-	std::ranges::copy(vector, std::front_inserter(deque));
+		assert(std::size(deque) == std::size(vector));
+	}
 
-	assert(std::size(deque) == std::size(vector));
+//  -----------------------------------------------------------------
 
-//  ================================================================================================
+	{
+		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-	std::list < int > list;
+		std::list < int > list;
 
-	std::ranges::copy(vector, std::back_inserter(list));
+		std::ranges::copy(vector, std::back_inserter(list));
 
-	assert(std::size(list) == std::size(vector));
+		assert(std::size(list) == std::size(vector));
+	}
 
-//  ================================================================================================
+//  -----------------------------------------------------------------
 
-	std::set < int > set;
+	{
+		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-	std::ranges::copy(vector, std::inserter(set, std::end(set)));
+		std::set < int > set;
 
-	assert(std::size(set) == std::size(vector));
+		std::ranges::copy(vector, std::inserter(set, std::end(set)));
+
+		assert(std::size(set) == std::size(vector));
+	}
 }
