@@ -3,37 +3,43 @@
 #include <iostream>
 #include <type_traits>
 
-////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	assert(sizeof(char) == 1);
+	{
+		assert(sizeof(char) == 1);
 
-	auto c = 'a';
+		auto c = 'a';
 
-	assert(static_cast < int > (c) == 97);
+		assert(static_cast < int > (c) == 97);
 
-//	c = 'я'; // error
+//		c = 'я'; // error
 
-	auto is_signed_char = std::is_signed_v < char > ;
+		auto is_signed_char = std::is_signed_v < char > ;
 
-	std::cout << "main : is_signed_char = " << std::format("{}", is_signed_char) << '\n';
+		std::cout << "main : is_signed_char = " << std::format("{}", is_signed_char) << '\n';
+		
+		assert('1' - '0' == 1);
+	}
 	
-	assert('1' - '0' == 1);
+//  -----------------------------------------------------------------------------------------
 
-//  ------------------------------------------------------------------------------------
+	{
+		std::cout << "main : sizeof(wchar_t) = " << sizeof(wchar_t) << '\n';
 
-	std::cout << "main : sizeof(wchar_t) = " << sizeof(wchar_t) << '\n';
+		auto wc = L'a';
 
-	auto wc = L'a';
+		std::wcout << "wc = " << wc << '\n';
+	}
 
-	std::wcout << "wc = " << wc << '\n';
+//  -----------------------------------------------------------------------------------------
 
-//  ------------------------------------------------------------------------------------
+	{
+		assert(sizeof(char8_t) == 1);
 
-	assert(sizeof(char8_t) == 1);
+		[[maybe_unused]] auto c8 = u8'a'; 	
 
-	[[maybe_unused]] auto c8 = u8'a'; 	
-
-//	std::cout << "main : c8 = " << c8 << '\n'; // error
+//		std::cout << "main : c8 = " << c8 << '\n'; // error
+	}	
 }

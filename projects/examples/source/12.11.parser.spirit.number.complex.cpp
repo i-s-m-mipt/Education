@@ -9,7 +9,7 @@ using namespace std::literals;
 
 #include <boost/spirit/home/x3.hpp>
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////
 
 auto parse(std::string_view data)
 {
@@ -20,6 +20,7 @@ auto parse(std::string_view data)
     using boost::spirit::x3::_attr;
 
     auto set_x = [&x](auto && context){ x = _attr(context); };
+
     auto set_y = [&y](auto && context){ y = _attr(context); };
 
     using boost::spirit::x3::double_;
@@ -27,7 +28,9 @@ auto parse(std::string_view data)
     auto rule = 
     (
         '(' >> double_[set_x] >> ',' >> double_[set_y] >> ')' |
+
         '(' >> double_[set_x]                          >> ')' |
+        
                double_[set_x]
     );
 
@@ -43,11 +46,13 @@ auto parse(std::string_view data)
     return std::complex < double > (x, y);
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////
 
 int main()
 {
     assert(parse("(1.0, 2.0)") == 1.0 + 2.0i);
+
     assert(parse("(1.0     )") == 1.0 + 0.0i);
+
     assert(parse(" 1.0      ") == 1.0 + 0.0i);
 }

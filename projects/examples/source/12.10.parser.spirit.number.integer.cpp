@@ -11,57 +11,65 @@ using namespace std::literals;
 
 #include <boost/spirit/home/x3.hpp>
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
 int main()
 {
-    auto skip = boost::spirit::x3::ascii::space;
+    {
+        auto data = "1"sv; auto begin = std::begin(data), end = std::end(data);
 
-    auto data_1 = "1"sv; auto begin_1 = std::begin(data_1), end_1 = std::end(data_1);
+        auto rule = boost::spirit::x3::int_;
 
-    auto rule_1 = boost::spirit::x3::int_;
+        auto x = 0;
 
-    auto x = 0;
+        boost::spirit::x3::phrase_parse(begin, end, rule, boost::spirit::x3::ascii::space, x);
 
-    boost::spirit::x3::phrase_parse(begin_1, end_1, rule_1, skip, x);
-
-    assert(x == 1);
+        assert(x == 1);
+    }
     
-//  -------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------------------------
 
-    auto data_2 = "1 2"sv; auto begin_2 = std::begin(data_2), end_2 = std::end(data_2);
+    {
+        auto data = "1 2"sv; auto begin = std::begin(data), end = std::end(data);
 
-    auto rule_2 = boost::spirit::x3::int_ >> boost::spirit::x3::int_;
+        auto rule = boost::spirit::x3::int_ >> boost::spirit::x3::int_;
 
-    std::pair < int, int > pair;
+        std::pair < int, int > pair;
 
-    boost::spirit::x3::phrase_parse(begin_2, end_2, rule_2, skip, pair);
+        boost::spirit::x3::phrase_parse(begin, end, rule, boost::spirit::x3::ascii::space, pair);
 
-    assert(pair == std::make_pair(1, 2));
+        assert(pair == std::make_pair(1, 2));
+    }
 
-//  ----------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------------------------
 
-    auto data_3 = "{ 1 2 }"sv; auto begin_3 = std::begin(data_3), end_3 = std::end(data_3);
+    {
+        auto data = "{ 1 2 }"sv; auto begin = std::begin(data), end = std::end(data);
 
-    auto rule_3 = '{' >> boost::spirit::x3::int_ >> boost::spirit::x3::int_ >> '}';
+        auto rule = '{' >> boost::spirit::x3::int_ >> boost::spirit::x3::int_ >> '}';
 
-    std::tuple < int, int > tuple;
+        std::tuple < int, int > tuple;
 
-    boost::spirit::x3::phrase_parse(begin_3, end_3, rule_3, skip, tuple);
+        boost::spirit::x3::phrase_parse(begin, end, rule, boost::spirit::x3::ascii::space, tuple);
 
-    assert(tuple == std::make_tuple(1, 2));
+        assert(tuple == std::make_tuple(1, 2));
+    }
 
-//  -----------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------------------------
 
-    auto data_4 = "1"sv; auto begin_4 = std::begin(data_4), end_4 = std::end(data_4);
+    {
+        auto data = "1"sv; auto begin = std::begin(data), end = std::end(data);
 
-    auto rule_4 = boost::spirit::x3::int_
-    [
-        (
-            [](auto && context)
-            { 
-                assert(boost::spirit::x3::_attr(context) == 1); 
-            }
-        )
-    ];
+        auto rule = boost::spirit::x3::int_
+        [
+            (
+                [](auto && context)
+                { 
+                    assert(boost::spirit::x3::_attr(context) == 1); 
+                }
+            )
+        ];
 
-    boost::spirit::x3::phrase_parse(begin_4, end_4, rule_4, skip);
+        boost::spirit::x3::phrase_parse(begin, end, rule, boost::spirit::x3::ascii::space);
+    }
 }

@@ -10,13 +10,14 @@
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 namespace detail
 {
     class Operand : public boost::spirit::x3::variant 
     < 
-        double, boost::spirit::x3::forward_ast < struct Sign > , 
+        double, boost::spirit::x3::forward_ast < struct Sign > ,
+
                 boost::spirit::x3::forward_ast < struct List > 
     >
     {
@@ -35,7 +36,7 @@ namespace detail
     };
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 BOOST_FUSION_ADAPT_STRUCT(::detail::Sign, operation, operand)
 
@@ -43,29 +44,34 @@ BOOST_FUSION_ADAPT_STRUCT(::detail::Step, operation, operand)
 
 BOOST_FUSION_ADAPT_STRUCT(::detail::List, head, tail)
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 namespace parser
 {
     boost::spirit::x3::rule < struct rule_1_tag, detail::List    > rule_1;
+
     boost::spirit::x3::rule < struct rule_2_tag, detail::List    > rule_2;
+
     boost::spirit::x3::rule < struct rule_3_tag, detail::Operand > rule_3;
 
     auto rule_1_def = rule_2 >> *
     (        
         boost::spirit::x3::char_('+') >> rule_2 | 
+
         boost::spirit::x3::char_('-') >> rule_2
     );
 
     auto rule_2_def = rule_3 >> *
     (
         boost::spirit::x3::char_('*') >> rule_3 | 
+
         boost::spirit::x3::char_('/') >> rule_3
     );
 
     auto rule_3_def = 
     (
         boost::spirit::x3::char_('+') >> rule_3 | 
+
         boost::spirit::x3::char_('-') >> rule_3 | boost::spirit::x3::double_ | '(' >> rule_1 >> ')'
     );
 
@@ -74,7 +80,7 @@ namespace parser
     auto rule = rule_1;
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Calculator
 {
@@ -91,8 +97,9 @@ public:
 
         switch (sign.operation)
         {
-            case '+': { return        rhs; }
-            case '-': { return -1.0 * rhs; }
+            case '+': { return rhs; }
+
+            case '-': { return rhs * -1.0; }
 
             default: 
             { 
@@ -108,8 +115,11 @@ public:
         switch (step.operation)
         {
             case '+': { return lhs + rhs; }
+
             case '-': { return lhs - rhs; }
+
             case '*': { return lhs * rhs; }
+
             case '/': { return lhs / rhs; }
 
             default: 
@@ -132,7 +142,7 @@ public:
     }
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 auto parse(std::string_view data)
 {
@@ -154,14 +164,14 @@ auto parse(std::string_view data)
     return calculator(list);
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
