@@ -34,10 +34,9 @@ union Entity_v2
 
    ~Entity_v2() {}
 
-//  ------------------------------------------------------------------------------------------------
+//  ---------------------------
 
-	std::string data_1; 
-	std::string data_2;
+	std::string data_1, data_2;
 };
 
 //  ================================================================================================
@@ -63,6 +62,7 @@ public:
 protected:
 
     Entity_v3() = default;
+
    ~Entity_v3() = default;
 };
 
@@ -77,6 +77,7 @@ private:
 public:
 
 	Client() { std::cout << "Client:: Client\n"; }
+
    ~Client() { std::cout << "Client::~Client\n"; }
 
 //  ----------------------------------------------------
@@ -106,49 +107,55 @@ BENCHMARK(test)->RangeMultiplier(2)->Range(1'024 * 1'024, 1'024 * 1'024 * 1'024)
 
 int main()
 {
-	assert(sizeof(Entity_v1) == sizeof(int));
-
-	auto size = 5uz;
-
-	auto entities = static_cast < Entity_v1 * > (operator new(sizeof(Entity_v1) * size));
-
-	for (auto i = 0uz; i < size; ++i)
 	{
-		new (entities + i) Entity_v1(i + 1);
+		assert(sizeof(Entity_v1) == sizeof(int));
+
+		auto size = 5uz;
+
+		auto entities = static_cast < Entity_v1 * > (operator new(sizeof(Entity_v1) * size));
+
+		for (auto i = 0uz; i < size; ++i)
+		{
+			new (entities + i) Entity_v1(i + 1);
+		}
+
+		auto offset = size / 2;
+
+		(entities + offset)->~Entity_v1();
+
+		new (entities + offset) Entity_v1(size + 1);
+
+		for (auto i = 0uz; i < size; ++i)
+		{
+			entities[i].~Entity_v1();
+		}
+
+		operator delete(entities, sizeof(Entity_v1) * size);
 	}
 
-	auto offset = size / 2;
+//  -----------------------------------------------------------------------------------------
 
-	(entities + offset)->~Entity_v1();
-
-	new (entities + offset) Entity_v1(size + 1);
-
-	for (auto i = 0uz; i < size; ++i)
 	{
-		entities[i].~Entity_v1();
+		Entity_v2 entity_v2;
+
+		entity_v2.data_1 = "aaaaa";
+
+		entity_v2.data_1.~basic_string();
+
+		new (&entity_v2.data_2) std::string;
+
+		entity_v2.data_2 = "bbbbb";
+
+		entity_v2.data_2.~basic_string();
 	}
 
-	operator delete(entities, sizeof(Entity_v1) * size);
+//  -----------------------------------------------------------------------------------------	
 
-//  ================================================================================================
+	{
+		delete new Client;
+	}
 
-	Entity_v2 entity_v2;
-
-	entity_v2.data_1 = "aaaaa";
-
-	entity_v2.data_1.~basic_string();
-
-	new (&entity_v2.data_2) std::string;
-
-	entity_v2.data_2 = "bbbbb";
-
-	entity_v2.data_2.~basic_string();
-
-//  ================================================================================================
-	
-	delete new Client;
-
-//  ================================================================================================
+//  -----------------------------------------------------------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }

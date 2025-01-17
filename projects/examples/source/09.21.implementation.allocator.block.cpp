@@ -311,11 +311,15 @@ int main()
     allocator.test(); 
 
 	[[maybe_unused]] auto ptr_1 = allocator.allocate(1); allocator.test();
+
 	[[maybe_unused]] auto ptr_2 = allocator.allocate(2); allocator.test();
+
 	[[maybe_unused]] auto ptr_3 = allocator.allocate(3); allocator.test();
+
     [[maybe_unused]] auto ptr_4 = allocator.allocate(4); allocator.test();
 
 	allocator.deallocate (ptr_3);                        allocator.test();
+    
     allocator.deallocate (ptr_2);                        allocator.test();
 
 	[[maybe_unused]] auto ptr_5 = allocator.allocate(5); allocator.test();

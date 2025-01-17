@@ -58,21 +58,28 @@ void test_v2(benchmark::State & state)
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test_v1);
+
 BENCHMARK(test_v2);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	static_assert(std::alignment_of_v < double > == 8);
+	{
+		static_assert(std::alignment_of_v < double > == 8);
+	}
 
-//  ------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
-	static_assert(sizeof(Entity_v1) == 12 && alignof(Entity_v1) == 4);
-	static_assert(sizeof(Entity_v2) ==  8 && alignof(Entity_v2) == 4);
-	static_assert(sizeof(Entity_v3) ==  8 && alignof(Entity_v3) == 8);
+	{
+		static_assert(sizeof(Entity_v1) == 12 && alignof(Entity_v1) == 4);
 
-//  ------------------------------------------------------------------
+		static_assert(sizeof(Entity_v2) ==  8 && alignof(Entity_v2) == 4);
+
+		static_assert(sizeof(Entity_v3) ==  8 && alignof(Entity_v3) == 8);
+	}
+
+//  ----------------------------------------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }

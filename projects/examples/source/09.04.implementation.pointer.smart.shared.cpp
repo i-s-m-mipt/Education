@@ -123,6 +123,7 @@ public:
     void swap(Shared & other)
     {
         std::swap(m_data, other.m_data);
+
         std::swap(m_rccb, other.m_rccb);
     }
 
@@ -142,21 +143,23 @@ private:
 
 int main()
 {
-    Shared < int > shared_1;
+    {
+        Shared < int > shared_1;
 
-    Shared < int > shared_2(new auto(2));
+        Shared < int > shared_2(new auto(2));
 
-//  ---------------------------------------------
+        Shared < int > shared_3(shared_2);
 
-    Shared < int > shared_3(shared_2); // error
+        Shared < int > shared_4(std::move(shared_3));
 
-    Shared < int > shared_4(std::move(shared_3));
+        shared_3 = shared_2;
+        
+        shared_4 = std::move(shared_3);
+    }
 
-    shared_3 = shared_2; // error
-    
-    shared_4 = std::move(shared_3);
+//  -------------------------------------------------
 
-//  -------------------------------
-
-    assert(*shared_4 == 2);
+    {
+        assert(*Shared < int > (new auto(1)) == 1);
+    }
 }

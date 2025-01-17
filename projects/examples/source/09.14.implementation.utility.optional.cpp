@@ -141,23 +141,27 @@ private:
 
 int main()
 {
-    Optional < int > optional_1;
+    {
+        Optional < int > optional_1;
     
-    Optional < int > optional_2(2);
+        Optional < int > optional_2(2);
 
-//  ----------------------------------------
+        Optional < int > optional_3(optional_2);
 
-    Optional < int > optional_3(optional_2);
+        Optional < int > optional_4(std::move(optional_3));
 
-    Optional < int > optional_4(std::move(optional_3));
-
-    optional_3 = optional_2; 
+        optional_3 = optional_2; 
     
-    optional_4 = std::move(optional_3);
+        optional_4 = std::move(optional_3);
 
-    optional_4 = 4;
+        optional_4 = 4;
+    }
 
-//  -----------------------------------------------------------
+//  ----------------------------------------------------------
 
-    assert(!optional_4.empty() && optional_4.data_or(0) == 4);
+    {
+        Optional < int > optional(1);
+
+        assert(!optional.empty() && optional.data_or(0) == 1);
+    }    
 }

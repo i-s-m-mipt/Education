@@ -15,7 +15,7 @@ using namespace std::literals;
 
 #include <benchmark/benchmark.h>
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state)
 {
@@ -32,7 +32,7 @@ void test_v1(benchmark::State & state)
 	}
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state)
 {
@@ -49,7 +49,7 @@ void test_v2(benchmark::State & state)
 	}
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v3(benchmark::State & state)
 {
@@ -70,7 +70,7 @@ void test_v3(benchmark::State & state)
 	}
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v4(benchmark::State & state)
 {
@@ -93,7 +93,7 @@ void test_v4(benchmark::State & state)
 	}
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 #define BOOST_POOL_NO_MT
 
@@ -112,64 +112,77 @@ void test_v5(benchmark::State & state) // support: Valgrind
 	}
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test_v1);
+
 BENCHMARK(test_v2);
+
 BENCHMARK(test_v3);
+
 BENCHMARK(test_v4);
+
 BENCHMARK(test_v5);
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::array < char, 32 > buffer;
-
-    std::ranges::fill(buffer, '_');
-
-    std::pmr::monotonic_buffer_resource arena(std::data(buffer), std::size(buffer));
-
-    auto size = 26uz;
-
-    std::pmr::vector < char > vector_1(&arena);
-
-    vector_1.reserve(size);
-
-    for (auto i = 0uz; i < size; ++i)
     {
-        vector_1.push_back('a' + i);
+        std::array < char, 32 > buffer;
+
+        std::ranges::fill(buffer, '_');
+
+        std::pmr::monotonic_buffer_resource arena(std::data(buffer), std::size(buffer));
+
+        auto size = 26uz;
+
+        std::pmr::vector < char > vector(&arena);
+
+        vector.reserve(size);
+
+        for (auto i = 0uz; i < size; ++i)
+        {
+            vector.push_back('a' + i);
+        }
+
+        auto result = "abcdefghijklmnopqrstuvwxyz______"s;
+
+        for (auto i = 0uz; i < std::size(buffer); ++i) 
+        {
+            assert(buffer[i] == result[i]);
+        }
     }
 
-    auto result = "abcdefghijklmnopqrstuvwxyz______"s;
+//  ------------------------------------------------------------------------------------
 
-    for (auto i = 0uz; i < std::size(buffer); ++i) 
     {
-        assert(buffer[i] == result[i]);
+        auto resource = std::pmr::new_delete_resource();
+
+        auto ptr = resource->allocate(1);
+
+        resource->deallocate(ptr, 1);
     }
 
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------
 
-    auto resource = std::pmr::new_delete_resource();
+    {
+        boost::object_pool < int > pool(32);
 
-    auto ptr = resource->allocate(1);
+        auto object_1 = pool.malloc(); pool.destroy(object_1);
 
-    resource->deallocate(ptr, 1);
+        auto object_2 = pool.malloc(); pool.destroy(object_2);
 
-//  ================================================================================================
+        assert(pool.get_next_size() == 64);
+    }
 
-    boost::object_pool < int > pool(32);
+//  ------------------------------------------------------------------------------------
 
-    auto object_1 = pool.malloc(); pool.destroy(object_1);
-    auto object_2 = pool.malloc(); pool.destroy(object_2);
+    {
+        std::vector < int, boost::pool_allocator < int > > vector;
+    }
 
-    assert(pool.get_next_size() == 64);
-
-//  ================================================================================================
-
-    std::vector < int, boost::pool_allocator < int > > vector_2;
-
-//  ================================================================================================
+//  ------------------------------------------------------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }
