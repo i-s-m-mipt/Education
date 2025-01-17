@@ -5,7 +5,7 @@
 #include <sstream>
 #include <string>
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 auto type(const std::filesystem::file_status & status)
 {
@@ -21,7 +21,7 @@ auto type(const std::filesystem::file_status & status)
     return '?';
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 auto permissions(std::filesystem::perms permissions) -> std::string
 {
@@ -33,12 +33,14 @@ auto permissions(std::filesystem::perms permissions) -> std::string
     return
     { 
         verify(std::filesystem::perms::owner_read , 'r'),
+
         verify(std::filesystem::perms::owner_write, 'w'),
+
         verify(std::filesystem::perms::owner_exec , 'x') 
     };
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 auto size(const std::filesystem::path & path)
 {
@@ -58,7 +60,7 @@ auto size(const std::filesystem::path & path)
 	return result;
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 auto size(const std::filesystem::directory_entry & entry)
 {
@@ -85,7 +87,7 @@ auto size(const std::filesystem::directory_entry & entry)
     return (std::stringstream() << std::format("{: >4}", result) << units[index]).str();
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 void view(const std::filesystem::path & path)
 {
@@ -108,7 +110,7 @@ void view(const std::filesystem::path & path)
 	}
 }
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {

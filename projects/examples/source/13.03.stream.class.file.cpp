@@ -10,14 +10,14 @@
 #include <streambuf>
 #include <string>
 
-///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 struct Entity 
 { 
     int data_1 = 0; std::string data_2; 
 };
 
-///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 auto & operator>>(std::istream & stream, Entity & entity)
 {
@@ -34,7 +34,7 @@ auto & operator>>(std::istream & stream, Entity & entity)
     return stream;
 }
 
-///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 auto & operator<<(std::ostream & stream, const Entity & entity)
 {
@@ -49,7 +49,7 @@ auto & operator<<(std::ostream & stream, const Entity & entity)
     return stream;
 }
 
-///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 class Redirector
 {
@@ -80,66 +80,70 @@ private:
     std::fstream m_fout; std::streambuf * m_buffer = nullptr;
 };
 
-///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    auto path = "13.03.stream.class.file.example.data";
-
-    auto size = 5uz;
-
-//  ---------------------------------------------------------------------------
-
-    if (std::fstream fout(path, std::ios::out); fout)
     {
-        for (auto i = 0uz; i < size; ++i)
+        if (std::fstream fout("13.03.stream.class.file.example.data", std::ios::out); fout)
         {
-            fout << std::string(size, 'a') << '\n';
+            auto size = 5uz;
+
+            for (auto i = 0uz; i < size; ++i)
+            {
+                fout << std::string(size, 'a') << '\n';
+            }
+
+            fout.seekp((size - 1) * (size + 1), std::ios::beg);
+
+            fout << "bbbbb\n" << Entity(1, "aaaaa") << '\n';
+        }
+        else 
+        {
+            throw std::runtime_error("invalid stream");
         }
 
-        fout.seekp((size - 1) * (size + 1), std::ios::beg);
-
-        fout << "bbbbb\n" << Entity(1, "aaaaa") << '\n';
-    }
-    else 
-    {
-        throw std::runtime_error("invalid stream");
+        std::cout << "main : enter char to continue : "; char c; std::cin >> c;
     }
 
-//  ---------------------------------------------------------------------------
-
-    if (std::fstream fin(path, std::ios::in); fin)
-    {
-        fin.seekg((size - 1) * (size + 1), std::ios::beg);
-
-        std::string input; std::getline(fin, input); 
-        
-        assert(input == "bbbbb");
-
-        Entity entity; fin >> entity;
-
-        assert(entity.data_1 == 1 && entity.data_2 == "aaaaa");
-    }
-    else 
-    {
-        throw std::runtime_error("invalid stream");
-    }
-
-//  ---------------------------------------------------------------------------
-
-    std::cout << "main : enter char to continue : "; char c1; std::cin >> c1;
-
-//  ---------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------
 
     {
-        Redirector redirector(path); std::cout << "main : trace\n";
+        if (std::fstream fin("13.03.stream.class.file.example.data", std::ios::in); fin)
+        {
+            auto size = 5uz;
+
+            fin.seekg((size - 1) * (size + 1), std::ios::beg);
+
+            std::string input; std::getline(fin, input); 
+            
+            assert(input == "bbbbb");
+
+            Entity entity; fin >> entity;
+
+            assert(entity.data_1 == 1 && entity.data_2 == "aaaaa");
+        }
+        else 
+        {
+            throw std::runtime_error("invalid stream");
+        }
     }
 
-//  ---------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------
 
-    std::cout << "main : enter char to continue : "; char c2; std::cin >> c2;
+    {
+        {
+            Redirector redirector("13.03.stream.class.file.example.data"); 
+            
+            std::cout << "main : trace\n";
+        }
 
-//  ---------------------------------------------------------------------------
+        std::cout << "main : enter char to continue : "; char c; std::cin >> c;
+    }
 
-    std::filesystem::remove(path);
+//  ---------------------------------------------------------------------------------------
+
+    {
+        std::filesystem::remove("13.03.stream.class.file.example.data");
+    }
 }

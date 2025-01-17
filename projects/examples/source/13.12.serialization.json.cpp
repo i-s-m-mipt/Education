@@ -11,70 +11,70 @@
 
 #include <nlohmann/json.hpp>
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 struct Entity 
 {
     int data_1 = 0; std::string data_2; std::vector < int > data_3;
 };
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Entity entity(1, "aaaaa", { 1, 2, 3, 4, 5 });
-
-    auto path = "13.12.serialization.json.example.json";
-
-//  -------------------------------------------------------------------------
-
-    nlohmann::json json_1; // support: boost::property_tree
-
-    json_1["data_1"] = entity.data_1;
-    json_1["data_2"] = entity.data_2;
-    json_1["data_3"] = entity.data_3;
-
-    json_1["x"]["y"] = 1;
-
-    if (std::fstream fout(path, std::ios::out); fout)
-	{
-		fout << std::setw(4) << json_1;
-	}
-	else 
     {
-        throw std::runtime_error("invalid stream");
+        nlohmann::json json; // support: boost::property_tree
+
+        Entity entity(1, "aaaaa", { 1, 2, 3, 4, 5 });
+
+        json["data_1"] = entity.data_1;
+
+        json["data_2"] = entity.data_2;
+
+        json["data_3"] = entity.data_3;
+
+        json["x"]["y"] = 1;
+
+        if (std::fstream stream("13.12.serialization.json.example.json", std::ios::out); stream)
+        {
+            stream << std::setw(4) << json;
+        }
+        else 
+        {
+            throw std::runtime_error("invalid stream");
+        }
+
+        std::cout << "main : enter char to continue : "; char c; std::cin >> c;
+    }
+    
+//  --------------------------------------------------------------------------------------------
+
+    {
+        nlohmann::json json;
+
+        if (std::fstream stream("13.12.serialization.json.example.json", std::ios::in); stream)
+        {
+            json = nlohmann::json::parse(stream);
+        }
+        else 
+        {
+            throw std::runtime_error("invalid stream");
+        }
+
+        Entity entity(1, "aaaaa", { 1, 2, 3, 4, 5 });
+
+        assert(json["data_1"].get < decltype(entity.data_1) > () == entity.data_1);
+
+        assert(json["data_2"].get < decltype(entity.data_2) > () == entity.data_2);
+
+        assert(json["data_3"].get < decltype(entity.data_3) > () == entity.data_3);
+
+        assert(json["x"]["y"].get < int > () == 1);
     }
 
-//  -------------------------------------------------------------------------
+//  --------------------------------------------------------------------------------------------
 
-    nlohmann::json json_2;
-
-    if (std::fstream fin(path, std::ios::in); fin)
-	{
-		json_2 = nlohmann::json::parse(fin);
-	}
-	else 
     {
-        throw std::runtime_error("invalid stream");
+        std::filesystem::remove("13.12.serialization.json.example.json");
     }
-
-    using data_1_t = int;
-
-    using data_2_t = std::string;
-
-    using data_3_t = std::vector < int > ;
-
-    assert(json_2["data_1"].get < data_1_t > () == entity.data_1);
-    assert(json_2["data_2"].get < data_2_t > () == entity.data_2);
-    assert(json_2["data_3"].get < data_3_t > () == entity.data_3);
-
-    assert(json_2["x"]["y"].get < int > () == 1);
-
-//  -------------------------------------------------------------------------
-
-    std::cout << "main : enter char to continue : "; char c; std::cin >> c;
-
-//  -----------------------------------------------------------------------
-
-    std::filesystem::remove(path);
 }

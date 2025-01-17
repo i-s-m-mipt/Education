@@ -8,11 +8,13 @@
 #include <PDFWriter/PDFRectangle.h>
 #include <PDFWriter/PDFWriter.h>
 
+////////////////////////////////////////////////////////////////////////////////////////////
+
 int main()
 {
     auto path = "13.13.serialization.pdf.example.pdf";
 
-//  ================================================================================================
+//  ----------------------------------------------------------------------------------------
 
     PDFWriter writer;
     
@@ -24,17 +26,19 @@ int main()
 
     page->SetMediaBox(PDFRectangle(0, 0, width, height)); 
 
-//  ================================================================================================
+//  ----------------------------------------------------------------------------------------
 
     auto context = writer.StartPageContentContext(page.get());
 
     auto line = height;
 
     using   Image_Options = AbstractContentContext::  ImageOptions;
+
     using    Text_Options = AbstractContentContext::   TextOptions;
+
     using Graphic_Options = AbstractContentContext::GraphicOptions;
 
-//  ================================================================================================
+//  ----------------------------------------------------------------------------------------
 
     auto delta = 10, image_height = 380, ppi = 72, image_ppi = 96;
 
@@ -50,7 +54,7 @@ int main()
     
     context->DrawImage(delta, line, "matthias.jpg", image_options);
 
-//  ================================================================================================
+//  ----------------------------------------------------------------------------------------
 
     auto font = writer.GetFontForFile("consolas.ttf");
 
@@ -62,7 +66,7 @@ int main()
 
     context->WriteText(delta, line, "Hello, World!", text_options);
 
-//  ================================================================================================
+//  ----------------------------------------------------------------------------------------
 
     auto rectangle_height = font_size + 4, rectangle_width = 100;
 
@@ -79,7 +83,7 @@ int main()
 
     context->DrawRectangle(delta, line, rectangle_width, rectangle_height, graphic_options);
 
-//  ================================================================================================
+//  ----------------------------------------------------------------------------------------
     
     std::ignore = writer.EndPageContentContext(context);
 
@@ -87,11 +91,9 @@ int main()
 
     std::ignore = writer.EndPDF();
 
-//  -----------------------------------------------------------------------
-
     std::cout << "main : enter char to continue : "; char c; std::cin >> c;
 
-//  -----------------------------------------------------------------------
+//  ----------------------------------------------------------------------------------------
 
     std::filesystem::remove(path);
 }

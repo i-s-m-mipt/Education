@@ -7,6 +7,8 @@
 #include <stdexcept>
 #include <string>
 
+//////////////////////////////////////////////////////////////////////////////////////
+
 void transform(const std::string & path_1, const std::string & path_2)
 {
     if (std::fstream fin(path_1, std::ios::in); fin)
@@ -81,6 +83,8 @@ void transform(const std::string & path_1, const std::string & path_2)
         throw std::runtime_error("invalid stream");
     }
 }
+
+//////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {

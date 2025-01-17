@@ -3,6 +3,8 @@
 #include <iomanip>
 #include <sstream>
 
+/////////////////////////////////////////////////////////////
+
 int main()
 {
 	std::stringstream stream;
@@ -11,15 +13,11 @@ int main()
 
 	assert(stream.str() == "____0377");
 
-//  ================================================================================================
-
 	stream.seekp(0);
 
 	stream << std::format("{:_>#8x}", 255);
 
 	assert(stream.str() == "____0xff");
-
-//  ================================================================================================
 
     char c;
 
@@ -27,7 +25,9 @@ int main()
     {
         if (c == '0')
         {
-            stream.unget(); int x; stream >> std::hex >> x; assert(x == 255);
+            stream.unget(); 
+            
+            int x; stream >> std::hex >> x; assert(x == 255);
         }
     }
 

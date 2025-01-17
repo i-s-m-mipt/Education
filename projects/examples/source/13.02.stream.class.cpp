@@ -48,42 +48,49 @@ template < typename ... Ts > void test(Ts ... args)
 
 int main()
 {
-    auto exceptions = std::cin.exceptions();
-
-    std::cin.exceptions(std::ios::eofbit | std::ios::badbit);
-
-    try
     {
-        std::cout << "main : enter ints and non-int : ";
-        
-        int x; while (std::cin >> x);
+        auto exceptions = std::cin.exceptions();
 
-        if (std::cin.fail()) 
+        std::cin.exceptions(std::ios::eofbit | std::ios::badbit);
+
+        try
         {
-            std::cin.clear(); char c; std::cin >> c;
+            std::cout << "main : enter ints and non-int : ";
+            
+            int x; while (std::cin >> x);
+
+            if (std::cin.fail()) 
+            {
+                std::cin.clear(); char c; std::cin >> c;
+            }
         }
-    }
-    catch (const std::ios_base::failure & exception)
-    {
-        std::cerr << "main : " << exception.what() << '\n';
-    }
+        catch (const std::ios_base::failure & exception)
+        {
+            std::cerr << "main : " << exception.what() << '\n';
+        }
 
-    std::cin.clear();
+        std::cin.clear();
+        
+        std::cin.exceptions(exceptions);
+    }
     
-    std::cin.exceptions(exceptions);
+//  -------------------------------------------------------------
 
-//  -------------------------------------------------------------------
+    {
+        auto flags = std::cout.flags();
 
-    auto flags = std::cout.flags();
+        auto x = 1.0, y = 2.0;
 
-    auto x = 1.0, y = 2.0;
+        std::cout << "main : x = " << Formatter(3) << x << '\n';
 
-    std::cout << "main : x = " << Formatter(3) << x << '\n';
-    std::cout << "main : y = " << Formatter(6) << y << '\n';
+        std::cout << "main : y = " << Formatter(6) << y << '\n';
 
-    std::cout.flags(flags);
+        std::cout.flags(flags);
+    }
 
-//  -------------------------------------------------------------------
+//  -------------------------------------------------------------
 
-    test(1, 2, 3);
+    {
+        test(1, 2, 3);
+    }
 }
