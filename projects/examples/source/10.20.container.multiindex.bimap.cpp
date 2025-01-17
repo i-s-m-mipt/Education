@@ -11,13 +11,13 @@
 
 struct Entity 
 { 
-	int data_1 = 0; 
-	int data_2 = 0; 
+	int data_1 = 0, data_2 = 0; 
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T, typename M > using HNU = boost::multi_index:: hashed_non_unique < T, M > ;
+
 template < typename T, typename M > using ONU = boost::multi_index::ordered_non_unique < T, M > ;
 
 template < typename T > using tag_t = boost::multi_index::tag < T > ;
@@ -35,6 +35,7 @@ using container_t = boost::multi_index::multi_index_container
 	Entity, boost::multi_index::indexed_by 
 	<
 		HNU < tag_t < struct data_1_tag > , member_t < Entity, int, &Entity::data_1 > > ,
+
 		ONU < tag_t < struct data_2_tag > , member_t < Entity, int, &Entity::data_2 > >
 	>
 > ; 
@@ -43,43 +44,41 @@ using container_t = boost::multi_index::multi_index_container
 
 int main()
 {
-	container_t container = { { 1, 1 }, { 2, 2 }, { 3, 3 }, { 4, 4 }, { 5, 5 } };
-
-//  -------------------------------------------------------------------------------------
-
-	auto & HNU_data_1_index = container.get < data_1_tag > ();
-
-	auto & ONU_data_2_index = container.get < data_2_tag > ();
-
-//  -------------------------------------------------------------------------------------
-	
-	if (HNU_data_1_index.contains(1))
 	{
-		auto lambda = [](auto && entity){ entity.data_1 = entity.data_2 = 2; };
+		container_t container = { { 1, 1 }, { 2, 2 }, { 3, 3 }, { 4, 4 }, { 5, 5 } };
 
-		assert(HNU_data_1_index.modify(HNU_data_1_index.find(1), lambda));
+		auto & HNU_data_1_index = container.get < data_1_tag > ();
 
-		assert(HNU_data_1_index.count(1) == 0);
+		auto & ONU_data_2_index = container.get < data_2_tag > ();
 
-		assert(HNU_data_1_index.count(2) == 2);
+		if (HNU_data_1_index.contains(1))
+		{
+			auto lambda = [](auto && entity){ entity.data_1 = entity.data_2 = 2; };
+
+			assert(HNU_data_1_index.modify(HNU_data_1_index.find(1), lambda));
+
+			assert(HNU_data_1_index.count(1) == 0);
+
+			assert(HNU_data_1_index.count(2) == 2);
+		}
+
+		assert(ONU_data_2_index.lower_bound(2)->data_2 == 2);
+
+		assert(ONU_data_2_index.upper_bound(2)->data_2 == 3);
 	}
 
-//  -------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
-	assert(ONU_data_2_index.lower_bound(2)->data_2 == 2);
-
-	assert(ONU_data_2_index.upper_bound(2)->data_2 == 3);
-
-//  -------------------------------------------------------------------------------------
-	
-	boost::bimap < int, int > bimap; // support: boost::bimaps::(multi)set_of
-
-	bimap.insert({ 1, 1 });
-
-	assert(bimap.left.count(1) == bimap.right.count(1));
-
-	for (const auto & element : bimap) 
 	{
-		assert(element.left == element.right);
+		boost::bimap < int, int > bimap; // support: boost::bimaps::(multi)set_of
+
+		bimap.insert({ 1, 1 });
+
+		assert(bimap.left.count(1) == bimap.right.count(1));
+
+		for (const auto & element : bimap) 
+		{
+			assert(element.left == element.right);
+		}
 	}
 }

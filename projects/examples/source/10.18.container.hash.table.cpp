@@ -15,8 +15,6 @@ void test(const std::unordered_set < std::string > & unordered_set)
 
 	std::cout << "test : load_factor = " << load_factor << "%\n";
 
-//  ----------------------------------------------------------------------------------------------
-
 	for (auto i = 0uz; i < unordered_set.bucket_count(); ++i)
 	{
 		std::cout << "test : buckets[" << std::format("{:0>3}", i) << "] = {";
@@ -59,24 +57,28 @@ auto make_dictionary(std::size_t size, std::size_t length)
 
 int main()
 {
-	using category_t = std::unordered_set < int > ::iterator::iterator_category;
-
-	static_assert(std::is_same_v < category_t, std::forward_iterator_tag > );
-
-//  ----------------------------------------------------------------------------
-	
-	std::unordered_set < std::string > unordered_set;
-
-	test(unordered_set); unordered_set.rehash(32);
-
-	test(unordered_set);
-
-	for (const auto & word : make_dictionary(unordered_set.bucket_count(), 5))
 	{
-		unordered_set.insert(word);
+		using category_t = std::unordered_set < int > ::iterator::iterator_category;
+
+		static_assert(std::is_same_v < category_t, std::forward_iterator_tag > );
 	}
 
-	test(unordered_set); unordered_set.rehash(64);
+//  --------------------------------------------------------------------------------
+
+	{
+		std::unordered_set < std::string > unordered_set;
+
+		test(unordered_set); unordered_set.rehash(32);
+
+		test(unordered_set);
+
+		for (const auto & word : make_dictionary(unordered_set.bucket_count(), 5))
+		{
+			unordered_set.insert(word);
+		}
+
+		test(unordered_set); unordered_set.rehash(64);
 	
-	test(unordered_set);
+		test(unordered_set);
+	}
 }

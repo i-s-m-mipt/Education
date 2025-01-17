@@ -7,7 +7,7 @@
 
 #include <boost/container_hash/hash.hpp>
 
-/////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 auto hash_v1(const std::string & string)
 {
@@ -21,7 +21,7 @@ auto hash_v1(const std::string & string)
 	return seed;
 }
 
-/////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 template < typename T, typename ... Ts > auto hash_v2(T arg, Ts ... args)
 {
@@ -35,7 +35,7 @@ template < typename T, typename ... Ts > auto hash_v2(T arg, Ts ... args)
 	return seed;
 }
 
-/////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 struct Entity 
 { 
@@ -43,39 +43,46 @@ struct Entity
 	int data_2 = 0; 
 };
 
-/////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 auto hash_value(const Entity & entity)
 {
 	auto seed = 0uz;
 
 	boost::hash_combine(seed, entity.data_1);
+	
 	boost::hash_combine(seed, entity.data_2);
 
 	return seed;
 }
 
-/////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	auto string = "aaaaa";
+	{
+		auto string = "aaaaa";
 
-	std::ignore = hash_v1(string);
+		std::ignore = hash_v1(string);
 
-	std::ignore = std::hash < std::string > ()(string);
+		std::ignore = std::hash < std::string > ()(string);
+	}
+	
+//  --------------------------------------------------------------------------
 
-//  ----------------------------------------------------------------------
+	{
+		Entity entity(1, 1);
 
-	Entity entity(1, 1);
+		std::ignore = hash_v2(entity.data_1, entity.data_2);
 
-	std::ignore = hash_v2(entity.data_1, entity.data_2);
+		std::ignore = boost::hash < Entity > ()(entity);
+	}
 
-	std::ignore = boost::hash < Entity > ()(entity);
+//  --------------------------------------------------------------------------
 
-//  ----------------------------------------------------------------------
+	{
+		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
-
-	std::ignore = boost::hash_range(std::begin(vector), std::end(vector));
+		std::ignore = boost::hash_range(std::begin(vector), std::end(vector));
+	}
 }

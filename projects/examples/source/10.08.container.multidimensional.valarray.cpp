@@ -17,8 +17,6 @@ int main()
     
     std::valarray < int > valarray_5(valarray_1[std::valarray < std::size_t > ({ 0, 1, 2 })]);
 
-//  ------------------------------------------------------------------------------------------
-
     assert(std::size(valarray_1) == 5);
 
     assert(std::size(valarray_2) == 5 && valarray_2[0] == 2 && valarray_2[4] == 0);
@@ -28,8 +26,6 @@ int main()
     assert(std::size(valarray_4) == 3 && valarray_4.max() == 3);
 
     assert(std::size(valarray_5) == 3 && valarray_5.max() == 3);
-
-//  ------------------------------------------------------------------------------------------
 
     assert((valarray_3 * valarray_4).sum() == 14);
 }

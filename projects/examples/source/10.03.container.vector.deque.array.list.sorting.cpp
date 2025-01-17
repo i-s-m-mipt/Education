@@ -163,9 +163,13 @@ void test_v5(benchmark::State & state)
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test_v1); 
+
 BENCHMARK(test_v2);
+
 BENCHMARK(test_v3);
+
 BENCHMARK(test_v4);
+
 BENCHMARK(test_v5);
 
 BENCHMARK_MAIN();

@@ -3,45 +3,55 @@
 #include <queue>
 #include <stack>
 
+////////////////////////////////////////////////////////
+
 int main()
 {
-	std::stack < int > stack; // support: LIFO
+	{
+		std::stack < int > stack;
 
-	stack.push(1);
-	stack.push(2);
-	stack.push(3);
+		stack.push(1);
 
-	assert(stack.top() == 3);
+		stack.push(2);
 
-	stack.pop();
+		assert(stack.top() == 2);
 
-	assert(stack.top() == 2);
+		stack.pop();
 
-//  ================================================================================================
+		assert(stack.top() == 1);
+	}
 
-	std::queue < int > queue; // support: FIFO
+//  ----------------------------------------------------
 
-	queue.push(1);
-	queue.push(2);
-	queue.push(3);
+	{
+		std::queue < int > queue;
 
-	assert(queue.front() == 1); assert(queue.back() == 3);
+		queue.push(1);
+		
+		queue.push(2);
 
-	queue.pop();
+		assert(queue.front() == 1 && queue.back() == 2);
 
-	assert(queue.front() == 2); assert(queue.back() == 3);
+		queue.pop();
 
-//  ================================================================================================
+		assert(queue.front() == 1 && queue.back() == 1);
+	}
 
-	std::priority_queue < int > priority_queue; // support: FIFO+
+//  ----------------------------------------------------
 
-	priority_queue.push(2);
-	priority_queue.push(3);
-	priority_queue.push(1);
+	{
+		std::priority_queue < int > priority_queue;
 
-	assert(priority_queue.top() == 3);
+		priority_queue.push(2);
 
-	priority_queue.pop();
+		priority_queue.push(3);
 
-	assert(priority_queue.top() == 2);
+		priority_queue.push(1);
+
+		assert(priority_queue.top() == 3);
+
+		priority_queue.pop();
+
+		assert(priority_queue.top() == 2);
+	}
 }

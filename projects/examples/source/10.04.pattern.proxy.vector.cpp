@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
@@ -22,25 +22,31 @@ private:
 	std::unique_ptr < int > m_data;
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Entity().make_data();
+	{
+		Entity().make_data();
+	}
 	
-	bool array[5]{};
+//  ---------------------------------------------------------------------------
 
-	assert(sizeof(array) == std::size(array));
+	{
+		bool array[5]{};
 
-//  -----------------------------------------------------------------------
+		assert(sizeof(array) == std::size(array));
+	}
 
-	std::vector < bool > vector(1'000'000'000, false); 
+//  ---------------------------------------------------------------------------
+
+	{
+		std::vector < bool > vector(1'000'000'000, false); 
  
-	auto proxy = vector.front();
+		auto proxy = vector.front();
 
-	static_assert(!std::is_same_v < decltype(proxy), bool > );
+		static_assert(!std::is_same_v < decltype(proxy), bool > );
 
-//  -----------------------------------------------------------------------
-
-	std::cout << "main : enter char to continue : "; char c; std::cin >> c;
+		std::cout << "main : enter char to continue : "; char c; std::cin >> c;
+	}
 }

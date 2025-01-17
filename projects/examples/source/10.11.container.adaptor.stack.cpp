@@ -4,7 +4,7 @@
 #include <stack>
 #include <utility>
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T > class Stack_v1
 {
@@ -37,7 +37,7 @@ private:
     std::stack < std::pair < T, T > > m_stack;
 };
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T > class Stack_v2
 {
@@ -84,39 +84,45 @@ private:
     std::stack < T > m_stack; T m_max = T();
 };
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Stack_v1 < int > stack_v1;
+    {
+        Stack_v1 < int > stack_v1;
 
-//  ---------------------------------------------------------------------------
+        stack_v1.push(1); assert(stack_v1.top() == 1); assert(stack_v1.max() == 1);
 
-    stack_v1.push(1); assert(stack_v1.top() == 1); assert(stack_v1.max() == 1);
-    stack_v1.push(3); assert(stack_v1.top() == 3); assert(stack_v1.max() == 3);
-    stack_v1.push(2); assert(stack_v1.top() == 2); assert(stack_v1.max() == 3);
+        stack_v1.push(3); assert(stack_v1.top() == 3); assert(stack_v1.max() == 3);
 
-//  ---------------------------------------------------------------------------
+        stack_v1.push(2); assert(stack_v1.top() == 2); assert(stack_v1.max() == 3);
 
-                      assert(stack_v1.top() == 2); assert(stack_v1.max() == 3);
-    stack_v1.pop ( ); assert(stack_v1.top() == 3); assert(stack_v1.max() == 3);
-    stack_v1.pop ( ); assert(stack_v1.top() == 1); assert(stack_v1.max() == 1);
-    stack_v1.pop ( );
+                          assert(stack_v1.top() == 2); assert(stack_v1.max() == 3);
 
-//  ---------------------------------------------------------------------------
+        stack_v1.pop ( ); assert(stack_v1.top() == 3); assert(stack_v1.max() == 3);
 
-    Stack_v2 < int > stack_v2;
+        stack_v1.pop ( ); assert(stack_v1.top() == 1); assert(stack_v1.max() == 1);
+
+        stack_v1.pop ( );
+    }    
    
-//  ---------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------
 
-    stack_v2.push(1); assert(stack_v2.top() == 1); assert(stack_v2.max() == 1);
-    stack_v2.push(3); assert(stack_v2.top() == 3); assert(stack_v2.max() == 3);
-    stack_v2.push(2); assert(stack_v2.top() == 2); assert(stack_v2.max() == 3);
+    {
+        Stack_v2 < int > stack_v2;
 
-//  ---------------------------------------------------------------------------
+        stack_v2.push(1); assert(stack_v2.top() == 1); assert(stack_v2.max() == 1);
 
-                      assert(stack_v2.top() == 2); assert(stack_v2.max() == 3);
-    stack_v2.pop ( ); assert(stack_v2.top() == 3); assert(stack_v2.max() == 3);
-    stack_v2.pop ( ); assert(stack_v2.top() == 1); assert(stack_v2.max() == 1);
-    stack_v2.pop ( );
+        stack_v2.push(3); assert(stack_v2.top() == 3); assert(stack_v2.max() == 3);
+
+        stack_v2.push(2); assert(stack_v2.top() == 2); assert(stack_v2.max() == 3);
+
+                          assert(stack_v2.top() == 2); assert(stack_v2.max() == 3);
+
+        stack_v2.pop ( ); assert(stack_v2.top() == 3); assert(stack_v2.max() == 3);
+
+        stack_v2.pop ( ); assert(stack_v2.top() == 1); assert(stack_v2.max() == 1);
+
+        stack_v2.pop ( );
+    }
 }
