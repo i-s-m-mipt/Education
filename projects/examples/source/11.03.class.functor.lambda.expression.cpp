@@ -78,7 +78,7 @@ int main()
 
 	std::vector < int > vector(5, 0);
 
-	std::ranges::for_each(vector, [result](auto & x){       (x += result); });
+	std::ranges::for_each(vector, [result](auto & x){       (x += result); }); // TODO result
 	std::ranges::for_each(vector, [result](auto   x){ assert(x == result); });
 
 //  -----------------------------------------------------------------------------

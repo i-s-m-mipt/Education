@@ -12,7 +12,7 @@ template < typename T, typename C = std::vector < T > > class Stack_v1
 {
 public:
 
-	void push(T value);
+	void push(T data);
 
 	auto top() const;
 
@@ -20,24 +20,24 @@ public:
 
 private:
 
-	C m_data;
+	C m_container;
 };
 
 //  ================================================================================================
 
-template < typename T, typename C > void Stack_v1 < T, C > ::push(T value)
+template < typename T, typename C > void Stack_v1 < T, C > ::push(T data)
 {
-	m_data.push_back(std::move(value));
+	m_container.push_back(std::move(data));
 }
 
 template < typename T, typename C > auto Stack_v1 < T, C > ::top() const
 {
-	return m_data.back();
+	return m_container.back();
 }
 
 template < typename T, typename C > void Stack_v1 < T, C > ::pop()
 {
-	m_data.pop_back();
+	m_container.pop_back();
 }
 
 //  ================================================================================================
@@ -46,7 +46,7 @@ template < typename T, template < typename E > typename C = std::vector > class 
 {
 private:
 
-	C < T > m_data;
+	C < T > m_container;
 };
 
 //  ================================================================================================

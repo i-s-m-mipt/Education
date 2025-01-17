@@ -129,13 +129,13 @@ int main()
 
 //  ------------------------------------------------------------------------------------
 
-    [[maybe_unused]] char   buffer_1[]{ 'a', 'a', 'a', 'a', 'a' };
+    [[maybe_unused]] char   buffer_1[5]{ 'a', 'a', 'a', 'a', 'a' };
 
-    [[maybe_unused]] char c_string_1[]{ 'a', 'a', 'a', 'a', 'a', '\0' };
+    [[maybe_unused]] char c_string_1[6]{ 'a', 'a', 'a', 'a', 'a', '\0' };
     
-    [[maybe_unused]] char c_string_2[] = "aaaaa";
+    [[maybe_unused]] char c_string_2[6] = "aaaaa";
 
-    [[maybe_unused]] auto c_string_3   = "aaaaa";
+    [[maybe_unused]] auto c_string_3    = "aaaaa";
 
     assert(std::strlen(string_3.c_str()) == 10);
 

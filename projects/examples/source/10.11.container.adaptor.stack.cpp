@@ -10,31 +10,31 @@ template < typename T > class Stack_v1
 {
 public:
 
-    void push(T value)
+    void push(T data)
     {
-        auto max = std::empty(m_data) ? value : std::max(value, m_data.top().second);
+        auto max = std::empty(m_stack) ? data : std::max(data, m_stack.top().second);
 
-        m_data.emplace(value, max);
+        m_stack.emplace(data, max);
     }
 
     auto top() const
     { 
-        return m_data.top().first; 
+        return m_stack.top().first; 
     }
  
     void pop() 
     { 
-        m_data.pop(); 
+        m_stack.pop(); 
     }
  
     auto max() const
     { 
-        return m_data.top().second; 
+        return m_stack.top().second; 
     }
 
 private:
 
-    std::stack < std::pair < T, T > > m_data;
+    std::stack < std::pair < T, T > > m_stack;
 };
 
 //  ================================================================================================
@@ -43,35 +43,35 @@ template < typename T > class Stack_v2
 {
 public:
 
-    void push(T value)
+    void push(T data)
     {
-        if (std::empty(m_data)) 
+        if (std::empty(m_stack)) 
         {
-            m_data.push(value); m_max = m_data.top();
+            m_stack.push(data); m_max = m_stack.top();
         }
-        else if (value > m_max) 
+        else if (data > m_max) 
         {
-            m_data.push(2 * value - m_max); m_max = value;
+            m_stack.push(2 * data - m_max); m_max = data;
         }
         else 
         {
-            m_data.push(value);
+            m_stack.push(data);
         }
     }
 
     auto top() const
     {
-        return m_data.top() > m_max ? m_max : m_data.top();
+        return m_stack.top() > m_max ? m_max : m_stack.top();
     }
 
     void pop()
     {
-        if (auto t = m_data.top(); t > m_max) 
+        if (auto t = m_stack.top(); t > m_max) 
         {
             (m_max *= 2) -= t;
         }
 
-        m_data.pop();
+        m_stack.pop();
     }
  
     auto max() const
@@ -81,7 +81,7 @@ public:
  
 private:
 
-    std::stack < T > m_data; T m_max = T();
+    std::stack < T > m_stack; T m_max = T();
 };
 
 //  ================================================================================================

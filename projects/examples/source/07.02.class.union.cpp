@@ -17,7 +17,7 @@ struct Variant
 { 
 	union 
 	{ 
-		int error; int value = 0; 
+		int error; int data = 0; 
 	}; 
 	
 	bool has_error = false; 
@@ -33,7 +33,7 @@ auto test(int x)
 	}
 	else
 	{
-		return Variant { .value = x };
+		return Variant { .data = x };
 	}
 }
 
@@ -59,13 +59,13 @@ int main()
 		assert(entity.data == 256);
 	}
 
-//  -----------------------------------------------------
+//  ----------------------------------------------------
 
 	{
 		auto x = 1;
 
 		auto variant = test(x);
 	
-		assert(!variant.has_error && variant.value == x);
+		assert(!variant.has_error && variant.data == x);
 	}
 }

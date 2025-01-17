@@ -56,9 +56,9 @@ public:
 			case '5': case '6': case '7': case '8': case '9':
 			case '.':
 			{
-				m_sin.putback(c); double d; m_sin >> d;
+				m_sin.putback(c); double x; m_sin >> x;
 
-				return Token(d);
+				return Token(x);
 			}
 			default:
 			{

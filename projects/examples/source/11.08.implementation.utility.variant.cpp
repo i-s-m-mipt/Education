@@ -129,24 +129,24 @@ namespace detail
     {
     public:
 
-        Selector(T value) 
+        Selector(T data) 
         { 
-            std::construct_at(derived().template buffer < T > (), std::move(value)); 
+            std::construct_at(derived().template buffer < T > (), std::move(data)); 
             
             update();
         }
 
-        auto & operator=(T value)
+        auto & operator=(T data)
         {
             if (derived().m_index == s_index) 
             {
-                *derived().template buffer < T > () = std::move(value);
+                *derived().template buffer < T > () = std::move(data);
             }
             else 
             {
                 derived().destroy(); 
                 
-                std::construct_at(derived().template buffer < T > (), std::move(value));
+                std::construct_at(derived().template buffer < T > (), std::move(data));
                 
                 update();
             }
@@ -157,6 +157,7 @@ namespace detail
     protected:
 
         Selector() = default;
+
        ~Selector() = default;
 
     //  --------------------------------------------------------------------------------
@@ -212,12 +213,12 @@ public:
 
     Variant(const Variant & other) : detail::Selector < derived_t, Ts, Ts ... > ::Selector()...
     {
-        other.visit([this](auto && value){ *this = value; });
+        other.visit([this](auto && data){ *this = data; });
     }
 
     Variant(Variant && other)
     {
-        other.visit([this](auto && value){ *this = std::move(value); });
+        other.visit([this](auto && data){ *this = std::move(data); });
     }
 
     auto & operator=(Variant other)

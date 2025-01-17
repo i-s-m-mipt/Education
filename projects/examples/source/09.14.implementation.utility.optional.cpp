@@ -71,9 +71,14 @@ public:
 
 //  -----------------------------------------------
 
-    auto empty   (      ) const { return !m_data; }
-    auto value   (      ) const { return *m_data; }
-    auto value_or(T data) const
+    auto empty() const 
+    { 
+        return !m_data;
+    }
+
+    auto data   (      ) const { return *m_data; }
+
+    auto data_or(T data) const
     { 
         return m_data ? *m_data : data; 
     }
@@ -154,5 +159,5 @@ int main()
 
 //  -----------------------------------------------------------
 
-    assert(!optional_4.empty() && optional_4.value_or(0) == 4);
+    assert(!optional_4.empty() && optional_4.data_or(0) == 4);
 }

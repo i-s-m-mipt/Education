@@ -73,7 +73,7 @@ auto size(const std::filesystem::directory_entry & entry)
         result = size(entry.path());
     }
 
-    char units[]{ 'B', 'K', 'M', 'G' };
+    char units[4]{ 'B', 'K', 'M', 'G' };
 
     auto index = 0uz;
 
