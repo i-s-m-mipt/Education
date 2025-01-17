@@ -11,9 +11,9 @@
 
 void transform(const std::string & path_1, const std::string & path_2)
 {
-    if (std::fstream fin(path_1, std::ios::in); fin)
+    if (std::fstream stream_1(path_1, std::ios::in); stream_1)
     {
-        std::istreambuf_iterator < char > begin(fin), end;
+        std::istreambuf_iterator < char > begin(stream_1), end;
 
         std::string data(begin, end);
 
@@ -69,9 +69,9 @@ void transform(const std::string & path_1, const std::string & path_2)
             }
         }
 
-        if (std::fstream fout(path_2, std::ios::out); fout)
+        if (std::fstream stream_2(path_2, std::ios::out); stream_2)
         {
-            fout << data;
+            stream_2 << data;
         }
         else 
         {

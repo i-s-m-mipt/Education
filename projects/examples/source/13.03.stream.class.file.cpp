@@ -10,14 +10,14 @@
 #include <streambuf>
 #include <string>
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 struct Entity 
 { 
     int data_1 = 0; std::string data_2; 
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 auto & operator>>(std::istream & stream, Entity & entity)
 {
@@ -34,7 +34,7 @@ auto & operator>>(std::istream & stream, Entity & entity)
     return stream;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 auto & operator<<(std::ostream & stream, const Entity & entity)
 {
@@ -49,17 +49,17 @@ auto & operator<<(std::ostream & stream, const Entity & entity)
     return stream;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 class Redirector
 {
 public:
 
-    Redirector(const std::string & path) : m_fout(path, std::ios::out)
+    Redirector(const std::string & path) : m_stream(path, std::ios::out)
     {
-        if (m_fout) 
+        if (m_stream) 
         {
-            m_buffer = std::cout.rdbuf(m_fout.rdbuf());
+            m_buffer = std::cout.rdbuf(m_stream.rdbuf());
         }
         else 
         {
@@ -77,26 +77,26 @@ public:
 
 private:
 
-    std::fstream m_fout; std::streambuf * m_buffer = nullptr;
+    std::fstream m_stream; std::streambuf * m_buffer = nullptr;
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
     {
-        if (std::fstream fout("13.03.stream.class.file.example.data", std::ios::out); fout)
+        if (std::fstream stream("13.03.stream.class.file.example.data", std::ios::out); stream)
         {
             auto size = 5uz;
 
             for (auto i = 0uz; i < size; ++i)
             {
-                fout << std::string(size, 'a') << '\n';
+                stream << std::string(size, 'a') << '\n';
             }
 
-            fout.seekp((size - 1) * (size + 1), std::ios::beg);
+            stream.seekp((size - 1) * (size + 1), std::ios::beg);
 
-            fout << "bbbbb\n" << Entity(1, "aaaaa") << '\n';
+            stream << "bbbbb\n" << Entity(1, "aaaaa") << '\n';
         }
         else 
         {
@@ -106,20 +106,20 @@ int main()
         std::cout << "main : enter char to continue : "; char c; std::cin >> c;
     }
 
-//  ---------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------------
 
     {
-        if (std::fstream fin("13.03.stream.class.file.example.data", std::ios::in); fin)
+        if (std::fstream stream("13.03.stream.class.file.example.data", std::ios::in); stream)
         {
             auto size = 5uz;
 
-            fin.seekg((size - 1) * (size + 1), std::ios::beg);
+            stream.seekg((size - 1) * (size + 1), std::ios::beg);
 
-            std::string input; std::getline(fin, input); 
+            std::string input; std::getline(stream, input); 
             
             assert(input == "bbbbb");
 
-            Entity entity; fin >> entity;
+            Entity entity; stream >> entity;
 
             assert(entity.data_1 == 1 && entity.data_2 == "aaaaa");
         }
@@ -129,7 +129,7 @@ int main()
         }
     }
 
-//  ---------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------------
 
     {
         {
@@ -141,7 +141,7 @@ int main()
         std::cout << "main : enter char to continue : "; char c; std::cin >> c;
     }
 
-//  ---------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------------
 
     {
         std::filesystem::remove("13.03.stream.class.file.example.data");

@@ -174,12 +174,15 @@ private:
 		stream << " | ";
 
 		using pid_t = boost::log::attributes::current_process_id::value_type;
+
 		using tid_t = boost::log::attributes::current_thread_id ::value_type;
 
 		const auto & pid = attribute_value_set[s_attributes.at(Attribute::process).first];
+
 		const auto & tid = attribute_value_set[s_attributes.at(Attribute::thread ).first];
 
 		stream << boost::log::extract_or_throw < pid_t > (pid) << " | ";
+		
 		stream << boost::log::extract_or_throw < tid_t > (tid) << " | ";
 
 		const auto & severity = attribute_value_set["Severity"];

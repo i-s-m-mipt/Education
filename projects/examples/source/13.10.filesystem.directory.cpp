@@ -24,7 +24,7 @@ int main()
 //  -------------------------------------------------------------------------------
 
 	{
-		if (std::fstream fout("X/x.txt", std::ios::out); !fout)
+		if (std::fstream stream("X/x.txt", std::ios::out); !stream)
 		{
 			throw std::runtime_error("invalid stream");
 		}

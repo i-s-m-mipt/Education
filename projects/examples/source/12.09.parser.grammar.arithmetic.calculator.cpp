@@ -18,17 +18,17 @@ class Stream
 {
 public:
 
-	Stream(const std::string & data) : m_sin(data + ';') {}
+	Stream(const std::string & data) : m_stream(data + ';') {}
 
 //  ----------------------------------------------------------------
 
 	auto empty()
 	{
-		char c; m_sin >> c;
+		char c; m_stream >> c;
 
 		if (c != ';') 
 		{ 
-			m_sin.putback(c); return false; 
+			m_stream.putback(c); return false; 
 		} 
 		else 
 		{
@@ -43,7 +43,7 @@ public:
 			m_is_full = false; return m_token; 
 		}
 
-		char c; m_sin >> c;
+		char c; m_stream >> c;
 		
 		switch (c)
 		{
@@ -56,7 +56,7 @@ public:
 			case '5': case '6': case '7': case '8': case '9':
 			case '.':
 			{
-				m_sin.putback(c); double x; m_sin >> x;
+				m_stream.putback(c); double x; m_stream >> x;
 
 				return Token(x);
 			}
@@ -66,14 +66,14 @@ public:
 				{
 					std::string string(1, c);
 					
-					while (m_sin.get(c) && (std::isalpha(c) || std::isdigit(c))) 
+					while (m_stream.get(c) && (std::isalpha(c) || std::isdigit(c))) 
 					{
 						string += c;
 					}
 
 					if (!std::isspace(c)) 
 					{
-						m_sin.putback(c); 
+						m_stream.putback(c); 
 					}
 
 					return Token(string);
@@ -93,7 +93,7 @@ public:
 
 private:
 
-	std::stringstream m_sin; bool m_is_full = false; Token m_token;
+	std::stringstream m_stream; bool m_is_full = false; Token m_token;
 };
 
 //  ================================================================================================
@@ -160,6 +160,7 @@ private:
 				switch (std::get < char > (token))
 				{
 					case '+': { left += term(stream); break; }
+
 					case '-': { left -= term(stream); break; }
 
 					default: 
@@ -190,6 +191,7 @@ private:
 				switch (std::get < char > (token))
 				{
 					case '*': { left *= term(stream); break; }
+
 					case '/': { left /= term(stream); break; }
 
 					default: 
@@ -236,6 +238,7 @@ private:
 					return result;
 				}
 				case '+': { return        primary(stream); }
+				
 				case '-': { return -1.0 * primary(stream); }
 				
 				default: 
