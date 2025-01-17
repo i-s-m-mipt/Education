@@ -55,6 +55,7 @@ public:
     public:
 
         static auto make_v1() -> Entity * { return new Router(1); }
+        
         static auto make_v2() -> Entity * { return new Router(2); }
     };
 

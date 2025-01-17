@@ -40,7 +40,7 @@ TEST(Assert, Miscellaneous)
 {
     ASSERT_NEAR(1.0, 1.0, 1e-6);
 
-    ASSERT_THAT("aaaaa", testing::StartsWith("a"));
+    ASSERT_THAT("aaaaa", testing::StartsWith("aaa"));
 }
 
 /////////////////////////////////////////////////////////////////////////////////

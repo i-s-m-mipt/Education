@@ -122,7 +122,7 @@ void test_v7(benchmark::State & state)
 {
     for (auto element : state) 
     {
-        state.SkipWithError("test failed");
+        state.SkipWithError("error");
 
         break;
     }

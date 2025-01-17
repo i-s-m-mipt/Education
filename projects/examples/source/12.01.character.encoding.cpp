@@ -14,7 +14,7 @@ int main()
 
 		assert(static_cast < int > (c) == 97);
 
-//		c = 'я'; // error
+//		c = 'а'; // error
 
 		auto is_signed_char = std::is_signed_v < char > ;
 

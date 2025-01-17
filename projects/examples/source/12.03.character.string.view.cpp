@@ -126,7 +126,7 @@ int main()
             assert(string.substr(0, index) == "aaaaa");
         }
 
-        assert(string.starts_with("aaaaa") && string.ends_with("bbbbb"));
+        assert(string.starts_with("aaa") && string.ends_with("bbb"));
 
         assert(std::stoi("1") == 1 && "1" == std::to_string(1));
     }
@@ -160,7 +160,7 @@ int main()
     {
         using cistring_t = std::basic_string < char, case_insensitive_traits > ;
 
-        assert(cistring_t("AAAAA") == cistring_t("aaaaa"));
+        assert(cistring_t("aaaaa") == cistring_t("AAAAA"));
     }
 
 //  -------------------------------------------------------------------------------------------
@@ -186,7 +186,7 @@ int main()
 
 //      std::string_view string_view_1 = "aaaaa"s + "bbbbb"s; // bad
 
-//      std::string_view string_view_3 = string; string = "aaaaa"; // bad
+//      std::string_view string_view_3 = string; string = "bbbbb"; // bad
 
 //      std::string_view string_view_2 = [](){ return "aaaaa"s; }(); // bad
     }

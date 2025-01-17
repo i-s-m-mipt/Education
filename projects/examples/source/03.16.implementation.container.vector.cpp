@@ -141,6 +141,7 @@ public:
 	void swap(Vector & other)
 	{
 		std::swap(m_data, other.m_data);
+		
 		std::swap(m_size, other.m_size);
 	}
 

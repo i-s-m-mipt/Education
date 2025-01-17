@@ -118,14 +118,14 @@ template < typename T > void test_v4(T *)
 
 template 
 < 
-	typename T, std::size_t S1, 
-				std::size_t S2 
+	typename T, std::size_t S1, std::size_t S2 
 > 
 auto max_v9(const T(&array_1)[S1], const T(&array_2)[S2])
 {
 	for (auto i = 0uz; i < std::min(S1, S2); ++i)
 	{
 		if (array_1[i] > array_2[i]) { return array_1; }
+
 		if (array_1[i] < array_2[i]) { return array_2; }
 	}
 

@@ -31,7 +31,7 @@ int main()
 
 		string.append("bbbbb");
 	
-		assert(string.starts_with('a') && string.substr(4, 2) == "ab");
+		assert(string.starts_with("aaa") && string.substr(4, 2) == "ab");
 	}
 
 //  ------------------------------------------------------------------------
