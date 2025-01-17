@@ -16,13 +16,11 @@ void test_v1(benchmark::State & state)
 {
     for (auto element : state)
     {
-        constexpr auto size = 100'000uz;
+        std::array < int, 100'000 > array;
 
-        std::array < int, size > array;
-
-        for (auto i = 0uz; i < size; ++i)
+        for (auto i = 0uz; i < std::size(array); ++i)
         {
-            array[i] = size - i;
+            array[i] = std::size(array) - i;
         }
 
         auto begin = std::chrono::steady_clock::now();
@@ -46,13 +44,11 @@ void test_v2(benchmark::State & state)
 {
     for (auto element : state)
     {
-        auto size = 100'000uz;
+        std::vector < int > vector(100'000, 0);
 
-        std::vector < int > vector(size, 0);
-
-        for (auto i = 0uz; i < size; ++i)
+        for (auto i = 0uz; i < std::size(vector); ++i)
         {
-            vector[i] = size - i;
+            vector[i] = std::size(vector) - i;
         }
 
         auto begin = std::chrono::steady_clock::now();
@@ -76,13 +72,11 @@ void test_v3(benchmark::State & state)
 {
     for (auto element : state)
     {
-        auto size = 100'000uz;
+        std::deque < int > deque(100'000, 0);
 
-        std::deque < int > deque(size, 0);
-
-        for (auto i = 0uz; i < size; ++i)
+        for (auto i = 0uz; i < std::size(deque); ++i)
         {
-            deque[i] = size - i;
+            deque[i] = std::size(deque) - i;
         } 
 
         auto begin = std::chrono::steady_clock::now();
@@ -106,11 +100,9 @@ void test_v4(benchmark::State & state)
 {
     for (auto element : state)
     {
-        auto size = 100'000uz;
+        std::list < int > list(100'000, 0);
 
-        std::list < int > list(size, 0);
-
-        for (auto state = size; auto & element : list)
+        for (auto state = std::size(list); auto & element : list)
         {
             element = state--;
         } 

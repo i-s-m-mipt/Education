@@ -82,6 +82,7 @@ public:
 //			}
 //
 //			m_data = data;
+//
 //			m_size = size;
 //		}
 //

@@ -6,11 +6,9 @@
 
 int main() // support: valgrind --leak-check=yes ./07.09.project.tool.profiler.memory
 {
-	auto size = 5uz;
+	auto array = new int[5]{};
 
-	auto array = new int[size]{};
-
-	array[size] = 1;
+	array[1'000] = 1;
 
 //  delete[] array; // bad
 

@@ -6,9 +6,9 @@
 
 auto find(const std::vector < int > & vector, int key)
 {
-	if (auto size = std::size(vector); size > 0)
+	if (std::size(vector) > 0)
 	{
-		auto l = 0uz, r = size - 1, m = 0uz;
+		auto l = 0uz, r = std::size(vector) - 1, m = 0uz;
 
 		while (l < r)
 		{		
