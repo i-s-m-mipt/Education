@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -17,11 +17,9 @@ int main()
 		assert(*object == 1);
 
 		allocator.deallocate(object, 1);
-
-		std::vector < int, std::allocator < int > > vector;
 	}
 
-//  -------------------------------------------------------------------
+//  --------------------------------------------------------------------------
 
 	{
 		std::allocator < std::string > allocator;
@@ -39,5 +37,11 @@ int main()
 		allocator_traits.destroy(allocator, object);
 
 		allocator_traits.deallocate(allocator, object, 1);
+	}
+
+//  --------------------------------------------------------------------------
+
+	{
+		std::vector < int, std::allocator < int > > vector = { 1, 2, 3, 4, 5};
 	}
 }

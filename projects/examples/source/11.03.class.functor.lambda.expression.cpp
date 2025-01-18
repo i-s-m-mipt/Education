@@ -57,7 +57,7 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		std::array < std::function < int(int, int) > , 5 > functions;
+		std::array < std::function < int(int, int) > , 5 > functions = {};
 
 		functions[0] = [](auto x, auto y){ return x + y; };
 

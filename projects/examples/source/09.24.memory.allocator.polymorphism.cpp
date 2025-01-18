@@ -76,7 +76,7 @@ void test_v4(benchmark::State & state)
 {
 	for (auto element : state)
 	{
-        std::array < std::byte, 32'000 > array;
+        std::array < std::byte, 32'000 > array = {};
 
         std::pmr::monotonic_buffer_resource arena(std::data(array), std::size(array));
 
@@ -129,7 +129,7 @@ BENCHMARK(test_v5);
 int main()
 {
     {
-        std::array < char, 32 > array;
+        std::array < char, 32 > array = {};
 
         std::ranges::fill(array, '_');
 
@@ -179,7 +179,7 @@ int main()
 //  ------------------------------------------------------------------------------------
 
     {
-        std::vector < int, boost::pool_allocator < int > > vector;
+        std::vector < int, boost::pool_allocator < int > > vector = { 1, 2, 3, 4, 5 };
     }
 
 //  ------------------------------------------------------------------------------------

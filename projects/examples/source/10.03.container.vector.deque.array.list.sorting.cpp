@@ -16,7 +16,7 @@ void test_v1(benchmark::State & state)
 {
     for (auto element : state)
     {
-        std::array < int, 100'000 > array;
+        std::array < int, 100'000 > array = {};
 
         for (auto i = 0uz; i < std::size(array); ++i)
         {

@@ -26,7 +26,7 @@ int main()
     boost::add_edge(4, 0, 8, graph);
     boost::add_edge(4, 1, 9, graph);
 
-	std::array < unsigned int, 5 > distances;
+	std::array < unsigned int, 5 > distances = {};
 
     auto map = boost::distance_map(std::begin(distances));
 

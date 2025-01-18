@@ -139,7 +139,7 @@ int main()
 
 		vector.erase(std::next(std::begin(vector), std::size(vector) / 2));
 
-		std::ignore = vector[0];
+		assert(vector[0] == 1);
 	}
 
 //  ------------------------------------------------------------------------------------------------
@@ -159,7 +159,7 @@ int main()
 
 		deque.erase (std::next(std::begin(deque), std::size(deque) / 2));
 
-		std::ignore = deque[0];
+		assert(deque[0] == 1);
 	}
 
 //  ------------------------------------------------------------------------------------------------
@@ -167,7 +167,7 @@ int main()
 	{
 		std::array < int, 5 > array_1 = { 1, 2, 3, 4, 5 };
 
-		std::ignore = array_1[0];
+		assert(array_1[0] == 1);
 
 		int array_2[5]{ 1, 2, 3, 4, 5 };
 

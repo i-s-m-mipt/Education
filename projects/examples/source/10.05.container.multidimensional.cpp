@@ -125,7 +125,7 @@ int main()
 	{
 		constexpr auto size = 5uz;
 
-		std::array < std::array < int, size > , size > array;
+		std::array < std::array < int, size > , size > array = {};
 
 		for (auto i = 0uz; i < size; ++i)
 		{

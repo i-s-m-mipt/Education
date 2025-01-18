@@ -60,9 +60,9 @@ void test_v2()
 {
 	std::cout << "test_v2 (1)\n";
 
-//	auto array = new int[5]{}; // bad
+//	auto array = new int[5]{ 1, 2, 3, 4, 5 }; // bad
 
-	std::vector < int > vector(5, 0);
+	std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
 	test_v1();
 
