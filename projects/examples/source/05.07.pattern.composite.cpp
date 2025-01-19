@@ -73,9 +73,9 @@ auto make_composite(std::size_t n_clients, std::size_t n_servers) -> Entity *
 {
     auto composite = new Composite;
 
-    for (auto i = 0uz; i < n_clients; ++i) { composite->add_entity(new Client()); }
+    for (auto i = 0uz; i < n_clients; ++i) { composite->add_entity(new Client); }
     
-    for (auto i = 0uz; i < n_servers; ++i) { composite->add_entity(new Server()); }
+    for (auto i = 0uz; i < n_servers; ++i) { composite->add_entity(new Server); }
 
     return composite;
 }

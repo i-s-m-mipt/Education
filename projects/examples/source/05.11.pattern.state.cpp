@@ -43,7 +43,7 @@ class Entity
 {
 public:
 
-    Entity() : m_state(new Slow()) {}
+    Entity() : m_state(new Slow) {}
 
    ~Entity() 
     { 
@@ -82,12 +82,12 @@ void Fast::set_fast([[maybe_unused]] Entity * entity) const
 
 void Fast::set_slow([[maybe_unused]] Entity * entity) const
 {
-    std::cout << "Fast::set_slow\n"; entity->set_state(new Slow()); 
+    std::cout << "Fast::set_slow\n"; entity->set_state(new Slow); 
 }
 
 void Slow::set_fast([[maybe_unused]] Entity * entity) const
 {
-    std::cout << "Slow::set_fast\n"; entity->set_state(new Fast());
+    std::cout << "Slow::set_fast\n"; entity->set_state(new Fast);
 }
 
 void Slow::set_slow([[maybe_unused]] Entity * entity) const

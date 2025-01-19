@@ -62,14 +62,14 @@ template < typename E > void test_v2(const E & entity)
 int main()
 {
 	{
-		Entity * entity = new Client_v1();
+		Entity * entity = new Client_v1;
 
 		test_v1(*entity);
 
 		delete entity;
 	}
 	
-//  --------------------------------------
+//  ------------------------------------
 
 	{
 		Client_v2 client_v2; 

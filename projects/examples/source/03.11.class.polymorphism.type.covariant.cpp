@@ -1,6 +1,6 @@
 #include <iostream>
 
-////////////////////////////////////////////
+//////////////////////////////////////////
 
 class Entity_v1 
 { 
@@ -11,7 +11,7 @@ public:
 
 class Client_v1 : public Entity_v1 {};
 
-////////////////////////////////////////////
+//////////////////////////////////////////
 
 class Entity_v2 
 {
@@ -25,11 +25,11 @@ public:
 	{ 
 		std::cout << "Entity_v2::test\n";
 
-		return new Entity_v1(); 
+		return new Entity_v1; 
 	}
 };
 
-////////////////////////////////////////////
+//////////////////////////////////////////
 
 class Client_v2 : public Entity_v2
 {
@@ -39,15 +39,15 @@ public:
 	{ 
 		std::cout << "Client_v2::test\n";
 
-		return new Client_v1(); 
+		return new Client_v1; 
 	}
 };
 
-////////////////////////////////////////////
+//////////////////////////////////////////
 
 int main()
 {
-	Entity_v2 * entity_v2 = new Client_v2();
+	Entity_v2 * entity_v2 = new Client_v2;
 
 	delete entity_v2->test();
 

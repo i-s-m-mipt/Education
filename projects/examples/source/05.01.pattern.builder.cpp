@@ -19,7 +19,7 @@ public:
 
     auto make() const
     { 
-        m_entity = new Entity(0, 0);
+        m_entity = new Entity;
 
         make_data_1();
         
@@ -65,7 +65,7 @@ public:
 
 int main()
 {
-    Builder * builder = new Builder_Client();
+    Builder * builder = new Builder_Client;
 
     auto entity = builder->make();
 

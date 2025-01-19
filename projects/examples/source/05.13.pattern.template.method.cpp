@@ -57,7 +57,7 @@ private:
 
 int main()
 {
-	Entity * entity = new Client();
+	Entity * entity = new Client;
 
 	entity->template_method(); 
 	

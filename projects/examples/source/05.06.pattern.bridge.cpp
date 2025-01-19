@@ -96,7 +96,7 @@ public:
 
 int main() 
 {
-    Entity_v1 * entity_v1 = new Client_v1();
+    Entity_v1 * entity_v1 = new Client_v1;
     
     Entity_v2 * entity_v2 = new Server_v1(*entity_v1);
 

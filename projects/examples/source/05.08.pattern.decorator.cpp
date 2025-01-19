@@ -72,7 +72,7 @@ public:
 
 int main()
 {
-    Entity * entity_1 = new Client();
+    Entity * entity_1 = new Client;
 
     Entity * entity_2 = new Decorated_Entity(*entity_1);
 

@@ -61,7 +61,7 @@ private:
 
 int main()
 {
-    Strategy * strategy = new Fast();
+    Strategy * strategy = new Fast;
 
     Entity entity(*strategy);
     

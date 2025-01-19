@@ -25,7 +25,7 @@ public:
 
 //////////////////////////////////////////////////////
 
-Entity:: Entity() : m_pimpl(new Implementation()) {}
+Entity:: Entity() : m_pimpl(new Implementation) {}
 
 Entity::~Entity() 
 { 

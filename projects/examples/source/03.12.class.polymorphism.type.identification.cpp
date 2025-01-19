@@ -42,7 +42,7 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		Entity * entity = new Client(); 
+		Entity * entity = new Client; 
 
 //		assert( static_cast < Client * > (entity)); // bad
 
@@ -54,7 +54,7 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		auto x = 1; auto & r_x = x; Entity * entity = new Client();
+		auto x = 1; auto & r_x = x; Entity * entity = new Client;
 
 		std::cout << "main : typeid(      x) = " << typeid(      x).name() << '\n';
 
@@ -70,7 +70,7 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		auto x = 1; auto & r_x = x; Entity * entity = new Client();
+		auto x = 1; auto & r_x = x; Entity * entity = new Client;
 
 		using boost::typeindex::type_id_with_cvr;
 

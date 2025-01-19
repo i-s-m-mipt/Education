@@ -41,7 +41,7 @@ public:
 
 template < typename E > auto make_entity() -> Entity *
 { 
-    return new E(); 
+    return new E; 
 }
 
 ///////////////////////////////////////////////////////////
@@ -94,7 +94,7 @@ public:
     
     Entity * make() const override 
     { 
-        return new Client(); 
+        return new Client; 
     } 
 };
 
@@ -106,7 +106,7 @@ public:
     
     Entity * make() const override 
     { 
-        return new Server(); 
+        return new Server; 
     } 
 };
 
@@ -135,7 +135,7 @@ int main()
 //  ---------------------------------------------
 
     {
-        Factory * factory = new Factory_Server();
+        Factory * factory = new Factory_Server;
 
         auto entity = factory->make(); 
 

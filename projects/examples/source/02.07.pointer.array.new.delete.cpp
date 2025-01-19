@@ -35,7 +35,7 @@ int main()
 	{
 		std::cout << "main : enter size : "; std::size_t size; std::cin >> size;
 
-		auto array = new int[size]; 
+		auto array = new int[size]{}; 
 
 		for (auto i = 0uz; i < size; ++i)
 		{
