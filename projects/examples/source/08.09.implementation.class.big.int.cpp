@@ -546,14 +546,12 @@ int main()
 		assert((big_int_01 *  big_int_02) == big_int_05);
 		assert((big_int_01 /  big_int_02) == big_int_10);
 
-		auto f = false, t = true;
-
-		assert((big_int_01 <  big_int_02) == f);
-		assert((big_int_01 >  big_int_02) == t);
-		assert((big_int_01 <= big_int_02) == f);
-		assert((big_int_01 >= big_int_02) == t);
-		assert((big_int_01 == big_int_02) == f);
-		assert((big_int_01 != big_int_02) == t);
+		assert((big_int_01 <  big_int_02) == 0);
+		assert((big_int_01 >  big_int_02) == 1);
+		assert((big_int_01 <= big_int_02) == 0);
+		assert((big_int_01 >= big_int_02) == 1);
+		assert((big_int_01 == big_int_02) == 0);
+		assert((big_int_01 != big_int_02) == 1);
 	}
 
 //  ----------------------------------------------------------------------------------------------

@@ -201,14 +201,12 @@ int main()
 		assert((ratio_1 *  ratio_2) == Ratio(4, 1));
 		assert((ratio_1 /  ratio_2) == Ratio(1, 1));
 
-		auto f = false, t = true;
-
-		assert((ratio_1 <  ratio_2) == f);
-		assert((ratio_1 >  ratio_2) == f);
-		assert((ratio_1 <= ratio_2) == t);
-		assert((ratio_1 >= ratio_2) == t);
-		assert((ratio_1 == ratio_2) == t);
-		assert((ratio_1 != ratio_2) == f);
+		assert((ratio_1 <  ratio_2) == 0);
+		assert((ratio_1 >  ratio_2) == 0);
+		assert((ratio_1 <= ratio_2) == 1);
+		assert((ratio_1 >= ratio_2) == 1);
+		assert((ratio_1 == ratio_2) == 1);
+		assert((ratio_1 != ratio_2) == 0);
 	}
 
 //  ---------------------------------------------------------------------------
@@ -246,14 +244,12 @@ int main()
 		assert((rational_1 *  rational_2) == boost::rational < int > (4, 1));
 		assert((rational_1 /  rational_2) == boost::rational < int > (1, 1));
 
-		auto f = false, t = true;
-
-		assert((rational_1 <  rational_2) == f);
-		assert((rational_1 >  rational_2) == f);
-		assert((rational_1 <= rational_2) == t);
-		assert((rational_1 >= rational_2) == t);
-		assert((rational_1 == rational_2) == t);
-		assert((rational_1 != rational_2) == f);
+		assert((rational_1 <  rational_2) == 0);
+		assert((rational_1 >  rational_2) == 0);
+		assert((rational_1 <= rational_2) == 1);
+		assert((rational_1 >= rational_2) == 1);
+		assert((rational_1 == rational_2) == 1);
+		assert((rational_1 != rational_2) == 0);
 	}
 
 //  ---------------------------------------------------------------------------

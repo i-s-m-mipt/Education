@@ -74,14 +74,12 @@ int main()
     {
         Entity_v1 entity_v1_1(1), entity_v1_2(2);
 
-        auto f = false, t = true;
-
-        assert((entity_v1_1 <  entity_v1_2) == t);
-        assert((entity_v1_1 >  entity_v1_2) == f);
-        assert((entity_v1_1 <= entity_v1_2) == t);
-        assert((entity_v1_1 >= entity_v1_2) == f);
-        assert((entity_v1_1 == entity_v1_2) == f);
-        assert((entity_v1_1 != entity_v1_2) == t);
+        assert((entity_v1_1 <  entity_v1_2) == 1);
+        assert((entity_v1_1 >  entity_v1_2) == 0);
+        assert((entity_v1_1 <= entity_v1_2) == 1);
+        assert((entity_v1_1 >= entity_v1_2) == 0);
+        assert((entity_v1_1 == entity_v1_2) == 0);
+        assert((entity_v1_1 != entity_v1_2) == 1);
     }
 
 //  ----------------------------------------------
@@ -89,13 +87,11 @@ int main()
     {
         Entity_v2 entity_v2_1(1), entity_v2_2(2);
 
-        auto f = false, t = true;
-
-        assert((entity_v2_1 <  entity_v2_2) == t);
-        assert((entity_v2_1 >  entity_v2_2) == f);
-        assert((entity_v2_1 <= entity_v2_2) == t);
-        assert((entity_v2_1 >= entity_v2_2) == f);
-        assert((entity_v2_1 == entity_v2_2) == f);
-        assert((entity_v2_1 != entity_v2_2) == t);
+        assert((entity_v2_1 <  entity_v2_2) == 1);
+        assert((entity_v2_1 >  entity_v2_2) == 0);
+        assert((entity_v2_1 <= entity_v2_2) == 1);
+        assert((entity_v2_1 >= entity_v2_2) == 0);
+        assert((entity_v2_1 == entity_v2_2) == 0);
+        assert((entity_v2_1 != entity_v2_2) == 1);
     }
 }

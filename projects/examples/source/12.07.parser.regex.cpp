@@ -36,15 +36,13 @@ auto test_v3(const std::string & string)
 int main()
 {
     {
-        auto f = false, t = true;
-
-        assert(test_v1("aaaaa") == t);
+        assert(test_v1("aaaaa") == 1);
         
-	    assert(test_v1("12345") == f);
+	    assert(test_v1("12345") == 0);
 
-	    assert(test_v1("_aaaa") == t);
+	    assert(test_v1("_aaaa") == 1);
 
-	    assert(test_v1("_2345") == t);
+	    assert(test_v1("_2345") == 1);
     }
     
 //  -----------------------------------------------------------------------------------

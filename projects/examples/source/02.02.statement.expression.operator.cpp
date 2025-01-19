@@ -46,14 +46,12 @@ int main()
 		assert((x --  ) == +2);
 		assert((  -- y) == +2);
 
-		auto f = false, t = true;
-
-		assert((x <  y) ==  t);
-		assert((x >  y) ==  f);
-		assert((x <= y) ==  t);
-		assert((x >= y) ==  f);
-		assert((x == y) ==  f);
-		assert((x != y) ==  t);
+		assert((x <  y) ==  1);
+		assert((x >  y) ==  0);
+		assert((x <= y) ==  1);
+		assert((x >= y) ==  0);
+		assert((x == y) ==  0);
+		assert((x != y) ==  1);
 	}
 
 //  ---------------------------------------------------------------------------
