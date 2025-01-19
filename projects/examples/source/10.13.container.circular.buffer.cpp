@@ -20,6 +20,8 @@ int main()
 
 	assert(buffer[0] == 3 && buffer[1] == 4 && buffer[2] == 5);
 
+//  --------------------------------------------------------------
+
 	assert(!buffer.is_linearized());
 
 	boost::circular_buffer < int > ::array_range array_1, array_2;

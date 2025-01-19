@@ -20,7 +20,8 @@ public:
 
 		if (m_den <  0)
 		{
-			m_num *= -1;
+			m_num *= -1; 
+			
 			m_den *= -1;
 		}
 
@@ -57,6 +58,7 @@ public:
 	auto & operator*=(const Ratio & other)
 	{
 		m_num *= other.m_num;
+
 		m_den *= other.m_den;
 
 		reduce();
@@ -82,8 +84,11 @@ public:
 //  ------------------------------------------------------------------------------------------
 
 	friend auto operator+ (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) += rhs; }
+
 	friend auto operator- (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) -= rhs; }
+
 	friend auto operator* (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) *= rhs; }
+
 	friend auto operator/ (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) /= rhs; }
 
 //  ------------------------------------------------------------------------------------------
@@ -94,8 +99,11 @@ public:
 	}
 
 	friend auto operator> (const Ratio & lhs, const Ratio & rhs) { return  (rhs < lhs); }
+	
 	friend auto operator<=(const Ratio & lhs, const Ratio & rhs) { return !(lhs > rhs); }
+
 	friend auto operator>=(const Ratio & lhs, const Ratio & rhs) { return !(lhs < rhs); }
+
 	friend auto operator==(const Ratio & lhs, const Ratio & rhs)
 	{
 		return !(lhs < rhs) && !(rhs < lhs);

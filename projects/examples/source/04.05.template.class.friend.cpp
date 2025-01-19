@@ -15,6 +15,7 @@ public:
 		if (m_den <  T(0))
 		{
 			m_num *= -1;
+
 			m_den *= -1;
 		}
 
@@ -74,12 +75,14 @@ private:
 		auto gcd = std::gcd(m_num, m_den);
 
 		m_num /= gcd;
+
 		m_den /= gcd;
 	}
 
 //  -----------------------------------------------------------------------------------
 
 	T m_num = T(0);
+	
 	T m_den = T(1);
 };
 

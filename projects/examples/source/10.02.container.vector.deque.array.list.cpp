@@ -55,11 +55,9 @@ int main()
 			std::cerr << "main : " << exception.what() << '\n';
 		}
 
-		for (auto i = 0uz; i < std::size(vector); ++i)
-		{
-//			assert(vector.at(i) == 0); // bad
-		
-			assert(vector[i] == 0);
+		for (auto i = 1uz; i < std::size(vector); ++i)
+		{		
+			assert(vector[i] == vector[i - 1] + 1);
 		}
 	}
 
@@ -86,7 +84,7 @@ int main()
 //  ------------------------------------------------------------------------------------------------
 
 	{
-		std::vector < Entity > entities_1(5);
+		std::vector < Entity > entities_1 = { { 1 }, { 2 }, { 3 }, { 4 }, { 5 } };
 
 		std::vector < Entity > entities_2(std::begin(entities_1), std::end(entities_1));
 

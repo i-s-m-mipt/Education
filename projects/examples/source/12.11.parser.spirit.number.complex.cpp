@@ -50,7 +50,7 @@ auto parse(std::string_view data)
 
 int main()
 {
-    assert(parse("(1.0, 2.0)") == 1.0 + 2.0i);
+    assert(parse("(1.0, 1.0)") == 1.0 + 1.0i);
 
     assert(parse("(1.0     )") == 1.0 + 0.0i);
 

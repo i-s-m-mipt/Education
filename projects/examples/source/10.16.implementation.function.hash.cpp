@@ -39,8 +39,7 @@ template < typename T, typename ... Ts > auto hash_v2(T arg, Ts ... args)
 
 struct Entity 
 { 
-	int data_1 = 0; 
-	int data_2 = 0; 
+	int data_1 = 0, data_2 = 0; 
 };
 
 //////////////////////////////////////////////////////////////////////////////

@@ -66,6 +66,7 @@ auto copy(const C1 < T > & container)
 template < typename T1, typename T2 > struct Pair 
 { 
 	T1 data_1 = T1(); 
+	
 	T2 data_2 = T2(); 
 };
 

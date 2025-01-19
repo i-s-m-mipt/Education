@@ -61,7 +61,9 @@ private:
 int main()
 {
 	{
-		Entity entity_1, entity_2;
+		Entity entity_1(Entity::State::slow);
+		
+		Entity entity_2(Entity::State::slow);
 
 		std::vector < Command > commands = 
 		{
@@ -89,11 +91,12 @@ int main()
 
 		using State = Entity::State;
 
-		Entity entity;
+		Entity entity(State::slow);
 
 		std::unordered_map < Order, std::function < void(void) > > commands = 
 		{
 			std::make_pair(Order::fast, [&entity](){ entity.state = State::fast; }),
+			
 			std::make_pair(Order::slow, [&entity](){ entity.state = State::slow; })
 		};
 

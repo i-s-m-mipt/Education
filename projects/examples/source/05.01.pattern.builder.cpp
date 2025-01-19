@@ -4,8 +4,7 @@
 
 struct Entity
 {
-    int data_1 = 0;
-    int data_2 = 0; 
+    int data_1 = 0, data_2 = 0; 
 };
 
 ///////////////////////////////////////////////////////////////
@@ -20,7 +19,7 @@ public:
 
     auto make() const
     { 
-        m_entity = new Entity();
+        m_entity = new Entity(0, 0);
 
         make_data_1();
         

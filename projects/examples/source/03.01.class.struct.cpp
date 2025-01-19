@@ -15,6 +15,7 @@ auto make_entity(int data_1, int data_2)
 	return Entity
 	(
 		data_1 < 0 ? 0 : data_1, 
+		
 		data_2 < 0 ? 0 : data_2
 	); 
 }
@@ -42,19 +43,19 @@ int main()
 //  ------------------------------------------------------------------------------------
 
 	{
-		Entity entity;
+		Entity entity(1, 1);
 
-		assert(entity.data_1 == 0);
+		assert(entity.data_1 == 1);
 
 		auto p_entity = &entity;
 
-//		assert((*p_entity).data_1 == 0); // bad
+//		assert((*p_entity).data_1 == 1); // bad
 
-		assert(p_entity->data_1 == 0);
+		assert(p_entity->data_1 == 1);
 
 		auto & r_entity = entity;
 
-		assert(r_entity.data_1 == 0);
+		assert(r_entity.data_1 == 1);
 	}
 
 //  ------------------------------------------------------------------------------------

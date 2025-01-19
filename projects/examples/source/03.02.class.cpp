@@ -25,7 +25,9 @@ public:
 	Entity(const int & data_1, int data_2, int data_3) 
 	: 
 		m_data_1(data_1), 
-		m_data_2(data_2),
+		
+		m_data_2(data_2), 
+		
 		m_data_3(data_3)
 	{
 		std::cout << "Entity::Entity (3)\n";
@@ -46,7 +48,9 @@ public:
 //  ---------------------------------------------------------------------
 
 	auto data_1() const { return m_data_1; }
+
 	auto data_2() const { return m_data_2; }
+
 	auto data_3() const { return m_data_3; }
 
 //  ---------------------------------------------------------------------
@@ -169,11 +173,11 @@ int main()
 	{
 		Entity entity_1;
 
-		Entity entity_2(2, 2, 2);
-	
-		Entity entity_3(3, 3);
+//		Entity entity_2(); // error
 
-//		Entity entity_4(); // warning
+		Entity entity_3(3, 3, 3);
+	
+		Entity entity_4(4, 4);
 	}
 
 //  -----------------------------------------------

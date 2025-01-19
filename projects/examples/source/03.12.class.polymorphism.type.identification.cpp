@@ -28,17 +28,15 @@ class Server : public Entity {};
 int main()
 {
 	{
-		[[maybe_unused]] auto x = 1; 
-		
-		[[maybe_unused]] auto & r_x = x;
+		auto x = 1;
 
-		[[maybe_unused]] auto y = r_x; 
+		static_assert(std::is_same_v < decltype( x ), int   > );
 
-		[[maybe_unused]] decltype(x) z = 3;
+		static_assert(std::is_same_v < decltype((x)), int & > );
 
-		[[maybe_unused]] decltype((y)) r_y_1 = y;
+		auto & r_x_1 = x;
 
-		[[maybe_unused]] decltype(auto) r_y_2 = r_y_1;
+		[[maybe_unused]] decltype(auto) r_x_2 = r_x_1;
 	}
 	
 //  ---------------------------------------------------------------------------------
@@ -59,8 +57,11 @@ int main()
 		auto x = 1; auto & r_x = x; Entity * entity = new Client();
 
 		std::cout << "main : typeid(      x) = " << typeid(      x).name() << '\n';
+
 		std::cout << "main : typeid(    r_x) = " << typeid(    r_x).name() << '\n';
+
 		std::cout << "main : typeid( entity) = " << typeid( entity).name() << '\n';
+
 		std::cout << "main : typeid(*entity) = " << typeid(*entity).name() << '\n';
 
 		delete entity;
@@ -74,8 +75,11 @@ int main()
 		using boost::typeindex::type_id_with_cvr;
 
 		assert(type_id_with_cvr < decltype(      x) > ().pretty_name() ==    "int" );
+	
 		assert(type_id_with_cvr < decltype(    r_x) > ().pretty_name() ==    "int&");
+
 		assert(type_id_with_cvr < decltype( entity) > ().pretty_name() == "Entity*");
+
 		assert(type_id_with_cvr < decltype(*entity) > ().pretty_name() == "Entity&");
 
 		delete entity;

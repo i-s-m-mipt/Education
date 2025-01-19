@@ -14,8 +14,6 @@ int main()
 
 		*object = 1;
 
-		assert(*object == 1);
-
 		allocator.deallocate(object, 1);
 	}
 
@@ -30,11 +28,9 @@ int main()
 
 //		assert(std::empty(*object)); // bad
 
-		allocator_traits.construct(allocator, object, "aaaaa");
+		allocator_traits.construct (allocator, object, "aaaaa");
 
-		assert(*object == "aaaaa");
-
-		allocator_traits.destroy(allocator, object);
+		allocator_traits.destroy   (allocator, object);
 
 		allocator_traits.deallocate(allocator, object, 1);
 	}

@@ -71,8 +71,7 @@ template < typename ... Ts > auto reduce_v4(Ts ... args)
 
 struct Entity 
 { 
-	int data_1 = 0; 
-	int data_2 = 0; 
+	int data_1 = 0, data_2 = 0; 
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

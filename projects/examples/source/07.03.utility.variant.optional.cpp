@@ -56,7 +56,7 @@ int main()
 	{
 		std::variant < int, std::string > variant_1(std::in_place_type  < int > , 1);
 
-		std::variant < int, std::string > variant_2(std::in_place_index < 0   > , 1);
+		std::variant < int, std::string > variant_2(std::in_place_index < 0   > , 2);
 	}
 
 //  ---------------------------------------------------------------------------------

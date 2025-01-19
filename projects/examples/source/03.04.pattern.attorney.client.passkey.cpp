@@ -6,13 +6,13 @@ class Entity_v1
 {
 public:
 
-    class Key_v1 { private: friend struct Client; Key_v1() = default; };
+    class Key_v1 { private: friend class Client; Key_v1() = default; };
 
-    class Key_v2 { private:                       Key_v2() = default; };
+    class Key_v2 { private:                      Key_v2() = default; };
 
 private:
 
-    friend struct Client;
+    friend class Client;
 
 //  --------------------------------------------------------------------
 
@@ -42,7 +42,7 @@ class Entity_v3
 {
 private:
 
-    friend struct Client;
+    friend class Client;
 
 //  -----------------------------------------------
 

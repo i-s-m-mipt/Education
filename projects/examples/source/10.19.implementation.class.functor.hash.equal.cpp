@@ -36,5 +36,8 @@ public:
 
 int main()
 {
-	std::unordered_set < Entity, Hash, Equal > entities;
+	std::unordered_set < Entity, Hash, Equal > entities = 
+	{
+		{ 1 }, { 2 }, { 3 }, { 4 }, { 5 }
+	};
 }

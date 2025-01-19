@@ -96,15 +96,15 @@ int main()
 	{
 		auto x = 1, y = 2, z = 3;
 
-		test_v3(&x, &y); assert(x == y);
+		test_v3(&x, &y); assert(x == 2 && y == 2);
 
-		test_v4( x,  z); assert(x == z);
+		test_v4( x,  z); assert(x == 3 && z == 3);
 	}
 
 //  ----------------------------------------------------------------
 
 	{
-		int array_1[5]{};
+		int array_1[5]{ 1, 2, 3, 4, 5 };
 
 		test_v5(array_1, std::size(array_1));
 
@@ -112,7 +112,7 @@ int main()
 
 		auto size = 5uz;
 
-		auto array_2 = new int[size]{};
+		auto array_2 = new int[size]{ 1, 2, 3, 4, 5 };
 
 		test_v5(array_2, size); 
 
@@ -122,7 +122,7 @@ int main()
 
 		test_v5("aaaaa");
 
-		test_v5(std::vector < int > (size, 0));
+		test_v5(std::vector < int > ({ 1, 2, 3, 4, 5 }));
 
 //		test_v5(1); // error
 	}
@@ -139,7 +139,9 @@ int main()
 
 	{
 		assert(test_v8() == 1);
+
 		assert(test_v8() == 2);
+
 		assert(test_v8() == 3);
 	}
 
@@ -149,8 +151,11 @@ int main()
 		volatile auto x = 1, y = 2;
 
 		assert(max_v1(x, y) == 2); // support: compiler-explorer.com
+		
 		assert(max_v2(x, y) == 2); // support: compiler-explorer.com
+
 		assert(max_v1(1, 2) == 2); // support: compiler-explorer.com
+
 		assert(max_v2(1, 2) == 2); // support: compiler-explorer.com
 	}
 }

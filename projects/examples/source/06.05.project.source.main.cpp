@@ -120,11 +120,11 @@ int main()
 //  -----------------------------------------------------------------------------------
 
 	{
-		std::string path_1 = __FILE__;
+		std::string path = __FILE__;
 
 		auto file_name = "06.05.project.source.main.cpp";
 
-		assert(path_1.substr(std::size(path_1) - std::strlen(file_name)) == file_name);
+		assert(path.substr(std::size(path) - std::strlen(file_name)) == file_name);
 
 		assert(__LINE__ == 129);
 
@@ -142,11 +142,11 @@ int main()
 	{
 		constexpr auto source_location = std::source_location::current();
 
-		std::string path_2 = source_location.file_name();
+		std::string path = source_location.file_name();
 
 		auto file_name = "06.05.project.source.main.cpp";
 
-		assert(path_2.substr(std::size(path_2) - std::strlen(file_name)) == file_name);
+		assert(path.substr(std::size(path) - std::strlen(file_name)) == file_name);
 
 		assert(source_location.line() == 143);
 

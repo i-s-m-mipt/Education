@@ -73,16 +73,16 @@ auto equal(double x, double y, double epsilon = 1e-6)
 int main()
 {
 	{
-		[[maybe_unused]] auto weight = 5_kg;
+		[[maybe_unused]] auto weight = 1_kg;
 	}
 	
-//  ------------------------------------------------------
+//  ---------------------------------------------------------
 
 	{
-		assert(equal(180.0_deg_to_rad, std::numbers::pi));
+		assert(equal(90.0_deg_to_rad, std::numbers::pi / 2));
 	}
 
-//  ------------------------------------------------------
+//  ---------------------------------------------------------
 
 	{
 		assert(210_b3 == 21);

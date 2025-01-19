@@ -41,7 +41,9 @@ int main()
         switch (auto y = x; y) // support: compiler-explorer.com
         {
             [[likely]] case 1:
+            
             [[likely]] case 2:
+
             [[likely]] case 3:
             {
                 std::cout << "(1) "; [[fallthrough]];

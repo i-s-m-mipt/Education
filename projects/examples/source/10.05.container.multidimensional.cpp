@@ -53,7 +53,7 @@ int main()
 		{
 			for (auto j = 0uz; j < size; ++j)
 			{
-				array[i][j] = 1;
+				array[i][j] = j + 1;
 			}
 		}
 	}
@@ -69,7 +69,7 @@ int main()
 		{
 			for (auto j = 0uz; j < size; ++j)
 			{
-				array[i][j] = 1;
+				array[i][j] = j + 1;
 			}
 		}
 	}
@@ -90,7 +90,7 @@ int main()
 		{
 			for (auto j = 0uz; j < size; ++j)
 			{
-				array[i][j] = 1;
+				array[i][j] = j + 1;
 			}
 		}
 
@@ -113,7 +113,7 @@ int main()
 		{
 			for (auto j = 0uz; j < size; ++j)
 			{
-				array[i * size + j] = 1;
+				array[i * size + j] = j + 1;
 			}
 		}
 
@@ -131,7 +131,7 @@ int main()
 		{
 			for (auto j = 0uz; j < size; ++j)
 			{
-				array[i][j] = 1;
+				array[i][j] = j + 1;
 			}
 		}
 	}
@@ -147,7 +147,7 @@ int main()
 		{
 			for (auto j = 0uz; j < size; ++j)
 			{
-				vector[i][j] = 1;
+				vector[i][j] = j + 1;
 			}
 		}
 	}
@@ -163,7 +163,7 @@ int main()
 		{
 			for (auto j = 0uz; j < size; ++j)
 			{
-				array[i][j] = 1;
+				array[i][j] = j + 1;
 			}
 		}
 
@@ -171,8 +171,8 @@ int main()
 
 		auto view = array[boost::indices[range_t(0, 2)][range_t(0, 5, 2)]];
 
-		assert(view[0][0] == 1 && view[0][1] == 1 && view[0][2] == 1);
+		assert(view[0][0] == 1 && view[0][1] == 3 && view[0][2] == 5);
 
-		assert(view[1][0] == 1 && view[1][1] == 1 && view[1][2] == 1);
+		assert(view[1][0] == 1 && view[1][1] == 3 && view[1][2] == 5);
 	}
 }

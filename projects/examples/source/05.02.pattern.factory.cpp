@@ -77,8 +77,10 @@ private:
 
 ///////////////////////////////////////////////////////////
 
-struct Factory
+class Factory
 {
+public:
+
     virtual ~Factory() = default; 
 
     virtual Entity * make() const = 0;  

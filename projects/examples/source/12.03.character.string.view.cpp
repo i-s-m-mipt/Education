@@ -186,9 +186,9 @@ int main()
 
 //      std::string_view string_view_1 = "aaaaa"s + "bbbbb"s; // bad
 
-//      std::string_view string_view_3 = string; string = "bbbbb"; // bad
+//      std::string_view string_view_2 = string; string = "bbbbb"; // bad
 
-//      std::string_view string_view_2 = [](){ return "aaaaa"s; }(); // bad
+//      std::string_view string_view_3 = [](){ return "aaaaa"s; }(); // bad
     }
 
 //  -------------------------------------------------------------------------------------------

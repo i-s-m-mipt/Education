@@ -19,11 +19,18 @@ struct Router : public Client, public Server {};
 int main()
 {
 	static_assert(sizeof(Entity_v1) == 1);
+
 	static_assert(sizeof(Entity_v2) == 2);
+
 	static_assert(sizeof(Entity_v3) == 1);
+
 	static_assert(sizeof(Entity_v4) == 2);
 
+//  --------------------------------------
+
 	static_assert(sizeof(Client   ) == 1);
-	static_assert(sizeof(Server   ) == 1);	
+
+	static_assert(sizeof(Server   ) == 1);
+
 	static_assert(sizeof(Router   ) == 2);
 }

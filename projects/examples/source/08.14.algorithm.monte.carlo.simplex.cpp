@@ -39,7 +39,7 @@ int main()
 
 	std::uniform_real_distribution < double > distribution(0.0, 2.0 * std::numbers::pi);
 
-	Vector PA(0.0, -1.0);
+	Vector PA(0.0, -1.0, 0.0);
 
 	auto counter = 0uz;
 

@@ -91,8 +91,11 @@ void test_v4(benchmark::State & state) // support: compiler-explorer.com
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test_v1);
+
 BENCHMARK(test_v2);
+
 BENCHMARK(test_v3);
+
 BENCHMARK(test_v4);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,6 +133,16 @@ int main()
 
     {
         auto x = 1, y = 2; x ^= y ^= x ^= y; assert(x == 2 && y == 1);
+    }
+
+//  ----------------------------------------------------------------------------------------------
+
+    {
+        static_assert(sizeof(Datetime) == 8);
+
+        Datetime datetime(0, 0, 0, 0, 1, 1, 1970);
+
+//      auto ptr = &datetime.year; // error
     }
 
 //  ----------------------------------------------------------------------------------------------
@@ -193,6 +206,7 @@ int main()
             sizeof(array[0]) * (ptr_1 - ptr_2) == static_cast < std::size_t >
             (
                 std::bit_cast < std::byte * > (ptr_1) - 
+
                 std::bit_cast < std::byte * > (ptr_2)
             )
         );

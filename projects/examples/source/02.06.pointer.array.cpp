@@ -36,7 +36,7 @@ int main()
 
 		assert(array[1] == *(array + 1) && array[1] == 1[array]);
 
-//		*(array + 1'000) = 0; // error
+//		assert(*(array + 1'000) == 0); // error
 
 		assert(array + std::size(array) - 1 - array == 4);
 

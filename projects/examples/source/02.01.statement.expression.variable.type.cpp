@@ -42,11 +42,15 @@ int main()
 	
 	{
 //		[[maybe_unused]]   signed           int x1; // bad
+
 //		[[maybe_unused]]   signed      long int x2; // bad
+
 //		[[maybe_unused]]   signed long long int x3; // bad
 
 		[[maybe_unused]] unsigned           int x4;
+
 		[[maybe_unused]] unsigned      long int x5;
+
 		[[maybe_unused]] unsigned long long int x6;
 
 		std::cout << "main : sizeof(long double) = " << sizeof(long double) << '\n';
@@ -59,7 +63,7 @@ int main()
 
 //		[[maybe_unused]] int x2 = x1; // error
 
-		[[maybe_unused]] int x3{}, x4 = 1, x5(1), x6 { 1 }, x7 = { 1 };
+		[[maybe_unused]] int x3{}, x4 = 4, x5(5), x6 { 6 }, x7 = { 7 };
 	}
 
 //  -----------------------------------------------------------------------------------------
@@ -69,13 +73,13 @@ int main()
 
 //		[[maybe_unused]] auto x2{}; // error
 
-		[[maybe_unused]] auto x3 = 1, x4(1), x5 { 1 };
+		[[maybe_unused]] auto x3 = 3, x4(4), x5 { 5 };
 
-//		[[maybe_unused]] auto x6 = { 1 }; // bad
+//		[[maybe_unused]] auto x6 = { 6 }; // bad
  
-		[[maybe_unused]] auto x7 = 1ull;
+		[[maybe_unused]] auto x7 = 7ull;
 
-//		[[maybe_unused]] auto x8 = 1, x9 = 1.0; // error
+//		[[maybe_unused]] auto x8 = 8, x9 = 9.0; // error
 	}
 
 //  -----------------------------------------------------------------------------------------
@@ -83,11 +87,11 @@ int main()
 	{
 //		[[maybe_unused]] int x1 = 1.0; // bad
 
-//		[[maybe_unused]] int x2 { 1.0 }; // error
+//		[[maybe_unused]] int x2 { 2.0 }; // error
 
-//		[[maybe_unused]] int x3 { int(1.0) }; // bad
+//		[[maybe_unused]] int x3 { int(3.0) }; // bad
 
-		[[maybe_unused]] int x4 { static_cast < int > (1.0) };
+		[[maybe_unused]] int x4 { static_cast < int > (4.0) };
 
 //		[[maybe_unused]] int x5 { static_cast < int > ("aaaaa") }; // error
 
@@ -113,14 +117,16 @@ int main()
 
 		[[maybe_unused]] std::size_t size_1 = 5;
 
-		[[maybe_unused]] auto size_2 = 1'000uz;
+		[[maybe_unused]] auto size_2 = 5uz;
 	}
 
 //  -----------------------------------------------------------------------------------------
 
 	{
 		assert(sizeof(std::int16_t) == 2 && sizeof(std::int_least16_t) >= 2);
+
 		assert(sizeof(std::int32_t) == 4 && sizeof(std::int_least32_t) >= 4);
+
 		assert(sizeof(std::int64_t) == 8 && sizeof(std::int_least64_t) >= 8);
 	}
 }

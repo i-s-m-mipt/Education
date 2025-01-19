@@ -9,7 +9,7 @@ class Vector
 {
 public:
 
-    Vector(std::size_t size) : m_data(size, 0) {}
+    Vector(std::size_t size, int data = 0) : m_vector(size, data) {}
 
 //  --------------------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ public:
     {
         std::cout << "Vector::operator[] (1)\n";
 
-        return m_data[index];
+        return m_vector[index];
     }
 
     auto & operator[](std::size_t index)
@@ -29,7 +29,7 @@ public:
 
 private:
 
-    std::vector < int > m_data;
+    std::vector < int > m_vector;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -44,9 +44,9 @@ int main()
         assert(x == 2);
     }
 
-//  ------------------------------------------------------------
+//  ------------------------------------------------
 
     {
-        Vector vector(5); vector[0] = 1; assert(vector[0] == 1);
+        Vector vector(5, 0); assert(vector[0] == 0);
     }
 }

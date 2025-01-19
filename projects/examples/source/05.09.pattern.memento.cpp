@@ -10,7 +10,7 @@ public:
 
     Memento(int data) : m_states(1, State(data)) 
     {
-        m_deltas.push_back(m_states.front() - State());
+        m_deltas.push_back(m_states.front() - State(0));
     }
 
 //  --------------------------------------------------------------------
@@ -41,7 +41,7 @@ public:
 
     void load_v2(std::size_t shift)
     {
-        State state;
+        State state(0);
 
         for (auto i = 0uz; i < shift && i < std::size(m_deltas); ++i)
         {
