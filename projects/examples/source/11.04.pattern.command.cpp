@@ -67,11 +67,9 @@ int main()
 
 		std::vector < Command > commands = 
 		{
-			Command(entity_1, Entity::Order::fast), 
 			Command(entity_1, Entity::Order::fast),
-			Command(entity_2, Entity::Order::fast),
-			Command(entity_1, Entity::Order::slow),
-			Command(entity_2, Entity::Order::slow)
+
+			Command(entity_2, Entity::Order::fast)
 		};
 
 		for (auto command : commands) 
@@ -79,19 +77,19 @@ int main()
 			command.apply();
 		}
 
-		assert(entity_1.state == Entity::State::slow);
+		assert(entity_1.state == Entity::State::fast);
 
-		assert(entity_2.state == Entity::State::slow);
+		assert(entity_2.state == Entity::State::fast);
 	}
 	
 //  --------------------------------------------------------------------------------
 
 	{
+		Entity entity(Entity::State::slow);
+
 		using Order = Entity::Order;
 
 		using State = Entity::State;
-
-		Entity entity(State::slow);
 
 		std::unordered_map < Order, std::function < void(void) > > commands = 
 		{

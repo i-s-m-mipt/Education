@@ -39,8 +39,10 @@ int main()
 	{
 		std::vector < int > vector = { 1, 2, 3, 4, 5 }; 
 	
-		vector.push_back(6);
+		vector.push_back(1);
 
-		assert(std::size(vector) == 6 && std::ranges::is_sorted(vector));
+		assert(vector.front() == vector.back() && std::size(vector) == 6);
+
+		std::ranges::sort(vector);
 	}
 }

@@ -42,11 +42,11 @@ int main()
 	{
 		std::priority_queue < int > priority_queue;
 
-		priority_queue.push(2);
+		priority_queue.push(1);
 
 		priority_queue.push(3);
 
-		priority_queue.push(1);
+		priority_queue.push(2);
 
 		assert(priority_queue.top() == 3);
 

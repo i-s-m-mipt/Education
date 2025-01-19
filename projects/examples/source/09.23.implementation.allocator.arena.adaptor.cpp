@@ -122,7 +122,7 @@ int main()
 
     std::vector < int, Allocator < int > > vector({ 1, 2, 3, 4, 5 }, allocator);
 
-    arena.test(); vector.push_back(6);
+    arena.test(); vector.push_back(1);
 	
     arena.test();
 }

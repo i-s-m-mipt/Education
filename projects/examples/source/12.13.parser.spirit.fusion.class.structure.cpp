@@ -38,7 +38,7 @@ auto parse(std::string_view data)
 
     auto skip = boost::spirit::x3::ascii::space;
 
-    Entity entity(0, 0);
+    Entity entity;
 
     auto result = boost::spirit::x3::phrase_parse(begin, end, parser::rule, skip, entity);
 
