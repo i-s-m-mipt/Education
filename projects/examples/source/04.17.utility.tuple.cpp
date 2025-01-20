@@ -90,9 +90,7 @@ int main()
     {
         auto tuple = std::make_tuple(1, "aaaaa"s);
 
-        auto x = 0; std::tie(x, std::ignore) = tuple; 
-        
-        assert(x == 1);
+        auto x = 0; std::tie(x, std::ignore) = tuple; assert(x == 1);
 
         const auto & [y, string] = tuple; // support: cppinsights.io
 

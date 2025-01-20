@@ -54,7 +54,9 @@ auto parse(std::string_view data)
 
 int main()
 {
-    auto entity = parse(R"({ 1 2 })");
+    auto entity = parse(R"({ 1 1 })");
 
-    assert(entity.data_1 == 1 && entity.data_2 == 2);
+    assert(entity.data_1 == 1);
+    
+    assert(entity.data_2 == 1);
 }

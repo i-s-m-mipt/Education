@@ -46,7 +46,7 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-//		std::variant <                 Entity_v1, int > variant; // error
+//		std::variant < Entity_v1, int > variant; // error
 
 		std::variant < std::monostate, Entity_v1, int > variant;
 	}
@@ -70,19 +70,9 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		auto optional = std::make_optional(1);
+		assert(std::make_optional(1).value_or(2) == 1);
 
-		assert(optional.has_value());
-
-		assert(optional.value() == 1 && optional.value_or(2) == 1);
-	}
-
-//  ---------------------------------------------------------------------------------
-
-	{
-		std::optional < std::string > optional(std::in_place, 5, 'a');
-
-    	assert(optional->substr(1, 3) == "aaa");
+    	assert(std::make_optional < std::string > (5, 'a')->starts_with("aaa"));
 	}
 
 //  ---------------------------------------------------------------------------------

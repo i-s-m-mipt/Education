@@ -90,9 +90,9 @@ int main()
 	{
 		std::vector < Entity > entities = { { 1 }, { 2 }, { 3 }, { 4 }, { 5 } };
 
-		std::ranges::sort(entities, std::ranges::greater(), &Entity::data);
+		std::ranges::sort(entities, std::greater(), &Entity::data);
 
-		assert(std::ranges::is_sorted(entities, std::ranges::greater(), &Entity::data));
+		assert(std::ranges::is_sorted(entities, std::greater(), &Entity::data));
 	}
 
 //  ------------------------------------------------------------------------------------------

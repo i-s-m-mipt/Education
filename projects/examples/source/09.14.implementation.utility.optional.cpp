@@ -2,7 +2,7 @@
 #include <new>
 #include <utility>
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T > class Optional 
 {
@@ -69,7 +69,7 @@ public:
         uninitialize(); 
     }
 
-//  -----------------------------------------------
+//  -----------------------------------------------------------------------------------------
 
     auto empty() const 
     { 
@@ -94,7 +94,7 @@ private:
 
     void allocate() 
     { 
-        m_data = static_cast < T * > (operator new(sizeof(T), std::align_val_t(alignof(T)))); 
+        m_data = static_cast < T * > (operator new(sizeof(T), std::align_val_t(alignof(T))));
     }
 
     void construct(T data) 
@@ -132,19 +132,26 @@ private:
         }
     }
 
-//  ---------------------
+//  -----------------------------------------------------------------------------------------
 
     T * m_data = nullptr;
 }; 
 
-//  ================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename T > auto make_optional(T && data)
+{ 
+    return Optional < T > (std::forward < T > (data)); 
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
     {
         Optional < int > optional_1;
     
-        Optional < int > optional_2(2);
+        Optional < int > optional_2 = 2;
 
         Optional < int > optional_3(optional_2);
 
@@ -157,11 +164,9 @@ int main()
         optional_4 = 4;
     }
 
-//  ----------------------------------------------------------
+//  -------------------------------------------------------
 
     {
-        Optional < int > optional(1);
-
-        assert(!optional.empty() && optional.data_or(0) == 1);
+        assert(make_optional(1).data_or(2) == 1);
     }    
 }

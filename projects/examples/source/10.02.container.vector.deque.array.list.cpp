@@ -48,16 +48,16 @@ int main()
 
 		try
 		{
-			assert(vector.at(1'000) == 0);
+			vector.at(1'000) = 1;
 		}
 		catch (const std::out_of_range & exception) 
 		{
 			std::cerr << "main : " << exception.what() << '\n';
 		}
 
-		for (auto i = 1uz; i < std::size(vector); ++i)
+		for (auto i = 0uz; i < std::size(vector); ++i)
 		{		
-			assert(vector[i] == vector[i - 1] + 1);
+			assert(vector[i] == i + 1);
 		}
 	}
 

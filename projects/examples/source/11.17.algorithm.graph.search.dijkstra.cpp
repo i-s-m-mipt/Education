@@ -16,21 +16,21 @@ int main()
     >
     graph;
 
-    boost::add_edge(0, 2, 1, graph);
-    boost::add_edge(1, 1, 2, graph);
-    boost::add_edge(1, 3, 3, graph);
-    boost::add_edge(2, 1, 4, graph);
-    boost::add_edge(2, 3, 5, graph);
-    boost::add_edge(3, 1, 6, graph);
-    boost::add_edge(3, 4, 7, graph);
-    boost::add_edge(4, 0, 8, graph);
-    boost::add_edge(4, 1, 9, graph);
+    boost::add_edge(1, 3, 1, graph);
+    boost::add_edge(2, 2, 2, graph);
+    boost::add_edge(2, 4, 3, graph);
+    boost::add_edge(3, 2, 4, graph);
+    boost::add_edge(3, 4, 5, graph);
+    boost::add_edge(4, 2, 6, graph);
+    boost::add_edge(4, 5, 7, graph);
+    boost::add_edge(5, 1, 8, graph);
+    boost::add_edge(5, 2, 9, graph);
 
 	std::array < unsigned int, 5 > distances = {};
 
     auto map = boost::distance_map(std::begin(distances));
 
-	boost::dijkstra_shortest_paths(graph, 0, map);
+	boost::dijkstra_shortest_paths(graph, 1, map);
 
     std::array < unsigned int, 5 > result = { 0, 5, 1, 6, 13 };
 

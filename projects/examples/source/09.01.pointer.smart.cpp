@@ -159,9 +159,13 @@ int main()
 			new int[5]{ 1, 2, 3, 4, 5 }, std::default_delete < int[] > ()
 		);
 
-//		++shared_ptr_2; // error
+//		assert(shared_ptr_2[0] == 1); // error
 
-		auto shared_ptr_3 = std::make_shared < int[] > (5, 0);
+		std::shared_ptr < int[] > shared_ptr_3(new int[5]{ 1, 2, 3, 4, 5 });
+
+		assert(shared_ptr_3[0] == 1);
+
+//		assert(*shared_ptr_3 == 1 && *(shared_ptr_3 + 1) == 2); // error
 	}
 
 //  -----------------------------------------------------------------------------

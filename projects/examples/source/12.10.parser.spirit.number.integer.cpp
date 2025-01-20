@@ -30,7 +30,7 @@ int main()
 //  ----------------------------------------------------------------------------------------------
 
     {
-        auto data = "1 2"sv; auto begin = std::begin(data), end = std::end(data);
+        auto data = "1 1"sv; auto begin = std::begin(data), end = std::end(data);
 
         auto rule = boost::spirit::x3::int_ >> boost::spirit::x3::int_;
 
@@ -38,13 +38,13 @@ int main()
 
         boost::spirit::x3::phrase_parse(begin, end, rule, boost::spirit::x3::ascii::space, pair);
 
-        assert(pair == std::make_pair(1, 2));
+        assert(pair == std::make_pair(1, 1));
     }
 
 //  ----------------------------------------------------------------------------------------------
 
     {
-        auto data = "{ 1 2 }"sv; auto begin = std::begin(data), end = std::end(data);
+        auto data = "{ 1 1 }"sv; auto begin = std::begin(data), end = std::end(data);
 
         auto rule = '{' >> boost::spirit::x3::int_ >> boost::spirit::x3::int_ >> '}';
 
@@ -52,7 +52,7 @@ int main()
 
         boost::spirit::x3::phrase_parse(begin, end, rule, boost::spirit::x3::ascii::space, tuple);
 
-        assert(tuple == std::make_tuple(1, 2));
+        assert(tuple == std::make_tuple(1, 1));
     }
 
 //  ----------------------------------------------------------------------------------------------

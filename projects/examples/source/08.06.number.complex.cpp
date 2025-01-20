@@ -43,6 +43,7 @@ auto equal(std::complex < double > x, std::complex < double > y, double epsilon 
     return 
     (
         std::abs(std::real(x) - std::real(y)) < epsilon &&
+        
         std::abs(std::imag(y) - std::imag(y)) < epsilon
     );
 }
@@ -55,7 +56,6 @@ int main()
         auto complex = 1.0 + 1.0i;
 
         assert(equal(std::real(complex), 1.000'000));
-
         assert(equal(std::imag(complex), 1.000'000));
 
         assert(equal(complex + complex , 2.000'000 + 2.000'000i));
@@ -64,13 +64,10 @@ int main()
         assert(equal(complex / complex , 1.000'000 + 0.000'000i));
 
         assert(equal(std::abs (complex), 1.414'214));
-        
         assert(equal(std::arg (complex), 0.785'398));
-
         assert(equal(std::norm(complex), 2.000'000));
 
         assert(equal(std::conj(complex), 1.000'000 - 1.000'000i));
-
         assert(equal(std::proj(complex), 1.000'000 + 1.000'000i));
 
         assert(equal(std::polar(std::sqrt(2.0), std::numbers::pi / 4), complex));

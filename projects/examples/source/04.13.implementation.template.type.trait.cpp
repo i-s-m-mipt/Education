@@ -150,7 +150,7 @@ private:
 
 public:
       
-	static constexpr auto value = decltype(test < B > (0))::value;
+	static constexpr auto value = decltype(test < B > (1))::value;
 };
 
 template < typename B > constexpr auto is_polymorphic_v = is_polymorphic < B > ::value;
@@ -174,7 +174,7 @@ private:
 
 public:
       
-	static constexpr auto value = decltype(test < D, B > (0))::value;
+	static constexpr auto value = decltype(test < D, B > (1))::value;
 };
 
 template 

@@ -61,9 +61,7 @@ private:
 int main()
 {
 	{
-		Entity entity_1(Entity::State::slow);
-		
-		Entity entity_2(Entity::State::slow);
+		Entity entity_1, entity_2;
 
 		std::vector < Command > commands = 
 		{
@@ -85,11 +83,11 @@ int main()
 //  --------------------------------------------------------------------------------
 
 	{
-		Entity entity(Entity::State::slow);
-
 		using Order = Entity::Order;
 
 		using State = Entity::State;
+
+		Entity entity;
 
 		std::unordered_map < Order, std::function < void(void) > > commands = 
 		{

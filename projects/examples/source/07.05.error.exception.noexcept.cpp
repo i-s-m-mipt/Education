@@ -11,9 +11,9 @@ class Entity
 {
 public:
 
-	Entity(int data = 0) try : m_data(data)
+	Entity(int data) try : m_data(data)
 	{
-		if (m_data == 0)
+		if (m_data < 0)
 		{
 			throw std::runtime_error("error");
 		}
@@ -30,14 +30,14 @@ public:
 		uninitialize();
 	}
 
-//  ------------------------------------------------
+//  -----------------------------------------------
 
 	void swap(Entity & other) noexcept
 	{
 		std::swap(m_data, other.m_data);
 	}
 
-//  ------------------------------------------------
+//  -----------------------------------------------
 
 	auto data() const noexcept
 	{
@@ -55,7 +55,7 @@ private:
 		catch (...) {}
 	}
 
-//  ------------------------------------------------
+//  -----------------------------------------------
 
 	int m_data = 0;
 };
@@ -116,7 +116,7 @@ int main()
 	{
 		try
 		{
-			Entity entity;
+			Entity entity(-1);
 		}
 		catch(const std::exception & exception)
 		{
@@ -130,8 +130,6 @@ int main()
 		Entity entity_1(1), entity_2(2);
 
     	entity_1.swap(entity_2);
-
-    	assert(entity_1.data() == 2 && entity_2.data() == 1);
 	}
 
 //  ---------------------------------------------------------------
@@ -140,8 +138,6 @@ int main()
 		Entity entity_1(1), entity_2(2);
 
 		invoke(swap < Entity > , entity_1, entity_2);
-
-    	assert(entity_1.data() == 2 && entity_2.data() == 1);
 	}
 
 //  ---------------------------------------------------------------

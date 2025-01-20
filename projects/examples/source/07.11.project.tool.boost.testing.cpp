@@ -203,9 +203,7 @@ public:
 
 BOOST_FIXTURE_TEST_CASE(Test_v7, Fixture)
 {
-    BOOST_TEST(std::size(data) == 0); data.push_back(1);
+    data.push_back(1); BOOST_TEST(std::size(data) == 1);
     
-    BOOST_TEST(std::size(data) == 1); data.push_back(1);
-
-    BOOST_TEST(std::size(data) == 2);
+    data.push_back(1); BOOST_TEST(std::size(data) == 2);
 }

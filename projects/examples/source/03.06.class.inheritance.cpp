@@ -35,8 +35,6 @@ class Client : public Entity
 {
 public:
 
-	Client() = default;
-
 	Client(int data_1, int data_2) : Entity(data_1), m_data(data_2)
 	{
 		assert(data() == data_1);
@@ -99,30 +97,38 @@ private:
 int main()
 {
 	{
-//		assert(Entity().data() == 0); // error
+		Entity entity(1);
+
+//		assert(entity.data() == 1); // error
 	}
 
-//  ------------------------------------------
+//  ----------------------------------------
 
 	{
-		Client client;
+		Client client(1, 1);
 
 		client.test_v1();
 
 		client.test_v2();
 
-		assert(client.data() == 0);
+		assert(client.data() == 1);
 	}
 
-//  ------------------------------------------
+//  ----------------------------------------
 
 	{	
-//		Server_v1().test_v1(); // error
+		Server_v1 server_v1;
 
-//		Server_v1().test_v2(); // error
+//		server_v1.test_v1(); // error
 
-		Server_v1().test();
+//		server_v1.test_v2(); // error
 
+		server_v1.test();
+	}
+
+//  ----------------------------------------
+
+	{
 		Server_v2().test();
 	}
 }

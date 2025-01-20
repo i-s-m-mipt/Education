@@ -1,11 +1,26 @@
 #include <algorithm>
 #include <cassert>
 #include <functional>
+#include <iostream>
 #include <iterator>
 #include <numeric>
 #include <random>
 #include <utility>
 #include <vector>
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+void test(const std::vector < int > & vector)
+{
+	std::cout << "test : vector = { ";
+
+	for (auto element : vector)
+	{
+		std::cout << element << ' ';
+	}
+
+	std::cout << "}\n";
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -30,25 +45,23 @@ int main()
 
 		std::shuffle(std::begin(vector), std::end(vector), engine);
 
-		std::uniform_int_distribution distribution(1, 5);
-
-		auto generator = [&engine, &distribution](){ return distribution(engine); };
-
-		std::generate(std::begin(vector), std::end(vector), generator);
+		test(vector);
 	}
 
 //  --------------------------------------------------------------------------------
 
 	{
-		std::vector < int > vector = { 1, 2, 3, 4, 5 };
+		std::vector < int > vector(5, 0);
 
-		auto iterator = std::find(std::begin(vector), std::end(vector), 0);
+		std::default_random_engine engine;
 
-		assert(iterator == std::end(vector));
+		std::uniform_int_distribution distribution(1, 5);
 
-		auto [min, max] = std::minmax_element(std::begin(vector), std::end(vector));
+		auto generator = [&engine, &distribution](){ return distribution(engine); };
 
-		assert(*min == 1 && *max == 5);
+		std::generate(std::begin(vector), std::end(vector), generator);
+
+		test(vector);
 	}
 
 //  --------------------------------------------------------------------------------
@@ -79,14 +92,26 @@ int main()
 	{
 		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-		auto iterator = std::remove(std::begin(vector), std::end(vector), 0);
+		auto iterator = std::remove(std::begin(vector), std::end(vector), 1);
+
+		test(vector);
 
 		vector.erase(iterator, std::end(vector));
+
+		assert(vector == std::vector < int > ({ 2, 3, 4, 5 }));
+	}
+
+//  --------------------------------------------------------------------------------
+
+	{
+		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
 		auto is_four = [](auto x){ return x == 4; };
 
 		auto is_five = [](auto x){ return x == 5; };
 
 		std::erase_if(vector, bind(is_four, is_five, std::logical_or <> ()));
+
+		assert(vector == std::vector < int > ({ 1, 2, 3 }));
 	}
 }

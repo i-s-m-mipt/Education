@@ -100,7 +100,7 @@ int main()
 
 //		x = x + ++x; // error
 
-		auto y = x = 1 + 2 + 3;
+		[[maybe_unused]] auto y = x = 1 + 2 + 3;
 
 //		assert((++x, ++y) == 7); // bad
 	}

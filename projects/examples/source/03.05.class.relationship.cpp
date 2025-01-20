@@ -8,14 +8,24 @@ class Entity
 {
 public:
 
-	void test() const
+	Entity() = default;
+
+	Entity(int data) : m_data(data) {}
+
+//  ----------------------------------
+
+	static void test()
 	{
 		std::cout << "Entity::test\n";
 	}
 
-//  --------------------------------------------
+//  ----------------------------------
 
-	int data = 0; static inline auto s_data = 0;
+	static inline auto s_data = 0;
+
+private:
+
+	int m_data = 0; 
 };
 
 ///////////////////////////////////////////////////////////
@@ -29,10 +39,16 @@ struct Server { std::vector < struct Client * > clients; };
 int main()
 {
 	{
-		assert(Entity().data == 0 && Entity::s_data == 0);
+		Entity entity_1(1), entity_2(2);
 	}
 	
-//  ------------------------------------------------------
+//  --------------------------------------------------
+
+	{
+		Entity::s_data = 1;
+	}
+
+//  --------------------------------------------------
 
 	{
 		auto size = 5uz;
@@ -49,9 +65,9 @@ int main()
 		}
 	}
 
-//  ------------------------------------------------------
+//  --------------------------------------------------
 
 	{
-		Entity().test();
+		Entity::test();
 	}
 }

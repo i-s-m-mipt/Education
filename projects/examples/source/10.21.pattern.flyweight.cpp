@@ -62,6 +62,8 @@ int main()
 
     std::cout << "main : enter char to continue : "; char c; std::cin >> c;
 
+//  ----------------------------------------------------------------------------
+
     auto & entity = entities.front();
 
     for (auto i = 1uz; i < size_1; ++i)

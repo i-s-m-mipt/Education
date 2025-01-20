@@ -123,7 +123,7 @@ int main()
 
 		(entities + offset)->~Entity_v1();
 
-		new (entities + offset) Entity_v1(size + 1);
+		new (entities + offset) Entity_v1(1);
 
 		for (auto i = 0uz; i < size; ++i)
 		{
@@ -144,7 +144,7 @@ int main()
 
 		new (&entity_v2.data_2) std::string;
 
-		entity_v2.data_2 = "bbbbb";
+		entity_v2.data_2 = "aaaaa";
 
 		entity_v2.data_2.~basic_string();
 	}

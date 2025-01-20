@@ -48,7 +48,8 @@ private:
 
 class Entity_v2 
 : 
-    private boost::less_than_comparable < Entity_v2 > , 
+    private boost::less_than_comparable < Entity_v2 > ,
+     
     private boost::          equivalent < Entity_v2 >
 {
 public:

@@ -21,7 +21,7 @@ int main()
 
     assert(std::size(valarray_1) == 5);
 
-    assert(std::size(valarray_2) == 5 && valarray_2[0] == 2 && valarray_2[4] == 0);
+    assert(std::size(valarray_2) == 5 && valarray_2[0] == 2 && valarray_2[3] == 5);
 
     assert(std::size(valarray_3) == 3 && valarray_3.max() == 3);
 

@@ -1,4 +1,4 @@
-#include <cassert>
+#include <iostream>
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -6,7 +6,17 @@ class Entity
 { 
 public: 
 
-	int data = 0; static inline auto s_data = 0;
+	void test_v1() const
+	{
+		std::cout << "Entity::test_v1\n";
+	}
+
+//  -------------------------------------
+
+	static void test_v2()
+	{
+		std::cout << "Entity::test_v2\n";
+	}
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -29,15 +39,29 @@ class Router_v2 : public Client_v2, public Server_v2 { public: Router_v2() {} };
 
 int main()
 {
-	Client_v1 client_v1; // support: compiler-explorer.com
+	{
+		Router_v1 router_v1; // support: compiler-explorer.com
 
-	Client_v2 client_v2; // support: compiler-explorer.com
+//		router_v1.test_v1(); // error
 
-	Router_v1 router_v1; // support: compiler-explorer.com
+		router_v1.test_v2();
+	}
 
-	Router_v2 router_v2; // support: compiler-explorer.com
+//  ----------------------------------------------------------
 
-//	assert(router_v1.data == 0 && Router_v1::s_data == 0); // error
+	{
+		Router_v2 router_v2; // support: compiler-explorer.com
 
-	assert(router_v2.data == 0 && Router_v2::s_data == 0);
+		router_v2.test_v1();
+
+		router_v2.test_v2();
+	}
+
+//  ----------------------------------------------------------
+
+	{
+		Client_v1 client_v1; // support: compiler-explorer.com
+
+		Client_v2 client_v2; // support: compiler-explorer.com
+	}
 }

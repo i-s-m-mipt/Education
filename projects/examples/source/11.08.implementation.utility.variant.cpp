@@ -333,7 +333,7 @@ int main()
     {
         Variant < int, std::string > variant_1;
     
-        Variant < int, std::string > variant_2(2);
+        Variant < int, std::string > variant_2 = 2;
 
         Variant < int, std::string > variant_3(variant_2);
 

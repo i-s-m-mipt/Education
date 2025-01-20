@@ -1,6 +1,6 @@
 #include <cassert>
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 union Entity // support: compiler-explorer.com
 { 
@@ -11,7 +11,7 @@ union Entity // support: compiler-explorer.com
 	char array_3[3]; int data = 0; 
 };
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 struct Variant 
 {
@@ -25,7 +25,7 @@ struct Variant
 	bool has_error = false; 
 };
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 auto test(int x)
 {
@@ -39,12 +39,12 @@ auto test(int x)
 	}
 }
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 int main()
 {
 	{
-		Entity entity { .data = 0 };
+		Entity entity;
 
 		entity.array_1[0] = 'a';
 
@@ -54,20 +54,22 @@ int main()
 
 //		assert(entity.array_3[0] == 'a'); // bad
 
-		entity.data = 0; 
+		entity.array_1[0] = 0; 
 		
 		entity.array_3[1] = 1;
 
 		assert(entity.data == 256);
 	}
 
-//  ------------------------------------------------------
+//  ----------------------------------------------------------
 
 	{
-		auto x = 1;
+		auto variant_1 = test(-1);
+		
+		auto variant_2 = test(+1);
 
-		auto variant = test(x);
-	
-		assert(!variant.has_error && variant.data_2 == x);
+		assert( variant_1.has_error && variant_1.data_1 == 1);
+
+		assert(!variant_2.has_error && variant_2.data_2 == 1);
 	}
 }

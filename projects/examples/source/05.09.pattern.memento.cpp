@@ -8,10 +8,7 @@ class Memento
 {
 public:
 
-    Memento(int data) : m_states(1, State(data)) 
-    {
-        m_deltas.push_back(m_states.front() - State(0));
-    }
+    Memento() : m_states(1, State()) {}
 
 //  --------------------------------------------------------------------
 
@@ -26,12 +23,9 @@ public:
         
         m_deltas.push_back(state - m_states.front());
 
-        m_states.front() = state;
-    }
+        m_states.push_back(state); 
 
-    void save()
-    { 
-        m_states.push_back(m_states.front()); 
+        m_states.front() = std::move(state);
     }
 
     void load_v1(std::size_t index)
@@ -41,7 +35,7 @@ public:
 
     void load_v2(std::size_t shift)
     {
-        State state(0);
+        State state;
 
         for (auto i = 0uz; i < shift && i < std::size(m_deltas); ++i)
         {
@@ -80,11 +74,15 @@ private:
 
 int main() 
 {
-    Memento memento(1); 
-    
-    memento.save(); memento.set(2);
+    Memento memento; 
 
-    memento.save();
+//  -----------------------------------------------
+    
+    memento.set(1); 
+
+    memento.set(2);
+
+//  -----------------------------------------------
     
     memento.load_v1(1); assert(memento.get() == 1);
     

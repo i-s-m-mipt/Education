@@ -32,11 +32,13 @@ int main()
 
 		assert(std::size(array) == 5);
 
-		assert(*array == 1);
+		assert(array[0] == 1 && 0[array] == 1);
 
-		assert(array[1] == *(array + 1) && array[1] == 1[array]);
+//		array[1'000] = 1; // error
 
-//		assert(*(array + 1'000) == 0); // error
+		assert(*array == 1 && *(array + 1) == 2);
+
+//		*(array + 1'000) = 1; // error
 
 		assert(array + std::size(array) - 1 - array == 4);
 

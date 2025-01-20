@@ -55,6 +55,8 @@ int main()
 {
 	auto size = 5uz;
 
+//  ----------------------------------------------------------
+
 	std::vector < std::vector < std::vector < int > > > vector
 	(
 		size, std::vector < std::vector < int > > 
@@ -66,6 +68,19 @@ int main()
 		)
 	);
 
+	for (auto i = 0uz; i < size; ++i)
+	{
+		for (auto j = 0uz; j < size; ++j)
+		{
+			for (auto k = 0uz; k < size; ++k)
+			{
+				vector[i][j][k] = k + 1;
+			}
+		}
+	}
+
+//  ----------------------------------------------------------
+
 	auto array = make_array < int, 3 > (vector);
 
 	for (auto i = 0uz; i < size; ++i)
@@ -74,7 +89,7 @@ int main()
 		{
 			for (auto k = 0uz; k < size; ++k)
 			{
-				assert(array[i][j][k] == vector[i][j][k]);;
+				assert(array[i][j][k] == vector[i][j][k]);
 			}
 		}
 	}

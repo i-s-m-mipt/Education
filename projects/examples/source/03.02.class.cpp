@@ -4,85 +4,71 @@
 
 using namespace std::literals;
 
-/////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
 public:
 
-	Entity() : m_data_1(s_data_1), m_data_2(0), m_data_3(0)
+	Entity() = default;
+
+	Entity(int data_1, int data_2) : m_data_1(data_1), m_data_2(data_2) {}
+
+//	Entity(int data_1, int data_2) : m_data_2(data_2), m_data_1(data_1) {} // error
+
+	Entity(int data_1) : Entity(data_1, 0) 
 	{
-		std::cout << "Entity::Entity (1)\n";
+//		m_data_2 = 1; // error
 	}
 
-//	Entity() : m_data_1(s_data_1), m_data_3(0), m_data_2(0) // error
-//	{
-//		std::cout << "Entity::Entity (2)\n";
-//	}
+   ~Entity() = default;
 
-//  ---------------------------------------------------------------------
-
-	Entity(const int & data_1, int data_2, int data_3) 
-	: 
-		m_data_1(data_1), 
-		
-		m_data_2(data_2), 
-		
-		m_data_3(data_3)
-	{
-		std::cout << "Entity::Entity (3)\n";
-	}
-
-	Entity(const int & data_1, int data_2) : Entity(data_1, data_2, 0) 
-	{
-		std::cout << "Entity::Entity (4)\n";
-	}
-
-//  ---------------------------------------------------------------------
-
-   ~Entity()
-	{
-		std::cout << "Entity::~Entity\n";
-	}
-
-//  ---------------------------------------------------------------------
+//  -------------------------------------------------------------------------------
 
 	auto data_1() const { return m_data_1; }
 
 	auto data_2() const { return m_data_2; }
 
-	auto data_3() const { return m_data_3; }
-
-//  ---------------------------------------------------------------------
+//  -------------------------------------------------------------------------------
 
 	const auto & data_as_string() const
 	{
-	//	m_data_3 = 1; // error
+	//	m_data_1 = 1; // error
 				
 		return m_cached_data.data_as_string(*this);
 	}
 
-//  ---------------------------------------------------------------------
+//  -------------------------------------------------------------------------------
 
-//	void set_data_3(int data) { m_data_3 = data; } // bad
+//	void set_data_1(int data) { m_data_1 = data; } // bad
 
-	void set_data_3(int data) 
+	void set_data_1(int data) 
 	{ 
-		m_data_3 = data; 
+		m_data_1 = data; 
 		
 		m_cached_data.set_invalid(); 
 	}
 
-//  ---------------------------------------------------------------------
+//  -------------------------------------------------------------------------------
 
 	static void test()
 	{
 		std::cout << "Entity::test\n";
 
-	//	m_data_3 = 1; // error
+	//	m_data_1 = 1; // error
 
 		s_data_1 = 1;
 	}
+
+//  -------------------------------------------------------------------------------
+
+	static inline       auto s_data_1 = 0;
+
+	static        const auto s_data_2 = 1;
+
+//	static        const auto s_data_3 = "aaaaa"s; // error
+
+	static inline const auto s_data_4 = "aaaaa"s;
 
 private:
 
@@ -96,9 +82,9 @@ private:
 			{
 				m_string = 
 				(
-					std::to_string(entity.m_data_1) + '/' +
-					std::to_string(entity.m_data_2) + '/' +
-					std::to_string(entity.m_data_3)
+					std::to_string(entity.m_data_1) + ' ' +
+					
+					std::to_string(entity.m_data_2)
 				);
 
 				m_is_invalid = false;
@@ -109,7 +95,7 @@ private:
 
 		void set_invalid()
 		{
-			m_is_invalid = true;
+			m_string.clear(); m_is_invalid = true;
 		}
 
 	private:
@@ -117,72 +103,68 @@ private:
 		std::string m_string; bool m_is_invalid = true;
 	};
 
-//  ---------------------------------------------------------------------
+//  -------------------------------------------------------------------------------
 
-	const int & m_data_1 = 0;
+		  int m_data_1 = 0; 
+	
+	const int m_data_2 = 0;
 
-	const int   m_data_2 = 0;
-
-		  int   m_data_3 = 0;
-
-//  ---------------------------------------------------------------------
+//  -------------------------------------------------------------------------------
 
 	mutable Cached_Data m_cached_data;
-
-//  ---------------------------------------------------------------------
-
-	static inline       auto s_data_1 = 0;
-
-	static        const auto s_data_2 = 0;
-
-//	static        const auto s_data_3 = "aaaaa"s; // error
-
-	static inline const auto s_data_4 = "aaaaa"s;
 };
 
-/////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
 	{
-		Entity entity;
+		Entity entity(1, 1);
 
-//		entity.m_data_3 = 1; // error
+//		entity.m_data_1 = 2; // error
 
-		entity.set_data_3(1); 
+		assert(entity.data_1() == 1);
+
+		assert(entity.data_as_string() == "1 1");
+
+		entity.set_data_1(2); 
 		
-		assert(entity.data_3() == 1);
-
-		assert(entity.data_as_string() == "0/0/1");
+		assert(entity.data_1() == 2);
 	}
 	
-//  -----------------------------------------------
+//  ---------------------------------------------
 
 	{
-		const Entity entity;
+		const Entity entity(1, 1);
+		
+		assert(entity.data_1() == 1);
 
-//  	entity.set_data_3(1); // error
+		assert(entity.data_as_string() == "1 1");
 
-		assert(entity.data_3() == 0);
-
-		assert(entity.data_as_string() == "0/0/0");
+//  	entity.set_data_1(2); // error
 	}
 
-//  -----------------------------------------------
+//  ---------------------------------------------
 
 	{
 		Entity entity_1;
 
 //		Entity entity_2(); // error
 
-		Entity entity_3(3, 3, 3);
+		Entity entity_3(3, 3);
 	
-		Entity entity_4(4, 4);
+		Entity entity_4(4);
 	}
 
-//  -----------------------------------------------
+//  ---------------------------------------------
 
 	{
-		Entity().test(); Entity::test();
+		Entity::s_data_1 = 1;
+
+		Entity::test();
+
+		assert(Entity::s_data_2 == 1);
+
+		assert(Entity::s_data_4 == "aaaaa");
 	}
 }

@@ -14,18 +14,26 @@ public:
 		std::cout << "Vector::Vector (1)\n";
 	}
 
-	Vector(std::size_t size) : Vector()
+	Vector(std::initializer_list < int > initializer_list) : Vector()
 	{
 		std::cout << "Vector::Vector (2)\n";
+
+		auto size = std::size(initializer_list);
 
 		m_data = size ? new int[size]{} : nullptr;
 
 		m_size = size;
+
+		std::ranges::copy(initializer_list, m_data);
 	}
 
-	Vector(const Vector & other) : Vector(other.m_size) 
+	Vector(const Vector & other) : Vector() 
 	{
 		std::cout << "Vector::Vector (3)\n";
+
+		m_data = other.m_size ? new int[other.m_size]{} : nullptr;
+
+		m_size = other.m_size;
 
 		std::ranges::copy(other.m_data, other.m_data + other.m_size, m_data);		
 	}
@@ -103,6 +111,7 @@ public:
 //			}
 //			
 //			m_data = other.m_data;
+
 //			m_size = other.m_size;
 //
 //			other.m_data = nullptr; 
@@ -152,11 +161,11 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////
 
-auto test_v1() { return Vector(); }
+auto test_v1() { return Vector({ 1, 2, 3, 4, 5 }); }
 
 auto test_v2() 
 { 
-	Vector vector; 
+	Vector vector = { 1, 2, 3, 4, 5 }; 
 	
 	return vector; 
 
@@ -170,7 +179,7 @@ int main()
 	{
 		Vector vector_1;
 
-		Vector vector_2(5);
+		Vector vector_2 = { 1, 2, 3, 4, 5 };
 
 		Vector vector_3(vector_2);
 

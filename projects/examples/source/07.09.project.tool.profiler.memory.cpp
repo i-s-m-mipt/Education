@@ -9,7 +9,7 @@ int main() // support: valgrind --leak-check=yes ./07.09.project.tool.profiler.m
 {
 	auto array = new int[5]{ 1, 2, 3, 4, 5 };
 
-	assert(array[1'000] == 0);
+	array[1'000] = 1;
 
 //  delete[] array; // bad
 
