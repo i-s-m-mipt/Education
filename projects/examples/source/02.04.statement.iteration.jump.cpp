@@ -59,7 +59,7 @@ int main()
 		{
 			std::cout << "main : iteration (06) : i = " << i << ' ';
 
-			std::cout << "break? (y/n) "; char c; std::cin >> c; 
+			std::cout << "break? (y/n) "; auto c = '\0'; std::cin >> c; 
 			
 			if (c == 'y') 
 			{
@@ -81,7 +81,7 @@ int main()
 					
 					std::cout << "i = " << i << " j = " << j << " k = " << k << ' ';
 
-					std::cout << "break? (y/n) "; char c; std::cin >> c; 
+					std::cout << "break? (y/n) "; auto c = '\0'; std::cin >> c; 
 			
 					if (c == 'y') 
 					{
@@ -101,7 +101,7 @@ int main()
 		{
 			std::cout << "main : iteration (08) : ";
 
-			std::cout << "break? (y/n) "; char c; std::cin >> c; 
+			std::cout << "break? (y/n) "; auto c = '\0'; std::cin >> c; 
 			
 			if (c == 'y') 
 			{
@@ -117,7 +117,7 @@ int main()
 		{
 			std::cout << "main : iteration (09) : ";
 
-			std::cout << "break? (y/n) "; char c; std::cin >> c; 
+			std::cout << "break? (y/n) "; auto c = '\0'; std::cin >> c; 
 			
 			if (c == 'y') 
 			{

@@ -55,9 +55,9 @@ int main()
 			std::cerr << "main : " << exception.what() << '\n';
 		}
 
-		for (auto i = 0uz; i < std::size(vector); ++i)
+		for (auto i = 1uz; i < std::size(vector); ++i)
 		{		
-			assert(vector[i] == i + 1);
+			assert(vector[i] == vector[i - 1] + 1);
 		}
 	}
 

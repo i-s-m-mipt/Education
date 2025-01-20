@@ -60,8 +60,6 @@ int main()
 //  ----------------------------------------------------------
 
 	{
-		Client_v1 client_v1; // support: compiler-explorer.com
-
 		Client_v2 client_v2; // support: compiler-explorer.com
 	}
 }

@@ -13,5 +13,5 @@ int main() // support: valgrind --leak-check=yes ./07.09.project.tool.profiler.m
 
 //  delete[] array; // bad
 
-	std::cout << "main : enter char to continue : "; char c; std::cin >> c;
+	std::cout << "main : enter char to continue : "; auto c = '\0'; std::cin >> c;
 }

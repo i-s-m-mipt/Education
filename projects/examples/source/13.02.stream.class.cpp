@@ -57,11 +57,11 @@ int main()
         {
             std::cout << "main : enter ints and non-int : ";
             
-            int x; while (std::cin >> x);
+            auto x = 0; while (std::cin >> x);
 
             if (std::cin.fail()) 
             {
-                std::cin.clear(); char c; std::cin >> c;
+                std::cin.clear(); auto c = '\0'; std::cin >> c;
             }
         }
         catch (const std::ios_base::failure & exception)

@@ -5,7 +5,7 @@
 int main()
 {
     {
-        std::cout << "main : enter int : "; int x; std::cin >> x;
+        std::cout << "main : enter int : "; auto x = 0; std::cin >> x;
 
         std::cout << "main : selection (1) : " << (x == 1 ? "(1)\n" : "(2)\n");
     }
@@ -13,7 +13,7 @@ int main()
 //  ---------------------------------------------------------------------------
 
     {
-        std::cout << "main : enter int : "; int x; std::cin >> x;
+        std::cout << "main : enter int : "; auto x = 0; std::cin >> x;
 
         std::cout << "main : selection (2) : ";
 
@@ -34,7 +34,7 @@ int main()
 //  ---------------------------------------------------------------------------
 
     {
-        std::cout << "main : enter int : "; int x; std::cin >> x;
+        std::cout << "main : enter int : "; auto x = 0; std::cin >> x;
 
         std::cout << "main : selection (3) : ";
 

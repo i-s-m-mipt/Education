@@ -119,16 +119,13 @@ int main()
 //  -------------------------------------------------------------------------------------------
 
     {
-        auto string = "aaaaabbbbb"s;
+        auto string = "aaaaa"s; string.append("bbbbb");
+        
+        assert(string.contains("aaa") && string.substr(4, 2) == "ab");
 
-        if (auto index = string.find('b'); index != std::string::npos)
-        {
-            assert(string.substr(0, index) == "aaaaa");
-        }
+        assert(string.find('b') != std::string::npos);
 
-        assert(string.starts_with("aaa") && string.ends_with("bbb"));
-
-        assert(std::stoi("1") == 1 && "1" == std::to_string(1));
+        assert(std::to_string(1) == "1" && std::stoi("1") == 1);
     }
 
 //  -------------------------------------------------------------------------------------------

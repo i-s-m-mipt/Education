@@ -72,7 +72,7 @@ int main()
 	{
 		assert(std::make_optional(1).value_or(2) == 1);
 
-    	assert(std::make_optional < std::string > (5, 'a')->starts_with("aaa"));
+    	assert(std::make_optional < std::string > (5, 'a')->contains("aaa"));
 	}
 
 //  ---------------------------------------------------------------------------------

@@ -27,7 +27,7 @@ int main()
         {
             stream.unget(); 
             
-            int x; stream >> std::hex >> x; assert(x == 255);
+            auto x = 0; stream >> std::hex >> x; assert(x == 255);
         }
     }
 

@@ -8,40 +8,40 @@
 
 //  using namespace std; // bad
 
-////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
 int main()
 {
 	{
-		std::cout << "main : enter 2 ints : "; int x, y; std::cin >> x >> y;
+		std::cout << "main : enter int : "; auto x = 0; std::cin >> x;
 
-		std::cout << "main : x = " << x << " y = " << y << '\n';
+		std::cout << "main : x = " << x << '\n';
 	}
 
-//  ------------------------------------------------------------------------
+//  ------------------------------------------------------------------
 	
 	{
 		assert(std::abs(std::sin(std::numbers::pi / 2) - 1.0) < 1e-6);
 	}
 
-//  ------------------------------------------------------------------------
+//  ------------------------------------------------------------------
 
 	{
 		std::string string = "aaaaa"; 
 
 		string.append("bbbbb");
 	
-		assert(string.starts_with("aaa") && string.substr(4, 2) == "ab");
+		assert(string.contains("aaa") && string.substr(4, 2) == "ab");
 	}
 
-//  ------------------------------------------------------------------------
+//  ------------------------------------------------------------------
 	
 	{
 		std::vector < int > vector = { 1, 2, 3, 4, 5 }; 
 	
 		vector.push_back(1);
 
-		assert(vector.front() == vector.back() && std::size(vector) == 6);
+		assert(vector.front() == vector.back() && vector.size() == 6);
 
 		std::ranges::sort(vector);
 	}

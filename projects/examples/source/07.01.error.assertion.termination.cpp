@@ -67,7 +67,7 @@ int main()
 
         std::atexit(test_v2);
 
-        std::cout << "main : terminate normally? (y/n) "; char c; std::cin >> c;
+        std::cout << "main : terminate normally? (y/n) "; auto c = '\0'; std::cin >> c;
 
         if (c == 'y') 
         {

@@ -103,7 +103,7 @@ int main()
             throw std::runtime_error("invalid stream");
         }
 
-        std::cout << "main : enter char to continue : "; char c; std::cin >> c;
+        std::cout << "main : enter char to continue : "; auto c = '\0'; std::cin >> c;
     }
 
 //  -------------------------------------------------------------------------------------------
@@ -138,7 +138,7 @@ int main()
             std::cout << "main : trace\n";
         }
 
-        std::cout << "main : enter char to continue : "; char c; std::cin >> c;
+        std::cout << "main : enter char to continue : "; auto c = '\0'; std::cin >> c;
     }
 
 //  -------------------------------------------------------------------------------------------

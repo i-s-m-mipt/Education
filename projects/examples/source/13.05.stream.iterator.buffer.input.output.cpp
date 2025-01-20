@@ -55,7 +55,7 @@ int main()
 			std::back_inserter(vector)
 		);
 
-		std::cin.clear(); char c; std::cin >> c;
+		std::cin.clear(); auto c = '\0'; std::cin >> c;
 
 		std::cout << "main : vector = { ";
 

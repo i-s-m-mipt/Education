@@ -24,7 +24,7 @@ public:
 
 	auto empty()
 	{
-		char c; m_stream >> c;
+		auto c = '\0'; m_stream >> c;
 
 		if (c != ';') 
 		{ 
@@ -43,7 +43,7 @@ public:
 			m_is_full = false; return m_token; 
 		}
 
-		char c; m_stream >> c;
+		auto c = '\0'; m_stream >> c;
 		
 		switch (c)
 		{
@@ -56,7 +56,7 @@ public:
 			case '5': case '6': case '7': case '8': case '9':
 			case '.':
 			{
-				m_stream.putback(c); double x; m_stream >> x;
+				m_stream.putback(c); auto x = 0.0; m_stream >> x;
 
 				return Token(x);
 			}

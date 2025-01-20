@@ -33,7 +33,7 @@ int main()
 //  ----------------------------------------------------------------------------
 
 	{
-		std::cout << "main : enter size : "; std::size_t size; std::cin >> size;
+		std::cout << "main : enter size : "; auto size = 0uz; std::cin >> size;
 
 		auto array = new int[size]{}; 
 
