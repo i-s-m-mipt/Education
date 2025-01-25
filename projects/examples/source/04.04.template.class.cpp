@@ -42,7 +42,7 @@ template < typename T, typename C > void Stack_v1 < T, C > ::pop()
 
 //  ================================================================================================
 
-template < typename T, template < typename T > typename C = std::vector > class Stack_v2 
+template < typename T, template < typename U > typename C = std::vector > class Stack_v2 
 {
 private:
 
@@ -53,9 +53,9 @@ private:
 
 template 
 < 
-	template < typename T > typename C1,
+	template < typename U > typename C1,
 	
-	template < typename T > typename C2, typename T 
+	template < typename U > typename C2, typename T
 >		   
 auto copy(const C1 < T > & container)
 {
