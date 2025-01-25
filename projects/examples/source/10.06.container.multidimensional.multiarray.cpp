@@ -6,30 +6,32 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < std::size_t D, typename C, typename I > void fill_shape(const C & container, I shape)
+template < std::size_t D, typename C, typename I > void fill_shape(const C & container, I iterator)
 {
-	if constexpr (*shape = std::size(container); D > 1)
+	*iterator = std::size(container);
+
+	if constexpr (D > 1)
 	{
-		fill_shape < D - 1 > (*std::begin(container), ++shape);
+		fill_shape < D - 1 > (*std::begin(container), ++iterator);
 	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < std::size_t D, typename C, typename I > void fill_array(const C & container, I array)
+template < std::size_t D, typename C, typename I > void fill_array(const C & container, I iterator)
 {
 	if constexpr (D > 1)
 	{
 		for (const auto & element : container) 
 		{
-			fill_array < D - 1 > (element, (array++)->begin());
+			fill_array < D - 1 > (element, (iterator++)->begin());
 		}
 	}
 	else
 	{
 		for (const auto & element : container) 
 		{
-			*array++ = element;
+			*iterator++ = element;
 		}
 	}
 }

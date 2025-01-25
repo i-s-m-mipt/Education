@@ -6,38 +6,38 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, std::size_t S > class Array
+template < typename T, std::size_t S1, std::size_t S2 > class Array
 {
 public:
 
-	class Row 
+	class View 
 	{
 	public:
 
-		Row(T * array) : m_array(array) {}
+		View(T * data) : m_data(data) {}
 
-	//  ------------------------------------------
+	//  ------------------------------------
 
 		auto & operator[](std::size_t index)
 		{ 
-			return m_array[index]; 
+			return m_data[index]; 
 		}
 
 	private:
 
-		T * m_array = nullptr;
+		T * m_data = nullptr;
 	};
 
-//  ----------------------------------------------
+//  ---------------------------------------------------------------
 
 	auto operator[](std::size_t index)
 	{ 
-		return Row(m_array[index]); 
+		return View(m_data[index]); 
 	}
 
 private:
 
-	T m_array[S][S]{};
+	T m_data[S1][S2]{};
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +63,7 @@ int main()
 	{
 		constexpr auto size = 5uz;
 
-		Array < int, size > array;
+		Array < int, size, size > array;
 
 		for (auto i = 0uz; i < size; ++i)
 		{

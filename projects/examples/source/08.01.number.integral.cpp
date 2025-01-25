@@ -13,7 +13,7 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct Datetime
+struct Timestamp
 {
     unsigned int milli  : 10 = 0;
     unsigned int second :  6 = 0;
@@ -138,11 +138,11 @@ int main()
 //  ----------------------------------------------------------------------------------------------
 
     {
-        static_assert(sizeof(Datetime) == 8);
+        static_assert(sizeof(Timestamp) == 8);
 
-        Datetime datetime(0, 0, 0, 0, 1, 1, 1970);
+        Timestamp timestamp(0, 0, 0, 0, 1, 1, 1970);
 
-//      auto ptr = &datetime.year; // error
+//      auto ptr = &timestamp.year; // error
     }
 
 //  ----------------------------------------------------------------------------------------------
@@ -178,17 +178,17 @@ int main()
 //  ----------------------------------------------------------------------------------------------
 
     {
-        auto   x = 0x01020304;
+        auto x = 0x01020304;
 
-        auto p_x = &x;
+        auto p_x_1 = &x;
 
-        auto p_x_byte = std::bit_cast < std::byte * > (p_x);
+        auto p_x_2 = std::bit_cast < std::byte * > (p_x_1);
 
         std::cout << "main : x = { ";
 
         for (auto i = 0uz; i < sizeof(unsigned int); ++i)
         {
-            std::cout << std::format("{:#04x}", std::to_integer < int > (*(p_x_byte + i))) << ' ';
+            std::cout << std::format("{:#04x}", std::to_integer < int > (*(p_x_2 + i))) << ' ';
         }
 
         std::cout << "}\n";

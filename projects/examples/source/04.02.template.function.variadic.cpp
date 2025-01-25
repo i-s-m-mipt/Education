@@ -76,9 +76,9 @@ struct Entity
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > auto make_object(Ts ... args)
+template < typename ... Ts > auto make_entity(Ts ... args)
 {
-	return new T(args...);
+	return new Entity(args...);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,6 +108,6 @@ int main()
 //  -----------------------------------------
 
 	{
-		delete make_object < Entity > (1, 1);
+		delete make_entity(1, 1);
 	}	
 }

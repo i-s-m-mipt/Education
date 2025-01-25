@@ -8,27 +8,27 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-auto generator_v1() 
+auto test() 
 { 
-	static auto state = 0; 
+	static auto x = 0; 
 	
-	return ++state; 
+	return ++x; 
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-class Generator_v2
+class Functor
 {
 public:
 
 	auto operator()() 
 	{ 
-		return ++m_state; 
+		return ++m_data; 
 	}
 
 private:
 
-	int m_state = 0;
+	int m_data = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -89,9 +89,9 @@ int main()
 
 		std::vector < int > vector_1(size, 0), vector_2(size, 0); 
 
-		std::ranges::generate(vector_1, generator_v1);
+		std::ranges::generate(vector_1, test);
 
-		std::ranges::generate(vector_2, Generator_v2());
+		std::ranges::generate(vector_2, Functor());
 
 		for (auto i = 0uz; i < size; ++i)
 		{

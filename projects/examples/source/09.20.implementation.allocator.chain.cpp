@@ -14,11 +14,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-class Chain_Allocator : private boost::noncopyable
+class Allocator : private boost::noncopyable
 {
 public:
 
-	Chain_Allocator(std::size_t size, std::size_t size_node) : m_size(size), m_size_node(size_node)
+	Allocator(std::size_t size, std::size_t size_node) : m_size(size), m_size_node(size_node)
 	{
 		if (m_size % m_size_node == 0 && m_size_node >= sizeof(Node))
 		{
@@ -30,13 +30,13 @@ public:
 		}
 	}
 
-   ~Chain_Allocator()
+   ~Allocator()
 	{
 		for (auto chain : m_chains) 
 		{
 			if (chain)
 			{
-				operator delete(chain, m_size, std::align_val_t(default_alignment));
+				operator delete(chain, m_size, std::align_val_t(s_default_alignment));
 			}
 		}
 	}
@@ -91,7 +91,7 @@ public:
 
 	void test() const
 	{ 
-		std::cout << "Chain_Allocator::test : ";
+		std::cout << "Allocator::test : ";
 
 		std::cout << "m_size = "   << m_size << ' ' << "m_size_node = " << m_size_node << ' ';
 
@@ -125,7 +125,7 @@ private:
 
 	auto allocate_nodes() const
 	{
-		auto node = get_node(operator new(m_size, std::align_val_t(default_alignment)));
+		auto node = get_node(operator new(m_size, std::align_val_t(s_default_alignment)));
 		
 		node->next = nullptr; 
 		
@@ -147,7 +147,7 @@ private:
 
 //  -----------------------------------------------------------------------------------------------
 
-	static inline auto default_alignment = alignof(std::max_align_t);
+	static inline auto s_default_alignment = alignof(std::max_align_t);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -160,7 +160,7 @@ void test_v1(benchmark::State & state)
 
 	for (auto element : state)
 	{
-		Chain_Allocator allocator(gb, mb);
+		Allocator allocator(gb, mb);
 
 		for (auto i = 0uz; i < kb; ++i) 
 		{ 
@@ -227,7 +227,7 @@ BENCHMARK(test_v2);
 int main()
 {
 	{
-		Chain_Allocator allocator(32, 8);
+		Allocator allocator(32, 8);
 	
 		allocator.test();
 

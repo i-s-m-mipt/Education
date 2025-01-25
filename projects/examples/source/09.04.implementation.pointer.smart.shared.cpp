@@ -8,7 +8,7 @@
 
 namespace detail
 {
-    class RCCB_base : private boost::noncopyable
+    class Controller : private boost::noncopyable
     {
     public:
 
@@ -24,9 +24,9 @@ namespace detail
 
     protected:
 
-                 RCCB_base() = default;
+                 Controller() = default;
 
-        virtual ~RCCB_base() = default;
+        virtual ~Controller() = default;
 
     private:
 
@@ -42,11 +42,11 @@ namespace detail
 
 namespace detail
 {
-    template < typename T > class RCCB : public RCCB_base
+    template < typename T > class Handler : public Controller
     {
     public:
 
-        RCCB(T * data) : m_data(data)
+        Handler(T * data) : m_data(data)
         {
             increase();
         }
@@ -79,15 +79,17 @@ public:
     {
         if (m_data)
         {
-            m_rccb = new detail::RCCB < T > (m_data);
+            m_controller = new detail::Handler < T > (m_data);
         }
     }
 
-    Shared(const Shared < T > & other) : m_data(other.m_data), m_rccb(other.m_rccb)
+    Shared(const Shared < T > & other) 
+    : 
+        m_data(other.m_data), m_controller(other.m_controller)
     {
-        if (m_rccb) 
+        if (m_controller) 
         {
-            m_rccb->increase();
+            m_controller->increase();
         }
     }
 
@@ -112,9 +114,9 @@ public:
 
    ~Shared() 
     { 
-        if (m_rccb) 
+        if (m_controller) 
         {
-            m_rccb->decrease();
+            m_controller->decrease();
         } 
     }
 
@@ -124,7 +126,7 @@ public:
     {
         std::swap(m_data, other.m_data);
 
-        std::swap(m_rccb, other.m_rccb);
+        std::swap(m_controller, other.m_controller);
     }
 
 //  -------------------------------------------------------------------------------
@@ -136,7 +138,7 @@ public:
 
 private:
 
-    T * m_data = nullptr; detail::RCCB_base * m_rccb = nullptr;
+    T * m_data = nullptr; detail::Controller * m_controller = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////

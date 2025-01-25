@@ -5,38 +5,38 @@
 
 //  ================================================================================================
 
-auto pow(unsigned long long base, unsigned long long exp)
+auto pow(unsigned long long x, unsigned long long y)
 {
     auto result = 1ull;
 
-    if (base == 0) 
+    if (x == 0) 
     {
-        return exp == 0 ? result : 0;
+        return y == 0 ? result : 0;
     }
 
-    while (exp > 0)
+    while (y > 0)
     {
-        if (exp & 1)
+        if (y & 1)
         {
-            if (result > std::numeric_limits < unsigned long long > ::max() / base)
+            if (result > std::numeric_limits < unsigned long long > ::max() / x)
             {
                 throw std::runtime_error("arithmetic overflow");
             }
 
-            result *= base;
+            result *= x;
         }
 
-        if (exp /= 2; exp == 0) 
+        if (y /= 2; y == 0) 
         {
             break;
         }
 
-        if (base > std::numeric_limits < unsigned long long > ::max() / base)
+        if (x > std::numeric_limits < unsigned long long > ::max() / x)
         {
             throw std::runtime_error("arithmetic overflow");
         }
 
-        base *= base;
+        x *= x;
     }
 
     return result;

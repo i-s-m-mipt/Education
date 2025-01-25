@@ -5,16 +5,16 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-struct Formatter 
+struct Manipulator 
 { 
     std::size_t precision = 0; 
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-auto & operator<<(std::ostream & stream, const Formatter & formatter)
+auto & operator<<(std::ostream & stream, const Manipulator & manipulator)
 {
-    stream.precision(formatter.precision);
+    stream.precision(manipulator.precision);
 
     stream.setf(std::ios_base::fixed);
 
@@ -25,23 +25,23 @@ auto & operator<<(std::ostream & stream, const Formatter & formatter)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > struct Helper 
+template < typename T > struct View 
 {
     const T & data;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > auto & operator<<(std::ostream & stream, const Helper < T > & helper)
+template < typename T > auto & operator<<(std::ostream & stream, const View < T > & view)
 {
-    return stream << "test : arg = " << helper.data << '\n';
+    return stream << "test : arg = " << view.data << '\n';
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename ... Ts > void test(Ts ... args)
 {
-    (std::cout << ... << Helper(args));
+    (std::cout << ... << View(args));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,9 +81,9 @@ int main()
 
         auto x = 1.0, y = 2.0;
 
-        std::cout << "main : x = " << Formatter(3) << x << '\n';
+        std::cout << "main : x = " << Manipulator(3) << x << '\n';
 
-        std::cout << "main : y = " << Formatter(6) << y << '\n';
+        std::cout << "main : y = " << Manipulator(6) << y << '\n';
 
         std::cout.flags(flags);
     }

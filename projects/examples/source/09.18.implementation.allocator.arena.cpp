@@ -11,26 +11,26 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-class Arena_Allocator : private boost::noncopyable
+class Allocator : private boost::noncopyable
 {
 public:
 
-	Arena_Allocator(std::size_t size) : m_size(size)
+	Allocator(std::size_t size) : m_size(size)
 	{
-		m_begin = operator new(m_size, std::align_val_t(default_alignment));
+		m_begin = operator new(m_size, std::align_val_t(s_default_alignment));
 	}
 
-   ~Arena_Allocator()
+   ~Allocator()
 	{
 		if (m_begin)
 		{
-			operator delete(m_begin, m_size, std::align_val_t(default_alignment));
+			operator delete(m_begin, m_size, std::align_val_t(s_default_alignment));
 		}
 	}
 
 //  ------------------------------------------------------------------------------------
 
-	auto allocate(std::size_t size, std::size_t alignment = default_alignment) -> void * 
+	auto allocate(std::size_t size, std::size_t alignment = s_default_alignment) -> void * 
 	{
 		void * begin = get_byte(m_begin) + m_offset;
 
@@ -52,7 +52,7 @@ public:
 
 	void test() const
 	{
-		std::cout << "Arena_Allocator::test : m_size = " << m_size << ' ';
+		std::cout << "Allocator::test : m_size = " << m_size << ' ';
 
 		std::cout << "m_begin = "  << std::format("{:018}", m_begin) << ' ';
 
@@ -74,7 +74,7 @@ private:
 
 //  ------------------------------------------------------------------------------------
 
-	static inline auto default_alignment = alignof(std::max_align_t);
+	static inline auto s_default_alignment = alignof(std::max_align_t);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -85,7 +85,7 @@ void test_v1(benchmark::State & state)
 
 	for (auto element : state)
 	{
-		Arena_Allocator allocator(gb);
+		Allocator allocator(gb);
 
 		for (auto i = 0uz; i < kb; ++i)
 		{
@@ -127,7 +127,7 @@ BENCHMARK(test_v2);
 int main()
 {
 	{
-		Arena_Allocator allocator(1'024); 
+		Allocator allocator(1'024); 
 
 		allocator.test();
 

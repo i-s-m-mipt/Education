@@ -123,10 +123,10 @@ int main()
 //  -----------------------------------------------------------------------------------------
 
 	{
-		assert(sizeof(std::int16_t) == 2 && sizeof(std::int_least16_t) >= 2);
+		static_assert(sizeof(std::int16_t) == 2 && sizeof(std::int_least16_t) >= 2);
 
-		assert(sizeof(std::int32_t) == 4 && sizeof(std::int_least32_t) >= 4);
+		static_assert(sizeof(std::int32_t) == 4 && sizeof(std::int_least32_t) >= 4);
 
-		assert(sizeof(std::int64_t) == 8 && sizeof(std::int_least64_t) >= 8);
+		static_assert(sizeof(std::int64_t) == 8 && sizeof(std::int_least64_t) >= 8);
 	}
 }

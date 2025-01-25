@@ -44,13 +44,13 @@ void Entity::test() const
 
 //////////////////////////////////////////////////////
 
-int global_x1 = 1;
+int g_x1 = 1;
 
 namespace 
 { 
-	[[maybe_unused]] int global_x2 = 2; 
+	[[maybe_unused]] int g_x2 = 2; 
 }
 
-       const int global_x3 = 3;
+       const int g_x3 = 3;
 	   
-extern const int global_x4 = 4;
+extern const int g_x4 = 4;

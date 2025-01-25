@@ -10,11 +10,11 @@
 
 namespace parser
 {
-    class Huns : public boost::spirit::x3::symbols < int >
+    class Handler_v1 : public boost::spirit::x3::symbols < int >
     {
     public:
 
-        Huns()
+        Handler_v1()
         {
             add("C"   , 100);
             add("CC"  , 200);
@@ -30,11 +30,11 @@ namespace parser
 
 //  ----------------------------------------------------------------------------------------
 
-    class Tens : public boost::spirit::x3::symbols < int >
+    class Handler_v2 : public boost::spirit::x3::symbols < int >
     {
     public:
 
-        Tens()
+        Handler_v2()
         {
             add("X"   , 10);
             add("XX"  , 20);
@@ -50,11 +50,11 @@ namespace parser
     
 //  ----------------------------------------------------------------------------------------
 
-    class Ones : public boost::spirit::x3::symbols < int >
+    class Handler_v3 : public boost::spirit::x3::symbols < int >
     {
     public:
 
-        Ones()
+        Handler_v3()
         {
             add("I"   , 1);
             add("II"  , 2);
@@ -80,13 +80,17 @@ namespace parser
 
     auto add_x = [](auto && context){ _val(context) += boost::spirit::x3::_attr(context); };
 
-    Huns huns; Tens tens; Ones ones;
+    Handler_v1 handler_v1; 
+    
+    Handler_v2 handler_v2; 
+    
+    Handler_v3 handler_v3;
 
     auto rule_def = 
     (
         boost::spirit::x3::eps[set_0] >> *boost::spirit::x3::char_('M')[add_M] >> 
         (
-            -huns[add_x] >> -tens[add_x] >> -ones[add_x]
+            -handler_v1[add_x] >> -handler_v2[add_x] >> -handler_v3[add_x]
         )
     );
 

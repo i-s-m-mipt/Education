@@ -15,15 +15,15 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-class Block_Allocator : private boost::noncopyable
+class Allocator : private boost::noncopyable
 {
 public:
 	
-    Block_Allocator(std::size_t size) : m_size(size)
+    Allocator(std::size_t size) : m_size(size)
     {
         if (m_size >= sizeof(Node) + 1) 
         {
-            m_begin = operator new(m_size, std::align_val_t(default_alignment));
+            m_begin = operator new(m_size, std::align_val_t(s_default_alignment));
 
 	        m_head = get_node(m_begin); 
             
@@ -37,11 +37,11 @@ public:
         }
     }
 	
-   ~Block_Allocator()
+   ~Allocator()
     {
         if (m_begin)
         {
-            operator delete(m_begin, m_size, std::align_val_t(default_alignment));
+            operator delete(m_begin, m_size, std::align_val_t(s_default_alignment));
         }
     }
 
@@ -216,7 +216,7 @@ private:
 
 //  -----------------------------------------------------------------------------------------------
 
-    static inline auto default_alignment = alignof(std::max_align_t);
+    static inline auto s_default_alignment = alignof(std::max_align_t);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -233,7 +233,7 @@ void test_v1(benchmark::State & state)
 
 	for (auto element : state)
 	{
-		Block_Allocator allocator(16 * gb);
+		Allocator allocator(16 * gb);
 
 		for (auto i = 0uz; i < kb; ++i) 
         { 
@@ -308,7 +308,7 @@ BENCHMARK(test_v2);
 int main()
 {
     {
-        Block_Allocator allocator(1'024);
+        Allocator allocator(1'024);
     
         allocator.test(); 
 

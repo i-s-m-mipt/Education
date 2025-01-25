@@ -39,10 +39,7 @@ public:
 
 	enum class Severity : std::uint8_t
 	{
-		debug,
-		trace,
-		error,
-		fatal,
+		debug, trace, error, fatal
 	};
 
 //  --------------------------------------------------------------------------------------------
@@ -85,10 +82,7 @@ private:
 
 	enum class Attribute : std::uint8_t
 	{
-		line,
-		time,
-		thread,
-		process,
+		line, time, thread, process
 	};
 
 //  ---------------------------------------------------------------------------
@@ -123,7 +117,7 @@ private:
 			boost::posix_time::hours(24)
 		);
 
-		auto fout_sink = boost::make_shared < sink_t > 
+		auto sink = boost::make_shared < sink_t > 
 		(
 			boost::log::keywords::file_name           = "%y.%m.%d.%H.%M.%S.log",
 			boost::log::keywords::time_based_rotation = rotation,
@@ -131,7 +125,7 @@ private:
 			boost::log::keywords::max_size            = 64 * 1'024 * 1'024
 		);
 
-		fout_sink->locked_backend()->set_file_collector
+		sink->locked_backend()->set_file_collector
 		(
 			boost::log::sinks::file::make_collector
 			(			
@@ -141,35 +135,35 @@ private:
 			)
 		);
 
-		fout_sink->locked_backend()->auto_flush(true);
+		sink->locked_backend()->auto_flush(true);
 
-		fout_sink->set_formatter(&Logger::format);
+		sink->set_formatter(&Logger::format);
 
-		fout_sink->set_filter
+		sink->set_filter
 		(
 			[](boost::log::attribute_value_set){ return true; }
 		);
 
-		return fout_sink;
+		return sink;
 	}
 
 //  ------------------------------------------------------------------------------------------------
 
-	static void format(boost::log::record_view record_view, boost::log::formatting_ostream & stream)
+	static void format(boost::log::record_view record, boost::log::formatting_ostream & stream)
 	{
-		const auto & attribute_value_set = record_view.attribute_values();
+		const auto & attributes = record.attribute_values();
 
-		const auto & line = attribute_value_set[s_attributes.at(Attribute::line).first];
+		const auto & line = attributes[s_attributes.at(Attribute::line).first];
 
 		stream << std::format("{:0>8}", boost::log::extract_or_throw < std::size_t > (line)) << " | ";
 
-		auto date_time_expression = boost::log::expressions::format_date_time 
+		auto time = boost::log::expressions::format_date_time 
 		< 
 			boost::posix_time::ptime 
 		> 
 		(s_attributes.at(Attribute::time).first, "%Y %B %e %H:%M:%S.%f");
 
-		(boost::log::expressions::stream << date_time_expression)(record_view, stream);
+		(boost::log::expressions::stream << time)(record, stream);
 
 		stream << " | ";
 
@@ -177,19 +171,19 @@ private:
 
 		using tid_t = boost::log::attributes::current_thread_id ::value_type;
 
-		const auto & pid = attribute_value_set[s_attributes.at(Attribute::process).first];
+		const auto & pid = attributes[s_attributes.at(Attribute::process).first];
 
-		const auto & tid = attribute_value_set[s_attributes.at(Attribute::thread ).first];
+		const auto & tid = attributes[s_attributes.at(Attribute::thread ).first];
 
 		stream << boost::log::extract_or_throw < pid_t > (pid) << " | ";
 		
 		stream << boost::log::extract_or_throw < tid_t > (tid) << " | ";
 
-		const auto & severity = attribute_value_set["Severity"];
+		const auto & severity = attributes["Severity"];
 
 		stream << s_severities.at(boost::log::extract_or_throw < Severity > (severity)) << " | ";
 
-		stream << record_view[boost::log::expressions::message];
+		stream << record[boost::log::expressions::message];
 	}
 
 //  --------------------------------------------------------

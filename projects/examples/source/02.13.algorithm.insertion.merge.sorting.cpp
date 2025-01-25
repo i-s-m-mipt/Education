@@ -26,23 +26,23 @@ void sort(std::vector < int > & vector, std::size_t left, std::size_t right)
 
 void merge(std::vector < int > & vector, std::size_t left, std::size_t middle, std::size_t right)
 {
-	std::vector < int > copy(right - left, 0);
+	std::vector < int > buffer(right - left, 0);
 
-	for (auto i = left, j = middle, k = 0uz; k < std::size(copy); ++k) 
+	for (auto i = left, j = middle, k = 0uz; k < std::size(buffer); ++k) 
 	{
 		if (i < middle && ((j < right && vector[i] <= vector[j]) || j == right))
 		{
-			copy[k] = vector[i++];
+			buffer[k] = vector[i++];
 		}
 		else
 		{
-			copy[k] = vector[j++];
+			buffer[k] = vector[j++];
 		}
 	}
 
-	for (auto i = 0uz, j = 0uz; j < std::size(copy); ++j) 
+	for (auto i = 0uz, j = 0uz; j < std::size(buffer); ++j) 
 	{
-		vector[left + i++] = copy[j];
+		vector[left + i++] = buffer[j];
 	}
 }
 
@@ -68,9 +68,9 @@ void split(std::vector < int > & vector, std::size_t left, std::size_t right)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-void timsort(std::vector < int > & vector, std::size_t left, std::size_t right)
+void timsort(std::vector < int > & vector)
 {
-	split(vector, left, right);
+	split(vector, 0, std::size(vector));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +86,7 @@ int main()
 		vector[i] = size - i;
 	}
 
-	timsort(vector, 0, size);
+	timsort(vector);
 
 	assert(std::ranges::is_sorted(vector));
 }

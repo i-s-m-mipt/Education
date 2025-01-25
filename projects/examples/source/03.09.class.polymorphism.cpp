@@ -32,7 +32,7 @@ public:
 
 private:
 
-	void * data = nullptr;
+	void * m_data = nullptr;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -62,7 +62,7 @@ public:
 
 private:
 
-	void * data = nullptr;
+	void * m_data = nullptr;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -80,7 +80,7 @@ public:
 
 private:
 
-	void * data = nullptr;
+	void * m_data = nullptr;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -133,7 +133,7 @@ int main()
 	{
 		Router router;
 
-//		[[maybe_unused]] Entity * entity_4 = &router; // error
+//		[[maybe_unused]] Entity * entity = &router; // error
 	}
 
 //  ----------------------------------------------------------------------

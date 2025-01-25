@@ -30,27 +30,27 @@ void test(const std::unordered_set < std::string > & unordered_set)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-auto make_dictionary(std::size_t size, std::size_t length)
+auto make_strings(std::size_t size, std::size_t length)
 {
-	std::set < std::string > dictionary;
+	std::set < std::string > strings;
 
-	std::string word(length, '_');
+	std::string string(length, '_');
 
 	std::default_random_engine engine;
 
 	std::uniform_int_distribution distribution(97, 122);
     
-	while (std::size(dictionary) < size)
+	while (std::size(strings) < size)
     {
-        for (auto & element : word) 
+        for (auto & element : string) 
 		{
 			element = distribution(engine);
 		}
 
-		dictionary.insert(word);
+		strings.insert(string);
     }
 
-	return dictionary;
+	return strings;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,9 +72,9 @@ int main()
 
 		test(unordered_set);
 
-		for (const auto & word : make_dictionary(unordered_set.bucket_count(), 5))
+		for (const auto & string : make_strings(unordered_set.bucket_count(), 5))
 		{
-			unordered_set.insert(word);
+			unordered_set.insert(string);
 		}
 
 		test(unordered_set); unordered_set.rehash(64);

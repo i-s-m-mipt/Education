@@ -27,7 +27,7 @@ class Entity_v2
 {
 private:
 
-    friend class Entity_v3;
+    friend class Attorney;
 
 //  --------------------------------------------------------------
 
@@ -38,7 +38,7 @@ private:
 
 ////////////////////////////////////////////////////////////////////////
 
-class Entity_v3 
+class Attorney 
 {
 private:
 
@@ -66,9 +66,9 @@ public:
 
     static void test_v2()
     {
-        Entity_v3::test_v1();
+        Attorney::test_v1();
 
-        Entity_v3::test_v2();
+        Attorney::test_v2();
     }
 };
 

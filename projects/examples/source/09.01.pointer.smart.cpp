@@ -128,11 +128,11 @@ int main()
 //  -----------------------------------------------------------------------------
 
 	{
-		auto object = new auto(1);
+		auto ptr_1 = new auto(1);
 
-//		std::shared_ptr < int > shared_ptr(object); // bad
+//		std::shared_ptr < int > ptr_2(ptr_1); // bad
 
-		delete object;
+		delete ptr_1;
 	}
 
 //  -----------------------------------------------------------------------------

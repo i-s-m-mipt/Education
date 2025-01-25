@@ -21,14 +21,18 @@ template < typename T > concept addable = requires (T x, T y) { x + y; };
 template < typename T > concept equable = requires (T x, T y)
 {
     { x == y } -> std::convertible_to < bool > ;
+
     { x != y } -> std::convertible_to < bool > ;
 };
 
 template < typename T > concept ordable = equable < T > && requires (T x, T y)
 {
     { x <  y } -> std::convertible_to < bool > ;
+    
     { x <= y } -> std::convertible_to < bool > ;
+
     { x >  y } -> std::convertible_to < bool > ;
+
     { x >= y } -> std::convertible_to < bool > ;
 };
 

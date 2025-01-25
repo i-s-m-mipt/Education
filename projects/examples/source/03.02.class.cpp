@@ -35,7 +35,7 @@ public:
 	{
 	//	m_data_1 = 1; // error
 				
-		return m_cached_data.data_as_string(*this);
+		return m_cache.data_as_string(*this);
 	}
 
 //  -------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ public:
 	{ 
 		m_data_1 = data; 
 		
-		m_cached_data.set_invalid(); 
+		m_cache.set_invalid(); 
 	}
 
 //  -------------------------------------------------------------------------------
@@ -72,7 +72,7 @@ public:
 
 private:
 
-	class Cached_Data 
+	class Cache 
 	{ 
 	public:
 
@@ -105,13 +105,11 @@ private:
 
 //  -------------------------------------------------------------------------------
 
-		  int m_data_1 = 0; 
-	
-	const int m_data_2 = 0;
+	mutable Cache m_cache;
 
 //  -------------------------------------------------------------------------------
 
-	mutable Cached_Data m_cached_data;
+	int m_data_1 = 0; const int m_data_2 = 0;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////

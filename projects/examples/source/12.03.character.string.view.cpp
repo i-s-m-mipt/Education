@@ -16,7 +16,7 @@ using namespace std::literals;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-class case_insensitive_traits : public std::char_traits < char > 
+class Traits : public std::char_traits < char > 
 {
 public:
 
@@ -155,7 +155,7 @@ int main()
 //  -------------------------------------------------------------------------------------------
 
     {
-        using cistring_t = std::basic_string < char, case_insensitive_traits > ;
+        using cistring_t = std::basic_string < char, Traits > ;
 
         assert(cistring_t("aaaaa") == cistring_t("AAAAA"));
     }

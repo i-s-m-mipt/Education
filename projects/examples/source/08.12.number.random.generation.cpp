@@ -25,26 +25,24 @@ int main()
 
 		std::normal_distribution distribution(25.0, 8.0);
 
-		std::vector < std::size_t > numbers(50, 0);
+		std::vector < std::size_t > vector(50, 0);
 
 		for (auto i = 0uz; i < 1'000'000; ++i)
 		{
-			if (auto number = distribution(engine); number > 0.0)
+			if (auto x = distribution(engine); x > 0.0)
 			{
-				auto index = static_cast < std::size_t > (std::floor(number));
-
-				if (index < std::size(numbers)) 
+				if (auto j = static_cast < std::size_t > (std::floor(x)); j < std::size(vector))
 				{
-					++numbers[index];
+					++vector[j];
 				}
 			}
 		}
 
-		for (auto i = 0uz; i < std::size(numbers); ++i)
+		for (auto i = 0uz; i < std::size(vector); ++i)
 		{
-			std::cout << "main : numbers[" << std::format("{:0>2}", i) << "] : ";
+			std::cout << "main : vector[" << std::format("{:0>2}", i) << "] : ";
 
-			std::cout << std::string(numbers[i] / 1'000, '+') << '\n';
+			std::cout << std::string(vector[i] / 1'000, '+') << '\n';
 		}
 	}
 

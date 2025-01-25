@@ -10,9 +10,9 @@ template < typename T > struct Node
 
 ////////////////////////////////////////////////////////////////////////////
 
-template < typename R, typename ... Ns > auto traverse(R root, Ns ... nodes)
+template < typename N, typename ... Ns > auto traverse(N node, Ns ... nodes)
 {
-	return (root ->* ... ->* nodes); // support: cppinsights.io
+	return (node ->* ... ->* nodes); // support: cppinsights.io
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -26,15 +26,15 @@ int main()
 		nodes[i].data = i + 1;
 	}
 
-	Node < int > * root = nullptr;
+	Node < int > * node = nullptr;
 	
-	root 						   = &nodes[0];
-	root->left          		   = &nodes[1];
-	root->left->right       	   = &nodes[2];
-	root->left->right->left    	   = &nodes[3];
-	root->left->right->left->right = &nodes[4];
+	node 						   = &nodes[0];
+	node->left          		   = &nodes[1];
+	node->left->right       	   = &nodes[2];
+	node->left->right->left    	   = &nodes[3];
+	node->left->right->left->right = &nodes[4];
 
 	auto left = &Node < int > ::left, right = &Node < int > ::right;
 
-	assert(traverse(root, left, right, left, right)->data == 5);
+	assert(traverse(node, left, right, left, right)->data == 5);
 }

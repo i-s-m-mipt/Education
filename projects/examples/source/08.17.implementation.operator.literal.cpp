@@ -1,28 +1,31 @@
 #include <cassert>
 #include <cmath>
 #include <numbers>
+#include <string>
+
+using namespace std::literals;
 
 ///////////////////////////////////////////////////////////////////////////
 
-struct Weight 
+struct Entity 
 { 
-	unsigned long long kilograms = 0; 
+	unsigned long long data = 0; 
 };
 
 ///////////////////////////////////////////////////////////////////////////
 
 namespace literals
 {
-	auto operator""_kg(unsigned long long kilograms)
+	auto operator""_E(unsigned long long x)
 	{
-		return Weight(kilograms);
+		return Entity(x);
 	}
 
 //  -----------------------------------------------------------------------
 
-	auto operator""_deg_to_rad(long double degrees)
+	auto operator""_deg_to_rad(long double x)
 	{
-		return degrees * std::numbers::pi_v < long double > / 180.0;
+		return x * std::numbers::pi_v < long double > / 180.0;
 	}
 
 //  -----------------------------------------------------------------------
@@ -36,11 +39,11 @@ namespace literals
 
 	//  -------------------------------------------------------------------
 
-		template < char D, char ... Ds > auto b3_handler() -> int
+		template < char D, char ... Ds > auto handler() -> int
 		{
 			if constexpr (auto x = D - '0'; sizeof...(Ds) > 0)
 			{
-				return x * pow(3, sizeof...(Ds)) + b3_handler < Ds... > ();
+				return x * pow(3, sizeof...(Ds)) + handler < Ds... > ();
 			}
 			else
 			{
@@ -53,7 +56,7 @@ namespace literals
 
 	template < char ... Ds > auto operator""_b3()
 	{
-		return detail::b3_handler < Ds... > ();
+		return detail::handler < Ds... > ();
 	}
 }
 
@@ -73,7 +76,13 @@ auto equal(double x, double y, double epsilon = 1e-6)
 int main()
 {
 	{
-		[[maybe_unused]] auto weight = 1_kg;
+		[[maybe_unused]] auto string = "aaaaa"s;
+	}
+	
+//  ---------------------------------------------------------
+
+	{
+		[[maybe_unused]] auto entity = 1_E;
 	}
 	
 //  ---------------------------------------------------------

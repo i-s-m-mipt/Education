@@ -169,9 +169,9 @@ int main()
     {
         boost::object_pool < int > pool(32);
 
-        auto object_1 = pool.malloc(); pool.destroy(object_1);
+        auto ptr_1 = pool.malloc(); pool.destroy(ptr_1);
 
-        auto object_2 = pool.malloc(); pool.destroy(object_2);
+        auto ptr_2 = pool.malloc(); pool.destroy(ptr_2);
 
         assert(pool.get_next_size() == 64);
     }

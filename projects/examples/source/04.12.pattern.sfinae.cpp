@@ -70,7 +70,7 @@ public:
 	
     template 
 	< 
-		typename S, typename E = std::enable_if_t 
+		typename S, typename = std::enable_if_t 
 		< 
 			std::is_convertible_v < S, std::string > , void 
 		> 

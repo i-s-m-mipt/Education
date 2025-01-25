@@ -10,20 +10,9 @@ public:
 
 //  ------------------------------------------------
 
-    virtual void set_fast(class Entity *) const = 0;
-
     virtual void set_slow(class Entity *) const = 0;
-};
 
-/////////////////////////////////////////////////////////////////////////
-
-class Fast : public State 
-{ 
-public:
-
-    void set_fast([[maybe_unused]] class Entity * entity) const override;
-
-    void set_slow([[maybe_unused]] class Entity * entity) const override; 
+    virtual void set_fast(class Entity *) const = 0;
 };
 
 /////////////////////////////////////////////////////////////////////////
@@ -32,9 +21,20 @@ class Slow : public State
 { 
 public:
 
-    void set_fast([[maybe_unused]] class Entity * entity) const override;
-
     void set_slow([[maybe_unused]] class Entity * entity) const override; 
+
+    void set_fast([[maybe_unused]] class Entity * entity) const override;
+};
+
+/////////////////////////////////////////////////////////////////////////
+
+class Fast : public State 
+{ 
+public:
+
+    void set_slow([[maybe_unused]] class Entity * entity) const override;
+
+    void set_fast([[maybe_unused]] class Entity * entity) const override;
 };
 
 /////////////////////////////////////////////////////////////////////////
@@ -64,9 +64,9 @@ public:
 
 //  --------------------------------------------
 
-    void set_fast() { m_state->set_fast(this); }
-    
     void set_slow() { m_state->set_slow(this); }
+
+    void set_fast() { m_state->set_fast(this); }
 
 private:
 
@@ -75,14 +75,9 @@ private:
 
 /////////////////////////////////////////////////////////////////////////
 
-void Fast::set_fast([[maybe_unused]] Entity * entity) const
+void Slow::set_slow([[maybe_unused]] Entity * entity) const
 {
-    std::cout << "Fast::set_fast\n";
-}
-
-void Fast::set_slow([[maybe_unused]] Entity * entity) const
-{
-    std::cout << "Fast::set_slow\n"; entity->set_state(new Slow); 
+    std::cout << "Slow::set_slow\n";
 }
 
 void Slow::set_fast([[maybe_unused]] Entity * entity) const
@@ -90,9 +85,14 @@ void Slow::set_fast([[maybe_unused]] Entity * entity) const
     std::cout << "Slow::set_fast\n"; entity->set_state(new Fast);
 }
 
-void Slow::set_slow([[maybe_unused]] Entity * entity) const
+void Fast::set_slow([[maybe_unused]] Entity * entity) const
 {
-    std::cout << "Slow::set_slow\n";
+    std::cout << "Fast::set_slow\n"; entity->set_state(new Slow); 
+}
+
+void Fast::set_fast([[maybe_unused]] Entity * entity) const
+{
+    std::cout << "Fast::set_fast\n";
 }
 
 /////////////////////////////////////////////////////////////////////////

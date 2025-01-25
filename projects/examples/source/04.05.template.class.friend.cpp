@@ -88,9 +88,9 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename U > auto operator-(const Ratio < U > & lhs, const Ratio < U > & rhs)
+template < typename T > auto operator-(const Ratio < T > & lhs, const Ratio < T > & rhs)
 { 
-	return Ratio < U > (lhs) -= rhs;
+	return Ratio < T > (lhs) -= rhs;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////

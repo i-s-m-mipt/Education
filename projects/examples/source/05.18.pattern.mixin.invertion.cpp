@@ -37,17 +37,17 @@ public:
 
     void set(data_t data) 
     { 
-        prev = B::get(); B::set(data); 
+        m_data = B::get(); B::set(data); 
     }
 
     void undo() 
     { 
-        B::set(prev); 
+        B::set(m_data); 
     }
     
 private:
     
-    data_t prev = data_t();
+    data_t m_data = data_t();
 };
 
 /////////////////////////////////////////////////
@@ -62,17 +62,17 @@ public:
 
     void set(data_t data) 
     { 
-        next = data; B::set(data); 
+        m_data = data; B::set(data); 
     }
 
     void redo() 
     { 
-        B::set(next); 
+        B::set(m_data); 
     }
     
 private:
     
-    data_t next = data_t(); 
+    data_t m_data = data_t(); 
 };
 
 /////////////////////////////////////////////////

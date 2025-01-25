@@ -7,21 +7,20 @@
 int main()
 {
 	{
-		auto f = false, t = true;
+		auto x = false, y = true;
 
-		assert(!f == t);
-		
-		assert(!t == f);
+		assert(!x == y);
+		assert(!y == x);
 
-		assert((f && f) == f);
-		assert((f && t) == f);
-		assert((t && f) == f);
-		assert((t && t) == t);
+		assert((x && x) == x);
+		assert((x && y) == x);
+		assert((y && x) == x);
+		assert((y && y) == y);
 
-		assert((f || f) == f);
-		assert((f || t) == t);
-		assert((t || f) == t);
-		assert((t || t) == t);
+		assert((x || x) == x);
+		assert((x || y) == y);
+		assert((y || x) == y);
+		assert((y || y) == y);
 	}
 	
 //  ---------------------------------------------------------------------------

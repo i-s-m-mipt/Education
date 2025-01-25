@@ -45,27 +45,18 @@ public:
 
     Decorator(Entity & entity): m_entity(entity) {}
 
-protected:
-
-    Entity & m_entity;
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class Decorated_Entity : public Decorator
-{
-public:
-
-    Decorated_Entity(Entity & entity) : Decorator(entity) {}
-
-//  -----------------------------------------------------------------
+//  -----------------------------------------------
 
     void test() const override
     { 
-        std::cout << "Decorated_Entity::test : "; 
+        std::cout << "Decorator::test : "; 
         
         m_entity.test();
     }
+
+private:
+
+    Entity & m_entity;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +65,7 @@ int main()
 {
     Entity * entity_1 = new Client;
 
-    Entity * entity_2 = new Decorated_Entity(*entity_1);
+    Entity * entity_2 = new Decorator(*entity_1);
 
     entity_1->test();
 

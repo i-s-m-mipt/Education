@@ -21,9 +21,9 @@ int main()
 
 //		rcy = 3; // error
 
-//		[[maybe_unused]]       int & r_i = 1; // error
+//		[[maybe_unused]]       int & ref_1 = 1; // error
 
-		[[maybe_unused]] const int & rci = 1;
+		[[maybe_unused]] const int & ref_2 = 1;
 	}
 	
 //  ---------------------------------------------------------------------------

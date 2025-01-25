@@ -24,11 +24,16 @@ void test(const std::vector < int > & vector)
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename F1, typename F2, typename B > auto bind(F1 && f1, F2 && f2, B && binder)
+template < typename F1, typename F2, typename F3 > auto bind(F1 && f1, F2 && f2, F3 && f3)
 {
 	return [=] < typename T > (T && x) 
 	{ 
-		return binder(f1(std::forward < T > (x)), f2(std::forward < T > (x))); 
+		return f3
+		(
+			f1(std::forward < T > (x)), 
+			
+			f2(std::forward < T > (x))
+		); 
 	};
 }
 

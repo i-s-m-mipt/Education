@@ -2,26 +2,28 @@
 #include <numeric>
 #include <vector>
 
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
-auto find(const std::vector < int > & vector, int key)
+auto find(const std::vector < int > & vector, int x)
 {
 	if (std::size(vector) > 0)
 	{
-		auto l = 0uz, r = std::size(vector) - 1, m = 0uz;
+		auto left = 0uz, right = std::size(vector) - 1, middle = 0uz;
 
-		while (l < r)
+		while (left < right)
 		{		
-			vector[m = std::midpoint(l, r)] < key ? l = m + 1 : r = m;
+			middle = std::midpoint(left, right);
+
+			vector[middle] < x ? left = middle + 1 : right = middle;
 		}
 
-		return vector[l] == key;
+		return vector[left] == x;
 	}
 	
 	return false;
 }
 
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
 int main()
 {

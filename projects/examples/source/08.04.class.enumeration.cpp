@@ -2,50 +2,39 @@
 #include <cstdint>
 #include <iostream>
 
-/////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-enum class Color : std::uint8_t 
+enum class State : std::uint8_t 
 { 
-	R, G, B, quantity 
+	slow = 0, fast = 1, size 
 };
 
-/////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-enum State : std::uint8_t
-{
-	fast = 0x01, slow = 0x02,
-};
+//  enum State { slow, fast }; // bad
 
-/////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
 	{	
-		std::cout << "main : enter int : "; auto color = 0; std::cin >> color;
+		std::cout << "main : enter int : "; auto state = 0; std::cin >> state;
 
-		if (color > 0 && color < static_cast < int > (Color::quantity)) 
+		if (state > 0 && state < static_cast < int > (State::size)) 
 		{
 			std::cout << "main : selection : ";
 
-			switch (Color(color))
+			switch (State(state))
 			{
-				case Color::R: { std::cout << "(1)\n"; break; }
+				case State::slow: { std::cout << "(1)\n"; break; }
 				
-				case Color::G: { std::cout << "(2)\n"; break; }
-
-				case Color::B: { std::cout << "(3)\n"; break; }
+				case State::fast: { std::cout << "(2)\n"; break; }
 
 				default:
 				{
-					std::cout << "(4)\n"; break;
+					std::cout << "(3)\n"; break;
 				}
 			}
 		}
-	}
-
-//  ---------------------------------------------------------------------
-
-	{
-		[[maybe_unused]] auto state = fast | slow;
 	}
 }

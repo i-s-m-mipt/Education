@@ -57,17 +57,18 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		std::array < std::function < int(int, int) > , 5 > functions = {};
+		std::array < std::function < int(int, int) > , 5 > functions = 
+		{
+			[](auto x, auto y){ return x + y; },
 
-		functions[0] = [](auto x, auto y){ return x + y; };
+			[](auto x, auto y){ return x - y; },
 
-		functions[1] = [](auto x, auto y){ return x - y; };
+			[](auto x, auto y){ return x * y; },
 
-		functions[2] = [](auto x, auto y){ return x * y; };
+			[](auto x, auto y){ return x / y; },
 
-		functions[3] = [](auto x, auto y){ return x / y; };
-
-		functions[4] = [](auto x, auto y){ return x % y; };
+			[](auto x, auto y){ return x % y; }
+		};
 
 		auto x = 1, y = 2;
 

@@ -39,11 +39,11 @@ void test_v2() { std::cout << "test_v2\n"; }
 int main()
 {
     {
-        auto object = new auto(1);
+        auto ptr = new auto(1);
 
-        assert(object);
+        assert(ptr);
 
-        delete object;
+        delete ptr;
 
 //      assert(nullptr); // error
     }

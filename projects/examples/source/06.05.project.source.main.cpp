@@ -37,11 +37,11 @@ FUNCTION(v1) // support: cppinsights.io
 
 #if !defined(NDEBUG)
 
-#define DEBUG(data) std::cout << __func__ << " : " << data << '\n'
+#define DEBUG(message) std::cout << __func__ << " : " << message << '\n'
 
 #else
 
-#define DEBUG(data) ;
+#define DEBUG(message) ;
 
 #endif
 
@@ -122,9 +122,9 @@ int main()
 	{
 		std::string path = __FILE__;
 
-		auto file_name = "06.05.project.source.main.cpp";
+		auto result = "06.05.project.source.main.cpp";
 
-		assert(path.substr(std::size(path) - std::strlen(file_name)) == file_name);
+		assert(path.substr(std::size(path) - std::strlen(result)) == result);
 
 		assert(__LINE__ == 129);
 
@@ -140,17 +140,17 @@ int main()
 //  ----------------------------------------------------------------------------------- 
 
 	{
-		constexpr auto source_location = std::source_location::current();
+		constexpr auto location = std::source_location::current();
 
-		std::string path = source_location.file_name();
+		std::string path = location.file_name();
 
-		auto file_name = "06.05.project.source.main.cpp";
+		auto result = "06.05.project.source.main.cpp";
 
-		assert(path.substr(std::size(path) - std::strlen(file_name)) == file_name);
+		assert(path.substr(std::size(path) - std::strlen(result)) == result);
 
-		assert(source_location.line() == 143);
+		assert(location.line() == 143);
 
-		assert(source_location.function_name() == "int main()"s);
+		assert(location.function_name() == "int main()"s);
 	}
 
 //  -----------------------------------------------------------------------------------
@@ -172,17 +172,17 @@ int main()
 //  -----------------------------------------------------------------------------------
 
 	{
-		assert(global_x1 == 1);
+		assert(g_x1 == 1);
 
-//		assert(global_x2 == 2); // error
+//		assert(g_x2 == 2); // error
 
-//		assert(global_x3 == 3); // error
+//		assert(g_x3 == 3); // error
 
-		assert(global_x4 == 4);
+		assert(g_x4 == 4);
 
-		assert(global_x5 == 5);
+		assert(g_x5 == 5);
 
-		assert(global_x6 == 6);
+		assert(g_x6 == 6);
 	}
 
 //  -----------------------------------------------------------------------------------

@@ -11,7 +11,7 @@ using namespace std::literals;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, std::size_t I = 0 > class Helper_v1
+template < typename T, std::size_t I = 0 > class Handler_v1
 {
 public:
 
@@ -21,7 +21,7 @@ public:
 
         if constexpr (std::tuple_size_v < T > > I + 1)
         {
-            Helper_v1 < T, I + 1 > ::read(stream, tuple);
+            Handler_v1 < T, I + 1 > ::read(stream, tuple);
         }
     }
 };
@@ -30,14 +30,14 @@ public:
 
 template < typename ... Ts > auto & operator>>(std::istream & stream, std::tuple < Ts ... > & tuple)
 {
-    Helper_v1 < std::tuple < Ts ... > > ::read(stream, tuple);
+    Handler_v1 < std::tuple < Ts ... > > ::read(stream, tuple);
 
     return stream;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, std::size_t I = 0 > class Helper_v2
+template < typename T, std::size_t I = 0 > class Handler_v2
 {
 public:
 
@@ -47,7 +47,7 @@ public:
 
         if constexpr (std::tuple_size_v < T > > I + 1)
         {
-            Helper_v2 < T, I + 1 > ::write(stream, tuple);
+            Handler_v2 < T, I + 1 > ::write(stream, tuple);
         }
     }
 };
@@ -62,7 +62,7 @@ auto & operator<<(std::ostream & stream, const std::tuple < Ts ... > & tuple)
 {
     stream << "{ "; 
     
-    Helper_v2 < std::tuple < Ts ... > > ::write(stream, tuple);
+    Handler_v2 < std::tuple < Ts ... > > ::write(stream, tuple);
     
     return stream << '}';
 }

@@ -72,17 +72,17 @@ template < typename T > void test_v6()
 
 ////////////////////////////////////////////////////////
 
-extern       int global_x1;
+extern       int g_x1;
 
-extern       int global_x2;
+extern       int g_x2;
 
-extern const int global_x3;
+extern const int g_x3;
 
-extern const int global_x4;
+extern const int g_x4;
 
-       const int global_x5 = 5;
+       const int g_x5 = 5;
 
-inline const int global_x6 = 6;
+inline const int g_x6 = 6;
 
 ////////////////////////////////////////////////////////
 

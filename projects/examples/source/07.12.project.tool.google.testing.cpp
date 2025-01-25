@@ -61,18 +61,14 @@ TEST_F(Fixture, Data)
 
 /////////////////////////////////////////////////////////////////////////////////
 
-class Parameters : public Fixture, public testing::WithParamInterface < int > {};
+class Adapter : public Fixture, public testing::WithParamInterface < int > {};
 
-TEST_P(Parameters, Data) 
+TEST_P(Adapter, Data) 
 { 
-    auto x = GetParam();
-
-    data.push_back(x); 
-    
-    ASSERT_EQ(data.back(), x); 
+    auto x = GetParam(); data.resize(x, 0); ASSERT_EQ(std::size(data), x); 
 }
 
-INSTANTIATE_TEST_CASE_P(Fixture, Parameters, testing::Values(1, 2, 3, 4, 5));
+INSTANTIATE_TEST_CASE_P(Fixture, Adapter, testing::Values(1, 2, 3, 4, 5));
 
 /////////////////////////////////////////////////////////////////////////////////
 

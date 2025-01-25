@@ -11,11 +11,11 @@
 int main()
 {
 	{
-		auto object = new auto(1);  
+		auto ptr = new auto(1);  
 
-		assert(*object == 1);
+		assert(*ptr == 1);
 	
-		delete object;
+		delete ptr;
 	}
 	
 //  ----------------------------------------------------------------------------

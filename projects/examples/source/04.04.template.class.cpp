@@ -42,7 +42,7 @@ template < typename T, typename C > void Stack_v1 < T, C > ::pop()
 
 //  ================================================================================================
 
-template < typename T, template < typename E > typename C = std::vector > class Stack_v2 
+template < typename T, template < typename T > typename C = std::vector > class Stack_v2 
 {
 private:
 
@@ -53,8 +53,9 @@ private:
 
 template 
 < 
-	template < typename E > typename C1,
-	template < typename E > typename C2, typename T 
+	template < typename T > typename C1,
+	
+	template < typename T > typename C2, typename T 
 >		   
 auto copy(const C1 < T > & container)
 {
@@ -69,14 +70,6 @@ template < typename T1, typename T2 > struct Pair
 	
 	T2 data_2 = T2(); 
 };
-
-//  ================================================================================================
-
-template < typename T > struct Outer { template < typename U > struct Inner; };
-
-template < typename T > 
-
-template < typename U > struct Outer < T > ::Inner {};
 
 //  ================================================================================================
 
@@ -166,12 +159,6 @@ int main()
 		[[maybe_unused]] Pair pair(1, 1);
 
 		std::vector vector = { 1, 2, 3, 4, 5 };
-	}
-
-//  ---------------------------------------------------------------------------
-
-	{
-		[[maybe_unused]] typename Outer < int > ::template Inner < int > inner;
 	}
 
 //  ---------------------------------------------------------------------------

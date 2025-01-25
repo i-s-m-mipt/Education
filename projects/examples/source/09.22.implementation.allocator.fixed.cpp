@@ -11,11 +11,11 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < std::size_t S > class Fixed_Allocator : private boost::noncopyable
+template < std::size_t S > class Allocator : private boost::noncopyable
 {
 public:
 
-	auto allocate(std::size_t size, std::size_t alignment = default_alignment) -> void *
+	auto allocate(std::size_t size, std::size_t alignment = s_default_alignment) -> void *
 	{
 		void * begin = m_begin + m_offset;
 
@@ -37,7 +37,7 @@ public:
 
 	void test() const
 	{
-		std::cout << "Fixed_Allocator::test : S = " << S << ' ';
+		std::cout << "Allocator::test : S = " << S << ' ';
 
 		auto begin = static_cast < void * > (m_begin);
 
@@ -50,13 +50,13 @@ private:
 
 	std::size_t m_offset = 0;
 
-    alignas(std::max_align_t) std::byte m_array[S]{};
+    alignas(std::max_align_t) std::byte m_data[S]{};
 
-    std::byte * m_begin = m_array;
+    std::byte * m_begin = m_data;
 
 //  ------------------------------------------------------------------------------------------------
 
-	static inline auto default_alignment = alignof(std::max_align_t);
+	static inline auto s_default_alignment = alignof(std::max_align_t);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,7 +67,7 @@ void test_v1(benchmark::State & state)
 
 	for (auto element : state)
 	{
-		Fixed_Allocator < 1'024 * 1'024 > allocator;
+		Allocator < 1'024 * 1'024 > allocator;
 
 		for (auto i = 0uz; i < kb; ++i)
 		{
@@ -109,7 +109,7 @@ BENCHMARK(test_v2);
 int main()
 {
 	{
-		Fixed_Allocator < 1'024 > allocator; 
+		Allocator < 1'024 > allocator; 
 
 		allocator.test();
 

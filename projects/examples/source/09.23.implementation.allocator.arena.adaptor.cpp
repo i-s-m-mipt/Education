@@ -17,20 +17,20 @@ public:
 
 	Arena(std::size_t size) : m_size(size)
 	{
-		m_begin = operator new(m_size, std::align_val_t(default_alignment));
+		m_begin = operator new(m_size, std::align_val_t(s_default_alignment));
 	}
 
    ~Arena()
 	{
 		if (m_begin)
 		{
-			operator delete(m_begin, m_size, std::align_val_t(default_alignment));
+			operator delete(m_begin, m_size, std::align_val_t(s_default_alignment));
 		}
 	}
 
 //  ------------------------------------------------------------------------------------
 
-	auto allocate(std::size_t size, std::size_t alignment = default_alignment) -> void *
+	auto allocate(std::size_t size, std::size_t alignment = s_default_alignment) -> void *
 	{
 		void * begin = get_byte(m_begin) + m_offset;
 
@@ -76,7 +76,7 @@ private:
 
 //  ------------------------------------------------------------------------------------
 
-	static inline auto default_alignment = alignof(std::max_align_t);
+	static inline auto s_default_alignment = alignof(std::max_align_t);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

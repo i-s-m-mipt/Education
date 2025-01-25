@@ -41,7 +41,7 @@ int main()
 	
 		vector.push_back(1);
 
-		assert(vector.front() == vector.back() && vector.size() == 6);
+		assert(vector.size() == 6 && vector.front() == vector.back());
 
 		std::ranges::sort(vector);
 	}

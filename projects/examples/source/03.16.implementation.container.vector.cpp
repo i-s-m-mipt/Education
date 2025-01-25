@@ -14,17 +14,17 @@ public:
 		std::cout << "Vector::Vector (1)\n";
 	}
 
-	Vector(std::initializer_list < int > initializer_list) : Vector()
+	Vector(std::initializer_list < int > list) : Vector()
 	{
 		std::cout << "Vector::Vector (2)\n";
 
-		auto size = std::size(initializer_list);
+		auto size = std::size(list);
 
 		m_data = size ? new int[size]{} : nullptr;
 
 		m_size = size;
 
-		std::ranges::copy(initializer_list, m_data);
+		std::ranges::copy(list, m_data);
 	}
 
 	Vector(const Vector & other) : Vector() 

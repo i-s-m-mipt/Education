@@ -7,7 +7,7 @@ template < typename ... Ts > struct List {};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename     T  > struct Size {};
+template < typename L > struct Size {};
 
 template < typename ... Ts > struct Size < List < Ts ... > >
 {
@@ -20,15 +20,18 @@ template < typename L > constexpr auto empty_v = size_v < L > == 0;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template <             typename     T  > struct Front {};
+template < typename L > struct Front {};
 
-template < typename T, typename ... Ts > struct Front < List < T, Ts ... > > { using type = T; };
+template < typename T, typename ... Ts > struct Front < List < T, Ts ... > > 
+{ 
+    using type = T; 
+};
 
 template < typename L > using front = typename Front < L > ::type;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename     U  > struct Push_Front {};
+template < typename T, typename L > struct Push_Front {};
 
 template < typename T, typename ... Ts > struct Push_Front < T, List < Ts ... > >
 {
@@ -39,7 +42,7 @@ template < typename T, typename L > using push_front = typename Push_Front < T, 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template <             typename     T  > struct Pop_Front {};
+template < typename L > struct Pop_Front {};
 
 template < typename T, typename ... Ts > struct Pop_Front < List < T, Ts ... > >
 {
@@ -50,9 +53,12 @@ template < typename L > using pop_front = typename Pop_Front < L > ::type;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template <             typename     T  > struct Back {};
+template < typename L > struct Back {};
 
-template < typename T                  > struct Back < List < T > > { using type = T; };
+template < typename T > struct Back < List < T > > 
+{ 
+    using type = T; 
+};
 
 template < typename T, typename ... Ts > struct Back < List < T, Ts ... > > 
 { 
@@ -79,9 +85,12 @@ template < typename T, typename L > using push_back = typename Push_Back < T, L 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template <             typename     T  > struct Pop_Back {};
+template < typename L > struct Pop_Back {};
 
-template < typename T                  > struct Pop_Back < List < T > > { using type = List <> ; };
+template < typename T > struct Pop_Back < List < T > > 
+{ 
+    using type = List <> ; 
+};
 
 template < typename T, typename ... Ts > struct Pop_Back < List < T, Ts ... > >
 {

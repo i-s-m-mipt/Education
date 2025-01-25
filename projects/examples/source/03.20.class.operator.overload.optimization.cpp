@@ -9,7 +9,7 @@ class Vector
 {
 public:
 
-    Vector(std::initializer_list < int > initializer_list) : m_vector(initializer_list) {}
+    Vector(std::initializer_list < int > list) : m_vector(list) {}
 
 //  --------------------------------------------------------------------------------------
 

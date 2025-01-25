@@ -20,7 +20,7 @@ namespace detail
 
 //  ----------------------------------------------------------------------------------------------
 
-    template < typename     T  > struct Size {};
+    template < typename L > struct Size {};
 
     template < typename ... Ts > struct Size < List < Ts ... > >
     {
@@ -33,7 +33,7 @@ namespace detail
 
 //  ----------------------------------------------------------------------------------------------
 
-    template <             typename     T  > struct Front {};
+    template < typename L > struct Front {};
 
     template < typename T, typename ... Ts > struct Front < List < T, Ts ... > > 
     { 
@@ -44,7 +44,7 @@ namespace detail
 
 //  ----------------------------------------------------------------------------------------------
 
-    template <             typename     T  > struct Pop_Front {};
+    template < typename L > struct Pop_Front {};
 
     template < typename T, typename ... Ts > struct Pop_Front < List < T, Ts ... > >
     {
@@ -76,7 +76,7 @@ namespace detail
 
 //  ----------------------------------------------------------------------------------------------
 
-    template < typename L, typename T, std::size_t I = 0, bool C = empty_v < L > > class Index;
+    template < typename L, typename T, std::size_t I = 0, bool C = empty_v < L > > class Index {};
 
     template < typename L, typename T, std::size_t I > class Index < L, T, I, true  > {};
 
@@ -99,23 +99,24 @@ namespace detail
 
 namespace detail
 {
-    template < typename ... Ts > class Recorder
+    template < typename ... Ts > class Storage
     {
     protected:
 
-        Recorder() = default;
-       ~Recorder() = default;
+        Storage() = default;
+
+       ~Storage() = default;
 
     //  ---------------------------------------------------------------------------
 
         template < typename T > auto array() const
         {
-            return std::bit_cast < T * > (&m_array);
+            return std::bit_cast < T * > (&m_data);
         }
 
     //  ---------------------------------------------------------------------------
 
-        alignas(Ts...) std::byte m_array[sizeof(max_type < List < Ts ... > > )]{}; 
+        alignas(Ts...) std::byte m_data[sizeof(max_type < List < Ts ... > > )]{}; 
 
         std::size_t m_index = 0; 
     }; 
@@ -125,11 +126,11 @@ namespace detail
 
 namespace detail
 {
-    template < typename D, typename T, typename ... Ts > class Selector
+    template < typename D, typename T, typename ... Ts > class Handler
     {
     public:
 
-        Selector(T data) 
+        Handler(T data) 
         { 
             std::construct_at(derived().template array < T > (), std::move(data)); 
             
@@ -156,9 +157,9 @@ namespace detail
 
     protected:
 
-        Selector() = default;
+        Handler() = default;
 
-       ~Selector() = default;
+       ~Handler() = default;
 
     //  --------------------------------------------------------------------------------
 
@@ -192,8 +193,9 @@ namespace detail
 
 template < typename ... Ts > class Variant 
 : 
-    private detail::Recorder           < Ts ... > , 
-    private detail::Selector < Variant < Ts ... > , Ts, Ts ... > ...
+    private detail::Storage           < Ts ... > , 
+
+    private detail::Handler < Variant < Ts ... > , Ts, Ts ... > ...
 {
 public:
 
@@ -201,8 +203,9 @@ public:
 
 //  ----------------------------------------------------------------------------------------------
 
-    using detail::Selector < derived_t, Ts, Ts ... > ::Selector ...;
-    using detail::Selector < derived_t, Ts, Ts ... > ::operator=...;
+    using detail::Handler < derived_t, Ts, Ts ... > ::Handler...;
+
+    using detail::Handler < derived_t, Ts, Ts ... > ::operator=...;
 
 //  ----------------------------------------------------------------------------------------------
 
@@ -211,7 +214,7 @@ public:
         *this = detail::front < detail::List < Ts ... > > (); 
     }
 
-    Variant(const Variant & other) : detail::Selector < derived_t, Ts, Ts ... > ::Selector()...
+    Variant(const Variant & other) : detail::Handler < derived_t, Ts, Ts ... > ::Handler()...
     {
         other.visit([this](auto && data){ *this = data; });
     }
@@ -237,7 +240,7 @@ public:
 
     void swap(Variant & other)
 	{
-        std::swap(this->m_array, other.m_array);
+        std::swap(this->m_data, other.m_data);
 
 		std::swap(this->m_index, other.m_index);
 	}
@@ -246,7 +249,7 @@ public:
 
     template < typename T > auto has() const
     {
-        return this->m_index == detail::Selector < derived_t, T, Ts ... > ::s_index;
+        return this->m_index == detail::Handler < derived_t, T, Ts ... > ::s_index;
     }
 
     template < typename T > auto get() const
@@ -266,13 +269,13 @@ public:
 
 private:
 
-    template < typename D, typename U, typename ... Us > friend class detail::Selector;
+    template < typename D, typename U, typename ... Us > friend class detail::Handler;
 
 //  ----------------------------------------------------------------------------------------------
 
     void destroy()
     {
-        (detail::Selector < derived_t, Ts, Ts ... > ::destroy(), ... ); 
+        (detail::Handler < derived_t, Ts, Ts ... > ::destroy(), ... ); 
         
         this->m_index = 0;
     }

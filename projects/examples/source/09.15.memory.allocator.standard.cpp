@@ -10,11 +10,11 @@ int main()
 	{
 		std::allocator < int > allocator;
 
-		auto object = allocator.allocate(1);
+		auto ptr = allocator.allocate(1);
 
-		*object = 1;
+		*ptr = 1;
 
-		allocator.deallocate(object, 1);
+		allocator.deallocate(ptr, 1);
 	}
 
 //  --------------------------------------------------------------------------
@@ -24,15 +24,15 @@ int main()
 
 		std::allocator_traits < decltype(allocator) > allocator_traits;
 
-		auto object = allocator_traits.allocate(allocator, 1);
+		auto ptr = allocator_traits.allocate(allocator, 1);
 
-//		assert(std::empty(*object)); // bad
+//		assert(std::empty(*ptr)); // bad
 
-		allocator_traits.construct (allocator, object, "aaaaa");
+		allocator_traits.construct (allocator, ptr, "aaaaa");
 
-		allocator_traits.destroy   (allocator, object);
+		allocator_traits.destroy   (allocator, ptr);
 
-		allocator_traits.deallocate(allocator, object, 1);
+		allocator_traits.deallocate(allocator, ptr, 1);
 	}
 
 //  --------------------------------------------------------------------------

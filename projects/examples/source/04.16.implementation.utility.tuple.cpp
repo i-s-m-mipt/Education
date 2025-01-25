@@ -17,20 +17,17 @@ public:
 
 	constexpr Tuple(T && head, Ts && ... tail) 
 	:
-		m_head(std::forward < T  > (head)   ), 
-		m_tail(std::forward < Ts > (tail)...) 
+		m_head(std::forward < T > (head)), m_tail(std::forward < Ts > (tail)...) 
 	{}
 
 	constexpr Tuple(const Tuple & other) 
 	: 
-		m_head(other.m_head), 
-		m_tail(other.m_tail) 
+		m_head(other.m_head), m_tail(other.m_tail) 
 	{}
 
 	constexpr Tuple(Tuple && other) 
 	: 
-		m_head(std::move(other.m_head)), 
-		m_tail(std::move(other.m_tail)) 
+		m_head(std::move(other.m_head)), m_tail(std::move(other.m_tail)) 
 	{}
 
 	constexpr auto & operator=(Tuple other) 

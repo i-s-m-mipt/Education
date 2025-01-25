@@ -42,9 +42,9 @@ int main()
 
 		assert(array + std::size(array) - 1 - array == 4);
 
-		for (auto ptr = array; ptr != array + std::size(array); ++ptr) 
+		for (auto ptr = array + 1; ptr != array + std::size(array); ++ptr) 
 		{
-			assert(*ptr == (ptr == array ? 1 : *(ptr - 1) + 1));
+			assert(*ptr == *(ptr - 1) + 1);
 		}
 	}
 

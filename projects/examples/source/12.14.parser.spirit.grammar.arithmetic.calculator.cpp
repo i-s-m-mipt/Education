@@ -26,13 +26,13 @@ namespace detail
         using base_type::base_type, base_type::operator=;
     };
 
-    struct Sign { char operation = '\0'; Operand operand; };
+    struct Sign { char operation = 0; Operand operand; };
     
-    struct Step { char operation = '\0'; Operand operand; };
+    struct Step { char operation = 0; Operand operand; };
 
     struct List 
     { 
-        Operand head; std::vector < Step > tail; 
+        Operand head; std::vector < Step > steps; 
     };
 }
 
@@ -42,7 +42,7 @@ BOOST_FUSION_ADAPT_STRUCT(::detail::Sign, operation, operand)
 
 BOOST_FUSION_ADAPT_STRUCT(::detail::Step, operation, operand)
 
-BOOST_FUSION_ADAPT_STRUCT(::detail::List, head, tail)
+BOOST_FUSION_ADAPT_STRUCT(::detail::List, head, steps)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -131,14 +131,14 @@ public:
 
     auto operator()(const detail::List & list) const -> double
     {
-        auto state = boost::apply_visitor(*this, list.head);
+        auto result = boost::apply_visitor(*this, list.head);
         
-        for (const auto & step : list.tail)
+        for (const auto & step : list.steps)
         {
-            state = (*this)(step, state);
+            result = (*this)(step, result);
         }
 
-        return state;
+        return result;
     }
 };
 

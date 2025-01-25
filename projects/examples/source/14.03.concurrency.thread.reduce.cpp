@@ -29,22 +29,16 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 
 	if (auto size = 1uz * std::distance(begin, end); size > 0) 
 	{
-		auto min_size = 100uz;
+		auto concurrency = 1uz * std::max(std::thread::hardware_concurrency(), 2u);
 
-		auto max_threads = (size + min_size - 1) / min_size;
+		std::vector < T > results(concurrency, T(0));
 
-		auto hardware = 1uz * std::thread::hardware_concurrency();
+		auto step = size / concurrency;
 
-		auto n_threads = std::min(hardware != 0 ? hardware : 2uz, max_threads);
-
-		auto block_size = size / n_threads;
-
-		std::vector < T > results(n_threads, T(0));
-
-		auto block_begin = begin, block_end = std::next(block_begin, block_size);
+		auto block_begin = begin, block_end = std::next(block_begin, step);
 
 		{
-			std::vector < std::jthread > threads(n_threads - 1);
+			std::vector < std::jthread > threads(concurrency - 1);
 
 			for (auto i = 0uz; i < std::size(threads); ++i)
 			{
@@ -55,12 +49,12 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 					Task < decltype(range), T > (), range, std::ref(results[i])
 				);
 
-				block_begin = block_end; block_end = std::next(block_begin, block_size);
+				block_begin = block_end; block_end = std::next(block_begin, step);
 			}
 
 			auto range = std::ranges::subrange(block_begin, end);
 
-			Task < decltype(range), T > ()(range, std::ref(results[n_threads - 1]));
+			Task < decltype(range), T > ()(range, std::ref(results[concurrency - 1]));
 		}
 
 		sum += std::reduce(std::begin(results), std::end(results), T(0));

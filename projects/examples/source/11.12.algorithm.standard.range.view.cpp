@@ -57,9 +57,9 @@ int main()
 	{
 		int array[5]{};
 
-		for (auto state = 0; auto && element : array) // support: cppinsights.io
+		for (auto x = 0; auto && element : array) // support: cppinsights.io
 		{
-			element = ++state;
+			element = ++x;
 		}
 	}
 
@@ -68,9 +68,9 @@ int main()
 	{
 		std::vector < int > vector(5, 0);
 
-		for (auto state = 0; auto && element : vector)
+		for (auto x = 0; auto && element : vector)
 		{
-			element = ++state;
+			element = ++x;
 		}
 	}	
 
@@ -79,9 +79,9 @@ int main()
 	{
 		std::map < int, int > map = { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 } };
 
-		for (auto state = 0; auto && [key, element] : map)
+		for (auto x = 0; auto && [first, second] : map)
 		{
-			element = ++state;
+			second = ++x;
 		}
 	}
 

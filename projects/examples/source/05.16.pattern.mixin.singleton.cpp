@@ -67,17 +67,17 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D, std::size_t S > class Counter
+template < typename D, std::size_t S > class Controller
 {
 protected:
 
-	Counter(                         ) { initialize(); }
+	Controller(                            ) { initialize(); }
 
-	Counter(const Counter < D, S > & ) { initialize(); }
+	Controller(const Controller < D, S > & ) { initialize(); }
 
-	Counter(      Counter < D, S > &&) { initialize(); }
+	Controller(      Controller < D, S > &&) { initialize(); }
 
-   ~Counter() 
+   ~Controller() 
     { 
 		--s_counter; 
 	}
@@ -88,7 +88,7 @@ private:
 	{
 		if (++s_counter > S)
 		{
-			std::cerr << "Counter::initialize : invalid instance\n";
+			std::cerr << "Controller::initialize : invalid instance\n";
 		}
 	}
 
@@ -99,9 +99,9 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > struct Entity_v3 : private Counter < Entity_v3 < T > , 5 > {};
+template < typename T > class Entity_v3 : private Controller < Entity_v3 < T > , 5 > {};
 
-template < typename T > struct Entity_v4 : private Counter < Entity_v4 < T > , 5 > {};
+template < typename T > class Entity_v4 : private Controller < Entity_v4 < T > , 5 > {};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 

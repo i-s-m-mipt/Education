@@ -30,7 +30,7 @@ consteval auto is_prime(int x)
 
 consteval auto test_v1()
 {
-//	[[maybe_unused]] auto object = new auto(1); // error
+//	[[maybe_unused]] auto ptr = new auto(1); // error
 
 	std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
@@ -60,7 +60,7 @@ template < typename T, typename ... Ts > void test_v3(T arg, Ts ... args)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-constinit auto global_x = 1;
+constinit auto g_x = 1;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -99,11 +99,9 @@ int main()
 	{
 		constexpr auto x = 1; auto y = 2;
 
-		constexpr auto is_constant_evaluated_1 = test_v2(x);
-	
-		      	  auto is_constant_evaluated_2 = test_v2(y);
-
-		assert(is_constant_evaluated_1 && !is_constant_evaluated_2);
+		constexpr auto result_1 = test_v2(x); assert( result_1);
+		
+				  auto result_2 = test_v2(y); assert(!result_2);
 	}
 
 //  ------------------------------------------------------------------------
@@ -115,6 +113,6 @@ int main()
 //  ------------------------------------------------------------------------
 
 	{
-		assert(++global_x == 2);
+		assert(++g_x == 2);
 	}
 }

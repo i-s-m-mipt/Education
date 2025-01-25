@@ -6,17 +6,17 @@
 
 //  ================================================================================================
 
-class Error : public std::exception
+class Exception : public std::exception
 {
 public:
 
-	Error(int data) : m_data(data) {}
+	Exception(int data) : m_data(data) {}
 
 //  -------------------------------------------
 
 	const char * what() const noexcept override 
 	{ 
-		return "error"; 
+		return "exception"; 
 	}
 
 private:
@@ -36,17 +36,17 @@ private:
 		
 //		throw 1; // bad
 
-		throw Error(1); // support: std::runtime_error
+		throw Exception(1); // support: std::runtime_error
 
 //		throw std::system_error(std::make_error_code(std::errc::no_message), "error");
 
 		std::cout << "test_v1 (3)\n";
 	}
-	catch (const Error & error)
+	catch (const Exception & exception)
 	{
-		std::cerr << "test_v1 : " << error.what() << '\n';
+		std::cerr << "test_v1 : " << exception.what() << '\n';
 
-//		throw error; // bad
+//		throw exception; // bad
 
 		throw;
 	}

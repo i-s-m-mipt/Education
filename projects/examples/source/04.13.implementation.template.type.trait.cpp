@@ -161,15 +161,15 @@ template < typename D, typename B > class is_convertible
 {
 private:
 
-    template < typename U > static int helper(U);
+    template < typename T > static int handler(T);
 
 //  ---------------------------------------------------------------------
 
-	template < typename T, typename U > static std::false_type test(...);
+	template < typename T1, typename T2 > static std::false_type test(...);
 
-    template < typename T, typename U > static std:: true_type test
+    template < typename T1, typename T2 > static std:: true_type test
 	(
-		int, decltype(helper < U > (std::declval < T > ())) = 0
+		int, decltype(handler < T2 > (std::declval < T1 > ())) = 0
 	);
 
 public:
@@ -203,23 +203,14 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < bool C, typename T = void > struct enable_if             {                 };
+template < bool C, typename T > struct enable_if {};
 
-template <         typename T        > struct enable_if < true, T > { using type = T; };
+template < typename T > struct enable_if < true, T > 
+{ 
+	using type = T; 
+};
 
-template < bool C, typename T = void > using  enable_if_t = typename enable_if < C, T > ::type;
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-template < bool C, typename T, typename F > struct conditional                 { using type = T; };
-
-template <         typename T, typename F > struct conditional < false, T, F > { using type = F; };
-
-template 
-< 
-	bool C, typename T, typename F 
-> 
-using conditional_t = typename conditional < C, T, F > ::type;
+template < bool C, typename T > using enable_if_t = typename enable_if < C, T > ::type;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -346,12 +337,4 @@ int main()
 
 //		static_assert(!std::is_same_v < enable_if_t < 1 + 2 != 3, int > , int > ); // error
 	}
-
-//  ------------------------------------------------------------------------------------------
-
-	{
-		static_assert(std::is_same_v < conditional_t < 1 + 2 == 3, int, double > , int    > );
-
-		static_assert(std::is_same_v < conditional_t < 1 + 2 != 3, int, double > , double > );
-	}	
 }

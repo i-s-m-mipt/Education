@@ -2,46 +2,46 @@
 #include <cmath>
 #include <cstddef>
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-auto count_v1(std::size_t size, std::size_t n_left = 0, std::size_t n_right = 0) -> std::size_t
+auto count_v1(std::size_t size, std::size_t left = 0, std::size_t right = 0) -> std::size_t
 {
 	auto counter = 0uz;
 
-	if (n_left < size || n_right < size)
+	if (left < size || right < size)
 	{
-		if (n_left < size) 
+		if (left < size) 
 		{ 
-			counter += count_v1(size, n_left + 1, n_right); 
+			counter += count_v1(size, left + 1, right); 
 		}
 
-		if (n_left > n_right) 
+		if (left > right) 
 		{ 
-			counter += count_v1(size, n_left, n_right + 1); 
+			counter += count_v1(size, left, right + 1); 
 		}
 	}
 	
 	return counter > 0 ? counter : 1uz;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-auto count_v2(std::size_t size, std::size_t n_left = 0, std::size_t n_right = 0) -> std::size_t
+auto count_v2(std::size_t size, std::size_t left = 0, std::size_t right = 0) -> std::size_t
 {
 	auto counter = 0uz;
 
-	if (n_left < size)
+	if (left < size)
 	{
-		for (auto i = size; i > std::max(n_left, n_right + 1) - 1; --i) 
+		for (auto i = size; i > std::max(left, right + 1) - 1; --i) 
 		{
-			counter += count_v2(size, i, n_right + 1);
+			counter += count_v2(size, i, right + 1);
 		}
 	}
 
 	return counter > 0 ? counter : 1uz;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {

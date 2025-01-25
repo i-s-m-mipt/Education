@@ -22,7 +22,7 @@ auto & operator<<(std::ostream & stream, const std::ratio < N, D > & ratio)
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-class Chronometer
+class Timer
 {
 public:
 
@@ -30,9 +30,9 @@ public:
 
 //  --------------------------------------------------------------------------------------
 
-	Chronometer(const std::string & scope) : m_scope(scope), m_begin(clock_t::now()) {}
+	Timer(const std::string & scope) : m_scope(scope), m_begin(clock_t::now()) {}
 
-   ~Chronometer() 
+   ~Timer() 
 	{
 		elapsed();
 	}
@@ -45,7 +45,7 @@ public:
 
 		auto delta = std::chrono::duration_cast < std::chrono::microseconds > (duration);
 
-		std::cout << m_scope << " : chronometer : ";
+		std::cout << m_scope << " : timer : ";
 
 		std::cout << std::format("{:.6f}", delta.count() / 1'000'000.0) << " (seconds)\n";
 	}
@@ -127,7 +127,7 @@ int main()
 //  --------------------------------------------------------------------------------
 
 	{
-		Chronometer chronometer("main");
+		Timer timer("main");
 
 		assert(equal(test(1'000'000), 1'000'000.0));
 	}
@@ -135,10 +135,10 @@ int main()
 //  --------------------------------------------------------------------------------
 
 	{
-		boost::timer::cpu_timer cpu_timer;
+		boost::timer::cpu_timer timer;
 
 		assert(equal(test(1'000'000), 1'000'000.0));
 
-		std::cout << "main : cpu_timer :" << cpu_timer.format();
+		std::cout << "main : cpu_timer :" << timer.format();
 	}
 }

@@ -20,7 +20,7 @@ using namespace std::literals;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-class Big_Int
+class Integer
 {
 public:
 
@@ -28,21 +28,21 @@ public:
 
 //  --------------------------------------------------------------------------------------------
 
-	Big_Int() : m_is_negative(false), m_n_digits(1), m_digits(size, 0) {}
+	Integer() : m_is_negative(false), m_n_digits(1), m_digits(s_size, 0) {}
 
-	Big_Int(digit_t number) : Big_Int() 
+	Integer(digit_t x) : Integer() 
 	{ 
-		parse(std::to_string(number)); 
+		parse(std::to_string(x)); 
 	}
 
-	Big_Int(const std::string & string) : Big_Int() 
+	Integer(const std::string & string) : Integer() 
 	{ 
 		parse(string); 
 	}
 
 //  --------------------------------------------------------------------------------------------
 
-	void swap(Big_Int & other)
+	void swap(Integer & other)
 	{
 		std::swap(m_is_negative, other.m_is_negative);
 		
@@ -53,7 +53,7 @@ public:
 
 //  --------------------------------------------------------------------------------------------
 
-	auto & operator+=(Big_Int other)
+	auto & operator+=(Integer other)
 	{
 		if 
 		(
@@ -91,21 +91,21 @@ public:
 		return *this;
 	}
 
-	auto & operator-=(Big_Int other)
+	auto & operator-=(Integer other)
 	{
 		other.m_is_negative = !other.m_is_negative;
 
 		return *this += other;
 	}
 
-	auto & operator*=(Big_Int other)
+	auto & operator*=(Integer other)
 	{
-		if (m_n_digits + other.m_n_digits > size) 
+		if (m_n_digits + other.m_n_digits > s_size) 
 		{
 			throw std::runtime_error("arithmetic overflow");
 		}
 
-		Big_Int result;
+		Integer result;
 
 		result.m_is_negative = m_is_negative ^ other.m_is_negative;
 
@@ -117,9 +117,9 @@ public:
 			{
 				result.m_digits[i + j] += m_digits[i] * other.m_digits[j] + r;
 
-				r = result.m_digits[i + j] / Big_Int::base;
+				r = result.m_digits[i + j] / s_base;
 
-				result.m_digits[i + j] -= r * Big_Int::base;
+				result.m_digits[i + j] -= r * s_base;
 			}
 		}
 
@@ -132,24 +132,24 @@ public:
 		return *this;
 	}
 
-	auto & operator/=(Big_Int other)
+	auto & operator/=(Integer other)
 	{
 		if (other.m_n_digits == 1 && other.m_digits.front() == 0)
 		{
 			throw std::runtime_error("invalid operand");
 		}
 
-		Big_Int result; result.m_n_digits = m_n_digits;
+		Integer result; result.m_n_digits = m_n_digits;
 
 		result.m_is_negative = m_is_negative ^ other.m_is_negative; other.m_is_negative = false;
 
-		Big_Int current;
+		Integer current;
 
 		for (auto i = static_cast < int > (m_n_digits) - 1; i >= 0; --i)
 		{
-			current *= Big_Int::base; current.m_digits[0] = m_digits[i];
+			current *= s_base; current.m_digits[0] = m_digits[i];
 
-			digit_t l = 0, r = Big_Int::base, digit = 0;
+			digit_t l = 0, r = s_base, digit = 0;
 
 			while (l <= r)
 			{
@@ -187,29 +187,29 @@ public:
 
 //  --------------------------------------------------------------------------------------------
 
-	friend auto operator+ (const Big_Int & lhs, const Big_Int & rhs) 
+	friend auto operator+ (const Integer & lhs, const Integer & rhs) 
 	{ 
-		return Big_Int(lhs) += rhs; 
+		return Integer(lhs) += rhs; 
 	}
 
-	friend auto operator- (const Big_Int & lhs, const Big_Int & rhs) 
+	friend auto operator- (const Integer & lhs, const Integer & rhs) 
 	{ 
-		return Big_Int(lhs) -= rhs; 
+		return Integer(lhs) -= rhs; 
 	}
 
-	friend auto operator* (const Big_Int & lhs, const Big_Int & rhs) -> Big_Int
+	friend auto operator* (const Integer & lhs, const Integer & rhs) -> Integer
 	{ 
-		return Big_Int(lhs) *= rhs; 
+		return Integer(lhs) *= rhs; 
 	}
 
-	friend auto operator/ (const Big_Int & lhs, const Big_Int & rhs) 
+	friend auto operator/ (const Integer & lhs, const Integer & rhs) 
 	{ 
-		return Big_Int(lhs) /= rhs; 
+		return Integer(lhs) /= rhs; 
 	}
 
 //  --------------------------------------------------------------------------------------------
 
-	friend auto operator< (const Big_Int & lhs, const Big_Int & rhs)
+	friend auto operator< (const Integer & lhs, const Integer & rhs)
 	{
 		if (lhs.m_is_negative != rhs.m_is_negative) { return lhs.m_is_negative; }
 
@@ -223,22 +223,22 @@ public:
 		}
 	}
 
-	friend auto operator> (const Big_Int & lhs, const Big_Int & rhs)
+	friend auto operator> (const Integer & lhs, const Integer & rhs)
 	{
 		return  (rhs < lhs);
 	}
 
-	friend auto operator<=(const Big_Int & lhs, const Big_Int & rhs) -> bool
+	friend auto operator<=(const Integer & lhs, const Integer & rhs) -> bool
 	{
 		return !(rhs < lhs);
 	}
 
-	friend auto operator>=(const Big_Int & lhs, const Big_Int & rhs)
+	friend auto operator>=(const Integer & lhs, const Integer & rhs)
 	{
 		return !(lhs < rhs);
 	}
 
-	friend auto operator==(const Big_Int & lhs, const Big_Int & rhs)
+	friend auto operator==(const Integer & lhs, const Integer & rhs)
 	{
 		if (lhs.m_is_negative != rhs.m_is_negative || lhs.m_n_digits != rhs.m_n_digits)
 		{
@@ -258,27 +258,27 @@ public:
 
 //  --------------------------------------------------------------------------------------------
 
-	friend auto & operator>>(std::istream & stream, Big_Int & big_int)
+	friend auto & operator>>(std::istream & stream, Integer & integer)
 	{
 		std::string string; stream >> string; 
 		
-		big_int = Big_Int(string); 
+		integer = Integer(string); 
 		
 		return stream;
 	}
 
-	friend auto & operator<<(std::ostream & stream, const Big_Int & big_int)
+	friend auto & operator<<(std::ostream & stream, const Integer & integer)
 	{
-		if (big_int.m_is_negative) 
+		if (integer.m_is_negative) 
 		{
 			stream << '-';
 		}
 
-		stream << big_int.m_digits[big_int.m_n_digits - 1];
+		stream << integer.m_digits[integer.m_n_digits - 1];
 
-		for (auto i = static_cast < int > (big_int.m_n_digits) - 2; i >= 0; --i)
+		for (auto i = static_cast < int > (integer.m_n_digits) - 2; i >= 0; --i)
 		{
-			stream << std::format("{:0>{}}", big_int.m_digits[i], step);
+			stream << std::format("{:0>{}}", integer.m_digits[i], Integer::s_step);
 		}
 
 		return stream;
@@ -286,7 +286,7 @@ public:
 
 //  --------------------------------------------------------------------------------------------
 
-	friend auto multiply(const Big_Int & x, const Big_Int & y)
+	friend auto multiply(const Integer & x, const Integer & y)
 	{
 		auto n = std::max(x.m_n_digits, y.m_n_digits);
 
@@ -297,15 +297,17 @@ public:
 
 		auto k = n / 2;
 
-		Big_Int xr; xr.m_n_digits =     k;
-		Big_Int xl; xl.m_n_digits = n - k;
+		Integer xr; xr.m_n_digits = k;
+
+		Integer xl; xl.m_n_digits = n - k;
 
 		for (auto i = 0uz; i < k; ++i) { xr.m_digits[i    ] = x.m_digits[i]; }
 
 		for (auto i = k  ; i < n; ++i) { xl.m_digits[i - k] = x.m_digits[i]; }
 
-		Big_Int yr; yr.m_n_digits =     k;
-		Big_Int yl; yl.m_n_digits = n - k;
+		Integer yr; yr.m_n_digits = k;
+		
+		Integer yl; yl.m_n_digits = n - k;
 
 		for (auto i = 0uz; i < k; ++i) { yr.m_digits[i    ] = y.m_digits[i]; }
 
@@ -313,11 +315,11 @@ public:
 
 		auto p1 = multiply(xl, yl), p2 = multiply(xr, yr), p3 = multiply(xl + xr, yl + yr);
 
-		Big_Int base = Big_Int::base;
+		Integer base = Integer::s_base;
 
 		for (auto i = 1uz; i < k; ++i) 
 		{
-			base *= Big_Int::base;
+			base *= Integer::s_base;
 		}
 
 		auto result = p1 * base * base + (p3 - p2 - p1) * base + p2;
@@ -329,20 +331,20 @@ public:
 
 //  --------------------------------------------------------------------------------------------
 
-	friend auto sqrt(const Big_Int & x)
+	friend auto sqrt(const Integer & x)
 	{
 		if (x.m_is_negative) 
 		{
 			throw std::runtime_error("invalid operand");
 		}
 
-    	Big_Int result; 
+    	Integer result; 
 		
 		result.m_n_digits = (x.m_n_digits + 1) / 2;
     	
     	for (auto i = static_cast < int > (result.m_n_digits) - 1; i >= 0; --i)
     	{
-      		digit_t l = 0, r = Big_Int::base, digit = 0;
+      		digit_t l = 0, r = Integer::s_base, digit = 0;
 
       		while (l <= r)
       		{
@@ -350,7 +352,7 @@ public:
 
         		if (result * result <= x)
         		{
-          			l = m + 1; digit = std::min(m, Big_Int::base - 1);
+          			l = m + 1; digit = std::min(m, Integer::s_base - 1);
         		}
         		else
 				{
@@ -390,9 +392,9 @@ private:
 
 			m_is_negative = string[0] == '-'; m_n_digits = 0;
 
-			for (auto i = std::ssize(string) - 1; i >= 0; i -= step)
+			for (auto i = std::ssize(string) - 1; i >= 0; i -= s_step)
 			{
-				auto begin = i - step + 1;
+				auto begin = i - s_step + 1;
 
 				if (begin <= 0) 
 				{
@@ -422,7 +424,7 @@ private:
 
 //  --------------------------------------------------------------------------------------------
 
-	auto add(const Big_Int & other) -> Big_Int &
+	auto add(const Integer & other) -> Integer &
 	{
 		m_n_digits = std::max(m_n_digits, other.m_n_digits);
 
@@ -430,11 +432,11 @@ private:
 		{
 			m_digits[i] += other.m_digits[i];
 
-			if (m_digits[i] >= Big_Int::base)
+			if (m_digits[i] >= s_base)
 			{
-				m_digits[i] -= Big_Int::base;
+				m_digits[i] -= s_base;
 
-				if (i < size - 1)
+				if (i < s_size - 1)
 				{
 					++m_digits[i + 1];
 				}
@@ -450,7 +452,7 @@ private:
 		return *this;
 	}
 
-	auto subtract(const Big_Int & other) -> Big_Int &
+	auto subtract(const Integer & other) -> Integer &
 	{
 		for (auto i = 0uz; i < m_n_digits; ++i)
 		{
@@ -458,7 +460,7 @@ private:
 
 			if (m_digits[i] < 0)
 			{
-				m_digits[i] += Big_Int::base;
+				m_digits[i] += s_base;
 
 				m_digits[i + 1]--;
 			}
@@ -471,7 +473,7 @@ private:
 
 //  --------------------------------------------------------------------------------------------
 
-	auto less(const Big_Int & other) const -> bool
+	auto less(const Integer & other) const -> bool
 	{
 		if (m_n_digits != other.m_n_digits) 
 		{
@@ -499,11 +501,11 @@ private:
 
 //  --------------------------------------------------------------------------------------------
 
-	static inline auto size = 1'000uz;
+	static inline auto s_size = 1'000uz;
 
-	static inline auto step = std::numeric_limits < digit_t > ::digits10 / 2;
+	static inline auto s_step = std::numeric_limits < digit_t > ::digits10 / 2;
 
-	static inline auto base = static_cast < digit_t > (std::pow(10, step));
+	static inline auto s_base = static_cast < digit_t > (std::pow(10, s_step));
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -511,83 +513,83 @@ private:
 int main()
 {
 	{
-		Big_Int big_int_01 = "+73640854127382725310948206095647"s;
+		Integer integer_01 = "+73640854127382725310948206095647"s;
 
-		Big_Int big_int_02 = "-46090058756232818791046807807190"s;
+		Integer integer_02 = "-46090058756232818791046807807190"s;
 
-		Big_Int big_int_03 = "+27550795371149906519901398288457"s;
+		Integer integer_03 = "+27550795371149906519901398288457"s;
 
-		Big_Int big_int_04 = big_int_01;
+		Integer integer_04 = integer_01;
 
-		Big_Int big_int_05 = "-3394111293590239892710602762023649092547630961329778427474301930"s;
+		Integer integer_05 = "-3394111293590239892710602762023649092547630961329778427474301930"s;
 
-		Big_Int big_int_06 = "-46090058756232818791046807807189"s;
+		Integer integer_06 = "-46090058756232818791046807807189"s;
 
-		Big_Int big_int_07 = "+73640854127382725310948206095648"s;
+		Integer integer_07 = "+73640854127382725310948206095648"s;
 
-		Big_Int big_int_08 = big_int_02;
+		Integer integer_08 = integer_02;
 
-		Big_Int big_int_09 = "+119730912883615544101995013902837"s;
+		Integer integer_09 = "+119730912883615544101995013902837"s;
 
-		Big_Int big_int_10 = -1;
+		Integer integer_10 = -1;
 
-		assert((big_int_01 += big_int_02) == big_int_03);
-		assert((big_int_01 -= big_int_02) == big_int_04);
-		assert((big_int_01 *= big_int_02) == big_int_05);
-		assert((big_int_01 /= big_int_02) == big_int_04);
+		assert((integer_01 += integer_02) == integer_03);
+		assert((integer_01 -= integer_02) == integer_04);
+		assert((integer_01 *= integer_02) == integer_05);
+		assert((integer_01 /= integer_02) == integer_04);
 
-		assert((big_int_01 ++           ) == big_int_04);
-		assert((           ++ big_int_02) == big_int_06);
-		assert((big_int_01 --           ) == big_int_07);
-		assert((           -- big_int_02) == big_int_08);
+		assert((integer_01 ++           ) == integer_04);
+		assert((           ++ integer_02) == integer_06);
+		assert((integer_01 --           ) == integer_07);
+		assert((           -- integer_02) == integer_08);
 
-		assert((big_int_01 +  big_int_02) == big_int_03);
-		assert((big_int_01 -  big_int_02) == big_int_09);
-		assert((big_int_01 *  big_int_02) == big_int_05);
-		assert((big_int_01 /  big_int_02) == big_int_10);
+		assert((integer_01 +  integer_02) == integer_03);
+		assert((integer_01 -  integer_02) == integer_09);
+		assert((integer_01 *  integer_02) == integer_05);
+		assert((integer_01 /  integer_02) == integer_10);
 
-		assert((big_int_01 <  big_int_02) == 0);
-		assert((big_int_01 >  big_int_02) == 1);
-		assert((big_int_01 <= big_int_02) == 0);
-		assert((big_int_01 >= big_int_02) == 1);
-		assert((big_int_01 == big_int_02) == 0);
-		assert((big_int_01 != big_int_02) == 1);
+		assert((integer_01 <  integer_02) == 0);
+		assert((integer_01 >  integer_02) == 1);
+		assert((integer_01 <= integer_02) == 0);
+		assert((integer_01 >= integer_02) == 1);
+		assert((integer_01 == integer_02) == 0);
+		assert((integer_01 != integer_02) == 1);
 	}
 
 //  ----------------------------------------------------------------------------------------------
 
 	{
-		std::cout << "main : enter Big_Int : "; Big_Int big_int; std::cin >> big_int; 
+		std::cout << "main : enter Integer : "; Integer integer; std::cin >> integer; 
 	
-		std::cout << "main : big_int = " << big_int << '\n';
+		std::cout << "main : integer = " << integer << '\n';
 	}
 
 //  ----------------------------------------------------------------------------------------------
 
 	{
-		Big_Int big_int_1 = "+73640854127382725310948206095647"s;
+		Integer integer_1 = "+73640854127382725310948206095647"s;
 
-		Big_Int big_int_2 = "-46090058756232818791046807807190"s;
+		Integer integer_2 = "-46090058756232818791046807807190"s;
 
-		Big_Int big_int_3 = "-3394111293590239892710602762023649092547630961329778427474301930"s;
+		Integer integer_3 = "-3394111293590239892710602762023649092547630961329778427474301930"s;
 
-		assert(multiply(big_int_1, big_int_2) == big_int_3);
+		assert(multiply(integer_1, integer_2) == integer_3);
 	}
 
 //  ----------------------------------------------------------------------------------------------
 
 	{
-		Big_Int big_int_1 = "+73640854127382725310948206095647"s;
+		Integer integer_1 = "+73640854127382725310948206095647"s;
 
-		Big_Int big_int_2 = "+8581424947372244"s;
+		Integer integer_2 = "+8581424947372244"s;
 
-		assert(sqrt(big_int_1) == big_int_2);
+		assert(sqrt(integer_1) == integer_2);
 	}
 
 //  ----------------------------------------------------------------------------------------------
 
 	{
-		Big_Int result = 1; 
+		Integer result = 1; 
 		
 		for (auto i = 1; i <= 100; ++i) 
 		{

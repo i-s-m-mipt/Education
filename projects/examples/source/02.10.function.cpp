@@ -60,9 +60,9 @@ void test_v5(const std::string &)
 
 const auto & test_v8()
 {
-	static auto state = 0; // support: compiler-explorer.com
+	static auto x = 0; // support: compiler-explorer.com
 
-	return ++state;
+	return ++x;
 }
 
 ////////////////////////////////////////////////////////////////////

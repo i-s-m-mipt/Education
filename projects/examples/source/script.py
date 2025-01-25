@@ -13,7 +13,7 @@ def make_plot(raw_points: str, label: str):
 
     plot.plot(x, y, label = label)
 
-    plot.xlabel("words")
+    plot.xlabel("strings")
     plot.ylabel("collisions")
 
     plot.grid  ()

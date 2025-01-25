@@ -51,11 +51,11 @@ auto & operator<<(std::ostream & stream, const Entity & entity)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-class Redirector
+class Adapter
 {
 public:
 
-    Redirector(const std::string & path) : m_stream(path, std::ios::out)
+    Adapter(const std::string & path) : m_stream(path, std::ios::out)
     {
         if (m_stream) 
         {
@@ -67,7 +67,7 @@ public:
         }
     }
 
-   ~Redirector() 
+   ~Adapter() 
     { 
         if (m_buffer) 
         {
@@ -133,7 +133,7 @@ int main()
 
     {
         {
-            Redirector redirector("13.03.stream.class.file.example.data"); 
+            Adapter adapter("13.03.stream.class.file.example.data"); 
             
             std::cout << "main : trace\n";
         }

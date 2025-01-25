@@ -67,14 +67,12 @@ BOOST_DATA_TEST_CASE
         boost::unit_test::data::distribution = std::uniform_real_distribution(0.0, 1.0)
     )),
 
-    index, sample
+    i, x
 )
 {
-    std::cout << "Test_v4 : index = " << index << ' ';
-    
-    std::cout << "sample = " << std::format("{:.3f}", sample) << '\n';
+    std::cout << "Test_v4 : i = " << i << " x = " << std::format("{:.3f}", x) << '\n';
 
-    BOOST_TEST(sample < 0.5);
+    BOOST_TEST(x < 0.5);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -125,8 +123,7 @@ public:
 
     private:
 
-        int m_x = 1;
-        int m_y = 1;
+        int m_x = 1, m_y = 1;
     };
 
 //  ---------------------------------------------------------------
@@ -155,10 +152,10 @@ namespace boost::unit_test::data::monomorphic
 
 BOOST_DATA_TEST_CASE
 (
-    Test_v5, Dataset() ^ boost::unit_test::data::make({ 1, 2, 3, 5, 8 }), sample, expected
+    Test_v5, Dataset() ^ boost::unit_test::data::make({ 1, 2, 3, 5, 8 }), x, y
 )
 {
-    BOOST_TEST(sample == expected);
+    BOOST_TEST(x == y);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////

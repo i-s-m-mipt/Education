@@ -40,18 +40,18 @@ public:
 
 		PyErr_NormalizeException(&error, &value, &stack);
 
-		boost::python::handle <> handle_error(error);
+		boost::python::handle <> handle_1(boost::python::allow_null(value));
 
-		boost::python::handle <> handle_value(boost::python::allow_null(value));
+		boost::python::handle <> handle_2(error);
 
-		boost::python::handle <> handle_stack(boost::python::allow_null(stack));
-
-		auto result =  
-		(
-			handle_value ? boost::python::str(handle_value) : boost::python::str(handle_error)
-		);
-
-		return boost::python::extract < std::string > (result)();
+		if (handle_1)
+		{
+			return boost::python::extract < std::string > (boost::python::str(handle_1))();
+		}
+		else
+		{
+			return boost::python::extract < std::string > (boost::python::str(handle_2))();
+		}
 	}
 
 private:
@@ -111,27 +111,27 @@ auto factorial(int x)
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-auto make_dictionary(std::size_t size, std::size_t length)
+auto make_strings(std::size_t size, std::size_t length)
 {
-	std::set < std::string > dictionary;
+	std::set < std::string > strings;
 
-	std::string word(length, '_');
+	std::string string(length, '_');
 
 	std::default_random_engine engine;
 
 	std::uniform_int_distribution distribution(97, 122);
     
-	while (std::size(dictionary) < size)
+	while (std::size(strings) < size)
     {
-        for (auto & element : word) 
+        for (auto & element : string) 
 		{
 			element = distribution(engine);
 		}
 
-		dictionary.insert(word);
+		strings.insert(string);
     }
 
-	return dictionary;
+	return strings;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -185,9 +185,9 @@ int main()
 		
 		std::string points;
 
-		for (const auto & word : make_dictionary(size + 1, 10))
+		for (const auto & string : make_strings(size + 1, 10))
 		{
-			hashes.insert(hash(word));
+			hashes.insert(hash(string));
 			
 			if (index++ % (size / 50) == 0)
 			{

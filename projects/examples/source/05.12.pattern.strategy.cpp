@@ -13,18 +13,6 @@ public:
     virtual void test() const = 0;
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class Fast : public Strategy 
-{ 
-public: 
-    
-    void test() const override 
-    { 
-        std::cout << "Fast::test\n"; 
-    } 
-};
-
 ////////////////////////////////////////////
 
 class Slow : public Strategy 
@@ -34,6 +22,18 @@ public:
     void test() const override 
     { 
         std::cout << "Slow::test\n"; 
+    } 
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class Fast : public Strategy 
+{ 
+public: 
+    
+    void test() const override 
+    { 
+        std::cout << "Fast::test\n"; 
     } 
 };
 
@@ -61,7 +61,7 @@ private:
 
 int main()
 {
-    Strategy * strategy = new Fast;
+    Strategy * strategy = new Slow;
 
     Entity entity(*strategy);
     

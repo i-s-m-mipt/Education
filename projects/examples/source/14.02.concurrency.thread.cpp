@@ -56,11 +56,11 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-class Scoped_Thread : private boost::noncopyable
+class Thread : private boost::noncopyable
 {
 public:
 
-	Scoped_Thread(std::thread thread) : m_thread(std::move(thread))
+	Thread(std::thread thread) : m_thread(std::move(thread))
 	{
 		if (!m_thread.joinable()) 
         {
@@ -68,7 +68,7 @@ public:
         }
 	}
 
-   ~Scoped_Thread()
+   ~Thread()
 	{
 		m_thread.join();
 	}
@@ -109,7 +109,7 @@ int main()
 
         Entity entity;
 
-        Scoped_Thread scoped_thread(std::thread(&Entity::test, &entity));
+        Thread thread(std::thread(&Entity::test, &entity));
     }
 
 //  -----------------------------------------------------------------------------------------

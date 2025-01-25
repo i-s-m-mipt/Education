@@ -35,9 +35,9 @@ int main()
 	
 		assert(std::get < int > (variant) == 1);
 
-		if (auto object = std::get_if < int > (&variant); object)
+		if (auto ptr = std::get_if < int > (&variant); ptr)
 		{
-			assert(*object == 1);
+			assert(*ptr == 1);
 		}
 
 		assert(std::holds_alternative < int > (variant));
@@ -78,7 +78,7 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		boost::logic::tribool f = false, t = true, i = boost::logic::indeterminate;
+		boost::logic::tribool x = false, y = true, z = boost::logic::indeterminate;
 
 		auto fv = boost::logic::tribool::false_value;
 
@@ -86,26 +86,26 @@ int main()
 
 		auto iv = boost::logic::tribool::indeterminate_value;
 
-		assert((   ! f).value == tv && (   ! t).value == fv && (   ! i).value == iv);
+		assert((   ! x).value == tv && (   ! y).value == fv && (   ! z).value == iv);
 
-		assert((f && f).value == fv && (f && t).value == fv && (f && i).value == fv);
+		assert((x && x).value == fv && (x && y).value == fv && (x && z).value == fv);
 
-		assert((t && f).value == fv && (t && t).value == tv && (t && i).value == iv);
+		assert((y && x).value == fv && (y && y).value == tv && (y && z).value == iv);
 
-		assert((i && f).value == fv && (i && t).value == iv && (i && i).value == iv);
+		assert((z && x).value == fv && (z && y).value == iv && (z && z).value == iv);
 
-		assert((f || f).value == fv && (f || t).value == tv && (f || i).value == iv);
+		assert((x || x).value == fv && (x || y).value == tv && (x || z).value == iv);
 
-		assert((t || f).value == tv && (t || t).value == tv && (t || i).value == tv);
+		assert((y || x).value == tv && (y || y).value == tv && (y || z).value == tv);
 
-		assert((i || f).value == iv && (i || t).value == tv && (i || i).value == iv);
+		assert((z || x).value == iv && (z || y).value == tv && (z || z).value == iv);
 	}
 
 //  ---------------------------------------------------------------------------------
 
 	{
-		auto i = boost::logic::indeterminate;
+		auto x = boost::logic::indeterminate;
 
-		std::cout << "main : i = " << std::boolalpha << i << '\n';
+		std::cout << "main : x = " << std::boolalpha << x << '\n';
 	}
 }
