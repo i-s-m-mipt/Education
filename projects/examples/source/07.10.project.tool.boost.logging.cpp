@@ -1,37 +1,23 @@
-#include <cstddef>
-#include <cstdint>
 #include <exception>
 #include <format>
 #include <mutex>
 #include <stdexcept>
 #include <string>
-#include <unordered_map>
 #include <utility>
+#include <vector>
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/log/attributes.hpp>
 #include <boost/log/common.hpp>
 #include <boost/log/core.hpp>
-#include <boost/log/exceptions.hpp>
 #include <boost/log/expressions.hpp>
 #include <boost/log/sinks.hpp>
-#include <boost/log/trivial.hpp>
-#include <boost/log/sources/basic_logger.hpp>
-#include <boost/log/sources/global_logger_storage.hpp>
-#include <boost/log/sources/logger.hpp>
-#include <boost/log/sources/record_ostream.hpp>
-#include <boost/log/sources/severity_logger.hpp>
 #include <boost/log/support/date_time.hpp>
-#include <boost/log/support/exception.hpp>
-#include <boost/log/utility/formatting_ostream.hpp>
-#include <boost/log/utility/value_ref.hpp>
-#include <boost/log/utility/setup/file.hpp>
-#include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Logger : private boost::noncopyable
 {
@@ -42,11 +28,11 @@ public:
 		debug, trace, error, fatal
 	};
 
-//  --------------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------------------------
 
 	Logger(const char * scope, bool has_trace) : m_scope(scope), m_has_trace(has_trace)
 	{
-		std::call_once(s_status, Logger::initialize);
+		std::call_once(s_status, initialize);
 
 		if (m_has_trace) 
 		{
@@ -62,13 +48,13 @@ public:
 		}
 	}
 
-//  ----------------------------------------------------------------
+//  ----------------------------------------------------------------------------------------------
 
-	void write(Severity severity, const std::string & message) const
+	void write(Severity severity, const std::string & data) const
 	{
 		if (auto record = s_logger.open_record(boost::log::keywords::severity = severity); record)
 		{
-			boost::log::record_ostream(record) << m_scope << " : " << message;
+			boost::log::record_ostream(record) << m_scope << " : " << data;
 
 			s_logger.push_record(std::move(record));
 		}
@@ -80,26 +66,26 @@ public:
 
 private:
 
-	enum class Attribute : std::uint8_t
-	{
-		line, time, thread, process
-	};
-
-//  ---------------------------------------------------------------------------
-
-	using attribute_pair_t = std::pair < std::string, boost::log::attribute > ;
-
-//  ---------------------------------------------------------------------------------------------
-
 	using sink_t = boost::log::sinks::synchronous_sink < boost::log::sinks::text_file_backend > ;
 
-//  ---------------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------------------------
 
 	static void initialize()
 	{
-		for (const auto & [type, attribute] : s_attributes)
+        std::vector < std::pair < std::string, boost::log::attribute > > attributes = 
+        {
+            { "line",    boost::log::attributes::counter < std::size_t > () },
+
+            { "time",    boost::log::attributes::utc_clock() },
+
+            { "process", boost::log::attributes::current_process_id() },
+
+            { "thread",  boost::log::attributes::current_thread_id () }
+        };
+
+		for (const auto & [name, attribute] : attributes)
 		{
-			if (!s_logger.add_attribute(attribute.first, attribute.second).second)
+			if (!s_logger.add_attribute(name, attribute).second)
 			{
 				throw std::runtime_error("invalid attribute");
 			}
@@ -108,7 +94,7 @@ private:
 		boost::log::core::get()->add_sink(make_sink());
 	}
 
-//  -----------------------------------------------
+//  ----------------------------------------------------------------------------------------------
 
 	static auto make_sink() -> boost::shared_ptr < sink_t >
 	{
@@ -119,103 +105,88 @@ private:
 
 		auto sink = boost::make_shared < sink_t > 
 		(
-			boost::log::keywords::file_name           = "%y.%m.%d.%H.%M.%S.log",
-			boost::log::keywords::time_based_rotation = rotation,
-			boost::log::keywords::rotation_size       = 32 * 1'024 * 1'024,
-			boost::log::keywords::max_size            = 64 * 1'024 * 1'024
-		);
+			boost::log::keywords::file_name = "%y.%m.%d.%H.%M.%S.log",
 
-		sink->locked_backend()->set_file_collector
-		(
-			boost::log::sinks::file::make_collector
-			(			
-				boost::log::keywords::target         = "loggers",
-				boost::log::keywords::max_size       = 128 * 1'024 * 1'024,
-				boost::log::keywords::min_free_space = 128 * 1'024 * 1'024
-			)
+			boost::log::keywords::time_based_rotation = rotation,
+
+			boost::log::keywords::rotation_size = 8 * 1'024 * 1'024
 		);
 
 		sink->locked_backend()->auto_flush(true);
 
-		sink->set_formatter(&Logger::format);
-
-		sink->set_filter
+		sink->locked_backend()->set_file_collector
 		(
-			[](boost::log::attribute_value_set){ return true; }
-		);
+			boost::log::sinks::file::make_collector(boost::log::keywords::target = "loggers")
+		);		
+
+		sink->set_formatter(&format);
+
+		sink->set_filter([](boost::log::attribute_value_set){ return true; });
 
 		return sink;
 	}
 
-//  ------------------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------------------------
 
 	static void format(boost::log::record_view record, boost::log::formatting_ostream & stream)
 	{
 		const auto & attributes = record.attribute_values();
 
-		const auto & line = attributes[s_attributes.at(Attribute::line).first];
+		stream << std::format
+		(
+			"{:0>8}", boost::log::extract_or_throw < std::size_t > (attributes["line"])
+		);
 
-		stream << std::format("{:0>8}", boost::log::extract_or_throw < std::size_t > (line)) << " | ";
+		auto timestamp = boost::log::expressions::format_date_time < boost::posix_time::ptime > 
+		(
+			"time", "%Y %B %e %H:%M:%S.%f"
+		);
 
-		auto time = boost::log::expressions::format_date_time 
-		< 
-			boost::posix_time::ptime 
-		> 
-		(s_attributes.at(Attribute::time).first, "%Y %B %e %H:%M:%S.%f");
-
-		(boost::log::expressions::stream << time)(record, stream);
-
-		stream << " | ";
+		(boost::log::expressions::stream << " | " << timestamp)(record, stream);
 
 		using pid_t = boost::log::attributes::current_process_id::value_type;
 
 		using tid_t = boost::log::attributes::current_thread_id ::value_type;
 
-		const auto & pid = attributes[s_attributes.at(Attribute::process).first];
-
-		const auto & tid = attributes[s_attributes.at(Attribute::thread ).first];
-
-		stream << boost::log::extract_or_throw < pid_t > (pid) << " | ";
+		stream << " | " << boost::log::extract_or_throw < pid_t > (attributes["process"]);
 		
-		stream << boost::log::extract_or_throw < tid_t > (tid) << " | ";
+		stream << " | " << boost::log::extract_or_throw < tid_t > (attributes["thread" ]);
 
-		const auto & severity = attributes["Severity"];
+        switch (boost::log::extract_or_throw < Severity > (attributes["Severity"]))
+        {
+            case Severity::debug: { stream << " | debug"; }
 
-		stream << s_severities.at(boost::log::extract_or_throw < Severity > (severity)) << " | ";
+            case Severity::trace: { stream << " | trace"; }
 
-		stream << record[boost::log::expressions::message];
+            case Severity::error: { stream << " | error"; }
+
+            case Severity::fatal: { stream << " | fatal"; }
+
+            default:
+            {
+                throw std::runtime_error("invalid severity"); 
+            }
+        }
+
+		stream << " | " << record[boost::log::expressions::message];
 	}
 
-//  --------------------------------------------------------
+//  ----------------------------------------------------------------------------------------------
 
 	const char * m_scope = nullptr; bool m_has_trace = true;
 
-//  --------------------------------------------------------
+//  ----------------------------------------------------------------------------------------------
 
-	static inline std::once_flag s_status;
+    static inline std::once_flag s_status;
 
-	static inline boost::log::sources::severity_logger_mt < Severity > s_logger;
-
-	static inline std::unordered_map < Attribute, attribute_pair_t > s_attributes = 
-	{
-		{ Attribute::line   , { "line"   , boost::log::attributes::counter < std::size_t > () } },
-		{ Attribute::time   , { "time"   , boost::log::attributes::utc_clock               () } },
-		{ Attribute::process, { "process", boost::log::attributes::current_process_id      () } },
-		{ Attribute::thread , { "thread" , boost::log::attributes::current_thread_id       () } }
-	};
-
-	static inline std::unordered_map < Severity, std::string > s_severities = 
-	{
-		{ Logger::Severity::debug, "debug" },
-		{ Logger::Severity::trace, "trace" },
-		{ Logger::Severity::error, "error" },
-		{ Logger::Severity::fatal, "fatal" }
-	};
+    static inline boost::log::sources::severity_logger_mt < Severity > s_logger;
 };
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define LOGGER(logger) Logger logger(__func__, true)
+#define LOGGER(logger) Logger logger(__func__, false)
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define LOGGER_WRITE_DEBUG(logger, message) logger.write(Logger::Severity::debug, message);
 
@@ -225,7 +196,7 @@ private:
 
 #define LOGGER_WRITE_FATAL(logger, message) logger.write(Logger::Severity::fatal, message);
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v1()
 {
@@ -234,13 +205,13 @@ void test_v1()
 	throw std::runtime_error("error");
 }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v2() { LOGGER(logger); test_v1(); }
 
 void test_v3() { LOGGER(logger); test_v2(); }
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
