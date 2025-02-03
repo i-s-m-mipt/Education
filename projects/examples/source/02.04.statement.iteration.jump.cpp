@@ -59,9 +59,9 @@ int main()
 		{
 			std::cout << "main : iteration (06) : i = " << i << ' ';
 
-			std::cout << "break? (y/n) "; auto c = '\0'; std::cin >> c; 
+			std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x; 
 			
-			if (c == 'y') 
+			if (x == 'b') 
 			{
 				break; // support: compiler-explorer.com
 			}
@@ -81,9 +81,9 @@ int main()
 					
 					std::cout << "i = " << i << " j = " << j << " k = " << k << ' ';
 
-					std::cout << "break? (y/n) "; auto c = '\0'; std::cin >> c; 
+					std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x;
 			
-					if (c == 'y') 
+					if (x == 'b') 
 					{
 						goto exit; // support: compiler-explorer.com
 					}
@@ -101,9 +101,9 @@ int main()
 		{
 			std::cout << "main : iteration (08) : ";
 
-			std::cout << "break? (y/n) "; auto c = '\0'; std::cin >> c; 
+			std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x; 
 			
-			if (c == 'y') 
+			if (x == 'b') 
 			{
 				break;
 			}
@@ -117,9 +117,9 @@ int main()
 		{
 			std::cout << "main : iteration (09) : ";
 
-			std::cout << "break? (y/n) "; auto c = '\0'; std::cin >> c; 
+			std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x; 
 			
-			if (c == 'y') 
+			if (x == 'b') 
 			{
 				break;
 			}
@@ -129,27 +129,27 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		auto c = 'n';
+		auto x = '\0';
 
-		while (c != 'y')
+		while (x != 'b')
 		{
 			std::cout << "main : iteration (10) : ";
 
-			std::cout << "break? (y/n) "; std::cin >> c;
+			std::cout << "enter \'b\' to break : "; std::cin >> x;
 		}
 	}
 
 //  ---------------------------------------------------------------------------------
 
 	{
-		auto c = 'n';
+		auto x = '\0';
 
 		do
 		{
 			std::cout << "main : iteration (11) : ";
 
-			std::cout << "break? (y/n) "; std::cin >> c;
+			std::cout << "enter \'b\' to break : "; std::cin >> x;
 		} 
-		while (c != 'y');
+		while (x != 'b');
 	}
 }

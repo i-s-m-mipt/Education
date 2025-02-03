@@ -60,7 +60,7 @@ int main()
         entities.emplace_back(1, std::string(size_2, 'a'));
     }
 
-    std::cout << "main : enter char to continue : "; auto c = '\0'; std::cin >> c;
+    std::cout << "main : enter char to continue : "; auto x = '\0'; std::cin >> x;
 
 //  ----------------------------------------------------------------------------
 

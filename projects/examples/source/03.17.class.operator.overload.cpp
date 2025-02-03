@@ -113,9 +113,9 @@ public:
 
 	friend auto & operator>>(std::istream & stream, Ratio & ratio)
 	{
-		auto num = 0; auto c = '\0'; auto den = 0; stream >> num >> c >> den;
+		auto num = 0; auto x = '\0'; auto den = 0; stream >> num >> x >> den;
 
-		if (c != '/') 
+		if (x != '/') 
 		{
 			std::cerr << "operator>> : invalid input\n";
 		}

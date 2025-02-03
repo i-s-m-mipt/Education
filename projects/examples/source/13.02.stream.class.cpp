@@ -61,7 +61,7 @@ int main()
 
             if (std::cin.fail()) 
             {
-                std::cin.clear(); auto c = '\0'; std::cin >> c;
+                std::cin.clear(); auto y = '\0'; std::cin >> y;
             }
         }
         catch (const std::ios_base::failure & exception)

@@ -10,11 +10,11 @@ int main()
 	{
 		assert(sizeof(char) == 1);
 
-		auto c = 'a';
+		auto x = 'a';
 
-		assert(static_cast < int > (c) == 97);
+		assert(static_cast < int > (x) == 97);
 
-//		c = 'а'; // error
+//		x = 'а'; // error
 
 		auto is_signed_char = std::is_signed_v < char > ;
 
@@ -28,9 +28,9 @@ int main()
 	{
 		std::cout << "main : sizeof(wchar_t) = " << sizeof(wchar_t) << '\n';
 
-		auto wc = L'a';
+		auto x = L'a';
 
-		std::wcout << "wc = " << wc << '\n';
+		std::wcout << "main : x = " << x << '\n';
 	}
 
 //  -----------------------------------------------------------------------------------------
@@ -38,8 +38,8 @@ int main()
 	{
 		assert(sizeof(char8_t) == 1);
 
-		[[maybe_unused]] auto c8 = u8'a'; 	
+		[[maybe_unused]] auto x = u8'a'; 	
 
-//		std::cout << "main : c8 = " << c8 << '\n'; // error
+//		std::cout << "main : x = " << x << '\n'; // error
 	}	
 }

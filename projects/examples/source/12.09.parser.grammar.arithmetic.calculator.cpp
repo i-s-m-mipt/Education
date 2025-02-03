@@ -24,11 +24,11 @@ public:
 
 	auto empty()
 	{
-		auto c = '\0'; m_stream >> c;
+		auto x = '\0'; m_stream >> x;
 
-		if (c != ';') 
+		if (x != ';') 
 		{ 
-			m_stream.putback(c); return false; 
+			m_stream.putback(x); return false; 
 		} 
 		else 
 		{
@@ -43,37 +43,37 @@ public:
 			m_is_full = false; return m_token; 
 		}
 
-		auto c = '\0'; m_stream >> c;
+		auto x = '\0'; m_stream >> x;
 		
-		switch (c)
+		switch (x)
 		{
 			case '+': case '-': case '*': case '/': 
 			case '(': case ')': case ';':
 			{
-				return Token(c);
+				return Token(x);
 			}
 			case '0': case '1': case '2': case '3': case '4':
 			case '5': case '6': case '7': case '8': case '9':
 			case '.':
 			{
-				m_stream.putback(c); auto x = 0.0; m_stream >> x;
+				m_stream.putback(x); auto y = 0.0; m_stream >> y;
 
-				return Token(x);
+				return Token(y);
 			}
 			default:
 			{
-				if (std::isalpha(c))
+				if (std::isalpha(x))
 				{
-					std::string string(1, c);
+					std::string string(1, x);
 					
-					while (m_stream.get(c) && (std::isalpha(c) || std::isdigit(c))) 
+					while (m_stream.get(x) && (std::isalpha(x) || std::isdigit(x))) 
 					{
-						string += c;
+						string += x;
 					}
 
-					if (!std::isspace(c)) 
+					if (!std::isspace(x)) 
 					{
-						m_stream.putback(c); 
+						m_stream.putback(x); 
 					}
 
 					return Token(string);

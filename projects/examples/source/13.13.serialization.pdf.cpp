@@ -87,7 +87,7 @@ int main()
 
     std::ignore = writer.EndPDF();
 
-    std::cout << "main : enter char to continue : "; auto c = '\0'; std::cin >> c;
+    std::cout << "main : enter char to continue : "; auto x = '\0'; std::cin >> x;
 
 //  ----------------------------------------------------------------------------------------
 
