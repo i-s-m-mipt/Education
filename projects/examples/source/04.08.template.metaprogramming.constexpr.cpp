@@ -46,15 +46,15 @@ constexpr auto test_v2(int)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > void test_v3(T arg, Ts ... args)
+template < typename T, typename ... Ts > void test_v3(T x, Ts ... xs)
 {
-	std::cout << "test_v3 : arg = " << arg << ' ';
+	std::cout << "test_v3 : x = " << x << ' ';
 	
-	std::cout << "sizeof...(args) = " << sizeof...(args) << '\n';
+	std::cout << "sizeof...(xs) = " << sizeof...(xs) << '\n';
 
-	if constexpr (sizeof...(args) > 0) 
+	if constexpr (sizeof...(xs) > 0) 
 	{
-		test_v3(args...);
+		test_v3(xs...);
 	}
 }
 

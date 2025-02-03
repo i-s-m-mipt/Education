@@ -23,13 +23,13 @@ auto hash_v1(const std::string & string)
 
 //////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > auto hash_v2(T arg, Ts ... args)
+template < typename T, typename ... Ts > auto hash_v2(T x, Ts ... xs)
 {
-	auto seed = std::hash < T > ()(arg); 
+	auto seed = std::hash < T > ()(x); 
 
-	if constexpr (sizeof...(args) > 0)
+	if constexpr (sizeof...(xs) > 0)
 	{
-		seed += hash_v2(args...) * 31;
+		seed += hash_v2(xs...) * 31;
 	}
 	
 	return seed;

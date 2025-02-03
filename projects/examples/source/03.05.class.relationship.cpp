@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-///////////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
 class Entity
 {
@@ -28,13 +28,13 @@ private:
 	int m_data = 0; 
 };
 
-///////////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
-struct Client { std::vector < struct Server * > servers; };
+struct Client { struct Server * server = nullptr; };
 
-struct Server { std::vector < struct Client * > clients; };
+struct Server { struct Client * client = nullptr; };
 
-///////////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
 int main()
 {
@@ -42,30 +42,25 @@ int main()
 		Entity entity_1(1), entity_2(2);
 	}
 	
-//  --------------------------------------------------
+//  ------------------------------------
 
 	{
 		Entity::s_data = 1;
 	}
 
-//  --------------------------------------------------
+//  ------------------------------------
 
 	{
-		auto size = 5uz;
+		Client client;
 
-		std::vector < Client > clients(size);
+		Server server;
 
-		std::vector < Server > servers(size);
-		
-		for (auto i = 0uz; i < size; ++i)
-		{
-			clients[i].servers.push_back(&servers[i]);
+		client.server = &server;
 
-			servers[i].clients.push_back(&clients[i]);
-		}
+		server.client = &client;
 	}
 
-//  --------------------------------------------------
+//  ------------------------------------
 
 	{
 		Entity::test();

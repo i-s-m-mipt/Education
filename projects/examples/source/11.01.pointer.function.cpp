@@ -25,9 +25,9 @@ auto test_v3(int x, int y)
 	return x + y; 
 }
 
-template < typename F, typename ... Ts > decltype(auto) invoke(F && f, Ts && ... args)
+template < typename F, typename ... Ts > decltype(auto) invoke(F && f, Ts && ... xs)
 {
-	return f(std::forward < Ts > (args)...);
+	return f(std::forward < Ts > (xs)...);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////

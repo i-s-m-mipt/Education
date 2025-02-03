@@ -70,9 +70,9 @@ private:
 
 ////////////////////////////////////////////////////////////////////////
 
-template < typename ... Ts > constexpr auto make_tuple(Ts && ... args)
+template < typename ... Ts > constexpr auto make_tuple(Ts && ... xs)
 {
-	return Tuple < Ts ... > (std::forward < Ts > (args)...);
+	return Tuple < Ts ... > (std::forward < Ts > (xs)...);
 }
 
 ////////////////////////////////////////////////////////////////////////

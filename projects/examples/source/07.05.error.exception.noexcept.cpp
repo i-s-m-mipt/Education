@@ -80,9 +80,9 @@ template
 < 
 	typename F, typename ... Ts 
 > 
-decltype(auto) invoke(F && f, Ts && ... args) noexcept(noexcept(f(std::declval < Ts > ()...)))
+decltype(auto) invoke(F && f, Ts && ... xs) noexcept(noexcept(f(std::declval < Ts > ()...)))
 {
-	return f(std::forward < Ts > (args)...);
+	return f(std::forward < Ts > (xs)...);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////

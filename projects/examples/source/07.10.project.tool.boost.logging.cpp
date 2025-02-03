@@ -154,13 +154,13 @@ private:
 
         switch (boost::log::extract_or_throw < Severity > (attributes["Severity"]))
         {
-            case Severity::debug: { stream << " | debug"; }
+            case Severity::debug: { stream << " | debug"; break; }
 
-            case Severity::trace: { stream << " | trace"; }
+            case Severity::trace: { stream << " | trace"; break; }
 
-            case Severity::error: { stream << " | error"; }
+            case Severity::error: { stream << " | error"; break; }
 
-            case Severity::fatal: { stream << " | fatal"; }
+            case Severity::fatal: { stream << " | fatal"; break; }
 
             default:
             {

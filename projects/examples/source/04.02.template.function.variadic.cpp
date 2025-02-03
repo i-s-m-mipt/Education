@@ -8,63 +8,63 @@ using namespace std::literals;
 
 void test_v1() {}
 
-template < typename T, typename ... Ts > void test_v1(T arg, Ts ... args)
+template < typename T, typename ... Ts > void test_v1(T x, Ts ... xs)
 {
-	std::cout << "test_v1 : arg = " << arg << ' ';
+	std::cout << "test_v1 : x = " << x << ' ';
 	
-	std::cout << "sizeof...(args) = " << sizeof...(args) << '\n';
+	std::cout << "sizeof...(xs) = " << sizeof...(xs) << '\n';
 	
-	test_v1(args...); // support: cppinsights.io
+	test_v1(xs...); // support: cppinsights.io
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > void test_v2(T arg)
+template < typename T > void test_v2(T x)
 {
-	std::cout << "test_v2 : arg = " << arg << ' ';
+	std::cout << "test_v2 : x = " << x << ' ';
 }
 
-template < typename T, typename ... Ts > void test_v2(T arg, Ts ... args)
+template < typename T, typename ... Ts > void test_v2(T x, Ts ... xs)
 {
-	test_v2(arg);
+	test_v2(x);
 
-	std::cout << "sizeof...(args) = " << sizeof...(args) << '\n';
+	std::cout << "sizeof...(xs) = " << sizeof...(xs) << '\n';
 
-	test_v2(args...);
+	test_v2(xs...);
 
-	if (sizeof...(args) == 1)
+	if (sizeof...(xs) == 1)
 	{
-		std::cout << "sizeof...(args) = 0\n";
+		std::cout << "sizeof...(xs) = 0\n";
 	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename ... Ts > void test_v3(Ts ... args) 
+template < typename ... Ts > void test_v3(Ts ... xs) 
 { 
-	test_v1(args + args...); // support: cppinsights.io
+	test_v1(xs + xs...); // support: cppinsights.io
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename ... Ts > auto reduce_v1(Ts ... args)
+template < typename ... Ts > auto reduce_v1(Ts ... xs)
 {
-	return (... + args); // support: cppinsights.io
+	return (... + xs); // support: cppinsights.io
 }
 
-template < typename ... Ts > auto reduce_v2(Ts ... args)
+template < typename ... Ts > auto reduce_v2(Ts ... xs)
 {
-	return (args + ...); // support: cppinsights.io
+	return (xs + ...); // support: cppinsights.io
 }
 
-template < typename ... Ts > auto reduce_v3(Ts ... args)
+template < typename ... Ts > auto reduce_v3(Ts ... xs)
 {
-	return (0 + ... + args); // support: cppinsights.io
+	return (0 + ... + xs); // support: cppinsights.io
 }
 
-template < typename ... Ts > auto reduce_v4(Ts ... args)
+template < typename ... Ts > auto reduce_v4(Ts ... xs)
 {
-	return (args + ... + 0); // support: cppinsights.io
+	return (xs + ... + 0); // support: cppinsights.io
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,9 +76,9 @@ struct Entity
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename ... Ts > auto make_entity(Ts ... args)
+template < typename ... Ts > auto make_entity(Ts ... xs)
 {
-	return new Entity(args...);
+	return new Entity(xs...);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -66,9 +66,9 @@ private:
 
 /////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > auto make_unique(Ts && ... args)
+template < typename T, typename ... Ts > auto make_unique(Ts && ... xs)
 {
-    return Unique < T > (new T(std::forward < Ts > (args)...)); 
+    return Unique < T > (new T(std::forward < Ts > (xs)...)); 
 }
 
 /////////////////////////////////////////////////////////////////////////

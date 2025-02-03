@@ -34,7 +34,7 @@ auto next(std::vector < std::size_t > & steps, const std::vector < std::size_t >
 template < typename F, typename T, std::size_t ... Is > void apply
 (
 	F && f, T && tuple, const std::vector < std::size_t > & steps,
-
+	
 	std::integer_sequence < std::size_t, Is ... >
 )
 {
@@ -43,26 +43,28 @@ template < typename F, typename T, std::size_t ... Is > void apply
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < std::forward_iterator ... Is > auto generate(std::pair < Is, Is > ... args)
+template < std::forward_iterator ... Is > auto generate(std::pair < Is, Is > ... pairs)
 {
 	std::vector < std::tuple < typename std::iterator_traits < Is > ::value_type ... > > result;
 
-	std::vector < std::size_t > steps(sizeof...(args), 0);
+	std::vector < std::size_t > steps(sizeof...(pairs), 0);
 
 	std::vector < std::size_t > sizes = 
 	{ 
-		static_cast < std::size_t > (std::distance(args.first , args.second))... 
+		static_cast < std::size_t > (std::distance(pairs.first , pairs.second))... 
 	};
+
+	auto sequence = std::make_integer_sequence < std::size_t, sizeof...(pairs) > ();
 
 	do
 	{
 		apply
 		(
-			[&result](auto && ... args)
+			[&result](auto && ... pairs)
 			{ 
-				result.emplace_back(args...); 
+				result.emplace_back(pairs...); 
 			}, 
-			std::tie(args...), steps, std::make_integer_sequence < std::size_t, sizeof...(args) > ()
+			std::tie(pairs...), steps, sequence
 		);
 	} 
 	while (next(steps, sizes));

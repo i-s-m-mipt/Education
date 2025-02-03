@@ -36,7 +36,7 @@ template < typename B > class Router : private B
 {
 public:
 
-    template < typename ... Ts > Router(Ts && ... args) : B(std::forward < Ts > (args)...)
+    template < typename ... Ts > Router(Ts && ... xs) : B(std::forward < Ts > (xs)...)
     {
         this->initialize();
     }

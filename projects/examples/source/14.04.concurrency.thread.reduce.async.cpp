@@ -18,9 +18,9 @@ auto test(int x, int y)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename F, typename ... Ts > decltype(auto) async_invoke(F && f, Ts && ... args)
+template < typename F, typename ... Ts > decltype(auto) async_invoke(F && f, Ts && ... xs)
 {
-	return std::async(std::launch::async, std::forward < F > (f), std::forward < Ts > (args)...);
+	return std::async(std::launch::async, std::forward < F > (f), std::forward < Ts > (xs)...);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////

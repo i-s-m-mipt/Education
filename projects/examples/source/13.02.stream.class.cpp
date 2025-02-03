@@ -34,14 +34,14 @@ template < typename T > struct View
 
 template < typename T > auto & operator<<(std::ostream & stream, const View < T > & view)
 {
-    return stream << "test : arg = " << view.data << '\n';
+    return stream << "test : view.data = " << view.data << '\n';
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename ... Ts > void test(Ts ... args)
+template < typename ... Ts > void test(Ts ... xs)
 {
-    (std::cout << ... << View(args));
+    (std::cout << ... << View(xs));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
