@@ -20,9 +20,9 @@ class Traits : public std::char_traits < char >
 {
 public:
 
-    static auto eq(char c1, char c2) { return std::toupper(c1) == std::toupper(c2); }
+    static auto eq(char x, char y) { return std::toupper(x) == std::toupper(y); }
 
-    static auto lt(char c1, char c2) { return std::toupper(c1) <  std::toupper(c2); }
+    static auto lt(char x, char y) { return std::toupper(x) <  std::toupper(y); }
 
     static auto compare
     (
@@ -40,11 +40,11 @@ public:
         return 0;
     }
 
-    static auto find(const char * string, std::size_t size, char c) -> const char *
+    static auto find(const char * string, std::size_t size, char x) -> const char *
     {
         for (auto i = 0uz; i < size; ++i) 
         {
-            if (eq(string[i], c)) 
+            if (eq(string[i], x)) 
             {
                 return &string[i];
             }

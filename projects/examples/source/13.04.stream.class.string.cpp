@@ -19,15 +19,15 @@ int main()
 
 	assert(stream.str() == "____0xff");
 
-    char c;
+    auto x = '\0';
 
-    while (stream.get(c))
+    while (stream.get(x))
     {
-        if (c == '0')
+        if (x == '0')
         {
             stream.unget(); 
             
-            auto x = 0; stream >> std::hex >> x; assert(x == 255);
+            auto y = 0; stream >> std::hex >> y; assert(y == 255);
         }
     }
 

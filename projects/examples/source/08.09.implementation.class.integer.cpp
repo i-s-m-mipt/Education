@@ -381,9 +381,9 @@ private:
 
 			std::ranges::for_each
 			(
-				std::next(std::begin(string)), std::end(string), [](auto c)
+				std::next(std::begin(string)), std::end(string), [](auto x)
 				{ 
-					if (!std::isdigit(c)) 
+					if (!std::isdigit(x)) 
 					{
 						throw std::runtime_error("invalid data"); 
 					}

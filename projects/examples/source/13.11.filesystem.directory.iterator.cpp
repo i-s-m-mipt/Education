@@ -25,9 +25,9 @@ auto type(const std::filesystem::file_status & status)
 
 auto permissions(std::filesystem::perms permissions) -> std::string
 {
-    auto verify = [permissions](auto bit, auto c) 
+    auto verify = [permissions](auto bit, auto x) 
     { 
-        return (permissions & bit) == std::filesystem::perms::none ? '-' : c; 
+        return (permissions & bit) == std::filesystem::perms::none ? '-' : x; 
     };
 
     return

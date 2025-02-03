@@ -27,11 +27,11 @@ auto determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) -> 
 
                 for (auto j = 1uz; j < size; ++j) 
                 {
-                    for (auto k = 0uz, c = 0uz; k < size; ++k) 
+                    for (auto k = 0uz, l = 0uz; k < size; ++k) 
                     {
                         if (k != i) 
                         {
-                            minor(j - 1, c++) = matrix(j, k);
+                            minor(j - 1, l++) = matrix(j, k);
                         }
                     }
                 }
