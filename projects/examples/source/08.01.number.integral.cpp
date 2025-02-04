@@ -15,13 +15,12 @@
 
 struct Timestamp
 {
-    unsigned int milli  : 10 = 0;
     unsigned int second :  6 = 0;
     unsigned int minute :  6 = 0;
     unsigned int hour   :  5 = 0;
     unsigned int day    :  5 = 0;
     unsigned int month  :  4 = 0;
-    unsigned int year   : 28 = 0;
+    unsigned int year   : 32 = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,15 +33,15 @@ struct Entity_v2 { std::uint32_t x      = 0, y      = 0; };
 
 void test_v1(benchmark::State & state)
 {
-    std::vector < Entity_v1 > entities(1'000);
+    std::vector < Entity_v1 > entities_v1(1'000);
 
     for (auto element : state)
     {
-        for (auto i = 1uz; i < std::size(entities); ++i)
+        for (auto i = 1uz; i < std::size(entities_v1); ++i)
         {
-            entities[i].x = i;
+            entities_v1[i].x = i;
 
-            entities[i].y = entities[i].x + entities[i - 1].y;
+            entities_v1[i].y = entities_v1[i].x + entities_v1[i - 1].y;
         }
     }
 }
@@ -51,15 +50,15 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state)
 {
-    std::vector < Entity_v2 > entities(1'000);
+    std::vector < Entity_v2 > entities_v2(1'000);
 
     for (auto element : state)
     {        
-        for (auto i = 1uz; i < std::size(entities); ++i)
+        for (auto i = 1uz; i < std::size(entities_v2); ++i)
         {
-            entities[i].x = i;
+            entities_v2[i].x = i;
 
-            entities[i].y = entities[i].x + entities[i - 1].y;
+            entities_v2[i].y = entities_v2[i].x + entities_v2[i - 1].y;
         }
     }
 }
@@ -140,7 +139,7 @@ int main()
     {
         static_assert(sizeof(Timestamp) == 8);
 
-        Timestamp timestamp(0, 0, 0, 0, 1, 1, 1970);
+        Timestamp timestamp(0, 0, 0, 1, 1, 1970);
 
 //      auto ptr = &timestamp.year; // error
     }

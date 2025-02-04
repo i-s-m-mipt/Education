@@ -160,105 +160,105 @@ auto equal(double x, double y, double epsilon = 1e-6)
 int main()
 {
 	{
-		[[maybe_unused]] Ratio ratio_1, ratio_2(2), ratio_3 = 3, ratio_4(4, 1);
+		[[maybe_unused]] Ratio x1, x2(2), x3 = 3, x4(4, 1);
 
 //		std::vector < int > vector = 1; // error
 	}
 
-//  ---------------------------------------------------------------------------
+//  -----------------------------------------------------------------
 
 	{
-		Ratio ratio_1 = 1, ratio_2 = 2;
+		Ratio x = 1, y = 2;
 
-		assert(equal(static_cast < double > (ratio_1), 1.0));
+		assert(equal(static_cast < double > (x), 1.0));
 
-//		assert(ratio_1.operator+=(ratio_2) == Ratio(3, 1)); // bad
+//		assert(x.operator+=(y) == Ratio(3, 1)); // bad
 
-		assert((ratio_1 += ratio_2) == Ratio(3, 1));
-		assert((ratio_1 +=       1) == Ratio(4, 1));
-//		assert((      1 += ratio_2) == Ratio(3, 1)); // error
-//		assert((      1 +=       1) == Ratio(2, 1)); // error
+		assert((x += y) == Ratio(3, 1));
+		assert((x += 1) == Ratio(4, 1));
+//		assert((1 += y) == Ratio(3, 1)); // error
+//		assert((1 += 1) == Ratio(2, 1)); // error
 
-		assert((ratio_1 -= ratio_2) == Ratio(2, 1));
-		assert((ratio_1 *= ratio_2) == Ratio(4, 1));
-		assert((ratio_1 /= ratio_2) == Ratio(2, 1));
+		assert((x -= y) == Ratio(2, 1));
+		assert((x *= y) == Ratio(4, 1));
+		assert((x /= y) == Ratio(2, 1));
 
-		assert((ratio_1 ++        ) == Ratio(2, 1));
-		assert((        ++ ratio_2) == Ratio(3, 1));
-		assert((ratio_1 --        ) == Ratio(3, 1));
-		assert((        -- ratio_2) == Ratio(2, 1));
+		assert((x ++  ) == Ratio(2, 1));
+		assert((  ++ y) == Ratio(3, 1));
+		assert((x --  ) == Ratio(3, 1));
+		assert((  -- y) == Ratio(2, 1));
 
-//		ratio_1++++; // error
+//		x++++; // error
 
-//		assert(operator+(ratio_1, ratio_2) == Ratio(4, 1)); // bad
+//		assert(operator+(x, y) == Ratio(4, 1)); // bad
 
-		assert((ratio_1 +  ratio_2) == Ratio(4, 1));
-		assert((ratio_1 +        1) == Ratio(3, 1));
-		assert((      1 +  ratio_2) == Ratio(3, 1));
-		assert((      1 +        1) == Ratio(2, 1));
+		assert((x +  y) == Ratio(4, 1));
+		assert((x +  1) == Ratio(3, 1));
+		assert((1 +  y) == Ratio(3, 1));
+		assert((1 +  1) == Ratio(2, 1));
 
-		assert((ratio_1 -  ratio_2) == Ratio(0, 1));
-		assert((ratio_1 *  ratio_2) == Ratio(4, 1));
-		assert((ratio_1 /  ratio_2) == Ratio(1, 1));
+		assert((x -  y) == Ratio(0, 1));
+		assert((x *  y) == Ratio(4, 1));
+		assert((x /  y) == Ratio(1, 1));
 
-		assert((ratio_1 <  ratio_2) == 0);
-		assert((ratio_1 >  ratio_2) == 0);
-		assert((ratio_1 <= ratio_2) == 1);
-		assert((ratio_1 >= ratio_2) == 1);
-		assert((ratio_1 == ratio_2) == 1);
-		assert((ratio_1 != ratio_2) == 0);
+		assert((x <  y) == 0);
+		assert((x >  y) == 0);
+		assert((x <= y) == 1);
+		assert((x >= y) == 1);
+		assert((x == y) == 1);
+		assert((x != y) == 0);
 	}
 
-//  ---------------------------------------------------------------------------
+//  -----------------------------------------------------------------
 
 	{
-		std::cout << "main : enter Ratio : "; Ratio ratio; std::cin >> ratio; 
+		std::cout << "main : enter Ratio : "; Ratio x; std::cin >> x; 
 	
-		std::cout << "main : ratio = " << ratio << '\n';
+		std::cout << "main : x = " << x << '\n';
 	}
 
-//  ---------------------------------------------------------------------------
+//  -----------------------------------------------------------------
 
 	{
-		boost::rational < int > rational_1 = 1, rational_2 = 2;
+		boost::rational < int > x = 1, y = 2;
 
-		assert(equal(boost::rational_cast < double > (rational_1), 1.0));
+		assert(equal(boost::rational_cast < double > (x), 1.0));
 
-		assert((rational_1 += rational_2) == boost::rational < int > (3, 1));
-		assert((rational_1 +=          1) == boost::rational < int > (4, 1));
-		assert((rational_1 -= rational_2) == boost::rational < int > (2, 1));
-		assert((rational_1 *= rational_2) == boost::rational < int > (4, 1));
-		assert((rational_1 /= rational_2) == boost::rational < int > (2, 1));
+		assert((x += y) == boost::rational < int > (3, 1));
+		assert((x += 1) == boost::rational < int > (4, 1));
+		assert((x -= y) == boost::rational < int > (2, 1));
+		assert((x *= y) == boost::rational < int > (4, 1));
+		assert((x /= y) == boost::rational < int > (2, 1));
 
-		assert((rational_1 ++           ) == boost::rational < int > (2, 1));
-		assert((           ++ rational_2) == boost::rational < int > (3, 1));
-		assert((rational_1 --           ) == boost::rational < int > (3, 1));
-		assert((           -- rational_2) == boost::rational < int > (2, 1));
+		assert((x ++  ) == boost::rational < int > (2, 1));
+		assert((  ++ y) == boost::rational < int > (3, 1));
+		assert((x --  ) == boost::rational < int > (3, 1));
+		assert((  -- y) == boost::rational < int > (2, 1));
 
-		assert((rational_1 +  rational_2) == boost::rational < int > (4, 1));
-		assert((rational_1 +           1) == boost::rational < int > (3, 1));
-		assert((         1 +  rational_2) == boost::rational < int > (3, 1));
-		assert((         1 +           1) == boost::rational < int > (2, 1));
+		assert((x +  y) == boost::rational < int > (4, 1));
+		assert((x +  1) == boost::rational < int > (3, 1));
+		assert((1 +  y) == boost::rational < int > (3, 1));
+		assert((1 +  1) == boost::rational < int > (2, 1));
 
-		assert((rational_1 -  rational_2) == boost::rational < int > (0, 1));
-		assert((rational_1 *  rational_2) == boost::rational < int > (4, 1));
-		assert((rational_1 /  rational_2) == boost::rational < int > (1, 1));
+		assert((x -  y) == boost::rational < int > (0, 1));
+		assert((x *  y) == boost::rational < int > (4, 1));
+		assert((x /  y) == boost::rational < int > (1, 1));
 
-		assert((rational_1 <  rational_2) == 0);
-		assert((rational_1 >  rational_2) == 0);
-		assert((rational_1 <= rational_2) == 1);
-		assert((rational_1 >= rational_2) == 1);
-		assert((rational_1 == rational_2) == 1);
-		assert((rational_1 != rational_2) == 0);
+		assert((x <  y) == 0);
+		assert((x >  y) == 0);
+		assert((x <= y) == 1);
+		assert((x >= y) == 1);
+		assert((x == y) == 1);
+		assert((x != y) == 0);
 	}
 
-//  ---------------------------------------------------------------------------
+//  -----------------------------------------------------------------
 
 	{
 		std::cout << "main : enter boost::rational < int > : "; 
 		
-		boost::rational < int > rational; std::cin >> rational; 
+		boost::rational < int > x; std::cin >> x; 
 	
-		std::cout << "main : rational = " << rational << '\n';
+		std::cout << "main : x = " << x << '\n';
 	}
 }

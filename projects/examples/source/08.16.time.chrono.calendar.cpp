@@ -2,51 +2,45 @@
 #include <chrono>
 #include <iostream>
 
-/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
 	{
-		auto local = std::chrono::system_clock::now();
+		auto local = std::chrono::floor < std::chrono::days > (std::chrono::system_clock::now());
 
-		auto time_point = std::chrono::floor < std::chrono::days > (local);
+		auto delta = std::chrono::system_clock::now() - local;
 
-		auto duration = std::chrono::floor < std::chrono::seconds > (local) - time_point;
-
-		std::chrono::hh_mm_ss hh_mm_ss(duration);
+		std::chrono::hh_mm_ss hh_mm_ss(delta);
 
 		std::cout << "main : hh_mm_ss = " << hh_mm_ss << '\n';
 
-		assert(hh_mm_ss.to_duration() == duration);
+		assert(hh_mm_ss.to_duration() == delta);
 	}
 
-//  -------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------------
 
 	{
-		auto local = std::chrono::system_clock::now();
+		auto local = std::chrono::floor < std::chrono::days > (std::chrono::system_clock::now());
 
-		auto time_point = std::chrono::floor < std::chrono::days > (local);
-
-		std::chrono::year_month_day year_month_day(time_point);
+		std::chrono::year_month_day year_month_day(local);
 
 		std::cout << "main : year_month_day = " << year_month_day << '\n';
 
-		assert(std::chrono::sys_days(year_month_day) == time_point);
+		assert(std::chrono::sys_days(year_month_day) == local);
 	}
 
-//  -------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------------
 
 	{
-		auto local = std::chrono::system_clock::now();
+		auto local = std::chrono::floor < std::chrono::days > (std::chrono::system_clock::now());
 
-		auto time_point = std::chrono::floor < std::chrono::days > (local);
-
-		auto weekday = std::chrono::year_month_weekday(time_point).weekday();
+		auto weekday = std::chrono::year_month_weekday(local).weekday();
 
 		std::cout << "main : weekday = " << weekday << '\n';
 	}
 
-//  -------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------------
 
 	{
 		auto local = std::chrono::system_clock::now();

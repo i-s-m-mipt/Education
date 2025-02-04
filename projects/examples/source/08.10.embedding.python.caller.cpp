@@ -40,17 +40,17 @@ public:
 
 		PyErr_NormalizeException(&error, &value, &stack);
 
-		boost::python::handle <> handle_1(boost::python::allow_null(value));
+		boost::python::handle <> handler_1(boost::python::allow_null(value));
 
-		boost::python::handle <> handle_2(error);
+		boost::python::handle <> handler_2(error);
 
-		if (handle_1)
+		if (handler_1)
 		{
-			return boost::python::extract < std::string > (boost::python::str(handle_1))();
+			return boost::python::extract < std::string > (boost::python::str(handler_1))();
 		}
 		else
 		{
-			return boost::python::extract < std::string > (boost::python::str(handle_2))();
+			return boost::python::extract < std::string > (boost::python::str(handler_2))();
 		}
 	}
 
@@ -138,14 +138,14 @@ auto make_strings(std::size_t size, std::size_t length)
 
 auto hash(const std::string & string) -> std::size_t
 {
-	std::uint32_t hash = std::size(string);
+	std::uint32_t result = std::size(string);
 
 	for (auto element : string)
 	{
-		hash = hash << 5 ^ hash >> 27 ^ element;
+		result = result << 5 ^ result >> 27 ^ element;
 	}
 
-	return hash;
+	return result;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,8 +197,6 @@ int main()
 			}
 		}
 
-		points.pop_back();
-
-		make_plot(points);
+		points.pop_back(); make_plot(points);
 	}
 }

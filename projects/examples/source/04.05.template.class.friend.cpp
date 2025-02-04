@@ -97,11 +97,11 @@ template < typename T > auto operator-(const Ratio < T > & lhs, const Ratio < T 
 
 int main()
 {
-	Ratio < int > ratio = 1;
+	Ratio < int > x = 1;
 
-	assert(ratio + 1 == Ratio < int > (2, 1));
+	assert(x + 1 == Ratio < int > (2, 1));
 
-//	assert(ratio - 1 == Ratio < int > (0, 1)); // error
+//	assert(x - 1 == Ratio < int > (0, 1)); // error
 
-	assert(operator- < int > (ratio, 1) == Ratio < int > (0, 1));
+	assert(operator- < int > (x, 1) == Ratio < int > (0, 1));
 }

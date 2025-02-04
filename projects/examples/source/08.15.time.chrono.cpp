@@ -12,8 +12,7 @@
 
 template 
 < 
-	std::intmax_t N, 
-	std::intmax_t D 
+	std::intmax_t N, std::intmax_t D 
 > 
 auto & operator<<(std::ostream & stream, const std::ratio < N, D > & ratio)
 {
@@ -41,13 +40,13 @@ public:
 
 	void elapsed() const
 	{
-		auto duration = clock_t::now() - m_begin;
+		auto delta_1 = clock_t::now() - m_begin;
 
-		auto delta = std::chrono::duration_cast < std::chrono::microseconds > (duration);
+		auto delta_2 = std::chrono::duration_cast < std::chrono::microseconds > (delta_1);
 
 		std::cout << m_scope << " : timer : ";
 
-		std::cout << std::format("{:.6f}", delta.count() / 1'000'000.0) << " (seconds)\n";
+		std::cout << std::format("{:.6f}", delta_2.count() / 1'000'000.0) << " (seconds)\n";
 	}
 
 private:

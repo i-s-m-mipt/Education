@@ -28,11 +28,11 @@ public:
 
 //  --------------------------------------------------------------------------------------------
 
-	Integer() : m_is_negative(false), m_n_digits(1), m_digits(s_size, 0) {}
+	Integer() : m_sign(false), m_data(s_size, 0), m_size(1) {}
 
-	Integer(digit_t x) : Integer() 
+	Integer(digit_t digit) : Integer() 
 	{ 
-		parse(std::to_string(x)); 
+		parse(std::to_string(digit)); 
 	}
 
 	Integer(const std::string & string) : Integer() 
@@ -44,39 +44,35 @@ public:
 
 	void swap(Integer & other)
 	{
-		std::swap(m_is_negative, other.m_is_negative);
-		
-		std::swap(m_n_digits,    other.m_n_digits   );
+		std::swap(m_sign, other.m_sign);
 
-		std::swap(m_digits,      other.m_digits     );
+		std::swap(m_data, other.m_data);
+		
+		std::swap(m_size, other.m_size);
 	}
 
 //  --------------------------------------------------------------------------------------------
 
 	auto & operator+=(Integer other)
 	{
-		if 
-		(
-			(!m_is_negative && !other.m_is_negative) ||
-			( m_is_negative &&  other.m_is_negative)
-		)
+		if ((!m_sign && !other.m_sign) || ( m_sign &&  other.m_sign))
 		{
 			this->add(other);
 		}
-		else if (!m_is_negative && other.m_is_negative)
+		else if (!m_sign && other.m_sign)
 		{
 			if (this->less(other))
 			{
 				*this = std::move(other.subtract(*this)); 
 				
-				m_is_negative = true;
+				m_sign = true;
 			}
 			else 
 			{
 				this->subtract(other);
 			}
 		}
-		else if (m_is_negative && !other.m_is_negative)
+		else if (m_sign && !other.m_sign)
 		{
 			if (this->less(other))
 			{
@@ -84,7 +80,7 @@ public:
 			}
 			else 
 			{ 
-				this->subtract(other); m_is_negative = true; 
+				this->subtract(other); m_sign = true; 
 			}
 		}
 
@@ -93,37 +89,37 @@ public:
 
 	auto & operator-=(Integer other)
 	{
-		other.m_is_negative = !other.m_is_negative;
+		other.m_sign = !other.m_sign;
 
 		return *this += other;
 	}
 
 	auto & operator*=(Integer other)
 	{
-		if (m_n_digits + other.m_n_digits > s_size) 
+		if (m_size + other.m_size > s_size) 
 		{
 			throw std::runtime_error("arithmetic overflow");
 		}
 
 		Integer result;
 
-		result.m_is_negative = m_is_negative ^ other.m_is_negative;
+		result.m_sign = m_sign ^ other.m_sign;
 
-		for (auto i = 0uz; i < m_n_digits; ++i)
+		for (auto i = 0uz; i < m_size; ++i)
 		{
-			digit_t r = 0;
+			digit_t remainder = 0;
 
-			for (auto j = 0uz; (j < other.m_n_digits) || r; ++j)
+			for (auto j = 0uz; (j < other.m_size) || remainder; ++j)
 			{
-				result.m_digits[i + j] += m_digits[i] * other.m_digits[j] + r;
+				result.m_data[i + j] += m_data[i] * other.m_data[j] + remainder;
 
-				r = result.m_digits[i + j] / s_base;
+				remainder = result.m_data[i + j] / s_base;
 
-				result.m_digits[i + j] -= r * s_base;
+				result.m_data[i + j] -= remainder * s_base;
 			}
 		}
 
-		result.m_n_digits = m_n_digits + other.m_n_digits;
+		result.m_size = m_size + other.m_size;
 
 		swap(result); 
 		
@@ -134,38 +130,36 @@ public:
 
 	auto & operator/=(Integer other)
 	{
-		if (other.m_n_digits == 1 && other.m_digits.front() == 0)
+		if (other.m_size == 1 && other.m_data.front() == 0)
 		{
 			throw std::runtime_error("invalid operand");
 		}
 
-		Integer result; result.m_n_digits = m_n_digits;
+		Integer result; result.m_size = m_size;
 
-		result.m_is_negative = m_is_negative ^ other.m_is_negative; other.m_is_negative = false;
+		result.m_sign = m_sign ^ other.m_sign; other.m_sign = false;
 
 		Integer current;
 
-		for (auto i = static_cast < int > (m_n_digits) - 1; i >= 0; --i)
+		for (auto i = static_cast < int > (m_size) - 1; i >= 0; --i)
 		{
-			current *= s_base; current.m_digits[0] = m_digits[i];
+			current *= s_base; current.m_data[0] = m_data[i];
 
-			digit_t l = 0, r = s_base, digit = 0;
+			digit_t left = 0, right = s_base, digit = 0;
 
-			while (l <= r)
+			while (left <= right)
 			{
-				auto m = std::midpoint(l, r);
-				
-				if (other * m <= current)
+				if (auto middle = std::midpoint(left, right); other * middle <= current)
 				{
-					l = m + 1; digit = m;
+					left  = middle + 1; digit = middle;
 				}
 				else
 				{
-					r = m - 1;
+					right = middle - 1;
 				}
 			}
 
-			result.m_digits[i] = digit; current -= other * digit;
+			result.m_data[i] = digit; current -= other * digit;
 		}
 
 		swap(result); 
@@ -211,9 +205,9 @@ public:
 
 	friend auto operator< (const Integer & lhs, const Integer & rhs)
 	{
-		if (lhs.m_is_negative != rhs.m_is_negative) { return lhs.m_is_negative; }
+		if (lhs.m_sign != rhs.m_sign) { return lhs.m_sign; }
 
-		if (lhs.m_is_negative && rhs.m_is_negative) 
+		if (lhs.m_sign && rhs.m_sign) 
 		{
 			return rhs.less(lhs);
 		}
@@ -240,14 +234,14 @@ public:
 
 	friend auto operator==(const Integer & lhs, const Integer & rhs)
 	{
-		if (lhs.m_is_negative != rhs.m_is_negative || lhs.m_n_digits != rhs.m_n_digits)
+		if (lhs.m_sign != rhs.m_sign || lhs.m_size != rhs.m_size)
 		{
 			return false;
 		}
 
-		for (auto i = 0uz; i < lhs.m_n_digits; ++i)
+		for (auto i = 0uz; i < lhs.m_size; ++i)
 		{
-			if (lhs.m_digits[i] != rhs.m_digits[i]) 
+			if (lhs.m_data[i] != rhs.m_data[i]) 
 			{
 				return false;
 			}
@@ -269,16 +263,16 @@ public:
 
 	friend auto & operator<<(std::ostream & stream, const Integer & integer)
 	{
-		if (integer.m_is_negative) 
+		if (integer.m_sign) 
 		{
 			stream << '-';
 		}
 
-		stream << integer.m_digits[integer.m_n_digits - 1];
+		stream << integer.m_data[integer.m_size - 1];
 
-		for (auto i = static_cast < int > (integer.m_n_digits) - 2; i >= 0; --i)
+		for (auto i = static_cast < int > (integer.m_size) - 2; i >= 0; --i)
 		{
-			stream << std::format("{:0>{}}", integer.m_digits[i], Integer::s_step);
+			stream << std::format("{:0>{}}", integer.m_data[i], Integer::s_step);
 		}
 
 		return stream;
@@ -286,81 +280,85 @@ public:
 
 //  --------------------------------------------------------------------------------------------
 
-	friend auto multiply(const Integer & x, const Integer & y)
+	friend auto multiply(const Integer & x, const Integer & y) -> Integer
 	{
-		auto n = std::max(x.m_n_digits, y.m_n_digits);
+		if (auto size = std::max(x.m_size, y.m_size); size > 1) 
+		{
+			auto half = size / 2;
 
-		if (n == 1) 
+			Integer xr; xr.m_size = half;
+
+			Integer xl; xl.m_size = size - half;
+
+			for (auto i =  0uz; i < half; ++i) { xr.m_data[i       ] = x.m_data[i]; }
+
+			for (auto i = half; i < size; ++i) { xl.m_data[i - half] = x.m_data[i]; }
+
+			Integer yr; yr.m_size = half;
+			
+			Integer yl; yl.m_size = size - half;
+
+			for (auto i =  0uz; i < half; ++i) { yr.m_data[i       ] = y.m_data[i]; }
+
+			for (auto i = half; i < size; ++i) { yl.m_data[i - half] = y.m_data[i]; }
+
+			auto p1 = multiply(xl, yl);
+			
+			auto p2 = multiply(xr, yr);
+			
+			auto p3 = multiply(xl + xr, yl + yr);
+
+			Integer base = Integer::s_base;
+
+			for (auto i = 1uz; i < half; ++i) 
+			{
+				base *= Integer::s_base;
+			}
+
+			auto result = p1 * base * base + (p3 - p2 - p1) * base + p2;
+
+			result.m_sign = x.m_sign ^ y.m_sign; 
+
+			return result;
+		}
+		else
 		{
 			return x * y;
 		}
-
-		auto k = n / 2;
-
-		Integer xr; xr.m_n_digits = k;
-
-		Integer xl; xl.m_n_digits = n - k;
-
-		for (auto i = 0uz; i < k; ++i) { xr.m_digits[i    ] = x.m_digits[i]; }
-
-		for (auto i = k  ; i < n; ++i) { xl.m_digits[i - k] = x.m_digits[i]; }
-
-		Integer yr; yr.m_n_digits = k;
-		
-		Integer yl; yl.m_n_digits = n - k;
-
-		for (auto i = 0uz; i < k; ++i) { yr.m_digits[i    ] = y.m_digits[i]; }
-
-		for (auto i = k  ; i < n; ++i) { yl.m_digits[i - k] = y.m_digits[i]; }
-
-		auto p1 = multiply(xl, yl), p2 = multiply(xr, yr), p3 = multiply(xl + xr, yl + yr);
-
-		Integer base = Integer::s_base;
-
-		for (auto i = 1uz; i < k; ++i) 
-		{
-			base *= Integer::s_base;
-		}
-
-		auto result = p1 * base * base + (p3 - p2 - p1) * base + p2;
-
-		result.m_is_negative = x.m_is_negative ^ y.m_is_negative; 
-
-		return result;
 	}
 
 //  --------------------------------------------------------------------------------------------
 
 	friend auto sqrt(const Integer & x)
 	{
-		if (x.m_is_negative) 
+		if (x.m_sign) 
 		{
 			throw std::runtime_error("invalid operand");
 		}
 
     	Integer result; 
 		
-		result.m_n_digits = (x.m_n_digits + 1) / 2;
+		result.m_size = (x.m_size + 1) / 2;
     	
-    	for (auto i = static_cast < int > (result.m_n_digits) - 1; i >= 0; --i)
+    	for (auto i = static_cast < int > (result.m_size) - 1; i >= 0; --i)
     	{
-      		digit_t l = 0, r = Integer::s_base, digit = 0;
+      		digit_t left = 0, right = Integer::s_base, digit = 0;
 
-      		while (l <= r)
+      		while (left <= right)
       		{
-				auto m = result.m_digits[i] = std::midpoint(l, r);
+				auto middle = result.m_data[i] = std::midpoint(left, right);
 
         		if (result * result <= x)
         		{
-          			l = m + 1; digit = std::min(m, Integer::s_base - 1);
+          			left  = middle + 1; digit = std::min(middle, Integer::s_base - 1);
         		}
         		else
 				{
-					r = m - 1;
+					right = middle - 1;
 				}				
       		}
 
-      		result.m_digits[i] = digit;
+      		result.m_data[i] = digit;
     	}
 
 		result.reduce(); 
@@ -390,7 +388,7 @@ private:
 				}
 			);
 
-			m_is_negative = string[0] == '-'; m_n_digits = 0;
+			m_sign = string[0] == '-'; m_size = 0;
 
 			for (auto i = std::ssize(string) - 1; i >= 0; i -= s_step)
 			{
@@ -398,10 +396,10 @@ private:
 
 				if (begin <= 0) 
 				{
-					begin = m_is_negative ? 1 : 0;
+					begin = m_sign ? 1 : 0;
 				}
 
-				m_digits[m_n_digits++] = std::stoll(string.substr(begin, i - begin + 1));
+				m_data[m_size++] = std::stoll(string.substr(begin, i - begin + 1));
 			}
 
 			reduce();
@@ -416,9 +414,9 @@ private:
 
 	void reduce()
 	{
-		while (m_n_digits > 1 && !m_digits[m_n_digits - 1]) 
+		while (m_size > 1 && !m_data[m_size - 1]) 
 		{
-			--m_n_digits;
+			--m_size;
 		}
 	}
 
@@ -426,19 +424,19 @@ private:
 
 	auto add(const Integer & other) -> Integer &
 	{
-		m_n_digits = std::max(m_n_digits, other.m_n_digits);
+		m_size = std::max(m_size, other.m_size);
 
-		for (auto i = 0uz; i < m_n_digits; ++i)
+		for (auto i = 0uz; i < m_size; ++i)
 		{
-			m_digits[i] += other.m_digits[i];
+			m_data[i] += other.m_data[i];
 
-			if (m_digits[i] >= s_base)
+			if (m_data[i] >= s_base)
 			{
-				m_digits[i] -= s_base;
+				m_data[i] -= s_base;
 
 				if (i < s_size - 1)
 				{
-					++m_digits[i + 1];
+					++m_data[i + 1];
 				}
 				else 
 				{
@@ -447,22 +445,22 @@ private:
 			}
 		}
 
-		m_n_digits += m_digits[m_n_digits];
+		m_size += m_data[m_size];
 
 		return *this;
 	}
 
 	auto subtract(const Integer & other) -> Integer &
 	{
-		for (auto i = 0uz; i < m_n_digits; ++i)
+		for (auto i = 0uz; i < m_size; ++i)
 		{
-			m_digits[i] -= other.m_digits[i];
+			m_data[i] -= other.m_data[i];
 
-			if (m_digits[i] < 0)
+			if (m_data[i] < 0)
 			{
-				m_digits[i] += s_base;
+				m_data[i] += s_base;
 
-				m_digits[i + 1]--;
+				m_data[i + 1]--;
 			}
 		}
 
@@ -475,16 +473,16 @@ private:
 
 	auto less(const Integer & other) const -> bool
 	{
-		if (m_n_digits != other.m_n_digits) 
+		if (m_size != other.m_size) 
 		{
-			return m_n_digits < other.m_n_digits;
+			return m_size < other.m_size;
 		}
 
-		for (auto i = static_cast < int > (m_n_digits) - 1; i >= 0; --i)
+		for (auto i = static_cast < int > (m_size) - 1; i >= 0; --i)
 		{
-			if (m_digits[i] != other.m_digits[i]) 
+			if (m_data[i] != other.m_data[i]) 
 			{
-				return m_digits[i] < other.m_digits[i];
+				return m_data[i] < other.m_data[i];
 			}
 		}
 
@@ -493,11 +491,11 @@ private:
 
 //  --------------------------------------------------------------------------------------------
 
-	bool m_is_negative = false;
+	bool m_sign = false;
 
-	std::size_t m_n_digits = 0;
+	std::vector < digit_t > m_data; 
 
-	std::vector < digit_t > m_digits; 
+	std::size_t m_size = 0;
 
 //  --------------------------------------------------------------------------------------------
 
@@ -513,77 +511,77 @@ private:
 int main()
 {
 	{
-		Integer integer_01 = "+73640854127382725310948206095647"s;
+		Integer x01 = "+73640854127382725310948206095647"s;
 
-		Integer integer_02 = "-46090058756232818791046807807190"s;
+		Integer x02 = "-46090058756232818791046807807190"s;
 
-		Integer integer_03 = "+27550795371149906519901398288457"s;
+		Integer x03 = "+27550795371149906519901398288457"s;
 
-		Integer integer_04 = integer_01;
+		Integer x04 = x01;
 
-		Integer integer_05 = "-3394111293590239892710602762023649092547630961329778427474301930"s;
+		Integer x05 = "-3394111293590239892710602762023649092547630961329778427474301930"s;
 
-		Integer integer_06 = "-46090058756232818791046807807189"s;
+		Integer x06 = "-46090058756232818791046807807189"s;
 
-		Integer integer_07 = "+73640854127382725310948206095648"s;
+		Integer x07 = "+73640854127382725310948206095648"s;
 
-		Integer integer_08 = integer_02;
+		Integer x08 = x02;
 
-		Integer integer_09 = "+119730912883615544101995013902837"s;
+		Integer x09 = "+119730912883615544101995013902837"s;
 
-		Integer integer_10 = -1;
+		Integer x10 = -1;
 
-		assert((integer_01 += integer_02) == integer_03);
-		assert((integer_01 -= integer_02) == integer_04);
-		assert((integer_01 *= integer_02) == integer_05);
-		assert((integer_01 /= integer_02) == integer_04);
+		assert((x01 += x02) == x03);
+		assert((x01 -= x02) == x04);
+		assert((x01 *= x02) == x05);
+		assert((x01 /= x02) == x04);
 
-		assert((integer_01 ++           ) == integer_04);
-		assert((           ++ integer_02) == integer_06);
-		assert((integer_01 --           ) == integer_07);
-		assert((           -- integer_02) == integer_08);
+		assert((x01 ++    ) == x04);
+		assert((    ++ x02) == x06);
+		assert((x01 --    ) == x07);
+		assert((    -- x02) == x08);
 
-		assert((integer_01 +  integer_02) == integer_03);
-		assert((integer_01 -  integer_02) == integer_09);
-		assert((integer_01 *  integer_02) == integer_05);
-		assert((integer_01 /  integer_02) == integer_10);
+		assert((x01 +  x02) == x03);
+		assert((x01 -  x02) == x09);
+		assert((x01 *  x02) == x05);
+		assert((x01 /  x02) == x10);
 
-		assert((integer_01 <  integer_02) == 0);
-		assert((integer_01 >  integer_02) == 1);
-		assert((integer_01 <= integer_02) == 0);
-		assert((integer_01 >= integer_02) == 1);
-		assert((integer_01 == integer_02) == 0);
-		assert((integer_01 != integer_02) == 1);
+		assert((x01 <  x02) == 0);
+		assert((x01 >  x02) == 1);
+		assert((x01 <= x02) == 0);
+		assert((x01 >= x02) == 1);
+		assert((x01 == x02) == 0);
+		assert((x01 != x02) == 1);
 	}
 
 //  ----------------------------------------------------------------------------------------------
 
 	{
-		std::cout << "main : enter Integer : "; Integer integer; std::cin >> integer; 
+		std::cout << "main : enter Integer : "; Integer x; std::cin >> x; 
 	
-		std::cout << "main : integer = " << integer << '\n';
+		std::cout << "main : x = " << x << '\n';
 	}
 
 //  ----------------------------------------------------------------------------------------------
 
 	{
-		Integer integer_1 = "+73640854127382725310948206095647"s;
+		Integer x = "+73640854127382725310948206095647"s;
 
-		Integer integer_2 = "-46090058756232818791046807807190"s;
+		Integer y = "-46090058756232818791046807807190"s;
 
-		Integer integer_3 = "-3394111293590239892710602762023649092547630961329778427474301930"s;
+		Integer z = "-3394111293590239892710602762023649092547630961329778427474301930"s;
 
-		assert(multiply(integer_1, integer_2) == integer_3);
+		assert(multiply(x, y) == z);
 	}
 
 //  ----------------------------------------------------------------------------------------------
 
 	{
-		Integer integer_1 = "+73640854127382725310948206095647"s;
+		Integer x = "+73640854127382725310948206095647"s;
 
-		Integer integer_2 = "+8581424947372244"s;
+		Integer y = "+8581424947372244"s;
 
-		assert(sqrt(integer_1) == integer_2);
+		assert(sqrt(x) == y);
 	}
 
 //  ----------------------------------------------------------------------------------------------

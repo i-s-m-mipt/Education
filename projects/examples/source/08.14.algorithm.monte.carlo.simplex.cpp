@@ -51,9 +51,9 @@ int main()
 
 		Vector PC(std::cos(w_C), std::sin(w_C), 0.0);
 
-		auto a = (PA * PB).z, b = (PB * PC).z, c = (PC * PA).z;
+		auto x = (PA * PB).z, y = (PB * PC).z, z = (PC * PA).z;
 
-		if ((a >= 0.0 && b >= 0.0 && c >= 0.0) || (a <= 0.0 && b <= 0.0 && c <= 0.0))
+		if ((x >= 0.0 && y >= 0.0 && z >= 0.0) || (x <= 0.0 && y <= 0.0 && z <= 0.0))
 		{
 			++counter;
 		}
