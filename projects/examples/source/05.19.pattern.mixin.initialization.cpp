@@ -1,50 +1,37 @@
 #include <iostream>
 #include <utility>
 
-////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
 public:
 
-    virtual ~Entity() = default; 
-
-//  ------------------------------------
-
-    virtual void initialize() const = 0;
-};
-
-////////////////////////////////////////////////////////////////
-
-class Client : public Entity
-{
-public:
-
-    void initialize() const override 
+    void initialize() const 
     { 
-        std::cout << "Client::initialize\n"; 
+        std::cout << "Entity::initialize\n"; 
     }
 
 protected:
 
-    Client(int) {}; 
+    Entity(int) {}; 
 };
 
-////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
-template < typename B > class Router : private B
+template < typename B > class Handler : private B
 {
 public:
 
-    template < typename ... Ts > Router(Ts && ... xs) : B(std::forward < Ts > (xs)...)
+    template < typename ... Ts > Handler(Ts && ... xs) : B(std::forward < Ts > (xs)...)
     {
         this->initialize();
     }
 };
 
-////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Router < Client > router(1);
+    Handler < Entity > entity(1);
 }

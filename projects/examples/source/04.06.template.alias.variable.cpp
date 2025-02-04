@@ -12,9 +12,9 @@ template < typename T > using Buffer = Array < T, 5 > ;
 
 template < typename T > T pi = T(3.141'592'653'589'793'238'462'643'383'279'502'884l);
 
-template < typename T > auto area(T x)
+template < typename T > auto area(T radius)
 {
-	return pi < T > * x * x;
+	return pi < T > * radius * radius;
 }
 
 //  ================================================================================================

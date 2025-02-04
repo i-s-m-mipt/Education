@@ -46,9 +46,9 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-//		std::variant < Entity_v1, int > variant; // error
+//		std::variant < Entity_v1, int > variant_1; // error
 
-		std::variant < std::monostate, Entity_v1, int > variant;
+		std::variant < std::monostate, Entity_v1, int > variant_2;
 	}
 
 //  ---------------------------------------------------------------------------------

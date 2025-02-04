@@ -71,9 +71,7 @@ int main()
 	
 //  ------------------------------------
 
-	{
-		Client_v2 client_v2; 
-	
-		test_v2(client_v2);
+	{	
+		test_v2(Client_v2());
 	}
 }

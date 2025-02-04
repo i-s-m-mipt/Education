@@ -78,7 +78,7 @@ int main()
 
 	Entity entity;
 
-	test_v4(entity);
-
 	test_v4(std::move(entity));
+
+	test_v4(Entity());
 }

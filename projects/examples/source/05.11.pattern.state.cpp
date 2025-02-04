@@ -102,7 +102,10 @@ int main()
     Entity entity;
 
     entity.set_slow(); 
+    
     entity.set_fast(); 
+
     entity.set_fast();
+
     entity.set_slow();
 }

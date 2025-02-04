@@ -63,10 +63,10 @@ int main()
 	{
 		auto x = 1.0;
 
-//		[[maybe_unused]]       int &  lr__x = x; // error
-		[[maybe_unused]] const int &  lr_cx = x;
-		[[maybe_unused]]       int && rr__x = x;
-		[[maybe_unused]] const int && rr_cx = x;
+//		[[maybe_unused]]       int &  lr_x = x; // error
+		[[maybe_unused]] const int &  lrcx = x;
+		[[maybe_unused]]       int && rr_x = x;
+		[[maybe_unused]] const int && rrcx = x;
 	}
 
 //  ------------------------------------------------------------------------------
@@ -83,6 +83,8 @@ int main()
 		Entity entity_3;
 
 		test(std::move(entity_3));
+
+		test(Entity());
 	}
 
 //  ------------------------------------------------------------------------------

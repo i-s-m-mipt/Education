@@ -9,7 +9,7 @@ class Vector
 {
 public:
 
-    Vector(std::initializer_list < int > list) : m_vector(list) {}
+    Vector(std::initializer_list < int > list) : m_data(list) {}
 
 //  --------------------------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ public:
     {
         std::cout << "Vector::operator[] (1)\n";
 
-        return m_vector[index];
+        return m_data[index];
     }
 
     auto & operator[](std::size_t index)
@@ -29,7 +29,7 @@ public:
 
 private:
 
-    std::vector < int > m_vector;
+    std::vector < int > m_data;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////
