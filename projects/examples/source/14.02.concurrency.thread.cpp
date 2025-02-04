@@ -18,7 +18,7 @@ class Task
 {
 public:
 
-	Task(int & data): m_data(data) {}
+	Task(int & x): m_data(x) {}
 
 //  --------------------------------------
 

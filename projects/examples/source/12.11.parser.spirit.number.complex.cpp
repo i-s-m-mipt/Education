@@ -11,9 +11,9 @@ using namespace std::literals;
 
 //////////////////////////////////////////////////////////////////////////
 
-auto parse(std::string_view data)
+auto parse(std::string_view view)
 {
-    auto begin = std::begin(data), end = std::end(data);
+    auto begin = std::begin(view), end = std::end(view);
 
     auto x = 0.0, y = 0.0;
 
@@ -40,7 +40,7 @@ auto parse(std::string_view data)
 
     if (!result || begin != end)
     {
-        throw std::runtime_error("invalid data");
+        throw std::runtime_error("invalid view");
     }
     
     return std::complex < double > (x, y);

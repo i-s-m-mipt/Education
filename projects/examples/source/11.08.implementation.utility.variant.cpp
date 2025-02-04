@@ -130,24 +130,24 @@ namespace detail
     {
     public:
 
-        Handler(T data) 
+        Handler(T x) 
         { 
-            std::construct_at(derived().template array < T > (), std::move(data)); 
+            std::construct_at(derived().template array < T > (), std::move(x)); 
             
             update();
         }
 
-        auto & operator=(T data)
+        auto & operator=(T x)
         {
             if (derived().m_index == s_index) 
             {
-                *derived().template array < T > () = std::move(data);
+                *derived().template array < T > () = std::move(x);
             }
             else 
             {
                 derived().destroy(); 
                 
-                std::construct_at(derived().template array < T > (), std::move(data));
+                std::construct_at(derived().template array < T > (), std::move(x));
                 
                 update();
             }
@@ -216,12 +216,12 @@ public:
 
     Variant(const Variant & other) : detail::Handler < derived_t, Ts, Ts ... > ::Handler()...
     {
-        other.visit([this](auto && data){ *this = data; });
+        other.visit([this](auto && x){ *this = x; });
     }
 
     Variant(Variant && other)
     {
-        other.visit([this](auto && data){ *this = std::move(data); });
+        other.visit([this](auto && x){ *this = std::move(x); });
     }
 
     auto & operator=(Variant other)

@@ -18,7 +18,7 @@ class Stream
 {
 public:
 
-	Stream(const std::string & data) : m_stream(data + ';') {}
+	Stream(const std::string & string) : m_stream(string + ';') {}
 
 //  ----------------------------------------------------------------
 

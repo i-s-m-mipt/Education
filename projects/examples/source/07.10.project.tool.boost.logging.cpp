@@ -50,11 +50,11 @@ public:
 
 //  ----------------------------------------------------------------------------------------------
 
-	void write(Severity severity, const std::string & data) const
+	void write(Severity severity, const std::string & string) const
 	{
 		if (auto record = s_logger.open_record(boost::log::keywords::severity = severity); record)
 		{
-			boost::log::record_ostream(record) << m_scope << " : " << data;
+			boost::log::record_ostream(record) << m_scope << " : " << string;
 
 			s_logger.push_record(std::move(record));
 		}
@@ -188,13 +188,13 @@ private:
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define LOGGER_WRITE_DEBUG(logger, message) logger.write(Logger::Severity::debug, message);
+#define LOGGER_WRITE_DEBUG(logger, string) logger.write(Logger::Severity::debug, string);
 
-#define LOGGER_WRITE_TRACE(logger, message) logger.write(Logger::Severity::trace, message);
+#define LOGGER_WRITE_TRACE(logger, string) logger.write(Logger::Severity::trace, string);
 
-#define LOGGER_WRITE_ERROR(logger, message) logger.write(Logger::Severity::error, message);
+#define LOGGER_WRITE_ERROR(logger, string) logger.write(Logger::Severity::error, string);
 
-#define LOGGER_WRITE_FATAL(logger, message) logger.write(Logger::Severity::fatal, message);
+#define LOGGER_WRITE_FATAL(logger, string) logger.write(Logger::Severity::fatal, string);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 

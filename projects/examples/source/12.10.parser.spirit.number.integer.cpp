@@ -16,7 +16,7 @@ using namespace std::literals;
 int main()
 {
     {
-        auto data = "1"sv; auto begin = std::begin(data), end = std::end(data);
+        auto view = "1"sv; auto begin = std::begin(view), end = std::end(view);
 
         auto rule = boost::spirit::x3::int_;
 
@@ -30,7 +30,7 @@ int main()
 //  ----------------------------------------------------------------------------------------------
 
     {
-        auto data = "1 1"sv; auto begin = std::begin(data), end = std::end(data);
+        auto view = "1 1"sv; auto begin = std::begin(view), end = std::end(view);
 
         auto rule = boost::spirit::x3::int_ >> boost::spirit::x3::int_;
 
@@ -44,7 +44,7 @@ int main()
 //  ----------------------------------------------------------------------------------------------
 
     {
-        auto data = "{ 1 1 }"sv; auto begin = std::begin(data), end = std::end(data);
+        auto view = "{ 1 1 }"sv; auto begin = std::begin(view), end = std::end(view);
 
         auto rule = '{' >> boost::spirit::x3::int_ >> boost::spirit::x3::int_ >> '}';
 
@@ -58,7 +58,7 @@ int main()
 //  ----------------------------------------------------------------------------------------------
 
     {
-        auto data = "1"sv; auto begin = std::begin(data), end = std::end(data);
+        auto view = "1"sv; auto begin = std::begin(view), end = std::end(view);
 
         auto rule = boost::spirit::x3::int_
         [

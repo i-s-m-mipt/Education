@@ -10,7 +10,7 @@ public:
 
 	Entity() = default;
 
-	Entity(int data) : m_data(data) {}
+	Entity(int x) : m_data(x) {}
 
 //  ----------------------------------
 

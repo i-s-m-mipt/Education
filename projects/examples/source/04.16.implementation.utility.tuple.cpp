@@ -15,9 +15,9 @@ public:
 
 	constexpr Tuple() = default;
 
-	constexpr Tuple(T && head, Ts && ... tail) 
+	constexpr Tuple(T && x, Ts && ... xs) 
 	:
-		m_head(std::forward < T > (head)), m_tail(std::forward < Ts > (tail)...) 
+		m_head(std::forward < T > (x)), m_tail(std::forward < Ts > (xs)...) 
 	{}
 
 	constexpr Tuple(const Tuple & other) 

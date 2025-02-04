@@ -46,7 +46,7 @@ namespace detail
     {
     public:
 
-        Handler(T * data) : m_data(data)
+        Handler(T * ptr) : m_data(ptr)
         {
             increase();
         }
@@ -75,7 +75,7 @@ template < typename T > class Shared
 {
 public:
 
-    Shared(T * data = nullptr) : m_data(data)
+    Shared(T * ptr = nullptr) : m_data(ptr)
     {
         if (m_data)
         {

@@ -13,7 +13,7 @@ template < typename T > class RAII : private boost::noncopyable
 {
 public:
 
-	RAII(T data) : m_data(new T(data)) {}
+	RAII(T x) : m_data(new T(x)) {}
 
    ~RAII() 
 	{ 

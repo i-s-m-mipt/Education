@@ -8,16 +8,16 @@ public:
 
     using data_t = int;
 
-//  -----------------------
+//  -------------------
 
     auto get() const 
     { 
         return m_data; 
     }
     
-    void set(int data) 
+    void set(int x) 
     { 
-        m_data = data;
+        m_data = x;
     }
 
 private:
@@ -33,7 +33,7 @@ public:
 
     using data_t = typename B::data_t;
 
-//  ---------------------------------------------
+//  ------------------------------------
 
     void set(data_t data) 
     { 
@@ -58,7 +58,7 @@ public:
 
     using data_t = typename B::data_t;
 
-//  ---------------------------------------------
+//  ----------------------------------
 
     void set(data_t data) 
     { 

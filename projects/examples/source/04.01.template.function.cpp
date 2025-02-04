@@ -163,8 +163,11 @@ int main()
 		assert(equal(max_v4 < double > (1, 2.0), 2.0));
 
 		assert(equal(max_v5(1, 2.0), 2.0));
+		
 		assert(equal(max_v6(1, 2.0), 2.0));
+
 		assert(equal(max_v7(1, 2.0), 2.0));
+
 		assert(equal(max_v8(1, 2.0), 2.0));
 
 		assert(equal(std::max(1.0, 2.0), 2.0));

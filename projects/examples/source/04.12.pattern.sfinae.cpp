@@ -11,12 +11,12 @@ class Entity_v1
 {
 public:
 	
-	Entity_v1(const std::string & data) : m_data(data) 
+	Entity_v1(const std::string & string) : m_data(string) 
 	{
 		std::cout << "Entity_v1::Entity_v1 (1)\n";
 	}
 
-	Entity_v1(std::string && data) : m_data(std::move(data)) 
+	Entity_v1(std::string && string) : m_data(std::move(string)) 
 	{
 		std::cout << "Entity_v1::Entity_v1 (2)\n";
 	}
@@ -42,7 +42,7 @@ class Entity_v2
 {
 public:
 	
-    template < typename S > Entity_v2(S && data) : m_data(std::forward < S > (data)) 
+    template < typename S > Entity_v2(S && string) : m_data(std::forward < S > (string)) 
 	{
 		std::cout << "Entity_v2::Entity_v2 (1)\n";
 	}
@@ -75,7 +75,7 @@ public:
 			std::is_convertible_v < S, std::string > , void 
 		> 
 	>
-	Entity_v3(S && data) : m_data(std::forward < S > (data))
+	Entity_v3(S && string) : m_data(std::forward < S > (string))
 	{
 		std::cout << "Entity_v3::Entity_v3 (1)\n";
 	}
@@ -101,14 +101,14 @@ class Entity_v4
 {
 public:
 	
-    template < typename S > Entity_v4(S && data) requires std::is_convertible_v < S, std::string > 
+    template < typename S > Entity_v4(S && string) requires std::is_convertible_v < S, std::string >
 	: 
-		m_data(std::forward < S > (data))
+		m_data(std::forward < S > (string))
 	{
 		std::cout << "Entity_v4::Entity_v4 (1)\n";
 	}
 	
-	Entity_v4(const Entity_v4 &  other) : m_data(other.m_data) 
+	Entity_v4(const Entity_v4 & other) : m_data(other.m_data) 
 	{
 		std::cout << "Entity_v4::Entity_v4 (2)\n";
 	}
@@ -128,9 +128,9 @@ private:
 int main()
 {
 	{
-		auto data = "aaaaa"s;
+		auto string = "aaaaa"s;
 
-		Entity_v1 entity_v1_1(data);
+		Entity_v1 entity_v1_1(string);
 
 		Entity_v1 entity_v1_2("bbbbb"s);
 
@@ -142,9 +142,9 @@ int main()
 //  --------------------------------------------------
 
 	{
-		auto data = "aaaaa"s;
+		auto string = "aaaaa"s;
 
-		Entity_v2 entity_v2_1(data);
+		Entity_v2 entity_v2_1(string);
 
 		Entity_v2 entity_v2_2("bbbbb"s);
 
@@ -152,7 +152,7 @@ int main()
 
 		Entity_v2 entity_v2_4(std::move(entity_v2_2));
 
-		const Entity_v2 entity_v2_5(data);
+		const Entity_v2 entity_v2_5(string);
 
     	Entity_v2 entity_v2_6(entity_v2_5);
 	}
@@ -160,9 +160,9 @@ int main()
 //  --------------------------------------------------
 
 	{
-		auto data = "aaaaa"s;
+		auto string = "aaaaa"s;
 
-		Entity_v3 entity_v3_1(data);
+		Entity_v3 entity_v3_1(string);
 
 		Entity_v3 entity_v3_2("bbbbb"s);
 
@@ -174,9 +174,9 @@ int main()
 //  --------------------------------------------------
 
 	{
-		auto data = "aaaaa"s;
+		auto string = "aaaaa"s;
 
-		Entity_v4 entity_v4_1(data);
+		Entity_v4 entity_v4_1(string);
 
 		Entity_v4 entity_v4_2("bbbbb"s);
 

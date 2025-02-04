@@ -12,11 +12,11 @@ public:
 
 	Entity() = default;
 
-	Entity(int data_1, int data_2) : m_data_1(data_1), m_data_2(data_2) {}
+	Entity(int x, int y) : m_data_1(x), m_data_2(y) {}
 
-//	Entity(int data_1, int data_2) : m_data_2(data_2), m_data_1(data_1) {} // error
+//	Entity(int x, int y) : m_data_2(x), m_data_1(y) {} // error
 
-	Entity(int data_1) : Entity(data_1, 0) 
+	Entity(int x) : Entity(x, 0) 
 	{
 //		m_data_2 = 1; // error
 	}
@@ -40,11 +40,11 @@ public:
 
 //  -------------------------------------------------------------------------------
 
-//	void set_data_1(int data) { m_data_1 = data; } // bad
+//	void set_data_1(int x) { m_data_1 = x; } // bad
 
-	void set_data_1(int data) 
+	void set_data_1(int x) 
 	{ 
-		m_data_1 = data; 
+		m_data_1 = x; 
 		
 		m_cache.set_invalid(); 
 	}

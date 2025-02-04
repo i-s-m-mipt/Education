@@ -15,9 +15,9 @@ void transform(const std::string & path_1, const std::string & path_2)
     {
         std::istreambuf_iterator < char > begin(stream_1), end;
 
-        std::string data(begin, end);
+        std::string string(begin, end);
 
-        for (auto iterator = std::begin(data); iterator != std::end(data); ++iterator) 
+        for (auto iterator = std::begin(string); iterator != std::end(string); ++iterator) 
         {
             if (*iterator == '\'')
             {
@@ -43,12 +43,12 @@ void transform(const std::string & path_1, const std::string & path_2)
                 {
                     auto last = std::next(iterator, 2);
 
-                    while (last != std::end(data) && *last != '\n')
+                    while (last != std::end(string) && *last != '\n')
                     {
                         ++last;
                     }
 
-                    iterator = data.erase(iterator, last);
+                    iterator = string.erase(iterator, last);
                 }
                 else if (*std::next(iterator) == '*')
                 {
@@ -59,11 +59,11 @@ void transform(const std::string & path_1, const std::string & path_2)
                         ++last;
                     }
 
-                    iterator = data.erase(iterator, ++last);
+                    iterator = string.erase(iterator, ++last);
                 }
             }
 
-            if (iterator == std::end(data)) 
+            if (iterator == std::end(string)) 
             {
                 break;
             }
@@ -71,7 +71,7 @@ void transform(const std::string & path_1, const std::string & path_2)
 
         if (std::fstream stream_2(path_2, std::ios::out); stream_2)
         {
-            stream_2 << data;
+            stream_2 << string;
         }
         else 
         {

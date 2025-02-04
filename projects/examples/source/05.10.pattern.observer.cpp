@@ -11,7 +11,7 @@ public:
 
 //  --------------------------------------
 
-    virtual void test(int data) const = 0;
+    virtual void test(int x) const = 0;
 };
 
 //////////////////////////////////////////////////////////////
@@ -38,9 +38,9 @@ public:
         m_observers.push_back(observer); 
     }
 
-    void set(int data) 
+    void set(int x) 
     { 
-        m_data = data; notify_observers();
+        m_data = x; notify_observers();
     }
 
     void notify_observers() const
@@ -65,9 +65,9 @@ class Client : public Observer
 {
 public:
 
-    void test(int data) const override
+    void test(int x) const override
     {
-        std::cout << "Client::test : data = " << data << '\n';
+        std::cout << "Client::test : x = " << x << '\n';
     }
 };
 
@@ -77,9 +77,9 @@ class Server : public Observer
 {
 public:
 
-    void test(int data) const override
+    void test(int x) const override
     {
-        std::cout << "Server::test : data = " << data << '\n';
+        std::cout << "Server::test : x = " << x << '\n';
     }
 };
 

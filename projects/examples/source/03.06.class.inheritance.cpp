@@ -9,7 +9,7 @@ public:
 
 	Entity() = default;
 
-	Entity(int data) : m_data(data) {}
+	Entity(int x) : m_data(x) {}
 
 //  ----------------------------------------------------------
 
@@ -35,9 +35,9 @@ class Client : public Entity
 {
 public:
 
-	Client(int data_1, int data_2) : Entity(data_1), m_data(data_2)
+	Client(int x, int y) : Entity(x), m_data(y)
 	{
-		assert(data() == data_1);
+		assert(data() == x);
 	}
 
 //  ---------------------------------------------------------------
@@ -97,10 +97,12 @@ private:
 int main()
 {
 	{
-//		assert(Entity(1).data() == 1); // error
+		Entity entity(1);
+
+//		assert(entity.data() == 1); // error
 	}
 
-//  -------------------------------------------
+//  ----------------------------------------
 
 	{
 		Client client(1, 1);
@@ -112,7 +114,7 @@ int main()
 		assert(client.data() == 1);
 	}
 
-//  -------------------------------------------
+//  ----------------------------------------
 
 	{	
 		Server_v1 server_v1;
@@ -124,7 +126,7 @@ int main()
 		server_v1.test();
 	}
 
-//  -------------------------------------------
+//  ----------------------------------------
 
 	{
 		Server_v2().test();

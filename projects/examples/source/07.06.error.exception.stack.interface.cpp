@@ -7,19 +7,19 @@ template < typename T, typename C = std::vector < T > > class Stack
 {
 public:
 
-	void push(T data)
+	void push(T x)
 	{
-		m_container.push_back(std::move(data));
+		m_data.push_back(std::move(x));
 	}
 
 	auto top() const
 	{ 
-		return m_container.back();
+		return m_data.back();
 	}
 
 	void pop()
 	{ 
-		m_container.pop_back();
+		m_data.pop_back();
 	}
 
 //	auto pop() // bad
@@ -29,7 +29,7 @@ public:
 
 private:
 
-	C m_container;
+	C m_data;
 };
 
 //  ================================================================================================

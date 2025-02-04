@@ -1,6 +1,6 @@
 module;
 
-#define DEBUG(data) std::cout << __func__ << " : " << data << '\n'
+#define DEBUG(string) std::cout << __func__ << " : " << string << '\n'
 
 export module demo;
 

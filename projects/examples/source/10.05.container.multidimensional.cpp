@@ -14,7 +14,7 @@ public:
 	{
 	public:
 
-		View(T * data) : m_data(data) {}
+		View(T * ptr) : m_data(ptr) {}
 
 	//  ------------------------------------
 

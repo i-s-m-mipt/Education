@@ -11,7 +11,7 @@ class Entity
 {
 public:
 
-	Entity(int data) try : m_data(data)
+	Entity(int x) try : m_data(x)
 	{
 		if (m_data < 0)
 		{

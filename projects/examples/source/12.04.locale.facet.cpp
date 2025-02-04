@@ -82,7 +82,7 @@ int main() // support: locale -a
 
 		std::cout << "main : enter std::tm (Day MM/DD/YYYY) : ";
 
-		auto state = std::ios_base::goodbit; std::tm input;
+		auto state = std::ios_base::goodbit; std::tm tm;
 
 		auto format = "%A %x";
 
@@ -92,12 +92,12 @@ int main() // support: locale -a
 
 			std::istreambuf_iterator < char > (),
 			
-			std::cin, state, &input, format, format + std::strlen(format)
+			std::cin, state, &tm, format, format + std::strlen(format)
 		);
 
 		if (state != std::ios_base::goodbit) 
 		{
-			throw std::runtime_error("invalid data");
+			throw std::runtime_error("invalid format");
 		}
 	}
 }

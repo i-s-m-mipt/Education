@@ -10,9 +10,9 @@ public:
 
     Optional() = default;
 
-    Optional(T data) 
+    Optional(T x) 
     { 
-        initialize(data); 
+        initialize(x); 
     }
 
     Optional(const Optional & other) 
@@ -57,9 +57,9 @@ public:
 		return *this;
     } 
 
-    auto & operator=(T data) 
+    auto & operator=(T x) 
     {
-        destroy(); construct(data); 
+        destroy(); construct(x); 
         
         return *this;
     }
@@ -76,20 +76,20 @@ public:
         return !m_data;
     }
 
-    auto data   (      ) const { return *m_data; }
+    auto data   (   ) const { return *m_data; }
 
-    auto data_or(T data) const
+    auto data_or(T x) const
     { 
-        return m_data ? *m_data : data; 
+        return m_data ? *m_data : x; 
     }
 
 private:
 
-    void initialize(T data) 
+    void initialize(T x) 
     { 
         allocate(); 
         
-        construct(data); 
+        construct(x); 
     }
 
     void allocate() 
@@ -97,14 +97,14 @@ private:
         m_data = static_cast < T * > (operator new(sizeof(T), std::align_val_t(alignof(T))));
     }
 
-    void construct(T data) 
+    void construct(T x) 
     {
         if (!m_data) 
         {
             allocate(); 
         }
         
-        new(m_data) T(data); 
+        new(m_data) T(x); 
     }
 
     void uninitialize() 
@@ -139,9 +139,9 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > auto make_optional(T && data)
+template < typename T > auto make_optional(T && x)
 { 
-    return Optional < T > (std::forward < T > (data)); 
+    return Optional < T > (std::forward < T > (x)); 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////

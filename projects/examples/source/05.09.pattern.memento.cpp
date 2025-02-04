@@ -17,9 +17,9 @@ public:
         return m_states.front().data;
     }
 
-    void set(int data)
+    void set(int x)
     {
-        State state(data);
+        State state(x);
         
         m_deltas.push_back(state - m_states.front());
 

@@ -32,9 +32,9 @@ namespace parser
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-auto parse(std::string_view data)
+auto parse(std::string_view view)
 {
-    auto begin = std::begin(data), end = std::end(data);
+    auto begin = std::begin(view), end = std::end(view);
 
     auto skip = boost::spirit::x3::ascii::space;
 
@@ -44,7 +44,7 @@ auto parse(std::string_view data)
 
     if (!result || begin != end)
     {
-        throw std::runtime_error("invalid data");
+        throw std::runtime_error("invalid view");
     }
 
     return entity;

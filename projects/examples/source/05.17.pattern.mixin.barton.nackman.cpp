@@ -30,7 +30,7 @@ class Entity_v1 : private Comparable < Entity_v1 >
 {
 public:
 
-    Entity_v1(int data) : m_data(data) {}
+    Entity_v1(int x) : m_data(x) {}
 
 //  -------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ class Entity_v2
 {
 public:
 
-    Entity_v2(int data) : m_data(data) {}
+    Entity_v2(int x) : m_data(x) {}
 
 //  -------------------------------------------------------------------
 

@@ -12,9 +12,9 @@ template < typename ... Bs > class Router_v1 : public Bs ...
 {
 public:
 
-    template < typename ... Ts > Router_v1(int data, Ts && ... xs) 
+    template < typename ... Ts > Router_v1(int x, Ts && ... xs) 
     : 
-        Bs(std::forward < Ts > (xs))..., m_data(data)
+        Bs(std::forward < Ts > (xs))..., m_data(x)
     {}
 
 private:
@@ -36,9 +36,9 @@ template < template < typename T > typename ... Bs > class Router_v2
 {
 public:
 
-    template < typename ... Ts > Router_v2(int data, Ts && ... xs) 
+    template < typename ... Ts > Router_v2(int x, Ts && ... xs) 
     : 
-        Bs < Router_v2 > (std::forward < Ts > (xs))..., m_data(data)
+        Bs < Router_v2 > (std::forward < Ts > (xs))..., m_data(x)
     {}
 
 private:

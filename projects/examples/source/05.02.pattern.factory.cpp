@@ -68,7 +68,7 @@ public:
 
 private:
 
-    Router(int data) : m_data(data) {};
+    Router(int x) : m_data(x) {};
 
 //  -------------------------------------------------------
 

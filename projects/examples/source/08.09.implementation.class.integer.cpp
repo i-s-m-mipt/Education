@@ -376,7 +376,7 @@ private:
 		{
 			if (!std::isdigit(string[0]) && std::size(string) == 1)
 			{
-				throw std::runtime_error("invalid data");
+				throw std::runtime_error("invalid string");
 			}
 
 			std::ranges::for_each
@@ -385,7 +385,7 @@ private:
 				{ 
 					if (!std::isdigit(x)) 
 					{
-						throw std::runtime_error("invalid data"); 
+						throw std::runtime_error("invalid string"); 
 					}
 				}
 			);
@@ -408,7 +408,7 @@ private:
 		}
 		else 
 		{
-			throw std::runtime_error("invalid data");
+			throw std::runtime_error("invalid string");
 		}
 	}
 

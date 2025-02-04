@@ -10,11 +10,11 @@ template < typename T > class Stack_v1
 {
 public:
 
-    void push(T data)
+    void push(T x)
     {
-        auto max = std::empty(m_stack) ? data : std::max(data, m_stack.top().second);
+        auto max = std::empty(m_stack) ? x : std::max(x, m_stack.top().second);
 
-        m_stack.emplace(data, max);
+        m_stack.emplace(x, max);
     }
 
     auto top() const
@@ -43,19 +43,19 @@ template < typename T > class Stack_v2
 {
 public:
 
-    void push(T data)
+    void push(T x)
     {
         if (std::empty(m_stack)) 
         {
-            m_stack.push(data); m_max = m_stack.top();
+            m_stack.push(x); m_max = m_stack.top();
         }
-        else if (data > m_max) 
+        else if (x > m_max) 
         {
-            m_stack.push(2 * data - m_max); m_max = data;
+            m_stack.push(2 * x - m_max); m_max = x;
         }
         else 
         {
-            m_stack.push(data);
+            m_stack.push(x);
         }
     }
 

@@ -37,11 +37,11 @@ FUNCTION(v1) // support: cppinsights.io
 
 #if !defined(NDEBUG)
 
-#define DEBUG(message) std::cout << __func__ << " : " << message << '\n'
+#define DEBUG(string) std::cout << __func__ << " : " << string << '\n'
 
 #else
 
-#define DEBUG(message) ;
+#define DEBUG(string) ;
 
 #endif
 

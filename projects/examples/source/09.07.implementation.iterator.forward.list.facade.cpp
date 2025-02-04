@@ -56,9 +56,9 @@ public:
 
 //  --------------------------------------------------------------------------------------------
 
-	void push_back(T data)
+	void push_back(T x)
 	{
-		auto node = std::make_shared < Node > (data, nullptr);
+		auto node = std::make_shared < Node > (x, nullptr);
 
 		if (m_head)
 		{

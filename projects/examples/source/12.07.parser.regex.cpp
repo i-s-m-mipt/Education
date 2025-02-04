@@ -64,7 +64,7 @@ int main()
 //  -----------------------------------------------------------------------------------
 
     {
-        auto data = "12345aaaaa67890BBBBB"s; auto begin = std::cbegin(data);
+        auto string = "12345aaaaa67890BBBBB"s; auto begin = std::cbegin(string);
 
         std::smatch matches;
         
@@ -72,7 +72,7 @@ int main()
 
         std::vector < std::string > result;
 
-        while (std::regex_search(begin, std::cend(data), matches, pattern))
+        while (std::regex_search(begin, std::cend(string), matches, pattern))
         {
             result.push_back(matches[0]); // support: boost::tokenizer
 
@@ -85,7 +85,7 @@ int main()
 //  -----------------------------------------------------------------------------------
 
     {
-        auto data = "12345aaaaa67890BBBBB"s; auto begin = std::cbegin(data);
+        auto string = "12345aaaaa67890BBBBB"s; auto begin = std::cbegin(string);
 
         std::regex pattern(R"([a-z]{4}([a-z]{1}))", std::regex_constants::icase);
 
@@ -93,7 +93,7 @@ int main()
 
         std::ranges::for_each
         (
-            std::sregex_iterator(begin, std::cend(data), pattern), 
+            std::sregex_iterator(begin, std::cend(string), pattern), 
 
             std::sregex_iterator(), 
             
@@ -106,7 +106,7 @@ int main()
 //  -----------------------------------------------------------------------------------
 
     {
-        auto data = "12345aaaaa67890BBBBB"s; auto begin = std::cbegin(data);
+        auto string = "12345aaaaa67890BBBBB"s; auto begin = std::cbegin(string);
 
         std::regex pattern(R"([a-z]{4}([a-z]{1}))", std::regex_constants::icase);
 
@@ -114,7 +114,7 @@ int main()
 
         std::ranges::for_each
         (
-            std::sregex_token_iterator(begin, std::cend(data), pattern, { 0, 1 }),
+            std::sregex_token_iterator(begin, std::cend(string), pattern, { 0, 1 }),
             
             std::sregex_token_iterator(), 
             

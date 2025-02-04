@@ -10,7 +10,7 @@ class Exception : public std::exception
 {
 public:
 
-	Exception(int data) : m_data(data) {}
+	Exception(int x) : m_data(x) {}
 
 //  -------------------------------------------
 
