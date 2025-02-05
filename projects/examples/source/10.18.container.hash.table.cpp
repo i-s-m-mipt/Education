@@ -30,17 +30,17 @@ void test(const std::unordered_set < std::string > & unordered_set)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-auto make_strings(std::size_t size, std::size_t length)
+auto make_strings(std::size_t size_1, std::size_t size_2)
 {
 	std::set < std::string > strings;
 
-	std::string string(length, '_');
+	std::string string(size_2, '_');
 
 	std::default_random_engine engine;
 
 	std::uniform_int_distribution distribution(97, 122);
     
-	while (std::size(strings) < size)
+	while (std::size(strings) < size_1)
     {
         for (auto & element : string) 
 		{

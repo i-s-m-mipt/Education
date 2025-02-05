@@ -22,17 +22,17 @@ int main()
 	{
 		std::allocator < std::string > allocator;
 
-		std::allocator_traits < decltype(allocator) > allocator_traits;
+		std::allocator_traits < decltype(allocator) > traits;
 
-		auto ptr = allocator_traits.allocate(allocator, 1);
+		auto ptr = traits.allocate(allocator, 1);
 
 //		assert(std::empty(*ptr)); // bad
 
-		allocator_traits.construct (allocator, ptr, "aaaaa");
+		traits.construct (allocator, ptr, "aaaaa");
 
-		allocator_traits.destroy   (allocator, ptr);
+		traits.destroy   (allocator, ptr);
 
-		allocator_traits.deallocate(allocator, ptr, 1);
+		traits.deallocate(allocator, ptr, 1);
 	}
 
 //  --------------------------------------------------------------------------

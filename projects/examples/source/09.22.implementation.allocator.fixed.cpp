@@ -15,15 +15,15 @@ template < std::size_t S > class Allocator : private boost::noncopyable
 {
 public:
 
-	auto allocate(std::size_t size, std::size_t alignment = s_default_alignment) -> void *
+	auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
 	{
 		void * begin = m_begin + m_offset;
 
-		auto space = S - m_offset;
+		auto free = S - m_offset;
 
-		if (begin = std::align(alignment, size, begin, space); begin)
+		if (begin = std::align(alignment, size, begin, free); begin)
 		{
-			m_offset = S - space + size; 
+			m_offset = S - free + size; 
 			
 			return begin;
 		}
@@ -56,7 +56,7 @@ private:
 
 //  ------------------------------------------------------------------------------------------------
 
-	static inline auto s_default_alignment = alignof(std::max_align_t);
+	static inline auto s_alignment = alignof(std::max_align_t);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

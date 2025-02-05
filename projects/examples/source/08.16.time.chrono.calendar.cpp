@@ -11,11 +11,11 @@ int main()
 
 		auto delta = std::chrono::system_clock::now() - local;
 
-		std::chrono::hh_mm_ss hh_mm_ss(delta);
+		std::chrono::hh_mm_ss time(delta);
 
-		std::cout << "main : hh_mm_ss = " << hh_mm_ss << '\n';
+		std::cout << "main : time = " << time << '\n';
 
-		assert(hh_mm_ss.to_duration() == delta);
+		assert(time.to_duration() == delta);
 	}
 
 //  ---------------------------------------------------------------------------------------------
@@ -23,11 +23,11 @@ int main()
 	{
 		auto local = std::chrono::floor < std::chrono::days > (std::chrono::system_clock::now());
 
-		std::chrono::year_month_day year_month_day(local);
+		std::chrono::year_month_day date(local);
 
-		std::cout << "main : year_month_day = " << year_month_day << '\n';
+		std::cout << "main : date = " << date << '\n';
 
-		assert(std::chrono::sys_days(year_month_day) == local);
+		assert(std::chrono::sys_days(date) == local);
 	}
 
 //  ---------------------------------------------------------------------------------------------

@@ -72,9 +72,7 @@ int main()
 
 		assert(x == 2 && y == 1);
 
-		x = x + y; 
-		y = x - y; 
-		x = x - y;
+		x = x + y; y = x - y; x = x - y;
 
 		assert(x == 1 && y == 2);
 	}

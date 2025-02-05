@@ -90,13 +90,13 @@ int main()
 //  --------------------------------------------------------------------------------
 
 	{
-		auto epoch = std::chrono::system_clock::time_point();
-
-		std::cout << "main : epoch = " << epoch << '\n';
-
 		auto local = std::chrono::system_clock::now();
 	
 		std::cout << "main : local = " << local << '\n';
+
+		auto epoch = std::chrono::system_clock::time_point();
+
+		std::cout << "main : epoch = " << epoch << '\n';		
 
 		assert(std::chrono::system_clock::to_time_t(local) == time(nullptr));
 	}

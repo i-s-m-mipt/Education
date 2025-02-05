@@ -62,14 +62,14 @@ public:
 
 		if (m_head)
 		{
-			auto last = m_head; 
+			auto tail = m_head; 
 			
-			while (last->next) 
+			while (tail->next) 
 			{
-				last = last->next;
+				tail = tail->next;
 			} 
 			
-			last->next = node;
+			tail->next = node;
 		}
 		else
 		{

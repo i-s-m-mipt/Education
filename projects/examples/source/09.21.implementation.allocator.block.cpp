@@ -23,7 +23,7 @@ public:
     {
         if (m_size >= sizeof(Node) + 1) 
         {
-            m_begin = operator new(m_size, std::align_val_t(s_default_alignment));
+            m_begin = operator new(m_size, std::align_val_t(s_alignment));
 
 	        m_head = get_node(m_begin); 
             
@@ -41,7 +41,7 @@ public:
     {
         if (m_begin)
         {
-            operator delete(m_begin, m_size, std::align_val_t(s_default_alignment));
+            operator delete(m_begin, m_size, std::align_val_t(s_alignment));
         }
     }
 
@@ -51,9 +51,9 @@ public:
     {
 	    void * end = get_byte(m_begin) + sizeof(Header) + size, * next = end;
 
-	    auto space = 2 * alignof(Header);
+	    auto free = 2 * alignof(Header);
 
-        if (next = std::align(alignof(Header), sizeof(Header), next, space); next)
+        if (next = std::align(alignof(Header), sizeof(Header), next, free); next)
         {
             auto padding = get_byte(next) - get_byte(end);
 
@@ -61,11 +61,11 @@ public:
             {
                 if (current->size >= size + padding + sizeof(Node) + 1)
                 {
-                    auto block_size = sizeof(Header) + size + padding;
+                    auto step = sizeof(Header) + size + padding;
 
-                    auto node = get_node(get_byte(current) + block_size);
+                    auto node = get_node(get_byte(current) + step);
 
-                    node->size = current->size - block_size;
+                    node->size = current->size - step;
                        
                     node->next = current->next; current->next = node;
                 }
@@ -216,7 +216,7 @@ private:
 
 //  -----------------------------------------------------------------------------------------------
 
-    static inline auto s_default_alignment = alignof(std::max_align_t);
+    static inline auto s_alignment = alignof(std::max_align_t);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -152,6 +152,6 @@ int main()
 
 		vector.resize(1'000);
 
-		[[maybe_unused]] auto x = *begin; // support: -D_GLIBCXX_DEBUG
+		std::ignore = *begin; // support: -D_GLIBCXX_DEBUG
 	}
 }

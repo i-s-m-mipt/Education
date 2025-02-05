@@ -33,15 +33,15 @@ struct Entity_v2 { std::uint32_t x      = 0, y      = 0; };
 
 void test_v1(benchmark::State & state)
 {
-    std::vector < Entity_v1 > entities_v1(1'000);
+    std::vector < Entity_v1 > entities(1'000);
 
     for (auto element : state)
     {
-        for (auto i = 1uz; i < std::size(entities_v1); ++i)
+        for (auto i = 1uz; i < std::size(entities); ++i)
         {
-            entities_v1[i].x = i;
+            entities[i].x = i;
 
-            entities_v1[i].y = entities_v1[i].x + entities_v1[i - 1].y;
+            entities[i].y = entities[i].x + entities[i - 1].y;
         }
     }
 }
@@ -50,15 +50,15 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state)
 {
-    std::vector < Entity_v2 > entities_v2(1'000);
+    std::vector < Entity_v2 > entities(1'000);
 
     for (auto element : state)
     {        
-        for (auto i = 1uz; i < std::size(entities_v2); ++i)
+        for (auto i = 1uz; i < std::size(entities); ++i)
         {
-            entities_v2[i].x = i;
+            entities[i].x = i;
 
-            entities_v2[i].y = entities_v2[i].x + entities_v2[i - 1].y;
+            entities[i].y = entities[i].x + entities[i - 1].y;
         }
     }
 }

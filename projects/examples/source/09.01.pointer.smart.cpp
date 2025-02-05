@@ -7,7 +7,7 @@
 
 #include <boost/noncopyable.hpp>
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 template < typename T > class RAII : private boost::noncopyable
 {
@@ -28,16 +28,18 @@ private:
 	T * m_data = nullptr;
 }; 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 void test_v1(std::shared_ptr < int > , int) {}
+
+//////////////////////////////////////////////////////////////////////////
 
 [[noreturn]] int test_v2() 
 {
 	throw std::runtime_error("error");
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 class Client
 {
@@ -53,7 +55,7 @@ public:
 	std::shared_ptr < class Server > server;
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 class Server
 {
@@ -69,7 +71,7 @@ public:
 	std::weak_ptr < class Client > client;
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 class Entity 
 {
@@ -85,7 +87,7 @@ public:
 	}
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 class Router : public Entity 
 {
@@ -97,7 +99,7 @@ public:
 	}
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -105,27 +107,27 @@ int main()
 		RAII < int > raii(1);
 	}
 
-//  -----------------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
 	{
-		std::shared_ptr < int > shared_ptr_1;
+		std::shared_ptr < int > ptr_1;
 
-		std::shared_ptr < int > shared_ptr_2(new auto(2)); 
+		std::shared_ptr < int > ptr_2(new auto(2)); 
 
-		std::shared_ptr < int > shared_ptr_3(shared_ptr_2);
+		std::shared_ptr < int > ptr_3(ptr_2);
 
-		assert(shared_ptr_2.use_count() == 2 && *shared_ptr_2 == 2);
+		assert(ptr_2.use_count() == 2 && *ptr_2 == 2);
 
-		assert(shared_ptr_3.use_count() == 2 && *shared_ptr_3 == 2);
+		assert(ptr_3.use_count() == 2 && *ptr_3 == 2);
 
-		shared_ptr_3.reset(new auto(3));
+		ptr_3.reset(new auto(3));
 
-		assert(shared_ptr_2.use_count() == 1 && *shared_ptr_2 == 2);
+		assert(ptr_2.use_count() == 1 && *ptr_2 == 2);
 
-		assert(shared_ptr_3.use_count() == 1 && *shared_ptr_3 == 3);
+		assert(ptr_3.use_count() == 1 && *ptr_3 == 3);
 	}	
 
-//  -----------------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
 	{
 		auto ptr_1 = new auto(1);
@@ -135,12 +137,12 @@ int main()
 		delete ptr_1;
 	}
 
-//  -----------------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
 	{
 //		test_v1(std::shared_ptr < int > (new auto(1)), test_v2()); // bad
 
-		auto shared_ptr = std::make_shared < int > (1);
+		auto ptr = std::make_shared < int > (1);
 
 		try
 		{
@@ -149,42 +151,38 @@ int main()
 		catch (...) {}
 	}
 
-//  -----------------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
 	{
-//		std::shared_ptr < int > shared_ptr_1(new int[5]{ 1, 2, 3, 4, 5 }); // bad
+//		std::shared_ptr < int > ptr_1(new int[5]{ 1, 2, 3, 4, 5 }); // bad
 
-		std::shared_ptr < int > shared_ptr_2
+		std::shared_ptr < int > ptr_2
 		(
 			new int[5]{ 1, 2, 3, 4, 5 }, std::default_delete < int[] > ()
 		);
 
-//		assert(shared_ptr_2[0] == 1); // error
+//		assert(ptr_2[0] == 1); // error
 
-		std::shared_ptr < int[] > shared_ptr_3(new int[5]{ 1, 2, 3, 4, 5 });
+		std::shared_ptr < int[] > array(new int[5]{ 1, 2, 3, 4, 5 });
 
-		assert(shared_ptr_3[0] == 1);
+		assert(array[0] == 1);
 
-//		assert(*shared_ptr_3 == 1 && *(shared_ptr_3 + 1) == 2); // error
+//		assert(*array == 1 && *(array + 1) == 2); // error
 	}
 
-//  -----------------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
 	{
-		auto shared_ptr = std::make_shared < int > (1);
+		auto ptr_1 = std::make_shared < int > (1);
 
-		std::weak_ptr < int > weak_ptr = shared_ptr;
+		std::weak_ptr < int > ptr_2 = ptr_1;
 
-		assert(weak_ptr.use_count() == 1);
+		assert(ptr_2.use_count() == 1 && *ptr_2.lock() == 1);
 
-		*weak_ptr.lock() = 1;
-
-		shared_ptr.reset();
-
-		assert(weak_ptr.expired());
+		ptr_1.reset(); assert(ptr_2.expired());
 	}
 
-//  -----------------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
 	{
 		auto client         = std::make_shared < Client > (); 
@@ -194,15 +192,15 @@ int main()
 			 client->server->client = client;
 	}
 
-//  -----------------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
 	{
-		auto unique_ptr_1 = std::make_unique < int > (1);
+		auto ptr_1 = std::make_unique < int > (1);
 
-		auto unique_ptr_2 = std::move(unique_ptr_1);
+		auto ptr_2 = std::move(ptr_1);
 
-		std::unique_ptr < Entity > unique_ptr_3 = std::make_unique < Router > ();
+		std::unique_ptr < Entity > ptr_3 = std::make_unique < Router > ();
 
-		unique_ptr_3->test();
+		ptr_3->test();
 	}
 }

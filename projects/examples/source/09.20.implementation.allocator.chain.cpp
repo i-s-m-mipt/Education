@@ -18,9 +18,9 @@ class Allocator : private boost::noncopyable
 {
 public:
 
-	Allocator(std::size_t size, std::size_t size_node) : m_size(size), m_size_node(size_node)
+	Allocator(std::size_t size, std::size_t step) : m_size(size), m_step(step)
 	{
-		if (m_size % m_size_node == 0 && m_size_node >= sizeof(Node))
+		if (m_size % m_step == 0 && m_step >= sizeof(Node))
 		{
 			make_chain(); m_begin = m_head;
 		}
@@ -36,7 +36,7 @@ public:
 		{
 			if (chain)
 			{
-				operator delete(chain, m_size, std::align_val_t(s_default_alignment));
+				operator delete(chain, m_size, std::align_val_t(s_alignment));
 			}
 		}
 	}
@@ -61,7 +61,7 @@ public:
 
 		if (!node->next)
 		{
-			auto next = get_byte(node) + m_size_node;
+			auto next = get_byte(node) + m_step;
 
 			if (next != get_byte(m_chains[m_offset - 1]) + m_size)
 			{
@@ -93,7 +93,7 @@ public:
 	{ 
 		std::cout << "Allocator::test : ";
 
-		std::cout << "m_size = "   << m_size << ' ' << "m_size_node = " << m_size_node << ' ';
+		std::cout << "m_size = "   << m_size << ' ' << "m_step = " << m_step << ' ';
 
 		std::cout << "m_begin = "  << std::format("{:018}", m_begin) << ' ';
 
@@ -125,7 +125,7 @@ private:
 
 	auto allocate_nodes() const
 	{
-		auto node = get_node(operator new(m_size, std::align_val_t(s_default_alignment)));
+		auto node = get_node(operator new(m_size, std::align_val_t(s_alignment)));
 		
 		node->next = nullptr; 
 		
@@ -139,7 +139,7 @@ private:
 
 //  -----------------------------------------------------------------------------------------------
 
-	std::size_t m_size = 0, m_size_node = 0, m_offset = 0;
+	std::size_t m_size = 0, m_step = 0, m_offset = 0;
 
 	void * m_begin = nullptr; Node * m_head = nullptr;
 
@@ -147,7 +147,7 @@ private:
 
 //  -----------------------------------------------------------------------------------------------
 
-	static inline auto s_default_alignment = alignof(std::max_align_t);
+	static inline auto s_alignment = alignof(std::max_align_t);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

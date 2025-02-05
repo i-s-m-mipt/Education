@@ -111,17 +111,17 @@ auto factorial(int x)
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-auto make_strings(std::size_t size, std::size_t length)
+auto make_strings(std::size_t size_1, std::size_t size_2)
 {
 	std::set < std::string > strings;
 
-	std::string string(length, '_');
+	std::string string(size_2, '_');
 
 	std::default_random_engine engine;
 
 	std::uniform_int_distribution distribution(97, 122);
     
-	while (std::size(strings) < size)
+	while (std::size(strings) < size_1)
     {
         for (auto & element : string) 
 		{
@@ -150,7 +150,7 @@ auto hash(const std::string & string) -> std::size_t
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-void make_plot(const std::string & string)
+void make_plot(const std::string & points)
 {
 	Python python;
 
@@ -158,7 +158,7 @@ void make_plot(const std::string & string)
 	{
 		boost::python::exec("from script import make_plot", python.local(), python.local());
 
-		python.local()["make_plot"](string.c_str(), "hash");
+		python.local()["make_plot"](points.c_str(), "hash");
 	}
 	catch (const boost::python::error_already_set &)
 	{

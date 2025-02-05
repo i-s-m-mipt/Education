@@ -33,11 +33,11 @@ public:
         m_states.front() = m_states.at(index);
     }
 
-    void load_v2(std::size_t shift)
+    void load_v2(std::size_t index)
     {
         State state;
 
-        for (auto i = 0uz; i < shift && i < std::size(m_deltas); ++i)
+        for (auto i = 0uz; i < index && i < std::size(m_deltas); ++i)
         {
             state = state + m_deltas[i];
         }

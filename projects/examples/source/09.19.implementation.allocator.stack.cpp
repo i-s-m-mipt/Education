@@ -19,28 +19,28 @@ public:
 
 	Allocator(std::size_t size) : m_size(size)
 	{
-		m_begin = operator new(m_size, std::align_val_t(s_default_alignment));
+		m_begin = operator new(m_size, std::align_val_t(s_alignment));
 	}
 
    ~Allocator()
 	{
 		if (m_begin)
 		{
-			operator delete(m_begin, m_size, std::align_val_t(s_default_alignment));
+			operator delete(m_begin, m_size, std::align_val_t(s_alignment));
 		}
 	}
 
 //  -------------------------------------------------------------------------------------------
 
-	auto allocate(std::size_t size, std::size_t alignment = s_default_alignment) -> void *
+	auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
 	{
 		void * begin = get_byte(m_begin) + m_offset;
 
 		void * block = get_byte(begin) + sizeof(Header);
 
-		auto space = m_size - m_offset - sizeof(Header);
+		auto free = m_size - m_offset - sizeof(Header);
 
-		if (block = std::align(alignment, size, block, space); block)
+		if (block = std::align(alignment, size, block, free); block)
 		{
 			auto header = get_header(get_byte(block) - sizeof(Header));
 
@@ -98,7 +98,7 @@ private:
 
 //  -------------------------------------------------------------------------------------------
 
-	static inline auto s_default_alignment = alignof(std::max_align_t);
+	static inline auto s_alignment = alignof(std::max_align_t);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

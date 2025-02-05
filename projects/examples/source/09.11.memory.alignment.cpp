@@ -21,18 +21,18 @@ struct alignas(64) Entity_v6 { std::uint8_t x = 0; };
 
 void test_v1(benchmark::State & state)
 {
-	std::vector < Entity_v5 > entities_v5(1'000);
+	std::vector < Entity_v5 > entities(1'000);
 	
     for (auto element : state)
     {
-		entities_v5.front().x = 1;
+		entities.front().x = 1;
 
-		for (auto i = 1uz; i < std::size(entities_v5); ++i) 
+		for (auto i = 1uz; i < std::size(entities); ++i) 
 		{
-			entities_v5[i].x = entities_v5[i - 1].x + 1;
+			entities[i].x = entities[i - 1].x + 1;
 		}
 
-		benchmark::DoNotOptimize(entities_v5);
+		benchmark::DoNotOptimize(entities);
     }
 }
 
@@ -40,18 +40,18 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state)
 {
-	std::vector < Entity_v6 > entities_v6(1'000);
+	std::vector < Entity_v6 > entities(1'000);
 	
     for (auto element : state)
     {
-		entities_v6.front().x = 1;
+		entities.front().x = 1;
 
-		for (auto i = 1uz; i < std::size(entities_v6); ++i) 
+		for (auto i = 1uz; i < std::size(entities); ++i) 
 		{
-			entities_v6[i].x = entities_v6[i - 1].x + 1;
+			entities[i].x = entities[i - 1].x + 1;
 		}
 
-		benchmark::DoNotOptimize(entities_v6);
+		benchmark::DoNotOptimize(entities);
     }
 }
 
