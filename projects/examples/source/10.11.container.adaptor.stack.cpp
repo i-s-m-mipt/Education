@@ -12,29 +12,29 @@ public:
 
     void push(T x)
     {
-        auto max = std::empty(m_stack) ? x : std::max(x, m_stack.top().second);
+        auto max = std::empty(m_data) ? x : std::max(x, m_data.top().second);
 
-        m_stack.emplace(x, max);
+        m_data.emplace(x, max);
     }
 
     auto top() const
     { 
-        return m_stack.top().first; 
+        return m_data.top().first; 
     }
  
     void pop() 
     { 
-        m_stack.pop(); 
+        m_data.pop(); 
     }
  
     auto max() const
     { 
-        return m_stack.top().second; 
+        return m_data.top().second; 
     }
 
 private:
 
-    std::stack < std::pair < T, T > > m_stack;
+    std::stack < std::pair < T, T > > m_data;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -45,33 +45,33 @@ public:
 
     void push(T x)
     {
-        if (std::empty(m_stack)) 
+        if (std::empty(m_data)) 
         {
-            m_stack.push(x); m_max = m_stack.top();
+            m_data.push(x); m_max = m_data.top();
         }
         else if (x > m_max) 
         {
-            m_stack.push(2 * x - m_max); m_max = x;
+            m_data.push(2 * x - m_max); m_max = x;
         }
         else 
         {
-            m_stack.push(x);
+            m_data.push(x);
         }
     }
 
     auto top() const
     {
-        return m_stack.top() > m_max ? m_max : m_stack.top();
+        return m_data.top() > m_max ? m_max : m_data.top();
     }
 
     void pop()
     {
-        if (auto t = m_stack.top(); t > m_max) 
+        if (auto t = m_data.top(); t > m_max) 
         {
             (m_max *= 2) -= t;
         }
 
-        m_stack.pop();
+        m_data.pop();
     }
  
     auto max() const
@@ -81,7 +81,7 @@ public:
  
 private:
 
-    std::stack < T > m_stack; T m_max = T();
+    std::stack < T > m_data; T m_max = T();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////

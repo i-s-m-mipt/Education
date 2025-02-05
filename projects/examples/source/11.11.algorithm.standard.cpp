@@ -78,17 +78,17 @@ int main()
 
 		std::shuffle(std::begin(vector), std::end(vector), engine);
 
-		auto position = std::size(vector) / 2;
+		auto offset = std::size(vector) / 2;
 
-		auto iterator = std::next(std::begin(vector), position);
+		auto iterator = std::next(std::begin(vector), offset);
 
 		std::nth_element(std::begin(vector), iterator, std::end(vector));
 
 		for (auto i = 0uz; i < std::size(vector); ++i)
 		{
-			if (i < position) { assert(vector[i] <= vector[position]); }
+			if (i < offset) { assert(vector[i] <= vector[offset]); }
 
-			if (i > position) { assert(vector[i] >= vector[position]); }
+			if (i > offset) { assert(vector[i] >= vector[offset]); }
 		}
 	}
 
@@ -111,11 +111,11 @@ int main()
 	{
 		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-		auto is_four = [](auto x){ return x == 4; };
+		auto lambda_1 = [](auto x){ return x == 4; };
 
-		auto is_five = [](auto x){ return x == 5; };
+		auto lambda_2 = [](auto x){ return x == 5; };
 
-		std::erase_if(vector, bind(is_four, is_five, std::logical_or <> ()));
+		std::erase_if(vector, bind(lambda_1, lambda_2, std::logical_or <> ()));
 
 		assert(vector == std::vector < int > ({ 1, 2, 3 }));
 	}

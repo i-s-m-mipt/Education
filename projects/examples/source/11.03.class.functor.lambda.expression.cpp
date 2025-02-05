@@ -47,9 +47,9 @@ int main()
 
 //		[&](){ x = y; }(); // bad
 
-		auto unique_ptr_1 = std::make_unique < int > (1);
+		auto ptr_1 = std::make_unique < int > (1);
 
-		[unique_ptr_2 = std::move(unique_ptr_1)](){ assert(*unique_ptr_2 == 1); }();
+		[ptr_2 = std::move(ptr_1)](){ assert(*ptr_2 == 1); }();
 
 		Entity().test();
 	}

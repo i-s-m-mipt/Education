@@ -8,7 +8,7 @@
 
 auto find(const std::vector < int > & vector_1, const std::vector < int > & vector_2) 
 {
-	std::vector < std::vector < std::size_t > > vector_3
+	std::vector < std::vector < std::size_t > > buffer
 	(
 		std::size(vector_1) + 1, std::vector < std::size_t > 
 		(
@@ -22,11 +22,11 @@ auto find(const std::vector < int > & vector_1, const std::vector < int > & vect
 		{
 			if (vector_1[i - 1] == vector_2[j - 1])
 			{
-				vector_3[i][j] = vector_3[i - 1][j - 1] + 1;
+				buffer[i][j] = buffer[i - 1][j - 1] + 1;
 			}
 			else
 			{
-				vector_3[i][j] = std::max(vector_3[i - 1][j], vector_3[i][j - 1]);
+				buffer[i][j] = std::max(buffer[i - 1][j], buffer[i][j - 1]);
 			}
 		}
 	}
@@ -43,7 +43,7 @@ auto find(const std::vector < int > & vector_1, const std::vector < int > & vect
 		}
 		else 
 		{
-			vector_3[i][j + 1] > vector_3[i + 1][j] ? --i : --j;
+			buffer[i][j + 1] > buffer[i + 1][j] ? --i : --j;
 		}
 	}
 

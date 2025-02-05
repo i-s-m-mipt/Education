@@ -7,28 +7,28 @@
 #include <type_traits>
 #include <unordered_set>
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-void test(const std::unordered_set < std::string > & unordered_set)
+void test(const std::unordered_set < std::string > & set)
 {
-	auto load_factor = static_cast < int > (std::round(unordered_set.load_factor() * 100));
+	auto rate = static_cast < int > (std::round(set.load_factor() * 100));
 
-	std::cout << "test : load_factor = " << load_factor << "%\n";
+	std::cout << "test : rate = " << rate << "%\n";
 
-	for (auto i = 0uz; i < unordered_set.bucket_count(); ++i)
+	for (auto i = 0uz; i < set.bucket_count(); ++i)
 	{
 		std::cout << "test : buckets[" << std::format("{:0>3}", i) << "] = {";
 
-		for (auto iterator = unordered_set.begin(i); iterator != unordered_set.end(i); ++iterator)
+		for (auto iterator = set.begin(i); iterator != set.end(i); ++iterator)
 		{
 			std::cout << ' ' << *iterator;
 		}
 
-		std::cout << (unordered_set.bucket_size(i) > 0 ? " " : "") << "}\n";
+		std::cout << (set.bucket_size(i) > 0 ? " " : "") << "}\n";
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 auto make_strings(std::size_t size_1, std::size_t size_2)
 {
@@ -53,7 +53,7 @@ auto make_strings(std::size_t size_1, std::size_t size_2)
 	return strings;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -66,19 +66,19 @@ int main()
 //  --------------------------------------------------------------------------------
 
 	{
-		std::unordered_set < std::string > unordered_set;
+		std::unordered_set < std::string > set;
 
-		test(unordered_set); unordered_set.rehash(32);
+		test(set); set.rehash(32);
 
-		test(unordered_set);
+		test(set);
 
-		for (const auto & string : make_strings(unordered_set.bucket_count(), 5))
+		for (const auto & string : make_strings(set.bucket_count(), 5))
 		{
-			unordered_set.insert(string);
+			set.insert(string);
 		}
 
-		test(unordered_set); unordered_set.rehash(64);
+		test(set); set.rehash(64);
 	
-		test(unordered_set);
+		test(set);
 	}
 }

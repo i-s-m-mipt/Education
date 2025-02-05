@@ -130,16 +130,16 @@ void test_v5(benchmark::State & state)
     {
         auto size = 100'000uz;
 
-        std::forward_list < int > forward_list(size, 0);
+        std::forward_list < int > list(size, 0);
 
-        for (auto state = size; auto & element : forward_list)
+        for (auto state = size; auto & element : list)
         {
             element = state--;
         } 
 
         auto begin = std::chrono::steady_clock::now();
 
-        forward_list.sort();
+        list.sort();
 
         auto delta = std::chrono::steady_clock::now() - begin;
 
@@ -148,7 +148,7 @@ void test_v5(benchmark::State & state)
             std::chrono::duration_cast < std::chrono::duration < double > > (delta).count()
         );
         
-        benchmark::DoNotOptimize(forward_list);
+        benchmark::DoNotOptimize(list);
     }
 }
 

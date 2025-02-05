@@ -70,13 +70,13 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		boost::bimap < int, int > bimap; // support: boost::bimaps::(multi)set_of
+		boost::bimap < int, int > map; // support: boost::bimaps::(multi)set_of
 
-		bimap.insert({ 1, 1 });
+		map.insert({ 1, 1 });
 
-		assert(bimap.left.count(1) == bimap.right.count(1));
+		assert(map.left.count(1) == map.right.count(1));
 
-		for (const auto & element : bimap) 
+		for (const auto & element : map) 
 		{
 			assert(element.left == element.right);
 		}

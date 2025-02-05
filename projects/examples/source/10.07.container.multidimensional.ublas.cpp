@@ -19,7 +19,7 @@ auto determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) -> 
     {
         if (size > 1)
         {
-            auto determinant = 0.0;
+            auto result = 0.0;
     
             for (auto i = 0uz; i < size; ++i) 
             {
@@ -36,10 +36,10 @@ auto determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) -> 
                     }
                 }
 
-                determinant += (i % 2 ? -1.0 : +1.0) * matrix(0, i) * determinant_v1(minor);
+                result += (i % 2 ? -1.0 : +1.0) * matrix(0, i) * determinant_v1(minor);
             }
 
-            return determinant;
+            return result;
         }
         else
         {
@@ -66,19 +66,19 @@ auto determinant_v2(const boost::numeric::ublas::matrix < double > & matrix)
 
             if (!boost::numeric::ublas::lu_factorize(copy, permutation))
             {
-                auto determinant = 1.0;
+                auto result = 1.0;
 
                 for (auto i = 0uz; i < copy.size1(); ++i)
                 {
                     if (permutation(i) != i) 
                     {
-                        determinant *= -1.0;
+                        result *= -1.0;
                     }
 
-                    determinant *= copy(i, i);
+                    result *= copy(i, i);
                 }
 
-                return determinant;
+                return result;
             }
             else 
             {

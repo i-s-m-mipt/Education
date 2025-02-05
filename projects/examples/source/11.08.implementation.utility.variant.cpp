@@ -240,7 +240,7 @@ public:
 
     void swap(Variant & other)
 	{
-        std::swap(this->m_data, other.m_data);
+        std::swap(this->m_data , other.m_data );
 
 		std::swap(this->m_index, other.m_index);
 	}

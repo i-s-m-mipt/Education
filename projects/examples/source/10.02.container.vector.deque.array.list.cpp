@@ -115,9 +115,9 @@ int main()
 	{
 		[[maybe_unused]] auto x { 1 };
 
-//		[[maybe_unused]] auto initializer_list_1   { 1, 2, 3, 4, 5 }; // error
+//		[[maybe_unused]] auto list_1   { 1, 2, 3, 4, 5 }; // error
 
-		[[maybe_unused]] auto initializer_list_2 = { 1, 2, 3, 4, 5 };
+		[[maybe_unused]] auto list_2 = { 1, 2, 3, 4, 5 };
 	}
 
 //  ------------------------------------------------------------------------------------------------
@@ -145,13 +145,13 @@ int main()
 	{
 		std::deque < int > deque = { 1, 2, 3, 4, 5 };
 
-		deque.push_back(1); 
+		deque.push_back(1);
 		
-		deque.push_front(1); 
+		deque.push_front(1);
 
 		deque.insert(std::next(std::begin(deque), std::size(deque) / 2), 1);
 
-		deque.pop_back(); 
+		deque.pop_back();
 		
 		deque.pop_front();
 
@@ -199,15 +199,15 @@ int main()
 //  ------------------------------------------------------------------------------------------------
 
 	{
-		std::forward_list < int > forward_list = { 1, 2, 3, 4, 5 };
+		std::forward_list < int > list = { 1, 2, 3, 4, 5 };
 
-		forward_list.insert_after(forward_list.before_begin(), 1);
+		list.insert_after(list.before_begin(), 1);
 
-		forward_list.erase_after(std::begin(forward_list)); 
+		list.erase_after(std::begin(list)); 
 
-		assert(forward_list == std::forward_list < int > ({ 1, 2, 3, 4, 5 }));
+		assert(list == std::forward_list < int > ({ 1, 2, 3, 4, 5 }));
 
-//		assert(std::size(forward_list) == 5); // error
+//		assert(std::size(list) == 5); // error
 	}
 
 //  ------------------------------------------------------------------------------------------------

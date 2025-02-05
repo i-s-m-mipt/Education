@@ -6,13 +6,13 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < std::size_t D, typename C, typename I > void fill_shape(const C & container, I iterator)
+template < std::size_t D, typename C, typename I > void fill_sizes(const C & container, I iterator)
 {
 	*iterator = std::size(container);
 
 	if constexpr (D > 1)
 	{
-		fill_shape < D - 1 > (*std::begin(container), ++iterator);
+		fill_sizes < D - 1 > (*std::begin(container), ++iterator);
 	}
 }
 
@@ -40,11 +40,11 @@ template < std::size_t D, typename C, typename I > void fill_array(const C & con
 
 template < typename T, std::size_t D, typename C > auto make_array(const C & container)
 {
-	std::vector < typename boost::multi_array < T, D > ::index > shape(D, 0);
+	std::vector < typename boost::multi_array < T, D > ::index > sizes(D, 0);
 
-	fill_shape < D > (container, std::begin(shape)); 
+	fill_sizes < D > (container, std::begin(sizes)); 
 	
-	boost::multi_array < T, D > array(shape);
+	boost::multi_array < T, D > array(sizes);
 	
 	fill_array < D > (container, std::begin(array));
 

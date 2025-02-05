@@ -40,18 +40,18 @@ int main()
 //  ----------------------------------------------------
 
 	{
-		std::priority_queue < int > priority_queue;
+		std::priority_queue < int > queue;
 
-		priority_queue.push(1);
+		queue.push(1);
 
-		priority_queue.push(3);
+		queue.push(3);
 
-		priority_queue.push(2);
+		queue.push(2);
 
-		assert(priority_queue.top() == 3);
+		assert(queue.top() == 3);
 
-		priority_queue.pop();
+		queue.pop();
 
-		assert(priority_queue.top() == 2);
+		assert(queue.top() == 2);
 	}
 }
