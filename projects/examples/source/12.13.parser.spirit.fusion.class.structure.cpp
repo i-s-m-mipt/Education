@@ -36,13 +36,13 @@ auto parse(std::string_view view)
 {
     auto begin = std::begin(view), end = std::end(view);
 
-    auto skip = boost::spirit::x3::ascii::space;
+    auto space = boost::spirit::x3::ascii::space;
 
     Entity entity;
 
-    auto result = boost::spirit::x3::phrase_parse(begin, end, parser::rule, skip, entity);
+    auto status = boost::spirit::x3::phrase_parse(begin, end, parser::rule, space, entity);
 
-    if (!result || begin != end)
+    if (!status || begin != end)
     {
         throw std::runtime_error("invalid view");
     }

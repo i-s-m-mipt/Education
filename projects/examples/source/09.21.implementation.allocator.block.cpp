@@ -57,7 +57,7 @@ public:
         {
             auto padding = get_byte(next) - get_byte(end);
 
-            if (auto [current, previous] = find_first(size + padding); current)
+            if (auto [current, previous] = find(size + padding); current)
             {
                 if (current->size >= size + padding + sizeof(Node) + 1)
                 {
@@ -132,7 +132,7 @@ public:
 
         std::cout << "m_begin = " << std::format("{:018}", m_begin) << ' ';
 
-        std::cout << "m_head = "  << std::format("{:018}", static_cast < void * > (m_head)) << ' '; 
+        std::cout << "m_head = "  << std::format("{:018}", static_cast < void * > (m_head)) << ' ';
 
         if (m_head->next)
         {
@@ -177,7 +177,7 @@ private:
 
 //  -----------------------------------------------------------------------------------------------
 
-    auto find_first(std::size_t size) const -> std::pair < Node * , Node * >
+    auto find(std::size_t size) const -> std::pair < Node * , Node * >
     {
         Node * current = m_head, * previous = nullptr;
 
@@ -267,7 +267,7 @@ void test_v2(benchmark::State & state)
 
     std::uniform_int_distribution distribution(1, 16);
 
-    std::vector < std::pair < void * , std::size_t > > blocks(kb);
+    std::vector < std::pair < void * , std::size_t > > ptrs(kb);
 
 	for (auto element : state)
 	{
@@ -275,24 +275,24 @@ void test_v2(benchmark::State & state)
         {
             auto size = distribution(engine) * mb; 
             
-            blocks[i].first = operator new(size); blocks[i].second = size;
+            ptrs[i].first = operator new(size); ptrs[i].second = size;
         }
         
 		for (auto i = 0uz; i < kb; i += 32) 
         {
-            operator delete(blocks[i].first, blocks[i].second);
+            operator delete(ptrs[i].first, ptrs[i].second);
         }
 
 		for (auto i = 0uz; i < kb; i += 32)
         {
             auto size = distribution(engine) * mb; 
             
-            blocks[i].first = operator new(size); blocks[i].second = size;
+            ptrs[i].first = operator new(size); ptrs[i].second = size;
         } 
         
 		for (auto i = 0uz; i < kb; ++i) 
         {
-            operator delete(blocks[i].first, blocks[i].second);
+            operator delete(ptrs[i].first, ptrs[i].second);
         }
 	}
 }

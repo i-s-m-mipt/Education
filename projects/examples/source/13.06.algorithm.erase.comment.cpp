@@ -90,7 +90,7 @@ int main()
 {
     auto path_1 = "13.07.algorithm.erase.comment.source.txt";
 
-	auto path_2 = "13.07.algorithm.erase.comment.result.txt";
+	auto path_2 = "13.07.algorithm.erase.comment.output.txt";
 
     transform(path_1, path_2);
 

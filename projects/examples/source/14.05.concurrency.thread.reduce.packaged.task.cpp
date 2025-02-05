@@ -32,13 +32,13 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 	{
 		auto concurrency = 1uz * std::max(std::thread::hardware_concurrency(), 2u);
 
-		std::vector < std::pair < std::future < T > , std::jthread > > results(concurrency - 1);
+		std::vector < std::pair < std::future < T > , std::jthread > > futures(concurrency - 1);
 
 		auto step = size / concurrency;
 
 		auto block_begin = begin, block_end = std::next(block_begin, step);
 
-		for (auto & result : results)
+		for (auto & future : futures)
 		{
 			auto range = std::ranges::subrange(block_begin, block_end);
 
@@ -46,9 +46,9 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 
 			std::packaged_task packaged_task(task);
 
-			result.first = packaged_task.get_future(); 
+			future.first = packaged_task.get_future(); 
 			
-			result.second = std::jthread(std::move(packaged_task), range);
+			future.second = std::jthread(std::move(packaged_task), range);
 
 			block_begin = block_end; block_end = std::next(block_begin, step);
 		}
@@ -57,9 +57,9 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 
 		sum += Task < decltype(range) > ()(range);
 
-		for (auto & result : results) 
+		for (auto & future : futures) 
 		{
-			sum += result.first.get();
+			sum += future.first.get();
 		}
 	}
 

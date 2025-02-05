@@ -8,11 +8,11 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename I > void advance(I & iterator, int distance, std::forward_iterator_tag)
+template < typename I > void advance(I & iterator, int offset, std::forward_iterator_tag)
 {
-	if (distance > 0) 
+	if (offset > 0) 
 	{
-		while (--distance >= 0)
+		while (--offset >= 0)
 		{
 			++iterator;
 		}
@@ -21,18 +21,18 @@ template < typename I > void advance(I & iterator, int distance, std::forward_it
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename I > void advance(I & iterator, int distance, std::bidirectional_iterator_tag)
+template < typename I > void advance(I & iterator, int offset, std::bidirectional_iterator_tag)
 {
-	if (distance > 0)
+	if (offset > 0)
 	{
-		while (--distance >= 0)
+		while (--offset >= 0)
 		{
 			++iterator;
 		} 
 	}
 	else
 	{
-		while (++distance <= 0)
+		while (++offset <= 0)
 		{
 			--iterator;
 		}
@@ -41,25 +41,25 @@ template < typename I > void advance(I & iterator, int distance, std::bidirectio
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename I > void advance(I & iterator, int distance, std::random_access_iterator_tag)
+template < typename I > void advance(I & iterator, int offset, std::random_access_iterator_tag)
 {
-	iterator += distance;
+	iterator += offset;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename I > void advance_v1(I & iterator, int distance)
+template < typename I > void advance_v1(I & iterator, int offset)
 {
-    advance(iterator, distance, typename std::iterator_traits < I > ::iterator_category());
+    advance(iterator, offset, typename std::iterator_traits < I > ::iterator_category());
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < std::forward_iterator I > void advance_v2(I & iterator, int distance)
+template < std::forward_iterator I > void advance_v2(I & iterator, int offset)
 {
-	if (distance > 0) 
+	if (offset > 0) 
 	{ 
-		while (--distance >= 0)
+		while (--offset >= 0)
 		{
 			++iterator;
 		}
@@ -68,18 +68,18 @@ template < std::forward_iterator I > void advance_v2(I & iterator, int distance)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < std::bidirectional_iterator I > void advance_v2(I & iterator, int distance)
+template < std::bidirectional_iterator I > void advance_v2(I & iterator, int offset)
 {
-	if (distance > 0)
+	if (offset > 0)
 	{
-		while (--distance >= 0)
+		while (--offset >= 0)
 		{
 			++iterator;
 		}
 	}
 	else
 	{
-		while (++distance <= 0)
+		while (++offset <= 0)
 		{
 			--iterator;
 		}
@@ -88,9 +88,9 @@ template < std::bidirectional_iterator I > void advance_v2(I & iterator, int dis
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < std::random_access_iterator I > void advance_v2(I & iterator, int distance)
+template < std::random_access_iterator I > void advance_v2(I & iterator, int offset)
 {
-	iterator += distance;
+	iterator += offset;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -116,17 +116,19 @@ int main()
 	{
 		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-		auto begin = vector.begin();
+		assert(std::distance(vector.begin(), vector.end()) == 5);
 
-			 advance_v1(begin, 1); assert(*begin == 2);
+		auto iterator = vector.begin();
 
-			 advance_v2(begin, 1); assert(*begin == 3);
+			 advance_v1(iterator, 1); assert(*iterator == 2);
 
-		std::advance   (begin, 1); assert(*begin == 4);
+			 advance_v2(iterator, 1); assert(*iterator == 3);
 
-		assert(*std::next(begin, 1) == 5);
+		std::advance   (iterator, 1); assert(*iterator == 4);
 
-		assert(*std::prev(begin, 1) == 3);
+		assert(*std::next(iterator, 1) == 5);
+
+		assert(*std::prev(iterator, 1) == 3);
 	}
 
 //  -------------------------------------------------------------------------------------------
@@ -148,10 +150,10 @@ int main()
 	{
 		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-		auto begin = std::begin(vector);
+		auto iterator = std::begin(vector);
 
 		vector.resize(1'000);
 
-		std::ignore = *begin; // support: -D_GLIBCXX_DEBUG
+		std::ignore = *iterator; // support: -D_GLIBCXX_DEBUG
 	}
 }

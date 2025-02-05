@@ -23,7 +23,7 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		for (auto i = 0uz; [[maybe_unused]] auto j = i < 5; ++i) 
+		for (auto i = 0uz; [[maybe_unused]] auto j = i < 5; ++i)
 		{
 			std::cout << "main : iteration (03) : i = " << i << '\n';
 		}
@@ -59,7 +59,7 @@ int main()
 		{
 			std::cout << "main : iteration (06) : i = " << i << ' ';
 
-			std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x; 
+			std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x;
 			
 			if (x == 'b') 
 			{
@@ -101,7 +101,7 @@ int main()
 		{
 			std::cout << "main : iteration (08) : ";
 
-			std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x; 
+			std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x;
 			
 			if (x == 'b') 
 			{
@@ -117,7 +117,7 @@ int main()
 		{
 			std::cout << "main : iteration (09) : ";
 
-			std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x; 
+			std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x;
 			
 			if (x == 'b') 
 			{

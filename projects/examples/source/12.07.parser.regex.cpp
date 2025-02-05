@@ -70,16 +70,16 @@ int main()
         
         std::regex pattern(R"([a-z]{4}([a-z]{1}))", std::regex_constants::icase);
 
-        std::vector < std::string > result;
+        std::vector < std::string > strings;
 
         while (std::regex_search(begin, std::cend(string), matches, pattern))
         {
-            result.push_back(matches[0]); // support: boost::tokenizer
+            strings.push_back(matches[0]); // support: boost::tokenizer
 
             begin = matches.suffix().first;
         }
 
-        assert(result == std::vector < std::string > ({ "aaaaa", "BBBBB" })); 
+        assert(strings == std::vector < std::string > ({ "aaaaa", "BBBBB" })); 
     }
     
 //  -----------------------------------------------------------------------------------
@@ -89,7 +89,7 @@ int main()
 
         std::regex pattern(R"([a-z]{4}([a-z]{1}))", std::regex_constants::icase);
 
-        std::vector < std::string > result;
+        std::vector < std::string > strings;
 
         std::ranges::for_each
         (
@@ -97,10 +97,10 @@ int main()
 
             std::sregex_iterator(), 
             
-            [&result](auto && matches){ result.push_back(matches[0]); }
+            [&strings](auto && matches){ strings.push_back(matches[0]); }
         );
 
-        assert(result == std::vector < std::string > ({ "aaaaa", "BBBBB" }));
+        assert(strings == std::vector < std::string > ({ "aaaaa", "BBBBB" }));
     }
 
 //  -----------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ int main()
 
         std::regex pattern(R"([a-z]{4}([a-z]{1}))", std::regex_constants::icase);
 
-        std::vector < std::string > result;
+        std::vector < std::string > strings;
 
         std::ranges::for_each
         (
@@ -118,9 +118,9 @@ int main()
             
             std::sregex_token_iterator(), 
             
-            [&result](auto && match){ result.push_back(match); }
+            [&strings](auto && match){ strings.push_back(match); }
         );
 
-        assert(result == std::vector < std::string > ({ "aaaaa", "a", "BBBBB", "B" }));
+        assert(strings == std::vector < std::string > ({ "aaaaa", "a", "BBBBB", "B" }));
     }
 }

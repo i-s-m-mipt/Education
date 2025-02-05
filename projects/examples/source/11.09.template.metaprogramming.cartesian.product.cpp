@@ -78,9 +78,10 @@ int main()
 {
     std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-	auto result = generate
+	auto tuples = generate
 	(	
 		std::make_pair(std::begin(vector), std::end(vector)),
+		
 		std::make_pair(std::begin(vector), std::end(vector))
 	);
 
@@ -90,7 +91,7 @@ int main()
 	{
 		for (auto j = 0uz; j < size; ++j)
 		{
-			auto tuple = result[i * size + j];
+			auto tuple = tuples[i * size + j];
 
 			assert(std::get < 0 > (tuple) == vector[i]);
 			

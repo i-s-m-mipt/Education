@@ -35,11 +35,11 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum) -> T
 
         std::ranges::subrange range(begin, middle);
 
-		auto result_1 = std::async(reduce < decltype(range), T > , range, sum);
+		auto future = std::async(reduce < decltype(range), T > , range, sum);
 
-		auto result_2 = reduce(std::ranges::subrange(middle, end), T(0));
+		auto sum = reduce(std::ranges::subrange(middle, end), T(0));
 
-		return result_1.get() + result_2;
+		return future.get() + sum;
 	}
 	else
 	{

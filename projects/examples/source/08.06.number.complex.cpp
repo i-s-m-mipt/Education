@@ -75,11 +75,11 @@ int main()
 //  --------------------------------------------------------------------------------
 
     {
-        auto result = transform({ 0.0 + 0.0i, 0.0 + 1.0i, 1.0 + 0.0i, 1.0 + 1.0i });
+        auto signal = transform({ 0.0 + 0.0i, 0.0 + 1.0i, 1.0 + 0.0i, 1.0 + 1.0i });
 
-        assert(equal(result.at(0), +2.0 + 2.0i));
-        assert(equal(result.at(1), -1.0 + 1.0i));
-        assert(equal(result.at(2), +0.0 - 2.0i));
-        assert(equal(result.at(3), -1.0 - 1.0i));
+        assert(equal(signal.at(0), +2.0 + 2.0i));
+        assert(equal(signal.at(1), -1.0 + 1.0i));
+        assert(equal(signal.at(2), +0.0 - 2.0i));
+        assert(equal(signal.at(3), -1.0 - 1.0i));
     }
 }

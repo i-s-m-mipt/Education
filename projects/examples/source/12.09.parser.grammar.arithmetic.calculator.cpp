@@ -104,7 +104,7 @@ public:
 
 	void test()
 	{
-		std::cout << "Calculator::test : enter expressions : \n"; std::string line;
+		std::cout << "Calculator::test : enter statements : \n"; std::string line;
 
 		while (std::getline(std::cin >> std::ws, line))
 		{

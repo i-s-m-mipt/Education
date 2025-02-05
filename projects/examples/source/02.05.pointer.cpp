@@ -31,6 +31,24 @@ int main()
 
 //		*ptr_3 = 1; // error
 	}
+	
+//  ------------------------------------------------------------------------------------------------
+
+	{
+		auto x = 1; const auto y = 2;
+
+		[[maybe_unused]]       int * const p_x_1 = &x;
+
+//		[[maybe_unused]]       int * const p_y_1 = &y; // error
+
+		[[maybe_unused]] const int *       p_x_2 = &x;
+
+		[[maybe_unused]] const int *       p_y_2 = &y;
+
+		[[maybe_unused]] const int * const p_x_3 = &x;
+
+		[[maybe_unused]] const int * const p_y_3 = &y;
+	}
 
 //  ------------------------------------------------------------------------------------------------
 
@@ -44,23 +62,5 @@ int main()
 		[[maybe_unused]] const auto p_x_2 = &x;
 
 		[[maybe_unused]] const auto p_y_2 = &y;
-	}
-	
-//  ------------------------------------------------------------------------------------------------
-
-	{
-		auto x = 1; const auto y = 2;
-
-		[[maybe_unused]]       int * const cp_x = &x;
-
-//		[[maybe_unused]]       int * const cp_y = &y; // error
-
-		[[maybe_unused]] const int *        pcx = &x;
-
-		[[maybe_unused]] const int *        pcy = &y;
-
-		[[maybe_unused]] const int * const cpcx = &x;
-
-		[[maybe_unused]] const int * const cpcy = &y;
 	}
 }

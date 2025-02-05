@@ -22,7 +22,7 @@ public:
 	{
 		if (m_size % m_step == 0 && m_step >= sizeof(Node))
 		{
-			make_chain(); m_begin = m_head;
+			make_list(); m_begin = m_head;
 		}
 		else 
 		{
@@ -32,11 +32,11 @@ public:
 
    ~Allocator()
 	{
-		for (auto chain : m_chains) 
+		for (auto list : m_lists) 
 		{
-			if (chain)
+			if (list)
 			{
-				operator delete(chain, m_size, std::align_val_t(s_alignment));
+				operator delete(list, m_size, std::align_val_t(s_alignment));
 			}
 		}
 	}
@@ -47,13 +47,13 @@ public:
 	{
 		if (!m_head)
 		{
-			if (m_offset == std::size(m_chains))
+			if (m_offset == std::size(m_lists))
 			{
-				make_chain();
+				make_list();
 			}
 			else 
 			{
-				m_head = get_node(m_chains[++m_offset - 1]);
+				m_head = get_node(m_lists[++m_offset - 1]);
 			}
 		}
 
@@ -63,7 +63,7 @@ public:
 		{
 			auto next = get_byte(node) + m_step;
 
-			if (next != get_byte(m_chains[m_offset - 1]) + m_size)
+			if (next != get_byte(m_lists[m_offset - 1]) + m_size)
 			{
 				m_head = get_node(next); m_head->next = nullptr;
 			}
@@ -132,9 +132,9 @@ private:
 		return node;
 	}
 
-	void make_chain()
+	void make_list()
 	{
-		m_head = allocate_nodes(); ++m_offset; m_chains.push_back(m_head);
+		m_head = allocate_nodes(); ++m_offset; m_lists.push_back(m_head);
 	}
 
 //  -----------------------------------------------------------------------------------------------
@@ -143,7 +143,7 @@ private:
 
 	void * m_begin = nullptr; Node * m_head = nullptr;
 
-	std::vector < void * > m_chains;
+	std::vector < void * > m_lists;
 
 //  -----------------------------------------------------------------------------------------------
 

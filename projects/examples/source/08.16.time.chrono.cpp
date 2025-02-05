@@ -51,7 +51,7 @@ public:
 
 private:
 
-	const std::string m_scope; clock_t::time_point m_begin;
+	std::string m_scope; clock_t::time_point m_begin;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////

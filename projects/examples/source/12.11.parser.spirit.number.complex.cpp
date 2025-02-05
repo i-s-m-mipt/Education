@@ -34,11 +34,11 @@ auto parse(std::string_view view)
                double_[set_x]
     );
 
-    auto skip = boost::spirit::x3::ascii::space;
+    auto space = boost::spirit::x3::ascii::space;
 
-    auto result = boost::spirit::x3::phrase_parse(begin, end, rule, skip);
+    auto status = boost::spirit::x3::phrase_parse(begin, end, rule, space);
 
-    if (!result || begin != end)
+    if (!status || begin != end)
     {
         throw std::runtime_error("invalid view");
     }

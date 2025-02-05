@@ -70,8 +70,8 @@ int main()
     entity_1->test();
 
     entity_2->test(); 
+
+    delete entity_2;
      
-    delete entity_1;  
-     
-    delete entity_2; 
+    delete entity_1;
 }

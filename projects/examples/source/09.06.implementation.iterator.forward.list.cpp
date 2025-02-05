@@ -108,5 +108,5 @@ int main()
 
 	for (auto iterator = std::begin(list); iterator != std::end(list); ++iterator);
 
-	for ([[maybe_unused]] auto element : list);
+	for ([[maybe_unused]] auto element : list); // support: cppinsights.io
 }

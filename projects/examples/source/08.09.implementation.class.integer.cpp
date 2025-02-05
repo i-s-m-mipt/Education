@@ -101,8 +101,8 @@ public:
 			throw std::runtime_error("arithmetic overflow");
 		}
 
-		Integer result;
-
+		Integer result; 
+		
 		result.m_sign = m_sign ^ other.m_sign;
 
 		for (auto i = 0uz; i < m_size; ++i)
@@ -135,7 +135,9 @@ public:
 			throw std::runtime_error("invalid operand");
 		}
 
-		Integer result; result.m_size = m_size;
+		Integer result; 
+		
+		result.m_size = m_size;
 
 		result.m_sign = m_sign ^ other.m_sign; other.m_sign = false;
 
@@ -511,47 +513,47 @@ private:
 int main()
 {
 	{
-		Integer x01 = "+73640854127382725310948206095647"s;
+		Integer x = "+73640854127382725310948206095647"s;
 
-		Integer x02 = "-46090058756232818791046807807190"s;
+		Integer y = "-46090058756232818791046807807190"s;
 
-		Integer x03 = "+27550795371149906519901398288457"s;
+		Integer result_1 = "+27550795371149906519901398288457"s;
 
-		Integer x04 = x01;
+		Integer result_2 = x;
 
-		Integer x05 = "-3394111293590239892710602762023649092547630961329778427474301930"s;
+		Integer result_3 = "-3394111293590239892710602762023649092547630961329778427474301930"s;
 
-		Integer x06 = "-46090058756232818791046807807189"s;
+		Integer result_4 = "-46090058756232818791046807807189"s;
 
-		Integer x07 = "+73640854127382725310948206095648"s;
+		Integer result_5 = "+73640854127382725310948206095648"s;
 
-		Integer x08 = x02;
+		Integer result_6 = y;
 
-		Integer x09 = "+119730912883615544101995013902837"s;
+		Integer result_7 = "+119730912883615544101995013902837"s;
 
-		Integer x10 = -1;
+		Integer result_8 = -1;
 
-		assert((x01 += x02) == x03);
-		assert((x01 -= x02) == x04);
-		assert((x01 *= x02) == x05);
-		assert((x01 /= x02) == x04);
+		assert((x += y) == result_1);
+		assert((x -= y) == result_2);
+		assert((x *= y) == result_3);
+		assert((x /= y) == result_2);
 
-		assert((x01 ++    ) == x04);
-		assert((    ++ x02) == x06);
-		assert((x01 --    ) == x07);
-		assert((    -- x02) == x08);
+		assert((x ++  ) == result_2);
+		assert((  ++ y) == result_4);
+		assert((x --  ) == result_5);
+		assert((  -- y) == result_6);
 
-		assert((x01 +  x02) == x03);
-		assert((x01 -  x02) == x09);
-		assert((x01 *  x02) == x05);
-		assert((x01 /  x02) == x10);
+		assert((x +  y) == result_1);
+		assert((x -  y) == result_7);
+		assert((x *  y) == result_3);
+		assert((x /  y) == result_8);
 
-		assert((x01 <  x02) == 0);
-		assert((x01 >  x02) == 1);
-		assert((x01 <= x02) == 0);
-		assert((x01 >= x02) == 1);
-		assert((x01 == x02) == 0);
-		assert((x01 != x02) == 1);
+		assert((x <  y) == 0);
+		assert((x >  y) == 1);
+		assert((x <= y) == 0);
+		assert((x >= y) == 1);
+		assert((x == y) == 0);
+		assert((x != y) == 1);
 	}
 
 //  ----------------------------------------------------------------------------------------------
@@ -565,35 +567,34 @@ int main()
 //  ----------------------------------------------------------------------------------------------
 
 	{
-		Integer x = "+73640854127382725310948206095647"s;
-
-		Integer y = "-46090058756232818791046807807190"s;
-
-		Integer z = "-3394111293590239892710602762023649092547630961329778427474301930"s;
-
-		assert(multiply(x, y) == z);
+		assert
+		(
+			multiply
+			(
+				Integer("+73640854127382725310948206095647"), 
+				
+				Integer("-46090058756232818791046807807190")
+			)
+			== "-3394111293590239892710602762023649092547630961329778427474301930"s
+		);
 	}
 
 //  ----------------------------------------------------------------------------------------------
 
 	{
-		Integer x = "+73640854127382725310948206095647"s;
-
-		Integer y = "+8581424947372244"s;
-
-		assert(sqrt(x) == y);
+		assert(sqrt(Integer("+73640854127382725310948206095647")) == "+8581424947372244"s);
 	}
 
 //  ----------------------------------------------------------------------------------------------
 
 	{
-		Integer result = 1; 
+		Integer x = 1; 
 		
 		for (auto i = 1; i <= 100; ++i) 
 		{
-			result *= i;
+			x *= i;
 		}
 
-		std::cout << "main : result = " << result << '\n';
+		std::cout << "main : x = " << x << '\n';
 	}
 }

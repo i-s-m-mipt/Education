@@ -27,7 +27,7 @@ int main()
 //  ------------------------------------------------------------------
 
 	{
-		std::string string = "aaaaa"; 
+		std::string string = "aaaaa";
 
 		string.append("bbbbb");
 	
@@ -37,7 +37,7 @@ int main()
 //  ------------------------------------------------------------------
 	
 	{
-		std::vector < int > vector = { 1, 2, 3, 4, 5 }; 
+		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 	
 		vector.push_back(1);
 

@@ -61,12 +61,5 @@ constexpr auto operator+(const Duration < T1, R1 > & lhs, const Duration < T2, R
 
 int main()
 {
-	auto result = 
-	(
-		Duration < int, Ratio < 1, 2 > > (1) + 
-		
-		Duration < int, Ratio < 1, 3 > > (1)
-	);
-
-	assert(result.data == 5);
+	assert((Duration < int, Ratio < 1, 2 > > (1) + Duration < int, Ratio < 1, 3 > > (1)).data == 5);
 }

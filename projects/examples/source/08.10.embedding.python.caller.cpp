@@ -171,9 +171,9 @@ void make_plot(const std::string & points)
 int main()
 {
 	{
-		auto result = factorial(100);
+		auto x = factorial(100);
 
-		std::cout << "main : result = " << result << '\n';
+		std::cout << "main : x = " << x << '\n';
 	}
 
 //  ------------------------------------------------------------------------

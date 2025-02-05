@@ -31,7 +31,7 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 	{
 		auto concurrency = 1uz * std::max(std::thread::hardware_concurrency(), 2u);
 
-		std::vector < T > results(concurrency, T(0));
+		std::vector < T > sums(concurrency, T(0));
 
 		auto step = size / concurrency;
 
@@ -46,7 +46,7 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 
 				threads[i] = std::jthread
 				(
-					Task < decltype(range), T > (), range, std::ref(results[i])
+					Task < decltype(range), T > (), range, std::ref(sums[i])
 				);
 
 				block_begin = block_end; block_end = std::next(block_begin, step);
@@ -54,10 +54,10 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 
 			auto range = std::ranges::subrange(block_begin, end);
 
-			Task < decltype(range), T > ()(range, std::ref(results[concurrency - 1]));
+			Task < decltype(range), T > ()(range, std::ref(sums[concurrency - 1]));
 		}
 
-		sum += std::reduce(std::begin(results), std::end(results), T(0));
+		sum += std::reduce(std::begin(sums), std::end(sums), T(0));
 	}
 	
 	return sum;

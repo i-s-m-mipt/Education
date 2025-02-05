@@ -34,21 +34,19 @@ public:
 
 	auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
 	{
-		void * begin = get_byte(m_begin) + m_offset;
-
-		void * block = get_byte(begin) + sizeof(Header);
+		void * begin = get_byte(m_begin) + m_offset + sizeof(Header);
 
 		auto free = m_size - m_offset - sizeof(Header);
 
-		if (block = std::align(alignment, size, block, free); block)
+		if (begin = std::align(alignment, size, begin, free); begin)
 		{
-			auto header = get_header(get_byte(block) - sizeof(Header));
+			auto header = get_header(get_byte(begin) - sizeof(Header));
 
-			*header = std::distance(get_byte(begin), get_byte(block));
+			*header = std::distance(get_byte(m_begin) + m_offset, get_byte(begin));
 
-			m_offset = get_byte(block) - get_byte(m_begin) + size;
+			m_offset = get_byte(begin) - get_byte(m_begin) + size;
 
-			return block;
+			return begin;
 		}
 		else 
 		{

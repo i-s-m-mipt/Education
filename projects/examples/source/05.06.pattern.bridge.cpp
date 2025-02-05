@@ -101,8 +101,8 @@ int main()
     Entity_v2 * entity_v2 = new Server_v1(*entity_v1);
 
     entity_v2->test(); 
-    
-    delete entity_v1;
-    
+
     delete entity_v2;
+    
+    delete entity_v1;    
 }
