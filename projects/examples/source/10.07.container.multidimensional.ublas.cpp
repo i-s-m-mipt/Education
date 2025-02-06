@@ -15,7 +15,7 @@
 
 auto determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) -> double
 {
-    if (auto size = matrix.size1(); size == matrix.size2() && size != 0)
+    if (auto size = matrix.size1(); size != 0 && size == matrix.size2())
     {
         if (size > 1)
         {
@@ -56,7 +56,7 @@ auto determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) -> 
 
 auto determinant_v2(const boost::numeric::ublas::matrix < double > & matrix)
 {    
-    if (auto size = matrix.size1(); size == matrix.size2() && size != 0)
+    if (auto size = matrix.size1(); size != 0 && size == matrix.size2())
     {
         if (size > 1)
         {
