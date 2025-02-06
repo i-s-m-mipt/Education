@@ -150,7 +150,12 @@ auto parse(std::string_view view)
 
     detail::List list;
 
-    boost::spirit::x3::phrase_parse(begin, end, parser::rule_1, space, list);
+    auto state = boost::spirit::x3::phrase_parse(begin, end, parser::rule_1, space, list);
+
+    if (!state || begin != end)
+    {
+        throw std::runtime_error("invalid view");
+    }
 
     static Calculator calculator;
 

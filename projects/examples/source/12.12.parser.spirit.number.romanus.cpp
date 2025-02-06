@@ -111,7 +111,12 @@ auto parse(std::string_view view)
 
     auto x = 0;
 
-    boost::spirit::x3::phrase_parse(begin, end, parser::rule, space, x);
+    auto state = boost::spirit::x3::phrase_parse(begin, end, parser::rule, space, x);
+
+    if (!state || begin != end)
+    {
+        throw std::runtime_error("invalid view");
+    }
     
     return x;
 }

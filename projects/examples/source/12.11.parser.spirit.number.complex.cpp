@@ -36,7 +36,12 @@ auto parse(std::string_view view)
 
     auto space = boost::spirit::x3::ascii::space;
 
-    boost::spirit::x3::phrase_parse(begin, end, rule, space);
+    auto state = boost::spirit::x3::phrase_parse(begin, end, rule, space);
+
+    if (!state || begin != end)
+    {
+        throw std::runtime_error("invalid view");
+    }
     
     return std::complex < double > (x, y);
 }

@@ -37,7 +37,12 @@ auto parse(std::string_view view)
 
     Entity entity;
 
-    boost::spirit::x3::phrase_parse(begin, end, parser::rule, space, entity);
+    auto state = boost::spirit::x3::phrase_parse(begin, end, parser::rule, space, entity);
+
+    if (!state || begin != end)
+    {
+        throw std::runtime_error("invalid view");
+    }
 
     return entity;
 }

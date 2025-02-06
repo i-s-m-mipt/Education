@@ -20,9 +20,11 @@ int main()
 
         auto rule = boost::spirit::x3::int_;
 
+        auto space = boost::spirit::x3::ascii::space;
+
         auto x = 0;
 
-        boost::spirit::x3::phrase_parse(begin, end, rule, boost::spirit::x3::ascii::space, x);
+        assert(boost::spirit::x3::phrase_parse(begin, end, rule, space, x) && begin == end);
 
         assert(x == 1);
     }
@@ -34,9 +36,11 @@ int main()
 
         auto rule = boost::spirit::x3::int_ >> boost::spirit::x3::int_;
 
+        auto space = boost::spirit::x3::ascii::space;
+
         std::pair < int, int > pair;
 
-        boost::spirit::x3::phrase_parse(begin, end, rule, boost::spirit::x3::ascii::space, pair);
+        assert(boost::spirit::x3::phrase_parse(begin, end, rule, space, pair) && begin == end);       
 
         assert(pair == std::make_pair(1, 1));
     }
@@ -48,9 +52,11 @@ int main()
 
         auto rule = '{' >> boost::spirit::x3::int_ >> boost::spirit::x3::int_ >> '}';
 
+        auto space = boost::spirit::x3::ascii::space;
+
         std::tuple < int, int > tuple;
 
-        boost::spirit::x3::phrase_parse(begin, end, rule, boost::spirit::x3::ascii::space, tuple);
+        assert(boost::spirit::x3::phrase_parse(begin, end, rule, space, tuple) && begin == end);
 
         assert(tuple == std::make_tuple(1, 1));
     }
@@ -65,6 +71,8 @@ int main()
             ([](auto && context){ assert(boost::spirit::x3::_attr(context) == 1); })
         ];
 
-        boost::spirit::x3::phrase_parse(begin, end, rule, boost::spirit::x3::ascii::space);
+        auto space = boost::spirit::x3::ascii::space;
+
+        assert(boost::spirit::x3::phrase_parse(begin, end, rule, space) && begin == end);
     }
 }
