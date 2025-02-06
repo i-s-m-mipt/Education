@@ -33,11 +33,11 @@ int main()
 //  ------------------------------------------------------------------------------
 
     {
-        boost::multiprecision::cpp_int x = 1; 
+        boost::multiprecision::cpp_int x = 1;
     
         for (auto i = 1; i <= 100; ++i) 
         {
-            x *= i; 
+            x *= i;
         }
     
         std::cout << "main : x = " << x << '\n';

@@ -24,9 +24,9 @@ auto is_even(int x)
 
 BOOST_AUTO_TEST_CASE(Test_v1)
 {
-    BOOST_TEST(is_even(1)); std::cout << "Test_v1 (1)\n";
+    std::cout << "Test_v1 (1)\n"; BOOST_TEST(is_even(1));
 
-    BOOST_TEST(is_even(2)); std::cout << "Test_v1 (2)\n";
+    std::cout << "Test_v1 (2)\n"; BOOST_TEST(is_even(2));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -95,30 +95,34 @@ public:
 
         const auto operator++(int) 
 		{ 
-			auto copy(*this); 
+			auto copy(*this);
             
-            m_x += m_y; std::swap(m_x, m_y);  
+            m_x += m_y;
             
-            return copy; 
+            std::swap(m_x, m_y);
+            
+            return copy;
 		}
 
         auto & operator++() 
 		{ 
-			m_x += m_y; std::swap(m_x, m_y); 
+			m_x += m_y;
+            
+            std::swap(m_x, m_y);
             
             return *this;
 		}		
 
         auto operator*() const
         { 
-            return m_y; 
+            return m_y;
         }
 
     //  ------------------------------------------------------------------
 
 		friend auto operator==(const iterator & lhs, const iterator & rhs)
 		{ 
-			return lhs.m_x == rhs.m_x && lhs.m_y == rhs.m_y; 
+			return lhs.m_x == rhs.m_x && lhs.m_y == rhs.m_y;
 		}
 
     private:
@@ -130,7 +134,7 @@ public:
 
     auto begin() const
     { 
-        return iterator(); 
+        return iterator();
     }
 
 //  ---------------------------------------------------------------
@@ -139,7 +143,7 @@ public:
     { 
         return boost::unit_test::data::BOOST_TEST_DS_INFINITE_SIZE;
     }
-}; 
+};
 
 //////////////////////////////////////////////////////////////////////////////////////////
 

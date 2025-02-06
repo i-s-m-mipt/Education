@@ -51,7 +51,9 @@ public:
 
 private:
 
-	std::string m_scope; clock_t::time_point m_begin;
+	std::string m_scope;
+	
+	clock_t::time_point m_begin;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -96,7 +98,7 @@ int main()
 
 		auto epoch = std::chrono::system_clock::time_point();
 
-		std::cout << "main : epoch = " << epoch << '\n';		
+		std::cout << "main : epoch = " << epoch << '\n';
 
 		assert(std::chrono::system_clock::to_time_t(local) == time(nullptr));
 	}

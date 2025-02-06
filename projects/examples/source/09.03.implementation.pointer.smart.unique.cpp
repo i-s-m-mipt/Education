@@ -13,26 +13,26 @@ public:
         
     Unique(Unique && other) : Unique() 
     { 
-        swap(other); 
+        swap(other);
     }
 
     auto & operator=(Unique && other)
     { 
-        reset(other.release()); 
+        reset(other.release());
         
         return *this;
     }
 
    ~Unique() 
     { 
-        reset(); 
+        reset();
     }
 
 //  -------------------------------------------------------------
 
     void swap(Unique & other)
     { 
-        std::swap(m_data, other.m_data); 
+        std::swap(m_data, other.m_data);
     }
 
 //  -------------------------------------------------------------
@@ -56,7 +56,7 @@ public:
 
     auto & operator*() const
     { 
-        return *m_data; 
+        return *m_data;
     }
      
 private:
@@ -68,7 +68,7 @@ private:
 
 template < typename T, typename ... Ts > auto make_unique(Ts && ... xs)
 {
-    return Unique < T > (new T(std::forward < Ts > (xs)...)); 
+    return Unique < T > (new T(std::forward < Ts > (xs)...));
 }
 
 /////////////////////////////////////////////////////////////////////////

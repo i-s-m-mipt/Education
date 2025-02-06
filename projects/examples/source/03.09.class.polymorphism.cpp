@@ -20,7 +20,7 @@ public:
 
 	virtual void test_v1() const
 	{ 
-		std::cout << "Entity::test_v1\n"; 
+		std::cout << "Entity::test_v1\n";
 	}
 
 	virtual void test_v2() const = 0;
@@ -39,7 +39,7 @@ private:
 
 void Entity::test_v2() const
 { 
-	std::cout << "Entity::test_v2\n"; 
+	std::cout << "Entity::test_v2\n";
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -55,9 +55,9 @@ public:
 
 	void test_v2() const override 
 	{ 
-		std::cout << "Client::test_v2\n"; 
+		std::cout << "Client::test_v2\n";
 		
-		Entity::test_v2(); 
+		Entity::test_v2();
 	}
 
 private:
@@ -73,7 +73,7 @@ public:
 
 	void test_v2() const override 
 	{ 
-		std::cout << "Server::test_v2\n"; 
+		std::cout << "Server::test_v2\n";
 
 		Entity::test_v2();
 	}
@@ -91,7 +91,7 @@ public:
 
 	void test_v2() const override 
 	{ 
-		std::cout << "Router::test_v2\n"; 
+		std::cout << "Router::test_v2\n";
 
 		Entity::test_v2();
 	}

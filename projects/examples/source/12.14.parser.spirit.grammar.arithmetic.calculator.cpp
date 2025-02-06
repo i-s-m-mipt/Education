@@ -32,7 +32,9 @@ namespace detail
 
     struct List 
     { 
-        Operand head; std::vector < Step > steps; 
+        Operand head;
+        
+        std::vector < Step > steps;
     };
 }
 
@@ -86,7 +88,7 @@ public:
 
     auto operator()(double x) const -> double
     { 
-        return x; 
+        return x;
     }
 
     auto operator()(const detail::Sign & sign) const -> double
@@ -101,7 +103,7 @@ public:
 
             default: 
             { 
-                throw std::runtime_error("invalid operation"); 
+                throw std::runtime_error("invalid operation");
             }
         }
     }

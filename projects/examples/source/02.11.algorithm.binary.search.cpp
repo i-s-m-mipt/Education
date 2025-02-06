@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////////////////////////////
 
-auto find(const std::vector < int > & vector, int x)
+auto find(const std::vector < int > & vector, int x) -> bool
 {
 	if (std::size(vector) > 0)
 	{
@@ -20,7 +20,7 @@ auto find(const std::vector < int > & vector, int x)
 		return vector[left] == x;
 	}
 	
-	return false;
+	return 0;
 }
 
 /////////////////////////////////////////////////////////////////////

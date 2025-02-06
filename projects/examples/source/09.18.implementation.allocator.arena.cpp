@@ -38,7 +38,7 @@ public:
 
 		if (begin = std::align(alignment, size, begin, free); begin)
 		{
-			m_offset = m_size - free + size; 
+			m_offset = m_size - free + size;
 			
 			return begin;
 		}
@@ -68,7 +68,7 @@ private:
 
 //  ------------------------------------------------------------------------------
 
-	std::size_t m_size = 0, m_offset = 0; 
+	std::size_t m_size = 0, m_offset = 0;
 	
 	void * m_begin = nullptr;
 
@@ -106,12 +106,12 @@ void test_v2(benchmark::State & state)
 	{
 		for (auto i = 0uz; i < kb; ++i) 
 		{ 
-			ptrs[i] = operator new(mb); 
+			ptrs[i] = operator new(mb);
 		}
 
 		for (auto i = 0uz; i < kb; ++i) 
 		{ 
-			operator delete(ptrs[i], mb); 
+			operator delete(ptrs[i], mb);
 		}
 	}
 }
@@ -127,7 +127,7 @@ BENCHMARK(test_v2);
 int main()
 {
 	{
-		Allocator allocator(1'024); 
+		Allocator allocator(1'024);
 
 		allocator.test();
 

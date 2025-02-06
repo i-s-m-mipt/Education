@@ -6,7 +6,7 @@ class Entity_v1
 {
 public:
 
-    virtual ~Entity_v1() = default; 
+    virtual ~Entity_v1() = default;
 
 //  -------------------------------
 
@@ -21,7 +21,7 @@ public:
 
     void test() const override 
     { 
-        std::cout << "Client_v1::test\n"; 
+        std::cout << "Client_v1::test\n";
     } 
 };
 
@@ -33,7 +33,7 @@ public:
 
     void test() const override 
     { 
-        std::cout << "Client_v2::test\n"; 
+        std::cout << "Client_v2::test\n";
     } 
 };
 
@@ -45,7 +45,7 @@ public:
 
     Entity_v2(Entity_v1 & entity_v1) : m_bridge(entity_v1) {}
 
-    virtual ~Entity_v2() = default; 
+    virtual ~Entity_v2() = default;
 
 //  ------------------------------------------------------------------
 
@@ -70,7 +70,7 @@ public:
     {
         std::cout << "Server_v1::test\n";
 
-        m_bridge.test(); 
+        m_bridge.test();
     }
 };
 
@@ -88,7 +88,7 @@ public:
     { 
         std::cout << "Server_v2::test\n";
 
-        m_bridge.test(); 
+        m_bridge.test();
     }
 };
 
@@ -100,9 +100,9 @@ int main()
     
     Entity_v2 * entity_v2 = new Server_v1(*entity_v1);
 
-    entity_v2->test(); 
+    entity_v2->test();
 
     delete entity_v2;
     
-    delete entity_v1;    
+    delete entity_v1;
 }

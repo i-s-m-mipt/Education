@@ -14,7 +14,9 @@
 
 struct Entity 
 { 
-    int data_1 = 0; std::string data_2; 
+    int data_1 = 0;
+    
+    std::string data_2;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,13 +73,15 @@ public:
     { 
         if (m_buffer) 
         {
-            std::cout.rdbuf(m_buffer); 
+            std::cout.rdbuf(m_buffer);
         }
     }
 
 private:
 
-    std::fstream m_stream; std::streambuf * m_buffer = nullptr;
+    std::fstream m_stream;
+    
+    std::streambuf * m_buffer = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +107,7 @@ int main()
             throw std::runtime_error("invalid stream");
         }
 
-        std::cout << "main : enter char to continue : "; auto x = '\0'; std::cin >> x;
+        std::cout << "main : enter char to continue : "; char x = 0; std::cin >> x;
     }
 
 //  -------------------------------------------------------------------------------------------
@@ -115,9 +119,9 @@ int main()
 
             stream.seekg((size - 1) * (size + 1), std::ios::beg);
 
-            std::string input; std::getline(stream, input); 
+            std::string string; std::getline(stream, string);
             
-            assert(input == "bbbbb");
+            assert(string == "bbbbb");
 
             Entity entity; stream >> entity;
 
@@ -133,12 +137,12 @@ int main()
 
     {
         {
-            Adapter adapter("13.03.stream.class.file.example.data"); 
+            Adapter adapter("13.03.stream.class.file.example.data");
             
             std::cout << "main : trace\n";
         }
 
-        std::cout << "main : enter char to continue : "; auto x = '\0'; std::cin >> x;
+        std::cout << "main : enter char to continue : "; char x = 0; std::cin >> x;
     }
 
 //  -------------------------------------------------------------------------------------------

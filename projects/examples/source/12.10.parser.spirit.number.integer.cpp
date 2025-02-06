@@ -16,9 +16,11 @@ using namespace std::literals;
 int main()
 {
     {
-        auto view = "1"sv; auto begin = std::begin(view), end = std::end(view);
+        auto view  = "1"sv;
+        
+        auto begin = std::begin(view), end = std::end(view);
 
-        auto rule = boost::spirit::x3::int_;
+        auto rule  = boost::spirit::x3::int_;
 
         auto space = boost::spirit::x3::ascii::space;
 
@@ -32,15 +34,17 @@ int main()
 //  ----------------------------------------------------------------------------------------------
 
     {
-        auto view = "1 1"sv; auto begin = std::begin(view), end = std::end(view);
+        auto view  = "1 1"sv;
+        
+        auto begin = std::begin(view), end = std::end(view);
 
-        auto rule = boost::spirit::x3::int_ >> boost::spirit::x3::int_;
+        auto rule  = boost::spirit::x3::int_ >> boost::spirit::x3::int_;
 
         auto space = boost::spirit::x3::ascii::space;
 
         std::pair < int, int > pair;
 
-        assert(boost::spirit::x3::phrase_parse(begin, end, rule, space, pair) && begin == end);       
+        assert(boost::spirit::x3::phrase_parse(begin, end, rule, space, pair) && begin == end);
 
         assert(pair == std::make_pair(1, 1));
     }
@@ -48,9 +52,11 @@ int main()
 //  ----------------------------------------------------------------------------------------------
 
     {
-        auto view = "{ 1 1 }"sv; auto begin = std::begin(view), end = std::end(view);
+        auto view  = "{ 1 1 }"sv;
+        
+        auto begin = std::begin(view), end = std::end(view);
 
-        auto rule = '{' >> boost::spirit::x3::int_ >> boost::spirit::x3::int_ >> '}';
+        auto rule  = '{' >> boost::spirit::x3::int_ >> boost::spirit::x3::int_ >> '}';
 
         auto space = boost::spirit::x3::ascii::space;
 
@@ -64,9 +70,11 @@ int main()
 //  ----------------------------------------------------------------------------------------------
 
     {
-        auto view = "1"sv; auto begin = std::begin(view), end = std::end(view);
+        auto view  = "1"sv;
+        
+        auto begin = std::begin(view), end = std::end(view);
 
-        auto rule = boost::spirit::x3::int_
+        auto rule  = boost::spirit::x3::int_
         [
             ([](auto && context){ assert(boost::spirit::x3::_attr(context) == 1); })
         ];

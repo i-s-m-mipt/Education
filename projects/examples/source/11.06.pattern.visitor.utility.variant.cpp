@@ -4,9 +4,9 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 
-class Client { public: void test() const { std::cout << "Client::test\n"; }; };
+class Client { public: void test() const { std::cout << "Client::test\n"; } };
 
-class Server { public: void test() const { std::cout << "Server::test\n"; }; };
+class Server { public: void test() const { std::cout << "Server::test\n"; } };
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +29,7 @@ template < typename ... Bs > class Visitor : public Bs ...
 { 
 public:
 
-    using Bs::operator()...; 
+    using Bs::operator()...;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

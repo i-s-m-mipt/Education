@@ -56,7 +56,7 @@ void split(std::vector < int > & vector, std::size_t left, std::size_t right)
 	}
 	else
 	{
-		auto middle = std::midpoint(left, right); 
+		auto middle = std::midpoint(left, right);
 		
 		split(vector, left, middle       );
 		

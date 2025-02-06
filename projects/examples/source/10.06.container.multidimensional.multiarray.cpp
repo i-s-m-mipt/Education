@@ -42,7 +42,7 @@ template < typename T, std::size_t D, typename C > auto make_array(const C & con
 {
 	std::vector < typename boost::multi_array < T, D > ::index > sizes(D, 0);
 
-	fill_sizes < D > (container, std::begin(sizes)); 
+	fill_sizes < D > (container, std::begin(sizes));
 	
 	boost::multi_array < T, D > array(sizes);
 	

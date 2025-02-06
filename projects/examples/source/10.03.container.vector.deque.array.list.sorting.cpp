@@ -102,9 +102,9 @@ void test_v4(benchmark::State & state)
     {
         std::list < int > list(100'000, 0);
 
-        for (auto state = std::size(list); auto & element : list)
+        for (auto x = 0; auto & element : list)
         {
-            element = state--;
+            element = std::size(list) - x++;
         } 
 
         auto begin = std::chrono::steady_clock::now();
@@ -132,9 +132,9 @@ void test_v5(benchmark::State & state)
 
         std::forward_list < int > list(size, 0);
 
-        for (auto state = size; auto & element : list)
+        for (auto x = 0; auto & element : list)
         {
-            element = state--;
+            element = size - x++;
         } 
 
         auto begin = std::chrono::steady_clock::now();
@@ -154,7 +154,7 @@ void test_v5(benchmark::State & state)
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-BENCHMARK(test_v1); 
+BENCHMARK(test_v1);
 
 BENCHMARK(test_v2);
 

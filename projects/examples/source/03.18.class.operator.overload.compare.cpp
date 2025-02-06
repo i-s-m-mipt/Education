@@ -13,7 +13,7 @@ public:
 
     friend auto operator<=>(const Entity_v1 & lhs, const Entity_v1 & rhs) 
     { 
-        return lhs.m_data <=> rhs.m_data; 
+        return lhs.m_data <=> rhs.m_data;
     }
 
 private:
@@ -31,12 +31,11 @@ public:
 
 //  --------------------------------------------------------------------------------
 
-    friend auto operator<=>(const Entity_v2 & lhs, const Entity_v2 & rhs) = default; 
+    friend auto operator<=>(const Entity_v2 & lhs, const Entity_v2 & rhs) = default;
 
 private:
 
-    int m_data_1 = 0; 
-    int m_data_2 = 0;
+    int m_data_1 = 0, m_data_2 = 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////

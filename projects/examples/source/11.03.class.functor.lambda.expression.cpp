@@ -16,7 +16,7 @@ public:
 
 	void test()
 	{ 
-		[this](){ m_data = 1; }(); 
+		[this](){ m_data = 1; }();
 	}
 
 private:
@@ -43,7 +43,9 @@ int main()
 	{
 		auto x = 1, y = 2;
 
-		[&x, y]() mutable { x = ++y; }(); assert(x == 3 && y == 2);
+		[&x, y]() mutable { x = ++y; }();
+		
+		assert(x == 3 && y == 2);
 
 //		[&](){ x = y; }(); // bad
 
@@ -100,7 +102,7 @@ int main()
 	{
 		std::set 
 		< 
-			int, decltype([](auto lhs, auto rhs){ return lhs < rhs; }) 
+			int, decltype([](auto lhs, auto rhs){ return lhs < rhs; })
 		> 
 		set = { 5, 4, 3, 2, 1 };
 

@@ -9,7 +9,11 @@ template < typename T > void swap(T & x, T & y)
 {
     static_assert(std::is_copy_constructible_v < T > && std::is_copy_assignable_v < T > );
 
-    auto z = y; y = x; x = z;
+    auto z = y; 
+            
+         y = x; 
+         
+         x = z;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -18,7 +22,7 @@ class Bad
 {
 private:
  
-	Bad() = default; 
+	Bad() = default;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +57,9 @@ int main()
     {
         static_assert(sizeof(int) == 4, "sizeof(int) != 4");
 
-        auto x = 1, y = 2; swap(x, y);
+        auto x = 1, y = 2;
+        
+        swap(x, y);
 
         [[maybe_unused]] Entity < int > entity_1;
 
@@ -67,11 +73,11 @@ int main()
 
         std::atexit(test_v2);
 
-        std::cout << "main : enter \'e\' to exit : "; auto x = '\0'; std::cin >> x;
+        std::cout << "main : enter \'e\' to exit : "; char x = 0; std::cin >> x;
 
         if (x == 'e') 
         {
-            std::exit(0); 
+            std::exit(0);
         }
         else 
         {

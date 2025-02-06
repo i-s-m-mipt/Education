@@ -6,7 +6,7 @@ class Entity_v1
 { 
 public:
 
-	virtual ~Entity_v1() = default; 
+	virtual ~Entity_v1() = default;
 };
 
 class Client_v1 : public Entity_v1 {};
@@ -25,7 +25,7 @@ public:
 	{ 
 		std::cout << "Entity_v2::test\n";
 
-		return new Entity_v1; 
+		return new Entity_v1;
 	}
 };
 
@@ -39,7 +39,7 @@ public:
 	{ 
 		std::cout << "Client_v2::test\n";
 
-		return new Client_v1; 
+		return new Client_v1;
 	}
 };
 

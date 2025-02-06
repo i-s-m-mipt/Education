@@ -6,7 +6,7 @@ class Strategy
 {
 public:
 
-    virtual ~Strategy() = default; 
+    virtual ~Strategy() = default;
 
 //  ------------------------------
 
@@ -21,7 +21,7 @@ public:
     
     void test() const override 
     { 
-        std::cout << "Slow::test\n"; 
+        std::cout << "Slow::test\n";
     } 
 };
 
@@ -33,7 +33,7 @@ public:
     
     void test() const override 
     { 
-        std::cout << "Fast::test\n"; 
+        std::cout << "Fast::test\n";
     } 
 };
 
@@ -49,7 +49,7 @@ public:
 
     void test() const
     { 
-        m_strategy.test(); 
+        m_strategy.test();
     }
 
 private:

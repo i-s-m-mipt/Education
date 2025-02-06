@@ -12,12 +12,12 @@ auto count_v1(std::size_t size, std::size_t left = 0, std::size_t right = 0) -> 
 	{
 		if (left < size) 
 		{ 
-			counter += count_v1(size, left + 1, right); 
+			counter += count_v1(size, left + 1, right);
 		}
 
 		if (left > right) 
 		{ 
-			counter += count_v1(size, left, right + 1); 
+			counter += count_v1(size, left, right + 1);
 		}
 	}
 	

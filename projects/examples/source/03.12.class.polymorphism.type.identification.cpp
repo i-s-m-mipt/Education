@@ -34,7 +34,9 @@ int main()
 
 		static_assert(std::is_same_v < decltype((x)), int & > );
 
-		auto & r_x_1 = x;
+		auto & r_x_1 = x; 
+		
+		[[maybe_unused]] auto y = r_x_1;
 
 		[[maybe_unused]] decltype(auto) r_x_2 = r_x_1;
 	}
@@ -42,7 +44,7 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		Entity * entity = new Client; 
+		Entity * entity = new Client;
 
 //		assert( static_cast < Client * > (entity)); // bad
 
@@ -54,7 +56,11 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		auto x = 1; auto & r_x = x; Entity * entity = new Client;
+		auto x = 1;
+		
+		auto & r_x = x;
+		
+		Entity * entity = new Client;
 
 		std::cout << "main : typeid(      x) = " << typeid(      x).name() << '\n';
 
@@ -70,7 +76,11 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		auto x = 1; auto & r_x = x; Entity * entity = new Client;
+		auto x = 1;
+		
+		auto & r_x = x;
+		
+		Entity * entity = new Client;
 
 		using boost::typeindex::type_id_with_cvr;
 

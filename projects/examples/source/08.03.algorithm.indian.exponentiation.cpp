@@ -26,7 +26,7 @@ auto pow(unsigned long long x, unsigned long long y)
             z *= x;
         }
 
-        if (y /= 2; y == 0) 
+        if (y /= 2; y == 0)
         {
             break;
         }

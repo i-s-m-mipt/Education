@@ -21,7 +21,7 @@ public:
     
     void test() const override 
     { 
-        std::cout << "Client::test\n"; 
+        std::cout << "Client::test\n";
     } 
 };
 
@@ -33,7 +33,7 @@ public:
     
     void test() const override 
     { 
-        std::cout << "Server::test\n"; 
+        std::cout << "Server::test\n";
     } 
 };
 
@@ -41,7 +41,7 @@ public:
 
 template < typename E > auto make_entity() -> Entity *
 { 
-    return new E; 
+    return new E;
 }
 
 ///////////////////////////////////////////////////////////
@@ -63,12 +63,12 @@ public:
 
     void test() const override 
     { 
-        std::cout << "Router::test\n"; 
-    };
+        std::cout << "Router::test\n";
+    }
 
 private:
 
-    Router(int x) : m_data(x) {};
+    Router(int x) : m_data(x) {}
 
 //  -------------------------------------------------------
 
@@ -81,9 +81,9 @@ class Factory
 {
 public:
 
-    virtual ~Factory() = default; 
+    virtual ~Factory() = default;
 
-    virtual Entity * make() const = 0;  
+    virtual Entity * make() const = 0;
 };
 
 ///////////////////////////////////////////////////////////
@@ -94,7 +94,7 @@ public:
     
     Entity * make() const override 
     { 
-        return new Client; 
+        return new Client;
     } 
 };
 
@@ -106,7 +106,7 @@ public:
     
     Entity * make() const override 
     { 
-        return new Server; 
+        return new Server;
     } 
 };
 
@@ -115,9 +115,9 @@ public:
 int main()
 {
     {
-        auto entity = make_entity < Client > (); 
+        auto entity = make_entity < Client > ();
 
-        entity->test(); 
+        entity->test();
     
         delete entity;
     }
@@ -125,9 +125,9 @@ int main()
 //  ---------------------------------------------
 
     {
-        auto entity = Router::Factory::make_v1(); 
+        auto entity = Router::Factory::make_v1();
 
-        entity->test(); 
+        entity->test();
     
         delete entity;
     }
@@ -137,10 +137,12 @@ int main()
     {
         Factory * factory = new Factory_Server;
 
-        auto entity = factory->make(); 
+        auto entity = factory->make();
 
-        entity->test(); 
+        entity->test();
     
-        delete entity; delete factory;
+        delete entity;
+        
+        delete factory;
     }
 }

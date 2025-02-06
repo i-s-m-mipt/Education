@@ -6,7 +6,7 @@ class Entity
 {    
 public:
 
-    virtual ~Entity() = default; 
+    virtual ~Entity() = default;
 
 //  ----------------------------------
 
@@ -23,13 +23,13 @@ public:
 
     Entity * copy() const override 
     { 
-        return new Client(*this); 
+        return new Client(*this);
     } 
 
     void test() const override 
     { 
-        std::cout << "Client::test\n"; 
-    };
+        std::cout << "Client::test\n";
+    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -40,13 +40,13 @@ public:
 
     Entity * copy() const override 
     { 
-        return new Server(*this); 
+        return new Server(*this);
     } 
 
     void test() const override 
     { 
-        std::cout << "Server::test\n"; 
-    };
+        std::cout << "Server::test\n";
+    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -64,9 +64,9 @@ public:
 
 int main()
 {
-    auto entity = Factory::make_client(); 
+    auto entity = Factory::make_client();
 
-    entity->test(); 
+    entity->test();
     
     delete entity;
 }

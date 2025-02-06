@@ -59,7 +59,7 @@ int main()
 		}
 		catch (const std::filesystem::filesystem_error & exception)
 		{
-			std::cerr << "main : " << exception.what() << '\n'; 
+			std::cerr << "main : " << exception.what() << '\n';
 		}
 	}
 }

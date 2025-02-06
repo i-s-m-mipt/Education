@@ -27,7 +27,7 @@ auto permissions(std::filesystem::perms permissions) -> std::string
 {
     auto lambda = [permissions](auto bit, auto x) 
     { 
-        return (permissions & bit) == std::filesystem::perms::none ? '-' : x; 
+        return (permissions & bit) == std::filesystem::perms::none ? '-' : x;
     };
 
     return
@@ -81,7 +81,9 @@ auto size(const std::filesystem::directory_entry & entry)
 
     while (index < 3 && size >= 1'024)
     {
-        size /= 1'024; ++index;
+        size /= 1'024;
+        
+        ++index;
     }
 
     return (std::stringstream() << std::format("{: >4}", size) << units[index]).str();

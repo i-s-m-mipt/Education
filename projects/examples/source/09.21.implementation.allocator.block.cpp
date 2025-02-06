@@ -25,7 +25,7 @@ public:
         {
             m_begin = operator new(m_size, std::align_val_t(s_alignment));
 
-	        m_head = get_node(m_begin); 
+	        m_head = get_node(m_begin);
             
             m_head->size = m_size - sizeof(Header);
             
@@ -67,7 +67,9 @@ public:
 
                     node->size = current->size - step;
                        
-                    node->next = current->next; current->next = node;
+                    node->next = current->next;
+                    
+                    current->next = node;
                 }
                 else
                 {
@@ -83,7 +85,9 @@ public:
                     previous->next = current->next;
                 }
 
-                auto header = get_header(current); header->size = size + padding;
+                auto header = get_header(current);
+                
+                header->size = size + padding;
 
                 return get_byte(current) + sizeof(Header);
             }
@@ -116,7 +120,9 @@ public:
                 break;
             }
 
-            previous = current; current = current->next;
+            previous = current;
+            
+            current  = current->next;
         }
 
         merge(previous, node);
@@ -148,14 +154,16 @@ private:
 
     struct Node 
     { 
-        std::size_t size = 0; Node * next = nullptr; 
+        std::size_t size = 0;
+        
+        Node * next = nullptr;
     };
 
 //  -----------------------------------------------------------------------------------------------
 
 	struct alignas(std::max_align_t) Header 
     { 
-        std::size_t size = 0; 
+        std::size_t size = 0;
     };
 
 //  -----------------------------------------------------------------------------------------------
@@ -183,7 +191,9 @@ private:
 
 	    while (current && size > current->size)
         {
-            previous = current; current = current->next;
+            previous = current;
+            
+            current  = current->next;
         }
 
         return std::make_pair(current, previous);
@@ -212,7 +222,9 @@ private:
 
     std::size_t m_size = 0;
 
-    void * m_begin = nullptr; Node * m_head = nullptr;
+    void * m_begin = nullptr;
+    
+    Node * m_head  = nullptr;
 
 //  -----------------------------------------------------------------------------------------------
 
@@ -235,24 +247,24 @@ void test_v1(benchmark::State & state)
 	{
 		Allocator allocator(16 * gb);
 
-		for (auto i = 0uz; i < kb; ++i) 
+		for (auto i = 0uz; i < kb; ++i)
         { 
-            ptrs[i] = allocator.allocate(distribution(engine) * mb); 
+            ptrs[i] = allocator.allocate(distribution(engine) * mb);
         }
 
-		for (auto i = 0uz; i < kb; i += 32) 
+		for (auto i = 0uz; i < kb; i += 32)
         { 
-            allocator.deallocate(ptrs[i]); 
+            allocator.deallocate(ptrs[i]);
         }
 
-		for (auto i = 0uz; i < kb; i += 32) 
+		for (auto i = 0uz; i < kb; i += 32)
         { 
-            ptrs[i] = allocator.allocate(distribution(engine) * mb); 
+            ptrs[i] = allocator.allocate(distribution(engine) * mb);
         }
 
-		for (auto i = 0uz; i < kb; ++i) 
+		for (auto i = 0uz; i < kb; ++i)
         { 
-            allocator.deallocate(ptrs[i]); 
+            allocator.deallocate(ptrs[i]);
         }
 	}
 }
@@ -271,23 +283,27 @@ void test_v2(benchmark::State & state)
 
 	for (auto element : state)
 	{
-		for (auto i = 0uz; i < kb; ++i) 
+		for (auto i = 0uz; i < kb; ++i)
         {
-            auto size = distribution(engine) * mb; 
+            auto size = distribution(engine) * mb;
             
-            ptrs[i].first = operator new(size); ptrs[i].second = size;
+            ptrs[i].first  = operator new(size);
+            
+            ptrs[i].second = size;
         }
         
-		for (auto i = 0uz; i < kb; i += 32) 
+		for (auto i = 0uz; i < kb; i += 32)
         {
             operator delete(ptrs[i].first, ptrs[i].second);
         }
 
 		for (auto i = 0uz; i < kb; i += 32)
         {
-            auto size = distribution(engine) * mb; 
+            auto size = distribution(engine) * mb;
             
-            ptrs[i].first = operator new(size); ptrs[i].second = size;
+            ptrs[i].first  = operator new(size);
+            
+            ptrs[i].second = size;
         } 
         
 		for (auto i = 0uz; i < kb; ++i) 
@@ -310,7 +326,7 @@ int main()
     {
         Allocator allocator(1'024);
     
-        allocator.test(); 
+        allocator.test();
 
         [[maybe_unused]] auto ptr_1 = allocator.allocate(1); allocator.test();
 

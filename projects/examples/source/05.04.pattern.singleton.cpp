@@ -16,16 +16,16 @@ public:
 
     void test() const
     { 
-        std::cout << "Singleton::test\n"; 
+        std::cout << "Singleton::test\n";
     }
 
 //  --------------------------------------------------
 
     static auto & instance() 
     { 
-        static Singleton singleton; 
+        static Singleton singleton;
         
-        return singleton; 
+        return singleton;
     }
 
 private:

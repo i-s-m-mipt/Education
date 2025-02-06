@@ -25,7 +25,7 @@ auto hash_v1(const std::string & string)
 
 template < typename T, typename ... Ts > auto hash_v2(T x, Ts ... xs)
 {
-	auto hash = std::hash < T > ()(x); 
+	auto hash = std::hash < T > ()(x);
 
 	if constexpr (sizeof...(xs) > 0)
 	{
@@ -39,7 +39,7 @@ template < typename T, typename ... Ts > auto hash_v2(T x, Ts ... xs)
 
 struct Entity 
 { 
-	int data_1 = 0, data_2 = 0; 
+	int data_1 = 0, data_2 = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////////

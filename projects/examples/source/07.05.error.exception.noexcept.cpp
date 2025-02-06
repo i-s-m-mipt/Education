@@ -91,14 +91,18 @@ void test_v1() { std::cout << "test_v1\n"; }
 
 void test_v2() 
 {
-    Entity entity_1(1); test_v1();
+    Entity entity_1(1);
+	
+	test_v1();
 
     Entity entity_2(2);
 }
 
 void test_v3() noexcept
 {
-    Entity entity_1(1); test_v1();
+    Entity entity_1(1);
+	
+	test_v1();
 
     Entity entity_2(2);
 }

@@ -38,7 +38,7 @@ public:
 
 		if (begin = std::align(alignment, size, begin, free); begin)
 		{
-			m_offset = m_size - free + size; 
+			m_offset = m_size - free + size;
 			
 			return begin;
 		}
@@ -97,12 +97,12 @@ public:
 
     auto allocate(std::size_t size) const
     { 
-        return static_cast < T * > (m_arena->allocate(size * sizeof(T), alignof(T))); 
+        return static_cast < T * > (m_arena->allocate(size * sizeof(T), alignof(T)));
     }
 
     void deallocate(T * ptr, std::size_t size) const
     {
-        m_arena->deallocate(ptr, size * sizeof(T)); 
+        m_arena->deallocate(ptr, size * sizeof(T));
     }
 
 private:
@@ -122,7 +122,9 @@ int main()
 
     std::vector < int, Allocator < int > > vector({ 1, 2, 3, 4, 5 }, allocator);
 
-    arena.test(); vector.push_back(1);
+    arena.test();
+	
+	vector.push_back(1);
 	
     arena.test();
 }

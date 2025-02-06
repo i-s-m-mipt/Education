@@ -18,7 +18,7 @@ using namespace std::literals;
 
 struct Entity 
 { 
-	int data = 0; 
+	int data = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,7 +98,7 @@ int main()
 //  ------------------------------------------------------------------------------------------
 
 	{
-		for ([[maybe_unused]] auto element : std::ranges::views::iota(1, 5)); 
+		for ([[maybe_unused]] auto element : std::ranges::views::iota(1, 5));
 
 		std::cout << "main : enter ints and non-int : ";
 

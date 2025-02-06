@@ -60,7 +60,7 @@ private:
 	{
 		std::call_once(s_status, [](){ Py_Initialize(); });
 
-		s_mutex.lock(); 
+		s_mutex.lock();
 			
 		s_state = PyGILState_Ensure();
 
@@ -71,7 +71,7 @@ private:
 
 	void release()
 	{
-		PyGILState_Release(s_state); 
+		PyGILState_Release(s_state);
 		
 		s_mutex.unlock();
 	}
@@ -181,7 +181,7 @@ int main()
 	{
 		auto size = 1'000'000uz, index = 0uz;
 	
-		std::unordered_set < std::size_t > hashes; 
+		std::unordered_set < std::size_t > hashes;
 		
 		std::string points;
 
@@ -197,6 +197,8 @@ int main()
 			}
 		}
 
-		points.pop_back(); make_plot(points);
+		points.pop_back();
+		
+		make_plot(points);
 	}
 }

@@ -6,7 +6,7 @@ class State
 {
 public:
 
-    virtual ~State() = default; 
+    virtual ~State() = default;
 
 //  ------------------------------------------------
 
@@ -21,7 +21,7 @@ class Slow : public State
 { 
 public:
 
-    void set_slow([[maybe_unused]] class Entity * entity) const override; 
+    void set_slow([[maybe_unused]] class Entity * entity) const override;
 
     void set_fast([[maybe_unused]] class Entity * entity) const override;
 };
@@ -47,7 +47,7 @@ public:
 
    ~Entity() 
     { 
-        set_state(nullptr); 
+        set_state(nullptr);
     }
 
 //  --------------------------------------------
@@ -82,12 +82,16 @@ void Slow::set_slow([[maybe_unused]] Entity * entity) const
 
 void Slow::set_fast([[maybe_unused]] Entity * entity) const
 {
-    std::cout << "Slow::set_fast\n"; entity->set_state(new Fast);
+    std::cout << "Slow::set_fast\n";
+    
+    entity->set_state(new Fast);
 }
 
 void Fast::set_slow([[maybe_unused]] Entity * entity) const
 {
-    std::cout << "Fast::set_slow\n"; entity->set_state(new Slow); 
+    std::cout << "Fast::set_slow\n";
+    
+    entity->set_state(new Slow);
 }
 
 void Fast::set_fast([[maybe_unused]] Entity * entity) const
@@ -101,9 +105,9 @@ int main()
 {
     Entity entity;
 
-    entity.set_slow(); 
+    entity.set_slow();
     
-    entity.set_fast(); 
+    entity.set_fast();
 
     entity.set_fast();
 

@@ -4,7 +4,7 @@
 
 struct Entity
 {
-    int data_1 = 0, data_2 = 0; 
+    int data_1 = 0, data_2 = 0;
 };
 
 ///////////////////////////////////////////////////////////////
@@ -25,7 +25,7 @@ public:
         
         make_data_2();
 
-        return m_entity; 
+        return m_entity;
     }
 
 //  -------------------------------------
@@ -71,5 +71,7 @@ int main()
 
     assert(entity->data_1 == 1 && entity->data_2 == 1);
 
-    delete entity; delete builder;
+    delete entity;
+    
+    delete builder;
 }

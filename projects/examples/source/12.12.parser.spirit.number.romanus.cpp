@@ -80,9 +80,9 @@ namespace parser
 
     auto lambda_3 = [](auto && context){ _val(context) += boost::spirit::x3::_attr(context); };
 
-    Handler_v1 handler_v1; 
+    Handler_v1 handler_v1;
     
-    Handler_v2 handler_v2; 
+    Handler_v2 handler_v2;
     
     Handler_v3 handler_v3;
 

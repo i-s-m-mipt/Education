@@ -22,7 +22,9 @@ public:
 	{
 		if (m_size % m_step == 0 && m_step >= sizeof(Node))
 		{
-			make_list(); m_begin = m_head;
+			make_list();
+			
+			m_begin = m_head;
 		}
 		else 
 		{
@@ -65,7 +67,9 @@ public:
 
 			if (next != get_byte(m_lists[m_offset - 1]) + m_size)
 			{
-				m_head = get_node(next); m_head->next = nullptr;
+				m_head = get_node(next);
+				
+				m_head->next = nullptr;
 			}
 			else 
 			{
@@ -82,9 +86,11 @@ public:
 
 	void deallocate(void * ptr)
 	{
-		auto node = get_node(ptr); 
+		auto node = get_node(ptr);
 		
-		node->next = m_head; m_head = node;
+		node->next = m_head;
+		
+		m_head = node;
 	}
 
 //  -----------------------------------------------------------------------------------------------
@@ -106,7 +112,7 @@ private:
 
 	struct Node 
 	{ 
-		Node * next = nullptr; 
+		Node * next = nullptr;
 	};
 
 //  -----------------------------------------------------------------------------------------------
@@ -118,7 +124,7 @@ private:
 
 	auto get_node(void * ptr) const -> Node *
 	{ 
-		return static_cast < Node * > (ptr); 
+		return static_cast < Node * > (ptr);
 	}
 
 //  -----------------------------------------------------------------------------------------------
@@ -127,21 +133,27 @@ private:
 	{
 		auto node = get_node(operator new(m_size, std::align_val_t(s_alignment)));
 		
-		node->next = nullptr; 
+		node->next = nullptr;
 		
 		return node;
 	}
 
 	void make_list()
 	{
-		m_head = allocate_nodes(); ++m_offset; m_lists.push_back(m_head);
+		m_head = allocate_nodes();
+		
+		++m_offset;
+		
+		m_lists.push_back(m_head);
 	}
 
 //  -----------------------------------------------------------------------------------------------
 
 	std::size_t m_size = 0, m_step = 0, m_offset = 0;
 
-	void * m_begin = nullptr; Node * m_head = nullptr;
+	void * m_begin = nullptr;
+	
+	Node * m_head  = nullptr;
 
 	std::vector < void * > m_lists;
 
@@ -162,24 +174,24 @@ void test_v1(benchmark::State & state)
 	{
 		Allocator allocator(gb, mb);
 
-		for (auto i = 0uz; i < kb; ++i) 
+		for (auto i = 0uz; i < kb; ++i)
 		{ 
-			ptrs[i] = allocator.allocate(); 
+			ptrs[i] = allocator.allocate();
 		}
 
-		for (auto i = 0uz; i < kb; i += 2) 
+		for (auto i = 0uz; i < kb; i += 2)
 		{ 
-			allocator.deallocate(ptrs[i]); 
+			allocator.deallocate(ptrs[i]);
 		}
 
-		for (auto i = 0uz; i < kb; i += 2) 
+		for (auto i = 0uz; i < kb; i += 2)
 		{ 
-			ptrs[i] = allocator.allocate(); 
+			ptrs[i] = allocator.allocate();
 		}
 
-		for (auto i = 0uz; i < kb; ++i) 
+		for (auto i = 0uz; i < kb; ++i)
 		{ 
-			allocator.deallocate(ptrs[i]); 
+			allocator.deallocate(ptrs[i]);
 		}
 	}
 }
@@ -194,24 +206,24 @@ void test_v2(benchmark::State & state)
 
 	for (auto element : state)
 	{
-		for (auto i = 0uz; i < kb; ++i) 
-		{ 
-			ptrs[i] = operator new(mb); 
-		}
-
-		for (auto i = 0uz; i < kb; i += 2) 
-		{ 
-			operator delete(ptrs[i], mb); 
-		}
-
-		for (auto i = 0uz; i < kb; i += 2) 
+		for (auto i = 0uz; i < kb; ++i)
 		{ 
 			ptrs[i] = operator new(mb);
 		}
 
-		for (auto i = 0uz; i < kb; ++i) 
+		for (auto i = 0uz; i < kb; i += 2)
+		{
+			operator delete(ptrs[i], mb);
+		}
+
+		for (auto i = 0uz; i < kb; i += 2)
+		{
+			ptrs[i] = operator new(mb);
+		}
+
+		for (auto i = 0uz; i < kb; ++i)
 		{ 
-			operator delete(ptrs[i], mb); 
+			operator delete(ptrs[i], mb);
 		}
 	}
 }

@@ -10,7 +10,7 @@
 
 auto next(std::vector < std::size_t > & steps, const std::vector < std::size_t > & sizes)
 {
-	auto has_next = false;
+	bool has_next = 0;
 
 	for (auto i = std::ssize(steps) - 1; i >= 0; --i)
 	{
@@ -22,7 +22,9 @@ auto next(std::vector < std::size_t > & steps, const std::vector < std::size_t >
 		}
 		else
 		{
-			has_next = true; break;
+			has_next = 1;
+			
+			break;
 		}
 	}
 
@@ -58,7 +60,7 @@ template < std::forward_iterator ... Is > auto generate(std::pair < Is, Is > ...
 	{
 		apply
 		(
-			[&tuples](auto && ... pairs){ tuples.emplace_back(pairs...); }, 
+			[&tuples](auto && ... pairs){ tuples.emplace_back(pairs...); },
 			
 			std::tie(pairs...), steps, 
 			

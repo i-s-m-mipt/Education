@@ -69,7 +69,7 @@ void test_v3(benchmark::State & state) // support: compiler-explorer.com
 {
     for (auto element : state)
     {
-        auto x = 1.0; 
+        auto x = 1.0;
         
         benchmark::DoNotOptimize(*reinterpret_cast < char * > (&x));
     }
@@ -131,7 +131,11 @@ int main()
 //  ----------------------------------------------------------------------------------------------
 
     {
-        auto x = 1, y = 2; x ^= y ^= x ^= y; assert(x == 2 && y == 1);
+        auto x = 1, y = 2;
+        
+        x ^= y ^= x ^= y;
+        
+        assert(x == 2 && y == 1);
     }
 
 //  ----------------------------------------------------------------------------------------------

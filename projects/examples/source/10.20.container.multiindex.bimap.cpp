@@ -11,7 +11,7 @@
 
 struct Entity 
 { 
-	int data_1 = 0, data_2 = 0; 
+	int data_1 = 0, data_2 = 0;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,7 +38,7 @@ using container_t = boost::multi_index::multi_index_container
 
 		ONU < tag_t < struct data_2_tag > , member_t < Entity, int, &Entity::data_2 > >
 	>
-> ; 
+> ;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

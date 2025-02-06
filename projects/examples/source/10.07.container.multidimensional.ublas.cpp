@@ -21,13 +21,13 @@ auto determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) -> 
         {
             auto determinant = 0.0;
     
-            for (auto i = 0uz; i < size; ++i) 
+            for (auto i = 0uz; i < size; ++i)
             {
                 boost::numeric::ublas::matrix < double > minor(size - 1, size - 1);
 
-                for (auto j = 1uz; j < size; ++j) 
+                for (auto j = 1uz; j < size; ++j)
                 {
-                    for (auto k = 0uz, l = 0uz; k < size; ++k) 
+                    for (auto k = 0uz, l = 0uz; k < size; ++k)
                     {
                         if (k != i) 
                         {
@@ -125,7 +125,7 @@ void test_v1(benchmark::State & state)
 
     for (auto element : state)
     {
-		benchmark::DoNotOptimize(determinant_v1(matrix));	
+		benchmark::DoNotOptimize(determinant_v1(matrix));
     }
 }
 
@@ -137,15 +137,15 @@ void test_v2(benchmark::State & state)
     
     for (auto element : state)
     {
-		benchmark::DoNotOptimize(determinant_v2(matrix));	
+		benchmark::DoNotOptimize(determinant_v2(matrix));
     }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-BENCHMARK(test_v1)->DenseRange(1, 9, 1); 
+BENCHMARK(test_v1)->DenseRange(1, 9, 1);
 
-BENCHMARK(test_v2)->DenseRange(1, 9, 1);  
+BENCHMARK(test_v2)->DenseRange(1, 9, 1);
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 

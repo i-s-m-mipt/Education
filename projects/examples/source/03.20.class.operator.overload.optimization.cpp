@@ -37,9 +37,11 @@ private:
 int main()
 {
     {
-        auto x = 1; const auto & r_x = x;
+        auto x = 1;
+        
+        const auto & r_x = x;
 
-        const_cast < int & > (r_x) = 2; 
+        const_cast < int & > (r_x) = 2;
     
         assert(x == 2);
     }

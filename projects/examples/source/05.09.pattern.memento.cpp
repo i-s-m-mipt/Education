@@ -23,7 +23,7 @@ public:
         
         m_deltas.push_back(state - m_states.front());
 
-        m_states.push_back(state); 
+        m_states.push_back(state);
 
         m_states.front() = std::move(state);
     }
@@ -55,12 +55,12 @@ private:
 
     friend auto operator-(const State & lhs, const State & rhs) -> Delta
     { 
-        return Delta(lhs.data - rhs.data); 
+        return Delta(lhs.data - rhs.data);
     }
 
     friend auto operator+(const State & lhs, const Delta & rhs) -> State
     { 
-        return State(lhs.data + rhs.data); 
+        return State(lhs.data + rhs.data);
     }
 
 //  --------------------------------------------------------------------
@@ -74,11 +74,11 @@ private:
 
 int main() 
 {
-    Memento memento; 
+    Memento memento;
 
 //  -----------------------------------------------
     
-    memento.set(1); 
+    memento.set(1);
 
     memento.set(2);
 

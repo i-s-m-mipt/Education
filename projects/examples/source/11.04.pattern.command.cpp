@@ -16,8 +16,8 @@ struct Entity
 
 //  -----------------------------------------------
 
-	State state = State::slow; 	
-}; 
+	State state = State::slow;
+};
 
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -40,7 +40,9 @@ public:
 
 private:
 
-	Entity & m_entity; State m_state = State::slow;
+	Entity & m_entity;
+	
+	State m_state = State::slow;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////

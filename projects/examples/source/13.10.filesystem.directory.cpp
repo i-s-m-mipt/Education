@@ -18,7 +18,7 @@ int main()
 
 		std::filesystem::create_directories("X/Y/Z");
 
-		std::cout << "main : enter char to continue : "; auto x = '\0'; std::cin >> x;
+		std::cout << "main : enter char to continue : "; char x = 0; std::cin >> x;
 	}
 	
 //  -------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ int main()
 
 		std::filesystem::rename("Y", "Z");
 
-		std::cout << "main : enter char to continue : "; auto x = '\0'; std::cin >> x;
+		std::cout << "main : enter char to continue : "; char x = 0; std::cin >> x;
 	}
 
 //  -------------------------------------------------------------------------------

@@ -51,7 +51,7 @@ int main()
 {
     auto size_1 = 1'000'000uz, size_2 = 1'000uz;
 
-    std::vector < Entity > entities; 
+    std::vector < Entity > entities;
     
     entities.reserve(size_1);
 
@@ -60,7 +60,7 @@ int main()
         entities.emplace_back(1, std::string(size_2, 'a'));
     }
 
-    std::cout << "main : enter char to continue : "; auto x = '\0'; std::cin >> x;
+    std::cout << "main : enter char to continue : "; char x = 0; std::cin >> x;
 
 //  ----------------------------------------------------------------------------
 

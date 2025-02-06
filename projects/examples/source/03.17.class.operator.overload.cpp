@@ -20,7 +20,7 @@ public:
 
 		if (m_den <  0)
 		{
-			m_num *= -1; 
+			m_num *= -1;
 			
 			m_den *= -1;
 		}
@@ -32,7 +32,7 @@ public:
 
 	explicit operator double() const
 	{ 
-		return 1.0 * m_num / m_den; 
+		return 1.0 * m_num / m_den;
 	}
 
 //  ------------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ public:
 	{
 		auto lcm = std::lcm(m_den, other.m_den);
 
-		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den); 
+		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den);
 		
 		m_den = lcm;
 
@@ -52,7 +52,7 @@ public:
 
 	auto & operator-=(const Ratio & other) 
 	{ 
-		return *this += other.m_num * -1; 
+		return *this += other.m_num * -1;
 	}
 
 	auto & operator*=(const Ratio & other)
@@ -68,7 +68,7 @@ public:
 	
 	auto & operator/=(const Ratio & other) 
 	{ 
-		return *this *= Ratio(other.m_den, other.m_num); 
+		return *this *= Ratio(other.m_den, other.m_num);
 	}
 
 //  ------------------------------------------------------------------------------------------
@@ -113,11 +113,11 @@ public:
 
 	friend auto & operator>>(std::istream & stream, Ratio & ratio)
 	{
-		auto num = 0; auto x = '\0'; auto den = 0; stream >> num >> x >> den;
+		auto num = 0; char x = 0; auto den = 0; stream >> num >> x >> den;
 
 		if (x != '/') 
 		{
-			std::cerr << "operator>> : invalid input\n";
+			std::cerr << "operator>> : invalid ratio\n";
 		}
 
 		ratio = Ratio(num, den);
@@ -143,9 +143,7 @@ private:
 
 //  ------------------------------------------------------------------------------------------
 
-	int m_num = 0;
-
-	int m_den = 1;
+	int m_num = 0, m_den = 1;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -255,9 +253,9 @@ int main()
 //  -----------------------------------------------------------------
 
 	{
-		std::cout << "main : enter boost::rational < int > : "; 
+		std::cout << "main : enter boost::rational < int > : ";
 		
-		boost::rational < int > x; std::cin >> x; 
+		boost::rational < int > x; std::cin >> x;
 	
 		std::cout << "main : x = " << x << '\n';
 	}

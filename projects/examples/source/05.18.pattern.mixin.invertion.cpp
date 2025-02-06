@@ -12,7 +12,7 @@ public:
 
     auto get() const 
     { 
-        return m_data; 
+        return m_data;
     }
     
     void set(int x) 
@@ -37,12 +37,14 @@ public:
 
     void set(data_t data) 
     { 
-        m_data = B::get(); B::set(data); 
+        m_data = B::get();
+        
+        B::set(data);
     }
 
     void undo() 
     { 
-        B::set(m_data); 
+        B::set(m_data);
     }
     
 private:
@@ -62,17 +64,19 @@ public:
 
     void set(data_t data) 
     { 
-        m_data = data; B::set(data); 
+        m_data = data;
+        
+        B::set(data);
     }
 
     void redo() 
     { 
-        B::set(m_data); 
+        B::set(m_data);
     }
     
 private:
     
-    data_t m_data = data_t(); 
+    data_t m_data = data_t();
 };
 
 /////////////////////////////////////////////////
@@ -83,7 +87,7 @@ int main()
 
 //  -----------------------------------------
 
-    entity.set(1); 
+    entity.set(1);
     
     entity.set(2);
 

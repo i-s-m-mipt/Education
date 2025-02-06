@@ -32,9 +32,9 @@ public:
 
 	constexpr auto & operator=(Tuple other) 
 	{ 
-		swap(other); 
+		swap(other);
 		
-		return *this; 
+		return *this;
 	}
 
 //  --------------------------------------------------------------------
@@ -45,7 +45,7 @@ public:
 
 		if constexpr (sizeof...(Ts) > 0) 
 		{ 
-			m_tail.swap(other.m_tail); 
+			m_tail.swap(other.m_tail);
 		}
 	}
 
@@ -65,7 +65,9 @@ public:
 
 private:
 
-	T m_head; Tuple < Ts ... > m_tail;
+	T m_head; 
+	
+	Tuple < Ts ... > m_tail;
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -88,7 +90,7 @@ int main()
 
     	Tuple < int, std::string > tuple_4(std::move(tuple_3));
 
-    	tuple_3 = tuple_2; 
+    	tuple_3 = tuple_2;
     
     	tuple_4 = std::move(tuple_3);
 	}

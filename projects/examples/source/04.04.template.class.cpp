@@ -66,9 +66,9 @@ auto copy(const C1 < T > & container)
 
 template < typename T1, typename T2 > struct Pair 
 { 
-	T1 data_1 = T1(); 
+	T1 data_1 = T1();
 	
-	T2 data_2 = T2(); 
+	T2 data_2 = T2();
 };
 
 //  ================================================================================================
@@ -79,7 +79,7 @@ public:
 
 	void test() const
 	{ 
-		std::cout << "Entity::test (1)\n"; 
+		std::cout << "Entity::test (1)\n";
 	}
 };
 
@@ -89,7 +89,7 @@ public:
 
 	void test() const 
 	{ 
-		std::cout << "Entity::test (2)\n"; 
+		std::cout << "Entity::test (2)\n";
 	}
 };
 
@@ -99,7 +99,7 @@ public:
 
 	void test() const 
 	{ 
-		std::cout << "Entity::test (3)\n"; 
+		std::cout << "Entity::test (3)\n";
 	}
 };
 
@@ -109,7 +109,7 @@ public:
 
 	void test() const 
 	{ 
-		std::cout << "Entity::test (4)\n"; 
+		std::cout << "Entity::test (4)\n";
 	}
 };
 
@@ -119,7 +119,7 @@ public:
 
 	void test() const 
 	{ 
-		std::cout << "Entity::test (5)\n"; 
+		std::cout << "Entity::test (5)\n";
 	}
 };
 
@@ -130,9 +130,9 @@ int main()
 	{
 		Stack_v1 < int > stack_v1;
 
-		stack_v1.push(1); 
+		stack_v1.push(1);
 	
-		assert(stack_v1.top() == 1); 
+		assert(stack_v1.top() == 1);
 	
 		stack_v1.pop();
 	}

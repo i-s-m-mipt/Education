@@ -10,7 +10,7 @@
 int main()
 {
 	{
-		std::ios::sync_with_stdio(false);
+		std::ios::sync_with_stdio(0);
 	}
 
 //  ------------------------------------------------------------------------------
@@ -34,7 +34,9 @@ int main()
 			*iterator_1++ = *iterator_2++;
 		}
 
-		*iterator_1 = '\n'; std::cin.clear();
+		*iterator_1 = '\n';
+		
+		std::cin.clear();
 	}
 
 //  ------------------------------------------------------------------------------
@@ -53,7 +55,9 @@ int main()
 			std::back_inserter(vector)
 		);
 
-		std::cin.clear(); auto x = '\0'; std::cin >> x;
+		std::cin.clear();
+		
+		char x = 0; std::cin >> x;
 
 		std::cout << "main : vector = { ";
 

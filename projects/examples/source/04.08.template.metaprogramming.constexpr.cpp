@@ -13,13 +13,13 @@ consteval auto factorial_v2(int x) -> int { return x > 1 ? x * factorial_v2(x - 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-consteval auto is_prime(int x)
+consteval auto is_prime(int x) -> bool
 {
 	for (auto i = 2; i * i < x; ++i)
 	{
 		if (x % i == 0) 
 		{
-			return false;
+			return 0;
 		}
 	}
 
@@ -41,7 +41,7 @@ consteval auto test_v1()
 
 constexpr auto test_v2(int) 
 { 
-	return std::is_constant_evaluated(); 
+	return std::is_constant_evaluated();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

@@ -32,7 +32,7 @@ template < typename R1, typename R2 > using sum_t = typename Sum < R1, R2 > ::ty
 
 template < typename T, typename R = Ratio < 1 > > struct Duration 
 { 
-	T data = T(); 
+	T data = T();
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////

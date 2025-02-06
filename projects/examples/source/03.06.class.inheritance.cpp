@@ -21,7 +21,7 @@ protected:
 
 	auto data() const
 	{ 
-		return m_data; 
+		return m_data;
 	}
 
 private:
@@ -68,9 +68,9 @@ public:
 
 	void test() const
 	{ 
-		test_v1(); 
+		test_v1();
 
-		test_v2(); 
+		test_v2();
 	}
 };
 
@@ -82,14 +82,14 @@ public:
 
 	void test() const
 	{ 
-		m_entity.test_v1(); 
+		m_entity.test_v1();
 
-		m_entity.test_v2(); 
+		m_entity.test_v2();
 	}
 
 private: 
 
-	Entity m_entity; 
+	Entity m_entity;
 };
 
 ///////////////////////////////////////////////////////////////////

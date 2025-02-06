@@ -23,7 +23,7 @@ public:
 
 		if (begin = std::align(alignment, size, begin, free); begin)
 		{
-			m_offset = S - free + size; 
+			m_offset = S - free + size;
 			
 			return begin;
 		}
@@ -86,12 +86,12 @@ void test_v2(benchmark::State & state)
 
 	for (auto element : state)
 	{
-		for (auto i = 0uz; i < kb; ++i) 
+		for (auto i = 0uz; i < kb; ++i)
 		{
 			ptrs[i] = operator new(kb);
 		}
 
-		for (auto i = 0uz; i < kb; ++i) 
+		for (auto i = 0uz; i < kb; ++i)
 		{
 			operator delete(ptrs[i]);
 		}
@@ -109,7 +109,7 @@ BENCHMARK(test_v2);
 int main()
 {
 	{
-		Allocator < 1'024 > allocator; 
+		Allocator < 1'024 > allocator;
 
 		allocator.test();
 

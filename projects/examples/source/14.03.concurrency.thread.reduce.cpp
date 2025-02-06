@@ -27,7 +27,7 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 {
     auto begin = std::begin(view), end = std::end(view);
 
-	if (auto size = 1uz * std::distance(begin, end); size > 0) 
+	if (auto size = 1uz * std::distance(begin, end); size > 0)
 	{
 		auto concurrency = 1uz * std::max(std::thread::hardware_concurrency(), 2u);
 
@@ -49,7 +49,9 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 					Task < decltype(range), T > (), range, std::ref(sums[i])
 				);
 
-				begin_block = end_block; end_block = std::next(begin_block, step);
+				begin_block = end_block;
+				
+				end_block = std::next(begin_block, step);
 			}
 
 			auto range = std::ranges::subrange(begin_block, end);

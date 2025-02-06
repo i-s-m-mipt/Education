@@ -55,9 +55,9 @@ void test_v3(benchmark::State & state)
 {
 	for (auto element : state)
 	{
-        std::pmr::monotonic_buffer_resource arena;
+        std::pmr::monotonic_buffer_resource resource;
 
-        std::pmr::polymorphic_allocator < int > allocator(&arena);
+        std::pmr::polymorphic_allocator < int > allocator(&resource);
 
         std::pmr::list < int > list(allocator);
 
@@ -78,9 +78,9 @@ void test_v4(benchmark::State & state)
 	{
         std::array < std::byte, 32'000 > array = {};
 
-        std::pmr::monotonic_buffer_resource arena(std::data(array), std::size(array));
+        std::pmr::monotonic_buffer_resource resource(std::data(array), std::size(array));
 
-        std::pmr::polymorphic_allocator < int > allocator(&arena);
+        std::pmr::polymorphic_allocator < int > allocator(&resource);
 
         std::pmr::list < int > list(allocator);
 
@@ -133,11 +133,11 @@ int main()
 
         std::ranges::fill(array, '_');
 
-        std::pmr::monotonic_buffer_resource arena(std::data(array), std::size(array));
+        std::pmr::monotonic_buffer_resource resource(std::data(array), std::size(array));
 
         auto size = 26uz;
 
-        std::pmr::vector < char > vector(&arena);
+        std::pmr::vector < char > vector(&resource);
 
         vector.reserve(size);
 
@@ -146,7 +146,7 @@ int main()
             vector.push_back('a' + i);
         }
 
-        for (auto i = 0uz; i < std::size(array); ++i) 
+        for (auto i = 0uz; i < std::size(array); ++i)
         {
             assert(array[i] == "abcdefghijklmnopqrstuvwxyz______"sv[i]);
         }
@@ -167,9 +167,9 @@ int main()
     {
         boost::object_pool < int > pool(32);
 
-        auto ptr_1 = pool.malloc(); pool.destroy(ptr_1);
-
-        auto ptr_2 = pool.malloc(); pool.destroy(ptr_2);
+        auto ptr = pool.malloc();
+        
+        pool.destroy(ptr);
 
         assert(pool.get_next_size() == 64);
     }

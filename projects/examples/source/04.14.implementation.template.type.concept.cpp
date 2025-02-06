@@ -40,7 +40,7 @@ template < typename T > concept ordable = equable < T > && requires (T x, T y)
 
 template < typename T > concept typable = requires 
 { 
-    typename T::value_type; 
+    typename T::value_type;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +86,7 @@ int main()
 //  --------------------------------------------------------------------------
 
     {
-        static_assert(addable < int > && !addable < Entity < int > > );    
+        static_assert(addable < int > && !addable < Entity < int > > );
 
         static_assert(equable < int > && !equable < Entity < int > > );
 

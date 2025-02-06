@@ -21,7 +21,7 @@ public:
 
 	void test() const override 
 	{ 
-		std::cout << "Client_v1::test\n"; 
+		std::cout << "Client_v1::test\n";
 	} 
 };
 
@@ -33,7 +33,7 @@ public:
 
 	void test() const override 
 	{ 
-		std::cout << "Server_v1::test\n"; 
+		std::cout << "Server_v1::test\n";
 	} 
 };
 
@@ -41,7 +41,7 @@ public:
 
 void test_v1(const Entity & entity)
 {
-	entity.test(); 
+	entity.test();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////

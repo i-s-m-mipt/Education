@@ -91,7 +91,7 @@ void test(benchmark::State & state)
 {
     for (auto element : state)
     {
-		auto ptr = operator new(state.range(0)); 
+		auto ptr = operator new(state.range(0));
 		
 		benchmark::DoNotOptimize(ptr);
 		

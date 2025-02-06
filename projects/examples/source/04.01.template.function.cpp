@@ -60,12 +60,12 @@ template <> void test_v1 < int > (int)
 
 void test_v1(int) 
 { 
-	std::cout << "test_v1 (3)\n"; 
+	std::cout << "test_v1 (3)\n";
 }
 
 void test_v1(double) 
 { 
-	std::cout << "test_v1 (4)\n"; 
+	std::cout << "test_v1 (4)\n";
 }
 
 //  ================================================================================================
@@ -202,7 +202,7 @@ int main()
 //  ----------------------------------------------------------------
 
 	{
-		int * ptr = nullptr; 
+		int * ptr = nullptr;
 	
 		test_v3(ptr);
 

@@ -35,14 +35,14 @@ public:
 
 		m_size = other.m_size;
 
-		std::ranges::copy(other.m_data, other.m_data + other.m_size, m_data);		
+		std::ranges::copy(other.m_data, other.m_data + other.m_size, m_data);
 	}
 
 	Vector(Vector && other) : m_data(other.m_data), m_size(other.m_size)
 	{
 		std::cout << "Vector::Vector (4)\n";
 
-		other.m_data = nullptr; 
+		other.m_data = nullptr;
 
 		other.m_size = 0;
 	}
@@ -114,7 +114,7 @@ public:
 
 //			m_size = other.m_size;
 //
-//			other.m_data = nullptr; 
+//			other.m_data = nullptr;
 //
 //			other.m_size = 0;
 //		}
@@ -156,7 +156,9 @@ public:
 
 private:
 
-	int * m_data = nullptr; std::size_t m_size = 0;
+	int * m_data = nullptr; 
+	
+	std::size_t m_size = 0;
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -165,9 +167,9 @@ auto test_v1() { return Vector({ 1, 2, 3, 4, 5 }); }
 
 auto test_v2() 
 { 
-	Vector vector = { 1, 2, 3, 4, 5 }; 
+	Vector vector = { 1, 2, 3, 4, 5 };
 	
-	return vector; 
+	return vector;
 
 //	return std::move(vector); // error
 }

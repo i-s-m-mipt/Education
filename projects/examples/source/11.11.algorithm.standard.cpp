@@ -33,7 +33,7 @@ template < typename F1, typename F2, typename F3 > auto bind(F1 && f1, F2 && f2,
 			f1(std::forward < T > (x)), 
 			
 			f2(std::forward < T > (x))
-		); 
+		);
 	};
 }
 
@@ -66,7 +66,7 @@ int main()
 		(
 			std::begin(vector), std::end(vector), [&engine, &distribution]()
 			{ 
-				return distribution(engine); 
+				return distribution(engine);
 			}
 		);
 

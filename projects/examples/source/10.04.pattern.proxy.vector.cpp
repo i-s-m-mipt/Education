@@ -41,12 +41,12 @@ int main()
 //  ---------------------------------------------------------------------------
 
 	{
-		std::vector < bool > vector(1'000'000'000, false); 
+		std::vector < bool > vector(1'000'000'000, 0);
  
 		auto proxy = vector.front();
 
 		static_assert(!std::is_same_v < decltype(proxy), bool > );
 
-		std::cout << "main : enter char to continue : "; auto x = '\0'; std::cin >> x;
+		std::cout << "main : enter char to continue : "; char x = 0; std::cin >> x;
 	}
 }

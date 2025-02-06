@@ -12,9 +12,9 @@ public:
 
     auto get()
     { 
-        return std::shared_ptr < Entity_v1 > (this); 
+        return std::shared_ptr < Entity_v1 > (this);
     }
-}; 
+};
 
 ///////////////////////////////////////////////////////////////////
 
@@ -24,7 +24,7 @@ public:
 
     auto get()
     { 
-        return shared_from_this(); 
+        return shared_from_this();
     }
 };
 
@@ -38,13 +38,13 @@ private:
 
 public:
 
-    Entity_v3(Key) {};
+    Entity_v3(Key) {}
 
 //  ---------------------------------------------------------------
 
     auto get()
     { 
-        return shared_from_this(); 
+        return shared_from_this();
     }
 
     static auto make()

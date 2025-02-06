@@ -17,7 +17,7 @@ auto convert_v1(const std::string & string)
 {
 	boost::locale::generator generator;
 
-	generator.locale_cache_enabled(true);
+	generator.locale_cache_enabled(1);
 
 	auto locale = generator(boost::locale::util::get_system_locale());
 
@@ -28,9 +28,9 @@ auto convert_v1(const std::string & string)
 
 auto convert_v2(const std::string & string)
 {
-	boost::locale::generator generator; 
+	boost::locale::generator generator;
     
-    generator.locale_cache_enabled(true);
+    generator.locale_cache_enabled(1);
 
 	auto locale = generator(boost::locale::util::get_system_locale());
 
@@ -41,7 +41,7 @@ auto convert_v2(const std::string & string)
 
 auto convert_v3(std::string_view view, const std::locale & locale) 
 {
-	std::vector < wchar_t > vector(std::size(view), L'\0');
+	std::vector < wchar_t > vector(std::size(view), 0);
 
 	std::use_facet < std::ctype < wchar_t > > (locale).widen
     (
@@ -57,7 +57,7 @@ auto convert_v3(std::string_view view, const std::locale & locale)
 
 auto convert_v4(std::wstring_view view, const std::locale & locale)
 {
-	std::vector < char > vector(std::size(view), '\0');
+	std::vector < char > vector(std::size(view), 0);
 
 	std::use_facet < std::ctype < wchar_t > > (locale).narrow
     (
@@ -82,7 +82,9 @@ int main()
 //  ----------------------------------------------------------------------------------
 
     {
-        auto string_1 = "ааааа"s; auto size = std::size(string_1);
+        auto string_1 = "ааааа"s;
+        
+        auto size = std::size(string_1);
 
         std::cout << "main : size = " << size << '\n';
 

@@ -24,7 +24,7 @@ template < typename L > struct Front {};
 
 template < typename T, typename ... Ts > struct Front < List < T, Ts ... > > 
 { 
-    using type = T; 
+    using type = T;
 };
 
 template < typename L > using front = typename Front < L > ::type;
@@ -57,12 +57,12 @@ template < typename L > struct Back {};
 
 template < typename T > struct Back < List < T > > 
 { 
-    using type = T; 
+    using type = T;
 };
 
 template < typename T, typename ... Ts > struct Back < List < T, Ts ... > > 
 { 
-    using type = typename Back < List < Ts ... > > ::type; 
+    using type = typename Back < List < Ts ... > > ::type;
 };
 
 template < typename L > using back = typename Back < L > ::type;
@@ -71,12 +71,12 @@ template < typename L > using back = typename Back < L > ::type;
 
 template < typename T, typename L, bool C = empty_v < L > > struct Push_Back {};
 
-template < typename T, typename L > struct Push_Back < T, L, false >
+template < typename T, typename L > struct Push_Back < T, L, 0 >
 {
     using type = push_front < front < L > , typename Push_Back < T, pop_front < L > > ::type > ;
-}; 
+};
 
-template < typename T, typename L > struct Push_Back < T, L, true >
+template < typename T, typename L > struct Push_Back < T, L, 1 >
 {
     using type = push_front < T, L > ;
 };
@@ -89,7 +89,7 @@ template < typename L > struct Pop_Back {};
 
 template < typename T > struct Pop_Back < List < T > > 
 { 
-    using type = List <> ; 
+    using type = List <> ;
 };
 
 template < typename T, typename ... Ts > struct Pop_Back < List < T, Ts ... > >
@@ -111,9 +111,9 @@ template < typename L, std::size_t I > using nth = typename Nth < L, I > ::type;
 
 template < typename L, bool C = empty_v < L > > class Max_Type {};
 
-template < typename L > class Max_Type < L, true  > { public: using type = std::byte; };
+template < typename L > class Max_Type < L, 1 > { public: using type = std::byte; };
 
-template < typename L > class Max_Type < L, false >
+template < typename L > class Max_Type < L, 0 >
 {
 private:
 

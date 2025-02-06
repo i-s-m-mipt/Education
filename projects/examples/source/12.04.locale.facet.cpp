@@ -31,7 +31,7 @@ void put_time(const std::locale & locale)
 int main() // support: locale -a
 {
 	{
-		std::locale locale("en_US.utf8"); 
+		std::locale locale("en_US.utf8");
     
 		std::cout.imbue(locale);
 
@@ -39,7 +39,7 @@ int main() // support: locale -a
 
 		assert((std::use_facet < std::moneypunct < char > > (locale).curr_symbol  ()) == "$");
 
-		std::cout << "main : date (en_US.utf8) = "; put_time(locale);	
+		std::cout << "main : date (en_US.utf8) = "; put_time(locale);
 	}
 	
 
@@ -82,7 +82,9 @@ int main() // support: locale -a
 
 		std::cout << "main : enter std::tm (Day MM/DD/YYYY) : ";
 
-		auto state = std::ios_base::goodbit; std::tm tm;
+		auto state = std::ios_base::goodbit;
+		
+		std::tm tm;
 
 		auto format = "%A %x";
 

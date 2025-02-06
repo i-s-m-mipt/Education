@@ -19,7 +19,7 @@ int main()
 
         try
         {
-            while (true) 
+            while (1) 
             {
                 new int[1'000'000'000]{};
             }
@@ -35,7 +35,7 @@ int main()
     {
         std::atexit(handler_v2);
 
-        while (true)
+        while (1)
         {
             if (auto array = new (std::nothrow) int[1'000'000'000]{}; !array)
             {

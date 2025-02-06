@@ -18,14 +18,14 @@ void test_v3();
 
 //  void test_v4() // error
 //  { 
-//	    std::cout << "test_v4\n"; 
+//	    std::cout << "test_v4\n";
 //  } 
 
 ////////////////////////////////////////////////////////
 
 inline void test_v5()
 { 
-    std::cout << "test_v5\n"; 
+    std::cout << "test_v5\n";
 }
 
 ////////////////////////////////////////////////////////

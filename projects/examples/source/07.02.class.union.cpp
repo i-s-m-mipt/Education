@@ -4,11 +4,9 @@
 
 union Entity // support: compiler-explorer.com
 { 
-	char data_1[1]; 
-
-	char data_2[2];
-
-	char data_3[3]; int data_4 = 0; 
+	char data_1[1], data_2[2], data_3[3];
+	
+	int data_4 = 0;
 };
 
 //////////////////////////////////////////////////////////////
@@ -17,12 +15,10 @@ struct Variant
 {
 	union 
 	{ 
-		int data_1; 
-		
-		int data_2 = 0; 
+		int data_1, data_2 = 0;
 	};
-
-	bool has_error = false; 
+	
+	bool has_error = 0;
 };
 
 //////////////////////////////////////////////////////////////
@@ -54,7 +50,7 @@ int main()
 
 //		assert(entity.data_3[0] == 'a'); // bad
 
-		entity.data_1[0] = 0; 
+		entity.data_1[0] = 0;
 		
 		entity.data_3[1] = 1;
 

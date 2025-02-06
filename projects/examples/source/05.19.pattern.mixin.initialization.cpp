@@ -9,12 +9,12 @@ public:
 
     void initialize() const 
     { 
-        std::cout << "Entity::initialize\n"; 
+        std::cout << "Entity::initialize\n";
     }
 
 protected:
 
-    Entity(int) {}; 
+    Entity(int) {}
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////

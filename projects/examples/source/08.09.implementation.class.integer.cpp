@@ -28,16 +28,16 @@ public:
 
 //  --------------------------------------------------------------------------------------------
 
-	Integer() : m_sign(false), m_data(s_size, 0), m_size(1) {}
+	Integer() : m_sign(0), m_data(s_size, 0), m_size(1) {}
 
 	Integer(digit_t digit) : Integer() 
 	{ 
-		parse(std::to_string(digit)); 
+		parse(std::to_string(digit));
 	}
 
 	Integer(const std::string & string) : Integer() 
 	{ 
-		parse(string); 
+		parse(string);
 	}
 
 //  --------------------------------------------------------------------------------------------
@@ -63,9 +63,9 @@ public:
 		{
 			if (this->less(other))
 			{
-				*this = std::move(other.subtract(*this)); 
+				*this = std::move(other.subtract(*this));
 				
-				m_sign = true;
+				m_sign = 1;
 			}
 			else 
 			{
@@ -80,7 +80,9 @@ public:
 			}
 			else 
 			{ 
-				this->subtract(other); m_sign = true; 
+				this->subtract(other);
+				
+				m_sign = 1;
 			}
 		}
 
@@ -101,7 +103,7 @@ public:
 			throw std::runtime_error("arithmetic overflow");
 		}
 
-		Integer x; 
+		Integer x;
 		
 		x.m_sign = m_sign ^ other.m_sign;
 
@@ -121,7 +123,9 @@ public:
 
 		x.m_size = m_size + other.m_size;
 
-		swap(x); reduce(); 
+		swap(x);
+		
+		reduce();
 		
 		return *this;
 	}
@@ -133,17 +137,21 @@ public:
 			throw std::runtime_error("invalid operand");
 		}
 
-		Integer x; 
+		Integer x;
 		
 		x.m_size = m_size;
 
-		x.m_sign = m_sign ^ other.m_sign; other.m_sign = false;
+		x.m_sign = m_sign ^ other.m_sign;
+		
+		other.m_sign = 0;
 
 		Integer current;
 
 		for (auto i = static_cast < int > (m_size) - 1; i >= 0; --i)
 		{
-			current *= s_base; current.m_data[0] = m_data[i];
+			current *= s_base;
+			
+			current.m_data[0] = m_data[i];
 
 			digit_t left = 0, right = s_base, digit = 0;
 
@@ -151,7 +159,9 @@ public:
 			{
 				if (auto middle = std::midpoint(left, right); other * middle <= current)
 				{
-					left  = middle + 1; digit = middle;
+					left  = middle + 1;
+					
+					digit = middle;
 				}
 				else
 				{
@@ -159,10 +169,14 @@ public:
 				}
 			}
 
-			x.m_data[i] = digit; current -= other * digit;
+			x.m_data[i] = digit;
+			
+			current -= other * digit;
 		}
 
-		swap(x); reduce(); 
+		swap(x);
+		
+		reduce();
 		
 		return *this;
 	}
@@ -181,22 +195,22 @@ public:
 
 	friend auto operator+ (const Integer & lhs, const Integer & rhs) 
 	{ 
-		return Integer(lhs) += rhs; 
+		return Integer(lhs) += rhs;
 	}
 
 	friend auto operator- (const Integer & lhs, const Integer & rhs) 
 	{ 
-		return Integer(lhs) -= rhs; 
+		return Integer(lhs) -= rhs;
 	}
 
 	friend auto operator* (const Integer & lhs, const Integer & rhs) -> Integer
 	{ 
-		return Integer(lhs) *= rhs; 
+		return Integer(lhs) *= rhs;
 	}
 
 	friend auto operator/ (const Integer & lhs, const Integer & rhs) 
 	{ 
-		return Integer(lhs) /= rhs; 
+		return Integer(lhs) /= rhs;
 	}
 
 //  --------------------------------------------------------------------------------------------
@@ -230,22 +244,22 @@ public:
 		return !(lhs < rhs);
 	}
 
-	friend auto operator==(const Integer & lhs, const Integer & rhs)
+	friend auto operator==(const Integer & lhs, const Integer & rhs) -> bool
 	{
 		if (lhs.m_sign != rhs.m_sign || lhs.m_size != rhs.m_size)
 		{
-			return false;
+			return 0;
 		}
 
 		for (auto i = 0uz; i < lhs.m_size; ++i)
 		{
 			if (lhs.m_data[i] != rhs.m_data[i]) 
 			{
-				return false;
+				return 0;
 			}
 		}
 
-		return true;
+		return 1;
 	}
 
 //  --------------------------------------------------------------------------------------------
@@ -254,7 +268,7 @@ public:
 	{
 		std::string string; stream >> string; 
 		
-		integer = Integer(string); 
+		integer = Integer(string);
 		
 		return stream;
 	}
@@ -280,21 +294,23 @@ public:
 
 	friend auto multiply(const Integer & x, const Integer & y) -> Integer
 	{
-		if (auto size = std::max(x.m_size, y.m_size); size > 1) 
+		if (auto size = std::max(x.m_size, y.m_size); size > 1)
 		{
 			auto step = size / 2;
 
-			Integer x1; x1.m_size = step;
+			Integer x1, x2, y1, y2;
 
-			Integer x2; x2.m_size = size - step;
+			x1.m_size = step;
+
+			x2.m_size = size - step;
 
 			for (auto i =  0uz; i < step; ++i) { x1.m_data[i       ] = x.m_data[i]; }
 
 			for (auto i = step; i < size; ++i) { x2.m_data[i - step] = x.m_data[i]; }
 
-			Integer y1; y1.m_size = step;
+			y1.m_size = step;
 			
-			Integer y2; y2.m_size = size - step;
+			y2.m_size = size - step;
 
 			for (auto i =  0uz; i < step; ++i) { y1.m_data[i       ] = y.m_data[i]; }
 
@@ -308,14 +324,14 @@ public:
 
 			Integer base = Integer::s_base;
 
-			for (auto i = 1uz; i < step; ++i) 
+			for (auto i = 1uz; i < step; ++i)
 			{
 				base *= Integer::s_base;
 			}
 
 			auto z = p1 * base * base + (p3 - p2 - p1) * base + p2;
 
-			z.m_sign = x.m_sign ^ y.m_sign; 
+			z.m_sign = x.m_sign ^ y.m_sign;
 
 			return z;
 		}
@@ -334,7 +350,7 @@ public:
 			throw std::runtime_error("invalid operand");
 		}
 
-    	Integer y; 
+    	Integer y;
 		
 		y.m_size = (x.m_size + 1) / 2;
     	
@@ -348,7 +364,9 @@ public:
 
         		if (y * y <= x)
         		{
-          			left  = middle + 1; digit = std::min(middle, Integer::s_base - 1);
+          			left  = middle + 1;
+					
+					digit = std::min(middle, Integer::s_base - 1);
         		}
         		else
 				{
@@ -359,9 +377,9 @@ public:
       		y.m_data[i] = digit;
     	}
 
-		y.reduce(); 
+		y.reduce();
 		
-		return y; 
+		return y;
 	}
 
 private:
@@ -381,12 +399,14 @@ private:
 				{ 
 					if (!std::isdigit(x)) 
 					{
-						throw std::runtime_error("invalid string"); 
+						throw std::runtime_error("invalid string");
 					}
 				}
 			);
 
-			m_sign = string[0] == '-'; m_size = 0;
+			m_sign = string[0] == '-';
+			
+			m_size = 0;
 
 			for (auto i = std::ssize(string) - 1; i >= 0; i -= s_step)
 			{
@@ -462,7 +482,7 @@ private:
 			}
 		}
 
-		reduce(); 
+		reduce();
 		
 		return *this;
 	}
@@ -484,14 +504,14 @@ private:
 			}
 		}
 
-		return false;
+		return 0;
 	}
 
 //  --------------------------------------------------------------------------------------------
 
-	bool m_sign = false;
+	bool m_sign = 0;
 
-	std::vector < digit_t > m_data; 
+	std::vector < digit_t > m_data;
 
 	std::size_t m_size = 0;
 
@@ -555,7 +575,7 @@ int main()
 //  ----------------------------------------------------------------------------------------------
 
 	{
-		std::cout << "main : enter Integer : "; Integer x; std::cin >> x; 
+		std::cout << "main : enter Integer : "; Integer x; std::cin >> x;
 	
 		std::cout << "main : x = " << x << '\n';
 	}
@@ -584,9 +604,9 @@ int main()
 //  ----------------------------------------------------------------------------------------------
 
 	{
-		Integer x = 1; 
+		Integer x = 1;
 		
-		for (auto i = 1; i <= 100; ++i) 
+		for (auto i = 1; i <= 100; ++i)
 		{
 			x *= i;
 		}

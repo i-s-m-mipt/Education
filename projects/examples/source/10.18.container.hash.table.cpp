@@ -68,7 +68,9 @@ int main()
 	{
 		std::unordered_set < std::string > set;
 
-		test(set); set.rehash(32);
+		test(set);
+		
+		set.rehash(32);
 
 		test(set);
 
@@ -77,7 +79,9 @@ int main()
 			set.insert(string);
 		}
 
-		test(set); set.rehash(64);
+		test(set);
+		
+		set.rehash(64);
 	
 		test(set);
 	}

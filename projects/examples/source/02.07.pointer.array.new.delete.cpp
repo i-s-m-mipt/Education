@@ -11,7 +11,7 @@
 int main()
 {
 	{
-		auto ptr = new auto(1);  
+		auto ptr = new auto(1);
 
 		assert(*ptr == 1);
 	
@@ -35,7 +35,7 @@ int main()
 	{
 		std::cout << "main : enter size : "; auto size = 0uz; std::cin >> size;
 
-		auto array = new int[size]{}; 
+		auto array = new int[size]{};
 
 		for (auto i = 0uz; i < size; ++i)
 		{

@@ -38,7 +38,7 @@ int main()
 	{
 		assert(sizeof(char8_t) == 1);
 
-		[[maybe_unused]] auto x = u8'a'; 	
+		[[maybe_unused]] auto x = u8'a';
 
 //		std::cout << "main : x = " << x << '\n'; // error
 	}	

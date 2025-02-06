@@ -15,9 +15,9 @@ public:
 
     static auto & instance() 
     { 
-        static D d; 
+        static D d;
 		
-		return d; 
+		return d;
     }
 
 protected:
@@ -38,7 +38,7 @@ public:
 
 private:
 
-    friend Singleton < Entity_v1 > ; 
+    friend Singleton < Entity_v1 > ;
 
 //  --------------------------------------------
 	
@@ -62,7 +62,7 @@ private:
 
 //  -------------------------------------
 
-	Entity_v2() = default; 
+	Entity_v2() = default;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,7 +79,7 @@ protected:
 
    ~Controller() 
     { 
-		--s_counter; 
+		--s_counter;
 	}
 
 private:

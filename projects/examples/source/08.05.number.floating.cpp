@@ -30,9 +30,9 @@ auto equal_v3(double x, double y, double scale)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-auto equal_v4(double x, double y, double scale, double epsilon = 1e-6)
+auto equal_v4(double x, double y, double scale, double epsilon = 1e-6) -> bool
 {
-	return std::abs(x - y) < epsilon ? true : equal_v3(x, y, scale);
+	return std::abs(x - y) < epsilon ? 1 : equal_v3(x, y, scale);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,7 +69,11 @@ int main()
 //  -----------------------------------------------------------------------------------------
 
 	{
-		assert(errno == 0); std::ignore = std::log(-1); assert(errno != 0);
+		assert(errno == 0);
+		
+		std::ignore = std::log(-1);
+		
+		assert(errno != 0);
 	
 		std::cout << "main : " << std::strerror(errno) << '\n';
 	}

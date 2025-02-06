@@ -19,17 +19,17 @@ public:
 
     auto top() const
     { 
-        return m_data.top().first; 
+        return m_data.top().first;
     }
  
     void pop() 
     { 
-        m_data.pop(); 
+        m_data.pop();
     }
  
     auto max() const
     { 
-        return m_data.top().second; 
+        return m_data.top().second;
     }
 
 private:
@@ -47,11 +47,15 @@ public:
     {
         if (std::empty(m_data)) 
         {
-            m_data.push(x); m_max = m_data.top();
+            m_data.push(x);
+            
+            m_max = m_data.top();
         }
         else if (x > m_max) 
         {
-            m_data.push(2 * x - m_max); m_max = x;
+            m_data.push(2 * x - m_max);
+            
+            m_max = x;
         }
         else 
         {
@@ -66,7 +70,7 @@ public:
 
     void pop()
     {
-        if (auto t = m_data.top(); t > m_max) 
+        if (auto t = m_data.top(); t > m_max)
         {
             (m_max *= 2) -= t;
         }
@@ -76,12 +80,14 @@ public:
  
     auto max() const
     { 
-        return m_max; 
+        return m_max;
     }
  
 private:
 
-    std::stack < T > m_data; T m_max = T();
+    std::stack < T > m_data;
+    
+    T m_max = T();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////

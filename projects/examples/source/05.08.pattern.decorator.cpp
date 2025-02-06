@@ -6,7 +6,7 @@ class Entity
 {
 public:
 
-    virtual ~Entity() = default; 
+    virtual ~Entity() = default;
 
 //  ------------------------------
 
@@ -21,7 +21,7 @@ public:
     
     void test() const override 
     { 
-        std::cout << "Client::test\n"; 
+        std::cout << "Client::test\n";
     } 
 };
 
@@ -33,7 +33,7 @@ public:
     
     void test() const override 
     { 
-        std::cout << "Server::test\n"; 
+        std::cout << "Server::test\n";
     } 
 };
 
@@ -49,7 +49,7 @@ public:
 
     void test() const override
     { 
-        std::cout << "Decorator::test : "; 
+        std::cout << "Decorator::test : ";
         
         m_entity.test();
     }
@@ -69,7 +69,7 @@ int main()
 
     entity_1->test();
 
-    entity_2->test(); 
+    entity_2->test();
 
     delete entity_2;
      

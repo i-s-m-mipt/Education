@@ -79,7 +79,7 @@ int main()
 
 		test(entity_1);
 
-		const Entity entity_2; 
+		const Entity entity_2;
 		
 		test(entity_2);
 
@@ -93,6 +93,10 @@ int main()
 //  -----------------------------------------------------------------------------
 
 	{
-		Entity entity; entity.test(); Entity().test();
+		Entity entity;
+		
+		entity.test();
+		
+		Entity().test();
 	}
 }

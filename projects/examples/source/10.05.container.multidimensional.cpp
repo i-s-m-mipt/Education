@@ -20,7 +20,7 @@ public:
 
 		auto & operator[](std::size_t index)
 		{ 
-			return m_data[index]; 
+			return m_data[index];
 		}
 
 	private:
@@ -32,7 +32,7 @@ public:
 
 	auto operator[](std::size_t index)
 	{ 
-		return View(m_data[index]); 
+		return View(m_data[index]);
 	}
 
 private:

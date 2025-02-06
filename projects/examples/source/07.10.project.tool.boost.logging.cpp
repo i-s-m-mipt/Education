@@ -112,16 +112,16 @@ private:
 			boost::log::keywords::rotation_size = 8 * 1'024 * 1'024
 		);
 
-		sink->locked_backend()->auto_flush(true);
+		sink->locked_backend()->auto_flush(1);
 
 		sink->locked_backend()->set_file_collector
 		(
 			boost::log::sinks::file::make_collector(boost::log::keywords::target = "loggers")
-		);		
+		);
 
 		sink->set_formatter(&format);
 
-		sink->set_filter([](boost::log::attribute_value_set){ return true; });
+		sink->set_filter([](boost::log::attribute_value_set){ return 1; });
 
 		return sink;
 	}
@@ -164,7 +164,7 @@ private:
 
             default:
             {
-                throw std::runtime_error("invalid severity"); 
+                throw std::runtime_error("invalid severity");
             }
         }
 
@@ -173,7 +173,9 @@ private:
 
 //  ----------------------------------------------------------------------------------------------
 
-	const char * m_scope = nullptr; bool m_has_trace = true;
+	const char * m_scope = nullptr;
+
+	bool m_has_trace = 1;
 
 //  ----------------------------------------------------------------------------------------------
 
@@ -184,7 +186,7 @@ private:
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define LOGGER(logger) Logger logger(__func__, false)
+#define LOGGER(logger) Logger logger(__func__, 0)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -8,7 +8,7 @@ class Entity
 {
 public:
 
-    virtual ~Entity() = default; 
+    virtual ~Entity() = default;
 
 //  -------------------------------------
 
@@ -17,9 +17,9 @@ public:
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-class Client : public Entity { public: std::size_t size() const override { return 1; }; };
+class Client : public Entity { public: std::size_t size() const override { return 1; } };
 
-class Server : public Entity { public: std::size_t size() const override { return 2; }; };
+class Server : public Entity { public: std::size_t size() const override { return 2; } };
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -42,7 +42,7 @@ public:
 
     void add_entity(Entity * entity) 
     { 
-        m_entities.push_back(entity); 
+        m_entities.push_back(entity);
     }
 
 //  ------------------------------------
@@ -86,7 +86,7 @@ int main()
 {
     auto composite = new Composite;
 
-    for (auto i = 0uz; i < 5; ++i) 
+    for (auto i = 0uz; i < 5; ++i)
     {
         composite->add_entity(make_composite(1, 1));
     }

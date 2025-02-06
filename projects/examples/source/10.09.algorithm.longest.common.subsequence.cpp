@@ -39,7 +39,11 @@ auto find(const std::vector < int > & vector_1, const std::vector < int > & vect
 	{
 		if (vector_1[i] == vector_2[j])
 		{
-			buffer_2.push_back(vector_1[i]); --i; --j;
+			buffer_2.push_back(vector_1[i]);
+			
+			--i;
+			
+			--j;
 		}
 		else 
 		{

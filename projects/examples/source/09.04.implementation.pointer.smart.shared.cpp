@@ -18,7 +18,7 @@ namespace detail
         { 
             if (--m_counter == 0) 
             {
-                clear(); 
+                clear();
             }
         }
 
@@ -100,14 +100,14 @@ public:
 
     auto & operator=(const Shared & other)
     {
-        Shared(other).swap(*this); 
+        Shared(other).swap(*this);
         
         return *this;
     }
 
     auto & operator=(Shared && other)
     {
-        Shared(std::move(other)).swap(*this); 
+        Shared(std::move(other)).swap(*this);
         
         return *this;
     }
@@ -133,12 +133,14 @@ public:
 
     auto & operator*() const
     { 
-        return *m_data; 
+        return *m_data;
     }
 
 private:
 
-    T * m_data = nullptr; detail::Controller * m_controller = nullptr;
+    T * m_data = nullptr;
+    
+    detail::Controller * m_controller = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////

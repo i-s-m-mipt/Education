@@ -97,7 +97,7 @@ int main()
 
     transform(path_1, path_2);
 
-    std::cout << "main : enter char to continue : "; auto x = '\0'; std::cin >> x;
+    std::cout << "main : enter char to continue : "; char x = 0; std::cin >> x;
 
     std::filesystem::remove(path_2);
 }

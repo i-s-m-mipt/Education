@@ -64,7 +64,9 @@ int main()
 //  -----------------------------------------------------------------------------------
 
     {
-        auto string = "12345aaaaa67890BBBBB"s; auto begin = std::cbegin(string);
+        auto string = "12345aaaaa67890BBBBB"s;
+        
+        auto begin = std::cbegin(string);
 
         std::smatch matches;
         
@@ -79,13 +81,15 @@ int main()
             begin = matches.suffix().first;
         }
 
-        assert(strings == std::vector < std::string > ({ "aaaaa", "BBBBB" })); 
+        assert(strings == std::vector < std::string > ({ "aaaaa", "BBBBB" }));
     }
     
 //  -----------------------------------------------------------------------------------
 
     {
-        auto string = "12345aaaaa67890BBBBB"s; auto begin = std::cbegin(string);
+        auto string = "12345aaaaa67890BBBBB"s;
+        
+        auto begin = std::cbegin(string);
 
         std::regex pattern(R"([a-z]{4}([a-z]{1}))", std::regex_constants::icase);
 
@@ -106,7 +110,9 @@ int main()
 //  -----------------------------------------------------------------------------------
 
     {
-        auto string = "12345aaaaa67890BBBBB"s; auto begin = std::cbegin(string);
+        auto string = "12345aaaaa67890BBBBB"s;
+        
+        auto begin = std::cbegin(string);
 
         std::regex pattern(R"([a-z]{4}([a-z]{1}))", std::regex_constants::icase);
 

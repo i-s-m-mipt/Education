@@ -60,7 +60,7 @@ template
 > 
 auto & operator<<(std::ostream & stream, const std::tuple < Ts ... > & tuple)
 {
-    stream << "{ "; 
+    stream << "{ ";
     
     Handler_v2 < std::tuple < Ts ... > > ::write(stream, tuple);
     
@@ -78,7 +78,7 @@ int main()
 //  ---------------------------------------------------------------------------------
 
     {
-        std::cout << "main : enter std::tuple < int, std::string > : "; 
+        std::cout << "main : enter std::tuple < int, std::string > : ";
 	
 	    std::tuple < int, std::string > tuple; std::cin >> tuple; 
 	
@@ -90,7 +90,11 @@ int main()
     {
         auto tuple = std::make_tuple(1, "aaaaa"s);
 
-        auto x = 0; std::tie(x, std::ignore) = tuple; assert(x == 1);
+        auto x = 0;
+        
+        std::tie(x, std::ignore) = tuple;
+        
+        assert(x == 1);
 
         const auto & [y, string] = tuple; // support: cppinsights.io
 

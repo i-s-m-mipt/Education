@@ -37,7 +37,7 @@ namespace detail
 
     template < typename T, typename ... Ts > struct Front < List < T, Ts ... > > 
     { 
-        using type = T; 
+        using type = T;
     };
 
     template < typename L > using front = typename Front < L > ::type;
@@ -57,9 +57,9 @@ namespace detail
 
     template < typename L, bool C = empty_v < L > > class Max_Type {};
 
-    template < typename L > class Max_Type < L, true  > { public: using type = char; };
+    template < typename L > class Max_Type < L, 1 > { public: using type = char; };
 
-    template < typename L > class Max_Type < L, false >
+    template < typename L > class Max_Type < L, 0 >
     {
     private:
 
@@ -78,9 +78,9 @@ namespace detail
 
     template < typename L, typename T, std::size_t I = 0, bool C = empty_v < L > > class Index {};
 
-    template < typename L, typename T, std::size_t I > class Index < L, T, I, true  > {};
+    template < typename L, typename T, std::size_t I > class Index < L, T, I, 1 > {};
 
-    template < typename L, typename T, std::size_t I > class Index < L, T, I, false > 
+    template < typename L, typename T, std::size_t I > class Index < L, T, I, 0 > 
     :
         public std::conditional_t 
         < 
@@ -116,10 +116,10 @@ namespace detail
 
     //  ---------------------------------------------------------------------------
 
-        alignas(Ts...) std::byte m_data[sizeof(max_type < List < Ts ... > > )]{}; 
+        alignas(Ts...) std::byte m_data[sizeof(max_type < List < Ts ... > > )]{};
 
-        std::size_t m_index = 0; 
-    }; 
+        std::size_t m_index = 0;
+    };
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,7 +132,7 @@ namespace detail
 
         Handler(T x) 
         { 
-            std::construct_at(derived().template array < T > (), std::move(x)); 
+            std::construct_at(derived().template array < T > (), std::move(x));
             
             update();
         }
@@ -145,7 +145,7 @@ namespace detail
             }
             else 
             {
-                derived().destroy(); 
+                derived().destroy();
                 
                 std::construct_at(derived().template array < T > (), std::move(x));
                 
@@ -179,12 +179,12 @@ namespace detail
 
         auto & derived()
         {
-            return *static_cast < D * > (this); 
+            return *static_cast < D * > (this);
         }
 
         void update() 
         { 
-            derived().m_index = s_index; 
+            derived().m_index = s_index;
         }
     };
 }
@@ -211,7 +211,7 @@ public:
 
     Variant() 
     { 
-        *this = detail::front < detail::List < Ts ... > > (); 
+        *this = detail::front < detail::List < Ts ... > > ();
     }
 
     Variant(const Variant & other) : detail::Handler < derived_t, Ts, Ts ... > ::Handler()...
@@ -233,7 +233,7 @@ public:
 
    ~Variant() 
     { 
-        destroy(); 
+        destroy();
     }
 
 //  ----------------------------------------------------------------------------------------------
@@ -275,7 +275,7 @@ private:
 
     void destroy()
     {
-        (detail::Handler < derived_t, Ts, Ts ... > ::destroy(), ... ); 
+        (detail::Handler < derived_t, Ts, Ts ... > ::destroy(), ... );
         
         this->m_index = 0;
     }
@@ -311,7 +311,7 @@ public:
 
     void operator()(int x) const
     {
-        std::cout << "Visitor::operator() : x = " << x << '\n'; 
+        std::cout << "Visitor::operator() : x = " << x << '\n';
     }
 
     void operator()(const std::string & string) const
@@ -342,7 +342,7 @@ int main()
 
         Variant < int, std::string > variant_4(std::move(variant_3));
 
-        variant_3 = variant_2; 
+        variant_3 = variant_2;
         
         variant_4 = std::move(variant_3);
 

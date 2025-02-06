@@ -29,7 +29,7 @@ public:
         const char * string_1, const char * string_2, std::size_t size
     ) 
     {
-        for (auto i = 0uz; i < size; ++i) 
+        for (auto i = 0uz; i < size; ++i)
         {
             if (!eq(string_1[i], string_2[i])) 
             {
@@ -42,7 +42,7 @@ public:
 
     static auto find(const char * string, std::size_t size, char x) -> const char *
     {
-        for (auto i = 0uz; i < size; ++i) 
+        for (auto i = 0uz; i < size; ++i)
         {
             if (eq(string[i], x)) 
             {
@@ -76,7 +76,7 @@ void test_v1(benchmark::State & state)
 
     for (auto element : state)
     {
-        benchmark::DoNotOptimize(string.substr(0, state.range(0)));	
+        benchmark::DoNotOptimize(string.substr(0, state.range(0)));
     }
 
     state.SetComplexityN(state.range(0));
@@ -92,7 +92,7 @@ void test_v2(benchmark::State & state)
 
     for (auto element : state)
     {
-        benchmark::DoNotOptimize(view.substr(0, state.range(0)));	
+        benchmark::DoNotOptimize(view.substr(0, state.range(0)));
     }
 
     state.SetComplexityN(state.range(0));
@@ -111,7 +111,7 @@ int main()
     {
         std::cout << "main : enter std::string : "; std::string string_1; std::cin >> string_1;
 
-        std::cout << "main : enter std::string : "; std::string string_2; 
+        std::cout << "main : enter std::string : "; std::string string_2;
     
         std::getline(std::cin >> std::ws, string_2);
     }
@@ -119,7 +119,9 @@ int main()
 //  -------------------------------------------------------------------------------------------
 
     {
-        auto string = "aaaaa"s; string.append("bbbbb");
+        auto string = "aaaaa"s;
+        
+        string.append("bbbbb");
         
         assert(string.contains("aaa") && string.substr(4, 2) == "ab");
 
@@ -143,13 +145,11 @@ int main()
 
         assert(std::strlen(string_5.c_str()) == 5);
 
-        std::cout << "main : enter char[] : "; char array_2[1'000]{};
+        std::cout << "main : enter char[] : ";
+        
+        char array[1'000]{}; std::cin.getline(array, std::size(array));
 
-        std::cin.getline(array_2, std::size(array_2));
-
-//      std::cout << "main : array_1 = " << array_1 << '\n'; // bad
-
-        std::cout << "main : array_2 = " << array_2 << '\n';
+        std::cout << "main : array = " << array << '\n';
     }
 
 //  -------------------------------------------------------------------------------------------
@@ -183,7 +183,9 @@ int main()
 
 //      std::string_view view_1 = "aaaaa"s + "bbbbb"s; // bad
 
-//      std::string_view view_2 = string; string = "bbbbb"; // bad
+//      std::string_view view_2 = string; // bad
+
+        string = "bbbbb";
 
 //      std::string_view view_3 = [](){ return "aaaaa"s; }(); // bad
     }

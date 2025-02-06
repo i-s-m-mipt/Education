@@ -22,17 +22,19 @@ public:
 
 //  ----------------------------------------------------------------
 
-	auto empty()
+	auto empty() -> bool
 	{
-		auto x = '\0'; m_stream >> x;
+		char x = 0; m_stream >> x;
 
-		if (x != ';') 
+		if (x != ';')
 		{ 
-			m_stream.putback(x); return false; 
+			m_stream.putback(x);
+			
+			return 0;
 		} 
 		else 
 		{
-			return true;
+			return 1;
 		}
 	}
 
@@ -40,10 +42,12 @@ public:
 	{
 		if (m_has_token) 
 		{ 
-			m_has_token = false; return m_token; 
+			m_has_token = 0;
+			
+			return m_token;
 		}
 
-		auto x = '\0'; m_stream >> x;
+		char x = 0; m_stream >> x;
 		
 		switch (x)
 		{
@@ -56,7 +60,9 @@ public:
 			case '5': case '6': case '7': case '8': case '9':
 			case '.':
 			{
-				m_stream.putback(x); auto y = 0.0; m_stream >> y;
+				m_stream.putback(x);
+				
+				auto y = 0.0; m_stream >> y;
 
 				return Token(y);
 			}
@@ -73,7 +79,7 @@ public:
 
 					if (!std::isspace(x)) 
 					{
-						m_stream.putback(x); 
+						m_stream.putback(x);
 					}
 
 					return Token(string);
@@ -88,12 +94,18 @@ public:
 
 	void putback(const Token & token)
 	{
-		m_token = token; m_has_token = true;
+		m_token = token;
+		
+		m_has_token = 1;
 	}
 
 private:
 
-	std::stringstream m_stream; bool m_has_token = false; Token m_token;
+	std::stringstream m_stream;
+
+	Token m_token;
+	
+	bool m_has_token = 0;
 };
 
 //  ================================================================================================
@@ -104,7 +116,9 @@ public:
 
 	void test()
 	{
-		std::cout << "Calculator::test : enter statements : \n"; std::string string;
+		std::cout << "Calculator::test : enter statements : \n";
+		
+		std::string string;
 
 		while (std::getline(std::cin >> std::ws, string))
 		{
@@ -133,7 +147,7 @@ private:
 			}
 		}
 		
-		stream.putback(token); 
+		stream.putback(token);
 		
 		return expression(stream);
 	}
@@ -149,9 +163,11 @@ private:
 
 	auto expression(Stream & stream) const -> double
 	{
-		auto x = term(stream); auto token = stream.get();
+		auto x = term(stream);
+		
+		auto token = stream.get();
 
-		while (true)
+		while (1)
 		{
 			if (std::holds_alternative < char > (token))
 			{
@@ -163,9 +179,9 @@ private:
 
 					default: 
 					{ 
-						stream.putback(token); 
+						stream.putback(token);
 						
-						return x; 
+						return x;
 					}
 				}
 			}
@@ -180,9 +196,11 @@ private:
 
 	auto term(Stream & stream) const -> double
 	{
-		auto x = primary(stream); auto token = stream.get();
+		auto x = primary(stream);
+		
+		auto token = stream.get();
 
-		while (true)
+		while (1)
 		{
 			if (std::holds_alternative < char > (token))
 			{
@@ -194,9 +212,9 @@ private:
 
 					default: 
 					{ 
-						stream.putback(token); 
+						stream.putback(token);
 						
-						return x; 
+						return x;
 					}
 				}
 			}
@@ -219,9 +237,9 @@ private:
 			{
 				case '(':
 				{
-					auto x = expression(stream); 
+					auto x = expression(stream);
 					
-					token = stream.get(); 
+					token = stream.get();
 
 					if (!std::holds_alternative < char > (token))
 					{

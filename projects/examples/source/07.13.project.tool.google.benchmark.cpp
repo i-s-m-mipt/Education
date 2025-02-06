@@ -55,7 +55,7 @@ void test_v3(benchmark::State & state)
 
         try
         {
-            for (auto i = 0uz; true; ++i)
+            for (auto i = 0uz; 1; ++i)
             {
                 x += std::pow(std::sin(i), 2.0) + std::pow(std::cos(i), 2.0);
 
@@ -146,7 +146,7 @@ BENCHMARK(test_v5)->Args({ 1, 2 })->Args({ 2, 4 })->Args({ 3, 6 });
 
 void make_args(benchmark::internal::Benchmark * benchmark) 
 {
-    for (auto i = 1; i < 4; ++i) 
+    for (auto i = 1; i < 4; ++i)
     {
         benchmark->Args({ i, i * 2 });
     }

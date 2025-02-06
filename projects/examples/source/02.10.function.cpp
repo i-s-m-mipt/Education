@@ -12,14 +12,14 @@
 
 [[nodiscard]] auto test_v1(int x) 
 {
-	return x; 
+	return x;
 }
 
 ////////////////////////////////////////////////////////////////////
 
 void test_v2([[maybe_unused]] int x, [[maybe_unused]] int y = 0) 
 { 
-	std::cout << "test_v2\n"; 
+	std::cout << "test_v2\n";
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -69,7 +69,7 @@ const auto & test_v8()
 
 inline auto max_v1(int x, int y)
 { 
-	return x > y ? x : y; 
+	return x > y ? x : y;
 }
 
 __attribute__ ((__noinline__)) auto max_v2(int x, int y)
@@ -114,9 +114,9 @@ int main()
 
 		auto array_2 = new int[size]{ 1, 2, 3, 4, 5 };
 
-		test_v5(array_2, size); 
+		test_v5(array_2, size);
 
-		test_v5(std::span < const int > (array_2, size)); 
+		test_v5(std::span < const int > (array_2, size));
 	
 		delete[] array_2;
 

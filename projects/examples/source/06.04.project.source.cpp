@@ -19,7 +19,7 @@ public:
 
     void test() const
     { 
-        std::cout << "Entity::Implementation::test\n"; 
+        std::cout << "Entity::Implementation::test\n";
     }
 };
 
@@ -39,7 +39,7 @@ Entity::~Entity()
 
 void Entity::test() const
 { 
-    m_pimpl->test(); 
+    m_pimpl->test();
 }
 
 //////////////////////////////////////////////////////
@@ -48,7 +48,7 @@ int g_x1 = 1;
 
 namespace 
 { 
-	[[maybe_unused]] int g_x2 = 2; 
+	[[maybe_unused]] int g_x2 = 2;
 }
 
        const int g_x3 = 3;

@@ -16,7 +16,7 @@
 
 struct Entity 
 { 
-	int data = 0; 
+	int data = 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,7 +125,7 @@ int main()
 	{
 		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-		vector.push_back(1); 
+		vector.push_back(1);
 
 		vector.insert(std::begin(vector), 1);
 
@@ -203,7 +203,7 @@ int main()
 
 		list.insert_after(list.before_begin(), 1);
 
-		list.erase_after(std::begin(list)); 
+		list.erase_after(std::begin(list));
 
 		assert(list == std::forward_list < int > ({ 1, 2, 3, 4, 5 }));
 

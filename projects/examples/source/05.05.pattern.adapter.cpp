@@ -8,7 +8,7 @@ public:
 
 	void test() const
 	{ 
-		std::cout << "Client::test\n"; 
+		std::cout << "Client::test\n";
 	} 
 };
 
@@ -18,11 +18,11 @@ class Entity
 {
 public:
 
-	virtual ~Entity() = default; 
+	virtual ~Entity() = default;
 
 //  ------------------------------
 
-	virtual void test() const = 0;	
+	virtual void test() const = 0;
 };
 
 //////////////////////////////////////////////////////////////
@@ -37,7 +37,7 @@ public:
 
 	void test() const override 
 	{ 
-		m_client.test(); 
+		m_client.test();
 	}
 
 private:
@@ -53,7 +53,7 @@ public:
 
 	void test() const override 
 	{ 
-		Client::test(); 
+		Client::test();
 	}
 };
 
@@ -76,7 +76,7 @@ int main()
 	{
 		Entity * entity = new Adapter_v2;
 
-		entity->test(); 
+		entity->test();
 	
 		delete entity;
 	}

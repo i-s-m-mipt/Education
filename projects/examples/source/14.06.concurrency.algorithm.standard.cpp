@@ -35,7 +35,7 @@ void test_v1(benchmark::State & state)
         (
             std::execution::seq, std::begin(vector), std::end(vector), [](auto & x) 
             { 
-                x = std::pow(std::sin(x), 2.0) + std::pow(std::cos(x), 2.0); 
+                x = std::pow(std::sin(x), 2.0) + std::pow(std::cos(x), 2.0);
             }
         );
     }
@@ -53,7 +53,7 @@ void test_v2(benchmark::State & state)
         (
             std::execution::par, std::begin(vector), std::end(vector), [](auto & x) 
             { 
-                x = std::pow(std::sin(x), 2.0) + std::pow(std::cos(x), 2.0); 
+                x = std::pow(std::sin(x), 2.0) + std::pow(std::cos(x), 2.0);
             }
         );
     }

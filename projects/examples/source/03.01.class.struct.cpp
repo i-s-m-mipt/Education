@@ -6,7 +6,7 @@
 
 struct Entity 
 { 
-	int data_1 = 0, data_2 = 0; 
+	int data_1 = 0, data_2 = 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -28,7 +28,9 @@ int main()
 //  --------------------------------------------------------------------------------
 
 	{
-		Entity entity(1, 1); auto p_entity = &entity; auto & r_entity =  entity;
+		Entity entity(1, 1);
+
+		auto p_entity = &entity; auto & r_entity = entity;
 
 //		assert((*p_entity).data_1 == 1); // bad
 

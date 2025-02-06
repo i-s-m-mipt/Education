@@ -16,7 +16,7 @@ protected:
 
 	void test_implementation() const
 	{ 
-		std::cout << "Entity::test_implementation\n"; 
+		std::cout << "Entity::test_implementation\n";
 	}
 };
 
@@ -30,9 +30,9 @@ public:
 
 	void test_implementation() const
 	{ 
-		std::cout << "Server::test_implementation\n"; 
+		std::cout << "Server::test_implementation\n";
 	}
-}; 
+};
 
 ////////////////////////////////////////////////////////////////
 

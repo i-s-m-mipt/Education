@@ -17,7 +17,9 @@ int main()
 
 		[[maybe_unused]] const int & r_y_2 = y;
 
-		r_x = 2; assert(x == 2);
+		r_x = 2;
+		
+		assert(x == 2);
 
 //		r_y_2 = 3; // error
 
@@ -51,7 +53,7 @@ int main()
 
 		vector.push_back(x);
 
-		vector.back().get() = 2; 
+		vector.back().get() = 2;
 	
 		assert(x == 2);
 	}

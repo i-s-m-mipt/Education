@@ -11,7 +11,9 @@ private:
 
 	struct Node 
 	{ 
-		T data = T(); std::shared_ptr < Node > next; 
+		T data = T();
+		
+		std::shared_ptr < Node > next;
 	};
 
 public:
@@ -26,18 +28,18 @@ public:
 
 		void increment() 
 		{ 
-			m_node = m_node->next; 
+			m_node = m_node->next;
 		}
 
 		auto & dereference() const
 		{ 
-			return m_node->data; 
+			return m_node->data;
 		}
 
 		auto equal(const Iterator & other) const
 		{ 
-			return m_node == other.m_node; 
-		};
+			return m_node == other.m_node;
+		}
 
 	private:
 
@@ -62,7 +64,7 @@ public:
 
 		if (m_head)
 		{
-			auto tail = m_head; 
+			auto tail = m_head;
 			
 			while (tail->next) 
 			{

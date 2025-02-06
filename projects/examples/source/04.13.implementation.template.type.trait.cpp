@@ -75,9 +75,13 @@ template < typename T > using  add_rvalue_reference_t = typename add_rvalue_refe
 template < typename T > class is_integral : public std::integral_constant 
 < 
 	bool, is_same_v < bool  , remove_reference_t < T > > || 
+	
 		  is_same_v < char  , remove_reference_t < T > > || 
+
 		  is_same_v < short , remove_reference_t < T > > ||
+
 		  is_same_v < int   , remove_reference_t < T > > ||
+
 		  is_same_v < long  , remove_reference_t < T > > 
 > {};
 
@@ -130,7 +134,7 @@ class Bad
 { 
 private:
 
-	Bad() = default; 
+	Bad() = default;
 };
 
 int test(Bad);
@@ -189,10 +193,10 @@ class Entity
 { 
 public:
 
-	virtual ~Entity() = default; 
+	virtual ~Entity() = default;
 };
 
-class Client : public Entity {}; 
+class Client : public Entity {};
 
 class Server 
 { 
@@ -205,9 +209,9 @@ public:
 
 template < bool C, typename T > struct enable_if {};
 
-template < typename T > struct enable_if < true, T > 
+template < typename T > struct enable_if < 1, T > 
 { 
-	using type = T; 
+	using type = T;
 };
 
 template < bool C, typename T > using enable_if_t = typename enable_if < C, T > ::type;

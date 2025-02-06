@@ -25,7 +25,7 @@ class Client_v1 : public         Entity {};
 
 class Client_v2 : public virtual Entity {};
 
-class Server_v1 : public         Entity {}; 
+class Server_v1 : public         Entity {};
 
 class Server_v2 : public virtual Entity {};
 

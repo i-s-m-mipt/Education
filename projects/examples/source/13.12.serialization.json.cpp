@@ -15,7 +15,11 @@
 
 struct Entity 
 {
-    int data_1 = 0; std::string data_2; std::vector < int > data_3;
+    int data_1 = 0;
+    
+    std::string data_2;
+    
+    std::vector < int > data_3;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +48,7 @@ int main()
             throw std::runtime_error("invalid stream");
         }
 
-        std::cout << "main : enter char to continue : "; auto x = '\0'; std::cin >> x;
+        std::cout << "main : enter char to continue : "; char x = 0; std::cin >> x;
     }
     
 //  --------------------------------------------------------------------------------------------

@@ -24,7 +24,7 @@ public:
 
 	void operator()() const
 	{
-		for (auto i = 0uz; i < 1'000; ++i) 
+		for (auto i = 0uz; i < 1'000; ++i)
         {
             ++m_data;
         }
@@ -39,7 +39,7 @@ private:
 
 void test(int & x, int y) 
 { 
-    x = y; 
+    x = y;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ public:
 
     void test() const
     { 
-        std::cout << "Entity::test\n"; 
+        std::cout << "Entity::test\n";
     } 
 };
 
@@ -76,7 +76,7 @@ public:
 private:
 
 	std::thread m_thread;
-}; 
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -103,7 +103,9 @@ int main()
 
 //      std::thread(test, x, 2).join(); // error
 
-        std::thread(test, std::ref(x), 2).join(); assert(x == 2);
+        std::thread(test, std::ref(x), 2).join();
+        
+        assert(x == 2);
 
         Entity entity;
 

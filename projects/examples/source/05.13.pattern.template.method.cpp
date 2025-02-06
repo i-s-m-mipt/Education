@@ -6,15 +6,18 @@ class Entity
 {
 public:
 
-	virtual ~Entity() = default; 
+	virtual ~Entity() = default;
 
 //  ----------------------------------------------------------
 
 	void template_method() const
 	{ 
-		test_v1(); 
-		test_v2(); 
-		test_v3(); 
+		test_v1();
+
+		test_v2();
+
+		test_v3();
+
 		test_v4();
 	} 
 
@@ -39,7 +42,7 @@ private:
 
 	void test_v2() const override { std::cout << "Client::test_v2\n"; }
 
-	void test_v4() const override { std::cout << "Client::test_v4\n"; }  
+	void test_v4() const override { std::cout << "Client::test_v4\n"; }
 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -50,7 +53,7 @@ private:
 
 	void test_v2() const override { std::cout << "Server::test_v2\n"; }
 	
-	void test_v4() const override { std::cout << "Server::test_v4\n"; } 
+	void test_v4() const override { std::cout << "Server::test_v4\n"; }
 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -59,7 +62,7 @@ int main()
 {
 	Entity * entity = new Client;
 
-	entity->template_method(); 
+	entity->template_method();
 	
 	delete entity;
 }

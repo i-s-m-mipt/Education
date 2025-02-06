@@ -7,7 +7,7 @@
 
 struct Manipulator 
 { 
-    std::size_t precision = 0; 
+    std::size_t precision = 0;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,9 @@ int main()
 
             if (std::cin.fail()) 
             {
-                std::cin.clear(); auto y = '\0'; std::cin >> y;
+                std::cin.clear();
+                
+                char y = 0; std::cin >> y;
             }
         }
         catch (const std::ios_base::failure & exception)

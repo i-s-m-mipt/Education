@@ -10,9 +10,9 @@
 
 auto test() 
 { 
-	static auto x = 0; 
+	static auto x = 0;
 	
-	return ++x; 
+	return ++x;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -23,7 +23,7 @@ public:
 
 	auto operator()() 
 	{ 
-		return ++m_data; 
+		return ++m_data;
 	}
 
 private:
@@ -39,17 +39,21 @@ public:
 
 	void operator()(T x) 
 	{ 
-		m_sum += x; ++m_counter;
+		m_sum += x;
+		
+		++m_counter;
 	}
 
 	auto get() const 
 	{ 
-		return m_sum / m_counter; 
+		return m_sum / m_counter;
 	}
 
 private:
 
-	T m_sum = T(0); std::size_t m_counter = 0;
+	T m_sum = T(0);
+	
+	std::size_t m_counter = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -87,7 +91,7 @@ int main()
 	{
 		auto size = 5uz;
 
-		std::vector < int > vector_1(size, 0), vector_2(size, 0); 
+		std::vector < int > vector_1(size, 0), vector_2(size, 0);
 
 		std::ranges::generate(vector_1, test);
 
@@ -108,6 +112,6 @@ int main()
 
 		mean = std::ranges::for_each(vector, mean).fun;
 
-		assert(mean.get() == 3); 
+		assert(mean.get() == 3);
 	}
 }

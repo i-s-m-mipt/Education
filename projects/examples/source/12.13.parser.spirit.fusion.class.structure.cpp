@@ -11,7 +11,7 @@
 
 struct Entity 
 { 
-    int data_1 = 0, data_2 = 0; 
+    int data_1 = 0, data_2 = 0;
 };
 
 BOOST_FUSION_ADAPT_STRUCT(Entity, data_1, data_2)

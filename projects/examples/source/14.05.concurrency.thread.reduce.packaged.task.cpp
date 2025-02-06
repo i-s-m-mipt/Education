@@ -44,11 +44,13 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 
 			std::packaged_task task { Task < decltype(range) > () };
 
-			future.first = task.get_future(); 
+			future.first = task.get_future();
 			
 			future.second = std::jthread(std::move(task), range);
 
-			begin_block = end_block; end_block = std::next(begin_block, step);
+			begin_block = end_block;
+			
+			end_block = std::next(begin_block, step);
 		}
 
 		auto range = std::ranges::subrange(begin_block, end);
@@ -61,7 +63,7 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 		}
 	}
 
-	return sum;	
+	return sum;
 }
 
 //  ================================================================================================

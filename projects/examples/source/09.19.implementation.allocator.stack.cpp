@@ -90,7 +90,7 @@ private:
 
 //  -------------------------------------------------------------------------------------------
 
-	std::size_t m_size = 0, m_offset = 0; 
+	std::size_t m_size = 0, m_offset = 0;
 	
 	void * m_begin = nullptr;
 

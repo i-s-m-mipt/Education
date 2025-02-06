@@ -12,7 +12,7 @@ public:
 
     Optional(T x) 
     { 
-        initialize(x); 
+        initialize(x);
     }
 
     Optional(const Optional & other) 
@@ -36,7 +36,7 @@ public:
             
             if (!other.empty()) 
             {
-                construct(*other.m_data); 
+                construct(*other.m_data);
             }
             else 
             {
@@ -51,7 +51,11 @@ public:
     {
         if (this != &other)
 		{
-            uninitialize(); m_data = other.m_data; other.m_data = nullptr;
+            uninitialize();
+            
+            m_data = other.m_data;
+            
+            other.m_data = nullptr;
 		}
 
 		return *this;
@@ -59,14 +63,16 @@ public:
 
     auto & operator=(T x) 
     {
-        destroy(); construct(x); 
+        destroy();
+        
+        construct(x);
         
         return *this;
     }
 
    ~Optional() 
     { 
-        uninitialize(); 
+        uninitialize();
     }
 
 //  -----------------------------------------------------------------------------------------
@@ -80,16 +86,16 @@ public:
 
     auto data_or(T x) const
     { 
-        return m_data ? *m_data : x; 
+        return m_data ? *m_data : x;
     }
 
 private:
 
     void initialize(T x) 
     { 
-        allocate(); 
+        allocate();
         
-        construct(x); 
+        construct(x);
     }
 
     void allocate() 
@@ -101,17 +107,17 @@ private:
     {
         if (!m_data) 
         {
-            allocate(); 
+            allocate();
         }
         
-        new(m_data) T(x); 
+        new(m_data) T(x);
     }
 
     void uninitialize() 
     { 
-        destroy(); 
+        destroy();
         
-        deallocate(); 
+        deallocate();
     }
 
     void destroy() 
@@ -126,7 +132,7 @@ private:
     { 
         if (m_data)
         {
-            operator delete(m_data, sizeof(T), std::align_val_t(alignof(T))); 
+            operator delete(m_data, sizeof(T), std::align_val_t(alignof(T)));
             
             m_data = nullptr;
         }
@@ -135,13 +141,13 @@ private:
 //  -----------------------------------------------------------------------------------------
 
     T * m_data = nullptr;
-}; 
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T > auto make_optional(T && x)
 { 
-    return Optional < T > (std::forward < T > (x)); 
+    return Optional < T > (std::forward < T > (x));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -157,7 +163,7 @@ int main()
 
         Optional < int > optional_4(std::move(optional_3));
 
-        optional_3 = optional_2; 
+        optional_3 = optional_2;
     
         optional_4 = std::move(optional_3);
 

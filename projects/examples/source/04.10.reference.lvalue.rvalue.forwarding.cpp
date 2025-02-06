@@ -29,14 +29,14 @@ void test_v2(      Entity && entity)
 
 template < typename E > void test_v3(E && entity) 
 { 
-	test_v1(std::forward < E > (entity)); 
+	test_v1(std::forward < E > (entity));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
 
 auto test_v4(int x, int y) 
 { 
-	return x + y; 
+	return x + y;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////

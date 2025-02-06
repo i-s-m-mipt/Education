@@ -14,7 +14,7 @@ int main()
 	{
 		[[maybe_unused]] int array_1[5]{};
 
-		[[maybe_unused]] int array_2[5]{ 1, 2, 3 }; 
+		[[maybe_unused]] int array_2[5]{ 1, 2, 3 };
 
 		[[maybe_unused]] int array_3[ ]{ 1, 2, 3, 4, 5 };
 	
@@ -53,7 +53,7 @@ int main()
 	{
 		std::cout << "main : enter size : "; auto size = 0uz; std::cin >> size;
 
-		int array[1'000]{}; assert(size < std::size(array));
+		int array[1'000]{};
 
 		for (auto i = 0uz; i < size; ++i)
 		{

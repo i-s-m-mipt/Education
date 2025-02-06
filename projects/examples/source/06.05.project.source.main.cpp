@@ -49,7 +49,7 @@ FUNCTION(v1) // support: cppinsights.io
 
 //  void test_v2() // error
 //  { 
-//	    std::cout << "test_v2\n"; 
+//	    std::cout << "test_v2\n";
 //  } 
 
 ///////////////////////////////////////////////////////////////////////////////////

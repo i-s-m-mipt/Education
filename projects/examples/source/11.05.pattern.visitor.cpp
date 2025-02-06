@@ -7,7 +7,7 @@ class Visitor
 {
 public:
 
-    virtual ~Visitor() = default; 
+    virtual ~Visitor() = default;
 
 //  ----------------------------------------------------------
 
@@ -22,11 +22,11 @@ class Entity
 {
 public:
 
-    virtual ~Entity() = default; 
+    virtual ~Entity() = default;
 
 //  ---------------------------------------------------------
 
-    virtual void test() const = 0; 
+    virtual void test() const = 0;
 
     virtual void visit_by(const Visitor & visitor) const = 0;
 };
@@ -39,7 +39,7 @@ public:
 
     void test() const override 
     { 
-        std::cout << "Client::test\n"; 
+        std::cout << "Client::test\n";
     }
 
     void visit_by(const Visitor & visitor) const override
@@ -56,7 +56,7 @@ public:
 
     void test() const override 
     { 
-        std::cout << "Server::test\n"; 
+        std::cout << "Server::test\n";
     }
 
     void visit_by(const Visitor & visitor) const override
@@ -73,14 +73,14 @@ public:
 
     void visit(const Client * client) const override 
     { 
-        std::cout << "Router::visit (1)\n"; 
+        std::cout << "Router::visit (1)\n";
 
         client->test();
     }
 
     void visit(const Server * server) const override 
     {
-        std::cout << "Router::visit (2)\n"; 
+        std::cout << "Router::visit (2)\n";
 
         server->test();
     }

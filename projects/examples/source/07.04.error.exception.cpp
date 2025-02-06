@@ -16,7 +16,7 @@ public:
 
 	const char * what() const noexcept override 
 	{ 
-		return "exception"; 
+		return "exception";
 	}
 
 private:

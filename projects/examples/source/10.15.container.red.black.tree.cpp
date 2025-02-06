@@ -17,16 +17,16 @@ void test_v1(benchmark::State & state)
 {
     for (auto element : state)
     {
-        std::vector < int > vector; 
+        std::vector < int > vector;
 
-		for (auto i = 1'000; i > 0; --i) 
+		for (auto i = 1'000; i > 0; --i)
 		{
 			vector.push_back(i);
 		}
 
 		std::ranges::sort(vector);
 
-		benchmark::DoNotOptimize(vector);	
+		benchmark::DoNotOptimize(vector);
     }
 }
 
@@ -38,12 +38,12 @@ void test_v2(benchmark::State & state)
     {
         std::set < int > set;
 
-		for (auto i = 1'000; i > 0; --i) 
+		for (auto i = 1'000; i > 0; --i)
 		{
 			set.insert(i);
 		}
 
-		benchmark::DoNotOptimize(set);	
+		benchmark::DoNotOptimize(set);
     }
 }
 
@@ -57,14 +57,14 @@ void test_v3(benchmark::State & state)
 
 		auto iterator = std::begin(set);
 
-		for (auto i = 1'000; i > 0; --i) 
+		for (auto i = 1'000; i > 0; --i)
 		{
 			set.insert(iterator, i);
 
 			iterator = std::begin(set);
 		}
 
-		benchmark::DoNotOptimize(set);	
+		benchmark::DoNotOptimize(set);
     }
 }
 
@@ -78,20 +78,20 @@ void test_v4(benchmark::State & state)
 
 		auto iterator = std::begin(set);
 
-		for (auto i = 1'000; i > 0; --i) 
+		for (auto i = 1'000; i > 0; --i)
 		{
 			set.insert(iterator, i);
 
 			iterator = std::end(set);
 		}
 
-		benchmark::DoNotOptimize(set);	
+		benchmark::DoNotOptimize(set);
     }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-BENCHMARK(test_v1); 
+BENCHMARK(test_v1);
 
 BENCHMARK(test_v2);
 
@@ -112,7 +112,7 @@ int main()
 //  -----------------------------------------------------------------------------------
 
 	{
-		std::set < int > set = { 5, 4, 3, 2, 1 }; 
+		std::set < int > set = { 5, 4, 3, 2, 1 };
 		
 		assert(std::ranges::is_sorted(set));
 
@@ -126,13 +126,17 @@ int main()
 
 //		*std::begin(set) = 2; // error
 
-		auto node = set.extract(1); node.value() = 2; set.insert(std::move(node));
+		auto node = set.extract(1);
+		
+		node.value() = 2;
+		
+		set.insert(std::move(node));
 	}
 
 //  -----------------------------------------------------------------------------------
 
 	{
-		std::map < int, std::string > map; 
+		std::map < int, std::string > map;
 
 		try
 		{

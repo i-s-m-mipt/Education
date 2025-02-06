@@ -9,7 +9,9 @@ private:
 
 	struct Node 
 	{ 
-		T data = T(); std::shared_ptr < Node > next; 
+		T data = T();
+		
+		std::shared_ptr < Node > next;
 	};
 	
 public:
@@ -28,41 +30,41 @@ public:
 
 		const auto operator++(int) 
 		{ 
-			auto copy(*this); 
+			auto copy(*this);
 			
-			m_node = m_node->next; 
+			m_node = m_node->next;
 			
-			return copy; 
+			return copy;
 		}
 
 		auto & operator++() 
 		{ 
-			m_node = m_node->next; 
+			m_node = m_node->next;
 			
 			return *this;
 		}
 
 		auto & operator*() const
 		{ 
-			return m_node->data; 
+			return m_node->data;
 		}
 
 		auto operator->() const
 		{ 
-			return &m_node->data; 
+			return &m_node->data;
 		}
 	
 	//  -------------------------------------------------------------------
 
 		friend auto operator==(const Iterator & lhs, const Iterator & rhs)
 		{ 
-			return lhs.m_node == rhs.m_node; 
+			return lhs.m_node == rhs.m_node;
 		}
 
 	private:
 
 		std::shared_ptr < Node > m_node;
-	}; 
+	};
 
 //  -------------------------------------------------------------------
 
@@ -78,7 +80,7 @@ public:
 
 		if (m_head)
 		{
-			auto tail = m_head; 
+			auto tail = m_head;
 			
 			while (tail->next) 
 			{

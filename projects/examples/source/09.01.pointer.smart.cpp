@@ -19,14 +19,14 @@ public:
 	{ 
 		if (m_data) 
 		{
-			delete m_data; 
+			delete m_data;
 		}
 	}
 
 private:
 
 	T * m_data = nullptr;
-}; 
+};
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -77,13 +77,13 @@ class Entity
 {
 public:
 
-	virtual ~Entity() = default; 
+	virtual ~Entity() = default;
 
 //  ----------------------------------
 
 	virtual void test() const
 	{ 
-		std::cout << "Entity::test\n"; 
+		std::cout << "Entity::test\n";
 	}
 };
 
@@ -95,7 +95,7 @@ public:
 
 	void test() const override 
 	{ 
-		std::cout << "Router::test\n"; 
+		std::cout << "Router::test\n";
 	}
 };
 
@@ -112,7 +112,7 @@ int main()
 	{
 		std::shared_ptr < int > ptr_1;
 
-		std::shared_ptr < int > ptr_2(new auto(2)); 
+		std::shared_ptr < int > ptr_2(new auto(2));
 
 		std::shared_ptr < int > ptr_3(ptr_2);
 
@@ -179,13 +179,15 @@ int main()
 
 		assert(ptr_2.use_count() == 1 && *ptr_2.lock() == 1);
 
-		ptr_1.reset(); assert(ptr_2.expired());
+		ptr_1.reset();
+		
+		assert(ptr_2.expired());
 	}
 
 //  ----------------------------------------------------------------------
 
 	{
-		auto client         = std::make_shared < Client > (); 
+		auto client         = std::make_shared < Client > ();
 		
 		     client->server = std::make_shared < Server > ();
 

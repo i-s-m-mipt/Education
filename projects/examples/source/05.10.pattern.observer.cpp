@@ -7,7 +7,7 @@ class Observer
 {
 public:
 
-    virtual ~Observer() = default; 
+    virtual ~Observer() = default;
 
 //  --------------------------------------
 
@@ -35,12 +35,14 @@ public:
 
     void add_observer(Observer * observer) 
     { 
-        m_observers.push_back(observer); 
+        m_observers.push_back(observer);
     }
 
     void set(int x) 
     { 
-        m_data = x; notify_observers();
+        m_data = x;
+        
+        notify_observers();
     }
 
     void notify_observers() const
@@ -56,7 +58,9 @@ public:
 
 private:
 
-    int m_data = 0; std::vector < Observer * > m_observers;
+    int m_data = 0; 
+    
+    std::vector < Observer * > m_observers;
 };
 
 //////////////////////////////////////////////////////////////
@@ -89,7 +93,11 @@ int main()
 {
     Entity entity;
 
-    entity.add_observer(new Client); entity.set(1);
+    entity.add_observer(new Client);
     
-    entity.add_observer(new Server); entity.set(2);    
+    entity.add_observer(new Server);
+    
+    entity.set(1);
+
+    entity.set(2);
 }

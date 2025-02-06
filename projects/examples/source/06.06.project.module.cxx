@@ -17,5 +17,8 @@ export namespace demo
 
 namespace demo
 {
-	void test_v3() { std::cout << "demo::test_v3\n"; }
+	void test_v3() 
+	{ 
+		std::cout << "demo::test_v3\n";
+	}
 }

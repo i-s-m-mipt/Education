@@ -20,7 +20,7 @@ int main()
 
     auto width = 595, height = 842;
 
-    page->SetMediaBox(PDFRectangle(0, 0, width, height)); 
+    page->SetMediaBox(PDFRectangle(0, 0, width, height));
 
 //  ----------------------------------------------------------------------------------------
 
@@ -87,7 +87,7 @@ int main()
 
     std::ignore = writer.EndPDF();
 
-    std::cout << "main : enter char to continue : "; auto x = '\0'; std::cin >> x;
+    std::cout << "main : enter char to continue : "; char x = 0; std::cin >> x;
 
 //  ----------------------------------------------------------------------------------------
 

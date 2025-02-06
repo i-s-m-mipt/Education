@@ -59,7 +59,7 @@ int main()
 		{
 			std::cout << "main : iteration (06) : i = " << i << ' ';
 
-			std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x;
+			std::cout << "enter \'b\' to break : "; char x = 0; std::cin >> x;
 			
 			if (x == 'b') 
 			{
@@ -81,7 +81,7 @@ int main()
 					
 					std::cout << "i = " << i << " j = " << j << " k = " << k << ' ';
 
-					std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x;
+					std::cout << "enter \'b\' to break : "; char x = 0; std::cin >> x;
 			
 					if (x == 'b') 
 					{
@@ -101,7 +101,7 @@ int main()
 		{
 			std::cout << "main : iteration (08) : ";
 
-			std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x;
+			std::cout << "enter \'b\' to break : "; char x = 0; std::cin >> x;
 			
 			if (x == 'b') 
 			{
@@ -113,11 +113,11 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		while (true)
+		while (1)
 		{
 			std::cout << "main : iteration (09) : ";
 
-			std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x;
+			std::cout << "enter \'b\' to break : "; char x = 0; std::cin >> x;
 			
 			if (x == 'b') 
 			{
@@ -129,7 +129,7 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		auto x = '\0';
+		char x = 0;
 
 		while (x != 'b')
 		{
@@ -142,7 +142,7 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		auto x = '\0';
+		char x = 0;
 
 		do
 		{

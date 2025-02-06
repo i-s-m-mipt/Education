@@ -24,7 +24,11 @@ public:
 
 //	auto pop() // bad
 //	{
-//		auto copy = top(); pop(); return copy;
+//		auto copy = top();
+//
+//		pop();
+//		
+//		return copy;
 //	}
 
 private:
@@ -36,11 +40,13 @@ private:
 
 int main()
 {
-	Stack < int > stack; 
+	Stack < int > stack;
 	
 	stack.push(1);
 
 //	std::ignore = stack.pop(); // bad
 
-	std::ignore = stack.top(); stack.pop();
+	std::ignore = stack.top();
+	
+	stack.pop();
 }
