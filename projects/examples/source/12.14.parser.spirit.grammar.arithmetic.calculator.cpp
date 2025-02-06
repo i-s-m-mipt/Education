@@ -91,13 +91,13 @@ public:
 
     auto operator()(const detail::Sign & sign) const -> double
     {
-        auto result = boost::apply_visitor(*this, sign.operand);
+        auto x = boost::apply_visitor(*this, sign.operand);
 
         switch (sign.operation)
         {
-            case '+': { return result; }
+            case '+': { return x; }
 
-            case '-': { return result * -1.0; }
+            case '-': { return x * -1.0; }
 
             default: 
             { 
@@ -129,14 +129,14 @@ public:
 
     auto operator()(const detail::List & list) const -> double
     {
-        auto result = boost::apply_visitor(*this, list.head);
+        auto x = boost::apply_visitor(*this, list.head);
         
         for (const auto & step : list.steps)
         {
-            result = (*this)(step, result);
+            x = (*this)(step, x);
         }
 
-        return result;
+        return x;
     }
 };
 

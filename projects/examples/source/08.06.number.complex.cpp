@@ -16,17 +16,17 @@ auto transform(const signal_t & signal)
 {
     auto size = std::size(signal);
 
-    signal_t result(size, signal_t::value_type(0));
+    signal_t buffer(size, signal_t::value_type(0));
     
     for (auto i = 0uz; i < size; ++i) 
     {
         for (auto j = 0uz; j < size; ++j) 
         {
-            result[i] += signal[j] * std::exp(-2.0i * (std::numbers::pi * i * j / size));
+            buffer[i] += signal[j] * std::exp(-2.0i * (std::numbers::pi * i * j / size));
         }
     }
 
-    return result;
+    return buffer;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

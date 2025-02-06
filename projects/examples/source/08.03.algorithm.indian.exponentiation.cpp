@@ -7,23 +7,23 @@
 
 auto pow(unsigned long long x, unsigned long long y)
 {
-    auto result = 1ull;
+    auto z = 1ull;
 
     if (x == 0) 
     {
-        return y == 0 ? result : 0;
+        return y == 0 ? z : 0;
     }
 
     while (y > 0)
     {
         if (y & 1)
         {
-            if (result > std::numeric_limits < unsigned long long > ::max() / x)
+            if (z > std::numeric_limits < unsigned long long > ::max() / x)
             {
                 throw std::runtime_error("arithmetic overflow");
             }
 
-            result *= x;
+            z *= x;
         }
 
         if (y /= 2; y == 0) 
@@ -39,7 +39,7 @@ auto pow(unsigned long long x, unsigned long long y)
         x *= x;
     }
 
-    return result;
+    return z;
 }
 
 //  ================================================================================================

@@ -110,9 +110,7 @@ public:
 		{
 			if (Stream stream(string); !stream.empty())
 			{
-				auto result = statement(stream);
-
-				std::cout << "Calculator::test : result = " << result << '\n';
+				std::cout << "Calculator::test : " << string << " = " << statement(stream) << '\n';
 			}
 			else 
 			{
@@ -151,7 +149,7 @@ private:
 
 	auto expression(Stream & stream) const -> double
 	{
-		auto result = term(stream); auto token = stream.get();
+		auto x = term(stream); auto token = stream.get();
 
 		while (true)
 		{
@@ -159,15 +157,15 @@ private:
 			{
 				switch (std::get < char > (token))
 				{
-					case '+': { result += term(stream); break; }
+					case '+': { x += term(stream); break; }
 
-					case '-': { result -= term(stream); break; }
+					case '-': { x -= term(stream); break; }
 
 					default: 
 					{ 
 						stream.putback(token); 
 						
-						return result; 
+						return x; 
 					}
 				}
 			}
@@ -182,7 +180,7 @@ private:
 
 	auto term(Stream & stream) const -> double
 	{
-		auto result = primary(stream); auto token = stream.get();
+		auto x = primary(stream); auto token = stream.get();
 
 		while (true)
 		{
@@ -190,15 +188,15 @@ private:
 			{
 				switch (std::get < char > (token))
 				{
-					case '*': { result *= term(stream); break; }
+					case '*': { x *= term(stream); break; }
 
-					case '/': { result /= term(stream); break; }
+					case '/': { x /= term(stream); break; }
 
 					default: 
 					{ 
 						stream.putback(token); 
 						
-						return result; 
+						return x; 
 					}
 				}
 			}
@@ -221,7 +219,7 @@ private:
 			{
 				case '(':
 				{
-					auto result = expression(stream); 
+					auto x = expression(stream); 
 					
 					token = stream.get(); 
 
@@ -235,7 +233,7 @@ private:
 						throw std::runtime_error("invalid token");
 					}
 					
-					return result;
+					return x;
 				}
 				case '+': { return        primary(stream); }
 				

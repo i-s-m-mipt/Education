@@ -5,14 +5,14 @@
 
 auto test(std::size_t size)
 {
-	auto result = 0.0;
+	auto x = 0.0;
 
 	for (auto i = 0uz; i < size; ++i)
 	{
-		result += std::pow(std::sin(i), 2.0) + std::pow(std::cos(i), 2.0);
+		x += std::pow(std::sin(i), 2.0) + std::pow(std::cos(i), 2.0);
 	}
 
-	return result;
+	return x;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

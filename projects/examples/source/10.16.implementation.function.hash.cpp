@@ -11,28 +11,28 @@
 
 auto hash_v1(const std::string & string)
 {
-	auto result = 0uz;
+	auto hash = 0uz;
 
 	for (auto element : string) 
 	{
-		(result *= 31) += element;
+		(hash *= 31) += element;
 	}
 
-	return result;
+	return hash;
 }
 
 //////////////////////////////////////////////////////////////////////////////
 
 template < typename T, typename ... Ts > auto hash_v2(T x, Ts ... xs)
 {
-	auto result = std::hash < T > ()(x); 
+	auto hash = std::hash < T > ()(x); 
 
 	if constexpr (sizeof...(xs) > 0)
 	{
-		result += hash_v2(xs...) * 31;
+		hash += hash_v2(xs...) * 31;
 	}
 	
-	return result;
+	return hash;
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -46,13 +46,13 @@ struct Entity
 
 auto hash_value(const Entity & entity)
 {
-	auto result = 0uz;
+	auto hash = 0uz;
 
-	boost::hash_combine(result, entity.data_1);
+	boost::hash_combine(hash, entity.data_1);
 	
-	boost::hash_combine(result, entity.data_2);
+	boost::hash_combine(hash, entity.data_2);
 
-	return result;
+	return hash;
 }
 
 //////////////////////////////////////////////////////////////////////////////

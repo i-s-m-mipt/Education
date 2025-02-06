@@ -44,7 +44,7 @@ auto permissions(std::filesystem::perms permissions) -> std::string
 
 auto size(const std::filesystem::path & path)
 {
-	auto result = 0uz;
+	auto size = 0uz;
 
 	if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
 	{
@@ -52,39 +52,39 @@ auto size(const std::filesystem::path & path)
 		{
 			if (!std::filesystem::is_directory(entry.status()))
 			{
-				result += std::filesystem::file_size(entry);
+				size += std::filesystem::file_size(entry);
 			}
 		}
 	}
 
-	return result;
+	return size;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 auto size(const std::filesystem::directory_entry & entry)
 {
-    auto result = 0uz;
+    auto size = 0uz;
 
     if (std::filesystem::is_regular_file(entry.status()))
     {
-        result = std::filesystem::file_size(entry);
+        size = std::filesystem::file_size(entry);
     }
     else
     {
-        result = size(entry.path());
+        size = ::size(entry.path());
     }
 
     char units[4]{ 'B', 'K', 'M', 'G' };
 
     auto index = 0uz;
 
-    while (index < 3 && result >= 1'024)
+    while (index < 3 && size >= 1'024)
     {
-        result /= 1'024; ++index;
+        size /= 1'024; ++index;
     }
 
-    return (std::stringstream() << std::format("{: >4}", result) << units[index]).str();
+    return (std::stringstream() << std::format("{: >4}", size) << units[index]).str();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////

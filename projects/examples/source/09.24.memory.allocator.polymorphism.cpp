@@ -146,11 +146,9 @@ int main()
             vector.push_back('a' + i);
         }
 
-        auto result = "abcdefghijklmnopqrstuvwxyz______"s;
-
         for (auto i = 0uz; i < std::size(array); ++i) 
         {
-            assert(array[i] == result[i]);
+            assert(array[i] == "abcdefghijklmnopqrstuvwxyz______"sv[i]);
         }
     }
 

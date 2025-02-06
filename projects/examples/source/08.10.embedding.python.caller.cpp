@@ -138,14 +138,14 @@ auto make_strings(std::size_t size_1, std::size_t size_2)
 
 auto hash(const std::string & string) -> std::size_t
 {
-	std::uint32_t result = std::size(string);
+	std::uint32_t hash = std::size(string);
 
 	for (auto element : string)
 	{
-		result = result << 5 ^ result >> 27 ^ element;
+		hash = hash << 5 ^ hash >> 27 ^ element;
 	}
 
-	return result;
+	return hash;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////

@@ -101,9 +101,9 @@ public:
 			throw std::runtime_error("arithmetic overflow");
 		}
 
-		Integer result; 
+		Integer x; 
 		
-		result.m_sign = m_sign ^ other.m_sign;
+		x.m_sign = m_sign ^ other.m_sign;
 
 		for (auto i = 0uz; i < m_size; ++i)
 		{
@@ -111,19 +111,17 @@ public:
 
 			for (auto j = 0uz; (j < other.m_size) || remainder; ++j)
 			{
-				result.m_data[i + j] += m_data[i] * other.m_data[j] + remainder;
+				x.m_data[i + j] += m_data[i] * other.m_data[j] + remainder;
 
-				remainder = result.m_data[i + j] / s_base;
+				remainder = x.m_data[i + j] / s_base;
 
-				result.m_data[i + j] -= remainder * s_base;
+				x.m_data[i + j] -= remainder * s_base;
 			}
 		}
 
-		result.m_size = m_size + other.m_size;
+		x.m_size = m_size + other.m_size;
 
-		swap(result); 
-		
-		reduce(); 
+		swap(x); reduce(); 
 		
 		return *this;
 	}
@@ -135,11 +133,11 @@ public:
 			throw std::runtime_error("invalid operand");
 		}
 
-		Integer result; 
+		Integer x; 
 		
-		result.m_size = m_size;
+		x.m_size = m_size;
 
-		result.m_sign = m_sign ^ other.m_sign; other.m_sign = false;
+		x.m_sign = m_sign ^ other.m_sign; other.m_sign = false;
 
 		Integer current;
 
@@ -161,12 +159,10 @@ public:
 				}
 			}
 
-			result.m_data[i] = digit; current -= other * digit;
+			x.m_data[i] = digit; current -= other * digit;
 		}
 
-		swap(result); 
-		
-		reduce(); 
+		swap(x); reduce(); 
 		
 		return *this;
 	}
@@ -286,42 +282,42 @@ public:
 	{
 		if (auto size = std::max(x.m_size, y.m_size); size > 1) 
 		{
-			auto half = size / 2;
+			auto step = size / 2;
 
-			Integer xr; xr.m_size = half;
+			Integer x1; x1.m_size = step;
 
-			Integer xl; xl.m_size = size - half;
+			Integer x2; x2.m_size = size - step;
 
-			for (auto i =  0uz; i < half; ++i) { xr.m_data[i       ] = x.m_data[i]; }
+			for (auto i =  0uz; i < step; ++i) { x1.m_data[i       ] = x.m_data[i]; }
 
-			for (auto i = half; i < size; ++i) { xl.m_data[i - half] = x.m_data[i]; }
+			for (auto i = step; i < size; ++i) { x2.m_data[i - step] = x.m_data[i]; }
 
-			Integer yr; yr.m_size = half;
+			Integer y1; y1.m_size = step;
 			
-			Integer yl; yl.m_size = size - half;
+			Integer y2; y2.m_size = size - step;
 
-			for (auto i =  0uz; i < half; ++i) { yr.m_data[i       ] = y.m_data[i]; }
+			for (auto i =  0uz; i < step; ++i) { y1.m_data[i       ] = y.m_data[i]; }
 
-			for (auto i = half; i < size; ++i) { yl.m_data[i - half] = y.m_data[i]; }
+			for (auto i = step; i < size; ++i) { y2.m_data[i - step] = y.m_data[i]; }
 
-			auto p1 = multiply(xl, yl);
+			auto p1 = multiply(x2, y2);
 			
-			auto p2 = multiply(xr, yr);
+			auto p2 = multiply(x1, y1);
 			
-			auto p3 = multiply(xl + xr, yl + yr);
+			auto p3 = multiply(x2 + x1, y2 + y1);
 
 			Integer base = Integer::s_base;
 
-			for (auto i = 1uz; i < half; ++i) 
+			for (auto i = 1uz; i < step; ++i) 
 			{
 				base *= Integer::s_base;
 			}
 
-			auto result = p1 * base * base + (p3 - p2 - p1) * base + p2;
+			auto z = p1 * base * base + (p3 - p2 - p1) * base + p2;
 
-			result.m_sign = x.m_sign ^ y.m_sign; 
+			z.m_sign = x.m_sign ^ y.m_sign; 
 
-			return result;
+			return z;
 		}
 		else
 		{
@@ -338,19 +334,19 @@ public:
 			throw std::runtime_error("invalid operand");
 		}
 
-    	Integer result; 
+    	Integer y; 
 		
-		result.m_size = (x.m_size + 1) / 2;
+		y.m_size = (x.m_size + 1) / 2;
     	
-    	for (auto i = static_cast < int > (result.m_size) - 1; i >= 0; --i)
+    	for (auto i = static_cast < int > (y.m_size) - 1; i >= 0; --i)
     	{
       		digit_t left = 0, right = Integer::s_base, digit = 0;
 
       		while (left <= right)
       		{
-				auto middle = result.m_data[i] = std::midpoint(left, right);
+				auto middle = y.m_data[i] = std::midpoint(left, right);
 
-        		if (result * result <= x)
+        		if (y * y <= x)
         		{
           			left  = middle + 1; digit = std::min(middle, Integer::s_base - 1);
         		}
@@ -360,12 +356,12 @@ public:
 				}				
       		}
 
-      		result.m_data[i] = digit;
+      		y.m_data[i] = digit;
     	}
 
-		result.reduce(); 
+		y.reduce(); 
 		
-		return result; 
+		return y; 
 	}
 
 private:
@@ -517,36 +513,36 @@ int main()
 
 		Integer y = "-46090058756232818791046807807190"s;
 
-		Integer result_1 = "+27550795371149906519901398288457"s;
+		Integer integer_1 = "+27550795371149906519901398288457"s;
 
-		Integer result_2 = x;
+		Integer integer_2 = x;
 
-		Integer result_3 = "-3394111293590239892710602762023649092547630961329778427474301930"s;
+		Integer integer_3 = "-3394111293590239892710602762023649092547630961329778427474301930"s;
 
-		Integer result_4 = "-46090058756232818791046807807189"s;
+		Integer integer_4 = "-46090058756232818791046807807189"s;
 
-		Integer result_5 = "+73640854127382725310948206095648"s;
+		Integer integer_5 = "+73640854127382725310948206095648"s;
 
-		Integer result_6 = y;
+		Integer integer_6 = y;
 
-		Integer result_7 = "+119730912883615544101995013902837"s;
+		Integer integer_7 = "+119730912883615544101995013902837"s;
 
-		Integer result_8 = -1;
+		Integer integer_8 = -1;
 
-		assert((x += y) == result_1);
-		assert((x -= y) == result_2);
-		assert((x *= y) == result_3);
-		assert((x /= y) == result_2);
+		assert((x += y) == integer_1);
+		assert((x -= y) == integer_2);
+		assert((x *= y) == integer_3);
+		assert((x /= y) == integer_2);
 
-		assert((x ++  ) == result_2);
-		assert((  ++ y) == result_4);
-		assert((x --  ) == result_5);
-		assert((  -- y) == result_6);
+		assert((x ++  ) == integer_2);
+		assert((  ++ y) == integer_4);
+		assert((x --  ) == integer_5);
+		assert((  -- y) == integer_6);
 
-		assert((x +  y) == result_1);
-		assert((x -  y) == result_7);
-		assert((x *  y) == result_3);
-		assert((x /  y) == result_8);
+		assert((x +  y) == integer_1);
+		assert((x -  y) == integer_7);
+		assert((x *  y) == integer_3);
+		assert((x /  y) == integer_8);
 
 		assert((x <  y) == 0);
 		assert((x >  y) == 1);

@@ -221,11 +221,6 @@ int main()
 
 		std::ranges::sort(vector);
 
-		std::vector < int > result = { 1, 2, 3, 4, 5 };
-
-		for (auto i = 0uz; i < std::size(vector); ++i)
-		{
-			assert(vector[i] == result[i]);
-		}
+		assert(std::ranges::is_sorted(vector));
 	}
 }

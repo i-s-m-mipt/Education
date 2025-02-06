@@ -45,7 +45,7 @@ template < typename F, typename T, std::size_t ... Is > void apply
 
 template < std::forward_iterator ... Is > auto generate(std::pair < Is, Is > ... pairs)
 {
-	std::vector < std::tuple < typename std::iterator_traits < Is > ::value_type ... > > result;
+	std::vector < std::tuple < typename std::iterator_traits < Is > ::value_type ... > > tuples;
 
 	std::vector < std::size_t > steps(sizeof...(pairs), 0);
 
@@ -58,7 +58,7 @@ template < std::forward_iterator ... Is > auto generate(std::pair < Is, Is > ...
 	{
 		apply
 		(
-			[&result](auto && ... pairs){ result.emplace_back(pairs...); }, 
+			[&tuples](auto && ... pairs){ tuples.emplace_back(pairs...); }, 
 			
 			std::tie(pairs...), steps, 
 			
@@ -67,7 +67,7 @@ template < std::forward_iterator ... Is > auto generate(std::pair < Is, Is > ...
 	} 
 	while (next(steps, sizes));
 
-	return result;
+	return tuples;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

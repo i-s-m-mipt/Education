@@ -32,7 +32,5 @@ int main()
 
 	boost::dijkstra_shortest_paths(graph, 0, boost::distance_map(std::begin(array)));
 
-    std::array < unsigned int, 5 > result = { 0, 5, 1, 6, 13 };
-
-	assert(array == result);
+	assert((array == std::array < unsigned int, 5 > ({ 0, 5, 1, 6, 13 })));
 }
