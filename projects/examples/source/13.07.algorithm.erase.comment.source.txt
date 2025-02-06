@@ -3,9 +3,11 @@
 int main(/* comment */)
 {
 	std::cout << '\'' << '\"' << '"' << '\n';
+
 	std::cout << "\"" << "\'" << "'" << '\n';
 	
 	std::cout << "// not comment   " << '\n';
+	
 	std::cout << "/* not comment */" << '\n';
 }
 // comment

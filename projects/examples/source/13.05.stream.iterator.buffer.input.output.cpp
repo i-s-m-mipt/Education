@@ -20,23 +20,21 @@ int main()
 
 		std::cout.flush();
 
-		std::ostreambuf_iterator < char > ostreambuf_iterator(std::cout);
+		std::ostreambuf_iterator < char > iterator_1(std::cout);
+
+		std::istreambuf_iterator < char > iterator_2(std::cin );
 
 		for (auto element : "\nmain : std::cout.streambuf = ")
 		{
-			*ostreambuf_iterator++ = element;
-		}
+			*iterator_1++ = element;
+		}		
 
-		std::istreambuf_iterator < char > istreambuf_iterator(std::cin);
-
-		while (istreambuf_iterator != std::istreambuf_iterator < char > ()) 
+		while (iterator_2 != std::istreambuf_iterator < char > ()) 
 		{
-			*ostreambuf_iterator++ = *istreambuf_iterator++;
+			*iterator_1++ = *iterator_2++;
 		}
 
-		*ostreambuf_iterator = '\n';
-
-		std::cin.clear();
+		*iterator_1 = '\n'; std::cin.clear();
 	}
 
 //  ------------------------------------------------------------------------------

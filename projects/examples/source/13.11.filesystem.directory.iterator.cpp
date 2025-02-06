@@ -25,18 +25,18 @@ auto type(const std::filesystem::file_status & status)
 
 auto permissions(std::filesystem::perms permissions) -> std::string
 {
-    auto verify = [permissions](auto bit, auto x) 
+    auto lambda = [permissions](auto bit, auto x) 
     { 
         return (permissions & bit) == std::filesystem::perms::none ? '-' : x; 
     };
 
     return
     { 
-        verify(std::filesystem::perms::owner_read , 'r'),
+        lambda(std::filesystem::perms::owner_read , 'r'),
 
-        verify(std::filesystem::perms::owner_write, 'w'),
+        lambda(std::filesystem::perms::owner_write, 'w'),
 
-        verify(std::filesystem::perms::owner_exec , 'x') 
+        lambda(std::filesystem::perms::owner_exec , 'x') 
     };
 }
 

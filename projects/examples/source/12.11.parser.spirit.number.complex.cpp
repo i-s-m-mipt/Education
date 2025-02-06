@@ -19,19 +19,19 @@ auto parse(std::string_view view)
 
     using boost::spirit::x3::_attr;
 
-    auto set_x = [&x](auto && context){ x = _attr(context); };
+    auto lambda_1 = [&x](auto && context){ x = _attr(context); };
 
-    auto set_y = [&y](auto && context){ y = _attr(context); };
+    auto lambda_2 = [&y](auto && context){ y = _attr(context); };
 
     using boost::spirit::x3::double_;
 
     auto rule = 
     (
-        '(' >> double_[set_x] >> ',' >> double_[set_y] >> ')' |
+        '(' >> double_[lambda_1] >> ',' >> double_[lambda_2] >> ')' |
 
-        '(' >> double_[set_x]                          >> ')' |
+        '(' >> double_[lambda_1]                             >> ')' |
         
-               double_[set_x]
+               double_[lambda_1]
     );
 
     auto space = boost::spirit::x3::ascii::space;

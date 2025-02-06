@@ -74,11 +74,11 @@ namespace parser
 
     using boost::spirit::x3::_val;
 
-    auto set_0 = [](auto && context){ _val(context) = 0; };
+    auto lambda_1 = [](auto && context){ _val(context) = 0; };
 
-    auto add_M = [](auto && context){ _val(context) += 1'000; };
+    auto lambda_2 = [](auto && context){ _val(context) += 1'000; };
 
-    auto add_x = [](auto && context){ _val(context) += boost::spirit::x3::_attr(context); };
+    auto lambda_3 = [](auto && context){ _val(context) += boost::spirit::x3::_attr(context); };
 
     Handler_v1 handler_v1; 
     
@@ -88,13 +88,13 @@ namespace parser
 
     auto rule_def = 
     (
-        boost::spirit::x3::eps[set_0] >> *boost::spirit::x3::char_('M')[add_M] >> 
+        boost::spirit::x3::eps[lambda_1] >> *boost::spirit::x3::char_('M')[lambda_2] >> 
         (
-            -handler_v1[add_x] >> 
+            -handler_v1[lambda_3] >> 
             
-            -handler_v2[add_x] >> 
+            -handler_v2[lambda_3] >> 
             
-            -handler_v3[add_x]
+            -handler_v3[lambda_3]
         )
     );
 

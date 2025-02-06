@@ -62,12 +62,7 @@ int main()
 
         auto rule = boost::spirit::x3::int_
         [
-            (
-                [](auto && context)
-                { 
-                    assert(boost::spirit::x3::_attr(context) == 1); 
-                }
-            )
+            ([](auto && context){ assert(boost::spirit::x3::_attr(context) == 1); })
         ];
 
         boost::spirit::x3::phrase_parse(begin, end, rule, boost::spirit::x3::ascii::space);

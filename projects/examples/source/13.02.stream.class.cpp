@@ -49,7 +49,7 @@ template < typename ... Ts > void test(Ts ... xs)
 int main()
 {
     {
-        auto exceptions = std::cin.exceptions();
+        auto state = std::cin.exceptions();
 
         std::cin.exceptions(std::ios::eofbit | std::ios::badbit);
 
@@ -71,13 +71,13 @@ int main()
 
         std::cin.clear();
         
-        std::cin.exceptions(exceptions);
+        std::cin.exceptions(state);
     }
     
 //  -------------------------------------------------------------
 
     {
-        auto flags = std::cout.flags();
+        auto state = std::cout.flags();
 
         auto x = 1.0, y = 2.0;
 
@@ -85,7 +85,7 @@ int main()
 
         std::cout << "main : y = " << Manipulator(6) << y << '\n';
 
-        std::cout.flags(flags);
+        std::cout.flags(state);
     }
 
 //  -------------------------------------------------------------

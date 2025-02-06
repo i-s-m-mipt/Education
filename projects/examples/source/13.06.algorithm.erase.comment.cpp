@@ -13,9 +13,12 @@ void transform(const std::string & path_1, const std::string & path_2)
 {
     if (std::fstream stream_1(path_1, std::ios::in); stream_1)
     {
-        std::istreambuf_iterator < char > begin(stream_1), end;
-
-        std::string string(begin, end);
+        std::string string
+        {
+            std::istreambuf_iterator < char > (stream_1), 
+            
+            std::istreambuf_iterator < char > ()
+        };
 
         for (auto iterator = std::begin(string); iterator != std::end(string); ++iterator) 
         {
@@ -41,25 +44,25 @@ void transform(const std::string & path_1, const std::string & path_2)
             {
                 if (*std::next(iterator) == '/')
                 {
-                    auto last = std::next(iterator, 2);
+                    auto end = std::next(iterator, 2);
 
-                    while (last != std::end(string) && *last != '\n')
+                    while (end != std::end(string) && *end != '\n')
                     {
-                        ++last;
+                        ++end;
                     }
 
-                    iterator = string.erase(iterator, last);
+                    iterator = string.erase(iterator, end);
                 }
                 else if (*std::next(iterator) == '*')
                 {
-                    auto last = std::next(iterator, 3);
+                    auto end = std::next(iterator, 3);
 
-                    while (!(*last == '/' && *std::prev(last) == '*'))
+                    while (!(*end == '/' && *std::prev(end) == '*'))
                     {
-                        ++last;
+                        ++end;
                     }
 
-                    iterator = string.erase(iterator, ++last);
+                    iterator = string.erase(iterator, ++end);
                 }
             }
 
