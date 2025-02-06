@@ -36,24 +36,22 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 
 		auto step = size / concurrency;
 
-		auto block_begin = begin, block_end = std::next(block_begin, step);
+		auto begin_block = begin, end_block = std::next(begin_block, step);
 
 		for (auto & future : futures)
 		{
-			auto range = std::ranges::subrange(block_begin, block_end);
+			auto range = std::ranges::subrange(begin_block, end_block);
 
-			Task < decltype(range) > task;
+			std::packaged_task task { Task < decltype(range) > () };
 
-			std::packaged_task packaged_task(task);
-
-			future.first = packaged_task.get_future(); 
+			future.first = task.get_future(); 
 			
-			future.second = std::jthread(std::move(packaged_task), range);
+			future.second = std::jthread(std::move(task), range);
 
-			block_begin = block_end; block_end = std::next(block_begin, step);
+			begin_block = end_block; end_block = std::next(begin_block, step);
 		}
 
-		auto range = std::ranges::subrange(block_begin, end);
+		auto range = std::ranges::subrange(begin_block, end);
 
 		sum += Task < decltype(range) > ()(range);
 

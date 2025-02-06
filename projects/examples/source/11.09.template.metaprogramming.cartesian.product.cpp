@@ -54,17 +54,15 @@ template < std::forward_iterator ... Is > auto generate(std::pair < Is, Is > ...
 		static_cast < std::size_t > (std::distance(pairs.first , pairs.second))... 
 	};
 
-	auto sequence = std::make_integer_sequence < std::size_t, sizeof...(pairs) > ();
-
 	do
 	{
 		apply
 		(
-			[&result](auto && ... pairs)
-			{ 
-				result.emplace_back(pairs...); 
-			}, 
-			std::tie(pairs...), steps, sequence
+			[&result](auto && ... pairs){ result.emplace_back(pairs...); }, 
+			
+			std::tie(pairs...), steps, 
+			
+			std::make_integer_sequence < std::size_t, sizeof...(pairs) > ()
 		);
 	} 
 	while (next(steps, sizes));

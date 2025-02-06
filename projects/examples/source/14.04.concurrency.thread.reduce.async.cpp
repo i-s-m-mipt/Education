@@ -29,7 +29,7 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum) -> T
 {
 	auto begin = std::begin(view), end = std::end(view);
 
-	if (auto size = 1uz * std::distance(begin, end), min_size = 100uz; size > min_size)
+	if (auto size = 1uz * std::distance(begin, end); size > 100uz)
 	{
 		auto middle = std::next(begin, size / 2);
 

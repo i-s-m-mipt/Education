@@ -18,9 +18,7 @@ auto make_vector(std::size_t size)
 
 	std::uniform_real_distribution distribution(0.0, 1.0);
 
-	auto generator = [&engine, &distribution](){ return distribution(engine); };
-
-	std::ranges::generate(vector, generator);
+	std::ranges::generate(vector, [&engine, &distribution](){ return distribution(engine); });
 
 	return vector;
 }

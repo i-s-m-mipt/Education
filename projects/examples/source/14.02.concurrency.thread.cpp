@@ -85,8 +85,6 @@ int main()
     {
         std::thread thread([](){});
 
-        [[maybe_unused]] auto id = thread.get_id();
-
         thread.join();
 
 //      std::thread([](){ std::this_thread::sleep_for(1s); }); // bad

@@ -98,9 +98,11 @@ int main()
 //  ---------------------------------------------------------------------------------
 
 	{
-		auto lambda = [](auto lhs, auto rhs){ return lhs < rhs; };
-
-		std::set < int, decltype(lambda) > set = { 5, 4, 3, 2, 1 };
+		std::set 
+		< 
+			int, decltype([](auto lhs, auto rhs){ return lhs < rhs; }) 
+		> 
+		set = { 5, 4, 3, 2, 1 };
 
 		assert(std::ranges::is_sorted(set));
 	}	

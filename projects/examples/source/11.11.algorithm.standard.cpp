@@ -53,7 +53,7 @@ int main()
 		test(vector);
 	}
 
-//  --------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------
 
 	{
 		std::vector < int > vector(5, 0);
@@ -62,14 +62,18 @@ int main()
 
 		std::uniform_int_distribution distribution(1, 5);
 
-		auto generator = [&engine, &distribution](){ return distribution(engine); };
-
-		std::generate(std::begin(vector), std::end(vector), generator);
+		std::generate
+		(
+			std::begin(vector), std::end(vector), [&engine, &distribution]()
+			{ 
+				return distribution(engine); 
+			}
+		);
 
 		test(vector);
 	}
 
-//  --------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------
 
 	{
 		std::vector < int > vector = { 1, 2, 3, 4, 5 };
@@ -92,7 +96,7 @@ int main()
 		}
 	}
 
-//  --------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------
 
 	{
 		std::vector < int > vector = { 1, 2, 3, 4, 5 };
@@ -106,17 +110,21 @@ int main()
 		assert(vector == std::vector < int > ({ 2, 3, 4, 5 }));
 	}
 
-//  --------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------
 
 	{
 		std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-		auto lambda_1 = [](auto x){ return x == 4; };
+		std::erase_if
+		(	
+			vector, bind
+			(
+				[](auto x){ return x == 1; },
 
-		auto lambda_2 = [](auto x){ return x == 5; };
+				[](auto x){ return x == 2; }, std::logical_or <> ()
+			)
+		);
 
-		std::erase_if(vector, bind(lambda_1, lambda_2, std::logical_or <> ()));
-
-		assert(vector == std::vector < int > ({ 1, 2, 3 }));
+		assert(vector == std::vector < int > ({ 3, 4, 5 }));
 	}
 }

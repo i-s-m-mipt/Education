@@ -53,9 +53,10 @@ int main()
 
 		if (HNU_data_1_index.contains(1))
 		{
-			auto lambda = [](auto && entity){ entity.data_1 = entity.data_2 = 2; };
-
-			assert(HNU_data_1_index.modify(HNU_data_1_index.find(1), lambda));
+			HNU_data_1_index.modify
+			(	
+				HNU_data_1_index.find(1), [](auto && entity){ entity = Entity(2, 2); }
+			);
 
 			assert(HNU_data_1_index.count(1) == 0);
 

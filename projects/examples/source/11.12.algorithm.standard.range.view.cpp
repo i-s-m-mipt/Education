@@ -118,10 +118,7 @@ int main()
 //  ------------------------------------------------------------------------------------------
 
 	{
-		auto iterator = std::ranges::max_element
-		(
-			[](){ return std::vector < int > ({ 1, 2, 3, 4, 5 }); }()
-		);
+		auto iterator = std::ranges::max_element(std::vector < int > ({ 1, 2, 3, 4, 5 }));
 		
 		static_assert(std::is_same_v < decltype(iterator), std::ranges::dangling > );
 
