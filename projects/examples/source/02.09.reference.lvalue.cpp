@@ -11,9 +11,9 @@ int main()
 
 //		[[maybe_unused]] int & ref_1; // error
 
-		[[maybe_unused]] int & r_x = x; // support: compiler-explorer.com
+		[[maybe_unused]]       int & r_x   = x; // support: compiler-explorer.com
 
-//		[[maybe_unused]] int & r_y_1 = y; // error
+//		[[maybe_unused]]       int & r_y_1 = y; // error
 
 		[[maybe_unused]] const int & r_y_2 = y;
 

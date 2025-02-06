@@ -228,7 +228,7 @@ int main()
 //  ----------------------------------------------------------------------------------------------
 
     {
-        auto x = 1.0; [[maybe_unused]] std::uint64_t y;
+        auto x = 1.0; [[maybe_unused]] std::uint64_t y = 0;
     
 //      *reinterpret_cast < double * > (&y) = x; // bad
 

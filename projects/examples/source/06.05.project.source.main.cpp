@@ -130,9 +130,9 @@ int main()
 
 		assert(__func__ == "main"s);
 
-		[[maybe_unused]] auto date = __DATE__;
+		std::cout << "main : __DATE__ = " << __DATE__ << '\n';
 
-		[[maybe_unused]] auto time = __TIME__;
+		std::cout << "main : __TIME__ = " << __TIME__ << '\n';
 
 		DEBUG("trace"); // support: cppinsights.io
 	}

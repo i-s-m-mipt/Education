@@ -58,12 +58,12 @@ public:
 
     Unique_v2() = default;
 
-//  Unique_v2([[maybe_unused]] const Unique_v2 & other) : Noncopyable(other) // error
+//  Unique_v2(const Unique_v2 & other) : Noncopyable(other) // error
 //  {
 //      std::cout << "Unique_v2::Unique_v2 (1)\n";
 //  } 
 
-    Unique_v2([[maybe_unused]] const Unique_v2 & other) : Noncopyable()
+    Unique_v2(const Unique_v2 &) : Noncopyable()
     {
         std::cout << "Unique_v2::Unique_v2 (2)\n";
     }
@@ -72,7 +72,7 @@ public:
     {
         std::cout << "Unique_v2::operator=\n";
 
-    //  Noncopyable::operator=(other); // error
+//      Noncopyable::operator=(other); // error
 
         return *this;
     }

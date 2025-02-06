@@ -76,7 +76,7 @@ auto equal(double x, double y, double epsilon = 1e-6)
 int main()
 {
 	{
-		[[maybe_unused]] auto string = "aaaaa"s;
+		auto string = "aaaaa"s;
 	}
 	
 //  ---------------------------------------------------------
