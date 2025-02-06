@@ -38,9 +38,9 @@ public:
 
 	auto get()
 	{
-		if (m_is_full) 
+		if (m_has_token) 
 		{ 
-			m_is_full = false; return m_token; 
+			m_has_token = false; return m_token; 
 		}
 
 		auto x = '\0'; m_stream >> x;
@@ -88,12 +88,12 @@ public:
 
 	void putback(const Token & token)
 	{
-		m_token = token; m_is_full = true;
+		m_token = token; m_has_token = true;
 	}
 
 private:
 
-	std::stringstream m_stream; bool m_is_full = false; Token m_token;
+	std::stringstream m_stream; bool m_has_token = false; Token m_token;
 };
 
 //  ================================================================================================
@@ -104,11 +104,11 @@ public:
 
 	void test()
 	{
-		std::cout << "Calculator::test : enter statements : \n"; std::string line;
+		std::cout << "Calculator::test : enter statements : \n"; std::string string;
 
-		while (std::getline(std::cin >> std::ws, line))
+		while (std::getline(std::cin >> std::ws, string))
 		{
-			if (Stream stream(line); !stream.empty())
+			if (Stream stream(string); !stream.empty())
 			{
 				auto result = statement(stream);
 
@@ -142,16 +142,16 @@ private:
 
 	auto declaration(Stream & stream) -> double
 	{
-		auto name = std::get < std::string > (stream.get());
+		auto string = std::get < std::string > (stream.get());
 
-		m_variables[name] = expression(stream);
+		m_variables[string] = expression(stream);
 
-		return m_variables[name];
+		return m_variables[string];
 	}
 
 	auto expression(Stream & stream) const -> double
 	{
-		auto left = term(stream); auto token = stream.get();
+		auto result = term(stream); auto token = stream.get();
 
 		while (true)
 		{
@@ -159,15 +159,15 @@ private:
 			{
 				switch (std::get < char > (token))
 				{
-					case '+': { left += term(stream); break; }
+					case '+': { result += term(stream); break; }
 
-					case '-': { left -= term(stream); break; }
+					case '-': { result -= term(stream); break; }
 
 					default: 
 					{ 
 						stream.putback(token); 
 						
-						return left; 
+						return result; 
 					}
 				}
 			}
@@ -182,7 +182,7 @@ private:
 
 	auto term(Stream & stream) const -> double
 	{
-		auto left = primary(stream); auto token = stream.get();
+		auto result = primary(stream); auto token = stream.get();
 
 		while (true)
 		{
@@ -190,15 +190,15 @@ private:
 			{
 				switch (std::get < char > (token))
 				{
-					case '*': { left *= term(stream); break; }
+					case '*': { result *= term(stream); break; }
 
-					case '/': { left /= term(stream); break; }
+					case '/': { result /= term(stream); break; }
 
 					default: 
 					{ 
 						stream.putback(token); 
 						
-						return left; 
+						return result; 
 					}
 				}
 			}

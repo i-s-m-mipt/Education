@@ -90,7 +90,11 @@ namespace parser
     (
         boost::spirit::x3::eps[set_0] >> *boost::spirit::x3::char_('M')[add_M] >> 
         (
-            -handler_v1[add_x] >> -handler_v2[add_x] >> -handler_v3[add_x]
+            -handler_v1[add_x] >> 
+            
+            -handler_v2[add_x] >> 
+            
+            -handler_v3[add_x]
         )
     );
 
@@ -107,12 +111,7 @@ auto parse(std::string_view view)
 
     auto x = 0;
 
-    auto status = boost::spirit::x3::phrase_parse(begin, end, parser::rule, space, x);
-
-    if (!status || begin != end)
-    {
-        throw std::runtime_error("invalid view");
-    }
+    boost::spirit::x3::phrase_parse(begin, end, parser::rule, space, x);
     
     return x;
 }

@@ -13,15 +13,15 @@
 
 void put_time(const std::locale & locale)
 {
-	const auto & time_put = std::use_facet < std::time_put < char > > (locale);
+	const auto & facet = std::use_facet < std::time_put < char > > (locale);
 
 	auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 
-	auto date = std::localtime(&time);
+	auto timestamp = std::localtime(&time);
 
 	auto format = "%A %x";
 
-	time_put.put(std::cout, std::cout, ' ', date, format, format + std::strlen(format));
+	facet.put(std::cout, std::cout, ' ', timestamp, format, format + std::strlen(format));
 
 	std::cout << '\n';
 }
@@ -60,11 +60,11 @@ int main() // support: locale -a
 //  -----------------------------------------------------------------------------------------------
 
 	{
-		const auto & time_get = std::use_facet < std::time_get < char > > (std::locale::classic());
+		const auto & facet = std::use_facet < std::time_get < char > > (std::locale::classic());
 
 		std::cout << "main : dateorder = std::time_base::";
 
-		switch (auto dateorder = time_get.date_order(); dateorder)
+		switch (auto dateorder = facet.date_order(); dateorder)
 		{
 			case std::time_base::dmy: { std::cout << "dmy\n"; break; }
 
@@ -86,7 +86,7 @@ int main() // support: locale -a
 
 		auto format = "%A %x";
 
-		time_get.get
+		facet.get
 		(
 			std::istreambuf_iterator < char > (std::cin), 
 

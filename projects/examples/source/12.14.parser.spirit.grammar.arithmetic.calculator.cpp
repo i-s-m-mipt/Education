@@ -76,8 +76,6 @@ namespace parser
     );
 
     BOOST_SPIRIT_DEFINE(rule_1, rule_2, rule_3);
-
-    auto rule = rule_1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,13 +91,13 @@ public:
 
     auto operator()(const detail::Sign & sign) const -> double
     {
-        auto rhs = boost::apply_visitor(*this, sign.operand);
+        auto result = boost::apply_visitor(*this, sign.operand);
 
         switch (sign.operation)
         {
-            case '+': { return rhs; }
+            case '+': { return result; }
 
-            case '-': { return rhs * -1.0; }
+            case '-': { return result * -1.0; }
 
             default: 
             { 
@@ -108,19 +106,19 @@ public:
         }
     }
 
-    auto operator()(const detail::Step & step, double lhs) const -> double
+    auto operator()(const detail::Step & step, double x) const -> double
     {
-        auto rhs = boost::apply_visitor(*this, step.operand);
+        auto y = boost::apply_visitor(*this, step.operand);
 
         switch (step.operation)
         {
-            case '+': { return lhs + rhs; }
+            case '+': { return x + y; }
 
-            case '-': { return lhs - rhs; }
+            case '-': { return x - y; }
 
-            case '*': { return lhs * rhs; }
+            case '*': { return x * y; }
 
-            case '/': { return lhs / rhs; }
+            case '/': { return x / y; }
 
             default: 
             {
@@ -152,12 +150,7 @@ auto parse(std::string_view view)
 
     detail::List list;
 
-    auto status = boost::spirit::x3::phrase_parse(begin, end, parser::rule, space, list);
-
-    if (!status || begin != end)
-    {
-        throw std::runtime_error("invalid view");
-    }
+    boost::spirit::x3::phrase_parse(begin, end, parser::rule_1, space, list);
 
     static Calculator calculator;
 

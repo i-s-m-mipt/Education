@@ -11,7 +11,7 @@ using namespace std::literals;
 
 #include <boost/locale.hpp>
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 auto convert_v1(const std::string & string)
 {
@@ -24,7 +24,7 @@ auto convert_v1(const std::string & string)
 	return boost::locale::conv::to_utf < char > (string, locale);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 auto convert_v2(const std::string & string)
 {
@@ -37,92 +37,74 @@ auto convert_v2(const std::string & string)
 	return boost::locale::conv::from_utf < char > (string, locale);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
-//  auto convert_v3(const std::wstring & wstring)
-//  {
-//  	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // bad
-//
-//  	return converter.to_bytes(wstring);
-//  }
-
-///////////////////////////////////////////////////////////////////////////////////////
-
-//  auto convert_v4(const std::string & string)
-//  {
-//  	std::wstring_convert < std::codecvt_utf8 < wchar_t > > converter; // bad
-//
-//  	return converter.from_bytes(string);
-//  }
-
-///////////////////////////////////////////////////////////////////////////////////////
-
-auto convert_v5(std::string_view string, const std::locale & locale) 
+auto convert_v3(std::string_view view, const std::locale & locale) 
 {
-	std::vector < wchar_t > vector(std::size(string), L'\0');
+	std::vector < wchar_t > vector(std::size(view), L'\0');
 
 	std::use_facet < std::ctype < wchar_t > > (locale).widen
     (
-		std::data(string), 
+		std::data(view), 
         
-        std::data(string) + std::size(string), std::data(vector)
+        std::data(view) + std::size(view), std::data(vector)
     );
 
 	return std::wstring(std::data(vector), std::size(vector));
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
-auto convert_v6(std::wstring_view wstring, const std::locale & locale)
+auto convert_v4(std::wstring_view view, const std::locale & locale)
 {
-	std::vector < char > vector(std::size(wstring), '\0');
+	std::vector < char > vector(std::size(view), '\0');
 
 	std::use_facet < std::ctype < wchar_t > > (locale).narrow
     (
-		std::data(wstring),
+		std::data(view),
         
-		std::data(wstring) + std::size(wstring), '?', std::data(vector)
+		std::data(view) + std::size(view), '?', std::data(vector)
     );
 
 	return std::string(std::data(vector), std::size(vector));
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
     {
-        auto system_locale = boost::locale::util::get_system_locale();
+        auto locale = boost::locale::util::get_system_locale();
 
-        std::cout << "main : system_locale = " << system_locale << '\n';
+        std::cout << "main : locale = " << locale << '\n';
     }
     
-//  -----------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------------
 
     {
-        auto string = "ааааа"s; auto size = std::size(string);
+        auto string_1 = "ааааа"s; auto size = std::size(string_1);
 
         std::cout << "main : size = " << size << '\n';
 
-        auto u8string = convert_v1(string);
+        auto string_2 = convert_v1(string_1);
 
-        assert(std::size(u8string) == 10);
+        assert(std::size(string_2) == 10);
 
-        assert(((u8string[0] & 0xff) << 8 | (u8string[1] & 0xff)) == 53'424);
+        assert(((string_2[0] & 0xff) << 8 | (string_2[1] & 0xff)) == 53'424);
 
-        auto u32string = boost::locale::conv::utf_to_utf < char32_t, char > (u8string);
+        auto string_3 = boost::locale::conv::utf_to_utf < char32_t, char > (string_2);
 
-        assert(std::size(u32string) == 5 && u32string.front() == 1'072);
+        assert(std::size(string_3) == 5 && string_3.front() == 1'072);
 
-        u8string = boost::locale::conv::utf_to_utf < char, char32_t > (u32string);
+        string_2 = boost::locale::conv::utf_to_utf < char, char32_t > (string_3);
 
-	    assert(convert_v2(u8string) == string);
+	    assert(convert_v2(string_2) == string_1);
     }
 
-//  -----------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------------
 
     {
-        std::unordered_map < char32_t, std::u32string > transliteration_table = 
+        std::unordered_map < char32_t, std::u32string > map = 
         { 
             { U'А', U"A"   }, { U'а', U"a"   },
             { U'Б', U"B"   }, { U'б', U"b"   },

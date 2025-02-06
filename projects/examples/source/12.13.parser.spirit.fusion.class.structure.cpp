@@ -22,10 +22,7 @@ namespace parser
 {
     boost::spirit::x3::rule < struct rule_tag, Entity > rule;
 
-    auto rule_def = 
-    (
-        '{' >> boost::spirit::x3::int_ >> boost::spirit::x3::int_ >> '}'
-    );
+    auto rule_def = '{' >> boost::spirit::x3::int_ >> boost::spirit::x3::int_ >> '}';
 
     BOOST_SPIRIT_DEFINE(rule);
 }
@@ -40,12 +37,7 @@ auto parse(std::string_view view)
 
     Entity entity;
 
-    auto status = boost::spirit::x3::phrase_parse(begin, end, parser::rule, space, entity);
-
-    if (!status || begin != end)
-    {
-        throw std::runtime_error("invalid view");
-    }
+    boost::spirit::x3::phrase_parse(begin, end, parser::rule, space, entity);
 
     return entity;
 }

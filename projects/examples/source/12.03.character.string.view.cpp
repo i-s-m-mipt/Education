@@ -131,17 +131,17 @@ int main()
 //  -------------------------------------------------------------------------------------------
 
     {
-        [[maybe_unused]] char    array_1[5]{ 'a', 'a', 'a', 'a', 'a' };
+        [[maybe_unused]] char string_1[5]{ 'a', 'a', 'a', 'a', 'a' };
 
-        [[maybe_unused]] char c_string_1[6]{ 'a', 'a', 'a', 'a', 'a', '\0' };
+        [[maybe_unused]] char string_2[6]{ 'a', 'a', 'a', 'a', 'a', '\0' };
         
-        [[maybe_unused]] char c_string_2[6] = "aaaaa";
+        [[maybe_unused]] char string_3[6] = "aaaaa";
 
-        [[maybe_unused]] auto c_string_3    = "aaaaa";
+        [[maybe_unused]] auto string_4    = "aaaaa";
 
-        auto string = "aaaaa"s;
+        auto string_5 = "aaaaa"s;
 
-        assert(std::strlen(string.c_str()) == 5);
+        assert(std::strlen(string_5.c_str()) == 5);
 
         std::cout << "main : enter char[] : "; char array_2[1'000]{};
 
@@ -173,19 +173,19 @@ int main()
 //  -------------------------------------------------------------------------------------------
 
     {
-        auto string = "aaaaa"s; auto string_view = "aaaaa"sv;
-
-        test(string);
+        test("aaaaa"s );
     
-        test(string_view);
+        test("aaaaa"sv);
+
+        auto string = "aaaaa"s;
 
         test(std::string_view(std::begin(string), std::next(std::begin(string), 5)));
 
-//      std::string_view string_view_1 = "aaaaa"s + "bbbbb"s; // bad
+//      std::string_view view_1 = "aaaaa"s + "bbbbb"s; // bad
 
-//      std::string_view string_view_2 = string; string = "bbbbb"; // bad
+//      std::string_view view_2 = string; string = "bbbbb"; // bad
 
-//      std::string_view string_view_3 = [](){ return "aaaaa"s; }(); // bad
+//      std::string_view view_3 = [](){ return "aaaaa"s; }(); // bad
     }
 
 //  -------------------------------------------------------------------------------------------

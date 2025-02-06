@@ -10,7 +10,7 @@ using namespace std::literals;
 
 auto test_v1(const std::string & string)
 {
-	return std::regex_match(string, std::regex(R"([_[:alpha:]]\w*)"));
+	return std::regex_match(string, std::regex(R"([_[:alpha:]]\w*)")); // support: regex101.com
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
