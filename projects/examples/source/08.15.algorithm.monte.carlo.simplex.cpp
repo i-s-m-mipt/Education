@@ -55,16 +55,18 @@ int main()
 
 		Vector PC(std::cos(w_C), std::sin(w_C), 0.0);
 
-		auto x = (PA * PB).z;
+		auto alpha_1 = (PA * PB).z;
 		
-		auto y = (PB * PC).z;
+		auto alpha_2 = (PB * PC).z;
 		
-		auto z = (PC * PA).z;
+		auto alpha_3 = (PC * PA).z;
 
-		if ((x >= 0.0 && y >= 0.0 && z >= 0.0) || (x <= 0.0 && y <= 0.0 && z <= 0.0))
-		{
-			++counter;
-		}
+		counter +=
+		(
+			(alpha_1 >= 0.0 && alpha_2 >= 0.0 && alpha_3 >= 0.0) || 
+			
+			(alpha_1 <= 0.0 && alpha_2 <= 0.0 && alpha_3 <= 0.0)
+		);
 	}
 
 	assert(equal(1.0 * counter / size, 0.250, 1e-3));

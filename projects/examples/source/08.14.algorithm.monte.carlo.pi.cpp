@@ -23,7 +23,9 @@ int main()
 
 	for (auto i = 0uz; i < size; ++i)
 	{
-		auto x = distribution(engine), y = distribution(engine);
+		auto x = distribution(engine);
+		
+		auto y = distribution(engine);
 
 		if (x * x + y * y < 1.0) 
 		{

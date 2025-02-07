@@ -53,7 +53,9 @@ auto equal(std::complex < double > x, std::complex < double > y, double epsilon 
 int main()
 {
     {
-        auto x = 1.0 + 1.0i, y = 2.0 + 2.0i;
+        auto x = 1.0 + 1.0i;
+        
+        auto y = 2.0 + 2.0i;
 
         assert(equal(std::real(x), 1.000'000));
         assert(equal(std::imag(x), 1.000'000));
