@@ -68,7 +68,7 @@ void split(std::vector < int > & vector, std::size_t left, std::size_t right)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-void timsort(std::vector < int > & vector)
+void sort(std::vector < int > & vector)
 {
 	split(vector, 0, std::size(vector));
 }
@@ -86,7 +86,7 @@ int main()
 		vector[i] = size - i;
 	}
 
-	timsort(vector);
+	sort(vector);
 
 	assert(std::ranges::is_sorted(vector));
 }

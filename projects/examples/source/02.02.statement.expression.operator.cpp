@@ -7,7 +7,7 @@
 int main()
 {
 	{
-		bool x = false, y = true;
+		auto x = false, y = true;
 
 		assert(!x == y);
 		assert(!y == x);
