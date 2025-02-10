@@ -10,13 +10,13 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-class Ratio
+class Rational
 {
 public:
 
-	/* explicit */ Ratio(int num = 0, int den = 1) : m_num(num), m_den(den)
+	/* explicit */ Rational(int num = 0, int den = 1) : m_num(num), m_den(den)
 	{
-		if (m_den == 0) { std::cerr << "Ratio::Ratio : invalid denominator\n"; }
+		if (m_den == 0) { std::cerr << "Rational::Rational : invalid denominator\n"; }
 
 		if (m_den <  0)
 		{
@@ -37,7 +37,7 @@ public:
 
 //  ------------------------------------------------------------------------------------------
 
-	auto & operator+=(const Ratio & other)
+	auto & operator+=(const Rational & other)
 	{
 		auto lcm = std::lcm(m_den, other.m_den);
 
@@ -50,12 +50,12 @@ public:
 		return *this;
 	}
 
-	auto & operator-=(const Ratio & other) 
+	auto & operator-=(const Rational & other) 
 	{ 
 		return *this += other.m_num * -1;
 	}
 
-	auto & operator*=(const Ratio & other)
+	auto & operator*=(const Rational & other)
 	{
 		m_num *= other.m_num;
 
@@ -66,9 +66,9 @@ public:
 		return *this;
 	}
 	
-	auto & operator/=(const Ratio & other) 
+	auto & operator/=(const Rational & other) 
 	{ 
-		return *this *= Ratio(other.m_den, other.m_num);
+		return *this *= Rational(other.m_den, other.m_num);
 	}
 
 //  ------------------------------------------------------------------------------------------
@@ -83,51 +83,63 @@ public:
 
 //  ------------------------------------------------------------------------------------------
 
-	friend auto operator+ (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) += rhs; }
+	friend auto operator+ (const Rational & lhs, const Rational & rhs) 
+	{ 
+		return Rational(lhs) += rhs; 
+	}
 
-	friend auto operator- (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) -= rhs; }
+	friend auto operator- (const Rational & lhs, const Rational & rhs) 
+	{ 
+		return Rational(lhs) -= rhs; 
+	}
 
-	friend auto operator* (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) *= rhs; }
+	friend auto operator* (const Rational & lhs, const Rational & rhs) 
+	{ 
+		return Rational(lhs) *= rhs; 
+	}
 
-	friend auto operator/ (const Ratio & lhs, const Ratio & rhs) { return Ratio(lhs) /= rhs; }
+	friend auto operator/ (const Rational & lhs, const Rational & rhs) 
+	{ 
+		return Rational(lhs) /= rhs; 
+	}
 
 //  ------------------------------------------------------------------------------------------
 
-	friend auto operator< (const Ratio & lhs, const Ratio & rhs)
+	friend auto operator< (const Rational & lhs, const Rational & rhs)
 	{
 		return static_cast < double > (lhs) < static_cast < double > (rhs);
 	}
 
-	friend auto operator> (const Ratio & lhs, const Ratio & rhs) { return  (rhs < lhs); }
+	friend auto operator> (const Rational & lhs, const Rational & rhs) { return  (rhs < lhs); }
 	
-	friend auto operator<=(const Ratio & lhs, const Ratio & rhs) { return !(lhs > rhs); }
+	friend auto operator<=(const Rational & lhs, const Rational & rhs) { return !(lhs > rhs); }
 
-	friend auto operator>=(const Ratio & lhs, const Ratio & rhs) { return !(lhs < rhs); }
+	friend auto operator>=(const Rational & lhs, const Rational & rhs) { return !(lhs < rhs); }
 
-	friend auto operator==(const Ratio & lhs, const Ratio & rhs)
+	friend auto operator==(const Rational & lhs, const Rational & rhs)
 	{
 		return !(lhs < rhs) && !(rhs < lhs);
 	}
 
 //  ------------------------------------------------------------------------------------------
 
-	friend auto & operator>>(std::istream & stream, Ratio & ratio)
+	friend auto & operator>>(std::istream & stream, Rational & rational)
 	{
 		auto num = 0; char x = 0; auto den = 0; stream >> num >> x >> den;
 
 		if (x != '/') 
 		{
-			std::cerr << "operator>> : invalid ratio\n";
+			std::cerr << "operator>> : invalid rational\n";
 		}
 
-		ratio = Ratio(num, den);
+		rational = Rational(num, den);
 		
 		return stream;
 	}
 
-	friend auto & operator<<(std::ostream & stream, const Ratio & ratio)
+	friend auto & operator<<(std::ostream & stream, const Rational & rational)
 	{
-		return stream << ratio.m_num << '/' << ratio.m_den;
+		return stream << rational.m_num << '/' << rational.m_den;
 	}
 
 private:
@@ -158,7 +170,7 @@ auto equal(double x, double y, double epsilon = 1e-6)
 int main()
 {
 	{
-		[[maybe_unused]] Ratio x1, x2(2), x3 = 3, x4(4, 1);
+		[[maybe_unused]] Rational x1, x2(2), x3 = 3, x4(4, 1);
 
 //		std::vector < int > vector = 1; // error
 	}
@@ -166,38 +178,38 @@ int main()
 //  -----------------------------------------------------------------
 
 	{
-		Ratio x = 1, y = 2;
+		Rational x = 1, y = 2;
 
 		assert(equal(static_cast < double > (x), 1.0));
 
-//		assert(x.operator+=(y) == Ratio(3, 1)); // bad
+//		assert(x.operator+=(y) == Rational(3, 1)); // bad
 
-		assert((x += y) == Ratio(3, 1));
-		assert((x += 1) == Ratio(4, 1));
-//		assert((1 += y) == Ratio(3, 1)); // error
-//		assert((1 += 1) == Ratio(2, 1)); // error
+		assert((x += y) == Rational(3, 1));
+		assert((x += 1) == Rational(4, 1));
+//		assert((1 += y) == Rational(3, 1)); // error
+//		assert((1 += 1) == Rational(2, 1)); // error
 
-		assert((x -= y) == Ratio(2, 1));
-		assert((x *= y) == Ratio(4, 1));
-		assert((x /= y) == Ratio(2, 1));
+		assert((x -= y) == Rational(2, 1));
+		assert((x *= y) == Rational(4, 1));
+		assert((x /= y) == Rational(2, 1));
 
-		assert((x ++  ) == Ratio(2, 1));
-		assert((  ++ y) == Ratio(3, 1));
-		assert((x --  ) == Ratio(3, 1));
-		assert((  -- y) == Ratio(2, 1));
+		assert((x ++  ) == Rational(2, 1));
+		assert((  ++ y) == Rational(3, 1));
+		assert((x --  ) == Rational(3, 1));
+		assert((  -- y) == Rational(2, 1));
 
 //		x++++; // error
 
-//		assert(operator+(x, y) == Ratio(4, 1)); // bad
+//		assert(operator+(x, y) == Rational(4, 1)); // bad
 
-		assert((x +  y) == Ratio(4, 1));
-		assert((x +  1) == Ratio(3, 1));
-		assert((1 +  y) == Ratio(3, 1));
-		assert((1 +  1) == Ratio(2, 1));
+		assert((x +  y) == Rational(4, 1));
+		assert((x +  1) == Rational(3, 1));
+		assert((1 +  y) == Rational(3, 1));
+		assert((1 +  1) == Rational(2, 1));
 
-		assert((x -  y) == Ratio(0, 1));
-		assert((x *  y) == Ratio(4, 1));
-		assert((x /  y) == Ratio(1, 1));
+		assert((x -  y) == Rational(0, 1));
+		assert((x *  y) == Rational(4, 1));
+		assert((x /  y) == Rational(1, 1));
 
 		assert((x <  y) == 0);
 		assert((x >  y) == 0);
@@ -210,7 +222,7 @@ int main()
 //  -----------------------------------------------------------------
 
 	{
-		std::cout << "main : enter Ratio : "; Ratio x; std::cin >> x; 
+		std::cout << "main : enter Rational : "; Rational x; std::cin >> x; 
 	
 		std::cout << "main : x = " << x << '\n';
 	}
