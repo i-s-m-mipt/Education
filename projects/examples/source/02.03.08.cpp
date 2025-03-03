@@ -1,10 +1,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cstddef>
-#include <functional>
 #include <iostream>
-#include <numeric>
-#include <utility>
 #include <vector>
 
 ////////////////////////////////////////////////////////////////////////////
