@@ -28,6 +28,8 @@ public:
         m_states.front() = std::move(state);
     }
 
+//  --------------------------------------------------------------------
+
     void load_v1(std::size_t index)
     {
         m_states.front() = m_states.at(index);

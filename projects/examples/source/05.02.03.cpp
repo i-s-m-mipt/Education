@@ -2,7 +2,7 @@
 #include <cstddef>
 #include <vector>
 
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
@@ -10,18 +10,18 @@ public:
 
     virtual ~Entity() = default;
 
-//  -------------------------------------
+//  -----------------------------
 
-    virtual std::size_t size() const = 0;
+    virtual int test() const = 0;
 };
 
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
-class Client : public Entity { public: std::size_t size() const override { return 1; } };
+class Client : public Entity { public: int test() const override { return 1; } };
 
-class Server : public Entity { public: std::size_t size() const override { return 2; } };
+class Server : public Entity { public: int test() const override { return 2; } };
 
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 class Composite : public Entity
 {
@@ -29,7 +29,7 @@ public:
 
    ~Composite()
     {
-        for (auto entity : m_entities) 
+        for (auto entity : m_entities)
         {
             if (entity)
             {
@@ -47,19 +47,19 @@ public:
 
 //  ------------------------------------
 
-    std::size_t size() const override
+    int test() const override
     {
-        auto size = 0uz;
+        auto x = 0;
 
         for (auto entity : m_entities)
         {
             if (entity) 
             {
-                size += entity->size();
+                x += entity->test();
             }
         }
 
-        return size;
+        return x;
     }
 
 private:
@@ -67,7 +67,7 @@ private:
     std::vector < Entity * > m_entities;
 };
 
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 auto make_composite(std::size_t size_1, std::size_t size_2) -> Entity *
 {
@@ -80,7 +80,7 @@ auto make_composite(std::size_t size_1, std::size_t size_2) -> Entity *
     return composite;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -93,7 +93,7 @@ int main()
 
     Entity * entity = composite;
         
-    assert(entity->size() == 15);
+    assert(entity->test() == 15);
 
     delete entity;
 }

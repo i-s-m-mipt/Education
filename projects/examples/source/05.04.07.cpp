@@ -33,7 +33,7 @@ public:
 
     using data_t = typename B::data_t;
 
-//  ------------------------------------
+//  ----------------------------------
 
     void set(data_t data) 
     { 

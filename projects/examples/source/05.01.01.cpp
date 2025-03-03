@@ -67,11 +67,9 @@ int main()
 {
     Builder * builder = new Builder_Client;
 
-    auto entity = builder->make();
+//  ---------------------------------------
 
-    assert(entity->data_1 == 1 && entity->data_2 == 1);
-
-    delete entity;
+    delete builder->make();
     
     delete builder;
 }

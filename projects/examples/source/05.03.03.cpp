@@ -87,6 +87,8 @@ void Slow::set_fast([[maybe_unused]] Entity * entity) const
     entity->set_state(new Fast);
 }
 
+/////////////////////////////////////////////////////////////////////////
+
 void Fast::set_slow([[maybe_unused]] Entity * entity) const
 {
     std::cout << "Fast::set_slow\n";
@@ -104,6 +106,8 @@ void Fast::set_fast([[maybe_unused]] Entity * entity) const
 int main()
 {
     Entity entity;
+
+//  ------------------
 
     entity.set_slow();
     

@@ -49,5 +49,7 @@ int main()
 	
 	test(Server());
 
+//  -------------------------------------------
+
 //	std::vector < Entity * > entities; // error
 }
