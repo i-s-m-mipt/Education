@@ -1,14 +1,10 @@
-#include <cassert>
 #include <iostream>
-#include <vector>
 
 ////////////////////////////////////////////////////
 
 class Entity
 {
 public:
-
-	Entity() = default;
 
 	Entity(int x) : m_data(x) {}
 
@@ -38,31 +34,23 @@ struct Server { struct Client * client = nullptr; };
 
 int main()
 {
-	{
-		Entity entity_1(1), entity_2(2);
-	}
-	
-//  ------------------------------------
+	Entity entity_1(1), entity_2(2);
 
-	{
-		Entity::s_data = 1;
-	}
+//  --------------------------------
 
-//  ------------------------------------
+	Entity::s_data = 1;
 
-	{
-		Client client;
+//  --------------------------------
 
-		Server server;
+	Client client;
 
-		client.server = &server;
+	Server server;
 
-		server.client = &client;
-	}
+	server.client = &client;
 
-//  ------------------------------------
+	client.server = &server;
 
-	{
-		Entity::test();
-	}
+//  --------------------------------
+
+	Entity::test();
 }

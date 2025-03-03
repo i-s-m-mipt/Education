@@ -1,6 +1,8 @@
 #include <algorithm>
 #include <cstddef>
+#include <initializer_list>
 #include <iostream>
+#include <iterator>
 #include <utility>
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -27,6 +29,8 @@ public:
 		std::ranges::copy(list, m_data);
 	}
 
+//  -----------------------------------------------------------------------------
+
 	Vector(const Vector & other) : Vector() 
 	{
 		std::cout << "Vector::Vector (3)\n";
@@ -37,6 +41,8 @@ public:
 
 		std::ranges::copy(other.m_data, other.m_data + other.m_size, m_data);
 	}
+
+//  -----------------------------------------------------------------------------
 
 	Vector(Vector && other) : m_data(other.m_data), m_size(other.m_size)
 	{
@@ -163,40 +169,21 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////
 
-auto test_v1() { return Vector({ 1, 2, 3, 4, 5 }); }
-
-auto test_v2() 
-{ 
-	Vector vector = { 1, 2, 3, 4, 5 };
-	
-	return vector;
-
-//	return std::move(vector); // error
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-
 int main()
 {
-	{
-		Vector vector_1;
+	Vector vector_1;
 
-		Vector vector_2 = { 1, 2, 3, 4, 5 };
+	Vector vector_2 = { 1, 2, 3, 4, 5 };
 
-		Vector vector_3(vector_2);
+//  -------------------------------------
 
-		Vector vector_4(std::move(vector_3));
+	Vector vector_3(vector_2);
 
-		vector_3 = vector_2;
+	Vector vector_4(std::move(vector_3));
 
-		vector_4 = std::move(vector_3);
-	}
-	
-//  -----------------------------------------
+//  -------------------------------------
 
-	{
-		auto vector_1 = test_v1();
-	
-		auto vector_2 = test_v2();
-	}
+	vector_3 = vector_2;
+
+	vector_4 = std::move(vector_3);
 }

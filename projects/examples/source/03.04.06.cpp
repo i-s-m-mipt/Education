@@ -1,7 +1,7 @@
 #include <iostream>
 #include <ostream>
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
@@ -13,26 +13,26 @@ public:
 
     friend auto & operator>>(std::istream & stream, Entity & entity)
     {
-        entity.read(stream);
+        entity.get(stream);
 
         return stream;
     }
 
     friend auto & operator<<(std::ostream & stream, const Entity & entity)
     {
-        entity.write(stream);
+        entity.put(stream);
 
         return stream;
     }
 
 protected:
 
-    virtual void read (std::istream & stream)
+    virtual void get(std::istream & stream)
     {
         stream >> m_data;
     }
 
-    virtual void write(std::ostream & stream) const 
+    virtual void put(std::ostream & stream) const 
     { 
         stream << "{ " << m_data << " }";
     }
@@ -42,20 +42,20 @@ protected:
     int m_data = 0;
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 class Client : public Entity 
 {
 public:
 
-    void read (std::istream & stream) override
+    void get(std::istream & stream) override
     {
-        Entity::read(stream);
+        Entity::get(stream);
         
         stream >> Client::m_data;
     }
 
-    void write(std::ostream & stream) const override 
+    void put(std::ostream & stream) const override 
     { 
         stream << "{ " << Entity::m_data << ' ' << Client::m_data << " }";
     }
@@ -65,11 +65,15 @@ private:
     int m_data = 0;
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::cout << "main : enter Client : "; Entity * entity = new Client; std::cin >> *entity;
+    std::cout << "main : enter Client : "; 
+    
+    Entity * entity = new Client; 
+    
+    std::cin >> *entity;
 
     std::cout << "main : *entity = " << *entity << '\n';
 
