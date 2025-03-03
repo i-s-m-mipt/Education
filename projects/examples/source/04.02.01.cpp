@@ -1,0 +1,49 @@
+#include <cassert>
+#include <vector>
+
+/////////////////////////////////////////////////////////////////////
+
+template < typename T, typename C = std::vector < T > > class Stack
+{
+public:
+
+	void push(T x);
+
+	auto top() const;
+
+	void pop();
+
+private:
+
+	C m_data;
+};
+
+/////////////////////////////////////////////////////////////////////
+
+template < typename T, typename C > void Stack < T, C > ::push(T x)
+{
+	m_data.push_back(std::move(x));
+}
+
+template < typename T, typename C > auto Stack < T, C > ::top() const
+{
+	return m_data.back();
+}
+
+template < typename T, typename C > void Stack < T, C > ::pop()
+{
+	m_data.pop_back();
+}
+
+/////////////////////////////////////////////////////////////////////
+
+int main()
+{
+    Stack < int > stack;
+
+	stack.push(1);
+	
+	assert(stack.top() == 1);
+	
+	stack.pop();
+}

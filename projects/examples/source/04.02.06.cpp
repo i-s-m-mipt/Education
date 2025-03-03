@@ -52,22 +52,40 @@ template < typename E > void test_v4(E && entity)
 int main()
 {
 	test_v1(make_entity_v1());
+
 	test_v1(make_entity_v2());
+
 	test_v1(make_entity_v3());
+
 	test_v1(make_entity_v4());
 
+//  -----------------------------------
+
 	test_v2(make_entity_v1());
+
 	test_v2(make_entity_v2());
+
 //	test_v2(make_entity_v3()); // error
+
 	test_v2(make_entity_v4());
 
+//  -----------------------------------
+
 	test_v3(make_entity_v1());
+
 	test_v3(make_entity_v2());
+
 	test_v3(make_entity_v3());
+
 	test_v3(make_entity_v4());
 
+//  -----------------------------------
+
 	test_v4(make_entity_v1());
+
 	test_v4(make_entity_v2());
+
 	test_v4(make_entity_v3());
+
 	test_v4(make_entity_v4());
 }

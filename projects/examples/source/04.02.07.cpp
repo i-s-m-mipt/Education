@@ -5,7 +5,7 @@
 
 using namespace std::literals;
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Entity_v1
 {
@@ -36,7 +36,7 @@ private:
 	std::string m_data;
 };
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Entity_v2
 {
@@ -62,7 +62,7 @@ private:
 	std::string m_data;
 };
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Entity_v3
 {
@@ -95,13 +95,13 @@ private:
 	std::string m_data;
 };
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Entity_v4
 {
 public:
 	
-    template < typename S > Entity_v4(S && string) requires std::is_convertible_v < S, std::string >
+    template < typename S > Entity_v4(S && string) requires std::convertible_to < S, std::string >
 	: 
 		m_data(std::forward < S > (string))
 	{
@@ -123,65 +123,53 @@ private:
 	std::string m_data;
 };
 
-//  ================================================================================================
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	{
-		auto string = "aaaaa"s;
+	auto string = "aaaaa"s;
 
-		Entity_v1 entity_v1_1(string);
+//  ----------------------------------------------
 
-		Entity_v1 entity_v1_2("bbbbb"s);
+	Entity_v1 entity_v1_1(string);
 
-		Entity_v1 entity_v1_3(entity_v1_2);
+	Entity_v1 entity_v1_2("bbbbb"s);
 
-		Entity_v1 entity_v1_4(std::move(entity_v1_3));
-	}
+	Entity_v1 entity_v1_3(entity_v1_2);
 
-//  --------------------------------------------------
+	Entity_v1 entity_v1_4(std::move(entity_v1_3));
 
-	{
-		auto string = "aaaaa"s;
+//  ----------------------------------------------
 
-		Entity_v2 entity_v2_1(string);
+	Entity_v2 entity_v2_1(string);
 
-		Entity_v2 entity_v2_2("bbbbb"s);
+	Entity_v2 entity_v2_2("bbbbb"s);
 
-//		Entity_v2 entity_v2_3(entity_v2_2); // error
+//	Entity_v2 entity_v2_3(entity_v2_2); // error
 
-		Entity_v2 entity_v2_4(std::move(entity_v2_2));
+	Entity_v2 entity_v2_4(std::move(entity_v2_2));
 
-		const Entity_v2 entity_v2_5(string);
+	const Entity_v2 entity_v2_5(string);
 
-    	Entity_v2 entity_v2_6(entity_v2_5);
-	}
+    Entity_v2 entity_v2_6(entity_v2_5);
 
-//  --------------------------------------------------
+//  ----------------------------------------------
 
-	{
-		auto string = "aaaaa"s;
+	Entity_v3 entity_v3_1(string);
 
-		Entity_v3 entity_v3_1(string);
+	Entity_v3 entity_v3_2("bbbbb"s);
 
-		Entity_v3 entity_v3_2("bbbbb"s);
+	Entity_v3 entity_v3_3(entity_v3_2);
 
-		Entity_v3 entity_v3_3(entity_v3_2);
+	Entity_v3 entity_v3_4(std::move(entity_v3_3));
 
-		Entity_v3 entity_v3_4(std::move(entity_v3_3));
-	}
+//  ----------------------------------------------
 
-//  --------------------------------------------------
+	Entity_v4 entity_v4_1(string);
 
-	{
-		auto string = "aaaaa"s;
+	Entity_v4 entity_v4_2("bbbbb"s);
 
-		Entity_v4 entity_v4_1(string);
+	Entity_v4 entity_v4_3(entity_v4_2);
 
-		Entity_v4 entity_v4_2("bbbbb"s);
-
-		Entity_v4 entity_v4_3(entity_v4_2);
-
-		Entity_v4 entity_v4_4(std::move(entity_v4_3));
-	}
+	Entity_v4 entity_v4_4(std::move(entity_v4_3));
 }

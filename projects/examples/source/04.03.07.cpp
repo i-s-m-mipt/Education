@@ -8,7 +8,7 @@ template < int N = 0, int D = 1 > struct Ratio
 	
 	static constexpr auto den = D;
 
-//  --------------------------------------
+//  ---------------------------------
 
 	using type = Ratio < num, den > ;
 };
@@ -25,6 +25,8 @@ template < typename R1, typename R2 > struct Sum
 	
 	using type = Ratio < num, den > ;
 };
+
+//////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename R1, typename R2 > using sum_t = typename Sum < R1, R2 > ::type;
 
@@ -45,21 +47,28 @@ template
 >
 constexpr auto operator+(const Duration < T1, R1 > & lhs, const Duration < T2, R2 > & rhs)
 {
-	using unit_t = Ratio < 1, sum_t < R1, R2 > ::den > ;
+	using ratio_t = Ratio < 1, sum_t < R1, R2 > ::den > ;
 
 	auto data = 
 	(
-		lhs.data * unit_t::den / R1::den * R1::num +
+		lhs.data * ratio_t::den / R1::den * R1::num +
 
-		rhs.data * unit_t::den / R2::den * R2::num
+		rhs.data * ratio_t::den / R2::den * R2::num
 	);
 
-	return Duration < decltype(data), unit_t > (data);
+	return Duration < decltype(data), ratio_t > (data);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	assert((Duration < int, Ratio < 1, 2 > > (1) + Duration < int, Ratio < 1, 3 > > (1)).data == 5);
+	auto duration = 
+	(
+		Duration < int, Ratio < 1, 2 > > (1) +
+
+		Duration < int, Ratio < 1, 3 > > (1)
+	);
+
+	assert(duration.data == 5);
 }
