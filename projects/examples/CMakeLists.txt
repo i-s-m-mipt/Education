@@ -1,235 +1,240 @@
 cmake_minimum_required(VERSION 3.28)
 
-################################################
+#####################################################################################################################
 
 project(examples VERSION 24.02.06 LANGUAGES CXX)
 
-################################################
+#####################################################################################################################
 
 set(CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-#####################################
+#####################################################################################################################
 
 set(Boost_USE_STATIC_LIBS ON)
 
 set(Boost_USE_STATIC_RUNTIME ON)
 
+# support: /usr/share/cmake/modules
+
 #####################################################################################################################
 
 find_package(Boost         1.85 REQUIRED COMPONENTS filesystem locale log python312 system timer unit_test_framework)
-find_package(ICU                REQUIRED COMPONENTS i18n uc)
-find_package(GTest         1.15 REQUIRED COMPONENTS)
+find_package(GTest         1.14 REQUIRED COMPONENTS)
 find_package(benchmark          REQUIRED COMPONENTS)
 find_package(Python        3.10 REQUIRED COMPONENTS Interpreter Development)
+find_package(ICU                REQUIRED COMPONENTS i18n uc)
 find_package(nlohmann_json 3.10 REQUIRED COMPONENTS)
 find_package(PDFHummus          REQUIRED COMPONENTS)
-find_package(TBB                REQUIRED COMPONENTS tbb)
-find_package(SFML               REQUIRED COMPONENTS graphics system window)
+find_package(TBB                REQUIRED COMPONENTS)
 
-###########################################################################
+find_package(SFML               REQUIRED COMPONENTS graphics system window) # TODO
+
+#####################################################################################################################
 
 include_directories(        ${Boost_INCLUDE_DIRS})
-include_directories(       ${Python_INCLUDE_DIRS})
-include_directories(${nlohmann_json_INCLUDE_DIRS})
 include_directories(        ${GTEST_INCLUDE_DIRS})
 include_directories(    ${benchmark_INCLUDE_DIRS})
+include_directories(       ${Python_INCLUDE_DIRS})
+include_directories(${nlohmann_json_INCLUDE_DIRS})
 include_directories(    ${PDFHummus_INCLUDE_DIRS})
 include_directories(          ${TBB_INCLUDE_DIRS})
+include_directories(${libwebsockets_INCLUDE_DIRS})
 include_directories(         ${SFML_INCLUDE_DIRS})
 
-##################################################
+#####################################################################################################################
 
 set(debug
 
-#   01.01.introduction
-    01.02.introduction.function.main
-    01.03.introduction.standard
-#   01.04.project.tool.git
-    02.01.statement.expression.variable.type
-    02.02.statement.expression.operator
-    02.03.statement.selection
-    02.04.statement.iteration.jump
-    02.05.pointer
-    02.06.pointer.array
-    02.07.pointer.array.new.delete
-    02.08.container.vector
-    02.09.reference.lvalue
-    02.10.function
-    02.11.algorithm.binary.search
-    02.12.algorithm.recursive.sequence
-    02.13.algorithm.insertion.merge.sorting
-    03.01.class.struct
-    03.02.class
-    03.03.class.friend
-    03.04.pattern.attorney.client.passkey
-    03.05.class.relationship
-    03.06.class.inheritance
-    03.07.class.inheritance.multiple
-#   03.08.class.inheritance.multiple.diamond
-    03.09.class.polymorphism
-#   03.10.class.polymorphism.vptr.vtbl
-    03.11.class.polymorphism.type.covariant
-    03.12.class.polymorphism.type.identification
-    03.13.class.optimization
-#   03.14.expression.classification
-    03.15.reference.lvalue.rvalue
-    03.16.implementation.container.vector
-    03.17.class.operator.overload
-    03.18.class.operator.overload.compare
-    03.19.class.operator.overload.input.output
-    03.20.class.operator.overload.optimization
-    04.01.template.function
-    04.02.template.function.variadic
-    04.03.template.function.variadic.tree.traversal
-    04.04.template.class
-    04.05.template.class.friend
-    04.06.template.alias.variable
-    04.07.template.metaprogramming
-    04.08.template.metaprogramming.constexpr
-    04.09.template.metaprogramming.constexpr.hybrid
-    04.10.reference.lvalue.rvalue.forwarding
-    04.11.template.type.inference
-    04.12.pattern.sfinae
-    04.13.implementation.template.type.trait
-    04.14.implementation.template.type.concept
-    04.15.implementation.utility.tlist
-    04.16.implementation.utility.tuple
-    04.17.utility.tuple
-    05.01.pattern.builder
-    05.02.pattern.factory
-    05.03.pattern.prototype
-    05.04.pattern.singleton
-    05.05.pattern.adapter
-    05.06.pattern.bridge
-    05.07.pattern.composite
-    05.08.pattern.decorator
-    05.09.pattern.memento
-    05.10.pattern.observer
-    05.11.pattern.state
-    05.12.pattern.strategy
-    05.13.pattern.template.method
-    05.14.template.polymorphism
-    05.15.pattern.mixin.crtp
-    05.16.pattern.mixin.singleton
-    05.17.pattern.mixin.barton.nackman
-    05.18.pattern.mixin.invertion
-    05.19.pattern.mixin.initialization
-    05.20.pattern.mixin.inheritance.variadic
-#   06.01.project.translation
-#   06.02.project.header
-#   06.03.project.header.precompiled
-#   06.04.project.source
-#   06.05.project.source.main
-#   06.06.project.module
-#   06.07.project.module.source
-#   06.08.project.module.submodule
-#   06.09.project.tool.cmake
-#   06.10.project.library.static
-#   06.11.project.library.shared
-    07.01.error.assertion.termination
-    07.02.class.union
-    07.03.utility.variant.optional
-    07.04.error.exception
-    07.05.error.exception.noexcept
-    07.06.error.exception.stack.interface
-    07.08.project.tool.profiler.cpu
-    07.09.project.tool.profiler.memory
-    07.10.project.tool.boost.logging
-    07.11.project.tool.boost.testing
-    08.02.algorithm.binary.gray.code
-    08.03.algorithm.indian.exponentiation
-    08.04.class.enumeration
-    08.05.number.floating
-    08.06.number.complex
-    08.07.number.integral.multiprecision
-    08.08.number.floating.multiprecision
-    08.09.implementation.class.big.int
-#   08.11.embedding.python.script
-#   08.13.algorithm.monte.carlo
-    08.15.time.chrono
-    08.16.time.chrono.calendar
-    08.17.implementation.operator.literal
-    09.01.pointer.smart
-    09.02.pointer.smart.shared.this
-    09.03.implementation.pointer.smart.unique
-    09.04.implementation.pointer.smart.shared
-    09.06.implementation.iterator.forward.list
-    09.07.implementation.iterator.forward.list.facade
-    09.08.pattern.facade
-#   09.09.memory.address.space
-#   09.10.memory.address.translation
-    09.12.memory.operator.new.handler
-    09.14.implementation.utility.optional
-    09.15.memory.allocator.standard
-#   09.16.memory.allocator
-#   09.17.memory.allocator.block
-    09.23.implementation.allocator.arena.adaptor
-#   10.01.container.vector.deque.array.list.memory
-    10.02.container.vector.deque.array.list
-    10.04.pattern.proxy.vector
-    10.05.container.multidimensional
-    10.06.container.multidimensional.multiarray
-    10.08.container.multidimensional.valarray
-    10.09.algorithm.longest.common.subsequence
-    10.10.container.adaptor
-    10.11.container.adaptor.stack
-#   10.12.container.circular.buffer.memory
-    10.13.container.circular.buffer
-#   10.14.container.red.black.tree.memory
-    10.16.implementation.function.hash
-#   10.17.container.hash.table.memory
-    10.18.container.hash.table
-    10.19.implementation.class.functor.hash.equal
-    10.20.container.multiindex.bimap
-    10.21.pattern.flyweight
-    11.01.pointer.function
-    11.02.class.functor
-    11.03.class.functor.lambda.expression
-    11.04.pattern.command
-    11.05.pattern.visitor
-    11.06.pattern.visitor.utility.variant
-    11.07.pattern.visitor.utility.any
-    11.08.implementation.utility.variant
-    11.09.template.metaprogramming.cartesian.product
-    11.10.algorithm.iterator.adaptor.inserter
-    11.11.algorithm.standard
-    11.12.algorithm.standard.range.view
-    11.13.algorithm.graph
-#   11.14.algorithm.graph.example
-    11.15.algorithm.graph.traversal.bfs
-    11.16.algorithm.graph.traversal.dfs
-    11.17.algorithm.graph.search.dijkstra
-    12.01.character.encoding
-#   12.02.character.encoding.unicode.utf
-    12.04.locale.facet
-#   12.06.parser.regex.ecma.script
-    12.07.parser.regex
-#   12.08.parser.grammar.arithmetic
-    12.09.parser.grammar.arithmetic.calculator
-    12.10.parser.spirit.number.integer
-    12.11.parser.spirit.number.complex
-    12.12.parser.spirit.number.romanus
-    12.13.parser.spirit.fusion.class.structure
-    12.14.parser.spirit.grammar.arithmetic.calculator
-#   13.01.stream.class.inheritance
-    13.02.stream.class
-    13.03.stream.class.file
-    13.04.stream.class.string
-    13.05.stream.iterator.buffer.input.output
-    13.06.algorithm.erase.comment
-#   13.07.algorithm.erase.comment.source
-    13.08.stream.output.format
-    13.09.filesystem.path
-    13.10.filesystem.directory
-    13.11.filesystem.directory.iterator
-    13.12.serialization.json
-#   14.01.concurrency.process.thread
-    14.02.concurrency.thread
-    14.03.concurrency.thread.reduce
-    14.04.concurrency.thread.reduce.async
-    14.05.concurrency.thread.reduce.packaged.task
+#   01.01.01
+    01.02.01
+    01.02.02
+#   01.03.01
+    02.01.01
+    02.01.02
+    02.01.03
+    02.01.04
+    02.01.05
+    02.01.06
+    02.01.07
+    02.01.08
+    02.01.09
+    02.01.10
+    02.02.01
+    02.02.02
+    02.02.03
+    02.02.04
+    02.02.05
+    02.02.06
+    02.02.07
+    02.02.08
+    02.02.09
+    02.02.10
+    02.02.11
+    02.02.12
+    02.02.13
+    02.02.14
+    02.02.15
+    02.03.01
+    02.03.02
+    02.03.03
+    02.03.04
+    02.03.05
+    02.03.06
+    02.03.07
+    02.03.08
+    02.03.09
+    02.03.10
+    02.03.11
+    02.03.12
+    02.04.01
+    02.04.02
+    02.04.03
+    02.04.04
+    02.04.05
+    02.04.06
+    02.04.07
+    03.01.01
+    03.01.02
+    03.01.03
+    03.01.04
+    03.01.05
+    03.01.06
+    03.01.07
+    03.02.01
+    03.02.02
+    03.02.03
+    03.02.04
+    03.02.05
+    03.02.06
+    03.02.07
+#   03.02.08
+    03.02.09
+    03.02.10
+    03.02.11
+#   03.02.12
+    03.02.13
+    03.02.14
+    03.02.15
+    03.02.16
+    03.02.17
+#   03.03.01
+    03.03.02
+    03.03.03
+    03.03.04
+    03.03.05
+    03.03.06
+    03.03.07
+    03.04.01
+    03.04.02
+    03.04.03
+    03.04.04
+    03.04.05
+    03.04.06
+    03.04.07
+    04.01.01
+    04.01.02
+    04.01.03
+    04.01.04
+    04.01.05
+    04.01.06
+    04.01.07
+    04.02.01
+    04.02.02
+    04.02.03
+    04.02.04
+    04.02.05
+    04.02.06
+    04.02.07
+    04.03.01
+    04.03.02
+    04.03.03
+    04.03.04
+    04.03.05
+    04.03.06
+    04.03.07
+    04.03.08
+    04.03.09
+    04.03.10
+    04.03.11
+    04.03.12
+    04.03.13
+    04.03.14
+    04.03.15
+    04.03.16
+    04.03.17
+    04.03.18
+    04.03.19
+    04.03.20
+    04.03.21
+    04.03.22
+    04.03.23
+    04.03.24
+    04.03.25
+    04.03.26
+    05.01.01
+    05.01.02
+    05.01.03
+    05.01.04
+    05.01.05
+    05.01.06
+    05.02.01
+    05.02.02
+    05.02.03
+    05.02.04
+    05.02.05
+    05.03.01
+    05.03.02
+    05.03.03
+    05.03.04
+    05.03.05
+    05.04.01
+    05.04.02
+    05.04.03
+    05.04.04
+    05.04.05
+    05.04.06
+    05.04.07
+    05.04.08
+#   06.01.01
+    06.01.02
+    06.01.03
+    06.01.04
+#   06.01.05
+#   06.01.06
+#   06.01.07
+#   06.01.08
+#   06.01.09
+#   06.01.10
+#   06.01.11
+    06.01.12
+#   06.02.01
+#   06.02.02
+#   06.02.03
+#   06.02.04
+#   06.03.01
+#   06.03.02
+#   06.03.03
+#   06.03.04
+    07.01.01
+    07.01.02
+    07.01.03
+    07.01.04
+    07.01.05
+    07.01.06
+    07.01.07
+    07.01.08
+    07.01.09
+    07.02.01
+    07.02.02
+    07.02.03
+#   07.03.01
+    07.03.02
+    07.03.03
+#   07.03.04
+    07.03.05
+#   07.03.06
 )
 
 #################################################
@@ -240,7 +245,7 @@ foreach(entry IN LISTS debug)
 
     target_link_libraries  (${entry} PRIVATE ${Boost_LIBRARIES})
     
-    target_link_libraries  (${entry} PRIVATE tbb)
+    target_link_libraries  (${entry} PRIVATE TBB::tbb)
 
     target_compile_options (${entry} PRIVATE -Wall -Wextra -pedantic -O0)
 
@@ -248,87 +253,85 @@ endforeach()
 
 ###################################################################################
 
-add_executable             (06.12.project.library source/06.12.project.library.cpp)
+add_executable             (06.01.11 source/06.01.10.cpp source/06.01.11.cpp)
 
-target_compile_options     (06.12.project.library PRIVATE -Wall -Wextra -pedantic -O0)
+target_compile_options     (06.01.11 PRIVATE -Wall -Wextra -pedantic -O0)
 
-target_include_directories (06.12.project.library PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
+###################################################################################
 
-target_link_libraries      (06.12.project.library PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/library_v1/liblibrary_v1.a)
+add_executable             (06.03.01 source/06.03.01.cpp)
 
-target_link_libraries      (06.12.project.library PRIVATE ${Boost_LIBRARIES})
+target_compile_options     (06.03.01 PRIVATE -Wall -Wextra -pedantic -O0)
+
+target_include_directories (06.03.01 PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
+
+target_link_libraries      (06.03.01 PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/library_v1/libstatic.a)
+
+target_link_libraries      (06.03.01 PRIVATE ${Boost_LIBRARIES})
 
 ###############################################################################################
 
-add_executable             (07.07.project.tool.debugger source/07.07.project.tool.debugger.cpp)
+add_executable             (07.03.01 source/07.03.01.cpp)
 
-target_compile_options     (07.07.project.tool.debugger PRIVATE -Wall -Wextra -pedantic -O0 -ggdb)
+target_compile_options     (07.03.01 PRIVATE -Wall -Wextra -pedantic -O0 -ggdb)
 
 ###########################################################################################################
 
-add_executable             (07.12.project.tool.google.testing source/07.12.project.tool.google.testing.cpp)
+#  add_executable             (07.03.04 source/07.03.04.cpp)
 
-target_compile_options     (07.12.project.tool.google.testing PRIVATE -Wall -Wextra -pedantic -O0)
+#  target_compile_options     (07.03.04 PRIVATE -Wall -Wextra -pedantic -O0)
 
-target_link_libraries      (07.12.project.tool.google.testing PRIVATE ${GTEST_BOTH_LIBRARIES})
+#  target_link_libraries      (07.03.04 PRIVATE )
 
-###################################################################################################
+#######################################################################################################
 
-add_executable             (08.10.embedding.python.caller source/08.10.embedding.python.caller.cpp)
+add_executable             (07.03.06 source/07.03.06.cpp)
 
-target_compile_options     (08.10.embedding.python.caller PRIVATE -Wall -Wextra -pedantic -O0)
+target_compile_options     (07.03.06 PRIVATE -Wall -Wextra -pedantic -O0)
 
-target_link_libraries      (08.10.embedding.python.caller PRIVATE  ${Boost_LIBRARIES})
-
-target_link_libraries      (08.10.embedding.python.caller PRIVATE ${Python_LIBRARIES})
+target_link_libraries      (07.03.06 PRIVATE GTest::gtest)
 
 ###################################################################################################
 
-add_executable             (09.05.iterator.classification source/09.05.iterator.classification.cpp)
+#add_executable             (08.10.embedding.python.caller source/08.10.embedding.python.caller.cpp)
 
-target_compile_options     (09.05.iterator.classification PRIVATE -Wall -Wextra -pedantic -O0) 
+#target_compile_options     (08.10.embedding.python.caller PRIVATE -Wall -Wextra -pedantic -O0)
 
-target_compile_definitions (09.05.iterator.classification PRIVATE _GLIBCXX_DEBUG)
+#target_link_libraries      (08.10.embedding.python.caller PRIVATE ${Boost_LIBRARIES})
+
+#target_link_libraries      (08.10.embedding.python.caller PRIVATE Python::Python)
+
+###################################################################################################
+
+#add_executable             (09.05.iterator.classification source/09.05.iterator.classification.cpp)
+
+#target_compile_options     (09.05.iterator.classification PRIVATE -Wall -Wextra -pedantic -O0) 
+
+#target_compile_definitions (09.05.iterator.classification PRIVATE _GLIBCXX_DEBUG)
 
 #########################################################################################################
 
-add_executable             (12.05.locale.facet.utf.converter source/12.05.locale.facet.utf.converter.cpp)
+#add_executable             (12.05.locale.facet.utf.converter source/12.05.locale.facet.utf.converter.cpp)
 
-target_compile_options     (12.05.locale.facet.utf.converter PRIVATE -Wall -Wextra -pedantic -O0)
+#target_compile_options     (12.05.locale.facet.utf.converter PRIVATE -Wall -Wextra -pedantic -O0)
 
-target_link_libraries      (12.05.locale.facet.utf.converter PRIVATE ${Boost_LIBRARIES})
+#target_link_libraries      (12.05.locale.facet.utf.converter PRIVATE ${Boost_LIBRARIES})
 
-target_link_libraries      (12.05.locale.facet.utf.converter PRIVATE   ${ICU_LIBRARIES})
+#target_link_libraries      (12.05.locale.facet.utf.converter PRIVATE ICU::i18n ICU::uc)
 
 ########################################################################################
 
-add_executable             (13.13.serialization.pdf source/13.13.serialization.pdf.cpp)
+#add_executable             (13.13.serialization.pdf source/13.13.serialization.pdf.cpp)
 
-target_compile_options     (13.13.serialization.pdf PRIVATE -Wall -Wextra -pedantic -O0)
+#target_compile_options     (13.13.serialization.pdf PRIVATE -Wall -Wextra -pedantic -O0)
 
-target_link_libraries      (13.13.serialization.pdf PRIVATE PDFHummus::PDFWriter)
+#target_link_libraries      (13.13.serialization.pdf PRIVATE PDFHummus::PDFWriter)
 
 #################################################################################
 
 set(release
 
-    07.13.project.tool.google.benchmark
-    08.01.number.integral
-    08.12.number.random.generation
-    08.14.algorithm.monte.carlo.simplex
-    09.11.memory.alignment
-    09.13.memory.operator.new.placement
-    09.18.implementation.allocator.arena
-    09.19.implementation.allocator.stack
-    09.20.implementation.allocator.chain
-    09.21.implementation.allocator.block
-    09.22.implementation.allocator.fixed
-    09.24.memory.allocator.polymorphism
-    10.03.container.vector.deque.array.list.sorting
-    10.07.container.multidimensional.ublas
-    10.15.container.red.black.tree
-    12.03.character.string.view
-    14.06.concurrency.algorithm.standard
+    07.03.07
 )
 
 ########################################
@@ -343,30 +346,8 @@ foreach(entry IN LISTS release)
 
     target_link_libraries  (${entry} PRIVATE benchmark::benchmark)
 
-    target_link_libraries  (${entry} PRIVATE tbb)
+    target_link_libraries  (${entry} PRIVATE TBB::tbb)
 
     target_link_libraries  (${entry} PRIVATE /usr/lib/gcc/x86_64-linux-gnu/13/libatomic.a)
 
 endforeach()
-
-###########################################################################################################
-
-add_executable         (17.01.multimedia.modeling.physics source/17.01.multimedia.modeling.physics/main.cpp
-                                                          source/17.01.multimedia.modeling.physics/system.cpp
-                                                          source/17.01.multimedia.modeling.physics/particle.cpp
-                                                          source/17.01.multimedia.modeling.physics/link.cpp 
-                                                          source/17.01.multimedia.modeling.physics/pressure.cpp)
-
-target_compile_options (17.01.multimedia.modeling.physics PRIVATE -Wall -Wextra -pedantic -O3)
-
-target_link_libraries  (17.01.multimedia.modeling.physics PRIVATE sfml-graphics sfml-system sfml-window)
-
-###########################################################################################################
-
-add_executable         (17.02.multimedia.modeling.fractal source/17.02.multimedia.modeling.fractal/main.cpp
-                                                          source/17.02.multimedia.modeling.fractal/calculator.cpp
-                                                          source/17.02.multimedia.modeling.fractal/visualizer.cpp)
-
-target_compile_options (17.02.multimedia.modeling.fractal PRIVATE -Wall -Wextra -pedantic -O3)
-
-target_link_libraries  (17.02.multimedia.modeling.fractal PRIVATE sfml-graphics sfml-system sfml-window)
