@@ -6,7 +6,7 @@
 #include <utility>
 #include <vector>
 
-//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
 template < typename T1, typename T2 > class Entity
 {
@@ -18,9 +18,9 @@ public:
 	}
 };
 
-//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-template < typename T > class Entity < T, T >
+template < typename T > class Entity < T, int >
 {
 public:
 
@@ -30,9 +30,9 @@ public:
 	}
 };
 
-//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-template < typename T > class Entity < T, int >
+template < typename T > class Entity < T, T >
 {
 public:
 
@@ -42,9 +42,9 @@ public:
 	}
 };
 
-//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-template < typename T1, typename T2 > class Entity < T1 * , T2 * >
+template <> class Entity < double, double >
 {
 public:
 
@@ -54,41 +54,15 @@ public:
 	}
 };
 
-//////////////////////////////////////////////////////////////////
-
-template <> class Entity < int, std::string >
-{
-public:
-
-	void test() const 
-	{ 
-		std::cout << "Entity::test (5)\n";
-	}
-};
-
-//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
 int main()
 {
-	using type_1 = int;
+	Entity < int   , double > ().test();
 
-	using type_2 = std::string;
+	Entity < double, int    > ().test();
 
-	using type_3 = double;
+//	Entity < int   , int    > ().test(); // error
 
-//  --------------------------------------------------
-
-	Entity < type_1   , type_3   > ().test();
-
-	Entity < type_2   , type_2   > ().test();
-
-	Entity < type_2   , type_1   > ().test();
-
-	Entity < type_1 * , type_2 * > ().test();
-
-	Entity < type_1   , type_2   > ().test();
-
-//	Entity < type_1   , type_1   > ().test(); // error
-
-//	Entity < type_1 * , type_1 * > ().test(); // error
+	Entity < double, double > ().test();
 }

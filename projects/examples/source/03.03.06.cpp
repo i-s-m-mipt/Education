@@ -162,7 +162,7 @@ public:
 
 private:
 
-	int * m_data = nullptr; 
+	int * m_data = nullptr;
 	
 	std::size_t m_size = 0;
 };

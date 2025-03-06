@@ -15,7 +15,7 @@ public:
     { 
 //	    m_data = 1; // error
 
-        return m_data; 
+        return m_data;
     }
 
 //  --------------------------------------

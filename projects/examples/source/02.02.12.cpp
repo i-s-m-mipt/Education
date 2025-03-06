@@ -1,6 +1,6 @@
 #include <iostream>
 
-//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -8,7 +8,7 @@ int main()
 	{
 		std::cout << "main : iteration (1) : i = " << i << ' ';
 
-		std::cout << "enter \'b\' to break : "; char x = 0; std::cin >> x;
+		std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x;
 			
 		if (x == 'b') 
 		{
@@ -16,13 +16,13 @@ int main()
 		}
 	}
 
-//  ----------------------------------------------------------------------
+//  -------------------------------------------------------------------------
 
     for (;;)
 	{
 		std::cout << "main : iteration (2) : ";
 
-		std::cout << "enter \'b\' to break : "; char x = 0; std::cin >> x;
+		std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x;
 			
 		if (x == 'b') 
 		{

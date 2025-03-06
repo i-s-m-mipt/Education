@@ -30,7 +30,7 @@ constinit auto g_x = 1;
 
 int main()
 {
-    constexpr auto x = test_v1(); 
+    constexpr auto x = test_v1();
     
               auto y = test_v1();
 

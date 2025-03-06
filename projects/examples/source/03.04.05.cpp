@@ -15,7 +15,7 @@ public:
     {
         if (lhs.m_data_1 == 0 || rhs.m_data_1 == 0)           
         { 
-            return std::partial_ordering::unordered; 
+            return std::partial_ordering::unordered;
         }
 
         if (lhs.m_data_1 < rhs.m_data_1) { return std::partial_ordering::less;    }

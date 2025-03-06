@@ -38,7 +38,9 @@ public:
 
 private:
 
-    int m_data_1 = 0; const int m_data_2 = 0;
+          int m_data_1 = 0;
+          
+    const int m_data_2 = 0;
 };
 
 ///////////////////////////////////////////////////////////////

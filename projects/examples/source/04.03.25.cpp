@@ -45,7 +45,7 @@ public:
 
 private:
 
-	T m_head; 
+	T m_head;
 	
 	Tuple < Ts ... > m_tail;
 };

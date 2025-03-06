@@ -8,7 +8,7 @@ class Memento
 {
 public:
 
-    Memento() : m_states(1, State()) {}
+    Memento(int x = 0) : m_states(1, State(x)) {}
 
 //  --------------------------------------------------------------------
 
@@ -30,12 +30,14 @@ public:
 
 //  --------------------------------------------------------------------
 
-    void load_v1(std::size_t index)
+    auto & load_v1(std::size_t index)
     {
         m_states.front() = m_states.at(index);
+
+        return *this;
     }
 
-    void load_v2(std::size_t index)
+    auto & load_v2(std::size_t index)
     {
         State state;
 
@@ -45,6 +47,8 @@ public:
         }
 
         m_states.front() = state;
+
+        return *this;
     }
 
 private:
@@ -78,15 +82,16 @@ int main()
 {
     Memento memento;
 
-//  -----------------------------------------------
-    
-    memento.set(1);
+//  --------------------------------------
 
-    memento.set(2);
+    for (auto i = 0; i < 2; ++i)
+    {
+        memento.set(i + 1);
+    }
 
-//  -----------------------------------------------
+//  --------------------------------------
     
-    memento.load_v1(1); assert(memento.get() == 1);
+    assert(memento.load_v1(1).get() == 1);
     
-    memento.load_v2(2); assert(memento.get() == 2);
+    assert(memento.load_v2(2).get() == 2);
 }

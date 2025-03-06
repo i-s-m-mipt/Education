@@ -10,7 +10,7 @@ public:
 
 private: 
 
-	void * m_data = nullptr; 
+	void * m_data = nullptr;
 };
 
 ////////////////////////////////////////////////////////
@@ -19,7 +19,7 @@ class Client : public Entity
 { 
 private: 
 	
-	void * m_data = nullptr; 
+	void * m_data = nullptr;
 };
 
 ////////////////////////////////////////////////////////

@@ -6,26 +6,26 @@
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-class Entity 
+class Vector 
 {
 public:
 
-    Entity(std::initializer_list < int > list) : m_data(list) {}
+    Vector(std::initializer_list < int > list) : m_data(list) {}
 
 //  --------------------------------------------------------------------------------
 
     const auto & operator[](std::size_t index) const 
     {
-        std::cout << "Entity::operator[] (1)\n";
+        std::cout << "Vector::operator[] (1)\n";
 
         return m_data[index];
     }
 
     auto & operator[](std::size_t index)
     {
-        std::cout << "Entity::operator[] (2)\n";
+        std::cout << "Vector::operator[] (2)\n";
 
-        return const_cast < int & > (static_cast < const Entity & > (*this)[index]);
+        return const_cast < int & > (static_cast < const Vector & > (*this)[index]);
     }
 
 private:
@@ -47,7 +47,7 @@ int main()
 
 //  ----------------------------------
 
-    Entity entity = { 1, 2, 3, 4, 5 };
+    Vector vector = { 1, 2, 3, 4, 5 };
         
-    assert(entity[0] == 1);
+    assert(vector[0] == 1);
 }

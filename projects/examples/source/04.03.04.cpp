@@ -19,13 +19,13 @@ template < int X > struct Is_Prime
 
 /////////////////////////////////////////////////////////////////////////////
 
-template <> struct Is_Prime < 0 > {	static constexpr bool value = 0; };
+template <> struct Is_Prime < 0 > {	static constexpr auto value = false; };
 
-template <> struct Is_Prime < 1 > { static constexpr bool value = 0; };
+template <> struct Is_Prime < 1 > { static constexpr auto value = false; };
 
-template <> struct Is_Prime < 2 > { static constexpr bool value = 1; };
+template <> struct Is_Prime < 2 > { static constexpr auto value = true;  };
 
-template <> struct Is_Prime < 3 > { static constexpr bool value = 1; };
+template <> struct Is_Prime < 3 > { static constexpr auto value = true;  };
 
 /////////////////////////////////////////////////////////////////////////////
 

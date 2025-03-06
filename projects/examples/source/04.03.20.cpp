@@ -4,7 +4,7 @@
 
 template < bool C, typename T > struct enable_if {};
 
-template <         typename T > struct enable_if < 1, T > 
+template <         typename T > struct enable_if < true, T > 
 { 
 	using type = T;
 };

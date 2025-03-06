@@ -1,4 +1,5 @@
 #include <cassert>
+#include <type_traits>
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -7,10 +8,6 @@ template < int N = 0, int D = 1 > struct Ratio
 	static constexpr auto num = N;
 	
 	static constexpr auto den = D;
-
-//  ---------------------------------
-
-	using type = Ratio < num, den > ;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +30,7 @@ template < typename R1, typename R2 > using sum_t = typename Sum < R1, R2 > ::ty
 //////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T, typename R = Ratio < 1 > > struct Duration 
-{ 
+{
 	T data = T();
 };
 
@@ -49,12 +46,16 @@ constexpr auto operator+(const Duration < T1, R1 > & lhs, const Duration < T2, R
 {
 	using ratio_t = Ratio < 1, sum_t < R1, R2 > ::den > ;
 
+//  -----------------------------------------------------
+
 	auto data = 
 	(
 		lhs.data * ratio_t::den / R1::den * R1::num +
 
 		rhs.data * ratio_t::den / R2::den * R2::num
 	);
+
+//  -----------------------------------------------------
 
 	return Duration < decltype(data), ratio_t > (data);
 }
@@ -63,12 +64,15 @@ constexpr auto operator+(const Duration < T1, R1 > & lhs, const Duration < T2, R
 
 int main()
 {
-	auto duration = 
-	(
-		Duration < int, Ratio < 1, 2 > > (1) +
+	Duration < int, Ratio < 1, 2 > > duration_1(1);
 
-		Duration < int, Ratio < 1, 3 > > (1)
-	);
+	Duration < int, Ratio < 1, 3 > > duration_2(1);
 
-	assert(duration.data == 5);
+//  ----------------------------------------------------------------------
+
+	Duration < int, Ratio < 1, 6 > > duration_3 = duration_1 + duration_2;
+
+//  ----------------------------------------------------------------------
+
+	assert(duration_3.data == 5);
 }

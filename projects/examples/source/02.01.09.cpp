@@ -1,6 +1,8 @@
 int main()
 {
-    [[maybe_unused]] double x = 1.0;
+    [[maybe_unused]] double x = 1;
+
+//  -------------------------------------------------------------------
 
 //	[[maybe_unused]] int y1 = x; // bad
 

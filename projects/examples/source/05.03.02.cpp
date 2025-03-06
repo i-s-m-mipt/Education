@@ -60,7 +60,7 @@ public:
 
 private:
 
-    int m_data = 0; 
+    int m_data = 0;
     
     std::vector < Observer * > m_observers;
 };
@@ -103,7 +103,8 @@ int main()
 
 //  --------------------------------
     
-    entity.set(1);
-
-    entity.set(2);
+    for (auto i = 0; i < 2; ++i)
+    {
+        entity.set(i + 1);
+    }
 }

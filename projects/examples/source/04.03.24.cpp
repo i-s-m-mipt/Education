@@ -83,12 +83,12 @@ template < typename D > using back = typename Back < D > ::type;
 
 template < typename T, typename D, bool C = empty_v < D > > struct Push_Back {};
 
-template < typename T, typename D > struct Push_Back < T, D, 0 >
+template < typename T, typename D > struct Push_Back < T, D, false >
 {
     using type = push_front < front < D > , typename Push_Back < T, pop_front < D > > ::type > ;
 };
 
-template < typename T, typename D > struct Push_Back < T, D, 1 >
+template < typename T, typename D > struct Push_Back < T, D, true >
 {
     using type = push_front < T, D > ;
 };
@@ -129,9 +129,7 @@ template < typename D, std::size_t I > using nth = typename Nth < D, I > ::type;
 
 template < typename D, bool C = empty_v < D > > class Max_Type {};
 
-template < typename D > class Max_Type < D, 1 > { public: using type = std::byte; };
-
-template < typename D > class Max_Type < D, 0 >
+template < typename D > class Max_Type < D, false >
 {
 private:
 
@@ -142,6 +140,13 @@ private:
 public:
 
     using type = std::conditional_t < sizeof(contender) >= sizeof(best), contender, best > ;
+};
+
+template < typename D > class Max_Type < D, true > 
+{ 
+public: 
+    
+    using type = std::byte;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

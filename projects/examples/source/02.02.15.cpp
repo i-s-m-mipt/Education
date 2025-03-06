@@ -4,7 +4,7 @@
 
 int main()
 {
-    char x = 0;
+    auto x = '\0';
 
 	do
 	{

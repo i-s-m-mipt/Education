@@ -69,9 +69,9 @@ private:
 
 int main()
 {
-    std::cout << "main : enter Client : "; 
+    std::cout << "main : enter Client : ";
     
-    Entity * entity = new Client; 
+    Entity * entity = new Client;
     
     std::cin >> *entity;
 

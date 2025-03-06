@@ -6,7 +6,7 @@
 
 int main()
 {
-    int x = 1; signed int y = 2; unsigned int z = 3;
+    int x = 1; signed int y = 2; unsigned int z = 3u;
 
 //  -----------------------------------------------------------------------
 

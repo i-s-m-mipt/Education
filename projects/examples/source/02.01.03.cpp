@@ -5,7 +5,7 @@
 
 int main()
 {
-	short x = 1; int y = 2; long z = 3;
+	short x = 1; int y = 2; long z = 3l;
 
 //  --------------------------------------------------------------
 
@@ -19,5 +19,5 @@ int main()
 
 	assert(std::numeric_limits < int > ::max() == +2'147'483'647);
 		
-	assert(std::numeric_limits < int > ::min() == -2'147'483'648);	
+	assert(std::numeric_limits < int > ::min() == -2'147'483'648);
 }

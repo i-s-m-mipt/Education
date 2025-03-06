@@ -5,7 +5,7 @@
 
 template < typename T > struct Node 
 { 
-	T data = T(); 
+	T data = T();
 	
 	Node * left = nullptr, * right = nullptr;
 };

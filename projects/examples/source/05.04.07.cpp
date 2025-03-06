@@ -42,9 +42,11 @@ public:
         B::set(data);
     }
 
-    void undo() 
+    auto & undo() 
     { 
         B::set(m_data);
+
+        return *this;
     }
     
 private:
@@ -69,9 +71,11 @@ public:
         B::set(data);
     }
 
-    void redo() 
+    auto & redo() 
     { 
         B::set(m_data);
+
+        return *this;
     }
     
 private:
@@ -85,15 +89,16 @@ int main()
 {
     Redoable < Undoable < Entity > > entity;
 
-//  -----------------------------------------
+//  ----------------------------------------
 
-    entity.set(1);
-    
-    entity.set(2);
+    for (auto i = 0; i < 2; ++i)
+    {
+        entity.set(i + 1);
+    }
 
-//  -----------------------------------------
+//  ----------------------------------------
 
-    entity.undo(); assert(entity.get() == 1);
+    assert(entity.undo().get() == 1);
 
-    entity.redo(); assert(entity.get() == 2);
+    assert(entity.redo().get() == 2);
 }

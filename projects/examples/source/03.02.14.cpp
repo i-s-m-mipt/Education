@@ -1,4 +1,5 @@
 #include <cassert>
+#include <tuple>
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -37,5 +38,5 @@ int main()
 
 	[[maybe_unused]] auto x = 1.0;
 
-//	[[maybe_unused]] auto y = dynamic_cast < int > (x); // error
+//	std::ignore = dynamic_cast < int > (x); // error
 }

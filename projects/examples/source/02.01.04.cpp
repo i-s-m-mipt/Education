@@ -5,7 +5,7 @@
 
 int main()
 {
-    float x = 1.0; double y = 2.0; long double z = 3.0;
+    float x = 1.0f; double y = 2.0; long double z = 3.0l;
 
 //  --------------------------------------------------------
 

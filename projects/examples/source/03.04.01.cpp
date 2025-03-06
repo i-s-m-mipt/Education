@@ -71,34 +71,34 @@ public:
 
 //  -------------------------------------------------------------------------------------------
 
-	const auto   operator++(int) { auto copy(*this); *this += 1; return  copy; } 
+	const auto   operator++(int) { auto copy = *this; *this += 1; return  copy; } 
 
-	      auto & operator++(   ) {                   *this += 1; return *this; }
+	      auto & operator++(   ) {                    *this += 1; return *this; }
 
-	const auto   operator--(int) { auto copy(*this); *this -= 1; return  copy; } 
+	const auto   operator--(int) { auto copy = *this; *this -= 1; return  copy; } 
 
-	      auto & operator--(   ) {                   *this -= 1; return *this; }
+	      auto & operator--(   ) {                    *this -= 1; return *this; }
 
 //  -------------------------------------------------------------------------------------------
 
 	friend auto operator+ (const Rational & lhs, const Rational & rhs) 
 	{ 
-		return Rational(lhs) += rhs; 
+		return Rational(lhs) += rhs;
 	}
 
 	friend auto operator- (const Rational & lhs, const Rational & rhs) 
 	{ 
-		return Rational(lhs) -= rhs; 
+		return Rational(lhs) -= rhs;
 	}
 
 	friend auto operator* (const Rational & lhs, const Rational & rhs) 
 	{ 
-		return Rational(lhs) *= rhs; 
+		return Rational(lhs) *= rhs;
 	}
 
 	friend auto operator/ (const Rational & lhs, const Rational & rhs) 
 	{ 
-		return Rational(lhs) /= rhs; 
+		return Rational(lhs) /= rhs;
 	}
 
 //  -------------------------------------------------------------------------------------------
@@ -123,7 +123,11 @@ public:
 
 	friend auto & operator>>(std::istream & stream, Rational & rational)
 	{
-		auto num = 0; char x = 0; auto den = 0; stream >> num >> x >> den;
+		auto num = 0, den = 0;
+		
+		auto x = '\0';
+		
+		stream >> num >> x >> den;
 
 		if (x != '/') 
 		{
@@ -167,7 +171,9 @@ auto equal(double x, double y, double epsilon = 1e-6)
 
 int main()
 {
-	Rational x = 1, y(2, 1);
+	Rational x = 1;
+	
+	Rational y(2, 1);
 
 //  -------------------------------------------------------
 
@@ -175,7 +181,7 @@ int main()
 
 //  -------------------------------------------------------
 
-	assert(equal(static_cast < double > (x), 1.0));
+	assert(equal(static_cast < double > (x), 1));
 
 //  -------------------------------------------------------
 
@@ -184,15 +190,21 @@ int main()
 //  -------------------------------------------------------
 
 	assert((x += y) == Rational(+3, 1));
+
 	assert((x -= y) == Rational(+1, 1));
+
 	assert((x *= y) == Rational(+2, 1));
+
 	assert((x /= y) == Rational(+1, 1));
 
 //  -------------------------------------------------------
 
 	assert((x ++  ) == Rational(+1, 1));
+
 	assert((  ++ y) == Rational(+3, 1));
+
 	assert((x --  ) == Rational(+2, 1));
+
 	assert((  -- y) == Rational(+2, 1));
 
 //  -------------------------------------------------------
@@ -206,24 +218,35 @@ int main()
 //  -------------------------------------------------------
 
 	assert((x +  y) == Rational(+3, 1));
+
 	assert((x -  y) == Rational(-1, 1));
+
 	assert((x *  y) == Rational(+2, 1));
+
 	assert((x /  y) == Rational(+1, 2));
 
 //  -------------------------------------------------------
 
 	assert((x += 1) == Rational(+2, 1));
+
 	assert((x +  1) == Rational(+3, 1));
+
 	assert((1 +  y) == Rational(+3, 1));
+
 	assert((1 +  1) == Rational(+2, 1));
 
 //  -------------------------------------------------------
 
 	assert((x <  y) == 0);
+	
 	assert((x >  y) == 0);
+
 	assert((x <= y) == 1);
+
 	assert((x >= y) == 1);
+
 	assert((x == y) == 1);
+
 	assert((x != y) == 0);
 
 //  -------------------------------------------------------

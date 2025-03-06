@@ -2,15 +2,15 @@
 #include <iostream>
 #include <numeric>
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > class Ratio
+template < typename T > class Rational
 {
 public:
 
-	Ratio(T num = T(0), T den = T(1)) : m_num(num), m_den(den)
+	Rational(T num = T(0), T den = T(1)) : m_num(num), m_den(den)
 	{
-		if (m_den == T(0)) { std::cerr << "Ratio::Ratio : invalid denominator\n"; }
+		if (m_den == T(0)) { std::cerr << "Rational::Rational : invalid denominator\n"; }
 
 		if (m_den <  T(0))
 		{
@@ -22,16 +22,16 @@ public:
 		reduce();
 	}
 
-//  -------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------
 
 	explicit operator double() const 
 	{ 
 		return 1.0 * m_num / m_den;
 	}
 
-//  -------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------
 
-	auto & operator+=(const Ratio & other)
+	auto & operator+=(const Rational & other)
 	{
 		auto lcm = std::lcm(m_den, other.m_den);
 
@@ -44,26 +44,26 @@ public:
 		return *this;
 	}
 
-	auto & operator-=(const Ratio & other) 
+	auto & operator-=(const Rational & other) 
 	{ 
 		return *this += other.m_num * -1;
 	}
 
-//  -------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------
 
-	friend auto operator+ (const Ratio & lhs, const Ratio & rhs) 
+	friend auto operator+ (const Rational & lhs, const Rational & rhs) 
 	{ 
-		return Ratio(lhs) += rhs;
+		return Rational(lhs) += rhs;
 	}
 
-//  -------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------
 
-	friend auto operator< (const Ratio & lhs, const Ratio & rhs)
+	friend auto operator< (const Rational & lhs, const Rational & rhs)
 	{
 		return static_cast < double > (lhs) < static_cast < double > (rhs);
 	}
 
-	friend auto operator==(const Ratio & lhs, const Ratio & rhs)
+	friend auto operator==(const Rational & lhs, const Rational & rhs)
 	{
 		return !(lhs < rhs) && !(rhs < lhs);
 	}
@@ -79,31 +79,31 @@ private:
 		m_den /= gcd;
 	}
 
-//  -------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------
 
 	T m_num = T(0), m_den = T(1);
 };
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > auto operator-(const Ratio < T > & lhs, const Ratio < T > & rhs)
+template < typename T > auto operator-(const Rational < T > & lhs, const Rational < T > & rhs)
 { 
-	return Ratio < T > (lhs) -= rhs;
+	return Rational < T > (lhs) -= rhs;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Ratio < int > x = 1;
+	Rational < int > x = 1;
 
-//  ---------------------------------------------------------
+//  ------------------------------------------------------------
 
-	assert(x + 1 == Ratio < int > (2, 1));
+	assert(x + 1 == Rational < int > (2, 1));
 
-//	assert(x - 1 == Ratio < int > (0, 1)); // error
+//	assert(x - 1 == Rational < int > (0, 1)); // error
 
-//  ---------------------------------------------------------
+//  ------------------------------------------------------------
 
-	assert(operator- < int > (x, 1) == Ratio < int > (0, 1));
+	assert(operator- < int > (x, 1) == Rational < int > (0, 1));
 }
