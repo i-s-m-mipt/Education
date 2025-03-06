@@ -18,12 +18,12 @@ int main()
 {
 	std::cout << "main : enter int : "; auto x = 0; std::cin >> x;
 
+	std::cout << "main : selection : ";
+
 //  --------------------------------------------------------------
 
 	if (x > 0 && x < static_cast < int > (State::size)) 
 	{
-		std::cout << "main : selection : ";
-
 		switch (State(x))
 		{
 			case State::slow: { std::cout << "(1)\n"; break; }

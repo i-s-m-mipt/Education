@@ -38,12 +38,4 @@ int main()
 	assert((y || x).value == 1 && (y || y).value == 1 && (y || z).value == 1);
 
 	assert((z || x).value == 2 && (z || y).value == 1 && (z || z).value == 2);
-
-//  --------------------------------------------------------------------------
-
-	std::cout << "main : x = " << std::boolalpha << x << '\n';
-
-	std::cout << "main : y = " << std::boolalpha << y << '\n';
-
-	std::cout << "main : z = " << std::boolalpha << z << '\n';
 }
