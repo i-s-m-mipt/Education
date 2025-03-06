@@ -1,16 +1,16 @@
-import demo;
+import library;
 
-import demo.submodule;
+import library.submodule;
 
-/////////////////////////////
+////////////////////////////////
 
 int main()
 {
-    demo::test_v1();
+    library::test_v1();
 
-	demo::test_v2();
+	library::test_v2();
 
-//	demo::test_v3(); // error
+//	library::test_v3(); // error
 
-	demo::test_v4();
+	library::test_v4();
 }

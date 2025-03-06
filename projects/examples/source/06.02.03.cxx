@@ -1,15 +1,15 @@
-export module demo.submodule;
+export module library.submodule;
 
-///////////////////////////////////////
+//////////////////////////////////////////
 
 import <iostream>;
 
-///////////////////////////////////////
+//////////////////////////////////////////
 
-export namespace demo
+export namespace library
 {
 	void test_v4() 
 	{ 
-		std::cout << "demo::test_v4\n";
+		std::cout << "library::test_v4\n";
 	}
 }

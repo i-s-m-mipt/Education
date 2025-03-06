@@ -1,79 +1,77 @@
 #include <iostream>
 
-/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
-namespace education
+namespace library
 {
-	namespace examples
+	namespace detail
 	{
 		struct Entity {};
 	}
 }
 
-/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
-namespace education::examples
+namespace library::detail
 {
 	void test(Entity)
 	{
-		std::cout << "education::examples::test\n";
+		std::cout << "library::detail::test\n";
 	}
 }
 
-/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
-namespace education
+namespace library
 {
-	inline namespace library_v1
+	inline namespace v1
 	{
 		void test()
 		{
-			std::cout << "education::library_v1::test\n";
+			std::cout << "library::v1::test\n";
 		}
 	}
 
-	namespace library_v2
+	namespace v2
 	{
 		void test()
 		{
-			std::cout << "education::library_v2::test\n";
+			std::cout << "library::v2::test\n";
 		}
 	}
 }
 
-/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 int main()
 {
-    ::education::examples::test(::education::examples::Entity());
+    ::library::detail::test(::library::detail::Entity());
 
-//  -------------------------------------------------------------
+//  -----------------------------------------------------
 
-    namespace ee = education::examples;
+    namespace alias = library::detail;
 
-//  -------------------------------------------------------------
+//  -----------------------------------------------------
 
-    ee::test(ee::Entity());
+	alias::test(alias::Entity());
 
-        test(ee::Entity());
+           test(alias::Entity());
 
-//  -------------------------------------------------------------
+//  -----------------------------------------------------
 
-    education::library_v1::test();
+    library::v1::test();
 
-    education::library_v2::test();
+    library::v2::test();
 
-//  -------------------------------------------------------------
+	library::    test();
 
-    education::test();
-
-//  -------------------------------------------------------------
+//  -----------------------------------------------------
 
 //  using namespace std; // bad
 
 	using namespace std::literals;
 
-//  -------------------------------------------------------------
+//  -----------------------------------------------------
 
 	auto string_1 = "aaaaa"s;
 

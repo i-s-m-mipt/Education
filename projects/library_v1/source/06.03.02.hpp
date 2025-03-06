@@ -1,12 +1,12 @@
 #pragma once
 
-////////////////////
+///////////////////
 
 #include <iostream>
 
-////////////////////
+///////////////////
 
-namespace library_v1
+namespace library
 {
 	void test();
 }
