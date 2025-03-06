@@ -98,7 +98,7 @@ private:
 
 	static auto make_sink() -> boost::shared_ptr < sink_t >
 	{
-		auto rotation = boost::log::sinks::file::rotation_at_time_interval
+		boost::log::sinks::file::rotation_at_time_interval rotation
 		(
 			boost::posix_time::hours(24)
 		);
@@ -112,7 +112,7 @@ private:
 			boost::log::keywords::rotation_size = 8 * 1'024 * 1'024
 		);
 
-		sink->locked_backend()->auto_flush(1);
+		sink->locked_backend()->auto_flush(true);
 
 		sink->locked_backend()->set_file_collector
 		(
@@ -121,7 +121,7 @@ private:
 
 		sink->set_formatter(&format);
 
-		sink->set_filter([](boost::log::attribute_value_set){ return 1; });
+		sink->set_filter([](boost::log::attribute_value_set){ return true; });
 
 		return sink;
 	}
@@ -175,7 +175,7 @@ private:
 
 	const char * m_scope = nullptr;
 
-	bool m_has_trace = 1;
+	bool m_has_trace = false;
 
 //  ----------------------------------------------------------------------------------------------
 
@@ -186,7 +186,7 @@ private:
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define LOGGER(logger) Logger logger(__func__, 0)
+#define LOGGER(logger) Logger logger(__func__, false)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -222,19 +222,13 @@ int main()
 	try
 	{
 		test_v3();
-
-		return EXIT_SUCCESS;
 	}
 	catch (const std::exception & exception)
 	{
 		LOGGER_WRITE_FATAL(logger, exception.what());
-
-		return EXIT_FAILURE;
 	}
 	catch (...)
 	{
 		LOGGER_WRITE_FATAL(logger, "unknown exception");
-
-		return EXIT_FAILURE;
 	}
 }

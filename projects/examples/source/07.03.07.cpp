@@ -7,7 +7,7 @@
 
 #include <benchmark/benchmark.h>
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state) 
 {
@@ -17,14 +17,14 @@ void test_v1(benchmark::State & state)
 
 		for (auto i = 0uz; i < 1'000; ++i)
 		{
-			x += std::pow(std::sin(i), 2.0) + std::pow(std::cos(i), 2.0);
+			x += std::pow(std::sin(i), 2) + std::pow(std::cos(i), 2);
 		}
 
         benchmark::DoNotOptimize(x);
     }
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state) 
 {
@@ -36,7 +36,7 @@ void test_v2(benchmark::State & state)
         {
             for (auto i = 0uz; i < 1'000; ++i)
             {
-                x += std::pow(std::sin(i), 2.0) + std::pow(std::cos(i), 2.0);
+                x += std::pow(std::sin(i), 2) + std::pow(std::cos(i), 2);
             }
         }
         catch (...) {}
@@ -45,7 +45,7 @@ void test_v2(benchmark::State & state)
     }
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////
 
 void test_v3(benchmark::State & state)
 {
@@ -55,9 +55,9 @@ void test_v3(benchmark::State & state)
 
         try
         {
-            for (auto i = 0uz; 1; ++i)
+            for (auto i = 0uz; true; ++i)
             {
-                x += std::pow(std::sin(i), 2.0) + std::pow(std::cos(i), 2.0);
+                x += std::pow(std::sin(i), 2) + std::pow(std::cos(i), 2);
 
                 if (i >= 1'000) 
                 {
@@ -71,7 +71,7 @@ void test_v3(benchmark::State & state)
     }
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////
 
 void test_v4(benchmark::State & state) 
 {
@@ -83,7 +83,7 @@ void test_v4(benchmark::State & state)
     }
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////
 
 void test_v5(benchmark::State & state)
 {
@@ -100,7 +100,7 @@ void test_v5(benchmark::State & state)
     state.SetComplexityN(state.range(0));
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////
 
 void test_v6(benchmark::State & state)
 {
@@ -116,7 +116,7 @@ void test_v6(benchmark::State & state)
     state.SetComplexityN(state.range(0));
 }
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////
 
 void test_v7(benchmark::State & state)
 {
@@ -128,7 +128,7 @@ void test_v7(benchmark::State & state)
     }
 } 
 
-//  ================================================================================================
+////////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test_v1);
 
@@ -144,6 +144,8 @@ BENCHMARK(test_v4)->RangeMultiplier(2)->Range(128, 1'024);
 
 BENCHMARK(test_v5)->Args({ 1, 2 })->Args({ 2, 4 })->Args({ 3, 6 });
 
+////////////////////////////////////////////////////////////////////////////////
+
 void make_args(benchmark::internal::Benchmark * benchmark) 
 {
     for (auto i = 1; i < 4; ++i)
@@ -152,10 +154,14 @@ void make_args(benchmark::internal::Benchmark * benchmark)
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
 BENCHMARK(test_v5)->Apply(make_args);
 
 BENCHMARK(test_v6)->RangeMultiplier(2)->Range(1'024, 1'024 << 16)->Complexity();
 
 BENCHMARK(test_v7);
+
+////////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK_MAIN();

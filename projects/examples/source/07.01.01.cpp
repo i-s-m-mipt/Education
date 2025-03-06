@@ -1,0 +1,46 @@
+#include <cassert>
+#include <concepts>
+#include <cstdlib>
+#include <iostream>
+#include <type_traits>
+
+///////////////////////////////////////////////////////////
+
+template < typename T > void swap(T & x, T & y)
+{
+    static_assert(std::is_copy_constructible_v < T > );
+    
+    static_assert(std::is_copy_assignable_v    < T > );
+
+    auto z = y;
+            
+         y = x;
+         
+         x = z;
+}
+
+///////////////////////////////////////////////////////////
+
+template < typename T > struct Entity
+{
+    static_assert(std::regular < T > , "T is not regular");
+};
+
+///////////////////////////////////////////////////////////
+
+int main()
+{
+    static_assert(sizeof(int) == 4, "sizeof(int) != 4");
+
+//  ----------------------------------------------------
+
+    auto x = 1, y = 2;
+        
+    swap(x, y);
+
+//  ----------------------------------------------------
+
+    [[maybe_unused]] Entity < int   > entity_1;
+
+//  [[maybe_unused]] Entity < int & > entity_2; // error
+}
