@@ -1,0 +1,30 @@
+#include <set>
+
+/////////////////////////////////////////////////////////////////
+
+struct Entity 
+{ 
+	int data = 0;
+};
+
+/////////////////////////////////////////////////////////////////
+
+class Less
+{
+public:
+
+	auto operator()(const Entity & lhs, const Entity & rhs) const
+	{
+		return lhs.data < rhs.data;
+	}
+};
+
+/////////////////////////////////////////////////////////////////
+
+int main()
+{
+	std::set < Entity, Less > entities = 
+	{
+		{ 1 }, { 2 }, { 3 }, { 4 }, { 5 }
+	};
+}
