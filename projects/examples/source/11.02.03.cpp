@@ -31,6 +31,8 @@ int main()
 
     using data_2_t = std::string;
 
+//  -------------------------------------------------------------------------------------------
+
     std::unordered_map < std::type_index, std::function < void(const std::any &) > > visitors =
     {
         std::make_pair(std::type_index(typeid(data_1_t)), Visitor < data_1_t > ()),
@@ -38,9 +40,11 @@ int main()
         std::make_pair(std::type_index(typeid(data_2_t)), Visitor < data_2_t > ())
     };
 
+//  -------------------------------------------------------------------------------------------
+
     for (const auto & element : std::vector < std::any > ({ 1, "aaaaa"s })) 
     {
-        auto type_index = std::type_index(element.type());
+        std::type_index type_index(element.type());
 
         if (auto iterator = visitors.find(type_index); iterator != std::end(visitors))
         {

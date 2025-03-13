@@ -6,11 +6,11 @@
 #include <utility>
 #include <vector>
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 auto next(std::vector < std::size_t > & steps, const std::vector < std::size_t > & sizes)
 {
-	bool has_next = 0;
+	auto has_next = false;
 
 	for (auto i = std::ssize(steps) - 1; i >= 0; --i)
 	{
@@ -22,7 +22,7 @@ auto next(std::vector < std::size_t > & steps, const std::vector < std::size_t >
 		}
 		else
 		{
-			has_next = 1;
+			has_next = true;
 			
 			break;
 		}
@@ -31,7 +31,7 @@ auto next(std::vector < std::size_t > & steps, const std::vector < std::size_t >
 	return has_next;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename F, typename T, std::size_t ... Is > void apply
 (
@@ -43,7 +43,7 @@ template < typename F, typename T, std::size_t ... Is > void apply
 	f(*std::next(std::get < Is > (tuple).first, steps[Is])...);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < std::forward_iterator ... Is > auto generate(std::pair < Is, Is > ... pairs)
 {
@@ -72,11 +72,13 @@ template < std::forward_iterator ... Is > auto generate(std::pair < Is, Is > ...
 	return tuples;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
     std::vector < int > vector = { 1, 2, 3, 4, 5 };
+
+//  ---------------------------------------------------------
 
 	auto tuples = generate
 	(	
@@ -85,7 +87,11 @@ int main()
 		std::make_pair(std::begin(vector), std::end(vector))
 	);
 
+//  ---------------------------------------------------------
+
 	auto size = std::size(vector);
+
+//  ---------------------------------------------------------
 
 	for (auto i = 0uz; i < size; ++i)
 	{
