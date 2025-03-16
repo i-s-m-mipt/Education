@@ -11,10 +11,12 @@
 
 struct Entity 
 { 
-    int data_1 = 0, data_2 = 0;
+    int x = 0, y = 0;
 };
 
-BOOST_FUSION_ADAPT_STRUCT(Entity, data_1, data_2)
+//////////////////////////////////////////////////////////////////////////////////////////
+
+BOOST_FUSION_ADAPT_STRUCT(Entity, x, y)
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -53,7 +55,9 @@ int main()
 {
     auto entity = parse(R"({ 1 1 })");
 
-    assert(entity.data_1 == 1);
+//  ----------------------------------
+
+    assert(entity.x == 1);
     
-    assert(entity.data_2 == 1);
+    assert(entity.y == 1);
 }

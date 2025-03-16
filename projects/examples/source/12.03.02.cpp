@@ -8,11 +8,11 @@
 #include <unordered_map>
 #include <variant>
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 using Token = std::variant < char, double, std::string > ;
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Stream
 {
@@ -20,49 +20,58 @@ public:
 
 	Stream(const std::string & string) : m_stream(string + ';') {}
 
-//  ----------------------------------------------------------------
+//  -------------------------------------------------------------------------------
 
-	auto empty() -> bool
+	auto empty()
 	{
-		char x = 0; m_stream >> x;
+		auto x = '\0'; 
+		
+		m_stream >> x;
 
 		if (x != ';')
 		{ 
-			m_stream.putback(x);
+			m_stream.unget();
 			
-			return 0;
+			return false;
 		} 
 		else 
 		{
-			return 1;
+			return true;
 		}
 	}
+
+//  -------------------------------------------------------------------------------
 
 	auto get()
 	{
 		if (m_has_token) 
 		{ 
-			m_has_token = 0;
+			m_has_token = false;
 			
 			return m_token;
 		}
 
-		char x = 0; m_stream >> x;
+		auto x = '\0'; 
+		
+		m_stream >> x;
 		
 		switch (x)
 		{
-			case '+': case '-': case '*': case '/': 
-			case '(': case ')': case ';':
+			case '+': case '-': case '*': case '/': case '(': case ')': case ';':
 			{
 				return Token(x);
 			}
 			case '0': case '1': case '2': case '3': case '4':
+
 			case '5': case '6': case '7': case '8': case '9':
+
 			case '.':
 			{
-				m_stream.putback(x);
+				m_stream.unget();
 				
-				auto y = 0.0; m_stream >> y;
+				auto y = 0.0; 
+				
+				m_stream >> y;
 
 				return Token(y);
 			}
@@ -72,14 +81,14 @@ public:
 				{
 					std::string string(1, x);
 					
-					while (m_stream.get(x) && (std::isalpha(x) || std::isdigit(x))) 
+					while (m_stream.get(x) && (std::isalpha(x) || std::isdigit(x)))
 					{
 						string += x;
 					}
 
 					if (!std::isspace(x)) 
 					{
-						m_stream.putback(x);
+						m_stream.unget();
 					}
 
 					return Token(string);
@@ -96,7 +105,7 @@ public:
 	{
 		m_token = token;
 		
-		m_has_token = 1;
+		m_has_token = true;
 	}
 
 private:
@@ -105,10 +114,10 @@ private:
 
 	Token m_token;
 	
-	bool m_has_token = 0;
+	bool m_has_token = false;
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Calculator
 {
@@ -152,6 +161,8 @@ private:
 		return expression(stream);
 	}
 
+//  -----------------------------------------------------------------------------------------------
+
 	auto declaration(Stream & stream) -> double
 	{
 		auto string = std::get < std::string > (stream.get());
@@ -161,13 +172,15 @@ private:
 		return m_variables[string];
 	}
 
+//  -----------------------------------------------------------------------------------------------
+
 	auto expression(Stream & stream) const -> double
 	{
 		auto x = term(stream);
 		
 		auto token = stream.get();
 
-		while (1)
+		while (true)
 		{
 			if (std::holds_alternative < char > (token))
 			{
@@ -194,13 +207,15 @@ private:
 		}
 	}
 
+//  -----------------------------------------------------------------------------------------------
+
 	auto term(Stream & stream) const -> double
 	{
 		auto x = primary(stream);
 		
 		auto token = stream.get();
 
-		while (1)
+		while (true)
 		{
 			if (std::holds_alternative < char > (token))
 			{
@@ -226,6 +241,8 @@ private:
 			token = stream.get();
 		}
 	}
+
+//  -----------------------------------------------------------------------------------------------
 
 	auto primary(Stream & stream) const -> double
 	{
@@ -253,9 +270,9 @@ private:
 					
 					return x;
 				}
-				case '+': { return        primary(stream); }
+				case '+': { return      primary(stream); }
 				
-				case '-': { return -1.0 * primary(stream); }
+				case '-': { return -1 * primary(stream); }
 				
 				default: 
 				{
@@ -272,12 +289,12 @@ private:
 		return m_variables.at(std::get < std::string > (token));
 	}
 
-//  -------------------------------------------------------
+//  -----------------------------------------------------------------------------------------------
 
 	std::unordered_map < std::string, double > m_variables;
 };
 
-//  ================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
