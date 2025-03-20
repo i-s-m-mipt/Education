@@ -1,10 +1,10 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="26.1.0">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="26.1.1">
   <diagram name="Страница — 1" id="S_IzX6l6qBvCFPKK4t_y">
-    <mxGraphModel dx="943" dy="543" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="651" dy="375" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="GgP-nV2CVQ64mw5wIq2N-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=1 1;" vertex="1" parent="1">
+        <mxCell id="GgP-nV2CVQ64mw5wIq2N-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=1 1;" parent="1" vertex="1">
           <mxGeometry x="180" y="180" width="240" height="80" as="geometry" />
         </mxCell>
         <mxCell id="p5cIM7SI1FKslKuhm6dL-2" value="&lt;b&gt;&lt;font style=&quot;font-size: 10px;&quot; face=&quot;Helvetica&quot;&gt;Preprocessor&lt;/font&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1">
@@ -16,7 +16,7 @@
         <mxCell id="p5cIM7SI1FKslKuhm6dL-4" value="&lt;font style=&quot;font-size: 14px;&quot; face=&quot;Helvetica&quot;&gt;&lt;b style=&quot;&quot;&gt;Source 2&lt;/b&gt;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;(&lt;/font&gt;&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 10px; background-color: transparent;&quot;&gt;definitions&lt;/span&gt;&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 10px; background-color: transparent;&quot;&gt;)&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="440" y="200" width="80" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="p5cIM7SI1FKslKuhm6dL-5" value="&lt;b&gt;Prepared source 1&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="p5cIM7SI1FKslKuhm6dL-5" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Source 1&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;(prepared)&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="320" y="360" width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="p5cIM7SI1FKslKuhm6dL-32" value="&lt;font face=&quot;Helvetica&quot; style=&quot;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Header 1&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;(&lt;/font&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;declarations&lt;font face=&quot;Helvetica&quot; style=&quot;&quot;&gt;)&lt;/font&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -64,10 +64,10 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="p5cIM7SI1FKslKuhm6dL-51" value="&lt;b style=&quot;&quot;&gt;&lt;font face=&quot;Helvetica&quot;&gt;Compiled source 1&lt;/font&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="p5cIM7SI1FKslKuhm6dL-51" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Source 1&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;(compiled)&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="320" y="520" width="80" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="p5cIM7SI1FKslKuhm6dL-52" value="&lt;b&gt;Compiled source 2&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="p5cIM7SI1FKslKuhm6dL-52" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Source 2&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;(compiled)&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="440" y="520" width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="p5cIM7SI1FKslKuhm6dL-59" value="&lt;b&gt;&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 14px;&quot;&gt;Linker&lt;/font&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1">
@@ -85,7 +85,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="p5cIM7SI1FKslKuhm6dL-66" value="&lt;b style=&quot;&quot;&gt;&lt;font&gt;Executable&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;b style=&quot;&quot;&gt;&lt;font&gt;or library&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="p5cIM7SI1FKslKuhm6dL-66" value="&lt;b style=&quot;&quot;&gt;&lt;font&gt;Executable&lt;/font&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="440" y="680" width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="p5cIM7SI1FKslKuhm6dL-82" value="" style="endArrow=oval;html=1;rounded=0;startArrow=oval;startFill=0;endFill=0;" parent="1" edge="1">
@@ -118,7 +118,7 @@
             <mxPoint x="490" y="530" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Im6-Hzp5tfuL-U-zUDxX-2" value="&lt;b&gt;Prepared source 2&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="Im6-Hzp5tfuL-U-zUDxX-2" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Source 2&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;(prepared)&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="440" y="360" width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="XEa0uay3GoqvfWMo62su-1" value=".cpp" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
