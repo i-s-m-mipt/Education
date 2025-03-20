@@ -7,11 +7,11 @@
 #include <stdexcept>
 #include <string>
 
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 void transform(const std::string & path_1, const std::string & path_2)
 {
-    if (std::fstream stream_1(path_1, std::ios::in); stream_1)
+    if (std::fstream stream_1(path_1); stream_1)
     {
         std::string string
         {
@@ -20,7 +20,9 @@ void transform(const std::string & path_1, const std::string & path_2)
             std::istreambuf_iterator < char > ()
         };
 
-        for (auto iterator = std::begin(string); iterator != std::end(string); ++iterator) 
+    //  ----------------------------------------------------------------------------------
+
+        for (auto iterator = std::begin(string); iterator != std::end(string); ++iterator)
         {
             if (*iterator == '\'')
             {
@@ -31,6 +33,8 @@ void transform(const std::string & path_1, const std::string & path_2)
                 while (!(*iterator == '\'' && *std::prev(iterator) != '\\'));
             }
 
+        //  -----------------------------------------------------------------
+
             if (*iterator == '\"')
             {
                 do
@@ -39,6 +43,8 @@ void transform(const std::string & path_1, const std::string & path_2)
                 } 
                 while (!(*iterator == '\"' && *std::prev(iterator) != '\\'));
             }
+
+        //  -----------------------------------------------------------------
                 
             if (*iterator == '/') 
             {
@@ -66,13 +72,17 @@ void transform(const std::string & path_1, const std::string & path_2)
                 }
             }
 
+        //  -----------------------------------------------------------------
+
             if (iterator == std::end(string)) 
             {
                 break;
             }
         }
 
-        if (std::fstream stream_2(path_2, std::ios::out); stream_2)
+    //  ----------------------------------------------------------------------------------
+
+        if (std::fstream stream_2(path_2); stream_2)
         {
             stream_2 << string;
         }
@@ -87,17 +97,23 @@ void transform(const std::string & path_1, const std::string & path_2)
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    auto path_1 = "13.07.algorithm.erase.comment.source.txt";
+    auto path_1 = "13.01.14.cpp";
 
-	auto path_2 = "13.07.algorithm.erase.comment.output.txt";
+	auto path_2 = "13.01.15.cpp";
+
+//  ----------------------------------------------------
 
     transform(path_1, path_2);
 
-    std::cout << "main : enter char to continue : "; char x = 0; std::cin >> x;
+//  ----------------------------------------------------
+
+    std::cout << "main : enter char : "; std::cin.get();
+
+//  ----------------------------------------------------
 
     std::filesystem::remove(path_2);
 }

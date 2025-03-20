@@ -1,5 +1,7 @@
 #include <iostream> // comment
 
+/////////////////////////////////////////////
+
 int main(/* comment */)
 {
 	std::cout << '\'' << '\"' << '"' << '\n';
