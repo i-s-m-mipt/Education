@@ -1,37 +1,49 @@
 cmake_minimum_required(VERSION 3.28)
 
-#####################################################################################################################
+#############################################################################################
 
 project(examples VERSION 24.02.06 LANGUAGES CXX)
 
-#####################################################################################################################
+#############################################################################################
 
 set(CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-#####################################################################################################################
+#############################################################################################
 
-set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_STATIC_LIBS    ON)
 
 set(Boost_USE_STATIC_RUNTIME ON)
 
+#############################################################################################
+
 # support: /usr/share/cmake/modules
 
-#####################################################################################################################
+#############################################################################################
 
-find_package(Boost         1.85 REQUIRED COMPONENTS filesystem locale log python312 system timer unit_test_framework)
-find_package(GTest         1.14 REQUIRED COMPONENTS)
-find_package(benchmark          REQUIRED COMPONENTS)
-find_package(Python        3.10 REQUIRED COMPONENTS Interpreter Development)
-find_package(ICU                REQUIRED COMPONENTS i18n uc)
-find_package(nlohmann_json 3.10 REQUIRED COMPONENTS)
-find_package(PDFHummus          REQUIRED COMPONENTS)
-find_package(TBB                REQUIRED COMPONENTS)
+find_package(Boost 1.85 REQUIRED COMPONENTS 
 
-find_package(SFML               REQUIRED COMPONENTS graphics system window) # TODO
+    filesystem 
+    locale 
+    log 
+    python312 
+    system 
+    timer 
+    unit_test_framework
+)
 
-#####################################################################################################################
+#############################################################################################
+
+find_package(GTest         REQUIRED COMPONENTS)
+find_package(benchmark     REQUIRED COMPONENTS)
+find_package(Python        REQUIRED COMPONENTS Interpreter Development)
+find_package(ICU           REQUIRED COMPONENTS i18n uc)
+find_package(nlohmann_json REQUIRED COMPONENTS)
+find_package(PDFHummus     REQUIRED COMPONENTS)
+find_package(TBB           REQUIRED COMPONENTS)
+
+#############################################################################################
 
 include_directories(        ${Boost_INCLUDE_DIRS})
 include_directories(        ${GTEST_INCLUDE_DIRS})
@@ -43,7 +55,7 @@ include_directories(          ${TBB_INCLUDE_DIRS})
 include_directories(${libwebsockets_INCLUDE_DIRS})
 include_directories(         ${SFML_INCLUDE_DIRS})
 
-#####################################################################################################################
+#############################################################################################
 
 set(debug
 
@@ -235,9 +247,207 @@ set(debug
 #   07.03.04
     07.03.05
 #   07.03.06
+    08.01.01
+    08.01.02
+    08.01.03
+#   08.01.04
+    08.01.05
+    08.01.07
+    08.01.08
+    08.01.09
+    08.02.01
+    08.02.02
+#   08.02.03
+    08.02.04
+    08.02.05
+    08.02.06
+    08.02.07
+#   08.02.08
+#   08.02.09
+#   08.02.10
+    08.03.01
+    08.03.02
+    08.03.03
+    08.03.04
+    08.03.05
+    08.03.06
+    08.03.07
+#   08.03.08
+    08.04.01
+    08.04.02
+    08.04.03
+    08.04.06
+    08.04.07
+    08.04.08
+    09.01.01
+    09.01.02
+    09.01.03
+    09.01.04
+    09.01.05
+    09.01.06
+    09.01.07
+    09.01.08
+    09.01.09
+    09.01.10
+    09.02.01
+    09.02.02
+    09.02.03
+#   09.02.04
+    09.02.05
+    09.02.06
+#   09.03.01
+    09.03.03
+    09.03.04
+    09.03.05
+    09.03.06
+    09.03.08
+    09.04.01
+    09.04.02
+#   09.04.03
+#   09.04.05
+#   09.04.07
+#   09.04.09
+    09.04.12
+    09.04.13
+    09.04.14
+    09.04.15
+    10.01.01
+    10.01.02
+    10.01.03
+    10.01.04
+    10.01.05
+    10.01.06
+    10.01.07
+    10.01.08
+    10.01.09
+    10.01.10
+    10.01.11
+    10.01.13
+    10.01.14
+    10.01.15
+    10.01.16
+    10.01.17
+    10.01.18
+    10.01.19
+#   10.01.20
+    10.01.21
+    10.01.22
+    10.02.01
+    10.02.02
+    10.02.03
+    10.02.04
+    10.02.05
+    10.02.06
+    10.02.07
+    10.02.08
+    10.02.09
+    10.02.11
+#   10.03.01
+    10.03.02
+    10.03.05
+    10.03.06
+#   10.04.01
+    10.04.02
+    10.04.03
+    10.04.06
+    10.04.07
+    10.04.08
+    10.04.09
+    11.01.01
+    11.01.02
+    11.01.03
+    11.01.04
+    11.01.05
+    11.01.06
+    11.01.07
+    11.01.08
+    11.01.09
+    11.01.10
+    11.02.01
+    11.02.02
+    11.02.03
+    11.02.04
+    11.03.01
+    11.03.02
+    11.03.03
+    11.03.04
+    11.03.05
+    11.03.06
+    11.03.07
+    11.03.08
+    11.03.09
+    11.03.10
+    11.03.11
+    11.03.12
+    11.04.01
+#   11.04.02
+    11.04.03
+    11.04.04
+    11.04.05
+#   12.01.01
+    12.01.02
+    12.01.03
+    12.01.04
+#   12.01.05
+    12.01.06
+    12.01.07
+    12.01.08
+    12.01.09
+    12.01.10
+    12.01.11
+#   12.02.01
+    12.02.02
+    12.02.03
+    12.02.04
+    12.02.05
+    12.02.06
+    12.02.07
+#   12.03.01
+    12.03.02
+    12.03.03
+    12.03.04
+    12.03.05
+    12.03.06
+    12.03.07
+    12.03.08
+    12.03.09
+    12.03.10
+#   13.01.01
+    13.01.02
+    13.01.03
+    13.01.04
+    13.01.05
+    13.01.06
+    13.01.07
+    13.01.08
+    13.01.09
+    13.01.10
+    13.01.11
+    13.01.12
+    13.01.13
+#   13.01.14
+    13.02.01
+    13.02.02
+    13.02.03
+    13.03.01
+    13.03.02
+#   13.03.03
+#   13.03.04
+#   13.03.05
+#   14.01.01
+    14.01.02
+    14.01.03
+    14.01.04
+    14.01.05
+    14.01.06
+    14.01.07
+    14.01.08
+    14.01.09
+    14.01.10
+    14.01.11
 )
 
-#################################################
+#############################################################################################
 
 foreach(entry IN LISTS debug)
 
@@ -251,13 +461,13 @@ foreach(entry IN LISTS debug)
 
 endforeach()
 
-###################################################################################
+#############################################################################################
 
 add_executable             (06.01.11 source/06.01.10.cpp source/06.01.11.cpp)
 
 target_compile_options     (06.01.11 PRIVATE -Wall -Wextra -pedantic -O0)
 
-###################################################################################
+#############################################################################################
 
 add_executable             (06.03.01 source/06.03.01.cpp)
 
@@ -265,17 +475,17 @@ target_compile_options     (06.03.01 PRIVATE -Wall -Wextra -pedantic -O0)
 
 target_include_directories (06.03.01 PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
 
-target_link_libraries      (06.03.01 PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/library_v1/libstatic.a)
+target_link_libraries      (06.03.01 PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/libstatic.a)
 
 target_link_libraries      (06.03.01 PRIVATE ${Boost_LIBRARIES})
 
-###############################################################################################
+#############################################################################################
 
 add_executable             (07.03.01 source/07.03.01.cpp)
 
 target_compile_options     (07.03.01 PRIVATE -Wall -Wextra -pedantic -O0 -ggdb)
 
-###########################################################################################################
+#############################################################################################
 
 #  add_executable             (07.03.04 source/07.03.04.cpp)
 
@@ -283,7 +493,7 @@ target_compile_options     (07.03.01 PRIVATE -Wall -Wextra -pedantic -O0 -ggdb)
 
 #  target_link_libraries      (07.03.04 PRIVATE )
 
-#######################################################################################################
+#############################################################################################
 
 add_executable             (07.03.06 source/07.03.06.cpp)
 
@@ -291,50 +501,72 @@ target_compile_options     (07.03.06 PRIVATE -Wall -Wextra -pedantic -O0)
 
 target_link_libraries      (07.03.06 PRIVATE GTest::gtest)
 
-###################################################################################################
+#############################################################################################
 
-#add_executable             (08.10.embedding.python.caller source/08.10.embedding.python.caller.cpp)
+add_executable             (08.02.09 source/08.02.09.cpp)
 
-#target_compile_options     (08.10.embedding.python.caller PRIVATE -Wall -Wextra -pedantic -O0)
+target_compile_options     (08.02.09 PRIVATE -Wall -Wextra -pedantic -O0)
 
-#target_link_libraries      (08.10.embedding.python.caller PRIVATE ${Boost_LIBRARIES})
+target_link_libraries      (08.02.09 PRIVATE ${Boost_LIBRARIES})
 
-#target_link_libraries      (08.10.embedding.python.caller PRIVATE Python::Python)
+target_link_libraries      (08.02.09 PRIVATE Python::Python)
 
-###################################################################################################
+#############################################################################################
 
-#add_executable             (09.05.iterator.classification source/09.05.iterator.classification.cpp)
+add_executable             (09.02.04 source/09.02.04.cpp)
 
-#target_compile_options     (09.05.iterator.classification PRIVATE -Wall -Wextra -pedantic -O0) 
+target_compile_options     (09.02.04 PRIVATE -Wall -Wextra -pedantic -O0) 
 
-#target_compile_definitions (09.05.iterator.classification PRIVATE _GLIBCXX_DEBUG)
+target_compile_definitions (09.02.04 PRIVATE _GLIBCXX_DEBUG)
 
-#########################################################################################################
+#############################################################################################
 
-#add_executable             (12.05.locale.facet.utf.converter source/12.05.locale.facet.utf.converter.cpp)
+add_executable             (12.01.05 source/12.01.05.cpp)
 
-#target_compile_options     (12.05.locale.facet.utf.converter PRIVATE -Wall -Wextra -pedantic -O0)
+target_compile_options     (12.01.05 PRIVATE -Wall -Wextra -pedantic -O0)
 
-#target_link_libraries      (12.05.locale.facet.utf.converter PRIVATE ${Boost_LIBRARIES})
+target_link_libraries      (12.01.05 PRIVATE ${Boost_LIBRARIES})
 
-#target_link_libraries      (12.05.locale.facet.utf.converter PRIVATE ICU::i18n ICU::uc)
+target_link_libraries      (12.01.05 PRIVATE ICU::i18n ICU::uc)
 
-########################################################################################
+#############################################################################################
 
-#add_executable             (13.13.serialization.pdf source/13.13.serialization.pdf.cpp)
+add_executable             (13.03.03 source/13.03.03.cpp)
 
-#target_compile_options     (13.13.serialization.pdf PRIVATE -Wall -Wextra -pedantic -O0)
+target_compile_options     (13.03.03 PRIVATE -Wall -Wextra -pedantic -O0)
 
-#target_link_libraries      (13.13.serialization.pdf PRIVATE PDFHummus::PDFWriter)
+target_link_libraries      (13.03.03 PRIVATE PDFHummus::PDFWriter)
 
-#################################################################################
+#############################################################################################
 
 set(release
 
     07.03.07
+    08.01.06
+    08.01.10
+    08.03.09
+    08.03.10
+    08.04.04
+    08.04.05
+    09.03.02
+    09.03.07
+    09.04.04
+    09.04.06
+    09.04.08
+    09.04.10
+    09.04.11
+    09.04.16
+    10.01.12
+    10.02.10
+    10.03.03
+    10.03.04
+#   10.04.04
+#   10.04.05
+    12.01.12
+    14.01.12
 )
 
-########################################
+#############################################################################################
 
 foreach(entry IN LISTS release)
 
@@ -351,3 +583,13 @@ foreach(entry IN LISTS release)
     target_link_libraries  (${entry} PRIVATE /usr/lib/gcc/x86_64-linux-gnu/13/libatomic.a)
 
 endforeach()
+
+#############################################################################################
+
+add_executable             (10.04.04 source/10.04.04.cpp)
+
+target_compile_options     (10.04.04 PRIVATE -Wall -Wextra -pedantic -O3)
+
+target_link_libraries      (10.04.04 PRIVATE ${Boost_LIBRARIES})
+
+target_link_libraries      (10.04.04 PRIVATE Python::Python)
