@@ -42,12 +42,18 @@ private :
 int main()
 {
 	Stack < int > stack;
+
+//  --------------------------------
 	
 	stack.push(1);
+
+//  --------------------------------
 
 //	assert(stack.pop() == 1); // bad
 
 	assert(stack.top() == 1);
+
+//  --------------------------------
 	
 	stack.pop();
 }

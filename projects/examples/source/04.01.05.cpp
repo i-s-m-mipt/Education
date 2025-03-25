@@ -14,6 +14,8 @@ template < typename T, typename ... Ts > void test_v1(T x, Ts ... xs)
 	std::cout << "test_v1 : x = " << x << ' ';
 	
 	std::cout << "sizeof...(xs) = " << sizeof...(xs) << '\n';
+
+//  ---------------------------------------------------------
 	
 	test_v1(xs...); // support : cppinsights.io
 }
@@ -31,9 +33,15 @@ template < typename T, typename ... Ts > void test_v2(T x, Ts ... xs)
 {
 	test_v2(x);
 
+//  ---------------------------------------------------------
+
 	std::cout << "sizeof...(xs) = " << sizeof...(xs) << '\n';
 
+//  ---------------------------------------------------------
+
 	test_v2(xs...);
+
+//  ---------------------------------------------------------
 
 	if (sizeof...(xs) == 1)
 	{

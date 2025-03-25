@@ -16,13 +16,17 @@ int main()
         
     [[maybe_unused]] char string_3[6] = "aaaaa";
 
-    [[maybe_unused]] auto string_4    = "aaaaa"; // c_str
+    [[maybe_unused]] auto string_4    = "aaaaa";
 
 //  -------------------------------------------------------------------
 
 //  assert(std::strlen(string_1) == 5); // error
 
     assert(std::strlen(string_2) == 5);
+
+//  -------------------------------------------------------------------
+
+    assert(std::strlen("aaaaa"s.c_str()) == 5);
 
 //  -------------------------------------------------------------------
 

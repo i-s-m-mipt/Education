@@ -42,13 +42,13 @@ int main()
 
 //  -------------------------------------------------------------------------------------------
 
-    for (const auto & element : std::vector < std::any > ({ 1, "aaaaa"s })) 
+    for (const auto & any : std::vector < std::any > ({ 1, "aaaaa"s })) 
     {
-        std::type_index type_index(element.type());
+        std::type_index type_index(any.type());
 
         if (auto iterator = visitors.find(type_index); iterator != std::end(visitors))
         {
-            iterator->second(element);
+            iterator->second(any);
         }
     }
 }

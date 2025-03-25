@@ -58,6 +58,8 @@ int main()
 {
 	Server_v1 server_v1;
 
+//  -----------------------------
+
 //	server_v1.test_v1(); // error
 
 //	server_v1.test_v2(); // error
@@ -67,6 +69,8 @@ int main()
 //  -----------------------------
 
 	Server_v2 server_v2;
+
+//  -----------------------------
 
 //	server_v2.test_v1(); // error
 

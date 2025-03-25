@@ -1,5 +1,6 @@
 #include <cassert>
 #include <chrono>
+#include <clocale>
 #include <cstring>
 #include <ctime>
 #include <iostream>
@@ -14,6 +15,8 @@ void test(const std::locale & locale)
 	auto timestamp = std::localtime(&time);
 
 	auto format = "%X %x";
+
+//  -----------------------------------------------------------------------------------
 
 	auto previous_locale = std::cout.imbue(locale);
 
@@ -35,13 +38,15 @@ void test(const std::locale & locale)
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+// support : locale -a
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
 int main()
 {
-	std::locale locale_1("en_US.utf8"); // support : locale -a
+	std::locale locale_1("en_US.utf8"); 
 
     std::locale locale_2("ru_RU.utf8");
-
-//	std::setlocale(LC_ALL, "..."); // TODO
 
 //  ----------------------------------------------------------------------------------------
 
@@ -58,4 +63,8 @@ int main()
 	test(locale_1);
 
 	test(locale_2);
+
+//  ----------------------------------------------------------------------------------------
+
+//	std::setlocale(LC_ALL, "C"); // bad
 }

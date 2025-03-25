@@ -15,6 +15,8 @@ auto test_v2()
 	
 	return entity;
 
+//  ----------------------------------
+
 //	return std::move(entity); // error
 }
 

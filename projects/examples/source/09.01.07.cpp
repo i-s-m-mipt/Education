@@ -72,7 +72,7 @@ int main()
 
 //  -------------------------------------------------------
 
-//  auto entity_v1_2 = entity_v1_1->get(); // bad
+//  auto entity_v1_2 = entity_v1_1->get(); // error
 
     auto entity_v2_2 = entity_v2_1->get();
 

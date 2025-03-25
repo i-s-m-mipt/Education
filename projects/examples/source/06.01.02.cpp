@@ -14,7 +14,7 @@ FUNCTION(v1) // support : cppinsights.io
 
 #undef FUNCTION
 
-//  FUNCTION(v2) // error
+// FUNCTION(v2) // error
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -50,7 +50,7 @@ int main()
 
 //  -----------------------------------------------
 
-//	assert(SQUARE_v1(x + x) == 3); // bad
+//	assert(SQUARE_v1(x + x) == 3); // error
 
 //  -----------------------------------------------
 

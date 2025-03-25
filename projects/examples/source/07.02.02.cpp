@@ -25,7 +25,7 @@ public :
 
    ~Entity() noexcept
 	{
-//		throw std::runtime_error("error"); // error
+	//	throw std::runtime_error("error"); // error
 
 		uninitialize();
 	}

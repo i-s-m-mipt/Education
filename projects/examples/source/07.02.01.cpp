@@ -54,7 +54,7 @@ void test_v2()
 	{
 		std::cerr << "test_v2 : " << exception.what() << '\n';
 
-//		throw exception; // bad
+	//	throw exception; // bad
 
 		throw;
 	}
