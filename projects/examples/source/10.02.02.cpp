@@ -4,36 +4,36 @@
 
 template < typename T, std::size_t S1, std::size_t S2 > class Array
 {
-public:
+public :
 
 	class View 
 	{
-	public:
+	public :
 
-		View(T * ptr) : m_data(ptr) {}
+		View(T (&array)[S2]) : m_array(array) {}
 
-	//  ------------------------------------
+	//  ----------------------------------------
 
 		auto & operator[](std::size_t index)
 		{ 
-			return m_data[index];
+			return m_array[index];
 		}
 
-	private:
+	private :
 
-		T * m_data = nullptr;
+		T (&m_array)[S2];
 	};
 
-//  ----------------------------------------
+//  --------------------------------------------
 
 	auto operator[](std::size_t index)
 	{ 
-		return View(m_data[index]);
+		return View(m_array[index]);
 	}
 
-private:
+private :
 
-	T m_data[S1][S2]{};
+	T m_array[S1][S2]{};
 };
 
 ///////////////////////////////////////////////////////////////////

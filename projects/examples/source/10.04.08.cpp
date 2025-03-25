@@ -6,20 +6,24 @@
 #include <boost/multi_index/ordered_index.hpp>
 #include <boost/multi_index/random_access_index.hpp>
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 struct Entity 
 { 
-	int data_1 = 0, data_2 = 0;
+	int x = 0, y = 0;
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename M > using HNU = boost::multi_index:: hashed_non_unique < T, M > ;
+template < typename T, typename M > using ONU_t = boost::multi_index::ordered_non_unique < T, M > ;
 
-template < typename T, typename M > using ONU = boost::multi_index::ordered_non_unique < T, M > ;
+template < typename T, typename M > using HNU_t = boost::multi_index:: hashed_non_unique < T, M > ;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T > using tag_t = boost::multi_index::tag < T > ;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 template 
 < 
@@ -27,49 +31,50 @@ template
 > 
 using member_t = boost::multi_index::member < C, T, P > ;
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 using container_t = boost::multi_index::multi_index_container 
 < 
 	Entity, boost::multi_index::indexed_by 
 	<
-		HNU < tag_t < struct index_1_tag > , member_t < Entity, int, &Entity::data_1 > > ,
+		ONU_t < tag_t < struct ONU_x_tag > , member_t < Entity, int, &Entity::x > > ,
 
-		ONU < tag_t < struct index_2_tag > , member_t < Entity, int, &Entity::data_2 > >
+		HNU_t < tag_t < struct HNU_y_tag > , member_t < Entity, int, &Entity::y > > 
 	>
 > ;
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void handler(Entity & entity)
+{
+	entity = Entity(2, 2);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
 	container_t container = { { 1, 1 }, { 2, 2 }, { 3, 3 }, { 4, 4 }, { 5, 5 } };
 
-//  ------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------
 
-	auto & HNU_data_1_index = container.get < index_1_tag > ();
+	auto & ONU_x_index = container.get < ONU_x_tag > ();
 
-	auto & ONU_data_2_index = container.get < index_2_tag > ();
+	auto & HNU_y_index = container.get < HNU_y_tag > ();
 
-//  ------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------
 
-	if (HNU_data_1_index.contains(1))
-	{
-		HNU_data_1_index.modify
-		(	
-			HNU_data_1_index.find(1), [](auto && entity){ entity = Entity(2, 2); }
-		);
+	assert(ONU_x_index.lower_bound(1)->x == 1);
 
-//      --------------------------------------------------------------------------
+	assert(ONU_x_index.upper_bound(1)->x == 2);
 
-		assert(HNU_data_1_index.count(1) == 0);
+//  -----------------------------------------------------------------------------
 
-		assert(HNU_data_1_index.count(2) == 2);
-	}
+	HNU_y_index.modify(HNU_y_index.find(1), handler);
 
-//  ------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------
 
-	assert(ONU_data_2_index.lower_bound(2)->data_2 == 2);
+	assert(HNU_y_index.count(1) == 0);
 
-	assert(ONU_data_2_index.upper_bound(2)->data_2 == 3);
+	assert(HNU_y_index.count(2) == 2);
 }

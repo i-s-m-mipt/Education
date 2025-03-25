@@ -4,40 +4,40 @@
 #include <stack>
 #include <utility>
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 template < typename T > class Stack
 {
-public:
+public :
 
     void push(T x)
     {
-        auto max = std::empty(m_data) ? x : std::max(x, m_data.top().second);
+        auto max = std::empty(m_stack) ? x : std::max(x, m_stack.top().second);
 
-        m_data.emplace(x, max);
+        m_stack.emplace(x, max);
     }
 
     auto top() const
     { 
-        return m_data.top().first;
+        return m_stack.top().first;
     }
  
     void pop() 
     { 
-        m_data.pop();
+        m_stack.pop();
     }
  
     auto max() const
     { 
-        return m_data.top().second;
+        return m_stack.top().second;
     }
 
-private:
+private :
 
-    std::stack < std::pair < T, T > > m_data;
+    std::stack < std::pair < T, T > > m_stack;
 };
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {

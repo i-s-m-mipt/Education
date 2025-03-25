@@ -30,7 +30,7 @@ auto equal(const std::valarray < int > & x, const std::valarray < int > & y)
 int main() 
 {
     std::valarray < int > x = { 1, 2, 3, 4, 5 };
-
+    
     std::valarray < int > y = { 1, 2, 3 };
 
 //  --------------------------------------------------------------------------

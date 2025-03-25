@@ -17,9 +17,13 @@ int main()
 
 	assert(queue.front() == 1 && queue.back() == 2);
 
+//  ------------------------------------------------
+
     queue.push(3);
 
 	queue.pop ( );
+
+//  ------------------------------------------------
 
 	assert(queue.front() == 2 && queue.back() == 3);
 }

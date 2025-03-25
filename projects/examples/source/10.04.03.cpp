@@ -22,7 +22,7 @@ template < typename T, typename ... Ts > auto hash(T x, Ts ... xs)
 
 struct Entity 
 { 
-	int data_1 = 0, data_2 = 0;
+	int x = 0, y = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -31,13 +31,13 @@ auto hash_value(const Entity & entity)
 {
 	auto seed = 0uz;
 
-//  -----------------------------------------
+//  ------------------------------------
 
-	boost::hash_combine(seed, entity.data_1);
+	boost::hash_combine(seed, entity.x);
 	
-	boost::hash_combine(seed, entity.data_2);
+	boost::hash_combine(seed, entity.y);
 
-//  -----------------------------------------
+//  ------------------------------------
 
 	return seed;
 }

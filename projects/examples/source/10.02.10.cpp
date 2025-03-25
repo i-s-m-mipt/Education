@@ -11,92 +11,78 @@
 
 #include <benchmark/benchmark.h>
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 auto determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) -> double
 {
-    if (auto size = matrix.size1(); size != 0 && size == matrix.size2())
+    if (auto size = matrix.size1(); size > 1)
     {
-        if (size > 1)
-        {
-            auto determinant = 0.0;
+        auto determinant = 0.0;
     
-            for (auto i = 0uz; i < size; ++i)
-            {
-                boost::numeric::ublas::matrix < double > minor(size - 1, size - 1);
+        for (auto i = 0uz; i < size; ++i)
+        {
+            boost::numeric::ublas::matrix < double > minor(size - 1, size - 1);
 
-                for (auto j = 1uz; j < size; ++j)
+            for (auto j = 1uz; j < size; ++j)
+            {
+                for (auto k = 0uz, l = 0uz; k < size; ++k)
                 {
-                    for (auto k = 0uz, l = 0uz; k < size; ++k)
+                    if (k != i) 
                     {
-                        if (k != i) 
-                        {
-                            minor(j - 1, l++) = matrix(j, k);
-                        }
+                        minor(j - 1, l++) = matrix(j, k);
                     }
                 }
+            }
 
-                determinant += (i % 2 ? -1 : +1) * matrix(0, i) * determinant_v1(minor);
+            determinant += (i % 2 ? -1 : +1) * matrix(0, i) * determinant_v1(minor);
+        }
+
+        return determinant;
+    }
+    else
+    {
+        return matrix(0, 0);
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+auto determinant_v2(const boost::numeric::ublas::matrix < double > & matrix)
+{
+    if (auto size = matrix.size1(); size > 1)
+    {
+        auto copy = matrix;
+    
+        boost::numeric::ublas::permutation_matrix <> permutation(size);
+
+        if (!boost::numeric::ublas::lu_factorize(copy, permutation))
+        {
+            auto determinant = 1.0;
+
+            for (auto i = 0uz; i < copy.size1(); ++i)
+            {
+                if (permutation(i) != i) 
+                {
+                    determinant *= -1;
+                }
+
+                determinant *= copy(i, i);
             }
 
             return determinant;
         }
-        else
+        else 
         {
-            return matrix(0, 0);
+            return 0.0;
         }
     }
-    else 
+    else
     {
-        throw std::runtime_error("invalid size");
+        return matrix(0, 0);
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
-
-auto determinant_v2(const boost::numeric::ublas::matrix < double > & matrix)
-{    
-    if (auto size = matrix.size1(); size != 0 && size == matrix.size2())
-    {
-        if (size > 1)
-        {
-            auto copy = matrix;
-    
-            boost::numeric::ublas::permutation_matrix <> permutation(size);
-
-            if (!boost::numeric::ublas::lu_factorize(copy, permutation))
-            {
-                auto determinant = 1.0;
-
-                for (auto i = 0uz; i < copy.size1(); ++i)
-                {
-                    if (permutation(i) != i) 
-                    {
-                        determinant *= -1;
-                    }
-
-                    determinant *= copy(i, i);
-                }
-
-                return determinant;
-            }
-            else 
-            {
-                return 0.0;
-            }
-        }
-        else
-        {
-            return matrix(0, 0);
-        }
-    }
-    else 
-    {
-        throw std::runtime_error("invalid size");
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 auto make_matrix(std::size_t size)
 {
@@ -119,7 +105,7 @@ auto make_matrix(std::size_t size)
     return matrix;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state)
 {
@@ -131,7 +117,7 @@ void test_v1(benchmark::State & state)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state)
 {
@@ -143,13 +129,13 @@ void test_v2(benchmark::State & state)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test_v1)->DenseRange(1, 9, 1);
 
 BENCHMARK(test_v2)->DenseRange(1, 9, 1);
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {

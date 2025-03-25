@@ -4,18 +4,18 @@
 
 struct Entity 
 { 
-	int data = 0;
+	int x = 0;
 };
 
 /////////////////////////////////////////////////////////////////
 
 class Less
 {
-public:
+public :
 
 	auto operator()(const Entity & lhs, const Entity & rhs) const
 	{
-		return lhs.data < rhs.data;
+		return lhs.x < rhs.x;
 	}
 };
 

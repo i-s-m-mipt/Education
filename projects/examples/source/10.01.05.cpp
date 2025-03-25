@@ -21,7 +21,7 @@ int main()
 
 	try
 	{
-		vector.at(1'000) = 1;
+		assert(vector.at(1'000) == 1);
 	}
 	catch (const std::out_of_range & exception) 
 	{

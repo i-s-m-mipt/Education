@@ -116,7 +116,7 @@ void test_v4(benchmark::State & state)
 
         for (auto x = 0; auto & element : list)
         {
-            element = std::size(list) - x++;
+            element = std::size(list) + 1 - ++x;
         }
 
 //      -----------------------------------------------------------------------------------
@@ -150,7 +150,7 @@ void test_v5(benchmark::State & state)
 
         for (auto x = 0; auto & element : list)
         {
-            element = size - x++;
+            element = size + 1 - ++x;
         }
 
 //      -----------------------------------------------------------------------------------

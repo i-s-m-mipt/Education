@@ -1,27 +1,27 @@
 #include <memory>
 
-//////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
 class Entity
 {
-public:
+public :
 
-	void make_data() 
+	void make()
 	{
-		if (m_data == nullptr) 
+		if (!m_x)
 		{
-			m_data = std::make_unique < int > (1);
+			m_x = std::make_unique < int > (1);
 		}
 	}
 
-private:
+private :
 
-	std::unique_ptr < int > m_data;
+	std::unique_ptr < int > m_x;
 };
 
-//////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
 int main()
 {
-    Entity().make_data();
+    Entity().make();
 }

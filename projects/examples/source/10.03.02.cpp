@@ -21,9 +21,7 @@ int main()
 
 //  ------------------------------------------------------------
 
-	assert(set.insert(1).second == 0);
-
-	std::ignore = set.erase(1);
+	assert(set.insert(1).second == 0); set.erase(1);
 
 	assert(set.insert(1).second == 1);
 
@@ -43,7 +41,7 @@ int main()
 		
 	node.value() = 2;
 		
-	std::ignore = set.insert(std::move(node));
+	set.insert(std::move(node));
 
 //  ------------------------------------------------------------
 	

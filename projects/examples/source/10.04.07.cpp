@@ -5,18 +5,18 @@
 
 struct Entity 
 { 
-	int data = 0;
+	int x = 0;
 };
 
 /////////////////////////////////////////////////////////////////
 
 class Hash
 {
-public:
+public :
 
 	auto operator()(const Entity & entity) const
 	{
-		return std::hash < int > ()(entity.data);
+		return std::hash < int > ()(entity.x);
 	}
 };
 
@@ -24,11 +24,11 @@ public:
 
 class Equal
 {
-public:
+public :
 
 	auto operator()(const Entity & lhs, const Entity & rhs) const
 	{
-		return lhs.data == rhs.data;
+		return lhs.x == rhs.x;
 	}
 };
 
