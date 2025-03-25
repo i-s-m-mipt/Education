@@ -4,11 +4,13 @@
 #include <iostream>
 #include <vector>
 
-////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 int main()
 {
-	std::cout << "main : enter size : "; auto size = 0uz; std::cin >> size;
+	auto size = 0uz;
+	
+	std::cout << "main : enter size : "; std::cin >> size;
 
 	std::vector < int > vector(size, 0);
 

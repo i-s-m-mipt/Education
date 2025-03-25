@@ -1,30 +1,32 @@
 #include <iostream>
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 int main()
 {
+	auto x = 0;
+
+//  ----------------------------------------------------------------------
+
     for (auto i = 0uz; i < 5; ++i)
 	{
-		std::cout << "main : iteration (1) : i = " << i << ' ';
+		std::cout << "main : iteration (1) : i = " << i << '\n';
 
-		std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x;
+		std::cout << "main : iteration (1) : enter int : "; std::cin >> x;
 			
-		if (x == 'b') 
+		if (x == 0)
 		{
-			break; // support: compiler-explorer.com
+			break; // support : compiler-explorer.com
 		}
 	}
 
-//  -------------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
     for (;;)
 	{
-		std::cout << "main : iteration (2) : ";
-
-		std::cout << "enter \'b\' to break : "; auto x = '\0'; std::cin >> x;
+		std::cout << "main : iteration (2) : enter int : "; std::cin >> x;
 			
-		if (x == 'b') 
+		if (x == 0)
 		{
 			break;
 		}

@@ -8,7 +8,7 @@ int main()
 	{
 		std::cout << "main : iteration : i = " << i << '\n';
 			
-		continue; // support: compiler-explorer.com
+		continue; // support : compiler-explorer.com
 
 		std::cout << "main : iteration : i = " << i << '\n';
 	}

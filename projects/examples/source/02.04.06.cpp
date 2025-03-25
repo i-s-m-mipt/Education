@@ -50,19 +50,21 @@ void merge(std::vector < int > & vector, std::size_t left, std::size_t middle, s
 
 void split(std::vector < int > & vector, std::size_t left, std::size_t right)
 {
-	if (right - left <= 64)
-	{
-		sort(vector, left, right);
-	}
-	else
+	if (right - left > 64)
 	{
 		auto middle = std::midpoint(left, right);
+
+	//  -----------------------------------------
 		
 		split(vector, left, middle       );
 		
 		split(vector,       middle, right);
 
 		merge(vector, left, middle, right);
+	}
+	else
+	{
+		sort(vector, left, right);
 	}
 }
 
@@ -81,12 +83,16 @@ int main()
 
 	std::vector < int > vector(size, 0);
 
+//  ---------------------------------------
+
 	for (auto i = 0uz; i < size; ++i)
 	{
 		vector[i] = size - i;
 	}
 
 	sort(vector);
+
+//  ---------------------------------------
 
 	assert(std::ranges::is_sorted(vector));
 }

@@ -29,5 +29,5 @@ int main()
 
 //  ---------------------------------------------
 
-    test_v2(1); // support: compiler-explorer.com
+    test_v2(1); // support : compiler-explorer.com
 }

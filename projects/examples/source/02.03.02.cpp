@@ -4,21 +4,21 @@ int main()
 		  
 	const auto y = 2;
 
-//  -------------------------------------------------------
+//  ----------------------------------------------------
 
-	[[maybe_unused]]       int * const p_x_1 = &x;
+	[[maybe_unused]]       int * const z1 = &x;
 
-//	[[maybe_unused]]       int * const p_y_1 = &y; // error
+//	[[maybe_unused]]       int * const z2 = &y; // error
 
-//  -------------------------------------------------------
+//  ----------------------------------------------------
 
-	[[maybe_unused]] const int *       p_x_2 = &x;
+	[[maybe_unused]] const int *       z3 = &x;
 
-	[[maybe_unused]] const int *       p_y_2 = &y;
+	[[maybe_unused]] const int *       z4 = &y;
 
-//  -------------------------------------------------------
+//  ----------------------------------------------------
 
-	[[maybe_unused]] const int * const p_x_3 = &x;
+	[[maybe_unused]] const int * const z5 = &x;
 
-	[[maybe_unused]] const int * const p_y_3 = &y;
+	[[maybe_unused]] const int * const z6 = &y;
 }

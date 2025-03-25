@@ -3,11 +3,13 @@
 #include <cstddef>
 #include <iostream>
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 int main()
 {
-	std::cout << "main : enter size : "; auto size = 0uz; std::cin >> size;
+	auto size = 0uz;
+	
+	std::cout << "main : enter size : "; std::cin >> size;
 
 	auto array = new int[size]{};
 

@@ -4,11 +4,11 @@
 
 int main()
 {
-	auto ptr = new auto(1);
+	auto x = new auto(1);
 
-	assert(*ptr == 1);
+	assert(*x == 1);
 	
-	delete ptr;
+	delete x;
 	
 //  -----------------------------------------
 

@@ -4,7 +4,7 @@
 
 int main()
 {
-	for (auto i = 0uz; i < 5; ++i) // support: compiler-explorer.com
+	for (auto i = 0uz; i < 5; ++i) // support : compiler-explorer.com
 	{
 		std::cout << "main : iteration (1) : i = " << i << '\n';
 	}

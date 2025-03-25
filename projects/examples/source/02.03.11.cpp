@@ -1,26 +1,26 @@
 #include <type_traits>
 
-////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
 int main()
 {
-    auto x = 1, & r_x_1 = x, y = r_x_1;
+    auto x1 = 1, & x2 = x1, x3 = x2;
 
-//  --------------------------------------------------------
+//  ---------------------------------------------------------
 
-	static_assert(std::is_same_v < decltype( x ), int   > );
+	static_assert(std::is_same_v < decltype( x1 ), int   > );
 
-    static_assert(std::is_same_v < decltype( y ), int   > );
+    static_assert(std::is_same_v < decltype( x3 ), int   > );
 
-    static_assert(std::is_same_v < decltype((x)), int & > );
+    static_assert(std::is_same_v < decltype((x1)), int & > );
 
-//  --------------------------------------------------------
+//  ---------------------------------------------------------
 
-	decltype(auto) r_x_2 = r_x_1;
+	decltype(auto) x4 = x2;
 
-//  --------------------------------------------------------
+//  ---------------------------------------------------------
 
-    static_assert(std::is_reference_v < decltype(r_x_1) > );
+    static_assert(std::is_same_v < decltype( x2 ), int & > );
 
-    static_assert(std::is_reference_v < decltype(r_x_2) > );
+    static_assert(std::is_same_v < decltype( x4 ), int & > );
 }

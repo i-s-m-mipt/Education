@@ -10,7 +10,7 @@
 
 const auto & test_v3()
 {
-	static auto x = 0; // support: compiler-explorer.com
+	static auto x = 0; // support : compiler-explorer.com
 
 	return ++x;
 }

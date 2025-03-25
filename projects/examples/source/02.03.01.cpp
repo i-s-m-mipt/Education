@@ -3,21 +3,21 @@
 #include <iostream>
 #include <type_traits>
 
-////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 int main()
 {
-    auto x = 1, * p_x = &x;
+    auto x = 1, * y = &x;
 
-	static_assert(std::is_same_v < decltype(p_x), int * > );
+	static_assert(std::is_same_v < decltype(y), int * > );
 
-	assert(*p_x == x);
+	assert(*y == x);
 
-	std::cout << "main : p_x = " << p_x << '\n';
+	std::cout << "main : y = " << y << '\n';
 
-//  --------------------------------------------------------
+//  ------------------------------------------------------
 
-	[[maybe_unused]] int * ptr = nullptr;
+	[[maybe_unused]] int * z1 = nullptr;
 
-//	[[maybe_unused]] int * ptr = NULL; // bad
+//	[[maybe_unused]] int * z2 = NULL; // bad
 }
