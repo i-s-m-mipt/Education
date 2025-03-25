@@ -10,7 +10,7 @@
 	std::cout << PREFIX << #version << '\n';    \
 }                                                    
 
-FUNCTION(v1) // support: cppinsights.io
+FUNCTION(v1) // support : cppinsights.io
 
 #undef FUNCTION
 
@@ -64,5 +64,5 @@ int main()
 
 //  -----------------------------------------------
 
-    TRACE("main", "trace");
+    TRACE("main", "execution ... ");
 }

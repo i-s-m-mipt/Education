@@ -10,7 +10,7 @@
 
 class Entity : private boost::noncopyable
 {
-public:
+public :
 
     Entity();
 
@@ -32,7 +32,7 @@ public:
 
     void test() const;
 
-private:
+private :
 
 	class Implementation;
 

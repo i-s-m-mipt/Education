@@ -6,7 +6,7 @@
 
 class Entity::Implementation
 {
-public:
+public :
 
     void test() const
     { 
