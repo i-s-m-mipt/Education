@@ -258,13 +258,14 @@ set(debug
     08.02.01
     08.02.02
 #   08.02.03
-    08.02.04
+#   08.02.04
     08.02.05
     08.02.06
     08.02.07
-#   08.02.08
+    08.02.08
 #   08.02.09
 #   08.02.10
+#   08.02.11
     08.03.01
     08.03.02
     08.03.03
@@ -273,6 +274,7 @@ set(debug
     08.03.06
     08.03.07
 #   08.03.08
+#   08.03.10
     08.04.01
     08.04.02
     08.04.03
@@ -503,13 +505,13 @@ target_link_libraries      (07.03.06 PRIVATE GTest::gtest)
 
 #############################################################################################
 
-add_executable             (08.02.09 source/08.02.09.cpp)
+add_executable             (08.02.10 source/08.02.10.cpp)
 
-target_compile_options     (08.02.09 PRIVATE -Wall -Wextra -pedantic -O0)
+target_compile_options     (08.02.10 PRIVATE -Wall -Wextra -pedantic -O0)
 
-target_link_libraries      (08.02.09 PRIVATE ${Boost_LIBRARIES})
+target_link_libraries      (08.02.10 PRIVATE ${Boost_LIBRARIES})
 
-target_link_libraries      (08.02.09 PRIVATE Python::Python)
+target_link_libraries      (08.02.10 PRIVATE Python::Python)
 
 #############################################################################################
 
@@ -545,7 +547,7 @@ set(release
     08.01.06
     08.01.10
     08.03.09
-    08.03.10
+    08.03.11
     08.04.04
     08.04.05
     09.03.02
