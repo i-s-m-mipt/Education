@@ -12,7 +12,7 @@ int main()
 	{
 		std::cout << "main : iteration (1) : i = " << i << '\n';
 
-		std::cout << "main : iteration (1) : enter int : "; std::cin >> x;
+		std::cout << "main : iteration (1) : enter int x : "; std::cin >> x;
 			
 		if (x == 0)
 		{
@@ -24,7 +24,7 @@ int main()
 
     for (;;)
 	{
-		std::cout << "main : iteration (2) : enter int : "; std::cin >> x;
+		std::cout << "main : iteration (2) : enter int x : "; std::cin >> x;
 			
 		if (x == 0)
 		{

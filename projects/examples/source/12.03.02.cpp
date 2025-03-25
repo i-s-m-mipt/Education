@@ -107,7 +107,7 @@ public :
 	{
 		std::string string;
 
-		std::cout << "Calculator::test : enter statements : \n";
+		std::cout << "Calculator::test : enter std::string string(s) : \n";
 		
 		while (std::getline(std::cin >> std::ws, string))
 		{

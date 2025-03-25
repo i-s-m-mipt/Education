@@ -20,9 +20,9 @@ int main()
 
 //  -----------------------------------------------------------
 	
-	std::cout << "main : enter int : "; std::cin >> x;
+	std::cout << "main : enter int x : "; std::cin >> x;
 
-	std::cout << "main : selection : ";
+	std::cout << "main : selection ";
 
 //  -----------------------------------------------------------
 

@@ -14,7 +14,7 @@ int main()
 		{
 			std::cout << "main : iteration : i = " << i << " j = " << j << '\n';
 
-			std::cout << "main : iteration : enter int : "; std::cin >> x;
+			std::cout << "main : iteration : enter int x : "; std::cin >> x;
 			
 			if (x == 0) 
 			{

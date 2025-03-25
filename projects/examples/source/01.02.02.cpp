@@ -6,19 +6,17 @@
 #include <string>
 #include <vector>
 
-//  using namespace std; // bad
-
-using namespace std::literals;
+// using namespace std; // bad
 
 ////////////////////////////////////////////////////////
 
 int main()
 {
-	auto x = 0;
+	int x = 0;
 
 //  ----------------------------------------------------
 
-	std::cout << "main : enter int : "; std::cin >> x;
+	std::cout << "main : enter int x : "; std::cin >> x;
 
 	std::cout << "main : x = " << x << '\n';
 
@@ -28,7 +26,7 @@ int main()
 
 //  ----------------------------------------------------
 
-	auto string = "aaaaa"s;
+	std::string string = "aaaaa";
 
 //  ----------------------------------------------------
 	
