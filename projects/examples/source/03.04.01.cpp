@@ -4,25 +4,17 @@
 #include <istream>
 #include <numeric>
 #include <ostream>
+#include <sstream>
 #include <vector>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 class Rational
 {
-public:
+public :
 
 	/* explicit */ Rational(int num = 0, int den = 1) : m_num(num), m_den(den)
 	{
-		if (m_den == 0) { std::cerr << "Rational::Rational : invalid denominator\n"; }
-
-		if (m_den <  0)
-		{
-			m_num *= -1;
-			
-			m_den *= -1;
-		}
-
 		reduce();
 	}
 
@@ -123,18 +115,11 @@ public:
 
 	friend auto & operator>>(std::istream & stream, Rational & rational)
 	{
-		auto num = 0, den = 0;
+		stream >> rational.m_num; 
 		
-		auto x = '\0';
-		
-		stream >> num >> x >> den;
+		stream.get();
 
-		if (x != '/') 
-		{
-			std::cerr << "operator>> : invalid rational\n";
-		}
-
-		rational = Rational(num, den);
+		stream >> rational.m_den;
 		
 		return stream;
 	}
@@ -144,7 +129,7 @@ public:
 		return stream << rational.m_num << '/' << rational.m_den;
 	}
 
-private:
+private :
 
 	void reduce()
 	{
@@ -171,23 +156,21 @@ auto equal(double x, double y, double epsilon = 1e-6)
 
 int main()
 {
-	Rational x = 1;
-	
-	Rational y(2, 1);
+	Rational x = 1, y(2, 1);
 
-//  -------------------------------------------------------
+//  -------------------------------------------------
 
 //	std::vector < int > vector = 1; // error
 
-//  -------------------------------------------------------
+//  -------------------------------------------------
 
 	assert(equal(static_cast < double > (x), 1));
 
-//  -------------------------------------------------------
+//  -------------------------------------------------
 
 //	assert(x.operator+=(y) == Rational(3, 1)); // bad
 
-//  -------------------------------------------------------
+//  -------------------------------------------------
 
 	assert((x += y) == Rational(+3, 1));
 
@@ -197,7 +180,7 @@ int main()
 
 	assert((x /= y) == Rational(+1, 1));
 
-//  -------------------------------------------------------
+//  -------------------------------------------------
 
 	assert((x ++  ) == Rational(+1, 1));
 
@@ -207,15 +190,15 @@ int main()
 
 	assert((  -- y) == Rational(+2, 1));
 
-//  -------------------------------------------------------
+//  -------------------------------------------------
 
 //	x++++; // error
 
-//  -------------------------------------------------------
+//  -------------------------------------------------
 
 //	assert(operator+(x, y) == Rational(3, 1)); // bad
 
-//  -------------------------------------------------------
+//  -------------------------------------------------
 
 	assert((x +  y) == Rational(+3, 1));
 
@@ -225,7 +208,7 @@ int main()
 
 	assert((x /  y) == Rational(+1, 2));
 
-//  -------------------------------------------------------
+//  -------------------------------------------------
 
 	assert((x += 1) == Rational(+2, 1));
 
@@ -235,7 +218,7 @@ int main()
 
 	assert((1 +  1) == Rational(+2, 1));
 
-//  -------------------------------------------------------
+//  -------------------------------------------------
 
 	assert((x <  y) == 0);
 	
@@ -249,9 +232,19 @@ int main()
 
 	assert((x != y) == 0);
 
-//  -------------------------------------------------------
+//  -------------------------------------------------
 
-	std::cout << "main : enter Rational : "; std::cin >> x; 
+	std::stringstream stream_1("1/2");
+
+	std::stringstream stream_2;
 	
-	std::cout << "main : x = " << x << '\n';
+//  -------------------------------------------------
+
+	stream_1 >> x;
+
+	stream_2 << x;
+
+//  -------------------------------------------------
+
+	assert(stream_2.str() == stream_1.str());
 }

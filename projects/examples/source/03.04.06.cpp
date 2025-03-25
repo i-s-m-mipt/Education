@@ -1,11 +1,13 @@
+#include <cassert>
 #include <iostream>
 #include <ostream>
+#include <sstream>
 
 //////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
-public:
+public :
 
     virtual ~Entity() = default;
 
@@ -13,69 +15,91 @@ public:
 
     friend auto & operator>>(std::istream & stream, Entity & entity)
     {
+        stream.get(); 
+        
         entity.get(stream);
+
+        stream.get();
 
         return stream;
     }
 
     friend auto & operator<<(std::ostream & stream, const Entity & entity)
     {
+        stream << "{ "; 
+        
         entity.put(stream);
+
+        stream << " }";
 
         return stream;
     }
 
-protected:
+protected :
 
     virtual void get(std::istream & stream)
     {
-        stream >> m_data;
+        stream >> m_x;
     }
 
     virtual void put(std::ostream & stream) const 
     { 
-        stream << "{ " << m_data << " }";
+        stream << m_x;
     }
 
 //  ----------------------------------------------------------------------
 
-    int m_data = 0;
+    int m_x = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
 
 class Client : public Entity 
 {
-public:
+public :
 
     void get(std::istream & stream) override
     {
         Entity::get(stream);
         
-        stream >> Client::m_data;
+        stream >> m_y;
     }
 
     void put(std::ostream & stream) const override 
     { 
-        stream << "{ " << Entity::m_data << ' ' << Client::m_data << " }";
+        Entity::put(stream);
+
+        stream << ' ' << m_y;
     }
 
-private:
+private :
 
-    int m_data = 0;
+    int m_y = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::cout << "main : enter Client : ";
+    std::stringstream stream_1("{ 1 1 }");
+
+    std::stringstream stream_2;
+
+//  -----------------------------------------
     
     Entity * entity = new Client;
-    
-    std::cin >> *entity;
 
-    std::cout << "main : *entity = " << *entity << '\n';
+//  -----------------------------------------
+
+    stream_1 >> *entity;
+
+    stream_2 << *entity;
+
+//  -----------------------------------------
+
+    assert(stream_2.str() == stream_1.str());
+
+//  -----------------------------------------
 
     delete entity;
 }

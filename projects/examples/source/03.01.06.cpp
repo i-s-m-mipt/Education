@@ -1,69 +1,69 @@
 #include <cassert>
 #include <string>
 
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 class Entity
 {
-public:
+public :
 
-	Entity(int x) : m_data(x) {}
+	Entity(int x) : m_x(x) {}
 
-//  -----------------------------------------------------------
+//  ----------------------------------------------------------
 
     const auto & get() const
     {      
-        return m_data_cache.load(*this);
+        return m_cache.get(*this);
     }
 
-//  -----------------------------------------------------------
+//  ----------------------------------------------------------
 
     void set(int x) 
     { 
         if (x > 0)
         {
-            m_data = x;
+            m_x = x;
 
-            m_data_cache.clear();
+            m_cache.clear();
         }
     }
 
-private:
+private :
 
-	class Data_Cache 
+	class Cache 
 	{ 
-	public:
+	public :
 
-		auto load(const Entity & entity) -> const std::string &
+		auto get(const Entity & entity) -> const std::string &
 		{
-			if (m_data.empty())
+			if (m_string.empty())
 			{
-				m_data = std::to_string(entity.m_data);
+				m_string = std::to_string(entity.m_x);
 			}
 			
-			return m_data;
+			return m_string;
 		}
 
 		void clear()
 		{
-			m_data.clear();
+			m_string.clear();
 		}
 
-	private:
+	private :
 
-		std::string m_data;
+		std::string m_string;
 	};
 
-//  -----------------------------------------------------------
+//  ----------------------------------------------------------
 
-	mutable Data_Cache m_data_cache;
+	mutable Cache m_cache;
 
-//  -----------------------------------------------------------
+//  ----------------------------------------------------------
 
-	int m_data = 0;
+	int m_x = 0;
 };
 
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 int main()
 {

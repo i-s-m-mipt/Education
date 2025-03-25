@@ -2,15 +2,15 @@
 
 ////////////////////////////////////////////////
 
-class Client_v1 { public: static void test(); };
+class Client_v1 { public : static void test(); };
 
-class Client_v2 { public: static void test(); };
+class Client_v2 { public : static void test(); };
 
 ////////////////////////////////////////////////
 
 class Entity
 {
-private:
+private :
 
 	friend void            test();
 

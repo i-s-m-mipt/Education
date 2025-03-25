@@ -1,13 +1,13 @@
 #include <cassert>
 #include <iostream>
 
-//////////////////////////////////////////////////
+///////////////////////////////////////////////
 
 class Entity
 {
-public:
+public :
 
-	Entity(int x) : m_data(x) {}
+	Entity(int x) : m_x(x) {}
 
 //  -------------------------------------
 
@@ -16,27 +16,27 @@ public:
         std::cout << "Entity::test_v1\n";
     }
 
-protected:
+protected :
 
     void test_v2() const 
     { 
         std::cout << "Entity::test_v2\n";
     }
 
-private:
+private :
 
-	int m_data = 0;
+	int m_x = 0;
 };
 
-//////////////////////////////////////////////////
+///////////////////////////////////////////////
 
 class Client : public Entity
 {
-public:
+public :
 
-	Client(int x, int y) : Entity(x), m_data(y) {}
+	Client(int x, int y) : Entity(x), m_y(y) {}
 
-//  ----------------------------------------------
+//  -------------------------------------------
 
 	void test_v1() const
 	{
@@ -47,20 +47,22 @@ public:
 		Entity::test_v1();
 	}
 
-//  ----------------------------------------------
+//  -------------------------------------------
 
 	using Entity::test_v2;
 
-private:
+private :
 
-	int m_data = 0;
+	int m_y = 0;
 };
 
-//////////////////////////////////////////////////
+///////////////////////////////////////////////
 
 int main()
 {
     Entity entity(1);
+
+//  --------------------------
 
     entity.test_v1();
 
@@ -69,6 +71,8 @@ int main()
 //  --------------------------
 
 	Client client(1, 1);
+
+//  --------------------------
 
 	client.test_v1();
 

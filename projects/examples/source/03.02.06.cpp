@@ -5,14 +5,14 @@
 
 class Entity
 {
-public:
+public :
 
 	void test_v1() const 
 	{ 
 		std::cout << "Entity::test_v1\n";
 	}
 
-protected:
+protected :
 
 	void test_v2() const 
 	{ 
@@ -24,7 +24,7 @@ protected:
 
 class Server_v1 : private Entity 
 {
-public:
+public :
 
 	void test() const
 	{
@@ -38,7 +38,7 @@ public:
 
 class Server_v2 
 {
-public:
+public :
 
 	void test() const
 	{
@@ -47,7 +47,7 @@ public:
 //		m_entity.test_v2(); // error
 	}
 
-private: 
+private : 
 
 	Entity m_entity;
 };

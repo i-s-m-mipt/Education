@@ -5,29 +5,29 @@
 
 class Entity
 {
-public:
+public :
 
-    Entity(int x, int y) : m_data_1(x), m_data_2(y) {}
+    Entity(int x, int y) : m_x(x), m_y(y) {}
 
 //  -------------------------------------------------------------------------------
 
     friend auto operator<=>(const Entity & lhs, const Entity & rhs)
     {
-        if (lhs.m_data_1 == 0 || rhs.m_data_1 == 0)           
+        if (lhs.m_x == 0 || rhs.m_x == 0)           
         { 
             return std::partial_ordering::unordered;
         }
 
-        if (lhs.m_data_1 < rhs.m_data_1) { return std::partial_ordering::less;    }
+        if (lhs.m_x < rhs.m_x) { return std::partial_ordering::less;    }
 
-        if (lhs.m_data_1 > rhs.m_data_1) { return std::partial_ordering::greater; }
+        if (lhs.m_x > rhs.m_x) { return std::partial_ordering::greater; }
 
         return std::partial_ordering::equivalent;
     }
 
-private:
+private :
 
-    int m_data_1 = 0, m_data_2 = 0;
+    int m_x = 0, m_y = 0;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////

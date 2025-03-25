@@ -1,12 +1,13 @@
+#include <cassert>
 #include <iostream>
 
 ////////////////////////////////////////////////////
 
 class Entity
 {
-public:
+public :
 
-	Entity(int x) : m_data(x) {}
+	Entity(int x) : m_x(x) {}
 
 //  ----------------------------------
 
@@ -17,11 +18,11 @@ public:
 
 //  ----------------------------------
 
-	static inline auto s_data = 0;
+	static inline auto s_x = 1;
 
-private:
+private :
 
-	int m_data = 0;
+	int m_x = 0;
 };
 
 ////////////////////////////////////////////////////
@@ -38,7 +39,7 @@ int main()
 
 //  --------------------------------
 
-	Entity::s_data = 1;
+	assert(Entity::s_x == 1);
 
 //  --------------------------------
 

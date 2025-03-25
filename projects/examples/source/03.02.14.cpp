@@ -5,7 +5,7 @@
 
 class Entity 
 {
-public:
+public :
 
 	virtual ~Entity() = default;
 };
@@ -24,11 +24,11 @@ int main()
 
 //  ------------------------------------------------------------------------------
 
-//	assert(  static_cast < Client * > (entity)); // bad
+//	assert( static_cast < Client * > (entity) != 0); // bad
 
-	assert( dynamic_cast < Client * > (entity)); // support: compiler-explorer.com
+	assert(dynamic_cast < Client * > (entity) != 0); // support : compiler-explorer.com
 
-	assert(!dynamic_cast < Server * > (entity));
+	assert(dynamic_cast < Server * > (entity) == 0);
 
 //  ------------------------------------------------------------------------------
 
@@ -38,5 +38,5 @@ int main()
 
 	[[maybe_unused]] auto x = 1.0;
 
-//	std::ignore = dynamic_cast < int > (x); // error
+//	assert(dynamic_cast < int > (x) == 1); // error
 }

@@ -4,22 +4,22 @@
 
 class Entity
 { 
-public:
+public :
 
 	virtual ~Entity() = default;
 
-private: 
+private : 
 
-	void * m_data = nullptr;
+	void * m_x = nullptr;
 };
 
 ////////////////////////////////////////////////////////
 
 class Client : public Entity 
 { 
-private: 
+private : 
 	
-	void * m_data = nullptr;
+	void * m_x = nullptr;
 };
 
 ////////////////////////////////////////////////////////

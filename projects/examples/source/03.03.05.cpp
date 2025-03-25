@@ -4,7 +4,7 @@
 
 class Entity
 {
-public:
+public :
 
 	void test() const &  { std::cout << "Entity::test (1)\n"; }
 

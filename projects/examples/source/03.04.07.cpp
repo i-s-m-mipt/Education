@@ -8,9 +8,9 @@
 
 class Vector 
 {
-public:
+public :
 
-    Vector(std::initializer_list < int > list) : m_data(list) {}
+    Vector(std::initializer_list < int > list) : m_vector(list) {}
 
 //  --------------------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ public:
     {
         std::cout << "Vector::operator[] (1)\n";
 
-        return m_data[index];
+        return m_vector[index];
     }
 
     auto & operator[](std::size_t index)
@@ -28,9 +28,9 @@ public:
         return const_cast < int & > (static_cast < const Vector & > (*this)[index]);
     }
 
-private:
+private :
 
-    std::vector < int > m_data;
+    std::vector < int > m_vector;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -39,9 +39,9 @@ int main()
 {
     auto x = 1;
         
-    const auto & r_x = x;
+    const auto & y = x;
 
-    const_cast < int & > (r_x) = 2;
+    const_cast < int & > (y) = 2;
     
     assert(x == 2);
 

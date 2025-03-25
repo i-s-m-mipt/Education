@@ -5,44 +5,44 @@
 
 class Entity_v1
 {
-public:
+public :
 
-    Entity_v1(int x, int y) : m_data_1(x), m_data_2(y) {}
+    Entity_v1(int x, int y) : m_x(x), m_y(y) {}
 
 //  ---------------------------------------------------------------------
 
     friend auto operator<=>(const Entity_v1 & lhs, const Entity_v1 & rhs) 
     { 
-        auto comparison = lhs.m_data_1 <=> rhs.m_data_1;
+        auto comparison = lhs.m_x <=> rhs.m_x;
 
         if (comparison != std::strong_ordering::equal)
         {
             return comparison;
         }
 
-        return lhs.m_data_2 <=> rhs.m_data_2;
+        return lhs.m_y <=> rhs.m_y;
     }
 
-private:
+private :
 
-    int m_data_1 = 0, m_data_2 = 0;
+    int m_x = 0, m_y = 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////
 
 class Entity_v2
 {
-public:
+public :
 
-    Entity_v2(int x, int y) : m_data_1(x), m_data_2(y) {}
+    Entity_v2(int x, int y) : m_x(x), m_y(y) {}
 
 //  --------------------------------------------------------------------------------
 
     friend auto operator<=>(const Entity_v2 & lhs, const Entity_v2 & rhs) = default;
 
-private:
+private :
 
-    int m_data_1 = 0, m_data_2 = 0;
+    int m_x = 0, m_y = 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -62,11 +62,12 @@ int main()
 //  ---------------------------------------------------
 
     assert((entity_v1_1 <  entity_v1_2) == 1);
-    assert((entity_v1_1 >  entity_v1_2) == 0);
-    assert((entity_v1_1 <= entity_v1_2) == 1);
-    assert((entity_v1_1 >= entity_v1_2) == 0);
 
-//  ---------------------------------------------------
+    assert((entity_v1_1 >  entity_v1_2) == 0);
+
+    assert((entity_v1_1 <= entity_v1_2) == 1);
+
+    assert((entity_v1_1 >= entity_v1_2) == 0);
 
 //  assert((entity_v1_1 == entity_v1_2) == 0); // error
 
@@ -79,9 +80,14 @@ int main()
 //  ---------------------------------------------------
 
     assert((entity_v2_1 <  entity_v2_2) == 1);
+
     assert((entity_v2_1 >  entity_v2_2) == 0);
+
     assert((entity_v2_1 <= entity_v2_2) == 1);
+
     assert((entity_v2_1 >= entity_v2_2) == 0);
+
     assert((entity_v2_1 == entity_v2_2) == 0);
+
     assert((entity_v2_1 != entity_v2_2) == 1);
 }

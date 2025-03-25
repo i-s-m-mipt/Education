@@ -4,7 +4,7 @@
 
 class Entity_v1 
 { 
-public:
+public :
 
 	virtual ~Entity_v1() = default;
 };
@@ -17,7 +17,7 @@ class Client_v1 : public Entity_v1 {};
 
 class Entity_v2 
 {
-public:
+public :
 
 	virtual ~Entity_v2() = default;
 
@@ -35,7 +35,7 @@ public:
 
 class Client_v2 : public Entity_v2
 {
-public:
+public :
 
 	Client_v1 * test() const override 
 	{ 

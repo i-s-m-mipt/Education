@@ -5,13 +5,13 @@
 #include <iterator>
 #include <utility>
 
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 class Vector
 {
-public:
+public :
 
-	Vector() : m_data(nullptr), m_size(0) 
+	Vector() : m_array(nullptr), m_size(0) 
 	{
 		std::cout << "Vector::Vector (1)\n";
 	}
@@ -20,40 +20,34 @@ public:
 	{
 		std::cout << "Vector::Vector (2)\n";
 
-		auto size = std::size(list);
+		m_array = (m_size = std::size(list)) ? new int[m_size]{} : nullptr;
 
-		m_data = size ? new int[size]{} : nullptr;
-
-		m_size = size;
-
-		std::ranges::copy(list, m_data);
+		std::ranges::copy(list, m_array);
 	}
 
-//  -----------------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
 	Vector(const Vector & other) : Vector() 
 	{
 		std::cout << "Vector::Vector (3)\n";
 
-		m_data = other.m_size ? new int[other.m_size]{} : nullptr;
+		m_array = (m_size = other.m_size) ? new int[m_size]{} : nullptr;
 
-		m_size = other.m_size;
-
-		std::ranges::copy(other.m_data, other.m_data + other.m_size, m_data);
+		std::ranges::copy(other.m_array, other.m_array + other.m_size, m_array);
 	}
 
-//  -----------------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
-	Vector(Vector && other) : m_data(other.m_data), m_size(other.m_size)
+	Vector(Vector && other)
+	: 
+		m_array(std::exchange(other.m_array, nullptr)), 
+		
+		m_size (std::exchange(other.m_size , 0))
 	{
 		std::cout << "Vector::Vector (4)\n";
-
-		other.m_data = nullptr;
-
-		other.m_size = 0;
 	}
 	
-//  -----------------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
 //	auto & operator=(const Vector & other) // bad
 //	{
@@ -61,22 +55,20 @@ public:
 //
 //		if (this != &other)
 //		{
-//			if (m_data)
+//			if (m_array)
 //			{
-//				delete[] m_data;
+//				delete[] m_array;
 //			}
 //
-//			m_data = other.m_size ? new int[other.m_size]{} : nullptr;
+//			m_array = (m_size = other.m_size) ? new int[m_size]{} : nullptr;
 //
-//			m_size = other.m_size;
-//
-//			std::ranges::copy(other.m_data, other.m_data + other.m_size, m_data);
+//			std::ranges::copy(other.m_array, other.m_array + other.m_size, m_array);
 //		}
 //
 //		return *this;
 //	}
 
-//  -----------------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
 //	auto & operator=(const Vector & other) // bad
 //	{
@@ -84,26 +76,24 @@ public:
 //
 //		if (this != &other)
 //		{
-//			auto data = other.m_size ? new int[other.m_size]{} : nullptr;
+//			auto array = other.m_size ? new int[other.m_size]{} : nullptr;
 //
-//			auto size = other.m_size;
+//			std::ranges::copy(other.m_array, other.m_array + other.m_size, array);
 //
-//			std::ranges::copy(other.m_data, other.m_data + other.m_size, data);
-//
-//			if (m_data)
+//			if (m_array)
 //			{
-//				delete[] m_data;
+//				delete[] m_array;
 //			}
 //
-//			m_data = data;
+//			m_array = array;
 //
-//			m_size = size;
+//			m_size  = other.m_size;
 //		}
 //
 //		return *this;
 //	}
 
-//  -----------------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
 //	auto & operator=(Vector && other) // bad
 //	{
@@ -111,24 +101,20 @@ public:
 //
 //		if (this != &other)
 //		{
-//			if (m_data) 
+//			if (m_array) 
 //			{
-//				delete[] m_data;
+//				delete[] m_array;
 //			}
 //			
-//			m_data = other.m_data;
-
-//			m_size = other.m_size;
+//			m_array = std::exchange(other.m_array, nullptr);
 //
-//			other.m_data = nullptr;
-//
-//			other.m_size = 0;
+//			m_size  = std::exchange(other.m_size , 0);
 //		}
 //
 //		return *this;
 //	}
 
-//  -----------------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
 	auto & operator=(Vector other)
 	{
@@ -139,35 +125,35 @@ public:
 		return *this;
 	}
 
-//  -----------------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
    ~Vector()
 	{
 		std::cout << "Vector::~Vector\n";
 
-		if (m_data) 
+		if (m_array) 
 		{
-			delete[] m_data;
+			delete[] m_array;
 		}
 	}
 
-//  -----------------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
 	void swap(Vector & other)
 	{
-		std::swap(m_data, other.m_data);
+		std::swap(m_array, other.m_array);
 		
-		std::swap(m_size, other.m_size);
+		std::swap(m_size , other.m_size );
 	}
 
-private:
+private :
 
-	int * m_data = nullptr;
+	int * m_array = nullptr;
 	
 	std::size_t m_size = 0;
 };
 
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -175,15 +161,15 @@ int main()
 
 	Vector vector_2 = { 1, 2, 3, 4, 5 };
 
-//  -------------------------------------
+//  --------------------------------------
 
-	Vector vector_3(vector_2);
+	Vector vector_3 = vector_2;
 
-	Vector vector_4(std::move(vector_3));
+		   vector_3 = vector_2;
 
-//  -------------------------------------
+//  --------------------------------------
 
-	vector_3 = vector_2;
+	Vector vector_4 = std::move(vector_3);
 
-	vector_4 = std::move(vector_3);
+		   vector_4 = std::move(vector_3);
 }

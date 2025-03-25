@@ -1,70 +1,72 @@
 #include <cassert>
 #include <iostream>
 
-//////////////////////////////////////////
+///////////////////////////////////////
 
 class Entity
 {
-public:
+public :
 
-    Entity(int x) : m_data(x) {}
+    Entity(int x) : m_x(x) {}
 
-//  --------------------------------------   
+//  -----------------------------------   
 
     auto get() const 
     { 
-//	    m_data = 1; // error
+//	    m_x = 1; // error
 
-        return m_data;
+        return m_x;
     }
 
-//  --------------------------------------
+//  -----------------------------------
 
-//	void set(int x) { m_data = x; } // bad
+//	void set(int x) { m_x = x; } // bad
 
     void set(int x) 
     { 
         if (x > 0)
         {
-            m_data = x;
+            m_x = x;
         }
     }
 
-//  --------------------------------------
+//  -----------------------------------
 
     void test() const;
 
-private: 
+private :
 
-    int m_data = 0;
+    int m_x = 0;
 };
 
-//////////////////////////////////////////
+///////////////////////////////////////
 
 void Entity::test() const
 {
     std::cout << "Entity::test\n";
 }
 
-//////////////////////////////////////////
+///////////////////////////////////////
 
 int main()
 {
-	Entity entity_1(1);
-
-//	entity_1.m_data = 2; // error
-
-	entity_1.set(2);
-		
-	assert(entity_1.get() == 2);
-
-//  -----------------------------
+	      Entity entity_1(1);
 
     const Entity entity_2(2);
 
+//  ----------------------------
+
+	entity_1.set(2);
+
 //  entity_2.set(3); // error
 
+//  ----------------------------
+		
+	assert(entity_1.get() == 2);
+
     assert(entity_2.get() == 2);
+
+//  ----------------------------
 
     entity_2.test();
 }

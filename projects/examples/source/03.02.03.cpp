@@ -4,13 +4,13 @@
 
 class Entity
 {
-public:
+public :
 
-    class Key_v1 { private: friend class Client; Key_v1() = default; };
+    class Key_v1 { private : friend class Client; Key_v1() = default; };
 
-    class Key_v2 { private:                      Key_v2() = default; };
+    class Key_v2 { private :                      Key_v2() = default; };
 
-private:
+private :
 
     friend class Client;
 
@@ -25,7 +25,7 @@ private:
 
 class Client
 {
-public:
+public :
 
     static void test()
     {

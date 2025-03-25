@@ -4,7 +4,7 @@
 
 class Entity
 {
-private:
+private :
 
     friend class Attorney;
 
@@ -19,7 +19,7 @@ private:
 
 class Attorney 
 {
-private:
+private :
 
     friend class Client;
 
@@ -34,7 +34,7 @@ private:
 
 class Client
 {
-public:
+public :
 
     static void test()
     {

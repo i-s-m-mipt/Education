@@ -5,7 +5,7 @@
 
 class Entity 
 {
-public:
+public :
 
 	Entity()
 	{
@@ -46,7 +46,7 @@ void Entity::test_v2() const
 
 class Client : public Entity
 {
-public:
+public :
 
 	void test_v1() const override final 
 	{ 
@@ -65,7 +65,7 @@ public:
 
 class Server final : public Entity 
 {
-public:
+public :
 
 	void test_v2() const override 
 	{ 
@@ -79,7 +79,7 @@ public:
 
 class Router : private Entity 
 {
-public:
+public :
 
 	void test_v2() const override 
 	{ 
@@ -111,7 +111,7 @@ int main()
 
 //  ------------------------------------------------------
 
-    entity_1->test_v1(); // support: compiler-explorer.com
+    entity_1->test_v1(); // support : compiler-explorer.com
 
     entity_1->test_v2();
 

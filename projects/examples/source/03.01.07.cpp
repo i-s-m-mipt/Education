@@ -1,43 +1,42 @@
+#include <cassert>
 #include <iostream>
 #include <string>
 
 using namespace std::literals;
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////
 
 class Entity
 {
-public:
+public :
 
 	static void test()
 	{
 		std::cout << "Entity::test\n";
 
-	//	m_data = 1; // error
+	//	m_x = 1; // error
 	}
 
-//  ------------------------------------------------------
+//  ----------------------------------
 
-	static inline       auto s_data_1 = 0;
+	static inline       auto s_x = 1;
 
-	static        const auto s_data_2 = 1;
+	static        const auto s_y = 2;
 
-//	static        const auto s_data_3 = "aaaaa"s; // error
+	static inline const auto s_z = 3;
 
-	static inline const auto s_data_4 = "aaaaa"s;
+private :
 
-private:
-
-	int m_data = 0;
+	int m_x = 0;
 };
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////
 
 int main()
 {
-	Entity::s_data_1 = 1;
+	assert(Entity::s_x == 1);
 
-//  ---------------------
+//  -------------------------
 
 	Entity::test();
 }
