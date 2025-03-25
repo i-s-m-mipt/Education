@@ -15,7 +15,7 @@ using namespace std::literals;
 
 template < typename T > class Visitor
 {
-public:
+public :
 
     void operator()(const std::any & any) const
     {
@@ -27,17 +27,17 @@ public:
 
 int main()
 {
-    using data_1_t = int;
+    using alias_1 = int;
 
-    using data_2_t = std::string;
+    using alias_2 = std::string;
 
 //  -------------------------------------------------------------------------------------------
 
     std::unordered_map < std::type_index, std::function < void(const std::any &) > > visitors =
     {
-        std::make_pair(std::type_index(typeid(data_1_t)), Visitor < data_1_t > ()),
+        std::make_pair(std::type_index(typeid(alias_1)), Visitor < alias_1 > ()),
         
-        std::make_pair(std::type_index(typeid(data_2_t)), Visitor < data_2_t > ())
+        std::make_pair(std::type_index(typeid(alias_2)), Visitor < alias_2 > ())
     };
 
 //  -------------------------------------------------------------------------------------------

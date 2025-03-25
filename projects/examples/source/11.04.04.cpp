@@ -9,7 +9,7 @@
 
 class Visitor : public boost::default_dfs_visitor
 {
-public:
+public :
 
     template < typename V, typename G > void initialize_vertex(V vertex, const G & graph)
     {

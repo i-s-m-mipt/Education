@@ -1,32 +1,40 @@
 #include <algorithm>
-#include <cassert>
+#include <iostream>
 #include <iterator>
 #include <random>
 #include <vector>
 
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+void test(const std::vector < int > & vector)
+{
+	std::cout << "test : vector = { ";
+
+	for (auto element : vector)
+	{
+		std::cout << element << ' ';
+	}
+
+	std::cout << "}\n";
+}
+
+/////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+	std::vector < int > vector(5, 0);
+
+	std::uniform_int_distribution distribution(1, 5);
 
 	std::default_random_engine engine;
 
-//  -----------------------------------------------------------------
+	auto lambda = [&engine, &distribution](){ return distribution(engine); };
 
-	std::shuffle(std::begin(vector), std::end(vector), engine);
+//  -------------------------------------------------------------------------
 
-//  -----------------------------------------------------------------
+	std::ranges::generate(vector, lambda);
 
-	auto iterator = std::next(std::begin(vector), 2);
+//  -------------------------------------------------------------------------
 
-//  -----------------------------------------------------------------
-
-	std::nth_element(std::begin(vector), iterator, std::end(vector));
-
-//  -----------------------------------------------------------------
-
-    assert(vector[0] < *iterator && vector[1] < *iterator);
-
-    assert(vector[3] > *iterator && vector[4] > *iterator);
+	test(vector);
 }

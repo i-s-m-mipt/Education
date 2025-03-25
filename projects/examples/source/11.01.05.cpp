@@ -7,7 +7,7 @@
 
 template < typename T > class Mean
 {
-public:
+public :
 
 	void operator()(T x) 
 	{ 
@@ -23,7 +23,7 @@ public:
 		return m_sum / m_counter;
 	}
 
-private:
+private :
 
 	T m_sum = T(0);
 	

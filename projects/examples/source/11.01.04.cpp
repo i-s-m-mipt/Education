@@ -15,16 +15,16 @@ auto test()
 
 class Functor
 {
-public:
+public :
 
 	auto operator()() 
 	{ 
-		return ++m_data;
+		return ++m_x;
 	}
 
-private:
+private :
 
-	int m_data = 0;
+	int m_x = 0;
 };
 
 ///////////////////////////////////////////////

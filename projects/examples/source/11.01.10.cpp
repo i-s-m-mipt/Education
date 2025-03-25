@@ -5,12 +5,12 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 
+enum class State : std::uint8_t { slow, fast };
+
+///////////////////////////////////////////////////////////////////////////////
+
 struct Entity 
 {
-	enum class State : std::uint8_t { slow, fast };
-
-//  -----------------------------------------------
-
 	State state = State::slow;
 };
 
@@ -18,11 +18,7 @@ struct Entity
 
 class Command
 {
-public:
-
-	using State = Entity::State;
-	
-//  ---------------------------------------------------------------------------
+public :
 
 	Command(Entity & entity, State state) : m_entity(entity), m_state(state) {}
 
@@ -33,7 +29,7 @@ public:
 		m_entity.state = m_state;
 	}
 
-private:
+private :
 
 	Entity & m_entity;
 	
@@ -44,10 +40,6 @@ private:
 
 int main()
 {
-	using State = Entity::State;
-
-//  --------------------------------------------------------
-
 	Entity entity;
 
 //  --------------------------------------------------------

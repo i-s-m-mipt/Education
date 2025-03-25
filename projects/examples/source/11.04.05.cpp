@@ -10,15 +10,11 @@
 
 int main()
 {
-    using edge_property_t = boost::property < boost::edge_weight_t, int > ;
-
-//  ---------------------------------------------------------------------------------
-
     boost::adjacency_list 
     < 
-        boost::vecS, 
+        boost::vecS, boost::vecS, boost::directedS, 
         
-        boost::vecS, boost::directedS, boost::no_property, edge_property_t 
+        boost::no_property, boost::property < boost::edge_weight_t, int >
     >
     graph;
 

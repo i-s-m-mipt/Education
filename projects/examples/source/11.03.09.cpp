@@ -1,39 +1,31 @@
-#include <iostream>
-#include <ranges>
-#include <string>
+#include <algorithm>
+#include <cassert>
+#include <iterator>
 #include <vector>
 
-using namespace std::literals;
-
-/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    for ([[maybe_unused]] auto element : std::ranges::views::iota(1, 5));
+	std::vector < int > vector_1 = { 1, 2, 3, 4, 5 };
 
-//  -------------------------------------------------------------------------------------
+	std::vector < int > vector_2;
 
-    std::cout << "main : enter ints and non-int : ";
+	std::vector < int > vector_3;
 
-//  -------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------
 
-    for ([[maybe_unused]] auto element : std::ranges::views::istream < int > (std::cin));
+	auto lambda = [](auto x){ return x > 0; };
 
-//  -------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------
 
-    auto string = "1,2,3,4,5"s;
+	std::ranges::copy   (vector_1, std::back_inserter(vector_2));
 
-//  -------------------------------------------------------------------------------------
+	std::ranges::copy_if(vector_1, std::back_inserter(vector_3), lambda);
 
-    for ([[maybe_unused]] auto element : std::ranges::views::split(string, ','));
+//  ---------------------------------------------------------------------
 
-//  -------------------------------------------------------------------------------------
+	assert(vector_2 == vector_1);
 
-    std::vector < int > vector = { 1, 2, 3, 4, 5 };
-
-    auto lambda = [](auto x){ return x; };
-
-//  -------------------------------------------------------------------------------------
-
-    for ([[maybe_unused]] auto element : std::ranges::views::transform(vector, lambda));
+	assert(vector_3 == vector_1);
 }

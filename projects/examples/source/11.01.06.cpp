@@ -6,17 +6,11 @@
 
 int main()
 {
-	auto lambda_1 = [](){}; // support: cppinsights.io
+	auto lambda_1 = [](){}; // support : cppinsights.io
 
-    auto lambda_2 = [] < typename T > (T x, T y){ return x < y ? y : x; };
+	auto lambda_2 = [](auto x) constexpr noexcept { return x; };
 
-	auto lambda_3 = [](auto x) constexpr noexcept { return x; };
-
-//  -----------------------------------------------------------------------------
-
-	std::ignore = lambda_2(1, 2);
-
-//	std::ignore = lambda_2(1, 2.0); // error
+    auto lambda_3 = [] < typename T > (T x, T y){ return x < y ? y : x; };
 
 //  -----------------------------------------------------------------------------
 

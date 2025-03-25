@@ -4,21 +4,29 @@
 #include <type_traits>
 #include <vector>
 
-/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+auto   test_v1() {        std::vector < int > vector = { 1, 2, 3, 4, 5 }; return vector; }
+
+auto & test_v2() { static std::vector < int > vector = { 1, 2, 3, 4, 5 }; return vector; }
+
+//////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	auto lambda = [](){ return std::vector < int > ({ 1, 2, 3, 4, 5 }); };
+	auto iterator_1 = std::ranges::max_element(test_v1());
 
-//  -----------------------------------------------------------------------------
+	auto iterator_2 = std::ranges::max_element(test_v2());
 
-	auto iterator = std::ranges::max_element(lambda());
-
-//  -----------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 		
-	static_assert(std::is_same_v < decltype(iterator), std::ranges::dangling > );
+	static_assert(std::is_same_v < decltype(iterator_1), std::ranges::dangling > == 1);
 
-//  -----------------------------------------------------------------------------
+	static_assert(std::is_same_v < decltype(iterator_2), std::ranges::dangling > == 0);
 
-//	assert(*terator == 5); // error
+//  -----------------------------------------------------------------------------------
+
+//	assert(*iterator_1 == 5); // error
+
+	assert(*iterator_2 == 5);
 }

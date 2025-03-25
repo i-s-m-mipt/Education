@@ -5,7 +5,7 @@
 
 class Visitor
 {
-public:
+public :
 
     virtual ~Visitor() = default;
 
@@ -20,7 +20,7 @@ public:
 
 class Entity
 {
-public:
+public :
 
     virtual ~Entity() = default;
 
@@ -35,7 +35,7 @@ public:
 
 class Client : public Entity 
 {
-public:
+public :
 
     void test() const override 
     { 
@@ -52,7 +52,7 @@ public:
 
 class Server : public Entity
 {
-public:
+public :
 
     void test() const override 
     { 
@@ -69,7 +69,7 @@ public:
 
 class Router : public Visitor
 {
-public:
+public :
 
     void visit(const Client * client) const override 
     { 

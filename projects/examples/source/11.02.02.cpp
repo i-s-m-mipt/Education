@@ -4,19 +4,19 @@
 
 //////////////////////////////////////////////////////////////////////////////
 
-class Client { public: void test() const { std::cout << "Client::test\n"; } };
+class Client { public : void test() const { std::cout << "Client::test\n"; } };
 
-class Server { public: void test() const { std::cout << "Server::test\n"; } };
+class Server { public : void test() const { std::cout << "Server::test\n"; } };
 
 //////////////////////////////////////////////////////////////////////////////
 
-using Entity = std::variant < Client, Server > ;
+using entity_t = std::variant < Client, Server > ;
 
 //////////////////////////////////////////////////////////////////////////////
 
 class Visitor_v1
 {
-public:
+public :
 
     void operator()(const Client & client) const { client.test(); }
 
@@ -27,7 +27,7 @@ public:
 
 template < typename ... Bs > class Visitor_v2 : public Bs ... 
 { 
-public:
+public :
 
     using Bs::operator()...;
 };
@@ -36,7 +36,7 @@ public:
 
 int main()
 { 
-    std::visit(             Visitor_v1   (), Entity(Client()));
+    std::visit(             Visitor_v1   (), entity_t(Client()));
 
-    std::visit(Visitor_v2 < Visitor_v1 > (), Entity(Client()));
+    std::visit(Visitor_v2 < Visitor_v1 > (), entity_t(Client()));
 }

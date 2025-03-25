@@ -1,39 +1,37 @@
-#include <algorithm>
-#include <iostream>
-#include <iterator>
-#include <numeric>
-#include <random>
+#include <forward_list>
+#include <list>
+#include <ranges>
 #include <vector>
 
-///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
-void test(const std::vector < int > & vector)
+template < typename T > class Vector : private std::vector < T >
 {
-	std::cout << "test : vector = { ";
+public :
 
-	for (auto element : vector)
-	{
-		std::cout << element << ' ';
-	}
+    using std::vector < T > ::begin;
 
-	std::cout << "}\n";
-}
+	using std::vector < T > ::  end;
 
-///////////////////////////////////////////////////////////////
+	using std::vector < T > :: size;
+};
 
-int main()
-{
-	std::vector < int > vector(5, 0);
+///////////////////////////////////////////////////////////////////////////////////
 
-    std::default_random_engine engine;
+static_assert(std::ranges::      range < Vector < int > > );
 
-//  -----------------------------------------------------------
+static_assert(std::ranges::sized_range < Vector < int > > );
 
-	std::ranges::iota(vector, 1);
+///////////////////////////////////////////////////////////////////////////////////
 
-	std::shuffle(std::begin(vector), std::end(vector), engine);
+static_assert(std::ranges::        sized_range < std::forward_list < int > > == 0);
 
-//  -----------------------------------------------------------
+static_assert(std::ranges::      forward_range < std::forward_list < int > > == 1);
 
-	test(vector);
-}
+static_assert(std::ranges::bidirectional_range < std::        list < int > > == 1);
+
+static_assert(std::ranges::random_access_range < std::      vector < int > > == 1);
+
+///////////////////////////////////////////////////////////////////////////////////
+
+int main() {}

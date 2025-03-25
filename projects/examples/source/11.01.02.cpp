@@ -1,13 +1,12 @@
 #include <cassert>
 #include <functional>
-#include <iostream>
 #include <utility>
 
 //////////////////////////////////////////////////////////////////////////
 
-auto test(int x, int y) 
+auto test(int x) 
 { 
-	return x + y;
+	return x;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -21,11 +20,11 @@ template < typename F, typename ... Ts > auto invoke(F && f, Ts && ... xs)
 
 class Entity
 {
-public:
+public :
 
-    void test() const
+    auto test(int x) const
     {
-        std::cout << "Entity::test\n";
+        return x;
     }
 };
 
@@ -33,11 +32,11 @@ public:
 
 int main()
 {
-    assert(		invoke(test, 1, 2) == 3);
+    assert(		invoke(test, 1) == 1);
 
-	assert(std::invoke(test, 1, 2) == 3);
+	assert(std::invoke(test, 1) == 1);
 
-//  -------------------------------------
+//  -----------------------------------------------------
 
-    std::invoke(&Entity::test, Entity());
+    assert(std::invoke(&Entity::test, Entity(), 1) == 1);
 }

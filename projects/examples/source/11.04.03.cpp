@@ -9,7 +9,7 @@
 
 class Visitor : public boost::default_bfs_visitor
 {
-public:
+public :
 
     template < typename V, typename G > auto initialize_vertex(V vertex, const G & graph)
     {

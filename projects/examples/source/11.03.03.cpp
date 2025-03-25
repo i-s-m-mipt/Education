@@ -4,7 +4,7 @@
 #include <random>
 #include <vector>
 
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
 void test(const std::vector < int > & vector)
 {
@@ -18,27 +18,17 @@ void test(const std::vector < int > & vector)
 	std::cout << "}\n";
 }
 
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::vector < int > vector(5, 0);
+	std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-	std::uniform_int_distribution distribution(1, 5);
+//  -----------------------------------------------------------
 
-	std::default_random_engine engine;
+	std::ranges::shuffle(vector, std::default_random_engine());
 
-//  --------------------------------------------------------------------
-
-	std::generate
-	(
-		std::begin(vector), std::end(vector), [&engine, &distribution]()
-		{ 
-			return distribution(engine);
-		}
-	);
-
-//  --------------------------------------------------------------------
+//  -----------------------------------------------------------
 
 	test(vector);
 }

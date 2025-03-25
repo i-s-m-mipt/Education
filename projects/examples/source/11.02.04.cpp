@@ -65,20 +65,20 @@ template < typename D, bool C = empty_v < D > > class Max_Type {};
 
 template < typename D > class Max_Type < D, false >
 {
-private:
+private :
 
-    using contender = front < D > ;
+    using current_t = front < D > ;
 
-    using best = typename Max_Type < pop_front < D > > ::type;
+    using max_t = typename Max_Type < pop_front < D > > ::type;
 
-public:
+public :
 
-    using type = std::conditional_t < (sizeof(contender) >= sizeof(best)), contender, best > ;
+    using type = std::conditional_t < sizeof(current_t) >= sizeof(max_t), current_t, max_t > ;
 };
 
 template < typename D > class Max_Type < D, true > 
 { 
-public: 
+public : 
         
     using type = char;
 };
@@ -113,22 +113,22 @@ template < typename D, typename T > constexpr auto index_v = Index < D, T > ::va
 
 template < typename ... Ts > class Storage
 {
-protected:
+protected :
 
     Storage() = default;
 
    ~Storage() = default;
 
-//  --------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
 
     template < typename T > auto extract() const
     {
-        return std::bit_cast < T * > (&m_data);
+        return std::bit_cast < T * > (&m_array);
     }
 
-//  --------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
 
-    alignas(Ts...) std::byte m_data[sizeof(max_type < Deque < Ts ... > > )]{};
+    alignas(Ts...) std::byte m_array[sizeof(max_type < Deque < Ts ... > > )]{};
 
     std::size_t m_index = 0;
 };
@@ -137,7 +137,7 @@ protected:
 
 template < typename D, typename T, typename ... Ts > class Handler
 {
-public:
+public :
 
     Handler(T x) 
     { 
@@ -164,7 +164,7 @@ public:
         return derived();
     }
 
-protected:
+protected :
 
     Handler() = default;
 
@@ -184,7 +184,7 @@ protected:
 
     static constexpr auto s_index = index_v < Deque < Ts ... > , T > + 1;
 
-private:
+private :
 
     auto & derived()
     {
@@ -205,7 +205,7 @@ template < typename ... Ts > class Variant
 
     private Handler < Variant < Ts ... > , Ts, Ts ... > ...
 {
-public:
+public :
 
     Variant() 
     { 
@@ -214,12 +214,16 @@ public:
 
     Variant(const Variant & other) : Handler < Variant < Ts ... > , Ts, Ts ... > ::Handler()...
     {
-        other.visit([this](auto && x){ *this = x; });
+        auto lambda = [this](auto && x){ *this = x; };
+
+        other.visit(lambda);
     }
 
     Variant(Variant && other)
     {
-        other.visit([this](auto && x){ *this = std::move(x); });
+        auto lambda = [this](auto && x){ *this = std::move(x); };
+
+        other.visit(lambda);
     }
 
     auto & operator=(Variant other)
@@ -238,7 +242,7 @@ public:
 
     void swap(Variant & other)
 	{
-        std::swap(this->m_data , other.m_data );
+        std::swap(this->m_array, other.m_array);
 
 		std::swap(this->m_index, other.m_index);
 	}
@@ -258,11 +262,6 @@ public:
 
     template < typename T > auto get() const
     {
-        if (!has < T > ()) 
-        {
-            throw std::runtime_error("invalid type");
-        }
-
         return *this->template extract < T > ();
     }  
 
@@ -271,7 +270,7 @@ public:
         return visit_implementation(std::forward < V > (visitor), Deque < Ts ... > ());
     }
 
-private:
+private :
 
     template < typename D, typename U, typename ... Us > friend class Handler;
 
@@ -296,13 +295,10 @@ private:
         {
             return visitor(this->template get < U > ());
         }
-        else if constexpr (sizeof...(Us) > 0) 
+        
+        if constexpr (sizeof...(Us) > 0)
         {
             return visit_implementation(std::forward < V > (visitor), Deque < Us ... > ());
-        }
-        else 
-        {
-            throw std::runtime_error("invalid type");
         }
     }
 };
@@ -311,7 +307,7 @@ private:
 
 class Visitor
 {
-public:
+public :
 
     void operator()(int x) const
     {
@@ -328,7 +324,7 @@ public:
 
 class Entity 
 { 
-public:
+public :
 
     Entity(int) {} 
 };
