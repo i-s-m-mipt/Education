@@ -1,29 +1,31 @@
 #include <iostream>
 #include <string>
 
-#include "08.02.08.hpp"
+#include "08.02.09.hpp"
 
-///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 int main()
 {
     Python python;
 
-//  -------------------------------------------------------------------
+//  ---------------------------------------------------------------
 
     try
 	{
-		auto statement = "from 08.02.09 import factorial";
+		auto statement = "from 08.02.11 import factorial";
 
-		boost::python::exec(statement, python.local(), python.local());
+		const auto & local = python.local();
 
-//      ---------------------------------------------------------------
+	//  -----------------------------------------------------------
 
-		auto object = python.local()["factorial"](100);
+		boost::python::exec(statement, local, local);
+
+		auto object = local["factorial"](100);
 			
 		auto x = boost::python::extract < std::string > (object)();
 
-//      ---------------------------------------------------------------
+	//  -----------------------------------------------------------
 
         std::cout << "main : x = " << x << '\n';
 	}

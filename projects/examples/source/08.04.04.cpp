@@ -10,7 +10,7 @@
 
 class Timer
 {
-public:
+public :
 
 	using clock_t = std::chrono::steady_clock;
 
@@ -38,7 +38,7 @@ public:
 		std::cout << std::format("{:.6f}", 1.0 * delta_2.count() / 1'000'000) << " (seconds)\n";
 	}
 
-private:
+private :
 
 	std::string m_scope;
 	

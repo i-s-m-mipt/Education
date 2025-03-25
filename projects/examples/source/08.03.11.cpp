@@ -39,9 +39,9 @@ int main()
 
 //  -----------------------------------------------------------------------
 
-	std::default_random_engine engine;
-
 	std::uniform_real_distribution distribution(0.0, 2 * std::numbers::pi);
+
+	std::default_random_engine engine;
 
 //  -----------------------------------------------------------------------
 

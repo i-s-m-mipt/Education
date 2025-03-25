@@ -12,7 +12,7 @@
 
 class Python : private boost::noncopyable
 {
-public:
+public :
 
 	Python() { acquire(); }
 
@@ -49,11 +49,11 @@ public:
 		}
 	}
 
-private:
+private :
 
 	void acquire()
 	{
-		std::call_once(s_status, [](){ Py_Initialize(); });
+		std::call_once(s_status, Py_Initialize);
 
 		s_mutex.lock();
 			

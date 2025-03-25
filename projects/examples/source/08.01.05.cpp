@@ -21,7 +21,7 @@ int main()
 
 //  -----------------------------------------
 
-//  auto ptr = &timestamp.year; // error
+//  auto year = &timestamp.year; // error
 
 //  -----------------------------------------
 

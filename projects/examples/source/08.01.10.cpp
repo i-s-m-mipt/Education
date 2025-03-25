@@ -5,7 +5,7 @@
 
 ////////////////////////////////////////////////////////////////////////
 
-void test_v1(benchmark::State & state) // support: compiler-explorer.com
+void test_v1(benchmark::State & state) // support : compiler-explorer.com
 {
     for (auto element : state)
     {
@@ -17,7 +17,7 @@ void test_v1(benchmark::State & state) // support: compiler-explorer.com
 
 ////////////////////////////////////////////////////////////////////////
 
-void test_v2(benchmark::State & state) // support: compiler-explorer.com
+void test_v2(benchmark::State & state) // support : compiler-explorer.com
 {
     for (auto element : state)
     {

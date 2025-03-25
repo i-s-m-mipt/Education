@@ -22,6 +22,20 @@ template < typename F, typename T > auto derivative(F && f, T x, T dx = 1e-9)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
+auto test_v1(const boost::multiprecision::cpp_bin_float_100 & x)
+{
+    return boost::multiprecision::sin(x);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+auto test_v2(const boost::multiprecision::cpp_bin_float_100 & x)
+{
+    return boost::math::gamma_p(2.0, x);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 template < typename T > auto equal(T x, T y, T epsilon = std::numeric_limits < T > ::epsilon())
 {
 	return boost::multiprecision::abs(x - y) < epsilon;
@@ -35,9 +49,9 @@ int main()
 
 //  ----------------------------------------------------------------------------------------
 
-    auto y1 = derivative([](auto && x){ return boost::multiprecision::sin(x); }, x);
+    auto y1 = derivative(test_v1, x);
 
-    auto y2 = derivative([](auto && x){ return boost::math::gamma_p (2.0, x); }, x);
+    auto y2 = derivative(test_v2, x);
 
 //  ----------------------------------------------------------------------------------------
 

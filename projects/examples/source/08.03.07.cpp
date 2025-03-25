@@ -17,11 +17,11 @@ auto equal(double x, double y, double epsilon = 1e-6)
 
 int main()
 {
+	std::normal_distribution distribution(25.0, 8.0);
+
 	std::random_device device;
 
 	std::mt19937_64 engine(device());
-
-	std::normal_distribution distribution(25.0, 8.0);
 
 //  ------------------------------------------------------------------------
 

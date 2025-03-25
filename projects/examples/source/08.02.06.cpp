@@ -1,35 +1,21 @@
-#include <cassert>
-#include <exception>
 #include <iostream>
-#include <limits>
-#include <stdexcept>
-#include <string>
-#include <tuple>
 
-#include <boost/multiprecision/cpp_int.hpp>
+#include "08.02.03.hpp"
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////
 
 int main()
 {
-    assert(std::numeric_limits < boost::multiprecision::uint128_t > ::digits10 == 38);
+    Integer x = 1;
 
-//  ----------------------------------------------------------------------------------  
+//  ----------------------------------------
+		
+	for (auto i = 1; i <= 100; ++i)
+	{
+		x *= i;
+	}
 
-    boost::multiprecision::cpp_int x(std::string(32, '1'));
+//  ----------------------------------------
 
-//  ----------------------------------------------------------------------------------  
-
-    try
-    {
-        std::ignore = boost::multiprecision::checked_uint128_t(0) - 1;
-    }
-    catch (const std::range_error & exception)
-    {
-        std::cerr << "main : " << exception.what() << '\n';
-    }
-
-//  ----------------------------------------------------------------------------------
-
-    assert(std::numeric_limits < boost::multiprecision::uint128_t > ::max() + 1 == 0);
+	std::cout << "main : x = " << x << '\n';
 }

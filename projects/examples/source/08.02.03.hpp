@@ -22,13 +22,13 @@
 
 class Integer
 {
-public:
+public :
 
 	using digit_t = long long;
 
 //  ------------------------------------------------------------------------------------
 
-	Integer() : m_sign(false), m_data(s_size, 0), m_size(1) {}
+	Integer() : m_sign(false), m_digits(s_size, 0), m_size(1) {}
 
 	Integer(digit_t digit) : Integer() 
 	{ 
@@ -44,11 +44,11 @@ public:
 
 	void swap(Integer & other)
 	{
-		std::swap(m_sign, other.m_sign);
+		std::swap(m_sign  , other.m_sign  );
 
-		std::swap(m_data, other.m_data);
+		std::swap(m_digits, other.m_digits);
 		
-		std::swap(m_size, other.m_size);
+		std::swap(m_size  , other.m_size  );
 	}
 
 //  ------------------------------------------------------------------------------------
@@ -98,11 +98,6 @@ public:
 
 	auto & operator*=(Integer other)
 	{
-		if (m_size + other.m_size > s_size) 
-		{
-			throw std::runtime_error("arithmetic overflow");
-		}
-
 		Integer x;
 		
 		x.m_sign = m_sign ^ other.m_sign;
@@ -113,11 +108,11 @@ public:
 
 			for (auto j = 0uz; (j < other.m_size) || remainder; ++j)
 			{
-				x.m_data[i + j] += m_data[i] * other.m_data[j] + remainder;
+				x.m_digits[i + j] += m_digits[i] * other.m_digits[j] + remainder;
 
-				remainder = x.m_data[i + j] / s_base;
+				remainder = x.m_digits[i + j] / s_base;
 
-				x.m_data[i + j] -= remainder * s_base;
+				x.m_digits[i + j] -= remainder * s_base;
 			}
 		}
 
@@ -132,11 +127,6 @@ public:
 
 	auto & operator/=(Integer other)
 	{
-		if (other.m_size == 1 && other.m_data.front() == 0)
-		{
-			throw std::runtime_error("invalid operand");
-		}
-
 		Integer x;
 		
 		x.m_size = m_size;
@@ -151,7 +141,7 @@ public:
 		{
 			current *= s_base;
 			
-			current.m_data[0] = m_data[i];
+			current.m_digits.front() = m_digits[i];
 
 			digit_t left = 0, right = s_base, digit = 0;
 
@@ -169,7 +159,7 @@ public:
 				}
 			}
 
-			x.m_data[i] = digit;
+			x.m_digits[i] = digit;
 			
 			current -= other * digit;
 		}
@@ -253,7 +243,7 @@ public:
 
 		for (auto i = 0uz; i < lhs.m_size; ++i)
 		{
-			if (lhs.m_data[i] != rhs.m_data[i]) 
+			if (lhs.m_digits[i] != rhs.m_digits[i]) 
 			{
 				return false;
 			}
@@ -266,7 +256,9 @@ public:
 
 	friend auto & operator>>(std::istream & stream, Integer & integer)
 	{
-		std::string string; stream >> string; 
+		std::string string; 
+		
+		stream >> string; 
 		
 		integer = Integer(string);
 		
@@ -280,11 +272,11 @@ public:
 			stream << '-';
 		}
 
-		stream << integer.m_data[integer.m_size - 1];
+		stream << integer.m_digits[integer.m_size - 1];
 
 		for (auto i = static_cast < int > (integer.m_size) - 2; i >= 0; --i)
 		{
-			stream << std::format("{:0>{}}", integer.m_data[i], Integer::s_step);
+			stream << std::format("{:0>{}}", integer.m_digits[i], Integer::s_step);
 		}
 
 		return stream;
@@ -294,11 +286,6 @@ public:
 
 	friend auto sqrt(const Integer & x)
 	{
-		if (x.m_sign) 
-		{
-			throw std::runtime_error("invalid operand");
-		}
-
 		Integer y;
 		
 		y.m_size = (x.m_size + 1) / 2;
@@ -309,7 +296,7 @@ public:
 
 			while (left <= right)
 			{
-				auto middle = y.m_data[i] = std::midpoint(left, right);
+				auto middle = y.m_digits[i] = std::midpoint(left, right);
 
 				if (y * y <= x)
 				{
@@ -323,7 +310,7 @@ public:
 				}				
 			}
 
-			y.m_data[i] = digit;
+			y.m_digits[i] = digit;
 		}
 
 		y.reduce();
@@ -345,17 +332,17 @@ public:
 
 			x2.m_size = size - step;
 
-			for (auto i =  0uz; i < step; ++i) { x1.m_data[i       ] = x.m_data[i]; }
+			for (auto i =  0uz; i < step; ++i) { x1.m_digits[i       ] = x.m_digits[i]; }
 
-			for (auto i = step; i < size; ++i) { x2.m_data[i - step] = x.m_data[i]; }
+			for (auto i = step; i < size; ++i) { x2.m_digits[i - step] = x.m_digits[i]; }
 
 			y1.m_size = step;
 			
 			y2.m_size = size - step;
 
-			for (auto i =  0uz; i < step; ++i) { y1.m_data[i       ] = y.m_data[i]; }
+			for (auto i =  0uz; i < step; ++i) { y1.m_digits[i       ] = y.m_digits[i]; }
 
-			for (auto i = step; i < size; ++i) { y2.m_data[i - step] = y.m_data[i]; }
+			for (auto i = step; i < size; ++i) { y2.m_digits[i - step] = y.m_digits[i]; }
 
 			auto a = multiply(x2, y2);
 			
@@ -382,62 +369,39 @@ public:
 		}
 	}
 
-private:
+private :
 
 	void parse(const std::string & string)
 	{
-		if (string[0] == '+' || string[0] == '-' || std::isdigit(string[0]))
-		{
-			if (!std::isdigit(string[0]) && std::size(string) == 1)
-			{
-				throw std::runtime_error("invalid string");
-			}
-
-			std::ranges::for_each
-			(
-				std::next(std::begin(string)), std::end(string), [](auto x)
-				{ 
-					if (!std::isdigit(x)) 
-					{
-						throw std::runtime_error("invalid string");
-					}
-				}
-			);
-
-			m_sign = string[0] == '-';
+		m_sign = string.front() == '-';
 			
-			m_size = 0;
+		m_size = 0;
 
-			for (auto i = std::ssize(string) - 1; i >= 0; i -= s_step)
+		for (auto i = std::ssize(string) - 1; i >= 0; i -= s_step)
+		{
+			auto begin = std::max(i - s_step + 1, 0l);
+
+			if (begin == 0 && !std::isdigit(string.front()))
 			{
-				auto begin = std::max(i - s_step + 1, 0l);
-
-				if (begin == 0 && !std::isdigit(string[0]))
-				{
-					++begin;
-				}
-
-				auto digit = string.substr(begin, i - begin + 1);
-
-				if (std::size(digit) > 0)
-				{
-					m_data[m_size++] = std::stoll(digit);
-				}
+				++begin;
 			}
 
-			reduce();
+			auto digit = string.substr(begin, i - begin + 1);
+
+			if (std::size(digit) > 0)
+			{
+				m_digits[m_size++] = std::stoll(digit);
+			}
 		}
-		else 
-		{
-			throw std::runtime_error("invalid string");
-		}
+
+		reduce();
 	}
 
 //  ------------------------------------------------------------------------------------
 
 	void reduce()
 	{
-		while (m_size > 1 && !m_data[m_size - 1]) 
+		while (m_size > 1 && !m_digits[m_size - 1]) 
 		{
 			--m_size;
 		}
@@ -451,24 +415,17 @@ private:
 
 		for (auto i = 0uz; i < m_size; ++i)
 		{
-			m_data[i] += other.m_data[i];
+			m_digits[i] += other.m_digits[i];
 
-			if (m_data[i] >= s_base)
+			if (m_digits[i] >= s_base)
 			{
-				m_data[i] -= s_base;
+				m_digits[i] -= s_base;
 
-				if (i < s_size - 1)
-				{
-					++m_data[i + 1];
-				}
-				else 
-				{
-					throw std::runtime_error("arithmetic overflow");
-				}
+				m_digits[i + 1]++;
 			}
 		}
 
-		m_size += m_data[m_size];
+		m_size += m_digits[m_size];
 
 		return *this;
 	}
@@ -477,13 +434,13 @@ private:
 	{
 		for (auto i = 0uz; i < m_size; ++i)
 		{
-			m_data[i] -= other.m_data[i];
+			m_digits[i] -= other.m_digits[i];
 
-			if (m_data[i] < 0)
+			if (m_digits[i] < 0)
 			{
-				m_data[i] += s_base;
+				m_digits[i] += s_base;
 
-				m_data[i + 1]--;
+				m_digits[i + 1]--;
 			}
 		}
 
@@ -503,9 +460,9 @@ private:
 
 		for (auto i = static_cast < int > (m_size) - 1; i >= 0; --i)
 		{
-			if (m_data[i] != other.m_data[i]) 
+			if (m_digits[i] != other.m_digits[i]) 
 			{
-				return m_data[i] < other.m_data[i];
+				return m_digits[i] < other.m_digits[i];
 			}
 		}
 
@@ -516,7 +473,7 @@ private:
 
 	bool m_sign = false;
 
-	std::vector < digit_t > m_data;
+	std::vector < digit_t > m_digits;
 
 	std::size_t m_size = 0;
 

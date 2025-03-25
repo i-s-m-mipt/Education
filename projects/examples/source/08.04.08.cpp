@@ -9,7 +9,7 @@ using namespace std::literals;
 
 struct Entity 
 { 
-	unsigned long long data = 0;
+	unsigned long long x = 0;
 };
 
 ////////////////////////////////////////////////////////////////
