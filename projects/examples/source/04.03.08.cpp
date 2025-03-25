@@ -14,7 +14,13 @@ template < typename T1, typename T2 > constexpr auto is_same_v = is_same < T1, T
 
 int main()
 {
-	static_assert( is_same_v < int, int    > );
+	static_assert(     is_same_v < int, int    > == 1);
     
-    static_assert(!is_same_v < int, double > );
+    static_assert(     is_same_v < int, double > == 0);
+
+//  ---------------------------------------------------
+
+    static_assert(std::is_same_v < int, int    > == 1);
+    
+    static_assert(std::is_same_v < int, double > == 0);
 }

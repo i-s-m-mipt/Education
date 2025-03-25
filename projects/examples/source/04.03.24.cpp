@@ -131,20 +131,20 @@ template < typename D, bool C = empty_v < D > > class Max_Type {};
 
 template < typename D > class Max_Type < D, false >
 {
-private:
+private :
 
-    using contender = front < D > ;
+    using current_t = front < D > ;
 
-    using best = typename Max_Type < pop_front < D > > ::type;
+    using max_t = typename Max_Type < pop_front < D > > ::type;
 
-public:
+public :
 
-    using type = std::conditional_t < sizeof(contender) >= sizeof(best), contender, best > ;
+    using type = std::conditional_t < sizeof(current_t) >= sizeof(max_t), current_t, max_t > ;
 };
 
 template < typename D > class Max_Type < D, true > 
 { 
-public: 
+public : 
     
     using type = std::byte;
 };
@@ -157,7 +157,9 @@ template < typename D > using max_type = typename Max_Type < D > ::type;
 
 int main()
 {
-    static_assert(size_v < Deque < int > > == 1 && !empty_v < Deque < int > > );
+    static_assert(size_v < Deque <     > > == 0 && empty_v < Deque <     > > == 1);
+
+    static_assert(size_v < Deque < int > > == 1 && empty_v < Deque < int > > == 0);
 
 //  ------------------------------------------------------------------------------------------
 

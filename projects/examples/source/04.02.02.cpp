@@ -6,18 +6,18 @@
 
 template < typename T, typename C = std::vector < T > > class Stack_v1
 {
-private:
+private :
 
-	C m_data;
+	C m_container;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T, template < typename U > typename C = std::vector > class Stack_v2
 {
-private:
+private :
 
-	C < T > m_data;
+	C < T > m_container;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////

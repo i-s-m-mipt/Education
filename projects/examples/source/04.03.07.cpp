@@ -25,13 +25,13 @@ template < typename R1, typename R2 > struct Sum
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename R1, typename R2 > using sum_t = typename Sum < R1, R2 > ::type;
+template < typename R1, typename R2 > using sum = typename Sum < R1, R2 > ::type;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T, typename R = Ratio < 1 > > struct Duration 
 {
-	T data = T();
+	T x = T();
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -44,20 +44,20 @@ template
 >
 constexpr auto operator+(const Duration < T1, R1 > & lhs, const Duration < T2, R2 > & rhs)
 {
-	using ratio_t = Ratio < 1, sum_t < R1, R2 > ::den > ;
+	using ratio_t = Ratio < 1, sum < R1, R2 > ::den > ;
 
-//  -----------------------------------------------------
+//  ---------------------------------------------------
 
-	auto data = 
+	auto x = 
 	(
-		lhs.data * ratio_t::den / R1::den * R1::num +
+		lhs.x * ratio_t::den / R1::den * R1::num +
 
-		rhs.data * ratio_t::den / R2::den * R2::num
+		rhs.x * ratio_t::den / R2::den * R2::num
 	);
 
-//  -----------------------------------------------------
+//  ---------------------------------------------------
 
-	return Duration < decltype(data), ratio_t > (data);
+	return Duration < decltype(x), ratio_t > (x);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -74,5 +74,5 @@ int main()
 
 //  ----------------------------------------------------------------------
 
-	assert(duration_3.data == 5);
+	assert(duration_3.x == 5);
 }

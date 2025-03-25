@@ -16,7 +16,13 @@ template < typename T > using  add_rvalue_reference_t = typename add_rvalue_refe
 
 int main()
 {
-    static_assert(std::is_same_v < add_lvalue_reference_t < int > , int &  > );
+    static_assert(std::is_same_v <      add_lvalue_reference_t < int > , int &  > );
 
-	static_assert(std::is_same_v < add_rvalue_reference_t < int > , int && > );
+	static_assert(std::is_same_v <      add_rvalue_reference_t < int > , int && > );
+
+//  --------------------------------------------------------------------------------
+
+    static_assert(std::is_same_v < std::add_lvalue_reference_t < int > , int &  > );
+
+	static_assert(std::is_same_v < std::add_rvalue_reference_t < int > , int && > );
 }

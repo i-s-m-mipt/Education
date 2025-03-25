@@ -8,7 +8,7 @@ template <             typename ... Ts > class Tuple {};
 
 template < typename T, typename ... Ts > class Tuple < T, Ts ... >
 {
-public:
+public :
 
 	constexpr Tuple() = default;
 
@@ -43,19 +43,12 @@ public:
 		}
 	}
 
-private:
+private :
 
 	T m_head;
 	
 	Tuple < Ts ... > m_tail;
 };
-
-////////////////////////////////////////////////////////////////////
-
-template < typename ... Ts > constexpr auto make_tuple(Ts && ... xs)
-{
-	return Tuple < Ts ... > (std::forward < Ts > (xs)...);
-}
 
 ////////////////////////////////////////////////////////////////////
 
@@ -65,19 +58,23 @@ int main()
 
 	Tuple < int, std::string > tuple_2(2, "bbbbb");
 
-//  -------------------------------------------------------
+//  --------------------------------------------------------
 
-	Tuple < int, std::string > tuple_3(tuple_2);
+	Tuple < int, std::string > tuple_3 = tuple_2;
 
-    Tuple < int, std::string > tuple_4(std::move(tuple_3));
+							   tuple_3 = tuple_2;
 
-//  -------------------------------------------------------
+//  --------------------------------------------------------
 
-    tuple_3 = tuple_2;
+    Tuple < int, std::string > tuple_4 = std::move(tuple_3);
     
-    tuple_4 = std::move(tuple_3);
+    						   tuple_4 = std::move(tuple_3);
 
-//  -------------------------------------------------------
+//  --------------------------------------------------------
 
-	static_assert(make_tuple(1, 2, 3).get < 0 > () == 1);
+	constexpr Tuple < int, int, int > tuple_5(1, 2, 3);
+
+//  --------------------------------------------------------
+
+	static_assert(tuple_5.get < 0 > () == 1);
 }

@@ -38,11 +38,11 @@ template < typename T > void test_v2(T *)
 
 int main()
 {
-    int * ptr = nullptr;
+    int * x = nullptr;
 
-//  --------------------
+//  ------------------
 	
-	test_v1(ptr);
+	test_v1(x);
 
-	test_v2(ptr);
+	test_v2(x);
 }

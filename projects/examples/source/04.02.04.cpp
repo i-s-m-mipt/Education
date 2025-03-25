@@ -6,19 +6,10 @@
 
 template < typename T > class Rational
 {
-public:
+public :
 
 	Rational(T num = T(0), T den = T(1)) : m_num(num), m_den(den)
 	{
-		if (m_den == T(0)) { std::cerr << "Rational::Rational : invalid denominator\n"; }
-
-		if (m_den <  T(0))
-		{
-			m_num *= -1;
-
-			m_den *= -1;
-		}
-
 		reduce();
 	}
 
@@ -68,7 +59,7 @@ public:
 		return !(lhs < rhs) && !(rhs < lhs);
 	}
 
-private:
+private :
 
 	void reduce()
 	{

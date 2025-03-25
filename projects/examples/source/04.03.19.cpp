@@ -5,7 +5,7 @@
 
 template < typename D, typename B > class is_convertible
 {
-private:
+private :
 
     template < typename T > static int handler(T);
 
@@ -18,7 +18,7 @@ private:
 		int, decltype(handler < T2 > (std::declval < T1 > ())) = 0
 	);
 
-public:
+public :
       
 	static constexpr auto value = decltype(test < D, B > (1))::value;
 };
@@ -39,7 +39,7 @@ class Client : public Entity {};
 
 class Server 
 { 
-public:
+public :
 
 	explicit Server(int) {} 
 };
@@ -48,11 +48,21 @@ public:
 
 int main()
 {
-    static_assert( is_convertible_v < int      , double   > );
+    static_assert(     is_convertible_v < int      , double   > == 1);
 
-	static_assert(!is_convertible_v < int      , Server   > );
+	static_assert(     is_convertible_v < int      , Server   > == 0);
 
-	static_assert( is_convertible_v < Client * , Entity * > );
+	static_assert(     is_convertible_v < Client * , Entity * > == 1);
 
-	static_assert(!is_convertible_v < Server * , Entity * > );
+	static_assert(     is_convertible_v < Server * , Entity * > == 0);
+
+//  ------------------------------------------------------------------
+
+	static_assert(std::is_convertible_v < int      , double   > == 1);
+
+	static_assert(std::is_convertible_v < int      , Server   > == 0);
+
+	static_assert(std::is_convertible_v < Client * , Entity * > == 1);
+
+	static_assert(std::is_convertible_v < Server * , Entity * > == 0);
 }

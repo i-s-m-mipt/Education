@@ -4,13 +4,13 @@
 
 template < typename D, typename B > class is_derived
 {
-private:
+private :
 
 	static std::int32_t test(...);
 
 	static std::int64_t test(B *);
 
-public:
+public :
 
 	static constexpr auto value = sizeof(test(static_cast < D * > (nullptr))) == 8;
 };
@@ -35,9 +35,9 @@ class Server {};
 
 int main()
 {
-	static_assert( is_derived_v < Client, Entity > );
+	static_assert(is_derived_v < Client, Entity > == 1);
 
-	static_assert(!is_derived_v < Server, Entity > );
+	static_assert(is_derived_v < Server, Entity > == 0);
 
-//	static_assert( is_derived_v < Client, Client > ); // bad
+//	static_assert(is_derived_v < Client, Client > == 1); // bad
 }

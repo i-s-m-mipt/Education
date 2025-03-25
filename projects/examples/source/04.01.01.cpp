@@ -4,7 +4,7 @@
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > T max_v1(T x, T y) // support: cppinsights.io
+template < typename T > T max_v1(T x, T y) // support : cppinsights.io
 {
 	return x < y ? y : x;
 }
@@ -39,7 +39,7 @@ template < typename T1, typename T2 > auto max_v7(T1 x, T2 y)
 	return x < y ? y : x;
 }
 
-auto max_v8(auto x, auto y) // support: cppinsights.io
+auto max_v8(auto x, auto y) // support : cppinsights.io
 {
 	return x < y ? y : x;
 }

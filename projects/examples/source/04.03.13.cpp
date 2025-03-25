@@ -32,17 +32,33 @@ constexpr auto is_rvalue_reference_v = is_rvalue_reference < T > ::value;
 
 int main()
 {
-    static_assert(!is_lvalue_reference_v < int    > );
+    static_assert(     is_lvalue_reference_v < int    > == 0);
 
-    static_assert( is_lvalue_reference_v < int &  > );
+    static_assert(     is_lvalue_reference_v < int &  > == 1);
 
-    static_assert(!is_lvalue_reference_v < int && > );
+    static_assert(     is_lvalue_reference_v < int && > == 0);
 
-//  --------------------------------------------------
+//  ----------------------------------------------------------
 
-    static_assert(!is_rvalue_reference_v < int    > );
+    static_assert(std::is_lvalue_reference_v < int    > == 0);
 
-    static_assert(!is_rvalue_reference_v < int &  > );
+    static_assert(std::is_lvalue_reference_v < int &  > == 1);
 
-    static_assert( is_rvalue_reference_v < int && > );
+    static_assert(std::is_lvalue_reference_v < int && > == 0);
+
+//  ----------------------------------------------------------
+
+    static_assert(     is_rvalue_reference_v < int    > == 0);
+
+    static_assert(     is_rvalue_reference_v < int &  > == 0);
+
+    static_assert(     is_rvalue_reference_v < int && > == 1);
+
+//  ----------------------------------------------------------
+
+    static_assert(std::is_rvalue_reference_v < int    > == 0);
+
+    static_assert(std::is_rvalue_reference_v < int &  > == 0);
+
+    static_assert(std::is_rvalue_reference_v < int && > == 1);
 }

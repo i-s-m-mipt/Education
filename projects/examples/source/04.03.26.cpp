@@ -28,7 +28,7 @@ int main()
 
 //  --------------------------------------------------------------
 
-    const auto & [y, string] = tuple; // support: cppinsights.io
+    const auto & [y, string] = tuple; // support : cppinsights.io
 
     assert(y == 1 && string == "aaaaa");
 

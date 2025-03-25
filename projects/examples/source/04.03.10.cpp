@@ -23,7 +23,13 @@ template < typename T > constexpr auto is_integral_v = is_integral < T > ::value
 
 int main()
 {
-    static_assert( is_integral_v < int    > );
+    static_assert(     is_integral_v < int    > == 1);
 		
-	static_assert(!is_integral_v < double > );
+	static_assert(     is_integral_v < double > == 0);
+
+//  --------------------------------------------------
+
+    static_assert(std::is_integral_v < int    > == 1);
+		
+	static_assert(std::is_integral_v < double > == 0);
 }

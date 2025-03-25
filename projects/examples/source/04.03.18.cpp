@@ -4,7 +4,7 @@
 
 template < typename B > class is_polymorphic
 {
-private:
+private :
 
 	template < typename T > static std::false_type test(...);
 
@@ -13,7 +13,7 @@ private:
 		int, decltype(dynamic_cast < void * > (std::declval < T * > ())) = nullptr
 	);
 
-public:
+public :
       
 	static constexpr auto value = decltype(test < B > (1))::value;
 };
@@ -26,7 +26,7 @@ template < typename B > constexpr auto is_polymorphic_v = is_polymorphic < B > :
 
 class Entity 
 { 
-public:
+public :
 
 	virtual ~Entity() = default;
 };
@@ -41,9 +41,17 @@ class Server {};
 
 int main()
 {
-	static_assert( is_polymorphic_v < Entity > );
+	static_assert(     is_polymorphic_v < Entity > == 1);
 
-	static_assert( is_polymorphic_v < Client > );
+	static_assert(     is_polymorphic_v < Client > == 1);
 
-	static_assert(!is_polymorphic_v < Server > );
+	static_assert(     is_polymorphic_v < Server > == 0);
+
+//  -----------------------------------------------------
+
+	static_assert(std::is_polymorphic_v < Entity > == 1);
+
+	static_assert(std::is_polymorphic_v < Client > == 1);
+
+	static_assert(std::is_polymorphic_v < Server > == 0);
 }

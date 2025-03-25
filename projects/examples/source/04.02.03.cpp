@@ -10,7 +10,7 @@
 
 template < typename T1, typename T2 > class Entity
 {
-public:
+public :
 
 	void test() const
 	{ 
@@ -22,7 +22,7 @@ public:
 
 template < typename T > class Entity < T, int >
 {
-public:
+public :
 
 	void test() const 
 	{ 
@@ -34,7 +34,7 @@ public:
 
 template < typename T > class Entity < T, T >
 {
-public:
+public :
 
 	void test() const 
 	{ 
@@ -46,7 +46,7 @@ public:
 
 template <> class Entity < double, double >
 {
-public:
+public :
 
 	void test() const 
 	{ 

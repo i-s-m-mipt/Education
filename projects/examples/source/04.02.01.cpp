@@ -5,7 +5,7 @@
 
 template < typename T, typename C = std::vector < T > > class Stack
 {
-public:
+public :
 
 	void push(T x);
 
@@ -13,26 +13,26 @@ public:
 
 	void pop();
 
-private:
+private :
 
-	C m_data;
+	C m_container;
 };
 
 /////////////////////////////////////////////////////////////////////
 
 template < typename T, typename C > void Stack < T, C > ::push(T x)
 {
-	m_data.push_back(std::move(x));
+	m_container.push_back(std::move(x));
 }
 
 template < typename T, typename C > auto Stack < T, C > ::top() const
 {
-	return m_data.back();
+	return m_container.back();
 }
 
 template < typename T, typename C > void Stack < T, C > ::pop()
 {
-	m_data.pop_back();
+	m_container.pop_back();
 }
 
 /////////////////////////////////////////////////////////////////////

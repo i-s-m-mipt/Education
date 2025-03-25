@@ -2,7 +2,12 @@
 
 /////////////////////////////////////////////////////////////////////
 
-void test_v1() {}
+void test_v1() 
+{
+	std::cout << "test_v1\n";
+}
+
+/////////////////////////////////////////////////////////////////////
 
 template < typename T, typename ... Ts > void test_v1(T x, Ts ... xs)
 {
@@ -10,7 +15,7 @@ template < typename T, typename ... Ts > void test_v1(T x, Ts ... xs)
 	
 	std::cout << "sizeof...(xs) = " << sizeof...(xs) << '\n';
 	
-	test_v1(xs...); // support: cppinsights.io
+	test_v1(xs...); // support : cppinsights.io
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -19,6 +24,8 @@ template < typename T > void test_v2(T x)
 {
 	std::cout << "test_v2 : x = " << x << ' ';
 }
+
+/////////////////////////////////////////////////////////////////////
 
 template < typename T, typename ... Ts > void test_v2(T x, Ts ... xs)
 {
@@ -38,14 +45,14 @@ template < typename T, typename ... Ts > void test_v2(T x, Ts ... xs)
 
 template < typename ... Ts > void test_v3(Ts ... xs) 
 { 
-	test_v1(xs + xs...); // support: cppinsights.io
+	test_v1(xs + xs...); // support : cppinsights.io
 }
 
 /////////////////////////////////////////////////////////////////////
 
 struct Entity 
 { 
-	int data_1 = 0, data_2 = 0;
+	int x = 0, y = 0;
 };
 
 /////////////////////////////////////////////////////////////////////
