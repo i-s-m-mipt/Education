@@ -17,7 +17,7 @@ struct Entity
 
 template <> class std::formatter < Entity > : public std::formatter < std::string_view >
 {
-public:
+public :
 
     auto format(const Entity & entity, std::format_context & context) const
     {

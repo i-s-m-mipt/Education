@@ -14,7 +14,7 @@ using namespace std::literals;
 
 int main()
 {
-    nlohmann::json json; // support: boost::property_tree
+    nlohmann::json json; // support : boost::property_tree
 
 //  -------------------------------------------------------------
 

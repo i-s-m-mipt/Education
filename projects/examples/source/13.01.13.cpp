@@ -7,97 +7,78 @@
 #include <stdexcept>
 #include <string>
 
-//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 void transform(const std::string & path_1, const std::string & path_2)
 {
-    if (std::fstream stream_1(path_1); stream_1)
+    auto string = (std::stringstream() << std::fstream(path_1).rdbuf()).str();
+
+//  ----------------------------------------------------------------------------------
+
+    for (auto iterator = std::begin(string); iterator != std::end(string); ++iterator)
     {
-        std::string string
+        if (*iterator == '\'')
         {
-            std::istreambuf_iterator < char > (stream_1), 
-            
-            std::istreambuf_iterator < char > ()
-        };
+            do
+            {
+                ++iterator;
+            } 
+            while (!(*iterator == '\'' && *std::prev(iterator) != '\\'));
+        }
 
-    //  ----------------------------------------------------------------------------------
+    //  -----------------------------------------------------------------
 
-        for (auto iterator = std::begin(string); iterator != std::end(string); ++iterator)
+        if (*iterator == '\"')
         {
-            if (*iterator == '\'')
+            do
             {
-                do
-                {
-                    ++iterator;
-                } 
-                while (!(*iterator == '\'' && *std::prev(iterator) != '\\'));
-            }
+                ++iterator;
+            } 
+            while (!(*iterator == '\"' && *std::prev(iterator) != '\\'));
+        }
 
-        //  -----------------------------------------------------------------
-
-            if (*iterator == '\"')
-            {
-                do
-                {
-                    ++iterator;
-                } 
-                while (!(*iterator == '\"' && *std::prev(iterator) != '\\'));
-            }
-
-        //  -----------------------------------------------------------------
+    //  -----------------------------------------------------------------
                 
-            if (*iterator == '/') 
+        if (*iterator == '/') 
+        {
+            if (*std::next(iterator) == '/')
             {
-                if (*std::next(iterator) == '/')
+                auto end = std::next(iterator, 2);
+
+                while (end != std::end(string) && *end != '\n')
                 {
-                    auto end = std::next(iterator, 2);
-
-                    while (end != std::end(string) && *end != '\n')
-                    {
-                        ++end;
-                    }
-
-                    iterator = string.erase(iterator, end);
+                    ++end;
                 }
-                else if (*std::next(iterator) == '*')
-                {
-                    auto end = std::next(iterator, 3);
 
-                    while (!(*end == '/' && *std::prev(end) == '*'))
-                    {
-                        ++end;
-                    }
-
-                    iterator = string.erase(iterator, ++end);
-                }
+                iterator = string.erase(iterator, end);
             }
-
-        //  -----------------------------------------------------------------
-
-            if (iterator == std::end(string)) 
+            else if (*std::next(iterator) == '*')
             {
-                break;
+                auto end = std::next(iterator, 3);
+
+                while (!(*end == '/' && *std::prev(end) == '*'))
+                {
+                    ++end;
+                }
+
+                iterator = string.erase(iterator, ++end);
             }
         }
 
-    //  ----------------------------------------------------------------------------------
+    //  -----------------------------------------------------------------
 
-        if (std::fstream stream_2(path_2); stream_2)
+        if (iterator == std::end(string)) 
         {
-            stream_2 << string;
-        }
-        else 
-        {
-            throw std::runtime_error("invalid stream");
+            break;
         }
     }
-    else 
-    {
-        throw std::runtime_error("invalid stream");
-    }
+
+//  ----------------------------------------------------------------------------------
+
+    std::fstream(path_2) << string;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {

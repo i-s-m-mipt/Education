@@ -20,7 +20,7 @@ int main()
 
 	while (iterator_1 != std::istreambuf_iterator < char > ()) 
 	{
-		*iterator_2++ = *iterator_1++;
+		*(iterator_2++) = *(iterator_1++);
 	}
 
 //  ----------------------------------------------------------

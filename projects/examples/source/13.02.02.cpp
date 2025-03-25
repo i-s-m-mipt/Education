@@ -30,10 +30,7 @@ int main()
 
 //  ---------------------------------------------------------------------------
 
-	if (std::fstream stream("a/file.data"); !stream)
-	{
-		throw std::runtime_error("invalid stream");
-	}
+	std::fstream("a/file.data");
 
 //  ---------------------------------------------------------------------------
 

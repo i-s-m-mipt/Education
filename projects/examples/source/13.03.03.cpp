@@ -28,11 +28,11 @@ int main()
 
 //  ----------------------------------------------------------------------------------------
 
-    using   Image_Options = AbstractContentContext::  ImageOptions;
+    using   image_options_t = AbstractContentContext::  ImageOptions;
 
-    using    Text_Options = AbstractContentContext::   TextOptions;
+    using    text_options_t = AbstractContentContext::   TextOptions;
 
-    using Graphic_Options = AbstractContentContext::GraphicOptions;
+    using graphic_options_t = AbstractContentContext::GraphicOptions;
 
 //  ----------------------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ int main()
 
 //  ----------------------------------------------------------------------------------------
 
-    Text_Options text_options(font, font_size, AbstractContentContext::eGray, 0);
+    text_options_t text_options(font, font_size, AbstractContentContext::eGray, 0);
 
 //  ----------------------------------------------------------------------------------------
 
@@ -72,7 +72,7 @@ int main()
 
 //  ----------------------------------------------------------------------------------------
 
-    Image_Options image_options;
+    image_options_t image_options;
 
     image_options.transformationMethod = AbstractContentContext::eMatrix;
 
@@ -92,7 +92,7 @@ int main()
 
 //  ----------------------------------------------------------------------------------------
 
-    Graphic_Options graphic_options
+    graphic_options_t graphic_options
     (
         AbstractContentContext::eStroke,
         

@@ -34,9 +34,9 @@ auto type(const std::filesystem::file_status & status)
 
 auto permissions(std::filesystem::perms permissions) -> std::string
 {
-    auto lambda = [permissions](auto bit, auto x) 
+    auto lambda = [permissions](auto x, auto y) 
     { 
-        return (permissions & bit) == std::filesystem::perms::none ? '-' : x;
+        return (permissions & x) == std::filesystem::perms::none ? '-' : y;
     };
 
     return
@@ -84,7 +84,7 @@ auto size(const std::filesystem::directory_entry & entry)
         size = ::size(entry.path());
     }
 
-    char units[4]{ 'B', 'K', 'M', 'G' };
+    char array[4]{ 'B', 'K', 'M', 'G' };
 
     auto index = 0uz;
 
@@ -95,7 +95,7 @@ auto size(const std::filesystem::directory_entry & entry)
         ++index;
     }
 
-    return (std::stringstream() << std::format("{: >4}", size) << units[index]).str();
+    return (std::stringstream() << std::format("{: >4}", size) << array[index]).str();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////

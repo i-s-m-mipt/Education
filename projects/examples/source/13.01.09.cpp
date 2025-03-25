@@ -11,17 +11,13 @@
 
 class Adapter
 {
-public:
+public :
 
     Adapter(const std::string & path) : m_stream(path)
     {
         if (m_stream) 
         {
             m_buffer = std::cout.rdbuf(m_stream.rdbuf());
-        }
-        else 
-        {
-            throw std::runtime_error("invalid stream");
         }
     }
 
@@ -33,7 +29,7 @@ public:
         }
     }
 
-private:
+private :
 
     std::fstream m_stream;
     
@@ -51,9 +47,9 @@ int main()
     {
         Adapter adapter(path);
 
-    //  ------------------------------
+    //  ----------------------
             
-        std::cout << "main : trace\n";
+        std::cout << "main\n";
     }
 
 //  ----------------------------------------------------
