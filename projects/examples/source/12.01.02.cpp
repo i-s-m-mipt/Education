@@ -2,15 +2,25 @@
 
 ////////////////////////////////////////////////////////
 
+// support : en.wikipedia.org/wiki/ASCII
+
+////////////////////////////////////////////////////////
+
+// support : en.wikipedia.org/wiki/Windows-1251
+
+// support : en.wikipedia.org/wiki/Windows-1252
+
+////////////////////////////////////////////////////////
+
 int main()
 {	
 	auto x1 =   'a'; 
 	
-	auto x2 =  L'a'; 
+	auto x2 =  L'a';
 	
-	auto x3 = u8'a'; 
+	auto x3 = u8'a';
 	
-	auto x4 =  u'a'; 
+	auto x4 =  u'a';
 	
 	auto x5 =  U'a';
 

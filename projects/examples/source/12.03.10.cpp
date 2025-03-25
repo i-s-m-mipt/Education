@@ -1,6 +1,7 @@
-#include <cassert>
 #include <cmath>
 #include <exception>
+#include <iostream>
+#include <istream>
 #include <iterator>
 #include <stdexcept>
 #include <string_view>
@@ -19,7 +20,7 @@ class Operand : public boost::spirit::x3::variant
             boost::spirit::x3::forward_ast < struct List > 
 >
 {
-public:
+public :
     
     using base_type::base_type, base_type::operator=;
 };
@@ -89,7 +90,7 @@ namespace parser
 
 class Calculator
 {
-public:
+public :
 
     auto operator()(double x) const -> double
     { 
@@ -102,15 +103,12 @@ public:
 
         switch (sign.operation)
         {
-            case '+': { return      x; }
+            case '+' : { return      x; }
 
-            case '-': { return -1 * x; }
-
-            default: 
-            { 
-                throw std::runtime_error("invalid operation");
-            }
+            case '-' : { return -1 * x; }
         }
+
+        return x;
     }
 
     auto operator()(const Step & step, double x) const -> double
@@ -119,19 +117,16 @@ public:
 
         switch (step.operation)
         {
-            case '+': { return x + y; }
+            case '+' : { return x + y; }
 
-            case '-': { return x - y; }
+            case '-' : { return x - y; }
 
-            case '*': { return x * y; }
+            case '*' : { return x * y; }
 
-            case '/': { return x / y; }
-
-            default: 
-            {
-                throw std::runtime_error("invalid operation");
-            }
+            case '/' : { return x / y; }
         }
+
+        return x;
     }
 
     auto operator()(const List & list) const -> double
@@ -157,12 +152,7 @@ auto parse(std::string_view view)
 
     List list;
 
-    auto state = boost::spirit::x3::phrase_parse(begin, end, parser::rule_1, space, list);
-
-    if (!state || begin != end)
-    {
-        throw std::runtime_error("invalid view");
-    }
+    boost::spirit::x3::phrase_parse(begin, end, parser::rule_1, space, list);
 
     static Calculator calculator;
 
@@ -171,14 +161,25 @@ auto parse(std::string_view view)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-auto equal(double x, double y, double epsilon = 1e-6)
-{
-	return std::abs(x - y) < epsilon;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
 int main()
 {
-    assert(equal(parse("+(1 + -(2 - 3)) * 4 / 5"), 1.6));
+    std::string string;
+
+//  ---------------------------------------------------------------------------
+
+    std::cout << "main : enter statements : \n";
+
+//  ---------------------------------------------------------------------------
+		
+	while (std::getline(std::cin >> std::ws, string))
+	{
+        if (string.front() != ';')
+        {
+            std::cout << "main : " << string << " = " << parse(string) << '\n';
+        }
+		else
+        {
+            break;
+        }
+	}
 }

@@ -7,11 +7,11 @@
 
 class Traits : public std::char_traits < char > 
 {
-public:
+public :
 
-    static auto eq(char x, char y) { return std::toupper(x) == std::toupper(y); }
+    static auto eq(char x, char y) { return std::tolower(x) == std::tolower(y); }
 
-    static auto lt(char x, char y) { return std::toupper(x) <  std::toupper(y); }
+    static auto lt(char x, char y) { return std::tolower(x) <  std::tolower(y); }
 
 //  -----------------------------------------------------------------------------------
 

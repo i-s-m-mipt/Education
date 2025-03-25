@@ -6,7 +6,7 @@
 
 auto test(const std::string & string)
 {
-    std::regex regex(R"(\b([a-z])([^\s]+))"); // support: regex101.com
+    std::regex regex(R"(\b([a-z])([^\s]+))"); // support : regex101.com
 
     auto format = "$1-$2";
 

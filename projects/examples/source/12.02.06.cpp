@@ -7,7 +7,7 @@
 
 using namespace std::literals;
 
-//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -19,18 +19,18 @@ int main()
 
     std::vector < std::string > strings;
 
-//  ----------------------------------------------------------------------
+    auto lambda = [&strings](const auto & matches){ strings.push_back(matches[0]); };
+
+//  ---------------------------------------------------------------------------------
 
     std::ranges::for_each
     (
         std::sregex_iterator(begin, std::cend(string), pattern), 
 
-        std::sregex_iterator(), 
-            
-        [&strings](auto && matches){ strings.push_back(matches[0]); }
+        std::sregex_iterator(), lambda
     );
 
-//  ----------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
     assert(strings == std::vector < std::string > ({ "aaaaa", "AAAAA" }));
 }

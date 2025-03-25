@@ -4,19 +4,19 @@
 
 using namespace std::literals;
 
-///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
-template < typename T1, typename T2 > auto distance(T1 * ptr_1, T2 * ptr_2)
+template < typename T1, typename T2 > auto distance(T1 * x, T2 * y)
 {
     return 
     (
-        std::bit_cast < std::byte * > (ptr_1) - 
+        std::bit_cast < std::byte * > (x) - 
         
-        std::bit_cast < std::byte * > (ptr_2)
+        std::bit_cast < std::byte * > (y)
     );
 }
 
-///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 int main()
 {

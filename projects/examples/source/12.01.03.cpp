@@ -7,34 +7,41 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-void put_time(const std::locale & locale)
+void test(const std::locale & locale)
 {
-	const auto & facet = std::use_facet < std::time_put < char > > (locale);
-
 	auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 
 	auto timestamp = std::localtime(&time);
 
 	auto format = "%X %x";
 
-//  --------------------------------------------------------------------------------------
+	auto previous_locale = std::cout.imbue(locale);
+
+//  -----------------------------------------------------------------------------------
 
     std::cout << "main : timestamp = ";
 
-    std::cout.imbue(locale);
-
-	facet.put(std::cout, std::cout, ' ', timestamp, format, format + std::strlen(format));
+	std::use_facet < std::time_put < char > > (locale).put
+	(
+		std::cout, std::cout, ' ', timestamp, format, format + std::strlen(format)
+	);
 
 	std::cout << '\n';
+
+//  -----------------------------------------------------------------------------------
+
+	std::cout.imbue(previous_locale);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-int main() // support: locale -a
+int main()
 {
-	std::locale locale_1("en_US.utf8");
+	std::locale locale_1("en_US.utf8"); // support : locale -a
 
     std::locale locale_2("ru_RU.utf8");
+
+//	std::setlocale(LC_ALL, "..."); // TODO
 
 //  ----------------------------------------------------------------------------------------
 
@@ -48,7 +55,7 @@ int main() // support: locale -a
 
 //  ----------------------------------------------------------------------------------------
 
-	put_time(locale_1);
+	test(locale_1);
 
-    put_time(locale_2);
+	test(locale_2);
 }

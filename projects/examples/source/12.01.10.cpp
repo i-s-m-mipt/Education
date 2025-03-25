@@ -16,7 +16,13 @@ int main()
         
     [[maybe_unused]] char string_3[6] = "aaaaa";
 
-    [[maybe_unused]] auto string_4    = "aaaaa";
+    [[maybe_unused]] auto string_4    = "aaaaa"; // c_str
+
+//  -------------------------------------------------------------------
+
+//  assert(std::strlen(string_1) == 5); // error
+
+    assert(std::strlen(string_2) == 5);
 
 //  -------------------------------------------------------------------
 
@@ -24,17 +30,17 @@ int main()
 
 //  -------------------------------------------------------------------
 
-    std::istringstream istream("aaaaa");
+    std::stringstream stream_1("aaaaa");
 
-    std::ostringstream ostream;
+    std::stringstream stream_2;
         
 //  -------------------------------------------------------------------
     
-    istream.getline(array, std::size(array));
+    stream_1.getline(array, std::size(array));
 
-    ostream << array;
+    stream_2 << array;
 
 //  -------------------------------------------------------------------
 
-    assert(ostream.str() == istream.str());
+    assert(stream_2.str() == stream_1.str());
 }

@@ -24,7 +24,7 @@ int main()
 
     while (std::regex_search(begin, std::cend(string), matches, pattern))
     {
-        strings.push_back(matches[0]); // support: boost::tokenizer
+        strings.push_back(matches[0]); // support : boost::tokenizer
 
         begin = matches.suffix().first;
     }

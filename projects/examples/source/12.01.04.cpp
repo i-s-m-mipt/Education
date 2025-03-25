@@ -8,11 +8,11 @@
 
 int main()
 {
-	std::stringstream stream("00:00:00 01/01/1970");
+	std::stringstream stream("00:00:00 01.01.1970");
 
 //  ------------------------------------------------
 
-	stream.imbue(std::locale());
+	stream.imbue(std::locale("ru_RU.utf8"));
 
 //  ------------------------------------------------
 

@@ -6,7 +6,7 @@
 
 auto test(const std::string & string) 
 {
-    std::regex regex(R"([_[:alpha:]]\w*)"); // support: regex101.com
+    std::regex regex(R"([_[:alpha:]]\w*)"); // support : regex101.com
 
 	return std::regex_match(string, regex); 
 }

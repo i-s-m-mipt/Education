@@ -19,15 +19,15 @@ int main()
 
     std::vector < std::string > strings;
 
+    auto lambda = [&strings](const auto & match){ strings.push_back(match); };
+
 //  --------------------------------------------------------------------------------
 
     std::ranges::for_each
     (
         std::sregex_token_iterator(begin, std::cend(string), pattern, { 0, 1 }),
             
-        std::sregex_token_iterator(), 
-            
-        [&strings](auto && match){ strings.push_back(match); }
+        std::sregex_token_iterator(), lambda
     );
 
 //  --------------------------------------------------------------------------------

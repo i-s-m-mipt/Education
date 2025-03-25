@@ -10,13 +10,13 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-using Token = std::variant < char, double, std::string > ;
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
 class Stream
 {
-public:
+public :
+
+	using token_t = std::variant < char, double, std::string > ;
+
+//  -------------------------------------------------------------------------------
 
 	Stream(const std::string & string) : m_stream(string + ';') {}
 
@@ -24,20 +24,7 @@ public:
 
 	auto empty()
 	{
-		auto x = '\0'; 
-		
-		m_stream >> x;
-
-		if (x != ';')
-		{ 
-			m_stream.unget();
-			
-			return false;
-		} 
-		else 
-		{
-			return true;
-		}
+		return m_stream.peek() == ';';
 	}
 
 //  -------------------------------------------------------------------------------
@@ -57,15 +44,15 @@ public:
 		
 		switch (x)
 		{
-			case '+': case '-': case '*': case '/': case '(': case ')': case ';':
+			case '+' : case '-' : case '*' : case '/' : case '(' : case ')' : case ';' :
 			{
-				return Token(x);
+				return token_t(x);
 			}
-			case '0': case '1': case '2': case '3': case '4':
+			case '0' : case '1' : case '2' : case '3' : case '4' :
 
-			case '5': case '6': case '7': case '8': case '9':
+			case '5' : case '6' : case '7' : case '8' : case '9' :
 
-			case '.':
+			case '.' :
 			{
 				m_stream.unget();
 				
@@ -73,46 +60,39 @@ public:
 				
 				m_stream >> y;
 
-				return Token(y);
+				return token_t(y);
 			}
-			default:
+			default :
 			{
-				if (std::isalpha(x))
-				{
-					std::string string(1, x);
+				std::string string(1, x);
 					
-					while (m_stream.get(x) && (std::isalpha(x) || std::isdigit(x)))
-					{
-						string += x;
-					}
-
-					if (!std::isspace(x)) 
-					{
-						m_stream.unget();
-					}
-
-					return Token(string);
-				}
-				else 
+				while (m_stream.get(x) && (std::isalpha(x) || std::isdigit(x)))
 				{
-					throw std::runtime_error("invalid token");
+					string += x;
 				}
+
+				if (!std::isspace(x)) 
+				{
+					m_stream.unget();
+				}
+
+				return token_t(string);
 			}
 		}
 	}
 
-	void putback(const Token & token)
+	void putback(const token_t & token)
 	{
 		m_token = token;
 		
 		m_has_token = true;
 	}
 
-private:
+private :
 
 	std::stringstream m_stream;
 
-	Token m_token;
+	token_t m_token;
 	
 	bool m_has_token = false;
 };
@@ -121,14 +101,14 @@ private:
 
 class Calculator
 {
-public:
+public :
 
 	void test()
 	{
-		std::cout << "Calculator::test : enter statements : \n";
-		
 		std::string string;
 
+		std::cout << "Calculator::test : enter statements : \n";
+		
 		while (std::getline(std::cin >> std::ws, string))
 		{
 			if (Stream stream(string); !stream.empty())
@@ -142,7 +122,7 @@ public:
 		}
 	}
 
-private:
+private :
 
 	auto statement(Stream & stream) -> double
 	{
@@ -182,25 +162,18 @@ private:
 
 		while (true)
 		{
-			if (std::holds_alternative < char > (token))
+			switch (std::get < char > (token))
 			{
-				switch (std::get < char > (token))
-				{
-					case '+': { x += term(stream); break; }
+				case '+' : { x += term(stream); break; }
 
-					case '-': { x -= term(stream); break; }
+				case '-' : { x -= term(stream); break; }
 
-					default: 
-					{ 
-						stream.putback(token);
+				default  : 
+				{ 
+					stream.putback(token);
 						
-						return x;
-					}
+					return x;
 				}
-			}
-			else 
-			{
-				throw std::runtime_error("invalid expression");
 			}
 
 			token = stream.get();
@@ -217,25 +190,18 @@ private:
 
 		while (true)
 		{
-			if (std::holds_alternative < char > (token))
+			switch (std::get < char > (token))
 			{
-				switch (std::get < char > (token))
-				{
-					case '*': { x *= term(stream); break; }
+				case '*' : { x *= term(stream); break; }
 
-					case '/': { x /= term(stream); break; }
+				case '/' : { x /= term(stream); break; }
 
-					default: 
-					{ 
-						stream.putback(token);
+				default  : 
+				{ 
+					stream.putback(token);
 						
-						return x;
-					}
+					return x;
 				}
-			}
-			else 
-			{
-				throw std::runtime_error("invalid term");
 			}
 
 			token = stream.get();
@@ -252,32 +218,17 @@ private:
 		{
 			switch (std::get < char > (token))
 			{
-				case '(':
+				case '(' :
 				{
 					auto x = expression(stream);
 					
-					token = stream.get();
-
-					if (!std::holds_alternative < char > (token))
-					{
-						throw std::runtime_error("invalid token");
-					}
-
-					if (std::get < char > (token) != ')')
-					{
-						throw std::runtime_error("invalid token");
-					}
+					stream.get();
 					
 					return x;
 				}
-				case '+': { return      primary(stream); }
+				case '+' : { return      primary(stream); }
 				
-				case '-': { return -1 * primary(stream); }
-				
-				default: 
-				{
-					throw std::runtime_error("invalid primary");
-				}
+				case '-' : { return -1 * primary(stream); }
 			}
 		}
 		
