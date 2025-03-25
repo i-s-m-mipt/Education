@@ -7,20 +7,20 @@
 
 template < typename T > class List
 {
-private:
+private :
 
 	struct Node 
 	{ 
-		T data = T();
+		T x = T();
 		
 		std::shared_ptr < Node > next;
 	};
 
-public:
+public :
 
 	class Iterator : public boost::iterator_facade < Iterator, T, boost::forward_traversal_tag >
 	{
-	public:
+	public :
 
 		Iterator(std::shared_ptr < Node > node = nullptr) : m_node(node) {}
 
@@ -33,7 +33,7 @@ public:
 
 		auto & dereference() const
 		{ 
-			return m_node->data;
+			return m_node->x;
 		}
 
 		auto equal(const Iterator & other) const
@@ -41,7 +41,7 @@ public:
 			return m_node == other.m_node;
 		}
 
-	private:
+	private :
 
 		friend boost::iterator_core_access;
 
@@ -79,7 +79,7 @@ public:
 		}
 	}
 
-private:
+private :
 
 	std::shared_ptr < Node > m_head;
 };
@@ -98,5 +98,5 @@ int main()
 
 //  -------------------------------------------------------------------------------
 
-	for ([[maybe_unused]] auto element : list); // support: cppinsights.io
+	for ([[maybe_unused]] auto element : list); // support : cppinsights.io
 }

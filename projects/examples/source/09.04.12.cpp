@@ -13,7 +13,7 @@
 
 class Arena : private boost::noncopyable
 {
-public:
+public :
 
 	Arena(std::size_t size) : m_size(size)
 	{
@@ -61,11 +61,11 @@ public:
 		std::cout << "m_offset = " << std::format("{:0>4}", m_offset) << '\n';
 	}
 
-private:
+private :
 
-	auto get_byte(void * ptr) const -> std::byte *
+	auto get_byte(void * x) const -> std::byte *
 	{
-		return static_cast < std::byte * > (ptr);
+		return static_cast < std::byte * > (x);
 	}
 
 //  ------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ private:
 
 template < typename T > class Allocator
 {
-public:
+public :
 
     using value_type = T;
 
@@ -100,12 +100,12 @@ public:
         return static_cast < T * > (m_arena->allocate(size * sizeof(T), alignof(T)));
     }
 
-    void deallocate(T * ptr, std::size_t size) const
+    void deallocate(T * x, std::size_t size) const
     {
-        m_arena->deallocate(ptr, size * sizeof(T));
+        m_arena->deallocate(x, size * sizeof(T));
     }
 
-private:
+private :
 
     Arena * m_arena = nullptr;
 };

@@ -13,7 +13,7 @@
 
 class Allocator : private boost::noncopyable
 {
-public:
+public :
 
 	Allocator(std::size_t size) : m_size(size)
 	{
@@ -59,11 +59,11 @@ public:
 		std::cout << "m_offset = " << std::format("{:0>4}", m_offset) << '\n';
 	}
 
-private:
+private :
 
-	auto get_byte(void * ptr) const -> std::byte *
+	auto get_byte(void * x) const -> std::byte *
 	{
-		return static_cast < std::byte * > (ptr);
+		return static_cast < std::byte * > (x);
 	}
 
 //  ------------------------------------------------------------------------------
@@ -100,18 +100,18 @@ void test_v2(benchmark::State & state)
 {
 	auto kb = 1'024uz, mb = kb * kb;
 
-	std::vector < void * > ptrs(kb, nullptr);
+	std::vector < void * > vector(kb, nullptr);
 
 	for (auto element : state)
 	{
 		for (auto i = 0uz; i < kb; ++i) 
 		{ 
-			ptrs[i] = operator new(mb);
+			vector[i] = operator new(mb);
 		}
 
 		for (auto i = 0uz; i < kb; ++i) 
 		{ 
-			operator delete(ptrs[i], mb);
+			operator delete(vector[i], mb);
 		}
 	}
 }
@@ -130,17 +130,17 @@ int main()
 
 	allocator.test();
 
-//  -------------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
-	[[maybe_unused]] auto ptr_1 = allocator.allocate(1, 1); allocator.test();
+	[[maybe_unused]] auto x1 = allocator.allocate(1, 1); allocator.test();
 		
-	[[maybe_unused]] auto ptr_2 = allocator.allocate(2, 2); allocator.test();
+	[[maybe_unused]] auto x2 = allocator.allocate(2, 2); allocator.test();
 
-	[[maybe_unused]] auto ptr_3 = allocator.allocate(4, 4); allocator.test();
+	[[maybe_unused]] auto x3 = allocator.allocate(4, 4); allocator.test();
 
-	[[maybe_unused]] auto ptr_4 = allocator.allocate(8, 8); allocator.test();
+	[[maybe_unused]] auto x4 = allocator.allocate(8, 8); allocator.test();
 
-//  -------------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
     benchmark::RunSpecifiedBenchmarks();
 }

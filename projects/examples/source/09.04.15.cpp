@@ -10,11 +10,11 @@ int main()
 
 //  ------------------------------------
 
-    auto ptr = pool.malloc();
+    auto x = pool.malloc();
 
-    *ptr = 1;
+    *x = 1;
         
-    pool.destroy(ptr);
+    pool.destroy(x);
 
 //  ------------------------------------
 

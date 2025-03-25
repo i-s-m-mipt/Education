@@ -17,24 +17,19 @@
 
 class Allocator : private boost::noncopyable
 {
-public:
+public :
 	
     Allocator(std::size_t size) : m_size(size)
     {
-        if (m_size >= sizeof(Node) + 1) 
-        {
-            m_begin = operator new(m_size, std::align_val_t(s_alignment));
+        assert(m_size >= sizeof(Node) + 1);
+        
+        m_begin = operator new(m_size, std::align_val_t(s_alignment));
 
-	        m_head = get_node(m_begin);
+	    m_head = get_node(m_begin);
             
-            m_head->size = m_size - sizeof(Header);
+        m_head->size = m_size - sizeof(Header);
             
-            m_head->next = nullptr;
-        }
-        else 
-        {
-            throw std::runtime_error("invalid size");
-        }
+        m_head->next = nullptr;
     }
 	
    ~Allocator()
@@ -96,9 +91,9 @@ public:
         return nullptr;
     }
 
-    void deallocate(void * ptr)
+    void deallocate(void * x)
     {
-        auto node = get_node(get_byte(ptr) - sizeof(Header));
+        auto node = get_node(get_byte(x) - sizeof(Header));
 
         Node * previous = nullptr, * current = m_head;
         
@@ -150,7 +145,7 @@ public:
         std::cout << '\n';
     }
 
-private:
+private :
 
     struct Node 
     { 
@@ -168,19 +163,19 @@ private:
 
 //  -----------------------------------------------------------------------------------------------
 
-    auto get_byte(void * ptr) const -> std::byte *
+    auto get_byte(void * x) const -> std::byte *
 	{
-		return static_cast < std::byte * > (ptr);
+		return static_cast < std::byte * > (x);
 	}
 
-    auto get_node(void * ptr) const -> Node *
+    auto get_node(void * x) const -> Node *
 	{
-		return static_cast < Node * > (ptr);
+		return static_cast < Node * > (x);
 	}
 
-    auto get_header(void * ptr) const -> Header *
+    auto get_header(void * x) const -> Header *
 	{
-		return static_cast < Header * > (ptr);
+		return static_cast < Header * > (x);
 	}
 
 //  -----------------------------------------------------------------------------------------------
@@ -241,7 +236,7 @@ void test_v1(benchmark::State & state)
 
     std::default_random_engine engine;
 
-    std::vector < void * > ptrs(kb, nullptr);
+    std::vector < void * > vector(kb, nullptr);
 
 	for (auto element : state)
 	{
@@ -249,22 +244,22 @@ void test_v1(benchmark::State & state)
 
 		for (auto i = 0uz; i < kb; ++i)
         { 
-            ptrs[i] = allocator.allocate(distribution(engine) * mb);
+            vector[i] = allocator.allocate(distribution(engine) * mb);
         }
 
 		for (auto i = 0uz; i < kb; i += 32)
         { 
-            allocator.deallocate(ptrs[i]);
+            allocator.deallocate(vector[i]);
         }
 
 		for (auto i = 0uz; i < kb; i += 32)
         { 
-            ptrs[i] = allocator.allocate(distribution(engine) * mb);
+            vector[i] = allocator.allocate(distribution(engine) * mb);
         }
 
 		for (auto i = 0uz; i < kb; ++i)
         { 
-            allocator.deallocate(ptrs[i]);
+            allocator.deallocate(vector[i]);
         }
 	}
 }
@@ -279,7 +274,7 @@ void test_v2(benchmark::State & state)
 
     std::default_random_engine engine;
 
-    std::vector < std::pair < void * , std::size_t > > ptrs(kb);
+    std::vector < std::pair < void * , std::size_t > > vector(kb);
 
 	for (auto element : state)
 	{
@@ -287,28 +282,28 @@ void test_v2(benchmark::State & state)
         {
             auto size = distribution(engine) * mb;
             
-            ptrs[i].first  = operator new(size);
+            vector[i].first  = operator new(size);
             
-            ptrs[i].second = size;
+            vector[i].second = size;
         }
         
 		for (auto i = 0uz; i < kb; i += 32)
         {
-            operator delete(ptrs[i].first, ptrs[i].second);
+            operator delete(vector[i].first, vector[i].second);
         }
 
 		for (auto i = 0uz; i < kb; i += 32)
         {
             auto size = distribution(engine) * mb;
             
-            ptrs[i].first  = operator new(size);
+            vector[i].first  = operator new(size);
             
-            ptrs[i].second = size;
+            vector[i].second = size;
         } 
         
 		for (auto i = 0uz; i < kb; ++i) 
         {
-            operator delete(ptrs[i].first, ptrs[i].second);
+            operator delete(vector[i].first, vector[i].second);
         }
 	}
 }
@@ -327,27 +322,27 @@ int main()
     
     allocator.test();
 
-//  -----------------------------------------------------------------------
+//  --------------------------------------------------------------------
 
-    [[maybe_unused]] auto ptr_1 = allocator.allocate(16); allocator.test();
+    [[maybe_unused]] auto x1 = allocator.allocate(16); allocator.test();
 
-    [[maybe_unused]] auto ptr_2 = allocator.allocate(16); allocator.test();
+    [[maybe_unused]] auto x2 = allocator.allocate(16); allocator.test();
 
-    [[maybe_unused]] auto ptr_3 = allocator.allocate(16); allocator.test();
+    [[maybe_unused]] auto x3 = allocator.allocate(16); allocator.test();
 
-    [[maybe_unused]] auto ptr_4 = allocator.allocate(16); allocator.test();
+    [[maybe_unused]] auto x4 = allocator.allocate(16); allocator.test();
 
-//  -----------------------------------------------------------------------
+//  --------------------------------------------------------------------
 
-    allocator.deallocate (ptr_3);                         allocator.test();
+    allocator.deallocate (x3);                         allocator.test();
         
-    allocator.deallocate (ptr_2);                         allocator.test();
+    allocator.deallocate (x2);                         allocator.test();
 
-//  -----------------------------------------------------------------------
+//  --------------------------------------------------------------------
 
-    [[maybe_unused]] auto ptr_5 = allocator.allocate(32); allocator.test();
+    [[maybe_unused]] auto x5 = allocator.allocate(32); allocator.test();
 
-//  -----------------------------------------------------------------------
+//  --------------------------------------------------------------------
 
     benchmark::RunSpecifiedBenchmarks();
 }

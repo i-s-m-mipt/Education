@@ -8,9 +8,9 @@ int main()
 
 //  ------------------------------------------------
 
-    auto ptr = resource->allocate(4);
+    auto x = resource->allocate(4);
 
-    *static_cast < int * > (ptr) = 1;
+    *static_cast < int * > (x) = 1;
 
-    resource->deallocate(ptr, 4);
+    resource->deallocate(x, 4);
 }

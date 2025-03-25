@@ -1,37 +1,37 @@
 #include <string>
 
-/////////////////////////////////////
+///////////////////////////////////////
 
 union Entity
 {
-	Entity() : data_1() {}
+	Entity() : string_1() {}
 
    ~Entity() {}
 
-//  ---------------------------
+//  -------------------------------
 
-	std::string data_1, data_2;
+	std::string string_1, string_2;
 };
 
-/////////////////////////////////////
+///////////////////////////////////////
 
 int main()
 {
     Entity entity;
 
-//  ---------------------------------
+//  -----------------------------------
 
-	entity.data_1 = "aaaaa";
+	entity.string_1 = "aaaaa";
 
-	entity.data_1.~basic_string();
+	entity.string_1.~basic_string();
 
-//  ---------------------------------
+//  -----------------------------------
 
-	new (&entity.data_2) std::string;
+	new (&entity.string_2) std::string;
 
-//  ---------------------------------
+//  -----------------------------------
 
-	entity.data_2 = "aaaaa";
+	entity.string_2 = "aaaaa";
 
-	entity.data_2.~basic_string();
+	entity.string_2.~basic_string();
 }

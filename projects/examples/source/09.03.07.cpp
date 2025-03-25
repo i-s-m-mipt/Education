@@ -8,11 +8,11 @@ void test(benchmark::State & state)
 {
     for (auto element : state)
     {
-        auto ptr = operator new(state.range(0));
+        auto x = operator new(state.range(0));
 
-        benchmark::DoNotOptimize(ptr);
+        benchmark::DoNotOptimize(x);
 
-        operator delete(ptr, state.range(0));
+        operator delete(x, state.range(0));
     }
 }
 

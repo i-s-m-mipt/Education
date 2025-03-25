@@ -5,7 +5,7 @@
 
 class Client
 {
-public:
+public :
 
    ~Client() 
     { 
@@ -21,7 +21,7 @@ public:
 
 class Server
 {
-public:
+public :
 
    ~Server() 
     { 

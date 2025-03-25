@@ -16,20 +16,15 @@
 
 class Allocator : private boost::noncopyable
 {
-public:
+public :
 
 	Allocator(std::size_t size, std::size_t step) : m_size(size), m_step(step)
 	{
-		if (m_size % m_step == 0 && m_step >= sizeof(Node))
-		{
-			make_list();
+		assert(m_size % m_step == 0 && m_step >= sizeof(Node));
+
+		make_list();
 			
-			m_begin = m_head;
-		}
-		else 
-		{
-			throw std::runtime_error("invalid size");
-		}
+		m_begin = m_head;
 	}
 
    ~Allocator()
@@ -84,9 +79,9 @@ public:
 		return node;
 	}
 
-	void deallocate(void * ptr)
+	void deallocate(void * x)
 	{
-		auto node = get_node(ptr);
+		auto node = get_node(x);
 		
 		node->next = m_head;
 		
@@ -108,7 +103,7 @@ public:
 		std::cout << "m_offset = " << m_offset << '\n';
 	}
 
-private:
+private :
 
 	struct Node 
 	{ 
@@ -117,14 +112,14 @@ private:
 
 //  -----------------------------------------------------------------------------------------------
 
-	auto get_byte(void * ptr) const -> std::byte *
+	auto get_byte(void * x) const -> std::byte *
 	{
-		return static_cast < std::byte * > (ptr);
+		return static_cast < std::byte * > (x);
 	}
 
-	auto get_node(void * ptr) const -> Node *
+	auto get_node(void * x) const -> Node *
 	{ 
-		return static_cast < Node * > (ptr);
+		return static_cast < Node * > (x);
 	}
 
 //  -----------------------------------------------------------------------------------------------
@@ -168,7 +163,7 @@ void test_v1(benchmark::State & state)
 {
 	auto kb = 1'024uz, mb = kb * kb, gb = kb * kb * kb;
 
-	std::vector < void * > ptrs(kb, nullptr);
+	std::vector < void * > vector(kb, nullptr);
 
 	for (auto element : state)
 	{
@@ -176,22 +171,22 @@ void test_v1(benchmark::State & state)
 
 		for (auto i = 0uz; i < kb; ++i)
 		{ 
-			ptrs[i] = allocator.allocate();
+			vector[i] = allocator.allocate();
 		}
 
 		for (auto i = 0uz; i < kb; i += 2)
 		{ 
-			allocator.deallocate(ptrs[i]);
+			allocator.deallocate(vector[i]);
 		}
 
 		for (auto i = 0uz; i < kb; i += 2)
 		{ 
-			ptrs[i] = allocator.allocate();
+			vector[i] = allocator.allocate();
 		}
 
 		for (auto i = 0uz; i < kb; ++i)
 		{ 
-			allocator.deallocate(ptrs[i]);
+			allocator.deallocate(vector[i]);
 		}
 	}
 }
@@ -202,28 +197,28 @@ void test_v2(benchmark::State & state)
 {
 	auto kb = 1'024uz, mb = kb * kb;
 
-	std::vector < void * > ptrs(kb, nullptr);
+	std::vector < void * > vector(kb, nullptr);
 
 	for (auto element : state)
 	{
 		for (auto i = 0uz; i < kb; ++i)
 		{ 
-			ptrs[i] = operator new(mb);
+			vector[i] = operator new(mb);
 		}
 
 		for (auto i = 0uz; i < kb; i += 2)
 		{
-			operator delete(ptrs[i], mb);
+			operator delete(vector[i], mb);
 		}
 
 		for (auto i = 0uz; i < kb; i += 2)
 		{
-			ptrs[i] = operator new(mb);
+			vector[i] = operator new(mb);
 		}
 
 		for (auto i = 0uz; i < kb; ++i)
 		{ 
-			operator delete(ptrs[i], mb);
+			operator delete(vector[i], mb);
 		}
 	}
 }
@@ -242,29 +237,29 @@ int main()
 	
 	allocator.test();
 
-//  ---------------------------------------------------------------------
+//  ------------------------------------------------------------------
 
-	[[maybe_unused]] auto ptr_1 = allocator.allocate(); allocator.test();
+	[[maybe_unused]] auto x1 = allocator.allocate(); allocator.test();
 
-	[[maybe_unused]] auto ptr_2 = allocator.allocate(); allocator.test();
+	[[maybe_unused]] auto x2 = allocator.allocate(); allocator.test();
 
-	[[maybe_unused]] auto ptr_3 = allocator.allocate(); allocator.test();
+	[[maybe_unused]] auto x3 = allocator.allocate(); allocator.test();
 
-	[[maybe_unused]] auto ptr_4 = allocator.allocate(); allocator.test();
+	[[maybe_unused]] auto x4 = allocator.allocate(); allocator.test();
 
-	[[maybe_unused]] auto ptr_5 = allocator.allocate(); allocator.test();
+	[[maybe_unused]] auto x5 = allocator.allocate(); allocator.test();
 
-//  ---------------------------------------------------------------------
+//  ------------------------------------------------------------------
 
-	allocator.deallocate (ptr_2);                       allocator.test();
+	allocator.deallocate (x2);                       allocator.test();
 		
-	allocator.deallocate (ptr_3);                       allocator.test();
+	allocator.deallocate (x3);                       allocator.test();
 
-//  ---------------------------------------------------------------------
+//  ------------------------------------------------------------------
 
-	[[maybe_unused]] auto ptr_6 = allocator.allocate(); allocator.test();
+	[[maybe_unused]] auto x6 = allocator.allocate(); allocator.test();
 
-//  ---------------------------------------------------------------------
+//  ------------------------------------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }

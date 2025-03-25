@@ -14,15 +14,15 @@ int main()
 
 //  -----------------------------------------------------
 
-	auto ptr = traits.allocate(allocator, 1);
+	auto string = traits.allocate(allocator, 1);
 
 //  -----------------------------------------------------
 
-	traits.construct (allocator, ptr, "aaaaa");
+	traits.construct (allocator, string, "aaaaa");
 
-	traits.destroy   (allocator, ptr);
+	traits.destroy   (allocator, string);
 
 //  -----------------------------------------------------
 
-	traits.deallocate(allocator, ptr, 1);
+	traits.deallocate(allocator, string, 1);
 }

@@ -5,20 +5,20 @@
 
 template < typename T > class List
 {
-private:
+private :
 
 	struct Node 
 	{ 
-		T data = T();
+		T x = T();
 		
 		std::shared_ptr < Node > next;
 	};
 	
-public:
+public :
 
 	class Iterator
 	{
-	public:
+	public :
 
 		using iterator_category = std::forward_iterator_tag;
 
@@ -48,12 +48,12 @@ public:
 
 		auto & operator*() const
 		{ 
-			return m_node->data;
+			return m_node->x;
 		}
 
 		auto operator->() const
 		{ 
-			return &m_node->data;
+			return &m_node->x;
 		}
 	
 	//  -------------------------------------------------------------------
@@ -63,7 +63,7 @@ public:
 			return lhs.m_node == rhs.m_node;
 		}
 
-	private:
+	private :
 
 		std::shared_ptr < Node > m_node;
 	};
@@ -97,7 +97,7 @@ public:
 		}
 	}
 
-private:
+private :
 
 	std::shared_ptr < Node > m_head;
 };
@@ -116,5 +116,5 @@ int main()
 
 //  -------------------------------------------------------------------------------
 
-	for ([[maybe_unused]] auto element : list); // support: cppinsights.io
+	for ([[maybe_unused]] auto element : list); // support : cppinsights.io
 }

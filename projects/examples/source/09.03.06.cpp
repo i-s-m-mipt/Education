@@ -6,7 +6,7 @@
 
 template < typename D > class Entity
 {
-public:
+public :
 
 	static auto operator new(std::size_t size) -> void *
 	{
@@ -15,14 +15,14 @@ public:
 		return ::operator new(size);
 	}
 
-	static void operator delete(void * ptr, std::size_t)
+	static void operator delete(void * x, std::size_t)
 	{
 		std::cout << "Entity::operator delete\n";
 
-		::operator delete(ptr);
+		::operator delete(x);
 	}
 
-protected:
+protected :
 
     Entity() = default;
 
@@ -33,11 +33,11 @@ protected:
 
 class Client : private Entity < Client >
 {
-private:
+private :
 
 	using base_t = Entity < Client > ;
 
-public:
+public :
 
 	Client() { std::cout << "Client:: Client\n"; }
 

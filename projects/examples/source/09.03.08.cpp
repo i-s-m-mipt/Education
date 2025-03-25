@@ -2,11 +2,11 @@
 #include <new>
 #include <utility>
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T > class Optional 
 {
-public:
+public :
 
     Optional() = default;
 
@@ -15,22 +15,22 @@ public:
         initialize(x);
     }
 
-//  ------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------
 
     Optional(const Optional & other) 
     {
-        if (other.m_data) 
+        if (other.m_x) 
         {
-            initialize(*other.m_data);
+            initialize(*other.m_x);
         }
     }
 
-    Optional(Optional && other) : m_data(other.m_data)
+    Optional(Optional && other) : m_x(other.m_x)
     {
-        other.m_data = nullptr;
+        other.m_x = nullptr;
     }
 
-//  ------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------
 
     auto & operator=(const Optional & other) 
     {
@@ -38,9 +38,9 @@ public:
         {
             destroy();
             
-            if (other.m_data) 
+            if (other.m_x) 
             {
-                construct(*other.m_data);
+                construct(*other.m_x);
             }
             else 
             {
@@ -57,9 +57,9 @@ public:
 		{
             uninitialize();
             
-            m_data = other.m_data;
+            m_x = other.m_x;
             
-            other.m_data = nullptr;
+            other.m_x = nullptr;
 		}
 
 		return *this;
@@ -74,14 +74,14 @@ public:
         return *this;
     }
 
-//  ------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------
 
    ~Optional() 
     { 
         uninitialize();
     }
 
-private:
+private :
 
     void initialize(T x) 
     { 
@@ -97,53 +97,53 @@ private:
         deallocate();
     }
 
-//  ------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------
 
     void allocate() 
     { 
-        m_data = static_cast < T * > (operator new(sizeof(T), std::align_val_t(s_alignment)));
+        m_x = static_cast < T * > (operator new(sizeof(T), std::align_val_t(s_alignment)));
     }
 
     void deallocate()
     { 
-        if (m_data)
+        if (m_x)
         {
-            operator delete(m_data, sizeof(T), std::align_val_t(s_alignment));
+            operator delete(m_x, sizeof(T), std::align_val_t(s_alignment));
             
-            m_data = nullptr;
+            m_x = nullptr;
         }
     }
 
-//  ------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------
 
     void construct(T x) 
     {
-        if (!m_data) 
+        if (!m_x) 
         {
             allocate();
         }
         
-        new (m_data) T(x);
+        new (m_x) T(x);
     }
 
     void destroy() 
     { 
-        if (m_data) 
+        if (m_x) 
         {
-            m_data->~T();
+            m_x->~T();
         } 
     }
 
-//  ------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------
 
-    T * m_data = nullptr;
+    T * m_x = nullptr;
 
-//  ------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------
 
     static inline auto s_alignment = alignof(T);
 };
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {

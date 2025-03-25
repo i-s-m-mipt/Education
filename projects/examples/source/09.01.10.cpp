@@ -7,9 +7,9 @@
 
 template < typename T > class Unique : private boost::noncopyable
 {
-public:
+public :
 
-    Unique(T * ptr = nullptr) : m_data(ptr) {}
+    Unique(T * x = nullptr) : m_x(x) {}
         
     Unique(Unique && other) : Unique() 
     { 
@@ -32,29 +32,29 @@ public:
 
     void swap(Unique & other)
     { 
-        std::swap(m_data, other.m_data);
+        std::swap(m_x, other.m_x);
     }
 
 //  ------------------------------------------
 
     auto release()
     {
-        return std::exchange(m_data, nullptr);
+        return std::exchange(m_x, nullptr);
     }
 
-    void reset(T * ptr = nullptr) 
+    void reset(T * x = nullptr) 
     {
-        if (m_data)
+        if (m_x)
         {
-            delete m_data;
+            delete m_x;
         }
 
-        m_data = ptr;
+        m_x = x;
     }
      
-private:
+private :
 
-    T * m_data = nullptr;
+    T * m_x = nullptr;
 };
 
 /////////////////////////////////////////////////////////////////

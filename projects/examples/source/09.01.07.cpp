@@ -9,7 +9,7 @@
 
 class Entity_v1
 {
-public:
+public :
 
     auto get()
     { 
@@ -21,7 +21,7 @@ public:
 
 class Entity_v2 : public std::enable_shared_from_this < Entity_v2 >
 {
-public:
+public :
 
     auto get()
     { 
@@ -33,11 +33,11 @@ public:
 
 class Entity_v3 : public std::enable_shared_from_this < Entity_v3 >
 {
-private:
+private :
 
     struct Key {};
 
-public:
+public :
 
     Entity_v3(Key) {}
 

@@ -98,7 +98,7 @@ int main()
 
 //  ------------------------------------------------
 
-	auto iterator = vector.begin();
+	auto iterator = std::begin(vector);
 
 //  ------------------------------------------------
 

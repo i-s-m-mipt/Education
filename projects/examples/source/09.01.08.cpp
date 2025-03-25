@@ -8,7 +8,7 @@
 
 class Controller : private boost::noncopyable
 {
-public:
+public :
 
     void increase() { ++m_counter; }
 
@@ -20,13 +20,13 @@ public:
         }
     }
 
-protected:
+protected :
 
              Controller() = default;
 
     virtual ~Controller() = default;
 
-private:
+private :
 
     virtual void clear() = 0;
 
@@ -39,47 +39,47 @@ private:
 
 template < typename T > class Handler : public Controller
 {
-public:
+public :
 
-    Handler(T * ptr) : m_data(ptr)
+    Handler(T * x) : m_x(x)
     {
         increase();
     }
 
-private:
+private :
 
     void clear() override
     {
-        if (m_data)
+        if (m_x)
         {
-            delete m_data;
+            delete m_x;
         }
             
         delete this;
     }
 
-//  ------------------------------
+//  -----------------------
 
-    T * m_data = nullptr;
+    T * m_x = nullptr;
 };
 
 //////////////////////////////////////////////////////////////
 
 template < typename T > class Shared
 {
-public:
+public :
 
-    Shared(T * ptr = nullptr) : m_data(ptr)
+    Shared(T * x = nullptr) : m_x(x)
     {
-        if (m_data)
+        if (m_x)
         {
-            m_controller = new Handler < T > (m_data);
+            m_controller = new Handler < T > (m_x);
         }
     }
 
     Shared(const Shared < T > & other) 
     : 
-        m_data(other.m_data), m_controller(other.m_controller)
+        m_x(other.m_x), m_controller(other.m_controller)
     {
         if (m_controller) 
         {
@@ -118,14 +118,14 @@ public:
 
     void swap(Shared & other)
     {
-        std::swap(m_data, other.m_data);
+        std::swap(m_x, other.m_x);
 
         std::swap(m_controller, other.m_controller);
     }
 
-private:
+private :
 
-    T * m_data = nullptr;
+    T * m_x = nullptr;
     
     Controller * m_controller = nullptr;
 };

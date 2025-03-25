@@ -13,7 +13,7 @@
 
 template < std::size_t S > class Allocator : private boost::noncopyable
 {
-public:
+public :
 
 	auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
 	{
@@ -46,13 +46,13 @@ public:
 		std::cout << "m_offset = " << std::format("{:0>4}", m_offset) << '\n';
 	}
 
-private:
+private :
 
 	std::size_t m_offset = 0;
 
-    alignas(std::max_align_t) std::byte m_data[S]{};
+    alignas(std::max_align_t) std::byte m_array[S]{};
 
-    std::byte * m_begin = m_data;
+    std::byte * m_begin = m_array;
 
 //  ------------------------------------------------------------------------------
 
@@ -82,18 +82,18 @@ void test_v2(benchmark::State & state)
 {
 	auto kb = 1'024uz;
 
-	std::vector < void * > ptrs(kb, nullptr);
+	std::vector < void * > vector(kb, nullptr);
 
 	for (auto element : state)
 	{
 		for (auto i = 0uz; i < kb; ++i)
 		{
-			ptrs[i] = operator new(kb);
+			vector[i] = operator new(kb);
 		}
 
 		for (auto i = 0uz; i < kb; ++i)
 		{
-			operator delete(ptrs[i]);
+			operator delete(vector[i]);
 		}
 	}
 }
@@ -112,17 +112,17 @@ int main()
 
 	allocator.test();
 
-//  -------------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
-	[[maybe_unused]] auto ptr_1 = allocator.allocate(1, 1); allocator.test();
+	[[maybe_unused]] auto x1 = allocator.allocate(1, 1); allocator.test();
 
-	[[maybe_unused]] auto ptr_2 = allocator.allocate(2, 2); allocator.test();
+	[[maybe_unused]] auto x2 = allocator.allocate(2, 2); allocator.test();
 		
-	[[maybe_unused]] auto ptr_3 = allocator.allocate(4, 4); allocator.test();
+	[[maybe_unused]] auto x3 = allocator.allocate(4, 4); allocator.test();
 
-	[[maybe_unused]] auto ptr_4 = allocator.allocate(8, 8); allocator.test();
+	[[maybe_unused]] auto x4 = allocator.allocate(8, 8); allocator.test();
 
-//  -------------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }

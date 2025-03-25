@@ -4,21 +4,21 @@
 
 template < typename T > class RAII : private boost::noncopyable
 {
-public:
+public :
 
-	RAII(T x) : m_data(new T(x)) {}
+	RAII(T x) : m_x(new T(x)) {}
 
    ~RAII() 
 	{ 
-		if (m_data) 
+		if (m_x) 
 		{
-			delete m_data;
+			delete m_x;
 		}
 	}
 
-private:
+private :
 
-	T * m_data = nullptr;
+	T * m_x = nullptr;
 };
 
 ///////////////////////////////////////////////////////////////

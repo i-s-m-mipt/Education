@@ -8,9 +8,9 @@ int main()
 
 //  ---------------------------------
 
-	auto ptr = allocator.allocate(1);
+	auto x = allocator.allocate(1);
 
-	*ptr = 1;
+	*x = 1;
 
-	allocator.deallocate(ptr, 1);
+	allocator.deallocate(x, 1);
 }
