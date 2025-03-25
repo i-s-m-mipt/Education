@@ -4,7 +4,7 @@
 
 class Client 
 { 
-public:
+public :
 
 	void test() const
 	{ 
@@ -16,7 +16,7 @@ public:
 
 class Entity
 {
-public:
+public :
 
 	virtual ~Entity() = default;
 
@@ -29,7 +29,7 @@ public:
 
 class Adapter_v1 : public Entity
 {
-public:
+public :
 
 	Adapter_v1(Client & client) : m_client(client) {}
 
@@ -40,7 +40,7 @@ public:
 		m_client.test();
 	}
 
-private:
+private :
 
 	Client & m_client;
 };
@@ -49,7 +49,7 @@ private:
 
 class Adapter_v2 : public Entity, private Client
 {
-public:
+public :
 
 	void test() const override 
 	{ 

@@ -4,7 +4,7 @@
 
 class Entity
 {
-public:
+public :
 
     virtual ~Entity() = default;
 };
@@ -13,24 +13,24 @@ public:
 
 class Client : public Entity
 {
-public:
+public :
 
     class Factory
     {
-    public:
+    public :
 
         static auto make_v1() -> Entity * { return new Client(1); }
         
         static auto make_v2() -> Entity * { return new Client(2); }
     };
 
-private:
+private :
 
-    Client(int x) : m_data(x) {}
+    Client(int x) : m_x(x) {}
 
 //  ---------------------------------------------------------------
 
-    int m_data = 0;
+    int m_x = 0;
 };
 
 ///////////////////////////////////////////////////////////////////

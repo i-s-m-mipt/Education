@@ -4,83 +4,71 @@
 
 class Entity
 {
-public:
-
-    using data_t = int;
-
-//  -------------------
+public :
 
     auto get() const 
     { 
-        return m_data;
+        return m_x;
     }
     
     void set(int x) 
     { 
-        m_data = x;
+        m_x = x;
     }
 
-private:
+private :
 
-    data_t m_data = 0;
+    int m_x = 0;
 };
 
 /////////////////////////////////////////////////
 
 template < typename B > class Undoable : public B
 {
-public:
+public :
 
-    using data_t = typename B::data_t;
-
-//  ----------------------------------
-
-    void set(data_t data) 
+    void set(int x) 
     { 
-        m_data = B::get();
+        m_x = B::get();
         
-        B::set(data);
+        B::set(x);
     }
 
     auto & undo() 
     { 
-        B::set(m_data);
+        B::set(m_x);
 
         return *this;
     }
     
-private:
+private :
     
-    data_t m_data = data_t();
+    int m_x = 0;
 };
 
 /////////////////////////////////////////////////
 
 template < typename B > class Redoable : public B
 {
-public:
+public :
 
-    using data_t = typename B::data_t;
-
-//  ----------------------------------
-
-    void set(data_t data) 
+    void set(int x) 
     { 
-        m_data = data;
+        m_x = x;
         
-        B::set(data);
+        B::set(x);
     }
 
     auto & redo() 
     { 
-        B::set(m_data);
+        B::set(m_x);
 
         return *this;
     }
     
-private:
+private :
     
-    data_t m_data = data_t();
+    int m_x = 0;
 };
 
 /////////////////////////////////////////////////

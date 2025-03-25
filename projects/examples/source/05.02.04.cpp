@@ -1,10 +1,10 @@
 #include <iostream>
 
-///////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
 class Entity 
 {
-public:
+public :
 
     virtual ~Entity() = default;
 
@@ -13,11 +13,11 @@ public:
     virtual void test() const = 0;
 };
 
-///////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
 class Client : public Entity 
 { 
-public: 
+public : 
     
     void test() const override 
     { 
@@ -25,11 +25,11 @@ public:
     } 
 };
 
-///////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
 class Server : public Entity 
 { 
-public: 
+public : 
     
     void test() const override 
     { 
@@ -37,15 +37,15 @@ public:
     } 
 };
 
-///////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
 class Decorator : public Entity
 {
-public:
+public :
 
-    Decorator(Entity & entity): m_entity(entity) {}
+    Decorator(Entity & entity) : m_entity(entity) {}
 
-//  -----------------------------------------------
+//  ------------------------------------------------
 
     void test() const override
     { 
@@ -54,12 +54,12 @@ public:
         m_entity.test();
     }
 
-private:
+private :
 
     Entity & m_entity;
 };
 
-///////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
 int main()
 {

@@ -4,7 +4,7 @@
 
 class Entity_v1
 {
-public:
+public :
 
     virtual ~Entity_v1() = default;
 
@@ -17,7 +17,7 @@ public:
 
 class Client_v1 : public Entity_v1 
 { 
-public:
+public :
 
     void test() const override 
     { 
@@ -29,7 +29,7 @@ public:
 
 class Client_v2 : public Entity_v1 
 { 
-public: 
+public : 
 
     void test() const override 
     { 
@@ -41,7 +41,7 @@ public:
 
 class Entity_v2
 {
-public:
+public :
 
     Entity_v2(Entity_v1 & entity_v1) : m_bridge(entity_v1) {}
 
@@ -51,7 +51,7 @@ public:
 
     virtual void test() const = 0;
 
-protected:
+protected :
 
     Entity_v1 & m_bridge;
 };
@@ -60,7 +60,7 @@ protected:
 
 class Server_v1 : public Entity_v2 
 {
-public:
+public :
 
     Server_v1(Entity_v1 & entity_v1) : Entity_v2(entity_v1) {}
 
@@ -78,7 +78,7 @@ public:
 
 class Server_v2 : public Entity_v2 
 {
-public:
+public :
 
     Server_v2(Entity_v1 & entity_v1) : Entity_v2(entity_v1) {}
 

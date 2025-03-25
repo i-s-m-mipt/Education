@@ -4,7 +4,7 @@
 
 class Entity
 {
-public:
+public :
 
 	virtual ~Entity() = default;
 
@@ -21,7 +21,7 @@ public:
 		test_v4();
 	} 
 
-private:
+private :
 
 	void test_v1() const { std::cout << "Entity::test_v1\n"; }
 
@@ -38,7 +38,7 @@ private:
 
 class Client : public Entity 
 { 
-private:
+private :
 
 	void test_v2() const override { std::cout << "Client::test_v2\n"; }
 
@@ -49,7 +49,7 @@ private:
 
 class Server : public Entity
 {
-private:
+private :
 
 	void test_v2() const override { std::cout << "Server::test_v2\n"; }
 	

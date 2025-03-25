@@ -1,45 +1,35 @@
 #include <cstddef>
 #include <iostream>
 
-////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D, std::size_t S > class Controller
+template < typename D > class Controller
 {
-protected:
+protected :
 
-	Controller(                            ) { initialize(); }
+	Controller(                         ) { ++s_counter; }
 
-	Controller(const Controller < D, S > & ) { initialize(); }
+	Controller(const Controller < D > & ) { ++s_counter; }
 
-	Controller(      Controller < D, S > &&) { initialize(); }
+	Controller(      Controller < D > &&) { ++s_counter; }
 
    ~Controller() 
     { 
 		--s_counter;
 	}
 
-private:
-
-	void initialize() const
-	{
-		if (++s_counter > S)
-		{
-			std::cerr << "Controller::initialize : invalid instance\n";
-		}
-	}
-
-//  -------------------------------------------------------------------
+private :
 
 	static inline auto s_counter = 0uz;
 };
 
-////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > class Entity_v3 : private Controller < Entity_v3 < T > , 5 > {};
+template < typename T > class Entity_v3 : private Controller < Entity_v3 < T > > {};
 
-template < typename T > class Entity_v4 : private Controller < Entity_v4 < T > , 5 > {};
+template < typename T > class Entity_v4 : private Controller < Entity_v4 < T > > {};
 
-////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {

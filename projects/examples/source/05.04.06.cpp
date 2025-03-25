@@ -10,20 +10,20 @@ class Entity
      
     private boost::          equivalent < Entity >
 {
-public:
+public :
 
-    Entity(int x) : m_data(x) {}
+    Entity(int x) : m_x(x) {}
 
 //  -------------------------------------------------------------
 
     friend auto operator<(const Entity & lhs, const Entity & rhs)
     {
-        return lhs.m_data < rhs.m_data;
+        return lhs.m_x < rhs.m_x;
     }
 
-private:
+private :
 
-    int m_data = 0;
+    int m_x = 0;
 };
 
 /////////////////////////////////////////////////////////////////

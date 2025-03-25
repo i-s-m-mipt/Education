@@ -1,67 +1,71 @@
 #include <cassert>
 
-///////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 
 struct Entity
 {
-    int data_1 = 0, data_2 = 0;
+    int x = 0, y = 0;
 };
 
-///////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 
 class Builder
 {
-public:
+public :
 
     virtual ~Builder() = default;
 
-//  -------------------------------------
+//  --------------------------------
 
-    auto make() const
+    auto make()
     { 
         m_entity = new Entity;
 
-        make_data_1();
+    //  ----------------------
+
+        make_x();
         
-        make_data_2();
+        make_y();
+
+    //  ----------------------
 
         return m_entity;
     }
 
-//  -------------------------------------
+//  --------------------------------
 
-    virtual void make_data_1() const = 0;
+    virtual void make_x() const = 0;
 
-    virtual void make_data_2() const = 0;
+    virtual void make_y() const = 0;
 
-protected:
+protected :
 
-    mutable Entity * m_entity = nullptr;
+    Entity * m_entity = nullptr;
 };
 
-///////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 
 class Builder_Client : public Builder
 {
-public:
+public :
 
-    void make_data_1() const override { m_entity->data_1 = 1; }
+    void make_x() const override { m_entity->x = 1; }
 
-    void make_data_2() const override { m_entity->data_2 = 1; }
+    void make_y() const override { m_entity->y = 1; }
 };
 
-///////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 
 class Builder_Server : public Builder
 {
-public:
+public :
 
-    void make_data_1() const override { m_entity->data_1 = 2; }
+    void make_x() const override { m_entity->x = 2; }
 
-    void make_data_2() const override { m_entity->data_2 = 2; }
+    void make_y() const override { m_entity->y = 2; }
 };
 
-///////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 
 int main()
 {

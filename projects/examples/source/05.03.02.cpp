@@ -5,7 +5,7 @@
 
 class Observer 
 {
-public:
+public :
 
     virtual ~Observer() = default;
 
@@ -18,7 +18,7 @@ public:
 
 class Entity 
 {
-public:
+public :
 
    ~Entity()
     {
@@ -42,7 +42,7 @@ public:
 
     void set(int x) 
     { 
-        m_data = x;
+        m_x = x;
         
         notify_observers();
     }
@@ -53,14 +53,14 @@ public:
         {
             if (observer) 
             {
-                observer->test(m_data);
+                observer->test(m_x);
             }
         }
     }
 
-private:
+private :
 
-    int m_data = 0;
+    int m_x = 0;
     
     std::vector < Observer * > m_observers;
 };
@@ -69,7 +69,7 @@ private:
 
 class Client : public Observer 
 {
-public:
+public :
 
     void test(int x) const override
     {
@@ -81,7 +81,7 @@ public:
 
 class Server : public Observer
 {
-public:
+public :
 
     void test(int x) const override
     {

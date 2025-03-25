@@ -6,13 +6,13 @@
 
 class Noncopyable
 {
-public:
+public :
 
     Noncopyable            (const Noncopyable &) = delete;
 
     Noncopyable & operator=(const Noncopyable &) = delete;
 
-protected:
+protected :
 
     Noncopyable() = default;
 };
@@ -25,7 +25,7 @@ class Unique_v1 : private Noncopyable {};
 
 class Unique_v2 : private Noncopyable
 {
-public:
+public :
 
     Unique_v2() = default;
 

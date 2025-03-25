@@ -4,7 +4,7 @@
 
 class Client
 {
-public:
+public :
 
     void test_v1() const { std::cout << "Client::test_v1\n"; }
     
@@ -15,7 +15,7 @@ public:
 
 class Server
 {
-public:
+public :
 
     void test_v1() const { std::cout << "Server::test_v1\n"; }
 
@@ -26,7 +26,7 @@ public:
 
 class Facade : private Client, private Server
 {
-public:
+public :
 
     void test_v1() const
     {

@@ -4,7 +4,7 @@
 
 class Entity
 {    
-public:
+public :
 
     virtual ~Entity() = default;
 
@@ -17,7 +17,7 @@ public:
 
 class Client : public Entity
 {
-public:
+public :
 
     Entity * copy() const override 
     { 
@@ -29,7 +29,7 @@ public:
 
 class Server : public Entity
 {
-public:
+public :
 
     Entity * copy() const override 
     { 
@@ -41,13 +41,13 @@ public:
 
 class Factory
 {
-public:
+public :
 
     static auto make_client() { return s_client.copy(); }
     
     static auto make_server() { return s_server.copy(); }
 
-private:
+private :
 
     static inline const Client s_client;
 

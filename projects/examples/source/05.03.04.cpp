@@ -4,7 +4,7 @@
 
 class Strategy 
 {
-public:
+public :
 
     virtual ~Strategy() = default;
 
@@ -17,7 +17,7 @@ public:
 
 class Slow : public Strategy 
 { 
-public: 
+public : 
     
     void test() const override 
     { 
@@ -29,7 +29,7 @@ public:
 
 class Fast : public Strategy 
 { 
-public: 
+public : 
     
     void test() const override 
     { 
@@ -41,7 +41,7 @@ public:
 
 class Entity
 {
-public:
+public :
 
     Entity(Strategy & strategy) : m_strategy(strategy) {}
 
@@ -52,7 +52,7 @@ public:
         m_strategy.test();
     }
 
-private:
+private :
     
     Strategy & m_strategy;
 };

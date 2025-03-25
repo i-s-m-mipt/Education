@@ -5,14 +5,14 @@
 
 template < typename D > class Entity
 {
-public:
+public :
 
 	void test() const
 	{
 		static_cast < const D * > (this)->test_implementation();
 	}
 
-protected:
+protected :
 
 	void test_implementation() const
 	{ 
@@ -26,7 +26,7 @@ class Client : public Entity < Client > {};
 
 class Server : public Entity < Server >
 {
-public:
+public :
 
 	void test_implementation() const
 	{ 

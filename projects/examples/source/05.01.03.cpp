@@ -4,7 +4,7 @@
 
 class Entity
 {
-public:
+public :
 
     virtual ~Entity() = default;
 };
@@ -19,7 +19,7 @@ class Server : public Entity {};
 
 class Factory
 {
-public:
+public :
 
     virtual ~Factory() = default;
 
@@ -32,7 +32,7 @@ public:
 
 class Factory_Client : public Factory 
 { 
-public: 
+public : 
     
     Entity * make() const override 
     { 
@@ -44,7 +44,7 @@ public:
 
 class Factory_Server : public Factory 
 { 
-public: 
+public : 
     
     Entity * make() const override 
     { 

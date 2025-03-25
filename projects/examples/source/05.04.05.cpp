@@ -4,7 +4,7 @@
 
 template < typename T > class Comparable
 {
-public:
+public :
 
     friend auto operator> (const T & lhs, const T & rhs) { return  (rhs < lhs); }
 
@@ -17,7 +17,7 @@ public:
         return !(lhs < rhs) && !(rhs < lhs);
     }
 
-protected:
+protected :
 
     Comparable() = default;
 };
@@ -26,20 +26,20 @@ protected:
 
 class Entity : private Comparable < Entity >
 {
-public:
+public :
 
-    Entity(int x) : m_data(x) {}
+    Entity(int x) : m_x(x) {}
 
 //  -------------------------------------------------------------
 
     friend auto operator<(const Entity & lhs, const Entity & rhs)
     {
-        return lhs.m_data < rhs.m_data;
+        return lhs.m_x < rhs.m_x;
     }
 
-private:
+private :
 
-    int m_data = 0;
+    int m_x = 0;
 };
 
 /////////////////////////////////////////////////////////////////////////////////

@@ -4,7 +4,7 @@
 
 class State
 {
-public:
+public :
 
     virtual ~State() = default;
 
@@ -19,7 +19,7 @@ public:
 
 class Slow : public State 
 { 
-public:
+public :
 
     void set_slow([[maybe_unused]] class Entity * entity) const override;
 
@@ -30,7 +30,7 @@ public:
 
 class Fast : public State 
 { 
-public:
+public :
 
     void set_slow([[maybe_unused]] class Entity * entity) const override;
 
@@ -41,7 +41,7 @@ public:
 
 class Entity
 {
-public:
+public :
 
     Entity() : m_state(new Slow) {}
 
@@ -68,7 +68,7 @@ public:
 
     void set_fast() { m_state->set_fast(this); }
 
-private:
+private :
 
     State * m_state = nullptr;
 };

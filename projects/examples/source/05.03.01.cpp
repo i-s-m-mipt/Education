@@ -6,7 +6,7 @@
 
 class Memento 
 {
-public:
+public :
 
     Memento(int x = 0) : m_states(1, State(x)) {}
 
@@ -14,7 +14,7 @@ public:
 
     auto get() const
     {
-        return m_states.front().data;
+        return m_states.front().x;
     }
 
     void set(int x)
@@ -51,22 +51,22 @@ public:
         return *this;
     }
 
-private:
+private :
 
-    struct State { int data = 0; };
+    struct State { int x = 0; };
 
-    struct Delta { int data = 0; };
+    struct Delta { int x = 0; };
 
 //  --------------------------------------------------------------------
 
     friend auto operator-(const State & lhs, const State & rhs) -> Delta
     { 
-        return Delta(lhs.data - rhs.data);
+        return Delta(lhs.x - rhs.x);
     }
 
     friend auto operator+(const State & lhs, const Delta & rhs) -> State
     { 
-        return State(lhs.data + rhs.data);
+        return State(lhs.x + rhs.x);
     }
 
 //  --------------------------------------------------------------------

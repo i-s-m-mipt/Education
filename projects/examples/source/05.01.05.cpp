@@ -4,7 +4,7 @@
 
 class Singleton
 {
-public:
+public :
 
     Singleton            (const Singleton &) = delete;
 
@@ -26,7 +26,7 @@ public:
         return singleton;
     }
 
-private:
+private :
 
     Singleton() = default;
 };

@@ -4,7 +4,7 @@
 
 template < typename D > class Singleton
 {
-public:
+public :
 
     Singleton            (const Singleton &) = delete;
 
@@ -19,7 +19,7 @@ public:
 		return d;
     }
 
-protected:
+protected :
 
     Singleton() = default;
 };
@@ -28,14 +28,14 @@ protected:
 
 class Entity_v1 : public Singleton < Entity_v1 > 
 {
-public:
+public :
 
 	void test() const
 	{
 		std::cout << "Entity_v1::test\n";
 	}
 
-private:
+private :
 
     friend Singleton < Entity_v1 > ;
 
@@ -48,14 +48,14 @@ private:
 
 class Entity_v2
 {
-public:
+public :
 
 	void test() const
 	{
 		std::cout << "Entity_v2::test\n";
 	}
 
-private:
+private :
 
 	friend Singleton < Entity_v2 > ;
 

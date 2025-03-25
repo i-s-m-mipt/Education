@@ -4,7 +4,7 @@
 
 class Entity
 {
-public:
+public :
 
 	virtual ~Entity() = default;
 
@@ -17,7 +17,7 @@ public:
 
 class Client_v1 : public Entity 
 { 
-public:
+public :
 
 	void test() const override 
 	{ 
@@ -29,7 +29,7 @@ public:
 
 class Server_v1 : public Entity 
 { 
-public:
+public :
 
 	void test() const override 
 	{ 
@@ -46,9 +46,9 @@ void test_v1(const Entity & entity)
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-class Client_v2 { public: void test() const { std::cout << "Client_v2::test\n"; } };
+class Client_v2 { public : void test() const { std::cout << "Client_v2::test\n"; } };
 
-class Server_v2 { public: void test() const { std::cout << "Server_v2::test\n"; } };
+class Server_v2 { public : void test() const { std::cout << "Server_v2::test\n"; } };
 
 ////////////////////////////////////////////////////////////////////////////////////
 
