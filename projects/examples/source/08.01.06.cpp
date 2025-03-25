@@ -19,9 +19,9 @@ void test_v1(benchmark::State & state)
     {
         for (auto i = 0uz; i < std::size(entities); ++i)
         {
-            entities[i].x = i;
+            entities[i].x = i + 1;
 
-            entities[i].y = i;
+            entities[i].y = i + 1;
         }
     }
 }
@@ -36,9 +36,9 @@ void test_v2(benchmark::State & state)
     {        
         for (auto i = 0uz; i < std::size(entities); ++i)
         {
-            entities[i].x = i;
+            entities[i].x = i + 1;
 
-            entities[i].y = i;
+            entities[i].y = i + 1;
         }
     }
 }
