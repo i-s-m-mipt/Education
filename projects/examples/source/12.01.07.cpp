@@ -8,6 +8,10 @@ using namespace std::literals;
 
 //////////////////////////////////////////////////
 
+// support : Boost.StringAlgorithms
+
+//////////////////////////////////////////////////
+
 int main()
 {
     std::stringstream stream("aaaaa bbbbb");

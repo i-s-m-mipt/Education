@@ -1,4 +1,8 @@
-class Entity_v1 {}; // support : boost::compressed_pair
+// support : Boost.CompressedPair
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+class Entity_v1 {};
 
 class Entity_v2 { public : char x = '\0';                       Entity_v1 entity_v1; };
 

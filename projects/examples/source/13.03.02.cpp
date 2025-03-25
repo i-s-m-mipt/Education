@@ -12,9 +12,13 @@ using namespace std::literals;
 
 /////////////////////////////////////////////////////////////////
 
+// support : Boost.PropertyTree
+
+/////////////////////////////////////////////////////////////////
+
 int main()
 {
-    nlohmann::json json; // support : boost::property_tree
+    nlohmann::json json;
 
 //  -------------------------------------------------------------
 
