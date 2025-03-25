@@ -5,15 +5,15 @@
 #include <type_traits>
 #include <utility>
 
-//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 class Entity
 {
-public:
+public :
 
-	Entity(int x) try : m_data(x)
+	Entity(int x) try : m_x(x)
 	{
-		if (m_data < 0)
+		if (m_x < 0)
 		{
 			throw std::runtime_error("error");
 		}
@@ -32,19 +32,12 @@ public:
 
 //  -----------------------------------------------
 
-	void swap(Entity & other) noexcept
+	auto get() const noexcept
 	{
-		std::swap(m_data, other.m_data);
+		return m_x;
 	}
 
-//  -----------------------------------------------
-
-	auto data() const noexcept
-	{
-		return m_data;
-	}
-
-private:
+private :
 
 	void uninitialize() const noexcept
 	{ 
@@ -57,10 +50,10 @@ private:
 
 //  -----------------------------------------------
 
-	int m_data = 0;
+	int m_x = 0;
 };
 
-//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 template < typename T > void swap(T & x, T & y) noexcept
 (
@@ -76,18 +69,7 @@ template < typename T > void swap(T & x, T & y) noexcept
 		 x = std::move(z);
 }
 
-//////////////////////////////////////////////////////////////////////////////////
-
-template 
-< 
-	typename F, typename ... Ts 
-> 
-auto invoke(F && f, Ts && ... xs) noexcept(noexcept(f(std::declval < Ts > ()...)))
-{
-	return f(std::forward < Ts > (xs)...);
-}
-
-//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 void test_v1() 
 {
@@ -96,7 +78,7 @@ void test_v1()
     Entity entity_2(2); std::cout << "test_v1\n";
 }
 
-//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 void test_v2() noexcept
 {
@@ -105,23 +87,25 @@ void test_v2() noexcept
     Entity entity_2(2); std::cout << "test_v1\n";
 }
 
-//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 int main()
 {
-	static_assert(noexcept(std::declval < Entity > ().data()));
+	static_assert(noexcept(std::declval < Entity > ().get()));
 
-//  -----------------------------------------------------------
+//  ----------------------------------------------------------
 
-	Entity entity_1(1), entity_2(2);
+	Entity entity_1(1);
+	
+	Entity entity_2(2);
 
-    entity_1.swap(entity_2);
+//  ----------------------------------------------------------
 
-	invoke(swap < Entity > , entity_1, entity_2);
+	swap(entity_1, entity_2);
 
-//  -----------------------------------------------------------
+//  ----------------------------------------------------------
 
-	test_v1(); // support: compiler-explorer.com
+	test_v1(); // support : compiler-explorer.com
 
-    test_v2(); // support: compiler-explorer.com
+    test_v2(); // support : compiler-explorer.com
 }

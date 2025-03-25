@@ -21,14 +21,14 @@
 
 class Logger : private boost::noncopyable
 {
-public:
+public :
 
 	enum class Severity : std::uint8_t
 	{
 		debug, trace, error, fatal
 	};
 
-//  ----------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------------
 
 	Logger(const char * scope, bool has_trace) : m_scope(scope), m_has_trace(has_trace)
 	{
@@ -48,53 +48,39 @@ public:
 		}
 	}
 
-//  ----------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------------
 
 	void write(Severity severity, const std::string & string) const
 	{
-		if (auto record = s_logger.open_record(boost::log::keywords::severity = severity); record)
-		{
-			boost::log::record_ostream(record) << m_scope << " : " << string;
+		auto record = s_logger.open_record(boost::log::keywords::severity = severity);
+		
+		boost::log::record_ostream(record) << m_scope << " : " << string;
 
-			s_logger.push_record(std::move(record));
-		}
-		else 
-		{
-			throw std::runtime_error("invalid record");
-		}
+		s_logger.push_record(std::move(record));
 	}
 
-private:
+private :
 
 	using sink_t = boost::log::sinks::synchronous_sink < boost::log::sinks::text_file_backend > ;
 
-//  ----------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------------
 
 	static void initialize()
 	{
-        std::vector < std::pair < std::string, boost::log::attribute > > attributes = 
-        {
-            { "line",    boost::log::attributes::counter < std::size_t > () },
+		s_logger.add_attribute("line",    boost::log::attributes::counter < std::size_t > ());
 
-            { "time",    boost::log::attributes::utc_clock() },
+		s_logger.add_attribute("time",    boost::log::attributes::utc_clock               ());
 
-            { "process", boost::log::attributes::current_process_id() },
+		s_logger.add_attribute("process", boost::log::attributes::current_process_id      ());
 
-            { "thread",  boost::log::attributes::current_thread_id () }
-        };
+		s_logger.add_attribute("thread",  boost::log::attributes::current_thread_id       ());
 
-		for (const auto & [name, attribute] : attributes)
-		{
-			if (!s_logger.add_attribute(name, attribute).second)
-			{
-				throw std::runtime_error("invalid attribute");
-			}
-		}
+	//  --------------------------------------------------------------------------------------
 
 		boost::log::core::get()->add_sink(make_sink());
 	}
 
-//  ----------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------------
 
 	static auto make_sink() -> boost::shared_ptr < sink_t >
 	{
@@ -121,12 +107,10 @@ private:
 
 		sink->set_formatter(&format);
 
-		sink->set_filter([](boost::log::attribute_value_set){ return true; });
-
 		return sink;
 	}
 
-//  ----------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------------
 
 	static void format(boost::log::record_view record, boost::log::formatting_ostream & stream)
 	{
@@ -154,30 +138,25 @@ private:
 
         switch (boost::log::extract_or_throw < Severity > (attributes["Severity"]))
         {
-            case Severity::debug: { stream << " | debug"; break; }
+            case Severity::debug : { stream << " | debug"; break; }
 
-            case Severity::trace: { stream << " | trace"; break; }
+            case Severity::trace : { stream << " | trace"; break; }
 
-            case Severity::error: { stream << " | error"; break; }
+            case Severity::error : { stream << " | error"; break; }
 
-            case Severity::fatal: { stream << " | fatal"; break; }
-
-            default:
-            {
-                throw std::runtime_error("invalid severity");
-            }
+            case Severity::fatal : { stream << " | fatal"; break; }
         }
 
 		stream << " | " << record[boost::log::expressions::message];
 	}
 
-//  ----------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------------
 
 	const char * m_scope = nullptr;
 
 	bool m_has_trace = false;
 
-//  ----------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------------
 
     static inline std::once_flag s_status;
 

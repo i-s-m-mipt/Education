@@ -40,18 +40,18 @@ TEST(Assert, That)
 
 class Fixture : public testing::Test 
 {
-public:
+public :
 
-    std::vector < int > data;
+    std::vector < int > vector;
 };
 
 //////////////////////////////////////////////////////////////////////////////
 
 TEST_F(Fixture, Data) 
 {
-    data.push_back(1); ASSERT_EQ(std::size(data), 1); 
+    vector.push_back(1); ASSERT_EQ(std::size(vector), 1); 
     
-    data.push_back(1); ASSERT_EQ(std::size(data), 2); 
+    vector.push_back(1); ASSERT_EQ(std::size(vector), 2); 
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -64,9 +64,9 @@ TEST_P(Adapter, Data)
 { 
     auto x = GetParam();
     
-    data.resize(x, 0);
+    vector.resize(x, 0);
     
-    ASSERT_EQ(std::size(data), x);
+    ASSERT_EQ(std::size(vector), x);
 }
 
 //////////////////////////////////////////////////////////////////////////////

@@ -64,12 +64,12 @@ BOOST_DATA_TEST_CASE
     Test_v5, 
 
     boost::unit_test::data::xrange(5) ^ boost::unit_test::data::random
-    ((            
-        boost::unit_test::data::seed = 1,
-        
-        boost::unit_test::data::engine = std::default_random_engine(),
+    ((   
+        boost::unit_test::data::distribution = std::uniform_real_distribution(0.0, 1.0),
 
-        boost::unit_test::data::distribution = std::uniform_real_distribution(0.0, 1.0)
+        boost::unit_test::data::seed = 1,
+
+        boost::unit_test::data::engine = std::default_random_engine()
     )),
 
     i, x
@@ -84,11 +84,11 @@ BOOST_DATA_TEST_CASE
 
 class Dataset 
 {
-public:
+public :
 
     class iterator
     {
-    public:
+    public :
 
         using iterator_category = std::forward_iterator_tag;
 
@@ -130,7 +130,7 @@ public:
 			return lhs.m_x == rhs.m_x && lhs.m_y == rhs.m_y;
 		}
 
-    private:
+    private :
 
         int m_x = 1, m_y = 1;
     };
@@ -204,16 +204,16 @@ boost::unit_test::test_suite * init_unit_test_suite(int, char **)
 
 class Fixture
 {
-public:
+public :
 
-    std::vector < int > data;
+    std::vector < int > vector;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
 BOOST_FIXTURE_TEST_CASE(Test_v8, Fixture)
 {
-    data.push_back(1); BOOST_TEST(std::size(data) == 1);
+    vector.push_back(1); BOOST_TEST(std::size(vector) == 1);
     
-    data.push_back(1); BOOST_TEST(std::size(data) == 2);
+    vector.push_back(1); BOOST_TEST(std::size(vector) == 2);
 }

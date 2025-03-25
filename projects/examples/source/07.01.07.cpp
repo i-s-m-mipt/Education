@@ -5,11 +5,11 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-class Entity_v1 { public: Entity_v1(int) {} };
+class Entity_v1 { public : Entity_v1(int) {} };
 
 class Entity_v2 
 { 
-public:
+public :
 
    ~Entity_v2() 
     { 

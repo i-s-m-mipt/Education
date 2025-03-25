@@ -164,4 +164,7 @@ BENCHMARK(test_v7);
 
 ////////////////////////////////////////////////////////////////////////////////
 
-BENCHMARK_MAIN();
+int main()
+{
+    benchmark::RunSpecifiedBenchmarks();
+}

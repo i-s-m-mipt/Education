@@ -7,9 +7,9 @@
 
 class Exception : public std::exception
 {
-public:
+public :
 
-	Exception(int x) : m_data(x) {}
+	Exception(int x) : m_x(x) {}
 
 //  -------------------------------------------
 
@@ -18,9 +18,9 @@ public:
 		return "exception";
 	}
 
-private:
+private :
 
-	int m_data = 0;
+	int m_x = 0;
 };
 
 //////////////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ private:
 {
 	std::cout << "test_v1\n";
 
-//	auto ptr = new auto(1); // bad
+//	auto x = new auto(1); // bad
 
 	std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
@@ -90,18 +90,14 @@ int main()
 	{
 		test_v3();
 	}
-	catch (const std::runtime_error & exception)
-	{
-		std::cerr << "main : " << exception.what() << '\n';
-	}
 	catch (const std::exception & exception)
 	{
 		std::cerr << "main : " << exception.what() << '\n';
 	}
 	catch (...)
 	{
-		auto exception = std::current_exception();
-
 		std::cerr << "main : unknown exception\n";
+
+		auto exception = std::current_exception();
 	}
 }

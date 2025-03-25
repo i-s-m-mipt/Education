@@ -9,9 +9,7 @@
 
 int main()
 {
-	boost::logic::tribool x = false;
-
-	boost::logic::tribool y = true;
+	boost::logic::tribool x = false, y = true;
 
 	boost::logic::tribool z = boost::logic::indeterminate;
 

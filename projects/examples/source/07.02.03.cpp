@@ -1,3 +1,4 @@
+#include <cassert>
 #include <vector>
 #include <utility>
 
@@ -5,21 +6,21 @@
 
 template < typename T, typename C = std::vector < T > > class Stack
 {
-public:
+public :
 
 	void push(T x)
 	{
-		m_data.push_back(std::move(x));
+		m_container.push_back(std::move(x));
 	}
 
 	auto top() const
 	{ 
-		return m_data.back();
+		return m_container.back();
 	}
 
 	void pop()
 	{ 
-		m_data.pop_back();
+		m_container.pop_back();
 	}
 
 //	auto pop() // bad
@@ -31,9 +32,9 @@ public:
 //		return copy;
 //	}
 
-private:
+private :
 
-	C m_data;
+	C m_container;
 };
 
 ///////////////////////////////////////////////////////////////////
@@ -44,9 +45,9 @@ int main()
 	
 	stack.push(1);
 
-//	std::ignore = stack.pop(); // bad
+//	assert(stack.pop() == 1); // bad
 
-	std::ignore = stack.top();
+	assert(stack.top() == 1);
 	
 	stack.pop();
 }
