@@ -5,6 +5,12 @@
 
 /////////////////////////////////////////////////////////////////
 
+// support : valgrind --tool=callgrind ./07.03.02
+
+// support : valgrind --leak-check=yes ./07.03.02
+
+/////////////////////////////////////////////////////////////////
+
 auto test(std::size_t size)
 {
 	auto x = 0.0;
@@ -23,12 +29,6 @@ auto equal(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }
-
-/////////////////////////////////////////////////////////////////
-
-// support : valgrind --tool=callgrind ./07.03.02
-
-// support : valgrind --leak-check=yes ./07.03.02
 
 /////////////////////////////////////////////////////////////////
 
