@@ -12,17 +12,21 @@
 
 auto find(const std::vector < int > & vector_1, const std::vector < int > & vector_2) 
 {
+	auto size_1 = std::size(vector_1);
+
+	auto size_2 = std::size(vector_2);
+
 	std::vector < std::vector < std::size_t > > buffer_1
 	(
-		std::size(vector_1) + 1, std::vector < std::size_t > 
+		size_1 + 1, std::vector < std::size_t > 
 		(
-			std::size(vector_2) + 1, 0
+			size_2 + 1, 0
 		)
 	);
 
-	for (auto i = 1uz; i < std::size(vector_1) + 1; ++i)
+	for (auto i = 1uz; i < size_1 + 1; ++i)
 	{
-		for (auto j = 1uz; j < std::size(vector_2) + 1; ++j)
+		for (auto j = 1uz; j < size_2 + 1; ++j)
 		{
 			if (vector_1[i - 1] == vector_2[j - 1])
 			{

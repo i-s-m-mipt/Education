@@ -30,9 +30,11 @@ void sort(std::vector < int > & vector, std::size_t left, std::size_t right)
 
 void merge(std::vector < int > & vector, std::size_t left, std::size_t middle, std::size_t right)
 {
-	std::vector < int > buffer(right - left, 0);
+	auto size = right - left;
 
-	for (auto i = left, j = middle, k = 0uz; k < std::size(buffer); ++k) 
+	std::vector < int > buffer(size, 0);
+
+	for (auto i = left, j = middle, k = 0uz; k < size; ++k) 
 	{
 		if (i < middle && ((j < right && vector[i] <= vector[j]) || j == right))
 		{
@@ -44,7 +46,7 @@ void merge(std::vector < int > & vector, std::size_t left, std::size_t middle, s
 		}
 	}
 
-	for (auto i = 0uz, j = 0uz; j < std::size(buffer); ++j) 
+	for (auto i = 0uz, j = 0uz; j < size; ++j) 
 	{
 		vector[left + i++] = buffer[j];
 	}

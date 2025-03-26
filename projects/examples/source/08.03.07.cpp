@@ -25,13 +25,15 @@ int main()
 
 //  ------------------------------------------------------------------------
 
-	std::vector < std::size_t > vector(50, 0);
+	auto size = 50uz;
+
+	std::vector < std::size_t > vector(size, 0);
 
 //  ------------------------------------------------------------------------
 
 	for (auto i = 0uz; i < 1'000'000; ++i)
 	{
-		if (auto x = distribution(engine); x > 0 && x < std::size(vector))
+		if (auto x = distribution(engine); x > 0 && x < size)
 		{
 			++vector[static_cast < std::size_t > (std::floor(x))];
 		}
@@ -39,7 +41,7 @@ int main()
 
 //  ------------------------------------------------------------------------
 
-	for (auto i = 0uz; i < std::size(vector); ++i)
+	for (auto i = 0uz; i < size; ++i)
 	{
 		std::cout << "main : vector[" << std::format("{:0>2}", i) << "] : ";
 

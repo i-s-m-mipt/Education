@@ -2,13 +2,13 @@
 #include <numeric>
 #include <vector>
 
-/////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 auto find(const std::vector < int > & vector, int x)
 {
-	if (std::size(vector) > 0)
+	if (auto size = std::size(vector); size > 0)
 	{
-		auto left = 0uz, right = std::size(vector) - 1, middle = 0uz;
+		auto left = 0uz, right = size - 1, middle = 0uz;
 
 		while (left < right)
 		{		
@@ -23,7 +23,7 @@ auto find(const std::vector < int > & vector, int x)
 	return false;
 }
 
-/////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 int main()
 {

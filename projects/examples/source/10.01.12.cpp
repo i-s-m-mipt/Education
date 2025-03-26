@@ -16,11 +16,13 @@ void test_v1(benchmark::State & state)
 {
     for (auto element : state)
     {
-        std::array < int, 100'000 > array = {};
+        constexpr auto size = 100'000uz;
 
-        for (auto i = 0uz; i < std::size(array); ++i)
+        std::array < int, size > array = {};
+
+        for (auto i = 0uz; i < size; ++i)
         {
-            array[i] = std::size(array) - i;
+            array[i] = size - i;
         }
 
 //      -----------------------------------------------------------------------------------
@@ -48,11 +50,13 @@ void test_v2(benchmark::State & state)
 {
     for (auto element : state)
     {
-        std::vector < int > vector(100'000, 0);
+        auto size = 100'000uz;
 
-        for (auto i = 0uz; i < std::size(vector); ++i)
+        std::vector < int > vector(size, 0);
+
+        for (auto i = 0uz; i < size; ++i)
         {
-            vector[i] = std::size(vector) - i;
+            vector[i] = size - i;
         }
 
 //      -----------------------------------------------------------------------------------
@@ -80,11 +84,13 @@ void test_v3(benchmark::State & state)
 {
     for (auto element : state)
     {
-        std::deque < int > deque(100'000, 0);
+        auto size = 100'000uz;
 
-        for (auto i = 0uz; i < std::size(deque); ++i)
+        std::deque < int > deque(size, 0);
+
+        for (auto i = 0uz; i < size; ++i)
         {
-            deque[i] = std::size(deque) - i;
+            deque[i] = size - i;
         }
 
 //      -----------------------------------------------------------------------------------
@@ -112,11 +118,13 @@ void test_v4(benchmark::State & state)
 {
     for (auto element : state)
     {
-        std::list < int > list(100'000, 0);
+        auto size = 100'000uz;
+
+        std::list < int > list(size, 0);
 
         for (auto x = 0; auto & element : list)
         {
-            element = std::size(list) + 1 - ++x;
+            element = size + 1 - ++x;
         }
 
 //      -----------------------------------------------------------------------------------

@@ -52,7 +52,7 @@ auto & operator<<(std::ostream & stream, const Entity & entity)
 
 //  --------------------------------------------------------------------
 
-    stream.write(std::data(entity.string), std::size(entity.string));
+    stream.write(std::data(entity.string), size);
 
 //  --------------------------------------------------------------------
 

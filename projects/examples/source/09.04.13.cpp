@@ -7,28 +7,30 @@
 
 using namespace std::literals;
 
-/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::array < char, 32 > array = {};
+    constexpr auto size = 32uz;
+
+    std::array < char, size > array = {};
 
     std::ranges::fill(array, '_');
 
-    std::pmr::monotonic_buffer_resource resource(std::data(array), std::size(array));
+    std::pmr::monotonic_buffer_resource resource(std::data(array), size);
 
     std::pmr::vector < char > vector(26, '\0', &resource);
 
-//  ---------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------
 
     for (auto i = 0uz; i < std::size(vector); ++i)
     {
         vector[i] = 'a' + i;
     }
 
-//  ---------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------
 
-    for (auto i = 0uz; i < std::size(array ); ++i)
+    for (auto i = 0uz; i < size; ++i)
     {
         assert(array[i] == "abcdefghijklmnopqrstuvwxyz______"sv[i]);
     }

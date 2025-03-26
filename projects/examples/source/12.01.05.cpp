@@ -11,32 +11,36 @@ using namespace std::literals;
 
 auto convert_v1(const std::string & string, const std::locale & locale) 
 {
-	std::vector < wchar_t > vector(std::size(string), L'\0');
+    auto size = std::size(string);
+
+	std::vector < wchar_t > vector(size, L'\0');
 
 	std::use_facet < std::ctype < wchar_t > > (locale).widen
     (
 		std::data(string), 
         
-        std::data(string) + std::size(string), std::data(vector)
+        std::data(string) + size, std::data(vector)
     );
 
-	return std::wstring(std::data(vector), std::size(vector));
+	return std::wstring(std::data(vector), size);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
 auto convert_v2(const std::wstring & wstring, const std::locale & locale)
 {
-	std::vector < char > vector(std::size(wstring), '\0');
+    auto size = std::size(wstring);
+
+	std::vector < char > vector(size, '\0');
 
 	std::use_facet < std::ctype < wchar_t > > (locale).narrow
     (
 		std::data(wstring),
         
-		std::data(wstring) + std::size(wstring), '?', std::data(vector)
+		std::data(wstring) + size, '?', std::data(vector)
     );
 
-	return std::string(std::data(vector), std::size(vector));
+	return std::string(std::data(vector), size);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -76,4 +80,8 @@ int main()
     assert(string_4 == string_2);
 
 	assert(string_5 == string_1);
+
+//  -----------------------------------------------------------------------------------
+
+    assert(convert_v2(convert_v1("aaaaa"s, locale), locale) == "aaaaa"s);
 }
