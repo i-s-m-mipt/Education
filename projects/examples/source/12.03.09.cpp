@@ -48,9 +48,9 @@ auto parse(std::string_view view)
 
 int main()
 {
-    auto entity = parse(R"({ 1 1 })");
+    auto entity = parse("{ 1 1 }");
 
-//  ----------------------------------
+//  -------------------------------
 
     assert(entity.x == 1);
     
