@@ -1,92 +1,55 @@
 #include <cassert>
-#include <iostream>
-#include <string>
-#include <vector>
 
-#include <boost/flyweight.hpp>
+#include <boost/circular_buffer.hpp>
 
-//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
-class Entity
+int main()
 {
-public :
+	boost::circular_buffer < int > buffer(3);
 
-    Entity(int x, const std::string & string) 
-    : 
-        m_flyweight_1(x), 
-        
-        m_flyweight_2(string) 
-    {}
+//  ----------------------------------------------------------
 
-//  ----------------------------------------------------------------------
+	for (auto i = 0; i < 5; ++i)
+	{
+		buffer.push_back(i + 1);
+	}
 
-    const auto & flyweight_1() const { return m_flyweight_1; }
+//  ----------------------------------------------------------
 
-    const auto & flyweight_2() const { return m_flyweight_2; }
+	assert(buffer.at(0) == 3);
+	
+	assert(buffer.at(1) == 4);
+	
+	assert(buffer.at(2) == 5);
 
-private :
+//  ----------------------------------------------------------
 
-    using alias_1 = int;
+	boost::circular_buffer < int > ::array_range array_1;
+	
+	boost::circular_buffer < int > ::array_range array_2;
 
-    using alias_2 = std::string;
+//  ----------------------------------------------------------
 
-//  ----------------------------------------------------------------------
+	assert(buffer.is_linearized() == 0);
 
-    template < typename T > using tag_t = boost::flyweights::tag < T > ;
+//  ----------------------------------------------------------
 
-//  ----------------------------------------------------------------------
+	array_1 = buffer.array_one(); assert(array_1.second == 1);
 
-    struct flyweight_1_tag {};
+	array_2 = buffer.array_two(); assert(array_2.second == 2);
 
-    struct flyweight_2_tag {};
+//  ----------------------------------------------------------
 
-//  ----------------------------------------------------------------------
+	buffer.linearize();
 
-    boost::flyweight < alias_1, tag_t < flyweight_1_tag > > m_flyweight_1;
+//  ----------------------------------------------------------
 
-    boost::flyweight < alias_2, tag_t < flyweight_2_tag > > m_flyweight_2;
-};
+	assert(buffer.is_linearized() == 1);
 
-//////////////////////////////////////////////////////////////////////////
+//  ----------------------------------------------------------
 
-int main() 
-{
-    auto size_1 = 1'000'000uz, size_2 = 1'000uz;
+	array_1 = buffer.array_one(); assert(array_1.second == 3);
 
-    std::vector < Entity > entities;
-
-    for (auto i = 0uz; i < size_1; ++i)
-    {
-        entities.emplace_back(1, std::string(size_2, 'a'));
-    }
-
-//  ----------------------------------------------------------------------------
-
-    std::cout << "main : enter char : "; std::cin.get();
-
-//  ----------------------------------------------------------------------------
-
-    auto & entity = entities.front();
-
-//  ----------------------------------------------------------------------------
-
-    for (auto i = 1uz; i < size_1; ++i)
-    {
-        assert(&entity.flyweight_1().get() == &entities[i].flyweight_1().get());
-
-        assert(&entity.flyweight_2().get() == &entities[i].flyweight_2().get());
-    }
-
-//  ----------------------------------------------------------------------------
-
-    entity = Entity(2, std::string(size_2, 'b'));
-
-//  ----------------------------------------------------------------------------
-
-    for (auto i = 1uz; i < size_1; ++i)
-    {
-        assert(&entity.flyweight_1().get() != &entities[i].flyweight_1().get());
-
-        assert(&entity.flyweight_2().get() != &entities[i].flyweight_2().get());
-    }
+	array_2 = buffer.array_two(); assert(array_2.second == 0);
 }
