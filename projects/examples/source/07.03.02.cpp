@@ -40,7 +40,7 @@ int main()
 
 	auto array = new int[5]{ 1, 2, 3, 4, 5 };
 
-	array[1'000] = 1;
+	assert(array[5] == 0);
 
 //  delete[] array; // bad
 

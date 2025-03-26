@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <iostream>
@@ -17,6 +16,8 @@ int main()
 //  ----------------------------------------------------
 
 	std::cout << "main : enter int x : "; std::cin >> x;
+
+//  ----------------------------------------------------
 
 	std::cout << "main : x = " << x << '\n';
 
@@ -43,8 +44,4 @@ int main()
 //  ----------------------------------------------------
 
 	assert(std::size(vector) == 6 && vector.at(0) == 1);
-
-//  ----------------------------------------------------
-
-	std::ranges::sort(vector);
 }

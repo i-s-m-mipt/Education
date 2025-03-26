@@ -13,8 +13,6 @@ int main()
 
 	int array[1'000]{};
 
-	assert(size <= std::size(array));
-
 	for (auto i = 0uz; i < size; ++i)
 	{
 		array[i] = i + 1;

@@ -22,6 +22,8 @@ public :
 	{
 		assert(m_size % m_step == 0 && m_step >= sizeof(Node));
 
+	//  -------------------------------------------------------
+
 		make_list();
 			
 		m_begin = m_head;

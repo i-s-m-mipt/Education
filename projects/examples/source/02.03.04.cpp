@@ -9,7 +9,9 @@ int main()
 
 //  --------------------------------------------------------
 
-//	assert(sizeof(array) / sizeof(int) == 5); // bad
+	static_assert(sizeof(array) / sizeof(int) == 5);
+
+//  --------------------------------------------------------
     
     assert(std::size(array) == 5);
 
@@ -17,13 +19,15 @@ int main()
     
     assert(array[0] == 1 && 0[array] == 1 && array[1] == 2);
     
-//	array[1'000] = 1; // error
+//	assert(array[5] == 0); // error
 
 //  --------------------------------------------------------
     
     assert(*array == 1 && *(array + 1) == 2);
     
-//	*(array + 1'000) = 1; // error
+//	assert(*(array + 5) == 0); // error
+
+//  --------------------------------------------------------
     
     assert(array + std::size(array) - array == 5);
 }

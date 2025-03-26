@@ -47,6 +47,8 @@ int main()
 
 	Server server;
 
+//  --------------------------------
+
 	server.client = &client;
 
 	client.server = &server;
