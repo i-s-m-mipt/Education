@@ -15,7 +15,7 @@ int main()
         
     auto begin = std::cbegin(string);
 
-    std::regex pattern(R"(([a-z]{1})([a-z]{4}))", std::regex_constants::icase);
+    std::regex pattern(R"(([a-z])([a-z]{4}))", std::regex_constants::icase);
 
     std::vector < std::string > strings;
 
