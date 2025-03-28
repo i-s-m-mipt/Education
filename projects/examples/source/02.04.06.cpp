@@ -1,14 +1,15 @@
-#include <algorithm>
-#include <cassert>
-#include <cstddef>
-#include <functional>
-#include <numeric>
-#include <utility>
-#include <vector>
-
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 // support : www.cs.usfca.edu/~galles/visualization/ComparisonSort.html
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <algorithm>
+#include <cassert>
+#include <cstddef>
+#include <numeric>
+#include <utility>
+#include <vector>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -34,6 +35,8 @@ void merge(std::vector < int > & vector, std::size_t left, std::size_t middle, s
 
 	std::vector < int > buffer(size, 0);
 
+//  ----------------------------------------------------------------------------
+
 	for (auto i = left, j = middle, k = 0uz; k < size; ++k) 
 	{
 		if (i < middle && ((j < right && vector[i] <= vector[j]) || j == right))
@@ -45,6 +48,8 @@ void merge(std::vector < int > & vector, std::size_t left, std::size_t middle, s
 			buffer[k] = vector[j++];
 		}
 	}
+
+//  ----------------------------------------------------------------------------
 
 	for (auto i = 0uz, j = 0uz; j < size; ++j) 
 	{
@@ -66,11 +71,13 @@ void split(std::vector < int > & vector, std::size_t left, std::size_t right)
 		
 		split(vector,       middle, right);
 
+	//  -----------------------------------------
+
 		merge(vector, left, middle, right);
 	}
 	else
 	{
-		sort(vector, left, right);
+		sort (vector, left, right);
 	}
 }
 
@@ -102,3 +109,5 @@ int main()
 
 	assert(std::ranges::is_sorted(vector));
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
