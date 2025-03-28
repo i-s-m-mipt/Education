@@ -62,6 +62,7 @@ set(debug
 #   01.01.01
     01.02.01
     01.02.02
+#   01.02.03
 #   01.03.01
     02.01.01
     02.01.02
@@ -457,11 +458,11 @@ foreach(entry IN LISTS debug)
 
     add_executable         (${entry} source/${entry}.cpp)
 
+    target_compile_options (${entry} PRIVATE -Wall -Wextra -pedantic -O0)
+
     target_link_libraries  (${entry} PRIVATE ${Boost_LIBRARIES})
     
     target_link_libraries  (${entry} PRIVATE TBB::tbb)
-
-    target_compile_options (${entry} PRIVATE -Wall -Wextra -pedantic -O0)
 
 endforeach()
 
@@ -475,9 +476,9 @@ target_compile_options     (06.01.11 PRIVATE -Wall -Wextra -pedantic -O0)
 
 add_executable             (06.03.01 source/06.03.01.cpp)
 
-target_compile_options     (06.03.01 PRIVATE -Wall -Wextra -pedantic -O0)
-
 target_include_directories (06.03.01 PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
+
+target_compile_options     (06.03.01 PRIVATE -Wall -Wextra -pedantic -O0)
 
 target_link_libraries      (06.03.01 PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/libstatic.a)
 

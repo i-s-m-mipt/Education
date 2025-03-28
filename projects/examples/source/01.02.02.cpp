@@ -1,9 +1,13 @@
+////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <cmath>
 #include <iostream>
 #include <numbers>
 #include <string>
 #include <vector>
+
+////////////////////////////////////////////////////////
 
 // using namespace std; // bad
 
@@ -45,3 +49,5 @@ int main()
 
 	assert(std::size(vector) == 6 && vector.at(0) == 1);
 }
+
+////////////////////////////////////////////////////////
