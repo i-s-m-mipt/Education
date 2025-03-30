@@ -24,7 +24,9 @@ int main()
 
         [[likely]] case 3 :
         {
-            std::cout << "(1) "; 
+            std::cout << "(1) ";
+            
+        //  --------------------
             
             [[fallthrough]];
         }
@@ -39,7 +41,9 @@ int main()
         
         [[unlikely]] default :
         {
-            std::cout << "(4)\n"; 
+            std::cout << "(4)\n";
+
+        //  ---------------------
             
             break;
         }

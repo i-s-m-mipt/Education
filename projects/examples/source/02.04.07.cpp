@@ -22,6 +22,8 @@ auto find(const std::vector < int > & vector, int x)
 		{		
 			middle = std::midpoint(left, right);
 
+		//  --------------------------------------------------------
+
 			vector[middle] < x ? left = middle + 1 : right = middle;
 		}
 
