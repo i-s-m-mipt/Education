@@ -1,3 +1,5 @@
+///////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <vector>
 
@@ -9,12 +11,14 @@ public :
 
 	Entity()
 	{
-//		test_v1(); // bad
+	//	test_v1(); // bad
 	}
 
 //  -----------------------------------------
 
 // ~Entity() = default; // error
+
+//  -----------------------------------------
 
 	virtual ~Entity() = default;
 
@@ -28,6 +32,8 @@ public :
 //  -----------------------------------------
 
 	virtual void test_v2() const = 0;
+
+//  -----------------------------------------
 
 //	virtual void test_v3() const = 0 // error
 //	{
@@ -53,9 +59,13 @@ public :
 		std::cout << "Client::test_v1\n";
 	}
 
+//  -------------------------------------
+
 	void test_v2() const override 
 	{ 
 		std::cout << "Client::test_v2\n";
+
+	//  ---------------------------------
 		
 		Entity::test_v2();
 	}
@@ -67,9 +77,11 @@ class Server final : public Entity
 {
 public :
 
-	void test_v2() const override 
+	void test_v2() const override
 	{ 
 		std::cout << "Server::test_v2\n";
+
+	//  ---------------------------------
 
 		Entity::test_v2();
 	}
@@ -84,6 +96,8 @@ public :
 	void test_v2() const override 
 	{ 
 		std::cout << "Router::test_v2\n";
+
+	//  ---------------------------------
 
 		Entity::test_v2();
 	}
@@ -123,5 +137,9 @@ int main()
 
 	Router router;
 
+//  -------------------------------------------------------
+
 //	[[maybe_unused]] Entity * entity = &router; // error
 }
+
+///////////////////////////////////////////////////////////

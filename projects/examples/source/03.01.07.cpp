@@ -1,8 +1,7 @@
+//////////////////////////////////////
+
 #include <cassert>
 #include <iostream>
-#include <string>
-
-using namespace std::literals;
 
 //////////////////////////////////////
 
@@ -13,6 +12,8 @@ public :
 	static void test()
 	{
 		std::cout << "Entity::test\n";
+
+	//  ------------------------------
 
 	//	m_x = 1; // error
 	}
@@ -40,3 +41,5 @@ int main()
 
 	Entity::test();
 }
+
+//////////////////////////////////////

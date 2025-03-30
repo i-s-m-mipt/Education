@@ -1,3 +1,5 @@
+////////////////////////////////////////////////////
+
 #include <cassert>
 #include <iostream>
 
@@ -35,25 +37,29 @@ struct Server { struct Client * client = nullptr; };
 
 int main()
 {
-	Entity entity_1(1), entity_2(2);
+	Entity entity_1(1);
+	
+	Entity entity_2(2);
 
-//  --------------------------------
+//  -------------------------
 
 	assert(Entity::s_x == 1);
 
-//  --------------------------------
+//  -------------------------
 
 	Client client;
 
 	Server server;
 
-//  --------------------------------
+//  -------------------------
 
 	server.client = &client;
 
 	client.server = &server;
 
-//  --------------------------------
+//  -------------------------
 
 	Entity::test();
 }
+
+////////////////////////////////////////////////////

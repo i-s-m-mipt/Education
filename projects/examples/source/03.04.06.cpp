@@ -1,5 +1,7 @@
+//////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
-#include <iostream>
+#include <istream>
 #include <ostream>
 #include <sstream>
 
@@ -15,22 +17,36 @@ public :
 
     friend auto & operator>>(std::istream & stream, Entity & entity)
     {
-        stream.get(); 
+        stream.get();
+
+    //  -------------------
         
         entity.get(stream);
 
+    //  -------------------
+
         stream.get();
+
+    //  -------------------
 
         return stream;
     }
 
+//  ----------------------------------------------------------------------
+
     friend auto & operator<<(std::ostream & stream, const Entity & entity)
     {
         stream << "{ "; 
+
+    //  -------------------
         
         entity.put(stream);
 
+    //  -------------------
+
         stream << " }";
+
+    //  -------------------
 
         return stream;
     }
@@ -41,6 +57,8 @@ protected :
     {
         stream >> m_x;
     }
+
+//  ----------------------------------------------------------------------
 
     virtual void put(std::ostream & stream) const 
     { 
@@ -64,6 +82,8 @@ public :
         
         stream >> m_y;
     }
+
+//  ----------------------------------------------
 
     void put(std::ostream & stream) const override 
     { 
@@ -97,9 +117,11 @@ int main()
 
 //  -----------------------------------------
 
-    assert(stream_2.str() == stream_1.str());
+    delete entity;
 
 //  -----------------------------------------
 
-    delete entity;
+    assert(stream_2.str() == stream_1.str());
 }
+
+//////////////////////////////////////////////////////////////////////////

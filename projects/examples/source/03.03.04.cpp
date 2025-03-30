@@ -1,3 +1,5 @@
+/////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <utility>
 
@@ -19,23 +21,25 @@ void test(const Entity &&) { std::cout << "test (4)\n"; }
 
 int main()
 {
-	Entity entity_1;
+		  Entity entity_1;
+
+	const Entity entity_2;
+
+//  ---------------------------------
 
 	test(entity_1);
 
-//  --------------------------
-
-	const Entity entity_2;
-		
 	test(entity_2);
 
-//  --------------------------
+//  ---------------------------------
 
-	Entity entity_3;
+	test(std::move(entity_1));
 
-	test(std::move(entity_3));
+//	test(std::move(entity_2)); // bad
 
-//  --------------------------
+//  ---------------------------------
 
 	test(Entity());
 }
+
+/////////////////////////////////////////////////////////

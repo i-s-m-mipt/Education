@@ -1,4 +1,5 @@
-#include <cassert>
+/////////////////////////////////////////
+
 #include <iostream>
 
 /////////////////////////////////////////
@@ -44,7 +45,7 @@ public :
 	{
 		m_entity.test_v1();
 
-//		m_entity.test_v2(); // error
+	//	m_entity.test_v2(); // error
 	}
 
 private : 
@@ -52,7 +53,7 @@ private :
 	Entity m_entity;
 };
 
-//////////////////////////////////////
+/////////////////////////////////////////
 
 int main()
 {
@@ -63,6 +64,8 @@ int main()
 //	server_v1.test_v1(); // error
 
 //	server_v1.test_v2(); // error
+
+//  -----------------------------
 
 	server_v1.test();
 
@@ -76,5 +79,9 @@ int main()
 
 //	server_v2.test_v2(); // error
 
+//  -----------------------------
+
 	server_v2.test();
 }
+
+/////////////////////////////////////////

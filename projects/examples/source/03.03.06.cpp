@@ -1,3 +1,5 @@
+////////////////////////////////////////////////////////////////////////////////////
+
 #include <algorithm>
 #include <cstddef>
 #include <initializer_list>
@@ -16,9 +18,13 @@ public :
 		std::cout << "Vector::Vector (1)\n";
 	}
 
+//  --------------------------------------------------------------------------------
+
 	Vector(std::initializer_list < int > list) : Vector()
 	{
 		std::cout << "Vector::Vector (2)\n";
+
+	//  -------------------------------------------------------------------
 
 		m_array = (m_size = std::size(list)) ? new int[m_size]{} : nullptr;
 
@@ -31,6 +37,8 @@ public :
 	{
 		std::cout << "Vector::Vector (3)\n";
 
+	//  ------------------------------------------------------------------------
+
 		m_array = (m_size = other.m_size) ? new int[m_size]{} : nullptr;
 
 		std::ranges::copy(other.m_array, other.m_array + other.m_size, m_array);
@@ -42,7 +50,7 @@ public :
 	: 
 		m_array(std::exchange(other.m_array, nullptr)), 
 		
-		m_size (std::exchange(other.m_size , 0))
+		m_size (std::exchange(other.m_size, 0))
 	{
 		std::cout << "Vector::Vector (4)\n";
 	}
@@ -53,6 +61,8 @@ public :
 //	{
 //		std::cout << "Vector::operator= (1)\n";
 //
+//	//	----------------------------------------------------------------------------
+//
 //		if (this != &other)
 //		{
 //			if (m_array)
@@ -60,10 +70,14 @@ public :
 //				delete[] m_array;
 //			}
 //
+//		//  ------------------------------------------------------------------------
+//
 //			m_array = (m_size = other.m_size) ? new int[m_size]{} : nullptr;
 //
 //			std::ranges::copy(other.m_array, other.m_array + other.m_size, m_array);
 //		}
+//
+//	//  ----------------------------------------------------------------------------
 //
 //		return *this;
 //	}
@@ -74,21 +88,29 @@ public :
 //	{
 //		std::cout << "Vector::operator= (2)\n";
 //
+//	//	--------------------------------------------------------------------------
+//
 //		if (this != &other)
 //		{
 //			auto array = other.m_size ? new int[other.m_size]{} : nullptr;
 //
 //			std::ranges::copy(other.m_array, other.m_array + other.m_size, array);
 //
+//		//	----------------------------------------------------------------------
+//
 //			if (m_array)
 //			{
 //				delete[] m_array;
 //			}
 //
+//		//	----------------------------------------------------------------------
+//
 //			m_array = array;
 //
 //			m_size  = other.m_size;
 //		}
+//
+//	//	--------------------------------------------------------------------------
 //
 //		return *this;
 //	}
@@ -99,17 +121,23 @@ public :
 //	{
 //		std::cout << "Vector::operator= (3)\n";
 //
+//	//  ----------------------------------------------------
+//
 //		if (this != &other)
 //		{
 //			if (m_array) 
 //			{
 //				delete[] m_array;
 //			}
+//
+//		//  ------------------------------------------------
 //			
 //			m_array = std::exchange(other.m_array, nullptr);
 //
-//			m_size  = std::exchange(other.m_size , 0);
+//			m_size  = std::exchange(other.m_size, 0);
 //		}
+//
+//	//  ----------------------------------------------------
 //
 //		return *this;
 //	}
@@ -120,7 +148,11 @@ public :
 	{
 		std::cout << "Vector::operator= (4)\n";
 
+	//  ---------------------------------------
+
 		swap(other);
+
+	//  ---------------------------------------
 
 		return *this;
 	}
@@ -130,6 +162,8 @@ public :
    ~Vector()
 	{
 		std::cout << "Vector::~Vector\n";
+
+	//  ---------------------------------
 
 		if (m_array) 
 		{
@@ -149,6 +183,8 @@ public :
 private :
 
 	int * m_array = nullptr;
+
+//  ------------------------
 	
 	std::size_t m_size = 0;
 };
@@ -173,3 +209,5 @@ int main()
 
 		   vector_4 = std::move(vector_3);
 }
+
+////////////////////////////////////////////////////////////////////////////////////

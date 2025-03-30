@@ -1,3 +1,5 @@
+//////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <string>
 
@@ -19,10 +21,12 @@ public :
 //  ----------------------------------------------------------
 
     void set(int x) 
-    { 
+    {
         if (x > 0)
         {
             m_x = x;
+
+		//  ----------------
 
             m_cache.clear();
         }
@@ -31,7 +35,7 @@ public :
 private :
 
 	class Cache 
-	{ 
+	{
 	public :
 
 		auto get(const Entity & entity) -> const std::string &
@@ -40,9 +44,13 @@ private :
 			{
 				m_string = std::to_string(entity.m_x);
 			}
+
+		//  ------------------------------------------
 			
 			return m_string;
 		}
+
+	//  ------------------------------------------------------
 
 		void clear()
 		{
@@ -77,3 +85,5 @@ int main()
 
     assert(entity.get() == "2");
 }
+
+//////////////////////////////////////////////////////////////

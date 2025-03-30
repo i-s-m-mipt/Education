@@ -1,6 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <cmath>
-#include <iostream>
 #include <istream>
 #include <numeric>
 #include <ostream>
@@ -31,19 +32,27 @@ public :
 	{
 		auto lcm = std::lcm(m_den, other.m_den);
 
+	//  ------------------------------------------------------------------
+
 		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den);
 		
 		m_den = lcm;
 
 		reduce();
 
+	//  ------------------------------------------------------------------
+
 		return *this;
 	}
+
+//  -------------------------------------------------------------------------------------------
 
 	auto & operator-=(const Rational & other) 
 	{ 
 		return *this += other.m_num * -1;
 	}
+
+//  -------------------------------------------------------------------------------------------
 
 	auto & operator*=(const Rational & other)
 	{
@@ -53,8 +62,12 @@ public :
 
 		reduce();
 
+	//  ---------------------
+
 		return *this;
 	}
+
+//  -------------------------------------------------------------------------------------------
 	
 	auto & operator/=(const Rational & other) 
 	{ 
@@ -73,25 +86,13 @@ public :
 
 //  -------------------------------------------------------------------------------------------
 
-	friend auto operator+ (const Rational & lhs, const Rational & rhs) 
-	{ 
-		return Rational(lhs) += rhs;
-	}
+	friend auto operator+ (Rational lhs, const Rational & rhs) { return Rational(lhs) += rhs; }
 
-	friend auto operator- (const Rational & lhs, const Rational & rhs) 
-	{ 
-		return Rational(lhs) -= rhs;
-	}
+	friend auto operator- (Rational lhs, const Rational & rhs) { return Rational(lhs) -= rhs; }
 
-	friend auto operator* (const Rational & lhs, const Rational & rhs) 
-	{ 
-		return Rational(lhs) *= rhs;
-	}
+	friend auto operator* (Rational lhs, const Rational & rhs) { return Rational(lhs) *= rhs; }
 
-	friend auto operator/ (const Rational & lhs, const Rational & rhs) 
-	{ 
-		return Rational(lhs) /= rhs;
-	}
+	friend auto operator/ (Rational lhs, const Rational & rhs) { return Rational(lhs) /= rhs; }
 
 //  -------------------------------------------------------------------------------------------
 
@@ -99,6 +100,8 @@ public :
 	{
 		return static_cast < double > (lhs) < static_cast < double > (rhs);
 	}
+
+//  -------------------------------------------------------------------------------------------
 
 	friend auto operator> (const Rational & lhs, const Rational & rhs) { return  (rhs < lhs); }
 	
@@ -120,9 +123,13 @@ public :
 		stream.get();
 
 		stream >> rational.m_den;
+
+	//  -------------------------
 		
 		return stream;
 	}
+
+//  -------------------------------------------------------------------------------------------
 
 	friend auto & operator<<(std::ostream & stream, const Rational & rational)
 	{
@@ -134,6 +141,8 @@ private :
 	void reduce()
 	{
 		auto gcd = std::gcd(m_num, m_den);
+
+	//  ----------------------------------
 
 		m_num /= gcd;
 
@@ -248,3 +257,5 @@ int main()
 
 	assert(stream_2.str() == stream_1.str());
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////
