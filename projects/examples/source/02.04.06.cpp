@@ -71,8 +71,6 @@ void split(std::vector < int > & vector, std::size_t left, std::size_t right)
 		
 		split(vector,       middle, right);
 
-	//  -----------------------------------------
-
 		merge(vector, left, middle, right);
 	}
 	else
@@ -102,6 +100,8 @@ int main()
 	{
 		vector[i] = size - i;
 	}
+
+//  ---------------------------------------
 
 	sort(vector);
 

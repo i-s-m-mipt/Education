@@ -31,6 +31,8 @@ auto find(const std::vector < int > & vector, int x)
 
 		return vector[left] == x;
 	}
+
+//  ----------------------------------------------------------------
 	
 	return false;
 }

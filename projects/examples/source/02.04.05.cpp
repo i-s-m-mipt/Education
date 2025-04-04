@@ -31,9 +31,17 @@ auto C_v2(int x, int y) -> int
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-auto catalan_v1(int x) { return C_v1(2 * x, x) / (x + 1); }
+auto catalan_v1(int x) 
+{ 
+	return C_v1(2 * x, x) / (x + 1);
+}
 
-auto catalan_v2(int x) { return C_v2(2 * x, x) - C_v2(x * x, x - 1); }
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+auto catalan_v2(int x) 
+{ 
+	return C_v2(2 * x, x) - C_v2(x * x, x - 1);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -41,22 +49,16 @@ auto catalan_v3(std::size_t size, std::size_t left = 0, std::size_t right = 0) -
 {
 	auto counter = 0uz;
 
-//  -----------------------------------------------------
+//  ---------------------------------------------------------------------------
 
 	if (left < size || right < size)
 	{
-		if (left < size)
-		{ 
-			counter += catalan_v3(size, left + 1, right);
-		}
+		if (left < size ) { counter += catalan_v3(size, left + 1, right    ); }
 
-		if (left > right)
-		{ 
-			counter += catalan_v3(size, left, right + 1);
-		}
+		if (left > right) { counter += catalan_v3(size, left,     right + 1); }
 	}
 
-//  -----------------------------------------------------
+//  ---------------------------------------------------------------------------
 	
 	return counter > 0 ? counter : 1uz;
 }

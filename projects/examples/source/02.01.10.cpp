@@ -8,9 +8,9 @@ int main()
 
 //  ------------------------------------------------
 
-	[[maybe_unused]] auto x3 = 3;
-    
-    [[maybe_unused]] auto x4(4);
+    [[maybe_unused]] auto x3(3);
+
+	[[maybe_unused]] auto x4 = 4;
     
     [[maybe_unused]] auto x5 { 5 };
 

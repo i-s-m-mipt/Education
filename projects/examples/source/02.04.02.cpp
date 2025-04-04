@@ -55,21 +55,23 @@ int main()
 
 //  -------------------------------------------------
 
-    int array_1[5]{ 1, 2, 3, 4, 5 };
-
-	auto size = 5uz;
-
-	auto array_2 = new int[size]{ 1, 2, 3, 4, 5 };
+	constexpr auto size = 5uz;
 
 //  -------------------------------------------------
 
-	test_v3(array_1, std::size(array_1));
+    int   array_1          [size]{ 1, 2, 3, 4, 5 };
+
+	int * array_2 = new int[size]{ 1, 2, 3, 4, 5 };
+
+//  -------------------------------------------------
+
+	test_v3(array_1, size);
 
 	test_v3(array_2, size);
     
 //  -------------------------------------------------
 
-	test_v3(std::span < const int > (array_1));
+	test_v3(std::span < const int > (array_1, size));
 
 	test_v3(std::span < const int > (array_2, size));
 

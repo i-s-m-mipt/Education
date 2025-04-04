@@ -1,7 +1,6 @@
 //////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <cstddef>
 #include <iostream>
 #include <type_traits>
 
@@ -28,6 +27,8 @@ int main()
 //	[[maybe_unused]] int * z1 = 0; // bad
 
 //	[[maybe_unused]] int * z2 = NULL; // bad
+
+//  ------------------------------------------------------
 
 	[[maybe_unused]] int * z3 = nullptr;
 }
