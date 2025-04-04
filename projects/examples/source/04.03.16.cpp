@@ -1,8 +1,11 @@
+///////////////////////////////////////////////////////////////////////////////////
+
 #include <cstdint>
+#include <type_traits>
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-template < typename D, typename B > class is_derived
+template < typename B, typename D > class is_base_of
 {
 private :
 
@@ -19,15 +22,19 @@ public :
 
 template 
 < 
-	typename D, typename B 
+	typename B, typename D 
 > 
-constexpr auto is_derived_v = is_derived < D, B > ::value;
+constexpr auto is_base_of_v = is_base_of < B, D > ::value;
 
 ///////////////////////////////////////////////////////////////////////////////////
 
 class Entity {};
 
+///////////////////////////////////////////////////////////////////////////////////
+
 class Client : public Entity {};
+
+///////////////////////////////////////////////////////////////////////////////////
 
 class Server {};
 
@@ -35,9 +42,19 @@ class Server {};
 
 int main()
 {
-	static_assert(is_derived_v < Client, Entity > == 1);
+	static_assert(     is_base_of_v < Entity, Client > == 1);
 
-	static_assert(is_derived_v < Server, Entity > == 0);
+	static_assert(     is_base_of_v < Entity, Server > == 0);
 
-//	static_assert(is_derived_v < Client, Client > == 1); // bad
+	static_assert(     is_base_of_v < Client, Client > == 1);
+
+//  ---------------------------------------------------------
+
+	static_assert(std::is_base_of_v < Entity, Client > == 1);
+
+	static_assert(std::is_base_of_v < Entity, Server > == 0);
+
+	static_assert(std::is_base_of_v < Client, Client > == 1);
 }
+
+///////////////////////////////////////////////////////////////////////////////////

@@ -1,3 +1,5 @@
+/////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <type_traits>
 #include <vector>
@@ -30,15 +32,15 @@ constinit auto g_x = 1;
 
 int main()
 {
-    constexpr auto x = test_v1();
+              auto x = test_v1();
     
-              auto y = test_v1();
+    constexpr auto y = test_v1();
 
 //  ---------------------------------------------------------
 
-    [[maybe_unused]] constexpr auto z1 = test_v2(x);
+//  [[maybe_unused]] constexpr auto z1 = test_v2(x); // error
 
-//	[[maybe_unused]] constexpr auto z2 = test_v2(y); // error
+	[[maybe_unused]] constexpr auto z2 = test_v2(y);
 
 //  ---------------------------------------------------------
 
@@ -48,15 +50,15 @@ int main()
 
 //  ---------------------------------------------------------
 
-    [[maybe_unused]] constexpr auto z5 = test_v3(x);
+//  [[maybe_unused]] constexpr auto z5 = test_v3(x); // error
 
-//	[[maybe_unused]] constexpr auto z6 = test_v3(y); // error
+	[[maybe_unused]] constexpr auto z6 = test_v3(y);
 
 //  ---------------------------------------------------------
 
-    [[maybe_unused]]           auto z7 = test_v3(x);
+//  [[maybe_unused]]           auto z7 = test_v3(x); // error
 
-//	[[maybe_unused]]           auto z8 = test_v3(y); // error
+	[[maybe_unused]]           auto z8 = test_v3(y);
 
 //  ---------------------------------------------------------
 
@@ -66,3 +68,5 @@ int main()
 
     assert(++g_x == 2);
 }
+
+/////////////////////////////////////////////////////////////

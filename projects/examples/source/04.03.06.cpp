@@ -1,16 +1,20 @@
+//////////////////////////////////////////////////////////////////
+
 #include <iostream>
 
 //////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > void test(T x, Ts ... xs)
+template < typename T, typename ... Ts > void test(T x, Ts ... ys)
 {
 	std::cout << "test_v3 : x = " << x << ' ';
 	
-	std::cout << "sizeof...(xs) = " << sizeof...(xs) << '\n';
+	std::cout << "sizeof...(ys) = " << sizeof...(ys) << '\n';
 
-	if constexpr (sizeof...(xs) > 0) 
+//  ---------------------------------------------------------
+
+	if constexpr (sizeof...(ys) > 0) 
 	{
-		test(xs...);
+		test(ys...);
 	}
 }
 
@@ -20,3 +24,5 @@ int main()
 {
 	test(1, 2, 3);
 }
+
+//////////////////////////////////////////////////////////////////

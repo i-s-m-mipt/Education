@@ -1,3 +1,5 @@
+////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <cmath>
 #include <cstddef>
@@ -17,6 +19,8 @@ auto max(const T(&array_1)[S1], const T(&array_2)[S2])
 		if (array_1[i] < array_2[i]) { return array_2; }
 	}
 
+//  ----------------------------------------------------
+
 	return S1 > S2 ? array_1 : array_2;
 }
 
@@ -26,9 +30,11 @@ int main()
 {
 	int array_1[5]{ 1, 2, 3, 4, 5 };
 		
-	int array_2[5]{ 1, 2, 3 };
+	int array_2[3]{ 1, 2, 3 };
 
 //  -----------------------------------------
 
 	assert(max(array_1, array_2) == array_1);
 }
+
+////////////////////////////////////////////////////////

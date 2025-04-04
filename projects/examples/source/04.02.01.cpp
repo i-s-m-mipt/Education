@@ -1,4 +1,7 @@
+/////////////////////////////////////////////////////////////////////
+
 #include <cassert>
+#include <utility>
 #include <vector>
 
 /////////////////////////////////////////////////////////////////////
@@ -9,7 +12,11 @@ public :
 
 	void push(T x);
 
+//  -----------------
+
 	auto top() const;
+
+//  -----------------
 
 	void pop();
 
@@ -25,10 +32,14 @@ template < typename T, typename C > void Stack < T, C > ::push(T x)
 	m_container.push_back(std::move(x));
 }
 
+/////////////////////////////////////////////////////////////////////
+
 template < typename T, typename C > auto Stack < T, C > ::top() const
 {
 	return m_container.back();
 }
+
+/////////////////////////////////////////////////////////////////////
 
 template < typename T, typename C > void Stack < T, C > ::pop()
 {
@@ -53,3 +64,5 @@ int main()
 	
 	stack.pop();
 }
+
+/////////////////////////////////////////////////////////////////////

@@ -1,3 +1,5 @@
+////////////////////////////////////////////////////////////////////////
+
 template < int X > struct Factorial // support : cppinsights.io
 {
 	static constexpr auto value = X * Factorial < X - 1 > ::value;
@@ -20,3 +22,5 @@ int main()
 {
     static_assert(factorial_v < 5 > == 120);
 }
+
+////////////////////////////////////////////////////////////////////////

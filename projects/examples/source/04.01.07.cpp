@@ -1,3 +1,5 @@
+////////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <vector>
 
@@ -6,6 +8,8 @@
 template < typename T > struct Node 
 { 
 	T x = T();
+
+//  -----------------------------------------
 	
 	Node * left = nullptr, * right = nullptr;
 };
@@ -54,3 +58,5 @@ int main()
 
 	assert(traverse(node, left, right, left, right)->x == 5);
 }
+
+////////////////////////////////////////////////////////////////////////////

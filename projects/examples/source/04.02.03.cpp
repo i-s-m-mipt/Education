@@ -1,10 +1,6 @@
-#include <cassert>
-#include <deque>
+//////////////////////////////////////////////////
+
 #include <iostream>
-#include <iterator>
-#include <string>
-#include <utility>
-#include <vector>
 
 //////////////////////////////////////////////////
 
@@ -58,11 +54,13 @@ public :
 
 int main()
 {
-	Entity < int   , double > ().test();
+	Entity < int,    double > ().test();
 
 	Entity < double, int    > ().test();
 
-//	Entity < int   , int    > ().test(); // error
+//	Entity < int,    int    > ().test(); // error
 
 	Entity < double, double > ().test();
 }
+
+//////////////////////////////////////////////////

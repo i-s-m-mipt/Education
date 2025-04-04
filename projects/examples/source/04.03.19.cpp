@@ -1,3 +1,5 @@
+///////////////////////////////////////////////////////////////////////////
+
 #include <type_traits>
 #include <utility>
 
@@ -12,6 +14,8 @@ private :
 //  -----------------------------------------------------------------------
 
 	template < typename T1, typename T2 > static std::false_type test(...);
+
+//  -----------------------------------------------------------------------
 
     template < typename T1, typename T2 > static std:: true_type test
 	(
@@ -35,7 +39,11 @@ constexpr auto is_convertible_v = is_convertible < D, B > ::value;
 
 class Entity {};
 
+///////////////////////////////////////////////////////////////////////////
+
 class Client : public Entity {};
+
+///////////////////////////////////////////////////////////////////////////
 
 class Server 
 { 
@@ -48,21 +56,23 @@ public :
 
 int main()
 {
-    static_assert(     is_convertible_v < int      , double   > == 1);
+    static_assert(     is_convertible_v < int,      double   > == 1);
 
-	static_assert(     is_convertible_v < int      , Server   > == 0);
+	static_assert(     is_convertible_v < int,      Server   > == 0);
 
-	static_assert(     is_convertible_v < Client * , Entity * > == 1);
+	static_assert(     is_convertible_v < Client *, Entity * > == 1);
 
-	static_assert(     is_convertible_v < Server * , Entity * > == 0);
+	static_assert(     is_convertible_v < Server *, Entity * > == 0);
 
-//  ------------------------------------------------------------------
+//  -----------------------------------------------------------------
 
-	static_assert(std::is_convertible_v < int      , double   > == 1);
+	static_assert(std::is_convertible_v < int,      double   > == 1);
 
-	static_assert(std::is_convertible_v < int      , Server   > == 0);
+	static_assert(std::is_convertible_v < int,      Server   > == 0);
 
-	static_assert(std::is_convertible_v < Client * , Entity * > == 1);
+	static_assert(std::is_convertible_v < Client *, Entity * > == 1);
 
-	static_assert(std::is_convertible_v < Server * , Entity * > == 0);
+	static_assert(std::is_convertible_v < Server *, Entity * > == 0);
 }
+
+///////////////////////////////////////////////////////////////////////////
