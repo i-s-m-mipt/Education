@@ -152,7 +152,7 @@ int main()
 {
 	auto string = "aaaaa"s;
 
-//  ----------------------------------------------
+//  -----------------------------------------------
 
 	Entity_v1 entity_v1_1(string);
 
@@ -162,7 +162,7 @@ int main()
 
 	Entity_v4 entity_v4_1(string);
 
-//  ----------------------------------------------
+//  -----------------------------------------------
 
 	Entity_v1 entity_v1_2("aaaaa"s);
 
@@ -172,33 +172,33 @@ int main()
 
 	Entity_v4 entity_v4_2("aaaaa"s);
 
-//  ----------------------------------------------
+//  -----------------------------------------------
 
-	Entity_v1 entity_v1_3(entity_v1_2);
+	Entity_v1 entity_v1_3 = entity_v1_2;
 
-//	Entity_v2 entity_v2_3(entity_v2_2); // error
+//	Entity_v2 entity_v2_3 = entity_v2_2; // error
 
-	Entity_v3 entity_v3_3(entity_v3_2);
+	Entity_v3 entity_v3_3 = entity_v3_2;
 
-	Entity_v4 entity_v4_3(entity_v4_2);
+	Entity_v4 entity_v4_3 = entity_v4_2;
 
-//  ----------------------------------------------
+//  -----------------------------------------------
 
 	const Entity_v2 entity_v2_5(string);
 
-//  ----------------------------------------------
+//  -----------------------------------------------
 
-	Entity_v2 entity_v2_6(entity_v2_5);
+	Entity_v2 entity_v2_6 = entity_v2_5;
 
-//  ----------------------------------------------
+//  -----------------------------------------------
 
-	Entity_v1 entity_v1_4(std::move(entity_v1_3));
+	Entity_v1 entity_v1_4 = std::move(entity_v1_3);
 
-	Entity_v2 entity_v2_4(std::move(entity_v2_2));
+	Entity_v2 entity_v2_4 = std::move(entity_v2_2);
 
-	Entity_v3 entity_v3_4(std::move(entity_v3_3));
+	Entity_v3 entity_v3_4 = std::move(entity_v3_3);
 
-	Entity_v4 entity_v4_4(std::move(entity_v4_3));
+	Entity_v4 entity_v4_4 = std::move(entity_v4_3);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
