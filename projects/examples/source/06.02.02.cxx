@@ -1,3 +1,5 @@
+//////////////////////////////////////////
+
 module library;
 
 //////////////////////////////////////////
@@ -8,8 +10,10 @@ import <iostream>;
 
 namespace library
 {
-	void test_v2() 
+	void test_v1() 
 	{ 
-		std::cout << "library::test_v2\n";
+		std::cout << "library::test_v1\n";
 	}
 }
+
+//////////////////////////////////////////

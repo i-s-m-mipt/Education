@@ -1,3 +1,5 @@
+//////////////////////////////////////
+
 #ifndef PROJECT_HEADER_HPP
 
 #define PROJECT_HEADER_HPP
@@ -12,29 +14,29 @@
 
 //////////////////////////////////////
 
-void test_v2();
+void test_v1();
 
-void test_v3();
+void test_v2();
 
 //////////////////////////////////////
 
-// void test_v4() // error
+// void test_v3() // error
 // { 
-//     std::cout << "test_v4\n";
+//     std::cout << "test_v3\n";
 // } 
 
 //////////////////////////////////////
 
-inline void test_v5()
+inline void test_v4()
 { 
-    std::cout << "test_v5\n";
+    std::cout << "test_v4\n";
 }
 
 //////////////////////////////////////
 
-template < typename T > void test_v6()
+template < typename T > void test_v5()
 {
-	std::cout << "test_v6\n";
+	std::cout << "test_v5\n";
 }
 
 //////////////////////////////////////
@@ -54,3 +56,5 @@ inline const int g_x6 = 6;
 //////////////////////////////////////
 
 #endif
+
+//////////////////////////////////////
