@@ -36,7 +36,7 @@ public :
 
     friend auto & operator<<(std::ostream & stream, const Entity & entity)
     {
-        stream << "{ "; 
+        stream << "{ ";
 
     //  -------------------
         
@@ -79,6 +79,12 @@ public :
     void get(std::istream & stream) override
     {
         Entity::get(stream);
+
+    //  --------------------
+
+        stream.get();
+
+    //  --------------------
         
         stream >> m_y;
     }
@@ -89,7 +95,9 @@ public :
     { 
         Entity::put(stream);
 
-        stream << ' ' << m_y;
+    //  ----------------------
+
+        stream << ", " << m_y;
     }
 
 private :
@@ -101,7 +109,7 @@ private :
 
 int main()
 {
-    std::stringstream stream_1("{ 1 1 }");
+    std::stringstream stream_1("{ 1, 1 }");
 
     std::stringstream stream_2;
 

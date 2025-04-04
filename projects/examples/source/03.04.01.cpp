@@ -38,6 +38,8 @@ public :
 		
 		m_den = lcm;
 
+	//  ------------------------------------------------------------------
+
 		reduce();
 
 	//  ------------------------------------------------------------------
@@ -59,6 +61,8 @@ public :
 		m_num *= other.m_num;
 
 		m_den *= other.m_den;
+
+	//  ---------------------
 
 		reduce();
 
@@ -86,19 +90,19 @@ public :
 
 //  -------------------------------------------------------------------------------------------
 
-	friend auto operator+ (Rational lhs, const Rational & rhs) { return Rational(lhs) += rhs; }
+	friend auto operator+ (Rational lhs, const Rational & rhs) { return lhs += rhs; }
 
-	friend auto operator- (Rational lhs, const Rational & rhs) { return Rational(lhs) -= rhs; }
+	friend auto operator- (Rational lhs, const Rational & rhs) { return lhs -= rhs; }
 
-	friend auto operator* (Rational lhs, const Rational & rhs) { return Rational(lhs) *= rhs; }
+	friend auto operator* (Rational lhs, const Rational & rhs) { return lhs *= rhs; }
 
-	friend auto operator/ (Rational lhs, const Rational & rhs) { return Rational(lhs) /= rhs; }
+	friend auto operator/ (Rational lhs, const Rational & rhs) { return lhs /= rhs; }
 
 //  -------------------------------------------------------------------------------------------
 
 	friend auto operator< (const Rational & lhs, const Rational & rhs)
 	{
-		return static_cast < double > (lhs) < static_cast < double > (rhs);
+		return lhs.m_num * rhs.m_den < rhs.m_num * lhs.m_den;
 	}
 
 //  -------------------------------------------------------------------------------------------
@@ -109,6 +113,8 @@ public :
 
 	friend auto operator>=(const Rational & lhs, const Rational & rhs) { return !(lhs < rhs); }
 
+//  -------------------------------------------------------------------------------------------
+
 	friend auto operator==(const Rational & lhs, const Rational & rhs)
 	{
 		return !(lhs < rhs) && !(rhs < lhs);
@@ -118,9 +124,13 @@ public :
 
 	friend auto & operator>>(std::istream & stream, Rational & rational)
 	{
-		stream >> rational.m_num; 
+		stream >> rational.m_num;
+
+	//  -------------------------
 		
 		stream.get();
+
+	//  -------------------------
 
 		stream >> rational.m_den;
 

@@ -139,7 +139,7 @@ int main()
 
 //  -------------------------------------------------------
 
-//	[[maybe_unused]] Entity * entity = &router; // error
+//	[[maybe_unused]] Entity * entity_4 = &router; // error
 }
 
 ///////////////////////////////////////////////////////////

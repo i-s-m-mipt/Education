@@ -29,7 +29,11 @@ int main()
 
 //  -----------------------------------------------------------------------------------
 
-//	assert( static_cast < Client * > (entity) != 0); // bad
+	assert( static_cast < Client * > (entity) != 0);
+
+//	assert( static_cast < Server * > (entity) != 0); // error
+
+//  -----------------------------------------------------------------------------------
 
 	assert(dynamic_cast < Client * > (entity) != 0); // support : compiler-explorer.com
 

@@ -21,7 +21,7 @@ int main()
 
 //  ----------------
 		
-	entity  .test();
+	entity.  test();
 		
 	Entity().test();
 }
