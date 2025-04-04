@@ -7,6 +7,8 @@
 template < typename T, typename ... Ts > void test(T x, Ts ... ys)
 {
 	std::cout << "test_v3 : x = " << x << ' ';
+
+//  ---------------------------------------------------------
 	
 	std::cout << "sizeof...(ys) = " << sizeof...(ys) << '\n';
 
