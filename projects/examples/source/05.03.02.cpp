@@ -1,3 +1,5 @@
+////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <vector>
 
@@ -43,9 +45,13 @@ public :
     void set(int x) 
     { 
         m_x = x;
+
+    //  -------------------
         
         notify_observers();
     }
+
+//  ---------------------------------------
 
     void notify_observers() const
     { 
@@ -61,6 +67,8 @@ public :
 private :
 
     int m_x = 0;
+
+//  ---------------------------------------
     
     std::vector < Observer * > m_observers;
 };
@@ -108,3 +116,5 @@ int main()
         entity.set(i + 1);
     }
 }
+
+////////////////////////////////////////////////////////

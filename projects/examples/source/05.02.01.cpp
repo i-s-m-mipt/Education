@@ -1,3 +1,5 @@
+/////////////////////////////////////////////////////
+
 #include <iostream>
 
 /////////////////////////////////////////////////////
@@ -63,17 +65,23 @@ int main()
 {
 	Client client;
 
-	Entity * entity_1 = new Adapter_v1(client);
-
-	entity_1->test();
-
-	delete entity_1;
-
 //  -------------------------------------------
+
+	Entity * entity_1 = new Adapter_v1(client);
 
 	Entity * entity_2 = new Adapter_v2;
 
+//  -------------------------------------------
+
+	entity_1->test();
+
 	entity_2->test();
+
+//  -------------------------------------------
+
+	delete entity_1;
 
 	delete entity_2;
 }
+
+/////////////////////////////////////////////////////

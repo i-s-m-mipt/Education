@@ -1,20 +1,22 @@
+///////////////////////////////////////////////////////////////////////
+
 #include <utility>
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
 class Client_v1 { public : Client_v1(int) {} };
 
 class Server_v1 { public : Server_v1(int) {} };
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
 template < typename ... Bs > class Router_v1 : public Bs ...
 {
 public :
 
-    template < typename ... Ts > Router_v1(int x, Ts && ... xs) 
+    template < typename ... Ts > Router_v1(int x, Ts && ... ys) 
     : 
-        Bs(std::forward < Ts > (xs))..., m_x(x)
+        Bs(std::forward < Ts > (ys))..., m_x(x)
     {}
 
 private :
@@ -22,13 +24,13 @@ private :
     int m_x = 0;
 };
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
 template < typename T > class Client_v2 { public : Client_v2(int) {} };
 
 template < typename T > class Server_v2 { public : Server_v2(int) {} };
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
 template < template < typename T > typename ... Bs > class Router_v2 
 : 
@@ -36,9 +38,9 @@ template < template < typename T > typename ... Bs > class Router_v2
 {
 public :
 
-    template < typename ... Ts > Router_v2(int x, Ts && ... xs) 
+    template < typename ... Ts > Router_v2(int x, Ts && ... ys) 
     : 
-        Bs < Router_v2 > (std::forward < Ts > (xs))..., m_x(x)
+        Bs < Router_v2 > (std::forward < Ts > (ys))..., m_x(x)
     {}
 
 private :
@@ -46,7 +48,7 @@ private :
     int m_x = 0;
 };
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -56,3 +58,5 @@ int main()
     
     Router_v2 < Client_v2, Server_v2 > router_v2(1, 1, 1);
 }
+
+///////////////////////////////////////////////////////////////////////

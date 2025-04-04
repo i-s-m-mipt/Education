@@ -1,3 +1,5 @@
+/////////////////////////////////////////////////
+
 #include <cassert>
 
 /////////////////////////////////////////////////
@@ -6,10 +8,12 @@ class Entity
 {
 public :
 
-    auto get() const 
+    auto get() const
     { 
         return m_x;
     }
+
+//  ----------------
     
     void set(int x) 
     { 
@@ -30,13 +34,19 @@ public :
     void set(int x) 
     { 
         m_x = B::get();
+
+    //  ---------------
         
         B::set(x);
     }
 
+//  -------------------
+
     auto & undo() 
     { 
         B::set(m_x);
+
+    //  -------------
 
         return *this;
     }
@@ -55,13 +65,19 @@ public :
     void set(int x) 
     { 
         m_x = x;
+
+    //  ----------
         
         B::set(x);
     }
 
+//  -----------------
+
     auto & redo() 
     { 
         B::set(m_x);
+
+    //  -------------
 
         return *this;
     }
@@ -90,3 +106,5 @@ int main()
 
     assert(entity.redo().get() == 2);
 }
+
+/////////////////////////////////////////////////

@@ -1,6 +1,3 @@
-#include <cstddef>
-#include <iostream>
-
 ////////////////////////////////////////////////////////////////////////////////////
 
 template < typename D > class Controller
@@ -13,10 +10,7 @@ protected :
 
 	Controller(      Controller < D > &&) { ++s_counter; }
 
-   ~Controller() 
-    { 
-		--s_counter;
-	}
+   ~Controller(                         ) { --s_counter; }
 
 private :
 
@@ -25,19 +19,23 @@ private :
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > class Entity_v3 : private Controller < Entity_v3 < T > > {};
+template < typename T > class Entity_v1 : private Controller < Entity_v1 < T > > {};
 
-template < typename T > class Entity_v4 : private Controller < Entity_v4 < T > > {};
+template < typename T > class Entity_v2 : private Controller < Entity_v2 < T > > {};
 
 ////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Entity_v3 < int > entity_v3_1;
+	Entity_v1 < int > entity_v1_1;
 	
-	Entity_v3 < int > entity_v3_2(entity_v3_1);
+	Entity_v1 < int > entity_v1_2 = entity_v1_1;
 
-//  -------------------------------------------
+//  --------------------------------------------
 
-	Entity_v4 < int > entity_v4;
+	Entity_v2 < int > entity_v2_1;
+
+	Entity_v2 < int > entity_v2_2 = entity_v2_1;
 }
+
+////////////////////////////////////////////////////////////////////////////////////

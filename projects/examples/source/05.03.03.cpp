@@ -1,3 +1,5 @@
+/////////////////////////////////////////////////////////////////////////
+
 #include <iostream>
 
 /////////////////////////////////////////////////////////////////////////
@@ -45,6 +47,8 @@ public :
 
     Entity() : m_state(new Slow) {}
 
+//  --------------------------------------------
+
    ~Entity() 
     { 
         set_state(nullptr);
@@ -58,6 +62,8 @@ public :
         {
             delete m_state;
         }
+
+    //  -------------------
         
         m_state = state;
     }
@@ -80,9 +86,13 @@ void Slow::set_slow([[maybe_unused]] Entity * entity) const
     std::cout << "Slow::set_slow\n";
 }
 
+/////////////////////////////////////////////////////////////////////////
+
 void Slow::set_fast([[maybe_unused]] Entity * entity) const
 {
     std::cout << "Slow::set_fast\n";
+
+//  --------------------------------
     
     entity->set_state(new Fast);
 }
@@ -92,9 +102,13 @@ void Slow::set_fast([[maybe_unused]] Entity * entity) const
 void Fast::set_slow([[maybe_unused]] Entity * entity) const
 {
     std::cout << "Fast::set_slow\n";
+
+//  --------------------------------
     
     entity->set_state(new Slow);
 }
+
+/////////////////////////////////////////////////////////////////////////
 
 void Fast::set_fast([[maybe_unused]] Entity * entity) const
 {
@@ -117,3 +131,5 @@ int main()
 
     entity.set_slow();
 }
+
+/////////////////////////////////////////////////////////////////////////

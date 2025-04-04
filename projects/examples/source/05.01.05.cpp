@@ -1,3 +1,5 @@
+//////////////////////////////////////////////////////
+
 #include <iostream>
 
 //////////////////////////////////////////////////////
@@ -7,6 +9,8 @@ class Singleton
 public :
 
     Singleton            (const Singleton &) = delete;
+
+//  --------------------------------------------------
 
     Singleton & operator=(const Singleton &) = delete;
 
@@ -22,6 +26,8 @@ public :
     static auto & get() 
     { 
         static Singleton singleton;
+
+    //  ---------------------------
         
         return singleton;
     }
@@ -37,3 +43,5 @@ int main()
 {
     Singleton::get().test();
 }
+
+//////////////////////////////////////////////////////

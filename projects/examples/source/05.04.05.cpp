@@ -1,3 +1,5 @@
+/////////////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -12,11 +14,6 @@ public :
 
     friend auto operator>=(const T & lhs, const T & rhs) { return !(lhs < rhs); }
 
-    friend auto operator==(const T & lhs, const T & rhs)
-    {
-        return !(lhs < rhs) && !(rhs < lhs);
-    }
-
 protected :
 
     Comparable() = default;
@@ -24,7 +21,27 @@ protected :
 
 /////////////////////////////////////////////////////////////////////////////////
 
-class Entity : private Comparable < Entity >
+template < typename T > class Equivalent
+{
+public :
+
+    friend auto operator==(const T & lhs, const T & rhs)
+    {
+        return !(lhs < rhs) && !(rhs < lhs);
+    }
+
+protected :
+
+    Equivalent() = default;
+};
+
+/////////////////////////////////////////////////////////////////////////////////
+
+class Entity 
+: 
+    private Comparable < Entity > , 
+    
+    private Equivalent < Entity >
 {
 public :
 
@@ -46,7 +63,9 @@ private :
 
 int main()
 {
-    Entity entity_1(1), entity_2(2);
+    Entity entity_1(1);
+    
+    Entity entity_2(2);
 
 //  ------------------------------------
 
@@ -62,3 +81,5 @@ int main()
 
     assert((entity_1 != entity_2) == 1);
 }
+
+/////////////////////////////////////////////////////////////////////////////////
