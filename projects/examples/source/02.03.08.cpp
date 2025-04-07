@@ -21,7 +21,7 @@ int main()
 
 //  ------------------------------------------------------------------
 
-	for (auto i = 0uz; i < std::size(vector); ++i)
+	for (auto i = 0uz; i < size; ++i)
 	{
 		vector[i] = i + 1;
 	}
