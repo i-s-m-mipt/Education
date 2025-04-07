@@ -8,8 +8,6 @@
 template < typename T > struct Node 
 { 
 	T x = T();
-
-//  -----------------------------------------
 	
 	Node * left = nullptr, * right = nullptr;
 };

@@ -14,8 +14,6 @@ void test_v1()
 template < typename T, typename ... Ts > void test_v1(T x, Ts ... ys)
 {
 	std::cout << "test_v1 : x = " << x << ' ';
-
-//  ---------------------------------------------------------
 	
 	std::cout << "sizeof...(ys) = " << sizeof...(ys) << '\n';
 

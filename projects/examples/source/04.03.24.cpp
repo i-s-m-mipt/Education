@@ -161,8 +161,6 @@ private :
 
     using current_t = front < D > ;
 
-//  -----------------------------------------------------------
-
     using max_t = typename Max_Type < pop_front < D > > ::type;
 
 public :
