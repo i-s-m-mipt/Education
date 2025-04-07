@@ -49,6 +49,8 @@ extern const int g_x3;
 
 extern const int g_x4;
 
+//////////////////////////////////////
+
        const int g_x5 = 5;
 
 inline const int g_x6 = 6;
