@@ -45,8 +45,6 @@ public :
     void set(int x) 
     { 
         m_x = x;
-
-    //  -------------------
         
         notify_observers();
     }

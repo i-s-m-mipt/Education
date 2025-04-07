@@ -30,11 +30,7 @@ public :
         
         m_deltas.push_back(state - m_states.front());
 
-    //  ---------------------------------------------
-
         m_states.push_back(state);
-
-    //  ---------------------------------------------
 
         m_states.front() = std::move(state);
     }
@@ -62,8 +58,6 @@ public :
         {
             state = state + m_deltas[i];
         }
-
-    //  -------------------------------------------------------------
 
         m_states.front() = state;
 

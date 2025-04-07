@@ -34,8 +34,6 @@ public :
     void set(int x) 
     { 
         m_x = B::get();
-
-    //  ---------------
         
         B::set(x);
     }
@@ -45,8 +43,6 @@ public :
     auto & undo() 
     { 
         B::set(m_x);
-
-    //  -------------
 
         return *this;
     }
@@ -65,8 +61,6 @@ public :
     void set(int x) 
     { 
         m_x = x;
-
-    //  ----------
         
         B::set(x);
     }
@@ -76,8 +70,6 @@ public :
     auto & redo() 
     { 
         B::set(m_x);
-
-    //  -------------
 
         return *this;
     }

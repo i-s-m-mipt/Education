@@ -62,8 +62,6 @@ public :
         {
             delete m_state;
         }
-
-    //  -------------------
         
         m_state = state;
     }
