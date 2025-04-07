@@ -100,10 +100,6 @@ public :
 	void test_v2() const override 
 	{ 
 		std::cout << "Router::test_v2\n";
-
-	//  ---------------------------------
-
-		Entity::test_v2();
 	}
 };
 

@@ -108,16 +108,14 @@ public :
 //
 //          ----------------------------------------------------------------------
 //
-//			std::ranges::copy(other.m_array, other.m_array + other.m_size, array);
+//			std::ranges::copy(other.m_array, other.m_array + other.m_size, array);		
 //
-//			if (m_array)
+//			if (array = std::exchange(m_array, array); array)
 //			{
-//				delete[] m_array;
+//				delete[] array;
 //			}
 //
-//			m_array = array;
-//
-//			m_size  = other.m_size;
+//			m_size = other.m_size;
 //		}
 //
 //	//	--------------------------------------------------------------------------

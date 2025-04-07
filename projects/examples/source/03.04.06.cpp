@@ -1,11 +1,11 @@
-//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <istream>
 #include <ostream>
 #include <sstream>
 
-//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
@@ -13,69 +13,47 @@ public :
 
     virtual ~Entity() = default;
 
-//  ----------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
     friend auto & operator>>(std::istream & stream, Entity & entity)
     {
-        stream.get();
-        
-        entity.get(stream);
-
-        stream.get();
-
-    //  -------------------
-
-        return stream;
+        return entity.get(stream.ignore()).ignore();
     }
 
-//  ----------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
     friend auto & operator<<(std::ostream & stream, const Entity & entity)
-    {
-        stream << "{ ";
-        
-        entity.put(stream);
-
-        stream << " }";
-
-    //  -------------------
-
-        return stream;
+    {        
+        return entity.put(stream << "{ ") << " }";
     }
 
 protected :
 
-    virtual void get(std::istream & stream)       { stream >> m_x; }
+    virtual std::istream & get(std::istream & stream)       { return stream >> m_x; }
 
-    virtual void put(std::ostream & stream) const { stream << m_x; }
+    virtual std::ostream & put(std::ostream & stream) const { return stream << m_x; }
 
-//  ----------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
     int m_x = 0;
 };
 
-//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 class Client : public Entity 
 {
 public :
 
-    void get(std::istream & stream) override
+    std::istream & get(std::istream & stream) override
     {
-        Entity::get(stream);
-
-        stream.get();
-        
-        stream >> m_y;
+        return Entity::get(stream).ignore() >> m_y;
     }
 
-//  ----------------------------------------------
+//  --------------------------------------------------------
 
-    void put(std::ostream & stream) const override
+    std::ostream & put(std::ostream & stream) const override
     { 
-        Entity::put(stream);
-
-        stream << ", " << m_y;
+        return Entity::put(stream) << ", " << m_y;
     }
 
 private :
@@ -83,7 +61,7 @@ private :
     int m_y = 0;
 };
 
-//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -110,4 +88,4 @@ int main()
     assert(stream_2.str() == stream_1.str());
 }
 
-//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
