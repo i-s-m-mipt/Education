@@ -1,4 +1,7 @@
+////////////////////////////////////////////////////////
+
 #include <cassert>
+#include <cerrno>
 #include <cmath>
 #include <cstring>
 #include <iostream>
@@ -45,3 +48,5 @@ int main()
 
     std::cout << "main : string = " << string << '\n';
 }
+
+////////////////////////////////////////////////////////

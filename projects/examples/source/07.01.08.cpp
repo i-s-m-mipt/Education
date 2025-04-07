@@ -1,3 +1,5 @@
+/////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <optional>
 #include <string>
@@ -14,9 +16,11 @@ int main()
 
     assert(optional_1.value_or(2) == 1);
 
-    assert(optional_2.value_or(2) == 2);
+    assert(optional_2.value_or(3) == 3);
 
 //  ---------------------------------------------------------------------
 
-    assert(std::make_optional < std::string > (5, 'a')->contains("aaa"));
+    assert(std::size(*std::make_optional < std::string > (5, 'a')) == 5);
 }
+
+/////////////////////////////////////////////////////////////////////////

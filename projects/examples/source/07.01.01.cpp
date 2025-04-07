@@ -1,6 +1,5 @@
-#include <cassert>
-#include <cstdlib>
-#include <iostream>
+//////////////////////////////////////////////////////////////
+
 #include <type_traits>
 
 //////////////////////////////////////////////////////////////
@@ -10,6 +9,8 @@ template < typename T > void swap(T & x, T & y)
     static_assert(std::is_copy_constructible_v < T > );
     
     static_assert(std::is_copy_assignable_v    < T > );
+
+//  ---------------------------------------------------
 
     auto z = y;
             
@@ -34,6 +35,8 @@ int main()
 //  ----------------------------------------------------
 
     auto x = 1, y = 2;
+
+//  ----------------------------------------------------
         
     swap(x, y);
 
@@ -43,3 +46,5 @@ int main()
 
 //  [[maybe_unused]] Entity < int & > entity_2; // error
 }
+
+//////////////////////////////////////////////////////////////

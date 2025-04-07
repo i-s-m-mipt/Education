@@ -1,50 +1,43 @@
+////////////////////////////////////////////////////////////////////
+
 #include <cassert>
-#include <cmath>
-#include <cstddef>
-#include <iostream>
+#include <numeric>
+#include <vector>
 
-/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
-// support : valgrind --tool=callgrind ./07.03.02
-
-// support : valgrind --leak-check=yes ./07.03.02
-
-/////////////////////////////////////////////////////////////////
-
-auto test(std::size_t size)
+auto find(const std::vector < int > & vector, int x)
 {
-	auto x = 0.0;
-
-	for (auto i = 0uz; i < size; ++i)
+	if (auto size = std::size(vector); size > 0)
 	{
-		x += std::pow(std::sin(i), 2) + std::pow(std::cos(i), 2);
+		auto left = 0uz, right = size - 1, middle = 0uz;
+
+	//  ------------------------------------------------------------
+
+		while (left < right)
+		{		
+			middle = std::midpoint(left, right);
+
+		//  --------------------------------------------------------
+
+			vector[middle] < x ? left = middle + 1 : right = middle;
+		}
+
+	//  ------------------------------------------------------------
+
+		return vector[left] == x;
 	}
 
-	return x;
+//  ----------------------------------------------------------------
+	
+	return false;
 }
 
-/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
-auto equal(double x, double y, double epsilon = 1e-6)
+int main()
 {
-	return std::abs(x - y) < epsilon;
+	assert(find({ 1, 2, 3, 4, 5 }, 1));
 }
 
-/////////////////////////////////////////////////////////////////
-
-int main() 
-{
-	assert(equal(test(1'000), 1'000));
-
-//  ----------------------------------------------------
-
-	auto array = new int[5]{ 1, 2, 3, 4, 5 };
-
-	assert(array[5] == 0);
-
-//  delete[] array; // bad
-
-//  ----------------------------------------------------
-
-	std::cout << "main : enter char : "; std::cin.get();
-}
+////////////////////////////////////////////////////////////////////

@@ -1,51 +1,78 @@
+/////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <iostream>
 #include <string>
 #include <variant>
 
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
-class Entity_v1 { public : Entity_v1(int) {} };
-
-class Entity_v2 
-{ 
+class Visitor
+{
 public :
 
-   ~Entity_v2() 
+    void operator()(int x) const
+    {
+        std::cout << "Visitor::operator() : x = " << x << '\n';
+    }
+
+//  ---------------------------------------------------------------------
+
+    void operator()(const std::string & string) const
+    {
+        std::cout << "Visitor::operator() : string = " << string << '\n';
+    }
+};
+
+/////////////////////////////////////////////////////////////////////////
+
+class Entity
+{ 
+public : 
+
+    Entity(int) {}
+
+//  -------------------------------------
+
+   ~Entity() 
     { 
-		std::cout << "Entity_v2::~Entity_v2\n";
+		std::cout << "Entity::~Entity\n";
 	} 
 };
 
-class Entity_v3 {};
-
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::variant < int, std::string > variant_1 = 1;
+    std::variant < int, std::string > variant_1 = 1;
 
-    std::variant < int, std::string > variant_2 = "aaaaa";
-
-//  -------------------------------------------------------------------
-
-    assert(std::holds_alternative < int > (variant_1));
-
-    assert(std::get < int > (variant_1) == 1);
-
-//  -------------------------------------------------------------------
+//  ----------------------------------------------------------------
 
     static_assert(std::variant_size_v < decltype(variant_1) > == 2);
 
-//  -------------------------------------------------------------------
+//  ----------------------------------------------------------------
 
-//	std::variant <                 Entity_v1, int > variant_3; // error
+    assert(std::get < int > (variant_1) == 1);
 
-	std::variant < std::monostate, Entity_v1, int > variant_4;
+//  ----------------------------------------------------------------
 
-//  -------------------------------------------------------------------
+    std::visit(Visitor(), variant_1);
 
-	std::variant < Entity_v2, Entity_v3 > variant_5;
+//  ----------------------------------------------------------------
 
-	variant_5 = Entity_v3();
+//	std::variant <                 Entity, int > variant_2; // error
+
+	std::variant < std::monostate, Entity, int > variant_3;
+
+//  ----------------------------------------------------------------
+
+	variant_3 = Entity(3);
+
+    variant_3 = 3;
+
+//  ----------------------------------------------------------------
+
+    assert(std::holds_alternative < Entity > (variant_3) == 0);
 }
+
+/////////////////////////////////////////////////////////////////////////

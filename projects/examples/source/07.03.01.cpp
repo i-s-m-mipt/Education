@@ -1,31 +1,42 @@
-#include <cassert>
-#include <numeric>
-#include <vector>
+///////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////
+#include <format>
+#include <iostream>
+#include <stacktrace>
 
-auto find(const std::vector < int > & vector, int x)
+///////////////////////////////////////////////////////////////
+
+void test_v1()
 {
-	if (auto size = std::size(vector); size > 0)
-	{
-		auto left = 0uz, right = size - 1, middle = 0uz;
+    for (const auto & entry : std::stacktrace::current())
+    {
+        std::cout << "test_v1 : entry : ";
 
-		while (left < right)
-		{		
-			middle = std::midpoint(left, right);
+        if (auto file = entry.source_file(); !std::empty(file))
+        {
+            std::cout << file << " : ";
+        }
 
-			vector[middle] < x ? left = middle + 1 : right = middle;
-		}
+        if (auto line = entry.source_line(); line > 0)
+        {
+            std::cout << std::format("{:0>3}", line) << " : ";
+        }
 
-		return vector[left] == x;
-	}
-	
-	return false;
+        std::cout << entry.description() << '\n';
+    }
 }
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+
+void test_v2() { test_v1(); }
+
+void test_v3() { test_v2(); }
+
+///////////////////////////////////////////////////////////////
 
 int main()
 {
-	assert(find({ 1, 2, 3, 4, 5 }, 1));
+    test_v3();
 }
+
+///////////////////////////////////////////////////////////////

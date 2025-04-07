@@ -1,170 +1,99 @@
-#include <algorithm>
+//////////////////////////////////////////////////////////////////////////////
+
 #include <cmath>
-#include <exception>
-#include <numeric>
-#include <stdexcept>
+#include <iostream>
 #include <vector>
 
-#include <benchmark/benchmark.h>
+//////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////////////
+#include <gmock/gmock.h>
 
-void test_v1(benchmark::State & state) 
+//////////////////////////////////////////////////////////////////////////////
+
+#include <gtest/gtest.h>
+
+//////////////////////////////////////////////////////////////////////////////
+
+TEST(Expect, Test)
 {
-    for (auto element : state)
-    {
-        auto x = 0.0;
+    std::cout << "Test::Expect::Test (1)\n"; EXPECT_TRUE(std::max(1, 2) == 1);
 
-		for (auto i = 0uz; i < 1'000; ++i)
-		{
-			x += std::pow(std::sin(i), 2) + std::pow(std::cos(i), 2);
-		}
-
-        benchmark::DoNotOptimize(x);
-    }
+    std::cout << "Test::Expect::Test (2)\n"; EXPECT_TRUE(std::max(1, 2) == 2);
 }
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-void test_v2(benchmark::State & state) 
+TEST(Assert, Test)
 {
-    for (auto element : state)
-    {
-        auto x = 0.0;
+    std::cout << "Test::Assert::Test (1)\n"; ASSERT_TRUE(std::max(1, 2) == 1);
 
-        try 
-        {
-            for (auto i = 0uz; i < 1'000; ++i)
-            {
-                x += std::pow(std::sin(i), 2) + std::pow(std::cos(i), 2);
-            }
-        }
-        catch (...) {}
-
-        benchmark::DoNotOptimize(x);
-    }
+    std::cout << "Test::Assert::Test (2)\n"; ASSERT_TRUE(std::max(1, 2) == 2);
 }
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-void test_v3(benchmark::State & state)
+TEST(Assert, Near) 
 {
-    for (auto element : state)
-    {
-        auto x = 0.0;
-
-        try
-        {
-            for (auto i = 0uz; true; ++i)
-            {
-                x += std::pow(std::sin(i), 2) + std::pow(std::cos(i), 2);
-
-                if (i >= 1'000) 
-                {
-                    throw std::runtime_error("error");
-                }
-            }
-        }
-        catch (...) {}
-
-        benchmark::DoNotOptimize(x);
-    }
+    ASSERT_NEAR(1e-9, 2e-9, 1e-6);
 }
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-void test_v4(benchmark::State & state) 
+TEST(Assert, That)
 {
-    for (auto element : state) 
-    {
-        std::vector < int > vector(state.range(0), 0);
-
-        benchmark::DoNotOptimize(vector);
-    }
+    ASSERT_THAT("aaaaa", testing::StartsWith("aaa"));
 }
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-void test_v5(benchmark::State & state)
+class Fixture : public testing::Test 
 {
-    for (auto element : state) 
-    {
-        std::vector < std::vector < int > > vector
-        (
-            state.range(0), std::vector < int > (state.range(1), 0)
-        );
+public :
 
-        benchmark::DoNotOptimize(vector);
-    }
+    std::vector < int > vector;
+};
 
-    state.SetComplexityN(state.range(0));
+//////////////////////////////////////////////////////////////////////////////
+
+TEST_F(Fixture, Data) 
+{
+    vector.push_back(1); ASSERT_EQ(std::size(vector), 1); 
+    
+    vector.push_back(1); ASSERT_EQ(std::size(vector), 2); 
 }
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-void test_v6(benchmark::State & state)
-{
-    std::vector < int > vector(state.range(0), 0);
+class Adapter : public Fixture, public testing::WithParamInterface < int > {};
 
-    std::ranges::iota(vector, 1);
+//////////////////////////////////////////////////////////////////////////////
 
-    for (auto element : state) 
-    {
-        benchmark::DoNotOptimize(std::ranges::lower_bound(vector, 0));
-    }
+TEST_P(Adapter, Data) 
+{ 
+    auto x = GetParam();
 
-    state.SetComplexityN(state.range(0));
+//  --------------------------------
+    
+    vector.resize(x, 0);
+
+//  --------------------------------
+    
+    ASSERT_EQ(std::size(vector), x);
 }
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-void test_v7(benchmark::State & state)
+INSTANTIATE_TEST_CASE_P(Fixture, Adapter, testing::Values(1, 2, 3, 4, 5));
+
+//////////////////////////////////////////////////////////////////////////////
+
+int main(int argc, char ** argv)
 {
-    for (auto element : state) 
-    {
-        state.SkipWithError("error");
+    testing::InitGoogleTest(&argc, argv);
 
-        break;
-    }
-} 
-
-////////////////////////////////////////////////////////////////////////////////
-
-BENCHMARK(test_v1);
-
-BENCHMARK(test_v2);
-
-BENCHMARK(test_v3);
-
-BENCHMARK(test_v4)->Arg(1);
-
-BENCHMARK(test_v4)->DenseRange(0, 5'000, 1'000);
-
-BENCHMARK(test_v4)->RangeMultiplier(2)->Range(128, 1'024);
-
-BENCHMARK(test_v5)->Args({ 1, 2 })->Args({ 2, 4 })->Args({ 3, 6 });
-
-////////////////////////////////////////////////////////////////////////////////
-
-void make_args(benchmark::internal::Benchmark * benchmark) 
-{
-    for (auto i = 1; i < 4; ++i)
-    {
-        benchmark->Args({ i, i * 2 });
-    }
+//  -------------------------------------
+    
+    return RUN_ALL_TESTS();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
-BENCHMARK(test_v5)->Apply(make_args);
-
-BENCHMARK(test_v6)->RangeMultiplier(2)->Range(1'024, 1'024 << 16)->Complexity();
-
-BENCHMARK(test_v7);
-
-////////////////////////////////////////////////////////////////////////////////
-
-int main()
-{
-    benchmark::RunSpecifiedBenchmarks();
-}
+//////////////////////////////////////////////////////////////////////////////

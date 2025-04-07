@@ -1,5 +1,5 @@
-#include <cassert>
-#include <exception>
+//////////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <stdexcept>
 #include <type_traits>
@@ -23,9 +23,13 @@ public :
 		uninitialize();
 	}
 
+//  -----------------------------------------------
+
    ~Entity() noexcept
 	{
 	//	throw std::runtime_error("error"); // error
+
+	//  -------------------------------------------
 
 		uninitialize();
 	}
@@ -71,20 +75,27 @@ template < typename T > void swap(T & x, T & y) noexcept
 
 //////////////////////////////////////////////////////////////
 
-void test_v1() 
+void test_v1()
 {
-    Entity entity_1(1); std::cout << "test_v1\n";
-
-    Entity entity_2(2); std::cout << "test_v1\n";
+	std::cout << "test_v1\n";
 }
 
 //////////////////////////////////////////////////////////////
 
-void test_v2() noexcept
+void test_v2() 
 {
-    Entity entity_1(1); std::cout << "test_v2\n";
+    Entity entity_1(1); test_v1();
 
-    Entity entity_2(2); std::cout << "test_v1\n";
+    Entity entity_2(2); test_v1();
+}
+
+//////////////////////////////////////////////////////////////
+
+void test_v3() noexcept
+{
+    Entity entity_1(1); test_v1();
+
+    Entity entity_2(2); test_v1();
 }
 
 //////////////////////////////////////////////////////////////
@@ -105,7 +116,9 @@ int main()
 
 //  ----------------------------------------------------------
 
-	test_v1(); // support : compiler-explorer.com
+	test_v2(); // support : compiler-explorer.com
 
-    test_v2(); // support : compiler-explorer.com
+    test_v3(); // support : compiler-explorer.com
 }
+
+//////////////////////////////////////////////////////////////

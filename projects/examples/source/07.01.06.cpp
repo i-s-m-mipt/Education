@@ -1,3 +1,5 @@
+//////////////////////////////////////////////////////
+
 #include <tuple>
 
 //////////////////////////////////////////////////////
@@ -8,6 +10,8 @@ struct Variant
 	{ 
 		int x, y = 0;
 	};
+
+//  -----------------------
 	
 	bool has_error = false;
 };
@@ -22,7 +26,7 @@ auto test(int x)
 	}
 	else
 	{
-		return Variant { .y = 1, .has_error =  true };
+		return Variant { .y = x, .has_error = true  };
 	}
 }
 
@@ -32,3 +36,5 @@ int main()
 {
 	std::ignore = test(1);
 }
+
+//////////////////////////////////////////////////////
