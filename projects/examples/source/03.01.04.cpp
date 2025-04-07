@@ -34,7 +34,7 @@ public :
 
 //  ----------------------------------------------
 
-	Entity(int x) : Entity(x, 0) 
+	Entity(int x) : Entity(x, 0)
 	{
         std::cout << "Entity:: Entity (4)\n";
 	}
@@ -48,7 +48,9 @@ public :
 
 private :
 
-          int m_x = 0;
+    int m_x = 0;
+
+//  ----------------------------------------------
           
     const int m_y = 0;
 };

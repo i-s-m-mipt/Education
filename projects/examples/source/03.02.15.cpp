@@ -20,6 +20,8 @@ class Client : public Entity {};
 int main()
 {
 	auto x = 1, & y = x;
+
+//  ---------------------------------------------------------------------------
 		
 	Entity * entity = new Client;
 

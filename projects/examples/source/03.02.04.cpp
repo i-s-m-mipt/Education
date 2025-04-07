@@ -25,11 +25,16 @@ private :
 
     friend class Client;
 
-//  --------------------------------------------
+//  -------------------------------
 
-    static void test_v1() { Entity::test_v1(); }
+    static void test_v1() 
+    { 
+        Entity::test_v1(); 
+    }
 
-    static void test_v2() {                    }
+//  -------------------------------
+
+    static void test_v2() = delete;
 };
 
 ///////////////////////////////////////////////////////////////
@@ -42,7 +47,7 @@ public :
     {
         Attorney::test_v1();
 
-        Attorney::test_v2();
+    //  Attorney::test_v2(); // error
     }
 };
 

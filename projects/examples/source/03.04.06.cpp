@@ -18,12 +18,8 @@ public :
     friend auto & operator>>(std::istream & stream, Entity & entity)
     {
         stream.get();
-
-    //  -------------------
         
         entity.get(stream);
-
-    //  -------------------
 
         stream.get();
 
@@ -37,12 +33,8 @@ public :
     friend auto & operator<<(std::ostream & stream, const Entity & entity)
     {
         stream << "{ ";
-
-    //  -------------------
         
         entity.put(stream);
-
-    //  -------------------
 
         stream << " }";
 
@@ -53,17 +45,9 @@ public :
 
 protected :
 
-    virtual void get(std::istream & stream)
-    {
-        stream >> m_x;
-    }
+    virtual void get(std::istream & stream)       { stream >> m_x; }
 
-//  ----------------------------------------------------------------------
-
-    virtual void put(std::ostream & stream) const 
-    { 
-        stream << m_x;
-    }
+    virtual void put(std::ostream & stream) const { stream << m_x; }
 
 //  ----------------------------------------------------------------------
 
@@ -80,22 +64,16 @@ public :
     {
         Entity::get(stream);
 
-    //  --------------------
-
         stream.get();
-
-    //  --------------------
         
         stream >> m_y;
     }
 
 //  ----------------------------------------------
 
-    void put(std::ostream & stream) const override 
+    void put(std::ostream & stream) const override
     { 
         Entity::put(stream);
-
-    //  ----------------------
 
         stream << ", " << m_y;
     }

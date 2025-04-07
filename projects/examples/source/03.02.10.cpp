@@ -11,6 +11,10 @@ public :
 
 	Entity()
 	{
+		std::cout << "Entity::Entity\n";
+
+	//  --------------------------------
+
 	//	test_v1(); // bad
 	}
 

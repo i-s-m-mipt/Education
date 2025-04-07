@@ -125,12 +125,8 @@ public :
 	friend auto & operator>>(std::istream & stream, Rational & rational)
 	{
 		stream >> rational.m_num;
-
-	//  -------------------------
 		
 		stream.get();
-
-	//  -------------------------
 
 		stream >> rational.m_den;
 

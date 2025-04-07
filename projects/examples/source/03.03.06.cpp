@@ -50,7 +50,7 @@ public :
 	: 
 		m_array(std::exchange(other.m_array, nullptr)), 
 		
-		m_size (std::exchange(other.m_size, 0))
+		m_size (std::exchange(other.m_size,  0      ))
 	{
 		std::cout << "Vector::Vector (4)\n";
 	}
@@ -84,8 +84,6 @@ public :
 //				delete[] m_array;
 //			}
 //
-//		//  ------------------------------------------------------------------------
-//
 //			m_array = (m_size = other.m_size) ? new int[m_size]{} : nullptr;
 //
 //			std::ranges::copy(other.m_array, other.m_array + other.m_size, m_array);
@@ -108,16 +106,14 @@ public :
 //		{
 //			auto array = other.m_size ? new int[other.m_size]{} : nullptr;
 //
-//			std::ranges::copy(other.m_array, other.m_array + other.m_size, array);
+//          ----------------------------------------------------------------------
 //
-//		//	----------------------------------------------------------------------
+//			std::ranges::copy(other.m_array, other.m_array + other.m_size, array);
 //
 //			if (m_array)
 //			{
 //				delete[] m_array;
 //			}
-//
-//		//	----------------------------------------------------------------------
 //
 //			m_array = array;
 //
@@ -144,11 +140,11 @@ public :
 //				delete[] m_array;
 //			}
 //
-//		//  ------------------------------------------------
+//          ------------------------------------------------
 //			
 //			m_array = std::exchange(other.m_array, nullptr);
 //
-//			m_size  = std::exchange(other.m_size, 0);
+//			m_size  = std::exchange(other.m_size,  0      );
 //		}
 //
 //	//  ----------------------------------------------------
@@ -184,8 +180,6 @@ private :
 
 	int * m_array = nullptr;
 
-//  --------------------------------------------------------------------------------
-	
 	std::size_t m_size = 0;
 };
 
@@ -197,17 +191,15 @@ int main()
 
 	Vector vector_2 = { 1, 2, 3, 4, 5 };
 
-//  --------------------------------------
-
 	Vector vector_3 = vector_2;
-
-		   vector_3 = vector_2;
-
-//  --------------------------------------
 
 	Vector vector_4 = std::move(vector_3);
 
-		   vector_4 = std::move(vector_3);
+//  --------------------------------------
+
+	vector_3 = vector_2;
+
+	vector_4 = std::move(vector_3);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
