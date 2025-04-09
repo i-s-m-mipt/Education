@@ -10,11 +10,9 @@
 
 /////////////////////////////////////////////////////////
 
-const auto & test_v3()
+auto const & test_v3()
 {
 	static auto x = 0; // support : compiler-explorer.com
-
-//  -----------------------------------------------------
 
 	return ++x;
 }

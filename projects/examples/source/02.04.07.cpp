@@ -35,8 +35,6 @@ void merge(std::vector < int > & vector, std::size_t left, std::size_t middle, s
 
 	std::vector < int > buffer(size, 0);
 
-//  ----------------------------------------------------------------------------
-
 	for (auto i = left, j = middle, k = 0uz; k < size; ++k) 
 	{
 		if (i < middle && ((j < right && vector[i] <= vector[j]) || j == right))
@@ -64,10 +62,12 @@ void split(std::vector < int > & vector, std::size_t left, std::size_t right)
 		auto middle = std::midpoint(left, right);
 
 	//  -----------------------------------------
+
+		split(vector, left,   middle);
 		
-		split(vector, left, middle       );
-		
-		split(vector,       middle, right);
+		split(vector, middle, right );
+
+	//  -----------------------------------------
 
 		merge(vector, left, middle, right);
 	}

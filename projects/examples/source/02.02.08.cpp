@@ -6,28 +6,30 @@
 
 int main()
 {
-    auto x = 0;
+    auto x = 0, y = 0;
 
 //  ---------------------------------------------------------
 
     std::cout << "main : enter int x : "; std::cin >> x;
 
-    std::cout << "main : selection ";
-
 //  ---------------------------------------------------------
 
-    if (auto y = x; y > 0) // support : compiler-explorer.com
+    if (auto z = x; z > 0) // support : compiler-explorer.com
     {
-        std::cout << "(1)\n";
+        y = 1;
     }
-    else if (0 == y)
+    else if (0 == z)
     {
-        std::cout << "(2)\n";
+        y = 2;
     }
     else
     {
-        std::cout << "(3)\n";
+        y = 3;
     }
+
+//  ---------------------------------------------------------
+
+    std::cout << "main : y = " << y << '\n';
 }
 
 /////////////////////////////////////////////////////////////

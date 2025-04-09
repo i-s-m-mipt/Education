@@ -2,7 +2,7 @@
 
 int main()
 {
-    [[maybe_unused]] const auto x = 1;
+    [[maybe_unused]] auto const x = 1;
 
 //  ----------------------------------
 

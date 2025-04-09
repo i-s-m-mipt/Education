@@ -20,19 +20,17 @@ int main()
 
 //	[[maybe_unused]] int y3 { int(x) }; // bad
 
-//	[[maybe_unused]] int y4 { (int)x }; // bad
+//  -------------------------------------------------------------------
+
+	[[maybe_unused]] int y4 { static_cast < int > (x) };
 
 //  -------------------------------------------------------------------
 
-	[[maybe_unused]] int y5 { static_cast < int > (x) };
-
-//  -------------------------------------------------------------------
-
-//	[[maybe_unused]] int y6 { static_cast < int > ("aaaaa") }; // error
+//	[[maybe_unused]] int y5 { static_cast < int > ("aaaaa") }; // error
 
 //  -------------------------------------------------------------------
         
-    [[maybe_unused]] int y7 = 'a';
+    [[maybe_unused]] int y6 = 'a';
 }
 
 ///////////////////////////////////////////////////////////////////////

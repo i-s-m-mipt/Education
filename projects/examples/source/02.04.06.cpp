@@ -49,16 +49,12 @@ auto catalan_v3(std::size_t size, std::size_t left = 0, std::size_t right = 0) -
 {
 	auto counter = 0uz;
 
-//  ---------------------------------------------------------------------------
-
 	if (left < size || right < size)
 	{
 		if (left < size ) { counter += catalan_v3(size, left + 1, right    ); }
 
 		if (left > right) { counter += catalan_v3(size, left,     right + 1); }
 	}
-
-//  ---------------------------------------------------------------------------
 	
 	return counter > 0 ? counter : 1uz;
 }
@@ -69,8 +65,6 @@ auto catalan_v4(std::size_t size, std::size_t left = 0, std::size_t right = 0) -
 {
 	auto counter = 0uz;
 
-//  ---------------------------------------------------------------
-
 	if (left < size)
 	{
 		for (auto i = size; i > std::max(left, right + 1) - 1; --i)
@@ -78,8 +72,6 @@ auto catalan_v4(std::size_t size, std::size_t left = 0, std::size_t right = 0) -
 			counter += catalan_v4(size, i, right + 1);
 		}
 	}
-
-//  ---------------------------------------------------------------
 
 	return counter > 0 ? counter : 1uz;
 }

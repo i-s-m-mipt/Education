@@ -15,28 +15,28 @@ void test_v2(int & x) { ++( x); }
 
 /////////////////////////////////////////////////////
 
-void test_v3(const int *, std::size_t)
+void test_v3(int const *, std::size_t)
 {
 	std::cout << "test_v3 (1)\n";
 }
 
 /////////////////////////////////////////////////////
 
-void test_v3(std::span < const int > )
+void test_v3(std::span < int const > )
 {
 	std::cout << "test_v3 (2)\n";
 }
 
 /////////////////////////////////////////////////////
 
-void test_v3(const std::string &) 
+void test_v3(std::string const &) 
 {
 	std::cout << "test_v3 (3)\n";
 }
 
 /////////////////////////////////////////////////////
 
-void test_v3(const std::vector < int > &)
+void test_v3(std::vector < int > const &)
 {
 	std::cout << "test_v3 (4)\n";
 }
@@ -55,7 +55,7 @@ int main()
 
 //  -------------------------------------------------
 
-	constexpr auto size = 5uz;
+	auto const size = 5uz;
 
 //  -------------------------------------------------
 
@@ -71,9 +71,9 @@ int main()
     
 //  -------------------------------------------------
 
-	test_v3(std::span < const int > (array_1, size));
+	test_v3(std::span < int const > (array_1, size));
 
-	test_v3(std::span < const int > (array_2, size));
+	test_v3(std::span < int const > (array_2, size));
 
 //  -------------------------------------------------
 	

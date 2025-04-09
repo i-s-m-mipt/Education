@@ -24,15 +24,15 @@ int main()
 
 //  --------------------------------------------------------------
 
-	static_assert(std::is_same_v < std::size_t, unsigned long > );
-
-//  --------------------------------------------------------------
-
 	static_assert(sizeof(std::int16_t) == 2);
 
 	static_assert(sizeof(std::int32_t) == 4);
 
 	static_assert(sizeof(std::int64_t) == 8);
+
+//  --------------------------------------------------------------
+
+	static_assert(std::is_same_v < std::size_t, unsigned long > );
 }
 
 //////////////////////////////////////////////////////////////////
