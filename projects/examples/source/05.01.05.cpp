@@ -8,11 +8,11 @@ class Singleton
 {
 public :
 
-    Singleton            (const Singleton &) = delete;
+    Singleton            (Singleton const &) = delete;
 
 //  --------------------------------------------------
 
-    Singleton & operator=(const Singleton &) = delete;
+    Singleton & operator=(Singleton const &) = delete;
 
 //  --------------------------------------------------
 
@@ -26,8 +26,6 @@ public :
     static auto & get() 
     { 
         static Singleton singleton;
-
-    //  ---------------------------
         
         return singleton;
     }

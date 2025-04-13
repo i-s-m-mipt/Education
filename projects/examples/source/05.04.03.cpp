@@ -15,8 +15,6 @@ public :
     static auto & get() 
     { 
         static D d;
-
-	//  -----------
 		
 		return d;
     }

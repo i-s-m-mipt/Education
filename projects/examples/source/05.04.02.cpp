@@ -11,7 +11,7 @@ public :
 
 	void test() const
 	{
-		static_cast < const D * > (this)->test_implementation();
+		static_cast < D const * > (this)->test_implementation();
 	}
 
 protected :
@@ -40,7 +40,7 @@ public :
 
 ////////////////////////////////////////////////////////////////
 
-template < typename D > void test(const Entity < D > & entity) 
+template < typename D > void test(Entity < D > const & entity) 
 {
 	entity.test();
 }

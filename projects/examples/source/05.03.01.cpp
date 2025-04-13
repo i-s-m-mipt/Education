@@ -25,8 +25,6 @@ public :
     void set(int x)
     {
         State state(x);
-
-    //  ---------------------------------------------
         
         m_deltas.push_back(state - m_states.front());
 
@@ -41,8 +39,6 @@ public :
     {
         m_states.front() = m_states.at(index);
 
-    //  --------------------------------------
-
         return *this;
     }
 
@@ -52,16 +48,12 @@ public :
     {
         State state;
 
-    //  -------------------------------------------------------------
-
         for (auto i = 0uz; i < index && i < std::size(m_deltas); ++i)
         {
             state = state + m_deltas[i];
         }
 
         m_states.front() = state;
-
-    //  -------------------------------------------------------------
 
         return *this;
     }
@@ -74,14 +66,14 @@ private :
 
 //  --------------------------------------------------------------------
 
-    friend auto operator-(const State & lhs, const State & rhs) -> Delta
+    friend auto operator-(State const & lhs, State const & rhs) -> Delta
     { 
         return Delta(lhs.x - rhs.x);
     }
 
 //  --------------------------------------------------------------------
 
-    friend auto operator+(const State & lhs, const Delta & rhs) -> State
+    friend auto operator+(State const & lhs, Delta const & rhs) -> State
     { 
         return State(lhs.x + rhs.x);
     }

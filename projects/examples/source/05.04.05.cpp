@@ -8,11 +8,11 @@ template < typename T > class Comparable
 {
 public :
 
-    friend auto operator> (const T & lhs, const T & rhs) { return  (rhs < lhs); }
+    friend auto operator> (T const & lhs, T const & rhs) { return  (rhs < lhs); }
 
-    friend auto operator<=(const T & lhs, const T & rhs) { return !(lhs > rhs); }
+    friend auto operator<=(T const & lhs, T const & rhs) { return !(lhs > rhs); }
 
-    friend auto operator>=(const T & lhs, const T & rhs) { return !(lhs < rhs); }
+    friend auto operator>=(T const & lhs, T const & rhs) { return !(lhs < rhs); }
 
 protected :
 
@@ -25,7 +25,7 @@ template < typename T > class Equivalent
 {
 public :
 
-    friend auto operator==(const T & lhs, const T & rhs)
+    friend auto operator==(T const & lhs, T const & rhs)
     {
         return !(lhs < rhs) && !(rhs < lhs);
     }
@@ -49,7 +49,7 @@ public :
 
 //  -------------------------------------------------------------
 
-    friend auto operator<(const Entity & lhs, const Entity & rhs)
+    friend auto operator<(Entity const & lhs, Entity const & rhs)
     {
         return lhs.m_x < rhs.m_x;
     }

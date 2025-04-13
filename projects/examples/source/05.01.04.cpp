@@ -47,9 +47,9 @@ public :
 
 private :
 
-    static inline const Client s_client;
+    static inline Client const s_client;
 
-    static inline const Server s_server;
+    static inline Server const s_server;
 };
 
 /////////////////////////////////////////////////////////

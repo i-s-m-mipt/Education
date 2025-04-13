@@ -41,7 +41,7 @@ public :
 
 //////////////////////////////////////////////////////
 
-void test_v1(const Entity & entity)
+void test_v1(Entity const & entity)
 {
 	entity.test();
 }
@@ -72,7 +72,7 @@ public :
 
 //////////////////////////////////////////////////////
 
-template < typename E > void test_v2(const E & entity)
+template < typename E > void test_v2(E const & entity)
 {
 	entity.test();
 }

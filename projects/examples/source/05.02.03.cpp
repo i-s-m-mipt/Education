@@ -71,8 +71,6 @@ public :
     {
         auto x = 0;
 
-    //  ------------------------------
-
         for (auto entity : m_entities)
         {
             if (entity) 
@@ -80,8 +78,6 @@ public :
                 x += entity->test();
             }
         }
-
-    //  ------------------------------
 
         return x;
     }

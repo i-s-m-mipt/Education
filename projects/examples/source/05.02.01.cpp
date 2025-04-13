@@ -69,6 +69,8 @@ int main()
 
 	Entity * entity_1 = new Adapter_v1(client);
 
+//  -------------------------------------------
+
 	Entity * entity_2 = new Adapter_v2;
 
 //  -------------------------------------------

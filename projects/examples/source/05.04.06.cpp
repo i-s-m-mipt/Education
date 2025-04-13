@@ -20,7 +20,7 @@ public :
 
 //  -------------------------------------------------------------
 
-    friend auto operator<(const Entity & lhs, const Entity & rhs)
+    friend auto operator<(Entity const & lhs, Entity const & rhs)
     {
         return lhs.m_x < rhs.m_x;
     }
