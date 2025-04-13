@@ -10,21 +10,21 @@ int main()
 
 //  ---------------------------------------------------------
 
+    decltype(auto) x4 = x2;
+
+//  ---------------------------------------------------------
+
 	static_assert(std::is_same_v < decltype( x1 ), int   > );
-
-    static_assert(std::is_same_v < decltype( x3 ), int   > );
-
-    static_assert(std::is_same_v < decltype((x1)), int & > );
-
-//  ---------------------------------------------------------
-
-	decltype(auto) x4 = x2;
-
-//  ---------------------------------------------------------
 
     static_assert(std::is_same_v < decltype( x2 ), int & > );
 
+    static_assert(std::is_same_v < decltype( x3 ), int   > );
+
     static_assert(std::is_same_v < decltype( x4 ), int & > );
+
+//  ---------------------------------------------------------
+
+    static_assert(std::is_same_v < decltype((x1)), int & > );
 }
 
 /////////////////////////////////////////////////////////////
