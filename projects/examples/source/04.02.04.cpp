@@ -23,7 +23,7 @@ public :
 
 //  ----------------------------------------------------------------------
 
-	auto & operator+=(const Rational & other)
+	auto & operator+=(Rational const & other)
 	{
 		auto lcm = std::lcm(m_den, other.m_den);
 
@@ -37,35 +37,33 @@ public :
 
 		reduce();
 
-	//  ------------------------------------------------------------------
-
 		return *this;
 	}
 
 //  ----------------------------------------------------------------------
 
-	auto & operator-=(const Rational & other) 
+	auto & operator-=(Rational const & other) 
 	{ 
 		return *this += other.m_num * -1;
 	}
 
 //  ----------------------------------------------------------------------
 
-	friend auto operator+ (Rational lhs, const Rational & rhs) 
+	friend auto operator+ (Rational lhs, Rational const & rhs) 
 	{ 
 		return lhs += rhs;
 	}
 
 //  ----------------------------------------------------------------------
 
-	friend auto operator< (const Rational & lhs, const Rational & rhs)
+	friend auto operator< (Rational const & lhs, Rational const & rhs)
 	{
 		return lhs.m_num * rhs.m_den < rhs.m_num * lhs.m_den;
 	}
 
 //  ----------------------------------------------------------------------
 
-	friend auto operator==(const Rational & lhs, const Rational & rhs)
+	friend auto operator==(Rational const & lhs, Rational const & rhs)
 	{
 		return !(lhs < rhs) && !(rhs < lhs);
 	}
@@ -90,7 +88,7 @@ private :
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > auto operator-(Rational < T > lhs, const Rational < T > & rhs)
+template < typename T > auto operator-(Rational < T > lhs, Rational < T > const & rhs)
 { 
 	return lhs -= rhs;
 }

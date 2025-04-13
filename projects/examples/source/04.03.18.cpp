@@ -20,7 +20,7 @@ private :
 
 public :
       
-	static constexpr auto value = decltype(test < B > (1))::value;
+	constexpr static auto value = decltype(test < B > (1))::value;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////

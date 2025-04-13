@@ -25,7 +25,11 @@ auto equal(double x, double y, double epsilon = 1e-6)
 
 int main()
 {
-	assert(area(1) == 3 && equal(area(1.0), pi < double > ));
+	assert(area(1) == 3);
+
+//  -----------------------------------------
+	
+	assert(equal(area(1.0), pi < double > ));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////

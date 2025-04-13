@@ -15,7 +15,7 @@ private :
 
 public :
 
-	static constexpr auto value = sizeof(test(static_cast < D * > (nullptr))) == 8;
+	constexpr static auto value = sizeof(test(static_cast < D * > (nullptr))) == 8;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////

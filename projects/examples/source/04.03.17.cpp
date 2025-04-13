@@ -26,8 +26,6 @@ int main()
 {
     static_assert(std::is_same_v < decltype(test(     declval < Entity > ())), int > );
 
-//  -----------------------------------------------------------------------------------
-
     static_assert(std::is_same_v < decltype(test(std::declval < Entity > ())), int > );
 }
 

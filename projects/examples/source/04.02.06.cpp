@@ -12,15 +12,15 @@ struct Entity {};
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-	  auto   make_entity_v1() { return Entity(); }
+auto         make_entity_v1() { return Entity(); }
 
-const auto   make_entity_v2() { return Entity(); }
+auto const   make_entity_v2() { return Entity(); }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-      auto & make_entity_v3() { static       Entity entity; return entity; }
+auto       & make_entity_v3() { static Entity       entity; return entity; }
 
-const auto & make_entity_v4() { static const Entity entity; return entity; }
+auto const & make_entity_v4() { static Entity const entity; return entity; }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -42,7 +42,7 @@ template < typename E > void test_v2(E & entity)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename E > void test_v3(const E & entity) 
+template < typename E > void test_v3(E const & entity) 
 {
 	std::cout << "test_v3 : typeid(entity) = ";
 

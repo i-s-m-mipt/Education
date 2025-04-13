@@ -24,7 +24,7 @@ private :
 
 public :
       
-	static constexpr auto value = decltype(test < D, B > (1))::value;
+	constexpr static auto value = decltype(test < D, B > (1))::value;
 };
 
 ///////////////////////////////////////////////////////////////////////////

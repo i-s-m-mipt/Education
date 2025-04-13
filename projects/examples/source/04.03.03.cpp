@@ -2,14 +2,14 @@
 
 template < int X > struct Factorial
 {
-	static constexpr auto value = X * Factorial < X - 1 > ::value;
+	constexpr static auto value = X * Factorial < X - 1 > ::value;
 };
 
 ////////////////////////////////////////////////////////////////////////
 
 template <> struct Factorial < 0 > 
 { 
-	static constexpr auto value = 1;
+	constexpr static auto value = 1;
 };
 
 ////////////////////////////////////////////////////////////////////////

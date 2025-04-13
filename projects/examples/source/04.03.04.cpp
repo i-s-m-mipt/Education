@@ -2,32 +2,32 @@
 
 template < int X, int D > struct Handler
 {
-	static constexpr auto value = X % D != 0 && Handler < X, D - 1 > ::value;
+	constexpr static auto value = X % D != 0 && Handler < X, D - 1 > ::value;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 
 template < int X > struct Handler < X, 2 >
 {
-	static constexpr auto value = X % 2 != 0;
+	constexpr static auto value = X % 2 != 0;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 
 template < int X > struct Is_Prime
 {
-	static constexpr auto value = Handler < X, X / 2 > ::value;
+	constexpr static auto value = Handler < X, X / 2 > ::value;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 
-template <> struct Is_Prime < 0 > {	static constexpr auto value = false; };
+template <> struct Is_Prime < 0 > {	constexpr static auto value = false; };
 
-template <> struct Is_Prime < 1 > { static constexpr auto value = false; };
+template <> struct Is_Prime < 1 > { constexpr static auto value = false; };
 
-template <> struct Is_Prime < 2 > { static constexpr auto value = true;  };
+template <> struct Is_Prime < 2 > { constexpr static auto value = true;  };
 
-template <> struct Is_Prime < 3 > { static constexpr auto value = true;  };
+template <> struct Is_Prime < 3 > { constexpr static auto value = true;  };
 
 /////////////////////////////////////////////////////////////////////////////
 

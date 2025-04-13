@@ -16,7 +16,7 @@ class Entity_v1
 {
 public :
 	
-	Entity_v1(const std::string & string) : m_string(string) 
+	Entity_v1(std::string const & string) : m_string(string) 
 	{
 		std::cout << "Entity_v1::Entity_v1 (1)\n";
 	}
@@ -30,7 +30,7 @@ public :
 
 //  -------------------------------------------------------------------
 	
-	Entity_v1(const Entity_v1 & other) : m_string(other.m_string) 
+	Entity_v1(Entity_v1 const & other) : m_string(other.m_string) 
 	{
 		std::cout << "Entity_v1::Entity_v1 (3)\n";
 	}
@@ -60,7 +60,7 @@ public :
 
 //  --------------------------------------------------------------------------------------
 	
-	Entity_v2(const Entity_v2 & other) : m_string(other.m_string) 
+	Entity_v2(Entity_v2 const & other) : m_string(other.m_string) 
 	{
 		std::cout << "Entity_v2::Entity_v2 (2)\n";
 	}
@@ -97,7 +97,7 @@ public :
 
 //  -------------------------------------------------------------------
 	
-	Entity_v3(const Entity_v3 & other) : m_string(other.m_string) 
+	Entity_v3(Entity_v3 const & other) : m_string(other.m_string) 
 	{
 		std::cout << "Entity_v3::Entity_v3 (2)\n";
 	}
@@ -129,7 +129,7 @@ public :
 
 //  ----------------------------------------------------------------------------------------------
 	
-	Entity_v4(const Entity_v4 & other) : m_string(other.m_string) 
+	Entity_v4(Entity_v4 const & other) : m_string(other.m_string) 
 	{
 		std::cout << "Entity_v4::Entity_v4 (2)\n";
 	}
@@ -184,7 +184,7 @@ int main()
 
 //  -----------------------------------------------
 
-	const Entity_v2 entity_v2_5(string);
+	Entity_v2 const entity_v2_5(string);
 
 //  -----------------------------------------------
 

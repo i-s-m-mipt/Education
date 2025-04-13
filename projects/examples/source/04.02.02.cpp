@@ -30,7 +30,7 @@ template
 	
 	template < typename U > typename C2, typename T
 >		   
-auto copy(const C1 < T > & container)
+auto copy(C1 < T > const & container)
 {
 	return C2 < T > (std::begin(container), std::end(container));
 }

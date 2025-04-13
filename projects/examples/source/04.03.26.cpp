@@ -36,7 +36,7 @@ int main()
 
 //  -------------------------------------------------------------
 
-    const auto & [y, string] = tuple; // support : cppinsights.io
+    auto const & [y, string] = tuple; // support : cppinsights.io
 
 //  -------------------------------------------------------------
 

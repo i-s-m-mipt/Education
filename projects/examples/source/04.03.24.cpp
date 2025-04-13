@@ -15,7 +15,7 @@ template < typename D > struct Size {};
 
 template < typename ... Ts > struct Size < Deque < Ts ... > >
 {
-     static constexpr auto value = sizeof...(Ts);
+    constexpr static auto value = sizeof...(Ts);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,7 +191,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------
 
-    static_assert(std::is_same_v <      front <      Deque < int > > , int                > );
+    static_assert(std::is_same_v <      front <      Deque < int > > ,         int      > );
 
     static_assert(std::is_same_v < push_front < int, Deque < int > > , Deque < int, int > > );
 
@@ -199,7 +199,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------
 
-    static_assert(std::is_same_v <       back <      Deque < int > > , int                > );
+    static_assert(std::is_same_v <       back <      Deque < int > > ,              int   > );
 
     static_assert(std::is_same_v <  push_back < int, Deque < int > > , Deque < int, int > > );
 
