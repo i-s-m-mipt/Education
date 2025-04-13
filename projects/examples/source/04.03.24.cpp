@@ -191,7 +191,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------------
 
-    static_assert(std::is_same_v <      front <      Deque < int > > ,         int      > );
+    static_assert(std::is_same_v <      front <      Deque < int > > ,         int        > );
 
     static_assert(std::is_same_v < push_front < int, Deque < int > > , Deque < int, int > > );
 

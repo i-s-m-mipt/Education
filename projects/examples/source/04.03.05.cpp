@@ -8,7 +8,7 @@
 
 constexpr auto test_v1() 
 { 
-	return std::is_constant_evaluated() ? 1 : 2;
+	return !std::is_constant_evaluated() ? 1 : 2;
 }
 
 /////////////////////////////////////////////////////////////

@@ -148,57 +148,42 @@ private :
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-int main()
+template < typename E > void test()
 {
 	auto string = "aaaaa"s;
 
-//  -----------------------------------------------
+	E entity_1(string);
 
-	Entity_v1 entity_v1_1(string);
+	E entity_2("aaaaa"s);
 
-	Entity_v2 entity_v2_1(string);
+	E entity_3 = entity_2;
 
-	Entity_v3 entity_v3_1(string);
+	E entity_4 = std::move(entity_3);
+}
 
-	Entity_v4 entity_v4_1(string);
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
-//  -----------------------------------------------
+int main()
+{
+	test < Entity_v1 > ();
 
-	Entity_v1 entity_v1_2("aaaaa"s);
+//	test < Entity_v2 > (); // error
 
-	Entity_v2 entity_v2_2("aaaaa"s);
+	test < Entity_v3 > ();
 
-	Entity_v3 entity_v3_2("aaaaa"s);
+	test < Entity_v4 > ();
 
-	Entity_v4 entity_v4_2("aaaaa"s);
+//  ---------------------------------------------
 
-//  -----------------------------------------------
+	Entity_v2       entity_v2_1("aaaaa"s);
 
-	Entity_v1 entity_v1_3 = entity_v1_2;
+	Entity_v2 const entity_v2_2("aaaaa"s);
 
-//	Entity_v2 entity_v2_3 = entity_v2_2; // error
+//  ---------------------------------------------
 
-	Entity_v3 entity_v3_3 = entity_v3_2;
+//	Entity_v2 entity_v2_3 = entity_v2_1; // error
 
-	Entity_v4 entity_v4_3 = entity_v4_2;
-
-//  -----------------------------------------------
-
-	Entity_v2 const entity_v2_5(string);
-
-//  -----------------------------------------------
-
-	Entity_v2 entity_v2_6 = entity_v2_5;
-
-//  -----------------------------------------------
-
-	Entity_v1 entity_v1_4 = std::move(entity_v1_3);
-
-	Entity_v2 entity_v2_4 = std::move(entity_v2_2);
-
-	Entity_v3 entity_v3_4 = std::move(entity_v3_3);
-
-	Entity_v4 entity_v4_4 = std::move(entity_v4_3);
+	Entity_v2 entity_v2_4 = entity_v2_2;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
