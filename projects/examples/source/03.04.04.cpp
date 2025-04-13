@@ -13,7 +13,7 @@ public :
 
 //  ------------------------------------------------------------------
 
-    friend auto operator<=>(const Entity & lhs, const Entity & rhs)
+    friend auto operator<=>(Entity const & lhs, Entity const & rhs)
     {
         if (lhs.m_x < rhs.m_x) { return std::weak_ordering::less;    }
 

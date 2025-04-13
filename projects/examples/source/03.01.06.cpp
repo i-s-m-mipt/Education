@@ -13,7 +13,7 @@ public :
 
 //  ----------------------------------------------------------
 
-    const auto & get() const
+    auto const & get() const
     {      
         return m_cache.get(*this);
     }
@@ -36,14 +36,12 @@ private :
 	{
 	public :
 
-		auto get(const Entity & entity) -> const std::string &
+		auto get(Entity const & entity) -> std::string const &
 		{
 			if (m_string.empty())
 			{
 				m_string = std::to_string(entity.m_x);
 			}
-
-		//  ------------------------------------------
 			
 			return m_string;
 		}

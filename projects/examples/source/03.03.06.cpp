@@ -33,7 +33,7 @@ public :
 
 //  --------------------------------------------------------------------------------
 
-	Vector(const Vector & other) : Vector() 
+	Vector(Vector const & other) : Vector() 
 	{
 		std::cout << "Vector::Vector (3)\n";
 
@@ -71,7 +71,7 @@ public :
 	
 //  --------------------------------------------------------------------------------
 
-//	auto & operator=(const Vector & other) // bad
+//	auto & operator=(Vector const & other) // bad
 //	{
 //		std::cout << "Vector::operator= (1)\n";
 //
@@ -89,14 +89,12 @@ public :
 //			std::ranges::copy(other.m_array, other.m_array + other.m_size, m_array);
 //		}
 //
-//	//  ----------------------------------------------------------------------------
-//
 //		return *this;
 //	}
 
 //  --------------------------------------------------------------------------------
 
-//	auto & operator=(const Vector & other) // bad
+//	auto & operator=(Vector const & other) // bad
 //	{
 //		std::cout << "Vector::operator= (2)\n";
 //
@@ -105,8 +103,6 @@ public :
 //		if (this != &other)
 //		{
 //			auto array = other.m_size ? new int[other.m_size]{} : nullptr;
-//
-//          ----------------------------------------------------------------------
 //
 //			std::ranges::copy(other.m_array, other.m_array + other.m_size, array);		
 //
@@ -117,8 +113,6 @@ public :
 //
 //			m_size = other.m_size;
 //		}
-//
-//	//	--------------------------------------------------------------------------
 //
 //		return *this;
 //	}
@@ -145,8 +139,6 @@ public :
 //			m_size  = std::exchange(other.m_size,  0      );
 //		}
 //
-//	//  ----------------------------------------------------
-//
 //		return *this;
 //	}
 
@@ -159,8 +151,6 @@ public :
 	//  ---------------------------------------
 
 		swap(other);
-
-	//  ---------------------------------------
 
 		return *this;
 	}
@@ -187,15 +177,23 @@ int main()
 {
 	Vector vector_1;
 
+//  --------------------------------------
+
 	Vector vector_2 = { 1, 2, 3, 4, 5 };
 
+//  --------------------------------------
+
 	Vector vector_3 = vector_2;
+
+//  --------------------------------------
 
 	Vector vector_4 = std::move(vector_3);
 
 //  --------------------------------------
 
 	vector_3 = vector_2;
+
+//  --------------------------------------
 
 	vector_4 = std::move(vector_3);
 }

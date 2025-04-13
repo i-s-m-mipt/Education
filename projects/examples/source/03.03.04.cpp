@@ -9,21 +9,21 @@ struct Entity {};
 
 /////////////////////////////////////////////////////////
 
-void test(      Entity & ) { std::cout << "test (1)\n"; }
+void test(Entity       & ) { std::cout << "test (1)\n"; }
 
-void test(const Entity & ) { std::cout << "test (2)\n"; }
+void test(Entity const & ) { std::cout << "test (2)\n"; }
 
-void test(      Entity &&) { std::cout << "test (3)\n"; }
+void test(Entity       &&) { std::cout << "test (3)\n"; }
 
-void test(const Entity &&) { std::cout << "test (4)\n"; }
+void test(Entity const &&) { std::cout << "test (4)\n"; }
 
 /////////////////////////////////////////////////////////
 
 int main()
 {
-		  Entity entity_1;
+	Entity       entity_1;
 
-	const Entity entity_2;
+	Entity const entity_2;
 
 //  ---------------------------------
 

@@ -11,9 +11,9 @@ public :
 
 	Entity(               ) { std::cout << "Entity::Entity (1)\n"; }
 
-	Entity(const Entity & ) { std::cout << "Entity::Entity (2)\n"; }
+	Entity(Entity const & ) { std::cout << "Entity::Entity (2)\n"; }
 
-	Entity(      Entity &&) { std::cout << "Entity::Entity (3)\n"; }
+	Entity(Entity       &&) { std::cout << "Entity::Entity (3)\n"; }
 };
 
 ////////////////////////////////////////////////////////////////////

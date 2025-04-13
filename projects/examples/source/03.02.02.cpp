@@ -14,11 +14,15 @@ class Entity
 {
 private :
 
-	friend void            test();
+	friend void test();
+
+//  ----------------------------------
 
 	friend void Client_v1::test();
 
-	friend      Client_v2;
+//  ----------------------------------
+
+	friend Client_v2;
 
 //  ----------------------------------
 
@@ -40,7 +44,9 @@ void Client_v2::test() { Entity::test(); }
 
 int main()
 {
-			   test();
+	test();
+
+//  ------------------
 			   
 	Client_v1::test();
 

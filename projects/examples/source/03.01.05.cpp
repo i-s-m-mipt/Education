@@ -59,9 +59,9 @@ void Entity::test() const
 
 int main()
 {
-	      Entity entity_1(1);
+	Entity       entity_1(1);
 
-    const Entity entity_2(2);
+    Entity const entity_2(2);
 
 //  ----------------------------
 
@@ -77,7 +77,7 @@ int main()
 
 //  ----------------------------
 
-    entity_2.test();
+    entity_1.test();
 }
 
 //////////////////////////////////

@@ -61,6 +61,8 @@ int main()
 
 	delete entity_v2->test();
 
+//  --------------------------------------
+
 	delete entity_v2;
 }
 

@@ -20,11 +20,11 @@ public :
 
 //  ----------------------------------
 
-	static inline       auto s_x = 1;
+	static inline auto       s_x = 1;
 
-	static        const auto s_y = 2;
+	static        auto const s_y = 2;
 
-	static inline const auto s_z = 3;
+	static inline auto const s_z = 3;
 
 private :
 

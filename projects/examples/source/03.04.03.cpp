@@ -13,18 +13,14 @@ public :
 
 //  ---------------------------------------------------------------------
 
-    friend auto operator<=>(const Entity_v1 & lhs, const Entity_v1 & rhs) 
+    friend auto operator<=>(Entity_v1 const & lhs, Entity_v1 const & rhs) 
     { 
         auto comparison = lhs.m_x <=> rhs.m_x;
-
-    //  ----------------------------------------------
 
         if (comparison != std::strong_ordering::equal)
         {
             return comparison;
         }
-
-    //  ----------------------------------------------
 
         return lhs.m_y <=> rhs.m_y;
     }
@@ -44,7 +40,7 @@ public :
 
 //  --------------------------------------------------------------------------------
 
-    friend auto operator<=>(const Entity_v2 & lhs, const Entity_v2 & rhs) = default;
+    friend auto operator<=>(Entity_v2 const & lhs, Entity_v2 const & rhs) = default;
 
 private :
 

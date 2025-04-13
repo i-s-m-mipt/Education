@@ -22,7 +22,7 @@ public :
 
 //  ---------------------------------------------------------------------------------
 
-    friend auto & operator<<(std::ostream & stream, const Entity & entity)
+    friend auto & operator<<(std::ostream & stream, Entity const & entity)
     {        
         return entity.put(stream << "{ ") << " }";
     }
@@ -65,9 +65,13 @@ private :
 
 int main()
 {
-    std::stringstream stream_1("{ 1, 1 }");
+    std::stringstream stream_1;
 
     std::stringstream stream_2;
+
+//  -----------------------------------------
+
+    stream_1.str("{ 1, 1 }");
 
 //  -----------------------------------------
     

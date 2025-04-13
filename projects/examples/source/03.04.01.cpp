@@ -28,7 +28,7 @@ public :
 
 //  -------------------------------------------------------------------------------------------
 
-	auto & operator+=(const Rational & other)
+	auto & operator+=(Rational const & other)
 	{
 		auto lcm = std::lcm(m_den, other.m_den);
 
@@ -42,21 +42,19 @@ public :
 
 		reduce();
 
-	//  ------------------------------------------------------------------
-
 		return *this;
 	}
 
 //  -------------------------------------------------------------------------------------------
 
-	auto & operator-=(const Rational & other) 
+	auto & operator-=(Rational const & other) 
 	{ 
 		return *this += other.m_num * -1;
 	}
 
 //  -------------------------------------------------------------------------------------------
 
-	auto & operator*=(const Rational & other)
+	auto & operator*=(Rational const & other)
 	{
 		m_num *= other.m_num;
 
@@ -66,56 +64,54 @@ public :
 
 		reduce();
 
-	//  ---------------------
-
 		return *this;
 	}
 
 //  -------------------------------------------------------------------------------------------
 	
-	auto & operator/=(const Rational & other) 
+	auto & operator/=(Rational const & other) 
 	{ 
 		return *this *= Rational(other.m_den, other.m_num);
 	}
 
 //  -------------------------------------------------------------------------------------------
 
-	const auto   operator++(int) { auto copy = *this; *this += 1; return  copy; } 
+	auto const   operator++(int) { auto copy = *this; *this += 1; return  copy; } 
 
-	      auto & operator++(   ) {                    *this += 1; return *this; }
+	auto       & operator++(   ) {                    *this += 1; return *this; }
 
-	const auto   operator--(int) { auto copy = *this; *this -= 1; return  copy; } 
+	auto const   operator--(int) { auto copy = *this; *this -= 1; return  copy; } 
 
-	      auto & operator--(   ) {                    *this -= 1; return *this; }
-
-//  -------------------------------------------------------------------------------------------
-
-	friend auto operator+ (Rational lhs, const Rational & rhs) { return lhs += rhs; }
-
-	friend auto operator- (Rational lhs, const Rational & rhs) { return lhs -= rhs; }
-
-	friend auto operator* (Rational lhs, const Rational & rhs) { return lhs *= rhs; }
-
-	friend auto operator/ (Rational lhs, const Rational & rhs) { return lhs /= rhs; }
+	auto       & operator--(   ) {                    *this -= 1; return *this; }
 
 //  -------------------------------------------------------------------------------------------
 
-	friend auto operator< (const Rational & lhs, const Rational & rhs)
+	friend auto operator+ (Rational lhs, Rational const & rhs) { return lhs += rhs; }
+
+	friend auto operator- (Rational lhs, Rational const & rhs) { return lhs -= rhs; }
+
+	friend auto operator* (Rational lhs, Rational const & rhs) { return lhs *= rhs; }
+
+	friend auto operator/ (Rational lhs, Rational const & rhs) { return lhs /= rhs; }
+
+//  -------------------------------------------------------------------------------------------
+
+	friend auto operator< (Rational const & lhs, Rational const & rhs)
 	{
 		return lhs.m_num * rhs.m_den < rhs.m_num * lhs.m_den;
 	}
 
 //  -------------------------------------------------------------------------------------------
 
-	friend auto operator> (const Rational & lhs, const Rational & rhs) { return  (rhs < lhs); }
+	friend auto operator> (Rational const & lhs, Rational const & rhs) { return  (rhs < lhs); }
 	
-	friend auto operator<=(const Rational & lhs, const Rational & rhs) { return !(lhs > rhs); }
+	friend auto operator<=(Rational const & lhs, Rational const & rhs) { return !(lhs > rhs); }
 
-	friend auto operator>=(const Rational & lhs, const Rational & rhs) { return !(lhs < rhs); }
+	friend auto operator>=(Rational const & lhs, Rational const & rhs) { return !(lhs < rhs); }
 
 //  -------------------------------------------------------------------------------------------
 
-	friend auto operator==(const Rational & lhs, const Rational & rhs)
+	friend auto operator==(Rational const & lhs, Rational const & rhs)
 	{
 		return !(lhs < rhs) && !(rhs < lhs);
 	}
@@ -129,7 +125,7 @@ public :
 
 //  -------------------------------------------------------------------------------------------
 
-	friend auto & operator<<(std::ostream & stream, const Rational & rational)
+	friend auto & operator<<(std::ostream & stream, Rational const & rational)
 	{
 		return stream << rational.m_num << '/' << rational.m_den;
 	}
@@ -241,9 +237,13 @@ int main()
 
 //  -------------------------------------------------
 
-	std::stringstream stream_1("1/2");
+	std::stringstream stream_1;
 
 	std::stringstream stream_2;
+
+//  -------------------------------------------------
+
+	stream_1.str("1/2");
 	
 //  -------------------------------------------------
 

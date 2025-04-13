@@ -6,13 +6,13 @@ int main()
 
 //  ----------------------------------------------
 
-//	[[maybe_unused]]       int &  y1 = x; // error
+//	[[maybe_unused]] int       &  y1 = x; // error
 
-	[[maybe_unused]] const int &  y2 = x;
+	[[maybe_unused]] int const &  y2 = x;
 
-	[[maybe_unused]]       int && y3 = x;
+	[[maybe_unused]] int       && y3 = x;
 
-	[[maybe_unused]] const int && y4 = x;
+	[[maybe_unused]] int const && y4 = x;
 }
 
 //////////////////////////////////////////////////

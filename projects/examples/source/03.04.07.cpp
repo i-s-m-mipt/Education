@@ -16,7 +16,7 @@ public :
 
 //  --------------------------------------------------------------------------------
 
-    const auto & operator[](std::size_t index) const 
+    auto const & operator[](std::size_t index) const 
     {
         std::cout << "Vector::operator[] (1)\n";
     
@@ -33,7 +33,7 @@ public :
 
     //  ----------------------------------------------------------------------------
 
-        return const_cast < int & > (static_cast < const Vector & > (*this)[index]);
+        return const_cast < int & > (static_cast < Vector const & > (*this)[index]);
     }
 
 private :
@@ -45,7 +45,7 @@ private :
 
 int main()
 {
-    const auto x = 1, & y = x;
+    auto const x = 1, & y = x;
 
 //  ----------------------------------
 
