@@ -64,6 +64,12 @@ int main()
     Entity const entity_2(2);
 
 //  ----------------------------
+		
+    assert(entity_1.get() == 1);
+
+    assert(entity_2.get() == 2);
+
+//  ----------------------------
 
 	entity_1.set_v2(2);
 
@@ -71,7 +77,7 @@ int main()
 
 //  ----------------------------
 		
-	assert(entity_1.get() == 2);
+    assert(entity_1.get() == 2);
 
     assert(entity_2.get() == 2);
 

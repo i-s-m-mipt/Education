@@ -35,11 +35,11 @@ private :
 
 int main()
 {
-	assert(Entity::s_x == 1);
+	Entity::test();
 
 //  -------------------------
 
-	Entity::test();
+	assert(Entity::s_x == 1);
 }
 
 //////////////////////////////////////
