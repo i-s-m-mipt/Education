@@ -1,6 +1,11 @@
+///////////////////////////////////////////////////
+
 #include <chrono>
 #include <iostream>
+#include <stop_token>
 #include <thread>
+
+///////////////////////////////////////////////////
 
 using namespace std::literals;
 
@@ -38,3 +43,5 @@ int main()
 
     jthread.get_stop_source().request_stop();
 }
+
+///////////////////////////////////////////////////

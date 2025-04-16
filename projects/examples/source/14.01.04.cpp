@@ -1,6 +1,10 @@
+///////////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <thread>
 #include <utility>
+
+///////////////////////////////////////////////////////////////
 
 #include <boost/noncopyable.hpp>
 
@@ -18,6 +22,8 @@ class Thread : private boost::noncopyable
 public :
 
 	Thread(std::thread thread) : m_thread(std::move(thread)) {}
+
+//  -----------------------------------------------------------
 
    ~Thread()
 	{
@@ -38,3 +44,5 @@ int main()
 {
     Thread thread { std::thread(test) };
 }
+
+///////////////////////////////////////////////////////////////

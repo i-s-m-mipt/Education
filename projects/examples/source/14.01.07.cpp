@@ -1,28 +1,33 @@
-#include <iostream>
+/////////////////////////////////////////////////////////////
+
+#include <cassert>
 #include <thread>
-#include <vector>
 
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
-void test(int x)
-{
-    std::cout << "test : x = " << x << '\n';
-}
+             auto g_x1 = 1;
 
-////////////////////////////////////////////////////////////////////
+thread_local auto g_x2 = 2;
+
+/////////////////////////////////////////////////////////////
+
+void test_v1() { ++g_x1; } // support : compiler-explorer.com
+
+void test_v2() { ++g_x2; } // support : compiler-explorer.com
+
+/////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::vector < std::jthread > threads;
+    std::jthread { test_v1 };
 
-//  ----------------------------------------------------------------
+    std::jthread { test_v2 };
 
-    for (auto i = 0uz; i < std::thread::hardware_concurrency(); ++i)
-    {
-        threads.emplace_back(test, i + 1);
-    }
+//  -------------------------
 
-//  ----------------------------------------------------------------
+    assert(g_x1 == 2);
 
-    std::ignore = std::this_thread::get_id();
+    assert(g_x2 == 2);
 }
+
+/////////////////////////////////////////////////////////////

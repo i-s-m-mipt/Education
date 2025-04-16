@@ -1,6 +1,10 @@
+/////////////////////////////////////////
+
 #include <chrono>
 #include <iostream>
 #include <thread>
+
+/////////////////////////////////////////
 
 using namespace std::literals;
 
@@ -51,3 +55,5 @@ int main()
 
 //  std::thread(Task(x)).detach(); // bad
 }
+
+/////////////////////////////////////////

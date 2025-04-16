@@ -1,110 +1,87 @@
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <algorithm>
+#include <cassert>
 #include <cmath>
-#include <cstddef>
-#include <execution>
+#include <concepts>
+#include <functional>
+#include <future>
 #include <iterator>
-#include <random>
+#include <numeric>
+#include <ranges>
+#include <thread>
+#include <utility>
 #include <vector>
 
-#include <benchmark/benchmark.h>
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-auto make_vector(std::size_t size)
+template < std::ranges::view V > class Task
 {
-	std::vector < double > vector(size, 0);
+public :
 
-    std::uniform_real_distribution distribution(0.0, 1.0);
-
-	std::default_random_engine engine;
-
-    auto lambda = [&engine, &distribution](){ return distribution(engine); };
-
-//  -------------------------------------------------------------------------
-
-	std::ranges::generate(vector, lambda);
-
-//  -------------------------------------------------------------------------
-
-	return vector;
-}
+	auto operator()(V view) const
+	{
+		return *std::ranges::fold_left_first(view, std::plus());
+	}
+};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-void handler(double & x)
+template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 {
-    x = std::pow(std::sin(x), 2) + std::pow(std::cos(x), 2);
+	auto begin = std::begin(view), end = std::end(view);
+
+	if (auto size = std::distance(begin, end); size > 0) 
+	{
+		auto concurrency = std::max(std::thread::hardware_concurrency(), 2u);
+
+		std::vector < std::pair < std::future < T > , std::jthread > > futures(concurrency - 1);
+
+		auto step = size / concurrency;
+
+		auto begin_block = begin, end_block = std::next(begin_block, step);
+
+		for (auto & [future, thread] : futures)
+		{
+			auto range = std::ranges::subrange(begin_block, end_block);
+
+			std::packaged_task task { Task < decltype(range) > () };
+
+			future = task.get_future();
+			
+			thread = std::jthread(std::move(task), range);
+
+			begin_block = end_block;
+			
+			end_block = std::next(begin_block, step);
+		}
+
+		auto range = std::ranges::subrange(begin_block, end);
+
+		sum += Task < decltype(range) > ()(range);
+
+		for (auto & future : futures) 
+		{
+			sum += future.first.get();
+		}
+	}
+
+	return sum;
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-void test_v1(benchmark::State & state)
-{
-    auto vector = make_vector(1'000'000);
-
-//  --------------------------------------------------------------------------------------
-
-    for (auto element : state)
-    {
-        std::for_each(std::execution::seq, std::begin(vector), std::end(vector), handler);
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-void test_v2(benchmark::State & state)
-{
-    auto vector = make_vector(1'000'000);
-
-//  --------------------------------------------------------------------------------------
-
-    for (auto element : state)
-    {
-        std::for_each(std::execution::par, std::begin(vector), std::end(vector), handler);
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-void test_v3(benchmark::State & state)
-{
-    auto vector = make_vector(1'000'000);
-
-//  --------------------------------------------------------------------------------------------
-    
-    for (auto element : state)
-    {
-        std::for_each(std::execution::par_unseq, std::begin(vector), std::end(vector), handler);
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-void test_v4(benchmark::State & state)
-{
-    auto vector = make_vector(1'000'000);
-
-//  ----------------------------------------------------------------------------------------
-    
-    for (auto element : state)
-    {
-        std::for_each(std::execution::unseq, std::begin(vector), std::end(vector), handler);
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-BENCHMARK(test_v1);
-
-BENCHMARK(test_v2);
-
-BENCHMARK(test_v3);
-
-BENCHMARK(test_v4);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    benchmark::RunSpecifiedBenchmarks();
+	std::vector < int > vector(1'000, 0);
+
+//  --------------------------------------------------------------
+
+	std::ranges::iota(vector, 1);
+
+//  --------------------------------------------------------------
+
+	assert(reduce(std::ranges::views::all(vector), 0) == 500'500);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////

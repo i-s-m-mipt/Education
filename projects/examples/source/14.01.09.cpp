@@ -1,30 +1,85 @@
+///////////////////////////////////////////////////////////////////////////////////
+
+#include <algorithm>
 #include <cassert>
-#include <future>
-#include <utility>
+#include <cmath>
+#include <concepts>
+#include <functional>
+#include <iterator>
+#include <numeric>
+#include <ranges>
+#include <thread>
+#include <vector>
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
-auto test(int x) 
-{ 
-	return x;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-template < typename F, typename ... Ts > auto async_invoke(F && f, Ts && ... xs)
+template < std::ranges::view V, typename T > class Task
 {
-	return std::async(std::launch::async, std::forward < F > (f), std::forward < Ts > (xs)...);
+public :
+
+	void operator()(V view, T & sum) const
+	{
+		sum = *std::ranges::fold_left_first(view, std::plus());
+	}
+};
+
+///////////////////////////////////////////////////////////////////////////////////
+
+template < std::ranges::view V, typename T > auto reduce(V view, T sum)
+{
+    auto begin = std::begin(view), end = std::end(view);
+
+	if (auto size = std::distance(begin, end); size > 0)
+	{
+		auto concurrency = std::max(std::thread::hardware_concurrency(), 2u);
+
+		std::vector < T > sums(concurrency, T());
+
+		auto step = size / concurrency;
+
+		auto begin_block = begin, end_block = std::next(begin_block, step);
+
+		{
+			std::vector < std::jthread > threads(concurrency - 1);
+
+			for (auto i = 0uz; i < std::size(threads); ++i)
+			{
+				auto range = std::ranges::subrange(begin_block, end_block);
+
+				threads[i] = std::jthread
+				(
+					Task < decltype(range), T > (), range, std::ref(sums[i])
+				);
+
+				begin_block = end_block;
+				
+				end_block = std::next(begin_block, step);
+			}
+
+			auto range = std::ranges::subrange(begin_block, end);
+
+			Task < decltype(range), T > ()(range, std::ref(sums[concurrency - 1]));
+		}
+
+		sum += *std::ranges::fold_left_first(sums, std::plus());
+	}
+	
+	return sum;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	assert(std::async(std::launch::async,    test, 1).get() == 1);
-
-	assert(std::async(std::launch::deferred, test, 1).get() == 1);
+	std::vector < int > vector(1'000, 0);
 
 //  --------------------------------------------------------------
 
-	assert(async_invoke(test, 1).get() == 1);
+	std::ranges::iota(vector, 1);
+
+//  --------------------------------------------------------------
+
+	assert(reduce(std::ranges::views::all(vector), 0) == 500'500);
 }
+
+///////////////////////////////////////////////////////////////////////////////////
