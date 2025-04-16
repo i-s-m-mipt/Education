@@ -1,21 +1,16 @@
 ///////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
-#include <chrono>
-#include <condition_variable>
-#include <deque>
+#include <functional>
 #include <memory>
 #include <mutex>
 #include <thread>
+#include <tuple>
 #include <utility>
+#include <vector>
 
 ///////////////////////////////////////////////////////////////////////////
 
-using namespace std::literals;
-
-///////////////////////////////////////////////////////////////////////////
-
-template < typename T, typename C = std::deque < T > > class Queue
+template < typename T, typename C = std::vector < T > >  class Stack
 {
 public :
 
@@ -23,29 +18,29 @@ public :
 
 //  -----------------------------------------------------------------------
 
-    Queue() = default;
+    Stack() = default;
 
 //  -----------------------------------------------------------------------
 
-    Queue(Queue const & other)
+    Stack(Stack const & other)
     {
-        std::scoped_lock < std::mutex > lock(other.m_mutex);
+        std::scoped_lock < mutex_t > lock(other.m_mutex);
 
         m_container = other.m_container;
     }
 
 //  -----------------------------------------------------------------------
 
-    Queue(Queue && other)
+    Stack(Stack && other)
     {
-        std::scoped_lock < std::mutex > lock(other.m_mutex);
+        std::scoped_lock < mutex_t > lock(other.m_mutex);
 
         m_container = std::move(other.m_container);
     }
 
 //  -----------------------------------------------------------------------
 
-    auto & operator=(Queue const & other)
+    auto & operator=(Stack const & other)
     {
         std::scoped_lock < mutex_t, mutex_t > lock(m_mutex, other.m_mutex);
 
@@ -56,7 +51,7 @@ public :
 
 //  -----------------------------------------------------------------------
 
-    auto & operator=(Queue && other)
+    auto & operator=(Stack && other)
     {
         std::scoped_lock < mutex_t, mutex_t > lock(m_mutex, other.m_mutex);
 
@@ -69,125 +64,101 @@ public :
 
     void push(T x)
     {
-        std::scoped_lock < std::mutex > lock(m_mutex);
+        std::scoped_lock < mutex_t > lock(m_mutex);
 
         m_container.push_back(x);
-
-        m_condition.notify_one();
     }
 
 //  -----------------------------------------------------------------------
 
-    auto wait_and_pop()
+//  auto top() const // bad
+//  {
+//      std::scoped_lock < mutex_t > lock(m_mutex);
+//
+//      return m_container.back();
+//  }
+
+//  -----------------------------------------------------------------------
+
+//  void pop() // bad
+//  {
+//      std::scoped_lock < mutex_t > lock(m_mutex);
+//
+//      m_container.pop_back();
+//  }
+
+//  -----------------------------------------------------------------------
+
+    auto top_and_pop()
     {
-        std::unique_lock < std::mutex > lock(m_mutex);
+        std::scoped_lock < mutex_t > lock(m_mutex);
 
-        auto lambda = [this](){ return !std::empty(m_container); };
+        auto x = std::make_shared < T > (m_container.back());
 
-        m_condition.wait(lock, lambda);
-
-        auto x = std::make_shared < T > (m_container.front());
-
-        m_container.pop_front();
+        m_container.pop_back();
 
         return x;
     }
 
 //  -----------------------------------------------------------------------
 
-    void wait_and_pop(T & x)
+    void top_and_pop(T & x)
     {
-        std::unique_lock < std::mutex > lock(m_mutex);
+        std::scoped_lock < mutex_t > lock(m_mutex);
 
-        auto lambda = [this](){ return !std::empty(m_container); };
+        x = m_container.back();
 
-        m_condition.wait(lock, lambda);
-
-        x = m_container.front();
-
-        m_container.pop_front();
+        m_container.pop_back();
     }
 
-//  -----------------------------------------------------------------------
-
-    auto try_pop() -> std::shared_ptr < T >
-    {
-        std::scoped_lock < std::mutex > lock(m_mutex);
-
-        if(!std::empty(m_container))
-        {
-            auto x = std::make_shared < T > (m_container.front());
-
-            m_container.pop_front();
-
-            return x;
-        }
-        
-        return nullptr;
-    }
-
-//  -----------------------------------------------------------------------
-
-    auto try_pop(T & x)
-    {
-        std::scoped_lock < std::mutex > lock(m_mutex);
-
-        if(!std::empty(m_container))
-        {
-            x = m_container.front();
-
-            m_container.pop_front();
-
-            return true;
-        }
-        
-        return false;
-    }
-
-private:
+private :
 
     C m_container;
 
 //  -----------------------------------------------------------------------
 
-    mutable std::mutex m_mutex;
-
-    mutable std::condition_variable m_condition;
+    mutable mutex_t m_mutex;
 };
 
 ///////////////////////////////////////////////////////////////////////////
 
-void produce(Queue < int > & queue)
-{
-    std::this_thread::sleep_for(1s);
-
-    for (auto i = 0; i < 1'000; ++i)
-    {
-        queue.push(i + 1);
-    }
-}
+// void top_and_pop_v1(Stack < int > & stack) // bad
+// {
+//     std::ignore = stack.top();
+// 
+//     stack.pop();
+// }
 
 ///////////////////////////////////////////////////////////////////////////
 
-void consume(Queue < int > & queue)
+void top_and_pop_v2(Stack < int > & stack)
 {
-    for (auto i = 0; i < 1'000; ++i)
-    {
-        assert(*queue.wait_and_pop() == i + 1);
-    }
+    std::ignore = stack.top_and_pop();
 }
 
 ///////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Queue < int > queue;
+    Stack < int > stack;
 
-//  ------------------------------------------------
+//  --------------------------------------------------------------
+    
+    stack.push(1);
 
-    std::jthread thread_1(produce, std::ref(queue));
+    stack.push(2);
 
-    std::jthread thread_2(consume, std::ref(queue));
+//  --------------------------------------------------------------
+    
+//  std::jthread thread_1(top_and_pop_v1, std::ref(stack)); // bad
+
+//  std::jthread thread_2(top_and_pop_v1, std::ref(stack)); // bad
+
+//  --------------------------------------------------------------
+
+    std::jthread thread_3(top_and_pop_v2, std::ref(stack));
+
+    std::jthread thread_4(top_and_pop_v2, std::ref(stack));
 }
 
 ///////////////////////////////////////////////////////////////////////////
