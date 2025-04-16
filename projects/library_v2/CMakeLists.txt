@@ -1,3 +1,5 @@
+###################################################################
+
 cmake_minimum_required(VERSION 3.28)
 
 ###################################################################
@@ -23,3 +25,5 @@ include_directories(${Boost_INCLUDE_DIRS})
 add_library            (shared SHARED source/06.03.04.cpp)
 
 target_compile_options (shared PRIVATE -Wall -Wextra -pedantic -O0)
+
+###################################################################
