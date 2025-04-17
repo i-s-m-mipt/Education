@@ -34,8 +34,6 @@ public :
     auto & operator=(Entity && other)
     {
         m_pimpl = std::exchange(other.m_pimpl, nullptr);
-
-    //  ------------------------------------------------
         
         return *this;
     }

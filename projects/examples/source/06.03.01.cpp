@@ -33,7 +33,7 @@ int main()
 
 //  ----------------------------------------------------------------------------
 		
-	for (const auto & function : functions)
+	for (auto const & function : functions)
 	{
 		function();
 	}

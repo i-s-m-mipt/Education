@@ -41,19 +41,19 @@ template < typename T > void test_v5()
 
 //////////////////////////////////////
 
-extern       int g_x1;
+extern int       g_x1;
 
-extern       int g_x2;
+extern int       g_x2;
 
-extern const int g_x3;
+extern int const g_x3;
 
-extern const int g_x4;
+extern int const g_x4;
 
 //////////////////////////////////////
 
-       const int g_x5 = 5;
+       int const g_x5 = 5;
 
-inline const int g_x6 = 6;
+inline int const g_x6 = 6;
 
 //////////////////////////////////////
 

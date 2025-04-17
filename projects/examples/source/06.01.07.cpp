@@ -26,8 +26,8 @@ namespace
 
 //////////////////////////////////
 
-       const int g_x3 = 3;
+       int const g_x3 = 3;
 	   
-extern const int g_x4 = 4;
+extern int const g_x4 = 4;
 
 //////////////////////////////////
