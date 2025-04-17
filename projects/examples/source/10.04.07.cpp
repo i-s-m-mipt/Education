@@ -50,10 +50,23 @@ using container_t = boost::multi_index::multi_index_container
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void handler(Entity & entity)
+class Handler
 {
-	entity = Entity(2, 2);
-}
+public :
+
+	Handler(const Entity & entity) : m_entity(entity) {}
+
+//  ----------------------------------------------------
+
+	void operator()(Entity & entity) const
+	{
+		entity = m_entity;
+	}
+
+private :
+
+	Entity m_entity;
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -65,8 +78,6 @@ int main()
 
 	auto & ONU_x_index = container.get < ONU_x_tag > ();
 
-	auto & HNU_y_index = container.get < HNU_y_tag > ();
-
 //  -----------------------------------------------------------------------------
 
 	assert(ONU_x_index.lower_bound(1)->x == 1);
@@ -75,7 +86,17 @@ int main()
 
 //  -----------------------------------------------------------------------------
 
-	HNU_y_index.modify(HNU_y_index.find(1), handler);
+	auto & HNU_y_index = container.get < HNU_y_tag > ();
+
+//  -----------------------------------------------------------------------------
+
+	Handler handler_1(Entity(2, 2));
+
+	Handler handler_2(Entity(1, 1));
+
+//  -----------------------------------------------------------------------------
+
+	assert(HNU_y_index.modify(HNU_y_index.find(1), handler_1, handler_2));
 
 //  -----------------------------------------------------------------------------
 

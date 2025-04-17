@@ -7,43 +7,41 @@
 
 int main()
 {
-	std::shared_ptr < int > x1;
+	std::shared_ptr < int > x1(new auto(2));
 
-	std::shared_ptr < int > x2(new auto(2));
-
-	std::shared_ptr < int > x3 = x2;
+	std::shared_ptr < int > x2 = x1;
 
 //  ----------------------------------------
+
+	assert(x1.use_count() == 2 && *x1 == 2);
 
 	assert(x2.use_count() == 2 && *x2 == 2);
 
-	assert(x3.use_count() == 2 && *x3 == 2);
+//  ----------------------------------------
+
+	x2.reset(new auto(3));
 
 //  ----------------------------------------
 
-	x3.reset(new auto(3));
+	assert(x1.use_count() == 1 && *x1 == 2);
+
+	assert(x2.use_count() == 1 && *x2 == 3);
 
 //  ----------------------------------------
 
-	assert(x2.use_count() == 1 && *x2 == 2);
-
-	assert(x3.use_count() == 1 && *x3 == 3);
+	auto x3 = new auto(1);
 
 //  ----------------------------------------
 
-	auto x4 = new auto(1);
+	std::shared_ptr < int > x4(x3);
 
 //  ----------------------------------------
 
-	std::shared_ptr < int > x5(x4);
+	assert(x4.use_count() == 1 && *x4 == 1);
 
 //  ----------------------------------------
 
-	assert(x5.use_count() == 1 && *x5 == 1);
-
-//  ----------------------------------------
-
-//	delete x4; // error
+//	delete x3; // error
 }
 
 ////////////////////////////////////////////
