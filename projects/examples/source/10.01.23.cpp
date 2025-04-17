@@ -1,17 +1,21 @@
+////////////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <iostream>
 #include <string>
 #include <vector>
 
+////////////////////////////////////////////////////////////////////////////////
+
 #include <boost/flyweight.hpp>
 
-//////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
 public :
 
-    Entity(int x, const std::string & string) 
+    Entity(int x, std::string const & string) 
     : 
         m_flyweight_1(x), 
         
@@ -20,9 +24,9 @@ public :
 
 //  ----------------------------------------------------------------------
 
-    const auto & flyweight_1() const { return m_flyweight_1; }
+    auto const & flyweight_1() const { return m_flyweight_1; }
 
-    const auto & flyweight_2() const { return m_flyweight_2; }
+    auto const & flyweight_2() const { return m_flyweight_2; }
 
 private :
 
@@ -47,17 +51,21 @@ private :
     boost::flyweight < alias_2, tag_t < flyweight_2_tag > > m_flyweight_2;
 };
 
-//////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 int main() 
 {
-    auto size_1 = 1'000'000uz, size_2 = 1'000uz;
-
     std::vector < Entity > entities;
 
-    for (auto i = 0uz; i < size_1; ++i)
+//  ----------------------------------------------------------------------------
+
+    auto size = 1'000'000uz;
+
+//  ----------------------------------------------------------------------------
+
+    for (auto i = 0uz; i < size; ++i)
     {
-        entities.emplace_back(1, std::string(size_2, 'a'));
+        entities.emplace_back(1, std::string(1'000, 'a'));
     }
 
 //  ----------------------------------------------------------------------------
@@ -70,7 +78,7 @@ int main()
 
 //  ----------------------------------------------------------------------------
 
-    for (auto i = 1uz; i < size_1; ++i)
+    for (auto i = 1uz; i < size; ++i)
     {
         assert(&entity.flyweight_1().get() == &entities[i].flyweight_1().get());
 
@@ -79,14 +87,16 @@ int main()
 
 //  ----------------------------------------------------------------------------
 
-    entity = Entity(2, std::string(size_2, 'b'));
+    entity = Entity(2, std::string(1'001, 'a'));
 
 //  ----------------------------------------------------------------------------
 
-    for (auto i = 1uz; i < size_1; ++i)
+    for (auto i = 1uz; i < size; ++i)
     {
         assert(&entity.flyweight_1().get() != &entities[i].flyweight_1().get());
 
         assert(&entity.flyweight_2().get() != &entities[i].flyweight_2().get());
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////

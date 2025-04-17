@@ -1,6 +1,9 @@
+////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <algorithm>
 #include <cassert>
 #include <functional>
+#include <iterator>
 #include <list>
 #include <vector>
 
@@ -18,7 +21,11 @@ int main()
 
 	std::vector < std::reference_wrapper < int > > vector(std::begin(list), std::end(list));
 
+//  ----------------------------------------------------------------------------------------
+
 	std::ranges::sort(vector);
+
+//  ----------------------------------------------------------------------------------------
 
 	assert(std::ranges::is_sorted(list) == 0 && std::ranges::is_sorted(vector));
 
@@ -26,5 +33,9 @@ int main()
 
 	list.sort();
 
+//  ----------------------------------------------------------------------------------------
+
 	assert(std::ranges::is_sorted(list) == 1);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////

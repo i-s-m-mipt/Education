@@ -1,49 +1,47 @@
+///////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <forward_list>
 #include <iterator>
-#include <tuple>
 #include <type_traits>
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+template < typename L, typename I > void erase(L & list, I iterator)
+{
+    auto previous = list.before_begin();
+
+    while (std::next(previous) != iterator)
+    {
+        ++previous;
+    }
+
+    list.erase_after(previous);
+}
+
+///////////////////////////////////////////////////////////////////////////
 
 int main()
 {
     std::forward_list < int > list = { 1, 2, 3, 4, 5 };
 
-//  ----------------------------------------------------------------
+//  -----------------------------------------------------------------------
 
-//  auto size = std::size(list); // error
+//  assert(std::size(list) == 5); // error
 
-//  ----------------------------------------------------------------
+//  -----------------------------------------------------------------------
 
-    auto iterator = std::begin(list);
+    ::erase(list, list.insert_after(std::next(list.before_begin(), 0), 1));
 
-//  ----------------------------------------------------------------
+	::erase(list, list.insert_after(std::next(list.before_begin(), 2), 1));
 
-    while (std::next(iterator) != std::end(list))
-    {
-        ++iterator;
-    }
+	::erase(list, list.insert_after(std::next(list.before_begin(), 5), 1));
 
-//  ----------------------------------------------------------------
+//  -----------------------------------------------------------------------
 
-    list.insert_after(iterator, 1);
+//  assert(list.at(0) == 1); // error
 
-    list. erase_after(iterator   );
-
-//  ----------------------------------------------------------------
-		
-	list.push_front(1);
-
-    list. pop_front( );
-
-//  ----------------------------------------------------------------
-
-    list.insert_after(std::next(std::begin(list), 2), 1);
-
-    list. erase_after(std::next(std::begin(list), 2)   );
-
-//  ----------------------------------------------------------------
+//  -----------------------------------------------------------------------
 
     static_assert
     (
@@ -55,3 +53,5 @@ int main()
         > 
     );
 }
+
+///////////////////////////////////////////////////////////////////////////

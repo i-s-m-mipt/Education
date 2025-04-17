@@ -1,12 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////////////////
+
 #include <algorithm>
 #include <array>
 #include <chrono>
 #include <deque>
 #include <forward_list>
-#include <functional>
 #include <list>
-#include <numeric>
 #include <vector>
+
+///////////////////////////////////////////////////////////////////////////////////////////
 
 #include <benchmark/benchmark.h>
 
@@ -16,7 +18,7 @@ void test_v1(benchmark::State & state)
 {
     for (auto element : state)
     {
-        constexpr auto size = 100'000uz;
+        auto const size = 100'000uz;
 
         std::array < int, size > array = {};
 
@@ -25,7 +27,7 @@ void test_v1(benchmark::State & state)
             array[i] = size - i;
         }
 
-//      -----------------------------------------------------------------------------------
+    //  -----------------------------------------------------------------------------------
 
         auto begin = std::chrono::steady_clock::now();
 
@@ -33,7 +35,7 @@ void test_v1(benchmark::State & state)
 
         auto delta = std::chrono::steady_clock::now() - begin;
 
-//      -----------------------------------------------------------------------------------
+    //  -----------------------------------------------------------------------------------
 
         state.SetIterationTime
         (
@@ -59,7 +61,7 @@ void test_v2(benchmark::State & state)
             vector[i] = size - i;
         }
 
-//      -----------------------------------------------------------------------------------
+    //  -----------------------------------------------------------------------------------
 
         auto begin = std::chrono::steady_clock::now();
 
@@ -67,7 +69,7 @@ void test_v2(benchmark::State & state)
 
         auto delta = std::chrono::steady_clock::now() - begin;
 
-//      -----------------------------------------------------------------------------------
+    //  -----------------------------------------------------------------------------------
 
         state.SetIterationTime
         (
@@ -93,7 +95,7 @@ void test_v3(benchmark::State & state)
             deque[i] = size - i;
         }
 
-//      -----------------------------------------------------------------------------------
+    //  -----------------------------------------------------------------------------------
 
         auto begin = std::chrono::steady_clock::now();
 
@@ -101,7 +103,7 @@ void test_v3(benchmark::State & state)
 
         auto delta = std::chrono::steady_clock::now() - begin;
 
-//      -----------------------------------------------------------------------------------
+    //  -----------------------------------------------------------------------------------
 
         state.SetIterationTime
         (
@@ -127,7 +129,7 @@ void test_v4(benchmark::State & state)
             element = size + 1 - ++x;
         }
 
-//      -----------------------------------------------------------------------------------
+    //  -----------------------------------------------------------------------------------
 
         auto begin = std::chrono::steady_clock::now();
 
@@ -135,7 +137,7 @@ void test_v4(benchmark::State & state)
 
         auto delta = std::chrono::steady_clock::now() - begin;
 
-//      -----------------------------------------------------------------------------------
+    //  -----------------------------------------------------------------------------------
 
         state.SetIterationTime
         (
@@ -161,7 +163,7 @@ void test_v5(benchmark::State & state)
             element = size + 1 - ++x;
         }
 
-//      -----------------------------------------------------------------------------------
+    //  -----------------------------------------------------------------------------------
 
         auto begin = std::chrono::steady_clock::now();
 
@@ -169,7 +171,7 @@ void test_v5(benchmark::State & state)
 
         auto delta = std::chrono::steady_clock::now() - begin;
 
-//      -----------------------------------------------------------------------------------
+    //  -----------------------------------------------------------------------------------
 
         state.SetIterationTime
         (
@@ -198,3 +200,5 @@ int main()
 {
     benchmark::RunSpecifiedBenchmarks();
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////

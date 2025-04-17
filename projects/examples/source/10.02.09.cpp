@@ -1,12 +1,17 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <cassert>
 #include <cstddef>
 #include <iterator>
 #include <vector>
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/multi_array.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < std::size_t D, typename C, typename I > void fill_sizes(const C & container, I iterator)
+template < std::size_t D, typename C, typename I > void fill_sizes(C const & container, I iterator)
 {
 	*iterator = std::size(container);
 
@@ -18,18 +23,18 @@ template < std::size_t D, typename C, typename I > void fill_sizes(const C & con
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < std::size_t D, typename C, typename I > void fill_array(const C & container, I iterator)
+template < std::size_t D, typename C, typename I > void fill_array(C const & container, I iterator)
 {
 	if constexpr (D > 1)
 	{
-		for (const auto & element : container) 
+		for (auto const & element : container) 
 		{
 			fill_array < D - 1 > (element, (iterator++)->begin());
 		}
 	}
 	else
 	{
-		for (const auto & element : container) 
+		for (auto const & element : container) 
 		{
 			*iterator++ = element;
 		}
@@ -38,7 +43,7 @@ template < std::size_t D, typename C, typename I > void fill_array(const C & con
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, std::size_t D, typename C > auto make_array(const C & container)
+template < typename T, std::size_t D, typename C > auto make_array(C const & container)
 {
 	std::vector < typename boost::multi_array < T, D > ::index > sizes(D, 0);
 
@@ -100,3 +105,5 @@ int main()
 		}
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

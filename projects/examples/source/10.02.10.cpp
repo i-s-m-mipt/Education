@@ -1,19 +1,20 @@
-#include <cassert>
-#include <cmath>
-#include <cstddef>
-#include <exception>
-#include <random>
-#include <stdexcept>
+//////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/numeric/ublas/io.hpp>
+#include <cstddef>
+#include <random>
+
+//////////////////////////////////////////////////////////////////////////////////////
+
 #include <boost/numeric/ublas/lu.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
+
+//////////////////////////////////////////////////////////////////////////////////////
 
 #include <benchmark/benchmark.h>
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-auto determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) -> double
+auto determinant_v1(boost::numeric::ublas::matrix < double > const & matrix) -> double
 {
     if (auto size = matrix.size1(); size > 1)
     {
@@ -47,7 +48,7 @@ auto determinant_v1(const boost::numeric::ublas::matrix < double > & matrix) -> 
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-auto determinant_v2(const boost::numeric::ublas::matrix < double > & matrix)
+auto determinant_v2(boost::numeric::ublas::matrix < double > const & matrix)
 {
     if (auto size = matrix.size1(); size > 1)
     {
@@ -91,8 +92,6 @@ auto make_matrix(std::size_t size)
     std::uniform_real_distribution distribution(0.0, 1.0);
 
     std::default_random_engine engine;
-
-//  ------------------------------------------------------------
 
     for (auto i = 0uz; i < matrix.size1(); ++i)
     {
@@ -141,3 +140,5 @@ int main()
 {
 	benchmark::RunSpecifiedBenchmarks();
 }
+
+//////////////////////////////////////////////////////////////////////////////////////

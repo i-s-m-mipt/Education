@@ -1,10 +1,12 @@
+////////////////////////////////////////////////////////
+
 #include <functional>
 #include <string>
 #include <tuple>
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
-auto hash(const std::string & string)
+auto hash(std::string const & string)
 {
 	auto seed = 0uz;
 
@@ -16,15 +18,15 @@ auto hash(const std::string & string)
 	return seed;
 }
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
 int main()
 {
-	auto string = "aaaaa";
+	std::ignore = hash("aaaaa");
 
-//  ---------------------------------------------------
+//  ----------------------------------------------------
 
-	std::ignore = hash(string);
-
-	std::ignore = std::hash < std::string > ()(string);
+	std::ignore = std::hash < std::string > ()("aaaaa");
 }
+
+////////////////////////////////////////////////////////

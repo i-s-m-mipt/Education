@@ -1,5 +1,6 @@
+///////////////////////////////////////////////////////////
+
 #include <cassert>
-#include <exception>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
@@ -23,8 +24,10 @@ int main()
 	{
 		assert(vector.at(5) == 0);
 	}
-	catch (const std::out_of_range & exception) 
+	catch (std::out_of_range const & exception) 
 	{
 		std::cerr << "main : " << exception.what() << '\n';
 	}
 }
+
+///////////////////////////////////////////////////////////

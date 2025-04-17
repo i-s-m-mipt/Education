@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////////////////////////////
+
+// support : www.cs.usfca.edu/~galles/visualization/DPLCS.html
+
+//////////////////////////////////////////////////////////////////////////////////////
+
 #include <algorithm>
 #include <cassert>
 #include <cmath>
@@ -6,11 +12,7 @@
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-// support : www.cs.usfca.edu/~galles/visualization/DPLCS.html
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-auto find(const std::vector < int > & vector_1, const std::vector < int > & vector_2) 
+auto find(std::vector < int > const & vector_1, std::vector < int > const & vector_2) 
 {
 	auto size_1 = std::size(vector_1);
 
@@ -38,8 +40,6 @@ auto find(const std::vector < int > & vector_1, const std::vector < int > & vect
 			}
 		}
 	}
-
-//  ------------------------------------------------------------------------------
 
 	std::vector < int > buffer_2;
 
@@ -72,3 +72,5 @@ int main()
 {
 	assert(find({ 1, 2, 3, 4, 5 }, { 1, 2, 3 }) == std::vector < int > ({ 1, 2, 3 }));
 }
+
+//////////////////////////////////////////////////////////////////////////////////////

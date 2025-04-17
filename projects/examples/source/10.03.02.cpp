@@ -1,3 +1,9 @@
+/////////////////////////////////////////////////////////////////
+
+// support : www.cs.usfca.edu/~galles/visualization/RedBlack.html
+
+/////////////////////////////////////////////////////////////////
+
 #include <algorithm>
 #include <cassert>
 #include <iterator>
@@ -5,11 +11,7 @@
 #include <type_traits>
 #include <utility>
 
-////////////////////////////////////////////////////////////////////
-
-// support : www.cs.usfca.edu/~galles/visualization/RedBlack.html
-
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -21,17 +23,15 @@ int main()
 
 //  ------------------------------------------------------------
 
-	assert(set.find(1) != std::end(set) && set.contains(1));
+	assert(set.contains(1) == (set.find(1) != std::end(set)));
 
 //  ------------------------------------------------------------
 
-	assert(set.insert(1).second == 0); set.erase(1);
-
-	assert(set.insert(1).second == 1);
+	assert(set.erase(1) == 1 && set.insert(1).second);
 
 //  ------------------------------------------------------------
 
-	assert(set.lower_bound(1) == std::begin(set));
+	assert(set.lower_bound(1) == std::next(std::begin(set), 0));
 		
 	assert(set.upper_bound(1) == std::next(std::begin(set), 1));
 
@@ -42,8 +42,12 @@ int main()
 //  ------------------------------------------------------------
 
 	auto node = set.extract(1);
+
+//  ------------------------------------------------------------
 		
 	node.value() = 2;
+
+//  ------------------------------------------------------------
 		
 	set.insert(std::move(node));
 
@@ -59,3 +63,5 @@ int main()
         > 
     );
 }
+
+/////////////////////////////////////////////////////////////////

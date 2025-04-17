@@ -1,18 +1,23 @@
+//////////////////////////////////////////////////////////////////////////
+
+#include <functional>
 #include <iterator>
 #include <tuple>
 #include <vector>
+
+//////////////////////////////////////////////////////////////////////////
 
 #include <boost/container_hash/hash.hpp>
 
 //////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > auto hash(T x, Ts ... xs)
+template < typename T, typename ... Ts > auto hash(T x, Ts ... ys)
 {
 	auto seed = std::hash < T > ()(x);
 
-	if constexpr (sizeof...(xs) > 0)
+	if constexpr (sizeof...(ys) > 0)
 	{
-		seed += hash(xs...) * 31;
+		seed += hash(ys...) * 31;
 	}
 	
 	return seed;
@@ -27,17 +32,13 @@ struct Entity
 
 //////////////////////////////////////////////////////////////////////////
 
-auto hash_value(const Entity & entity)
+auto hash_value(Entity const & entity)
 {
 	auto seed = 0uz;
-
-//  ------------------------------------
 
 	boost::hash_combine(seed, entity.x);
 	
 	boost::hash_combine(seed, entity.y);
-
-//  ------------------------------------
 
 	return seed;
 }
@@ -60,3 +61,5 @@ int main()
 
 	std::ignore = boost::hash_range(std::begin(vector), std::end(vector));
 }
+
+//////////////////////////////////////////////////////////////////////////
