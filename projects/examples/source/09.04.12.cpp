@@ -1,11 +1,13 @@
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <cstddef>
-#include <exception>
 #include <format>
 #include <iostream>
 #include <memory>
 #include <new>
-#include <stdexcept>
 #include <vector>
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/noncopyable.hpp>
 
@@ -19,6 +21,8 @@ public :
 	{
 		m_begin = operator new(m_size, std::align_val_t(s_alignment));
 	}
+
+//  ------------------------------------------------------------------------------
 
    ~Arena()
 	{
@@ -48,7 +52,7 @@ public :
 		}
 	}
 
-    void deallocate(void * , std::size_t) const {}
+    void deallocate(void *, std::size_t) const {}
 
 //  ------------------------------------------------------------------------------
 
@@ -91,7 +95,7 @@ public :
 
     Allocator(Arena & arena) : m_arena(&arena) {}
 
-    template < typename U > Allocator(const Allocator < U > & other) : m_arena(other.m_arena) {}
+    template < typename U > Allocator(Allocator < U > const & other) : m_arena(other.m_arena) {}
 
 //  --------------------------------------------------------------------------------------------
 
@@ -116,7 +120,11 @@ int main()
 {
 	Arena arena(1'024);
 
+//  ----------------------------------------------------------------------------
+
     Allocator < int > allocator(arena);
+
+//  ----------------------------------------------------------------------------
 
     std::vector < int, Allocator < int > > vector({ 1, 2, 3, 4, 5 }, allocator);
 
@@ -126,3 +134,5 @@ int main()
 	
     arena.test();
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////

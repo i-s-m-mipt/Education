@@ -1,16 +1,22 @@
-#include <cassert>
+/////////////////////////////////////////////////////////
+
 #include <cstddef>
 #include <utility>
 
+/////////////////////////////////////////////////////////
+
 #include <boost/noncopyable.hpp>
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 class Controller : private boost::noncopyable
 {
 public :
 
-    void increase() { ++m_counter; }
+    void increase() 
+    { 
+        ++m_counter; 
+    }
 
     void decrease() 
     { 
@@ -35,7 +41,7 @@ private :
     std::size_t m_counter = 0;
 };
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 template < typename T > class Handler : public Controller
 {
@@ -63,7 +69,7 @@ private :
     T * m_x = nullptr;
 };
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 template < typename T > class Shared
 {
@@ -77,7 +83,9 @@ public :
         }
     }
 
-    Shared(const Shared < T > & other) 
+//  ----------------------------------------------------
+
+    Shared(Shared < T > const & other) 
     : 
         m_x(other.m_x), m_controller(other.m_controller)
     {
@@ -87,24 +95,14 @@ public :
         }
     }
 
+//  ----------------------------------------------------
+
     Shared(Shared < T > && other) : Shared()
 	{
 		swap(other);
 	}
 
-    auto & operator=(const Shared & other)
-    {
-        Shared(other).swap(*this);
-        
-        return *this;
-    }
-
-    auto & operator=(Shared && other)
-    {
-        Shared(std::move(other)).swap(*this);
-        
-        return *this;
-    }
+//  ----------------------------------------------------
 
    ~Shared() 
     { 
@@ -114,7 +112,18 @@ public :
         } 
     }
 
-//  ----------------------------------------------------------
+//  ----------------------------------------------------
+
+    auto & operator=(Shared other)
+    {
+        swap(other);
+
+    //  -------------
+        
+        return *this;
+    }
+
+//  ----------------------------------------------------
 
     void swap(Shared & other)
     {
@@ -126,11 +135,13 @@ public :
 private :
 
     T * m_x = nullptr;
+
+//  ----------------------------------------------------
     
     Controller * m_controller = nullptr;
 };
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 int main()
 {
@@ -138,15 +149,15 @@ int main()
 
     Shared < int > shared_2(new auto(2));
 
-//  ----------------------------------------------
-
     Shared < int > shared_3 = shared_2;
 
-                   shared_3 = shared_2;
+    Shared < int > shared_4 = std::move(shared_3);
 
 //  ----------------------------------------------
 
-    Shared < int > shared_4 = std::move(shared_3);
-        
-                   shared_4 = std::move(shared_3);
+    shared_3 = shared_2;
+
+    shared_4 = std::move(shared_3);
 }
+
+/////////////////////////////////////////////////////////

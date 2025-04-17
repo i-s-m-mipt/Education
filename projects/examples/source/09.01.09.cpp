@@ -1,3 +1,5 @@
+///////////////////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <memory>
 #include <utility>
@@ -34,9 +36,11 @@ public :
 
 int main()
 {
-	auto x = std::make_unique < int > (1);
+	auto client_1 = std::make_unique < Client > ();
 
-	auto y = std::move(x);
+//	auto client_2 = client_1; // error
+
+	auto client_3 = std::move(client_1);
 
 //  -------------------------------------------------------------------
 
@@ -46,3 +50,5 @@ int main()
 
 	entity->test();
 }
+
+///////////////////////////////////////////////////////////////////////

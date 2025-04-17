@@ -1,14 +1,15 @@
-#include <cstdlib>
-#include <exception>
+/////////////////////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <new>
-#include <stdexcept>
 
 /////////////////////////////////////////////////////////////////////////
 
 void test() 
 { 
-    std::cout << "test\n"; 
+    std::cout << "test\n";
+
+//  ------------------------------
     
     std::set_new_handler(nullptr); 
 }
@@ -28,7 +29,7 @@ int main()
             new int[1'000'000'000]{};
         }
     }
-    catch (const std::bad_alloc & exception)
+    catch (std::bad_alloc const & exception)
     {
         std::cerr << "main : " << exception.what() << '\n';
     }
@@ -43,3 +44,5 @@ int main()
         }
     }
 }
+
+/////////////////////////////////////////////////////////////////////////

@@ -1,3 +1,5 @@
+/////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <memory>
 
@@ -37,9 +39,15 @@ public :
 
 int main()
 {
-	auto client         = std::make_shared < Client > ();
-		
-		 client->server = std::make_shared < Server > ();
+	auto client = std::make_shared < Client > ();
 
-		 client->server->client = client;
+	auto server = std::make_shared < Server > ();
+
+//  ---------------------------------------------
+		
+	client->server         = server;
+
+	client->server->client = client;
 }
+
+/////////////////////////////////////////////////////////

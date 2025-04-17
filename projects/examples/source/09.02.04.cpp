@@ -1,3 +1,5 @@
+/////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <iterator>
 #include <vector>
@@ -20,3 +22,5 @@ int main()
 
 	assert(*iterator == 1); // support : -D_GLIBCXX_DEBUG
 }
+
+/////////////////////////////////////////////////////////

@@ -1,3 +1,5 @@
+/////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <memory>
 #include <string>
@@ -18,11 +20,27 @@ int main()
 
 //  -----------------------------------------------------
 
-	traits.construct (allocator, string, "aaaaa");
+	assert(string);
 
-	traits.destroy   (allocator, string);
+//  -----------------------------------------------------
+
+	traits.construct(allocator, string, 5, 'a');
+
+//  -----------------------------------------------------
+
+	assert(*string == "aaaaa");
+
+//  -----------------------------------------------------
+
+	traits.destroy(allocator, string);
+
+//  -----------------------------------------------------
+
+	assert(string);
 
 //  -----------------------------------------------------
 
 	traits.deallocate(allocator, string, 1);
 }
+
+/////////////////////////////////////////////////////////

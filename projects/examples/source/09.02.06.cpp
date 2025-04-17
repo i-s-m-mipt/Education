@@ -1,6 +1,11 @@
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <iterator>
 #include <memory>
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <boost/iterator/iterator_categories.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,7 +41,7 @@ public :
 			return m_node->x;
 		}
 
-		auto equal(const Iterator & other) const
+		auto equal(Iterator const & other) const
 		{ 
 			return m_node == other.m_node;
 		}
@@ -90,6 +95,8 @@ int main()
 {
 	List < int > list;
 
+//  -------------------------------------------------------------------------------
+
 	list.push_back(1);
 
 //  -------------------------------------------------------------------------------
@@ -100,3 +107,5 @@ int main()
 
 	for ([[maybe_unused]] auto element : list); // support : cppinsights.io
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////

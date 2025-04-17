@@ -1,4 +1,5 @@
-#include <cassert>
+///////////////////////////////////////////////////////////////////////////////////////////
+
 #include <new>
 #include <utility>
 
@@ -17,7 +18,7 @@ public :
 
 //  ---------------------------------------------------------------------------------------
 
-    Optional(const Optional & other) 
+    Optional(Optional const & other) 
     {
         if (other.m_x) 
         {
@@ -32,7 +33,14 @@ public :
 
 //  ---------------------------------------------------------------------------------------
 
-    auto & operator=(const Optional & other) 
+   ~Optional() 
+    { 
+        uninitialize();
+    }
+
+//  ---------------------------------------------------------------------------------------
+
+    auto & operator=(Optional const & other) 
     {
         if (this != &other)
         {
@@ -72,13 +80,6 @@ public :
         construct(x);
         
         return *this;
-    }
-
-//  ---------------------------------------------------------------------------------------
-
-   ~Optional() 
-    { 
-        uninitialize();
     }
 
 private :
@@ -151,17 +152,17 @@ int main()
     
     Optional < int > optional_2 = 2;
 
-//  ----------------------------------------------------
-
     Optional < int > optional_3 = optional_2;
-
-                     optional_3 = optional_2;
-
-//  ----------------------------------------------------
 
     Optional < int > optional_4 = std::move(optional_3);
 
-                     optional_4 = std::move(optional_3);
+//  ----------------------------------------------------
 
-                     optional_4 = 4;  
+    optional_3 = optional_2;
+
+    optional_4 = std::move(optional_3);
+
+    optional_1 = 1;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////

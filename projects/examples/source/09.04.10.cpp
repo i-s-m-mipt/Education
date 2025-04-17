@@ -1,15 +1,20 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <cassert>
 #include <cstddef>
-#include <exception>
 #include <format>
 #include <iostream>
 #include <memory>
 #include <new>
 #include <random>
-#include <stdexcept>
 #include <utility>
 #include <vector>
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <boost/noncopyable.hpp>
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <benchmark/benchmark.h>
 
@@ -33,6 +38,8 @@ public :
             
         m_head->next = nullptr;
     }
+
+//  -----------------------------------------------------------------------------------------------
 	
    ~Allocator()
     {
@@ -182,7 +189,7 @@ private :
 
 //  -----------------------------------------------------------------------------------------------
 
-    auto find(std::size_t size) const -> std::pair < Node * , Node * >
+    auto find(std::size_t size) const -> std::pair < Node *, Node * >
     {
         Node * current = m_head, * previous = nullptr;
 
@@ -276,17 +283,15 @@ void test_v2(benchmark::State & state)
 
     std::default_random_engine engine;
 
-    std::vector < std::pair < void * , std::size_t > > vector(kb);
+    std::vector < std::pair < void *, std::size_t > > vector(kb);
 
 	for (auto element : state)
 	{
 		for (auto i = 0uz; i < kb; ++i)
         {
-            auto size = distribution(engine) * mb;
+            vector[i].second = distribution(engine) * mb;
             
-            vector[i].first  = operator new(size);
-            
-            vector[i].second = size;
+            vector[i].first  = operator new(vector[i].second);
         }
         
 		for (auto i = 0uz; i < kb; i += 32)
@@ -296,11 +301,9 @@ void test_v2(benchmark::State & state)
 
 		for (auto i = 0uz; i < kb; i += 32)
         {
-            auto size = distribution(engine) * mb;
+            vector[i].second = distribution(engine) * mb;
             
-            vector[i].first  = operator new(size);
-            
-            vector[i].second = size;
+            vector[i].first  = operator new(vector[i].second);
         } 
         
 		for (auto i = 0uz; i < kb; ++i) 
@@ -321,6 +324,8 @@ BENCHMARK(test_v2);
 int main()
 {
     Allocator allocator(1'024);
+
+//  --------------------------------------------------------------------
     
     allocator.test();
 
@@ -348,3 +353,5 @@ int main()
 
     benchmark::RunSpecifiedBenchmarks();
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
