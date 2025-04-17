@@ -69,13 +69,9 @@ int main()
 {
     Entity * entity_1 = new Client;
 
-//  ---------------------------------------------
-
     Entity * entity_2 = new Decorator(*entity_1);
 
 //  ---------------------------------------------
-
-    entity_1->test();
 
     entity_2->test();
 

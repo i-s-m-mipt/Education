@@ -48,6 +48,21 @@ public :
     {
         std::cout << "Unique_v2::Unique_v2 (2)\n";
     }
+
+//  ----------------------------------------------------------------
+
+    auto & operator=([[maybe_unused]] Unique_v2 const & other)
+    {
+        std::cout << "Unique_v2::operator=\n";
+
+    //  ---------------------------------------
+
+    //  Noncopyable::operator=(other); // error
+
+    //  ---------------------------------------
+
+        return *this;
+    }
 };
 
 ////////////////////////////////////////////////////////////////////
@@ -61,6 +76,8 @@ template < typename U > void test()
     U unique_1;
 
     U unique_2 = unique_1;
+
+      unique_2 = unique_1;
 }
 
 ////////////////////////////////////////////////////////////////////

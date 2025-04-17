@@ -62,9 +62,9 @@ class Builder_Server : public Builder
 {
 public :
 
-    void make_x() const override { m_entity->x = 2; }
+    void make_x() const override { m_entity->x = 1; }
 
-    void make_y() const override { m_entity->y = 2; }
+    void make_y() const override { m_entity->y = 1; }
 };
 
 /////////////////////////////////////////////////////
@@ -76,8 +76,6 @@ int main()
 //  ---------------------------------------
 
     delete builder->make();
-
-//  ---------------------------------------
     
     delete builder;
 }
