@@ -50,7 +50,9 @@ int main()
 
 //  ----------------------------------------------------------------
 
-	auto left = &Node < int > ::left, right = &Node < int > ::right;
+	auto  left = &Node < int > :: left;
+	
+	auto right = &Node < int > ::right;
 
 //  ----------------------------------------------------------------
 
