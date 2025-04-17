@@ -1,5 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <cassert>
 #include <limits>
 #include <string>
+
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/math/constants/constants.hpp>
 #include <boost/math/special_functions/gamma.hpp>
@@ -22,14 +27,14 @@ template < typename F, typename T > auto derivative(F && f, T x, T dx = 1e-9)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-auto test_v1(const boost::multiprecision::cpp_bin_float_100 & x)
+auto test_v1(boost::multiprecision::cpp_bin_float_100 const & x)
 {
     return boost::multiprecision::sin(x);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-auto test_v2(const boost::multiprecision::cpp_bin_float_100 & x)
+auto test_v2(boost::multiprecision::cpp_bin_float_100 const & x)
 {
     return boost::math::gamma_p(2.0, x);
 }
@@ -55,11 +60,15 @@ int main()
 
 //  ----------------------------------------------------------------------------------------
 
+    assert(equal(y1, boost::multiprecision::cpp_bin_float_100(0)));
+
+//  ----------------------------------------------------------------------------------------
+
     boost::multiprecision::cpp_bin_float_100 epsilon("0." + std::string(55, '0') + '1');
 
 //  ----------------------------------------------------------------------------------------
 
-    assert(equal(y1, boost::multiprecision::cpp_bin_float_100(0)));
-
     assert(equal(y2, boost::math::gamma_p_derivative(2.0, x), epsilon));
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////

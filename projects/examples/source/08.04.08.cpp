@@ -1,7 +1,11 @@
+////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <cmath>
 #include <numbers>
 #include <string>
+
+////////////////////////////////////////////////////////////////
 
 using namespace std::literals;
 
@@ -37,7 +41,11 @@ auto pow(int x, int y) -> int
 
 template < char D, char ... Ds > auto handler() -> int
 {
-	if constexpr (auto x = D - '0'; sizeof...(Ds) > 0)
+	auto x = D - '0';
+
+//  ------------------------------------------------------------
+	
+	if constexpr (sizeof...(Ds) > 0)
 	{
 		return x * pow(3, sizeof...(Ds)) + handler < Ds... > ();
 	}
@@ -79,3 +87,5 @@ int main()
 
 	assert(210_b3 == 21);
 }
+
+////////////////////////////////////////////////////////////////

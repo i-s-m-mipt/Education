@@ -1,11 +1,14 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
-#include <exception>
 #include <iostream>
 #include <limits>
 #include <sstream>
 #include <stdexcept>
 #include <string>
 #include <tuple>
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/multiprecision/cpp_int.hpp>
 
@@ -25,7 +28,7 @@ int main()
     {
         std::ignore = boost::multiprecision::checked_uint128_t(0) - 1;
     }
-    catch (const std::range_error & exception)
+    catch (std::range_error const & exception)
     {
         std::cerr << "main : " << exception.what() << '\n';
     }
@@ -100,3 +103,5 @@ int main()
 
     assert(stream_2.str() == stream_1.str());
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////

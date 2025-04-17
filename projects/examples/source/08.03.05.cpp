@@ -1,6 +1,10 @@
+/////////////////////////////////////////////////////
+
 #include <cassert>
 #include <cmath>
 #include <complex>
+
+/////////////////////////////////////////////////////
 
 using namespace std::literals;
 
@@ -23,9 +27,13 @@ int main()
 
     assert(equal(std::imag(x), 1.000'000));
 
+//  ---------------------------------------
+
     assert(equal(std::norm(x), 2.000'000));
 
     assert(equal(std::abs (x), 1.414'214));
 
     assert(equal(std::arg (x), 0.785'398));
 }
+
+/////////////////////////////////////////////////////

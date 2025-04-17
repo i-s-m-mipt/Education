@@ -1,3 +1,5 @@
+//////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <cmath>
 #include <random>
@@ -19,6 +21,8 @@ int main()
 
 	std::uniform_real_distribution distribution(0.0, 1.0);
 
+//  ------------------------------------------------------
+
 	std::default_random_engine engine;
 
 //  ------------------------------------------------------
@@ -32,6 +36,8 @@ int main()
 		auto x = distribution(engine);
 		
 		auto y = distribution(engine);
+	
+	//  ------------------------------
 
 		if (x * x + y * y < 1)
 		{
@@ -43,3 +49,5 @@ int main()
 
 	assert(equal(4.0 * counter / size, 3.141, 1e-3));
 }
+
+//////////////////////////////////////////////////////////

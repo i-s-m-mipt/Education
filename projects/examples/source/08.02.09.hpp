@@ -1,9 +1,13 @@
+////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <mutex>
 #include <string>
+
+////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/noncopyable.hpp>
 #include <boost/python.hpp>
@@ -20,7 +24,7 @@ public :
 
 //  ----------------------------------------------------------------------------------------
 
-	const auto & local() const
+	auto const & local() const
 	{
 		return m_local;
 	}
@@ -31,13 +35,19 @@ public :
 	{
 		PyObject * error, * value, * stack;
 
+	//  ------------------------------------------------------------------------------------
+
 		PyErr_Fetch             (&error, &value, &stack);
 
 		PyErr_NormalizeException(&error, &value, &stack);
 
+	//  ------------------------------------------------------------------------------------
+
 		boost::python::handle <> handler_1(boost::python::allow_null(value));
 
 		boost::python::handle <> handler_2(error);
+
+	//  ------------------------------------------------------------------------------------
 
 		if (handler_1)
 		{
@@ -53,7 +63,7 @@ private :
 
 	void acquire()
 	{
-		std::call_once(s_status, Py_Initialize);
+		std::call_once(s_flag, Py_Initialize);
 
 		s_mutex.lock();
 			
@@ -63,6 +73,8 @@ private :
 
 		boost::python::exec("import sys\nsys.path.append(\".\")", m_local, m_local);
 	}
+
+//  ----------------------------------------------------------------------------------------
 
 	void release()
 	{
@@ -77,9 +89,11 @@ private :
 
 //  ----------------------------------------------------------------------------------------
 
-	static inline std::once_flag s_status;
+	static inline std::once_flag s_flag;
 
 	static inline std::mutex s_mutex;
 	
 	static inline PyGILState_STATE s_state;
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,24 +1,22 @@
+//////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <algorithm>
 #include <cctype>
 #include <cmath>
 #include <cstddef>
-#include <exception>
 #include <format>
 #include <istream>
-#include <iterator>
 #include <limits>
 #include <numeric>
 #include <ostream>
-#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 class Integer
 {
@@ -26,32 +24,36 @@ public :
 
 	using digit_t = long long;
 
-//  ------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------
 
 	Integer() : m_sign(false), m_digits(s_size, 0), m_size(1) {}
+
+//  ------------------------------------------------------------------------------------------
 
 	Integer(digit_t digit) : Integer() 
 	{ 
 		parse(std::to_string(digit));
 	}
 
-	Integer(const std::string & string) : Integer() 
+//  ------------------------------------------------------------------------------------------
+
+	Integer(std::string const & string) : Integer() 
 	{ 
 		parse(string);
 	}
 
-//  ------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------
 
 	void swap(Integer & other)
 	{
-		std::swap(m_sign  , other.m_sign  );
+		std::swap(m_sign,   other.m_sign  );
 
 		std::swap(m_digits, other.m_digits);
 		
-		std::swap(m_size  , other.m_size  );
+		std::swap(m_size,   other.m_size  );
 	}
 
-//  ------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------
 
 	auto & operator+=(Integer other)
 	{
@@ -89,12 +91,16 @@ public :
 		return *this;
 	}
 
+//  ------------------------------------------------------------------------------------------
+
 	auto & operator-=(Integer other)
 	{
 		other.m_sign = !other.m_sign;
 
 		return *this += other;
 	}
+
+//  ------------------------------------------------------------------------------------------
 
 	auto & operator*=(Integer other)
 	{
@@ -124,6 +130,8 @@ public :
 		
 		return *this;
 	}
+
+//  ------------------------------------------------------------------------------------------
 
 	auto & operator/=(Integer other)
 	{
@@ -171,45 +179,36 @@ public :
 		return *this;
 	}
 
-//  ------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------
 
-	const auto   operator++(int) { auto copy = *this; *this += 1; return  copy; }
+	auto const   operator++(int) { auto copy = *this; *this += 1; return  copy; }
 
-	      auto & operator++(   ) { 				      *this += 1; return *this; }
+	auto       & operator++(   ) { 				      *this += 1; return *this; }
 
-	const auto   operator--(int) { auto copy = *this; *this -= 1; return  copy; }
+	auto const   operator--(int) { auto copy = *this; *this -= 1; return  copy; }
 
-	      auto & operator--(   ) { 				      *this -= 1; return *this; }
+	auto       & operator--(   ) { 				      *this -= 1; return *this; }
 
-//  ------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------
 
-	friend auto operator+ (const Integer & lhs, const Integer & rhs) 
-	{ 
-		return Integer(lhs) += rhs;
-	}
+	friend auto operator+ (Integer lhs, Integer const & rhs) 			{ return lhs += rhs; }
 
-	friend auto operator- (const Integer & lhs, const Integer & rhs) 
-	{ 
-		return Integer(lhs) -= rhs;
-	}
+	friend auto operator- (Integer lhs, Integer const & rhs) 			{ return lhs -= rhs; }
 
-	friend auto operator* (const Integer & lhs, const Integer & rhs) -> Integer
-	{ 
-		return Integer(lhs) *= rhs;
-	}
+	friend auto operator* (Integer lhs, Integer const & rhs) -> Integer { return lhs *= rhs; }
 
-	friend auto operator/ (const Integer & lhs, const Integer & rhs) 
-	{ 
-		return Integer(lhs) /= rhs;
-	}
+	friend auto operator/ (Integer lhs, Integer const & rhs) 			{ return lhs /= rhs; }
 
-//  ------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------
 
-	friend auto operator< (const Integer & lhs, const Integer & rhs)
+	friend auto operator< (Integer const & lhs, Integer const & rhs)
 	{
-		if (lhs.m_sign != rhs.m_sign) { return lhs.m_sign; }
+		if (lhs.m_sign != rhs.m_sign)
+		{ 
+			return lhs.m_sign; 
+		}
 
-		if (lhs.m_sign && rhs.m_sign) 
+		if (lhs.m_sign && rhs.m_sign)
 		{
 			return rhs.less(lhs);
 		}
@@ -219,22 +218,30 @@ public :
 		}
 	}
 
-	friend auto operator> (const Integer & lhs, const Integer & rhs)
+//  ------------------------------------------------------------------------------------------
+
+	friend auto operator> (Integer const & lhs, Integer const & rhs)
 	{
 		return  (rhs < lhs);
 	}
 
-	friend auto operator<=(const Integer & lhs, const Integer & rhs) -> bool
+//  ------------------------------------------------------------------------------------------
+
+	friend auto operator<=(Integer const & lhs, Integer const & rhs) -> bool
 	{
 		return !(rhs < lhs);
 	}
 
-	friend auto operator>=(const Integer & lhs, const Integer & rhs)
+//  ------------------------------------------------------------------------------------------
+
+	friend auto operator>=(Integer const & lhs, Integer const & rhs)
 	{
 		return !(lhs < rhs);
 	}
 
-	friend auto operator==(const Integer & lhs, const Integer & rhs) -> bool
+//  ------------------------------------------------------------------------------------------
+
+	friend auto operator==(Integer const & lhs, Integer const & rhs) -> bool
 	{
 		if (lhs.m_sign != rhs.m_sign || lhs.m_size != rhs.m_size)
 		{
@@ -243,7 +250,7 @@ public :
 
 		for (auto i = 0uz; i < lhs.m_size; ++i)
 		{
-			if (lhs.m_digits[i] != rhs.m_digits[i]) 
+			if (lhs.m_digits[i] != rhs.m_digits[i])
 			{
 				return false;
 			}
@@ -252,20 +259,22 @@ public :
 		return true;
 	}
 
-//  ------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------
 
 	friend auto & operator>>(std::istream & stream, Integer & integer)
 	{
-		std::string string; 
+		std::string string;
 		
-		stream >> string; 
+		stream >> string;
 		
 		integer = Integer(string);
 		
 		return stream;
 	}
 
-	friend auto & operator<<(std::ostream & stream, const Integer & integer)
+//  ------------------------------------------------------------------------------------------
+
+	friend auto & operator<<(std::ostream & stream, Integer const & integer)
 	{
 		if (integer.m_sign) 
 		{
@@ -282,9 +291,9 @@ public :
 		return stream;
 	}
 
-//  ------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------
 
-	friend auto sqrt(const Integer & x)
+	friend auto sqrt(Integer const & x)
 	{
 		Integer y;
 		
@@ -318,9 +327,9 @@ public :
 		return y;
 	}
 
-//  ------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------
 
-	friend auto multiply(const Integer & x, const Integer & y) -> Integer
+	friend auto multiply(Integer const & x, Integer const & y) -> Integer
 	{
 		if (auto size = std::max(x.m_size, y.m_size); size > 1)
 		{
@@ -328,27 +337,39 @@ public :
 
 			Integer x1, x2, y1, y2;
 
+		//  -----------------------------------------------------------------------------
+
 			x1.m_size = step;
 
 			x2.m_size = size - step;
+
+		//  -----------------------------------------------------------------------------
 
 			for (auto i =  0uz; i < step; ++i) { x1.m_digits[i       ] = x.m_digits[i]; }
 
 			for (auto i = step; i < size; ++i) { x2.m_digits[i - step] = x.m_digits[i]; }
 
+		//  -----------------------------------------------------------------------------
+
 			y1.m_size = step;
 			
 			y2.m_size = size - step;
 
+		//  -----------------------------------------------------------------------------
+
 			for (auto i =  0uz; i < step; ++i) { y1.m_digits[i       ] = y.m_digits[i]; }
 
 			for (auto i = step; i < size; ++i) { y2.m_digits[i - step] = y.m_digits[i]; }
+
+		//  -----------------------------------------------------------------------------
 
 			auto a = multiply(x2, y2);
 			
 			auto b = multiply(x1, y1);
 			
 			auto c = multiply(x2 + x1, y2 + y1);
+
+		//  -----------------------------------------------------------------------------
 
 			Integer base = Integer::s_base;
 
@@ -371,7 +392,7 @@ public :
 
 private :
 
-	void parse(const std::string & string)
+	void parse(std::string const & string)
 	{
 		m_sign = string.front() == '-';
 			
@@ -397,7 +418,7 @@ private :
 		reduce();
 	}
 
-//  ------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------
 
 	void reduce()
 	{
@@ -407,9 +428,9 @@ private :
 		}
 	}
 
-//  ------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------
 
-	auto add(const Integer & other) -> Integer &
+	auto add(Integer const & other) -> Integer &
 	{
 		m_size = std::max(m_size, other.m_size);
 
@@ -430,7 +451,9 @@ private :
 		return *this;
 	}
 
-	auto subtract(const Integer & other) -> Integer &
+//  ------------------------------------------------------------------------------------------
+
+	auto subtract(Integer const & other) -> Integer &
 	{
 		for (auto i = 0uz; i < m_size; ++i)
 		{
@@ -449,9 +472,9 @@ private :
 		return *this;
 	}
 
-//  ------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------
 
-	auto less(const Integer & other) const -> bool
+	auto less(Integer const & other) const -> bool
 	{
 		if (m_size != other.m_size) 
 		{
@@ -469,7 +492,7 @@ private :
 		return false;
 	}
 
-//  ------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------
 
 	bool m_sign = false;
 
@@ -477,7 +500,7 @@ private :
 
 	std::size_t m_size = 0;
 
-//  ------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------
 
 	static inline auto s_size = 1'000uz;
 
@@ -485,3 +508,5 @@ private :
 
 	static inline auto s_base = static_cast < digit_t > (std::pow(10, s_step));
 };
+
+//////////////////////////////////////////////////////////////////////////////////////////////
