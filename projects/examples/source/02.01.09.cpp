@@ -1,22 +1,26 @@
-////////////////////////////////////////////////////////
-
-// support : Boost.NumericConversion
-
-////////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
 int main()
 {
-    double x = 1;
+//	[[maybe_unused]] auto x1; // error
 
-//  ----------------------------------------------------
+//	[[maybe_unused]] auto x2{}; // error
 
-//	[[maybe_unused]] int y1 = x; // bad
+    [[maybe_unused]] auto x3(3);
 
-//	[[maybe_unused]] int y2 { x }; // error
+	[[maybe_unused]] auto x4 = 4;
+    
+    [[maybe_unused]] auto x5 { 5 };
 
-//	[[maybe_unused]] int y3 { int(x) }; // bad
+//	[[maybe_unused]] auto x6 = { 6 }; // bad
 
-	[[maybe_unused]] int y4 { static_cast < int > (x) };
+//  ------------------------------------------------
+
+    [[maybe_unused]] auto y1 = 1u;
+
+//  ------------------------------------------------
+
+//	[[maybe_unused]] auto y2 = 2, y3 = 3.0; // error
 }
 
-////////////////////////////////////////////////////////
+////////////////////////////////////////////////////
