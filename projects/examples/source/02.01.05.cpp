@@ -24,7 +24,7 @@ int main()
 
 	assert(std::numeric_limits < unsigned int > ::max() == 4'294'967'295);
 
-	assert(std::numeric_limits < unsigned int > ::min() == 0            );
+	assert(std::numeric_limits < unsigned int > ::min() == 0);
 }
 
 //////////////////////////////////////////////////////////////////////////
