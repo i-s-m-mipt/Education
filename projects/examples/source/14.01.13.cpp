@@ -1,5 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+// support : en.wikipedia.org/wiki/Amdahl%27s_law
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
@@ -68,7 +72,7 @@ void test_v3(benchmark::State & state)
     
     for (auto element : state)
     {
-        std::for_each(std::execution::par_unseq, std::begin(vector), std::end(vector), handler);
+        std::for_each(std::execution::unseq, std::begin(vector), std::end(vector), handler);
     }
 }
 
@@ -80,7 +84,7 @@ void test_v4(benchmark::State & state)
     
     for (auto element : state)
     {
-        std::for_each(std::execution::unseq, std::begin(vector), std::end(vector), handler);
+        std::for_each(std::execution::par_unseq, std::begin(vector), std::end(vector), handler);
     }
 }
 

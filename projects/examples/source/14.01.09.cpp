@@ -58,7 +58,7 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 
 			auto range = std::ranges::subrange(begin_block, end);
 
-			Task < decltype(range), T > ()(range, std::ref(sums[concurrency - 1]));
+			Task < decltype(range), T > ()(range, sums[concurrency - 1]);
 		}
 
 		sum += *std::ranges::fold_left_first(sums, std::plus());

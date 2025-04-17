@@ -144,7 +144,7 @@ public :
         return false;
     }
 
-private:
+private :
 
     C m_container;
 

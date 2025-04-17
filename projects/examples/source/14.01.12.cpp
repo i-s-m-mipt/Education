@@ -60,9 +60,9 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 
 		sum += Task < decltype(range) > ()(range);
 
-		for (auto & future : futures) 
+		for (auto & [future, thread] : futures) 
 		{
-			sum += future.first.get();
+			sum += future.get();
 		}
 	}
 

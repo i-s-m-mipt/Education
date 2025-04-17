@@ -1,14 +1,22 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
+#include <exception>
 #include <future>
 #include <utility>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-auto test(int x) 
+auto test_v1(int x) 
 { 
 	return x;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+void test_v2()
+{
+	throw std::runtime_error("error");
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,13 +30,21 @@ template < typename F, typename ... Ts > auto async_invoke(F && f, Ts && ... xs)
 
 int main()
 {
-	assert(std::async(std::launch::async,    test, 1).get() == 1);
+	assert(std::async(std::launch::async,    test_v1, 1).get() == 1);
 
-	assert(std::async(std::launch::deferred, test, 1).get() == 1);
+	assert(std::async(std::launch::deferred, test_v1, 1).get() == 1);
 
-//  --------------------------------------------------------------
+//  -----------------------------------------------------------------
 
-	assert(async_invoke(test, 1).get() == 1);
+	try
+	{
+		std::async(test_v2).get();
+	}
+	catch(...) {}
+	
+//  -----------------------------------------------------------------
+
+	assert(async_invoke(test_v1, 1).get() == 1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

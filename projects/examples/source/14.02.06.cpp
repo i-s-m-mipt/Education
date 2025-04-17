@@ -18,6 +18,8 @@ public :
     {
     //  initialize_v1(); // bad
 
+    //  -----------------------------------------------------
+
         std::call_once(m_flag, &Entity::initialize_v2, this);
     }
 
@@ -25,13 +27,13 @@ private :
 
 //  void initialize_v1() // bad
 //  {
-//      if (!m_x)
+//      if (!s_x)
 //      {
 //          std::scoped_lock < mutex_t > lock(m_mutex);
 //
-//          if (!m_x)
+//          if (!s_x)
 //          {
-//              m_x = std::make_unique < int > (1);
+//              s_x = std::make_unique < int > (1);
 //          }
 //      }
 //  }
@@ -40,12 +42,12 @@ private :
 
     void initialize_v2()
     {
-        m_x = std::make_unique < int > (1);
+        s_x = std::make_unique < int > (1);
     }
 
 //  ---------------------------------------------------------
 
-    std::unique_ptr < int > m_x;
+    static std::unique_ptr < int > s_x;
 
 //  ---------------------------------------------------------
 
