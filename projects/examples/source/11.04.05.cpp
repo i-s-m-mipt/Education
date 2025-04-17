@@ -1,26 +1,33 @@
-#include <array>
-#include <cassert>
-#include <iostream>
-#include <iterator>
-
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/dijkstra_shortest_paths.hpp>
-
 /////////////////////////////////////////////////////////////////////////////////////
 
 // support : www.cs.usfca.edu/~galles/visualization/Dijkstra.html
 
 /////////////////////////////////////////////////////////////////////////////////////
 
+#include <array>
+#include <cassert>
+#include <iterator>
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/dijkstra_shortest_paths.hpp>
+#include <boost/graph/named_function_params.hpp>
+
+/////////////////////////////////////////////////////////////////////////////////////
+
 int main()
 {
-    boost::adjacency_list 
+    using graph_t = boost::adjacency_list 
     < 
         boost::vecS, boost::vecS, boost::directedS, 
         
         boost::no_property, boost::property < boost::edge_weight_t, int >
-    >
-    graph;
+    > ;
+
+//  ---------------------------------------------------------------------------------
+
+    graph_t graph;
 
 //  ---------------------------------------------------------------------------------
 
@@ -54,3 +61,5 @@ int main()
 
 	assert((array == std::array < int, 5 > ({ 0, 5, 1, 6, 13 })));
 }
+
+/////////////////////////////////////////////////////////////////////////////////////

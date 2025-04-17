@@ -1,3 +1,5 @@
+///////////////////////////////////////////////////
+
 #include <algorithm>
 #include <cassert>
 #include <cstddef>
@@ -25,7 +27,7 @@ public :
 
 private :
 
-	T m_sum = T(0);
+	T m_sum = T();
 	
 	std::size_t m_counter = 0;
 };
@@ -40,9 +42,13 @@ int main()
 
 	Mean < decltype(vector)::value_type > mean;
 
+//  -----------------------------------------------
+
 	mean = std::ranges::for_each(vector, mean).fun;
 
 //  -----------------------------------------------
 
 	assert(mean.get() == 3);
 }
+
+///////////////////////////////////////////////////

@@ -1,12 +1,13 @@
+///////////////////////////////////////////////////////////////
+
 #include <algorithm>
 #include <iostream>
-#include <iterator>
 #include <random>
 #include <vector>
 
 ///////////////////////////////////////////////////////////////
 
-void test(const std::vector < int > & vector)
+void test(std::vector < int > const & vector)
 {
 	std::cout << "test : vector = { ";
 
@@ -32,3 +33,5 @@ int main()
 
 	test(vector);
 }
+
+///////////////////////////////////////////////////////////////

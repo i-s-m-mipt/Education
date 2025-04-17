@@ -1,12 +1,13 @@
+/////////////////////////////////////////////////////////////////////////////
+
 #include <algorithm>
 #include <iostream>
-#include <iterator>
 #include <random>
 #include <vector>
 
 /////////////////////////////////////////////////////////////////////////////
 
-void test(const std::vector < int > & vector)
+void test(std::vector < int > const & vector)
 {
 	std::cout << "test : vector = { ";
 
@@ -24,9 +25,15 @@ int main()
 {
 	std::vector < int > vector(5, 0);
 
+//  -------------------------------------------------------------------------
+
 	std::uniform_int_distribution distribution(1, 5);
 
+//  -------------------------------------------------------------------------
+
 	std::default_random_engine engine;
+
+//  -------------------------------------------------------------------------
 
 	auto lambda = [&engine, &distribution](){ return distribution(engine); };
 
@@ -38,3 +45,5 @@ int main()
 
 	test(vector);
 }
+
+/////////////////////////////////////////////////////////////////////////////

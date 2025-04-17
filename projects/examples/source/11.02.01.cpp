@@ -1,3 +1,5 @@
+///////////////////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <memory>
 
@@ -11,9 +13,9 @@ public :
 
 //  ----------------------------------------------------------
 
-    virtual void visit(const class Client * client) const = 0;
+    virtual void visit(class Client const * client) const = 0;
     
-    virtual void visit(const class Server * server) const = 0;
+    virtual void visit(class Server const * server) const = 0;
 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -28,7 +30,7 @@ public :
 
     virtual void test() const = 0;
 
-    virtual void visit_by(const Visitor & visitor) const = 0;
+    virtual void visit_by(Visitor const & visitor) const = 0;
 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -42,7 +44,7 @@ public :
         std::cout << "Client::test\n";
     }
 
-    void visit_by(const Visitor & visitor) const override
+    void visit_by(Visitor const & visitor) const override
     { 
         visitor.visit(this);
     }
@@ -59,7 +61,7 @@ public :
         std::cout << "Server::test\n";
     }
 
-    void visit_by(const Visitor & visitor) const override
+    void visit_by(Visitor const & visitor) const override
     {
         visitor.visit(this);
     }
@@ -71,14 +73,14 @@ class Router : public Visitor
 {
 public :
 
-    void visit(const Client * client) const override 
+    void visit(Client const * client) const override 
     { 
         std::cout << "Router::visit (1)\n";
 
         client->test();
     }
 
-    void visit(const Server * server) const override 
+    void visit(Server const * server) const override 
     {
         std::cout << "Router::visit (2)\n";
 
@@ -92,7 +94,13 @@ int main()
 {
     std::shared_ptr < Entity > entity = std::make_shared < Client > ();
 
+//  -------------------------------------------------------------------
+
     Router router;
+
+//  -------------------------------------------------------------------
 
     entity->visit_by(router);
 }
+
+///////////////////////////////////////////////////////////////////////

@@ -1,13 +1,11 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <bit>
 #include <cassert>
 #include <cstddef>
-#include <exception>
 #include <iostream>
 #include <memory>
-#include <new>
-#include <stdexcept>
 #include <string>
-#include <tuple>
 #include <type_traits>
 #include <utility>
 #include <variant>
@@ -20,9 +18,11 @@ template < typename ... Ts > struct Deque {};
 
 template < typename D > struct Size {};
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 template < typename ... Ts > struct Size < Deque < Ts ... > >
 {
-    static constexpr auto value = sizeof...(Ts);
+    constexpr static auto value = sizeof...(Ts);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,6 +37,8 @@ template < typename D > constexpr auto empty_v = size_v < D > == 0;
 
 template < typename D > struct Front {};
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 template < typename T, typename ... Ts > struct Front < Deque < T, Ts ... > > 
 { 
     using type = T;
@@ -49,6 +51,8 @@ template < typename D > using front = typename Front < D > ::type;
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename D > struct Pop_Front {};
+
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T, typename ... Ts > struct Pop_Front < Deque < T, Ts ... > >
 {
@@ -63,6 +67,8 @@ template < typename D > using pop_front = typename Pop_Front < D > ::type;
 
 template < typename D, bool C = empty_v < D > > class Max_Type {};
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 template < typename D > class Max_Type < D, false >
 {
 private :
@@ -75,6 +81,8 @@ public :
 
     using type = std::conditional_t < sizeof(current_t) >= sizeof(max_t), current_t, max_t > ;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename D > class Max_Type < D, true > 
 { 
@@ -91,6 +99,8 @@ template < typename D > using max_type = typename Max_Type < D > ::type;
 
 template < typename D, typename T, std::size_t I = 0, bool C = empty_v < D > > class Index {};
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 template < typename D, typename T, std::size_t I > class Index < D, T, I, false > 
 :
     public std::conditional_t 
@@ -102,6 +112,8 @@ template < typename D, typename T, std::size_t I > class Index < D, T, I, false 
         Index < pop_front < D > , T, I + 1 > 
     > 
 {};
+
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename D, typename T, std::size_t I > class Index < D, T, I, true > {};
 
@@ -182,7 +194,7 @@ protected :
 
 //  -----------------------------------------------------------------------------
 
-    static constexpr auto s_index = index_v < Deque < Ts ... > , T > + 1;
+    constexpr static auto s_index = index_v < Deque < Ts ... > , T > + 1;
 
 private :
 
@@ -212,7 +224,7 @@ public :
         *this = front < Deque < Ts ... > > ();
     }
 
-    Variant(const Variant & other) : Handler < Variant < Ts ... > , Ts, Ts ... > ::Handler()...
+    Variant(Variant const & other) : Handler < Variant < Ts ... > , Ts, Ts ... > ::Handler()...
     {
         auto lambda = [this](auto && x){ *this = x; };
 
@@ -226,16 +238,20 @@ public :
         other.visit(lambda);
     }
 
+//  -------------------------------------------------------------------------------------------
+
+   ~Variant() 
+    { 
+        destroy();
+    }
+
+//  -------------------------------------------------------------------------------------------
+
     auto & operator=(Variant other)
     {
         swap(other);
 
 		return *this;
-    }
-
-   ~Variant() 
-    { 
-        destroy();
     }
 
 //  -------------------------------------------------------------------------------------------
@@ -278,7 +294,7 @@ private :
 
     void destroy()
     {
-        (Handler < Variant < Ts ... > , Ts, Ts ... > ::destroy(), ... );
+        (Handler < Variant < Ts ... > , Ts, Ts ... > ::destroy(), ...);
         
         this->m_index = 0;
     }
@@ -295,6 +311,8 @@ private :
         {
             return visitor(this->template get < U > ());
         }
+
+    //  -----------------------------------------------------------------------------------
         
         if constexpr (sizeof...(Us) > 0)
         {
@@ -314,7 +332,7 @@ public :
         std::cout << "Visitor::operator() : x = " << x << '\n';
     }
 
-    void operator()(const std::string & string) const
+    void operator()(std::string const & string) const
     {
         std::cout << "Visitor::operator() : string = " << string << '\n';
     }
@@ -322,11 +340,18 @@ public :
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-class Entity 
+class Entity
 { 
-public :
+public : 
 
-    Entity(int) {} 
+    Entity(int) {}
+
+//  -------------------------------------
+
+   ~Entity() 
+    { 
+		std::cout << "Entity::~Entity\n";
+	} 
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -337,33 +362,39 @@ int main()
     
     Variant < int, std::string > variant_2 = 2;
 
-//  --------------------------------------------------------------
-
     Variant < int, std::string > variant_3 = variant_2;
-
-                                 variant_3 = variant_2;
-
-//  --------------------------------------------------------------
 
     Variant < int, std::string > variant_4 = std::move(variant_3);
 
-                                 variant_4 = std::move(variant_3);
+//  --------------------------------------------------------------
 
-                                 variant_4 = 4;
+    variant_3 = variant_2;
+
+    variant_4 = std::move(variant_3);
+
+    variant_1 = 1;
 
 //  --------------------------------------------------------------
 
-    assert(variant_4.has < int > ());
-    
-    assert(variant_4.get < int > () == 4);
+    assert(variant_1.get < int > () == 1);
 
 //  --------------------------------------------------------------
 
-    variant_4.visit(Visitor());
+    variant_1.visit(Visitor());
 
 //  --------------------------------------------------------------
 
 //  Variant <                 Entity, int > variant_5; // error
 
     Variant < std::monostate, Entity, int > variant_6;
+
+//  --------------------------------------------------------------
+
+    (variant_6 = Entity(6)) = 6;
+
+//  --------------------------------------------------------------
+
+    assert(variant_6.has < Entity > () == 0);
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////
