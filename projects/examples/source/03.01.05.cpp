@@ -15,9 +15,9 @@ public :
 
     auto get() const
     { 
-    //	m_x = 1; // error
+    //	++m_x; // error
 
-    //  -----------------
+    //  ---------------
 
         return m_x;
     }

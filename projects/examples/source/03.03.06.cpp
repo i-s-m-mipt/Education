@@ -177,23 +177,15 @@ int main()
 {
 	Vector vector_1;
 
-//  ------------------------------------
-
 	Vector vector_2 = { 1, 2, 3, 4, 5 };
 
-//  ------------------------------------
+	Vector vector_3 = vector_2;
 
-	auto vector_3 = vector_2;
+	Vector vector_4 = std::move(vector_3);
 
-//  ------------------------------------
-
-	auto vector_4 = std::move(vector_3);
-
-//  ------------------------------------
+//  --------------------------------------
 
 	vector_3 = vector_2;
-
-//  ------------------------------------
 
 	vector_4 = std::move(vector_3);
 }

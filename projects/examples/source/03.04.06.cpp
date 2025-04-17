@@ -65,13 +65,9 @@ private :
 
 int main()
 {
-    std::stringstream stream_1;
+    std::stringstream stream_1("{ 1, 1 }");
 
     std::stringstream stream_2;
-
-//  -----------------------------------------
-
-    stream_1.str("{ 1, 1 }");
 
 //  -----------------------------------------
     
