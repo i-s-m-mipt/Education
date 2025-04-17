@@ -108,17 +108,13 @@ public :
 
     //  ------------------------------------------------------------------
 
-        const auto operator++(int) 
+        auto const operator++(int) 
 		{ 
 			auto copy = *this;
-
-        //  --------------------
             
             m_x += m_y;
             
             std::swap(m_x, m_y);
-
-        //  --------------------
             
             return copy;
 		}
@@ -130,8 +126,6 @@ public :
 			m_x += m_y;
             
             std::swap(m_x, m_y);
-
-        //  --------------------
             
             return *this;
 		}
@@ -145,7 +139,7 @@ public :
 
     //  ------------------------------------------------------------------
 
-		friend auto operator==(const iterator & lhs, const iterator & rhs)
+		friend auto operator==(iterator const & lhs, iterator const & rhs)
 		{ 
 			return lhs.m_x == rhs.m_x && lhs.m_y == rhs.m_y;
 		}
@@ -213,13 +207,9 @@ boost::unit_test::test_suite * init_unit_test_suite(int, char **)
 
     auto test_case = BOOST_PARAM_TEST_CASE(&test, std::begin(vector), std::end(vector));
 
-//  ------------------------------------------------------------------------------------
-
     boost::unit_test::framework::master_test_suite().add(test_case);
 
     boost::unit_test::framework::master_test_suite().p_name.value = "master";
-
-//  ------------------------------------------------------------------------------------
 
     return nullptr;
 }

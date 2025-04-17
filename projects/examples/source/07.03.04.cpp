@@ -35,9 +35,9 @@ public :
 
 //  ---------------------------------------------------------------------------------------------
 
-	Logger(const char * scope, bool has_trace) : m_scope(scope), m_has_trace(has_trace)
+	Logger(char const * scope, bool has_trace) : m_scope(scope), m_has_trace(has_trace)
 	{
-		std::call_once(s_status, initialize);
+		std::call_once(s_flag, initialize);
 
 		if (m_has_trace) 
 		{
@@ -57,11 +57,9 @@ public :
 
 //  ---------------------------------------------------------------------------------------------
 
-	void write(Severity severity, const std::string & string) const
+	void write(Severity severity, std::string const & string) const
 	{
 		auto record = s_logger.open_record(boost::log::keywords::severity = severity);
-
-	//  ------------------------------------------------------------------------------
 		
 		boost::log::record_ostream(record) << m_scope << " : " << string;
 
@@ -107,8 +105,6 @@ private :
 			boost::log::keywords::rotation_size = 8 * 1'024 * 1'024
 		);
 
-	//  -------------------------------------------------------------------------------------
-
 		sink->locked_backend()->auto_flush();
 
 		sink->locked_backend()->set_file_collector
@@ -118,8 +114,6 @@ private :
 
 		sink->set_formatter(&format);
 
-	//  -------------------------------------------------------------------------------------
-
 		return sink;
 	}
 
@@ -127,23 +121,17 @@ private :
 
 	static void format(boost::log::record_view record, boost::log::formatting_ostream & stream)
 	{
-		const auto & attributes = record.attribute_values();
-
-	//  ---------------------------------------------------------------------------------------
+		auto const & attributes = record.attribute_values();
 
 		stream << std::format
 		(
 			"{:0>8}", boost::log::extract_or_throw < std::size_t > (attributes["line"])
 		);
 
-	//  ---------------------------------------------------------------------------------------
-
 		auto timestamp = boost::log::expressions::format_date_time < boost::posix_time::ptime >
 		(
 			"time", "%Y %B %d %H:%M:%S.%f"
 		);
-
-	//  ---------------------------------------------------------------------------------------	
 
 		(boost::log::expressions::stream << " | " << timestamp)(record, stream);
 
@@ -177,13 +165,13 @@ private :
 
 //  ---------------------------------------------------------------------------------------------
 
-	const char * m_scope = nullptr;
+	char const * m_scope = nullptr;
 
 	bool m_has_trace = false;
 
 //  ---------------------------------------------------------------------------------------------
 
-    static inline std::once_flag s_status;
+    static inline std::once_flag s_flag;
 
     static inline boost::log::sources::severity_logger_mt < Severity > s_logger;
 };
@@ -231,7 +219,7 @@ int main()
 	{
 		test_v3();
 	}
-	catch (const std::exception & exception)
+	catch (std::exception const & exception)
 	{
 		LOGGER_WRITE_FATAL(logger, exception.what());
 	}

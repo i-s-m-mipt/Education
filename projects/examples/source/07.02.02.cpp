@@ -36,6 +36,13 @@ public :
 
 //  -----------------------------------------------
 
+	void swap(Entity & other) noexcept
+	{
+		std::swap(m_x, other.m_x);
+	}
+
+//  -----------------------------------------------
+
 	auto get() const noexcept
 	{
 		return m_x;
@@ -56,22 +63,6 @@ private :
 
 	int m_x = 0;
 };
-
-//////////////////////////////////////////////////////////////
-
-template < typename T > void swap(T & x, T & y) noexcept
-(
-	std::is_nothrow_move_constructible_v < T > && 
-	
-	std::is_nothrow_move_assignable_v    < T >
-)
-{
-	auto z = std::move(y);
-
-	     y = std::move(x);
-
-		 x = std::move(z);
-}
 
 //////////////////////////////////////////////////////////////
 
@@ -112,7 +103,7 @@ int main()
 
 //  ----------------------------------------------------------
 
-	swap(entity_1, entity_2);
+	entity_1.swap(entity_2);
 
 //  ----------------------------------------------------------
 

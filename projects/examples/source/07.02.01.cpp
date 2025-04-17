@@ -15,7 +15,7 @@ public :
 
 //  -------------------------------------------
 
-	const char * what() const noexcept override 
+	char const * what() const noexcept override 
 	{ 
 		return "exception";
 	}
@@ -64,7 +64,7 @@ void test_v2()
 	{
 		test_v1();
 	}
-	catch (const Exception & exception)
+	catch (Exception const & exception)
 	{
 		std::cerr << "test_v2 : " << exception.what() << '\n';
 
@@ -94,7 +94,7 @@ void test_v3()
 	{
 		test_v2();
 	}
-	catch (const std::exception & exception)
+	catch (std::exception const & exception)
 	{
 		std::cerr << "test_v3 : " << exception.what() << '\n';
 
@@ -116,7 +116,7 @@ int main()
 	{
 		test_v3();
 	}
-	catch (const std::exception & exception)
+	catch (std::exception const & exception)
 	{
 		std::cerr << "main : " << exception.what() << '\n';
 	}

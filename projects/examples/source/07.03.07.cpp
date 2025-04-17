@@ -71,8 +71,6 @@ class Adapter : public Fixture, public testing::WithParamInterface < int > {};
 TEST_P(Adapter, Data) 
 { 
     auto x = GetParam();
-
-//  --------------------------------
     
     vector.resize(x, 0);
 

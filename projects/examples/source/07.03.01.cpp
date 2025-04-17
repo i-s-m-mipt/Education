@@ -8,7 +8,7 @@
 
 void test_v1()
 {
-    for (const auto & entry : std::stacktrace::current())
+    for (auto const & entry : std::stacktrace::current())
     {
         std::cout << "test_v1 : entry : ";
 

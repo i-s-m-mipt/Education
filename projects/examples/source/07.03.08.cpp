@@ -19,8 +19,6 @@ void test_v1(benchmark::State & state)
     {
         auto x = 0.0;
 
-    //  -------------------------------------------------------------
-
 		for (auto i = 0uz; i < 1'000; ++i)
 		{
 			x += std::pow(std::sin(i), 2) + std::pow(std::cos(i), 2);
@@ -37,8 +35,6 @@ void test_v2(benchmark::State & state)
     for (auto element : state)
     {
         auto x = 0.0;
-
-    //  -----------------------------------------------------------------
 
         try 
         {
@@ -60,8 +56,6 @@ void test_v3(benchmark::State & state)
     for (auto element : state)
     {
         auto x = 0.0;
-
-    //  -----------------------------------------------------------------
 
         try
         {
@@ -89,8 +83,6 @@ void test_v4(benchmark::State & state)
     {
         std::vector < int > vector(state.range(0), 0);
 
-    //  ----------------------------------------------
-
         benchmark::DoNotOptimize(vector);
     }
 }
@@ -106,8 +98,6 @@ void test_v5(benchmark::State & state)
             state.range(0), std::vector < int > (state.range(1), 0)
         );
 
-    //  -----------------------------------------------------------
-
         benchmark::DoNotOptimize(vector);
     }
 
@@ -119,8 +109,6 @@ void test_v5(benchmark::State & state)
 void test_v6(benchmark::State & state)
 {
     std::vector < int > vector(state.range(0), 0);
-
-//  ------------------------------------------------------------------
 
     std::ranges::iota(vector, 1);
 

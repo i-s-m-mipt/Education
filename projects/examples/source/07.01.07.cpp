@@ -18,7 +18,7 @@ public :
 
 //  ---------------------------------------------------------------------
 
-    void operator()(const std::string & string) const
+    void operator()(std::string const & string) const
     {
         std::cout << "Visitor::operator() : string = " << string << '\n';
     }
@@ -66,9 +66,7 @@ int main()
 
 //  ----------------------------------------------------------------
 
-	variant_3 = Entity(3);
-
-    variant_3 = 3;
+	(variant_3 = Entity(3)) = 3;
 
 //  ----------------------------------------------------------------
 
