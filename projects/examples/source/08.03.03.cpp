@@ -19,19 +19,23 @@ template < typename T > auto equal(T x, T y, T epsilon = std::numeric_limits < T
 
 int main()
 {
-    boost::multiprecision::cpp_bin_float_100 x("0." + std::string(100, '3'));
+    using float_100_t = boost::multiprecision::cpp_bin_float_100;
 
-//  boost::multiprecision::cpp_bin_float_100 y(1.0 / 3); // bad
+//  -------------------------------------------------------------
 
-    boost::multiprecision::cpp_bin_float_100 z(1);
+    float_100_t x("0." + std::string(100, '3'));
 
-//  -------------------------------------------------------------------------
+    float_100_t y = 1.0 / 3;
+
+    float_100_t z = 1;
+
+//  -------------------------------------------------------------
 
     z /= 3;
 
-//  -------------------------------------------------------------------------
+//  -------------------------------------------------------------
 
-//  assert(equal(x, y) == 0); // bad
+    assert(equal(x, y) == 0);
 
     assert(equal(x, z) == 1);
 }

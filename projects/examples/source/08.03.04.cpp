@@ -50,25 +50,25 @@ template < typename T > auto equal(T x, T y, T epsilon = std::numeric_limits < T
 
 int main()
 {
-    auto x = boost::math::constants::pi < boost::multiprecision::cpp_bin_float_100 > () / 2;
+    using float_100_t = boost::multiprecision::cpp_bin_float_100;
 
 //  ----------------------------------------------------------------------------------------
 
-    auto y1 = derivative(test_v1, x);
+    float_100_t x = boost::math::constants::pi < float_100_t > () / 2;
 
-    auto y2 = derivative(test_v2, x);
+    float_100_t y = 0;
 
-//  ----------------------------------------------------------------------------------------
-
-    assert(equal(y1, boost::multiprecision::cpp_bin_float_100(0)));
+    float_100_t z = boost::math::gamma_p_derivative(2.0, x);
 
 //  ----------------------------------------------------------------------------------------
 
-    boost::multiprecision::cpp_bin_float_100 epsilon("0." + std::string(55, '0') + '1');
+    float_100_t epsilon("0." + std::string(55, '0') + '1');
 
 //  ----------------------------------------------------------------------------------------
 
-    assert(equal(y2, boost::math::gamma_p_derivative(2.0, x), epsilon));
+    assert(equal(derivative(test_v1, x), y));
+
+    assert(equal(derivative(test_v2, x), z, epsilon));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -16,11 +16,15 @@
 
 int main()
 {
-    assert(std::numeric_limits < boost::multiprecision::uint128_t > ::digits10 == 38);
+    using uint128_t = boost::multiprecision::uint128_t;
 
 //  ----------------------------------------------------------------------------------------------  
 
-    assert(std::numeric_limits < boost::multiprecision::uint128_t > ::max() + 1 == 0);
+    assert(std::numeric_limits < uint128_t > ::digits10 == 38);
+
+//  ----------------------------------------------------------------------------------------------  
+
+    assert(std::numeric_limits < uint128_t > ::max() + 1 == 0);
 
 //  ----------------------------------------------------------------------------------------------  
 
