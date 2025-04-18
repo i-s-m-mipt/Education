@@ -115,6 +115,8 @@ int main()
 
     Client client;
 
+	Router router;
+
 //  -------------------------------------------------------
 
 	[[maybe_unused]] Entity * entity_1 = &client;
@@ -122,6 +124,8 @@ int main()
 	[[maybe_unused]] Entity & entity_2 =  client;
 
 //	[[maybe_unused]] Entity   entity_3 =  client; // error
+
+//	[[maybe_unused]] Entity * entity_4 = &router; // error
 
 //  -------------------------------------------------------
 
@@ -132,14 +136,6 @@ int main()
 //  -------------------------------------------------------
 
 	std::vector < Entity * > entities;
-
-//  -------------------------------------------------------
-
-	Router router;
-
-//  -------------------------------------------------------
-
-//	[[maybe_unused]] Entity * entity_4 = &router; // error
 }
 
 ///////////////////////////////////////////////////////////

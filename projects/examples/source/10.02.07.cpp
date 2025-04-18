@@ -18,7 +18,7 @@ auto find(std::vector < int > const & vector_1, std::vector < int > const & vect
 
 	auto size_2 = std::size(vector_2);
 
-	std::vector < std::vector < std::size_t > > buffer_1
+	std::vector < std::vector < std::size_t > > vector_3
 	(
 		size_1 + 1, std::vector < std::size_t > 
 		(
@@ -32,16 +32,16 @@ auto find(std::vector < int > const & vector_1, std::vector < int > const & vect
 		{
 			if (vector_1[i - 1] == vector_2[j - 1])
 			{
-				buffer_1[i][j] = buffer_1[i - 1][j - 1] + 1;
+				vector_3[i][j] = vector_3[i - 1][j - 1] + 1;
 			}
 			else
 			{
-				buffer_1[i][j] = std::max(buffer_1[i - 1][j], buffer_1[i][j - 1]);
+				vector_3[i][j] = std::max(vector_3[i - 1][j], vector_3[i][j - 1]);
 			}
 		}
 	}
 
-	std::vector < int > buffer_2;
+	std::vector < int > vector_4;
 
 	auto i = std::ssize(vector_1) - 1, j = std::ssize(vector_2) - 1;
 
@@ -49,7 +49,7 @@ auto find(std::vector < int > const & vector_1, std::vector < int > const & vect
 	{
 		if (vector_1[i] == vector_2[j])
 		{
-			buffer_2.push_back(vector_1[i]);
+			vector_4.push_back(vector_1[i]);
 			
 			--i;
 			
@@ -57,13 +57,13 @@ auto find(std::vector < int > const & vector_1, std::vector < int > const & vect
 		}
 		else 
 		{
-			buffer_1[i][j + 1] > buffer_1[i + 1][j] ? --i : --j;
+			vector_3[i][j + 1] > vector_3[i + 1][j] ? --i : --j;
 		}
 	}
 
-	std::ranges::reverse(buffer_2);
+	std::ranges::reverse(vector_4);
 	
-	return buffer_2;
+	return vector_4;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////

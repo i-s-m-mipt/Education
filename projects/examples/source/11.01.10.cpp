@@ -2,8 +2,6 @@
 
 #include <cassert>
 #include <cstdint>
-#include <functional>
-#include <vector>
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -45,37 +43,31 @@ private :
 
 int main()
 {
-	Entity entity;
+	Entity entity(State::slow);
 
-//  --------------------------------------------------------
+//  ---------------------------------------------------------
 
-	std::vector < Command > commands_1 = 
-	{
-		Command(entity, State::slow),
+	Command command(entity, State::fast);
 
-		Command(entity, State::fast)
-	};
+//  ---------------------------------------------------------
 
-//  --------------------------------------------------------
+	command();
 
-	commands_1.at(0)(); assert(entity.state == State::slow);
+//  ---------------------------------------------------------
 
-	commands_1.at(1)(); assert(entity.state == State::fast);
-	
-//  --------------------------------------------------------
+	assert(entity.state == State::fast);
 
-	std::vector < std::function < void() > > commands_2 = 
-	{
-		[&entity](){ entity.state = State::slow; },
-			
-		[&entity](){ entity.state = State::fast; }
-	};
+//  ---------------------------------------------------------
 
-//  --------------------------------------------------------
+	auto lambda = [&entity](){ entity.state = State::slow; };
 
-	commands_2.at(0)(); assert(entity.state == State::slow);
-		
-	commands_2.at(1)(); assert(entity.state == State::fast);
+//  ---------------------------------------------------------
+
+	lambda();
+
+//  ---------------------------------------------------------
+
+	assert(entity.state == State::slow);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

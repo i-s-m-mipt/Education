@@ -14,14 +14,14 @@ int main()
 
 	std::vector < int > vector_3
 	(
-		std::make_move_iterator(std::begin(vector_2)),
+		std::make_move_iterator(std::begin(vector_1)),
 		
-		std::make_move_iterator(std::end  (vector_2))
+		std::make_move_iterator(std::end  (vector_1))
 	);
 
 //  -----------------------------------------------------------------------
 
-	assert(vector_3 == vector_1 && std::size(vector_2) == 5);
+	assert(vector_3 == vector_2 && std::size(vector_1) == 5);
 }
 
 ///////////////////////////////////////////////////////////////////////////

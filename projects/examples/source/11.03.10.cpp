@@ -18,23 +18,17 @@ int main()
 {
 	auto iterator_1 = std::ranges::max_element(test_v1());
 
-//  -----------------------------------------------------------------------------------
-
-	static_assert(std::is_same_v < decltype(iterator_1), std::ranges::dangling > == 1);
-
-//  -----------------------------------------------------------------------------------
-
-//	assert(*iterator_1 == 5); // error
-
-//  -----------------------------------------------------------------------------------
-
 	auto iterator_2 = std::ranges::max_element(test_v2());
 
 //  -----------------------------------------------------------------------------------
 
+	static_assert(std::is_same_v < decltype(iterator_1), std::ranges::dangling > == 1);
+
 	static_assert(std::is_same_v < decltype(iterator_2), std::ranges::dangling > == 0);
 
 //  -----------------------------------------------------------------------------------
+
+//	assert(*iterator_1 == 5); // error
 
 	assert(*iterator_2 == 5);
 }

@@ -335,41 +335,31 @@ public :
 		{
 			auto step = size / 2;
 
-			Integer x1, x2, y1, y2;
-
-		//  -----------------------------------------------------------------------------
+			Integer x1, x2;
 
 			x1.m_size = step;
 
 			x2.m_size = size - step;
 
-		//  -----------------------------------------------------------------------------
-
 			for (auto i =  0uz; i < step; ++i) { x1.m_digits[i       ] = x.m_digits[i]; }
 
 			for (auto i = step; i < size; ++i) { x2.m_digits[i - step] = x.m_digits[i]; }
 
-		//  -----------------------------------------------------------------------------
+			Integer y1, y2;
 
 			y1.m_size = step;
 			
 			y2.m_size = size - step;
 
-		//  -----------------------------------------------------------------------------
-
 			for (auto i =  0uz; i < step; ++i) { y1.m_digits[i       ] = y.m_digits[i]; }
 
 			for (auto i = step; i < size; ++i) { y2.m_digits[i - step] = y.m_digits[i]; }
-
-		//  -----------------------------------------------------------------------------
 
 			auto a = multiply(x2, y2);
 			
 			auto b = multiply(x1, y1);
 			
 			auto c = multiply(x2 + x1, y2 + y1);
-
-		//  -----------------------------------------------------------------------------
 
 			Integer base = Integer::s_base;
 

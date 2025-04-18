@@ -18,8 +18,6 @@ int main()
 
     [[maybe_unused]] auto y1 = 1u;
 
-//  ------------------------------------------------
-
 //	[[maybe_unused]] auto y2 = 2, y3 = 3.0; // error
 }
 
