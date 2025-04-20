@@ -1,9 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
-
-//////////////////////////////////////////////////////////////////////////////////////////
-
 template < int N = 0, int D = 1 > struct Ratio
 {
 	constexpr static auto num = N;
@@ -61,17 +57,17 @@ constexpr auto operator+(Duration < T1, R1 > const & lhs, Duration < T2, R2 > co
 
 int main()
 {
-	Duration < int, Ratio < 1, 2 > > duration_1(1);
+	constexpr Duration < int, Ratio < 1, 2 > > duration_1(1);
 
-	Duration < int, Ratio < 1, 3 > > duration_2(2);
+	constexpr Duration < int, Ratio < 1, 3 > > duration_2(2);
 
-//  ----------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
-	Duration < int, Ratio < 1, 6 > > duration_3 = duration_1 + duration_2;
+	constexpr Duration < int, Ratio < 1, 6 > > duration_3 = duration_1 + duration_2;
 
-//  ----------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
-	assert(duration_3.x == 7);
+	static_assert(duration_3.x == 7);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////

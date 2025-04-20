@@ -24,7 +24,7 @@ template < typename D > constexpr auto size_v = Size < D > ::value;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D > constexpr auto empty_v = size_v < D > == 0;
+template < typename D > constexpr auto is_empty_v = size_v < D > == 0;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -95,7 +95,7 @@ template < typename D > using back = typename Back < D > ::type;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename D, bool C = empty_v < D > > struct Push_Back {};
+template < typename T, typename D, bool C = is_empty_v < D > > struct Push_Back {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -151,7 +151,7 @@ template < typename D, std::size_t I > using nth = typename Nth < D, I > ::type;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D, bool C = empty_v < D > > class Max_Type {};
+template < typename D, bool C = is_empty_v < D > > class Max_Type {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -185,9 +185,9 @@ template < typename D > using max_type = typename Max_Type < D > ::type;
 
 int main()
 {
-    static_assert(size_v < Deque <     > > == 0 && empty_v < Deque <     > > == 1);
+    static_assert(size_v < Deque <     > > == 0 && is_empty_v < Deque <     > > == 1);
 
-    static_assert(size_v < Deque < int > > == 1 && empty_v < Deque < int > > == 0);
+    static_assert(size_v < Deque < int > > == 1 && is_empty_v < Deque < int > > == 0);
 
 //  ------------------------------------------------------------------------------------------
 

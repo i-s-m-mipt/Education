@@ -1,30 +1,51 @@
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
-#include <type_traits>
+#include <cstddef>
+#include <utility>
 
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
-template < typename T1, typename T2 > class is_same          : public std::false_type {};
+template < typename ... Ts > class Tuple {};
 
-template < typename T               > class is_same < T, T > : public std:: true_type {};
+////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////////////////////////
+template < typename T, typename ... Ts > class Tuple < T, Ts ... >
+{
+public :
 
-template < typename T1, typename T2 > constexpr auto is_same_v = is_same < T1, T2 > ::value;
+	constexpr Tuple(T && x, Ts && ... ys)
+	:
+		m_head(std::forward < T  > (x )   ), 
+		
+		m_tail(std::forward < Ts > (ys)...)
+	{}
 
-////////////////////////////////////////////////////////////////////////////////////////////
+//  -----------------------------------------------------
+
+	template < std::size_t I > constexpr auto get() const
+	{
+		if constexpr (I > 0)
+		{
+			return m_tail.template get < I - 1 > ();
+		}
+		else
+		{
+			return m_head;
+		}
+	}
+
+private :
+
+	T m_head;
+	
+	Tuple < Ts ... > m_tail;
+};
+
+////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	static_assert(     is_same_v < int, int    > == 1);
-    
-    static_assert(     is_same_v < int, double > == 0);
-
-//  ---------------------------------------------------
-
-    static_assert(std::is_same_v < int, int    > == 1);
-    
-    static_assert(std::is_same_v < int, double > == 0);
+	static_assert(Tuple < int, double > (1, 1.0).get < 0 > () == 1);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
