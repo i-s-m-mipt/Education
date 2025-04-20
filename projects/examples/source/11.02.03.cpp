@@ -1,61 +1,37 @@
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
-#include <any>
-#include <functional>
+#include <algorithm>
 #include <iostream>
-#include <iterator>
-#include <string>
-#include <typeindex>
-#include <unordered_map>
-#include <utility>
+#include <random>
 #include <vector>
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
-using namespace std::literals;
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-template < typename T > class Visitor
+void test(std::vector < int > const & vector)
 {
-public :
+	std::cout << "test : vector = { ";
 
-    void operator()(std::any const & any) const
-    {
-        std::cout << "Visitor::operator() : any = " << std::any_cast < T > (any) << '\n';
-    }
-};
+	for (auto element : vector)
+	{
+		std::cout << element << ' ';
+	}
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+	std::cout << "}\n";
+}
+
+///////////////////////////////////////////////////////////////
 
 int main()
 {
-    using alias_1 = int;
+	std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-    using alias_2 = std::string;
+//  -----------------------------------------------------------
 
-//  -------------------------------------------------------------------------------------------
+	std::ranges::shuffle(vector, std::default_random_engine());
 
-    std::unordered_map < std::type_index, std::function < void(std::any const &) > > visitors =
-    {
-        std::make_pair(std::type_index(typeid(alias_1)), Visitor < alias_1 > ()),
-        
-        std::make_pair(std::type_index(typeid(alias_2)), Visitor < alias_2 > ())
-    };
+//  -----------------------------------------------------------
 
-//  -------------------------------------------------------------------------------------------
-
-    for (auto const & any : std::vector < std::any > ({ 1, "aaaaa"s })) 
-    {
-        std::type_index type_index(any.type());
-
-    //  ------------------------------------------------------------------------------
-
-        if (auto iterator = visitors.find(type_index); iterator != std::end(visitors))
-        {
-            iterator->second(any);
-        }
-    }
+	test(vector);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////

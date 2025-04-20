@@ -1,34 +1,65 @@
-///////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-#include <algorithm>
+// support : www.cs.usfca.edu/~galles/visualization/Dijkstra.html
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+#include <array>
 #include <cassert>
 #include <iterator>
-#include <random>
-#include <vector>
 
-///////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/dijkstra_shortest_paths.hpp>
+#include <boost/graph/named_function_params.hpp>
+
+/////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+    using graph_t = boost::adjacency_list 
+    < 
+        boost::vecS, boost::vecS, boost::directedS, 
+        
+        boost::no_property, boost::property < boost::edge_weight_t, int >
+    > ;
 
-//  -----------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
-	std::ranges::shuffle(vector, std::default_random_engine());
+    graph_t graph;
 
-//  -----------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
-	auto iterator = std::next(std::begin(vector), 2);
+    boost::add_edge(0, 2, 1, graph);
 
-//  -----------------------------------------------------------
+    boost::add_edge(1, 1, 2, graph);
 
-	std::ranges::nth_element(vector, iterator);
+    boost::add_edge(1, 3, 3, graph);
 
-//  -----------------------------------------------------------
+    boost::add_edge(2, 1, 4, graph);
 
-    assert(vector[0] < *iterator && vector[1] < *iterator);
+    boost::add_edge(2, 3, 5, graph);
 
-    assert(vector[3] > *iterator && vector[4] > *iterator);
+    boost::add_edge(3, 1, 6, graph);
+
+    boost::add_edge(3, 4, 7, graph);
+
+    boost::add_edge(4, 0, 8, graph);
+
+    boost::add_edge(4, 1, 9, graph);
+
+//  ---------------------------------------------------------------------------------
+
+	std::array < int, 5 > array = {};
+
+//  ---------------------------------------------------------------------------------
+
+	boost::dijkstra_shortest_paths(graph, 0, boost::distance_map(std::begin(array)));
+
+//  ---------------------------------------------------------------------------------
+
+	assert((array == std::array < int, 5 > ({ 0, 5, 1, 6, 13 })));
 }
 
-///////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////

@@ -1,63 +1,41 @@
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
-#include <iostream>
-#include <variant>
+#include <forward_list>
+#include <list>
+#include <ranges>
+#include <vector>
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
-class Client 
-{ 
-public : 
-
-    void test() const 
-    { 
-        std::cout << "Client::test\n"; 
-    } 
-};
-
-///////////////////////////////////////////////////////////////////
-
-class Server 
-{ 
-public : 
-
-    void test() const 
-    { 
-        std::cout << "Server::test\n"; 
-    } 
-};
-
-///////////////////////////////////////////////////////////////////
-
-using entity_t = std::variant < Client, Server > ;
-
-///////////////////////////////////////////////////////////////////
-
-class Visitor_v1
+template < typename T > class Vector : private std::vector < T >
 {
 public :
 
-    void operator()(Client const & client) const { client.test(); }
+    using std::vector < T > ::begin;
 
-    void operator()(Server const & server) const { server.test(); }
+	using std::vector < T > ::  end;
+
+	using std::vector < T > :: size;
 };
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
-template < typename ... Bs > class Visitor_v2 : public Bs ... 
-{ 
-public :
+static_assert(std::ranges::      range < Vector < int > > );
 
-    using Bs::operator()...;
-};
+static_assert(std::ranges::sized_range < Vector < int > > );
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
-int main()
-{ 
-    std::visit(             Visitor_v1   (), entity_t(Client()));
+static_assert(std::ranges::        sized_range < std::forward_list < int > > == 0);
 
-    std::visit(Visitor_v2 < Visitor_v1 > (), entity_t(Client()));
-}
+static_assert(std::ranges::      forward_range < std::forward_list < int > > == 1);
 
-///////////////////////////////////////////////////////////////////
+static_assert(std::ranges::bidirectional_range < std::        list < int > > == 1);
+
+static_assert(std::ranges::random_access_range < std::      vector < int > > == 1);
+
+///////////////////////////////////////////////////////////////////////////////////
+
+int main() {}
+
+///////////////////////////////////////////////////////////////////////////////////
