@@ -4,6 +4,7 @@
 
 //////////////////////////////////////////////////////////////////////////////////////
 
+#include <array>
 #include <chrono>
 #include <filesystem>
 #include <format>
@@ -88,7 +89,7 @@ auto size(std::filesystem::directory_entry const & entry)
         size = ::size(entry.path());
     }
 
-    char array[4]{ 'B', 'K', 'M', 'G' };
+    std::array < char, 4 > array = { 'B', 'K', 'M', 'G' };
 
     auto i = 0uz;
 

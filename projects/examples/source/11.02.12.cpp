@@ -77,34 +77,36 @@ template < typename ... Is > auto generate(std::pair < Is, Is > ... pairs)
 
 int main()
 {
-    std::vector < int > vector = { 1, 2, 3, 4, 5 };
+    std::vector < int > vector_1 = { 1, 2, 3, 4, 5 };
 
-//  ---------------------------------------------------------
+	std::vector < int > vector_2 = { 1, 2, 3 };
+
+//  -------------------------------------------------------------
 
 	auto tuples = generate
 	(	
-		std::make_pair(std::begin(vector), std::end(vector)),
+		std::make_pair(std::begin(vector_1), std::end(vector_1)),
 		
-		std::make_pair(std::begin(vector), std::end(vector))
+		std::make_pair(std::begin(vector_2), std::end(vector_2))
 	);
 
-//  ---------------------------------------------------------
+//  -------------------------------------------------------------
 
-	auto size = std::size(vector);
+	auto size = std::size(vector_2);
 
-//  ---------------------------------------------------------
+//  -------------------------------------------------------------
 
-	for (auto i = 0uz; i < size; ++i)
+	for (auto i = 0uz; i < std::size(vector_1); ++i)
 	{
 		for (auto j = 0uz; j < size; ++j)
 		{
 			auto tuple = tuples[i * size + j];
 
-		//  --------------------------------------------
+		//  ----------------------------------------------
 
-			assert(std::get < 0 > (tuple) == vector[i]);
+			assert(std::get < 0 > (tuple) == vector_1[i]);
 			
-			assert(std::get < 1 > (tuple) == vector[j]);
+			assert(std::get < 1 > (tuple) == vector_2[j]);
 		}
 	}
 }

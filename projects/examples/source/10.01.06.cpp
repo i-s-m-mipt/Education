@@ -1,5 +1,6 @@
 /////////////////////////////////////////////////////////////////
 
+#include <array>
 #include <cassert>
 #include <iostream>
 #include <type_traits>
@@ -9,7 +10,7 @@
 
 int main()
 {
-	bool array[5]{};
+	std::array < bool, 5 > array = {};
 
 //  -------------------------------------------------------------
 

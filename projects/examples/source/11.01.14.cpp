@@ -1,5 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include <array>
 #include <bit>
 #include <cassert>
 #include <cstddef>
@@ -131,16 +132,16 @@ protected :
 
    ~Storage() = default;
 
-//  ---------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------------
 
     template < typename T > auto extract() const
     {
-        return std::bit_cast < T * > (&m_array);
+        return std::bit_cast < T * > (std::begin(m_array));
     }
 
-//  ---------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------------
 
-    alignas(Ts...) std::byte m_array[sizeof(max_type < Deque < Ts ... > > )]{};
+    alignas(Ts...) std::array < std::byte, sizeof(max_type < Deque < Ts ... > > ) > m_array = {};
 
     std::size_t m_index = 0;
 };

@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 
+#include <array>
 #include <cstddef>
 #include <format>
 #include <iostream>
@@ -56,9 +57,9 @@ private :
 
 	std::size_t m_offset = 0;
 
-    alignas(std::max_align_t) std::byte m_array[S]{};
+    alignas(std::max_align_t) std::array < std::byte, S > m_array = {};
 
-    std::byte * m_begin = m_array;
+    std::byte * m_begin = std::begin(m_array);
 
 //  ------------------------------------------------------------------------------
 
