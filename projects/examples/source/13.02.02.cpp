@@ -37,9 +37,9 @@ int main()
 
 //  ----------------------------------------------------------------------------
 
-	std::filesystem::remove_all("a");
+	std::filesystem::remove_all("a1");
 	
-	std::filesystem::remove_all("f");
+	std::filesystem::remove_all("a2");
 
 //  ----------------------------------------------------------------------------
 
