@@ -1,13 +1,15 @@
+///////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <cstddef>
 #include <filesystem>
 #include <iostream>
 #include <string>
-#include <utility>
+#include <tuple>
 
 ///////////////////////////////////////////////////////////////
 
-auto operator""_p(const char * string, std::size_t size)
+auto operator""_p(char const * string, std::size_t size)
 {
 	return std::filesystem::path(std::string(string, size));
 }
@@ -16,7 +18,7 @@ auto operator""_p(const char * string, std::size_t size)
 
 int main()
 {
-	auto path_1 = "../output/./13.02.01.cpp"_p;
+	auto path_1 = "../output/./13.02.01"_p;
 
 	auto path_2 = std::filesystem::absolute (path_1);
 
@@ -30,9 +32,15 @@ int main()
 
 	assert(std::filesystem::exists(path_1));
 
+//  -----------------------------------------------------------
+
 	assert(path_1.filename() == "13.02.01");
 
+//  -----------------------------------------------------------
+
 	assert(path_2 != path_3);
+
+//  -----------------------------------------------------------
 		
 	assert(std::filesystem::equivalent(path_2, path_3));
 
@@ -42,7 +50,7 @@ int main()
 	{
 		std::ignore = std::filesystem::canonical(path_5);
 	}
-	catch (const std::filesystem::filesystem_error & exception)
+	catch (std::filesystem::filesystem_error const & exception)
 	{
 		std::cerr << "main : " << exception.what() << '\n';
 	}
@@ -57,3 +65,5 @@ int main()
 
 	std::cout << "main : path_5 = " << path_5 << '\n';
 }
+
+///////////////////////////////////////////////////////////////

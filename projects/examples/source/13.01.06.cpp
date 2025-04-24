@@ -1,3 +1,5 @@
+////////////////////////////////////////////////////////////////////////
+
 #include <bit>
 #include <cassert>
 #include <cstddef>
@@ -21,40 +23,28 @@ auto & operator>>(std::istream & stream, Entity & entity)
 {
     auto size = 0uz;
 
-//  -------------------------------------------------------------------
-
     stream.read(std::bit_cast < char * > (&entity.x), sizeof(int));
 
     stream.read(std::bit_cast < char * > (&size), sizeof(std::size_t));
 
-//  -------------------------------------------------------------------
-
     entity.string.resize(size);
 
     stream.read(&entity.string.front(), size);
-
-//  -------------------------------------------------------------------
 
     return stream;
 }
 
 ////////////////////////////////////////////////////////////////////////
 
-auto & operator<<(std::ostream & stream, const Entity & entity)
+auto & operator<<(std::ostream & stream, Entity const & entity)
 {
     auto size = std::size(entity.string);
-
-//  --------------------------------------------------------------------
 
     stream.write(std::bit_cast < char * > (&entity.x), sizeof(int));
 
     stream.write(std::bit_cast < char * > (&size), sizeof(std::size_t));
 
-//  --------------------------------------------------------------------
-
     stream.write(std::data(entity.string), size);
-
-//  --------------------------------------------------------------------
 
     return stream;
 }
@@ -70,6 +60,8 @@ int main()
     string[0] = 1;
 
     string[4] = 5;
+
+//  ------------------------------------------------------------
 
     string.append("aaaaa");
 
@@ -93,3 +85,5 @@ int main()
 
     assert(stream_2.str() == stream_1.str());
 }
+
+////////////////////////////////////////////////////////////////////////

@@ -1,98 +1,60 @@
+//////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <filesystem>
 #include <iostream>
 #include <memory>
-#include <utility>
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <PDFWriter/AbstractContentContext.h>
 #include <PDFWriter/PageContentContext.h>
 #include <PDFWriter/PDFPage.h>
 #include <PDFWriter/PDFRectangle.h>
 #include <PDFWriter/PDFWriter.h>
 
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
-int main()
+void make_text(int & line, int delta, PageContentContext & context, PDFWriter & writer)
 {
-    PDFWriter writer;
+    auto font = writer.GetFontForFile("font.ttf");
 
-//  ----------------------------------------------------------------------------------------
-    
-    writer.StartPDF("13.03.03.pdf", ePDFVersion17);
+    auto size = 16;
 
-//  ----------------------------------------------------------------------------------------
+    line -= delta + size;
 
-    auto page = std::make_unique < PDFPage > ();
+    AbstractContentContext::TextOptions options(font, size, AbstractContentContext::eGray, 0);
 
-//  ----------------------------------------------------------------------------------------
+    context.WriteText(delta, line, "Hello, World!", options);
+}
 
-    page->SetMediaBox(PDFRectangle(0, 0, 595, 842));
+//////////////////////////////////////////////////////////////////////////////////////////////
 
-//  ----------------------------------------------------------------------------------------
-
-    using   image_options_t = AbstractContentContext::  ImageOptions;
-
-    using    text_options_t = AbstractContentContext::   TextOptions;
-
-    using graphic_options_t = AbstractContentContext::GraphicOptions;
-
-//  ----------------------------------------------------------------------------------------
-
-    auto delta = 10, line = static_cast < int > (page->GetMediaBox().UpperRightY);
-
-//  ----------------------------------------------------------------------------------------
-
-    auto context = writer.StartPageContentContext(page.get());
-
-//  ----------------------------------------------------------------------------------------
-
-    auto font = writer.GetFontForFile("13.03.04.ttf");
-
-    auto font_size = 16;
-
-//  ----------------------------------------------------------------------------------------
-
-    line -= delta + font_size;
-
-//  ----------------------------------------------------------------------------------------
-
-    text_options_t text_options(font, font_size, AbstractContentContext::eGray, 0);
-
-//  ----------------------------------------------------------------------------------------
-
-    context->WriteText(delta, line, "Hello, World!", text_options);
-
-//  ----------------------------------------------------------------------------------------
-
-    auto image_height = 380, ppi = 72, image_ppi = 96;
+void make_image(int & line, int delta, PageContentContext & context)
+{
+    auto height = 380, ppi_1 = 72, ppi_2 = 96;
 
     auto zoom = 1.0;
 
-//  ----------------------------------------------------------------------------------------
+    line -= delta + zoom * height * ppi_1 / ppi_2;
 
-    line -= delta + zoom * image_height * ppi / image_ppi;
+    AbstractContentContext::ImageOptions options;
 
-//  ----------------------------------------------------------------------------------------
+    options.transformationMethod = AbstractContentContext::eMatrix;
 
-    image_options_t image_options;
-
-    image_options.transformationMethod = AbstractContentContext::eMatrix;
-
-    image_options.matrix[0] = image_options.matrix[3] = zoom;
-
-//  ----------------------------------------------------------------------------------------
+    options.matrix[0] = options.matrix[3] = zoom;
     
-    context->DrawImage(delta, line, "13.03.05.jpg", image_options);
+    context.DrawImage(delta, line, "image.jpg", options);
+}
 
-//  ----------------------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////////////////////
 
-    auto rectangle_width = 100, rectangle_height = font_size + 4;
+void make_graphic(int & line, int delta, PageContentContext & context)
+{
+    auto width = 100, height = 100;
 
-//  ----------------------------------------------------------------------------------------
+    line -= delta + height;
 
-    line -= delta + rectangle_height;
-
-//  ----------------------------------------------------------------------------------------
-
-    graphic_options_t graphic_options
+    AbstractContentContext::GraphicOptions options
     (
         AbstractContentContext::eStroke,
         
@@ -101,11 +63,44 @@ int main()
         AbstractContentContext::ColorValueForName("Red"), 2
     );
 
-//  ----------------------------------------------------------------------------------------
+    context.DrawRectangle(delta, line, width, height, options);
+}
 
-    context->DrawRectangle(delta, line, rectangle_width, rectangle_height, graphic_options);
+//////////////////////////////////////////////////////////////////////////////////////////////
 
-//  ----------------------------------------------------------------------------------------
+int main()
+{
+    PDFWriter writer;
+
+//  --------------------------------------------------------------
+    
+    writer.StartPDF("output.pdf", EPDFVersion::ePDFVersionMax);
+
+//  --------------------------------------------------------------
+
+    auto page = std::make_unique < PDFPage > ();
+
+//  --------------------------------------------------------------
+
+    auto line = 842, delta = 10;
+
+//  --------------------------------------------------------------
+
+    page->SetMediaBox(PDFRectangle(0, 0, 595, line));
+
+//  --------------------------------------------------------------
+
+    auto context = writer.StartPageContentContext(page.get());
+
+//  --------------------------------------------------------------
+
+    make_text   (line, delta, *context, writer);
+
+    make_image  (line, delta, *context);
+
+    make_graphic(line, delta, *context);
+
+//  --------------------------------------------------------------
     
     writer.EndPageContentContext(context);
 
@@ -113,11 +108,13 @@ int main()
 
     writer.EndPDF();
 
-//  ----------------------------------------------------------------------------------------
+//  --------------------------------------------------------------
 
     std::cout << "main : enter char : "; std::cin.get();
 
-//  ----------------------------------------------------------------------------------------
+//  --------------------------------------------------------------
 
     std::filesystem::remove(writer.GetOutputFile().GetFilePath());
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////

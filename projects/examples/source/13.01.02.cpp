@@ -1,9 +1,9 @@
+////////////////////////////////////////////////////////////
+
 #include <cassert>
-#include <exception>
 #include <ios>
 #include <iostream>
 #include <sstream>
-#include <stdexcept>
 
 ////////////////////////////////////////////////////////////
 
@@ -33,24 +33,24 @@ int main()
         
         while (stream >> x);
     }
-    catch (const std::ios_base::failure & exception)
+    catch (std::ios_base::failure const & exception)
     {
         std::cerr << "main : " << exception.what() << '\n';
 
     //  ---------------------------------------------------
 
-        assert(stream.fail());
+        assert(stream.fail()); stream.clear();
+
+        assert(stream.good());
 
     //  ---------------------------------------------------
-
-        stream.clear();
-
-    //  ---------------------------------------------------
-
-        assert(stream.good() && stream.get() == 'a');
+        
+        assert(stream.get() == 'a');
     }
 
 //  --------------------------------------------------------
 
     stream.exceptions(state);
 }
+
+////////////////////////////////////////////////////////////

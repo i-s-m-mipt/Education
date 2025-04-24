@@ -1,3 +1,5 @@
+////////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <cstddef>
 #include <ios>
@@ -13,7 +15,7 @@ struct Manipulator
 
 ////////////////////////////////////////////////////////////////////////////
 
-auto & operator<<(std::ostream & stream, const Manipulator & manipulator)
+auto & operator<<(std::ostream & stream, Manipulator const & manipulator)
 {
     stream.precision(manipulator.precision);
 
@@ -28,3 +30,5 @@ int main()
 {
     assert((std::stringstream() << Manipulator(3) << 1.0).str() == "1.000");
 }
+
+////////////////////////////////////////////////////////////////////////////

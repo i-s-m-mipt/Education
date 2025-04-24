@@ -1,3 +1,5 @@
+/////////////////////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <ostream>
 #include <sstream>
@@ -6,12 +8,12 @@
 
 template < typename T > struct View 
 {
-    const T & x;
+    T const & x;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > auto & operator<<(std::ostream & stream, const View < T > & view)
+template < typename T > auto & operator<<(std::ostream & stream, View < T > const & view)
 {
     return stream << view.x << ' ';
 }
@@ -20,6 +22,8 @@ template < typename T > auto & operator<<(std::ostream & stream, const View < T 
 
 template < typename ... Ts > auto test(Ts ... xs)
 {
+//  return (std::stringstream() << ... <<      xs ).str(); // bad
+
     return (std::stringstream() << ... << View(xs)).str();
 }
 
@@ -29,3 +33,5 @@ int main()
 {
     assert(test(1, 2, 3) == "1 2 3 ");
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////

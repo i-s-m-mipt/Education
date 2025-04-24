@@ -1,35 +1,36 @@
-#include <exception>
-#include <filesystem>
-#include <fstream>
-#include <ios>
-#include <iostream>
-#include <stdexcept>
-#include <streambuf>
-#include <string>
-
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
 // support : Boost.IOStreams
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <streambuf>
+#include <string>
+
+/////////////////////////////////////////////////////////////////////
 
 class Adapter
 {
 public :
 
-    Adapter(const std::string & path) : m_stream(path)
+    Adapter(std::string const & path) : m_stream(path, std::ios::out)
     {
         if (m_stream) 
         {
-            m_buffer = std::cout.rdbuf(m_stream.rdbuf());
+            m_streambuf = std::cout.rdbuf(m_stream.rdbuf());
         }
     }
 
+//  -----------------------------------------------------------------
+
    ~Adapter() 
     { 
-        if (m_buffer) 
+        if (m_streambuf) 
         {
-            std::cout.rdbuf(m_buffer);
+            std::cout.rdbuf(m_streambuf);
         }
     }
 
@@ -37,14 +38,14 @@ private :
 
     std::fstream m_stream;
     
-    std::streambuf * m_buffer = nullptr;
+    std::streambuf * m_streambuf = nullptr;
 };
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    auto path = "13.01.09.data";
+    auto path = "output.data";
 
 //  ----------------------------------------------------
 
@@ -64,3 +65,5 @@ int main()
 
     std::filesystem::remove(path);
 }
+
+/////////////////////////////////////////////////////////////////////

@@ -1,100 +1,45 @@
-#include <exception>
-#include <filesystem>
-#include <ios>
-#include <iostream>
+/////////////////////////////////////////////////////////////////////////////
+
+#include <algorithm>
+#include <cassert>
 #include <iterator>
-#include <fstream>
-#include <stdexcept>
-#include <string>
+#include <sstream>
+#include <vector>
 
-//////////////////////////////////////////////////////////////////////////////////////
-
-void transform(const std::string & path_1, const std::string & path_2)
-{
-    auto string = (std::stringstream() << std::fstream(path_1).rdbuf()).str();
-
-//  ----------------------------------------------------------------------------------
-
-    for (auto iterator = std::begin(string); iterator != std::end(string); ++iterator)
-    {
-        if (*iterator == '\'')
-        {
-            do
-            {
-                ++iterator;
-            } 
-            while (!(*iterator == '\'' && *std::prev(iterator) != '\\'));
-        }
-
-    //  -----------------------------------------------------------------
-
-        if (*iterator == '\"')
-        {
-            do
-            {
-                ++iterator;
-            } 
-            while (!(*iterator == '\"' && *std::prev(iterator) != '\\'));
-        }
-
-    //  -----------------------------------------------------------------
-                
-        if (*iterator == '/') 
-        {
-            if (*std::next(iterator) == '/')
-            {
-                auto end = std::next(iterator, 2);
-
-                while (end != std::end(string) && *end != '\n')
-                {
-                    ++end;
-                }
-
-                iterator = string.erase(iterator, end);
-            }
-            else if (*std::next(iterator) == '*')
-            {
-                auto end = std::next(iterator, 3);
-
-                while (!(*end == '/' && *std::prev(end) == '*'))
-                {
-                    ++end;
-                }
-
-                iterator = string.erase(iterator, ++end);
-            }
-        }
-
-    //  -----------------------------------------------------------------
-
-        if (iterator == std::end(string)) 
-        {
-            break;
-        }
-    }
-
-//  ----------------------------------------------------------------------------------
-
-    std::fstream(path_2) << string;
-}
-
-//////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    auto path_1 = "13.01.14.cpp";
+	std::stringstream stream_1("1 2 3 4 5");
 
-	auto path_2 = "13.01.15.cpp";
+    std::stringstream stream_2;
 
-//  ----------------------------------------------------
+//  -------------------------------------------------------------------------
 
-    transform(path_1, path_2);
+	std::vector < int > vector;
 
-//  ----------------------------------------------------
+//  -------------------------------------------------------------------------
 
-    std::cout << "main : enter char : "; std::cin.get();
+	std::ranges::copy
+	(
+		std::istream_iterator < int > (stream_1),
 
-//  ----------------------------------------------------
+		std::istream_iterator < int > (), 
+			
+		std::back_inserter(vector)
+	);
 
-    std::filesystem::remove(path_2);
+//  -------------------------------------------------------------------------
+
+	assert(std::ranges::is_sorted(vector));
+
+//  -------------------------------------------------------------------------
+
+	std::ranges::copy(vector, std::ostream_iterator < int > (stream_2, " "));
+
+//  -------------------------------------------------------------------------
+
+	assert(stream_2.str() == "1 2 3 4 5 ");
 }
+
+/////////////////////////////////////////////////////////////////////////////

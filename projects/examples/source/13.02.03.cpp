@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////////////////////////////
+
+// support : ls -la
+
+//////////////////////////////////////////////////////////////////////////////////////
+
 #include <chrono>
 #include <filesystem>
 #include <format>
@@ -7,7 +13,7 @@
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-auto type(const std::filesystem::file_status & status)
+auto type(std::filesystem::file_status const & status)
 {
     if (std::filesystem::is_block_file    (status)) { return 'b'; }
     
@@ -25,8 +31,6 @@ auto type(const std::filesystem::file_status & status)
 
     if (std::filesystem::is_symlink       (status)) { return 'l'; }
 
-//  ---------------------------------------------------------------
-
     return '?';
 }
 
@@ -41,23 +45,23 @@ auto permissions(std::filesystem::perms permissions) -> std::string
 
     return
     { 
-        lambda(std::filesystem::perms::owner_read , 'r'),
+        lambda(std::filesystem::perms::owner_read,  'r'),
 
         lambda(std::filesystem::perms::owner_write, 'w'),
 
-        lambda(std::filesystem::perms::owner_exec , 'x') 
+        lambda(std::filesystem::perms::owner_exec,  'x') 
     };
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-auto size(const std::filesystem::path & path)
+auto size(std::filesystem::path const & path)
 {
 	auto size = 0uz;
 
 	if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
 	{
-		for (const auto & entry : std::filesystem::recursive_directory_iterator(path))
+		for (auto const & entry : std::filesystem::recursive_directory_iterator(path))
 		{
 			if (!std::filesystem::is_directory(entry.status()))
 			{
@@ -71,7 +75,7 @@ auto size(const std::filesystem::path & path)
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-auto size(const std::filesystem::directory_entry & entry)
+auto size(std::filesystem::directory_entry const & entry)
 {
     auto size = 0uz;
 
@@ -86,37 +90,36 @@ auto size(const std::filesystem::directory_entry & entry)
 
     char array[4]{ 'B', 'K', 'M', 'G' };
 
-    auto index = 0uz;
+    auto i = 0uz;
 
-    while (index < 3 && size >= 1'024)
+    while (i++ < 3 && size >= 1'024)
     {
         size /= 1'024;
-        
-        ++index;
     }
 
-    return (std::stringstream() << std::format("{: >4}", size) << array[index]).str();
+    return (std::stringstream() << std::format("{: >4}", size) << array[i - 1]).str();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-void view(const std::filesystem::path & path)
+void test(std::filesystem::path const & path)
 {
 	if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
 	{
-        for (const auto & entry : std::filesystem::directory_iterator(path))
+        for (auto const & entry : std::filesystem::directory_iterator(path))
 		{
-            std::cout << "view : " << type(entry.status()) << " | ";
+            std::cout << "test : entry : " << type(entry.status());
 
-            std::cout << permissions(entry.status().permissions()) << " | ";
+            std::cout << " | " << permissions(entry.status().permissions());
 
-            std::cout << size(entry) << " | ";
+            std::cout << " | " << size(entry);
 
-            auto time = std::chrono::file_clock::to_sys(entry.last_write_time());
+            std::cout << " | " << std::chrono::floor < std::chrono::seconds > 
+            (
+                std::chrono::file_clock::to_sys(entry.last_write_time())
+            );
 
-            std::cout << std::chrono::floor < std::chrono::seconds > (time) << " | ";
-
-			std::cout << entry.path().filename().string() << '\n';
+			std::cout << " | " << entry.path().filename().string() << '\n';
 		}
 	}
 }
@@ -125,5 +128,7 @@ void view(const std::filesystem::path & path)
 
 int main()
 {
-	view(std::filesystem::current_path());
+	test(std::filesystem::current_path());
 }
+
+//////////////////////////////////////////////////////////////////////////////////////

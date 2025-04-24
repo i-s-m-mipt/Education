@@ -1,3 +1,5 @@
+/////////////////////////////////////////////
+
 #include <cassert>
 #include <sstream>
 #include <string>
@@ -24,3 +26,5 @@ int main()
 	
 	assert(stream_2.str() == stream_1.str());
 }
+
+/////////////////////////////////////////////
