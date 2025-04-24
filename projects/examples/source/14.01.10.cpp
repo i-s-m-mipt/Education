@@ -30,9 +30,13 @@ template < typename F, typename ... Ts > auto async_invoke(F && f, Ts && ... xs)
 
 int main()
 {
-	assert(std::async(std::launch::async,    test_v1, 1).get() == 1);
+	auto future = std::async(test_v1, 1);
 
-	assert(std::async(std::launch::deferred, test_v1, 1).get() == 1);
+//  -----------------------------------------------------------------
+
+    assert(future.valid() == 1); assert(future.get() == 1);
+
+    assert(future.valid() == 0);
 
 //  -----------------------------------------------------------------
 
@@ -41,6 +45,12 @@ int main()
 		std::async(test_v2).get();
 	}
 	catch(...) {}
+
+//  -----------------------------------------------------------------
+
+	assert(std::async(std::launch::async,    test_v1, 1).get() == 1);
+
+	assert(std::async(std::launch::deferred, test_v1, 1).get() == 1);
 	
 //  -----------------------------------------------------------------
 

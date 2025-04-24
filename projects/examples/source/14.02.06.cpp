@@ -16,16 +16,14 @@ public :
 
     Entity()
     {
-    //  initialize_v1(); // bad
-
-    //  -----------------------------------------------------
+    //  initialize_v1(); // error
 
         std::call_once(m_flag, &Entity::initialize_v2, this);
     }
 
 private :
 
-//  void initialize_v1() // bad
+//  void initialize_v1() // error
 //  {
 //      if (!s_x)
 //      {
@@ -47,7 +45,7 @@ private :
 
 //  ---------------------------------------------------------
 
-    static std::unique_ptr < int > s_x;
+    static inline std::unique_ptr < int > s_x;
 
 //  ---------------------------------------------------------
 

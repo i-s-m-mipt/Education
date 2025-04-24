@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <atomic>
 #include <chrono>
 #include <iostream>
-#include <latch>
 #include <syncstream>
 #include <thread>
 
@@ -16,13 +16,14 @@ class Entity
 {
 public :
 
-    Entity() : m_latch(1) {}
-
-//  ---------------------------------------------------------------------------
-
     void execute() const
     {
-        test(); m_latch.wait();
+        test(); 
+        
+        while (!m_x)
+        {
+            std::this_thread::yield();
+        }
 
         test(); 
     }
@@ -31,7 +32,7 @@ public :
 
     void release() const
     {
-        m_latch.count_down();
+        m_x = true;
     }
 
 private :
@@ -45,7 +46,7 @@ private :
 
 //  ---------------------------------------------------------------------------
 
-    mutable std::latch m_latch;
+    mutable std::atomic < bool > m_x = false;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

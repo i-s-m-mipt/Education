@@ -82,9 +82,10 @@ public :
     {
         std::unique_lock < std::mutex > lock(m_mutex);
 
-        auto lambda = [this](){ return !std::empty(m_container); };
-
-        m_condition.wait(lock, lambda);
+        while (std::empty(m_container))
+        {
+            m_condition.wait(lock);
+        }
 
         auto x = std::make_shared < T > (m_container.front());
 
@@ -99,9 +100,10 @@ public :
     {
         std::unique_lock < std::mutex > lock(m_mutex);
 
-        auto lambda = [this](){ return !std::empty(m_container); };
-
-        m_condition.wait(lock, lambda);
+        while (std::empty(m_container))
+        {
+            m_condition.wait(lock);
+        }
 
         x = m_container.front();
 

@@ -1,108 +1,71 @@
-////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
-// support : en.wikipedia.org/wiki/Amdahl%27s_law
+#include <chrono>
+#include <future>
+#include <iostream>
+#include <thread>
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
-#include <algorithm>
-#include <cmath>
-#include <cstddef>
-#include <execution>
-#include <iterator>
-#include <random>
-#include <vector>
+using namespace std::literals;
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
-#include <benchmark/benchmark.h>
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-auto make_vector(std::size_t size)
+class Entity
 {
-	std::vector < double > vector(size, 0);
+public :
 
-    std::uniform_real_distribution distribution(0.0, 1.0);
+    Entity() : m_future(m_promise.get_future()) {}
 
-	std::default_random_engine engine;
+//  ------------------------------------------------------------------------------
 
-    auto lambda = [&engine, &distribution](){ return distribution(engine); };
-
-	std::ranges::generate(vector, lambda);
-
-	return vector;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-void handler(double & x)
-{
-    x = std::pow(std::sin(x), 2) + std::pow(std::cos(x), 2);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-void test_v1(benchmark::State & state)
-{
-    auto vector = make_vector(1'000'000);
-
-    for (auto element : state)
+    void execute() const
     {
-        std::for_each(std::execution::seq, std::begin(vector), std::end(vector), handler);
+        test(); m_future.wait();
+
+        test();
     }
-}
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+//  ------------------------------------------------------------------------------
 
-void test_v2(benchmark::State & state)
-{
-    auto vector = make_vector(1'000'000);
-
-    for (auto element : state)
+    void release() const
     {
-        std::for_each(std::execution::par, std::begin(vector), std::end(vector), handler);
+        m_promise.set_value();
     }
-}
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+private :
 
-void test_v3(benchmark::State & state)
-{
-    auto vector = make_vector(1'000'000);
-    
-    for (auto element : state)
+    void test() const
     {
-        std::for_each(std::execution::unseq, std::begin(vector), std::end(vector), handler);
+        std::cout << "Entity::test : id = " << std::this_thread::get_id() << '\n';
     }
-}
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+//  ------------------------------------------------------------------------------
 
-void test_v4(benchmark::State & state)
-{
-    auto vector = make_vector(1'000'000);
-    
-    for (auto element : state)
-    {
-        std::for_each(std::execution::par_unseq, std::begin(vector), std::end(vector), handler);
-    }
-}
+    mutable std::promise < void > m_promise;
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+    mutable std::shared_future < void > m_future;
+};
 
-BENCHMARK(test_v1);
-
-BENCHMARK(test_v2);
-
-BENCHMARK(test_v3);
-
-BENCHMARK(test_v4);
-
-////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    benchmark::RunSpecifiedBenchmarks();
+    Entity entity;
+
+//  -------------------------------------------------
+
+    std::jthread thread_1(&Entity::execute, &entity);
+
+    std::jthread thread_2(&Entity::execute, &entity);
+
+//  -------------------------------------------------
+
+    std::this_thread::sleep_for(1s);
+
+//  -------------------------------------------------
+
+    entity.release();
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////

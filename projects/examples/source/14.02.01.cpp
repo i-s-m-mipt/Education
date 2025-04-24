@@ -14,7 +14,7 @@ public :
 
 //  -----------------------------------------------------------
 
-//  void test_v1() // bad
+//  void test_v1() // error
 //  {
 //      ++m_x;
 //  }
@@ -33,8 +33,6 @@ public :
     void test_v3() const
     {
         std::scoped_lock < mutex_t > lock(m_mutex);
-
-    //  -------------------------------------------------------
 
         std::cout << "Entity::test_v3 : m_x = " << m_x << '\n';
     }

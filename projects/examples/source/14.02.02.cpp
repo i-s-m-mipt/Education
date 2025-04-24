@@ -28,8 +28,6 @@ public :
     {
         std::shared_lock < mutex_t > lock(m_mutex);
 
-    //  -------------------------------------------------------
-
         std::cout << "Entity::test_v2 : m_x = " << m_x << '\n';
     }
 

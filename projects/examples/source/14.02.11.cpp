@@ -1,70 +1,72 @@
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
+#include <chrono>
 #include <iostream>
-#include <latch>
+#include <semaphore>
 #include <syncstream>
 #include <thread>
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+using namespace std::literals;
+
+///////////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
 public :
 
-    Entity(int x) : m_stream(std::cout), m_latch_1(x), m_latch_2(1) {}
+    Entity() : m_semaphore(0) {}
 
-//  ------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
 
-    auto & latch_1() const { return m_latch_1; }
-
-    auto & latch_2() const { return m_latch_2; }
-
-//  ------------------------------------------------------------------
-
-    void execute(int x) const
+    void execute() const
     {
-        test(x); m_latch_1.count_down();
+        test(); m_semaphore.acquire();
 
-        test(x); m_latch_2.wait();
+        test(); m_semaphore.release();
+    }
 
-        test(x);
+//  ---------------------------------------------------------------------------
+
+    void release() const
+    {   
+        m_semaphore.release(m_semaphore.max());
     }
 
 private :
 
-    void test(int x) const
+    void test() const
     {
-        m_stream << "Entity::test : x = " << x << '\n';
+        std::osyncstream stream(std::cout);
+
+        stream << "Entity::test : id = " << std::this_thread::get_id() << '\n';
     }
 
-//  ------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
 
-    mutable std::osyncstream m_stream;
-
-//  ------------------------------------------------------------------
-
-    mutable std::latch m_latch_1;
-
-    mutable std::latch m_latch_2;
+    mutable std::counting_semaphore < 2 > m_semaphore;
 };
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Entity entity(2);
+    Entity entity;
 
-//  ----------------------------------------------------
+//  -------------------------------------------------
 
-    std::jthread thread_1(&Entity::execute, &entity, 1);
+    std::jthread thread_1(&Entity::execute, &entity);
 
-    std::jthread thread_2(&Entity::execute, &entity, 2);
+    std::jthread thread_2(&Entity::execute, &entity);
 
-//  ----------------------------------------------------
+//  -------------------------------------------------
 
-    entity.latch_1().wait();
+    std::this_thread::sleep_for(1s);
 
-    entity.latch_2().count_down();
+//  -------------------------------------------------
+
+    entity.release();
 }
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////

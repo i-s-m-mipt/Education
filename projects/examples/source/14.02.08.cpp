@@ -71,7 +71,7 @@ public :
 
 //  -----------------------------------------------------------------------
 
-//  auto top() const // bad
+//  auto top() const // error
 //  {
 //      std::scoped_lock < mutex_t > lock(m_mutex);
 //
@@ -80,7 +80,7 @@ public :
 
 //  -----------------------------------------------------------------------
 
-//  void pop() // bad
+//  void pop() // error
 //  {
 //      std::scoped_lock < mutex_t > lock(m_mutex);
 //
@@ -122,7 +122,7 @@ private :
 
 ///////////////////////////////////////////////////////////////////////////
 
-// void top_and_pop_v1(Stack < int > & stack) // bad
+// void top_and_pop_v1(Stack < int > & stack) // error
 // {
 //     std::ignore = stack.top();
 // 
@@ -142,23 +142,27 @@ int main()
 {
     Stack < int > stack;
 
-//  --------------------------------------------------------------
+//  --------------------------------------------------------------------
     
     stack.push(1);
 
     stack.push(2);
 
-//  --------------------------------------------------------------
-    
-//  std::jthread thread_1(top_and_pop_v1, std::ref(stack)); // bad
+//  --------------------------------------------------------------------
 
-//  std::jthread thread_2(top_and_pop_v1, std::ref(stack)); // bad
+    {
+//      std::jthread thread_1(top_and_pop_v1, std::ref(stack)); // error
 
-//  --------------------------------------------------------------
+//      std::jthread thread_2(top_and_pop_v1, std::ref(stack)); // error
+    }
 
-    std::jthread thread_3(top_and_pop_v2, std::ref(stack));
+//  --------------------------------------------------------------------
 
-    std::jthread thread_4(top_and_pop_v2, std::ref(stack));
+    {
+        std::jthread thread_1(top_and_pop_v2, std::ref(stack));
+
+        std::jthread thread_2(top_and_pop_v2, std::ref(stack));
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////

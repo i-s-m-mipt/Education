@@ -1,50 +1,68 @@
-////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 #include <chrono>
+#include <condition_variable>
 #include <iostream>
-#include <semaphore>
+#include <mutex>
+#include <syncstream>
 #include <thread>
 
-////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 using namespace std::literals;
 
-////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
 public :
 
-    Entity() : m_semaphore(0) {}
-
-//  --------------------------------------------------------
-
-    void test(int x) const
+    void execute() const
     {
-        std::cout << "Entity::test (1) : x = " << x << '\n';
-        
-        m_semaphore.acquire();
+        test();
 
-        std::cout << "Entity::test (2) : x = " << x << '\n'; 
-        
-        m_semaphore.release();
+        {
+            std::unique_lock < std::mutex > lock(m_mutex);
 
-        std::cout << "Entity::test (3) : x = " << x << '\n';
+            while (!m_x)
+            {
+                m_condition.wait(lock);
+            }
+        }
+        
+        test();
     }
 
-//  --------------------------------------------------------
+//  ---------------------------------------------------------------------------
 
     void release() const
-    {   
-        m_semaphore.release(m_semaphore.max());
+    {
+        std::scoped_lock < std::mutex > lock(m_mutex);
+
+        m_x = true;
+
+        m_condition.notify_all();
     }
 
 private :
 
-    mutable std::counting_semaphore < 2 > m_semaphore;
+    void test() const
+    {
+        std::osyncstream stream(std::cout);
+
+        stream << "Entity::test : id = " << std::this_thread::get_id() << '\n';
+    }
+
+//  ---------------------------------------------------------------------------
+
+    mutable bool m_x = false;
+
+    mutable std::mutex m_mutex;
+
+    mutable std::condition_variable m_condition;
 };
 
-////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -52,11 +70,9 @@ int main()
 
 //  -------------------------------------------------
 
-    std::jthread thread_1(&Entity::test, &entity, 1);
+    std::jthread thread_1(&Entity::execute, &entity);
 
-    std::jthread thread_2(&Entity::test, &entity, 2);
-
-    std::jthread thread_3(&Entity::test, &entity, 3);
+    std::jthread thread_2(&Entity::execute, &entity);
 
 //  -------------------------------------------------
 
@@ -67,4 +83,4 @@ int main()
     entity.release();
 }
 
-////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////

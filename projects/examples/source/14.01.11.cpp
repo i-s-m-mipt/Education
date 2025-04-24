@@ -24,7 +24,7 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum) -> T
 
 		sum += reduce(std::ranges::subrange(std::end(range), end), T());
 
-		return sum + future.get();
+		return future.get() + sum;
 	}
 	else
 	{
