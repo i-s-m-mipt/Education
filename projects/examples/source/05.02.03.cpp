@@ -93,13 +93,9 @@ auto make_composite(std::size_t size_1, std::size_t size_2) -> Entity *
 {
     auto composite = new Composite;
 
-//  --------------------------------------------------------------------------
-
     for (auto i = 0uz; i < size_1; ++i) { composite->add_entity(new Client); }
     
     for (auto i = 0uz; i < size_2; ++i) { composite->add_entity(new Server); }
-
-//  --------------------------------------------------------------------------
 
     return composite;
 }

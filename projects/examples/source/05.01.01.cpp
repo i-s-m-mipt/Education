@@ -23,13 +23,9 @@ public :
     { 
         m_entity = new Entity;
 
-    //  ----------------------
-
         make_x();
         
         make_y();
-
-    //  ----------------------
 
         return m_entity;
     }

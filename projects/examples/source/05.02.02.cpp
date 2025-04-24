@@ -74,8 +74,6 @@ public :
     {
         std::cout << "Server_v1::test\n";
 
-    //  ---------------------------------
-
         m_bridge.test();
     }
 };
@@ -93,8 +91,6 @@ public :
     void test() const override 
     { 
         std::cout << "Server_v2::test\n";
-
-    //  ---------------------------------
 
         m_bridge.test();
     }

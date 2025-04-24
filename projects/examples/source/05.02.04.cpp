@@ -52,8 +52,6 @@ public :
     void test() const override
     { 
         std::cout << "Decorator::test : ";
-
-    //  ----------------------------------
         
         m_entity.test();
     }

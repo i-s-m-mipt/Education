@@ -55,11 +55,7 @@ public :
     {
         std::cout << "Unique_v2::operator=\n";
 
-    //  ---------------------------------------
-
     //  Noncopyable::operator=(other); // error
-
-    //  ---------------------------------------
 
         return *this;
     }
