@@ -76,8 +76,6 @@ int main()
 
 //  using namespace std; // bad
 
-//  ---------------------------------------------
-
 	using namespace std::literals;
 
 //  ---------------------------------------------
