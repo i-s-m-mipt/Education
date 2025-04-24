@@ -26,9 +26,9 @@
 
 BOOST_AUTO_TEST_CASE(Test_v1)
 {
-    std::cout << "Test_v1 (1)\n"; BOOST_TEST(std::max(1, 2) == 1);
+    std::cout << "Test_v1\n"; BOOST_TEST(std::max(1, 2) == 1);
 
-    std::cout << "Test_v1 (2)\n"; BOOST_TEST(std::max(1, 2) == 2);
+    std::cout << "Test_v1\n"; BOOST_TEST(std::max(1, 2) == 2);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -58,8 +58,6 @@ BOOST_DATA_TEST_CASE
 {
     std::cout << "Test_v3 : x = " << x << " y = " << y << '\n';
 
-//  -----------------------------------------------------------
-
     BOOST_TEST(x > 0); BOOST_TEST(x < 3);
 
     BOOST_TEST(y > 0); BOOST_TEST(y < 4);
@@ -85,8 +83,6 @@ BOOST_DATA_TEST_CASE
 {
     std::cout << "Test_v4 : i = " << i << " x = " << std::format("{:.3f}", x) << '\n';
 
-//  ----------------------------------------------------------------------------------
-
     BOOST_TEST(x > 0.5);
 }
 
@@ -100,35 +96,31 @@ public :
     {
     public :
 
-        using iterator_category = std::forward_iterator_tag;
-
-    //  ------------------------------------------------------------------
-
         iterator() : m_x(1), m_y(1) {}
 
     //  ------------------------------------------------------------------
 
         auto const operator++(int) 
-		{ 
-			auto copy = *this;
+        { 
+            auto x = *this;
             
             m_x += m_y;
             
             std::swap(m_x, m_y);
             
-            return copy;
-		}
+            return x;
+        }
 
     //  ------------------------------------------------------------------
 
         auto & operator++() 
-		{ 
-			m_x += m_y;
+        { 
+            m_x += m_y;
             
             std::swap(m_x, m_y);
             
             return *this;
-		}
+        }
         
     //  ------------------------------------------------------------------
 
@@ -205,9 +197,9 @@ boost::unit_test::test_suite * init_unit_test_suite(int, char **)
 {
     std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-    auto test_case = BOOST_PARAM_TEST_CASE(&test, std::begin(vector), std::end(vector));
+    auto generator = BOOST_PARAM_TEST_CASE(&test, std::begin(vector), std::end(vector));
 
-    boost::unit_test::framework::master_test_suite().add(test_case);
+    boost::unit_test::framework::master_test_suite().add(generator);
 
     boost::unit_test::framework::master_test_suite().p_name.value = "master";
 

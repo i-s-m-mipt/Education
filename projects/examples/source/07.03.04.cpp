@@ -195,8 +195,6 @@ private :
 void test_v1()
 {
 	LOGGER(logger);
-
-//  ----------------------------------
 		
 	throw std::runtime_error("error");
 }

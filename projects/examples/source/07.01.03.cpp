@@ -19,8 +19,6 @@ auto test(bool & has_error)
 
       has_error = true;
 
-//  -------------------
-
     return true;
 }
 

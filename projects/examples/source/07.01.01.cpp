@@ -10,8 +10,6 @@ template < typename T > void swap(T & x, T & y)
     
     static_assert(std::is_copy_assignable_v    < T > );
 
-//  ---------------------------------------------------
-
     auto z = y;
             
          y = x;

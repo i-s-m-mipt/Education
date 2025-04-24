@@ -16,18 +16,18 @@
 
 TEST(Expect, Test)
 {
-    std::cout << "Test::Expect::Test (1)\n"; EXPECT_TRUE(std::max(1, 2) == 1);
+    std::cout << "Expect::Test\n"; EXPECT_TRUE(std::max(1, 2) == 1);
 
-    std::cout << "Test::Expect::Test (2)\n"; EXPECT_TRUE(std::max(1, 2) == 2);
+    std::cout << "Expect::Test\n"; EXPECT_TRUE(std::max(1, 2) == 2);
 }
 
 //////////////////////////////////////////////////////////////////////////////
 
 TEST(Assert, Test)
 {
-    std::cout << "Test::Assert::Test (1)\n"; ASSERT_TRUE(std::max(1, 2) == 1);
+    std::cout << "Assert::Test\n"; ASSERT_TRUE(std::max(1, 2) == 1);
 
-    std::cout << "Test::Assert::Test (2)\n"; ASSERT_TRUE(std::max(1, 2) == 2);
+    std::cout << "Assert::Test\n"; ASSERT_TRUE(std::max(1, 2) == 2);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -73,8 +73,6 @@ TEST_P(Adapter, Data)
     auto x = GetParam();
     
     vector.resize(x, 0);
-
-//  --------------------------------
     
     ASSERT_EQ(std::size(vector), x);
 }
