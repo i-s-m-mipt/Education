@@ -73,8 +73,8 @@ int main()
 {
     assert(equal(max_v1(1,   2  ), 2)); // support : cppinsights.io
 
-	assert(equal(max_v1(1.0, 2.0), 2));
-
+	assert(equal(max_v1(1.0, 2.0), 2)); // support : cppinsights.io
+ 
 //	assert(equal(max_v1(1,   2.0), 2)); // error
 
 //  ---------------------------------------------------------------
@@ -89,7 +89,7 @@ int main()
 
 	assert(equal(max_v2(1.0, 2  ), 2));
 
-//	assert(equal(max_v2(1,   2.0), 2)); // bad
+//	assert(equal(max_v2(1,   2.0), 2)); // error
 
 //  ---------------------------------------------------------------
 

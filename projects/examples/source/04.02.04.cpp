@@ -27,13 +27,9 @@ public :
 	{
 		auto lcm = std::lcm(m_den, other.m_den);
 
-	//  ------------------------------------------------------------------
-
 		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den);
 		
 		m_den = lcm;
-
-	//  ------------------------------------------------------------------
 
 		reduce();
 
@@ -73,8 +69,6 @@ private :
 	void reduce()
 	{
 		auto gcd = std::gcd(m_num, m_den);
-
-	//  ----------------------------------
 
 		m_num /= gcd;
 

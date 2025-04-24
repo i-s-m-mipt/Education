@@ -10,8 +10,6 @@ template < typename T, typename ... Ts > void test(T x, Ts ... ys)
 	
 	std::cout << "sizeof...(ys) = " << sizeof...(ys) << '\n';
 
-//  ---------------------------------------------------------
-
 	if constexpr (sizeof...(ys) > 0) 
 	{
 		test(ys...);
