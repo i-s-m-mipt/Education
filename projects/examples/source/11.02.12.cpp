@@ -50,22 +50,14 @@ template < typename ... Is > auto generate(std::pair < Is, Is > ... pairs)
 {
 	std::vector < std::tuple < typename std::iterator_traits < Is > ::value_type ... > > tuples;
 
-//  --------------------------------------------------------------------------------------------
-
 	std::vector < std::size_t > steps(sizeof...(pairs), 0);
-
-//  --------------------------------------------------------------------------------------------
 
 	std::vector < std::size_t > sizes = 
 	{ 
 		static_cast < std::size_t > (std::distance(pairs.first, pairs.second))... 
 	};
 
-//  --------------------------------------------------------------------------------------------
-
 	auto lambda = [&tuples](auto ... pairs){ tuples.emplace_back(pairs...); };
-
-//  --------------------------------------------------------------------------------------------
 
 	do
 	{
@@ -77,8 +69,6 @@ template < typename ... Is > auto generate(std::pair < Is, Is > ... pairs)
 		);
 	} 
 	while (next(steps, sizes));
-
-//  --------------------------------------------------------------------------------------------
 
 	return tuples;
 }
