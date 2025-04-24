@@ -20,13 +20,9 @@ public :
             return std::partial_ordering::unordered;
         }
 
-    //  -----------------------------------------------------------------
-
         if (lhs.m_x < rhs.m_x) { return std::partial_ordering::less;    }
 
         if (lhs.m_x > rhs.m_x) { return std::partial_ordering::greater; }
-
-    //  -----------------------------------------------------------------
 
         return std::partial_ordering::equivalent;
     }

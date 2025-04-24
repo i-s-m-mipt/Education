@@ -13,8 +13,6 @@ public :
 	{
 		std::cout << "Entity::test\n";
 
-	//  ------------------------------
-
 	//	++m_x; // error
 	}
 

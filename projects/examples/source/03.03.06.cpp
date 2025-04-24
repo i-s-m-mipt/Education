@@ -24,8 +24,6 @@ public :
 	{
 		std::cout << "Vector::Vector (2)\n";
 
-	//  -------------------------------------------------------------------
-
 		m_array = (m_size = std::size(list)) ? new int[m_size]{} : nullptr;
 
 		std::ranges::copy(list, m_array);
@@ -36,8 +34,6 @@ public :
 	Vector(Vector const & other) : Vector() 
 	{
 		std::cout << "Vector::Vector (3)\n";
-
-	//  ------------------------------------------------------------------------
 
 		m_array = (m_size = other.m_size) ? new int[m_size]{} : nullptr;
 
@@ -61,8 +57,6 @@ public :
 	{
 		std::cout << "Vector::~Vector\n";
 
-	//  ---------------------------------
-
 		if (m_array) 
 		{
 			delete[] m_array;
@@ -71,11 +65,9 @@ public :
 	
 //  --------------------------------------------------------------------------------
 
-//	auto & operator=(Vector const & other) // bad
+//	auto & operator=(Vector const & other) // error
 //	{
 //		std::cout << "Vector::operator= (1)\n";
-//
-//	//	----------------------------------------------------------------------------
 //
 //		if (this != &other)
 //		{
@@ -97,8 +89,6 @@ public :
 //	auto & operator=(Vector const & other) // bad
 //	{
 //		std::cout << "Vector::operator= (2)\n";
-//
-//	//	--------------------------------------------------------------------------
 //
 //		if (this != &other)
 //		{
@@ -123,16 +113,12 @@ public :
 //	{
 //		std::cout << "Vector::operator= (3)\n";
 //
-//	//  ----------------------------------------------------
-//
 //		if (this != &other)
 //		{
 //			if (m_array) 
 //			{
 //				delete[] m_array;
 //			}
-//
-//          ------------------------------------------------
 //			
 //			m_array = std::exchange(other.m_array, nullptr);
 //
@@ -147,8 +133,6 @@ public :
 	auto & operator=(Vector other)
 	{
 		std::cout << "Vector::operator= (4)\n";
-
-	//  ---------------------------------------
 
 		swap(other);
 

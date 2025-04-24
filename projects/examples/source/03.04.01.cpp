@@ -32,13 +32,9 @@ public :
 	{
 		auto lcm = std::lcm(m_den, other.m_den);
 
-	//  ------------------------------------------------------------------
-
 		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den);
 		
 		m_den = lcm;
-
-	//  ------------------------------------------------------------------
 
 		reduce();
 
@@ -60,8 +56,6 @@ public :
 
 		m_den *= other.m_den;
 
-	//  ---------------------
-
 		reduce();
 
 		return *this;
@@ -76,13 +70,15 @@ public :
 
 //  -------------------------------------------------------------------------------------------
 
-	auto const   operator++(int) { auto copy = *this; *this += 1; return  copy; } 
+	auto const operator++(int) { auto x = *this; *this += 1; return x; }
 
-	auto       & operator++(   ) {                    *this += 1; return *this; }
+	auto const operator--(int) { auto x = *this; *this -= 1; return x; }
 
-	auto const   operator--(int) { auto copy = *this; *this -= 1; return  copy; } 
+//  -------------------------------------------------------------------------------------------
 
-	auto       & operator--(   ) {                    *this -= 1; return *this; }
+	auto & operator++() { *this += 1; return *this; }
+
+	auto & operator--() { *this -= 1; return *this; }
 
 //  -------------------------------------------------------------------------------------------
 
@@ -136,8 +132,6 @@ private :
 	{
 		auto gcd = std::gcd(m_num, m_den);
 
-	//  ----------------------------------
-
 		m_num /= gcd;
 
 		m_den /= gcd;
@@ -187,9 +181,9 @@ int main()
 
 	assert((x ++  ) == Rational(+1, 1));
 
-	assert((  ++ y) == Rational(+3, 1));
-
 	assert((x --  ) == Rational(+2, 1));
+
+	assert((  ++ y) == Rational(+3, 1));
 
 	assert((  -- y) == Rational(+2, 1));
 

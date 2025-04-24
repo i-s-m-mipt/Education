@@ -39,9 +39,9 @@ int main()
 
 	assert((x ++  ) == boost::rational < int > (+1, 1));
 
-	assert((  ++ y) == boost::rational < int > (+3, 1));
-
 	assert((x --  ) == boost::rational < int > (+2, 1));
+
+	assert((  ++ y) == boost::rational < int > (+3, 1));
 
 	assert((  -- y) == boost::rational < int > (+2, 1));
 

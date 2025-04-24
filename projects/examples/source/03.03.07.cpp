@@ -29,11 +29,7 @@ auto test_v2()
 { 
 	Entity entity;
 
-//  ----------------------------------
-
 //	return std::move(entity); // error
-
-//  ----------------------------------
 	
 	return entity;
 }

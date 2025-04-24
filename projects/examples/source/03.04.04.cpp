@@ -19,8 +19,6 @@ public :
 
         if (lhs.m_x > rhs.m_x) { return std::weak_ordering::greater; }
 
-    //  --------------------------------------------------------------
-
         return std::weak_ordering::equivalent;
     }
 
