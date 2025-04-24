@@ -18,6 +18,8 @@ public :
     {
     //  initialize_v1(); // error
 
+    //  -----------------------------------------------------
+
         std::call_once(m_flag, &Entity::initialize_v2, this);
     }
 

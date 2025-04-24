@@ -49,6 +49,8 @@ int main()
 
     static_assert(std::is_trivially_copyable_v < Entity_v2 > == 1);
 
+//  ---------------------------------------------------------------
+
     static_assert(std::is_trivially_copyable_v < Entity_v3 > == 0);
 
     static_assert(std::is_trivially_copyable_v < Entity_v4 > == 0);
