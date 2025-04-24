@@ -1,46 +1,43 @@
 ////////////////////////////////////////////////////////////////
 
+#include <array>
 #include <cassert>
+#include <cmath>
+#include <charconv>
 #include <iterator>
-#include <string_view>
 
 ////////////////////////////////////////////////////////////////
 
-using namespace std::literals;
-
-////////////////////////////////////////////////////////////////
-
-#include <boost/spirit/home/x3.hpp>
+auto equal(double x, double y, double epsilon = 1e-6)
+{
+	return std::abs(x - y) < epsilon;
+}
 
 ////////////////////////////////////////////////////////////////
 
 int main()
 {
-    auto view = "1"sv;
-
-//  ------------------------------------------------------------
-        
-    auto begin = std::begin(view), end = std::end(view);
+    std::array < char, 1'000 > array = {};
 
 //  ------------------------------------------------------------
 
-    auto rule = boost::spirit::x3::int_;
+    auto begin = std::begin(array), end = std::end(array);
 
 //  ------------------------------------------------------------
 
-    auto space = boost::spirit::x3::ascii::space;
+    std::to_chars(begin, end, 1.0, std::chars_format::fixed, 1);
 
 //  ------------------------------------------------------------
 
-    auto x = 0;
+    auto x = 0.0;
 
 //  ------------------------------------------------------------
 
-    boost::spirit::x3::phrase_parse(begin, end, rule, space, x);
+    std::from_chars(begin, end, x);
 
 //  ------------------------------------------------------------
 
-    assert(x == 1);
+    assert(equal(x, 1.0));
 }
 
 ////////////////////////////////////////////////////////////////

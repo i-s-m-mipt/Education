@@ -1,9 +1,9 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <cctype>
-#include <exception>
 #include <iostream>
 #include <istream>
 #include <sstream>
-#include <stdexcept>
 #include <string>
 #include <unordered_map>
 #include <variant>
@@ -18,7 +18,7 @@ public :
 
 //  -------------------------------------------------------------------------------
 
-	Stream(const std::string & string) : m_stream(string + ';') {}
+	Stream(std::string const & string) : m_stream(string + ';') {}
 
 //  -------------------------------------------------------------------------------
 
@@ -81,7 +81,7 @@ public :
 		}
 	}
 
-	void putback(const token_t & token)
+	void putback(token_t const & token)
 	{
 		m_token = token;
 		
@@ -192,9 +192,9 @@ private :
 		{
 			switch (std::get < char > (token))
 			{
-				case '*' : { x *= term(stream); break; }
+				case '*' : { x *= primary(stream); break; }
 
-				case '/' : { x /= term(stream); break; }
+				case '/' : { x /= primary(stream); break; }
 
 				default  : 
 				{ 
@@ -251,3 +251,5 @@ int main()
 {
 	Calculator().test();
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

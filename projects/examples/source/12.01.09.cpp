@@ -1,3 +1,5 @@
+///////////////////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <cctype>
 #include <cstddef>
@@ -15,7 +17,7 @@ public :
 
 //  -----------------------------------------------------------------------------------
 
-    static auto compare(const char * string_1, const char * string_2, std::size_t size)
+    static auto compare(char const * string_1, char const * string_2, std::size_t size)
     {
         for (auto i = 0uz; i < size; ++i)
         {
@@ -30,7 +32,7 @@ public :
 
 //  -----------------------------------------------------------------------------------
 
-    static auto find(const char * string, std::size_t size, char x) -> const char *
+    static auto find(char const * string, std::size_t size, char x) -> char const *
     {
         for (auto i = 0uz; i < size; ++i)
         {
@@ -55,3 +57,5 @@ int main()
         (std::basic_string < char, Traits > ("AAAAA"))
     );
 }
+
+///////////////////////////////////////////////////////////////////////////////////////

@@ -1,20 +1,19 @@
-#include <cassert>
-#include <iostream>
-#include <istream>
-#include <sstream>
-#include <string>
-
-using namespace std::literals;
-
 //////////////////////////////////////////////////
 
 // support : Boost.StringAlgorithms
 
 //////////////////////////////////////////////////
 
+#include <cassert>
+#include <istream>
+#include <sstream>
+#include <string>
+
+//////////////////////////////////////////////////
+
 int main()
 {
-    std::stringstream stream("aaaaa bbbbb");
+    std::stringstream stream("aaaaa aaaaa");
 
 //  ----------------------------------------------
 
@@ -38,7 +37,7 @@ int main()
 
 //  ----------------------------------------------
 
-    assert(string == "aaaaa bbbbb");
+    assert(string == "aaaaa aaaaa");
 
 //  ----------------------------------------------
 
@@ -48,3 +47,5 @@ int main()
 
     assert(std::stoi(std::to_string(1)) == 1);
 }
+
+//////////////////////////////////////////////////

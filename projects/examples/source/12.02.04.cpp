@@ -1,10 +1,12 @@
+///////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <regex>
 #include <string>
 
 ///////////////////////////////////////////////////////////////////////
 
-auto test(const std::string & string)
+auto test(std::string const & string)
 {
     std::regex regex(R"(\b([a-z])([^\s]+))"); // support : regex101.com
 
@@ -19,3 +21,5 @@ int main()
 {
     assert(test("aaaaa 12345") == "a-aaaa 12345");
 }
+
+///////////////////////////////////////////////////////////////////////

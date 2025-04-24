@@ -1,12 +1,16 @@
+///////////////////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <cmath>
 #include <complex>
-#include <exception>
 #include <iterator>
-#include <stdexcept>
 #include <string_view>
 
+///////////////////////////////////////////////////////////////////////////////////////
+
 using namespace std::literals;
+
+///////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/spirit/home/x3.hpp>
 
@@ -20,9 +24,9 @@ auto parse(std::string_view view)
 
     using boost::spirit::x3::_attr;
 
-    auto lambda_1 = [&x](const auto & context){ x = _attr(context); };
+    auto lambda_1 = [&x](auto const & context){ x = _attr(context); };
 
-    auto lambda_2 = [&y](const auto & context){ y = _attr(context); };
+    auto lambda_2 = [&y](auto const & context){ y = _attr(context); };
 
     using boost::spirit::x3::double_;
 
@@ -60,7 +64,9 @@ int main()
 {
     assert(equal(parse("(1.0, 1.0)"), 1.0 + 1.0i));
 
-    assert(equal(parse("(1.0     )"), 1.0 + 0.0i));
+    assert(equal(parse("(1.0)     "), 1.0 + 0.0i));
 
     assert(equal(parse(" 1.0      "), 1.0 + 0.0i));
 }
+
+///////////////////////////////////////////////////////////////////////////////////////

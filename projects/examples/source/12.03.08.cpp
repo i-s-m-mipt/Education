@@ -1,8 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
-#include <exception>
 #include <iterator>
-#include <stdexcept>
 #include <string_view>
+
+///////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/spirit/home/x3.hpp>
 
@@ -16,15 +18,15 @@ namespace parser
 
         Handler_v1()
         {
-            add("C"   , 100);
-            add("CC"  , 200);
-            add("CCC" , 300);
-            add("CD"  , 400);
-            add("D"   , 500);
-            add("DC"  , 600);
-            add("DCC" , 700);
+            add("C",    100);
+            add("CC",   200);
+            add("CCC",  300);
+            add("CD",   400);
+            add("D",    500);
+            add("DC",   600);
+            add("DCC",  700);
             add("DCCC", 800);
-            add("CM"  , 900);
+            add("CM",   900);
         }
     };
 
@@ -36,15 +38,15 @@ namespace parser
 
         Handler_v2()
         {
-            add("X"   , 10);
-            add("XX"  , 20);
-            add("XXX" , 30);
-            add("XL"  , 40);
-            add("L"   , 50);
-            add("LX"  , 60);
-            add("LXX" , 70);
+            add("X",    10);
+            add("XX",   20);
+            add("XXX",  30);
+            add("XL",   40);
+            add("L",    50);
+            add("LX",   60);
+            add("LXX",  70);
             add("LXXX", 80);
-            add("XC"  , 90);
+            add("XC",   90);
         }
     };
     
@@ -56,15 +58,15 @@ namespace parser
 
         Handler_v3()
         {
-            add("I"   , 1);
-            add("II"  , 2);
-            add("III" , 3);
-            add("IV"  , 4);
-            add("V"   , 5);
-            add("VI"  , 6);
-            add("VII" , 7);
+            add("I",    1);
+            add("II",   2);
+            add("III",  3);
+            add("IV",   4);
+            add("V",    5);
+            add("VI",   6);
+            add("VII",  7);
             add("VIII", 8);
-            add("IX"  , 9);
+            add("IX",   9);
         }
     };
 
@@ -80,11 +82,11 @@ namespace parser
 
 //  -----------------------------------------------------------------------------------
 
-    auto lambda_1 = [](const auto & context){ _val(context) = 0; };
+    auto lambda_1 = [](auto const & context){ _val(context) = 0; };
 
-    auto lambda_2 = [](const auto & context){ _val(context) += 1'000; };
+    auto lambda_2 = [](auto const & context){ _val(context) += 1'000; };
 
-    auto lambda_3 = [](const auto & context){ _val(context) += _attr(context); };
+    auto lambda_3 = [](auto const & context){ _val(context) += _attr(context); };
 
 //  -----------------------------------------------------------------------------------
 
@@ -134,3 +136,5 @@ int main()
 {
     assert(parse("MCMLXX") == 1'970);
 }
+
+///////////////////////////////////////////////////////////////////////////////////////

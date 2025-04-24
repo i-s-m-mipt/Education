@@ -1,26 +1,38 @@
-#include <cassert>
-#include <iterator>
-#include <regex>
-#include <string>
-#include <vector>
-
-using namespace std::literals;
-
 //////////////////////////////////////////////////////////////////////////
 
 // support : Boost.Tokenizer
 
 //////////////////////////////////////////////////////////////////////////
 
+#include <cassert>
+#include <iterator>
+#include <regex>
+#include <string>
+#include <vector>
+
+//////////////////////////////////////////////////////////////////////////
+
+using namespace std::literals;
+
+//////////////////////////////////////////////////////////////////////////
+
 int main()
 {
     auto string = "aaaaa 12345 AAAAA 12345"s;
+
+//  ----------------------------------------------------------------------
         
     auto begin = std::cbegin(string);
 
+//  ----------------------------------------------------------------------
+
     std::smatch matches;
+
+//  ----------------------------------------------------------------------
         
     std::regex pattern(R"([a-z]{5})", std::regex_constants::icase);
+
+//  ----------------------------------------------------------------------
 
     std::vector < std::string > strings;
 
@@ -30,6 +42,8 @@ int main()
     {
         strings.push_back(matches[0]);
 
+    //  -------------------------------
+
         begin = matches.suffix().first;
     }
 
@@ -37,3 +51,5 @@ int main()
 
     assert(strings == std::vector < std::string > ({ "aaaaa", "AAAAA" }));
 }
+
+//////////////////////////////////////////////////////////////////////////

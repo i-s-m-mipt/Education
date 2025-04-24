@@ -1,11 +1,13 @@
-#include <cmath>
-#include <exception>
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <istream>
 #include <iterator>
-#include <stdexcept>
+#include <string>
 #include <string_view>
 #include <vector>
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/spirit/home/x3.hpp>
@@ -45,6 +47,8 @@ struct List
 BOOST_FUSION_ADAPT_STRUCT(Sign, operation, operand)
 
 BOOST_FUSION_ADAPT_STRUCT(Step, operation, operand)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 BOOST_FUSION_ADAPT_STRUCT(List, head, steps)
 
@@ -97,7 +101,7 @@ public :
         return x;
     }
 
-    auto operator()(const Sign & sign) const -> double
+    auto operator()(Sign const & sign) const -> double
     {
         auto x = boost::apply_visitor(*this, sign.operand);
 
@@ -111,7 +115,7 @@ public :
         return x;
     }
 
-    auto operator()(const Step & step, double x) const -> double
+    auto operator()(Step const & step, double x) const -> double
     {
         auto y = boost::apply_visitor(*this, step.operand);
 
@@ -129,11 +133,11 @@ public :
         return x;
     }
 
-    auto operator()(const List & list) const -> double
+    auto operator()(List const & list) const -> double
     {
         auto x = boost::apply_visitor(*this, list.head);
         
-        for (const auto & step : list.steps)
+        for (auto const & step : list.steps)
         {
             x = (*this)(step, x);
         }
@@ -183,3 +187,5 @@ int main()
         }
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
