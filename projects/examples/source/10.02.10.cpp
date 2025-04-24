@@ -48,26 +48,24 @@ auto determinant_v1(boost::numeric::ublas::matrix < double > const & matrix) -> 
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-auto determinant_v2(boost::numeric::ublas::matrix < double > const & matrix)
+auto determinant_v2(boost::numeric::ublas::matrix < double > matrix)
 {
     if (auto size = matrix.size1(); size > 1)
-    {
-        auto copy = matrix;
-    
+    {    
         boost::numeric::ublas::permutation_matrix <> permutation(size);
 
-        if (!boost::numeric::ublas::lu_factorize(copy, permutation))
+        if (!boost::numeric::ublas::lu_factorize(matrix, permutation))
         {
             auto determinant = 1.0;
 
-            for (auto i = 0uz; i < copy.size1(); ++i)
+            for (auto i = 0uz; i < size; ++i)
             {
                 if (permutation(i) != i) 
                 {
                     determinant *= -1;
                 }
 
-                determinant *= copy(i, i);
+                determinant *= matrix(i, i);
             }
 
             return determinant;
