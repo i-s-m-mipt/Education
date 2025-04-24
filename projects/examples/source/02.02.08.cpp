@@ -16,15 +16,15 @@ int main()
 
     if (auto y = x; y > 0) // support : compiler-explorer.com
     {
-        std::cout << "main (1)\n";
+        std::cout << "main : selection (1)\n";
     }
     else if (0 == y)
     {
-        std::cout << "main (2)\n";
+        std::cout << "main : selection (2)\n";
     }
     else
     {
-        std::cout << "main (3)\n";
+        std::cout << "main : selection (3)\n";
     }
 }
 

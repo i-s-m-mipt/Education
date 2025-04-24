@@ -6,20 +6,20 @@
 
 int main()
 {
-    auto x = 0, y = 1;
+    auto x = 1, y = 2;
 
 //  -------------------------------
 
 //	assert // bad
 //  (
-//      static_cast < bool > (x) !=
+//      static_cast < bool > (x) ==
 //        
 //      static_cast < bool > (y)
 //  ); 
 
 //  -------------------------------
 
-	assert(!!x != !!y);
+	assert(!!x == !!y);
 }
 
 ///////////////////////////////////

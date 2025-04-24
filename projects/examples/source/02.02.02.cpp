@@ -36,9 +36,9 @@ int main()
 
 	assert((x ++  ) == +1);
 
-	assert((  ++ y) == +3);
-
 	assert((x --  ) == +2);
+
+	assert((  ++ y) == +3);
 
 	assert((  -- y) == +2);
 
