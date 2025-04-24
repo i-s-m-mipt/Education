@@ -14,8 +14,6 @@ public :
 	{
 		std::cout << "Entity::operator new\n";
 
-	//  --------------------------------------
-
 		return ::operator new(size);
 	}
 
@@ -24,8 +22,6 @@ public :
 	static void operator delete(void * x, std::size_t)
 	{
 		std::cout << "Entity::operator delete\n";
-
-	//  -----------------------------------------
 
 		::operator delete(x);
 	}

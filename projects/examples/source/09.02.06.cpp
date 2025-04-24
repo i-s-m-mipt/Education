@@ -36,10 +36,14 @@ public :
 			m_node = m_node->next;
 		}
 
+	//  -------------------------------------------------------------------
+
 		auto & dereference() const
 		{ 
 			return m_node->x;
 		}
+
+	//  -------------------------------------------------------------------
 
 		auto equal(Iterator const & other) const
 		{ 

@@ -70,9 +70,9 @@ int main()
 
 //  -------------------------------------------------------
 
-//  assert(entity_v1_1.use_count() == 1); // bad
+//  assert(entity_v1_1.use_count() == 1); // error
 
-//  assert(entity_v1_2.use_count() == 1); // bad
+//  assert(entity_v1_2.use_count() == 1); // error
 
 //  -------------------------------------------------------
 

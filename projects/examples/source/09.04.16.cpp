@@ -21,14 +21,10 @@ void test_v1(benchmark::State & state)
     {
         std::list < int > list;
 
-    //  ----------------------------------
-
         for (auto i = 0uz; i < 1'000; ++i) 
         {
             list.push_back(1);
         }
-
-    //  ----------------------------------
 
         benchmark::DoNotOptimize(list);
     }
@@ -42,14 +38,10 @@ void test_v2(benchmark::State & state)
     {
         std::pmr::list < int > list;
 
-    //  ----------------------------------
-
         for (auto i = 0uz; i < 1'000; ++i) 
         {
             list.push_back(1);
         }
-
-    //  ----------------------------------
 
         benchmark::DoNotOptimize(list);
     }
@@ -67,14 +59,10 @@ void test_v3(benchmark::State & state)
 
         std::pmr::list < int > list(allocator);
 
-    //  -------------------------------------------------------------
-
         for (auto i = 0uz; i < 1'000; ++i) 
         {
             list.push_back(1);
         }
-
-    //  -------------------------------------------------------------
 
         benchmark::DoNotOptimize(list);
     }
@@ -94,14 +82,10 @@ void test_v4(benchmark::State & state)
 
         std::pmr::list < int > list(allocator);
 
-    //  ---------------------------------------------------------------------------------
-
         for (auto i = 0uz; i < 1'000; ++i) 
         {
             list.push_back(1);    
         }
-
-    //  ---------------------------------------------------------------------------------
 
         benchmark::DoNotOptimize(list);
     }
@@ -119,14 +103,10 @@ void test_v5(benchmark::State & state)
     {
         std::list < int, boost::pool_allocator < int > > list;
 
-    //  ------------------------------------------------------
-
         for (auto i = 0uz; i < 1'000; ++i) 
         {
             list.push_back(1);
         }
-
-    //  ------------------------------------------------------
 
         benchmark::DoNotOptimize(list);
     }
@@ -140,14 +120,10 @@ void test_v6(benchmark::State & state)
     {
         std::list < int, boost::fast_pool_allocator < int > > list;
 
-    //  -----------------------------------------------------------
-
         for (auto i = 0uz; i < 1'000; ++i) 
         {
             list.push_back(1);
         }
-        
-    //  -----------------------------------------------------------
 
         benchmark::DoNotOptimize(list);
     }

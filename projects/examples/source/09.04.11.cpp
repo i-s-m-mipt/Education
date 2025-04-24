@@ -116,23 +116,21 @@ int main()
 {
 	Allocator < 1'024 > allocator;
 
-//  ----------------------------------------------------------------------
+//  -------------------------------------------
 
+	allocator.test(); allocator.allocate(1, 1);
+
+	allocator.test(); allocator.allocate(2, 2); 
+	
+	allocator.test(); allocator.allocate(4, 4); 
+	
+	allocator.test(); allocator.allocate(8, 8); 
+	
 	allocator.test();
 
-//  ----------------------------------------------------------------------
+//  -------------------------------------------
 
-	[[maybe_unused]] auto x1 = allocator.allocate(1, 1); allocator.test();
-
-	[[maybe_unused]] auto x2 = allocator.allocate(2, 2); allocator.test();
-		
-	[[maybe_unused]] auto x3 = allocator.allocate(4, 4); allocator.test();
-
-	[[maybe_unused]] auto x4 = allocator.allocate(8, 8); allocator.test();
-
-//  ----------------------------------------------------------------------
-
-	benchmark::RunSpecifiedBenchmarks();
+    benchmark::RunSpecifiedBenchmarks();
 }
 
 //////////////////////////////////////////////////////////////////////////////////

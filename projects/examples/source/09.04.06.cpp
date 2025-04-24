@@ -1,5 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////
 
+#include <cassert>
 #include <cstddef>
 #include <cstdint>
 #include <format>
@@ -165,31 +166,33 @@ int main()
 {
 	Allocator allocator(1'024);
 
-//  ----------------------------------------------------------------------
+//  ----------------------------------------------------
 
-	allocator.test();
+	allocator.test();          allocator.allocate(1, 1); 
+	
+	allocator.test();          allocator.allocate(2, 2); 
+	
+	allocator.test(); auto x = allocator.allocate(4, 4); 
+	
+	allocator.test(); auto y = allocator.allocate(8, 8);
 
-//  ----------------------------------------------------------------------
+//  ----------------------------------------------------
+	
+	allocator.test(); allocator.deallocate(y);  
+	
+	allocator.test(); allocator.deallocate(x);
+	
+//  ----------------------------------------------------
+	
+	allocator.test(); auto z = allocator.allocate(8, 8); 
+	
+	allocator.test(); 
 
-	[[maybe_unused]] auto x1 = allocator.allocate(1, 1); allocator.test();
+//  ----------------------------------------------------
 
-	[[maybe_unused]] auto x2 = allocator.allocate(2, 2); allocator.test();
+	assert(z == x);
 
-	[[maybe_unused]] auto x3 = allocator.allocate(4, 4); allocator.test();
-		
-	[[maybe_unused]] auto x4 = allocator.allocate(8, 8); allocator.test();
-
-//  ----------------------------------------------------------------------
-
-	allocator.deallocate (x4); 							 allocator.test();
-
-	allocator.deallocate (x3); 							 allocator.test();
-
-//  ----------------------------------------------------------------------
-
-	[[maybe_unused]] auto x5 = allocator.allocate(8, 8); allocator.test(); 
-
-//  ----------------------------------------------------------------------
+//  ----------------------------------------------------
 
 	benchmark::RunSpecifiedBenchmarks();
 }

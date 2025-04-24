@@ -325,31 +325,33 @@ int main()
 {
     Allocator allocator(1'024);
 
-//  --------------------------------------------------------------------
+//  --------------------------------------------------
+    
+    allocator.test();          allocator.allocate(16); 
+    
+    allocator.test(); auto x = allocator.allocate(16); 
+    
+    allocator.test(); auto y = allocator.allocate(16); 
+    
+    allocator.test();          allocator.allocate(16);
+
+//  --------------------------------------------------
+    
+    allocator.test(); allocator.deallocate(y);
+    
+    allocator.test(); allocator.deallocate(x);
+
+//  --------------------------------------------------
+    
+    allocator.test(); auto z = allocator.allocate(32);
     
     allocator.test();
 
-//  --------------------------------------------------------------------
+//  --------------------------------------------------
 
-    [[maybe_unused]] auto x1 = allocator.allocate(16); allocator.test();
+    assert(z == x);
 
-    [[maybe_unused]] auto x2 = allocator.allocate(16); allocator.test();
-
-    [[maybe_unused]] auto x3 = allocator.allocate(16); allocator.test();
-
-    [[maybe_unused]] auto x4 = allocator.allocate(16); allocator.test();
-
-//  --------------------------------------------------------------------
-
-    allocator.deallocate (x3);                         allocator.test();
-        
-    allocator.deallocate (x2);                         allocator.test();
-
-//  --------------------------------------------------------------------
-
-    [[maybe_unused]] auto x5 = allocator.allocate(32); allocator.test();
-
-//  --------------------------------------------------------------------
+//  --------------------------------------------------
 
     benchmark::RunSpecifiedBenchmarks();
 }

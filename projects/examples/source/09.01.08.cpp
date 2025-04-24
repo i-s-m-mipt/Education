@@ -18,6 +18,8 @@ public :
         ++m_counter; 
     }
 
+//  --------------------------------
+
     void decrease() 
     { 
         if (--m_counter == 0) 
@@ -117,8 +119,6 @@ public :
     auto & operator=(Shared other)
     {
         swap(other);
-
-    //  -------------
         
         return *this;
     }
@@ -135,8 +135,6 @@ public :
 private :
 
     T * m_x = nullptr;
-
-//  ----------------------------------------------------
     
     Controller * m_controller = nullptr;
 };

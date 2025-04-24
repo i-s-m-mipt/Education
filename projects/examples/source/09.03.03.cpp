@@ -8,8 +8,6 @@
 void test() 
 { 
     std::cout << "test\n";
-
-//  ------------------------------
     
     std::set_new_handler(nullptr); 
 }
