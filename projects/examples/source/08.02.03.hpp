@@ -26,7 +26,7 @@ public :
 
 //  ------------------------------------------------------------------------------------------
 
-	Integer() : m_sign(false), m_digits(s_size, 0), m_size(1) {}
+	Integer() : m_is_negative(false), m_digits(s_size, 0), m_size(1) {}
 
 //  ------------------------------------------------------------------------------------------
 
@@ -46,35 +46,35 @@ public :
 
 	void swap(Integer & other)
 	{
-		std::swap(m_sign,   other.m_sign  );
+		std::swap(m_is_negative, other.m_is_negative);
 
-		std::swap(m_digits, other.m_digits);
+		std::swap(m_digits,      other.m_digits     );
 		
-		std::swap(m_size,   other.m_size  );
+		std::swap(m_size,        other.m_size       );
 	}
 
 //  ------------------------------------------------------------------------------------------
 
 	auto & operator+=(Integer other)
 	{
-		if ((!m_sign && !other.m_sign) || (m_sign && other.m_sign))
+		if (m_is_negative == other.m_is_negative)
 		{
 			this->add(other);
 		}
-		else if (!m_sign && other.m_sign)
+		else if (!m_is_negative && other.m_is_negative)
 		{
 			if (this->less(other))
 			{
 				*this = std::move(other.subtract(*this));
 				
-				m_sign = true;
+				m_is_negative = true;
 			}
 			else 
 			{
 				this->subtract(other);
 			}
 		}
-		else if (m_sign && !other.m_sign)
+		else if (m_is_negative && !other.m_is_negative)
 		{
 			if (this->less(other))
 			{
@@ -84,7 +84,7 @@ public :
 			{ 
 				this->subtract(other);
 				
-				m_sign = true;
+				m_is_negative = true;
 			}
 		}
 
@@ -95,7 +95,7 @@ public :
 
 	auto & operator-=(Integer other)
 	{
-		other.m_sign = !other.m_sign;
+		other.m_is_negative = !other.m_is_negative;
 
 		return *this += other;
 	}
@@ -106,7 +106,7 @@ public :
 	{
 		Integer x;
 		
-		x.m_sign = m_sign ^ other.m_sign;
+		x.m_is_negative = m_is_negative ^ other.m_is_negative;
 
 		for (auto i = 0uz; i < m_size; ++i)
 		{
@@ -139,9 +139,9 @@ public :
 		
 		x.m_size = m_size;
 
-		x.m_sign = m_sign ^ other.m_sign;
+		x.m_is_negative = m_is_negative ^ other.m_is_negative;
 		
-		other.m_sign = false;
+		other.m_is_negative = false;
 
 		Integer current;
 
@@ -181,13 +181,15 @@ public :
 
 //  ------------------------------------------------------------------------------------------
 
-	auto const   operator++(int) { auto copy = *this; *this += 1; return  copy; }
+	auto const operator++(int) { auto x = *this; *this += 1; return x; }
 
-	auto       & operator++(   ) { 				      *this += 1; return *this; }
+	auto const operator--(int) { auto x = *this; *this -= 1; return x; }
 
-	auto const   operator--(int) { auto copy = *this; *this -= 1; return  copy; }
+//  ------------------------------------------------------------------------------------------
 
-	auto       & operator--(   ) { 				      *this -= 1; return *this; }
+	auto & operator++() { *this += 1; return *this; }
+
+	auto & operator--() { *this -= 1; return *this; }
 
 //  ------------------------------------------------------------------------------------------
 
@@ -203,12 +205,12 @@ public :
 
 	friend auto operator< (Integer const & lhs, Integer const & rhs)
 	{
-		if (lhs.m_sign != rhs.m_sign)
+		if (lhs.m_is_negative != rhs.m_is_negative)
 		{ 
-			return lhs.m_sign; 
+			return lhs.m_is_negative; 
 		}
 
-		if (lhs.m_sign && rhs.m_sign)
+		if (lhs.m_is_negative && rhs.m_is_negative)
 		{
 			return rhs.less(lhs);
 		}
@@ -243,7 +245,7 @@ public :
 
 	friend auto operator==(Integer const & lhs, Integer const & rhs) -> bool
 	{
-		if (lhs.m_sign != rhs.m_sign || lhs.m_size != rhs.m_size)
+		if (lhs.m_is_negative != rhs.m_is_negative || lhs.m_size != rhs.m_size)
 		{
 			return false;
 		}
@@ -276,7 +278,7 @@ public :
 
 	friend auto & operator<<(std::ostream & stream, Integer const & integer)
 	{
-		if (integer.m_sign) 
+		if (integer.m_is_negative) 
 		{
 			stream << '-';
 		}
@@ -370,7 +372,7 @@ public :
 
 			auto z = a * base * base + (c - b - a) * base + b;
 
-			z.m_sign = x.m_sign ^ y.m_sign;
+			z.m_is_negative = x.m_is_negative ^ y.m_is_negative;
 
 			return z;
 		}
@@ -384,7 +386,7 @@ private :
 
 	void parse(std::string const & string)
 	{
-		m_sign = string.front() == '-';
+		m_is_negative = string.front() == '-';
 			
 		m_size = 0;
 
@@ -484,7 +486,7 @@ private :
 
 //  ------------------------------------------------------------------------------------------
 
-	bool m_sign = false;
+	bool m_is_negative = false;
 
 	std::vector < digit_t > m_digits;
 

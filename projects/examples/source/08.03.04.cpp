@@ -20,8 +20,6 @@ template < typename F, typename T > auto derivative(F && f, T x, T dx = 1e-9)
 
     auto c = f(x + 3 * dx) - f(x - 3 * dx);
 
-//  --------------------------------------------------------
-
     return (15 * a / 2 - 6 * b / 4 + 1 * c / 6) / (10 * dx);
 }
 

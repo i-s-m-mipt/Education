@@ -35,8 +35,6 @@ public :
 
 		auto delta_2 = std::chrono::duration_cast < std::chrono::microseconds > (delta_1);
 
-	//  ----------------------------------------------------------------------------------------
-
 		std::cout << m_scope << " : timer : ";
 
 		std::cout << std::format("{:.6f}", 1.0 * delta_2.count() / 1'000'000) << " (seconds)\n";
