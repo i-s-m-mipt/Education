@@ -14,9 +14,9 @@ public :
 		std::cout << "Client::~Client\n";
 	}
 
-//  ----------------------------------------
+//  ------------------------------------------
 
-	std::shared_ptr < class Server > server;
+	std::shared_ptr < class Server > m_server;
 };
 
 /////////////////////////////////////////////////////////
@@ -30,9 +30,9 @@ public :
 		std::cout << "Server::~Server\n";
 	}
 
-//  --------------------------------------
+//  ----------------------------------------
 
-	std::weak_ptr < class Client > client;
+	std::weak_ptr < class Client > m_client;
 };
 
 /////////////////////////////////////////////////////////
@@ -45,9 +45,9 @@ int main()
 
 //  ---------------------------------------------
 		
-	client->server         = server;
+	client->m_server           = server;
 
-	client->server->client = client;
+	client->m_server->m_client = client;
 }
 
 /////////////////////////////////////////////////////////

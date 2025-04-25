@@ -82,8 +82,6 @@ private :
 
 		s_logger.add_attribute("thread",  boost::log::attributes::current_thread_id       ());
 
-	//  --------------------------------------------------------------------------------------
-
 		boost::log::core::get()->add_sink(make_sink());
 	}
 
@@ -135,19 +133,13 @@ private :
 
 		(boost::log::expressions::stream << " | " << timestamp)(record, stream);
 
-	//  ---------------------------------------------------------------------------------------
-
 		using pid_t = boost::log::attributes::current_process_id::value_type;
 
 		using tid_t = boost::log::attributes::current_thread_id ::value_type;
 
-	//  ---------------------------------------------------------------------------------------
-
 		stream << " | " << boost::log::extract_or_throw < pid_t > (attributes["process"]);
 		
 		stream << " | " << boost::log::extract_or_throw < tid_t > (attributes["thread" ]);
-
-	//  ---------------------------------------------------------------------------------------
 
         switch (boost::log::extract_or_throw < Severity > (attributes["Severity"]))
         {

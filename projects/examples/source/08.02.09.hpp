@@ -35,19 +35,13 @@ public :
 	{
 		PyObject * error, * value, * stack;
 
-	//  ------------------------------------------------------------------------------------
-
 		PyErr_Fetch             (&error, &value, &stack);
 
 		PyErr_NormalizeException(&error, &value, &stack);
 
-	//  ------------------------------------------------------------------------------------
-
 		boost::python::handle <> handler_1(boost::python::allow_null(value));
 
 		boost::python::handle <> handler_2(error);
-
-	//  ------------------------------------------------------------------------------------
 
 		if (handler_1)
 		{

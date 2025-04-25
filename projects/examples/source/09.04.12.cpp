@@ -95,6 +95,8 @@ public :
 
     Allocator(Arena & arena) : m_arena(&arena) {}
 
+//  --------------------------------------------------------------------------------------------
+
     template < typename U > Allocator(Allocator < U > const & other) : m_arena(other.m_arena) {}
 
 //  --------------------------------------------------------------------------------------------
@@ -103,6 +105,8 @@ public :
     { 
         return static_cast < T * > (m_arena->allocate(size * sizeof(T), alignof(T)));
     }
+
+//  --------------------------------------------------------------------------------------------
 
     void deallocate(T * x, std::size_t size) const
     {

@@ -26,6 +26,8 @@ namespace parser
 {
     boost::spirit::x3::rule < struct rule_tag, Entity > rule;
 
+//  ---------------------------------------------------------
+
     auto rule_def = 
     (
         '{' 
@@ -34,6 +36,8 @@ namespace parser
                boost::spirit::x3::int_ >> 
         '}'
     );
+
+//  ---------------------------------------------------------
 
     BOOST_SPIRIT_DEFINE(rule);
 }

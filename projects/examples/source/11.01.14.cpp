@@ -159,6 +159,8 @@ public :
         update();
     }
 
+//  -----------------------------------------------------------------------------
+
     auto & operator=(T x)
     {
         if (derived().m_index == s_index) 
@@ -204,6 +206,8 @@ private :
         return *static_cast < D * > (this);
     }
 
+//  -----------------------------------------------------------------------------
+
     void update() 
     { 
         derived().m_index = s_index;
@@ -225,12 +229,16 @@ public :
         *this = front < Deque < Ts ... > > ();
     }
 
+//  -------------------------------------------------------------------------------------------
+
     Variant(Variant const & other) : Handler < Variant < Ts ... > , Ts, Ts ... > ::Handler()...
     {
         auto lambda = [this](auto && x){ *this = x; };
 
         other.visit(lambda);
     }
+
+//  -------------------------------------------------------------------------------------------
 
     Variant(Variant && other)
     {
@@ -277,10 +285,14 @@ public :
         return this->m_index == Handler < Variant < Ts ... > , T, Ts ... > ::s_index;
     }
 
+//  -------------------------------------------------------------------------------------------
+
     template < typename T > auto get() const
     {
         return *this->template extract < T > ();
-    }  
+    }
+
+//  -------------------------------------------------------------------------------------------
 
     template < typename V > auto visit(V && visitor) const
     {
@@ -312,8 +324,6 @@ private :
         {
             return visitor(this->template get < U > ());
         }
-
-    //  -----------------------------------------------------------------------------------
         
         if constexpr (sizeof...(Us) > 0)
         {
@@ -332,6 +342,8 @@ public :
     {
         std::cout << "Visitor::operator() : x = " << x << '\n';
     }
+
+//  ---------------------------------------------------------------------
 
     void operator()(std::string const & string) const
     {

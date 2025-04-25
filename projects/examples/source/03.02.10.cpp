@@ -13,8 +13,6 @@ public :
 	{
 		std::cout << "Entity::Entity\n";
 
-	//  --------------------------------
-
 	//	test_v1(); // bad
 	}
 
@@ -68,8 +66,6 @@ public :
 	void test_v2() const override 
 	{ 
 		std::cout << "Client::test_v2\n";
-
-	//  ---------------------------------
 		
 		Entity::test_v2();
 	}
@@ -84,8 +80,6 @@ public :
 	void test_v2() const override
 	{ 
 		std::cout << "Server::test_v2\n";
-
-	//  ---------------------------------
 
 		Entity::test_v2();
 	}

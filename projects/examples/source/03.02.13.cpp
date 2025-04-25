@@ -29,8 +29,6 @@ public :
 	{ 
 		std::cout << "Entity_v2::make\n";
 
-	//  ---------------------------------
-
 		return new Entity_v1;
 	}
 };
@@ -44,8 +42,6 @@ public :
 	Client_v1 * make() const override 
 	{ 
 		std::cout << "Client_v2::make\n";
-
-	//  ---------------------------------
 
 		return new Client_v1;
 	}

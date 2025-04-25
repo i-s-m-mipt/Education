@@ -31,8 +31,6 @@ private :
     { 
         std::cout << "Attorney::test_v1\n";
 
-    //  -----------------------------------
-
         Entity::test_v1();
     }
 

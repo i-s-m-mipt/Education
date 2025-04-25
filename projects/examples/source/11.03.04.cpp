@@ -24,6 +24,8 @@ public :
 
         boost::default_dfs_visitor::initialize_vertex(vertex, graph);
     }
+
+//  ---------------------------------------------------------------------------------------
     
     template < typename V, typename G > void start_vertex(V vertex, G const & graph)
     {
@@ -32,12 +34,16 @@ public :
         boost::default_dfs_visitor::start_vertex(vertex, graph);
     }
 
+//  ---------------------------------------------------------------------------------------
+
     template < typename V, typename G > void discover_vertex(V vertex, G const & graph)
     {
         std::cout << "Visitor::discover_vertex : vertex = " << vertex << '\n';
 
         boost::default_dfs_visitor::discover_vertex(vertex, graph);
     }
+
+//  ---------------------------------------------------------------------------------------
 
     template < typename V, typename G > void finish_vertex(V vertex, G const & graph)
     {
@@ -55,12 +61,16 @@ public :
         boost::default_dfs_visitor::examine_edge(edge, graph);
     }
 
+//  ---------------------------------------------------------------------------------------
+
     template < typename E, typename G > void tree_edge(E edge, G const & graph)
     {
         std::cout << "Visitor::tree_edge : edge = " << edge << '\n';
 
         boost::default_dfs_visitor::tree_edge(edge, graph);
     }
+
+//  ---------------------------------------------------------------------------------------
 
     template < typename E, typename G > void back_edge(E edge, G const & graph)
     {
@@ -69,12 +79,16 @@ public :
         boost::default_dfs_visitor::back_edge(edge, graph);
     }
 
+//  ---------------------------------------------------------------------------------------
+
     template < typename E, typename G > void forward_or_cross_edge(E edge, G const & graph)
     {
         std::cout << "Visitor::forward_or_cross_edge : edge = " << edge << '\n';
 
         boost::default_dfs_visitor::forward_or_cross_edge(edge, graph);
     }
+
+//  ---------------------------------------------------------------------------------------
 
     template < typename E, typename G > void finish_edge(E edge, G const & graph)
     {

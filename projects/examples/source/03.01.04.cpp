@@ -20,8 +20,6 @@ public :
     {
         std::cout << "Entity:: Entity (2)\n";
 
-    //  -------------------------------------
-
     //	m_y = y; // error
     }
 

@@ -12,6 +12,8 @@ int main()
 
 	std::vector < int > vector_2(std::begin(vector_1), std::end(vector_1));
 
+//  -----------------------------------------------------------------------
+
 	std::vector < int > vector_3
 	(
 		std::make_move_iterator(std::begin(vector_2)),

@@ -27,8 +27,6 @@ public :
     Allocator(std::size_t size) : m_size(size)
     {
         assert(m_size >= sizeof(Node) + 1);
-
-    //  --------------------------------------------------------------
         
         m_begin = operator new(m_size, std::align_val_t(s_alignment));
 
@@ -99,6 +97,8 @@ public :
 
         return nullptr;
     }
+
+//  -----------------------------------------------------------------------------------------------
 
     void deallocate(void * x)
     {
@@ -177,10 +177,14 @@ private :
 		return static_cast < std::byte * > (x);
 	}
 
+//  -----------------------------------------------------------------------------------------------
+
     auto get_node(void * x) const -> Node *
 	{
 		return static_cast < Node * > (x);
 	}
+
+//  -----------------------------------------------------------------------------------------------
 
     auto get_header(void * x) const -> Header *
 	{

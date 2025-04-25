@@ -65,8 +65,6 @@ public :
 private :
 
     int m_x = 0;
-
-//  ---------------------------------------
     
     std::vector < Observer * > m_observers;
 };

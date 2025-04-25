@@ -30,6 +30,8 @@ public :
 
     virtual void test() const = 0;
 
+//  ---------------------------------------------------------
+
     virtual void visit_by(Visitor const & visitor) const = 0;
 };
 
@@ -43,6 +45,8 @@ public :
     { 
         std::cout << "Client::test\n";
     }
+
+//  -----------------------------------------------------
 
     void visit_by(Visitor const & visitor) const override
     { 
@@ -60,6 +64,8 @@ public :
     { 
         std::cout << "Server::test\n";
     }
+
+//  -----------------------------------------------------
 
     void visit_by(Visitor const & visitor) const override
     {
@@ -79,6 +85,8 @@ public :
 
         client->test();
     }
+
+//  ------------------------------------------------
 
     void visit(Server const * server) const override 
     {

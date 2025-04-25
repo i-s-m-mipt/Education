@@ -15,11 +15,7 @@ auto g_has_error = false;
 
 auto test(bool & has_error)
 {
-    g_has_error = true;
-
-      has_error = true;
-
-    return true;
+    return g_has_error = has_error = true;
 }
 
 ////////////////////////////////////////////////////////

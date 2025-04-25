@@ -29,8 +29,6 @@ public :
 	{
 	//	throw std::runtime_error("error"); // error
 
-	//  -------------------------------------------
-
 		uninitialize();
 	}
 
