@@ -6,9 +6,4 @@ https://www.learncpp.com/ - учебное пособие
 https://www.cppstories.com/ - частный блог
 https://www.fluentcpp.com/ - частный блог
 https://www.modernescpp.com/ - частный блог
-https://www.onlinegdb.com/ - компиляторы
-https://cppinsights.io/ - анализ программ
 https://roadmap.sh/ - обзор всех технологий
-https://e-maxx.ru/algo/ - сборник алгоритмов
-https://www.asciitable.com/ - таблица ASCII
-https://regex101.com/ - регулярные выражения
