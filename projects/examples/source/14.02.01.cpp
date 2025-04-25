@@ -10,10 +10,6 @@ class Entity
 {
 public :
 
-    using mutex_t = std::mutex;
-
-//  -----------------------------------------------------------
-
 //  void test_v1() // error
 //  {
 //      ++m_x;
@@ -23,7 +19,7 @@ public :
 
     void test_v2()
     {
-        std::scoped_lock < mutex_t > lock(m_mutex);
+        std::scoped_lock < std::mutex > lock(m_mutex);
 
         ++m_x;
     }
@@ -32,7 +28,7 @@ public :
 
     void test_v3() const
     {
-        std::scoped_lock < mutex_t > lock(m_mutex);
+        std::scoped_lock < std::mutex > lock(m_mutex);
 
         std::cout << "Entity::test_v3 : m_x = " << m_x << '\n';
     }
@@ -43,7 +39,7 @@ private :
 
 //  -----------------------------------------------------------
 
-    mutable mutex_t m_mutex;
+    mutable std::mutex m_mutex;
 };
 
 ///////////////////////////////////////////////////////////////

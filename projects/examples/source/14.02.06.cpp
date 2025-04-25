@@ -10,10 +10,6 @@ class Entity
 {
 public :
 
-    using mutex_t = std::mutex;
-
-//  ---------------------------------------------------------
-
     Entity()
     {
     //  initialize_v1(); // error
@@ -29,7 +25,7 @@ private :
 //  {
 //      if (!s_x)
 //      {
-//          std::scoped_lock < mutex_t > lock(m_mutex);
+//          std::scoped_lock < std::mutex > lock(m_mutex);
 //
 //          if (!s_x)
 //          {
@@ -51,7 +47,7 @@ private :
 
 //  ---------------------------------------------------------
 
-    mutable mutex_t m_mutex;
+    mutable std::mutex m_mutex;
 
     mutable std::once_flag m_flag;
 };

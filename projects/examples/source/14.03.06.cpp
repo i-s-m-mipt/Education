@@ -26,6 +26,8 @@ public :
             std::this_thread::yield();
         }
 
+    //  ------------------------------------------------------
+
     //  assert(m_x.load(std::memory_order::relaxed)); // error
     }
 
