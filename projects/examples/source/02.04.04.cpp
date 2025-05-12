@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////
 
-auto const & test_v3()
+auto const & generate()
 {
 	static auto x = 0; // support : compiler-explorer.com
 
@@ -27,11 +27,11 @@ int main()
 
 //  ---------------------------------
 
-    assert( test_v3() == 1);
+    assert(generate() == 1);
 
-    assert( test_v3() == 2);
+    assert(generate() == 2);
 
-    assert( test_v3() == 3);
+    assert(generate() == 3);
 }
 
 /////////////////////////////////////////////////////////
