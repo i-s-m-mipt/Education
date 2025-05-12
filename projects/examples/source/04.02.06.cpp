@@ -1,104 +1,96 @@
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <cassert>
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/type_index.hpp>
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 struct Entity {};
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 auto         make_entity_v1() { return Entity(); }
 
 auto const   make_entity_v2() { return Entity(); }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 auto       & make_entity_v3() { static Entity       entity; return entity; }
 
 auto const & make_entity_v4() { static Entity const entity; return entity; }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-template < typename E > void test_v1(E entity) 
+template < typename E > auto make_name_v1(E entity) 
 {
-	std::cout << "test_v1 : typeid(entity) = ";
-
-	std::cout << boost::typeindex::type_id_with_cvr < decltype(entity) > ().pretty_name() << '\n';
+	return boost::typeindex::type_id_with_cvr < decltype(entity) > ().pretty_name();
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-template < typename E > void test_v2(E & entity) 
+template < typename E > auto make_name_v2(E & entity) 
 {
-	std::cout << "test_v2 : typeid(entity) = ";
-
-	std::cout << boost::typeindex::type_id_with_cvr < decltype(entity) > ().pretty_name() << '\n';
+	return boost::typeindex::type_id_with_cvr < decltype(entity) > ().pretty_name();
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-template < typename E > void test_v3(E const & entity) 
+template < typename E > auto make_name_v3(E const & entity) 
 {
-	std::cout << "test_v3 : typeid(entity) = ";
-
-	std::cout << boost::typeindex::type_id_with_cvr < decltype(entity) > ().pretty_name() << '\n';
+	return boost::typeindex::type_id_with_cvr < decltype(entity) > ().pretty_name();
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-template < typename E > void test_v4(E && entity) 
+template < typename E > auto make_name_v4(E && entity) 
 {
-	std::cout << "test_v4 : typeid(entity) = ";
-
-	std::cout << boost::typeindex::type_id_with_cvr < decltype(entity) > ().pretty_name() << '\n';
+	return boost::typeindex::type_id_with_cvr < decltype(entity) > ().pretty_name();
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	test_v1(make_entity_v1());
+	assert(make_name_v1(make_entity_v1()) == "Entity"        );
 
-	test_v1(make_entity_v2());
+	assert(make_name_v1(make_entity_v2()) == "Entity"        );
 
-	test_v1(make_entity_v3());
+	assert(make_name_v1(make_entity_v3()) == "Entity"        );
 
-	test_v1(make_entity_v4());
+	assert(make_name_v1(make_entity_v4()) == "Entity"        );
 
-//  -----------------------------------
+//  --------------------------------------------------------------------
 
-//	test_v2(make_entity_v1()); // error
+//	assert(make_name_v2(make_entity_v1()) == "Entity&"       ); // error
 
-	test_v2(make_entity_v2());
+	assert(make_name_v2(make_entity_v2()) == "Entity const&" );
 
-	test_v2(make_entity_v3());
+	assert(make_name_v2(make_entity_v3()) == "Entity&"       );
 
-	test_v2(make_entity_v4());
+	assert(make_name_v2(make_entity_v4()) == "Entity const&" );
 
-//  -----------------------------------
+//  --------------------------------------------------------------------
 
-	test_v3(make_entity_v1());
+	assert(make_name_v3(make_entity_v1()) == "Entity const&" );
 
-	test_v3(make_entity_v2());
+	assert(make_name_v3(make_entity_v2()) == "Entity const&" );
 
-	test_v3(make_entity_v3());
+	assert(make_name_v3(make_entity_v3()) == "Entity const&" );
 
-	test_v3(make_entity_v4());
+	assert(make_name_v3(make_entity_v4()) == "Entity const&" );
 
-//  -----------------------------------
+//  --------------------------------------------------------------------
 
-	test_v4(make_entity_v1());
+	assert(make_name_v4(make_entity_v1()) == "Entity&&"      );
 
-	test_v4(make_entity_v2());
+	assert(make_name_v4(make_entity_v2()) == "Entity const&&");
 
-	test_v4(make_entity_v3());
+	assert(make_name_v4(make_entity_v3()) == "Entity&"       );
 
-	test_v4(make_entity_v4());
+	assert(make_name_v4(make_entity_v4()) == "Entity const&" );
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////

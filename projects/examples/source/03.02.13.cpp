@@ -1,8 +1,8 @@
-//////////////////////////////////////////
+///////////////////////////////////////////////////
 
 #include <iostream>
 
-//////////////////////////////////////////
+///////////////////////////////////////////////////
 
 class Entity_v1 
 { 
@@ -11,11 +11,11 @@ public :
 	virtual ~Entity_v1() = default;
 };
 
-//////////////////////////////////////////
+///////////////////////////////////////////////////
 
 class Client_v1 : public Entity_v1 {};
 
-//////////////////////////////////////////
+///////////////////////////////////////////////////
 
 class Entity_v2 
 {
@@ -23,31 +23,31 @@ public :
 
 	virtual ~Entity_v2() = default;
 
-//  -------------------------------------
+//  -----------------------------------------------
 
-	virtual Entity_v1 * make() const
+	virtual Entity_v1 * make_entity_v1() const
 	{ 
-		std::cout << "Entity_v2::make\n";
+		std::cout << "Entity_v2::make_entity_v1\n";
 
 		return new Entity_v1;
 	}
 };
 
-//////////////////////////////////////////
+///////////////////////////////////////////////////
 
 class Client_v2 : public Entity_v2
 {
 public :
 
-	Client_v1 * make() const override 
+	Client_v1 * make_entity_v1() const override 
 	{ 
-		std::cout << "Client_v2::make\n";
+		std::cout << "Client_v2::make_entity_v1\n";
 
 		return new Client_v1;
 	}
 };
 
-//////////////////////////////////////////
+///////////////////////////////////////////////////
 
 int main()
 {
@@ -55,9 +55,9 @@ int main()
 
 //  --------------------------------------
 
-	delete entity_v2->make();
+	delete entity_v2->make_entity_v1();
 
 	delete entity_v2;
 }
 
-//////////////////////////////////////////
+///////////////////////////////////////////////////

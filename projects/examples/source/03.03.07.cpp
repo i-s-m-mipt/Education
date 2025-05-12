@@ -18,14 +18,14 @@ public :
 
 ////////////////////////////////////////////////////////////////////
 
-auto test_v1() 
+auto make_entity_v1() 
 { 
 	return Entity(); 
 }
 
 ////////////////////////////////////////////////////////////////////
 
-auto test_v2() 
+auto make_entity_v2() 
 { 
 	Entity entity;
 
@@ -38,9 +38,9 @@ auto test_v2()
 
 int main()
 {
-    [[maybe_unused]] auto entity_1 = test_v1();
+    [[maybe_unused]] auto entity_1 = make_entity_v1();
 	
-	[[maybe_unused]] auto entity_2 = test_v2();
+	[[maybe_unused]] auto entity_2 = make_entity_v2();
 }
 
 ////////////////////////////////////////////////////////////////////
