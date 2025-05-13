@@ -134,9 +134,9 @@ public :
 
 //  -----------------------------------------------------------------------------------------------
 
-    void test() const
+    void show() const
     { 
-        std::cout << "Chain_Allocator::test : ";
+        std::cout << "Chain_Allocator::show : ";
 
         std::cout << "m_size = "  << m_size << ' ';
 
@@ -331,25 +331,25 @@ int main()
 
 //  --------------------------------------------------
     
-    allocator.test();          allocator.allocate(16); 
+    allocator.show();          allocator.allocate(16); 
     
-    allocator.test(); auto x = allocator.allocate(16); 
+    allocator.show(); auto x = allocator.allocate(16); 
     
-    allocator.test(); auto y = allocator.allocate(16); 
+    allocator.show(); auto y = allocator.allocate(16); 
     
-    allocator.test();          allocator.allocate(16);
+    allocator.show();          allocator.allocate(16);
 
 //  --------------------------------------------------
     
-    allocator.test(); allocator.deallocate(y);
+    allocator.show(); allocator.deallocate(y);
     
-    allocator.test(); allocator.deallocate(x);
+    allocator.show(); allocator.deallocate(x);
 
 //  --------------------------------------------------
     
-    allocator.test(); auto z = allocator.allocate(32);
+    allocator.show(); auto z = allocator.allocate(32);
     
-    allocator.test();
+    allocator.show();
 
 //  --------------------------------------------------
 

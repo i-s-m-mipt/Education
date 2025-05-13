@@ -7,9 +7,9 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-void test(std::vector < int > const & vector)
+void show(std::vector < int > const & vector)
 {
-	std::cout << "test : vector = { ";
+	std::cout << "show : vector = { ";
 
 	for (auto element : vector)
 	{
@@ -43,7 +43,7 @@ int main()
 
 //  -------------------------------------------------------------------------
 
-	test(vector);
+	show(vector);
 }
 
 /////////////////////////////////////////////////////////////////////////////

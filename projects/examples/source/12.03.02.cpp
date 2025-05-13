@@ -83,7 +83,7 @@ public :
 
 //  ------------------------------------------------------------------------------------
 
-	void putback(token_t const & token)
+	void put(token_t const & token)
 	{
 		m_token = token;
 		
@@ -138,7 +138,7 @@ private :
 			}
 		}
 		
-		stream.putback(token);
+		stream.put(token);
 		
 		return expression(stream);
 	}
@@ -172,7 +172,7 @@ private :
 
 				default  : 
 				{ 
-					stream.putback(token);
+					stream.put(token);
 						
 					return x;
 				}
@@ -200,7 +200,7 @@ private :
 
 				default  : 
 				{ 
-					stream.putback(token);
+					stream.put(token);
 						
 					return x;
 				}

@@ -35,7 +35,7 @@ public :
 
 //  ---------------------------------------
 
-    void add_observer(Observer * observer)
+    void add(Observer * observer)
     { 
         m_observers.push_back(observer);
     }
@@ -46,12 +46,12 @@ public :
     { 
         m_x = x;
         
-        notify_observers();
+        notify_all();
     }
 
 //  ---------------------------------------
 
-    void notify_observers() const
+    void notify_all() const
     { 
         for (auto observer : m_observers)
         {
@@ -99,13 +99,13 @@ int main()
 {
     Entity entity;
 
-//  --------------------------------
+//  ----------------------------
 
-    entity.add_observer(new Client);
+    entity.add(new Client);
     
-    entity.add_observer(new Server);
+    entity.add(new Server);
 
-//  --------------------------------
+//  ----------------------------
     
     for (auto i = 0; i < 2; ++i)
     {

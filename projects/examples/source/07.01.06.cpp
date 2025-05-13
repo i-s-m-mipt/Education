@@ -18,7 +18,7 @@ struct Variant
 
 //////////////////////////////////////////////////////
 
-auto test(int x)
+auto make_variant(int x)
 {
 	if (x > 0)
 	{
@@ -34,7 +34,7 @@ auto test(int x)
 
 int main()
 {
-	std::ignore = test(1);
+	std::ignore = make_variant(1);
 }
 
 //////////////////////////////////////////////////////

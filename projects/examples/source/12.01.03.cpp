@@ -6,34 +6,29 @@
 
 #include <cassert>
 #include <chrono>
-#include <clocale>
 #include <cstring>
 #include <ctime>
-#include <iostream>
 #include <locale>
+#include <sstream>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-void put_time(std::locale const & locale_1)
+auto make_timestamp(std::locale const & locale, std::time_t time = 0)
 {
-	auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+	std::stringstream stream;
 
-	auto timestamp = std::localtime(&time);
+	stream.imbue(locale);
+
+	auto timestamp = std::gmtime(&time);
 
 	auto format = "%X %x";
 
-	auto locale_2 = std::cout.imbue(locale_1);
-
-    std::cout << "main : timestamp = ";
-
-	std::use_facet < std::time_put < char > > (locale_1).put
+	std::use_facet < std::time_put < char > > (locale).put
 	(
-		std::cout, std::cout, ' ', timestamp, format, format + std::strlen(format)
+		stream, stream, ' ', timestamp, format, format + std::strlen(format)
 	);
 
-	std::cout << '\n';
-
-	std::cout.imbue(locale_2);
+	return stream.str();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,9 +53,9 @@ int main()
 
 //  ----------------------------------------------------------------------------------------
 
-	put_time(locale_1);
+	assert(make_timestamp(locale_1) == "12:00:00 AM 01/01/1970");
 
-	put_time(locale_2);
+	assert(make_timestamp(locale_2) == "00:00:00 01.01.1970"   );
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////

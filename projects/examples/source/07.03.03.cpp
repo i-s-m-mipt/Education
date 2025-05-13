@@ -13,7 +13,7 @@
 
 /////////////////////////////////////////////////////////////////
 
-auto test(std::size_t size)
+auto calculate(std::size_t size)
 {
 	auto x = 0.0;
 
@@ -36,7 +36,7 @@ auto equal(double x, double y, double epsilon = 1e-6)
 
 int main() 
 {
-	assert(equal(test(1'000), 1'000));
+	assert(equal(calculate(1'000), 1'000));
 
 //  ----------------------------------------------------
 

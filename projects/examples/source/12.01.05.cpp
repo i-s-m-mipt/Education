@@ -15,7 +15,7 @@ using namespace std::literals;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-auto convert_v1(std::string const & string, std::locale const & locale) 
+auto make_string_v1(std::string const & string, std::locale const & locale) 
 {
     auto size = std::size(string);
 
@@ -33,7 +33,7 @@ auto convert_v1(std::string const & string, std::locale const & locale)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-auto convert_v2(std::wstring const & wstring, std::locale const & locale)
+auto make_string_v2(std::wstring const & wstring, std::locale const & locale)
 {
     auto size = std::size(wstring);
 
@@ -57,9 +57,9 @@ int main()
 
 //  ---------------------------------------------------------------------------------------------
 
-    assert(convert_v1( "aaaaa", locale) == L"aaaaa");
+    assert(make_string_v1( "aaaaa", locale) == L"aaaaa");
 
-    assert(convert_v2(L"aaaaa", locale) ==  "aaaaa");
+    assert(make_string_v2(L"aaaaa", locale) ==  "aaaaa");
 
 //  ---------------------------------------------------------------------------------------------
 

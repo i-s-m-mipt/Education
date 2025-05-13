@@ -14,7 +14,7 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-void make_text(int & line, int delta, PageContentContext & context, PDFWriter & writer)
+void add_text(int & line, int delta, PageContentContext & context, PDFWriter & writer)
 {
     auto font = writer.GetFontForFile("font.ttf");
 
@@ -29,7 +29,7 @@ void make_text(int & line, int delta, PageContentContext & context, PDFWriter & 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-void make_image(int & line, int delta, PageContentContext & context)
+void add_image(int & line, int delta, PageContentContext & context)
 {
     auto height = 380, ppi_1 = 72, ppi_2 = 96;
 
@@ -48,7 +48,7 @@ void make_image(int & line, int delta, PageContentContext & context)
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-void make_graphic(int & line, int delta, PageContentContext & context)
+void add_graphic(int & line, int delta, PageContentContext & context)
 {
     auto width = 100, height = 100;
 
@@ -94,11 +94,11 @@ int main()
 
 //  --------------------------------------------------------------
 
-    make_text   (line, delta, *context, writer);
+    add_text   (line, delta, *context, writer);
 
-    make_image  (line, delta, *context);
+    add_image  (line, delta, *context);
 
-    make_graphic(line, delta, *context);
+    add_graphic(line, delta, *context);
 
 //  --------------------------------------------------------------
     

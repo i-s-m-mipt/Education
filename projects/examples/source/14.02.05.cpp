@@ -40,7 +40,7 @@ int * g_x = nullptr;
 
 //////////////////////////////////////////////////////
 
-void extract(int & x)
+void test(int & x)
 {
     g_x = &x;
 }
@@ -53,7 +53,7 @@ int main()
 
 //  --------------------------
 
-    entity.invoke(extract);
+    entity.invoke(test);
 
 //  --------------------------
 

@@ -105,6 +105,8 @@ public :
         return x;
     }
 
+//  ------------------------------------------------------------
+
     auto operator()(Sign const & sign) const -> double
     {
         auto x = boost::apply_visitor(*this, sign.operand);
@@ -118,6 +120,8 @@ public :
 
         return x;
     }
+
+//  ------------------------------------------------------------
 
     auto operator()(Step const & step, double x) const -> double
     {
@@ -136,6 +140,8 @@ public :
 
         return x;
     }
+
+//  ------------------------------------------------------------
 
     auto operator()(List const & list) const -> double
     {

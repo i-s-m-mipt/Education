@@ -72,9 +72,9 @@ public :
 
 //  -------------------------------------------------------------------------------
 
-	void test() const
+	void show() const
 	{
-		std::cout << "Allocator::test : m_size = " << m_size << ' ';
+		std::cout << "Allocator::show : m_size = " << m_size << ' ';
 
 		std::cout << "m_begin = "  << std::format("{:018}", m_begin) << ' ';
 
@@ -170,25 +170,25 @@ int main()
 
 //  ----------------------------------------------------
 
-	allocator.test();          allocator.allocate(1, 1); 
+	allocator.show();          allocator.allocate(1, 1); 
 	
-	allocator.test();          allocator.allocate(2, 2); 
+	allocator.show();          allocator.allocate(2, 2); 
 	
-	allocator.test(); auto x = allocator.allocate(4, 4); 
+	allocator.show(); auto x = allocator.allocate(4, 4); 
 	
-	allocator.test(); auto y = allocator.allocate(8, 8);
+	allocator.show(); auto y = allocator.allocate(8, 8);
 
 //  ----------------------------------------------------
 	
-	allocator.test(); allocator.deallocate(y);  
+	allocator.show(); allocator.deallocate(y);  
 	
-	allocator.test(); allocator.deallocate(x);
+	allocator.show(); allocator.deallocate(x);
 	
 //  ----------------------------------------------------
 	
-	allocator.test(); auto z = allocator.allocate(8, 8); 
+	allocator.show(); auto z = allocator.allocate(8, 8); 
 	
-	allocator.test(); 
+	allocator.show(); 
 
 //  ----------------------------------------------------
 

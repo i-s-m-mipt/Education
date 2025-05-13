@@ -14,7 +14,7 @@
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-auto type(std::filesystem::file_status const & status)
+auto make_type(std::filesystem::file_status const & status)
 {
     if (std::filesystem::is_block_file    (status)) { return 'b'; }
     
@@ -37,7 +37,7 @@ auto type(std::filesystem::file_status const & status)
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-auto permissions(std::filesystem::perms permissions) -> std::string
+auto make_permissions(std::filesystem::perms permissions) -> std::string
 {
     auto lambda = [permissions](auto x, auto y) 
     { 
@@ -103,15 +103,15 @@ auto size(std::filesystem::directory_entry const & entry)
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-void test(std::filesystem::path const & path)
+void show(std::filesystem::path const & path)
 {
 	if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
 	{
         for (auto const & entry : std::filesystem::directory_iterator(path))
 		{
-            std::cout << "test : entry : " << type(entry.status());
+            std::cout << "show : entry : " << make_type(entry.status());
 
-            std::cout << " | " << permissions(entry.status().permissions());
+            std::cout << " | " << make_permissions(entry.status().permissions());
 
             std::cout << " | " << size(entry);
 
@@ -129,7 +129,7 @@ void test(std::filesystem::path const & path)
 
 int main()
 {
-	test(std::filesystem::current_path());
+	show(std::filesystem::current_path());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////

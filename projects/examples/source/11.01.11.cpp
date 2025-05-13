@@ -26,13 +26,13 @@ public :
 
     virtual ~Entity() = default;
 
-//  ---------------------------------------------------------
+//  -------------------------------------------------------
 
     virtual void test() const = 0;
 
-//  ---------------------------------------------------------
+//  -------------------------------------------------------
 
-    virtual void visit_by(Visitor const & visitor) const = 0;
+    virtual void invoke(Visitor const & visitor) const = 0;
 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -46,9 +46,9 @@ public :
         std::cout << "Client::test\n";
     }
 
-//  -----------------------------------------------------
+//  ---------------------------------------------------
 
-    void visit_by(Visitor const & visitor) const override
+    void invoke(Visitor const & visitor) const override
     { 
         visitor.visit(this);
     }
@@ -65,9 +65,9 @@ public :
         std::cout << "Server::test\n";
     }
 
-//  -----------------------------------------------------
+//  ---------------------------------------------------
 
-    void visit_by(Visitor const & visitor) const override
+    void invoke(Visitor const & visitor) const override
     {
         visitor.visit(this);
     }
@@ -108,7 +108,7 @@ int main()
 
 //  -------------------------------------------------------------------
 
-    entity->visit_by(router);
+    entity->invoke(router);
 }
 
 ///////////////////////////////////////////////////////////////////////

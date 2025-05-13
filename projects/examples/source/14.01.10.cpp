@@ -21,7 +21,7 @@ void test_v2()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename F, typename ... Ts > auto async_invoke(F && f, Ts && ... xs)
+template < typename F, typename ... Ts > auto invoke(F && f, Ts && ... xs)
 {
 	return std::async(std::launch::async, std::forward < F > (f), std::forward < Ts > (xs)...);
 }
@@ -54,7 +54,7 @@ int main()
 	
 //  -----------------------------------------------------------------
 
-	assert(async_invoke(test_v1, 1).get() == 1);
+	assert(invoke(test_v1, 1).get() == 1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

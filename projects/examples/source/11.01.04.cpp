@@ -6,7 +6,7 @@
 
 //////////////////////////////////////////////////////////////
 
-auto generate() 
+auto make_integer() 
 { 
 	static auto x = 0;
 	
@@ -37,7 +37,7 @@ int main()
 
 //  ----------------------------------------------------------
 
-	std::ranges::generate(vector, generate);
+	std::ranges::generate(vector, make_integer);
 
 //  ----------------------------------------------------------
 

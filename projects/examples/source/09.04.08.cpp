@@ -25,7 +25,7 @@ public :
 	{
 		assert(m_size % m_step == 0 && m_step >= sizeof(Node));
 
-		make_list();
+		resize();
 			
 		m_begin = m_head;
 	}
@@ -51,7 +51,7 @@ public :
 		{
 			if (m_offset == std::size(m_lists))
 			{
-				make_list();
+				resize();
 			}
 			else 
 			{
@@ -97,9 +97,9 @@ public :
 
 //  ------------------------------------------------------------------------------------------------
 
-	void test() const
+	void show() const
 	{ 
-		std::cout << "Allocator::test : ";
+		std::cout << "Allocator::show : ";
 
 		std::cout << "m_size = "   << m_size << ' ' << "m_step = " << m_step << ' ';
 
@@ -133,20 +133,11 @@ private :
 
 //  ------------------------------------------------------------------------------------------------
 
-	auto allocate_nodes() const
+	void resize()
 	{
-		auto node = get_node(operator new(m_size, std::align_val_t(s_alignment)));
-		
-		node->next = nullptr;
-		
-		return node;
-	}
+		m_head = get_node(operator new(m_size, std::align_val_t(s_alignment)));
 
-//  ------------------------------------------------------------------------------------------------
-
-	void make_list()
-	{
-		m_head = allocate_nodes();
+		m_head->next = nullptr;
 		
 		++m_offset;
 		
@@ -248,27 +239,27 @@ int main()
 
 //  ------------------------------------------------
 	
-	allocator.test();          allocator.allocate(); 
+	allocator.show();          allocator.allocate(); 
 	
-	allocator.test(); auto x = allocator.allocate(); 
+	allocator.show(); auto x = allocator.allocate(); 
 	
-	allocator.test(); auto y = allocator.allocate(); 
+	allocator.show(); auto y = allocator.allocate(); 
 	
-	allocator.test();          allocator.allocate(); 
+	allocator.show();          allocator.allocate(); 
 	
-	allocator.test();          allocator.allocate();
+	allocator.show();          allocator.allocate();
 
 //  ------------------------------------------------
 	
-	allocator.test(); allocator.deallocate(x);
+	allocator.show(); allocator.deallocate(x);
 	
-	allocator.test(); allocator.deallocate(y);
+	allocator.show(); allocator.deallocate(y);
 
 //  ------------------------------------------------
 	
-	allocator.test(); auto z = allocator.allocate();
+	allocator.show(); auto z = allocator.allocate();
 	
-	allocator.test();
+	allocator.show();
 
 //  ------------------------------------------------
 

@@ -27,7 +27,7 @@ void test_v2(benchmark::State & state)
 {
     std::string string(65'536, 'a');
 
-    std::string_view view(string);
+    std::string_view view = string;
 
     for (auto element : state)
     {

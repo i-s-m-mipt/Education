@@ -9,18 +9,18 @@ template < typename B > class is_polymorphic
 {
 private :
 
-	template < typename T > static std::false_type handle(...);
+	template < typename T > static std::false_type test(...);
 
 //  ------------------------------------------------------------------------------
 
-    template < typename T > static std:: true_type handle
+    template < typename T > static std:: true_type test
 	(
 		int, decltype(dynamic_cast < void * > (std::declval < T * > ())) = nullptr
 	);
 
 public :
       
-	constexpr static auto value = decltype(handle < B > (1))::value;
+	constexpr static auto value = decltype(test < B > (1))::value;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////

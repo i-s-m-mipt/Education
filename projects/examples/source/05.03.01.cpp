@@ -22,7 +22,7 @@ public :
 
 //  --------------------------------------------------------------------
 
-    void set(int x)
+    void save(int x)
     {
         State state(x);
         
@@ -95,7 +95,7 @@ int main()
 
     for (auto i = 0; i < 2; ++i)
     {
-        memento.set(i + 1);
+        memento.save(i + 1);
     }
 
 //  --------------------------------------

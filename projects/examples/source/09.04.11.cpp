@@ -42,9 +42,9 @@ public :
 
 //  ------------------------------------------------------------------------------
 
-	void test() const
+	void show() const
 	{
-		std::cout << "Allocator::test : S = " << S << ' ';
+		std::cout << "Allocator::show : S = " << S << ' ';
 
 		auto begin = static_cast < void * > (m_begin);
 
@@ -119,15 +119,15 @@ int main()
 
 //  -------------------------------------------
 
-	allocator.test(); allocator.allocate(1, 1);
+	allocator.show(); allocator.allocate(1, 1);
 
-	allocator.test(); allocator.allocate(2, 2); 
+	allocator.show(); allocator.allocate(2, 2); 
 	
-	allocator.test(); allocator.allocate(4, 4); 
+	allocator.show(); allocator.allocate(4, 4); 
 	
-	allocator.test(); allocator.allocate(8, 8); 
+	allocator.show(); allocator.allocate(8, 8); 
 	
-	allocator.test();
+	allocator.show();
 
 //  -------------------------------------------
 

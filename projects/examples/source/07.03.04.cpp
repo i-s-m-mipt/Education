@@ -41,7 +41,7 @@ public :
 
 		if (m_has_trace) 
 		{
-			write(Severity::trace, "execution ... ");
+			put(Severity::trace, "execution ... ");
 		}
 	}
 
@@ -51,13 +51,13 @@ public :
 	{
 		if (m_has_trace) 
 		{
-			write(Severity::trace, "execution complete");
+			put(Severity::trace, "execution complete");
 		}
 	}
 
 //  ---------------------------------------------------------------------------------------------
 
-	void write(Severity severity, std::string const & string) const
+	void put(Severity severity, std::string const & string) const
 	{
 		auto record = s_logger.open_record(boost::log::keywords::severity = severity);
 		
@@ -174,13 +174,13 @@ private :
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define LOGGER_WRITE_DEBUG(logger, string) logger.write(Logger::Severity::debug, string);
+#define LOGGER_WRITE_DEBUG(logger, string) logger.put(Logger::Severity::debug, string);
 
-#define LOGGER_WRITE_TRACE(logger, string) logger.write(Logger::Severity::trace, string);
+#define LOGGER_WRITE_TRACE(logger, string) logger.put(Logger::Severity::trace, string);
 
-#define LOGGER_WRITE_ERROR(logger, string) logger.write(Logger::Severity::error, string);
+#define LOGGER_WRITE_ERROR(logger, string) logger.put(Logger::Severity::error, string);
 
-#define LOGGER_WRITE_FATAL(logger, string) logger.write(Logger::Severity::fatal, string);
+#define LOGGER_WRITE_FATAL(logger, string) logger.put(Logger::Severity::fatal, string);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

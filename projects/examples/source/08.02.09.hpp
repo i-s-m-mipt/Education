@@ -18,9 +18,27 @@ class Python : private boost::noncopyable
 {
 public :
 
-	Python() { acquire(); }
+	Python() 
+	{ 
+		std::call_once(s_flag, Py_Initialize);
 
-   ~Python() { release(); }
+		s_mutex.lock();
+			
+		s_state = PyGILState_Ensure();
+
+		m_local = boost::python::import("__main__").attr("__dict__");
+
+		boost::python::exec("import sys\nsys.path.append(\".\")", m_local, m_local); 
+	}
+
+//  ----------------------------------------------------------------------------------------
+
+   ~Python() 
+    { 
+		PyGILState_Release(s_state);
+		
+		s_mutex.unlock();
+	}
 
 //  ----------------------------------------------------------------------------------------
 
@@ -54,30 +72,6 @@ public :
 	}
 
 private :
-
-	void acquire()
-	{
-		std::call_once(s_flag, Py_Initialize);
-
-		s_mutex.lock();
-			
-		s_state = PyGILState_Ensure();
-
-		m_local = boost::python::import("__main__").attr("__dict__");
-
-		boost::python::exec("import sys\nsys.path.append(\".\")", m_local, m_local);
-	}
-
-//  ----------------------------------------------------------------------------------------
-
-	void release()
-	{
-		PyGILState_Release(s_state);
-		
-		s_mutex.unlock();
-	}
-
-//  ----------------------------------------------------------------------------------------
 
 	boost::python::api::object m_local;
 

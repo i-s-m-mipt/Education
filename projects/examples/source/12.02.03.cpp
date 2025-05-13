@@ -6,7 +6,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-auto test(std::string const & string)
+auto search(std::string const & string)
 {
     std::smatch matches;
 
@@ -21,11 +21,11 @@ auto test(std::string const & string)
 
 int main()
 {
-    assert(test(" aaaaa-12345       ")[0] == "aaaaa-12345"      );
+    assert(search(" aaaaa-12345       ")[0] == "aaaaa-12345"      );
 
-    assert(test(" aaaaa-12345-12345 ")[0] == "aaaaa-12345-12345");
+    assert(search(" aaaaa-12345-12345 ")[0] == "aaaaa-12345-12345");
 
-    assert(test(" aaaaa-12345-12345 ")[1] ==            "-12345");
+    assert(search(" aaaaa-12345-12345 ")[1] ==            "-12345");
 }
 
 /////////////////////////////////////////////////////////////////////////////

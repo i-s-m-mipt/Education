@@ -18,11 +18,11 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void test(std::unordered_set < std::string > const & set)
+void show(std::unordered_set < std::string > const & set)
 {
 	for (auto i = 0uz; i < set.bucket_count(); ++i)
 	{
-		std::cout << "test : buckets[" << std::format("{:0>2}", i) << "] = {";
+		std::cout << "show : buckets[" << std::format("{:0>2}", i) << "] = {";
 
 		for (auto iterator = set.begin(i); iterator != set.end(i); ++iterator)
 		{
@@ -73,9 +73,9 @@ int main()
 
 //  ----------------------------------------------------------------------------
 
-	test(set); set.rehash(32);
+	show(set); set.rehash(32);
 
-	test(set);
+	show(set);
 
 //  ----------------------------------------------------------------------------
 
@@ -86,9 +86,9 @@ int main()
 
 //  ----------------------------------------------------------------------------
 
-	test(set); set.rehash(64);
-	
-	test(set);
+	show(set); set.rehash(64);
+		
+	show(set);
 
 //  ----------------------------------------------------------------------------
 

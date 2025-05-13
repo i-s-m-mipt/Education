@@ -56,9 +56,9 @@ public :
 
 //  ------------------------------------------------------------------------------
 
-	void test() const
+	void show() const
 	{
-		std::cout << "Arena::test : m_size = " << m_size << ' ';
+		std::cout << "Arena::show : m_size = " << m_size << ' ';
 
 		std::cout << "m_begin = "  << std::format("{:018}", m_begin) << ' ';
 
@@ -134,9 +134,9 @@ int main()
 
 //  ----------------------------------------------------------------------------
 
-    arena.test(); vector.push_back(1);
+    arena.show(); vector.push_back(1);
 	
-    arena.test();
+    arena.show();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

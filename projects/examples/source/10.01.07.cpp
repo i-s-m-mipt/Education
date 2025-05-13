@@ -8,7 +8,7 @@ class Entity
 {
 public :
 
-	void make()
+	void load()
 	{
 		if (!m_x)
 		{
@@ -25,7 +25,7 @@ private :
 
 int main()
 {
-    Entity().make();
+    Entity().load();
 }
 
 ///////////////////////////////////////////////

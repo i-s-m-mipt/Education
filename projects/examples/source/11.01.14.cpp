@@ -134,7 +134,7 @@ protected :
 
 //  ---------------------------------------------------------------------------------------------
 
-    template < typename T > auto extract() const
+    template < typename T > auto get_type() const
     {
         return std::bit_cast < T * > (std::begin(m_array));
     }
@@ -154,26 +154,26 @@ public :
 
     Handler(T x) 
     { 
-        std::construct_at(derived().template extract < T > (), std::move(x));
+        std::construct_at(derived().template get_type < T > (), std::move(x));
             
-        update();
+        derived().m_index = s_index;
     }
 
-//  -----------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------
 
     auto & operator=(T x)
     {
         if (derived().m_index == s_index) 
         {
-            *derived().template extract < T > () = std::move(x);
+            *derived().template get_type < T > () = std::move(x);
         }
         else 
         {
             derived().destroy();
                 
-            std::construct_at(derived().template extract < T > (), std::move(x));
+            std::construct_at(derived().template get_type < T > (), std::move(x));
                 
-            update();
+            derived().m_index = s_index;
         }
 
         return derived();
@@ -185,17 +185,17 @@ protected :
 
    ~Handler() = default;
 
-//  -----------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------
 
     void destroy()
     {
         if (derived().m_index == s_index) 
         {
-            derived().template extract < T > ()->~T();
+            derived().template get_type < T > ()->~T();
         }
     }
 
-//  -----------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------
 
     constexpr static auto s_index = index_v < Deque < Ts ... > , T > + 1;
 
@@ -204,13 +204,6 @@ private :
     auto & derived()
     {
         return *static_cast < D * > (this);
-    }
-
-//  -----------------------------------------------------------------------------
-
-    void update() 
-    { 
-        derived().m_index = s_index;
     }
 };
 
@@ -280,7 +273,7 @@ public :
 
 //  -------------------------------------------------------------------------------------------
 
-    template < typename T > auto has() const
+    template < typename T > auto holds_alternative() const
     {
         return this->m_index == Handler < Variant < Ts ... > , T, Ts ... > ::s_index;
     }
@@ -289,7 +282,7 @@ public :
 
     template < typename T > auto get() const
     {
-        return *this->template extract < T > ();
+        return *this->template get_type < T > ();
     }
 
 //  -------------------------------------------------------------------------------------------
@@ -320,7 +313,7 @@ private :
     > 
     auto visit_implementation(V && visitor, Deque < U, Us ... > ) const
     {
-        if (this->template has < U > ()) 
+        if (this->template holds_alternative < U > ()) 
         {
             return visitor(this->template get < U > ());
         }
@@ -389,7 +382,9 @@ int main()
 
 //  --------------------------------------------------------------
 
-    assert(variant_1.has < int > ());
+    assert(variant_1.holds_alternative < int > ());
+
+//  --------------------------------------------------------------
 
     assert(variant_1.get < int > () == 1);
 

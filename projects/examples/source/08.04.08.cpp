@@ -40,13 +40,13 @@ auto pow(int x, int y) -> int
 
 /////////////////////////////////////////////////////////////////////
 
-template < char D, char ... Ds > auto handler() -> int
+template < char D, char ... Ds > auto make_integer() -> int
 {
 	auto x = D - '0';
 	
 	if constexpr (sizeof...(Ds) > 0)
 	{
-		return x * pow(3, sizeof...(Ds)) + handler < Ds... > ();
+		return x * pow(3, sizeof...(Ds)) + make_integer < Ds... > ();
 	}
 	else
 	{
@@ -58,7 +58,7 @@ template < char D, char ... Ds > auto handler() -> int
 
 template < char ... Ds > auto operator""_b3()
 {
-	return handler < Ds... > ();
+	return make_integer < Ds... > ();
 }
 
 /////////////////////////////////////////////////////////////////////

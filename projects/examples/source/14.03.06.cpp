@@ -10,7 +10,7 @@ class Entity
 {
 public :
 
-    void execute_v1()
+    void test_v1()
     {
         m_x.store(true, std::memory_order::seq_cst);
 
@@ -19,7 +19,7 @@ public :
 
 //  ---------------------------------------------------------
 
-    void execute_v2()
+    void test_v2()
     {
         while (m_y.load(std::memory_order::seq_cst) == false)
         {
@@ -40,11 +40,11 @@ int main()
 {
     Entity entity;
 
-//  ----------------------------------------------------
+//  -------------------------------------------------
 
-    std::jthread thread_1(&Entity::execute_v1, &entity);
+    std::jthread thread_1(&Entity::test_v1, &entity);
 
-    std::jthread thread_2(&Entity::execute_v2, &entity);
+    std::jthread thread_2(&Entity::test_v2, &entity);
 }
 
 /////////////////////////////////////////////////////////////

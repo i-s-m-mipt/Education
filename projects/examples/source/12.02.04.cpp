@@ -6,7 +6,7 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-auto test(std::string const & string)
+auto replace(std::string const & string)
 {
     std::regex regex(R"(\b([a-z])([^\s]+))"); // support : regex101.com
 
@@ -19,7 +19,7 @@ auto test(std::string const & string)
 
 int main()
 {
-    assert(test("aaaaa 12345") == "a-aaaa 12345");
+    assert(replace("aaaaa 12345") == "a-aaaa 12345");
 }
 
 ///////////////////////////////////////////////////////////////////////

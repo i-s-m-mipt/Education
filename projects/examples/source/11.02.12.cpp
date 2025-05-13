@@ -46,7 +46,7 @@ template < typename F, typename T, std::size_t ... Is > void invoke
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename ... Is > auto generate(std::pair < Is, Is > ... pairs)
+template < typename ... Is > auto cartesian(std::pair < Is, Is > ... pairs)
 {
 	std::vector < std::tuple < typename std::iterator_traits < Is > ::value_type ... > > tuples;
 
@@ -83,7 +83,7 @@ int main()
 
 //  -------------------------------------------------------------
 
-	auto tuples = generate
+	auto tuples = cartesian
 	(	
 		std::make_pair(std::begin(vector_1), std::end(vector_1)),
 		

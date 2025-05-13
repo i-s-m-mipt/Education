@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////
 
-auto test(std::string const & string) 
+auto match(std::string const & string) 
 {
     std::regex regex(R"([_[:alpha:]]\w*)"); // support : regex101.com
 
@@ -21,15 +21,15 @@ auto test(std::string const & string)
 
 int main()
 {
-    assert(test("aaaaa") == 1);
+    assert(match("aaaaa") == 1);
         
-	assert(test("12345") == 0);
+	assert(match("12345") == 0);
 
-	assert(test("_aaaa") == 1);
+	assert(match("_aaaa") == 1);
 
-	assert(test("_2345") == 1);
+	assert(match("_2345") == 1);
 
-	assert(test("_____") == 1);
+	assert(match("_____") == 1);
 }
 
 /////////////////////////////////////////////////////////////////////

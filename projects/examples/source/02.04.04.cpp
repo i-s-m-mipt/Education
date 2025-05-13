@@ -10,7 +10,7 @@
 
 ////////////////////////////////////////////////////////////////
 
-auto const & iota()
+auto const & make_integer()
 {
 	static auto x = 0; // support : compiler-explorer.com
 
@@ -27,11 +27,11 @@ int main()
 
 //  ------------------------------------------
 
-    assert(iota() == 1);
+    assert(make_integer() == 1);
 
-    assert(iota() == 2);
+    assert(make_integer() == 2);
 
-    assert(iota() == 3);
+    assert(make_integer() == 3);
 }
 
 ////////////////////////////////////////////////////////////////
