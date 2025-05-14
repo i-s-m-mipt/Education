@@ -1,9 +1,0 @@
-https://en.cppreference.com/w/ - справочник
-https://www.boost.org/ - библиотеки Boost
-https://stackoverflow.com/ - вопросы-ответы
-https://github.com/ - проекты и библиотеки
-https://www.learncpp.com/ - учебное пособие
-https://www.cppstories.com/ - частный блог
-https://www.fluentcpp.com/ - частный блог
-https://www.modernescpp.com/ - частный блог
-https://roadmap.sh/ - обзор всех технологий
