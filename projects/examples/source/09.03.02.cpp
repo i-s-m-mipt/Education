@@ -15,15 +15,15 @@ struct Entity_v2 { std::int8_t x = 0; std::int16_t y = 0; std::int32_t z = 0; };
 
 ////////////////////////////////////////////////////////////////////////////////
 
-struct             Entity_v3 { std::int8_t x = 0; };
+struct            Entity_v3 { std::int8_t x = 0; };
 
-struct alignas(64) Entity_v4 { std::int8_t x = 0; };
+struct alignas(8) Entity_v4 { std::int8_t x = 0; };
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state)
 {
-	std::vector < Entity_v3 > entities(1'000);
+	std::vector < Entity_v3 > entities(1'000'000);
 	
     for (auto element : state)
     {
@@ -40,7 +40,7 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state)
 {
-	std::vector < Entity_v4 > entities(1'000);
+	std::vector < Entity_v4 > entities(1'000'000);
 	
     for (auto element : state)
     {
