@@ -43,7 +43,7 @@ public:
 
         for (auto i = 0uz; i < 1'000'000; ++i)
         {
-            m_x.store(i + 1);
+            m_x = 1;
         }
 
         auto delta = std::chrono::steady_clock::now() - begin;
