@@ -29,7 +29,7 @@ struct Entity_v2
 
 class Task
 {
-public:
+public :
 
     Task(std::barrier <> & barrier, std::atomic < int > & x) : m_barrier(barrier), m_x(x) {}
 
@@ -51,7 +51,7 @@ public:
         return std::chrono::duration_cast < std::chrono::duration < double > > (delta).count();
     }
 
-private:
+private :
 
     std::barrier <> & m_barrier;
 
