@@ -6,15 +6,11 @@
 
 template < typename T > class is_integral : public std::integral_constant 
 < 
-	bool, std::is_same_v < T, bool  > || 
+	bool, std::is_same_v < T, bool > ||
 	
-          std::is_same_v < T, char  > || 
+          std::is_same_v < T, char > ||
 
-          std::is_same_v < T, short > ||
-
-          std::is_same_v < T, int   > ||
-
-          std::is_same_v < T, long  > 
+          std::is_same_v < T, int  >
 > {};
 
 /////////////////////////////////////////////////////////////////////////////////

@@ -14,12 +14,12 @@ using namespace std::literals;
 
 struct Entity 
 { 
-	unsigned long long x = 0;
+	unsigned long long int x = 0;
 };
 
 /////////////////////////////////////////////////////////////////////
 
-auto operator""_E(unsigned long long x)
+auto operator""_E(unsigned long long int x)
 {
 	return Entity(x);
 }

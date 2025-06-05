@@ -22,7 +22,7 @@ class Integer
 {
 public :
 
-	using digit_t = long long;
+	using digit_t = long long int;
 
 //  ------------------------------------------------------------------------------------------
 
