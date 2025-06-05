@@ -7,15 +7,17 @@
 
 int main()
 {
-	short x = 1; int y = 2; long z = 3l;
+	short x1 = 1; int x2 = 2; long x3 = 3l; long long x4 = 4ll;
 
 //  --------------------------------------------------------------
 
-	static_assert(sizeof(x) == 2);
+	static_assert(sizeof(x1) == 2);
 
-	static_assert(sizeof(y) == 4);
+	static_assert(sizeof(x2) == 4);
 
-	static_assert(sizeof(z) == 8);
+	static_assert(sizeof(x3) == 8);
+
+	static_assert(sizeof(x4) == 8);
 
 //  --------------------------------------------------------------
 
