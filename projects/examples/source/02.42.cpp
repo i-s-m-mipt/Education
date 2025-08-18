@@ -1,36 +1,109 @@
-/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
+// support : www.cs.usfca.edu/~galles/visualization/ComparisonSort.html
+
+////////////////////////////////////////////////////////////////////////////////////
+
+#include <algorithm>
 #include <cassert>
+#include <cstddef>
+#include <numeric>
+#include <utility>
+#include <vector>
 
-/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-inline auto max_v1(int x, int y)
-{ 
-	return x > y ? x : y;
-}
-
-/////////////////////////////////////////////////////////////////
-
-__attribute__ ((__noinline__)) auto max_v2(int x, int y)
+void order(std::vector < int > & vector, std::size_t left, std::size_t right)
 {
-	return x > y ? x : y;
+	for (auto i = left + 1; i < right; ++i) 
+	{
+		for (auto j = i; j > left; --j)
+		{
+			if (vector[j - 1] > vector[j]) 
+			{
+				std::swap(vector[j], vector[j - 1]);
+			}
+		}
+	}
 }
 
-/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+void merge(std::vector < int > & vector_1, std::size_t left, std::size_t right)
+{
+	auto middle = std::midpoint(left, right), size = right - left;
+
+	std::vector < int > vector_2(size, 0);
+
+	for (auto i = left, j = middle, k = 0uz; k < size; ++k) 
+	{
+		if (i < middle && ((j < right && vector_1[i] <= vector_1[j]) || j == right))
+		{
+			vector_2[k] = vector_1[i++];
+		}
+		else
+		{
+			vector_2[k] = vector_1[j++];
+		}
+	}
+
+	for (auto i = 0uz, j = 0uz; j < size; ++j) 
+	{
+		vector_1[left + i++] = vector_2[j];
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+
+void split(std::vector < int > & vector, std::size_t left, std::size_t right)
+{
+	if (right - left > 64)
+	{
+		auto middle = std::midpoint(left, right);
+
+		split(vector, left,   middle);
+		
+		split(vector, middle, right );
+
+		merge(vector, left,   right );
+	}
+	else
+	{
+		order(vector, left,   right );
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+
+void sort(std::vector < int > & vector)
+{
+	split(vector, 0, std::size(vector));
+}
+
+////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	volatile auto x = 1, y = 2;
+	auto size = 1'000uz;
 
-//  -------------------------------------------------------------
+//  ---------------------------------------
 
-	assert(max_v1(x, y) == 2); // support : compiler-explorer.com
-		
-	assert(max_v2(x, y) == 2); // support : compiler-explorer.com
+	std::vector < int > vector(size, 0);
 
-	assert(max_v1(1, 2) == 2); // support : compiler-explorer.com
+//  ---------------------------------------
 
-	assert(max_v2(1, 2) == 2); // support : compiler-explorer.com
+	for (auto i = 0uz; i < size; ++i)
+	{
+		vector[i] = size - i;
+	}
+
+//  ---------------------------------------
+
+	sort(vector);
+
+//  ---------------------------------------
+
+	assert(std::ranges::is_sorted(vector));
 }
 
-/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////

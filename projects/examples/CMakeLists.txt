@@ -57,94 +57,92 @@ include_directories(         ${SFML_INCLUDE_DIRS})
 
 set(debug
 
-#   01.01.01
-    01.02.01
-    01.02.02
-#   01.02.03
-#   01.03.01
-    02.01.01
-    02.01.02
-    02.01.03
-    02.01.04
-    02.01.05
-    02.01.06
-    02.01.07
-    02.01.08
-    02.01.09
-    02.01.10
-    02.02.01
-    02.02.02
-    02.02.03
-    02.02.04
-    02.02.05
-    02.02.06
-    02.02.07
-    02.02.08
-    02.02.09
-    02.02.10
-    02.02.11
-    02.02.12
-    02.02.13
-    02.02.14
-    02.02.15
-    02.03.01
-    02.03.02
-    02.03.03
-    02.03.04
-    02.03.05
-    02.03.06
-    02.03.07
-    02.03.08
-    02.03.09
-    02.03.10
-    02.03.11
-    02.03.12
-    02.04.01
-    02.04.02
-    02.04.03
-    02.04.04
-    02.04.05
-    02.04.06
-    02.04.07
-    02.04.08
-    03.01.01
-    03.01.02
-    03.01.03
-    03.01.04
-    03.01.05
-    03.01.06
-    03.01.07
-    03.02.01
-    03.02.02
-    03.02.03
-    03.02.04
-    03.02.05
-    03.02.06
-    03.02.07
-#   03.02.08
-    03.02.09
-    03.02.10
-    03.02.11
-#   03.02.12
-    03.02.13
-    03.02.14
-    03.02.15
-    03.02.16
-    03.02.17
-#   03.03.01
-    03.03.02
-    03.03.03
-    03.03.04
-    03.03.05
-    03.03.06
-    03.03.07
-    03.04.01
-    03.04.02
-    03.04.03
-    03.04.04
-    03.04.05
-    03.04.06
-    03.04.07
+#   01.01
+    01.02
+    01.03
+#   01.04
+#   01.05
+    02.01
+    02.02
+    02.03
+    02.04
+    02.05
+    02.06
+    02.07
+    02.08
+    02.09
+    02.10
+    02.11
+    02.12
+    02.13
+    02.14
+    02.15
+    02.16
+    02.17
+    02.18
+    02.19
+    02.20
+    02.21
+    02.22
+    02.23
+    02.24
+    02.25
+    02.26
+    02.27
+    02.28
+    02.29
+    02.30
+    02.31
+    02.32
+    02.33
+    02.34
+    02.35
+    02.36
+    02.37
+    02.38
+    02.39
+    02.40
+    02.41
+    02.42
+    02.43
+    03.01
+    03.02
+    03.03
+    03.04
+    03.05
+    03.06
+    03.07
+    03.08
+    03.09
+    03.10
+    03.11
+    03.12
+    03.13
+    03.14
+#   03.15
+    03.16
+    03.17
+    03.18
+#   03.19
+    03.20
+    03.21
+    03.22
+    03.23
+    03.24
+#   03.25
+    03.26
+    03.27
+    03.28
+    03.29
+    03.30
+    03.31
+    03.32
+    03.33
+    03.34
+    03.35
+    03.36
+    03.37
+    03.38
     04.01.01
     04.01.02
     04.01.03
@@ -478,7 +476,7 @@ foreach(entry IN LISTS debug)
 
     add_executable         (${entry} source/${entry}.cpp)
 
-    target_compile_options (${entry} PRIVATE -Wall -Wextra -pedantic -O0)
+    target_compile_options (${entry} PRIVATE -Wall -Wextra -Wpedantic -O0)
 
     target_link_libraries  (${entry} PRIVATE ${Boost_LIBRARIES})
     
@@ -490,7 +488,7 @@ endforeach()
 
 add_executable             (06.01.11 source/06.01.10.cpp source/06.01.11.cpp)
 
-target_compile_options     (06.01.11 PRIVATE -Wall -Wextra -pedantic -O0)
+target_compile_options     (06.01.11 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
 #############################################################################################
 
@@ -498,7 +496,7 @@ add_executable             (06.03.01 source/06.03.01.cpp)
 
 target_include_directories (06.03.01 PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
 
-target_compile_options     (06.03.01 PRIVATE -Wall -Wextra -pedantic -O0)
+target_compile_options     (06.03.01 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
 target_link_libraries      (06.03.01 PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/libstatic.a)
 
@@ -508,7 +506,7 @@ target_link_libraries      (06.03.01 PRIVATE ${Boost_LIBRARIES})
 
 add_executable             (07.03.01 source/07.03.01.cpp)
 
-target_compile_options     (07.03.01 PRIVATE -Wall -Wextra -pedantic -O0 -ggdb)
+target_compile_options     (07.03.01 PRIVATE -Wall -Wextra -Wpedantic -O0 -ggdb)
 
 target_link_libraries      (07.03.01 PRIVATE -lstdc++_libbacktrace)
 
@@ -516,13 +514,13 @@ target_link_libraries      (07.03.01 PRIVATE -lstdc++_libbacktrace)
 
 add_executable             (07.03.02 source/07.03.02.cpp)
 
-target_compile_options     (07.03.02 PRIVATE -Wall -Wextra -pedantic -O0 -ggdb)
+target_compile_options     (07.03.02 PRIVATE -Wall -Wextra -Wpedantic -O0 -ggdb)
 
 #############################################################################################
 
 #  add_executable             (07.03.05 source/07.03.05.cpp)
 
-#  target_compile_options     (07.03.05 PRIVATE -Wall -Wextra -pedantic -O0)
+#  target_compile_options     (07.03.05 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
 #  target_link_libraries      (07.03.05 PRIVATE )
 
@@ -530,7 +528,7 @@ target_compile_options     (07.03.02 PRIVATE -Wall -Wextra -pedantic -O0 -ggdb)
 
 add_executable             (07.03.07 source/07.03.07.cpp)
 
-target_compile_options     (07.03.07 PRIVATE -Wall -Wextra -pedantic -O0)
+target_compile_options     (07.03.07 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
 target_link_libraries      (07.03.07 PRIVATE GTest::gtest)
 
@@ -538,7 +536,7 @@ target_link_libraries      (07.03.07 PRIVATE GTest::gtest)
 
 add_executable             (08.02.10 source/08.02.10.cpp)
 
-target_compile_options     (08.02.10 PRIVATE -Wall -Wextra -pedantic -O0)
+target_compile_options     (08.02.10 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
 target_link_libraries      (08.02.10 PRIVATE ${Boost_LIBRARIES})
 
@@ -548,7 +546,7 @@ target_link_libraries      (08.02.10 PRIVATE Python::Python)
 
 add_executable             (09.02.04 source/09.02.04.cpp)
 
-target_compile_options     (09.02.04 PRIVATE -Wall -Wextra -pedantic -O0) 
+target_compile_options     (09.02.04 PRIVATE -Wall -Wextra -Wpedantic -O0) 
 
 target_compile_definitions (09.02.04 PRIVATE _GLIBCXX_DEBUG)
 
@@ -556,7 +554,7 @@ target_compile_definitions (09.02.04 PRIVATE _GLIBCXX_DEBUG)
 
 add_executable             (12.01.05 source/12.01.05.cpp)
 
-target_compile_options     (12.01.05 PRIVATE -Wall -Wextra -pedantic -O0)
+target_compile_options     (12.01.05 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
 target_link_libraries      (12.01.05 PRIVATE ${Boost_LIBRARIES})
 
@@ -566,7 +564,7 @@ target_link_libraries      (12.01.05 PRIVATE ICU::i18n ICU::uc)
 
 add_executable             (13.03.03 source/13.03.03.cpp)
 
-target_compile_options     (13.03.03 PRIVATE -Wall -Wextra -pedantic -O0)
+target_compile_options     (13.03.03 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
 target_link_libraries      (13.03.03 PRIVATE PDFHummus::PDFWriter)
 
@@ -574,7 +572,7 @@ target_link_libraries      (13.03.03 PRIVATE PDFHummus::PDFWriter)
 
 #  add_executable             (13.03.04 source/13.03.04.cpp)
 
-#  target_compile_options     (13.03.04 PRIVATE -Wall -Wextra -pedantic -O0)
+#  target_compile_options     (13.03.04 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
 #  target_link_libraries      (13.03.04 PRIVATE )
 
@@ -614,7 +612,7 @@ foreach(entry IN LISTS release)
 
     add_executable         (${entry} source/${entry}.cpp)
 
-    target_compile_options (${entry} PRIVATE -Wall -pedantic -Wextra -O3)
+    target_compile_options (${entry} PRIVATE -Wall -Wpedantic -Wextra -O3)
 
     target_link_libraries  (${entry} PRIVATE ${Boost_LIBRARIES})
 
@@ -628,7 +626,7 @@ endforeach()
 
 add_executable             (10.04.04 source/10.04.04.cpp)
 
-target_compile_options     (10.04.04 PRIVATE -Wall -Wextra -pedantic -O3)
+target_compile_options     (10.04.04 PRIVATE -Wall -Wextra -Wpedantic -O3)
 
 target_link_libraries      (10.04.04 PRIVATE ${Boost_LIBRARIES})
 
@@ -638,7 +636,7 @@ target_link_libraries      (10.04.04 PRIVATE Python::Python)
 
 add_executable             (14.03.02 source/14.03.02.cpp)
 
-target_compile_options     (14.03.02 PRIVATE -Wall -Wextra -pedantic -O3)
+target_compile_options     (14.03.02 PRIVATE -Wall -Wextra -Wpedantic -O3)
 
 target_link_libraries      (14.03.02 PRIVATE TBB::tbb)
 
