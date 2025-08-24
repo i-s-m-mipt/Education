@@ -1,83 +1,87 @@
-///////////////////////////////////////////////
+/////////////////////////////////////////
 
 #include <iostream>
 
-///////////////////////////////////////////////
+/////////////////////////////////////////
 
 class Entity
 {
 public :
 
-	Entity(int x) : m_x(x) {}
-
-//  -------------------------------------
-
 	void test_v1() const 
-    { 
-        std::cout << "Entity::test_v1\n";
-    }
+	{ 
+		std::cout << "Entity::test_v1\n";
+	}
 
 protected :
 
-    void test_v2() const 
-    { 
-        std::cout << "Entity::test_v2\n";
-    }
-
-private :
-
-	int m_x = 0;
+	void test_v2() const 
+	{ 
+		std::cout << "Entity::test_v2\n";
+	}
 };
 
-///////////////////////////////////////////////
+/////////////////////////////////////////
 
-class Client : public Entity
+class Server_v1 : private Entity 
 {
 public :
 
-	Client(int x, int y) : Entity(x), m_y(y) {}
-
-//  -------------------------------------------
-
-	void test_v1() const
+	void test() const
 	{
-		std::cout << "Client::test_v1\n";
-
-	//	test_v1(); // error
-
 		Entity::test_v1();
+
+		Entity::test_v2();
 	}
-
-//  -------------------------------------------
-
-	using Entity::test_v2;
-
-private :
-
-	int m_y = 0;
 };
 
-///////////////////////////////////////////////
+/////////////////////////////////////////
+
+class Server_v2 
+{
+public :
+
+	void test() const
+	{
+		m_entity.test_v1();
+
+	//	m_entity.test_v2(); // error
+	}
+
+private : 
+
+	Entity m_entity;
+};
+
+/////////////////////////////////////////
 
 int main()
 {
-    Entity entity(1);
+	Server_v1 server_v1;
 
-//  --------------------------
+//  -----------------------------
 
-    entity.test_v1();
+//	server_v1.test_v1(); // error
 
-//  entity.test_v2(); // error
+//	server_v1.test_v2(); // error
 
-//  --------------------------
+//  -----------------------------
 
-	Client client(1, 1);
+	server_v1.test();
 
-//  --------------------------
+//  -----------------------------
 
-	client.test_v1();
+	Server_v2 server_v2;
 
-	client.test_v2();
+//  -----------------------------
+
+//	server_v2.test_v1(); // error
+
+//	server_v2.test_v2(); // error
+
+//  -----------------------------
+
+	server_v2.test();
 }
 
-///////////////////////////////////////////////
+/////////////////////////////////////////

@@ -1,87 +1,67 @@
-/////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
 
-/////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 class Entity
-{
-public :
+{ 
+public : 
 
-	void test_v1() const 
-	{ 
+	void test_v1() const
+	{
 		std::cout << "Entity::test_v1\n";
 	}
 
-protected :
+//  -------------------------------------
 
-	void test_v2() const 
-	{ 
+	static void test_v2()
+	{
 		std::cout << "Entity::test_v2\n";
 	}
 };
 
-/////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
-class Server_v1 : private Entity 
-{
-public :
+class Client_v1 : public         Entity {};
 
-	void test() const
-	{
-		Entity::test_v1();
+class Client_v2 : public virtual Entity {};
 
-		Entity::test_v2();
-	}
-};
+class Server_v1 : public         Entity {};
 
-/////////////////////////////////////////
+class Server_v2 : public virtual Entity {};
 
-class Server_v2 
-{
-public :
+/////////////////////////////////////////////////////////////////////////////////
 
-	void test() const
-	{
-		m_entity.test_v1();
+class Router_v1 : public Client_v1, public Server_v1 { public : Router_v1() {} };
 
-	//	m_entity.test_v2(); // error
-	}
+class Router_v2 : public Client_v2, public Server_v2 { public : Router_v2() {} };
 
-private : 
-
-	Entity m_entity;
-};
-
-/////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Server_v1 server_v1;
+	Router_v1 router_v1; // support : compiler-explorer.com
 
-//  -----------------------------
+//  -------------------------------------------------------
 
-//	server_v1.test_v1(); // error
+//	router_v1.test_v1(); // error
 
-//	server_v1.test_v2(); // error
+	router_v1.test_v2();
 
-//  -----------------------------
+//  -------------------------------------------------------
 
-	server_v1.test();
+	Router_v2 router_v2; // support : compiler-explorer.com
 
-//  -----------------------------
+//  -------------------------------------------------------
 
-	Server_v2 server_v2;
+	router_v2.test_v1();
 
-//  -----------------------------
+	router_v2.test_v2();
 
-//	server_v2.test_v1(); // error
+//  -------------------------------------------------------
 
-//	server_v2.test_v2(); // error
-
-//  -----------------------------
-
-	server_v2.test();
+	Client_v2 client_v2; // support : compiler-explorer.com
 }
 
-/////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////

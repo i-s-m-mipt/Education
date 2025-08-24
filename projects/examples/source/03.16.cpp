@@ -1,50 +1,135 @@
-///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-// support : Boost.CompressedPair
+#include <iostream>
+#include <vector>
 
-///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-class Entity_v1 {};
+class Entity 
+{
+public :
 
-///////////////////////////////////////////////////////////////////////////////////////
+	Entity()
+	{
+		std::cout << "Entity::Entity\n";
 
-class Entity_v2 { public : char x = '\0';                       Entity_v1 entity_v1; };
+	//	test_v1(); // bad
+	}
 
-class Entity_v3 { public : char x = '\0'; [[no_unique_address]] Entity_v1 entity_v1; };
+//  -----------------------------------------
 
-///////////////////////////////////////////////////////////////////////////////////////
+// ~Entity() = default; // error
 
-class Client_v1 : public 		 Entity_v1 {};
+//  -----------------------------------------
 
-class Client_v2 : public virtual Entity_v1 {};
+	virtual ~Entity() = default;
 
-class Server_v1 : public 		 Entity_v1 {};
+//  -----------------------------------------
 
-class Server_v2 : public virtual Entity_v1 {};
+	virtual void test_v1() const
+	{ 
+		std::cout << "Entity::test_v1\n";
+	}
 
-///////////////////////////////////////////////////////////////////////////////////////
+//  -----------------------------------------
 
-class Router_v1 : public Client_v1, public Server_v1 {};
+	virtual void test_v2() const = 0;
 
-class Router_v2 : public Client_v2, public Server_v2 {};
+//  -----------------------------------------
 
-///////////////////////////////////////////////////////////////////////////////////////
+//	virtual void test_v3() const = 0 // error
+//	{
+//		std::cout << "Entity::test_v3\n";
+//	}
+};
+
+///////////////////////////////////////////////////////////
+
+void Entity::test_v2() const
+{ 
+	std::cout << "Entity::test_v2\n";
+}
+
+///////////////////////////////////////////////////////////
+
+class Client : public Entity
+{
+public :
+
+	void test_v1() const override final 
+	{ 
+		std::cout << "Client::test_v1\n";
+	}
+
+//  -------------------------------------
+
+	void test_v2() const override 
+	{ 
+		std::cout << "Client::test_v2\n";
+		
+		Entity::test_v2();
+	}
+};
+
+///////////////////////////////////////////////////////////
+
+class Server final : public Entity 
+{
+public :
+
+	void test_v2() const override
+	{ 
+		std::cout << "Server::test_v2\n";
+
+		Entity::test_v2();
+	}
+};
+
+///////////////////////////////////////////////////////////
+
+class Router : private Entity 
+{
+public :
+
+	void test_v2() const override 
+	{ 
+		std::cout << "Router::test_v2\n";
+	}
+};
+
+///////////////////////////////////////////////////////////
 
 int main()
 {
-	static_assert(sizeof(Entity_v1) == 1);
+//  std::vector < Client > clients; // bad
 
-//  --------------------------------------
+//  std::vector < Server > servers; // bad
 
-	static_assert(sizeof(Entity_v2) == 2);
+//  -------------------------------------------------------
 
-	static_assert(sizeof(Entity_v3) == 1);
+    Client client;
 
-//  --------------------------------------
+	Router router;
 
-	static_assert(sizeof(Router_v1) == 2);
+//  -------------------------------------------------------
 
-	static_assert(sizeof(Router_v2) != 1);
+	[[maybe_unused]] Entity * entity_1 = &client;
+	
+	[[maybe_unused]] Entity & entity_2 =  client;
+
+//	[[maybe_unused]] Entity   entity_3 =  client; // error
+
+//	[[maybe_unused]] Entity * entity_4 = &router; // error
+
+//  -------------------------------------------------------
+
+    entity_1->test_v1(); // support : compiler-explorer.com
+
+    entity_1->test_v2();
+
+//  -------------------------------------------------------
+
+	std::vector < Entity * > entities;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////

@@ -1,45 +1,31 @@
-/////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 #include <iostream>
-#include <utility>
 
-/////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
-struct Entity {};
+class Entity
+{
+public :
 
-/////////////////////////////////////////////////////////
+	void test() const &  { std::cout << "Entity::test (1)\n"; }
 
-void test(Entity       & ) { std::cout << "test (1)\n"; }
+	void test() const && { std::cout << "Entity::test (2)\n"; }
+};
 
-void test(Entity const & ) { std::cout << "test (2)\n"; }
+////////////////////////////////////////////////////////////////
 
-void test(Entity       &&) { std::cout << "test (3)\n"; }
+auto   make_entity_v1() {        Entity entity; return entity; }
+	  
+auto & make_entity_v2() { static Entity entity; return entity; }
 
-void test(Entity const &&) { std::cout << "test (4)\n"; }
-
-/////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 int main()
-{
-	Entity       entity_1;
-
-	Entity const entity_2;
-
-//  ---------------------------------
-
-	test(entity_1);
-
-	test(entity_2);
-
-//  ---------------------------------
-
-	test(std::move(entity_1));
-
-//	test(std::move(entity_2)); // bad
-
-//  ---------------------------------
-
-	test(Entity());
+{		
+	make_entity_v1().test();
+		
+	make_entity_v2().test();
 }
 
-/////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////

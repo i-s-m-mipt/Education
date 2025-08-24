@@ -1,65 +1,56 @@
-////////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
-#include <cassert>
 #include <iostream>
 
-////////////////////////////////////////////////////
+/////////////////////////////////////////////////
+
+class Client_v1 { public : static void test(); };
+
+class Client_v2 { public : static void test(); };
+
+/////////////////////////////////////////////////
 
 class Entity
 {
-public :
+private :
 
-	Entity(int x) : m_x(x) {}
+	friend void test();
+
+//  ----------------------------------
+
+	friend void Client_v1::test();
+
+//  ----------------------------------
+
+	friend Client_v2;
 
 //  ----------------------------------
 
 	static void test()
 	{
 		std::cout << "Entity::test\n";
-	}
-
-//  ----------------------------------
-
-	static inline auto s_x = 1;
-
-private :
-
-	int m_x = 0;
+	} 	
 };
 
-////////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
-struct Client { struct Server * server = nullptr; };
+void            test() { Entity::test(); }
 
-struct Server { struct Client * client = nullptr; };
+void Client_v1::test() { Entity::test(); }
 
-////////////////////////////////////////////////////
+void Client_v2::test() { Entity::test(); }
+
+/////////////////////////////////////////////////
 
 int main()
 {
-	Entity entity_1(1);
-	
-	Entity entity_2(2);
+	test();
 
-//  -------------------------
+//  ------------------
+			   
+	Client_v1::test();
 
-	assert(Entity::s_x == 1);
-
-//  -------------------------
-
-	Client client;
-
-	Server server;
-
-//  -------------------------
-
-	server.client = &client;
-
-	client.server = &server;
-
-//  -------------------------
-
-	Entity::test();
+	Client_v2::test();
 }
 
-////////////////////////////////////////////////////
+/////////////////////////////////////////////////

@@ -1,66 +1,83 @@
-///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////
 
 #include <iostream>
 
-///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////
 
 class Entity
 {
-private :
+public :
 
-    friend class Attorney;
+	Entity(int x) : m_x(x) {}
 
-//  -----------------------------------------------------------
+//  -------------------------------------
 
-    static void test_v1() { std::cout << "Entity::test_v1\n"; }
-
-    static void test_v2() { std::cout << "Entity::test_v2\n"; }
-};
-
-///////////////////////////////////////////////////////////////
-
-class Attorney 
-{
-private :
-
-    friend class Client;
-
-//  ---------------------------------------
-
-    static void test_v1() 
+	void test_v1() const 
     { 
-        std::cout << "Attorney::test_v1\n";
-
-        Entity::test_v1();
+        std::cout << "Entity::test_v1\n";
     }
 
-//  ---------------------------------------
+protected :
 
-    static void test_v2() 
+    void test_v2() const 
     { 
-        std::cout << "Attorney::test_v2\n";
+        std::cout << "Entity::test_v2\n";
     }
+
+private :
+
+	int m_x = 0;
 };
 
-///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////
 
-class Client
+class Client : public Entity
 {
 public :
 
-    static void test()
-    {
-        Attorney::test_v1();
+	Client(int x, int y) : Entity(x), m_y(y) {}
 
-        Attorney::test_v2();
-    }
+//  -------------------------------------------
+
+	void test_v1() const
+	{
+		std::cout << "Client::test_v1\n";
+
+	//	test_v1(); // error
+
+		Entity::test_v1();
+	}
+
+//  -------------------------------------------
+
+	using Entity::test_v2;
+
+private :
+
+	int m_y = 0;
 };
 
-///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////
 
 int main()
 {
-    Client::test();
+    Entity entity(1);
+
+//  --------------------------
+
+    entity.test_v1();
+
+//  entity.test_v2(); // error
+
+//  --------------------------
+
+	Client client(1, 1);
+
+//  --------------------------
+
+	client.test_v1();
+
+	client.test_v2();
 }
 
-///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////

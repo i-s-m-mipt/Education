@@ -1,18 +1,45 @@
-//////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <utility>
+
+/////////////////////////////////////////////////////////
+
+struct Entity {};
+
+/////////////////////////////////////////////////////////
+
+void test(Entity       & ) { std::cout << "test (1)\n"; }
+
+void test(Entity const & ) { std::cout << "test (2)\n"; }
+
+void test(Entity       &&) { std::cout << "test (3)\n"; }
+
+void test(Entity const &&) { std::cout << "test (4)\n"; }
+
+/////////////////////////////////////////////////////////
 
 int main()
 {
-	auto x = 1.0;
+	Entity       entity_1;
 
-//  ----------------------------------------------
+	Entity const entity_2;
 
-//	[[maybe_unused]] int       &  y1 = x; // error
+//  ---------------------------------
 
-	[[maybe_unused]] int const &  y2 = x;
+	test(entity_1);
 
-	[[maybe_unused]] int       && y3 = x;
+	test(entity_2);
 
-	[[maybe_unused]] int const && y4 = x;
+//  ---------------------------------
+
+	test(std::move(entity_1));
+
+//	test(std::move(entity_2)); // bad
+
+//  ---------------------------------
+
+	test(Entity());
 }
 
-//////////////////////////////////////////////////
+/////////////////////////////////////////////////////////

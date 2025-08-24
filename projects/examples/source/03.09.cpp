@@ -1,56 +1,47 @@
-/////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 #include <iostream>
 
-/////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
-class Client_v1 { public : static void test(); };
+class Key_v1 { private : friend class Client; Key_v1() = default; };
 
-class Client_v2 { public : static void test(); };
+class Key_v2 { private :                      Key_v2() = default; };
 
-/////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 class Entity
 {
 private :
 
-	friend void test();
+    friend class Client;
 
-//  ----------------------------------
+//  ---------------------------------------------------------------
 
-	friend void Client_v1::test();
-
-//  ----------------------------------
-
-	friend Client_v2;
-
-//  ----------------------------------
-
-	static void test()
-	{
-		std::cout << "Entity::test\n";
-	} 	
+    static void test(Key_v1) { std::cout << "Entity::test (1)\n"; }
+    
+    static void test(Key_v2) { std::cout << "Entity::test (2)\n"; }
 };
 
-/////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
-void            test() { Entity::test(); }
+class Client
+{
+public :
 
-void Client_v1::test() { Entity::test(); }
+    static void test()
+    {
+        Entity::test(Key_v1());
 
-void Client_v2::test() { Entity::test(); }
+    //  Entity::test(Key_v2()); // error
+    }
+};
 
-/////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	test();
-
-//  ------------------
-			   
-	Client_v1::test();
-
-	Client_v2::test();
+    Client::test();
 }
 
-/////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
