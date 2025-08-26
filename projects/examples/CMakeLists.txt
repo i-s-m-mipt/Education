@@ -206,26 +206,26 @@ set(debug
     05.22
     05.23
     05.24
-#   06.01.01
-    06.01.02
-    06.01.03
-    06.01.04
-#   06.01.05
-#   06.01.06
-#   06.01.07
-#   06.01.08
-#   06.01.09
-#   06.01.10
-#   06.01.11
-    06.01.12
-#   06.02.01
-#   06.02.02
-#   06.02.03
-#   06.02.04
-#   06.03.01
-#   06.03.02
-#   06.03.03
-#   06.03.04
+#   06.01
+    06.02
+    06.03
+    06.04
+#   06.05
+#   06.06
+#   06.07
+#   06.08
+#   06.09
+#   06.10
+#   06.11
+    06.12
+#   06.13
+#   06.14
+#   06.15
+#   06.16
+#   06.17
+#   06.18
+#   06.19
+#   06.20
     07.01.01
     07.01.02
     07.01.03
@@ -485,21 +485,21 @@ endforeach()
 
 #############################################################################################
 
-add_executable             (06.01.11 source/06.01.10.cpp source/06.01.11.cpp)
+add_executable             (06.11 source/06.10.cpp source/06.11.cpp)
 
-target_compile_options     (06.01.11 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (06.11 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
 #############################################################################################
 
-add_executable             (06.03.01 source/06.03.01.cpp)
+add_executable             (06.17 source/06.17.cpp)
 
-target_include_directories (06.03.01 PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
+target_include_directories (06.17 PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
 
-target_compile_options     (06.03.01 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (06.17 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
-target_link_libraries      (06.03.01 PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/libstatic.a)
+target_link_libraries      (06.17 PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/libstatic.a)
 
-target_link_libraries      (06.03.01 PRIVATE ${Boost_LIBRARIES})
+target_link_libraries      (06.17 PRIVATE ${Boost_LIBRARIES})
 
 #############################################################################################
 
