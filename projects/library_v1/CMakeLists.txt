@@ -22,7 +22,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 ####################################################################
 
-add_library            (static STATIC source/06.19.cpp)
+add_library            (static STATIC source/06.20.cpp)
 
 target_compile_options (static PRIVATE -Wall -Wextra -Wpedantic -O0)
 
