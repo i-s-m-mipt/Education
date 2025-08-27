@@ -1,32 +1,60 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
+#include <cstdint>
 #include <type_traits>
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > struct add_lvalue_reference { using type = T &;  };
+template < typename B, typename D > class is_base_of
+{
+private :
 
-template < typename T > struct add_rvalue_reference { using type = T &&; };
+	static std::int32_t test(...);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+	static std::int64_t test(B *);
 
-template < typename T > using  add_lvalue_reference_t = typename add_lvalue_reference < T > ::type;
+public :
 
-template < typename T > using  add_rvalue_reference_t = typename add_rvalue_reference < T > ::type;
+	constexpr static auto value = sizeof(test(static_cast < D * > (nullptr))) == 8;
+};
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
+template 
+< 
+	typename B, typename D 
+> 
+constexpr auto is_base_of_v = is_base_of < B, D > ::value;
+
+///////////////////////////////////////////////////////////////////////////////////
+
+class Entity {};
+
+///////////////////////////////////////////////////////////////////////////////////
+
+class Client : public Entity {};
+
+///////////////////////////////////////////////////////////////////////////////////
+
+class Server {};
+
+///////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    static_assert(std::is_same_v <      add_lvalue_reference_t < int > , int &  > );
+	static_assert(     is_base_of_v < Entity, Client > == 1);
 
-	static_assert(std::is_same_v <      add_rvalue_reference_t < int > , int && > );
+	static_assert(     is_base_of_v < Entity, Server > == 0);
 
-//  --------------------------------------------------------------------------------
+	static_assert(     is_base_of_v < Client, Client > == 1);
 
-    static_assert(std::is_same_v < std::add_lvalue_reference_t < int > , int &  > );
+//  ---------------------------------------------------------
 
-	static_assert(std::is_same_v < std::add_rvalue_reference_t < int > , int && > );
+	static_assert(std::is_base_of_v < Entity, Client > == 1);
+
+	static_assert(std::is_base_of_v < Entity, Server > == 0);
+
+	static_assert(std::is_base_of_v < Client, Client > == 1);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////

@@ -1,35 +1,41 @@
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
-#include <type_traits>
+#include <concepts>
 
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
-template < bool C, typename T > struct enable_if {};
+template < typename T > concept totally_ordered = requires (T x, T y)
+{
+    { x <  y } -> std::convertible_to < bool > ;
+    
+    { x >  y } -> std::convertible_to < bool > ;
 
-//////////////////////////////////////////////////////////////////////////////////////////
+    { x <= y } -> std::convertible_to < bool > ;
 
-template < typename T > struct enable_if < true, T >
-{ 
-	using type = T;
+    { x >= y } -> std::convertible_to < bool > ;
+
+    { x == y } -> std::convertible_to < bool > ;
+
+    { x != y } -> std::convertible_to < bool > ;
 };
 
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
-template < bool C, typename T > using enable_if_t = typename enable_if < C, T > ::type;
+struct Entity {};
 
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	static_assert(std::is_same_v <      enable_if_t < true,  int > , int > == 1);
+    static_assert(     totally_ordered < int    > == 1);
+    
+    static_assert(     totally_ordered < Entity > == 0);
 
-//	static_assert(std::is_same_v <      enable_if_t < false, int > , int > == 0); // error
+//  ----------------------------------------------------
 
-//  --------------------------------------------------------------------------------------
-
-	static_assert(std::is_same_v < std::enable_if_t < true,  int > , int > == 1);
-
-//	static_assert(std::is_same_v < std::enable_if_t < false, int > , int > == 0); // error
+    static_assert(std::totally_ordered < int    > == 1);
+    
+    static_assert(std::totally_ordered < Entity > == 0);
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////

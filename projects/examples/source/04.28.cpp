@@ -1,37 +1,32 @@
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cstddef>
 #include <type_traits>
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T                > class is_array          : public std::false_type {};
+template < typename T > struct add_lvalue_reference { using type = T &;  };
 
-template < typename T                > class is_array < T[ ] > : public std:: true_type {};
+template < typename T > struct add_rvalue_reference { using type = T &&; };
 
-template < typename T, std::size_t S > class is_array < T[S] > : public std:: true_type {};
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////////
+template < typename T > using  add_lvalue_reference_t = typename add_lvalue_reference < T > ::type;
 
-template < typename T > constexpr auto is_array_v = is_array < T > ::value;
+template < typename T > using  add_rvalue_reference_t = typename add_rvalue_reference < T > ::type;
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    static_assert(     is_array_v < int[5] > == 1);
+    static_assert(std::is_same_v <      add_lvalue_reference_t < int > , int &  > );
 
-	static_assert(     is_array_v < int[ ] > == 1);
+	static_assert(std::is_same_v <      add_rvalue_reference_t < int > , int && > );
 
-	static_assert(     is_array_v < int    > == 0);
+//  --------------------------------------------------------------------------------
 
-//  -----------------------------------------------
+    static_assert(std::is_same_v < std::add_lvalue_reference_t < int > , int &  > );
 
-	static_assert(std::is_array_v < int[5] > == 1);
-
-	static_assert(std::is_array_v < int[ ] > == 1);
-
-	static_assert(std::is_array_v < int    > == 0);
+	static_assert(std::is_same_v < std::add_rvalue_reference_t < int > , int && > );
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////

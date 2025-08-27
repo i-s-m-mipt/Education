@@ -1,68 +1,36 @@
-///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 #include <type_traits>
 
-///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > class is_lvalue_reference          : public std::false_type {};
+template < typename T > struct remove_reference          { using type = T; };
 
-template < typename T > class is_lvalue_reference < T &  > : public std:: true_type {};
+template < typename T > struct remove_reference < T &  > { using type = T; };
 
-///////////////////////////////////////////////////////////////////////////////////////
+template < typename T > struct remove_reference < T && > { using type = T; };
 
-template 
-< 
-	typename T 
-> 
-constexpr auto is_lvalue_reference_v = is_lvalue_reference < T > ::value;
+///////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////
+template < typename T > using  remove_reference_t = typename remove_reference < T > ::type;
 
-template < typename T > class is_rvalue_reference          : public std::false_type {};
-
-template < typename T > class is_rvalue_reference < T && > : public std:: true_type {};
-
-///////////////////////////////////////////////////////////////////////////////////////
-
-template 
-< 
-	typename T 
-> 
-constexpr auto is_rvalue_reference_v = is_rvalue_reference < T > ::value;
-
-///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    static_assert(     is_lvalue_reference_v < int    > == 0);
+	static_assert(std::is_same_v <      remove_reference_t < int    > , int > );
 
-    static_assert(     is_lvalue_reference_v < int &  > == 1);
+	static_assert(std::is_same_v <      remove_reference_t < int &  > , int > );
 
-    static_assert(     is_lvalue_reference_v < int && > == 0);
+	static_assert(std::is_same_v <      remove_reference_t < int && > , int > );
 
-//  ----------------------------------------------------------
+//  ----------------------------------------------------------------------------
 
-    static_assert(std::is_lvalue_reference_v < int    > == 0);
+	static_assert(std::is_same_v < std::remove_reference_t < int    > , int > );
 
-    static_assert(std::is_lvalue_reference_v < int &  > == 1);
+	static_assert(std::is_same_v < std::remove_reference_t < int &  > , int > );
 
-    static_assert(std::is_lvalue_reference_v < int && > == 0);
-
-//  ----------------------------------------------------------
-
-    static_assert(     is_rvalue_reference_v < int    > == 0);
-
-    static_assert(     is_rvalue_reference_v < int &  > == 0);
-
-    static_assert(     is_rvalue_reference_v < int && > == 1);
-
-//  ----------------------------------------------------------
-
-    static_assert(std::is_rvalue_reference_v < int    > == 0);
-
-    static_assert(std::is_rvalue_reference_v < int &  > == 0);
-
-    static_assert(std::is_rvalue_reference_v < int && > == 1);
+	static_assert(std::is_same_v < std::remove_reference_t < int && > , int > );
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
