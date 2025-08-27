@@ -224,26 +224,26 @@ set(debug
 #   06.18
 #   06.19
 #   06.20
-    07.01.01
-    07.01.02
-    07.01.03
-    07.01.04
-    07.01.05
-    07.01.06
-    07.01.07
-    07.01.08
-    07.01.09
-    07.01.10
-    07.02.01
-    07.02.02
-    07.02.03
-#   07.03.01
-#   07.03.02
-    07.03.03
-    07.03.04
-#   07.03.05
-    07.03.06
-#   07.03.07
+    07.01
+    07.02
+    07.03
+    07.04
+    07.05
+    07.06
+    07.07
+    07.08
+    07.09
+    07.10
+    07.11
+    07.12
+    07.13
+#   07.14
+#   07.15
+    07.16
+    07.17
+#   07.18
+    07.19
+#   07.20
     08.01.01
     08.01.02
     08.01.03
@@ -501,33 +501,33 @@ target_link_libraries      (06.17 PRIVATE ${Boost_LIBRARIES})
 
 #############################################################################################
 
-add_executable             (07.03.01 source/07.03.01.cpp)
+add_executable             (07.14 source/07.14.cpp)
 
-target_compile_options     (07.03.01 PRIVATE -Wall -Wextra -Wpedantic -O0 -ggdb)
+target_compile_options     (07.14 PRIVATE -Wall -Wextra -Wpedantic -O0 -ggdb)
 
-target_link_libraries      (07.03.01 PRIVATE -lstdc++_libbacktrace)
-
-#############################################################################################
-
-add_executable             (07.03.02 source/07.03.02.cpp)
-
-target_compile_options     (07.03.02 PRIVATE -Wall -Wextra -Wpedantic -O0 -ggdb)
+target_link_libraries      (07.14 PRIVATE -lstdc++_libbacktrace)
 
 #############################################################################################
 
-#  add_executable             (07.03.05 source/07.03.05.cpp)
+add_executable             (07.15 source/07.15.cpp)
 
-#  target_compile_options     (07.03.05 PRIVATE -Wall -Wextra -Wpedantic -O0)
-
-#  target_link_libraries      (07.03.05 PRIVATE )
+target_compile_options     (07.15 PRIVATE -Wall -Wextra -Wpedantic -O0 -ggdb)
 
 #############################################################################################
 
-add_executable             (07.03.07 source/07.03.07.cpp)
+# add_executable             (07.18 source/07.18.cpp)
 
-target_compile_options     (07.03.07 PRIVATE -Wall -Wextra -Wpedantic -O0)
+# target_compile_options     (07.18 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
-target_link_libraries      (07.03.07 PRIVATE GTest::gtest)
+# target_link_libraries      (07.18 PRIVATE )
+
+#############################################################################################
+
+add_executable             (07.20 source/07.20.cpp)
+
+target_compile_options     (07.20 PRIVATE -Wall -Wextra -Wpedantic -O0)
+
+target_link_libraries      (07.20 PRIVATE GTest::gtest)
 
 #############################################################################################
 
@@ -567,17 +567,17 @@ target_link_libraries      (13.03.03 PRIVATE PDFHummus::PDFWriter)
 
 #############################################################################################
 
-#  add_executable             (13.03.04 source/13.03.04.cpp)
+# add_executable             (13.03.04 source/13.03.04.cpp)
 
-#  target_compile_options     (13.03.04 PRIVATE -Wall -Wextra -Wpedantic -O0)
+# target_compile_options     (13.03.04 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
-#  target_link_libraries      (13.03.04 PRIVATE )
+# target_link_libraries      (13.03.04 PRIVATE )
 
 #############################################################################################
 
 set(release
 
-    07.03.08
+    07.21
     08.01.06
     08.01.10
     08.03.09
