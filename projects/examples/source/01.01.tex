@@ -1,131 +1,128 @@
-\documentclass{beamer} % Установка класса документа
+\documentclass{beamer}
 
-\usetheme{Copenhagen} % Установка темы презентации
+\usetheme{Copenhagen}
 
-\colorlet{beamer@blendedblue}{green!40!black} % Установка цветовой гаммы презентации
+\colorlet{beamer@blendedblue}{green!40!black}
 
-\usepackage[T2A]{fontenc}   % Подключение внутренней кодировки LaTeX
-\usepackage[utf8]{inputenc} % Подключение кодировки набираемого текста
-\usepackage[russian]{babel} % Подключение особенностей обработки текста
 
-\renewcommand{\familydefault}{\sfdefault} % Установка семейства шрифтов
 
-\usepackage[export]{adjustbox} % Управление расположение картинок
+\usepackage[export]{adjustbox}
+\usepackage[russian]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
 
-\usepackage{geometry} % Подключение пользовательской разметки документа
 
-\parindent = 0pt  % Установка отступа в начале абзаца
-\parskip   = 0pt  % Установка интервала между абзацами
-\tolerance = 2000 % Установка меры разреженности строки
 
-\flushbottom % Установка выравнивания высоты страниц
+\usepackage{amsbsy}
+\usepackage{amscd}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsopn}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amsxtra}
+\usepackage{array}
+\usepackage{ctable}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{latexsym}
+\usepackage{listings}
+\usepackage{makecell}
+\usepackage{ragged2e}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{xcolor}
 
-\usepackage{amsmath}  % Подключение средств форматирования математических выражений
-\usepackage{amsbsy}   % Подключение \boldsymbol и \pmb для набора полужирных символов
-\usepackage{amscd}    % Подключение процедуры создания простых коммутативных диаграмм
-\usepackage{amsfonts} % Подключение дополнительных шрифтов для математических символов
-\usepackage{amsopn}   % Подключение \DeclareMathOperator для определения новых команд
-\usepackage{amssymb}  % Подключение дополнительных математических символов и шрифтов
-\usepackage{amstext}  % Подключение \text для набора текста внутри выключных формул
-\usepackage{amsthm}   % Подключение окружения proof и улучшенной декларации теорем
-\usepackage{amsxtra}  % Подключение дополнительных средств форматирования формул
 
-\usepackage{latexsym} % Подключение дополнительных математических символов
 
-\usepackage{listings} % Подключение форматирования кода
-\usepackage{color}    % Подключение управления цветом
- 
-\definecolor{c_1}{rgb}{0.00, 0.50, 0.00} % Цвет темно-зеленый для ссылок
-\definecolor{c_2}{rgb}{0.00, 0.00, 0.50} % Цвет темно-синий для листингов
-\definecolor{c_3}{rgb}{0.50, 0.00, 0.00} % Цвет темно-красный для резерва
+\renewcommand{\familydefault}{\sfdefault}
 
-\lstset % Настройка пакета listings
+\renewcommand{\arraystretch}{1.25}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\parindent = 0pt
+\parskip   = 0pt
+\tolerance = 100
+
+\flushbottom
+
+\definecolor{B}{rgb}{0.00, 0.00, 0.50}
+
+\lstset
 {
-  backgroundcolor   = \color{white},        % Установка цвета заднего плана  
-  basicstyle        = \ttfamily\color{c_2}, % Установка размера и цвета шрифта
-  breakatwhitespace = true,                 % Установка разрывов на пробелах
-  breaklines        = true,                 % Установка переноса длинных строк
-  captionpos        = none,                 % Установка позиции имени листинга
-  commentstyle      = \color{c_2},          % Установка цвета комментариев кода
-  deletekeywords    = {},                   % Установка удаленных ключевых слов  
-  escapeinside      = {\%*}{*)},            % Установка добавления LaTeX в коде  
-  extendedchars     = false,                % Установка дополнительных символов 
-  frame             = L,                    % Установка типа рамки вокруг кода
-  framexleftmargin  = -8pt,                 % Установка размера левого отступа
-  keepspaces        = true,                 % Установка выравнивания пробелов
-  keywordstyle      = \color{c_2},          % Установка цвета ключевых слов  
-  language          = C++,                  % Установка языка программирования
-  otherkeywords     = {},                   % Установка добавочных ключевых слов   
-  numbers           = none,                 % Установка позиции нумерации строк
-  numbersep         = 0pt,                  % Установка отступа нумерации строк
-  numberstyle       = \color{black},        % Установка цвета нумерации строк
-  showspaces        = false,                % Установка пробелов символом '_'
-  showstringspaces  = false,                % Установка пробелов символом '_'
-  showtabs          = false,                % Установка табуляторов видимыми
-  stepnumber        = 1,                    % Установка периода нумерации строк
-  stringstyle       = \color{c_2},          % Установка цвета строковых литералов
-  tabsize           = 2,                    % Установка размера табуляции в коде
+    backgroundcolor   = \color{white},      % Установка цвета заднего плана  
+    basicstyle        = \ttfamily\color{B}, % Установка размера и цвета шрифта
+    breakatwhitespace = true,               % Установка разрывов на пробелах
+    breaklines        = true,               % Установка переноса длинных строк
+    captionpos        = none,               % Установка позиции имени листинга
+    commentstyle      = \color{B},          % Установка цвета комментариев кода
+    deletekeywords    = {},                 % Установка удаленных ключевых слов  
+    escapeinside      = {\%*}{*)},          % Установка добавления LaTeX в коде  
+    extendedchars     = false,              % Установка дополнительных символов 
+    frame             = L,                  % Установка типа рамки вокруг кода
+    framexleftmargin  = -8pt,               % Установка размера левого отступа
+    keepspaces        = true,               % Установка выравнивания пробелов
+    keywordstyle      = \color{B},          % Установка цвета ключевых слов  
+    language          = C++,                % Установка языка программирования
+    otherkeywords     = {},                 % Установка добавочных ключевых слов   
+    numbers           = none,               % Установка позиции нумерации строк
+    numbersep         = 0pt,                % Установка отступа нумерации строк
+    numberstyle       = \color{black},      % Установка цвета нумерации строк
+    showspaces        = false,              % Установка пробелов символом '_'
+    showstringspaces  = false,              % Установка пробелов символом '_'
+    showtabs          = false,              % Установка табуляторов видимыми
+    stepnumber        = 1,                  % Установка периода нумерации строк
+    stringstyle       = \color{B},          % Установка цвета строковых литералов
+    tabsize           = 2,                  % Установка размера табуляции в коде
 }
 
-%\usepackage{hyperref} % Подключение использования гиперссылок
- 
-%\hypersetup % Настройка пакета hyperref
-%{
-%  linkcolor  = c_1,  % Установка цвета ссылок
-%  urlcolor   = c_1,  % Установка цвета гиперссылок
-%  colorlinks = true  % Установка отображения ссылок
-%}
 
-\usepackage{sectsty} % Подключение возможности стилизации заголовков статей
-
-\sectionfont   {\Large\selectfont} % Установка размера шрифта подзаголовков
-\subsectionfont{\large\selectfont} % Установка размера шрифта подподзаголовков
-
-\usepackage{titlesec}  % Подключение возможности форматирования заголовков статей
-
-\titlelabel{} % Установка формата заголовков
-
-\usepackage{ragged2e} % Настройки титульной страницы
-
-\title{Программная инженерия с использованием C\texttt{++}} % Название презентации
-
-\author{Московский Физико\,-Технический Институт} % Альма-матер автора
-
-\date{}
 
 \begin{document}
 
-\frame{\titlepage} % Титульный слайд
 
-\begin{frame}{\bf Автор курса}
 
-    \textbf{\;\;\;\;\,\,\,\,Иван Сергеевич Макаров}
+\title{\bf Software Engineering} 
+
+\author{Moscow Institute of Physics and Technology}
+
+\date{}
+
+\frame{\titlepage}
+
+
+
+\begin{frame}{\bf Course Author}
+
+    \textbf{\;\;\;\;\,\,\,\,PhD Ivan Sergeevich Makarov}
 
     \bigskip
     
     \begin{itemize}
 
-        \item Выпускник Московского Физико\,-Технического Института
+        \item Graduate of the Moscow Institute of Physics and Technology
 
-        \item Кандидат технических наук по специальности 1.2.1
+        \item Candidate of Technical Sciences in specialty 1.2.1
 
-        \item Доцент Высшей Школы Программной Инженерии МФТИ
+        \item Associate Professor and Senior Researcher at the MIPT
+
+        \item Software Developer and AI Researcher since 2010
+
+        \item Author of 20 publications in peer\,-\,reviewed scientific journals
     
-        \item Автор 11 докладов на конференциях IEEE и ICPS
-
-        \item Автор 20 публикаций в рецензируемых научных изданиях
-
-        \item Разработчик систем с использованием C\texttt{++} с 2010 года
+        \item Author of 11 reports at IEEE \texttt{/} ICPS conferences
         
     \end{itemize}
 
     \begin{block}
-    \justifying В настоящее время я занимаюсь проектированием и разработ- кой различных вычислительных систем с использованием сте- ка технологий параллельного и сетевого программирования, в частности, я занимаюсь оптимизацией инфраструктурных эле- ментов автоматизированных систем высокочастотной торговли.
+    \justifying Currently, I am engaged in the design and development of various computing systems using concurrent\:and\:network\:programming, in particular, I am working on the optimization of infrastructure com- ponents\;for\;financial\;systems\;of\;automated\;high\,-\,frequency\;trading.
     \end{block}
     
 \end{frame}
 
-\begin{frame}{\bf Программа курса}
+\begin{frame}{\bf Course Program}
 
 {\footnotesize
 
@@ -133,35 +130,35 @@
 
         \setlength\itemsep{0.1em}
 
-        \item 01. Общее введение и обзор технологий
-
-        \item 02. Структурное программирование
-
-        \item 03. Объектно-ориентированное программирование
-
-        \item 04. Обобщенное программирование
-
-        \item 05. Паттерны и технологии проектирования
-
-        \item 06. Организация проектов и библиотек
-
-        \item 07. Обработка ошибок и исключений
-
-        \item 08. Особенности математических вычислений
-
-        \item 09. Низкоуровневое управление памятью
-
-        \item 10. Коллекции объектов и контейнеры
-
-        \item 11. Итераторы и алгоритмы на диапазонах
-
-        \item 12. Кодирование символов и парсинг текстов
-
-        \item 13. Потоки ввода-вывода и сериализация
-
-        \item 14. Параллельное программирование
-
-        \item 15. Компьютерные сети и сетевые технологии
+        \item 01. Introduction and Brief Overview
+    
+        \item 02. Basics of Programming
+    
+        \item 03. Object\,-\,Oriented Programming
+    
+        \item 04. Generic Programming
+    
+        \item 05. Software Architecture Patterns
+    
+        \item 06. Projects and Libraries
+    
+        \item 07. Handling Errors and Debugging
+    
+        \item 08. Instruments of Calculus
+    
+        \item 09. Detailed Memory Management
+    
+        \item 10. Collections and Containers
+    
+        \item 11. Iterators and Algorithm Libraries
+    
+        \item 12. Text Data Processing
+    
+        \item 13. Streams and Data Serialization
+    
+        \item 14. Concurrent Programming
+    
+        \item 15. Network Technologies and Tools
         
     \end{itemize}
     
@@ -169,199 +166,197 @@
 
 \end{frame}
 
-\begin{frame}{\bf Определение C\texttt{++}}
+\begin{frame}{\bf C\texttt{++} Definition}
 
     \begin{block}
-    \justifying C\texttt{++} -- это компилируемый язык программирования широкого назначения со слабой статической типизацией, который под- держивает несколько парадигм программирования и предос- тавляет как низкоуровневые, так и высокоуровневые средства.
+    \justifying C\texttt{++}\;is\;a\;compiled\:general\,-\,purpose\:programming\:language\;based\:on weak static type system. This language supports multiple program- ming\:paradigms\:and\:provides\:both\:low\,-\,level\:and\:high\,-\,level\:features.
     \end{block}
 
     \begin{itemize}
 
-        \item Процессор понимает низкоуровневый машинный код
+        \item The processor\;understands\;only\;low\,-\,level\;machine\;code
 
-        \item Разработчик пишет высокоуровневый исходный код
+        \item The developer writes high\,-\,level source code
 
-        \item Компилятор транслирует исходный код в машинный
+        \item The compiler translates the source code into machine code
 
-        \item Типы всех объектов известны во время компиляции
+        \item The types of all objects are known at compile time
 
-        \item Допустимы автоматические неявные преобразования
+        \item Various automatic implicit type conversions are allowed
         
     \end{itemize}
     
 \end{frame}
 
-\begin{frame}{\bf Формирование C\texttt{++}}
+\begin{frame}{\bf C\texttt{++} Development}
     
     \begin{itemize}
 
-        \item Изначально разрабатывался как набор расширений C
+        \item Originally\;developed as\;a\;set\;of the\;C\;language\;extensions
 
-        \item В настоящее время является самостоятельным языком
+        \item Currently is an independent and full\,-\,fledged language
 
-        \item Унаследовал компоненты Ada, Algol, Fortran и Simula
+        \item Inherited components of Ada, Fortran, Simula and others
 
-        \item Повлиял на Java, Go, Python и многие другие языки
+        \item Influenced\;Java,\:Go,\:Python\;and\;many\;other\;languages
 
-        \item Занял место на рынке и имеет достойных конкурентов
+        \item Has\;taken\;place\;in\;the\;market\;and\;has\;several\;competitors
          
     \end{itemize}
 
     \begin{block}
-    \justifying Первый коммерческий релиз C\texttt{++} состоялся 14 октября 1985 г.
+    \justifying The\:first\:commercial\:release\:of\:the\:C\texttt{++}\:language\:was\:on\:14\texttt{/}10\texttt{/}1985.
     \end{block}
     
 \end{frame}
 
-\begin{frame}{\bf Стандартизация C\texttt{++}}
+\begin{frame}{\bf C\texttt{++} Standardization}
 
     \begin{itemize}
 
-        \item C\texttt{++}98 -- фундаментальный стандарт
+        \item C\texttt{++}98 -- the first fundamental standard
 
-        \item C\texttt{++}03 -- патч
+        \item C\texttt{++}03 -- patch
 
-        \item Technical Report 1 2007 \texttt{/} Boost
+        \item Technical Report 1 2007 and Boost
 
-        \item C\texttt{++}11 -- ядро языка \texttt{+30}\%, стандартная библиотека \texttt{+100}\%
+        \item C\texttt{++}11 -- language core \texttt{+30}\%, standard library \texttt{+100}\%
 
-        \item C\texttt{++}14 -- патч
+        \item C\texttt{++}14 -- patch
 
-        \item C\texttt{++}17 -- патч
+        \item C\texttt{++}17 -- patch
 
-        \item C\texttt{++}20 -- важные дополнения
+        \item C\texttt{++}20 -- significant extensions
 
-        \item C\texttt{++}23 -- патч
+        \item C\texttt{++}23 -- patch
 
-        \item C\texttt{++}26 -- следующий разрабатываемый стандарт
+        \item C\texttt{++}26 -- the next standard under development
          
     \end{itemize}
 
     \begin{block}
-    \justifying Дополнительные возможности предоставляются библиотеками.
+    \justifying Additional features are provided by libraries such as Boost and Qt.
     \end{block}
     
 \end{frame}
 
-\begin{frame}{\bf Использование C\texttt{++}}
+\begin{frame}{\bf C\texttt{++} Applications}
     
     \begin{itemize}
 
-        \item Операционные системы и системы управления
+        \item Operating\:systems\;and\;control\:systems
 
-        \item Высоконагруженные системы обработки данных
+        \item Highly loaded data processing systems
 
-        \item Математическое и физическое моделирование
+        \item Game\;software and simulation\;systems
 
-        \item Финансовые системы автоматической торговли
+        \item Financial\:systems\:of\:automated\:trading
 
-        \item Решения для отраслей высокой ответственности
+        \item Systems for highly\;responsible\;industry
         
     \end{itemize}
 
     \begin{block}
-    \justifying C\texttt{++} сочетает низкоуровневые и высокоуровневые технологии.
+    \justifying The C\texttt{++} language provides both low\,-\,level and high\,-\,level features.
     \end{block}
     
 \end{frame}
 
-\begin{frame}{\bf Парадигмы программирования}
+\begin{frame}{\bf Programming Paradigms}
     
     \begin{itemize}
 
-        \item Декларативное программирование -- описание результатов
+        \item Declarative\;programming -- SQL and HTML
 
-        \item Императивное программирование -- последовательности
+        \item Imperative\, programming -- \,statements
 
-        \item Процедурное программирование -- подпрограммы
+        \item Procedural programming -- \,subroutines
 
-        \item Функциональное\,программирование -- композиции\,функций
+        \item Functional\, programming -- \,Lisp,\:Erlang\:and\:Haskell
         
-        \item Структурное программирование -- ветвления и циклы
+        \item Structured\, programming -- \,sequences, selections and loops 
         
-        \item Объектно-ориентированное программирование -- классы
+        \item Object\,-\,oriented\,programming\;--\;classes
         
-        \item Обобщенное программирование -- типы и шаблоны
+        \item Generic programming -- templates
+
+        \item Event\,-\,driven programming -- events and callbacks
         
-        \item Параллельное программирование -- процессы и потоки
-        
-        \item Событийно-ориентированное программирование -- события
+        \item Concurrent programming -- threads,\;processes\;and\;networks
         
     \end{itemize}
     
 \end{frame}
 
-\begin{frame}{\bf Инструменты разработчиков}
+\begin{frame}{\bf Developer Instruments}
 
-    \begin{itemize}
+    \begin{tabular}{|l|l|l|}
 
-        \item Дистрибутивы ОС Linux -- Ubuntu, Debian, Fedora
+        \hline
 
-        \item Системы сборки -- Clang, GCC, ICC, MinGW, MSVC
+        \textbf{Instrument} & \textbf{Considered} & \textbf{Alternative} \\
 
-        \item Редакторы кода -- Sublime, Vim, Visual Studio Code
+        \hline
+        
+        \text{Linux\,operating\,system} & Ubuntu & Debian, CentOS \\
 
-        \item Отладчики и профилировщики -- GDB, Valgrind
+        \hline
 
-        \item Системы автоматизации сборки -- CMake, MSBuild
+        \text{Environment} & Visual\;Studio\;Code & CLion \\
 
-        \item Системы контроля версий -- Git, SVN, Mercurial
+        \hline
+         
+        \text{Toolset : Compiler} & Compiler GNU & Clang \\
 
-        \item Сервисы для хостинга проектов -- GitHub, Bitbucket
+        \hline
 
-        \item Графические клиенты -- GitHub Desktop, SmartGit
+        \text{Toolset : Builder} & CMake & Bazel, Ninja \\
 
-        \item Среды разработки -- CLion, Visual Studio, XCode
+        \hline 
 
-        \item Системы управления задачами -- Asana, Jira, Trello
+        \text{Toolset : Debugger} & GDB, Valgrind & LLDB \\
 
-    \end{itemize}
+        \hline
+
+        \text{Toolset : Profiler} & Google.Benchmark & gperftools \\
+
+        \hline
+
+        \text{Version control system} & Git & no \\
+
+        \hline
+
+        \text{Git graphical client} & SmartGit, IDE & GitHub Desktop \\
+
+        \hline
+
+        \text{Project hosting system} & GitHub & Bitbucket \\
+
+        \hline
+        
+    \end{tabular}
     
 \end{frame}
 
-\begin{frame}{\bf Ресурсы разработчиков}
+\begin{frame}{\bf Developer Resources}
 
     \begin{itemize}
 
-        \item learncpp.com -- начальные учебные материалы
+        \item learncpp.com -- basic\,educational\,materials
 
-        \item cppreference.com -- справочное руководство
+        \item cppreference.com -- language reference
 
-        \item boost.org -- документации к библиотекам Boost
+        \item boost.org -- Boost libraries documentation
 
-        \item github.com -- сервис для хостинга проектов
+        \item github.com -- open\,projects\,and\,libraries
 
-        \item stackoverflow.com -- форум вопросов и ответов
+        \item stackoverflow.com -- developers QA forum
 
     \end{itemize}
 
     \begin{block}
-    \justifying Список изученной мной литературы доступен в \href{https://docs.google.com/spreadsheets/d/1MAx4-DoZUrZEB210XJ524e-0OogZRvH7QBorja_tGiw/edit?usp=sharing}{Google таблице}.
+    \justifying The\:list\:of\:recommended\:books\:is\:available\:at\:my\:own\:\href{https://docs.google.com/spreadsheets/d/1MAx4-DoZUrZEB210XJ524e-0OogZRvH7QBorja_tGiw/edit?usp=sharing}{Google\,-\,table}.
     \end{block}
-    
-\end{frame}
-
-\begin{frame}{\bf Этапы жизненного цикла проектов}
-
-    \begin{itemize}
-
-        \item Формирование набора требований
-
-        \item Оценка необходимых ресурсов
-
-        \item Разработка архитектуры решения
-
-        \item Детальное проектирование модулей
-
-        \item Механическое написание кода
-
-        \item Отладка и оптимизация системы
-
-        \item Внедрение и техническая поддержка
-
-        \item Вывод продукта из эксплуатации
-
-    \end{itemize}
     
 \end{frame}
 
