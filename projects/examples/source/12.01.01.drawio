@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="26.1.1">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="28.1.2">
   <diagram name="Страница — 1" id="lHIpNA71YD9EEB81Ue6B">
-    <mxGraphModel dx="943" dy="543" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="777" dy="471" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -49,7 +49,7 @@
         <mxCell id="7rVMGAdaCvuB3OoOaOV6-1" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;have 1 octets - 07 bits&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;&quot;&gt;&amp;nbsp;&lt;/span&gt;have&amp;nbsp;&lt;span style=&quot;&quot;&gt;2 octets - 11 bits&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;div&gt;&amp;nbsp;have&amp;nbsp;3 octets - 16 bits&amp;nbsp;&lt;/div&gt;&lt;div&gt;&amp;nbsp;have&amp;nbsp;4 octets - 21 bits&amp;nbsp;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="403.5" y="180" width="140" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="7rVMGAdaCvuB3OoOaOV6-2" value="&lt;b style=&quot;&quot;&gt;UTF - 8 encoding algorithm :&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+        <mxCell id="7rVMGAdaCvuB3OoOaOV6-2" value="&lt;b style=&quot;&quot;&gt;UTF - 8 Encoding Algorithm :&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="257" y="150" width="433" height="20" as="geometry" />
         </mxCell>
         <mxCell id="7rVMGAdaCvuB3OoOaOV6-4" value="&lt;span style=&quot;&quot;&gt;: 0xxxxxxx&lt;/span&gt;&lt;div&gt;: 110xxxxx 10xxxxxx&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;: 1110xxxx 10xxxxxx 10xxxxxx&lt;/div&gt;&lt;div&gt;: 11110xxx&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;10xxxxxx&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;10xxxxxx&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;10xxxxxx&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
