@@ -1,0 +1,355 @@
+\documentclass[a4paper,12pt]{article}
+
+
+
+\usepackage[export]{adjustbox}
+\usepackage[russian]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+
+
+
+\usepackage{amsbsy}
+\usepackage{amscd}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsopn}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amsxtra}
+\usepackage{array}
+\usepackage{ctable}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{latexsym}
+\usepackage{listings}
+\usepackage{makecell}
+\usepackage{ragged2e}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{xcolor}
+
+
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\renewcommand{\arraystretch}{1.5}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\geometry{left   = 0.5cm}
+\geometry{bottom = 0.5cm}
+\geometry{right  = 0.5cm}
+\geometry{top    = 0.5cm}
+
+\parindent = 0pt
+\parskip   = 0pt
+\tolerance = 100
+
+\flushbottom
+
+\definecolor{G}{rgb}{0.00, 0.50, 0.00}
+
+\hypersetup
+{
+    linkcolor  = G,
+    urlcolor   = G,
+    colorlinks = true
+}
+
+\renewenvironment{itemize}
+{
+    \begin{list}{\labelitemi}
+    {
+      \setlength{\topsep}{0pt}
+      \setlength{\partopsep}{0pt}
+      \setlength{\parskip}{0pt}
+      \setlength{\itemsep}{0pt}
+      \setlength{\parsep}{0pt}
+      \setlength{\leftmargin}{14.5pt}
+    }
+}{\end{list}}
+
+\definecolor{B}{rgb}{0.00, 0.00, 0.50}
+
+\lstset
+{
+    backgroundcolor   = \color{white},      % Установка цвета заднего плана  
+    basicstyle        = \ttfamily\color{B}, % Установка размера и цвета шрифта
+    breakatwhitespace = true,               % Установка разрывов на пробелах
+    breaklines        = true,               % Установка переноса длинных строк
+    captionpos        = none,               % Установка позиции имени листинга
+    commentstyle      = \color{B},          % Установка цвета комментариев кода
+    deletekeywords    = {},                 % Установка удаленных ключевых слов  
+    escapeinside      = {\%*}{*)},          % Установка добавления LaTeX в коде  
+    extendedchars     = false,              % Установка дополнительных символов 
+    frame             = L,                  % Установка типа рамки вокруг кода
+    framexleftmargin  = -8pt,               % Установка размера левого отступа
+    keepspaces        = true,               % Установка выравнивания пробелов
+    keywordstyle      = \color{B},          % Установка цвета ключевых слов  
+    language          = C++,                % Установка языка программирования
+    otherkeywords     = {},                 % Установка добавочных ключевых слов   
+    numbers           = none,               % Установка позиции нумерации строк
+    numbersep         = 0pt,                % Установка отступа нумерации строк
+    numberstyle       = \color{black},      % Установка цвета нумерации строк
+    showspaces        = false,              % Установка пробелов символом '_'
+    showstringspaces  = false,              % Установка пробелов символом '_'
+    showtabs          = false,              % Установка табуляторов видимыми
+    stepnumber        = 1,                  % Установка периода нумерации строк
+    stringstyle       = \color{B},          % Установка цвета строковых литералов
+    tabsize           = 2,                  % Установка размера табуляции в коде
+}
+
+
+
+\begin{document}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 2.50in\enlargethispage{100in}
+
+\title{\bf Software Engineering} 
+
+\author{Moscow Institute of Physics and Technology}
+
+\date{}
+
+\maketitle
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 6.10in\enlargethispage{100in}
+
+\renewcommand\contentsname{\Large Table of Contents}
+
+\renewcommand{\cftdotsep}{0.5}
+
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+\makeatletter
+\let\latexl@section\l@section
+\def\l@section#1#2{\begingroup\let\numberline\@gobble\latexl@section{#1}{#2}\endgroup}
+\makeatother
+
+\titlelabel{}
+
+\thispagestyle{empty}\tableofcontents\thispagestyle{empty}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 3.25in
+
+\textbf{\Large 00. Mandatory Requirements}
+
+\bigskip
+
+\,\textbf{Требования: часть 1}
+
+\medskip
+
+\begin{itemize}
+
+    \item Ваши решения должны собираться без предупреждений и ошибок с флагами \lstinline{-Wall} и \lstinline{-Wextra}.
+
+    \smallskip
+
+    \item Ваши решения должны сопровождаться по крайней мере пятью тестами.
+
+    \smallskip
+
+    \item Ваши решения должны выполняться до конца и проходить тесты без ошибок и неопределенного поведения.
+
+    \smallskip
+
+    \item Ваши решения должны быть адекватно отформатированы в рамках единого стиля.
+    
+\end{itemize}
+
+\bigskip
+
+\,\textbf{Требования: часть 2}
+
+\medskip
+
+\begin{itemize}
+
+    \item Ваши решения не должны содержать дублирующегося кода, непонятных названий и магических литералов.
+
+    \smallskip
+
+    \item Ваши решения не должны использовать стандартные символьные потоки ввода и вывода.
+
+\end{itemize}
+
+\bigskip
+
+\,В случае конфликтов требований в приоритете является выполнение требований, указанных в условиях задач.
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 5.20in
+
+\section{01. Introduction and Brief Overview}
+
+{\large \textbf{01.01} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.07.cpp}{\texttt{06.07}}]}} 
+
+\bigskip
+
+Напишите программу, которая выводит в стандартный символьный поток вывода \lstinline{std::cout} любую строку и при этом обладает функцией \lstinline{main} с единственной инструкцией \lstinline{return 0}. Предложите по крайней мере четыре разных решения. Впервые я столкнулся с этой задачей на техническом собеседовании в крупную российскую компанию. Для ее решения Вам потребуются технологии, которые будут рассматриваться во втором, третьем и шестом модулях данного курса, поэтому Вы можете пропустить эту задачу и вернуться к ней позже. Возможно, Вы немного удивились тому, что первая же задача данного курса обладает настолько неадекватным уровнем сложности. Это своеобразная дань памяти моему детству. Я начал серьезно изучать компьютерные науки и языки программирования в 12 лет, когда проводил летние школьные каникулы на даче у бабушки с дедушкой. Родители подарили мне две книги: Программирование -- принципы и практика с использованием C\texttt{++} Бьёрна Страуструпа и Язык программирования C Брайана Кернигана и Денниса Ритчи. Также у меня имелся простой ноутбук со средой разработки Code::Blocks, однако не было ни интернета, ни даже мобильной связи, потому что дача находится в низине, а сеть можно поймать только на определенном тайном холмике в лесу. Я решил начать изучение с визуально небольшой книги по языку C, быстро проработать ее, а потом приступить к монографии Страуструпа. Опрометчивое решение! В одном из первых заданий просили написать программу, которая удалила бы все комментарии из исходного кода другой программы на языке C. Предположу, что это весьма сложная задача для третьего дня изучения программирования, но я справился, потому что из-за отсутствия связи с внешним миром я просто не понял, что это сложно. Возможно, именно этот случай помог мне определиться с основным направлением всей дальнейшей деятельности. Любопытно, что случилось, если бы мне тогда подарили монографию Искусство программирования Дональда Кнута? Возможно, я стал бы лучше относиться к математике. Пожалуй, стоит провести небольшой эксперимент над собственными детьми.
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 12.20in\enlargethispage{100in}
+
+\section{02. Basics of Programming}
+
+{\large \textbf{02.01} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.12.cpp}{\texttt{02.12}}]}}
+
+\bigskip
+
+Реализуйте алгоритм вычисления N\,-\,ого числа ряда Фибоначчи на основе формулы Бине. Используйте тип \lstinline{double}. Используйте константы. Используйте стандартные функции \lstinline{std::sqrt} и \lstinline{std::pow}. Используйте стандартный символьный поток ввода \lstinline{std::cin} для ввода числа N. Используйте стандартный символьный поток вывода\:\lstinline{std::cout}\:для\:вывода\:числа\:ряда\:Фибоначчи.\:Не\:сопровождайте\:Ваше\:решение\:данной\:задачи\:тестами.
+
+\bigskip
+
+{\large \textbf{02.02} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.17.cpp}{\texttt{02.17}}]}}
+
+\bigskip
+
+Реализуйте алгоритм вычисления корней алгебраического уравнения второй степени с вещественными коэффициентами a, b и c. Используйте тип \lstinline{double}. Используйте ветвления типа \lstinline{if} для проверки значения коэффициента a и значения дискриминанта. Используйте константу epsilon для корректного сравнения чисел с плавающей точкой с заданной точностью. Используйте стандартную функцию \lstinline{std::abs}. Используйте стандартный символьный поток ввода \lstinline{std::cin} для ввода чисел a, b и c. Используйте стандартный символьный
+
+поток\,вывода\,\lstinline{std::cout}\,для\,вывода\,корней\,уравнения.\,Не\,сопровождайте\,Ваше\,решение\,данной\,задачи\,тестами.
+
+\bigskip
+
+{\large \textbf{02.03} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.18.cpp}{\texttt{02.18}}]}}
+
+\bigskip
+
+Реализуйте алгоритм классификации символов таблицы ASCII с десятичными кодами от 32 до 127 включительно на 5 следующих классов: заглавные буквы, строчные буквы, десятичные цифры, знаки препинания, прочие символы. Используйте литералы типа \lstinline{char}. Используйте ветвление \lstinline{switch} с проваливанием. Используйте стандартный символьный поток ввода \lstinline{std::cin} для ввода символов. Используйте стандартный символьный поток вывода \lstinline{std::cout}\,для\,вывода\,названий\,классов.\,Не\,сопровождайте\,Ваше\,решение\,данной\,задачи\,тестами.
+
+\bigskip
+
+{\large \textbf{02.04} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.20.cpp}{\texttt{02.20}}]}}
+
+\bigskip
+
+Реализуйте алгоритм вычисления всех трехзначных чисел Армстронга. Используйте тройной вложенный цикл \lstinline{for} для перебора. Не используйте стандартную функцию \lstinline{std::pow}. Используйте стандартный символьный поток вывода \lstinline{std::cout} для вывода чисел Армстронга. Не\:сопровождайте\:Ваше\:решение\:данной\:задачи\:тестами.
+
+\bigskip
+
+{\large \textbf{02.05} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.24.cpp}{\texttt{02.24}}]}}
+
+\bigskip
+
+Реализуйте алгоритм вычисления числа \texttt{e} на основе суммы членов ряда Маклорена при \texttt{x = 1} с точностью, заданной числом epsilon. Используйте тип \lstinline{double}. Не вычисляйте факториалы, чтобы не столкнуться с проблемой переполнения. Используйте известное соотношение между членами ряда Маклорена для оптимизации вычисления каждого нового члена ряда на основе предыдущего члена ряда. Используйте цикл \lstinline{while} для вычисления членов\,ряда\,Маклорена\,до\,тех\,пор, пока\;очередной\;член\;ряда\;не\;станет\;меньше\;числа\;epsilon.\;Используйте 
+
+стандартный символьный поток ввода \lstinline{std::cin} для ввода числа epsilon. Используйте стандартный символьный поток вывода \lstinline{std::cout} для вывода числа \texttt{e}. Не сопровождайте Ваше решение данной задачи тестами.
+
+\bigskip
+
+{\large \textbf{02.06} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.31.cpp}{\texttt{02.31}}]}}
+
+\bigskip
+
+Реализуйте алгоритм вычисления наибольшей длины последовательности Коллатца среди всех последовательностей Коллатца, начинающихся со значений от 1 до 100. Используйте тип \lstinline{unsigned long long int}. Используйте кэширование длин последовательностей Коллатца в контейнере \lstinline{std::vector} для оптимизации вычисления длины каждой новой последовательности на основе предыдущих последовательностей. Используйте стандартный символьный поток вывода \lstinline{std::cout} для вывода наибольшей длины последовательности\;Кол- 
+
+латца и соответствующего ей начального значения. Не сопровождайте Ваше решение данной задачи тестами.
+
+\bigskip
+
+{\large \textbf{02.07} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.41.cpp}{\texttt{02.41}}]}}
+
+\bigskip
+
+Реализуйте алгоритм вычисления наибольшего общего делителя двух натуральных чисел на основе рекурсивного подхода. Реализуйте алгоритм вычисления наименьшего общего кратного двух натуральных чисел. Используйте тип \lstinline{int}. Используйте стандартные функции \lstinline{std::gcd} и \lstinline{std::lcm} для\:сравнения\:результатов\:тестов.
+
+\bigskip
+
+{\large \textbf{02.08} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.42.cpp}{\texttt{02.42}}]}}
+
+\bigskip
+
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.42.cpp}{\texttt{02.42}} таким образом, чтобы вместо алгоритма сортировки слиянием использовался алгоритм быстрой сортировки. Обоснуйте временную сложность полученного гибридного алгоритма сортировки.
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
+
+\section{03. Object\,-\,Oriented Programming}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
+
+\section{04. Generic Programming}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
+
+\section{05. Software Architecture Patterns}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
+
+\section{06. Projects and Libraries}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
+
+\section{07. Handling Errors and Debugging}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
+
+\section{08. Instruments of Calculus}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
+
+\section{09. Detailed Memory Management}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
+
+\section{10. Collections and Containers}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
+
+\section{11. Iterators and Algorithm Libraries}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
+
+\section{12. Text Data Processing}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
+
+\section{13. Streams and Data Serialization}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
+
+\section{14. Concurrent Programming}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
+
+\section{15. Network Technologies and Tools}
+
+
+
+\end{document}
