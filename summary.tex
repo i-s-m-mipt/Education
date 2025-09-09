@@ -1,0 +1,263 @@
+\documentclass[a4paper,12pt]{article}
+
+
+
+\usepackage[export]{adjustbox}
+\usepackage[russian]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+
+
+
+\usepackage{amsbsy}
+\usepackage{amscd}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsopn}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amsxtra}
+\usepackage{array}
+\usepackage{ctable}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{latexsym}
+\usepackage{listings}
+\usepackage{makecell}
+\usepackage{ragged2e}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{xcolor}
+
+
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\renewcommand{\arraystretch}{1.5}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\geometry{left   = 0.5cm}
+\geometry{bottom = 0.5cm}
+\geometry{right  = 0.5cm}
+\geometry{top    = 0.5cm}
+
+\parindent = 0pt
+\parskip   = 0pt
+\tolerance = 100
+
+\flushbottom
+
+\definecolor{G}{rgb}{0.00, 0.50, 0.00}
+
+\hypersetup
+{
+    linkcolor  = G,
+    urlcolor   = G,
+    colorlinks = true
+}
+
+\renewenvironment{itemize}
+{
+    \begin{list}{\labelitemi}
+    {
+      \setlength{\topsep}{0pt}
+      \setlength{\partopsep}{0pt}
+      \setlength{\parskip}{0pt}
+      \setlength{\itemsep}{0pt}
+      \setlength{\parsep}{0pt}
+      \setlength{\leftmargin}{14.5pt}
+    }
+}{\end{list}}
+
+\definecolor{B}{rgb}{0.00, 0.00, 0.50}
+
+\lstset
+{
+    backgroundcolor   = \color{white},      % Установка цвета заднего плана  
+    basicstyle        = \ttfamily\color{B}, % Установка размера и цвета шрифта
+    breakatwhitespace = true,               % Установка разрывов на пробелах
+    breaklines        = true,               % Установка переноса длинных строк
+    captionpos        = none,               % Установка позиции имени листинга
+    commentstyle      = \color{B},          % Установка цвета комментариев кода
+    deletekeywords    = {},                 % Установка удаленных ключевых слов  
+    escapeinside      = {\%*}{*)},          % Установка добавления LaTeX в коде  
+    extendedchars     = false,              % Установка дополнительных символов 
+    frame             = L,                  % Установка типа рамки вокруг кода
+    framexleftmargin  = -8pt,               % Установка размера левого отступа
+    keepspaces        = true,               % Установка выравнивания пробелов
+    keywordstyle      = \color{B},          % Установка цвета ключевых слов  
+    language          = C++,                % Установка языка программирования
+    otherkeywords     = {},                 % Установка добавочных ключевых слов   
+    numbers           = none,               % Установка позиции нумерации строк
+    numbersep         = 0pt,                % Установка отступа нумерации строк
+    numberstyle       = \color{black},      % Установка цвета нумерации строк
+    showspaces        = false,              % Установка пробелов символом '_'
+    showstringspaces  = false,              % Установка пробелов символом '_'
+    showtabs          = false,              % Установка табуляторов видимыми
+    stepnumber        = 1,                  % Установка периода нумерации строк
+    stringstyle       = \color{B},          % Установка цвета строковых литералов
+    tabsize           = 2,                  % Установка размера табуляции в коде
+}
+
+
+
+\begin{document}
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 2.50in\enlargethispage{100in}
+
+\title{\bf Software Engineering} 
+
+\author{Moscow Institute of Physics and Technology}
+
+\date{}
+
+\maketitle
+
+
+
+\newpage\thispagestyle{empty}\pdfpageheight = 12.25in\enlargethispage{100in}
+
+\textbf{Лектор\:и\:семинарист}
+
+\medskip
+
+Доцент МФТИ, ведущий разработчик, к.т.н. \href{https://t.me/i_s_m_mipt}{Иван Сергеевич Макаров}
+
+\medskip
+\medskip
+
+\textbf{Исторический обзор}
+
+\medskip
+
+Первые лекции и семинары данного курса были проведены в формате факультатива весной 2018 года. Основой для этого послужило мое желание поделиться знаниями, собранными в процессе разработки и исследований с использованием языка программирования C\texttt{++} и производных от него технологий.\,Подготовка\,первичных\,ма- териалов курса была профинансирована Фондом Целевого Капитала. В настоящее время курс читается для студентов нескольких Физтех\,-\,школ, а также на программах дополнительного профессионального образования.
+
+\medskip
+\medskip
+
+\textbf{Общая информация}
+
+\medskip
+
+В первом семестре Вы изучите ядро языка: функции, классы, шаблоны и другие средства, которые необходимы для понимания существующих программ и разработки собственных. Во втором семестре Вы познакомитесь со стандартной библиотекой и Boost, а также с некоторыми дополнительными библиотеками и инструментами, которые используются при разработке промышленного программного обеспечения. Особое внимание будет уделяться вопросам организации высокопроизводительных вычислительных систем и методам оптимизации кода. Обучение будет осуществляться в интенсивном режиме. На входе приветствуется понимание алгоритмов и структур данных, а также опыт использования других языков программирования, например, Java или Python.
+
+\medskip
+\medskip
+
+\textbf{Программа модулей}
+
+\medskip
+
+\begin{itemize}
+    
+    \item 01. Introduction and Brief Overview
+
+    \smallskip
+    
+    \item 02. Basics of Programming
+
+    \smallskip
+    
+    \item 03. Object\,-\,Oriented Programming
+
+    \smallskip
+    
+    \item 04. Generic Programming
+
+    \smallskip
+    
+    \item 05. Software Architecture Patterns
+
+    \smallskip
+    
+    \item 06. Projects and Libraries
+
+    \smallskip
+    
+    \item 07. Handling Errors and Debugging
+
+    \smallskip
+    
+    \item 08. Instruments of Calculus
+
+    \smallskip
+    
+    \item 09. Detailed Memory Management
+
+    \smallskip
+    
+    \item 10. Collections and Containers
+
+    \smallskip
+    
+    \item 11. Iterators and Algorithm Libraries
+
+    \smallskip
+    
+    \item 12. Text Data Processing
+
+    \smallskip
+    
+    \item 13. Streams and Data Serialization
+
+    \smallskip
+    
+    \item 14. Concurrent Programming
+
+    \smallskip
+    
+    \item 15. Network Technologies and Tools
+    
+\end{itemize}
+
+\medskip
+\medskip
+
+\textbf{Система\:оценивания}
+
+\medskip
+
+Каждую неделю мы будем разбирать некоторые примеры и задачи из репозитория курса. Оставшиеся примеры и задачи будут предлагаться Вам в качестве материалов для самостоятельной работы. Каждый семестр я буду проводить четыре зачета, на каждом из которых Вы должны будете устно прокомментировать два случайно выбранных примера, а также сдать решения двух случайно выбранных задач. Каждое зачетное задание будет оцениваться по десятибалльной шкале. Таким образом, на каждом зачете Вы сможете набрать максимум 40 баллов. Также на каждой лекции Вы сможете набрать пять дополнительных баллов за активную работу. Ваша итоговая оценка за семестр будет рассчитываться по формуле S \texttt{/} 160 \texttt{*} 10, где S - сумма набранных баллов.
+
+\medskip
+\medskip
+
+\textbf{Контакты студентов}
+
+\medskip
+
+Дополнительную информацию об особенностях данного курса Вы можете получить у студентов прошлых лет:
+
+\medskip
+
+\begin{itemize}
+
+    \item Выпускник \texttt{2020}\,-\,ого года \href{https://t.me/makovka2000}{Мария}
+
+    \smallskip
+
+    \item Выпускник \texttt{2021}\,-\,ого года \href{https://t.me/TF0801}{Тимур}
+
+    \smallskip
+
+    \item Выпускник \texttt{2022}\,-\,ого года \href{https://t.me/Funny_ded}{Прохор}
+
+    \smallskip
+
+    \item Выпускник \texttt{2023}\,-\,ого года \href{https://t.me/YuriKashpur}{Юрий}
+
+    \smallskip
+
+    \item Выпускник \texttt{2024}\,-\,ого года \href{https://t.me/Yeah_That_Fits}{Роман} 
+
+    \smallskip
+
+    \item Выпускник \texttt{2025}\,-\,ого года \href{https://t.me/Funny_ded}{Прохор}
+
+\end{itemize}
+
+\end{document}
