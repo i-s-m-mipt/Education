@@ -20,7 +20,7 @@ __attribute__ ((__noinline__)) auto max_v2(int x, int y)
 
 int main()
 {
-	volatile auto x = 1, y = 2;
+	auto volatile x = 1, y = 2;
 
 //  -------------------------------------------------------------
 
