@@ -95,7 +95,6 @@ set(debug
     02.34
     02.35
     02.36
-    02.37
     02.38
     02.39
     02.40
@@ -439,6 +438,14 @@ foreach(entry IN LISTS debug)
     target_link_libraries  (${entry} PRIVATE TBB::tbb)
 
 endforeach()
+
+##########################################################################################
+
+add_executable             (02.37 source/02.37.cpp)
+
+target_compile_options     (02.37 PRIVATE -Wall -Wextra -Wpedantic -O0 -m32)
+
+target_link_options        (02.37 PRIVATE -m32)
 
 ##########################################################################################
 

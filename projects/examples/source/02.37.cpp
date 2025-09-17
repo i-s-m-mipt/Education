@@ -1,0 +1,28 @@
+//////////////////////////////////////////////////////////////////////
+
+// support : en.wikipedia.org/wiki/X86_calling_conventions
+
+//////////////////////////////////////////////////////////////////////
+
+#include <cassert>
+
+//////////////////////////////////////////////////////////////////////
+
+__attribute__((cdecl   )) auto test_v1(int x, int y) { return x + y; }
+
+__attribute__((stdcall )) auto test_v2(int x, int y) { return x + y; }
+
+__attribute__((fastcall)) auto test_v3(int x, int y) { return x + y; }
+
+//////////////////////////////////////////////////////////////////////
+
+int main()
+{
+    assert(test_v1(1, 2) == 3); // support : compiler-explorer.com
+
+    assert(test_v2(1, 2) == 3); // support : compiler-explorer.com
+
+    assert(test_v3(1, 2) == 3); // support : compiler-explorer.com
+}
+
+//////////////////////////////////////////////////////////////////////
