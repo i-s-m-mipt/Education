@@ -13,7 +13,7 @@ int main()
     [[maybe_unused]] auto x3(3);
 
 	[[maybe_unused]] auto x4 = 4;
-    
+
     [[maybe_unused]] auto x5 { 5 };
 
 //	[[maybe_unused]] auto x6 = { 6 }; // bad

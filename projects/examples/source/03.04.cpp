@@ -17,8 +17,6 @@ public :
     { 
     //	++m_x; // error
 
-    //  ---------------
-
         return m_x;
     }
 

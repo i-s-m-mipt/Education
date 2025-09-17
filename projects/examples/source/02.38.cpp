@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <iostream>
 #include <span>
+#include <string>
 #include <vector>
 
 /////////////////////////////////////////////////////////////////////
@@ -19,7 +20,9 @@ void test_v2(int *, std::size_t   ) { std::cout << "test_v2 (1)\n"; }
 
 void test_v2(std::span < int >    ) { std::cout << "test_v2 (2)\n"; }
 
-void test_v2(std::vector < int > &) { std::cout << "test_v2 (3)\n"; }
+void test_v2(std::string const &  ) { std::cout << "test_v2 (3)\n"; }
+
+void test_v2(std::vector < int > &) { std::cout << "test_v2 (4)\n"; }
 
 /////////////////////////////////////////////////////////////////////
 
@@ -54,6 +57,14 @@ int main()
 //  -----------------------------------------------
 
 	delete[] array;
+
+//  -----------------------------------------------
+
+	std::string string = "aaaaa";
+
+//  -----------------------------------------------
+
+	test_v2(string);
 
 //  -----------------------------------------------
 
