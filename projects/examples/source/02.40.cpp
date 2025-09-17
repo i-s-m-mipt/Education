@@ -1,36 +1,37 @@
-/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 #include <cassert>
 
-/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
-inline auto max_v1(int x, int y)
-{ 
-	return x > y ? x : y;
-}
+// auto   make_dangling_v1() { auto x = 1; return &x; } // error
 
-/////////////////////////////////////////////////////////////////
+// auto & make_dangling_v2() { auto x = 1; return  x; } // error
 
-__attribute__ ((__noinline__)) auto max_v2(int x, int y)
+////////////////////////////////////////////////////////////////
+
+auto const & make_integer()
 {
-	return x > y ? x : y;
+	static auto x = 0; // support : compiler-explorer.com
+
+	return ++x;
 }
 
-/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 int main()
 {
-	auto volatile x = 1, y = 2;
+//  assert(*make_dangling_v1() == 1); // error
 
-//  -------------------------------------------------------------
+//	assert( make_dangling_v2() == 1); // error
 
-	assert(max_v1(x, y) == 2); // support : compiler-explorer.com
-		
-	assert(max_v2(x, y) == 2); // support : compiler-explorer.com
+//  ------------------------------------------
 
-	assert(max_v1(1, 2) == 2); // support : compiler-explorer.com
+    assert(make_integer() == 1);
 
-	assert(max_v2(1, 2) == 2); // support : compiler-explorer.com
+    assert(make_integer() == 2);
+
+    assert(make_integer() == 3);
 }
 
-/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////

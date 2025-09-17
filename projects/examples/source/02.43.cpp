@@ -1,39 +1,109 @@
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-// support : www.cs.usfca.edu/~galles/visualization/Search.html
+// support : www.cs.usfca.edu/~galles/visualization/ComparisonSort.html
 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
+#include <algorithm>
 #include <cassert>
+#include <cstddef>
 #include <numeric>
+#include <utility>
 #include <vector>
 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-auto find(std::vector < int > const & vector, int x)
+void order(std::vector < int > & vector, std::size_t left, std::size_t right)
 {
-	if (auto size = std::size(vector); size > 0)
+	for (auto i = left + 1; i < right; ++i) 
 	{
-		auto left = 0uz, right = size - 1, middle = 0uz;
-
-		while (left < right)
-		{		
-			middle = std::midpoint(left, right);
-
-			vector[middle] < x ? left = middle + 1 : right = middle;
+		for (auto j = i; j > left; --j)
+		{
+			if (vector[j - 1] > vector[j]) 
+			{
+				std::swap(vector[j], vector[j - 1]);
+			}
 		}
-
-		return vector[left] == x;
 	}
-	
-	return false;
 }
 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+void merge(std::vector < int > & vector_1, std::size_t left, std::size_t right)
+{
+	auto middle = std::midpoint(left, right), size = right - left;
+
+	std::vector < int > vector_2(size, 0);
+
+	for (auto i = left, j = middle, k = 0uz; k < size; ++k) 
+	{
+		if (i < middle && ((j < right && vector_1[i] <= vector_1[j]) || j == right))
+		{
+			vector_2[k] = vector_1[i++];
+		}
+		else
+		{
+			vector_2[k] = vector_1[j++];
+		}
+	}
+
+	for (auto i = 0uz, j = 0uz; j < size; ++j) 
+	{
+		vector_1[left + i++] = vector_2[j];
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+
+void split(std::vector < int > & vector, std::size_t left, std::size_t right)
+{
+	if (right - left > 64)
+	{
+		auto middle = std::midpoint(left, right);
+
+		split(vector, left,   middle);
+		
+		split(vector, middle, right );
+
+		merge(vector, left,   right );
+	}
+	else
+	{
+		order(vector, left,   right );
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+
+void sort(std::vector < int > & vector)
+{
+	split(vector, 0, std::size(vector));
+}
+
+////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	assert(find({ 1, 2, 3, 4, 5 }, 1));
+	auto size = 1'000uz;
+
+//  ---------------------------------------
+
+	std::vector < int > vector(size, 0);
+
+//  ---------------------------------------
+
+	for (auto i = 0uz; i < size; ++i)
+	{
+		vector[i] = size - i;
+	}
+
+//  ---------------------------------------
+
+	sort(vector);
+
+//  ---------------------------------------
+
+	assert(std::ranges::is_sorted(vector));
 }
 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
