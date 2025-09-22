@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////
 
 #include <cassert>
 #include <cstddef>
@@ -7,24 +7,70 @@
 #include <string>
 #include <vector>
 
-/////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////
 
-void test_v1(int x, int * y, int & z) 
+void test(int x, int * y, int & z) 
 { 
 	++x, ++(*y), ++z;
 }
 
-/////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////
 
-void test_v2(int *, std::size_t   ) { std::cout << "test_v2 (1)\n"; }
+void show(int * array, std::size_t size) 
+{ 
+	std::cout << "show : array = { ";
 
-void test_v2(std::span < int >    ) { std::cout << "test_v2 (2)\n"; }
+	for (auto i = 0uz; i < size; ++i)
+	{
+		std::cout << array[i] << ' ';
+	}
 
-void test_v2(std::string const &  ) { std::cout << "test_v2 (3)\n"; }
+	std::cout << "}\n"; 
+}
 
-void test_v2(std::vector < int > &) { std::cout << "test_v2 (4)\n"; }
+///////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////
+void show(std::span < const int > span) 
+{ 
+	std::cout << "show : vector = { ";
+
+	for (auto i = 0uz; i < std::size(span); ++i)
+	{
+		std::cout << span[i] << ' ';
+	}
+
+	std::cout << "}\n";
+}
+
+///////////////////////////////////////////////////
+
+void show(std::string const & string) 
+{ 
+	std::cout << "show : string = { ";
+
+	for (auto i = 0uz; i < std::size(string); ++i)
+	{
+		std::cout << string[i] << ' ';
+	}
+
+	std::cout << "}\n"; 
+}
+
+///////////////////////////////////////////////////
+
+void show(std::vector < int > const & vector) 
+{ 
+	std::cout << "show : vector = { ";
+
+	for (auto i = 0uz; i < std::size(vector); ++i)
+	{
+		std::cout << vector[i] << ' ';
+	}
+
+	std::cout << "}\n";  
+}
+
+///////////////////////////////////////////////////
 
 int main()
 {
@@ -32,7 +78,7 @@ int main()
 
 //  -----------------------------------------------
 	
-	test_v1(x, &y, z);
+	test(x, &y, z);
 
 //  -----------------------------------------------
 
@@ -48,11 +94,11 @@ int main()
 
 //  -----------------------------------------------
 
-	test_v2(array, size);
+	show(array, size);
     
 //  -----------------------------------------------
 
-	test_v2(std::span < int > (array, size));
+	show(std::span < int const > (array, size));
 
 //  -----------------------------------------------
 
@@ -64,7 +110,7 @@ int main()
 
 //  -----------------------------------------------
 
-	test_v2(string);
+	show(string);
 
 //  -----------------------------------------------
 
@@ -72,7 +118,7 @@ int main()
 
 //  -----------------------------------------------
 
-	test_v2(vector);
+	show(vector);
 }
 
-/////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////
