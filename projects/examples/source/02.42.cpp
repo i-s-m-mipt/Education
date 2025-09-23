@@ -11,7 +11,7 @@ inline auto max_v1(int x, int y)
 
 /////////////////////////////////////////////////////////////////
 
-__attribute__ ((__noinline__)) auto max_v2(int x, int y)
+__attribute__((noinline)) auto max_v2(int x, int y)
 {
 	return x > y ? x : y;
 }
