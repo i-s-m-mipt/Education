@@ -24,7 +24,7 @@ int main()
 			
 			if (x == 0) 
 			{
-				goto exit; // support : compiler-explorer.com
+				goto exit;
 			}
 		}
 	}
