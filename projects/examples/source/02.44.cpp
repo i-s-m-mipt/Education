@@ -57,7 +57,7 @@ void merge(std::vector < int > & vector_1, std::size_t left, std::size_t right)
 
 void split(std::vector < int > & vector, std::size_t left, std::size_t right)
 {
-	if (right - left > 64)
+	if (right - left > 16)
 	{
 		auto middle = std::midpoint(left, right);
 
