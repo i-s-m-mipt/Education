@@ -25,7 +25,7 @@ public :
 
 //  ----------------------------------------------
 
-//	Entity(int x, int y) : m_y(x), m_x(y) // error
+//	Entity(int x, int y) : m_y(y), m_x(x) // error
 //  {
 //      std::cout << "Entity:: Entity (3)\n";
 //  }
