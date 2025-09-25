@@ -20,9 +20,7 @@ public :
 
 	static inline auto       s_x = 1;
 
-	static        auto const s_y = 2;
-
-	static inline auto const s_z = 3;
+	static inline auto const s_y = 2;
 
 private :
 
