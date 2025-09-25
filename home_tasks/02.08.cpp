@@ -1,38 +1,35 @@
 #include <iostream>
 #include <vector>
 
-struct KattalatzInfo {
-  unsigned long long num;
-  size_t len;
-};
 
 int main() {
   const unsigned long long int N_limit = 100;
-  std::vector<KattalatzInfo> Kattalanz_nums;
+  std::vector < unsigned long long > cash(N_limit);
   for (unsigned long long ni = 1; ni <= N_limit; ++ni) {
     size_t tmp_len = 0;
-    unsigned long long current = ni; // Используем временную переменную
+    unsigned long long current = ni;
     while (current != 1) {
+      if (cash[current - 1] != 0) {
+        tmp_len += cash[current - 1];
+        break;
+      }
+
       if (current % 2 != 0) {
         current = 3 * current + 1;
       } else {
         current /= 2;
       }
       tmp_len++;
-      // std::cout << current << " ";
     }
-    KattalatzInfo kat_data;
-    kat_data.num = ni;
-    kat_data.len = tmp_len;
-    Kattalanz_nums.push_back(kat_data);
+    cash[ni - 1] = tmp_len;
   }
 
   size_t kat_max = 0;
   unsigned long long kat_num = 0;
   for (unsigned long long i = 0; i < N_limit; ++i) {
-    if (Kattalanz_nums[i].len > kat_max) {
-      kat_max = Kattalanz_nums[i].len;
-      kat_num = Kattalanz_nums[i].num;
+    if (cash[i] > kat_max) {
+      kat_max = cash[i];
+      kat_num = i + 1;
     }
   }
 
