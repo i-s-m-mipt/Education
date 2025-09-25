@@ -13,8 +13,15 @@ public :
 
 //  -------------------------------------------------------------
 
+	auto get() const
+	{
+		return m_x; // support : compiler-explorer.com
+	}
+
+//  -------------------------------------------------------------
+
     auto const & make_string() const
-    {      
+    {
         return m_cache.string(*this);
     }
 
@@ -42,7 +49,7 @@ private :
 			{
 				m_string = std::to_string(entity.m_x);
 			}
-			
+
 			return m_string;
 		}
 
@@ -72,6 +79,10 @@ private :
 int main()
 {
     Entity entity(1);
+
+//  ------------------------------------
+
+	assert(entity.get() == 1);
 
 //  ------------------------------------
 
