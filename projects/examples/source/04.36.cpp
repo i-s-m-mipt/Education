@@ -1,41 +1,37 @@
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 #include <concepts>
+#include <ranges>
+#include <vector>
 
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
-template < typename T > concept totally_ordered = requires (T x, T y)
+template < typename R > concept sized_range = requires (R range)
 {
-    { x <  y } -> std::convertible_to < bool > ;
-    
-    { x >  y } -> std::convertible_to < bool > ;
+	std::ranges::begin(range);
 
-    { x <= y } -> std::convertible_to < bool > ;
+	std::ranges::end  (range);
 
-    { x >= y } -> std::convertible_to < bool > ;
+    std::ranges::size (range);
 
-    { x == y } -> std::convertible_to < bool > ;
+//  --------------------------
 
-    { x != y } -> std::convertible_to < bool > ;
+    typename R::iterator;
 };
 
-/////////////////////////////////////////////////////////////////////
-
-struct Entity {};
-
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    static_assert(     totally_ordered < int    > == 1);
+    static_assert(             sized_range < std::vector < int > > == 1);
     
-    static_assert(     totally_ordered < Entity > == 0);
+    static_assert(             sized_range < int                 > == 0);
 
-//  ----------------------------------------------------
+//  ---------------------------------------------------------------------
 
-    static_assert(std::totally_ordered < int    > == 1);
+    static_assert(std::ranges::sized_range < std::vector < int > > == 1);
     
-    static_assert(std::totally_ordered < Entity > == 0);
+    static_assert(std::ranges::sized_range < int                 > == 0);
 }
 
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
