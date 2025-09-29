@@ -11,9 +11,9 @@ int main()
 {
     [[maybe_unused]] Entity entity_1;
 	
-	[[maybe_unused]] Entity entity_2(2);
+	[[maybe_unused]] Entity entity_2 { 2 };
 	
-	[[maybe_unused]] Entity entity_3(3, 3);
+	[[maybe_unused]] Entity entity_3 { 3, 3 };
 		
 	[[maybe_unused]] Entity entity_4 { .x = 4 };
 
