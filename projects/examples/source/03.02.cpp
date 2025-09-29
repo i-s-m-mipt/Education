@@ -20,9 +20,9 @@ int main()
 
 //  ------------------------------------------------------------------
 
-	assert(entity_1.x == 1 && entity_2->x == (*entity_2).x);
+	assert(entity_1.x == 1 && (*entity_2).x == entity_2->x);
 
-	assert(entity_1.y == 1 && entity_2->y == (*entity_2).y);
+	assert(entity_1.y == 1 && (*entity_2).y == entity_2->y);
 
 //  ------------------------------------------------------------------
 
