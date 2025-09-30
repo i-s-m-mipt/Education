@@ -1,227 +1,222 @@
-////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cmath>
+#include <cstddef>
+#include <cstdint>
+#include <exception>
 #include <format>
-#include <iostream>
-#include <iterator>
-#include <random>
+#include <mutex>
+#include <stdexcept>
 #include <string>
-#include <type_traits>
 #include <utility>
-#include <vector>
 
-////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/mpl/list.hpp>
-#include <boost/test/data/monomorphic.hpp>
-#include <boost/test/data/size.hpp>
-#include <boost/test/data/test_case.hpp>
-#include <boost/test/framework.hpp>
-#include <boost/test/parameterized_test.hpp>
-#include <boost/test/test_tools.hpp>
-#include <boost/test/tree/test_unit.hpp>
-#include <boost/test/unit_test_suite.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/log/attributes.hpp>
+#include <boost/log/common.hpp>
+#include <boost/log/core.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/sinks.hpp>
+#include <boost/log/support/date_time.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 
-////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOST_AUTO_TEST_CASE(Test_v1)
-{
-    std::cout << "Test_v1\n"; BOOST_TEST(std::max(1, 2) == 1);
-
-    std::cout << "Test_v1\n"; BOOST_TEST(std::max(1, 2) == 2);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-BOOST_AUTO_TEST_CASE(Test_v2) 
-{
-    BOOST_TEST(1e-9 == 2e-9, boost::test_tools::tolerance(1e-6));
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-BOOST_AUTO_TEST_CASE(Test_v3) 
-{
-    BOOST_TEST("aaaaa" < "bbbbb", boost::test_tools::lexicographic());
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-BOOST_DATA_TEST_CASE
-(
-    Test_v4, 
-
-    boost::unit_test::data::xrange(1, 3, 1) * boost::unit_test::data::xrange(1, 4, 1),
-
-    x, y
-)
-{
-    std::cout << "Test_v3 : x = " << x << " y = " << y << '\n';
-
-    BOOST_TEST(x > 0); BOOST_TEST(x < 3);
-
-    BOOST_TEST(y > 0); BOOST_TEST(y < 4);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-BOOST_DATA_TEST_CASE
-(
-    Test_v5, 
-
-    boost::unit_test::data::xrange(5) ^ boost::unit_test::data::random
-    ((   
-        boost::unit_test::data::distribution = std::uniform_real_distribution(0.0, 1.0),
-
-        boost::unit_test::data::seed = 1,
-
-        boost::unit_test::data::engine = std::default_random_engine()
-    )),
-
-    i, x
-)
-{
-    std::cout << "Test_v4 : i = " << i << " x = " << std::format("{:.3f}", x) << '\n';
-
-    BOOST_TEST(x > 0.5);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-class Dataset 
+class Logger : private boost::noncopyable
 {
 public :
 
-    class iterator
-    {
-    public :
+	enum class Severity : std::uint8_t
+	{
+		debug, trace, error, fatal
+	};
 
-        iterator() : m_x(1), m_y(1) {}
+//  ---------------------------------------------------------------------------------------------
 
-    //  ------------------------------------------------------------------
+	Logger(char const * scope, bool has_trace) : m_scope(scope), m_has_trace(has_trace)
+	{
+		std::call_once(s_flag, initialize);
 
-        auto const operator++(int) 
-        { 
-            auto x = *this;
-            
-            m_x += m_y;
-            
-            std::swap(m_x, m_y);
-            
-            return x;
-        }
-
-    //  ------------------------------------------------------------------
-
-        auto & operator++() 
-        { 
-            m_x += m_y;
-            
-            std::swap(m_x, m_y);
-            
-            return *this;
-        }
-        
-    //  ------------------------------------------------------------------
-
-        auto operator*() const
-        { 
-            return m_y;
-        }
-
-    //  ------------------------------------------------------------------
-
-		friend auto operator==(iterator const & lhs, iterator const & rhs)
-		{ 
-			return lhs.m_x == rhs.m_x && lhs.m_y == rhs.m_y;
+		if (m_has_trace) 
+		{
+			put(Severity::trace, "execution ... ");
 		}
+	}
 
-    private :
+//  ---------------------------------------------------------------------------------------------
 
-        int m_x = 1, m_y = 1;
-    };
+   ~Logger()
+	{
+		if (m_has_trace) 
+		{
+			put(Severity::trace, "execution complete");
+		}
+	}
 
-//  ----------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------------
 
-    auto begin() const
-    { 
-        return iterator();
-    }
+	void put(Severity severity, std::string const & string) const
+	{
+		auto record = s_logger.open_record(boost::log::keywords::severity = severity);
+		
+		boost::log::record_ostream(record) << m_scope << " : " << string;
 
-//  ----------------------------------------------------------------------
+		s_logger.push_record(std::move(record));
+	}
 
-    auto size() const
-    { 
-        return boost::unit_test::data::BOOST_TEST_DS_INFINITE_SIZE;
-    }
+private :
+
+	using sink_t = boost::log::sinks::synchronous_sink < boost::log::sinks::text_file_backend > ;
+
+//  ---------------------------------------------------------------------------------------------
+
+	static void initialize()
+	{
+		s_logger.add_attribute("line",    boost::log::attributes::counter < std::size_t > ());
+
+		s_logger.add_attribute("time",    boost::log::attributes::utc_clock               ());
+
+		s_logger.add_attribute("process", boost::log::attributes::current_process_id      ());
+
+		s_logger.add_attribute("thread",  boost::log::attributes::current_thread_id       ());
+
+		boost::log::core::get()->add_sink(make_sink());
+	}
+
+//  ---------------------------------------------------------------------------------------------
+
+	static auto make_sink() -> boost::shared_ptr < sink_t >
+	{
+		boost::log::sinks::file::rotation_at_time_interval rotation
+		(
+			boost::posix_time::hours(24)
+		);
+
+		auto sink = boost::make_shared < sink_t > 
+		(
+			boost::log::keywords::file_name = "%y.%m.%d.%H.%M.%S.log",
+
+			boost::log::keywords::time_based_rotation = rotation,
+
+			boost::log::keywords::rotation_size = 8 * 1'024 * 1'024
+		);
+
+		sink->locked_backend()->auto_flush();
+
+		sink->locked_backend()->set_file_collector
+		(
+			boost::log::sinks::file::make_collector(boost::log::keywords::target = "loggers")
+		);
+
+		sink->set_formatter(&format);
+
+		return sink;
+	}
+
+//  ---------------------------------------------------------------------------------------------
+
+	static void format(boost::log::record_view record, boost::log::formatting_ostream & stream)
+	{
+		auto const & attributes = record.attribute_values();
+
+		stream << std::format
+		(
+			"{:0>8}", boost::log::extract_or_throw < std::size_t > (attributes["line"])
+		);
+
+		auto timestamp = boost::log::expressions::format_date_time < boost::posix_time::ptime >
+		(
+			"time", "%Y %B %d %H:%M:%S.%f"
+		);
+
+		(boost::log::expressions::stream << " | " << timestamp)(record, stream);
+
+		using pid_t = boost::log::attributes::current_process_id::value_type;
+
+		using tid_t = boost::log::attributes::current_thread_id ::value_type;
+
+		stream << " | " << boost::log::extract_or_throw < pid_t > (attributes["process"]);
+		
+		stream << " | " << boost::log::extract_or_throw < tid_t > (attributes["thread" ]);
+
+        switch (boost::log::extract_or_throw < Severity > (attributes["Severity"]))
+        {
+            case Severity::debug : { stream << " | debug"; break; }
+
+            case Severity::trace : { stream << " | trace"; break; }
+
+            case Severity::error : { stream << " | error"; break; }
+
+            case Severity::fatal : { stream << " | fatal"; break; }
+        }
+
+		stream << " | " << record[boost::log::expressions::message];
+	}
+
+//  ---------------------------------------------------------------------------------------------
+
+	char const * m_scope = nullptr;
+
+	bool m_has_trace = false;
+
+//  ---------------------------------------------------------------------------------------------
+
+    static inline std::once_flag s_flag;
+
+    static inline boost::log::sources::severity_logger_mt < Severity > s_logger;
 };
 
-////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace boost::unit_test::data::monomorphic 
+#define LOGGER(logger) Logger logger(__func__, true)
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+#define LOGGER_WRITE_DEBUG(logger, string) logger.put(Logger::Severity::debug, string);
+
+#define LOGGER_WRITE_TRACE(logger, string) logger.put(Logger::Severity::trace, string);
+
+#define LOGGER_WRITE_ERROR(logger, string) logger.put(Logger::Severity::error, string);
+
+#define LOGGER_WRITE_FATAL(logger, string) logger.put(Logger::Severity::fatal, string);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+void test_v1()
 {
-    template <> class is_dataset < Dataset > : public std::true_type {};
+	LOGGER(logger);
+		
+	throw std::runtime_error("error");
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOST_DATA_TEST_CASE
-(
-    Test_v6, Dataset() ^ boost::unit_test::data::make({ 1, 2, 3, 5, 8 }), x, y
-)
+void test_v2() { LOGGER(logger); test_v1(); }
+
+void test_v3() { LOGGER(logger); test_v2(); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+int main()
 {
-    BOOST_TEST(x == y);
+	LOGGER(logger);
+
+//  ----------------------------------------------------
+
+	try
+	{
+		test_v3();
+	}
+	catch (std::exception const & exception)
+	{
+		LOGGER_WRITE_FATAL(logger, exception.what());
+	}
+	catch (...)
+	{
+		LOGGER_WRITE_FATAL(logger, "unknown exception");
+	}
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
-
-using list_t = boost::mpl::list < int, std::string > ;
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-BOOST_AUTO_TEST_CASE_TEMPLATE(Test_v7, T, list_t)
-{
-    BOOST_TEST(sizeof(T) == 4);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-void test(int x)
-{
-    BOOST_TEST(x > 0);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-boost::unit_test::test_suite * init_unit_test_suite(int, char **)
-{
-    std::vector < int > vector = { 1, 2, 3, 4, 5 };
-
-    auto generator = BOOST_PARAM_TEST_CASE(&test, std::begin(vector), std::end(vector));
-
-    boost::unit_test::framework::master_test_suite().add(generator);
-
-    boost::unit_test::framework::master_test_suite().p_name.value = "master";
-
-    return nullptr;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-class Fixture
-{
-public :
-
-    std::vector < int > vector;
-};
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-BOOST_FIXTURE_TEST_CASE(Test_v8, Fixture)
-{
-    vector.push_back(1); BOOST_TEST(std::size(vector) == 1);
-    
-    vector.push_back(1); BOOST_TEST(std::size(vector) == 2);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
