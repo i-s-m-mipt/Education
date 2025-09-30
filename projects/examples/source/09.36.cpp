@@ -1,5 +1,6 @@
-////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
+#include <array>
 #include <cstddef>
 #include <format>
 #include <iostream>
@@ -7,42 +8,29 @@
 #include <new>
 #include <vector>
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/noncopyable.hpp>
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
-class Arena : private boost::noncopyable
+#include <benchmark/benchmark.h>
+
+//////////////////////////////////////////////////////////////////////////////////
+
+template < std::size_t S > class Allocator : private boost::noncopyable
 {
 public :
 
-	Arena(std::size_t size) : m_size(size)
-	{
-		m_begin = operator new(m_size, std::align_val_t(s_alignment));
-	}
-
-//  ------------------------------------------------------------------------------
-
-   ~Arena()
-	{
-		if (m_begin)
-		{
-			operator delete(m_begin, m_size, std::align_val_t(s_alignment));
-		}
-	}
-
-//  ------------------------------------------------------------------------------
-
 	auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
 	{
-		void * begin = get_byte(m_begin) + m_offset;
+		void * begin = m_begin + m_offset;
 
-		auto free = m_size - m_offset;
+		auto free = S - m_offset;
 
 		if (begin = std::align(alignment, size, begin, free); begin)
 		{
-			m_offset = m_size - free + size;
+			m_offset = S - free + size;
 			
 			return begin;
 		}
@@ -52,91 +40,98 @@ public :
 		}
 	}
 
-    void deallocate(void *, std::size_t) const {}
-
 //  ------------------------------------------------------------------------------
 
 	void show() const
 	{
-		std::cout << "Arena::show : m_size = " << m_size << ' ';
+		std::cout << "Allocator::show : S = " << S << ' ';
 
-		std::cout << "m_begin = "  << std::format("{:018}", m_begin) << ' ';
+		auto begin = static_cast < void * > (m_begin);
+
+		std::cout << "m_begin = "  << std::format("{:018}", begin) << ' ';
 
 		std::cout << "m_offset = " << std::format("{:0>4}", m_offset) << '\n';
 	}
 
 private :
 
-	auto get_byte(void * x) const -> std::byte *
-	{
-		return static_cast < std::byte * > (x);
-	}
+	std::size_t m_offset = 0;
 
-//  ------------------------------------------------------------------------------
+    alignas(std::max_align_t) std::array < std::byte, S > m_array = {};
 
-	std::size_t m_size = 0, m_offset = 0;
-
-	void * m_begin = nullptr;
+    std::byte * m_begin = std::begin(m_array);
 
 //  ------------------------------------------------------------------------------
 
 	static inline auto s_alignment = alignof(std::max_align_t);
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > class Allocator
+void test_v1(benchmark::State & state)
 {
-public :
+	auto kb = 1'024uz;
 
-    using value_type = T;
+	for (auto element : state)
+	{
+		Allocator < 1'024 * 1'024 > allocator;
 
-//  --------------------------------------------------------------------------------------------
+		for (auto i = 0uz; i < kb; ++i)
+		{
+			benchmark::DoNotOptimize(allocator.allocate(kb));
+		}
+	}
+}
 
-    Allocator(Arena & arena) : m_arena(&arena) {}
+//////////////////////////////////////////////////////////////////////////////////
 
-//  --------------------------------------------------------------------------------------------
+void test_v2(benchmark::State & state)
+{
+	auto kb = 1'024uz;
 
-    template < typename U > Allocator(Allocator < U > const & other) : m_arena(other.m_arena) {}
+	std::vector < void * > vector(kb, nullptr);
 
-//  --------------------------------------------------------------------------------------------
+	for (auto element : state)
+	{
+		for (auto i = 0uz; i < kb; ++i)
+		{
+			vector[i] = operator new(kb);
+		}
 
-    auto allocate(std::size_t size) const
-    { 
-        return static_cast < T * > (m_arena->allocate(size * sizeof(T), alignof(T)));
-    }
+		for (auto i = 0uz; i < kb; ++i)
+		{
+			operator delete(vector[i]);
+		}
+	}
+}
 
-//  --------------------------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////////
 
-    void deallocate(T * x, std::size_t size) const
-    {
-        m_arena->deallocate(x, size * sizeof(T));
-    }
+BENCHMARK(test_v1);
 
-private :
+BENCHMARK(test_v2);
 
-    Arena * m_arena = nullptr;
-};
-
-////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Arena arena(1'024);
+	Allocator < 1'024 > allocator;
 
-//  ----------------------------------------------------------------------------
+//  -------------------------------------------
 
-    Allocator < int > allocator(arena);
+	allocator.show(); allocator.allocate(1, 1);
 
-//  ----------------------------------------------------------------------------
-
-    std::vector < int, Allocator < int > > vector({ 1, 2, 3, 4, 5 }, allocator);
-
-//  ----------------------------------------------------------------------------
-
-    arena.show(); vector.push_back(1);
+	allocator.show(); allocator.allocate(2, 2); 
 	
-    arena.show();
+	allocator.show(); allocator.allocate(4, 4); 
+	
+	allocator.show(); allocator.allocate(8, 8); 
+	
+	allocator.show();
+
+//  -------------------------------------------
+
+    benchmark::RunSpecifiedBenchmarks();
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////

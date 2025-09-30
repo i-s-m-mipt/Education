@@ -1,34 +1,62 @@
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
+#include <cstddef>
+#include <iostream>
 #include <new>
 
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
-#include <benchmark/benchmark.h>
-
-/////////////////////////////////////////////////////////////////////////////////
-
-void test(benchmark::State & state)
+template < typename D > class Entity
 {
-    for (auto element : state)
-    {
-        auto x = operator new(state.range(0));
+public :
 
-        benchmark::DoNotOptimize(x);
+	static auto operator new(std::size_t size) -> void *
+	{
+		std::cout << "Entity::operator new\n";
 
-        operator delete(x, state.range(0));
-    }
-}
+		return ::operator new(size);
+	}
 
-/////////////////////////////////////////////////////////////////////////////////
+//  ----------------------------------------------------
 
-BENCHMARK(test)->RangeMultiplier(2)->Range(1'024 * 1'024, 1'024 * 1'024 * 1'024);
+	static void operator delete(void * x, std::size_t)
+	{
+		std::cout << "Entity::operator delete\n";
 
-/////////////////////////////////////////////////////////////////////////////////
+		::operator delete(x);
+	}
+
+protected :
+
+    Entity() = default;
+
+   ~Entity() = default;
+};
+
+////////////////////////////////////////////////////////
+
+class Client : private Entity < Client >
+{
+private :
+
+	using base_t = Entity < Client > ;
+
+public :
+
+	Client() { std::cout << "Client:: Client\n"; }
+
+   ~Client() { std::cout << "Client::~Client\n"; }
+
+//  ----------------------------------------------------
+
+    using base_t::operator new, base_t::operator delete;
+};
+
+////////////////////////////////////////////////////////
 
 int main()
 {
-    benchmark::RunSpecifiedBenchmarks();
+    delete new Client;
 }
 
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
