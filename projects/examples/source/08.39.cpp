@@ -1,31 +1,35 @@
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 #include <chrono>
 #include <iostream>
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 int main()
 {
-	auto now_1 = std::chrono::system_clock::now();
+    auto now_1 = std::chrono::system_clock::now();
 
-//  ------------------------------------------------------
+    auto now_2 = std::chrono::floor < std::chrono::days > (now_1);
 
-	std::chrono::zoned_time now_2("Europe/London", now_1);
+//  --------------------------------------------------------------
 
-	std::chrono::zoned_time now_3("Europe/Berlin", now_1);
+    std::chrono::year_month_day date(now_2);
 
-	std::chrono::zoned_time now_4("Europe/Moscow", now_1);
+//  --------------------------------------------------------------
 
-//  ------------------------------------------------------
+    auto wday = std::chrono::year_month_weekday(now_2).weekday();
 
-	std::cout << "main : now_1 = " << now_1 << '\n';
+//  --------------------------------------------------------------
 
-	std::cout << "main : now_2 = " << now_2 << '\n';
+	std::chrono::hh_mm_ss time(now_1 - now_2);
 
-	std::cout << "main : now_3 = " << now_3 << '\n';
+//  --------------------------------------------------------------
 
-	std::cout << "main : now_4 = " << now_4 << '\n';
+    std::cout << "main : date = " << date << '\n';
+
+    std::cout << "main : wday = " << wday << '\n';
+
+	std::cout << "main : time = " << time << '\n';
 }
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////

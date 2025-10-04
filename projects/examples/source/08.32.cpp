@@ -1,48 +1,95 @@
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <cmath>
+#include <numbers>
+#include <random>
 
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-#include <boost/accumulators/accumulators.hpp>
-#include <boost/accumulators/statistics/weighted_mean.hpp>
-#include <boost/accumulators/statistics/weighted_variance.hpp>
+struct Vector 
+{ 
+	double x = 0, y = 0, z = 0;
+};
 
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+auto operator*(Vector const & a, Vector const & b)
+{
+	return Vector
+	( 
+		a.y * b.z - a.z * b.y,
+
+	   -a.x * b.z + a.z * b.x,
+
+		a.x * b.y - a.y * b.x 
+	);
+}
+
+///////////////////////////////////////////////////////////////////////////
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }
 
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    using features_t = boost::accumulators::features
-    <
-        boost::accumulators::tag::weighted_mean,
+	auto size = 100'000'000uz;
 
-        boost::accumulators::tag::weighted_variance
-    > ;
+//  -----------------------------------------------------------------------
 
-//  ------------------------------------------------------------------------
+	std::uniform_real_distribution distribution(0.0, 2 * std::numbers::pi);
 
-    boost::accumulators::accumulator_set < double, features_t, double > set;
+//  -----------------------------------------------------------------------
 
-//  ------------------------------------------------------------------------
+	std::default_random_engine engine;
 
-    for (auto i = 1; i <= 5; ++i)
-    {
-        set(i, boost::accumulators::weight = i);
-    }
+//  -----------------------------------------------------------------------
 
-//  ------------------------------------------------------------------------
+	Vector PA(0, -1, 0);
 
-    assert(equal(boost::accumulators::weighted_mean    (set), 3.666'666));
+//  -----------------------------------------------------------------------
 
-    assert(equal(boost::accumulators::weighted_variance(set), 1.555'555));
+	auto counter = 0uz;
+
+//  -----------------------------------------------------------------------
+
+	for (auto i = 0uz; i < size; ++i)
+	{
+		auto w_B = distribution(engine);
+		
+		auto w_C = distribution(engine);
+
+	//  -----------------------------------------------------
+
+		Vector PB(std::cos(w_B), std::sin(w_B), 0);
+
+		Vector PC(std::cos(w_C), std::sin(w_C), 0);
+
+	//  -----------------------------------------------------
+
+		auto alpha_1 = (PA * PB).z;
+		
+		auto alpha_2 = (PB * PC).z;
+		
+		auto alpha_3 = (PC * PA).z;
+
+	//  -----------------------------------------------------
+
+		counter +=
+		(
+			(alpha_1 >= 0 && alpha_2 >= 0 && alpha_3 >= 0) ||
+			
+			(alpha_1 <= 0 && alpha_2 <= 0 && alpha_3 <= 0)
+		);
+	}
+
+//  -----------------------------------------------------------------------
+
+	assert(equal(1.0 * counter / size, 0.250, 1e-3));
 }
 
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////

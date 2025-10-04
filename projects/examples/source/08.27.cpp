@@ -1,60 +1,65 @@
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
+#include <cassert>
 #include <cmath>
-#include <cstddef>
-#include <format>
-#include <iostream>
-#include <random>
-#include <string>
+#include <complex>
+#include <numbers>
 #include <vector>
 
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-auto equal(double x, double y, double epsilon = 1e-6)
+using namespace std::literals;
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+using signal_t = std::vector < std::complex < double > > ;
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+auto transform(signal_t const & signal_1)
 {
-	return std::abs(x - y) < epsilon;
+    auto size = std::size(signal_1);
+
+    signal_t signal_2(size, signal_t::value_type(0));
+    
+    for (auto i = 0uz; i < size; ++i) 
+    {
+        for (auto j = 0uz; j < size; ++j) 
+        {
+            signal_2[i] += signal_1[j] * std::exp(-2i * (std::numbers::pi * i * j / size));
+        }
+    }
+
+    return signal_2;
 }
 
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+
+auto equal(std::complex < double > x, std::complex < double > y, double epsilon = 1e-6)
+{
+    return 
+    (
+        std::abs(std::real(x) - std::real(y)) < epsilon &&
+        
+        std::abs(std::imag(y) - std::imag(y)) < epsilon
+    );
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::normal_distribution distribution(25.0, 8.0);
+    auto signal = transform({ 0.0 + 0.0i, 0.0 + 1.0i, 1.0 + 0.0i, 1.0 + 1.0i });
 
-//  ------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------
 
-	std::random_device device;
+    assert(equal(signal.at(0), +2.0 + 2.0i));
 
-//  ------------------------------------------------------------------------
+    assert(equal(signal.at(1), -1.0 + 1.0i));
 
-	std::mt19937_64 engine(device());
+    assert(equal(signal.at(2), +0.0 - 2.0i));
 
-//  ------------------------------------------------------------------------
-
-	auto size = 50uz;
-
-//  ------------------------------------------------------------------------
-
-	std::vector < std::size_t > vector(size, 0);
-
-//  ------------------------------------------------------------------------
-
-	for (auto i = 0uz; i < 1'000'000; ++i)
-	{
-		if (auto x = distribution(engine); x > 0 && x < size)
-		{
-			++vector[static_cast < std::size_t > (std::floor(x))];
-		}
-	}
-
-//  ------------------------------------------------------------------------
-
-	for (auto i = 0uz; i < size; ++i)
-	{
-		std::cout << "main : vector[" << std::format("{:0>2}", i) << "] : ";
-
-		std::cout << std::string(vector[i] / 1'000, '+') << '\n';
-	}
+    assert(equal(signal.at(3), -1.0 - 1.0i));
 }
 
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////

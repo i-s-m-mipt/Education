@@ -1,39 +1,48 @@
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <cmath>
-#include <complex>
 
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
-using namespace std::literals;
+#include <boost/accumulators/accumulators.hpp>
+#include <boost/accumulators/statistics/weighted_mean.hpp>
+#include <boost/accumulators/statistics/weighted_variance.hpp>
 
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
 	return std::abs(x - y) < epsilon;
 }
 
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    auto x = 1.0 + 1.0i;
+    using features_t = boost::accumulators::features
+    <
+        boost::accumulators::tag::weighted_mean,
 
-//  ---------------------------------------
+        boost::accumulators::tag::weighted_variance
+    > ;
 
-    assert(equal(std::real(x), 1.000'000));
+//  ------------------------------------------------------------------------
 
-    assert(equal(std::imag(x), 1.000'000));
+    boost::accumulators::accumulator_set < double, features_t, double > set;
 
-//  ---------------------------------------
+//  ------------------------------------------------------------------------
 
-    assert(equal(std::norm(x), 2.000'000));
+    for (auto i = 1; i <= 5; ++i)
+    {
+        set(i, boost::accumulators::weight = i);
+    }
 
-    assert(equal(std::abs (x), 1.414'214));
+//  ------------------------------------------------------------------------
 
-    assert(equal(std::arg (x), 0.785'398));
+    assert(equal(boost::accumulators::weighted_mean    (set), 3.666'666));
+
+    assert(equal(boost::accumulators::weighted_variance(set), 1.555'555));
 }
 
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////

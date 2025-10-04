@@ -1,98 +1,31 @@
-/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-#include <cassert>
-#include <cmath>
-#include <numbers>
-#include <string>
-#include <type_traits>
+#include <chrono>
+#include <iostream>
 
-/////////////////////////////////////////////////////////////////////
-
-using namespace std::literals;
-
-/////////////////////////////////////////////////////////////////////
-
-struct Entity 
-{ 
-	unsigned long long int x = 0;
-};
-
-/////////////////////////////////////////////////////////////////////
-
-auto operator""_E(unsigned long long int x)
-{
-	return Entity(x);
-}
-
-/////////////////////////////////////////////////////////////////////
-
-auto operator""_deg_to_rad(long double x)
-{
-	return x * std::numbers::pi_v < long double > / 180;
-}
-
-/////////////////////////////////////////////////////////////////////
-
-auto pow(int x, int y) -> int
-{
-	return y > 0 ? x * pow(x, y - 1) : 1;
-}
-
-/////////////////////////////////////////////////////////////////////
-
-template < char D, char ... Ds > auto make_integer() -> int
-{
-	auto x = D - '0';
-	
-	if constexpr (sizeof...(Ds) > 0)
-	{
-		return x * pow(3, sizeof...(Ds)) + make_integer < Ds... > ();
-	}
-	else
-	{
-		return x;
-	}
-}
-	
-/////////////////////////////////////////////////////////////////////
-
-template < char ... Ds > auto operator""_b3()
-{
-	return make_integer < Ds... > ();
-}
-
-/////////////////////////////////////////////////////////////////////
-
-auto equal(double x, double y, double epsilon = 1e-6)
-{
-	return std::abs(x - y) < epsilon;
-}
-
-/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 int main()
 {
-	auto string = "aaaaa"s;
+	auto now_1 = std::chrono::system_clock::now();
 
-//  -----------------------------------------------------------------
+//  ------------------------------------------------------
 
-	static_assert(std::is_same_v < decltype(string), std::string > );
+	std::chrono::zoned_time now_2("Europe/London", now_1);
 
-//  -----------------------------------------------------------------
+	std::chrono::zoned_time now_3("Europe/Berlin", now_1);
 
-	auto entity = 1_E;
+	std::chrono::zoned_time now_4("Europe/Moscow", now_1);
 
-//  -----------------------------------------------------------------
+//  ------------------------------------------------------
 
-	static_assert(std::is_same_v < decltype(entity), Entity > );
+	std::cout << "main : now_1 = " << now_1 << '\n';
 
-//  -----------------------------------------------------------------
+	std::cout << "main : now_2 = " << now_2 << '\n';
 
-	assert(equal(90.0_deg_to_rad, std::numbers::pi / 2));
+	std::cout << "main : now_3 = " << now_3 << '\n';
 
-//  -----------------------------------------------------------------
-
-	assert(210_b3 == 21);
+	std::cout << "main : now_4 = " << now_4 << '\n';
 }
 
-/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
