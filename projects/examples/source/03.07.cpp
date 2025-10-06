@@ -13,7 +13,7 @@ public :
 
 //  ----------------------------------
 
-	static void test()
+	void test() const
 	{
 		std::cout << "Entity::test\n";
 	}
@@ -63,7 +63,7 @@ int main()
 
 //  -------------------------
 
-	Entity::test();
+	Entity(1).test();
 }
 
 /////////////////////////////////////////////
