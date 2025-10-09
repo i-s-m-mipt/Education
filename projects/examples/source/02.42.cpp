@@ -25,7 +25,7 @@ int main()
 //  -------------------------------------------------------------
 
 	assert(max_v1(x, y) == 2); // support : compiler-explorer.com
-		
+
 	assert(max_v2(x, y) == 2); // support : compiler-explorer.com
 
 	assert(max_v1(1, 2) == 2); // support : compiler-explorer.com

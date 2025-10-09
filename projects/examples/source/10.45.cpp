@@ -1,39 +1,18 @@
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-// support : www.cs.usfca.edu/~galles/visualization/OpenHash.html
-
-////////////////////////////////////////////////////////////////////////////////
-
-#include <cassert>
-#include <cmath>
 #include <cstddef>
-#include <format>
+#include <cstdint>
 #include <iostream>
-#include <iterator>
 #include <random>
 #include <set>
 #include <string>
-#include <type_traits>
 #include <unordered_set>
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-void show(std::unordered_set < std::string > const & set)
-{
-	for (auto i = 0uz; i < set.bucket_count(); ++i)
-	{
-		std::cout << "show : buckets[" << std::format("{:0>2}", i) << "] = {";
+#include "08.19.hpp"
 
-		for (auto iterator = set.begin(i); iterator != set.end(i); ++iterator)
-		{
-			std::cout << ' ' << *iterator;
-		}
-
-		std::cout << (set.bucket_size(i) > 0 ? " " : "") << "}\n\n";
-	}
-}
-
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 auto make_strings(std::size_t size_1, std::size_t size_2)
 {
@@ -58,53 +37,70 @@ auto make_strings(std::size_t size_1, std::size_t size_2)
 	return strings;
 }
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-auto equal(double x, double y, double epsilon = 1e-6)
+auto hash(std::string const & string) -> std::size_t
 {
-	return std::abs(x - y) < epsilon;
-}
+	std::uint32_t seed = std::size(string);
 
-////////////////////////////////////////////////////////////////////////////////
-
-int main()
-{
-	std::unordered_set < std::string > set;
-
-//  ----------------------------------------------------------------------------
-
-	show(set); set.rehash(32);
-
-	show(set);
-
-//  ----------------------------------------------------------------------------
-
-	for (auto const & string : make_strings(set.bucket_count(), 5))
+	for (auto element : string)
 	{
-		set.insert(string);
+		seed = seed << 5 ^ seed >> 27 ^ element;
 	}
 
-//  ----------------------------------------------------------------------------
-
-	show(set); set.rehash(64);
-		
-	show(set);
-
-//  ----------------------------------------------------------------------------
-
-	assert(equal(set.load_factor(), 1.0 * std::size(set) / set.bucket_count()));
-
-//  ----------------------------------------------------------------------------
-
-	static_assert
-	(
-		std::is_same_v 
-		< 
-			std::unordered_set < int > ::iterator::iterator_category, 
-				
-			std::forward_iterator_tag 
-		> 
-	);
+	return seed;
 }
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+int main()
+{	
+	std::unordered_set < std::size_t > hashes;
+
+//  ----------------------------------------------------------------------
+
+	std::string points;
+
+//  ----------------------------------------------------------------------
+
+	for (auto i = 0uz; auto const & string : make_strings(1'000'000, 10))
+	{
+		hashes.insert(hash(string));
+
+	//  ----------------------------------------------------
+			
+		if (i++ % 1'000 == 0)
+		{
+			points += i == 1 ? "" : ",";
+
+			points += std::to_string(i - 1) + ',';
+
+			points += std::to_string(i - std::size(hashes));
+		}
+	}
+
+//  ----------------------------------------------------------------------
+		
+	Python python;
+
+//  ----------------------------------------------------------------------
+
+	try
+	{
+		auto const & local = python.local();
+
+	//  ------------------------------------------------------------------
+
+		boost::python::exec("from script import make_plot", local, local);
+
+	//  ------------------------------------------------------------------
+
+		local["make_plot"](points.c_str(), "hash");
+	}
+	catch (boost::python::error_already_set const &)
+	{
+		std::cerr << "main : " << Python::exception() << '\n';
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////

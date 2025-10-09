@@ -30,7 +30,7 @@ void show(int * array, std::size_t size)
 
 ///////////////////////////////////////////////////
 
-void show(std::span < const int > span) 
+void show(std::span < int const > span) 
 { 
 	std::cout << "show : vector = { ";
 

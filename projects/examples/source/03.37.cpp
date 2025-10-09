@@ -1,63 +1,91 @@
-////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <cstddef>
-#include <initializer_list>
-#include <iostream>
-#include <vector>
+#include <istream>
+#include <ostream>
+#include <sstream>
 
-////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-class Vector 
+class Entity
 {
 public :
 
-    Vector(std::initializer_list < int > list) : m_vector(list) {}
+    virtual ~Entity() = default;
 
-//  --------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
-    auto const & operator[](std::size_t index) const 
+    friend auto & operator>>(std::istream & stream, Entity & entity)
     {
-        std::cout << "Vector::operator[] (1)\n";
-
-        return m_vector[index];
+        return entity.get(stream.ignore()).ignore();
     }
 
-//  --------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
-    auto & operator[](std::size_t index)
+    friend auto & operator<<(std::ostream & stream, Entity const & entity)
+    {        
+        return entity.put(stream << "{ ") << " }";
+    }
+
+protected :
+
+    virtual std::istream & get(std::istream & stream)       { return stream >> m_x; }
+
+    virtual std::ostream & put(std::ostream & stream) const { return stream << m_x; }
+
+//  ---------------------------------------------------------------------------------
+
+    int m_x = 0;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+class Client : public Entity 
+{
+public :
+
+    std::istream & get(std::istream & stream) override
     {
-        std::cout << "Vector::operator[] (2)\n";
+        return Entity::get(stream).ignore() >> m_y;
+    }
 
-        return const_cast < int & > (static_cast < Vector const & > (*this)[index]);
+//  --------------------------------------------------------
+
+    std::ostream & put(std::ostream & stream) const override
+    { 
+        return Entity::put(stream) << ", " << m_y;
     }
 
 private :
 
-    std::vector < int > m_vector;
+    int m_y = 0;
 };
 
-////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    auto const x = 1, & y = x;
+    std::stringstream stream_1("{ 1, 1 }");
 
-//  ----------------------------------
+    std::stringstream stream_2;
 
-    ++(const_cast < int & > (y));
-
-//  ----------------------------------
+//  -----------------------------------------
     
-    assert(x == 2);
+    Entity * entity = new Client;
 
-//  ----------------------------------
+//  -----------------------------------------
 
-    Vector vector = { 1, 2, 3, 4, 5 };
+    stream_1 >> *entity;
 
-//  ----------------------------------
-        
-    assert(vector[0] == 1);
+    stream_2 << *entity;
+
+//  -----------------------------------------
+
+    delete entity;
+
+//  -----------------------------------------
+
+    assert(stream_2.str() == stream_1.str());
 }
 
-////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////

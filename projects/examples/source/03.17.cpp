@@ -1,32 +1,74 @@
-////////////////////////////////////////////////////////
+/////////////////////////////////////////////
+
+#include <iostream>
+#include <vector>
+
+/////////////////////////////////////////////
 
 class Entity
-{ 
+{
 public :
 
-	virtual ~Entity() = default;
+    virtual ~Entity() = default;
 
-private : 
+//  -----------------------------------------
 
-	void * m_x = nullptr;
+    virtual void test_v1() const = 0;
+
+//  -----------------------------------------
+
+//	virtual void test_v2() const = 0 // error
+//	{
+//		std::cout << "Entity::test_v2\n";
+//	}
 };
 
-////////////////////////////////////////////////////////
+/////////////////////////////////////////////
 
-class Client : public Entity 
+void Entity::test_v1() const
 { 
-private : 
-	
-	void * m_x = nullptr;
+	std::cout << "Entity::test_v1\n";
+}
+
+/////////////////////////////////////////////
+
+class Client : public Entity
+{
+public :
+
+    void test_v1() const override 
+	{ 
+		std::cout << "Client::test_v1\n";
+		
+		Entity::test_v1();
+	}
 };
 
-////////////////////////////////////////////////////////
+/////////////////////////////////////////////
 
 int main()
 {
-	static_assert(sizeof(Entity) == 2 * sizeof(void *));
+    std::vector < Entity * > entities;
 
-	static_assert(sizeof(Client) == 3 * sizeof(void *));
+//  ----------------------------------------
+
+//  entities.push_back(new Entity); // error
+
+    entities.push_back(new Client);
+
+//  ----------------------------------------
+
+    for (auto entity : entities)
+    {
+        entity->test_v1();
+    }
+
+//  ----------------------------------------
+
+    for (auto entity : entities)
+    {
+        delete entity;
+    }
 }
 
-////////////////////////////////////////////////////////
+/////////////////////////////////////////////

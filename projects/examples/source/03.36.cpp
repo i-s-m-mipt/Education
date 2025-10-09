@@ -1,91 +1,60 @@
-/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <istream>
-#include <ostream>
-#include <sstream>
+#include <compare>
 
-/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
 public :
 
-    virtual ~Entity() = default;
+    Entity(int x, int y) : m_x(x), m_y(y) {}
 
-//  ---------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------
 
-    friend auto & operator>>(std::istream & stream, Entity & entity)
+    friend auto operator<=>(Entity const & lhs, Entity const & rhs)
     {
-        return entity.get(stream.ignore()).ignore();
-    }
+        if (lhs.m_x == 0 || rhs.m_x == 0)           
+        { 
+            return std::partial_ordering::unordered;
+        }
 
-//  ---------------------------------------------------------------------------------
+        if (lhs.m_x < rhs.m_x) { return std::partial_ordering::less;    }
 
-    friend auto & operator<<(std::ostream & stream, Entity const & entity)
-    {        
-        return entity.put(stream << "{ ") << " }";
-    }
+        if (lhs.m_x > rhs.m_x) { return std::partial_ordering::greater; }
 
-protected :
-
-    virtual std::istream & get(std::istream & stream)       { return stream >> m_x; }
-
-    virtual std::ostream & put(std::ostream & stream) const { return stream << m_x; }
-
-//  ---------------------------------------------------------------------------------
-
-    int m_x = 0;
-};
-
-/////////////////////////////////////////////////////////////////////////////////////
-
-class Client : public Entity 
-{
-public :
-
-    std::istream & get(std::istream & stream) override
-    {
-        return Entity::get(stream).ignore() >> m_y;
-    }
-
-//  --------------------------------------------------------
-
-    std::ostream & put(std::ostream & stream) const override
-    { 
-        return Entity::put(stream) << ", " << m_y;
+        return std::partial_ordering::equivalent;
     }
 
 private :
 
-    int m_y = 0;
+    int m_x = 0, m_y = 0;
 };
 
-/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::stringstream stream_1("{ 1, 1 }");
-
-    std::stringstream stream_2;
-
-//  -----------------------------------------
+    Entity entity_1(1, 1);
     
-    Entity * entity = new Client;
+    Entity entity_2(1, 2);
 
-//  -----------------------------------------
+    Entity entity_3(3, 3);
 
-    stream_1 >> *entity;
+    Entity entity_4(0, 4);
 
-    stream_2 << *entity;
+//  --------------------------------------------------------------------
 
-//  -----------------------------------------
+    assert((entity_3 <=> entity_2) >  0);
 
-    delete entity;
+    assert((entity_1 <=> entity_2) == 0);
 
-//  -----------------------------------------
+    assert((entity_1 <=> entity_3) <  0);
 
-    assert(stream_2.str() == stream_1.str());
+//  --------------------------------------------------------------------
+
+    assert((entity_1 <=> entity_4) == std::partial_ordering::unordered);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////

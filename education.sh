@@ -64,22 +64,22 @@ cp ../source/{script.py,source.cpp,font.ttf,image.jpg} .
 
 files="../source/06.07.cpp ../source/06.08.cpp"
 
-g++ -c -std=c++23 -Wall -Wextra -pedantic -O0 ../source/06.06.hpp -o 06.06.hpp.gch
+g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 ../source/06.06.hpp -o 06.06.hpp.gch
 
-g++    -std=c++23 -Wall -Wextra -pedantic -O0 $files -ltbb -o 06.08
+g++    -std=c++23 -Wall -Wextra -Wpedantic -O0 $files -ltbb -o 06.08
 
 ###################################################################################################
 
 files="../source/06.16.cpp 06.13.o 06.14.o 06.15.o"
 
-g++ -c -std=c++23 -fmodules-ts -Wall -Wextra -pedantic -O0 -xc++-system-header iostream
+g++ -c -std=c++23 -fmodules-ts -Wall -Wextra -Wpedantic -O0 -xc++-system-header iostream
 
-g++ -c -std=c++23 -fmodules-ts -Wall -Wextra -pedantic -O0 ../source/06.15.cxx
+g++ -c -std=c++23 -fmodules-ts -Wall -Wextra -Wpedantic -O0 ../source/06.15.cxx
 
-g++ -c -std=c++23 -fmodules-ts -Wall -Wextra -pedantic -O0 ../source/06.13.cxx
+g++ -c -std=c++23 -fmodules-ts -Wall -Wextra -Wpedantic -O0 ../source/06.13.cxx
 
-g++ -c -std=c++23 -fmodules-ts -Wall -Wextra -pedantic -O0 ../source/06.14.cxx
+g++ -c -std=c++23 -fmodules-ts -Wall -Wextra -Wpedantic -O0 ../source/06.14.cxx
 
-g++    -std=c++23 -fmodules-ts -Wall -Wextra -pedantic -O0 $files -o 06.16
+g++    -std=c++23 -fmodules-ts -Wall -Wextra -Wpedantic -O0 $files -o 06.16
 
 ###################################################################################################

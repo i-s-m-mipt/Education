@@ -1,65 +1,71 @@
-////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
+// support : www.cs.usfca.edu/~galles/visualization/RedBlack.html
+
+/////////////////////////////////////////////////////////////////
+
+#include <algorithm>
+#include <cassert>
 #include <iterator>
 #include <set>
+#include <type_traits>
+#include <utility>
 
-////////////////////////////////////////
-
-#include <benchmark/benchmark.h>
-
-////////////////////////////////////////
-
-void test_v1(benchmark::State & state)
-{
-    for (auto element : state)
-    {
-        std::set < int > set;
-
-		auto iterator = std::begin(set);
-
-		for (auto i = 1'000; i > 0; --i)
-		{
-			set.insert(iterator, i);
-
-			iterator = std::begin(set);
-		}
-
-		benchmark::DoNotOptimize(set);
-    }
-}
-
-////////////////////////////////////////
-
-void test_v2(benchmark::State & state)
-{
-    for (auto element : state)
-    {
-        std::set < int > set;
-
-		auto iterator = std::begin(set);
-
-		for (auto i = 1'000; i > 0; --i)
-		{
-			set.insert(iterator, i);
-
-			iterator = std::end(set);
-		}
-
-		benchmark::DoNotOptimize(set);
-    }
-}
-
-////////////////////////////////////////
-
-BENCHMARK(test_v1);
-
-BENCHMARK(test_v2);
-
-////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
 int main()
 {
-    benchmark::RunSpecifiedBenchmarks();
+	std::set < int > set = { 5, 4, 3, 2, 1 };
+
+//  ----------------------------------------------------------
+		
+	assert(std::ranges::is_sorted(set));
+
+//  ----------------------------------------------------------
+
+	assert(set.contains(1) == (set.find(1) != std::end(set)));
+
+//  ----------------------------------------------------------
+
+	assert(set.erase(1) == 1 && set.insert(1).second);
+
+//  ----------------------------------------------------------
+
+	auto begin = std::begin(set);
+
+//  ----------------------------------------------------------
+
+	assert(set.lower_bound(1) == std::next(begin, 0));
+		
+	assert(set.upper_bound(1) == std::next(begin, 1));
+
+//  ----------------------------------------------------------
+
+//	*begin = 2; // error
+
+//  ----------------------------------------------------------
+
+	auto node = set.extract(1);
+
+//  ----------------------------------------------------------
+		
+	node.value() = 2;
+
+//  ----------------------------------------------------------
+		
+	set.insert(std::move(node));
+
+//  ----------------------------------------------------------
+	
+    static_assert
+    (
+        std::is_same_v 
+        < 
+            std::set < int > ::iterator::iterator_category, 
+                
+            std::bidirectional_iterator_tag 
+        > 
+    );
 }
 
-////////////////////////////////////////
+/////////////////////////////////////////////////////////////////

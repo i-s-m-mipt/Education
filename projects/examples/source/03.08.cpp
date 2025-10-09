@@ -44,9 +44,13 @@ void Client_v2::test() { Entity::test(); }
 
 int main()
 {
+//	Entity::test(); // error
+
+//  ------------------------
+
 	test();
 
-//  ------------------
+//  ------------------------
 			   
 	Client_v1::test();
 

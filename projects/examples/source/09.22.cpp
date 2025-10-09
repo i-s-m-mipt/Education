@@ -1,62 +1,45 @@
-////////////////////////////////////////////////////////
+///////////////////////////////////////
 
-#include <cstddef>
-#include <iostream>
-#include <new>
+#include <string>
 
-////////////////////////////////////////////////////////
+///////////////////////////////////////
 
-template < typename D > class Entity
+union Entity
 {
-public :
+	Entity() : string_1() {}
 
-	static auto operator new(std::size_t size) -> void *
-	{
-		std::cout << "Entity::operator new\n";
+//  ------------------------
 
-		return ::operator new(size);
-	}
+   ~Entity() {}
 
-//  ----------------------------------------------------
+//  ------------------------
 
-	static void operator delete(void * x, std::size_t)
-	{
-		std::cout << "Entity::operator delete\n";
-
-		::operator delete(x);
-	}
-
-protected :
-
-    Entity() = default;
-
-   ~Entity() = default;
+	std::string string_1;
+	
+	std::string string_2;
 };
 
-////////////////////////////////////////////////////////
-
-class Client : private Entity < Client >
-{
-private :
-
-	using base_t = Entity < Client > ;
-
-public :
-
-	Client() { std::cout << "Client:: Client\n"; }
-
-   ~Client() { std::cout << "Client::~Client\n"; }
-
-//  ----------------------------------------------------
-
-    using base_t::operator new, base_t::operator delete;
-};
-
-////////////////////////////////////////////////////////
+///////////////////////////////////////
 
 int main()
 {
-    delete new Client;
+    Entity entity;
+
+//  -----------------------------------
+
+	entity.string_1 = "aaaaa";
+
+	entity.string_1.~basic_string();
+
+//  -----------------------------------
+
+	new (&entity.string_2) std::string;
+
+//  -----------------------------------
+
+	entity.string_2 = "aaaaa";
+
+	entity.string_2.~basic_string();
 }
 
-////////////////////////////////////////////////////////
+///////////////////////////////////////

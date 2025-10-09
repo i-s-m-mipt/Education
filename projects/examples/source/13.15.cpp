@@ -18,7 +18,7 @@ auto operator""_p(char const * string, std::size_t size)
 
 int main()
 {
-	auto path_1 = "../output/./13.02.01"_p;
+	auto path_1 = "../output/./13.15"_p;
 
 	auto path_2 = std::filesystem::absolute (path_1);
 
@@ -34,7 +34,7 @@ int main()
 
 //  -----------------------------------------------------------
 
-	assert(path_1.filename() == "13.02.01");
+	assert(path_1.filename() == "13.15");
 
 //  -----------------------------------------------------------
 

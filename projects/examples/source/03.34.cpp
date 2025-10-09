@@ -1,25 +1,28 @@
-//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <compare>
 
-//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-class Entity
+class Entity_v1
 {
 public :
 
-    Entity(int x, int y) : m_x(x), m_y(y) {}
+    Entity_v1(int x, int y) : m_x(x), m_y(y) {}
 
-//  ------------------------------------------------------------------
+//  ---------------------------------------------------------------------
 
-    friend auto operator<=>(Entity const & lhs, Entity const & rhs)
-    {
-        if (lhs.m_x < rhs.m_x) { return std::weak_ordering::less;    }
+    friend auto operator<=>(Entity_v1 const & lhs, Entity_v1 const & rhs) 
+    { 
+        auto comparison = lhs.m_x <=> rhs.m_x;
 
-        if (lhs.m_x > rhs.m_x) { return std::weak_ordering::greater; }
+        if (comparison != std::strong_ordering::equal)
+        {
+            return comparison;
+        }
 
-        return std::weak_ordering::equivalent;
+        return lhs.m_y <=> rhs.m_y;
     }
 
 private :
@@ -27,23 +30,72 @@ private :
     int m_x = 0, m_y = 0;
 };
 
-//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+class Entity_v2
+{
+public :
+
+    Entity_v2(int x, int y) : m_x(x), m_y(y) {}
+
+//  --------------------------------------------------------------------------------
+
+    friend auto operator<=>(Entity_v2 const & lhs, Entity_v2 const & rhs) = default;
+
+private :
+
+    int m_x = 0, m_y = 0;
+};
+
+////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Entity entity_1(1, 1);
+    assert((2 <=> 1) >  0);
+
+    assert((1 <=> 1) == 0);
+
+    assert((1 <=> 2) <  0);
     
-    Entity entity_2(1, 2);
+//  ---------------------------------------------------
 
-    Entity entity_3(3, 3);
+    Entity_v1 entity_v1_1(1, 1);
+    
+    Entity_v1 entity_v1_2(2, 2);
 
-//  -------------------------------------
+//  ---------------------------------------------------
 
-    assert((entity_3 <=> entity_2) >  0);
+    assert((entity_v1_1 <  entity_v1_2) == 1);
 
-    assert((entity_1 <=> entity_2) == 0);
+    assert((entity_v1_1 >  entity_v1_2) == 0);
 
-    assert((entity_1 <=> entity_3) <  0);
+    assert((entity_v1_1 <= entity_v1_2) == 1);
+
+    assert((entity_v1_1 >= entity_v1_2) == 0);
+
+//  assert((entity_v1_1 == entity_v1_2) == 0); // error
+
+//  assert((entity_v1_1 != entity_v1_2) == 1); // error
+
+//  ---------------------------------------------------
+
+    Entity_v2 entity_v2_1(1, 1);
+    
+    Entity_v2 entity_v2_2(2, 2);
+
+//  ---------------------------------------------------
+
+    assert((entity_v2_1 <  entity_v2_2) == 1);
+
+    assert((entity_v2_1 >  entity_v2_2) == 0);
+
+    assert((entity_v2_1 <= entity_v2_2) == 1);
+
+    assert((entity_v2_1 >= entity_v2_2) == 0);
+
+    assert((entity_v2_1 == entity_v2_2) == 0);
+
+    assert((entity_v2_1 != entity_v2_2) == 1);
 }
 
-//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////

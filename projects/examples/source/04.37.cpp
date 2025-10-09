@@ -1,38 +1,41 @@
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
 #include <concepts>
-#include <iostream>
 
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
-template < typename T > void test_v1(T x) requires std::integral < T >
+template < typename T > concept totally_ordered = requires (T x, T y)
 {
-	std::cout << "test_v1 : x = " << x << '\n';
-}
+    { x <  y } -> std::convertible_to < bool > ;
+    
+    { x >  y } -> std::convertible_to < bool > ;
 
-//////////////////////////////////////////////////////////////////////
+    { x <= y } -> std::convertible_to < bool > ;
 
-template < std::integral T > void test_v2(T x)
-{
-	std::cout << "test_v2 : x = " << x << '\n';
-}
+    { x >= y } -> std::convertible_to < bool > ;
 
-//////////////////////////////////////////////////////////////////////
+    { x == y } -> std::convertible_to < bool > ;
 
-void test_v3(std::integral auto x)
-{
-	std::cout << "test_v3 : x = " << x << '\n';
-}
+    { x != y } -> std::convertible_to < bool > ;
+};
 
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+struct Entity {};
+
+/////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    test_v1(1);
+    static_assert(     totally_ordered < int    > == 1);
     
-    test_v2(1);
+    static_assert(     totally_ordered < Entity > == 0);
 
-    test_v3(1);
+//  ----------------------------------------------------
+
+    static_assert(std::totally_ordered < int    > == 1);
+    
+    static_assert(std::totally_ordered < Entity > == 0);
 }
 
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
