@@ -58,7 +58,7 @@ cmake .. && cmake --build .
 
 cp ../../../libraries/libshared.so .
 
-cp ../source/{script.py,source.cpp,font.ttf,image.jpg} .
+cp ../source/{font.ttf,image.jpg,script.py,source.cpp} .
 
 ###################################################################################################
 
