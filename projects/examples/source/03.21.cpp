@@ -21,23 +21,29 @@ class Client : public Entity {};
 
 class Server : public Entity {};
 
+class Router : public Server {};
+
 ///////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Entity * entity = new Client;
+	Entity * entity = new Router;
 
 //  -----------------------------------------------------------------------------------
 
-	assert( static_cast < Client * > (entity) != 0);
+	assert( static_cast < Router * > (entity) != 0); // support : compiler-explorer.com
 
-//	assert( static_cast < Server * > (entity) != 0); // error
+	assert( static_cast < Server * > (entity) != 0);
+
+//	assert( static_cast < Client * > (entity) != 0); // error
 
 //  -----------------------------------------------------------------------------------
 
-	assert(dynamic_cast < Client * > (entity) != 0); // support : compiler-explorer.com
+	assert(dynamic_cast < Router * > (entity) != 0); // support : compiler-explorer.com
 
-	assert(dynamic_cast < Server * > (entity) == 0);
+	assert(dynamic_cast < Server * > (entity) != 0);
+
+	assert(dynamic_cast < Client * > (entity) == 0);
 
 //  -----------------------------------------------------------------------------------
 
