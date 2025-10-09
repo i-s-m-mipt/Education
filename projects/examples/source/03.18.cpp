@@ -17,7 +17,7 @@ class Client : public Entity
 { 
 private : 
 	
-	void * m_x = nullptr;
+	void * m_y = nullptr;
 };
 
 ////////////////////////////////////////////////////////
