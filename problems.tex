@@ -308,7 +308,7 @@
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 14.80in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 15.20in\enlargethispage{100in}
 
 \section{03. Object\,-\,Oriented Programming}
 
@@ -352,7 +352,7 @@
 
 \bigskip
 
-Реализуйте систему раздельного переопределения наследуемых виртуальных функций-членов с одинаковыми сигнатурами. Реализуйте базовые классы \lstinline{Entity_v1} и \lstinline{Entity_v2}. Реализуйте в классе \lstinline{Entity_v1} виртуальную функцию-член \lstinline{test}. Реализуйте в классе \lstinline{Entity_v2} виртуальную функцию-член \lstinline{test}, сигнатура которой полностью совпадает с сигнатурой виртуальной функции-члена \lstinline{test} из класса \lstinline{Entity_v1}. Реализуйте производный класс \lstinline{Client}, который является наследником интерфейсов классов \lstinline{Entity_v1} и \lstinline{Entity_v2}. Обратите внимание, что раздельное переопределение наследуемых виртуальных функций-членов \lstinline{test} в классе \lstinline{Client} невозможно из-за совпадения их сигнатур. Реализуйте промежуточный класс \lstinline{Adapter} в иерархии наследования между классами \lstinline{Entity_v1} и \lstinline{Client}, который предотвратит совпадение сигнатур наследуемых виртуальных функций-членов в классе \lstinline{Client}. Реализуйте дополнительную виртуальную функцию-член в классе \lstinline{Adapter}.
+Реализуйте систему раздельного переопределения наследуемых виртуальных функций-членов с одинаковыми сигнатурами. Реализуйте базовые классы \lstinline{Entity_v1} и \lstinline{Entity_v2}. Реализуйте в классе \lstinline{Entity_v1} виртуальную функцию-член \lstinline{test}. Реализуйте в классе \lstinline{Entity_v2} виртуальную функцию-член \lstinline{test}, сигнатура которой полностью совпадает с сигнатурой виртуальной функции-члена \lstinline{test} из класса \lstinline{Entity_v1}. Реализуйте производный класс \lstinline{Client}, который является наследником интерфейсов классов \lstinline{Entity_v1} и \lstinline{Entity_v2}. Обратите внимание, что раздельное переопределение наследуемых виртуальных функций-членов \lstinline{test} в классе \lstinline{Client} невозможно из-за совпадения их сигнатур. Реализуйте дополнительный промежуточный класс \lstinline{Adapter_v1} в иерархии наследования между классами \lstinline{Entity_v1} и \lstinline{Client}. Реализуйте дополнительный промежуточный класс \lstinline{Adapter_v2} в иерархии наследования между классами \lstinline{Entity_v2} и \lstinline{Client}. Реализуйте дополнительные чисто виртуальные функции-члены в классах \lstinline{Adapter_v1} и \lstinline{Adapter_v2}, которые будут обладать разными сигнатурами и предотвратят совпадение сигнатур наследуемых виртуальных функций-членов в классе \lstinline{Client}.
 
 \bigskip
 
