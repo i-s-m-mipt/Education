@@ -20,9 +20,13 @@ void test_v1(int x, int y = 0)
 
 int main()
 {
-    test_v1(1);
+    test_v1(1   );
 
-//  test_v2(1); // error
+    test_v1(1, 2);
+
+//  test_v2(1   ); // error
+
+//  test_v2(1, 2); // error
 }
 
 //////////////////////////////////////////////////////////////////
