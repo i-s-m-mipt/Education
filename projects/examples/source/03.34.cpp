@@ -51,21 +51,13 @@ private :
 
 int main()
 {
-    assert((2 <=> 1) >  0);
-
-    assert((1 <=> 1) == 0);
-
-    assert((1 <=> 2) <  0);
-    
-//  ---------------------------------------------------
-
     Entity_v1 entity_v1_1(1, 1);
     
     Entity_v1 entity_v1_2(2, 2);
 
-//  ---------------------------------------------------
+//  -----------------------------------------------------------------------------
 
-    assert((entity_v1_1 <  entity_v1_2) == 1);
+    assert((entity_v1_1 <  entity_v1_2) == 1); // support : compiler-explorer.com
 
     assert((entity_v1_1 >  entity_v1_2) == 0);
 
@@ -77,13 +69,13 @@ int main()
 
 //  assert((entity_v1_1 != entity_v1_2) == 1); // error
 
-//  ---------------------------------------------------
+//  -----------------------------------------------------------------------------
 
     Entity_v2 entity_v2_1(1, 1);
     
     Entity_v2 entity_v2_2(2, 2);
 
-//  ---------------------------------------------------
+//  -----------------------------------------------------------------------------
 
     assert((entity_v2_1 <  entity_v2_2) == 1);
 
@@ -93,7 +85,7 @@ int main()
 
     assert((entity_v2_1 >= entity_v2_2) == 0);
 
-    assert((entity_v2_1 == entity_v2_2) == 0);
+    assert((entity_v2_1 == entity_v2_2) == 0); // support : compiler-explorer.com
 
     assert((entity_v2_1 != entity_v2_2) == 1);
 }
