@@ -11,11 +11,14 @@ public :
 
 // ~Entity() = default; // error
 
-//  ----------------------------------
+//  -------------------------------------
 
-	virtual ~Entity() = default;
+	virtual ~Entity()
+	{
+		std::cout << "Entity::~Entity\n";
+	}
 
-//  ----------------------------------
+//  -------------------------------------
 
 	virtual void test() const
 	{ 
@@ -29,6 +32,13 @@ class Client : public Entity
 {
 public :
 
+   ~Client() override
+	{
+		std::cout << "Client::~Client\n";
+	}
+
+//  -------------------------------------
+
 	void test() const override final
 	{ 
 		std::cout << "Client::test\n";
@@ -37,7 +47,15 @@ public :
 
 //////////////////////////////////////////////////////////
 
-class Server final : public Entity {};
+class Server final : public Entity 
+{
+public:
+
+   ~Server() override
+	{
+		std::cout << "Server::~Server\n";
+	}
+};
 
 //////////////////////////////////////////////////////////
 
@@ -51,44 +69,32 @@ int main()
 
 //  std::vector < Server > servers; // bad
 
-//  ------------------------------------------------------
+//  ---------------------------------------------------------
 
-    Client client;
+	[[maybe_unused]] Entity * entity_1 = new Client;
 
-	Server server;
+	[[maybe_unused]] Entity * entity_2 = new Server;
 
-	Router router;
+//	[[maybe_unused]] Entity * entity_3 = new Router; // error
 
-//  ------------------------------------------------------
-
-	[[maybe_unused]] Entity * entity_1 = &client;
-
-	[[maybe_unused]] Entity * entity_2 = &server;
-	
-	[[maybe_unused]] Entity & entity_3 =  client;
-
-//	[[maybe_unused]] Entity   entity_4 =  server; // error
-
-//	[[maybe_unused]] Entity * entity_5 = &router; // error
-
-//  ------------------------------------------------------
+//  ---------------------------------------------------------
 
 	std::vector < Entity * > entities;
 
-//  ------------------------------------------------------
+//  ---------------------------------------------------------
 
-    entities.push_back(new Client);
+    entities.push_back(entity_1);
 
-	entities.push_back(new Server);
+	entities.push_back(entity_2);
 
-//  ------------------------------------------------------
+//  ---------------------------------------------------------
 
     for (auto entity : entities)
     {
-        entity->test(); // support : compiler-explorer.com
+        entity->test();
     }
 
-//  ------------------------------------------------------
+//  ---------------------------------------------------------
 
     for (auto entity : entities)
     {
