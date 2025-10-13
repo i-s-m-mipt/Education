@@ -18,7 +18,10 @@ public :
 
 protected :
 
-    void test_v3() const { std::cout << "Entity::test_v3\n"; }
+    void test_v3() const 
+	{ 
+		std::cout << "Entity::test_v3\n"; 
+	}
 
 private :
 
