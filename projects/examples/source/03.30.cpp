@@ -15,14 +15,14 @@ public :
 
 	Vector() : m_array(nullptr), m_size(0) 
 	{
-		std::cout << "Vector::Vector (1)\n";
+		std::cout << "Vector:: Vector (1)\n";
 	}
 
 //  --------------------------------------------------------------------------------
 
 	Vector(std::initializer_list < int > list) : Vector()
 	{
-		std::cout << "Vector::Vector (2)\n";
+		std::cout << "Vector:: Vector (2)\n";
 
 		m_array = (m_size = std::size(list)) ? new int[m_size]{} : nullptr;
 
@@ -33,7 +33,7 @@ public :
 
 	Vector(Vector const & other) : Vector() 
 	{
-		std::cout << "Vector::Vector (3)\n";
+		std::cout << "Vector:: Vector (3)\n";
 
 		m_array = (m_size = other.m_size) ? new int[m_size]{} : nullptr;
 
@@ -48,7 +48,7 @@ public :
 		
 		m_size (std::exchange(other.m_size,  0      ))
 	{
-		std::cout << "Vector::Vector (4)\n";
+		std::cout << "Vector:: Vector (4)\n";
 	}
 
 //  --------------------------------------------------------------------------------
