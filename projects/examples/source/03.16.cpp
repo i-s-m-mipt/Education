@@ -69,6 +69,8 @@ int main()
 
 //  std::vector < Server > servers; // bad
 
+//  std::vector < Router > routers; // bad
+
 //  ---------------------------------------------------------
 
 	[[maybe_unused]] Entity * entity_1 = new Client;
