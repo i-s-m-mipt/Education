@@ -73,6 +73,18 @@ int main()
 
 //  ----------------------------------------------------------------------------
 
+	static_assert
+	(
+		std::is_same_v 
+		< 
+			decltype(set)::iterator::iterator_category, 
+				
+			std::forward_iterator_tag 
+		> 
+	);
+
+//  ----------------------------------------------------------------------------
+
 	show(set); set.rehash(32);
 
 	show(set);
@@ -93,18 +105,6 @@ int main()
 //  ----------------------------------------------------------------------------
 
 	assert(equal(set.load_factor(), 1.0 * std::size(set) / set.bucket_count()));
-
-//  ----------------------------------------------------------------------------
-
-	static_assert
-	(
-		std::is_same_v 
-		< 
-			std::unordered_set < int > ::iterator::iterator_category, 
-				
-			std::forward_iterator_tag 
-		> 
-	);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

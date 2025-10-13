@@ -18,6 +18,18 @@ int main()
 	std::set < int > set = { 5, 4, 3, 2, 1 };
 
 //  ----------------------------------------------------------
+	
+    static_assert
+    (
+        std::is_same_v 
+        < 
+            decltype(set)::iterator::iterator_category, 
+                
+            std::bidirectional_iterator_tag 
+        > 
+    );
+
+//  ----------------------------------------------------------
 		
 	assert(std::ranges::is_sorted(set));
 
@@ -54,18 +66,6 @@ int main()
 //  ----------------------------------------------------------
 		
 	set.insert(std::move(node));
-
-//  ----------------------------------------------------------
-	
-    static_assert
-    (
-        std::is_same_v 
-        < 
-            std::set < int > ::iterator::iterator_category, 
-                
-            std::bidirectional_iterator_tag 
-        > 
-    );
 }
 
 /////////////////////////////////////////////////////////////////
