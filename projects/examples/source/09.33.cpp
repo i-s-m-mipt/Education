@@ -36,10 +36,7 @@ public :
 	{
 		for (auto list : m_lists) 
 		{
-			if (list)
-			{
-				operator delete(list, m_size, std::align_val_t(s_alignment));
-			}
+			operator delete(list, m_size, std::align_val_t(s_alignment));
 		}
 	}
 

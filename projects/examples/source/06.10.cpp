@@ -26,10 +26,7 @@ Entity:: Entity() : m_pimpl(new Implementation) {}
 
 Entity::~Entity() 
 { 
-    if (m_pimpl)
-    {
-        delete m_pimpl;
-    }
+    delete m_pimpl;
 }
 
 //////////////////////////////////////////////////////

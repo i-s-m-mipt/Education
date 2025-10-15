@@ -33,10 +33,7 @@ public :
 
    ~Allocator()
 	{
-		if (m_begin)
-		{
-			operator delete(m_begin, m_size, std::align_val_t(s_alignment));
-		}
+		operator delete(m_begin, m_size, std::align_val_t(s_alignment));
 	}
 
 //  -------------------------------------------------------------------------------

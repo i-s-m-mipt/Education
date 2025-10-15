@@ -1,6 +1,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
+#include <utility>
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -58,12 +59,7 @@ public :
 
     void set(State * state)
     { 
-        if (m_state)
-        {
-            delete m_state;
-        }
-        
-        m_state = state;
+        delete std::exchange(m_state, state);
     }
 
 //  ------------------------------------------

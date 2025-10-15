@@ -26,10 +26,7 @@ public :
     {
         for (auto observer : m_observers) 
         {
-            if (observer)
-            {
-                delete observer;
-            }
+            delete observer;
         }
     }
 

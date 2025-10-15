@@ -55,12 +55,7 @@ public :
 
     void reset(T * x = nullptr) 
     {
-        if (m_x)
-        {
-            delete m_x;
-        }
-
-        m_x = x;
+        delete std::exchange(m_x, x);
     }
      
 private :

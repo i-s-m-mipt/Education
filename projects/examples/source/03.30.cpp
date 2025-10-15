@@ -57,10 +57,7 @@ public :
 	{
 		std::cout << "Vector::~Vector\n";
 
-		if (m_array) 
-		{
-			delete[] m_array;
-		}
+		delete[] m_array;
 	}
 	
 //  --------------------------------------------------------------------------------
@@ -71,10 +68,7 @@ public :
 //
 //		if (this != &other)
 //		{
-//			if (m_array)
-//			{
-//				delete[] m_array;
-//			}
+//			delete[] m_array;
 //
 //			m_array = (m_size = other.m_size) ? new int[m_size]{} : nullptr;
 //
@@ -95,11 +89,8 @@ public :
 //			auto array = other.m_size ? new int[other.m_size]{} : nullptr;
 //
 //			std::ranges::copy(other.m_array, other.m_array + other.m_size, array);		
-//
-//			if (array = std::exchange(m_array, array); array)
-//			{
-//				delete[] array;
-//			}
+//		
+//			delete[] std::exchange(m_array, array);
 //
 //			m_size = other.m_size;
 //		}
@@ -115,10 +106,7 @@ public :
 //
 //		if (this != &other)
 //		{
-//			if (m_array) 
-//			{
-//				delete[] m_array;
-//			}
+//			delete[] m_array;
 //			
 //			m_array = std::exchange(other.m_array, nullptr);
 //

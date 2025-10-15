@@ -14,10 +14,7 @@ public :
 
    ~RAII() 
 	{ 
-		if (m_x) 
-		{
-			delete m_x;
-		}
+		delete m_x;
 	}
 
 private :

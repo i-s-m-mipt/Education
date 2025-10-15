@@ -51,10 +51,7 @@ public :
     {
         for (auto entity : m_entities)
         {
-            if (entity)
-            {
-                delete entity;
-            }
+            delete entity;
         }
     }
 
