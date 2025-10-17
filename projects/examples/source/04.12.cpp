@@ -25,7 +25,7 @@ void test_v2(Entity const & entity) { test_v1(entity); }
 
 void test_v2(Entity && entity)
 { 
-	test_v1(std::move(entity)); 
+	test_v1(std::move(entity));
 }
 
 ///////////////////////////////////////////////////////////////

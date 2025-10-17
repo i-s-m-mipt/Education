@@ -91,6 +91,20 @@ int main()
 	assert(make_typename_v4(make_entity_v3()) == "Entity&"       );
 
 	assert(make_typename_v4(make_entity_v4()) == "Entity const&" );
+
+//  ------------------------------------------------------------------------
+
+	Entity       entity_1;
+
+	Entity const entity_2;
+
+//  ------------------------------------------------------------------------
+
+	assert(make_typename_v4(entity_1) == "Entity&"      );
+
+	assert(make_typename_v4(entity_2) == "Entity const&");
+
+	assert(make_typename_v4(Entity()) == "Entity&&"     );
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
