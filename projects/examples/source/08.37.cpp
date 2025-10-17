@@ -10,13 +10,9 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-class Timer
+template < typename D = std::chrono::duration < double > > class Timer
 {
 public :
-
-	using clock_t = std::chrono::steady_clock;
-
-//  --------------------------------------------------------------------------------------
 
 	Timer(std::string const & scope) : m_scope(scope), m_begin(clock_t::now()) {}
 
@@ -24,21 +20,21 @@ public :
 
    ~Timer() 
 	{
-		std::cout << m_scope << " : timer : " << format() << " (seconds)\n";
+		std::cout << m_scope << " : " << std::format("{:.6f}", elapsed().count()) << '\n';
 	}
 
 //  --------------------------------------------------------------------------------------
 
-	auto format() const -> std::string
+	auto elapsed() const
 	{
-		auto delta_1 = clock_t::now() - m_begin;
-
-		auto delta_2 = std::chrono::duration_cast < std::chrono::microseconds > (delta_1);
-
-		return std::format("{:.6f}", 1.0 * delta_2.count() / 1'000'000);
+		return std::chrono::duration_cast < D > (clock_t::now() - m_begin);
 	}
 
 private :
+
+	using clock_t = std::chrono::steady_clock;
+
+//  --------------------------------------------------------------------------------------
 
 	std::string m_scope;
 	
@@ -70,7 +66,7 @@ auto equal(double x, double y, double epsilon = 1e-6)
 
 int main()
 {
-	Timer timer("main");
+	Timer timer("main : timer");
 
 //  -----------------------------------------------
 
