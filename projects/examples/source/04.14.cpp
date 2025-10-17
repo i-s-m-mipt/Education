@@ -87,7 +87,7 @@ public :
 	< 
 		typename S, typename = std::enable_if_t 
 		< 
-			std::convertible_to < S, std::string > , void 
+			std::is_convertible_v < S, std::string > , void 
 		> 
 	>
 	Entity_v3(S && string) : m_string(std::forward < S > (string))
