@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 #include <algorithm>
 #include <atomic>
@@ -11,11 +11,11 @@
 #include <thread>
 #include <vector>
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 #include <benchmark/benchmark.h>
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 template < typename D = std::chrono::duration < double > > class Timer
 {
@@ -39,59 +39,71 @@ private :
 	clock_t::time_point m_begin;
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 class Task
 {
 public :
 
-    auto operator()(std::barrier <> & barrier, std::atomic < int > & x) const
+    virtual ~Task() = default;
+
+//  ------------------------------------------
+
+    auto operator()(std::barrier <> & barrier)
     {
         barrier.arrive_and_wait();
 
         Timer timer;
 
-        test(x);
+        test();
 
         return timer.elapsed().count();
     }
 
-private :
+//  ------------------------------------------
 
-    virtual void test(std::atomic < int > & x) const = 0;
+    virtual void test() = 0;
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 class Task_v1 : public Task
 {
-private :
+public :
 
-    void test(std::atomic < int > & x) const override
+    void test() override
     {
         for (auto i = 0uz; i < 1'000'000; ++i)
         {
-            x.store(1, std::memory_order::seq_cst);
+            m_x.store(1, std::memory_order::seq_cst);
         }
     }
+
+private :
+
+    std::atomic < int > m_x = 0;
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 class Task_v2 : public Task
 {
-private :
+public :
 
-    void test(std::atomic < int > & x) const override
+    void test() override
     {
         for (auto i = 0uz; i < 1'000'000; ++i)
         {
-            x.store(1, std::memory_order::relaxed);
+            m_x.store(1, std::memory_order::relaxed);
         }
     }
+
+private :
+
+    std::atomic < int > m_x = 0;
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 void test(benchmark::State & state)
 {
@@ -107,8 +119,6 @@ void test(benchmark::State & state)
 
     std::barrier <> barrier(concurrency + 1);
 
-    std::atomic < int > x = 1;
-
     auto lambda = [](auto & future){ return future.get(); };
 
     for (auto element : state)
@@ -117,7 +127,7 @@ void test(benchmark::State & state)
         {
             future = std::async
             (
-                std::launch::async, &Task::operator(), task, std::ref(barrier), std::ref(x)
+                std::launch::async, &Task::operator(), task, std::ref(barrier)
             );
         }
 
@@ -130,19 +140,19 @@ void test(benchmark::State & state)
 
         state.SetIterationTime(time / concurrency);
 
-		benchmark::DoNotOptimize(x);
+		benchmark::DoNotOptimize(*task);
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test)->Arg(0)->Arg(1);
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
     benchmark::RunSpecifiedBenchmarks();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
