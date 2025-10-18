@@ -113,9 +113,9 @@ void test(benchmark::State & state)
 
     std::shared_ptr < Task > task;
     
-    if (state.range(0) == 0) { task = std::make_shared < Task_v1 > (); }
+    if (state.range(0) == 1) { task = std::make_shared < Task_v1 > (); }
 
-    if (state.range(0) == 1) { task = std::make_shared < Task_v2 > (); }
+    if (state.range(0) == 2) { task = std::make_shared < Task_v2 > (); }
 
     std::barrier <> barrier(concurrency + 1);
 
@@ -146,7 +146,7 @@ void test(benchmark::State & state)
 
 //////////////////////////////////////////////////////////////////////////////
 
-BENCHMARK(test)->Arg(0)->Arg(1);
+BENCHMARK(test)->Arg(1)->Arg(2);
 
 //////////////////////////////////////////////////////////////////////////////
 

@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 #include <algorithm>
 #include <array>
@@ -8,11 +8,35 @@
 #include <list>
 #include <vector>
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 #include <benchmark/benchmark.h>
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+template < typename D = std::chrono::duration < double > > class Timer
+{
+public :
+
+	Timer() : m_begin(clock_t::now()) {}
+
+//  -----------------------------------------------------------------------
+
+	auto elapsed() const
+	{
+		return std::chrono::duration_cast < D > (clock_t::now() - m_begin);
+	}
+
+private :
+
+    using clock_t = std::chrono::steady_clock;
+
+//  -----------------------------------------------------------------------
+	
+	clock_t::time_point m_begin;
+};
+
+///////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state) 
 {
@@ -27,22 +51,17 @@ void test_v1(benchmark::State & state)
             array[i] = size - i;
         }
 
-        auto begin = std::chrono::steady_clock::now();
+        Timer timer;
 
         std::ranges::sort(array);
 
-        auto delta = std::chrono::steady_clock::now() - begin;
-
-        state.SetIterationTime
-        (
-            std::chrono::duration_cast < std::chrono::duration < double > > (delta).count()
-        );
+        state.SetIterationTime(timer.elapsed().count());
 
         benchmark::DoNotOptimize(array);
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state) 
 {
@@ -57,22 +76,17 @@ void test_v2(benchmark::State & state)
             vector[i] = size - i;
         }
 
-        auto begin = std::chrono::steady_clock::now();
+        Timer timer;
 
         std::ranges::sort(vector);
 
-        auto delta = std::chrono::steady_clock::now() - begin;
-
-        state.SetIterationTime
-        (
-            std::chrono::duration_cast < std::chrono::duration < double > > (delta).count()
-        );
+        state.SetIterationTime(timer.elapsed().count());
 
         benchmark::DoNotOptimize(vector);
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 void test_v3(benchmark::State & state) 
 {
@@ -87,22 +101,17 @@ void test_v3(benchmark::State & state)
             deque[i] = size - i;
         }
 
-        auto begin = std::chrono::steady_clock::now();
+        Timer timer;
 
         std::ranges::sort(deque);
 
-        auto delta = std::chrono::steady_clock::now() - begin;
-
-        state.SetIterationTime
-        (
-            std::chrono::duration_cast < std::chrono::duration < double > > (delta).count()
-        );
+        state.SetIterationTime(timer.elapsed().count());
 
         benchmark::DoNotOptimize(deque);
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 void test_v4(benchmark::State & state) 
 {
@@ -117,22 +126,17 @@ void test_v4(benchmark::State & state)
             element = size + 1 - ++x;
         }
 
-        auto begin = std::chrono::steady_clock::now();
+        Timer timer;
 
         list.sort();
 
-        auto delta = std::chrono::steady_clock::now() - begin;
-
-        state.SetIterationTime
-        (
-            std::chrono::duration_cast < std::chrono::duration < double > > (delta).count()
-        );
+        state.SetIterationTime(timer.elapsed().count());
 
         benchmark::DoNotOptimize(list);
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 void test_v5(benchmark::State & state) 
 {
@@ -147,22 +151,17 @@ void test_v5(benchmark::State & state)
             element = size + 1 - ++x;
         }
 
-        auto begin = std::chrono::steady_clock::now();
+        Timer timer;
 
         list.sort();
 
-        auto delta = std::chrono::steady_clock::now() - begin;
-
-        state.SetIterationTime
-        (
-            std::chrono::duration_cast < std::chrono::duration < double > > (delta).count()
-        );
+        state.SetIterationTime(timer.elapsed().count());
         
         benchmark::DoNotOptimize(list);
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test_v1);
 
@@ -174,11 +173,11 @@ BENCHMARK(test_v4);
 
 BENCHMARK(test_v5);
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 int main()
 {
     benchmark::RunSpecifiedBenchmarks();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////

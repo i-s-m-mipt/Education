@@ -94,7 +94,7 @@ void test_v1(benchmark::State & state)
 
 		for (auto i = 0uz; i < kb; ++i)
 		{
-			benchmark::DoNotOptimize(allocator.allocate(mb));
+			allocator.allocate(mb);
 		}
 	}
 }
