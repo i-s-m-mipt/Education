@@ -19,9 +19,17 @@ void test_v2() { ++g_y; } // support : compiler-explorer.com
 
 int main()
 {
-    std::jthread { test_v1 }; assert(g_x == 2);
+    { 
+        std::jthread jthread_1(test_v1);
 
-    std::jthread { test_v2 }; assert(g_y == 2);
+        std::jthread jthread_2(test_v2);
+    } 
+
+//  ------------------------------------ 
+
+    assert(g_x == 2);
+
+    assert(g_y == 2);
 }
 
 ////////////////////////////////////////////////////////////

@@ -55,17 +55,17 @@ int main()
 {
     Entity entity;
 
-//  ----------------------------------------------
+//  -----------------------------------------------
 
-    std::jthread thread_1(&Entity::test, &entity);
+    std::jthread jthread_1(&Entity::test, &entity);
 
-    std::jthread thread_2(&Entity::test, &entity);
+    std::jthread jthread_2(&Entity::test, &entity);
 
-//  ----------------------------------------------
+//  -----------------------------------------------
 
     std::this_thread::sleep_for(1s);
 
-//  ----------------------------------------------
+//  -----------------------------------------------
 
     entity.release();
 }

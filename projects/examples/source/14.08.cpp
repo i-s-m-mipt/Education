@@ -19,13 +19,13 @@ void test(int x)
 
 int main()
 {
-    std::vector < std::jthread > threads;
+    std::vector < std::jthread > jthreads;
 
 //  ----------------------------------------------------------------
 
     for (auto i = 0uz; i < std::thread::hardware_concurrency(); ++i)
     {
-        threads.emplace_back(test, i + 1);
+        jthreads.emplace_back(test, i + 1);
     }
 }
 

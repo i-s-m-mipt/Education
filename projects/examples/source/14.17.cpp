@@ -43,11 +43,11 @@ int main()
 {
     Entity entity;
 
-//  -------------------------------------------------
+//  --------------------------------------------------
 
-    std::jthread thread_1(&Entity::test_v1, &entity);
+    std::jthread jthread_1(&Entity::test_v1, &entity);
 
-    std::jthread thread_2(&Entity::test_v2, &entity);
+    std::jthread jthread_2(&Entity::test_v2, &entity);
 }
 
 ////////////////////////////////////////////////////////////////
