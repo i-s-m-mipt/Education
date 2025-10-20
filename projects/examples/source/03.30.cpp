@@ -20,22 +20,22 @@ public :
 
 //  --------------------------------------------------------------------------------
 
-	Vector(std::initializer_list < int > list) : Vector()
+	Vector(std::initializer_list < int > list) : m_size(std::size(list))
 	{
 		std::cout << "Vector:: Vector (2)\n";
 
-		m_array = (m_size = std::size(list)) ? new int[m_size]{} : nullptr;
+		m_array = m_size ? new int[m_size]{} : nullptr;
 
 		std::ranges::copy(list, m_array);
 	}
 
 //  --------------------------------------------------------------------------------
 
-	Vector(Vector const & other) : Vector() 
+	Vector(Vector const & other) : m_size(other.m_size) 
 	{
 		std::cout << "Vector:: Vector (3)\n";
 
-		m_array = (m_size = other.m_size) ? new int[m_size]{} : nullptr;
+		m_array = m_size ? new int[m_size]{} : nullptr;
 
 		std::ranges::copy(other.m_array, other.m_array + other.m_size, m_array);
 	}
