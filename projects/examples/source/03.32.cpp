@@ -130,6 +130,13 @@ private :
 
 	void reduce()
 	{
+		if (m_den < 0)
+		{
+			m_num = -m_num;
+
+			m_den = -m_den;
+		}
+
 		auto gcd = std::gcd(m_num, m_den);
 
 		m_num /= gcd;
