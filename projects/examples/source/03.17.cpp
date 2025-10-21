@@ -1,6 +1,6 @@
 /////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 #include <vector>
 
 /////////////////////////////////////////////
@@ -19,7 +19,7 @@ public :
 
 //	virtual void test_v2() const = 0 // error
 //	{
-//		std::cout << "Entity::test_v2\n";
+//		std::print("Entity::test_v2\n");
 //	}
 };
 
@@ -27,7 +27,7 @@ public :
 
 void Entity::test_v1() const
 { 
-	std::cout << "Entity::test_v1\n";
+	std::print("Entity::test_v1\n");
 }
 
 /////////////////////////////////////////////
@@ -38,7 +38,7 @@ public :
 
     void test_v1() const override 
 	{ 
-		std::cout << "Client::test_v1\n";
+		std::print("Client::test_v1\n");
 		
 		Entity::test_v1();
 	}
@@ -52,7 +52,7 @@ public :
 
     void test_v1() const override 
 	{ 
-		std::cout << "Server::test_v1\n";
+		std::print("Server::test_v1\n");
 		
 		Entity::test_v1();
 	}

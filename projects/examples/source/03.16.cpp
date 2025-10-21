@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 #include <vector>
 
 /////////////////////////////////////////////////////////////
@@ -11,18 +11,18 @@ public :
 
 // ~Entity() = default; // error
 
-//  -------------------------------------
+//  ------------------------------------
 
 	virtual ~Entity()
 	{
-		std::cout << "Entity::~Entity\n";
+		std::print("Entity::~Entity\n");
 	}
 
-//  -------------------------------------
+//  ------------------------------------
 
 	virtual void test() const
 	{ 
-		std::cout << "Entity::test\n";
+		std::print("Entity::test\n");
 	}
 };
 
@@ -34,14 +34,14 @@ public :
 
    ~Client() override
 	{
-		std::cout << "Client::~Client\n";
+		std::print("Client::~Client\n");
 	}
 
-//  -------------------------------------
+//  ------------------------------------
 
 	void test() const override final
 	{ 
-		std::cout << "Client::test\n";
+		std::print("Client::test\n");
 	}
 };
 
@@ -53,7 +53,7 @@ public:
 
    ~Server() override
 	{
-		std::cout << "Server::~Server\n";
+		std::print("Server::~Server\n");
 	}
 };
 

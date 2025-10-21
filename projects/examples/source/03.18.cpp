@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 
 ///////////////////////////////////////////////////////////
 
@@ -28,11 +28,11 @@ public :
 
 	virtual ~Entity_v2() = default;
 
-//  -------------------------------------
+//  ------------------------------------
 
 	virtual void test() const
 	{ 
-		std::cout << "Entity_v2::test\n";
+		std::print("Entity_v2::test\n");
 	}
 
 private : 
@@ -48,7 +48,7 @@ public:
 
 	void test() const override
 	{ 
-		std::cout << "Client_v2::test\n";
+		std::print("Client_v2::test\n");
 	}
 
 private : 

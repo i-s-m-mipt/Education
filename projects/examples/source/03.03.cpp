@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////
 
 #include <cassert>
-#include <iostream>
+#include <print>
 
 //////////////////////////////////////////////////
 
@@ -11,14 +11,14 @@ public :
 
 	Entity()
     {
-        std::cout << "Entity:: Entity (1)\n";
+        std::print("Entity:: Entity (1)\n");
     }
 
 //  ----------------------------------------------
 
     Entity(int x, int y) : m_x(x), m_y(y)
     {
-        std::cout << "Entity:: Entity (2)\n";
+        std::print("Entity:: Entity (2)\n");
 
     //	m_y = y; // error
     }
@@ -27,21 +27,21 @@ public :
 
 //	Entity(int x, int y) : m_y(y), m_x(x) // error
 //  {
-//      std::cout << "Entity:: Entity (3)\n";
+//      std::print("Entity:: Entity (3)\n");
 //  }
 
 //  ----------------------------------------------
 
 	Entity(int x) : Entity(x, 0)
 	{
-        std::cout << "Entity:: Entity (4)\n";
+        std::print("Entity:: Entity (4)\n");
 	}
 
 //  ----------------------------------------------
 
    ~Entity()
     {
-        std::cout << "Entity::~Entity\n";
+        std::print("Entity::~Entity\n");
     }
 
 private :

@@ -3,7 +3,7 @@
 #include <cassert>
 #include <cstddef>
 #include <initializer_list>
-#include <iostream>
+#include <print>
 #include <vector>
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -18,7 +18,7 @@ public :
 
     auto const & operator[](std::size_t index) const 
     {
-        std::cout << "Vector::operator[] (1)\n";
+        std::print("Vector::operator[] (1)\n");
 
         return m_vector[index];
     }
@@ -27,7 +27,7 @@ public :
 
     auto & operator[](std::size_t index)
     {
-        std::cout << "Vector::operator[] (2)\n";
+        std::print("Vector::operator[] (2)\n");
 
         return const_cast < int & > (static_cast < Vector const & > (*this)[index]);
     }

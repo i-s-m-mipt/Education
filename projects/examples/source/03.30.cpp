@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <cstddef>
 #include <initializer_list>
-#include <iostream>
 #include <iterator>
+#include <print>
 #include <utility>
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -15,14 +15,14 @@ public :
 
 	Vector() : m_array(nullptr), m_size(0) 
 	{
-		std::cout << "Vector:: Vector (1)\n";
+		std::print("Vector:: Vector (1)\n");
 	}
 
 //  --------------------------------------------------------------------------------
 
 	Vector(std::initializer_list < int > list) : m_size(std::size(list))
 	{
-		std::cout << "Vector:: Vector (2)\n";
+		std::print("Vector:: Vector (2)\n");
 
 		m_array = m_size ? new int[m_size]{} : nullptr;
 
@@ -33,7 +33,7 @@ public :
 
 	Vector(Vector const & other) : m_size(other.m_size) 
 	{
-		std::cout << "Vector:: Vector (3)\n";
+		std::print("Vector:: Vector (3)\n");
 
 		m_array = m_size ? new int[m_size]{} : nullptr;
 
@@ -48,14 +48,14 @@ public :
 		
 		m_size (std::exchange(other.m_size,  0      ))
 	{
-		std::cout << "Vector:: Vector (4)\n";
+		std::print("Vector:: Vector (4)\n");
 	}
 
 //  --------------------------------------------------------------------------------
 
    ~Vector()
 	{
-		std::cout << "Vector::~Vector\n";
+		std::print("Vector::~Vector\n");
 
 		delete[] m_array;
 	}
@@ -64,7 +64,7 @@ public :
 
 //	auto & operator=(Vector const & other) // error
 //	{
-//		std::cout << "Vector::operator= (1)\n";
+//		std::print("Vector::operator= (1)\n");
 //
 //		if (this != &other)
 //		{
@@ -82,7 +82,7 @@ public :
 
 //	auto & operator=(Vector const & other) // bad
 //	{
-//		std::cout << "Vector::operator= (2)\n";
+//		std::print("Vector::operator= (2)\n");
 //
 //		if (this != &other)
 //		{
@@ -102,7 +102,7 @@ public :
 
 //	auto & operator=(Vector && other) // bad
 //	{
-//		std::cout << "Vector::operator= (3)\n";
+//		std::print("Vector::operator= (3)\n");
 //
 //		if (this != &other)
 //		{
@@ -120,7 +120,7 @@ public :
 
 	auto & operator=(Vector other)
 	{
-		std::cout << "Vector::operator= (4)\n";
+		std::print("Vector::operator= (4)\n");
 
 		swap(other);
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 
 ////////////////////////////////////////////////////////////////
 
@@ -8,9 +8,9 @@ class Entity
 {
 public :
 
-	void test() const &  { std::cout << "Entity::test (1)\n"; }
+	void test() const &  { std::print("Entity::test (1)\n"); }
 
-	void test() const && { std::cout << "Entity::test (2)\n"; }
+	void test() const && { std::print("Entity::test (2)\n"); }
 };
 
 ////////////////////////////////////////////////////////////////

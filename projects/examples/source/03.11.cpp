@@ -1,8 +1,8 @@
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
 class Entity
 {
@@ -10,20 +10,20 @@ public :
 
 	Entity(int x) : m_x(x)
 	{
-		std::cout << "Entity::Entity\n";
+		std::print("Entity::Entity\n");
 	}
 
-//  ----------------------------------------------------------
+//  ---------------------------------------------------------
 
-	void test_v1() const { std::cout << "Entity::test_v1\n"; }
+	void test_v1() const { std::print("Entity::test_v1\n"); }
 
-	void test_v2() const { std::cout << "Entity::test_v2\n"; }
+	void test_v2() const { std::print("Entity::test_v2\n"); }
 
 protected :
 
     void test_v3() const 
 	{ 
-		std::cout << "Entity::test_v3\n"; 
+		std::print("Entity::test_v3\n"); 
 	}
 
 private :
@@ -31,7 +31,7 @@ private :
 	int m_x = 0;
 };
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
 class Client : public Entity
 {
@@ -39,14 +39,14 @@ public :
 
 	Client(int x, int y) : Entity(x), m_y(y)
 	{
-		std::cout << "Client::Client\n";
+		std::print("Client::Client\n");
 	}
 
 //  ----------------------------------------
 
 	void test_v2() const
 	{
-		std::cout << "Client::test_v2\n";
+		std::print("Client::test_v2\n");
 
 	//	test_v2(); // error
 
@@ -62,7 +62,7 @@ private :
 	int m_y = 0;
 };
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -97,4 +97,4 @@ int main()
 	client.test_v3();
 }
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
