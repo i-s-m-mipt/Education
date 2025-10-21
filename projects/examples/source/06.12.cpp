@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 #include <string>
 
 /////////////////////////////////////////////////
@@ -19,7 +19,7 @@ namespace library::detail
 {
 	void test(Entity)
 	{
-		std::cout << "library::detail::test\n";
+		std::print("library::detail::test\n");
 	}
 }
 
@@ -31,17 +31,17 @@ namespace library
 	{
 		void test()
 		{
-			std::cout << "library::v1::test\n";
+			std::print("library::v1::test\n");
 		}
 	}
 
-//  -------------------------------------------
+//  ------------------------------------------
 
 	namespace v2
 	{
 		void test()
 		{
-			std::cout << "library::v2::test\n";
+			std::print("library::v2::test\n");
 		}
 	}
 }
