@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////
 
-#include <iostream>
 #include <memory>
+#include <print>
 
 /////////////////////////////////////////////////////////
 
@@ -11,7 +11,7 @@ public :
 
    ~Client() 
     { 
-		std::cout << "Client::~Client\n";
+		std::print("Client::~Client\n");
 	}
 
 //  ------------------------------------------
@@ -27,7 +27,7 @@ public :
 
    ~Server() 
     { 
-		std::cout << "Server::~Server\n";
+		std::print("Server::~Server\n");
 	}
 
 //  ----------------------------------------

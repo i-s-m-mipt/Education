@@ -4,10 +4,10 @@
 #include <cstddef>
 #include <cstdint>
 #include <format>
-#include <iostream>
 #include <iterator>
 #include <memory>
 #include <new>
+#include <print>
 #include <vector>
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -71,11 +71,12 @@ public :
 
 	void show() const
 	{
-		std::cout << "Allocator::show : m_size = " << m_size << ' ';
+		std::print
+		(
+			"Allocator::show : m_size = {} m_begin = {:018} m_offset = {:0>4}\n",
 
-		std::cout << "m_begin = "  << std::format("{:018}", m_begin) << ' ';
-
-		std::cout << "m_offset = " << std::format("{:0>4}", m_offset) << '\n';
+			m_size, m_begin, m_offset
+		);
 	}
 
 private :
