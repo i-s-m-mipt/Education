@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 #include <vector>
 
 ////////////////////////////////////////////////////////////////
@@ -18,7 +18,7 @@ protected :
 
 	void test_implementation() const
 	{ 
-		std::cout << "Entity::test_implementation\n";
+		std::print("Entity::test_implementation\n");
 	}
 };
 
@@ -34,7 +34,7 @@ public :
 
 	void test_implementation() const
 	{ 
-		std::cout << "Server::test_implementation\n";
+		std::print("Server::test_implementation\n");
 	}
 };
 

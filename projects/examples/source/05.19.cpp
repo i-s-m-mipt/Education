@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 
 ////////////////////////////////////////////////////////////////////
 
@@ -32,14 +32,14 @@ public :
 
 	void test() const
 	{
-		std::cout << "Entity_v1::test\n";
+		std::print("Entity_v1::test\n");
 	}
 
 private :
 
     friend Singleton < Entity_v1 > ;
 
-//  -------------------------------------
+//  ------------------------------------
 	
 	Entity_v1() = default;
 };
@@ -52,14 +52,14 @@ public :
 
 	void test() const
 	{
-		std::cout << "Entity_v2::test\n";
+		std::print("Entity_v2::test\n");
 	}
 
 private :
 
 	friend Singleton < Entity_v2 > ;
 
-//  -------------------------------------
+//  ------------------------------------
 
 	Entity_v2() = default;
 };
