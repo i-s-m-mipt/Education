@@ -468,7 +468,7 @@ add_executable             (07.14 source/07.14.cpp)
 
 target_compile_options     (07.14 PRIVATE -Wall -Wextra -Wpedantic -O0 -ggdb)
 
-target_link_libraries      (07.14 PRIVATE -lstdc++_libbacktrace)
+target_link_libraries      (07.14 PRIVATE -lstdc++exp)
 
 #############################################################################################
 
