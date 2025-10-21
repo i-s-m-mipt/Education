@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 #include <stdexcept>
 #include <type_traits>
 #include <utility>
@@ -52,7 +52,7 @@ private :
 	{ 
 		try
 		{
-			std::cout << "Entity::uninitialize\n";
+			std::print("Entity::uninitialize\n");
 		}
 		catch (...) {}
 	}
@@ -66,7 +66,7 @@ private :
 
 void test_v1()
 {
-	std::cout << "test_v1\n";
+	std::print("test_v1\n");
 }
 
 //////////////////////////////////////////////////////////////

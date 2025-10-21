@@ -1,11 +1,12 @@
-//////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
+#include <cstdio>
 #include <exception>
-#include <iostream>
+#include <print>
 #include <stdexcept>
 #include <vector>
 
-//////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
 class Exception : public std::exception
 {
@@ -25,11 +26,11 @@ private :
 	int m_x = 0;
 };
 
-//////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
 [[noreturn]] void test_v1()
 {
-	std::cout << "test_v1\n";
+	std::print("test_v1\n");
 
 //	auto x = new auto(1); // error
 
@@ -41,14 +42,14 @@ private :
 
 //	delete x; // error
 	
-	std::cout << "test_v1\n";
+	std::print("test_v1\n");
 }
 
-//////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
 void test_v2()
 {
-	std::cout << "test_v2\n";
+	std::print("test_v2\n");
 
 	try
 	{
@@ -56,21 +57,21 @@ void test_v2()
 	}
 	catch (Exception const & exception)
 	{
-		std::cerr << "test_v2 : " << exception.what() << '\n';
+		std::print(stderr, "test_v2 : {}\n", exception.what());
 
 	//	throw exception; // error
 
 		throw;
 	}
 
-	std::cout << "test_v2\n";
+	std::print("test_v2\n");
 }
 
-//////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
 void test_v3()
 {
-	std::cout << "test_v3\n";
+	std::print("test_v3\n");
 
 	try
 	{
@@ -78,15 +79,15 @@ void test_v3()
 	}
 	catch (std::exception const & exception)
 	{
-		std::cerr << "test_v3 : " << exception.what() << '\n';
+		std::print(stderr, "test_v3 : {}\n", exception.what());
 
 		throw std::runtime_error("error");
 	}
 
-	std::cout << "test_v3\n";
+	std::print("test_v3\n");
 }
 
-//////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -96,16 +97,16 @@ int main()
 	}
 	catch (std::exception const & exception)
 	{
-		std::cerr << "main : " << exception.what() << '\n';
+		std::print(stderr, "main : {}\n", exception.what());
 	}
 	catch (...)
 	{
-		std::cerr << "main : unknown exception\n";
+		std::print(stderr, "main : unknown exception\n");
 
-	//  ------------------------------------------
+	//  -------------------------------------------------
 
 		auto exception = std::current_exception();
 	}
 }
 
-//////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////

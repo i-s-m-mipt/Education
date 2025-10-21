@@ -2,8 +2,8 @@
 
 #include <algorithm>
 #include <format>
-#include <iostream>
 #include <iterator>
+#include <print>
 #include <random>
 #include <string>
 #include <type_traits>
@@ -26,9 +26,9 @@
 
 BOOST_AUTO_TEST_CASE(Test_v1)
 {
-    std::cout << "Test_v1\n"; BOOST_TEST(std::max(1, 2) == 1);
+    std::print("Test_v1\n"); BOOST_TEST(std::max(1, 2) == 1);
 
-    std::cout << "Test_v1\n"; BOOST_TEST(std::max(1, 2) == 2);
+    std::print("Test_v1\n"); BOOST_TEST(std::max(1, 2) == 2);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ BOOST_DATA_TEST_CASE
     x, y
 )
 {
-    std::cout << "Test_v3 : x = " << x << " y = " << y << '\n';
+    std::print("Test_v4 : x = {} y = {}\n", x, y);
 
     BOOST_TEST(x > 0); BOOST_TEST(x < 3);
 
@@ -81,7 +81,7 @@ BOOST_DATA_TEST_CASE
     i, x
 )
 {
-    std::cout << "Test_v4 : i = " << i << " x = " << std::format("{:.3f}", x) << '\n';
+    std::print("Test_v5 : i = {} x = {:.3f}\n", i, x);
 
     BOOST_TEST(x > 0.5);
 }
@@ -101,38 +101,38 @@ public :
     //  ------------------------------------------------------------------
 
         auto const operator++(int) 
-        { 
+        {
             auto x = *this;
-            
+
             m_x += m_y;
-            
+
             std::swap(m_x, m_y);
-            
+
             return x;
         }
 
     //  ------------------------------------------------------------------
 
         auto & operator++() 
-        { 
+        {
             m_x += m_y;
-            
+
             std::swap(m_x, m_y);
-            
+
             return *this;
         }
-        
+
     //  ------------------------------------------------------------------
 
         auto operator*() const
-        { 
+        {
             return m_y;
         }
 
     //  ------------------------------------------------------------------
 
 		friend auto operator==(iterator const & lhs, iterator const & rhs)
-		{ 
+		{
 			return lhs.m_x == rhs.m_x && lhs.m_y == rhs.m_y;
 		}
 

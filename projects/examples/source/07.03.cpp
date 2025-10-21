@@ -4,7 +4,7 @@
 #include <cerrno>
 #include <cmath>
 #include <cstring>
-#include <iostream>
+#include <print>
 #include <tuple>
 
 ////////////////////////////////////////////////////////
@@ -40,7 +40,7 @@ int main()
 
 //  ----------------------------------------------------
 
-    std::cout << "main : string = " << string << '\n';
+    std::print("main : string = {}\n", string);
 }
 
 ////////////////////////////////////////////////////////
