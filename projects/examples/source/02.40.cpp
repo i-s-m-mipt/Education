@@ -22,7 +22,7 @@ void show(int * array, std::size_t size)
 
 	for (auto i = 0uz; i < size; ++i)
 	{
-		std::print("{}, ", array[i]);
+		std::print("{} ", array[i]);
 	}
 
 	std::print("}}\n"); 
@@ -36,7 +36,7 @@ void show(std::span < int const > span)
 
 	for (auto i = 0uz; i < std::size(span); ++i)
 	{
-		std::print("{}, ", span[i]);
+		std::print("{} ", span[i]);
 	}
 
 	std::print("}}\n");
@@ -50,7 +50,7 @@ void show(std::string const & string)
 
 	for (auto i = 0uz; i < std::size(string); ++i)
 	{
-		std::print("{}, ", string[i]);
+		std::print("{} ", string[i]);
 	}
 
 	std::print("}}\n");
@@ -64,7 +64,7 @@ void show(std::vector < int > const & vector)
 
 	for (auto i = 0uz; i < std::size(vector); ++i)
 	{
-		std::print("{}, ", vector[i]);
+		std::print("{} ", vector[i]);
 	}
 
 	std::print("}}\n"); 
