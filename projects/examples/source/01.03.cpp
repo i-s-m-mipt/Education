@@ -8,6 +8,7 @@
 #include <cmath>
 #include <iostream>
 #include <numbers>
+#include <print>
 #include <string>
 #include <vector>
 
@@ -23,11 +24,11 @@ int main()
 
 //  ----------------------------------------------------
 
-	std::cout << "main : enter int x : "; std::cin >> x;
+	std::print("main : enter int x : "); std::cin >> x;
 
 //  ----------------------------------------------------
 
-	std::cout << "main : x = " << x << '\n';
+	std::print("main : x = {}\n", x);
 
 //  ----------------------------------------------------
 	
