@@ -1,14 +1,14 @@
 //////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 
 //////////////////////////////////////////////////////////////////
 
 template < typename T, typename ... Ts > void test(T x, Ts ... ys)
 {
-	std::cout << "test : x = " << x << ' ';
+	std::print("test : x = {} ", x);
 	
-	std::cout << "sizeof...(ys) = " << sizeof...(ys) << '\n';
+	std::print("sizeof...(ys) = {}\n", sizeof...(ys));
 
 	if constexpr (sizeof...(ys) > 0) 
 	{

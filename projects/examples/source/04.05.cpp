@@ -1,21 +1,21 @@
 /////////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 
 /////////////////////////////////////////////////////////////////////
 
 void test_v1() 
 {
-	std::cout << "test_v1\n";
+	std::print("test_v1\n");
 }
 
 /////////////////////////////////////////////////////////////////////
 
 template < typename T, typename ... Ts > void test_v1(T x, Ts ... ys)
 {
-	std::cout << "test_v1 : x = " << x << ' ';
+	std::print("test_v1 : x = {} ", x);
 	
-	std::cout << "sizeof...(ys) = " << sizeof...(ys) << '\n';
+	std::print("sizeof...(ys) = {}\n", sizeof...(ys));
 	
 	test_v1(ys...); // support : cppinsights.io
 }
@@ -24,7 +24,7 @@ template < typename T, typename ... Ts > void test_v1(T x, Ts ... ys)
 
 template < typename T > void test_v2(T x)
 {
-	std::cout << "test_v2 : x = " << x << ' ';
+	std::print("test_v2 : x = {} ", x);
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -33,13 +33,13 @@ template < typename T, typename ... Ts > void test_v2(T x, Ts ... ys)
 {
 	test_v2(x);
 
-	std::cout << "sizeof...(ys) = " << sizeof...(ys) << '\n';
+	std::print("sizeof...(ys) = {}\n", sizeof...(ys));
 
 	test_v2(ys...);
 
 	if (sizeof...(ys) == 1)
 	{
-		std::cout << "sizeof...(ys) = 0\n";
+		std::print("sizeof...(ys) = 0\n");
 	}
 }
 

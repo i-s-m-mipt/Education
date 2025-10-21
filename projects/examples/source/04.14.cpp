@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <concepts>
-#include <iostream>
+#include <print>
 #include <string>
 #include <type_traits>
 #include <utility>
@@ -18,28 +18,28 @@ public :
 	
 	Entity_v1(std::string const & string) : m_string(string) 
 	{
-		std::cout << "Entity_v1::Entity_v1 (1)\n";
+		std::print("Entity_v1::Entity_v1 (1)\n");
 	}
 
 //  -------------------------------------------------------------------
 
 	Entity_v1(std::string && string) : m_string(std::move(string)) 
 	{
-		std::cout << "Entity_v1::Entity_v1 (2)\n";
+		std::print("Entity_v1::Entity_v1 (2)\n");
 	}
 
 //  -------------------------------------------------------------------
 	
 	Entity_v1(Entity_v1 const & other) : m_string(other.m_string) 
 	{
-		std::cout << "Entity_v1::Entity_v1 (3)\n";
+		std::print("Entity_v1::Entity_v1 (3)\n");
 	}
 
 //  -------------------------------------------------------------------
 
 	Entity_v1(Entity_v1 && other) : m_string(std::move(other.m_string)) 
 	{
-		std::cout << "Entity_v1::Entity_v1 (4)\n";
+		std::print("Entity_v1::Entity_v1 (4)\n");
 	}
 
 private :
@@ -55,21 +55,21 @@ public :
 	
     template < typename S > Entity_v2(S && string) : m_string(std::forward < S > (string))
 	{
-		std::cout << "Entity_v2::Entity_v2 (1)\n";
+		std::print("Entity_v2::Entity_v2 (1)\n");
 	}
 
 //  --------------------------------------------------------------------------------------
 	
 	Entity_v2(Entity_v2 const & other) : m_string(other.m_string) 
 	{
-		std::cout << "Entity_v2::Entity_v2 (2)\n";
+		std::print("Entity_v2::Entity_v2 (2)\n");
 	}
 
 //  --------------------------------------------------------------------------------------
 
 	Entity_v2(Entity_v2 && other) : m_string(std::move(other.m_string)) 
 	{
-		std::cout << "Entity_v2::Entity_v2 (3)\n";
+		std::print("Entity_v2::Entity_v2 (3)\n");
 	}
 
 private :
@@ -92,21 +92,21 @@ public :
 	>
 	Entity_v3(S && string) : m_string(std::forward < S > (string))
 	{
-		std::cout << "Entity_v3::Entity_v3 (1)\n";
+		std::print("Entity_v3::Entity_v3 (1)\n");
 	}
 
 //  -------------------------------------------------------------------
 	
 	Entity_v3(Entity_v3 const & other) : m_string(other.m_string) 
 	{
-		std::cout << "Entity_v3::Entity_v3 (2)\n";
+		std::print("Entity_v3::Entity_v3 (2)\n");
 	}
 
 //  -------------------------------------------------------------------
 
 	Entity_v3(Entity_v3 && other) : m_string(std::move(other.m_string)) 
 	{
-		std::cout << "Entity_v3::Entity_v3 (3)\n";
+		std::print("Entity_v3::Entity_v3 (3)\n");
 	}
 
 private :
@@ -124,21 +124,21 @@ public :
 	: 
 		m_string(std::forward < S > (string))
 	{
-		std::cout << "Entity_v4::Entity_v4 (1)\n";
+		std::print("Entity_v4::Entity_v4 (1)\n");
 	}
 
 //  ----------------------------------------------------------------------------------------------
 	
 	Entity_v4(Entity_v4 const & other) : m_string(other.m_string) 
 	{
-		std::cout << "Entity_v4::Entity_v4 (2)\n";
+		std::print("Entity_v4::Entity_v4 (2)\n");
 	}
 
 //  ----------------------------------------------------------------------------------------------
 
 	Entity_v4(Entity_v4 && other) : m_string(std::move(other.m_string)) 
 	{
-		std::cout << "Entity_v4::Entity_v4 (3)\n";
+		std::print("Entity_v4::Entity_v4 (3)\n");
 	}
 
 private :

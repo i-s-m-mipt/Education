@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 
 //////////////////////////////////////////////////
 
@@ -10,7 +10,7 @@ public :
 
 	void test() const
 	{ 
-		std::cout << "Entity::test (1)\n";
+		std::print("Entity::test (1)\n");
 	}
 };
 
@@ -22,7 +22,7 @@ public :
 
 	void test() const 
 	{ 
-		std::cout << "Entity::test (2)\n";
+		std::print("Entity::test (2)\n");
 	}
 };
 
@@ -34,7 +34,7 @@ public :
 
 	void test() const 
 	{ 
-		std::cout << "Entity::test (3)\n";
+		std::print("Entity::test (3)\n");
 	}
 };
 
@@ -46,7 +46,7 @@ public :
 
 	void test() const 
 	{ 
-		std::cout << "Entity::test (4)\n";
+		std::print("Entity::test (4)\n");
 	}
 };
 
