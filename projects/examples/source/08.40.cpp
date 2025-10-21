@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////
 
 #include <chrono>
-#include <iostream>
+#include <print>
 
 //////////////////////////////////////////////////////////
 
@@ -19,13 +19,13 @@ int main()
 
 //  ------------------------------------------------------
 
-	std::cout << "main : now_1 = " << now_1 << '\n';
+	std::print("main : now_1 = {}\n", now_1);
 
-	std::cout << "main : now_2 = " << now_2 << '\n';
+	std::print("main : now_2 = {}\n", now_2);
 
-	std::cout << "main : now_3 = " << now_3 << '\n';
+	std::print("main : now_3 = {}\n", now_3);
 
-	std::cout << "main : now_4 = " << now_4 << '\n';
+	std::print("main : now_4 = {}\n", now_4);
 }
 
 //////////////////////////////////////////////////////////
