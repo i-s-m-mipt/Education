@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////
 
-#include <iostream>
 #include <memory>
+#include <print>
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -43,7 +43,7 @@ public :
 
     void test() const override 
     { 
-        std::cout << "Client::test\n";
+        std::print("Client::test\n");
     }
 
 //  ---------------------------------------------------
@@ -62,7 +62,7 @@ public :
 
     void test() const override 
     { 
-        std::cout << "Server::test\n";
+        std::print("Server::test\n");
     }
 
 //  ---------------------------------------------------
@@ -81,7 +81,7 @@ public :
 
     void visit(Client const * client) const override 
     { 
-        std::cout << "Router::visit (1)\n";
+        std::print("Router::visit (1)\n");
 
         client->test();
     }
@@ -90,7 +90,7 @@ public :
 
     void visit(Server const * server) const override 
     {
-        std::cout << "Router::visit (2)\n";
+        std::print("Router::visit (2)\n");
 
         server->test();
     }

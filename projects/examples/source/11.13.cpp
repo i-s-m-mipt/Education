@@ -2,8 +2,8 @@
 
 #include <any>
 #include <functional>
-#include <iostream>
 #include <iterator>
+#include <print>
 #include <string>
 #include <typeindex>
 #include <unordered_map>
@@ -22,7 +22,7 @@ public :
 
     void operator()(std::any const & any) const
     {
-        std::cout << "Visitor::operator() : any = " << std::any_cast < T > (any) << '\n';
+        std::print("Visitor::operator() : any = {}\n", std::any_cast < T > (any));
     }
 };
 

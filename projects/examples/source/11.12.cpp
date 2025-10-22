@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 #include <variant>
 
 ///////////////////////////////////////////////////////////////////
@@ -11,7 +11,7 @@ public :
 
     void test() const 
     { 
-        std::cout << "Client::test\n"; 
+        std::print("Client::test\n"); 
     } 
 };
 
@@ -23,7 +23,7 @@ public :
 
     void test() const 
     { 
-        std::cout << "Server::test\n"; 
+        std::print("Server::test\n"); 
     } 
 };
 
