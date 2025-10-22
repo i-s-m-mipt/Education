@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#include <print>
+#include <iostream>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -20,7 +20,7 @@ public :
 
     template < typename V, typename G > auto initialize_vertex(V vertex, G const & graph)
     {
-        std::print("Visitor::initialize_vertex : vertex = {}\n", vertex);
+        std::cout << "Visitor::initialize_vertex : vertex = " << vertex << '\n';
 
         return boost::default_bfs_visitor::initialize_vertex(vertex, graph);
     }
@@ -29,7 +29,7 @@ public :
 
     template < typename V, typename G > auto discover_vertex(V vertex, G const & graph)
     {
-        std::print("Visitor::discover_vertex : vertex = {}\n", vertex);
+        std::cout << "Visitor::discover_vertex : vertex = " << vertex << '\n';
 
         return boost::default_bfs_visitor::discover_vertex(vertex, graph);
     }
@@ -38,7 +38,7 @@ public :
 
     template < typename V, typename G > auto examine_vertex(V vertex, G const & graph)
     {
-        std::print("Visitor::examine_vertex : vertex = {}\n", vertex);
+        std::cout << "Visitor::examine_vertex : vertex = " << vertex << '\n';
 
         return boost::default_bfs_visitor::examine_vertex(vertex, graph);
     }
@@ -47,7 +47,7 @@ public :
 
     template < typename V, typename G > auto finish_vertex(V vertex, G const & graph)
     {
-        std::print("Visitor::finish_vertex : vertex = {}\n", vertex);
+        std::cout << "Visitor::finish_vertex : vertex = " << vertex << '\n';
 
         return boost::default_bfs_visitor::finish_vertex(vertex, graph);
     }
@@ -56,7 +56,7 @@ public :
 
     template < typename E, typename G > auto examine_edge(E edge, G const & graph)
     {
-        std::print("Visitor::examine_edge : edge = {}\n", edge);
+        std::cout << "Visitor::examine_edge : edge = " << edge << '\n';
 
         return boost::default_bfs_visitor::examine_edge(edge, graph);
     }
@@ -65,7 +65,7 @@ public :
 
     template < typename E, typename G > auto tree_edge(E edge, G const & graph)
     {
-        std::print("Visitor::tree_edge : edge = {}\n", edge);
+        std::cout << "Visitor::tree_edge : edge = " << edge << '\n';
 
         return boost::default_bfs_visitor::tree_edge(edge, graph);
     }
@@ -74,16 +74,16 @@ public :
 
     template < typename E, typename G > auto non_tree_edge(E edge, G const & graph)
     {
-        std::print("Visitor::non_tree_edge : edge = {}\n", edge);
+        std::cout << "Visitor::non_tree_edge : edge = " << edge << '\n';
 
         return boost::default_bfs_visitor::non_tree_edge(edge, graph);
     }
-
+    
 //  -------------------------------------------------------------------------------------
 
     template < typename E, typename G > auto gray_target(E edge, G const & graph)
     {
-        std::print("Visitor::gray_target : edge = {}\n", edge);
+        std::cout << "Visitor::gray_target : edge = " << edge << '\n';
 
         return boost::default_bfs_visitor::gray_target(edge, graph);
     }
@@ -92,7 +92,7 @@ public :
 
     template < typename E, typename G > auto black_target(E edge, G const & graph)
     {
-        std::print("Visitor::black_target : edge = {}\n", edge);
+        std::cout << "Visitor::black_target : edge = " << edge << '\n';
 
         return boost::default_bfs_visitor::black_target(edge, graph);
     }
