@@ -72,7 +72,7 @@ g++    -std=c++23 -Wall -Wextra -Wpedantic -O0 $files -ltbb -o 06.08
 
 files="../source/06.16.cpp 06.13.o 06.14.o 06.15.o"
 
-g++ -c -std=c++23 -fmodules-ts -Wall -Wextra -Wpedantic -O0 -xc++-system-header iostream
+g++ -c -std=c++23 -fmodules-ts -Wall -Wextra -Wpedantic -O0 -xc++-system-header print
 
 g++ -c -std=c++23 -fmodules-ts -Wall -Wextra -Wpedantic -O0 ../source/06.15.cxx
 
