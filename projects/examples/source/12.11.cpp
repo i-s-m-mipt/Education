@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 #include <string>
 #include <string_view>
 #include <type_traits>
@@ -13,7 +13,7 @@ using namespace std::literals;
 
 void test(std::string_view view) 
 {
-    std::cout << "test : view = " << view << '\n';
+    std::print("test : view = {}\n", view);
 }
 
 //////////////////////////////////////////////////////////////////////////

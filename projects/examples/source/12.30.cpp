@@ -3,6 +3,7 @@
 #include <iostream>
 #include <istream>
 #include <iterator>
+#include <print>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -179,17 +180,17 @@ int main()
 {
     std::string string;
 
-//  ---------------------------------------------------------------------------
+//  --------------------------------------------------------------
 
-    std::cout << "main : enter std::string string(s) : \n";
+    std::print("main : enter std::string string(s) : \n");
 
-//  ---------------------------------------------------------------------------
+//  --------------------------------------------------------------
 		
 	while (std::getline(std::cin >> std::ws, string))
 	{
         if (string.front() != ';')
         {
-            std::cout << "main : " << string << " = " << parse(string) << '\n';
+            std::print("main : {} = {}\n", string, parse(string));
         }
 		else
         {
