@@ -4,7 +4,7 @@
 
 ////////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 #include <thread>
 #include <vector>
 
@@ -12,7 +12,7 @@
 
 void test(int x)
 {
-    std::cout << "test : x = " << x << '\n';
+    std::print("test : x = {}\n", x);
 }
 
 ////////////////////////////////////////////////////////////////////

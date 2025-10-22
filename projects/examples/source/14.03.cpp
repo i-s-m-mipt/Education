@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <chrono>
-#include <iostream>
+#include <print>
 #include <thread>
 
 //////////////////////////////////////
@@ -13,7 +13,7 @@ using namespace std::literals;
 
 void test_v1()
 {
-    std::cout << "test\n";
+    std::print("test\n");
 }
 
 //////////////////////////////////////
