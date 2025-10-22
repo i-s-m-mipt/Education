@@ -30,7 +30,7 @@ int main()
         auto x = 0;
 
     //  --------------------
-        
+
         while (stream >> x);
     }
     catch (std::ios_base::failure const & exception)
@@ -44,7 +44,7 @@ int main()
         assert(stream.good());
 
     //  ---------------------------------------------------
-        
+
         assert(stream.get() == 'a');
     }
 

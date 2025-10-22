@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iterator>
 #include <fstream>
+#include <print>
 #include <sstream>
 #include <string>
 
@@ -76,15 +77,15 @@ int main()
 
 	auto path_2 = "output.cpp";
 
-//  ----------------------------------------------------
+//  ---------------------------------------------------
 
     transform(path_1, path_2);
 
-//  ----------------------------------------------------
+//  ---------------------------------------------------
 
-    std::cout << "main : enter char : "; std::cin.get();
+    std::print("main : enter char : "); std::cin.get();
 
-//  ----------------------------------------------------
+//  ---------------------------------------------------
 
     std::filesystem::remove(path_2);
 }

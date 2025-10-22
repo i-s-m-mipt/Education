@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <filesystem>
 #include <iostream>
+#include <print>
 #include <string>
 #include <tuple>
 
@@ -57,13 +58,13 @@ int main()
 
 //  -----------------------------------------------------------
 
-	std::cout << "main : path_2 = " << path_2 << '\n';
+	std::print("main : path_2 = {}\n", path_2.string());
 
-	std::cout << "main : path_3 = " << path_3 << '\n';
+	std::print("main : path_3 = {}\n", path_3.string());
 
-	std::cout << "main : path_4 = " << path_4 << '\n';
+	std::print("main : path_4 = {}\n", path_4.string());
 
-	std::cout << "main : path_5 = " << path_5 << '\n';
+	std::print("main : path_5 = {}\n", path_5.string());
 }
 
 ///////////////////////////////////////////////////////////////
