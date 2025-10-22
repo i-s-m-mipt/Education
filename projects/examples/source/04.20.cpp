@@ -4,15 +4,15 @@
 
 //////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > void test(T x, Ts ... ys)
+template < typename T, typename ... Ts > void show(T x, Ts ... ys)
 {
-	std::print("test : x = {} ", x);
+	std::print("show : x = {} ", x);
 	
 	std::print("sizeof...(ys) = {}\n", sizeof...(ys));
 
 	if constexpr (sizeof...(ys) > 0) 
 	{
-		test(ys...);
+		show(ys...);
 	}
 }
 
@@ -20,7 +20,7 @@ template < typename T, typename ... Ts > void test(T x, Ts ... ys)
 
 int main()
 {
-	test(1, 2, 3);
+	show(1, 2.0, "aaaaa");
 }
 
 //////////////////////////////////////////////////////////////////

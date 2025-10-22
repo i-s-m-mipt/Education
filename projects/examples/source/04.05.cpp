@@ -4,38 +4,38 @@
 
 /////////////////////////////////////////////////////////////////////
 
-void test_v1() 
+void show_v1() 
 {
-	std::print("test_v1\n");
+	std::print("show_v1\n");
 }
 
 /////////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > void test_v1(T x, Ts ... ys)
+template < typename T, typename ... Ts > void show_v1(T x, Ts ... ys)
 {
-	std::print("test_v1 : x = {} ", x);
+	std::print("show_v1 : x = {} ", x);
 	
 	std::print("sizeof...(ys) = {}\n", sizeof...(ys));
 	
-	test_v1(ys...); // support : cppinsights.io
+	show_v1(ys...); // support : cppinsights.io
 }
 
 /////////////////////////////////////////////////////////////////////
 
-template < typename T > void test_v2(T x)
+template < typename T > void show_v2(T x)
 {
-	std::print("test_v2 : x = {} ", x);
+	std::print("show_v2 : x = {} ", x);
 }
 
 /////////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > void test_v2(T x, Ts ... ys)
+template < typename T, typename ... Ts > void show_v2(T x, Ts ... ys)
 {
-	test_v2(x);
+	show_v2(x);
 
 	std::print("sizeof...(ys) = {}\n", sizeof...(ys));
 
-	test_v2(ys...);
+	show_v2(ys...);
 
 	if (sizeof...(ys) == 1)
 	{
@@ -45,9 +45,9 @@ template < typename T, typename ... Ts > void test_v2(T x, Ts ... ys)
 
 /////////////////////////////////////////////////////////////////////
 
-template < typename ... Ts > void test_v3(Ts ... xs) 
+template < typename ... Ts > void transform(Ts ... xs) 
 { 
-	test_v1(xs + xs...); // support : cppinsights.io
+	show_v1(xs * xs...); // support : cppinsights.io
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -68,11 +68,13 @@ template < typename ... Ts > auto make_entity(Ts ... xs)
 
 int main()
 {
-	test_v1(1, 2, 3);
+	show_v1(1, 2.0, "aaaaa");
 		
-	test_v2(1, 2, 3);
+	show_v2(1, 2.0, "aaaaa");
 
-	test_v3(1, 2, 3);
+//  -------------------------
+
+	transform(1, 2, 3);
 
 //  -------------------------
 
