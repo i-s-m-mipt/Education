@@ -31,7 +31,7 @@ template < typename ... Ts > auto test(Ts ... xs)
 
 int main()
 {
-    assert(test(1, 2, 3) == "1 2 3 ");
+    assert(test(1, 2.0, "aaaaa") == "1 2 aaaaa ");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
