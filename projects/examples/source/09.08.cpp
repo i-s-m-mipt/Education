@@ -58,10 +58,7 @@ private :
 
     void clear() override
     {
-        if (m_x)
-        {
-            delete m_x;
-        }
+        delete m_x;
             
         delete this;
     }

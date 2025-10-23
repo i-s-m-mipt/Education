@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 
 ////////////////////////////////////////////////////////////////////
 
@@ -39,21 +39,21 @@ public :
 
 //  Unique_v2(Unique_v2 const & other) : Noncopyable(other) // error
 //  {
-//      std::cout << "Unique_v2::Unique_v2 (1)\n";
+//      std::print("Unique_v2::Unique_v2 (1)\n");
 //  }
 
 //  ----------------------------------------------------------------
 
     Unique_v2(Unique_v2 const &) : Noncopyable()
     {
-        std::cout << "Unique_v2::Unique_v2 (2)\n";
+        std::print("Unique_v2::Unique_v2 (2)\n");
     }
 
 //  ----------------------------------------------------------------
 
     auto & operator=([[maybe_unused]] Unique_v2 const & other)
     {
-        std::cout << "Unique_v2::operator=\n";
+        std::print("Unique_v2::operator=\n");
 
     //  Noncopyable::operator=(other); // error
 

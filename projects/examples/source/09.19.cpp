@@ -21,43 +21,32 @@ struct alignas(8) Entity_v4 { std::int8_t x = 0; };
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void test_v1(benchmark::State & state)
+void test(benchmark::State & state)
 {
-	std::vector < Entity_v3 > entities(1'000'000);
+	auto size = 1'000'000uz;
+
+	std::vector < Entity_v3 > entities_v3(size);
+
+	std::vector < Entity_v4 > entities_v4(size);
 	
     for (auto element : state)
     {
-		for (auto i = 0uz; i < std::size(entities); ++i) 
-		{
-			entities[i].x = 1;
-		}
+		for (auto i = 0uz; i < size; ++i)
+        {
+            if (state.range(0) == 1) { entities_v3[i].x = 1; }
 
-		benchmark::DoNotOptimize(entities);
+            if (state.range(0) == 2) { entities_v4[i].x = 1; }
+        }
+
+        benchmark::DoNotOptimize(entities_v3);
+
+        benchmark::DoNotOptimize(entities_v4);
     }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void test_v2(benchmark::State & state)
-{
-	std::vector < Entity_v4 > entities(1'000'000);
-	
-    for (auto element : state)
-    {
-		for (auto i = 0uz; i < std::size(entities); ++i) 
-		{
-			entities[i].x = 1;
-		}
-
-		benchmark::DoNotOptimize(entities);
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-BENCHMARK(test_v1);
-
-BENCHMARK(test_v2);
+BENCHMARK(test)->Arg(1)->Arg(2);
 
 ////////////////////////////////////////////////////////////////////////////////
 

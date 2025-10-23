@@ -61,9 +61,9 @@ void test()
 
 int main()
 {
-    std::jthread thread_1(test);
+    std::jthread jthread_1(test);
 
-    std::jthread thread_2(test);
+    std::jthread jthread_2(test);
 }
 
 /////////////////////////////////////////////////////////////

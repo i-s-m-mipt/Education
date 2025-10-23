@@ -128,7 +128,7 @@ private :
 
 		auto timestamp = boost::log::expressions::format_date_time < boost::posix_time::ptime >
 		(
-			"time", "%Y %B %d %H:%M:%S.%f"
+			"time", "%Y %B %d %H:%M:%S.%f %Z"
 		);
 
 		(boost::log::expressions::stream << " | " << timestamp)(record, stream);

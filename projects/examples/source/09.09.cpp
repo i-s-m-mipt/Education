@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////
 
-#include <iostream>
 #include <memory>
+#include <print>
 #include <utility>
 
 ///////////////////////////////////////////////////////////////////////
@@ -12,11 +12,11 @@ public :
 
 	virtual ~Entity() = default;
 
-//  ----------------------------------
+//  ---------------------------------
 
 	virtual void test() const
 	{ 
-		std::cout << "Entity::test\n";
+		std::print("Entity::test\n");
 	}
 };
 
@@ -28,7 +28,7 @@ public :
 
 	void test() const override 
 	{ 
-		std::cout << "Client::test\n";
+		std::print("Client::test\n");
 	}
 };
 

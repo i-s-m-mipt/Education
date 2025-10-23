@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 
 /////////////////////////////////////////////////////
 
@@ -10,7 +10,7 @@ public :
 
 	void test() const
 	{ 
-		std::cout << "Client::test\n";
+		std::print("Client::test\n");
 	} 
 };
 

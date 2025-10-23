@@ -3,6 +3,7 @@
 #include <cassert>
 #include <limits>
 #include <type_traits>
+#include <utility>
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -25,6 +26,14 @@ int main()
 	assert(std::numeric_limits < unsigned int > ::max() == 4'294'967'295);
 
 	assert(std::numeric_limits < unsigned int > ::min() == 0);
+
+//  ----------------------------------------------------------------------
+
+#pragma GCC diagnostic ignored "-Wsign-compare"
+
+//  ----------------------------------------------------------------------
+
+    assert(-1 > 1u && std::cmp_less(-1, 1u) && std::cmp_equal(1, 1u));
 }
 
 //////////////////////////////////////////////////////////////////////////

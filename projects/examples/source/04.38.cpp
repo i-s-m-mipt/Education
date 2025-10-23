@@ -1,27 +1,27 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <concepts>
-#include <iostream>
+#include <print>
 
 //////////////////////////////////////////////////////////////////////
 
 template < typename T > void test_v1(T x) requires std::integral < T >
 {
-	std::cout << "test_v1 : x = " << x << '\n';
+	std::print("test_v1 : x = {}\n", x);
 }
 
 //////////////////////////////////////////////////////////////////////
 
 template < std::integral T > void test_v2(T x)
 {
-	std::cout << "test_v2 : x = " << x << '\n';
+	std::print("test_v2 : x = {}\n", x);
 }
 
 //////////////////////////////////////////////////////////////////////
 
 void test_v3(std::integral auto x)
 {
-	std::cout << "test_v3 : x = " << x << '\n';
+	std::print("test_v3 : x = {}\n", x);
 }
 
 //////////////////////////////////////////////////////////////////////

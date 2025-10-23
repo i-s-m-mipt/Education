@@ -19,7 +19,7 @@ auto equal(double x, double y, double epsilon = 1e-6)
 
 int main()
 {
-    boost::rational < int > x = 1, y = 2;
+    boost::rational < int > x = 1, y(2, 1);
 
 //  ------------------------------------------------------
 

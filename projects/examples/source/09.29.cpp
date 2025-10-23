@@ -2,9 +2,9 @@
 
 #include <cstddef>
 #include <format>
-#include <iostream>
 #include <memory>
 #include <new>
+#include <print>
 #include <vector>
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -30,10 +30,7 @@ public :
 
    ~Allocator()
 	{
-		if (m_begin)
-		{
-			operator delete(m_begin, m_size, std::align_val_t(s_alignment));
-		}
+		operator delete(m_begin, m_size, std::align_val_t(s_alignment));
 	}
 
 //  ------------------------------------------------------------------------------
@@ -60,11 +57,12 @@ public :
 
 	void show() const
 	{
-		std::cout << "Allocator::show : m_size = " << m_size << ' ';
+		std::print
+		(
+			"Allocator::show : m_size = {} m_begin = {:018} m_offset = {:0>4}\n",
 
-		std::cout << "m_begin = "  << std::format("{:018}", m_begin) << ' ';
-
-		std::cout << "m_offset = " << std::format("{:0>4}", m_offset) << '\n';
+			m_size, m_begin, m_offset
+		);
 	}
 
 private :
@@ -97,7 +95,7 @@ void test_v1(benchmark::State & state)
 
 		for (auto i = 0uz; i < kb; ++i)
 		{
-			benchmark::DoNotOptimize(allocator.allocate(mb));
+			allocator.allocate(mb);
 		}
 	}
 }

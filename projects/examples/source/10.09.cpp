@@ -12,6 +12,18 @@ int main()
     std::list < int > list = { 1, 2, 3, 4, 5 };
 
 //  -----------------------------------------------------------
+
+	static_assert
+	(
+		std::is_same_v 
+		< 
+			decltype(list)::iterator::iterator_category,
+			
+			std::bidirectional_iterator_tag 
+		> 
+	);
+
+//  -----------------------------------------------------------
 		
 	list.erase(list.insert(std::next(std::begin(list), 0), 1));
 
@@ -22,18 +34,6 @@ int main()
 //  -----------------------------------------------------------
 
 //  assert(list.at(0) == 1); // error
-
-//  -----------------------------------------------------------
-
-	static_assert
-	(
-		std::is_same_v 
-		< 
-			std::list < int > ::iterator::iterator_category,
-			
-			std::bidirectional_iterator_tag 
-		> 
-	);
 }
 
 ///////////////////////////////////////////////////////////////

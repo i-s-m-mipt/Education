@@ -3,6 +3,7 @@
 #include <array>
 #include <cassert>
 #include <iostream>
+#include <print>
 #include <type_traits>
 #include <vector>
 
@@ -34,7 +35,7 @@ int main()
 
 //  -------------------------------------------------------------
 
-	std::cout << "main : enter char : "; std::cin.get();
+	std::print("main : enter char : "); std::cin.get();
 }
 
 /////////////////////////////////////////////////////////////////

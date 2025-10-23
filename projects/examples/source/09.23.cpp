@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////
 
 #include <cstddef>
-#include <iostream>
 #include <new>
+#include <print>
 
 ////////////////////////////////////////////////////////
 
@@ -12,7 +12,7 @@ public :
 
 	static auto operator new(std::size_t size) -> void *
 	{
-		std::cout << "Entity::operator new\n";
+		std::print("Entity::operator new\n");
 
 		return ::operator new(size);
 	}
@@ -21,7 +21,7 @@ public :
 
 	static void operator delete(void * x, std::size_t)
 	{
-		std::cout << "Entity::operator delete\n";
+		std::print("Entity::operator delete\n");
 
 		::operator delete(x);
 	}
@@ -43,9 +43,9 @@ private :
 
 public :
 
-	Client() { std::cout << "Client:: Client\n"; }
+	Client() { std::print("Client:: Client\n"); }
 
-   ~Client() { std::cout << "Client::~Client\n"; }
+   ~Client() { std::print("Client::~Client\n"); }
 
 //  ----------------------------------------------------
 

@@ -1,9 +1,9 @@
-//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 #include <vector>
 
-//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
 class Entity 
 {
@@ -11,39 +11,57 @@ public :
 
 // ~Entity() = default; // error
 
-//  ----------------------------------
+//  ------------------------------------
 
-	virtual ~Entity() = default;
+	virtual ~Entity()
+	{
+		std::print("Entity::~Entity\n");
+	}
 
-//  ----------------------------------
+//  ------------------------------------
 
 	virtual void test() const
 	{ 
-		std::cout << "Entity::test\n";
+		std::print("Entity::test\n");
 	}
 };
 
-//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
 class Client : public Entity
 {
 public :
 
+   ~Client() override
+	{
+		std::print("Client::~Client\n");
+	}
+
+//  ------------------------------------
+
 	void test() const override final
 	{ 
-		std::cout << "Client::test\n";
+		std::print("Client::test\n");
 	}
 };
 
-//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
-class Server final : public Entity {};
+class Server final : public Entity 
+{
+public:
 
-//////////////////////////////////////////////////////////
+   ~Server() override
+	{
+		std::print("Server::~Server\n");
+	}
+};
+
+/////////////////////////////////////////////////////////////
 
 class Router : private Entity {};
 
-//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -51,44 +69,34 @@ int main()
 
 //  std::vector < Server > servers; // bad
 
-//  ------------------------------------------------------
+//  std::vector < Router > routers; // bad
 
-    Client client;
+//  ---------------------------------------------------------
 
-	Server server;
+	[[maybe_unused]] Entity * entity_1 = new Client;
 
-	Router router;
+	[[maybe_unused]] Entity * entity_2 = new Server;
 
-//  ------------------------------------------------------
+//	[[maybe_unused]] Entity * entity_3 = new Router; // error
 
-	[[maybe_unused]] Entity * entity_1 = &client;
-
-	[[maybe_unused]] Entity * entity_2 = &server;
-	
-	[[maybe_unused]] Entity & entity_3 =  client;
-
-//	[[maybe_unused]] Entity   entity_4 =  server; // error
-
-//	[[maybe_unused]] Entity * entity_5 = &router; // error
-
-//  ------------------------------------------------------
+//  ---------------------------------------------------------
 
 	std::vector < Entity * > entities;
 
-//  ------------------------------------------------------
+//  ---------------------------------------------------------
 
-    entities.push_back(new Client);
+    entities.push_back(entity_1);
 
-	entities.push_back(new Server);
+	entities.push_back(entity_2);
 
-//  ------------------------------------------------------
+//  ---------------------------------------------------------
 
     for (auto entity : entities)
     {
-        entity->test(); // support : compiler-explorer.com
+        entity->test();
     }
 
-//  ------------------------------------------------------
+//  ---------------------------------------------------------
 
     for (auto entity : entities)
     {
@@ -96,4 +104,4 @@ int main()
     }
 }
 
-//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////

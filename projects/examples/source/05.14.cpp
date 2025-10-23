@@ -1,6 +1,7 @@
 ////////////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
+#include <utility>
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -58,12 +59,7 @@ public :
 
     void set(State * state)
     { 
-        if (m_state)
-        {
-            delete m_state;
-        }
-        
-        m_state = state;
+        delete std::exchange(m_state, state);
     }
 
 //  ------------------------------------------
@@ -81,14 +77,14 @@ private :
 
 void Slow::to_slow([[maybe_unused]] Entity * entity) const
 {
-    std::cout << "Slow::to_slow\n";
+    std::print("Slow::to_slow\n");
 }
 
 ////////////////////////////////////////////////////////////////////////
 
 void Slow::to_fast([[maybe_unused]] Entity * entity) const
 {
-    std::cout << "Slow::to_fast\n";
+    std::print("Slow::to_fast\n");
     
     entity->set(new Fast);
 }
@@ -97,7 +93,7 @@ void Slow::to_fast([[maybe_unused]] Entity * entity) const
 
 void Fast::to_slow([[maybe_unused]] Entity * entity) const
 {
-    std::cout << "Fast::to_slow\n";
+    std::print("Fast::to_slow\n");
     
     entity->set(new Slow);
 }
@@ -106,7 +102,7 @@ void Fast::to_slow([[maybe_unused]] Entity * entity) const
 
 void Fast::to_fast([[maybe_unused]] Entity * entity) const
 {
-    std::cout << "Fast::to_fast\n";
+    std::print("Fast::to_fast\n");
 }
 
 ////////////////////////////////////////////////////////////////////////

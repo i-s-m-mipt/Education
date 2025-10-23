@@ -3,7 +3,8 @@
 #include <cassert>
 #include <chrono>
 #include <ctime>
-#include <iostream>
+#include <format>
+#include <print>
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -17,11 +18,15 @@ int main()
 
 //  ------------------------------------------------------------------------
 
+	std::print("main : now = {:%Y %B %d %H:%M:%S %Z}\n", now);
+
+//  ------------------------------------------------------------------------
+
 	auto delta = std::chrono::floor < std::chrono::days > (now - epoch);
 
 //  ------------------------------------------------------------------------
 
-	std::cout << "main : delta = " << delta.count() << " (days)\n";
+	std::print("main : delta = {} (days)\n", delta.count());
 
 //  ------------------------------------------------------------------------
 

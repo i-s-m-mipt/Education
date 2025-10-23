@@ -13,6 +13,18 @@ int main()
 
 //  --------------------------------------------------------------
 
+    static_assert
+	(
+		std::is_same_v 
+		< 
+			decltype(deque)::iterator::iterator_category,
+			
+			std::random_access_iterator_tag 
+		> 
+	);
+
+//  --------------------------------------------------------------
+
 	deque.erase(deque.insert(std::next(std::begin(deque), 0), 1));
 
 	deque.erase(deque.insert(std::next(std::begin(deque), 2), 1));
@@ -22,18 +34,6 @@ int main()
 //  --------------------------------------------------------------
 
     assert(deque.at(0) == 1);
-
-//  --------------------------------------------------------------
-
-    static_assert
-	(
-		std::is_same_v 
-		< 
-			std::deque < int > ::iterator::iterator_category,
-			
-			std::random_access_iterator_tag 
-		> 
-	);
 }
 
 //////////////////////////////////////////////////////////////////

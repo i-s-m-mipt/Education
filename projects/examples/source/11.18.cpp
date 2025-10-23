@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 #include <algorithm>
-#include <iostream>
+#include <print>
 #include <random>
 #include <vector>
 
@@ -9,14 +9,14 @@
 
 void show(std::vector < int > const & vector)
 {
-	std::cout << "show : vector = { ";
+	std::print("show : vector = {{ ");
 
 	for (auto element : vector)
 	{
-		std::cout << element << ' ';
+		std::print("{} ", element);
 	}
 
-	std::cout << "}\n";
+	std::print("}}\n"); 
 }
 
 /////////////////////////////////////////////////////////////////////////////

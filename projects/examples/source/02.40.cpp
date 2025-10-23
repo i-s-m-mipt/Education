@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <cstddef>
-#include <iostream>
+#include <print>
 #include <span>
 #include <string>
 #include <vector>
@@ -18,56 +18,56 @@ void test(int x, int * y, int & z)
 
 void show(int * array, std::size_t size) 
 { 
-	std::cout << "show : array = { ";
+	std::print("show : array = {{ ");
 
 	for (auto i = 0uz; i < size; ++i)
 	{
-		std::cout << array[i] << ' ';
+		std::print("{} ", array[i]);
 	}
 
-	std::cout << "}\n"; 
+	std::print("}}\n"); 
 }
 
 ///////////////////////////////////////////////////
 
 void show(std::span < int const > span) 
 { 
-	std::cout << "show : vector = { ";
+	std::print("show : span = {{ ");
 
 	for (auto i = 0uz; i < std::size(span); ++i)
 	{
-		std::cout << span[i] << ' ';
+		std::print("{} ", span[i]);
 	}
 
-	std::cout << "}\n";
+	std::print("}}\n");
 }
 
 ///////////////////////////////////////////////////
 
 void show(std::string const & string) 
 { 
-	std::cout << "show : string = { ";
+	std::print("show : string = {{ ");
 
 	for (auto i = 0uz; i < std::size(string); ++i)
 	{
-		std::cout << string[i] << ' ';
+		std::print("{} ", string[i]);
 	}
 
-	std::cout << "}\n"; 
+	std::print("}}\n");
 }
 
 ///////////////////////////////////////////////////
 
 void show(std::vector < int > const & vector) 
 { 
-	std::cout << "show : vector = { ";
+	std::print("show : vector = {{ ");
 
 	for (auto i = 0uz; i < std::size(vector); ++i)
 	{
-		std::cout << vector[i] << ' ';
+		std::print("{} ", vector[i]);
 	}
 
-	std::cout << "}\n";  
+	std::print("}}\n"); 
 }
 
 ///////////////////////////////////////////////////

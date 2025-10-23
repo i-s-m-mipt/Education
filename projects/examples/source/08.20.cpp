@@ -1,6 +1,7 @@
 //////////////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <cstdio>
+#include <print>
 #include <string>
 
 //////////////////////////////////////////////////////////////////////////
@@ -33,11 +34,11 @@ int main()
 
 	//  ------------------------------------------------------------------
 
-        std::cout << "main : x = " << x << '\n';
+        std::print("main : x = {}\n", x);
 	}
 	catch (boost::python::error_already_set const &)
 	{
-		std::cerr << "main : " << Python::exception() << '\n';
+		std::print(stderr, "main : {}\n", Python::exception());
 	}
 }
 

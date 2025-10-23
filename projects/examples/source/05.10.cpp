@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 
 ////////////////////////////////////////////////////
 
@@ -23,7 +23,7 @@ public :
     
     void test() const override 
     { 
-        std::cout << "Client::test\n";
+        std::print("Client::test\n");
     } 
 };
 
@@ -35,7 +35,7 @@ public :
     
     void test() const override 
     { 
-        std::cout << "Server::test\n";
+        std::print("Server::test\n");
     } 
 };
 
@@ -51,7 +51,7 @@ public :
 
     void test() const override
     { 
-        std::cout << "Decorator::test : ";
+        std::print("Decorator::test : ");
         
         m_entity.test();
     }

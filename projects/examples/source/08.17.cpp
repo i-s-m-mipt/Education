@@ -1,8 +1,9 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <iostream>
+#include <cstdio>
 #include <limits>
+#include <print>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -34,7 +35,7 @@ int main()
     }
     catch (std::range_error const & exception)
     {
-        std::cerr << "main : " << exception.what() << '\n';
+        std::print(stderr, "main : {}\n", exception.what());
     }
 
 //  ----------------------------------------------------------------------------------------------

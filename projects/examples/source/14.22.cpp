@@ -138,26 +138,26 @@ int main()
 {
     Stack < int > stack;
 
-//  --------------------------------------------------------------------
+//  ---------------------------------------------------------------------
     
     stack.push(1);
 
     stack.push(2);
 
-//  --------------------------------------------------------------------
+//  ---------------------------------------------------------------------
 
     {
-//      std::jthread thread_1(top_and_pop_v1, std::ref(stack)); // error
+//      std::jthread jthread_1(top_and_pop_v1, std::ref(stack)); // error
 
-//      std::jthread thread_2(top_and_pop_v1, std::ref(stack)); // error
+//      std::jthread jthread_2(top_and_pop_v1, std::ref(stack)); // error
     }
 
-//  --------------------------------------------------------------------
+//  ---------------------------------------------------------------------
 
     {
-        std::jthread thread_1(top_and_pop_v2, std::ref(stack));
+        std::jthread jthread_1(top_and_pop_v2, std::ref(stack));
 
-        std::jthread thread_2(top_and_pop_v2, std::ref(stack));
+        std::jthread jthread_2(top_and_pop_v2, std::ref(stack));
     }
 }
 

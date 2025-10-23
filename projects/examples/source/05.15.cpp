@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 
 /////////////////////////////////////////////////////////
 
@@ -23,7 +23,7 @@ public :
     
     void test() const override 
     { 
-        std::cout << "Slow::test\n";
+        std::print("Slow::test\n");
     } 
 };
 
@@ -35,7 +35,7 @@ public :
     
     void test() const override 
     { 
-        std::cout << "Fast::test\n";
+        std::print("Fast::test\n");
     } 
 };
 

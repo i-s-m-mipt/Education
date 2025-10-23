@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
-#include <cmath>
-#include <iostream>
+#include <algorithm>
+#include <print>
 #include <vector>
 
 //////////////////////////////////////////////////////////////////////////////
@@ -16,18 +16,18 @@
 
 TEST(Expect, Test)
 {
-    std::cout << "Expect::Test\n"; EXPECT_TRUE(std::max(1, 2) == 1);
+    std::print("Expect::Test\n"); EXPECT_TRUE(std::max(1, 2) == 1);
 
-    std::cout << "Expect::Test\n"; EXPECT_TRUE(std::max(1, 2) == 2);
+    std::print("Expect::Test\n"); EXPECT_TRUE(std::max(1, 2) == 2);
 }
 
 //////////////////////////////////////////////////////////////////////////////
 
 TEST(Assert, Test)
 {
-    std::cout << "Assert::Test\n"; ASSERT_TRUE(std::max(1, 2) == 1);
+    std::print("Assert::Test\n"); ASSERT_TRUE(std::max(1, 2) == 1);
 
-    std::cout << "Assert::Test\n"; ASSERT_TRUE(std::max(1, 2) == 2);
+    std::print("Assert::Test\n"); ASSERT_TRUE(std::max(1, 2) == 2);
 }
 
 //////////////////////////////////////////////////////////////////////////////

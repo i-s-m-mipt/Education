@@ -31,17 +31,17 @@ void test_v2(int x)
 int main()
 {
     {
-        std::jthread thread_1(test_v1, 1);
+        std::jthread jthread_1(test_v1, 1);
 
-        std::jthread thread_2(test_v1, 2);
+        std::jthread jthread_2(test_v1, 2);
     }
 
-//  --------------------------------------
+//  ---------------------------------------
 
     {
-        std::jthread thread_1(test_v2, 1);
+        std::jthread jthread_1(test_v2, 1);
 
-        std::jthread thread_2(test_v2, 2);
+        std::jthread jthread_2(test_v2, 2);
     }
 }
 

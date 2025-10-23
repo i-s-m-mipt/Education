@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 
 ////////////////////////////////////////////////////////////////////
 
@@ -16,11 +16,11 @@ private :
 
     friend class Client;
 
-//  ---------------------------------------------------------------
+//  --------------------------------------------------------------
 
-    static void test(Key_v1) { std::cout << "Entity::test (1)\n"; }
+    static void test(Key_v1) { std::print("Entity::test (1)\n"); }
     
-    static void test(Key_v2) { std::cout << "Entity::test (2)\n"; }
+    static void test(Key_v2) { std::print("Entity::test (2)\n"); }
 };
 
 ////////////////////////////////////////////////////////////////////

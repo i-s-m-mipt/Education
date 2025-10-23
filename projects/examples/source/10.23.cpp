@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <print>
 #include <string>
 #include <vector>
 
@@ -70,7 +71,7 @@ int main()
 
 //  ----------------------------------------------------------------------------
 
-    std::cout << "main : enter char : "; std::cin.get();
+    std::print("main : enter char : "); std::cin.get();
 
 //  ----------------------------------------------------------------------------
 

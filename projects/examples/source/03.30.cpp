@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <cstddef>
 #include <initializer_list>
-#include <iostream>
 #include <iterator>
+#include <print>
 #include <utility>
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -15,27 +15,27 @@ public :
 
 	Vector() : m_array(nullptr), m_size(0) 
 	{
-		std::cout << "Vector::Vector (1)\n";
+		std::print("Vector:: Vector (1)\n");
 	}
 
 //  --------------------------------------------------------------------------------
 
-	Vector(std::initializer_list < int > list) : Vector()
+	Vector(std::initializer_list < int > list) : m_size(std::size(list))
 	{
-		std::cout << "Vector::Vector (2)\n";
+		std::print("Vector:: Vector (2)\n");
 
-		m_array = (m_size = std::size(list)) ? new int[m_size]{} : nullptr;
+		m_array = m_size ? new int[m_size]{} : nullptr;
 
 		std::ranges::copy(list, m_array);
 	}
 
 //  --------------------------------------------------------------------------------
 
-	Vector(Vector const & other) : Vector() 
+	Vector(Vector const & other) : m_size(other.m_size) 
 	{
-		std::cout << "Vector::Vector (3)\n";
+		std::print("Vector:: Vector (3)\n");
 
-		m_array = (m_size = other.m_size) ? new int[m_size]{} : nullptr;
+		m_array = m_size ? new int[m_size]{} : nullptr;
 
 		std::ranges::copy(other.m_array, other.m_array + other.m_size, m_array);
 	}
@@ -48,33 +48,27 @@ public :
 		
 		m_size (std::exchange(other.m_size,  0      ))
 	{
-		std::cout << "Vector::Vector (4)\n";
+		std::print("Vector:: Vector (4)\n");
 	}
 
 //  --------------------------------------------------------------------------------
 
    ~Vector()
 	{
-		std::cout << "Vector::~Vector\n";
+		std::print("Vector::~Vector\n");
 
-		if (m_array) 
-		{
-			delete[] m_array;
-		}
+		delete[] m_array;
 	}
 	
 //  --------------------------------------------------------------------------------
 
 //	auto & operator=(Vector const & other) // error
 //	{
-//		std::cout << "Vector::operator= (1)\n";
+//		std::print("Vector::operator= (1)\n");
 //
 //		if (this != &other)
 //		{
-//			if (m_array)
-//			{
-//				delete[] m_array;
-//			}
+//			delete[] m_array;
 //
 //			m_array = (m_size = other.m_size) ? new int[m_size]{} : nullptr;
 //
@@ -88,18 +82,15 @@ public :
 
 //	auto & operator=(Vector const & other) // bad
 //	{
-//		std::cout << "Vector::operator= (2)\n";
+//		std::print("Vector::operator= (2)\n");
 //
 //		if (this != &other)
 //		{
 //			auto array = other.m_size ? new int[other.m_size]{} : nullptr;
 //
 //			std::ranges::copy(other.m_array, other.m_array + other.m_size, array);		
-//
-//			if (array = std::exchange(m_array, array); array)
-//			{
-//				delete[] array;
-//			}
+//		
+//			delete[] std::exchange(m_array, array);
 //
 //			m_size = other.m_size;
 //		}
@@ -111,14 +102,11 @@ public :
 
 //	auto & operator=(Vector && other) // bad
 //	{
-//		std::cout << "Vector::operator= (3)\n";
+//		std::print("Vector::operator= (3)\n");
 //
 //		if (this != &other)
 //		{
-//			if (m_array) 
-//			{
-//				delete[] m_array;
-//			}
+//			delete[] m_array;
 //			
 //			m_array = std::exchange(other.m_array, nullptr);
 //
@@ -132,7 +120,7 @@ public :
 
 	auto & operator=(Vector other)
 	{
-		std::cout << "Vector::operator= (4)\n";
+		std::print("Vector::operator= (4)\n");
 
 		swap(other);
 

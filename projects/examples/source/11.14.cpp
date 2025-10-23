@@ -4,8 +4,8 @@
 #include <bit>
 #include <cassert>
 #include <cstddef>
-#include <iostream>
 #include <memory>
+#include <print>
 #include <string>
 #include <type_traits>
 #include <utility>
@@ -333,14 +333,14 @@ public :
 
     void operator()(int x) const
     {
-        std::cout << "Visitor::operator() : x = " << x << '\n';
+        std::print("Visitor::operator() : x = {}\n", x);
     }
 
-//  ---------------------------------------------------------------------
+//  --------------------------------------------------------------
 
     void operator()(std::string const & string) const
     {
-        std::cout << "Visitor::operator() : string = " << string << '\n';
+        std::print("Visitor::operator() : string = {}\n", string);
     }
 };
 
@@ -352,11 +352,11 @@ public :
 
     Entity(int) {}
 
-//  -------------------------------------
+//  ------------------------------------
 
    ~Entity() 
     { 
-		std::cout << "Entity::~Entity\n";
+		std::print("Entity::~Entity\n");
 	} 
 };
 

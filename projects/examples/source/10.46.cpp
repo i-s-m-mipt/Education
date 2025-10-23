@@ -8,8 +8,8 @@
 #include <cmath>
 #include <cstddef>
 #include <format>
-#include <iostream>
 #include <iterator>
+#include <print>
 #include <random>
 #include <set>
 #include <string>
@@ -22,15 +22,17 @@ void show(std::unordered_set < std::string > const & set)
 {
 	for (auto i = 0uz; i < set.bucket_count(); ++i)
 	{
-		std::cout << "show : buckets[" << std::format("{:0>2}", i) << "] = {";
+		std::print("show : buckets[{:0>2}] = {{", i);
 
 		for (auto iterator = set.begin(i); iterator != set.end(i); ++iterator)
 		{
-			std::cout << ' ' << *iterator;
+			std::print(" {}", *iterator);
 		}
 
-		std::cout << (set.bucket_size(i) > 0 ? " " : "") << "}\n\n";
+		std::print("{}}}\n", set.bucket_size(i) > 0 ? " " : "");
 	}
+
+	std::print("\n");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -73,6 +75,18 @@ int main()
 
 //  ----------------------------------------------------------------------------
 
+	static_assert
+	(
+		std::is_same_v 
+		< 
+			decltype(set)::iterator::iterator_category, 
+				
+			std::forward_iterator_tag 
+		> 
+	);
+
+//  ----------------------------------------------------------------------------
+
 	show(set); set.rehash(32);
 
 	show(set);
@@ -93,18 +107,6 @@ int main()
 //  ----------------------------------------------------------------------------
 
 	assert(equal(set.load_factor(), 1.0 * std::size(set) / set.bucket_count()));
-
-//  ----------------------------------------------------------------------------
-
-	static_assert
-	(
-		std::is_same_v 
-		< 
-			std::unordered_set < int > ::iterator::iterator_category, 
-				
-			std::forward_iterator_tag 
-		> 
-	);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

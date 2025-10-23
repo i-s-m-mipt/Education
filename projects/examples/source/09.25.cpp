@@ -118,13 +118,10 @@ private :
 //  ---------------------------------------------------------------------------------------
 
     void deallocate()
-    { 
-        if (m_x)
-        {
-            operator delete(m_x, sizeof(T), std::align_val_t(s_alignment));
+    {
+        operator delete(m_x, sizeof(T), std::align_val_t(s_alignment));
             
-            m_x = nullptr;
-        }
+        m_x = nullptr;
     }
 
 //  ---------------------------------------------------------------------------------------

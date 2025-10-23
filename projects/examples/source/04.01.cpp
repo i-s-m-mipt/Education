@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
+#include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <type_traits>
@@ -55,7 +56,7 @@ template < typename T1, typename T2 > auto max_v7(T1 x, T2 y)
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-auto max_v8(auto x, auto y)
+auto max_v8(auto x, auto y) // support : cppinsights.io
 {
 	return x < y ? y : x;
 }

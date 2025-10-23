@@ -1,6 +1,6 @@
 /////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 #include <vector>
 
 /////////////////////////////////////////////
@@ -19,7 +19,7 @@ public :
 
 //	virtual void test_v2() const = 0 // error
 //	{
-//		std::cout << "Entity::test_v2\n";
+//		std::print("Entity::test_v2\n");
 //	}
 };
 
@@ -27,7 +27,7 @@ public :
 
 void Entity::test_v1() const
 { 
-	std::cout << "Entity::test_v1\n";
+	std::print("Entity::test_v1\n");
 }
 
 /////////////////////////////////////////////
@@ -38,7 +38,21 @@ public :
 
     void test_v1() const override 
 	{ 
-		std::cout << "Client::test_v1\n";
+		std::print("Client::test_v1\n");
+		
+		Entity::test_v1();
+	}
+};
+
+/////////////////////////////////////////////
+
+class Server : public Entity
+{
+public :
+
+    void test_v1() const override 
+	{ 
+		std::print("Server::test_v1\n");
 		
 		Entity::test_v1();
 	}
@@ -50,25 +64,29 @@ int main()
 {
     std::vector < Entity * > entities;
 
-//  ----------------------------------------
-
-//  entities.push_back(new Entity); // error
+//  ----------------------------------
 
     entities.push_back(new Client);
 
-//  ----------------------------------------
+    entities.push_back(new Server);
+
+//  ----------------------------------
 
     for (auto entity : entities)
     {
         entity->test_v1();
     }
 
-//  ----------------------------------------
+//  ----------------------------------
 
     for (auto entity : entities)
     {
         delete entity;
     }
+
+//  ----------------------------------
+
+//	Entity entity; // error
 }
 
 /////////////////////////////////////////////

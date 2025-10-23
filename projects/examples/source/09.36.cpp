@@ -3,9 +3,9 @@
 #include <array>
 #include <cstddef>
 #include <format>
-#include <iostream>
 #include <memory>
 #include <new>
+#include <print>
 #include <vector>
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -44,13 +44,12 @@ public :
 
 	void show() const
 	{
-		std::cout << "Allocator::show : S = " << S << ' ';
+		std::print
+		(
+			"Allocator::show : S = {} m_begin = {:018} m_offset = {:0>4}\n",
 
-		auto begin = static_cast < void * > (m_begin);
-
-		std::cout << "m_begin = "  << std::format("{:018}", begin) << ' ';
-
-		std::cout << "m_offset = " << std::format("{:0>4}", m_offset) << '\n';
+			S, static_cast < void * > (m_begin), m_offset
+		);
 	}
 
 private :

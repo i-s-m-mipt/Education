@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 #include <utility>
 
 ////////////////////////////////////////////////////////////////////
@@ -9,11 +9,13 @@ class Entity
 {
 public :
 
-	Entity(               ) { std::cout << "Entity::Entity (1)\n"; }
+	Entity(               ) { std::print("Entity:: Entity (1)\n"); }
 
-	Entity(Entity const & ) { std::cout << "Entity::Entity (2)\n"; }
+	Entity(Entity const & ) { std::print("Entity:: Entity (2)\n"); }
 
-	Entity(Entity       &&) { std::cout << "Entity::Entity (3)\n"; }
+	Entity(Entity       &&) { std::print("Entity:: Entity (3)\n"); }
+
+   ~Entity(               ) { std::print("Entity::~Entity    \n"); }
 };
 
 ////////////////////////////////////////////////////////////////////
@@ -25,7 +27,7 @@ auto make_entity_v1()
 
 ////////////////////////////////////////////////////////////////////
 
-auto make_entity_v2() 
+auto make_entity_v2()
 { 
 	Entity entity;
 

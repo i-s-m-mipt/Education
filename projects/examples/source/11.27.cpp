@@ -3,6 +3,7 @@
 #include <cassert>
 #include <iostream>
 #include <iterator>
+#include <print>
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -51,7 +52,7 @@ int main()
 
 //  ---------------------------------------------------------------------------
 
-	std::cout << "main : graph = "; boost::write_graphviz(std::cout, graph);
+	std::print("main : graph = "); boost::write_graphviz(std::cout, graph);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

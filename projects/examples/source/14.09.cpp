@@ -6,7 +6,6 @@
 
 #include <algorithm>
 #include <cassert>
-#include <cmath>
 #include <concepts>
 #include <functional>
 #include <iterator>
@@ -42,13 +41,13 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum)
 		auto step = size / concurrency;
 
 		{
-			std::vector < std::jthread > threads(concurrency - 1);
+			std::vector < std::jthread > jthreads(concurrency - 1);
 
-			for (auto i = 0uz; i < std::size(threads); ++i)
+			for (auto i = 0uz; i < std::size(jthreads); ++i)
 			{
 				auto range = std::ranges::subrange(begin, std::next(begin, step));
 
-				threads[i] = std::jthread
+				jthreads[i] = std::jthread
 				(
 					Task < decltype(range), T > (), range, std::ref(sums[i])
 				);

@@ -1,63 +1,52 @@
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 #include <cstdint>
 #include <vector>
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 #include <benchmark/benchmark.h>
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-struct Entity_v1 { std::uint32_t x : 15 = 0, y : 17 = 0; };
+struct Entity_v1 { std::uint32_t x      = 0, y      = 0; };
 
-struct Entity_v2 { std::uint32_t x      = 0, y      = 0; };
+struct Entity_v2 { std::uint32_t x : 10 = 0, y : 22 = 0; };
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-void test_v1(benchmark::State & state)
+void test(benchmark::State & state)
 {
-    std::vector < Entity_v1 > entities(1'000);
+    auto size = 1'000uz;
+
+    std::vector < Entity_v1 > entities_v1(size);
+
+    std::vector < Entity_v2 > entities_v2(size);
 
     for (auto element : state)
     {
-        for (auto i = 0uz; i < std::size(entities); ++i)
+        for (auto i = 0uz; i < size; ++i)
         {
-            entities[i].x = i + 1;
+            if (state.range(0) == 1) { entities_v1[i].x = entities_v1[i].y = i + 1; }
 
-            entities[i].y = i + 1;
+            if (state.range(0) == 2) { entities_v2[i].x = entities_v2[i].y = i + 1; }
         }
+
+        benchmark::DoNotOptimize(entities_v1);
+
+        benchmark::DoNotOptimize(entities_v2);
     }
 }
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-void test_v2(benchmark::State & state)
-{
-    std::vector < Entity_v2 > entities(1'000);
+BENCHMARK(test)->Arg(1)->Arg(2);
 
-    for (auto element : state)
-    {        
-        for (auto i = 0uz; i < std::size(entities); ++i)
-        {
-            entities[i].x = i + 1;
-
-            entities[i].y = i + 1;
-        }
-    }
-}
-
-///////////////////////////////////////////////////////////
-
-BENCHMARK(test_v1);
-
-BENCHMARK(test_v2);
-
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
     benchmark::RunSpecifiedBenchmarks();
 }
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////

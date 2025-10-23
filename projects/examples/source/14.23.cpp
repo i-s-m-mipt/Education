@@ -181,11 +181,11 @@ int main()
 {
     Queue < int > queue;
 
-//  ------------------------------------------------
+//  -------------------------------------------------
 
-    std::jthread thread_1(produce, std::ref(queue));
+    std::jthread jthread_1(produce, std::ref(queue));
 
-    std::jthread thread_2(consume, std::ref(queue));
+    std::jthread jthread_2(consume, std::ref(queue));
 }
 
 /////////////////////////////////////////////////////////////////////////////////

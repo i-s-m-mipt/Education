@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <chrono>
-#include <iostream>
+#include <print>
 
 //////////////////////////////////////////////////////
 
@@ -12,7 +12,7 @@ int main()
 
 //  --------------------------------------------------
 
-    std::cout << "main : epoch = " << epoch << '\n';
+    std::print("main : epoch = {}\n", epoch);
 
 //  --------------------------------------------------
 
