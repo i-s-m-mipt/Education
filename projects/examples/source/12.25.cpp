@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <iterator>
+#include <string>
 #include <string_view>
 #include <tuple>
 
@@ -18,7 +19,7 @@ using namespace std::literals;
 
 int main()
 {
-    auto view = "1 2 3"sv;
+    auto view = "1 aaaaa"sv;
 
 //  ----------------------------------------------------------------
         
@@ -26,13 +27,11 @@ int main()
 
 //  ----------------------------------------------------------------
 
-    auto rule = 
+    auto rule =
     (
-        boost::spirit::x3::int_ >> 
-        
-        boost::spirit::x3::int_ >> 
+        boost::spirit::x3::int_ >>
 
-        boost::spirit::x3::int_
+        boost::spirit::x3::repeat(5)[boost::spirit::x3::char_]
     );
 
 //  ----------------------------------------------------------------
@@ -41,7 +40,7 @@ int main()
 
 //  ----------------------------------------------------------------
 
-    std::tuple < int, int, int > tuple;
+    std::tuple < int, std::string > tuple;
 
 //  ----------------------------------------------------------------
 
@@ -49,7 +48,7 @@ int main()
 
 //  ----------------------------------------------------------------
 
-    assert(tuple == std::make_tuple(1, 2, 3));
+    assert(tuple == std::make_tuple(1, "aaaaa"s));
 }
 
 ////////////////////////////////////////////////////////////////////
