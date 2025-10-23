@@ -32,20 +32,24 @@ int main()
 {
     using alias_1 = int;
 
-    using alias_2 = std::string;
+    using alias_2 = double;
+
+    using alias_3 = std::string;
 
 //  -------------------------------------------------------------------------------------------
 
     std::unordered_map < std::type_index, std::function < void(std::any const &) > > visitors =
     {
         std::make_pair(std::type_index(typeid(alias_1)), Visitor < alias_1 > ()),
+
+        std::make_pair(std::type_index(typeid(alias_2)), Visitor < alias_2 > ()),
         
-        std::make_pair(std::type_index(typeid(alias_2)), Visitor < alias_2 > ())
+        std::make_pair(std::type_index(typeid(alias_3)), Visitor < alias_3 > ())
     };
 
 //  -------------------------------------------------------------------------------------------
 
-    for (auto const & any : std::vector < std::any > ({ 1, "aaaaa"s })) 
+    for (auto const & any : std::vector < std::any > ({ 1, 2.0, "aaaaa"s })) 
     {
         std::type_index type_index(any.type());
 
