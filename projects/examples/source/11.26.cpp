@@ -35,7 +35,7 @@ template < typename ... Ts > void show(const std::tuple < Ts ... > & tuple)
 
 int main()
 {
-    show(std::make_tuple(1, "aaaaa"s));
+    show(std::make_tuple(1, 2.0, "aaaaa"s));
 }
 
 ///////////////////////////////////////////////////////////////////////////

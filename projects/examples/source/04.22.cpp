@@ -17,7 +17,7 @@ public :
 
 	Tuple(T && x, Ts && ... ys)
 	:
-		m_head(std::forward < T  > (x )   ), 
+		m_head(std::forward < T  > (x )   ),
 		
 		m_tail(std::forward < Ts > (ys)...)
 	{}
@@ -47,9 +47,9 @@ private :
 
 int main()
 {
-	Tuple < int, std::string > tuple(1, "aaaaa");
+	Tuple < int, double, std::string > tuple(1, 2.0, "aaaaa");
 
-//  ---------------------------------------------
+//  ----------------------------------------------------------
 
 	assert(tuple.get < 0 > () == 1);
 }
