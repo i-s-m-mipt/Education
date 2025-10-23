@@ -38,19 +38,19 @@ int main()
 {
     Entity entity_1(1, 1);
     
-    Entity entity_2(1, 2);
+    Entity entity_2(2, 2);
 
-    Entity entity_3(3, 3);
+    Entity entity_3(2, 3);
 
     Entity entity_4(0, 4);
 
 //  --------------------------------------------------------------------
 
-    assert((entity_3 <=> entity_2) >  0);
+    assert((entity_1 <=> entity_2) <  0);
 
-    assert((entity_1 <=> entity_2) == 0);
+    assert((entity_2 <=> entity_3) == 0);
 
-    assert((entity_1 <=> entity_3) <  0);
+    assert((entity_2 <=> entity_1) >  0);
 
 //  --------------------------------------------------------------------
 
