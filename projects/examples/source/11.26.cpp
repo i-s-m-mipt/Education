@@ -12,9 +12,9 @@ using namespace std::literals;
 
 ///////////////////////////////////////////////////////////////////////////
 
-template < typename T, std::size_t ... Is > void show
+template < std::size_t ... Is > void show
 (
-    T && tuple, std::index_sequence < Is ... >
+    auto && tuple, std::index_sequence < Is ... >
 )
 {
     std::print("show : tuple = {{ ");

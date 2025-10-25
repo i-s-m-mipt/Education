@@ -16,7 +16,7 @@ auto next(std::vector < std::size_t > & steps, std::vector < std::size_t > const
 	for (auto i = std::ssize(steps) - 1; i >= 0; --i)
 	{
 		++steps[i];
-		
+
 		if (steps[i] == sizes[i])
 		{
 			steps[i] = 0;
@@ -24,7 +24,7 @@ auto next(std::vector < std::size_t > & steps, std::vector < std::size_t > const
 		else
 		{
 			has_next = true;
-			
+
 			break;
 		}
 	}
@@ -34,10 +34,10 @@ auto next(std::vector < std::size_t > & steps, std::vector < std::size_t > const
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename F, typename T, std::size_t ... Is > void invoke
+template < std::size_t ... Is > void invoke
 (
-	F && f, T && tuple, std::vector < std::size_t > const & steps,
-	
+	auto && f, auto && tuple, std::vector < std::size_t > const & steps,
+
 	std::index_sequence < Is ... >
 )
 {
@@ -64,7 +64,7 @@ template < typename ... Is > auto cartesian(std::pair < Is, Is > ... pairs)
 		invoke
 		(
 			lambda, std::tie(pairs...), steps,
-			
+
 			std::make_index_sequence < sizeof...(pairs) > ()
 		);
 	} 
@@ -86,7 +86,7 @@ int main()
 	auto tuples = cartesian
 	(	
 		std::make_pair(std::begin(vector_1), std::end(vector_1)),
-		
+
 		std::make_pair(std::begin(vector_2), std::end(vector_2))
 	);
 
@@ -105,7 +105,7 @@ int main()
 		//  ----------------------------------------------
 
 			assert(std::get < 0 > (tuple) == vector_1[i]);
-			
+
 			assert(std::get < 1 > (tuple) == vector_2[j]);
 		}
 	}

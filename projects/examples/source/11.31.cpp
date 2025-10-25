@@ -1,96 +1,96 @@
-///////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // support : www.cs.usfca.edu/~galles/visualization/DFS.html
 
-///////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
 
-///////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/depth_first_search.hpp>
 #include <boost/graph/named_function_params.hpp>
 
-///////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 class Visitor : public boost::default_dfs_visitor
 {
 public :
 
-    template < typename V, typename G > void initialize_vertex(V vertex, G const & graph)
+    void initialize_vertex(auto vertex, auto const & graph)
     {
         std::cout << "Visitor::initialize_vertex : vertex = " << vertex << '\n';
 
         boost::default_dfs_visitor::initialize_vertex(vertex, graph);
     }
 
-//  ---------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------
     
-    template < typename V, typename G > void start_vertex(V vertex, G const & graph)
+    void start_vertex(auto vertex, auto const & graph)
     {
         std::cout << "Visitor::start_vertex : vertex = " << vertex << '\n';
 
         boost::default_dfs_visitor::start_vertex(vertex, graph);
     }
 
-//  ---------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------
 
-    template < typename V, typename G > void discover_vertex(V vertex, G const & graph)
+    void discover_vertex(auto vertex, auto const & graph)
     {
         std::cout << "Visitor::discover_vertex : vertex = " << vertex << '\n';
 
         boost::default_dfs_visitor::discover_vertex(vertex, graph);
     }
 
-//  ---------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------
 
-    template < typename V, typename G > void finish_vertex(V vertex, G const & graph)
+    void finish_vertex(auto vertex, auto const & graph)
     {
         std::cout << "Visitor::finish_vertex : vertex = " << vertex << '\n';
 
         boost::default_dfs_visitor::finish_vertex(vertex, graph);
     }
     
-//  ---------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------
 
-    template < typename E, typename G > void examine_edge(E edge, G const & graph)
+    void examine_edge(auto edge, auto const & graph)
     {
         std::cout << "Visitor::examine_edge : edge = " << edge << '\n';
 
         boost::default_dfs_visitor::examine_edge(edge, graph);
     }
 
-//  ---------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------
 
-    template < typename E, typename G > void tree_edge(E edge, G const & graph)
+    void tree_edge(auto edge, auto const & graph)
     {
         std::cout << "Visitor::tree_edge : edge = " << edge << '\n';
 
         boost::default_dfs_visitor::tree_edge(edge, graph);
     }
 
-//  ---------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------
 
-    template < typename E, typename G > void back_edge(E edge, G const & graph)
+    void back_edge(auto edge, auto const & graph)
     {
         std::cout << "Visitor::back_edge : edge = " << edge << '\n';
 
         boost::default_dfs_visitor::back_edge(edge, graph);
     }
 
-//  ---------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------
 
-    template < typename E, typename G > void forward_or_cross_edge(E edge, G const & graph)
+    void forward_or_cross_edge(auto edge, auto const & graph)
     {
         std::cout << "Visitor::forward_or_cross_edge : edge = " << edge << '\n';
 
         boost::default_dfs_visitor::forward_or_cross_edge(edge, graph);
     }
 
-//  ---------------------------------------------------------------------------------------
+//  ----------------------------------------------------------------------------
 
-    template < typename E, typename G > void finish_edge(E edge, G const & graph)
+    void finish_edge(auto edge, auto const & graph)
     {
         std::cout << "Visitor::finish_edge : edge = " << edge << '\n';
 
@@ -98,7 +98,7 @@ public :
     }
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -129,4 +129,4 @@ int main()
     boost::depth_first_search(graph, boost::visitor(Visitor()).root_vertex(1));
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
