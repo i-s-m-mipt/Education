@@ -7,7 +7,7 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-template < typename L, typename I > void erase(L & list, I iterator)
+void erase(auto & list, auto iterator)
 {
     auto previous = list.before_begin();
 

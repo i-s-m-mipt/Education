@@ -16,7 +16,7 @@ using namespace std::literals;
 
 //////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > auto hash(T x, Ts ... ys)
+template < typename T > auto hash(T x, auto ... ys)
 {
 	auto seed = std::hash < T > ()(x);
 
