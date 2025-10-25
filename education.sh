@@ -6,7 +6,7 @@
 #
 # tar xvf boost_1_85_0.tar.gz
 #
-# cd boost_1_85_0/
+# cd boost_1_85_0
 #
 # sudo apt update
 #
