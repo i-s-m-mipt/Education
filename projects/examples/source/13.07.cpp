@@ -20,7 +20,7 @@ template < typename T > auto & operator<<(std::ostream & stream, View < T > cons
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename ... Ts > auto test(Ts ... xs)
+auto test(auto ... xs)
 {
 //  return (std::stringstream() << ... <<      xs ).str(); // bad
 
