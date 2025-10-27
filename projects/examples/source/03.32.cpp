@@ -166,9 +166,9 @@ int main()
 
 //	std::vector < int > vector_1 = 5; // error
 
-	std::vector < int > vector_2(5, 0);
+	std::vector < int > vector_2(5);
 
-	std::vector < int > vector_3 = { 1, 2, 3, 4, 5};
+	std::vector < int > vector_3 = { 1, 2, 3, 4, 5 };
 
 //  -----------------------------------------------------------------------
 
