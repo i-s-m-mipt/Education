@@ -1,58 +1,114 @@
-///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <iostream>
+#include <cstddef>
 #include <iterator>
-#include <print>
+#include <tuple>
+#include <utility>
+#include <vector>
 
-///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/graphviz.hpp>
+auto next(std::vector < std::size_t > & steps, std::vector < std::size_t > const & sizes)
+{
+	auto has_next = false;
 
-///////////////////////////////////////////////////////////////////////////////
+	for (auto i = std::ssize(steps) - 1; i >= 0; --i)
+	{
+		++steps[i];
+
+		if (steps[i] == sizes[i])
+		{
+			steps[i] = 0;
+		}
+		else
+		{
+			has_next = true;
+
+			break;
+		}
+	}
+
+	return has_next;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < std::size_t ... Is > void invoke
+(
+	auto && f, auto && tuple, std::vector < std::size_t > const & steps,
+
+	std::index_sequence < Is ... >
+)
+{
+	f(*std::next(std::get < Is > (tuple).first, steps[Is])...);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename ... Is > auto cartesian(std::pair < Is, Is > ... pairs)
+{
+	std::vector < std::tuple < typename std::iterator_traits < Is > ::value_type ... > > tuples;
+
+	std::vector < std::size_t > steps(sizeof...(pairs), 0);
+
+	std::vector < std::size_t > sizes = 
+	{ 
+		static_cast < std::size_t > (std::distance(pairs.first, pairs.second))... 
+	};
+
+	auto lambda = [&tuples](auto ... pairs){ tuples.emplace_back(pairs...); };
+
+	do
+	{
+		invoke
+		(
+			lambda, std::tie(pairs...), steps,
+
+			std::make_index_sequence < sizeof...(pairs) > ()
+		);
+	} 
+	while (next(steps, sizes));
+
+	return tuples;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS > graph;
+    std::vector < int > vector_1 = { 1, 2, 3, 4, 5 };
 
-//  ---------------------------------------------------------------------------
+	std::vector < int > vector_2 = { 1, 2, 3 };
 
-	auto vertex_1 = boost::add_vertex(graph);
-		
-	auto vertex_2 = boost::add_vertex(graph);
+//  -------------------------------------------------------------
 
-	auto vertex_3 = boost::add_vertex(graph);
+	auto tuples = cartesian
+	(	
+		std::make_pair(std::begin(vector_1), std::end(vector_1)),
 
-//  ---------------------------------------------------------------------------
+		std::make_pair(std::begin(vector_2), std::end(vector_2))
+	);
 
-	auto vertices = boost::vertices(graph);
+//  -------------------------------------------------------------
 
-//  ---------------------------------------------------------------------------
+	auto size = std::size(vector_2);
 
-	assert(std::distance(vertices.first, vertices.second) == 3);
+//  -------------------------------------------------------------
 
-//  ---------------------------------------------------------------------------
+	for (auto i = 0uz; i < std::size(vector_1); ++i)
+	{
+		for (auto j = 0uz; j < size; ++j)
+		{
+			auto tuple = tuples[i * size + j];
 
-	assert(boost::add_edge(vertex_1, vertex_2, graph).second);
+		//  ----------------------------------------------
 
-	assert(boost::add_edge(vertex_2, vertex_1, graph).second);
+			assert(std::get < 0 > (tuple) == vector_1[i]);
 
-	assert(boost::add_edge(vertex_2, vertex_3, graph).second);
-
-	assert(boost::add_edge(vertex_3, vertex_1, graph).second);
-
-//  ---------------------------------------------------------------------------
-
-	auto edges = boost::edges(graph);
-
-//  ---------------------------------------------------------------------------
-
-	assert(std::distance(edges.first, edges.second) == 4);
-
-//  ---------------------------------------------------------------------------
-
-	std::print("main : graph = "); boost::write_graphviz(std::cout, graph);
+			assert(std::get < 1 > (tuple) == vector_2[j]);
+		}
+	}
 }
 
-///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////

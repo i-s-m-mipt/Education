@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////
 
-#include <cstdio>
+#include <iostream>
 #include <new>
 #include <print>
 
@@ -9,7 +9,7 @@
 void test() 
 { 
     std::print("test\n");
-    
+
     std::set_new_handler(nullptr); 
 }
 
@@ -30,7 +30,7 @@ int main()
     }
     catch (std::bad_alloc const & exception)
     {
-        std::print(stderr, "main : {}\n", exception.what());
+        std::cerr << "main : " << exception.what() << '\n';
     }
 
 //  ---------------------------------------------------------------------

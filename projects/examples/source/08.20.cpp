@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////
 
-#include <cstdio>
+#include <iostream>
 #include <print>
 #include <string>
 
@@ -29,7 +29,7 @@ int main()
 		auto object = local["factorial"](100);
 
 	//  ------------------------------------------------------------------
-			
+
 		auto x = boost::python::extract < std::string > (object)();
 
 	//  ------------------------------------------------------------------
@@ -38,7 +38,7 @@ int main()
 	}
 	catch (boost::python::error_already_set const &)
 	{
-		std::print(stderr, "main : {}\n", Python::exception());
+		std::cerr << "main : " << Python::exception() << '\n';
 	}
 }
 

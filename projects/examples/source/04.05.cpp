@@ -22,14 +22,14 @@ template < typename T, typename ... Ts > void show_v1(T x, Ts ... ys)
 
 /////////////////////////////////////////////////////////////////////
 
-template < typename T > void show_v2(T x)
+void show_v2(auto x)
 {
 	std::print("show_v2 : x = {} ", x);
 }
 
 /////////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > void show_v2(T x, Ts ... ys)
+void show_v2(auto x, auto ... ys)
 {
 	show_v2(x);
 
@@ -45,7 +45,7 @@ template < typename T, typename ... Ts > void show_v2(T x, Ts ... ys)
 
 /////////////////////////////////////////////////////////////////////
 
-template < typename ... Ts > void transform(Ts ... xs) 
+void transform(auto ... xs) 
 { 
 	show_v1(xs * xs...); // support : cppinsights.io
 }
@@ -59,7 +59,7 @@ struct Entity
 
 /////////////////////////////////////////////////////////////////////
 
-template < typename ... Ts > auto make_entity(Ts ... xs)
+auto make_entity(auto ... xs)
 {
 	return new Entity(xs...);
 }

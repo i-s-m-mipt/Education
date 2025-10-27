@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////
 
-#include <iostream>
 #include <mutex>
+#include <print>
 #include <thread>
 
 ////////////////////////////////////////////////////////////////
@@ -25,7 +25,7 @@ public :
     {
         std::scoped_lock < std::recursive_mutex > lock(m_mutex);
 
-        std::cout << "Entity::test_v2 : m_x = " << m_x << '\n';
+        std::print("Entity::test_v2 : m_x = {}\n", m_x);
     }
 
 private :

@@ -7,6 +7,7 @@
 #include <iostream>
 #include <istream>
 #include <ostream>
+#include <print>
 #include <string>
 
 //////////////////////////////////////////////////////////
@@ -42,7 +43,7 @@ int main()
 
 //  ------------------------------------------------------
 
-    std::cout << "main : enter char : "; std::cin.get();
+    std::print("main : enter char : "); std::cin.get();
 
 //  ------------------------------------------------------
 
@@ -58,11 +59,11 @@ int main()
         std::string string;
 
     //  --------------------------------------------------
-            
+
         std::getline(stream >> std::ws, string);
 
     //  --------------------------------------------------
-            
+
         assert(string == "bbbbb");
     }
 

@@ -338,6 +338,13 @@ public :
 
 //  --------------------------------------------------------------
 
+    void operator()(double x) const
+    {
+        std::print("Visitor::operator() : x = {}\n", x);
+    }
+
+//  --------------------------------------------------------------
+
     void operator()(std::string const & string) const
     {
         std::print("Visitor::operator() : string = {}\n", string);
@@ -364,15 +371,15 @@ public :
 
 int main()
 {
-    Variant < int, std::string > variant_1;
-    
-    Variant < int, std::string > variant_2 = 2;
+    Variant < int, double, std::string > variant_1;
 
-    Variant < int, std::string > variant_3 = variant_2;
+    Variant < int, double, std::string > variant_2 = 2;
 
-    Variant < int, std::string > variant_4 = std::move(variant_3);
+    Variant < int, double, std::string > variant_3 = variant_2;
 
-//  --------------------------------------------------------------
+    Variant < int, double, std::string > variant_4 = std::move(variant_3);
+
+//  ----------------------------------------------------------------------
 
     variant_3 = variant_2;
 
@@ -380,15 +387,15 @@ int main()
 
     variant_1 = 1;
 
-//  --------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
     assert(variant_1.holds_alternative < int > ());
 
-//  --------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
     assert(variant_1.get < int > () == 1);
 
-//  --------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
     variant_1.visit(Visitor());
 }

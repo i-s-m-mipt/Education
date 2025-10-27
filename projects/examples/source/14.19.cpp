@@ -18,7 +18,7 @@ public :
 
 //  --------------------------------------------------
 
-    template < typename F > void invoke(F && f)
+    void invoke(auto && f)
     {
         std::scoped_lock < std::mutex > lock(m_mutex);
 

@@ -12,7 +12,7 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename F, typename T > auto derivative(F && f, T x, T dx = 1e-9)
+template < typename T > auto derivative(auto && f, T x, T dx = 1e-9)
 {
     auto a = f(x + 1 * dx) - f(x - 1 * dx);
 

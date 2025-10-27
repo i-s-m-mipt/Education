@@ -2,8 +2,13 @@
 
 #include <functional>
 #include <iterator>
+#include <string>
 #include <tuple>
 #include <vector>
+
+//////////////////////////////////////////////////////////////////////////
+
+using namespace std::literals;
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -11,7 +16,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > auto hash(T x, Ts ... ys)
+template < typename T > auto hash(T x, auto ... ys)
 {
 	auto seed = std::hash < T > ()(x);
 
@@ -47,7 +52,7 @@ auto hash_value(Entity const & entity)
 
 int main()
 {
-    std::ignore = hash(1, 2, 3);
+    std::ignore = hash(1, 2.0, "aaaaa"s);
 
 //  ----------------------------------------------------------------------
 

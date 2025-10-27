@@ -11,13 +11,13 @@ public :
 
     Entity(int x, int y) : m_x(x), m_y(y) {}
 
-//  ------------------------------------------------------------------
+//  ----------------------------------------------------------------
 
-    friend auto operator<=>(Entity const & lhs, Entity const & rhs)
+    auto operator<=>(Entity const & other) const
     {
-        if (lhs.m_x < rhs.m_x) { return std::weak_ordering::less;    }
+        if (m_x < other.m_x) { return std::weak_ordering::less;    }
 
-        if (lhs.m_x > rhs.m_x) { return std::weak_ordering::greater; }
+        if (m_x > other.m_x) { return std::weak_ordering::greater; }
 
         return std::weak_ordering::equivalent;
     }
@@ -33,17 +33,21 @@ int main()
 {
     Entity entity_1(1, 1);
     
-    Entity entity_2(1, 2);
+    Entity entity_2(2, 2);
 
-    Entity entity_3(3, 3);
+    Entity entity_3(2, 3);
 
-//  -------------------------------------
+//  ------------------------------------------------------------------
 
-    assert((entity_3 <=> entity_2) >  0);
+    assert((entity_1 <=> entity_2) <  0);
 
-    assert((entity_1 <=> entity_2) == 0);
+    assert((entity_2 <=> entity_3) == 0);
 
-    assert((entity_1 <=> entity_3) <  0);
+    assert((entity_2 <=> entity_1) >  0);
+
+//  ------------------------------------------------------------------
+
+    assert((entity_2 <=> entity_3) == std::weak_ordering::equivalent);
 }
 
 //////////////////////////////////////////////////////////////////////

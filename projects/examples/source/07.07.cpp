@@ -18,6 +18,13 @@ public :
 
 //  --------------------------------------------------------------
 
+    void operator()(double x) const
+    {
+        std::print("Visitor::operator() : x = {}\n", x);
+    }
+
+//  --------------------------------------------------------------
+
     void operator()(std::string const & string) const
     {
         std::print("Visitor::operator() : string = {}\n", string);
@@ -44,7 +51,7 @@ public :
 
 int main()
 {
-    std::variant < int, std::string > variant_1 = 1;
+    std::variant < int, double, std::string > variant_1 = 1;
 
 //  ----------------------------------------------------------------
 
@@ -56,7 +63,7 @@ int main()
 
 //  ----------------------------------------------------------------
 
-    static_assert(std::variant_size_v < decltype(variant_1) > == 2);
+    static_assert(std::variant_size_v < decltype(variant_1) > == 3);
 
 //  ----------------------------------------------------------------
 

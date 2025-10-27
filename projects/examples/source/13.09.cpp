@@ -7,6 +7,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <print>
 #include <streambuf>
 #include <string>
 
@@ -47,21 +48,21 @@ int main()
 {
     auto path = "output.data";
 
-//  ----------------------------------------------------
+//  ---------------------------------------------------
 
     {
         Adapter adapter(path);
 
     //  ----------------------
-            
+
         std::cout << "main\n";
     }
 
-//  ----------------------------------------------------
+//  ---------------------------------------------------
 
-    std::cout << "main : enter char : "; std::cin.get();
+    std::print("main : enter char : "); std::cin.get();
 
-//  ----------------------------------------------------
+//  ---------------------------------------------------
 
     std::filesystem::remove(path);
 }

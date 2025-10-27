@@ -10,7 +10,7 @@
 
 //////////////////////////////////////
 
-#include <iostream>
+#include <print>
 
 //////////////////////////////////////
 
@@ -22,21 +22,21 @@ void test_v2();
 
 // void test_v3() // error
 // { 
-//     std::cout << "test_v3\n";
+//     std::print("test_v3\n");
 // } 
 
 //////////////////////////////////////
 
 inline void test_v4()
 { 
-    std::cout << "test_v4\n";
+    std::print("test_v4\n");
 }
 
 //////////////////////////////////////
 
 template < typename T > void test_v5()
 {
-	std::cout << "test_v5\n";
+	std::print("test_v5\n");
 }
 
 //////////////////////////////////////

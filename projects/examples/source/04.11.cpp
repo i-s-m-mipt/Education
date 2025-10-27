@@ -40,7 +40,7 @@ public :
 
 	auto & operator-=(Rational const & other) 
 	{ 
-		return *this += other.m_num * -1;
+		return *this += Rational(other.m_num * -1, other.m_den);
 	}
 
 //  ----------------------------------------------------------------------

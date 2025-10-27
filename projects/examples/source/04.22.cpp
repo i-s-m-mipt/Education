@@ -1,6 +1,8 @@
 //////////////////////////////////////////////////////////////////
 
+#include <cassert>
 #include <cstddef>
+#include <string>
 #include <utility>
 
 //////////////////////////////////////////////////////////////////
@@ -13,16 +15,16 @@ template < typename T, typename ... Ts > class Tuple < T, Ts ... >
 {
 public :
 
-	constexpr Tuple(T && x, Ts && ... ys)
+	Tuple(T && x, Ts && ... ys)
 	:
-		m_head(std::forward < T  > (x )   ), 
+		m_head(std::forward < T  > (x )   ),
 		
 		m_tail(std::forward < Ts > (ys)...)
 	{}
 
-//  -----------------------------------------------------
+//  ------------------------------------------------
 
-	template < std::size_t I > constexpr auto get() const
+	template < std::size_t I > auto get() const
 	{
 		if constexpr (I > 0)
 		{
@@ -45,7 +47,11 @@ private :
 
 int main()
 {
-	static_assert(Tuple < int, double > (1, 1).get < 0 > () == 1);
+	Tuple < int, double, std::string > tuple(1, 2.0, "aaaaa");
+
+//  ----------------------------------------------------------
+
+	assert(tuple.get < 0 > () == 1);
 }
 
 //////////////////////////////////////////////////////////////////

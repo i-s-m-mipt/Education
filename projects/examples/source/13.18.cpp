@@ -29,8 +29,8 @@ public :
     {
         std::string string;
 
-        std::format_to(std::back_inserter(string), "{}, {}", entity.x, entity.string);
-        
+        std::format_to(std::back_inserter(string), "{} {}", entity.x, entity.string);
+
         return std::formatter < std::string_view > ::format("{ " + string + " }", context);
     }
 };
@@ -39,7 +39,7 @@ public :
 
 int main()
 {
-    assert(std::format("{0}, {1}", false, true) == "false, true");
+    assert(std::format("{0} {1}", false, true) == "false true");
 
 //  ----------------------------------------------------------------
 
@@ -57,11 +57,11 @@ int main()
 
 //  ----------------------------------------------------------------
 
-    std::format_to(std::back_inserter(string), "{}, {}", 1, 2);
+    std::format_to(std::back_inserter(string), "{} {}", 1, 2);
 
 //  ----------------------------------------------------------------
 
-    assert(string == "1, 2");
+    assert(string == "1 2");
 
 //  ----------------------------------------------------------------
 

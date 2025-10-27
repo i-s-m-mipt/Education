@@ -1,12 +1,12 @@
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
-#include <cstdio>
 #include <exception>
+#include <iostream>
 #include <print>
 #include <stdexcept>
 #include <vector>
 
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 class Exception : public std::exception
 {
@@ -26,7 +26,7 @@ private :
 	int m_x = 0;
 };
 
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 [[noreturn]] void test_v1()
 {
@@ -45,7 +45,7 @@ private :
 	std::print("test_v1\n");
 }
 
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 void test_v2()
 {
@@ -57,7 +57,7 @@ void test_v2()
 	}
 	catch (Exception const & exception)
 	{
-		std::print(stderr, "test_v2 : {}\n", exception.what());
+		std::cerr << "test_v2 : " << exception.what() << '\n';
 
 	//	throw exception; // error
 
@@ -67,7 +67,7 @@ void test_v2()
 	std::print("test_v2\n");
 }
 
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 void test_v3()
 {
@@ -79,7 +79,7 @@ void test_v3()
 	}
 	catch (std::exception const & exception)
 	{
-		std::print(stderr, "test_v3 : {}\n", exception.what());
+		std::cerr << "test_v3 : " << exception.what() << '\n';
 
 		throw std::runtime_error("error");
 	}
@@ -87,7 +87,7 @@ void test_v3()
 	std::print("test_v3\n");
 }
 
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -97,16 +97,16 @@ int main()
 	}
 	catch (std::exception const & exception)
 	{
-		std::print(stderr, "main : {}\n", exception.what());
+		std::cerr << "main : " << exception.what() << '\n';
 	}
 	catch (...)
 	{
-		std::print(stderr, "main : unknown exception\n");
+		std::cerr << "main : unknown exception\n";
 
-	//  -------------------------------------------------
+	//  ------------------------------------------
 
 		auto exception = std::current_exception();
 	}
 }
 
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////

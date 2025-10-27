@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////
 
 #include <atomic>
-#include <iostream>
+#include <print>
 #include <type_traits>
 
 ///////////////////////////////////////////////////////////////////
@@ -18,7 +18,7 @@ public :
 
     auto & operator=(Entity_v3 const &)
     {
-        std::cout << "Entity_v3::operator=\n";
+        std::print("Entity_v3::operator=\n");
 
         return *this;
     }

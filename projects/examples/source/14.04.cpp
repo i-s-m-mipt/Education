@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <print>
 #include <thread>
 #include <utility>
 
@@ -12,7 +12,7 @@
 
 void test()
 {
-    std::cout << "test\n";
+    std::print("test\n");
 }
 
 ///////////////////////////////////////////////////////////////

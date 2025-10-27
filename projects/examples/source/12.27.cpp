@@ -1,14 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <cmath>
-#include <complex>
 #include <iterator>
 #include <string_view>
-
-///////////////////////////////////////////////////////////////////////////////////////
-
-using namespace std::literals;
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -16,57 +10,131 @@ using namespace std::literals;
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-auto parse(std::string_view view)
+namespace parser
 {
-    auto begin = std::begin(view), end = std::end(view);
+    class Handler_v1 : public boost::spirit::x3::symbols < int >
+    {
+    public :
 
-    auto x = 0.0, y = 0.0;
+        Handler_v1()
+        {
+            add("C",    100);
+            add("CC",   200);
+            add("CCC",  300);
+            add("CD",   400);
+            add("D",    500);
+            add("DC",   600);
+            add("DCC",  700);
+            add("DCCC", 800);
+            add("CM",   900);
+        }
+    };
+
+//  -----------------------------------------------------------------------------------
+
+    class Handler_v2 : public boost::spirit::x3::symbols < int >
+    {
+    public :
+
+        Handler_v2()
+        {
+            add("X",    10);
+            add("XX",   20);
+            add("XXX",  30);
+            add("XL",   40);
+            add("L",    50);
+            add("LX",   60);
+            add("LXX",  70);
+            add("LXXX", 80);
+            add("XC",   90);
+        }
+    };
+    
+//  -----------------------------------------------------------------------------------
+
+    class Handler_v3 : public boost::spirit::x3::symbols < int >
+    {
+    public :
+
+        Handler_v3()
+        {
+            add("I",    1);
+            add("II",   2);
+            add("III",  3);
+            add("IV",   4);
+            add("V",    5);
+            add("VI",   6);
+            add("VII",  7);
+            add("VIII", 8);
+            add("IX",   9);
+        }
+    };
+
+//  -----------------------------------------------------------------------------------
+
+    boost::spirit::x3::rule < struct rule_tag, int > rule;
+
+//  -----------------------------------------------------------------------------------
+
+    using boost::spirit::x3::_val;
 
     using boost::spirit::x3::_attr;
 
-    auto lambda_1 = [&x](auto const & context){ x = _attr(context); };
+//  -----------------------------------------------------------------------------------
 
-    auto lambda_2 = [&y](auto const & context){ y = _attr(context); };
+    auto lambda_1 = [](auto const & context){ _val(context) = 0; };
 
-    using boost::spirit::x3::double_;
+    auto lambda_2 = [](auto const & context){ _val(context) += 1'000; };
 
-    auto rule = 
+    auto lambda_3 = [](auto const & context){ _val(context) += _attr(context); };
+
+//  -----------------------------------------------------------------------------------
+
+    Handler_v1 handler_v1;
+    
+    Handler_v2 handler_v2;
+    
+    Handler_v3 handler_v3;
+
+//  -----------------------------------------------------------------------------------
+
+    auto rule_def = 
     (
-        '(' >> double_[lambda_1] >> ',' >> double_[lambda_2] >> ')' |
-
-        '(' >> double_[lambda_1]                             >> ')' |
-        
-               double_[lambda_1]
+        boost::spirit::x3::eps[lambda_1] >> *boost::spirit::x3::char_('M')[lambda_2] >>
+        (
+            -handler_v1[lambda_3] >> 
+            
+            -handler_v2[lambda_3] >> 
+            
+            -handler_v3[lambda_3]
+        )
     );
 
-    auto space = boost::spirit::x3::ascii::space;
+//  -----------------------------------------------------------------------------------
 
-    boost::spirit::x3::phrase_parse(begin, end, rule, space);
-    
-    return std::complex < double > (x, y);
+    BOOST_SPIRIT_DEFINE(rule);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-auto equal(std::complex < double > x, std::complex < double > y, double epsilon = 1e-6)
+auto parse(std::string_view view)
 {
-    return 
-    (
-        std::abs(std::real(x) - std::real(y)) < epsilon &&
-        
-        std::abs(std::imag(y) - std::imag(y)) < epsilon
-    );
+    auto begin = std::begin(view), end = std::end(view);
+
+    using parser::rule;
+
+    auto x = 0;
+
+    boost::spirit::x3::parse(begin, end, rule, x);
+    
+    return x;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    assert(equal(parse("(1.0, 1.0)"), 1.0 + 1.0i));
-
-    assert(equal(parse("(1.0)     "), 1.0 + 0.0i));
-
-    assert(equal(parse(" 1.0      "), 1.0 + 0.0i));
+    assert(parse("MCMLXX") == 1'970);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////

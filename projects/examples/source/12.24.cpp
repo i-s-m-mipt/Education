@@ -18,24 +18,26 @@ using namespace std::literals;
 
 int main()
 {
-    auto view = "1 2"sv;
+    auto view = "{ 1, 1 }"sv;
 
 //  ---------------------------------------------------------------
-        
+
     auto begin = std::begin(view), end = std::end(view);
 
 //  ---------------------------------------------------------------
 
     auto rule = 
     (
-        boost::spirit::x3::int_ >> 
-        
-        boost::spirit::x3::int_
+        '{' 
+            >> boost::spirit::x3::int_ >> ','
+                
+            >> boost::spirit::x3::int_ >> 
+        '}'
     );
 
 //  ---------------------------------------------------------------
 
-    auto space = boost::spirit::x3::ascii::space;
+    using boost::spirit::x3::ascii::space;
 
 //  ---------------------------------------------------------------
 
@@ -47,7 +49,7 @@ int main()
 
 //  ---------------------------------------------------------------
 
-    assert(pair == std::make_pair(1, 2));
+    assert(pair == std::make_pair(1, 1));
 }
 
 ///////////////////////////////////////////////////////////////////

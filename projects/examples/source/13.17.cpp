@@ -8,7 +8,7 @@
 #include <chrono>
 #include <filesystem>
 #include <format>
-#include <iostream>
+#include <print>
 #include <sstream>
 #include <string>
 
@@ -98,7 +98,7 @@ auto size(std::filesystem::directory_entry const & entry)
         size /= 1'024;
     }
 
-    return (std::stringstream() << std::format("{: >4}", size) << array[i - 1]).str();
+    return (std::stringstream() << std::format("{: >4}{}", size, array[i - 1])).str();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -109,18 +109,23 @@ void show(std::filesystem::path const & path)
 	{
         for (auto const & entry : std::filesystem::directory_iterator(path))
 		{
-            std::cout << "show : entry : " << make_type(entry.status());
-
-            std::cout << " | " << make_permissions(entry.status().permissions());
-
-            std::cout << " | " << size(entry);
-
-            std::cout << " | " << std::chrono::floor < std::chrono::seconds > 
+            std::print
             (
-                std::chrono::file_clock::to_sys(entry.last_write_time())
-            );
+                "show : entry : {} | {} | {} | {} | {}\n",
 
-			std::cout << " | " << entry.path().filename().string() << '\n';
+                make_type(entry.status()),
+
+                make_permissions(entry.status().permissions()),
+
+                size(entry),
+
+                std::chrono::floor < std::chrono::seconds >
+                (
+                    std::chrono::file_clock::to_sys(entry.last_write_time())
+                ),
+
+			    entry.path().filename().string()
+            );
 		}
 	}
 }

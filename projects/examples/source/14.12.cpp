@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <cassert>
-#include <concepts>
 #include <functional>
 #include <future>
 #include <iterator>
@@ -26,7 +25,7 @@ public :
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < std::ranges::view V, typename T > auto reduce(V view, T sum)
+template < typename T > auto reduce(std::ranges::view auto view, T sum)
 {
 	auto begin = std::begin(view), end = std::end(view);
 

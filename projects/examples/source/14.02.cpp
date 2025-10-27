@@ -1,13 +1,13 @@
 /////////////////////////////
 
-#include <iostream>
+#include <print>
 #include <thread>
 
 /////////////////////////////
 
 void test()
 {
-    std::cout << "test\n";
+    std::print("test\n");
 }
 
 /////////////////////////////

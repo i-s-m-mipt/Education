@@ -2,8 +2,7 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <cstdio>
-#include <print>
+#include <iostream>
 #include <random>
 #include <set>
 #include <string>
@@ -100,7 +99,7 @@ int main()
 	}
 	catch (boost::python::error_already_set const &)
 	{
-		std::print(stderr, "main : {}\n", Python::exception());
+		std::cerr << "main : " << Python::exception() << '\n';
 	}
 }
 
