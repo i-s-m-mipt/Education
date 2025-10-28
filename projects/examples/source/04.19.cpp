@@ -6,13 +6,6 @@
 
 /////////////////////////////////////////////////////////////
 
-constexpr auto make_integer() 
-{ 
-	return !std::is_constant_evaluated() ? 1 : 2;
-}
-
-/////////////////////////////////////////////////////////////
-
 constexpr auto test_v1(int x) { return x; }
 
 consteval auto test_v2(int x) { return x; }
@@ -48,9 +41,9 @@ constinit auto g_x = 1;
 
 int main()
 {
-              auto x = make_integer();
-    
-    constexpr auto y = make_integer();
+              auto x = 1;
+
+    constexpr auto y = 2;
 
 //  ---------------------------------------------------------
 
