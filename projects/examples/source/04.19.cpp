@@ -23,7 +23,7 @@ consteval auto factorial_v2(int x)
 {
     for (auto i = x - 1; i > 1; x *= i, --i);
 
-	return x;
+    return x;
 }
 
 /////////////////////////////////////////////////////////////
