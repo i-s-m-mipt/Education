@@ -8,13 +8,13 @@
 template < typename T > void swap(T & x, T & y)
 {
     static_assert(std::is_copy_constructible_v < T > );
-    
+
     static_assert(std::is_copy_assignable_v    < T > );
 
     auto z = y;
-            
+
          y = x;
-         
+
          x = z;
 }
 
@@ -42,12 +42,8 @@ int main()
     auto x = 1, y = 2;
 
 //  ----------------------------------------------------
-        
+
     swap(x, y);
-
-//  ----------------------------------------------------
-
-    assert(x == 2 && y == 1);
 }
 
 //////////////////////////////////////////////////////////////

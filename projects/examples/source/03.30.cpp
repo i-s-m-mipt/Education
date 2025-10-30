@@ -13,7 +13,7 @@ class Vector
 {
 public :
 
-	Vector() : m_array(nullptr), m_size(0) 
+	Vector() : m_array(nullptr), m_size(0)
 	{
 		std::print("Vector:: Vector (1)\n");
 	}
@@ -31,7 +31,7 @@ public :
 
 //  --------------------------------------------------------------------------------
 
-	Vector(Vector const & other) : m_size(other.m_size) 
+	Vector(Vector const & other) : m_size(other.m_size)
 	{
 		std::print("Vector:: Vector (3)\n");
 
@@ -43,9 +43,9 @@ public :
 //  --------------------------------------------------------------------------------
 
 	Vector(Vector && other)
-	: 
-		m_array(std::exchange(other.m_array, nullptr)), 
-		
+	:
+		m_array(std::exchange(other.m_array, nullptr)),
+
 		m_size (std::exchange(other.m_size,  0      ))
 	{
 		std::print("Vector:: Vector (4)\n");
@@ -88,8 +88,8 @@ public :
 //		{
 //			auto array = other.m_size ? new int[other.m_size]{} : nullptr;
 //
-//			std::ranges::copy(other.m_array, other.m_array + other.m_size, array);		
-//		
+//			std::ranges::copy(other.m_array, other.m_array + other.m_size, array);
+//
 //			delete[] std::exchange(m_array, array);
 //
 //			m_size = other.m_size;
@@ -107,7 +107,7 @@ public :
 //		if (this != &other)
 //		{
 //			delete[] m_array;
-//			
+//
 //			m_array = std::exchange(other.m_array, nullptr);
 //
 //			m_size  = std::exchange(other.m_size,  0      );
@@ -132,7 +132,7 @@ public :
 	void swap(Vector & other)
 	{
 		std::swap(m_array, other.m_array);
-		
+
 		std::swap(m_size,  other.m_size );
 	}
 
@@ -142,6 +142,13 @@ private :
 
 	std::size_t m_size = 0;
 };
+
+////////////////////////////////////////////////////////////////////////////////////
+
+void swap(Vector & lhs, Vector & rhs)
+{
+	lhs.swap(rhs);
+}
 
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -160,6 +167,10 @@ int main()
 	vector_3 = vector_2;
 
 	vector_4 = std::move(vector_3);
+
+//  --------------------------------------
+
+	swap(vector_1, vector_2);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
