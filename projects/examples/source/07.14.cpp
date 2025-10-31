@@ -1,6 +1,7 @@
 ///////////////////////////////////////////////////////////////
 
 #include <format>
+#include <iterator>
 #include <print>
 #include <stacktrace>
 
