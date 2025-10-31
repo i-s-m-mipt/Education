@@ -308,7 +308,7 @@
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 21.70in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 21.90in\enlargethispage{100in}
 
 \section{03. Object\,-\,Oriented Programming}
 
@@ -384,6 +384,8 @@
 
 \bigskip
 
+|
+
 \bigskip
 
 {\large \textbf{03.09} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.32.cpp}{\texttt{03.32}}]}}
@@ -402,7 +404,7 @@
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 8.00in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 14.50in\enlargethispage{100in}
 
 \section{04. Generic Programming}
 
@@ -437,6 +439,58 @@
 \bigskip
 
 Доработайте Ваше предыдущее решение задачи 03.07 таким образом, чтобы реализованный вектор мог использоваться для хранения данных любых типов. Используйте шаблон класса. Не~изменяйте~реализацию~вектора.
+
+\bigskip
+
+{\large \textbf{04.05} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.17.cpp}{\texttt{04.17}}]}}
+
+\bigskip
+
+Реализуйте алгоритм вычисления N\,-\,ого числа ряда Фибоначчи на основе рекурсивного подхода. Используйте метапрограммирование шаблонов. Реализуйте базовый шаблон структуры \lstinline{Fibonacci} для представления N\,-\,ого числа ряда Фибоначчи. Реализуйте в шаблоне структуры \lstinline{Fibonacci} параметр типа \lstinline{int} для указания номера N на этапе компиляции. Реализуйте в структуре \lstinline{Fibonacci} статическое константное поле типа \lstinline{int} для хранения вычисляемого на этапе компиляции N\,-\,ого числа ряда Фибоначчи. Реализуйте в структуре \lstinline{Fibonacci} статическое утверждение \lstinline{static_assert} для проверки переполнения типа \lstinline{int} при вычислениях на этапе компиляции. Реализуйте две полные специализации шаблона структуры \lstinline{Fibonacci} для представления первого и второго чисел ряда Фибоначчи. Реализуйте шаблон константы для сокращения записей обращений 
+
+к полю шаблона структуры \lstinline{Fibonacci}. Реализуйте тесты на основе статических утверждений \lstinline{static_assert}.
+
+\bigskip
+
+{\large \textbf{04.06} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.19.cpp}{\texttt{04.19}}]}}
+
+\bigskip
+
+Доработайте Ваше предыдущее решение задачи 02.05 таким образом, чтобы алгоритм вычисления числа e выполнялся только на этапе компиляции. Реализуйте мгновенную функцию со спецификатором \lstinline{consteval} для вычисления числа e. Используйте стандартный контейнер \lstinline{std::array} со спецификатором \lstinline{constexpr} для хранения различных значений числа epsilon. Реализуйте тесты на основе статических утверждений \lstinline{static_assert}.
+
+\bigskip
+
+{\large \textbf{04.07} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.21.cpp}{\texttt{04.21}}]}}
+
+\bigskip
+
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.21.cpp}{\texttt{04.21}} таким образом, чтобы дроби можно было вычитать, умножать и делить на этапе компиляции. Реализуйте шаблоны структур \lstinline{Sub}, \lstinline{Mul} и \lstinline{Div} по аналогии с шаблоном структуры \lstinline{Sum} для представления операций вычитания, умножения и деления дробей соответственно. Используйте в структурах \lstinline{Sub} и \lstinline{Div} структуры \lstinline{Sum} и \lstinline{Mul} соответственно для устранения дублирования кода. Реализуйте в структурах \lstinline{Sum} и \lstinline{Mul} алгоритмы сокращения дробей. Используйте стандартную функцию \lstinline{std::gcd}. Реализуйте в структуре \lstinline{Div} статическое утверждение \lstinline{static_assert} для проверки деления на ноль при вычислениях на этапе компиляции. Реализуйте шаблоны псевдонимов для сокращения записей обращений к псевдонимам типов в шаблонах структур \lstinline{Sub}, \lstinline{Mul} и \lstinline{Div} по аналогии с шаблоном псевдонима \lstinline{sum}. Реализуйте шаблон перегруженного оператора вычитания интервалов со спецификатором \lstinline{constexpr}, используя внутри него шаблон перегру-
+
+женного\,оператора\,сложения\,интервалов.\,Реализуйте\,тесты\,на\,основе\,статических\,утверждений\,\lstinline{static_assert}.
+
+\bigskip
+
+{\large \textbf{04.08} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.22.cpp}{\texttt{04.22}}]}}
+
+\bigskip
+
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.22.cpp}{\texttt{04.22}} таким образом, чтобы пользователь мог определить размер кортежа. Реализуйте в классе \lstinline{Tuple} публичную функцию-член \lstinline{size} для получения значения размера кортежа. Используйте оператор \lstinline{sizeof...} для пакета типов кортежа. Реализуйте тесты на основе статических утверждений \lstinline{static_assert}.
+
+\bigskip
+
+{\large \textbf{04.09} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.34.cpp}{\texttt{04.34}}]}}
+
+\bigskip
+
+|
+
+\bigskip
+
+{\large \textbf{04.10} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.39.cpp}{\texttt{04.39}}]}}
+
+\bigskip
+
+|
 
 
 
@@ -578,7 +632,7 @@
 
 \bigskip
 
-Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/14.09.cpp}{\texttt{14.09}} таким образом, чтобы алгоритм вместо сложения элементов коллекции применял переданное пользователем действие к каждому элементу коллекции. Сравните тип возвращаемого результата реализованного алгоритма с типом возвращаемого результата стандартного последовательного алгоритма \lstinline{std::for_each} без политики выполнения. Обоснуйте различия процессов выполнения этих двух алгоритмов.
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/14.09.cpp}{\texttt{14.09}} таким образом, чтобы алгоритм применял переданное пользователем действие к каждому элементу коллекции вместо сложения элементов коллекции. Сравните тип возвращаемого результата реализованного алгоритма с типом возвращаемого результата стандартного последовательного алгоритма \lstinline{std::for_each} без политики выполнения. Обоснуйте различия процессов выполнения этих двух алгоритмов.
 
 \bigskip
 
