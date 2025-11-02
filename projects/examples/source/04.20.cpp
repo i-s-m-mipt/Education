@@ -10,7 +10,7 @@ void show(auto x, auto ... ys)
 {
 	std::print("show : x = {} sizeof...(ys) = {}\n", x, sizeof...(ys));
 
-	if constexpr (sizeof...(ys) > 0) 
+	if constexpr (sizeof...(ys) > 0) // support : cppinsights.io
 	{
 		show(ys...);
 	}
@@ -20,7 +20,7 @@ void show(auto x, auto ... ys)
 
 constexpr auto test(int x, int y)
 {
-	if consteval
+	if consteval // support : cppinsights.io
 	{
 		return std::max(x, y);
 	}

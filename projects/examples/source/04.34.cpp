@@ -21,7 +21,7 @@ template < bool C, typename T > using enable_if_t = typename enable_if < C, T > 
 
 int main()
 {
-	static_assert(std::is_same_v <      enable_if_t < 1, int > , int > == 1); // ?
+	static_assert(std::is_same_v <      enable_if_t < 1, int > , int > == 1);
 
 //	static_assert(std::is_same_v <      enable_if_t < 0, int > , int > == 0); // error
 

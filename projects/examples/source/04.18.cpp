@@ -21,8 +21,6 @@ template < int X > struct Is_Prime
 
 /////////////////////////////////////////////////////////////////////////////
 
-template <> struct Is_Prime < 0 > {	constexpr static bool value = 0; };
-
 template <> struct Is_Prime < 1 > { constexpr static bool value = 0; };
 
 template <> struct Is_Prime < 2 > { constexpr static bool value = 1; };

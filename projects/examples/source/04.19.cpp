@@ -43,7 +43,11 @@ int main()
 {
               auto x = 1;
 
-    constexpr auto y = 2;
+    constexpr auto y = 2; // support : compiler-explorer.com
+
+//  ---------------------------------------------------------
+
+//  ++y; // error
 
 //  ---------------------------------------------------------
 
