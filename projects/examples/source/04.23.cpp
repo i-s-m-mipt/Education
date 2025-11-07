@@ -32,23 +32,23 @@ int main()
 
 //  ----------------------------------------------------------------
 
-    auto z = 0.0;
+    auto x = 0.0;
 
 //  ----------------------------------------------------------------
 
-    std::tie(std::ignore, z, std::ignore) = tuple;
+    std::tie(std::ignore, x, std::ignore) = tuple;
 
 //  ----------------------------------------------------------------
 
-    assert(equal(z, 2.0));
+    assert(equal(x, 2.0));
 
 //  ----------------------------------------------------------------
 
-    auto const & [x, y, string] = tuple; // support : cppinsights.io
+    auto const & [y, z, string] = tuple; // support : cppinsights.io
 
 //  ----------------------------------------------------------------
 
-    assert(x == 1 && equal(y, 2.0) && string == "aaaaa");
+    assert(y == 1 && equal(z, 2.0) && string == "aaaaa");
 }
 
 ////////////////////////////////////////////////////////////////////
