@@ -16,13 +16,6 @@ public :
 
 //  ----------------------------------------------------------------------
 
-	explicit operator double() const 
-	{ 
-		return 1.0 * m_num / m_den;
-	}
-
-//  ----------------------------------------------------------------------
-
 	auto & operator+=(Rational const & other)
 	{
 		auto lcm = std::lcm(m_den, other.m_den);
@@ -52,22 +45,22 @@ public :
 
 //  ----------------------------------------------------------------------
 
-	friend auto operator< (Rational const & lhs, Rational const & rhs)
-	{
-		return lhs.m_num * rhs.m_den < rhs.m_num * lhs.m_den;
-	}
-
-//  ----------------------------------------------------------------------
-
 	friend auto operator==(Rational const & lhs, Rational const & rhs)
 	{
-		return !(lhs < rhs) && !(rhs < lhs);
+		return lhs.m_num * rhs.m_den == rhs.m_num * lhs.m_den;
 	}
 
 private :
 
 	void reduce()
 	{
+		if (m_den < 0)
+		{
+			m_num = -m_num;
+
+			m_den = -m_den;
+		}
+
 		auto gcd = std::gcd(m_num, m_den);
 
 		m_num /= gcd;
