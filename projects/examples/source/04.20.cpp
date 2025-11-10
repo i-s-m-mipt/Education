@@ -6,13 +6,13 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-void show(auto x, auto ... ys)
+void show(auto x, auto ... xs)
 {
-	std::print("show : x = {} sizeof...(ys) = {}\n", x, sizeof...(ys));
+	std::print("show : x = {} sizeof...(xs) = {}\n", x, sizeof...(xs));
 
-	if constexpr (sizeof...(ys) > 0) // support : cppinsights.io
+	if constexpr (sizeof...(xs) > 0) // support : cppinsights.io
 	{
-		show(ys...);
+		show(xs...);
 	}
 }
 
