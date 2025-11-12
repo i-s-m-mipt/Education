@@ -20,11 +20,11 @@ public :
 //  -------------------------------
 
     auto make_entity()
-    { 
+    {
         m_entity = new Entity;
 
         set_x();
-        
+
         set_y();
 
         return m_entity;

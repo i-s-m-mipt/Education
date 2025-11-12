@@ -17,16 +17,16 @@ public :
 //  --------------------------------------------------
 
     void test() const
-    { 
+    {
         std::print("Singleton::test\n");
     }
 
 //  --------------------------------------------------
 
-    static auto & get() 
-    { 
+    static auto & get()
+    {
         static Singleton singleton;
-        
+
         return singleton;
     }
 

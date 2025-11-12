@@ -42,7 +42,7 @@ class Factory
 public :
 
     static auto make_client() { return s_client.copy(); }
-    
+
     static auto make_server() { return s_server.copy(); }
 
 private :
