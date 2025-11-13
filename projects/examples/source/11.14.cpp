@@ -89,7 +89,7 @@ template < typename D > class Max_Type < D, true >
 { 
 public : 
         
-    using type = char;
+    using type = std::byte;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
