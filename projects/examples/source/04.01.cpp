@@ -112,6 +112,8 @@ int main()
 
 //  ---------------------------------------------------------------
 
+	assert(equal(std::max(1,   2  ), 2));
+
 	assert(equal(std::max(1.0, 2.0), 2));
 	
 //	assert(equal(std::max(1,   2.0), 2)); // error

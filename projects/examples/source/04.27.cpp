@@ -1,37 +1,32 @@
-///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
-#include <cstddef>
 #include <type_traits>
 
-///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
-template < typename T                > class is_array          : public std::false_type {};
+template < typename T > struct is_function : std::integral_constant 
+<
+    bool, !std::is_const_v < T const > && !std::is_reference_v < T >
 
-template < typename T                > class is_array < T[ ] > : public std:: true_type {};
+> {};
 
-template < typename T, std::size_t S > class is_array < T[S] > : public std:: true_type {};
+/////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////////
+template < typename T > constexpr auto is_function_v = is_function < T > ::value;
 
-template < typename T > constexpr auto is_array_v = is_array < T > ::value;
-
-///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    static_assert(     is_array_v < int[5] > == 1);
+    static_assert(     is_function_v < int(int) > == 1);
 
-	static_assert(     is_array_v < int[ ] > == 1);
+	static_assert(     is_function_v < int      > == 0);
 
-	static_assert(     is_array_v < int    > == 0);
+//  ----------------------------------------------------
 
-//  -----------------------------------------------
+	static_assert(std::is_function_v < int(int) > == 1);
 
-	static_assert(std::is_array_v < int[5] > == 1);
-
-	static_assert(std::is_array_v < int[ ] > == 1);
-
-	static_assert(std::is_array_v < int    > == 0);
+	static_assert(std::is_function_v < int      > == 0);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////

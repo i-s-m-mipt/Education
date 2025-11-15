@@ -4,18 +4,18 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-void show_v1() 
+void show_v1()
 {
 	std::print("show_v1\n");
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > void show_v1(T x, Ts ... ys)
+template < typename T, typename ... Ts > void show_v1(T x, Ts ... xs)
 {
-	std::print("show_v1 : x = {} sizeof...(ys) = {}\n", x, sizeof...(ys));
+	std::print("show_v1 : x = {} sizeof...(xs) = {}\n", x, sizeof...(xs));
 
-	show_v1(ys...); // support : cppinsights.io
+	show_v1(xs...); // support : cppinsights.io
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -27,17 +27,17 @@ void show_v2(auto x)
 
 //////////////////////////////////////////////////////////////////////////
 
-void show_v2(auto x, auto ... ys)
+void show_v2(auto x, auto ... xs)
 {
 	show_v2(x);
 
-	std::print("sizeof...(ys) = {}\n", sizeof...(ys));
+	std::print("sizeof...(xs) = {}\n", sizeof...(xs));
 
-	show_v2(ys...);
+	show_v2(xs...);
 
-	if (sizeof...(ys) == 1)
+	if (sizeof...(xs) == 1)
 	{
-		std::print("sizeof...(ys) = 0\n");
+		std::print("sizeof...(xs) = 0\n");
 	}
 }
 

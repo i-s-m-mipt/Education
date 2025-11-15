@@ -18,7 +18,7 @@ public :
     public :
 
         static auto make_client_v1() -> Entity * { return new Client(1); }
-        
+
         static auto make_client_v2() -> Entity * { return new Client(2); }
     };
 

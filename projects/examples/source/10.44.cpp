@@ -16,13 +16,13 @@ using namespace std::literals;
 
 //////////////////////////////////////////////////////////////////////////
 
-template < typename T > auto hash(T x, auto ... ys)
+template < typename T > auto hash(T x, auto ... xs)
 {
 	auto seed = std::hash < T > ()(x);
 
-	if constexpr (sizeof...(ys) > 0)
+	if constexpr (sizeof...(xs) > 0)
 	{
-		seed += hash(ys...) * 31;
+		seed += hash(xs...) * 31;
 	}
 	
 	return seed;

@@ -15,11 +15,11 @@ template < typename T, typename ... Ts > class Tuple < T, Ts ... >
 {
 public :
 
-	Tuple(T && x, Ts && ... ys)
+	Tuple(T && x, Ts && ... xs)
 	:
 		m_head(std::forward < T  > (x )   ),
 		
-		m_tail(std::forward < Ts > (ys)...)
+		m_tail(std::forward < Ts > (xs)...)
 	{}
 
 //  ------------------------------------------------
