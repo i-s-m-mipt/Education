@@ -33,7 +33,7 @@ protected :
 
     virtual std::ostream & put(std::ostream & stream) const { return stream << m_x; }
 
-//  ---------------------------------------------------------------------------------
+private :
 
     int m_x = 0;
 };
