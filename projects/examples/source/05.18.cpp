@@ -24,19 +24,19 @@ protected :
 
 ////////////////////////////////////////////////////////////////
 
-class Client : public Entity < Client > {};
-
-////////////////////////////////////////////////////////////////
-
-class Server : public Entity < Server >
+class Client : public Entity < Client >
 {
 public :
 
 	void test_implementation() const
-	{ 
-		std::print("Server::test_implementation\n");
+	{
+		std::print("Client::test_implementation\n");
 	}
 };
+
+////////////////////////////////////////////////////////////////
+
+class Server : public Entity < Server > {};
 
 ////////////////////////////////////////////////////////////////
 
