@@ -8,16 +8,16 @@
 
 template < typename R > concept range = requires (R range)
 {
-	std::ranges::begin(range);
+	std::begin(range);
 
-	std::ranges::end  (range);
+	std::end  (range);
 };
 
 /////////////////////////////////////////////////////////////////////////
 
 template < typename R > concept sized_range = 
 (
-    range < R > && requires (R range){ std::ranges::size(range); }
+    range < R > && requires (R range){ std::size(range); }
 );
 
 /////////////////////////////////////////////////////////////////////////

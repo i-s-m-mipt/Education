@@ -19,7 +19,7 @@ template < std::ranges::view V > auto make_vector(V view)
 
     if constexpr (std::ranges::sized_range < V > )
     {
-        vector.reserve(std::ranges::size(view));
+        vector.reserve(std::size(view));
     }
 
     std::ranges::copy(view, std::back_inserter(vector));
