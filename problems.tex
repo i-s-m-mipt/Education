@@ -500,7 +500,7 @@
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 5.00in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 8.60in\enlargethispage{100in}
 
 \section{05. Software Architecture Patterns}
 
@@ -508,7 +508,41 @@
 
 \bigskip
 
-Реализуйте разновидность паттерна Builder, которая позволяет выполнять поэтапное конструирование составного объекта следующим образом: \lstinline{auto person = builder.name("Ivan").age(25).grade(10).get()}, где \lstinline{person} является экземпляром класса \lstinline{Person}, а \lstinline{builder} является экземпляром класса \lstinline{Builder}. Реализуйте класс \lstinline{Person} для представления составного объекта. Реализуйте класс \lstinline{Builder} для представления процесса создания составного объекта. Реализуйте в классе \lstinline{Builder} конструктор по умолчанию для создания составного объекта в начальном состоянии. Реализуйте в классе \lstinline{Builder} публичные функции-члены для поэтапного создания составного объекта и публичную функцию-член \lstinline{get} для получения созданного составного объекта.
+Реализуйте такую разновидность паттерна Builder, которая позволяет выполнять поэтапное создание составного объекта следующим образом: \lstinline{auto person = builder.name("Ivan").age(25).grade(10).get()}, где \lstinline{person} является экземпляром класса \lstinline{Person}, а \lstinline{builder} является экземпляром класса \lstinline{Builder}. Реализуйте класс \lstinline{Person} для представления составного объекта. Реализуйте класс \lstinline{Builder} для представления процесса создания составного объекта. Реализуйте в классе \lstinline{Builder} конструктор по умолчанию для создания составного объекта в начальном состоянии. Реализуйте в классе \lstinline{Builder} публичные функции-члены для поэтапного создания составного объекта и публичную функцию-член \lstinline{get} для получения созданного составного объекта.
+
+\bigskip
+
+{\large \textbf{05.02} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.10.cpp}{\texttt{05.10}}]}}
+
+\bigskip
+
+Реализуйте такую разновидность паттерна Decorator, которая основана на шаблоне. Реализуйте шаблон производного класса \lstinline{Decorator}, который является наследником интерфейса класса \lstinline{Entity} и наследником реали-
+
+зации собственного параметра шаблона. Устраните в классе \lstinline{Decorator} конструктор и ссылку на класс \lstinline{Entity}.
+
+\bigskip
+
+{\large \textbf{05.03} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.15.cpp}{\texttt{05.15}}]}}
+
+\bigskip
+
+Реализуйте такую разновидность паттерна Strategy, которая основана на статическом полиморфизме. Устраните класс \lstinline{Strategy}. Реализуйте шаблон производного класса \lstinline{Entity}, который является наследником реализации собственного параметра шаблона. Устраните в классе \lstinline{Entity} конструктор и ссылку на класс \lstinline{Strategy}.
+
+\bigskip
+
+{\large \textbf{05.04} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.16.cpp}{\texttt{05.16}}]}}
+
+\bigskip
+
+Реализуйте частичный программный каркас для некоторой абстрактной стратегической компьютерной игры. Используйте по крайней мере один порождающий паттерн проектирования, например, Factory, для создания игровых объектов; один структурый паттерн проектирования, например, Composite, для организации использования игровых объектов и один поведенческий паттерн проектирования, например, State, для управления сценариями взаимодействия игровых объектов в системе. Используйте любые другие паттерны проектирования при необходимости. Поставьте себя на место архитектора или инженера подобной программной системы.
+
+\bigskip
+
+{\large \textbf{05.05} \texttt{[\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.21.cpp}{\texttt{05.21}}]}}
+
+\bigskip
+
+Доработайте Ваше предыдущее решение задачи 03.10 таким образом, чтобы дробь содержала минимальный набор операторов с собственными реализациями и подмешивала себе остальные необходимые операторы посредством миксинов. Реализуйте шаблоны базовых классов \lstinline{addable}, \lstinline{subtractable}, \lstinline{multipliable}, \lstinline{dividable}, \lstinline{incrementable} и \lstinline{decrementable} для представления подмешиваемых дружественных для указанных базовых классов операторов сложения, вычитания, умножения, деления, префиксного и постфиксного инкремента и декремента дробей соответственно. Реализуйте производный класс \lstinline{Rational}, который является наследником реализации указанных базовых классов. Используйте документацию библиотеки \href{https://www.boost.org/doc/libs/1_84_0/libs/utility/doc/html/utility/utilities/operators.html}{Boost.Operators}.
 
 
 
