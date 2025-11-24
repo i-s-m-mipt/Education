@@ -2,7 +2,6 @@
 
 #include <cassert>
 #include <cstddef>
-#include <format>
 #include <new>
 #include <print>
 #include <vector>
