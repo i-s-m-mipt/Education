@@ -29,11 +29,11 @@ int main()
 //  -----------------------------------------------------------------------
 
     [[maybe_unused]] Entity const &  entity_05 = make_entity_v1();
-	
+
     [[maybe_unused]] Entity const &  entity_06 = make_entity_v2();
-	
+
     [[maybe_unused]] Entity const &  entity_07 = make_entity_v3();
-	
+
     [[maybe_unused]] Entity const &  entity_08 = make_entity_v4();
 
 //  -----------------------------------------------------------------------
@@ -41,7 +41,7 @@ int main()
     [[maybe_unused]] Entity       && entity_09 = make_entity_v1(); 
 
 //  [[maybe_unused]] Entity       && entity_10 = make_entity_v2(); // error
-	
+
 //  [[maybe_unused]] Entity       && entity_11 = make_entity_v3(); // error
 
 //  [[maybe_unused]] Entity       && entity_12 = make_entity_v4(); // error
