@@ -11,7 +11,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-template < typename T > auto reduce(std::ranges::view auto view, T sum) -> T
+template < std::ranges::view V, typename T > auto reduce(V view, T sum) -> T
 {
 	auto begin = std::begin(view), end = std::end(view);
 
