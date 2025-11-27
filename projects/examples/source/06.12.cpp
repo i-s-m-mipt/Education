@@ -25,10 +25,10 @@ namespace library::detail
 
 /////////////////////////////////////////////////
 
-// void test(library::detail::Entity)
-// {
-//     std::print("test\n");
-// }
+void test(library::detail::Entity)
+{
+    std::print("test\n");
+}
 
 /////////////////////////////////////////////////
 
@@ -57,15 +57,17 @@ namespace library
 
 int main()
 {
-	::library::detail::Entity entity;
+	library::detail::Entity entity;
 
 //  ---------------------------------------------
 
-	test(entity);
+//	  test(entity); // error
+
+	::test(entity);
 
 //  ---------------------------------------------
 
-    namespace alias = ::library::detail;
+    namespace alias = library::detail;
 
 //  ---------------------------------------------
 
