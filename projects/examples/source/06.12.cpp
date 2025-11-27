@@ -25,6 +25,13 @@ namespace library::detail
 
 /////////////////////////////////////////////////
 
+// void test(library::detail::Entity)
+// {
+//     std::print("test\n");
+// }
+
+/////////////////////////////////////////////////
+
 namespace library
 {
 	inline namespace v1
