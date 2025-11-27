@@ -1,8 +1,8 @@
 //////////////////////////////////////
 
-#ifndef PROJECT_HEADER_HPP
+#ifndef HEADER_06_05
 
-#define PROJECT_HEADER_HPP
+#define HEADER_06_05
 
 //////////////////////////////////////
 
