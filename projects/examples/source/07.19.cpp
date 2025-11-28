@@ -88,7 +88,7 @@ private :
 
 //  ---------------------------------------------------------------------------------------------
 
-	static auto make_sink() -> boost::shared_ptr < sink_t >
+	[[nodiscard]] static auto make_sink() -> boost::shared_ptr < sink_t >
 	{
 		boost::log::sinks::file::rotation_at_time_interval rotation
 		(
@@ -175,13 +175,13 @@ private :
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define LOGGER_WRITE_DEBUG(logger, string) logger.put(Logger::Severity::debug, string);
+#define LOGGER_PUT_DEBUG(logger, string) logger.put(Logger::Severity::debug, string);
 
-#define LOGGER_WRITE_TRACE(logger, string) logger.put(Logger::Severity::trace, string);
+#define LOGGER_PUT_TRACE(logger, string) logger.put(Logger::Severity::trace, string);
 
-#define LOGGER_WRITE_ERROR(logger, string) logger.put(Logger::Severity::error, string);
+#define LOGGER_PUT_ERROR(logger, string) logger.put(Logger::Severity::error, string);
 
-#define LOGGER_WRITE_FATAL(logger, string) logger.put(Logger::Severity::fatal, string);
+#define LOGGER_PUT_FATAL(logger, string) logger.put(Logger::Severity::fatal, string);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -204,7 +204,7 @@ int main()
 {
 	LOGGER(logger);
 
-//  ----------------------------------------------------
+//  --------------------------------------------------
 
 	try
 	{
@@ -212,11 +212,11 @@ int main()
 	}
 	catch (std::exception const & exception)
 	{
-		LOGGER_WRITE_FATAL(logger, exception.what());
+		LOGGER_PUT_FATAL(logger, exception.what());
 	}
 	catch (...)
 	{
-		LOGGER_WRITE_FATAL(logger, "unknown exception");
+		LOGGER_PUT_FATAL(logger, "unknown exception");
 	}
 }
 
