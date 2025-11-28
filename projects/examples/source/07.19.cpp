@@ -5,6 +5,7 @@
 #include <exception>
 #include <format>
 #include <mutex>
+#include <source_location>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -60,7 +61,7 @@ public :
 	void put(Severity severity, std::string const & string) const
 	{
 		auto record = s_logger.open_record(boost::log::keywords::severity = severity);
-		
+
 		boost::log::record_ostream(record) << m_scope << " : " << string;
 
 		s_logger.push_record(std::move(record));
@@ -128,7 +129,7 @@ private :
 
 		auto timestamp = boost::log::expressions::format_date_time < boost::posix_time::ptime >
 		(
-			"time", "%Y %B %d %H:%M:%S.%f %Z"
+			"time", "%Y %B %d %H:%M:%S.%f UTC"
 		);
 
 		(boost::log::expressions::stream << " | " << timestamp)(record, stream);
@@ -138,7 +139,7 @@ private :
 		using tid_t = boost::log::attributes::current_thread_id ::value_type;
 
 		stream << " | " << boost::log::extract_or_throw < pid_t > (attributes["process"]);
-		
+
 		stream << " | " << boost::log::extract_or_throw < tid_t > (attributes["thread" ]);
 
         switch (boost::log::extract_or_throw < Severity > (attributes["Severity"]))
@@ -170,7 +171,7 @@ private :
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define LOGGER(logger) Logger logger(__func__, true)
+#define LOGGER(logger) Logger logger(std::source_location::current().function_name(), true)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -187,7 +188,7 @@ private :
 void test_v1()
 {
 	LOGGER(logger);
-		
+
 	throw std::runtime_error("error");
 }
 
