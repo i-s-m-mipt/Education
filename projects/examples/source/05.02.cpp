@@ -1,4 +1,4 @@
-//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////
 
 class Entity
 {
@@ -7,7 +7,7 @@ public :
     virtual ~Entity() = default;
 };
 
-//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////
 
 class Client : public Entity
 {
@@ -17,25 +17,43 @@ public :
     {
     public :
 
-        static auto make_client_v1() -> Entity * { return new Client(1); }
-
-        static auto make_client_v2() -> Entity * { return new Client(2); }
+        static auto make_client() -> Entity *
+        { 
+            return new Client; 
+        }
     };
 
 private :
 
-    Client(int x) : m_x(x) {}
-
-//  ----------------------------------------------------------------------
-
-    int m_x = 0;
+    Client() = default;
 };
 
-//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////
+
+class Server : public Entity
+{
+public :
+
+    class Factory
+    {
+    public :
+
+        static auto make_server() -> Entity *
+        { 
+            return new Server; 
+        }
+    };
+
+private :
+
+    Server() = default;
+};
+
+/////////////////////////////////////////////
 
 int main()
 {
-    delete Client::Factory::make_client_v1();
+    delete Client::Factory::make_client();
 }
 
-//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////

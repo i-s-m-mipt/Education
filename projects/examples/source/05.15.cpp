@@ -17,26 +17,26 @@ public :
 
 /////////////////////////////////////////////////////////
 
-class Slow : public Strategy 
-{ 
-public : 
-    
-    void test() const override 
-    { 
-        std::print("Slow::test\n");
-    } 
+class Client : public Strategy
+{
+public :
+
+    void test() const override
+    {
+        std::print("Client::test\n");
+    }
 };
 
 /////////////////////////////////////////////////////////
 
-class Fast : public Strategy 
-{ 
-public : 
-    
-    void test() const override 
-    { 
-        std::print("Fast::test\n");
-    } 
+class Server : public Strategy
+{
+public :
+
+    void test() const override
+    {
+        std::print("Server::test\n");
+    }
 };
 
 /////////////////////////////////////////////////////////
@@ -50,12 +50,12 @@ public :
 //  -----------------------------------------------------
 
     void test() const
-    { 
+    {
         m_strategy.test();
     }
 
 private :
-    
+
     Strategy & m_strategy;
 };
 
@@ -63,17 +63,17 @@ private :
 
 int main()
 {
-    Strategy * strategy = new Slow;
+    Strategy * strategy = new Client;
 
-//  -------------------------------
+//  ---------------------------------
 
     Entity entity(*strategy);
 
-//  -------------------------------
-    
+//  ---------------------------------
+
     entity.test();
 
-//  -------------------------------
+//  ---------------------------------
 
     delete strategy;
 }

@@ -4,14 +4,14 @@
 
 /////////////////////////////////////////////////////
 
-class Client 
-{ 
+class Client
+{
 public :
 
 	void test() const
-	{ 
+	{
 		std::print("Client::test\n");
-	} 
+	}
 };
 
 /////////////////////////////////////////////////////
@@ -29,6 +29,18 @@ public :
 
 /////////////////////////////////////////////////////
 
+class Server : public Entity
+{
+public :
+
+    void test() const override
+    {
+        std::print("Server::test\n");
+    }
+};
+
+/////////////////////////////////////////////////////
+
 class Adapter_v1 : public Entity
 {
 public :
@@ -37,8 +49,8 @@ public :
 
 //  -------------------------------------------------
 
-	void test() const override 
-	{ 
+	void test() const override
+	{
 		m_client.test();
 	}
 
@@ -53,8 +65,8 @@ class Adapter_v2 : public Entity, private Client
 {
 public :
 
-	void test() const override 
-	{ 
+	void test() const override
+	{
 		Client::test();
 	}
 };
