@@ -120,19 +120,21 @@ private :
 
 	static void format(boost::log::record_view record, boost::log::formatting_ostream & stream)
 	{
-		auto const & attributes = record.attribute_values();
+		auto & attributes = record.attribute_values();
 
 		stream << std::format
 		(
 			"{:0>8}", boost::log::extract_or_throw < std::size_t > (attributes["line"])
 		);
 
-		auto timestamp = boost::log::expressions::format_date_time < boost::posix_time::ptime >
-		(
-			"time", "%Y %B %d %H:%M:%S.%f UTC"
-		);
-
-		(boost::log::expressions::stream << " | " << timestamp)(record, stream);
+		boost::log::expressions::stream << " | " <<
+        (
+            boost::log::expressions::format_date_time < boost::posix_time::ptime >
+            (
+                "time", "%Y %B %d %H:%M:%S.%f UTC"
+            )
+        )
+        (record, stream);
 
 		using pid_t = boost::log::attributes::current_process_id::value_type;
 
@@ -175,13 +177,13 @@ private :
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define LOGGER_PUT_DEBUG(logger, string) logger.put(Logger::Severity::debug, string);
+#define LOGGER_PUT_DEBUG(logger, string) logger.put(Logger::Severity::debug, string)
 
-#define LOGGER_PUT_TRACE(logger, string) logger.put(Logger::Severity::trace, string);
+#define LOGGER_PUT_TRACE(logger, string) logger.put(Logger::Severity::trace, string)
 
-#define LOGGER_PUT_ERROR(logger, string) logger.put(Logger::Severity::error, string);
+#define LOGGER_PUT_ERROR(logger, string) logger.put(Logger::Severity::error, string)
 
-#define LOGGER_PUT_FATAL(logger, string) logger.put(Logger::Severity::fatal, string);
+#define LOGGER_PUT_FATAL(logger, string) logger.put(Logger::Severity::fatal, string)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
