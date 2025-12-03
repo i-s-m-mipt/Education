@@ -32,7 +32,7 @@ int main()
 	functions.push_back(boost::dll::import_symbol < void() > (path, "test_v2"));
 
 //  ----------------------------------------------------------------------------
-		
+
 	for (auto const & function : functions)
 	{
 		function();
