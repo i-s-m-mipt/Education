@@ -127,13 +127,15 @@ private :
 			"{:0>8}", boost::log::extract_or_throw < std::size_t > (attributes["line"])
 		);
 
-		boost::log::expressions::stream << " | " <<
-        (
-            boost::log::expressions::format_date_time < boost::posix_time::ptime >
-            (
-                "time", "%Y %B %d %H:%M:%S.%f UTC"
-            )
-        )
+		(
+			boost::log::expressions::stream << " | " <<
+        	(
+            	boost::log::expressions::format_date_time < boost::posix_time::ptime >
+            	(
+                	"time", "%Y %B %d %H:%M:%S.%f UTC"
+            	)
+        	)
+		)
         (record, stream);
 
 		using pid_t = boost::log::attributes::current_process_id::value_type;
