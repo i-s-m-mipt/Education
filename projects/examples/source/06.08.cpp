@@ -13,14 +13,14 @@
 // void test_v1() // error
 // { 
 //     std::print("test_v1\n");
-// } 
+// }
 
 ///////////////////////////////
 
 int main()
 {
 	test_v1();
-	
+
 //	test_v2(); // error
 
 //	test_v3(); // error
