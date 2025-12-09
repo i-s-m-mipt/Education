@@ -71,7 +71,7 @@ void test_v1()
 
 //////////////////////////////////////////////////////////////
 
-void test_v2() 
+void test_v2() // support : compiler-explorer.com
 {
     Entity entity_1(1); test_v1();
 
@@ -80,7 +80,7 @@ void test_v2()
 
 //////////////////////////////////////////////////////////////
 
-void test_v3() noexcept
+void test_v3() noexcept // support : compiler-explorer.com
 {
     Entity entity_1(1); test_v1();
 
@@ -105,9 +105,9 @@ int main()
 
 //  ----------------------------------------------------------
 
-	test_v2(); // support : compiler-explorer.com
+	test_v2();
 
-    test_v3(); // support : compiler-explorer.com
+    test_v3();
 }
 
 //////////////////////////////////////////////////////////////
