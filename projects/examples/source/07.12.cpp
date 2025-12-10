@@ -1,9 +1,11 @@
 //////////////////////////////////////////////////////////////
 
+#include <cassert>
 #include <print>
 #include <stdexcept>
 #include <type_traits>
 #include <utility>
+#include <vector>
 
 //////////////////////////////////////////////////////////////
 
@@ -91,10 +93,6 @@ void test_v3() noexcept // support : compiler-explorer.com
 
 int main()
 {
-	static_assert(noexcept(std::declval < Entity > ().get()));
-
-//  ----------------------------------------------------------
-
 	Entity entity_1(1);
 	
 	Entity entity_2(2);
@@ -108,6 +106,14 @@ int main()
 	test_v2();
 
     test_v3();
+
+//  ----------------------------------------------------------
+
+	static_assert(noexcept(std::declval < Entity > ().get()));
+
+//  ----------------------------------------------------------
+
+	assert(std::empty(std::vector < int > ()));
 }
 
 //////////////////////////////////////////////////////////////
