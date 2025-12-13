@@ -16,8 +16,8 @@ public :
 
 //  -------------------------------------------
 
-	char const * what() const noexcept override 
-	{ 
+	char const * what() const noexcept override
+	{
 		return "exception";
 	}
 
@@ -41,7 +41,7 @@ private :
 	throw Exception(1);
 
 //	delete x; // error
-	
+
 	std::print("test_v1\n");
 }
 

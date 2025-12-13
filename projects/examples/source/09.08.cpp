@@ -59,7 +59,7 @@ private :
     void clear() override
     {
         delete m_x;
-            
+
         delete this;
     }
 

@@ -11,7 +11,10 @@ class Memento
 {
 public :
 
-    Memento(int x = 0) : m_states(1, State(x)) {}
+    Memento(int x = 0) : m_states(1, State())
+    {
+        save(x);
+    }
 
 //  --------------------------------------------------------------------
 
@@ -24,20 +27,18 @@ public :
 
     void save(int x)
     {
-        State state(x);
-        
-        m_deltas.push_back(state - m_states.front());
+        m_states.push_back(State(x));
 
-        m_states.push_back(state);
+        m_deltas.push_back(m_states.back() - m_states.front());
 
-        m_states.front() = std::move(state);
+        m_states.front() = m_states.back();
     }
 
 //  --------------------------------------------------------------------
 
     auto & load_v1(std::size_t index)
     {
-        m_states.front() = m_states.at(index);
+        m_states.front() = m_states.at(index + 1);
 
         return *this;
     }
@@ -48,9 +49,9 @@ public :
     {
         State state;
 
-        for (auto i = 0uz; i < index && i < std::size(m_deltas); ++i)
+        for (auto i = 0uz; i < index + 1; ++i)
         {
-            state = state + m_deltas[i];
+            state = state + m_deltas.at(i);
         }
 
         m_states.front() = state;

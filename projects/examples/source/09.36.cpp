@@ -2,7 +2,6 @@
 
 #include <array>
 #include <cstddef>
-#include <format>
 #include <memory>
 #include <new>
 #include <print>

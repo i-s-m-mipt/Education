@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > class Comparable
+template < typename T > class Comparable // support : cppinsights.io
 {
 public :
 

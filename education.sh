@@ -64,9 +64,11 @@ cp ../source/{font.ttf,image.jpg,script.py,source.cpp} .
 
 files="../source/06.07.cpp ../source/06.08.cpp"
 
-g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 ../source/06.06.hpp -o 06.06.hpp.gch
+g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 ../source/06.06.hpp -o ../source/06.06.hpp.gch
 
 g++    -std=c++23 -Wall -Wextra -Wpedantic -O0 $files -ltbb -o 06.08
+
+rm ../source/06.06.hpp.gch
 
 ###################################################################################################
 

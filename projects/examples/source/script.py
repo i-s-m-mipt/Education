@@ -6,13 +6,13 @@ import matplotlib.pyplot as plot
 
 ####################################################################
 
-def factorial(x: int) -> str:
+def factorial(x : int) -> str :
 
     return str(math.factorial(x))
 
 ####################################################################
 
-def make_plot(string: str, label: str):
+def make_plot(string : str, label : str) :
 
     points = [float(coordinate) for coordinate in string.split(',')]
 

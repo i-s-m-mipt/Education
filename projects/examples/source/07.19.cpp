@@ -5,6 +5,7 @@
 #include <exception>
 #include <format>
 #include <mutex>
+#include <source_location>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -60,7 +61,7 @@ public :
 	void put(Severity severity, std::string const & string) const
 	{
 		auto record = s_logger.open_record(boost::log::keywords::severity = severity);
-		
+
 		boost::log::record_ostream(record) << m_scope << " : " << string;
 
 		s_logger.push_record(std::move(record));
@@ -87,7 +88,7 @@ private :
 
 //  ---------------------------------------------------------------------------------------------
 
-	static auto make_sink() -> boost::shared_ptr < sink_t >
+	[[nodiscard]] static auto make_sink() -> boost::shared_ptr < sink_t >
 	{
 		boost::log::sinks::file::rotation_at_time_interval rotation
 		(
@@ -119,26 +120,30 @@ private :
 
 	static void format(boost::log::record_view record, boost::log::formatting_ostream & stream)
 	{
-		auto const & attributes = record.attribute_values();
+		auto & attributes = record.attribute_values();
 
 		stream << std::format
 		(
 			"{:0>8}", boost::log::extract_or_throw < std::size_t > (attributes["line"])
 		);
 
-		auto timestamp = boost::log::expressions::format_date_time < boost::posix_time::ptime >
 		(
-			"time", "%Y %B %d %H:%M:%S.%f %Z"
-		);
-
-		(boost::log::expressions::stream << " | " << timestamp)(record, stream);
+			boost::log::expressions::stream << " | " <<
+        	(
+            	boost::log::expressions::format_date_time < boost::posix_time::ptime >
+            	(
+                	"time", "%Y %B %d %H:%M:%S.%f UTC"
+            	)
+        	)
+		)
+        (record, stream);
 
 		using pid_t = boost::log::attributes::current_process_id::value_type;
 
 		using tid_t = boost::log::attributes::current_thread_id ::value_type;
 
 		stream << " | " << boost::log::extract_or_throw < pid_t > (attributes["process"]);
-		
+
 		stream << " | " << boost::log::extract_or_throw < tid_t > (attributes["thread" ]);
 
         switch (boost::log::extract_or_throw < Severity > (attributes["Severity"]))
@@ -170,24 +175,24 @@ private :
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define LOGGER(logger) Logger logger(__func__, true)
+#define LOGGER(logger) Logger logger(std::source_location::current().function_name(), true)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define LOGGER_WRITE_DEBUG(logger, string) logger.put(Logger::Severity::debug, string);
+#define LOGGER_PUT_DEBUG(logger, string) logger.put(Logger::Severity::debug, string)
 
-#define LOGGER_WRITE_TRACE(logger, string) logger.put(Logger::Severity::trace, string);
+#define LOGGER_PUT_TRACE(logger, string) logger.put(Logger::Severity::trace, string)
 
-#define LOGGER_WRITE_ERROR(logger, string) logger.put(Logger::Severity::error, string);
+#define LOGGER_PUT_ERROR(logger, string) logger.put(Logger::Severity::error, string)
 
-#define LOGGER_WRITE_FATAL(logger, string) logger.put(Logger::Severity::fatal, string);
+#define LOGGER_PUT_FATAL(logger, string) logger.put(Logger::Severity::fatal, string)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v1()
 {
 	LOGGER(logger);
-		
+
 	throw std::runtime_error("error");
 }
 
@@ -203,7 +208,7 @@ int main()
 {
 	LOGGER(logger);
 
-//  ----------------------------------------------------
+//  --------------------------------------------------
 
 	try
 	{
@@ -211,11 +216,11 @@ int main()
 	}
 	catch (std::exception const & exception)
 	{
-		LOGGER_WRITE_FATAL(logger, exception.what());
+		LOGGER_PUT_FATAL(logger, exception.what());
 	}
 	catch (...)
 	{
-		LOGGER_WRITE_FATAL(logger, "unknown exception");
+		LOGGER_PUT_FATAL(logger, "unknown exception");
 	}
 }
 

@@ -3,7 +3,6 @@
 #include <cassert>
 #include <chrono>
 #include <ctime>
-#include <format>
 #include <print>
 
 ////////////////////////////////////////////////////////////////////////////

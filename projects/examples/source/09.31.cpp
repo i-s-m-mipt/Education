@@ -3,7 +3,6 @@
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
-#include <format>
 #include <iterator>
 #include <memory>
 #include <new>

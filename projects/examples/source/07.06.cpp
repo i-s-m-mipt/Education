@@ -1,13 +1,13 @@
 //////////////////////////////////////////////////////
 
-#include <tuple>
+#include <cassert>
 
 //////////////////////////////////////////////////////
 
 struct Alternative 
 {
-	union 
-	{ 
+	union
+	{
 		int x, y = 0;
 	};
 
@@ -34,7 +34,9 @@ auto make_alternative(int x)
 
 int main()
 {
-	std::ignore = make_alternative(1);
+	assert(make_alternative(0).has_error == 1);
+
+	assert(make_alternative(1).has_error == 0);
 }
 
 //////////////////////////////////////////////////////

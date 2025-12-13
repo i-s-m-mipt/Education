@@ -1,7 +1,11 @@
-/////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+#include <vector>
+
+///////////////////////////////////////////////////////////
 
 class Entity
-{    
+{
 public :
 
     virtual ~Entity() = default;
@@ -11,52 +15,69 @@ public :
     virtual Entity * copy() const = 0;
 };
 
-/////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 class Client : public Entity
 {
 public :
 
-    Entity * copy() const override 
-    { 
+    Entity * copy() const override
+    {
         return new Client(*this);
     }
 };
 
-/////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 class Server : public Entity
 {
 public :
 
-    Entity * copy() const override 
+    Entity * copy() const override
     { 
         return new Server(*this);
     }
 };
 
-/////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-class Factory
+class Prototype
 {
 public :
 
-    static auto make_client() { return s_client.copy(); }
+    Prototype()
+    {
+        m_entities.push_back(new Client);
 
-    static auto make_server() { return s_server.copy(); }
+        m_entities.push_back(new Server);
+    }
+
+//  -------------------------------------------------------
+
+   ~Prototype()
+    {
+        for (auto entity : m_entities)
+        {
+            delete entity;
+        }
+    }
+
+//  -------------------------------------------------------
+
+    auto make_client() { return m_entities.at(0)->copy(); }
+
+    auto make_server() { return m_entities.at(1)->copy(); }
 
 private :
 
-    static inline Client const s_client;
-
-    static inline Server const s_server;
+    std::vector < Entity * > m_entities;
 };
 
-/////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 int main()
 {
-    delete Factory::make_client();
+    delete Prototype().make_client();
 }
 
-/////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////

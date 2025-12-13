@@ -2,7 +2,6 @@
 
 #include <cmath>
 #include <cstddef>
-#include <format>
 #include <print>
 #include <random>
 #include <string>

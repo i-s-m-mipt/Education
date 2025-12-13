@@ -7,7 +7,6 @@
 #include <cassert>
 #include <cmath>
 #include <cstddef>
-#include <format>
 #include <iterator>
 #include <print>
 #include <random>

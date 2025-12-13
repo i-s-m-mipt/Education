@@ -14,14 +14,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 ####################################################################
 
-find_package(Boost 1.85 REQUIRED COMPONENTS)
-
-####################################################################
-
-include_directories(${Boost_INCLUDE_DIRS})
-
-####################################################################
-
 add_library            (static STATIC source/06.20.cpp)
 
 target_compile_options (static PRIVATE -Wall -Wextra -Wpedantic -O0)

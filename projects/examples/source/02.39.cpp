@@ -14,11 +14,11 @@ void test(int, int, int = 0) { std::print("test (3)\n"); }
 
 int main()
 {
-    test(1      );
+    test(1      ); // support : compiler-explorer.com
 
 //  test(1, 2   ); // error
 
-    test(1, 2, 3);
+    test(1, 2, 3); // support : compiler-explorer.com
 }
 
 //////////////////////////////////////////////////////////

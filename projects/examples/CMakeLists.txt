@@ -348,7 +348,6 @@ set(debug
     12.02
     12.03
     12.04
-#   12.05
     12.06
     12.07
     12.08
@@ -431,7 +430,7 @@ foreach(entry IN LISTS debug)
     target_compile_options (${entry} PRIVATE -Wall -Wextra -Wpedantic -O0)
 
     target_link_libraries  (${entry} PRIVATE ${Boost_LIBRARIES})
-    
+
     target_link_libraries  (${entry} PRIVATE TBB::tbb)
 
 endforeach()

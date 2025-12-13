@@ -8,21 +8,21 @@
 
 int main()
 {
-    std::expected < int, std::string > expexted_1 = 1;
+    std::expected < int, std::string > expected_1 = 1;
 
-    std::expected < int, std::string > expexted_2 = std::unexpected("aaaaa");
-
-//  -------------------------------------------------------------------------
-
-    assert(expexted_1.value_or(2) == 1);
-
-    assert(expexted_2.value_or(3) == 3);
+    std::expected < int, std::string > expected_2 = std::unexpected("aaaaa");
 
 //  -------------------------------------------------------------------------
 
-    assert(expexted_1.error_or("bbbbb") == "bbbbb");
+    assert(expected_1.has_value() == 1 && expected_1.value_or(2) == 1);
 
-    assert(expexted_2.error_or("bbbbb") == "aaaaa");
+    assert(expected_2.has_value() == 0 && expected_2.value_or(3) == 3);
+
+//  -------------------------------------------------------------------------
+
+    assert(expected_1.error_or("bbbbb") == "bbbbb");
+
+    assert(expected_2.error_or("bbbbb") == "aaaaa");
 }
 
 /////////////////////////////////////////////////////////////////////////////
