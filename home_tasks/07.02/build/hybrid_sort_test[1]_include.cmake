@@ -1,0 +1,5 @@
+if(EXISTS "/Users/pavelkr/Education/home_tasks/07.02/build/hybrid_sort_test[1]_tests.cmake")
+  include("/Users/pavelkr/Education/home_tasks/07.02/build/hybrid_sort_test[1]_tests.cmake")
+else()
+  add_test(hybrid_sort_test_NOT_BUILT hybrid_sort_test_NOT_BUILT)
+endif()

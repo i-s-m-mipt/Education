@@ -1,0 +1,3 @@
+/Users/pavelkr/Education/home_tasks/07.02/build/CMakeFiles/hybrid_sort_test.dir
+/Users/pavelkr/Education/home_tasks/07.02/build/CMakeFiles/edit_cache.dir
+/Users/pavelkr/Education/home_tasks/07.02/build/CMakeFiles/rebuild_cache.dir
