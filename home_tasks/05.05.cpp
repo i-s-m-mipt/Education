@@ -7,7 +7,87 @@
 #include <vector>
 #include <iostream>
 
-class Rational
+template <typename T> class addable
+{
+public:
+    friend auto operator+ (T lhs, T const & rhs) { return lhs += rhs; }
+
+protected :
+    addable() = default;
+};
+
+template <typename T> class subtractable
+{
+public:
+    friend auto operator- (T lhs, T const & rhs) { return lhs -= rhs; }
+
+protected :
+    subtractable() = default;
+};
+
+template <typename T> class multipliable
+{
+public:
+    friend auto operator* (T lhs, T const & rhs) { return lhs *= rhs; }
+
+protected :
+    multipliable() = default;
+};
+
+template <typename T> class dividable
+{
+public:
+    friend auto operator/ (T lhs, T const & rhs) { return lhs /= rhs; }
+
+protected :
+    dividable() = default;
+};
+
+template <typename T> class incrementable
+{
+public:
+    auto & operator++() { 
+        T& self = static_cast<T&>(*this);
+        self += 1;
+        return self;
+    }
+
+    T operator++(int) { 
+        T temp = static_cast<T&> (*this);
+        ++ (*this);
+        return temp;
+     }
+
+protected :
+    incrementable() = default;
+};
+
+template <typename T> class decrementable
+{
+public:
+    auto & operator--() { 
+        T& self = static_cast<T&>(*this);
+        self -= 1;
+        return self;
+    }
+
+    T operator--(int) { 
+        T temp = static_cast<T&> (*this);
+        -- (*this);
+        return temp;
+     }
+
+protected :
+    decrementable() = default;
+};
+
+class Rational :
+    public addable <Rational>,
+    public subtractable <Rational>,
+    public multipliable <Rational>,
+    public dividable <Rational>,
+    public incrementable <Rational>,
+    public decrementable <Rational>
 {
 public:
     Rational(int num = 0, int den = 1) : m_num(num), m_den(den)
@@ -46,16 +126,11 @@ public:
     { 
         return *this *= Rational(other.m_den, other.m_num);
     }
-    
-    auto const operator++(int) { auto x = *this; *this += 1; return x; }
-    auto const operator--(int) { auto x = *this; *this -= 1; return x; }
-    auto & operator++() { *this += 1; return *this; }
-    auto & operator--() { *this -= 1; return *this; }
 
-    friend auto operator+ (Rational lhs, Rational const & rhs) { return lhs += rhs; }
-    friend auto operator- (Rational lhs, Rational const & rhs) { return lhs -= rhs; }
-    friend auto operator* (Rational lhs, Rational const & rhs) { return lhs *= rhs; }
-    friend auto operator/ (Rational lhs, Rational const & rhs) { return lhs /= rhs; }
+    friend auto operator==(Rational const & lhs, Rational const & rhs)
+    {
+        return !(lhs < rhs) && !(rhs < lhs);
+    }
 
     friend std::strong_ordering operator<=>(Rational const & lhs, Rational const & rhs)
     {
@@ -66,7 +141,6 @@ public:
         return left_value <=> right_value;
     }
 
-    friend bool operator==(Rational const & lhs, Rational const & rhs) = default;
 
     friend auto & operator>>(std::istream & stream, Rational & rational)
     {
