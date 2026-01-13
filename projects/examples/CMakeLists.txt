@@ -40,6 +40,7 @@ find_package(Python        REQUIRED COMPONENTS Interpreter Development)
 find_package(ICU           REQUIRED COMPONENTS i18n uc)
 find_package(nlohmann_json REQUIRED COMPONENTS)
 find_package(PDFHummus     REQUIRED COMPONENTS)
+find_package(zipper        REQUIRED COMPONENTS)
 find_package(TBB           REQUIRED COMPONENTS)
 
 #############################################################################################
@@ -51,6 +52,7 @@ include_directories(    ${benchmark_INCLUDE_DIRS})
 include_directories(       ${Python_INCLUDE_DIRS})
 include_directories(${nlohmann_json_INCLUDE_DIRS})
 include_directories(    ${PDFHummus_INCLUDE_DIRS})
+include_directories(       ${zipper_INCLUDE_DIRS})
 include_directories(          ${TBB_INCLUDE_DIRS})
 
 #############################################################################################
@@ -539,11 +541,11 @@ target_link_libraries      (13.20 PRIVATE PDFHummus::PDFWriter)
 
 #############################################################################################
 
-# add_executable             (13.21 source/13.21.cpp)
+add_executable             (13.21 source/13.21.cpp)
 
-# target_compile_options     (13.21 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (13.21 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
-# target_link_libraries      (13.21 PRIVATE )
+target_link_libraries      (13.21 PRIVATE zipper::zipper)
 
 #############################################################################################
 
