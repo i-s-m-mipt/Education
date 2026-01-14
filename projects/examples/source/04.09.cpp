@@ -24,15 +24,15 @@ private :
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-template 
-< 
+template
+<
 	template < typename U > typename C1,
-	
+
 	template < typename U > typename C2, typename T
->		   
+>
 auto copy(C1 < T > const & container)
 {
-	return C2 < T > (std::begin(container), std::end(container));
+	return C2(std::begin(container), std::end(container));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -40,7 +40,7 @@ auto copy(C1 < T > const & container)
 int main()
 {
 	Stack_v1 < int, std::deque < int > > stack_v1;
-	
+
 	Stack_v2 < int, std::deque         > stack_v2;
 
 //  -------------------------------------------------------
