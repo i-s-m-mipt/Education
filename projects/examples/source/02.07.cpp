@@ -1,5 +1,25 @@
 //////////////////////////////////////////////////////////////////////
 
+// chapter : Basics of Programming
+
+//////////////////////////////////////////////////////////////////////
+
+// section : Fundamental Types
+
+//////////////////////////////////////////////////////////////////////
+
+// content : Type Aliases
+//
+// content : Declaration using
+//
+// content : Specifier typedef
+//
+// content : Type Alias std::size_t
+//
+// content : Fixed-Width Integer Type Aliases
+
+//////////////////////////////////////////////////////////////////////
+
 #include <cstddef>
 #include <cstdint>
 #include <type_traits>
@@ -20,7 +40,7 @@ int main()
 
 //  ------------------------------------------------------------------
 
-	static_assert(std::is_same_v < decltype(x), int > );
+	static_assert(std::is_same_v < alias_1, int > );
 
 //  ------------------------------------------------------------------
 
