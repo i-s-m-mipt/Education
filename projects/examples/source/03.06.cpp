@@ -1,5 +1,25 @@
 ////////////////////////////////////////
 
+// chapter : Object-Oriented Programming
+
+////////////////////////////////////////
+
+// section : User-Defined Data Types
+
+////////////////////////////////////////
+
+// content : Static Data Members
+//
+// content : Specifier static
+//
+// content : Inline Static Data Members
+//
+// content : Specifier inline
+//
+// content : Static Member Functions
+
+////////////////////////////////////////
+
 #include <cassert>
 #include <print>
 

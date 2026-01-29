@@ -1,5 +1,39 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
+// chapter : Object-Oriented Programming
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+// section : Operator Overloading
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+// content : Rational Arithmetic
+//
+// content : Type Rational
+//
+// content : User-Defined Implicit and Explicit Type Conversions
+//
+// content : Specifier explicit
+//
+// content : Functions std::gcd and std::lcm
+//
+// content : Operator Overloading
+//
+// content : Operator double
+//
+// content : Arithmetic Operators with Assignment
+//
+// content : Prefix and Postfix Operators
+//
+// content : Arithmetic and Comparison Operators
+//
+// content : Operators >> and <<
+//
+// content : Streams std::istream, std::ostream and std::stringstream
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <cmath>
 #include <istream>
