@@ -16,7 +16,7 @@
 //
 // content : Special Memory
 //
-// content : Qualifier volatile
+// content : Type Qualifier volatile
 
 /////////////////////////////////////////////////////////////////
 

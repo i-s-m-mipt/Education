@@ -8,7 +8,7 @@
 
 ////////////////////////////////////////////////////////////////
 
-// content : Dangling Pointers and References
+// content : Dangling Pointers and Lvalue References
 //
 // content : Static Segment
 //

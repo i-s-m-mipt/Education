@@ -8,7 +8,7 @@
 
 //////////////////////////////////////////////////////////////////////
 
-// content : Calling Conventions x86 
+// content : Calling Conventions x86
 //
 // content : Attributes [[cdecl]], [[stdcall]] and [[fastcall]]
 

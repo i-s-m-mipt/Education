@@ -8,7 +8,7 @@
 
 //////////////////////////////////////////////////////////
 
-// content : Function Signatures
+// content : Signatures
 //
 // content : Function Overloading
 

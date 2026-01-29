@@ -14,7 +14,7 @@
 //
 // content : Algorithm std::ranges::is_sorted
 //
-// content : Functional Object std::less
+// content : Function Object std::less
 
 ////////////////////////////////////////////////////////
 

@@ -12,11 +12,11 @@
 //
 // content : Operator &
 //
-// content : Specifier decltype
+// content : Fundamental Types
 //
 // content : Type void
 //
-// content : Uninitialized memory
+// content : Uninitialized Memory
 // 
 // content : Operator *
 //
