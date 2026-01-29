@@ -10,7 +10,13 @@
 
 // content : Statement if
 //
-// content : Tool Compiler Explorer
+// content : Utility Compiler Explorer
+//
+// content : Function std::print
+//
+// content : Stream std::cin
+//
+// content : Operator >>
 
 /////////////////////////////////////////////////////////////
 

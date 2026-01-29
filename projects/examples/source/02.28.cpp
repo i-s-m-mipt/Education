@@ -18,7 +18,7 @@
 //
 // content : Automatic Objects
 //
-// content : Tool ulimit
+// content : Utility ulimit
 
 ///////////////////////////////////////////////////////////
 
