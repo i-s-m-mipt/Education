@@ -8,13 +8,19 @@
 
 ////////////////////////////////////////////////////////
 
+// content : Standard Library
+//
+// content : Directive #include
+//
 // content : Namespace std
+//
+// content : Declaration using
 //
 // content : Comments
 //
-// content : Documenting Code
+// content : Code Documentation
 //
-// content : Tool Doxygen
+// content : Utility Doxygen
 
 ////////////////////////////////////////////////////////
 
