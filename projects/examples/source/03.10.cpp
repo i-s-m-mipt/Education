@@ -12,7 +12,7 @@
 //
 // content : Default Implementations
 //
-// content : Specifier default
+// content : Function Specifier default
 
 ////////////////////////////////////////////////////////////////////
 

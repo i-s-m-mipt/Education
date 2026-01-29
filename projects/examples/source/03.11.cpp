@@ -14,11 +14,15 @@
 //
 // content : Public Inheritance
 //
+// content : Base Class Specifier public
+//
 // content : Shadowing Member Functions
 //
 // content : Protected Members
 //
-// content : Specifier protected
+// content : Access Specifier protected
+//
+// content : Declaration using
 
 /////////////////////////////////////////////////////////////
 

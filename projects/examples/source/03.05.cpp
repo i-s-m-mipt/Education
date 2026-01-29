@@ -10,11 +10,15 @@
 
 // content : Nested Classes
 //
+// content : Caching Data
+//
+// content : Function std::to_string
+//
 // content : Pointer this
 //
 // content : Bitwise and Logical Constancy
 //
-// content : Specifier mutable
+// content : Storage Class Specifier mutable
 
 /////////////////////////////////////////////////////////////////
 

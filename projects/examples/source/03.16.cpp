@@ -14,7 +14,9 @@
 //
 // content : Overriding Functions
 //
-// content : Specifiers virtual, override and final
+// content : Function Specifiers virtual and override
+//
+// content : Function and Class Specifier final
 //
 // content : Upcasting Type Conversions
 //

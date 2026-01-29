@@ -10,7 +10,7 @@
 
 // content : Friend Functions and Classes
 //
-// content : Specifier friend
+// content : Function and Class Specifier friend
 
 /////////////////////////////////////////////////
 

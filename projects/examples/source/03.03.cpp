@@ -14,7 +14,7 @@
 //
 // content : Encapsulation
 //
-// content : Specifiers public and private
+// content : Access Specifiers public and private
 //
 // content : Default, Used-Defined and Delegating Constructors
 //

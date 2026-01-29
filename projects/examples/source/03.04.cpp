@@ -14,6 +14,8 @@
 //
 // content : Getters and Setters
 //
+// content : Invarinats
+//
 // content : Constant Member Functions
 //
 // content : Function Qualifier const

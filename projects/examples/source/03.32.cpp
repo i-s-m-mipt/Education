@@ -14,7 +14,7 @@
 //
 // content : User-Defined Implicit and Explicit Type Conversions
 //
-// content : Specifier explicit
+// content : Function Specifier explicit
 //
 // content : Functions std::gcd and std::lcm
 //
@@ -24,7 +24,7 @@
 //
 // content : Arithmetic Operators with Assignment
 //
-// content : Prefix and Postfix Operators
+// content : Postfix and Prefix Operators
 //
 // content : Arithmetic and Comparison Operators
 //

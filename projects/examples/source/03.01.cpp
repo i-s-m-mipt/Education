@@ -14,7 +14,7 @@
 //
 // content : Data Members
 //
-// content : Aggregate and Designated Initialization
+// content : Default, Aggregate and Designated Initialization
 
 /////////////////////////////////////////////////////////////////
 
