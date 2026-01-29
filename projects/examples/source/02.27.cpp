@@ -10,7 +10,7 @@
 
 // content : Constant Pointers
 //
-// content : Pointers to Constants
+// content : Pointers to Constant Objects
 
 ////////////////////////////////////////////////////////
 
