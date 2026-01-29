@@ -10,7 +10,7 @@
 
 // content : Lvalue Reference Type Inference
 //
-// content : Specifier decltype
+// content : Type Specifier decltype
 //
 // content : Type Placeholder decltype(auto)
 

@@ -18,7 +18,7 @@
 //
 // content : Literal Suffixes
 //
-// content : Hungarian Naming Convention
+// content : Hungarian Notation
 //
 // content : Overflow Problem
 

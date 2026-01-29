@@ -14,6 +14,8 @@
 //
 // content : Function std::abs
 //
+// content : Scientific Notation
+//
 // content : Operator %
 
 ///////////////////////////////////////////////

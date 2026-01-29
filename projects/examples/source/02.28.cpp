@@ -12,6 +12,8 @@
 //
 // content : Aggregate Initialization
 //
+// content : Size Inference
+//
 // content : Compiler Extensions
 //
 // content : Stack Segment

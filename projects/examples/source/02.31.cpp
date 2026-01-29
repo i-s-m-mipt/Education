@@ -12,9 +12,11 @@
 //
 // content : Algorithmic Complexities O(1) and O(N)
 //
+// content : Amortized Algorithmic Complexity
+//
 // content : Algorithm std::ranges::is_sorted
 //
-// content : Function Object std::less
+// content : Functional Object std::less
 
 ////////////////////////////////////////////////////////
 

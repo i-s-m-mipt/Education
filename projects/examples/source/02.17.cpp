@@ -14,6 +14,8 @@
 //
 // content : Function std::print
 //
+// content : C-Style String Literals
+//
 // content : Stream std::cin
 //
 // content : Operator >>

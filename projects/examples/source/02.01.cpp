@@ -16,6 +16,8 @@
 //
 // content : Attribute [[maybe_unused]]
 //
+// content : Separator ,
+//
 // content : Operator sizeof
 //
 // content : Declaration static_assert

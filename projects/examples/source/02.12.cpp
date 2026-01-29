@@ -12,7 +12,7 @@
 //
 // content : Arithmetic Operators with Assignment
 //
-// content : Prefix and Postfix Operators
+// content : Postfix and Prefix Operators
 //
 // content : Comparison Operators
 

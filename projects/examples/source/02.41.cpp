@@ -10,11 +10,11 @@
 
 // content : Dangling Pointers and Lvalue References
 //
-// content : Static Segment
+// content : Data Segment
 //
 // content : Static Objects
 //
-// content : Specifier static
+// content : Storage Class Specifier static
 
 ////////////////////////////////////////////////////////////////
 

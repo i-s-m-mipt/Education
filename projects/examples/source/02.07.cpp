@@ -12,7 +12,7 @@
 //
 // content : Declaration using
 //
-// content : Specifier typedef
+// content : Declaration typedef
 //
 // content : Type Alias std::size_t
 //

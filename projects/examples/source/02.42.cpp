@@ -10,7 +10,7 @@
 
 // content : Inline Functions
 //
-// content : Specifier inline
+// content : Function Specifier inline
 //
 // content : Attribute [[noinline]]
 //
