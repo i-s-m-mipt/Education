@@ -10,11 +10,11 @@
 
 // content : Multiple and Virtual Inheritance
 //
+// content : Diamond Problem
+//
 // content : Virtual Base Classes
 //
 // content : Base Class Specifier virtual
-//
-// content : Diamond Problem
 
 /////////////////////////////////////////////////////////////////////////////////
 

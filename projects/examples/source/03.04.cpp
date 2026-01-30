@@ -14,7 +14,7 @@
 //
 // content : Getters and Setters
 //
-// content : Invarinats
+// content : Invariants
 //
 // content : Constant Member Functions
 //
