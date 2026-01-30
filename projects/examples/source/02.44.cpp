@@ -12,6 +12,8 @@
 //
 // content : Algorithmic Complexities O(N^2) and O(N*log(N))
 //
+// content : Timsort Algorithm
+//
 // content : Cache Lines
 //
 // content : Function std::midpoint

@@ -10,7 +10,7 @@
 
 // content : Dangling Pointers and Lvalue References
 //
-// content : Data Segment
+// content : Data and BSS Segments
 //
 // content : Static Objects
 //

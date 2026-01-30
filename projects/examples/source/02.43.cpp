@@ -8,17 +8,17 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Recursion
+// content : Recursive Functions
+//
+// content : Factorial Calculation Algorithm
 //
 // content : Trailing Return Types
 //
-// content : Factorial
+// content : Binomial Coefficient Calculation Algorithm
 //
-// content : Binomial Coefficients
+// content : Correct Bracket Sequences Problem
 //
-// content : Catalan Numbers
-//
-// content : Correct Bracket Sequences
+// content : Catalan Number Calculation Algorithm
 //
 // content : Function std::max
 
