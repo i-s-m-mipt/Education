@@ -1,5 +1,43 @@
 /////////////////////////////////////////////////
 
+// chapter : Projects and Libraries
+
+/////////////////////////////////////////////////
+
+// section : Compilation and Linkage
+
+/////////////////////////////////////////////////
+
+// content : Namespaces
+//
+// content : Declaration namespace
+//
+// content : Nested Namespaces
+//
+// content : Namespace Additivity
+//
+// content : Operator ::
+//
+// content : Global Namespace
+//
+// content : Argument Dependent Lookup
+//
+// content : Namespace Aliases
+//
+// content : Inline Namespaces
+//
+// content : Namespace Specifier inline
+//
+// content : Namespace std
+//
+// content : Declaration using
+//
+// content : Namespace std::literals
+//
+// content : Operator ""s
+
+/////////////////////////////////////////////////
+
 #include <print>
 #include <string>
 
@@ -51,7 +89,7 @@ namespace library
 			std::print("library::v2::test\n");
 		}
 	}
-}
+} 
 
 /////////////////////////////////////////////////
 
