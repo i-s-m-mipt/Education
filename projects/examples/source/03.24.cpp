@@ -8,7 +8,7 @@
 
 ///////////////////////////////////////////////////////////////
 
-// content : Utility std::any
+// content : Type std::any
 //
 // content : Function std::any_cast
 //
