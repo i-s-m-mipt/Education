@@ -15,6 +15,8 @@
 // content : String Literals
 //
 // content : Namespace std::literals
+//
+// content : Function equal
 
 ///////////////////////////////////////////////////////////////
 

@@ -10,7 +10,7 @@
 
 // content : Nested Classes
 //
-// content : Caching Data
+// content : Helper Cache
 //
 // content : Function std::to_string
 //
