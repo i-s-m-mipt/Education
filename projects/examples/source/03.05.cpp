@@ -16,9 +16,11 @@
 //
 // content : Pointer this
 //
-// content : Bitwise and Logical Constancy
+// content : Mutable Data Members
 //
 // content : Storage Class Specifier mutable
+//
+// content : Logical Constancy
 
 /////////////////////////////////////////////////////////////////
 

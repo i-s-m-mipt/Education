@@ -19,6 +19,8 @@
 // content : Constant Member Functions
 //
 // content : Function Qualifier const
+//
+// content : Bitwise Constancy
 
 ////////////////////////////////////////
 

@@ -12,9 +12,13 @@
 //
 // content : Header Files
 //
+// content : Declarations and Definitions
+//
 // content : One Definition Rule
 //
 // content : Global Objects
+//
+// content : Variable Declarations
 //
 // content : Storage Class Specifier extern
 //

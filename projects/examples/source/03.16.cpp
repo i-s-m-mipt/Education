@@ -12,9 +12,11 @@
 //
 // content : Virtual Functions
 //
+// content : Function Specifiers virtual and override
+//
 // content : Overriding Functions
 //
-// content : Function Specifiers virtual and override
+// content : Final Classes
 //
 // content : Function and Class Specifier final
 //

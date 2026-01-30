@@ -16,11 +16,11 @@
 //
 // content : Operator +
 //
-// content : Ambiguity Problem
+// content : Dependent Types
 //
 // content : Disambiguation Specifier typename
 //
-// content : Dependent Names
+// content : Ambiguity Problem
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
