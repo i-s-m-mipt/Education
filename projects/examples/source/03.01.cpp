@@ -8,6 +8,8 @@
 
 /////////////////////////////////////////////////////////////////
 
+// content : User-Defined Types
+//
 // content : Structures
 //
 // content : Declaration struct
