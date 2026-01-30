@@ -12,7 +12,7 @@
 //
 // content : Functions std::make_tuple, std::get and std::tie
 //
-// content : Type Trait std::tuple_size
+// content : Metafunction std::tuple_size
 //
 // content : Object std::ignore
 //

@@ -10,7 +10,7 @@
 
 // content : Metaprogramming
 //
-// content : Compile-Time Factorial
+// content : Compile-Time Factorial Calculation Algorithm
 
 ////////////////////////////////////////////////////////////////////////
 

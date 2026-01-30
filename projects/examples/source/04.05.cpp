@@ -16,7 +16,7 @@
 //
 // content : Operator sizeof...
 //
-// content : Parameter Pack Expansion
+// content : Expanding Parameter Packs
 //
 // content : Variadic Expressions
 
