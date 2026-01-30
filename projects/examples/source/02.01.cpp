@@ -14,9 +14,9 @@
 //
 // content : Literals false and true
 //
-// content : Attribute [[maybe_unused]]
-//
 // content : Separator ,
+//
+// content : Attribute [[maybe_unused]]
 //
 // content : Operator sizeof
 //

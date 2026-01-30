@@ -10,9 +10,7 @@
 
 // content : Type Aliases
 //
-// content : Declaration using
-//
-// content : Declaration typedef
+// content : Declarations using and typedef
 //
 // content : Type Alias std::size_t
 //

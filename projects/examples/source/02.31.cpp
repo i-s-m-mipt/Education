@@ -16,7 +16,7 @@
 //
 // content : Algorithm std::ranges::is_sorted
 //
-// content : Functional Object std::less
+// content : Policy std::less
 
 ////////////////////////////////////////////////////////
 
