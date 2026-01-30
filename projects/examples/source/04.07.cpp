@@ -10,11 +10,11 @@
 
 // content : Type Node
 //
-// content : Traverse Algorithm
-//
-// content : Pointers to Data Members
+// content : Binary Tree Traverse Algorithm
 //
 // content : Operator ->*
+//
+// content : Pointers to Data Members
 
 ////////////////////////////////////////////////////////////////
 
