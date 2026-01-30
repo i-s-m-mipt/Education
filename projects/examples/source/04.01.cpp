@@ -16,15 +16,17 @@
 //
 // content : Type Specifier typename
 //
-// content : Instantiating Templates
+// content : Instantiating Function Templates
 //
 // content : Two-Phase Template Lookup
 //
-// content : Default Template Arguments
+// content : Default Arguments
 //
 // content : Type Trait std::common_type_t
 //
 // content : Abbreviated Function Templates
+//
+// content : Utility C++ Insights
 
 //////////////////////////////////////////////////////////////////////////////////////
 
