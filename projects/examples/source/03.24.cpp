@@ -8,7 +8,7 @@
 
 ///////////////////////////////////////////////////////////////
 
-// content : Type std::any
+// content : Wrapper std::any
 //
 // content : Function std::any_cast
 //
