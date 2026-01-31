@@ -8,7 +8,7 @@
 
 ////////////////////////////////////////////////////////////////////
 
-// content : Type std::tuple
+// content : Wrapper std::tuple
 //
 // content : Functions std::make_tuple, std::get and std::tie
 //

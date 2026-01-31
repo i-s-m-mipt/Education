@@ -8,7 +8,7 @@
 
 //////////////////////////////////////////////////////////////////
 
-// content : Type Tuple
+// content : Wrapper Tuple
 //
 // content : Dependent Nested Templates
 //
