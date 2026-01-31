@@ -4,7 +4,7 @@
 
 ////////////////////////////////////////////////////////////
 
-// section : Custom Libraries
+// section : Static and Dynamic Libraries
 
 ////////////////////////////////////////////////////////////
 
@@ -31,7 +31,7 @@
 namespace library
 {
 	API void test_v1() { std::print("library::test_v1\n"); }
-	
+
 	API void test_v2() { std::print("library::test_v2\n"); }
 }
 

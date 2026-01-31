@@ -4,15 +4,15 @@
 
 ///////////////////////////////////////////////////////////////////
 
-// section : Module Support
+// section : Modular Programming
 
 ///////////////////////////////////////////////////////////////////
 
-// content : Modules
+// content : Module Units
 //
 // content : Declaration module
 //
-// content : Interface Units
+// content : Module Interface Units
 //
 // content : Global Module Fragments
 //
