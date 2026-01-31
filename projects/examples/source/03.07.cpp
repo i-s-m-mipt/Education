@@ -10,7 +10,7 @@
 
 // content : Composition, Aggregation and Association
 //
-// content : Forward Declarations
+// content : Structure Declarations
 //
 // content : Dependency
 //

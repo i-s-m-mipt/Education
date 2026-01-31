@@ -20,6 +20,8 @@
 //
 // content : Operator sizeof
 //
+// content : Compile-Time Assertions
+//
 // content : Declaration static_assert
 
 //////////////////////////////////////////////

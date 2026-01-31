@@ -22,6 +22,8 @@
 //
 // content : Access Specifier protected
 //
+// content : Changing Member Access
+//
 // content : Declaration using
 
 /////////////////////////////////////////////////////////////

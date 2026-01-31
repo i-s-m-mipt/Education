@@ -10,7 +10,7 @@
 
 // content : Functions
 //
-// content : Forward Declarations
+// content : Function Declarations
 //
 // content : Parameters and Arguments
 //
