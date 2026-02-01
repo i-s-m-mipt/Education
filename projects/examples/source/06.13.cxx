@@ -8,7 +8,9 @@
 
 ///////////////////////////////////////////////////////////////////
 
-// content : Module Units
+// content : Modular Programming
+//
+// content : Modules
 //
 // content : Declaration module
 //

@@ -4,15 +4,15 @@
 
 /////////////////////////////////////////////////////////////////////////////////
 
-// section : Type Traits
+// section : Constant Expressions
 
 /////////////////////////////////////////////////////////////////////////////////
 
-// content : Type Trait is_function
+// content : Type Trait is_integral
 //
-// content : Type Traits std::is_const and std::is_reference
+// content : Base Class std::integral_constant
 //
-// content : Type Trait std::is_function
+// content : Type Trait std::is_integral
 
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -20,29 +20,32 @@
 
 /////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > struct is_function : std::integral_constant 
-<
-    bool, !std::is_const_v < T const > && !std::is_reference_v < T >
+template < typename T > class is_integral : public std::integral_constant
+< 
+	bool, std::is_same_v < T, bool > ||
 
+          std::is_same_v < T, char > ||
+
+          std::is_same_v < T, int  >
 > {};
 
 /////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > constexpr auto is_function_v = is_function < T > ::value;
+template < typename T > constexpr auto is_integral_v = is_integral < T > ::value;
 
 /////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    static_assert(     is_function_v < int(int) > == 1);
+    static_assert(     is_integral_v < int    > == 1);
 
-	static_assert(     is_function_v < int      > == 0);
+	static_assert(     is_integral_v < double > == 0);
 
-//  ----------------------------------------------------
+//  --------------------------------------------------
 
-	static_assert(std::is_function_v < int(int) > == 1);
+    static_assert(std::is_integral_v < int    > == 1);
 
-	static_assert(std::is_function_v < int      > == 0);
+	static_assert(std::is_integral_v < double > == 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////////

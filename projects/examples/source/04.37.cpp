@@ -1,59 +1,56 @@
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 // chapter : Generic Programming
 
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
-// section : Constraints and Concepts
+// section : Constant Expressions
 
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
-// content : Concept totally_ordered
+// content : Expression requires
 //
-// content : Compound and Nested Requirements
+// content : Simple and Type Requirements
 //
-// content : Concept std::convertible_to
+// content : Concept range
 //
-// content : Concept std::totally_ordered
+// content : Concepts sized_range and std::ranges::sized_range
 
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 #include <concepts>
+#include <ranges>
+#include <vector>
 
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
-template < typename T > concept totally_ordered = requires (T x, T y)
+template < typename R > concept range = requires (R range)
 {
-    { x <  y } -> std::convertible_to < bool > ;
+	std::begin(range);
 
-    { x >  y } -> std::convertible_to < bool > ;
-
-    { x <= y } -> std::convertible_to < bool > ;
-
-    { x >= y } -> std::convertible_to < bool > ;
-
-    { x == y } -> std::convertible_to < bool > ;
-
-    { x != y } -> std::convertible_to < bool > ;
+	std::end  (range);
 };
 
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
-struct Entity {};
+template < typename R > concept sized_range = 
+(
+    range < R > && requires (R range){ std::size(range); }
+);
 
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    static_assert(     totally_ordered < int    > == 1);
+    static_assert(             sized_range < std::vector < int > > == 1);
 
-    static_assert(     totally_ordered < Entity > == 0);
+    static_assert(             sized_range < int                 > == 0);
 
-//  ----------------------------------------------------
+//  ---------------------------------------------------------------------
 
-    static_assert(std::totally_ordered < int    > == 1);
+    static_assert(std::ranges::sized_range < std::vector < int > > == 1);
 
-    static_assert(std::totally_ordered < Entity > == 0);
+    static_assert(std::ranges::sized_range < int                 > == 0);
 }
 
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////

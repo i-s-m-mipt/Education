@@ -16,11 +16,11 @@
 //
 // content : Operator Precedence
 //
-// content : Expressions
-//
 // content : Short-Circuit Evaluations
 //
 // content : De Morgan's Rules
+//
+// content : Expressions and Statements
 
 ////////////////////////////////////////
 

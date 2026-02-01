@@ -1,90 +1,78 @@
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Generic Programming
 
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
-// section : Type Traits
+// section : Constant Expressions
 
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
-// content : Type Traits is_convertible and std::is_convertible
+// content : Type Traits is_polymorphic and std::is_polymorphic
 
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 #include <type_traits>
 #include <utility>
 
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D, typename B > class is_convertible
+template < typename B > class is_polymorphic
 {
 private :
 
-    template < typename T > static int test_v1(T);
+	template < typename T > static std::false_type test(...);
 
-//  --------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------
 
-	template < typename T1, typename T2 > static std::false_type test_v2(...);
-
-//  --------------------------------------------------------------------------
-
-    template < typename T1, typename T2 > static std:: true_type test_v2
+    template < typename T > static std:: true_type test
 	(
-		int, decltype(test_v1 < T2 > (std::declval < T1 > ())) = 0
+		int, decltype(dynamic_cast < void * > (std::declval < T * > ())) = nullptr
 	);
 
 public :
       
-	constexpr static auto value = decltype(test_v2 < D, B > (1))::value;
+	constexpr static auto value = decltype(test < B > (1))::value;
 };
 
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
-template 
-< 
-	typename D, typename B 
-> 
-constexpr auto is_convertible_v = is_convertible < D, B > ::value;
+template < typename B > constexpr auto is_polymorphic_v = is_polymorphic < B > ::value;
 
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
-class Entity {};
-
-//////////////////////////////////////////////////////////////////////////////
-
-class Client : public Entity {};
-
-//////////////////////////////////////////////////////////////////////////////
-
-class Server 
+class Entity 
 { 
 public :
 
-	explicit Server(int) {}
+	virtual ~Entity() = default;
 };
 
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+
+class Client : public Entity {};
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+class Server {};
+
+///////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    static_assert(     is_convertible_v < int,      double   > == 1);
+	static_assert(     is_polymorphic_v < Entity > == 1);
 
-	static_assert(     is_convertible_v < int,      Server   > == 0);
+	static_assert(     is_polymorphic_v < Client > == 1);
 
-	static_assert(     is_convertible_v < Client *, Entity * > == 1);
+	static_assert(     is_polymorphic_v < Server > == 0);
 
-	static_assert(     is_convertible_v < Server *, Entity * > == 0);
+//  -----------------------------------------------------
 
-//  -----------------------------------------------------------------
+	static_assert(std::is_polymorphic_v < Entity > == 1);
 
-	static_assert(std::is_convertible_v < int,      double   > == 1);
+	static_assert(std::is_polymorphic_v < Client > == 1);
 
-	static_assert(std::is_convertible_v < int,      Server   > == 0);
-
-	static_assert(std::is_convertible_v < Client *, Entity * > == 1);
-
-	static_assert(std::is_convertible_v < Server *, Entity * > == 0);
+	static_assert(std::is_polymorphic_v < Server > == 0);
 }
 
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
