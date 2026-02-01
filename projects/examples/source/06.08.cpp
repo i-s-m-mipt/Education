@@ -10,7 +10,7 @@
 
 // content : Include Directories
 //
-// content : Compilation and Linkage Stages
+// content : Compilation and Linking Stages
 //
 // content : Object, Executable and Library Files
 //
