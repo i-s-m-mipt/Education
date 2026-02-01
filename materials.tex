@@ -134,1403 +134,273 @@
 
 \titlelabel{}
 
-\thispagestyle{empty}\tableofcontents\thispagestyle{empty}
+%\thispagestyle{empty}\tableofcontents\thispagestyle{empty}
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 4.30in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 25.00in\enlargethispage{100in}
 
-\section{01. Introduction and Brief Overview}
 
-\begin{tabular}{!{\vrule width 1pt}L{4.1cm}!{\vrule width 1pt}L{14.9cm}!{\vrule width 0pt}} 
 
-\Xcline{1-1}{1pt}
-
-\textbf{General Introduction} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-    
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/01.01.pdf}{\texttt{01.01}} -- Software\:engineering.\:The\:C\texttt{++}\:programming\:language.\:Programming\:paradigms.\:Instruments.\:References.
-    
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{5.3cm}!{\vrule width 1pt}L{13.7cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Environment and Compiler} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
+\section{01. Introduction and Overview}
 
 \begin{itemize}
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/01.02.cpp}{\texttt{01.02}} -- Environment \href{https://code.visualstudio.com/}{Visual Studio Code}. Terminal. Compiler g\texttt{++} from \href{https://gcc.gnu.org/}{GCC}. Minimal program. Function \lstinline{main}.
+    \item \textbf{Course Introduction}
+
+    \medskip
+
+    \item \textbf{Developer Tools}
+
+    \medskip
     
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{3.3cm}!{\vrule width 1pt}L{15.7cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Standard Library} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/01.03.cpp}{\texttt{01.03}} -- Standard library overview. Comments. Documenting code. Utility \href{https://doxygen.nl/}{Doxygen}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/01.04.hpp}{\texttt{01.04}} -- Standard library header files.
-    
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{4.7cm}!{\vrule width 1pt}L{14.3cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Version Control System} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/01.05.pdf}{\texttt{01.05}} -- Version control system \href{https://git-scm.com/}{Git}. Project hosting system \href{https://github.com/}{GitHub}. Git graphical client \href{https://www.smartgit.dev/}{SmartGit}.
+    \item \textbf{Standard Library Overview}
     
 \end{itemize}
 
 
-
-\newpage\thispagestyle{empty}\pdfpageheight = 17.00in\enlargethispage{100in}
 
 \section{02. Basics of Programming}
 
-\begin{tabular}{!{\vrule width 1pt}L{5.0cm}!{\vrule width 1pt}L{14.0cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Fundamental Data Types} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
 \begin{itemize}
-    
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.01.cpp}{\texttt{02.01}} -- Type \lstinline{bool}. Automatic objects. Literals \lstinline{false} and \lstinline{true}. Operator \lstinline{sizeof}. Attribute \lstinline{maybe_unused}.
 
-    \smallskip
+    \item \textbf{Types and Variables}
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.02.cpp}{\texttt{02.02}} -- Type \lstinline{char}. Escape sequences. Portability problem.
+    \medskip
 
-    \smallskip
+    \item \textbf{Operators and Expressions}
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.03.cpp}{\texttt{02.03}} -- Type \lstinline{int}. Modifiers \lstinline{short} and \lstinline{long}. Literal suffixes. Two's complement. Overflow problem.
+    \medskip
 
-    \smallskip
-    
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.04.cpp}{\texttt{02.04}} -- Types \lstinline{float}, \lstinline{double} and \lstinline{long double}. Floating point formats. Precision problem.
+    \item \textbf{Memory Management}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.05.cpp}{\texttt{02.05}} -- Type signness. Modifiers \lstinline{signed} and \lstinline{unsigned}.
+    \item \textbf{Lvalue References}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.06.cpp}{\texttt{02.06}} -- Constants. Qualifier \lstinline{const}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.07.cpp}{\texttt{02.07}} -- Type aliases. Declaration \lstinline{using}. Specifier \lstinline{typedef}. Alias \lstinline{std::size_t}. Fixed\,-\,width integer types.
+    \item \textbf{Functions and Algorithms}
     
 \end{itemize}
 
-\bigskip\medskip
 
-\begin{tabular}{!{\vrule width 1pt}L{4.3cm}!{\vrule width 1pt}L{14.7cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Objects and Variables} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.08.cpp}{\texttt{02.08}} -- Declarations. Definitions. Default, value, direct, copy and list initialization. Undefined behavior.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.09.cpp}{\texttt{02.09}} -- Type inference. Placeholder \lstinline{auto}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.10.cpp}{\texttt{02.10}} -- Implicit, explicit, narrowing and C\,-\,style type conversions. Operator \lstinline{static_cast}. Temporary objects.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{5.2cm}!{\vrule width 1pt}L{13.8cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Operators and Expressions} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.11.cpp}{\texttt{02.11}} -- Logical operators. Alternative representations. Short\,-\,circuit evaluations.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.12.cpp}{\texttt{02.12}} -- Expressions. Arithmetic and comparison operators. Operator arity. Operator precedence.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.13.cpp}{\texttt{02.13}} -- Operator exclusive or.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.14.cpp}{\texttt{02.14}} -- Assignment operators. Arithmetic swap algorithm. Function \lstinline{std::swap}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.15.cpp}{\texttt{02.15}} -- Operator division. Operator remainder.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.16.cpp}{\texttt{02.16}} -- Evaluation order. Unspecified behavior. Operator associativity. Operator comma.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{4.2cm}!{\vrule width 1pt}L{14.8cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Selection Statements} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.17.cpp}{\texttt{02.17}} -- Statement \lstinline{if}. Utility \href{https://godbolt.org/}{Compiler Explorer}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.18.cpp}{\texttt{02.18}} -- Statement \lstinline{switch}. Labels \lstinline{case} and \lstinline{default}. Attributes \lstinline{fallthrough}, \lstinline{likely} and \lstinline{unlikely}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.19.cpp}{\texttt{02.19}} -- Ternary operator.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{5.7cm}!{\vrule width 1pt}L{13.3cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Loops and Jump Statements} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.20.cpp}{\texttt{02.20}} -- Statement \lstinline{for}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.21.cpp}{\texttt{02.21}} -- Statement \lstinline{continue}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.22.cpp}{\texttt{02.22}} -- Statement \lstinline{break}. Infinite loops.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.23.cpp}{\texttt{02.23}} -- Statement \lstinline{goto}. Labels.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.24.cpp}{\texttt{02.24}} -- Statement \lstinline{while}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.25.cpp}{\texttt{02.25}} -- Statement \lstinline{while}\,-\,\lstinline{do}.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{4.4cm}!{\vrule width 1pt}L{14.6cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Memory Management} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.26.cpp}{\texttt{02.26}} -- Pointers. Operator address of. Operator dereference. Literal \lstinline{nullptr}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.27.cpp}{\texttt{02.27}} -- Constant pointers. Pointers to constants.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{5.3cm}!{\vrule width 1pt}L{13.7cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Collections and Containers} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.28.cpp}{\texttt{02.28}} -- Static arrays. Aggregate initialization. Non\,-\,standard compiler extensions. Stack limit. Command ulimit.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.29.cpp}{\texttt{02.29}} -- Function \lstinline{std::size}. Index access operator. Pointer arithmetic.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.30.cpp}{\texttt{02.30}} -- Dynamic objects. Operators \lstinline{new} and \lstinline{delete}. Dynamic arrays. Operators \lstinline{new[]} and \lstinline{delete[]}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.31.cpp}{\texttt{02.31}} -- Container \lstinline{std::vector} overview. Complexities \texttt{O(1)} and \texttt{O(N)}. Amortized complexity.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{3.6cm}!{\vrule width 1pt}L{15.4cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Lvalue References} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.32.cpp}{\texttt{02.32}} -- Lvalue references.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.33.cpp}{\texttt{02.33}} -- Constant lvalue references.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.34.cpp}{\texttt{02.34}} -- Lvalue reference type inference. Placeholder \lstinline{decltype(auto)}. Specifier \lstinline{decltype}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.35.cpp}{\texttt{02.35}} -- Wrapper \lstinline{std::reference_wrapper}.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{4.9cm}!{\vrule width 1pt}L{14.1cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Functional Programming} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.36.cpp}{\texttt{02.36}} -- Functions. Forward declarations. Statement \lstinline{return}. Attribute \lstinline{nodiscard}. Object \lstinline{std::ignore}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.37.cpp}{\texttt{02.37}} -- Calling conventions x86. Attributes \lstinline{cdecl}, \lstinline{stdcall} and \lstinline{fastcall}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.38.cpp}{\texttt{02.38}} -- Type \lstinline{void}. Default arguments.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.39.cpp}{\texttt{02.39}} -- Function overloading.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.40.cpp}{\texttt{02.40}} -- Passing arguments by value, by lvalue reference and by pointer. View \lstinline{std::span}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.41.cpp}{\texttt{02.41}} -- Dangling pointers and references. Static objects. Specifier \lstinline{static}.
-
-    \smallskip
-    
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.42.cpp}{\texttt{02.42}} -- Inline functions. Specifier \lstinline{inline}. Attribute \lstinline{noinline}. Special memory. Qualifier \lstinline{volatile}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.43.cpp}{\texttt{02.43}} -- Recursion. Factorial. Binomial coefficients. Catalan numbers. Trailing return types.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.44.cpp}{\texttt{02.44}} -- Insertion and merge sort algorithms. Complexities \texttt{O(N*N)} and \texttt{O(N*log(N))}. Function \lstinline{std::midpoint}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/02.45.cpp}{\texttt{02.45}} -- Binary search algorithm. Complexity \texttt{O(log(N))}.
-
-\end{itemize}
-
-
-
-\newpage\thispagestyle{empty}\pdfpageheight = 14.10in\enlargethispage{100in}
 
 \section{03. Object\,-\,Oriented Programming}
 
-\begin{tabular}{!{\vrule width 1pt}L{5.1cm}!{\vrule width 1pt}L{13.9cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{User\,-\,defined Data Types} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
 \begin{itemize}
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.01.cpp}{\texttt{03.01}} -- Structures. Declaration \lstinline{struct}. Data members. Instances. Designated initialization.
+    \item \textbf{Structures and Classes}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.02.cpp}{\texttt{03.02}} -- Operator point. Operator arrow.
+    \item \textbf{Object Relations}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.03.cpp}{\texttt{03.03}} -- Classes. Declaration \lstinline{class}. Encapsulation. Specifiers \lstinline{public} and \lstinline{private}. Constructors. Destructors.
+    \item \textbf{Dynamic Polymorphism}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.04.cpp}{\texttt{03.04}} -- Member functions. Constant member functions.
+    \item \textbf{Rvalue References}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.05.cpp}{\texttt{03.05}} -- Nested classes. Pointer \lstinline{this}. Logical and bitwise constancy. Specifier \lstinline{mutable}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.06.cpp}{\texttt{03.06}} -- Static members.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{3.8cm}!{\vrule width 1pt}L{15.2cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Interclass Relations} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.07.cpp}{\texttt{03.07}} -- Composition, aggregation, association and dependency relations.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.08.cpp}{\texttt{03.08}} -- Friend functions and classes. Specifier \lstinline{friend}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.09.cpp}{\texttt{03.09}} -- Pattern Attorney\,-\,Client.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.10.cpp}{\texttt{03.10}} -- Pattern PassKey.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{5.4cm}!{\vrule width 1pt}L{13.6cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Inheritance and Hierarchies} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.11.cpp}{\texttt{03.11}} -- Class hierarchies. Base and derived classes. Public inheritance. Protected members. Specifier \lstinline{protected}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.12.cpp}{\texttt{03.12}} -- Private inheritance. Composition.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.13.cpp}{\texttt{03.13}} -- Multiple inheritance. Virtual inheritance. Diamond problem.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.14.pdf}{\texttt{03.14}} -- Appendix: scheme.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.15.cpp}{\texttt{03.15}} -- Empty classes. Empty base optimization. Attribute \lstinline{no_unique_address}.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{4.7cm}!{\vrule width 1pt}L{14.3cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Dynamic Polymorphism} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.16.cpp}{\texttt{03.16}} -- Virtual functions. Specifiers \lstinline{virtual}, \lstinline{override} and \lstinline{final}. Virtual destructors.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.17.cpp}{\texttt{03.17}} -- Pure virtual functions. Abstract base classes.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.18.cpp}{\texttt{03.18}} -- Virtual pointers. Virtual tables.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.19.pdf}{\texttt{03.19}} -- Appendix: scheme.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.20.cpp}{\texttt{03.20}} -- Covariant return types.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{5.5cm}!{\vrule width 1pt}L{13.5cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Runtime Type Identification} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.21.cpp}{\texttt{03.21}} -- Downcasting type conversions. Operator \lstinline{dynamic_cast}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.22.cpp}{\texttt{03.22}} -- Operator \lstinline{typeid}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.23.cpp}{\texttt{03.23}} -- Library \href{https://www.boost.org/doc/libs/1_84_0/doc/html/boost_typeindex.html}{Boost.TypeIndex}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.24.cpp}{\texttt{03.24}} -- Type \lstinline{std::any}. Function \lstinline{std::make_any}. Pointers to raw memory.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{3.6cm}!{\vrule width 1pt}L{15.4cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Rvalue References} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.25.pdf}{\texttt{03.25}} -- Lvalue, glvalue, xvalue, rvalue and prvalue expressions.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.26.cpp}{\texttt{03.26}} -- Rvalue references.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.27.cpp}{\texttt{03.27}} -- Extending temporary objects lifetime.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.28.cpp}{\texttt{03.28}} -- Copy and move semantics. Function \lstinline{std::move}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.29.cpp}{\texttt{03.29}} -- Member function reference qualifiers.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.30.cpp}{\texttt{03.30}} -- Container\:\lstinline{Vector}.\:Special\:member\:functions.\:Deep\:and\:shallow\:copy.\:Copy\:and\:swap.\:Rules\:of\:0,\:3\:and\:5.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.31.cpp}{\texttt{03.31}} -- Copy elision. Return value optimization. Named return value optimization.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{4.3cm}!{\vrule width 1pt}L{14.7cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Operator Overloading} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.32.cpp}{\texttt{03.32}} -- Rational arithmetic. Type \lstinline{Rational}. User\,-\,defined type conversions. Specifier \lstinline{explicit}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.33.cpp}{\texttt{03.33}} -- Library \href{https://www.boost.org/doc/libs/1_75_0/libs/rational/rational.html}{Boost.Rational}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.34.cpp}{\texttt{03.34}} -- Three\,-\,way comparison operator. Strong ordering. Equivalence. Equality.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.35.cpp}{\texttt{03.35}} -- Weak ordering.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.36.cpp}{\texttt{03.36}} -- Unordered objects. Partial ordering.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.37.cpp}{\texttt{03.37}} -- Input and output operators.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.38.cpp}{\texttt{03.38}} -- Constant and non\,-\,constant index access operators. Constancy type conversions. Operator \lstinline{const_cast}.
+    \item \textbf{Operator Overloading}
 
 \end{itemize}
 
 
-
-\newpage\thispagestyle{empty}\pdfpageheight = 15.00in\enlargethispage{100in}
 
 \section{04. Generic Programming}
 
-\begin{tabular}{!{\vrule width 1pt}L{3.9cm}!{\vrule width 1pt}L{15.1cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Function Templates} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
 \begin{itemize}
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.01.cpp}{\texttt{04.01}} -- Function\:templates.\:Declaration\:\lstinline{template}.\:Type\:template\:parameters.\:Specifier\:\lstinline{typename}.\:Instantiating.
+    \item \textbf{Function Templates}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.02.cpp}{\texttt{04.02}} -- Full specializations. Function template overloading.
+    \item \textbf{Class Templates}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.03.cpp}{\texttt{04.03}} -- Dimov\,-\,Abrahams example.
+    \item \textbf{Forwarding References}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.04.cpp}{\texttt{04.04}} -- Non\,-\,type template parameters. Passing static arrays by lvalue reference.
+    \item \textbf{Metaprogramming}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.05.cpp}{\texttt{04.05}} -- Variadic templates. Template and function parameter packs. Ellipsis.  Operator \lstinline{sizeof...}
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.06.cpp}{\texttt{04.06}} -- Variadic expressions. Fold expressions. Arithmetic reduce algorithm.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.07.cpp}{\texttt{04.07}} -- Tree traverse algorithm. Pointers to members.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{3.2cm}!{\vrule width 1pt}L{15.8cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Class Templates} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.08.cpp}{\texttt{04.08}} -- Class templates. Container \lstinline{Stack}. Default types. Instantiating member functions.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.09.cpp}{\texttt{04.09}} -- Class template argument deduction. Template template parameters.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.10.cpp}{\texttt{04.10}} -- Full and partial specializations.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.11.cpp}{\texttt{04.11}} -- Instantiating friend functions and operators.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{4.5cm}!{\vrule width 1pt}L{14.5cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Forwarding References} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.12.cpp}{\texttt{04.12}} -- Forwarding references. Perfect forwarding. Function \lstinline{std::forward}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.13.cpp}{\texttt{04.13}} -- Template type inference. Reference collapsing rules.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.14.cpp}{\texttt{04.14}} -- Special member function templates. Substitution failure is not an error. Metafunction \lstinline{std::enable_if}.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{3.6cm}!{\vrule width 1pt}L{15.4cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Special Templates} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.15.cpp}{\texttt{04.15}} -- Type alias templates. Container \lstinline{Array}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.16.cpp}{\texttt{04.16}} -- Variable and constant templates.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{4.2cm}!{\vrule width 1pt}L{14.8cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Constant Expressions} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.17.cpp}{\texttt{04.17}} -- Template metaprogramming. Compile\,-\,time factorial.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.18.cpp}{\texttt{04.18}} -- Compile\,-\,time prime number test algorithm.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.19.cpp}{\texttt{04.19}} -- Constant expressions. Immediate functions. Specifiers \lstinline{constexpr}, \lstinline{consteval} and \lstinline{constinit}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.20.cpp}{\texttt{04.20}} -- Statement \lstinline{if constexpr}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.21.cpp}{\texttt{04.21}} -- Hybrid template metaprogramming. Compile\,-\,time rational arithmetic.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.22.cpp}{\texttt{04.22}} -- Type \lstinline{Tuple}. Dependent names. Ambiguity problem.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.23.cpp}{\texttt{04.23}} -- Type \lstinline{std::tuple}. Functions \lstinline{std::make_tuple}, \lstinline{std::get} and \lstinline{std::tie}. Structured bindings.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{3.2cm}!{\vrule width 1pt}L{15.8cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Trait Templates} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.24.cpp}{\texttt{04.24}} -- Metafunctions \lstinline{is_same}. Base classes \lstinline{std::false_type} and \lstinline{std::true_type}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.25.cpp}{\texttt{04.25}} -- Metafunctions \lstinline{is_any_of} and \lstinline{is_all_of}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.26.cpp}{\texttt{04.26}} -- Integral arithmetic types. Metafunctions \lstinline{is_integral}. Base class \lstinline{std::integral_constant}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.27.cpp}{\texttt{04.27}} -- Metafunctions \lstinline{is_array}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.28.cpp}{\texttt{04.28}} -- Metafunctions \lstinline{add_lvalue_reference} and \lstinline{add_rvalue_reference}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.29.cpp}{\texttt{04.29}} -- Metafunctions \lstinline{remove_reference}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.30.cpp}{\texttt{04.30}} -- Metafunctions \lstinline{is_base_of}. Variadic functions.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.31.cpp}{\texttt{04.31}} -- Unevaluated contexts. Function \lstinline{declval}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.32.cpp}{\texttt{04.32}} -- Metafunctions \lstinline{is_polymorphic}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.33.cpp}{\texttt{04.33}} -- Metafunctions \lstinline{is_convertible}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.34.cpp}{\texttt{04.34}} -- Compile\,-\,time conditions. Metafunctions \lstinline{enable_if}.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{5.1cm}!{\vrule width 1pt}L{13.9cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Concepts and Constraints} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.35.cpp}{\texttt{04.35}} -- Concepts. Declaration \lstinline{concept}. Constraints. Concepts \lstinline{same_as}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.36.cpp}{\texttt{04.36}} -- Expression \lstinline{requires}. Simple and type requirements. Concepts \lstinline{sized_range}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.36.cpp}{\texttt{04.36}} -- Compound requirements. Concepts \lstinline{totally_ordered}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.37.cpp}{\texttt{04.37}} -- Clause \lstinline{requires}. Concept \lstinline{std::integral}. Abbreviated function templates.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{3.8cm}!{\vrule width 1pt}L{15.2cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Variadic Type Lists} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.39.cpp}{\texttt{04.39}} -- Compile\,-\,time type collections. Container \lstinline{Deque}. 
+    \item \textbf{Constant Expressions}
 
 \end{itemize}
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 8.90in\enlargethispage{100in}
-
-\section{05. Software Architecture Patterns}
-
-\begin{tabular}{!{\vrule width 1pt}L{3.9cm}!{\vrule width 1pt}L{15.1cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Generative Patterns} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
+\section{05. Software Design Patterns}
 
 \begin{itemize}
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.01.cpp}{\texttt{05.01}} -- Pattern Builder. 
+    \item \textbf{Generative Patterns}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.02.cpp}{\texttt{05.02}} -- Pattern Factory method.
+    \item \textbf{Constructional Patterns}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.03.cpp}{\texttt{05.03}} -- Pattern Abstract factory. 
+    \item \textbf{Behavioral Patterns}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.04.cpp}{\texttt{05.04}} -- Pattern Prototype. Virtual constructors.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.05.cpp}{\texttt{05.05}} -- Pattern Singleton. Default and deleted special member functions. Specifiers \lstinline{default} and \lstinline{delete}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.06.cpp}{\texttt{05.06}} -- Pattern Noncopyable. Library \href{https://www.boost.org/doc/libs/1_85_0/libs/core/doc/html/index.html}{Boost.Noncopyable}.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{3.8cm}!{\vrule width 1pt}L{15.2cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Structural Patterns} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.07.cpp}{\texttt{05.07}} -- Pattern Adapter. 
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.08.cpp}{\texttt{05.08}} -- Pattern Bridge. 
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.09.cpp}{\texttt{05.09}} -- Pattern Composite. 
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.10.cpp}{\texttt{05.10}} -- Pattern Decorator.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.11.cpp}{\texttt{05.11}} -- Pattern Facade.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{3.9cm}!{\vrule width 1pt}L{15.1cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Behavioral Patterns} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.12.cpp}{\texttt{05.12}} -- Pattern Memento.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.13.cpp}{\texttt{05.13}} -- Pattern Observer.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.14.cpp}{\texttt{05.14}} -- Pattern State. Finite\,-\,state machines.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.15.cpp}{\texttt{05.15}} -- Pattern Strategy.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.16.cpp}{\texttt{05.16}} -- Pattern Template method. Non\,-\,virtual interfaces.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{3.7cm}!{\vrule width 1pt}L{15.3cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Template Patterns} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.17.cpp}{\texttt{05.17}} -- Static polymorphism. Eliminating virtuality.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.18.cpp}{\texttt{05.18}} -- Curiously recurring template pattern.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.19.cpp}{\texttt{05.19}} -- Mixin based pattern Singleton.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.20.cpp}{\texttt{05.20}} -- Pattern Controller.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.21.cpp}{\texttt{05.21}} -- Extending functionality. Barton\,-\,Nackman trick. Restricted template expansion.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.22.cpp}{\texttt{05.22}} -- Library \href{https://www.boost.org/doc/libs/1_84_0/libs/utility/doc/html/utility/utilities/operators.html}{Boost.Operators}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.23.cpp}{\texttt{05.23}} -- Mixin based pattern Memento. Inverted inheritance.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.24.cpp}{\texttt{05.24}} -- Variadic base classes.
+    \item \textbf{Mixin\,-\,Based Patterns}
 
 \end{itemize}
 
 
-
-\newpage\thispagestyle{empty}\pdfpageheight = 8.80in\enlargethispage{100in}
 
 \section{06. Projects and Libraries}
 
-\begin{tabular}{!{\vrule width 1pt}L{4.0cm}!{\vrule width 1pt}L{15.0cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Preprocessing Stage} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
 \begin{itemize}
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.01.pdf}{\texttt{06.01}} -- Multi\,-\,file projects. Build stages. Source and header files. Translation units. Object and executable files.
+    \item \textbf{Preprocessor Directives}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.02.cpp}{\texttt{06.02}} -- Preprocessor. Directives \lstinline{include}, \lstinline{define}, \lstinline{undef},  \lstinline{if}, \lstinline{else}, \lstinline{endif} and \lstinline{pragma}. Macros. 
+    \item \textbf{Multi\,-\,File Projects}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.03.cpp}{\texttt{06.03}} -- Macros \lstinline{FILE}, \lstinline{LINE}, \lstinline{DATE}, \lstinline{TIME} and others. Identifier \lstinline{func}.
+    \item \textbf{Modular Programming}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.04.cpp}{\texttt{06.04}} -- Utility \lstinline{std::source_location}.
+    \item \textbf{Additional Libraries}
 
 \end{itemize}
 
-\bigskip\medskip
 
-\begin{tabular}{!{\vrule width 1pt}L{4.9cm}!{\vrule width 1pt}L{14.1cm}!{\vrule width 0pt}} 
 
-\Xcline{1-1}{1pt}
-
-\textbf{Compilation and Linkage} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
+\section{07. Debugging and Profiling}
 
 \begin{itemize}
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.05.hpp}{\texttt{06.05}} -- Conditional compilation. Include guards. One definition rule. Specifier \lstinline{extern}. Inline variables.
+    \item \textbf{Irrecoverable Errors}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.06.hpp}{\texttt{06.06}} -- Precompiled header files.
+    \item \textbf{Function Return Codes}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.07.cpp}{\texttt{06.07}} -- Global variables and constants. Anonymous namespaces.
+    \item \textbf{Exception Handling}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.08.cpp}{\texttt{06.08}} -- Internal and external linkage. Multiply defined and unresolved external symbols.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.09.hpp}{\texttt{06.09}} -- Reducing compile\,-\,time dependencies. Pointers to implementations.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.10.cpp}{\texttt{06.10}} -- Class implementation details.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.11.cpp}{\texttt{06.11}} -- Appendix: main.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.12.cpp}{\texttt{06.12}} -- Namespaces. Declaration \lstinline{namespace}. Scope operator. Argument dependent lookup. Namespace aliases.
+    \item \textbf{Debugging and Profiling}
 
 \end{itemize}
 
-\bigskip\medskip
 
-\begin{tabular}{!{\vrule width 1pt}L{3.2cm}!{\vrule width 1pt}L{15.8cm}!{\vrule width 0pt}} 
 
-\Xcline{1-1}{1pt}
-
-\textbf{Module Support} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
+\section{08. Number Processing}
 
 \begin{itemize}
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.13.cxx}{\texttt{06.13}} -- Modules. Declaration \lstinline{module}. Global module fragments. Exporting symbols. Declaration \lstinline{export}.
+    \item \textbf{}
 
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.14.cxx}{\texttt{06.14}} -- Interface and implementation units. Standard library modules.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.15.cxx}{\texttt{06.15}} -- Submodules.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.16.cpp}{\texttt{06.16}} -- Importing modules. Declaration \lstinline{import}.
-
-    \smallskip
+    \medskip
 
 \end{itemize}
 
-\bigskip\medskip
 
-\begin{tabular}{!{\vrule width 1pt}L{5.1cm}!{\vrule width 1pt}L{13.9cm}!{\vrule width 0pt}} 
 
-\Xcline{1-1}{1pt}
-
-\textbf{Build Automation System} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
+\section{09. Memory Management}
 
 \begin{itemize}
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/CMakeLists.txt}{\texttt{06.17}} -- Builder \href{https://cmake.org/}{CMake}. File CMakeLists. Packages. Targets. Libraries. Scripts.
+    \item \textbf{}
+
+    \medskip
 
 \end{itemize}
 
-\bigskip\medskip
 
-\begin{tabular}{!{\vrule width 1pt}L{3.3cm}!{\vrule width 1pt}L{15.7cm}!{\vrule width 0pt}} 
 
-\Xcline{1-1}{1pt}
-
-\textbf{Custom Libraries} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
+\section{10. Data Structures}
 
 \begin{itemize}
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.18.cpp}{\texttt{06.18}} -- Importing symbols and aliases. Library \href{https://www.boost.org/doc/libs/1_84_0/doc/html/boost_dll.html}{Boost.DLL}.
+    \item \textbf{}
 
-    \smallskip
+    \medskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/library_v1/source/06.19.hpp}{\texttt{06.19}} -- Static libraries.
+\end{itemize}
 
-    \smallskip
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/library_v1/source/06.20.cpp}{\texttt{06.20}} -- Library implementation details.
 
-    \smallskip
+\section{11. Algorithms and Ranges}
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/library_v2/source/06.21.cpp}{\texttt{06.21}} -- Dynamic libraries. C\,-\,style linkage. Declaration \lstinline{extern C}. Implicit and explicit library linkage.
+\begin{itemize}
+
+    \item \textbf{}
+
+    \medskip
+
+\end{itemize}
+
+
+
+\section{12. String Processing}
+
+\begin{itemize}
+
+    \item \textbf{}
+
+    \medskip
+
+\end{itemize}
+
+
+
+\section{13. Streams and Serialization}
+
+\begin{itemize}
+
+    \item \textbf{}
+
+    \medskip
+
+\end{itemize}
+
+
+
+\section{14. Parallel Programming}
+
+\begin{itemize}
+
+    \item \textbf{}
+
+    \medskip
+
+\end{itemize}
+
+
+
+\section{15. Computer Network Systems}
+
+\begin{itemize}
+
+    \item \textbf{}
+
+    \medskip
 
 \end{itemize}
 
 
 
 \newpage\thispagestyle{empty}\pdfpageheight = 8.70in\enlargethispage{100in}
-
-\section{07. Handling Errors and Debugging}
-
-\begin{tabular}{!{\vrule width 1pt}L{3.7cm}!{\vrule width 1pt}L{15.3cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Code Interruptions} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.01.cpp}{\texttt{07.01}} -- Compile\,-\,time and runtime assertions. Declaration \lstinline{static_assert}. Macro \lstinline{assert}. 
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.02.cpp}{\texttt{07.02}} -- Normal and abnormal exits. Functions \lstinline{std::atexit}, \lstinline{std::exit}, \lstinline{std::abort} and \lstinline{std::terminate}.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{4.4cm}!{\vrule width 1pt}L{14.6cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Return Code Handling} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
-
-\begin{itemize}
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.03.cpp}{\texttt{07.03}} -- Return codes. Macro \lstinline{errno}. Function \lstinline{std::strerror}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.04.cpp}{\texttt{07.04}} -- Scoped and unscoped enumerations. Declaration \lstinline{enum}. Underlying types.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.05.cpp}{\texttt{07.05}} -- Unions. Declaration \lstinline{union}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.06.cpp}{\texttt{07.06}} -- Hybrid return codes. Type \lstinline{Alternative}. Anonymous unions.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.07.cpp}{\texttt{07.07}} -- Type \lstinline{std::variant}. Type \lstinline{std::monostate}. Functions \lstinline{std::get}, \lstinline{std::visit} and others.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.08.cpp}{\texttt{07.08}} -- Ternary logic. Library \href{https://www.boost.org/doc/libs/1_85_0/doc/html/tribool.html}{Boost.Tribool}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.09.cpp}{\texttt{07.09}} -- Type \lstinline{std::optional}. Object \lstinline{std::nullopt}. Function \lstinline{std::make_optional}.
-
-    \smallskip
-
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.10.cpp}{\texttt{07.10}} -- Type \lstinline{std::expected}. Type \lstinline{std::unexpected}.
-
-\end{itemize}
-
-\bigskip\medskip
-
-\begin{tabular}{!{\vrule width 1pt}L{3.9cm}!{\vrule width 1pt}L{15.1cm}!{\vrule width 0pt}} 
-
-\Xcline{1-1}{1pt}
-
-\textbf{Exception Handling} & \\
-
-\Xcline{1-2}{1pt}
-
-\end{tabular}
-
-\medskip\smallskip
 
 \begin{itemize}
 
@@ -1605,8 +475,6 @@
 
 
 \newpage\thispagestyle{empty}\pdfpageheight = 13.70in\enlargethispage{100in}
-
-\section{08. Instruments of Calculus}
 
 \begin{tabular}{!{\vrule width 1pt}L{3.7cm}!{\vrule width 1pt}L{15.3cm}!{\vrule width 0pt}} 
 
@@ -1734,7 +602,7 @@
 
 \begin{itemize}
 
-    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/08.21.cpp}{\texttt{08.21}} -- Precision. Exponent. Infinity. Quiet and signaling NaNs. Standard IEEE\,-\,754.
+    \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/08.21.cpp}{\texttt{08.21}} -- Standard IEEE\,-\,754. Precision. Exponent. Infinity. Quiet and signaling NaNs.
 
     \smallskip
 
@@ -1849,52 +717,5 @@
     \item \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/08.41.cpp}{\texttt{08.41}} -- Namespace \lstinline{std::literals}. User\,-\,defined literals. Literal operators.
 
 \end{itemize}
-
-\bigskip\medskip
-
-
-
-
-
-
-\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
-
-\section{09. Detailed Memory Management}
-
-
-
-\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
-
-\section{10. Collections and Containers}
-
-
-
-\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
-
-\section{11. Iterators and Algorithm Libraries}
-
-
-
-\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
-
-\section{12. Text Data Processing}
-
-
-
-\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
-
-\section{13. Streams and Data Serialization}
-
-
-
-\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
-
-\section{14. Concurrent Programming}
-
-
-
-\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
-
-\section{15. Network Technologies and Tools}
 
 \end{document}
