@@ -4,13 +4,15 @@
 
 ///////////////////////////////////////////////////////////////////
 
-// section : Preprocessor Directives
+// section : Translation Process
 
 ///////////////////////////////////////////////////////////////////
 
-// content : Program Building Stages
+// content : Translation Process
 //
-// content : Preprocessing Stage
+// content : Preprocessing
+//
+// content : Translation Units
 //
 // content : Preprocessor Directives
 //
