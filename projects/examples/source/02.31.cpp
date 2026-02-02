@@ -1,5 +1,25 @@
 ////////////////////////////////////////////////////////
 
+// chapter : Basics of Programming
+
+////////////////////////////////////////////////////////
+
+// section : Memory Management
+
+////////////////////////////////////////////////////////
+
+// content : Container std::vector
+//
+// content : Algorithmic Complexities O(1) and O(N)
+//
+// content : Amortized Algorithmic Complexity
+//
+// content : Algorithm std::ranges::is_sorted
+//
+// content : Policy std::less
+
+////////////////////////////////////////////////////////
+
 #include <algorithm>
 #include <cassert>
 #include <functional>

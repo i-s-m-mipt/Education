@@ -1,5 +1,33 @@
 /////////////////////////////////////////////////////////////
 
+// chapter : Object-Oriented Programming
+
+/////////////////////////////////////////////////////////////
+
+// section : Dynamic Polymorphism
+
+/////////////////////////////////////////////////////////////
+
+// content : Dynamic Polymorphism
+//
+// content : Virtual Functions
+//
+// content : Function Specifiers virtual and override
+//
+// content : Overriding Functions
+//
+// content : Final Classes
+//
+// content : Function and Class Specifier final
+//
+// content : Upcasting Type Conversions
+//
+// content : Slicing Objects
+//
+// content : Virtual Destructors
+
+/////////////////////////////////////////////////////////////
+
 #include <print>
 #include <vector>
 

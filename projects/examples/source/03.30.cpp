@@ -1,5 +1,41 @@
 ////////////////////////////////////////////////////////////////////////////////////
 
+// chapter : Object-Oriented Programming
+
+////////////////////////////////////////////////////////////////////////////////////
+
+// section : Rvalue References
+
+////////////////////////////////////////////////////////////////////////////////////
+
+// content : Container Vector
+//
+// content : Special Member Functions
+//
+// content : Container std::initializer_list
+//
+// content : Algorithm std::ranges::copy
+//
+// content : Deep and Shallow Copy
+//
+// content : Copy and Move Constructors
+//
+// content : Function std::exchange
+//
+// content : Copy and Move Operators =
+//
+// content : Self-Assignment Problem
+//
+// content : Pattern Copy and Swap
+//
+// content : Function swap
+//
+// content : Generating Special Member Functions
+//
+// content : Rules of 0, 3, 4 and 5
+
+////////////////////////////////////////////////////////////////////////////////////
+
 #include <algorithm>
 #include <cstddef>
 #include <initializer_list>

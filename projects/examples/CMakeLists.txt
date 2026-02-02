@@ -33,22 +33,28 @@ find_package(Boost 1.85 REQUIRED COMPONENTS
 
 #############################################################################################
 
+find_package(glog          REQUIRED COMPONENTS)
 find_package(GTest         REQUIRED COMPONENTS)
 find_package(benchmark     REQUIRED COMPONENTS)
 find_package(Python        REQUIRED COMPONENTS Interpreter Development)
 find_package(ICU           REQUIRED COMPONENTS i18n uc)
 find_package(nlohmann_json REQUIRED COMPONENTS)
 find_package(PDFHummus     REQUIRED COMPONENTS)
+find_package(zipper        REQUIRED COMPONENTS)
+find_package(libpqxx       REQUIRED COMPONENTS)
 find_package(TBB           REQUIRED COMPONENTS)
 
 #############################################################################################
 
 include_directories(        ${Boost_INCLUDE_DIRS})
+include_directories(         ${glog_INCLUDE_DIRS})
 include_directories(        ${GTEST_INCLUDE_DIRS})
 include_directories(    ${benchmark_INCLUDE_DIRS})
 include_directories(       ${Python_INCLUDE_DIRS})
 include_directories(${nlohmann_json_INCLUDE_DIRS})
 include_directories(    ${PDFHummus_INCLUDE_DIRS})
+include_directories(       ${zipper_INCLUDE_DIRS})
+include_directories(      ${libpqxx_INCLUDE_DIRS})
 include_directories(          ${TBB_INCLUDE_DIRS})
 
 #############################################################################################
@@ -56,7 +62,7 @@ include_directories(          ${TBB_INCLUDE_DIRS})
 set(debug
 
     01.02
-    01.03
+    01.04
     02.01
     02.02
     02.03
@@ -485,11 +491,11 @@ target_link_options        (07.16 PRIVATE -fsanitize=address)
 
 #############################################################################################
 
-# add_executable             (07.20 source/07.20.cpp)
+add_executable             (07.20 source/07.20.cpp)
 
-# target_compile_options     (07.20 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (07.20 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
-# target_link_libraries      (07.20 PRIVATE )
+target_link_libraries      (07.20 glog::glog)
 
 #############################################################################################
 
@@ -537,11 +543,19 @@ target_link_libraries      (13.20 PRIVATE PDFHummus::PDFWriter)
 
 #############################################################################################
 
-# add_executable             (13.21 source/13.21.cpp)
+add_executable             (13.21 source/13.21.cpp)
 
-# target_compile_options     (13.21 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (13.21 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
-# target_link_libraries      (13.21 PRIVATE )
+target_link_libraries      (13.21 PRIVATE zipper::zipper)
+
+#############################################################################################
+
+add_executable             (13.22 source/13.22.cpp)
+
+target_compile_options     (13.22 PRIVATE -Wall -Wextra -Wpedantic -O0)
+
+target_link_libraries      (13.22 PRIVATE libpqxx::pqxx)
 
 #############################################################################################
 

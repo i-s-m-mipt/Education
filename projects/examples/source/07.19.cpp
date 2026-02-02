@@ -31,7 +31,7 @@ public :
 
 	enum class Severity : std::uint8_t
 	{
-		debug, trace, error, fatal
+		trace, debug, error, fatal
 	};
 
 //  ---------------------------------------------------------------------------------------------
@@ -148,9 +148,9 @@ private :
 
         switch (boost::log::extract_or_throw < Severity > (attributes["Severity"]))
         {
-            case Severity::debug : { stream << " | debug"; break; }
+			case Severity::trace : { stream << " | trace"; break; }
 
-            case Severity::trace : { stream << " | trace"; break; }
+            case Severity::debug : { stream << " | debug"; break; }
 
             case Severity::error : { stream << " | error"; break; }
 
@@ -179,9 +179,9 @@ private :
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define LOGGER_PUT_DEBUG(logger, string) logger.put(Logger::Severity::debug, string)
-
 #define LOGGER_PUT_TRACE(logger, string) logger.put(Logger::Severity::trace, string)
+
+#define LOGGER_PUT_DEBUG(logger, string) logger.put(Logger::Severity::debug, string)
 
 #define LOGGER_PUT_ERROR(logger, string) logger.put(Logger::Severity::error, string)
 

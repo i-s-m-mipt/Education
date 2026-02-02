@@ -1,5 +1,29 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
+// chapter : Generic Programming
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+// section : Class Templates
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+// content : Container Stack
+//
+// content : Template Template Parameters
+//
+// content : Class Template Argument Deduction
+//
+// content : Container std::deque
+//
+// content : Deduction Guides
+//
+// content : Container Copy Algorithm
+//
+// content : Functions std::begin and std::end
+
+////////////////////////////////////////////////////////////////////////////////////////
+
 #include <deque>
 #include <iterator>
 #include <vector>
@@ -24,15 +48,15 @@ private :
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-template 
-< 
+template
+<
 	template < typename U > typename C1,
-	
+
 	template < typename U > typename C2, typename T
->		   
+>
 auto copy(C1 < T > const & container)
 {
-	return C2 < T > (std::begin(container), std::end(container));
+	return C2(std::begin(container), std::end(container));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -40,7 +64,7 @@ auto copy(C1 < T > const & container)
 int main()
 {
 	Stack_v1 < int, std::deque < int > > stack_v1;
-	
+
 	Stack_v2 < int, std::deque         > stack_v2;
 
 //  -------------------------------------------------------

@@ -158,7 +158,7 @@ BENCHMARK(test_v5)->Args({ 1, 2 })->Args({ 2, 4 })->Args({ 3, 6 });
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void make_args(benchmark::internal::Benchmark * benchmark) 
+void make_args(::benchmark::Benchmark * benchmark) 
 {
     for (auto i = 1; i < 4; ++i)
     {

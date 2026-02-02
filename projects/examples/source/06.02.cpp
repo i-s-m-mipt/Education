@@ -1,5 +1,39 @@
 ///////////////////////////////////////////////////////////////////
 
+// chapter : Projects and Libraries
+
+///////////////////////////////////////////////////////////////////
+
+// section : Preprocessor Directives
+
+///////////////////////////////////////////////////////////////////
+
+// content : Program Building Stages
+//
+// content : Preprocessing Stage
+//
+// content : Preprocessor Directives
+//
+// content : Directive #include
+//
+// content : Object and Function Macros
+//
+// content : Directives #define and #undef
+//
+// content : Multi-Line Macros
+//
+// content : Operators ## and #
+//
+// content : Macro assert
+//
+// content : Conditional Compilation
+//
+// content : Directives #if, #else and #endif
+//
+// content : Directive #pragma
+
+///////////////////////////////////////////////////////////////////
+
 // support : g++ -std=с++23 -DNO_TRACE 06.02.cpp
 
 ///////////////////////////////////////////////////////////////////

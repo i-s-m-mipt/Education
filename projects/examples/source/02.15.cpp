@@ -1,5 +1,25 @@
 ///////////////////////////////////////////////
 
+// chapter : Basics of Programming
+
+///////////////////////////////////////////////
+
+// section : Operators and Expressions
+
+///////////////////////////////////////////////
+
+// content : Operator / 
+//
+// content : Comparing Floating-Point Numbers
+//
+// content : Function std::abs
+//
+// content : Scientific Notation
+//
+// content : Operator %
+
+///////////////////////////////////////////////
+
 #include <cassert>
 #include <cmath>
 

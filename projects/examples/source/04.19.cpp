@@ -1,5 +1,29 @@
 //////////////////////////////////////////////////////////////////////
 
+// chapter : Generic Programming
+
+//////////////////////////////////////////////////////////////////////
+
+// section : Constant Expressions
+
+//////////////////////////////////////////////////////////////////////
+
+// content : Constant Expressions
+//
+// content : Declaration Specifier constexpr
+//
+// content : Immediate Functions
+//
+// content : Declaration Specifier consteval
+//
+// content : Compile-Time Factorial Calculation Algorithm
+//
+// content : Static Initialization
+//
+// content : Declaration Specifier constinit
+
+//////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <type_traits>
 #include <vector>

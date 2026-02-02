@@ -1,36 +1,46 @@
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// chapter : Generic Programming
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// section : Constant Expressions
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// content : Metafunctions add_lvalue_reference and add_rvalue_reference
+//
+// content : Metafunctions std::add_lvalue_reference and std::add_rvalue_reference
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <type_traits>
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > struct remove_reference          { using type = T; };
+template < typename T > struct add_lvalue_reference { using type = T &;  };
 
-template < typename T > struct remove_reference < T &  > { using type = T; };
+template < typename T > struct add_rvalue_reference { using type = T &&; };
 
-template < typename T > struct remove_reference < T && > { using type = T; };
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////////
+template < typename T > using  add_lvalue_reference_t = typename add_lvalue_reference < T > ::type;
 
-template < typename T > using  remove_reference_t = typename remove_reference < T > ::type;
+template < typename T > using  add_rvalue_reference_t = typename add_rvalue_reference < T > ::type;
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	static_assert(std::is_same_v <      remove_reference_t < int    > , int > );
+    static_assert(std::is_same_v <      add_lvalue_reference_t < int > , int &  > );
 
-	static_assert(std::is_same_v <      remove_reference_t < int &  > , int > );
+	static_assert(std::is_same_v <      add_rvalue_reference_t < int > , int && > );
 
-	static_assert(std::is_same_v <      remove_reference_t < int && > , int > );
+//  --------------------------------------------------------------------------------
 
-//  ----------------------------------------------------------------------------
+    static_assert(std::is_same_v < std::add_lvalue_reference_t < int > , int &  > );
 
-	static_assert(std::is_same_v < std::remove_reference_t < int    > , int > );
-
-	static_assert(std::is_same_v < std::remove_reference_t < int &  > , int > );
-
-	static_assert(std::is_same_v < std::remove_reference_t < int && > , int > );
+	static_assert(std::is_same_v < std::add_rvalue_reference_t < int > , int && > );
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////

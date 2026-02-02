@@ -1,5 +1,23 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
+// chapter : Generic Programming
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+// section : Class Templates
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+// content : Rational Arithmetic
+//
+// content : Type Rational
+//
+// content : Instantiating Class Template Friend Functions
+//
+// content : Operator -
+
+//////////////////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <numeric>
 
@@ -21,7 +39,7 @@ public :
 		auto lcm = std::lcm(m_den, other.m_den);
 
 		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den);
-		
+
 		m_den = lcm;
 
 		reduce();
@@ -38,7 +56,7 @@ public :
 
 //  ----------------------------------------------------------------------
 
-	friend auto operator+ (Rational lhs, Rational const & rhs) 
+	friend auto operator+ (Rational lhs, Rational const & rhs)
 	{ 
 		return lhs += rhs;
 	}
