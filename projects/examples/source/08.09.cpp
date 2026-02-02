@@ -1,32 +1,55 @@
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 #include <bit>
 #include <cassert>
-#include <cstddef>
+#include <cstdint>
+#include <cstring>
+#include <type_traits>
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+template < typename T2, typename T1 > T2 bit_cast(T1 const & source)
+{
+    static_assert(std::is_trivially_constructible_v < T2 > );
+
+    static_assert(sizeof(T1) == sizeof(T2));
+
+    static_assert(std::is_trivially_copyable_v < T1 > );
+
+    static_assert(std::is_trivially_copyable_v < T2 > );
+ 
+    T2 destination;
+
+    std::memcpy(&destination, &source, sizeof(T2));
+
+    return destination;
+}
+
+////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    assert(std::endian::native == std::endian::little);
+    auto x = 1.0;
 
-//  ---------------------------------------------------
+//  -------------------------------------------------
 
-    auto x = 0x01020304;
+    [[maybe_unused]] std::uint64_t y = 0, z = 0;
 
-//  ---------------------------------------------------
+//  -------------------------------------------------
 
-    auto byte = std::bit_cast < std::byte * > (&x);
+    *reinterpret_cast < char   * > (&y) = 0;
 
-//  ---------------------------------------------------
+//  *reinterpret_cast < double * > (&y) = x; // error
 
-    assert(std::to_integer < int > (*(byte + 0)) == 4);
+//  -------------------------------------------------
 
-    assert(std::to_integer < int > (*(byte + 1)) == 3);
+    y =      bit_cast < std::uint64_t > (x);
 
-    assert(std::to_integer < int > (*(byte + 2)) == 2);
+    z = std::bit_cast < std::uint64_t > (x);
 
-    assert(std::to_integer < int > (*(byte + 3)) == 1);
+//  -------------------------------------------------
+
+    assert(y == z);
 }
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
