@@ -8,6 +8,12 @@
 
 /////////////////////////////////////////////////////////////
 
+// content : Upcasting Type Conversions
+//
+// content : Static and Dynamic Types
+//
+// content : Slicing Objects
+//
 // content : Dynamic Polymorphism
 //
 // content : Virtual Functions
@@ -19,10 +25,6 @@
 // content : Final Classes
 //
 // content : Function and Class Specifier final
-//
-// content : Upcasting Type Conversions
-//
-// content : Slicing Objects
 //
 // content : Virtual Destructors
 
