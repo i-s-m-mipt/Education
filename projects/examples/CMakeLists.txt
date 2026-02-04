@@ -457,15 +457,15 @@ target_compile_options     (06.11 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
 #############################################################################################
 
-add_executable             (06.18 source/06.18.cpp)
+add_executable             (06.17 source/06.17.cpp)
 
-target_include_directories (06.18 PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
+target_include_directories (06.17 PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
 
-target_compile_options     (06.18 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (06.17 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
-target_link_libraries      (06.18 PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/libstatic.a)
+target_link_libraries      (06.17 PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/libstatic.a)
 
-target_link_libraries      (06.18 PRIVATE ${Boost_LIBRARIES})
+target_link_libraries      (06.17 PRIVATE ${Boost_LIBRARIES})
 
 #############################################################################################
 
