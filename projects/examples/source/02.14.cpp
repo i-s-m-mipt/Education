@@ -10,7 +10,7 @@
 
 // content : Function std::swap
 //
-// content : Arithmetic Swap Algorithm
+// content : Value Swapping Algorithm
 
 //////////////////////////////////////
 

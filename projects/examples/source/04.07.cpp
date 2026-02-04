@@ -10,7 +10,7 @@
 
 // content : Type Node
 //
-// content : Binary Tree Traverse Algorithm
+// content : Function traverse
 //
 // content : Operator ->*
 //

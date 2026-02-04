@@ -10,9 +10,7 @@
 
 // content : Fold Expressions
 //
-// content : Arithmetic Reduce Algorithm
-//
-// content : Arithmetic Transform Reduce Algorithm
+// content : Functions reduce and transform_reduce
 
 ///////////////////////////////////////////////////////////////////////////////////
 

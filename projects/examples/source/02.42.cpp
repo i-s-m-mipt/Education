@@ -12,7 +12,7 @@
 //
 // content : Function Specifier inline
 //
-// content : Max Value Algorithm
+// content : Function max
 //
 // content : Attribute [[noinline]]
 //

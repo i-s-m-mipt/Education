@@ -10,7 +10,7 @@
 
 // content : Non-Type Template Parameters
 //
-// content : Max Array Algorithm
+// content : Function max
 //
 // content : Passing Static Arrays by Lvalue Reference
 

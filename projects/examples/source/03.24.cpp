@@ -16,7 +16,7 @@
 //
 // content : Namespace std::literals
 //
-// content : Equal Values Algorithm
+// content : Function equal
 
 ///////////////////////////////////////////////////////////////
 

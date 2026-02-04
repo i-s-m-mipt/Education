@@ -18,7 +18,7 @@
 //
 // content : Parameter Packs Expansion
 //
-// content : Arithmetic Transform Algorithm
+// content : Function transform
 //
 // content : Variadic Expressions
 

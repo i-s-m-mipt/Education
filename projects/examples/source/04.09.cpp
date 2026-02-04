@@ -14,11 +14,11 @@
 //
 // content : Class Template Argument Deduction
 //
-// content : Container std::deque
-//
 // content : Deduction Guides
 //
-// content : Container Copy Algorithm
+// content : Container std::deque
+//
+// content : Function copy
 //
 // content : Functions std::begin and std::end
 

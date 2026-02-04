@@ -8,7 +8,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-// content : Insertion and Merge Sort Algorithms
+// content : Insertion and Merge Sorting Algorithms
 //
 // content : Algorithmic Complexities O(N^2) and O(N*log(N))
 //

@@ -16,7 +16,7 @@
 //
 // content : Declaration Specifier consteval
 //
-// content : Compile-Time Factorial Calculation Algorithm
+// content : Compile-Time Factorials
 //
 // content : Static Initialization
 //

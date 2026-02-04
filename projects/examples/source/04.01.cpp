@@ -16,7 +16,7 @@
 //
 // content : Type Specifier typename
 //
-// content : Max Value Algorithm
+// content : Function max
 //
 // content : Instantiating Function Templates
 //
