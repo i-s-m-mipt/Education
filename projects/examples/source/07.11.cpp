@@ -1,5 +1,41 @@
 //////////////////////////////////////////////////////////////
 
+// chapter : Debugging and Profiling
+
+//////////////////////////////////////////////////////////////
+
+// section : Exception Handling
+
+//////////////////////////////////////////////////////////////
+
+// content : Exception Handling
+//
+// content : Statement throw
+//
+// content : User-Defined Exceptions
+//
+// content : Base Class std::exception
+//
+// content : Attribute [[noreturn]]
+//
+// content : Stack Unwinding
+//
+// content : Statements try and catch
+//
+// content : Stream std::cerr
+//
+// content : Rethrowing Exceptions
+//
+// content : Exception std::runtime_error
+//
+// content : Catch-All Handlers
+//
+// content : Function std::current_exception
+//
+// content : Zero-Overhead Principle
+
+//////////////////////////////////////////////////////////////
+
 #include <exception>
 #include <iostream>
 #include <print>
