@@ -18,9 +18,11 @@
 //
 // content : Function main
 //
+// content : Naming Conventions
+//
 // content : Comments and Documentation
 //
-// content : Utility Doxygen
+// content : Service Doxygen
 
 ////////////////////////////////////////////////////////
 

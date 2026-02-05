@@ -14,7 +14,7 @@
 //
 // content : Commands pwd, ls, cd, man and sudo
 //
-// content : Tools snap and apt
+// content : Tools Snap and APT
 //
 // content : Code Editor Visual Studio Code
 //
