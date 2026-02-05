@@ -12,7 +12,9 @@
 //
 // content : Function std::any_cast
 //
-// content : String Literals
+// content : String Literals and Literal Operators
+//
+// content : Operator ""s
 //
 // content : Namespace std::literals
 //

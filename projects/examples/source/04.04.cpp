@@ -12,6 +12,8 @@
 //
 // content : Function max
 //
+// content : Function std::min
+//
 // content : Passing Static Arrays by Lvalue Reference
 
 ////////////////////////////////////////////////////////

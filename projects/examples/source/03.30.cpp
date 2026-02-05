@@ -28,6 +28,8 @@
 //
 // content : Pattern Copy and Swap
 //
+// content : Function swap
+//
 // content : Generating Special Member Functions
 //
 // content : Rules of 0, 3, 4 and 5
