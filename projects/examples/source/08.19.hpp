@@ -1,5 +1,29 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+// chapter : Number Processing
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+// section : Long Arithmetic
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+// content : Embedding Python
+//
+// content : Library Boost.Python
+//
+// content : Wrapper Python
+//
+// content : Global Interpreter Locker
+//
+// content : Mutex std::mutex
+//
+// content : Handling Python Errors
+//
+// content : Function exception
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -18,12 +42,12 @@ class Python : private boost::noncopyable
 {
 public :
 
-	Python() 
-	{ 
+	Python()
+	{
 		std::call_once(s_flag, Py_Initialize);
 
 		s_mutex.lock();
-			
+
 		s_state = PyGILState_Ensure();
 
 		m_local = boost::python::import("__main__").attr("__dict__");
@@ -34,9 +58,9 @@ public :
 //  ----------------------------------------------------------------------------------------
 
    ~Python() 
-    { 
+    {
 		PyGILState_Release(s_state);
-		
+
 		s_mutex.unlock();
 	}
 
@@ -80,7 +104,7 @@ private :
 	static inline std::once_flag s_flag;
 
 	static inline std::mutex s_mutex;
-	
+
 	static inline PyGILState_STATE s_state;
 };
 

@@ -1,5 +1,25 @@
 ////////////////////////////////////////////////////////////////////
 
+// chapter : Number Processing
+
+////////////////////////////////////////////////////////////////////
+
+// section : Bitwise Operators
+
+////////////////////////////////////////////////////////////////////
+
+// content : Reinterpreting Bits
+//
+// content : Operator reinterpret_cast
+//
+// content : Type Punning
+//
+// content : Strict Aliasing Rule
+//
+// content : Functions bit_cast, std::memcpy and std::bit_cast
+
+////////////////////////////////////////////////////////////////////
+
 #include <bit>
 #include <cassert>
 #include <cstdint>
@@ -10,13 +30,7 @@
 
 template < typename T2, typename T1 > T2 bit_cast(T1 const & source)
 {
-    static_assert(std::is_trivially_constructible_v < T2 > );
-
     static_assert(sizeof(T1) == sizeof(T2));
-
-    static_assert(std::is_trivially_copyable_v < T1 > );
-
-    static_assert(std::is_trivially_copyable_v < T2 > );
  
     T2 destination;
 

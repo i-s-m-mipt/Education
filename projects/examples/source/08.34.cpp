@@ -1,5 +1,29 @@
 //////////////////////////////////////////////////////
 
+// chapter : Number Processing
+
+//////////////////////////////////////////////////////
+
+// section : Chrono Management
+
+//////////////////////////////////////////////////////
+
+// content : Chrono Management
+//
+// content : Namespace std::chrono
+//
+// content : Epochs and Periods
+//
+// content : Unix Epoch
+//
+// content : Compile-Time Rational Arithmetic
+//
+// content : Type std::ratio
+//
+// content : System and Steady Clocks
+
+//////////////////////////////////////////////////////
+
 #include <cassert>
 #include <chrono>
 #include <print>
