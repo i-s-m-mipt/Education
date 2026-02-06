@@ -10,6 +10,8 @@
 
 // content : Pattern Noncopyable
 //
+// content : Protected Constructors
+//
 // content : Library Boost.Noncopyable
 
 ////////////////////////////////////////////////////////////////////
