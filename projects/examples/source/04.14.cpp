@@ -10,7 +10,7 @@
 
 // content : Special Member Function Templates
 //
-// content : Pattern SFINAE
+// content : Pattern Substitution Failure Is Not An Error
 //
 // content : Metafunction std::enable_if
 //

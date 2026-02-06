@@ -11,6 +11,8 @@
 // content : Clause requires
 //
 // content : Concept std::integral
+//
+// content : Abbreviated Function Templates
 
 //////////////////////////////////////////////////////////////////////
 

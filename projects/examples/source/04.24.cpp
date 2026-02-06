@@ -10,6 +10,10 @@
 
 // content : Container Deque
 //
+// content : Metafunctions Size, Front, Push_Front, Pop_Front, Back, Push_Back, Pop_Back and Nth
+//
+// content : Metafunction Max_Type
+//
 // content : Metafunction std::conditional
 //
 // content : Type std::byte

@@ -12,7 +12,9 @@
 //
 // content : Declaration concept
 //
-// content : Concepts same_as and std::same_as
+// content : Concept same_as
+//
+// content : Concept std::same_as
 
 ///////////////////////////////////////////////////////////////////////////////////
 

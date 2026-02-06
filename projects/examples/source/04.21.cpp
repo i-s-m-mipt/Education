@@ -12,15 +12,19 @@
 //
 // content : Compile-Time Rational Arithmetic
 //
-// content : Types Ratio, Sum and Duration
+// content : Type Ratio
 //
-// content : Operator +
+// content : Metafunction Sum
+//
+// content : Dependent Names Problem
 //
 // content : Dependent Types
 //
 // content : Disambiguation Specifier typename
 //
-// content : Ambiguity Problem
+// content : Type Duration
+//
+// content : Operator +
 
 //////////////////////////////////////////////////////////////////////////////////////////
 

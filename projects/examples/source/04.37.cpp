@@ -14,7 +14,9 @@
 //
 // content : Concept range
 //
-// content : Concepts sized_range and std::ranges::sized_range
+// content : Concept sized_range
+//
+// content : Concept std::ranges::sized_range
 
 /////////////////////////////////////////////////////////////////////////
 

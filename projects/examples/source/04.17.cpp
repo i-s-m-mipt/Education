@@ -8,7 +8,17 @@
 
 ////////////////////////////////////////////////////////////////////////
 
-// content : Metaprogramming
+// content : Template Metaprogramming
+//
+// content : Class Templates
+//
+// content : Class Template Specializations
+//
+// content : Non-Type Template Parameters
+//
+// content : Static Data Members
+//
+// content : Recursive Template Instantiation
 //
 // content : Compile-Time Factorials
 

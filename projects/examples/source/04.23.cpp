@@ -10,9 +10,13 @@
 
 // content : Wrapper std::tuple
 //
-// content : Functions std::make_tuple, std::get and std::tie
+// content : Function std::make_tuple 
 //
 // content : Metafunction std::tuple_size
+//
+// content : Unpacking Tuples
+//
+// content : Functions std::get and std::tie
 //
 // content : Object std::ignore
 //

@@ -16,19 +16,21 @@
 //
 // content : Type Specifier typename
 //
-// content : Function max
+// content : Functions max
 //
 // content : Instantiating Function Templates
 //
 // content : Two-Phase Template Lookup
 //
-// content : Utility C++ Insights
+// content : Service C++ Insights
 //
 // content : Default Arguments
 //
 // content : Metafunction std::common_type_t
 //
 // content : Abbreviated Function Templates
+//
+// content : Function std::max
 
 //////////////////////////////////////////////////////////////////////////////////////
 

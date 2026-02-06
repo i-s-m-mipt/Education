@@ -10,7 +10,9 @@
 
 // content : Unevaluated Contexts
 //
-// content : Functions declval and std::declval
+// content : Function declval
+//
+// content : Function std::declval
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
