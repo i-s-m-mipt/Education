@@ -14,6 +14,8 @@
 //
 // content : Types float and double
 //
+// content : Literal Suffixes f and l
+//
 // content : Standard IEEE 754
 //
 // content : Sign, Mantissa and Exponent

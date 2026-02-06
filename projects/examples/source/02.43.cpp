@@ -14,6 +14,8 @@
 //
 // content : Trailing Return Types
 //
+// content : Stack Overflow
+//
 // content : Combinations
 //
 // content : Catalan Numbers

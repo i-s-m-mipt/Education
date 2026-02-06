@@ -17,6 +17,8 @@
 // content : Dynamic Arrays
 //
 // content : Operators new[] and delete[]
+//
+// content : Memory Leaks
 
 //////////////////////////////////////////////////////////////
 

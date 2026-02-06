@@ -8,10 +8,6 @@
 
 /////////////////////////////////////////////////////////////////
 
-// content : Objects, Variables and Literals
-//
-// content : Declarations and Definitions
-//
 // content : Default, Value, Direct, Copy and List Initialization
 //
 // content : Undefined Behavior
