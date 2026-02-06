@@ -11,6 +11,8 @@
 // content : Private Inheritance
 //
 // content : Base Class Specifier private
+//
+// content : Composition
 
 /////////////////////////////////////////
 

@@ -17,6 +17,8 @@
 // content : Dependency
 //
 // content : Stream std::cout
+//
+// content : Operator <<
 
 /////////////////////////////////////////////////////
 

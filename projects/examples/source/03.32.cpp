@@ -16,6 +16,8 @@
 //
 // content : Function Specifier explicit
 //
+// content : Function reduce
+//
 // content : Functions std::gcd and std::lcm
 //
 // content : Operator Overloading
@@ -30,7 +32,9 @@
 //
 // content : Operators >> and <<
 //
-// content : Streams std::istream, std::ostream and std::stringstream
+// content : Streams std::istream and std::ostream
+//
+// content : Stream std::stringstream
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 

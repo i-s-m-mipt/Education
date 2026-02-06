@@ -22,6 +22,8 @@
 //
 // content : Initializer Lists
 //
+// content : Data Members Initialization Order
+//
 // content : The Most Vexing Parse
 //
 // content : Destructors

@@ -16,6 +16,8 @@
 //
 // content : Base Class Specifier public
 //
+// content : Construction Order
+//
 // content : Shadowing Member Functions
 //
 // content : Protected Members
