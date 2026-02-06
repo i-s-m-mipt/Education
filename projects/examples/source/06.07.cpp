@@ -12,7 +12,9 @@
 //
 // content : Internal and External Linking
 //
-// content : Anonymous Namespaces
+// content : Unnamed Namespaces
+//
+// content : Declaration namespace
 
 //////////////////////////////////////////
 

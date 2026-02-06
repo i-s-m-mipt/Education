@@ -16,6 +16,8 @@
 //
 // content : One Definition Rule
 //
+// content : Definitions in Header Files
+//
 // content : Global Objects
 //
 // content : Variable Declarations

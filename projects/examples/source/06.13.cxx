@@ -10,11 +10,13 @@
 
 // content : Modular Programming
 //
+// content : Header and Source File Overheads
+//
 // content : Modules
 //
-// content : Declaration module
-//
 // content : Module Interface Units
+//
+// content : Declaration module
 //
 // content : Global Module Fragments
 //

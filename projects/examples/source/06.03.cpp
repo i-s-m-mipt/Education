@@ -8,9 +8,11 @@
 
 /////////////////////////////////////////////////////////////
 
+// content : Debug Information
+//
 // content : Macros __FILE__, __LINE__, __DATE__ and __TIME__
 //
-// content : Identifier __func__
+// content : Container __func__
 //
 // content : Macros EXIT_SUCCESS and EXIT_FAILURE
 

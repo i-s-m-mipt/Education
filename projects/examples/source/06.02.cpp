@@ -10,11 +10,13 @@
 
 // content : Translation Process
 //
-// content : Preprocessing
+// content : Preprocessing Stage
 //
 // content : Translation Units
 //
 // content : Preprocessor Directives
+//
+// content : Using Libraries
 //
 // content : Directive #include
 //
@@ -26,11 +28,23 @@
 //
 // content : Operators ## and #
 //
+// content : Macros PREFIX and FUNCTION
+//
+// content : Dangerous Side Effects
+//
+// content : Macros SQUARE
+//
+// content : Runtime Assertions
+//
 // content : Macro assert
 //
 // content : Conditional Compilation
 //
 // content : Directives #if, #else and #endif
+//
+// content : Macros NO_TRACE and TRACE
+//
+// content : Suppressing Compiler Warnings
 //
 // content : Directive #pragma
 

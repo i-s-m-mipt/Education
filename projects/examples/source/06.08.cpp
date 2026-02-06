@@ -10,7 +10,7 @@
 
 // content : Search Directories
 //
-// content : Compilation, Assembly and Linking
+// content : Compilation, Assembly and Linking Stages
 //
 // content : Object and Executable Files
 //
