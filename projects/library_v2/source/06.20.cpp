@@ -10,7 +10,7 @@
 
 // content : Dynamic Libraries
 //
-// content : C-Style Linking
+// content : Name Mangling
 //
 // content : Declaration extern "C"
 

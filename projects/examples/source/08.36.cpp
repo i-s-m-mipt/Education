@@ -12,9 +12,9 @@
 //
 // content : Function std::time
 //
-// content : Unix Time Points
+// content : Unix Time
 //
-// content : Year 2038 Problem
+// content : Y2038 Problem
 
 ////////////////////////////////////////////////////////////////////////////
 

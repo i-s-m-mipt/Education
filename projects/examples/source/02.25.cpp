@@ -8,7 +8,7 @@
 
 ///////////////////////////////////////////////////////////
 
-// content : Statement do
+// content : Statement do while
 //
 // content : Guaranteed Iterations
 

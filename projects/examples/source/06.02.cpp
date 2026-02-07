@@ -24,9 +24,7 @@
 //
 // content : Directives #define and #undef
 //
-// content : Multi-Line Macros
-//
-// content : Operators ## and #
+// content : Operators \, ## and #
 //
 // content : Side Effects
 //
