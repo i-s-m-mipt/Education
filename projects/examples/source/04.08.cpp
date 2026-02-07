@@ -12,7 +12,7 @@
 //
 // content : External Member Function Definitions
 //
-// content : Instantiating Class Template Member Functions
+// content : Instantiating Member Functions
 
 /////////////////////////////////////////////////////////////////////
 

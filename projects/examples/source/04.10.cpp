@@ -10,7 +10,7 @@
 
 // content : Class Template Specializations
 //
-// content : Partial and Full Specializations
+// content : Partial Specializations
 
 //////////////////////////////////////////////////
 

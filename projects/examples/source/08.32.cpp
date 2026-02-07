@@ -8,7 +8,7 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-// content : W.L.Putnam Mathematical Competition Proble
+// content : W.L.Putnam Mathematical Competition Problem
 //
 // content : Vector Product
 //

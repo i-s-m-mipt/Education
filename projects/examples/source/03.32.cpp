@@ -10,7 +10,7 @@
 
 // content : Rational Arithmetic
 //
-// content : User-Defined Implicit and Explicit Type Conversions
+// content : User-Defined Type Conversions
 //
 // content : Function Specifier explicit
 //

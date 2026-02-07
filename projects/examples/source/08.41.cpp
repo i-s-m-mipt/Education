@@ -8,11 +8,11 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-// content : Namespace std::literals
-//
-// content : String and Chrono Literals and Literal Operators
+// content : Literal Operators
 //
 // content : Operators ""s
+//
+// content : Namespace std::literals
 //
 // content : User-Defined Literal Operators
 

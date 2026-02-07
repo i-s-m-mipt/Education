@@ -18,11 +18,11 @@
 //
 // content : Virtual Functions
 //
-// content : Function Specifiers virtual and override
+// content : Function Specifier virtual
 //
 // content : Overriding Functions
 //
-// content : Final Classes
+// content : Function Specifier override
 //
 // content : Function and Class Specifier final
 //

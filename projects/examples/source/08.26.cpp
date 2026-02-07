@@ -8,10 +8,6 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-// content : Complex Arithmetic
-//
-// content : Complex Literals and Literal Operators
-//
 // content : Type std::complex
 //
 // content : Operator ""i

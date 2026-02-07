@@ -21,6 +21,8 @@
 // content : Static Initialization
 //
 // content : Declaration Specifier constinit
+//
+// content : Dynamic Initialization
 
 //////////////////////////////////////////////////////////////////////
 

@@ -8,8 +8,6 @@
 
 ///////////////////////////////////////////////////////
 
-// content : Endianess
-//
 // content : Little and Big Endian Byte Orders
 //
 // content : Type std::endian
