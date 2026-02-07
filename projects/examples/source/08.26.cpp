@@ -12,9 +12,9 @@
 //
 // content : Complex Literals and Literal Operators
 //
-// content : Operator ""i
-//
 // content : Type std::complex
+//
+// content : Operator ""i
 //
 // content : Functions std::real, std::imag, std::norm, std::abs and std::arg
 
@@ -39,7 +39,7 @@ auto equal(double x, double y, double epsilon = 1e-6)
 
 int main()
 {
-    auto x = 1.0 + 1.0i;
+    std::complex < double > x = 1.0 + 1.0i;
 
 //  ---------------------------------------
 

@@ -10,11 +10,9 @@
 
 // content : Time Points
 //
-// content : Unix Time
-//
 // content : Function std::time
 //
-// content : Type std::time_t
+// content : Unix Time Points
 //
 // content : Year 2038 Problem
 

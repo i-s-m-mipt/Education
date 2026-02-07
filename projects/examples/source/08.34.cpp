@@ -16,10 +16,6 @@
 //
 // content : Unix Epoch
 //
-// content : Compile-Time Rational Arithmetic
-//
-// content : Type std::ratio
-//
 // content : System and Steady Clocks
 
 //////////////////////////////////////////////////////

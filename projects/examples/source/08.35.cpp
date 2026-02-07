@@ -10,9 +10,13 @@
 
 // content : Durations
 //
+// content : Compile-Time Rational Arithmetic
+//
+// content : Type std::ratio
+//
 // content : Duration Type Conversions
 //
-// content : Time Arithmetic
+// content : Chrono Arithmetic
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
