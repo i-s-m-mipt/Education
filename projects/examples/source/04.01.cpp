@@ -16,8 +16,6 @@
 //
 // content : Type Specifier typename
 //
-// content : Functions max
-//
 // content : Instantiating Function Templates
 //
 // content : Two-Phase Template Lookup

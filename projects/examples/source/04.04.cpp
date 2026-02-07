@@ -10,11 +10,9 @@
 
 // content : Non-Type Template Parameters
 //
-// content : Function max
+// content : Passing Static Arrays by Lvalue Reference
 //
 // content : Function std::min
-//
-// content : Passing Static Arrays by Lvalue Reference
 
 ////////////////////////////////////////////////////////
 

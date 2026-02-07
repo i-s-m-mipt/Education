@@ -12,6 +12,8 @@
 //
 // content : Boost Library Collection
 //
+// content : Static and Dynamic Libraries
+//
 // content : Library Boost.DLL
 //
 // content : Wrapper std::function

@@ -8,11 +8,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Container Deque
-//
-// content : Metafunctions Size, Front, Push_Front, Pop_Front, Back, Push_Back, Pop_Back and Nth
-//
-// content : Metafunction Max_Type
+// content : Type Lists
 //
 // content : Metafunction std::conditional
 //

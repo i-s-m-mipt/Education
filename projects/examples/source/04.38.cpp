@@ -8,13 +8,11 @@
 
 /////////////////////////////////////////////////////////////////////
 
-// content : Concept totally_ordered
+// content : Concepts totally_ordered
 //
 // content : Compound and Nested Requirements
 //
 // content : Concept std::convertible_to
-//
-// content : Concept std::totally_ordered
 
 /////////////////////////////////////////////////////////////////////
 

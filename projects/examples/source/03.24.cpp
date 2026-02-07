@@ -17,8 +17,6 @@
 // content : Operator ""s
 //
 // content : Namespace std::literals
-//
-// content : Function equal
 
 ///////////////////////////////////////////////////////////////
 

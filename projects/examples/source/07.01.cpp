@@ -14,9 +14,11 @@
 //
 // content : Declaration static_assert
 //
+// content : Type Traits std::is_copy_constructible and std::is_copy_assignable
+//
 // content : Macro assert
 //
-// content : Type Traits std::is_copy_constructible and std::is_copy_assignable
+// content : Debug Information
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -49,7 +51,7 @@ template < typename T > struct Entity
 
 int main()
 {
-    static_assert(sizeof(int) == 4, "sizeof(int) != 4");
+    static_assert(sizeof(int) == 4);
 
 //  ----------------------------------------------------
 

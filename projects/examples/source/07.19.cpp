@@ -199,16 +199,6 @@ private :
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define LOGGER_PUT_TRACE(logger, string) logger.put(Logger::Severity::trace, string)
-
-#define LOGGER_PUT_DEBUG(logger, string) logger.put(Logger::Severity::debug, string)
-
-#define LOGGER_PUT_ERROR(logger, string) logger.put(Logger::Severity::error, string)
-
-#define LOGGER_PUT_FATAL(logger, string) logger.put(Logger::Severity::fatal, string)
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
 void test_v1()
 {
 	LOGGER(logger);
@@ -228,7 +218,7 @@ int main()
 {
 	LOGGER(logger);
 
-//  --------------------------------------------------
+//  -------------------------------------------------------------
 
 	try
 	{
@@ -236,11 +226,11 @@ int main()
 	}
 	catch (std::exception const & exception)
 	{
-		LOGGER_PUT_FATAL(logger, exception.what());
+		logger.put(Logger::Severity::fatal, exception.what());
 	}
 	catch (...)
 	{
-		LOGGER_PUT_FATAL(logger, "unknown exception");
+		logger.put(Logger::Severity::fatal, "unknown exception");
 	}
 }
 

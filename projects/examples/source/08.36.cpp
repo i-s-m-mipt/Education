@@ -10,9 +10,7 @@
 
 // content : Time Points
 //
-// content : Chrono Arithmetic
-//
-// content : C-Style Time
+// content : Unix Time
 //
 // content : Function std::time
 //

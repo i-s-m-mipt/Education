@@ -16,7 +16,7 @@
 //
 // content : Stack Overflow
 //
-// content : Combinations
+// content : Binomial Coefficients
 //
 // content : Catalan Numbers
 //

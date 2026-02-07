@@ -10,11 +10,11 @@
 
 // content : Address Sanitizers
 //
-// content : Heap-Buffer-Overflow Error
+// content : Heap-Buffer-Overflow Errors
 //
 // content : Memory Leaks
 //
-// content : Use-After-Free Error
+// content : Use-After-Free Errors
 
 /////////////////////////////////////////////
 

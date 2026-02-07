@@ -10,13 +10,9 @@
 
 // content : Rational Arithmetic
 //
-// content : Type Rational
-//
 // content : User-Defined Implicit and Explicit Type Conversions
 //
 // content : Function Specifier explicit
-//
-// content : Function reduce
 //
 // content : Functions std::gcd and std::lcm
 //

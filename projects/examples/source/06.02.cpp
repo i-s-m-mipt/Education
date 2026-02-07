@@ -10,7 +10,7 @@
 
 // content : Translation Process
 //
-// content : Preprocessing Stage
+// content : Preprocessing
 //
 // content : Translation Units
 //
@@ -28,11 +28,7 @@
 //
 // content : Operators ## and #
 //
-// content : Macros PREFIX and FUNCTION
-//
 // content : Dangerous Side Effects
-//
-// content : Macros SQUARE
 //
 // content : Runtime Assertions
 //
@@ -41,8 +37,6 @@
 // content : Conditional Compilation
 //
 // content : Directives #if, #else and #endif
-//
-// content : Macros NO_TRACE and TRACE
 //
 // content : Suppressing Compiler Warnings
 //

@@ -10,8 +10,6 @@
 
 // content : Statistics
 //
-// content : Weighted Mean and Weighted Variance
-//
 // content : Library Boost.Accumulators
 
 ////////////////////////////////////////////////////////////////////////////

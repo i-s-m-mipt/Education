@@ -10,7 +10,7 @@
 
 // content : Time Zones
 //
-// content : UTC, CET and MSK
+// content : Standards UTC, CET and MSK
 
 //////////////////////////////////////////////////////////
 

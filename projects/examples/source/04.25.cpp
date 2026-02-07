@@ -10,11 +10,9 @@
 
 // content : Type Traits and Metafunctions
 //
-// content : Type Trait is_same
+// content : Type Traits is_same
 //
 // content : Base Classes std::false_type and std::true_type
-//
-// content : Type Trait std::is_same
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 

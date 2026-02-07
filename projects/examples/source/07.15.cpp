@@ -8,9 +8,9 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-// content : Debugging
+// content : Debugging Process
 //
-// content : Utility GNU Debugger
+// content : Tool GDB
 //
 // content : Commands run, continue, next, step, break, print and backtrace
 

@@ -12,11 +12,9 @@
 //
 // content : Inline Member Functions
 //
-// content : Getters and Setters
+// content : Invariants
 //
 // content : External Member Function Definitions
-//
-// content : Invariants
 //
 // content : Constant Member Functions
 //

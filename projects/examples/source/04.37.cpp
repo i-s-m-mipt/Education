@@ -12,11 +12,7 @@
 //
 // content : Simple and Type Requirements
 //
-// content : Concept range
-//
-// content : Concept sized_range
-//
-// content : Concept std::ranges::sized_range
+// content : Concepts sized_range
 
 /////////////////////////////////////////////////////////////////////////
 

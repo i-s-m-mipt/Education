@@ -8,11 +8,11 @@
 
 /////////////////////////////////////////////////////////////////
 
-// content : Profiling
+// content : Profiling Process
 //
 // content : Functions std::pow, std::sin and std::cos
 //
-// content : Utilities Callgrind and KCachegrind
+// content : Tools Callgrind and KCachegrind
 
 /////////////////////////////////////////////////////////////////
 

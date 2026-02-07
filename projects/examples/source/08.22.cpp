@@ -10,8 +10,6 @@
 
 // content : Comparing Floating-Point Numbers
 //
-// content : Functions equal
-//
 // content : D.E.Knuth Implementation
 
 ////////////////////////////////////////////////////////////////////////

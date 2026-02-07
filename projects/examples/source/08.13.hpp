@@ -10,10 +10,6 @@
 
 // content : Long Arithmetic
 //
-// content : Type Integer
-//
-// content : Radix Optimization
-//
 // content : Arithmetic Operators with Assignment
 //
 // content : Binary Search Algorithm
@@ -24,15 +20,13 @@
 //
 // content : Operators >> and <<
 //
-// content : Functions sqrt and multiply
+// content : Square Roots
 //
 // content : Karatsuba Fast Multiplication Algorithm
 //
-// content : Function parse
-//
 // content : Functions std::ssize, std::isdigit, std::stoll
 //
-// content : Functions reduce, add, subtract and less
+// content : Radix Optimization
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 

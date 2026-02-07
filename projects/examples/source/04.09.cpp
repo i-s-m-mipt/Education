@@ -8,17 +8,13 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Containers Stack
-//
 // content : Template Template Parameters
 //
 // content : Class Template Argument Deduction
 //
-// content : Deduction Guides
-//
 // content : Container std::deque
 //
-// content : Function copy
+// content : Deduction Guides
 //
 // content : Functions std::begin and std::end
 

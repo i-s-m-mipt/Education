@@ -8,10 +8,6 @@
 
 ////////////////////////////////////////////////////////////////
 
-// content : Type Node
-//
-// content : Function traverse
-//
 // content : Operator ->*
 //
 // content : Pointers to Data Members

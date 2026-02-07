@@ -8,7 +8,15 @@
 
 //////////////////////////////////////////////////////////////////////////////
 
-// content : Scoped and Unscoped Enumerations
+// content : Scoped Enumerations
+//
+// content : Declaration enum class
+//
+// content : Underlying Types
+//
+// content : Type Alias std::uint8_t
+//
+// content : Unscoped Enumerations
 //
 // content : Declaration enum
 

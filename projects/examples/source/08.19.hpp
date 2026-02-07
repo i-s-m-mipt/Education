@@ -12,15 +12,9 @@
 //
 // content : Library Boost.Python
 //
-// content : Wrapper Python
-//
-// content : Global Interpreter Locker
-//
 // content : Mutex std::mutex
 //
-// content : Handling Python Errors
-//
-// content : Function exception
+// content : Global Interpreter Locker
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 

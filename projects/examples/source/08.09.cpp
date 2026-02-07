@@ -16,7 +16,11 @@
 //
 // content : Strict Aliasing Rule
 //
-// content : Functions bit_cast, std::memcpy and std::bit_cast
+// content : Type Alias std::uint64_t
+//
+// content : Function std::memcpy
+//
+// content : Function std::bit_cast
 
 ////////////////////////////////////////////////////////////////////
 
