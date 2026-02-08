@@ -1,5 +1,25 @@
 ///////////////////////////////////////////
 
+// chapter : Memory Management
+
+///////////////////////////////////////////
+
+// section : Resource Handlers
+
+///////////////////////////////////////////
+
+// content : Garbage Collectors
+//
+// content : Smart Pointers
+//
+// content : Pointer std::shared_ptr
+//
+// content : Reference Counting
+//
+// content : Plain and Smart Pointers
+
+///////////////////////////////////////////
+
 #include <cassert>
 #include <memory>
 

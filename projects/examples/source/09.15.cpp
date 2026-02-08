@@ -1,5 +1,19 @@
 ///////////////////////////////////////////////////////////////////////////////////
 
+// chapter : Memory Management
+
+///////////////////////////////////////////////////////////////////////////////////
+
+// section : Iterator Classification
+
+///////////////////////////////////////////////////////////////////////////////////
+
+// content : List Iterators
+//
+// content : Range-Based Statement for
+
+///////////////////////////////////////////////////////////////////////////////////
+
 #include <iterator>
 #include <memory>
 
@@ -9,10 +23,10 @@ template < typename T > class List
 {
 private :
 
-	struct Node 
+	struct Node
 	{ 
 		T x = T();
-		
+
 		std::shared_ptr < Node > next;
 	};
 	
@@ -26,21 +40,21 @@ public :
 
 	//  -------------------------------------------------------------------
 
-		auto const operator++(int) 
-		{ 
+		auto const operator++(int)
+		{
 			auto x = *this;
-			
+
 			m_node = m_node->next;
-			
+
 			return x;
 		}
 
 	//  -------------------------------------------------------------------
 
-		auto & operator++() 
-		{ 
+		auto & operator++()
+		{
 			m_node = m_node->next;
-			
+
 			return *this;
 		}
 
@@ -53,7 +67,7 @@ public :
 	//  -------------------------------------------------------------------
 
 		friend auto operator==(Iterator const & lhs, Iterator const & rhs)
-		{ 
+		{
 			return lhs.m_node == rhs.m_node;
 		}
 
@@ -65,7 +79,7 @@ public :
 //  -----------------------------------------------------------------------
 
 	auto begin() const { return Iterator(m_head); }
-	
+
 	auto end  () const { return Iterator(      ); }
 
 //  -----------------------------------------------------------------------
@@ -77,12 +91,12 @@ public :
 		if (m_head)
 		{
 			auto tail = m_head;
-			
+
 			while (tail->next) 
 			{
 				tail = tail->next;
-			} 
-			
+			}
+
 			tail->next = node;
 		}
 		else
