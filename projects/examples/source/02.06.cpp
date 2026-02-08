@@ -11,6 +11,8 @@
 // content : Constant Objects
 //
 // content : Type Qualifier const
+//
+// content : Magic Numbers
 
 /////////////////////////////////////
 

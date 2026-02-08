@@ -22,6 +22,8 @@
 //
 // content : GNU Compiler Collection
 //
+// content : Warnings, Errors and Optimizations
+//
 // content : Options -std=c++23, -O0 and -O3
 //
 // content : Options -Wall, -Wextra and -Wpedantic
