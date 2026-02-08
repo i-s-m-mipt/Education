@@ -10,9 +10,7 @@
 
 // content : Rational Arithmetic
 //
-// content : Type Rational
-//
-// content : Instantiating Class Template Friend Functions
+// content : Instantiating Friend Functions
 //
 // content : Operator -
 

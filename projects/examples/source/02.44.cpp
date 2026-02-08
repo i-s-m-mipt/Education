@@ -10,9 +10,9 @@
 
 // content : Insertion and Merge Sort Algorithms
 //
-// content : Algorithmic Complexities O(N^2) and O(N*log(N))
-//
 // content : Timsort Algorithm
+//
+// content : Algorithmic Complexities O(N^2) and O(N*log(N))
 //
 // content : Cache Lines
 //

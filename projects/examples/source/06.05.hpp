@@ -4,17 +4,19 @@
 
 ///////////////////////////////////////////
 
-// section : Multi-File Projects
+// section : Project Structure
 
 ///////////////////////////////////////////
 
-// content : Multi-File Projects
+// content : Project Structure
 //
 // content : Header Files
 //
 // content : Declarations and Definitions
 //
 // content : One Definition Rule
+//
+// content : Definitions in Header Files
 //
 // content : Global Objects
 //

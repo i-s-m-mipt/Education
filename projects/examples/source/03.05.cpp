@@ -10,8 +10,6 @@
 
 // content : Nested Classes
 //
-// content : Type Cache
-//
 // content : Function std::to_string
 //
 // content : Pointer this
@@ -44,13 +42,6 @@ public :
 
 //  -------------------------------------------------------------
 
-    auto const & make_string() const
-    {
-        return m_cache.string(*this);
-    }
-
-//  -------------------------------------------------------------
-
     void set(int x) 
     {
         if (x > 0)
@@ -59,6 +50,13 @@ public :
 
             m_cache.clear();
         }
+    }
+
+//  -------------------------------------------------------------
+
+    auto const & make_string() const
+    {
+        return m_cache.string(*this);
     }
 
 private :

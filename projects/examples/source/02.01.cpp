@@ -8,6 +8,10 @@
 
 //////////////////////////////////////////////
 
+// content : Declarations and Definitions
+//
+// content : Objects and Variables
+//
 // content : Logical Types and Literals
 //
 // content : Type bool
@@ -18,11 +22,11 @@
 //
 // content : Attribute [[maybe_unused]]
 //
-// content : Operator sizeof
-//
 // content : Compile-Time Assertions
 //
 // content : Declaration static_assert
+//
+// content : Operator sizeof
 
 //////////////////////////////////////////////
 

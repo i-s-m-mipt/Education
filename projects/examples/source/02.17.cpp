@@ -8,17 +8,23 @@
 
 /////////////////////////////////////////////////////////////
 
-// content : Statement if
-//
-// content : Utility Compiler Explorer
-//
 // content : Function std::print
 //
-// content : C-Style String Literals
+// content : String Literals
+//
+// content : Null-Terminated Strings
 //
 // content : Stream std::cin
 //
 // content : Operator >>
+//
+// content : Selection Statements
+//
+// content : Statement if
+//
+// content : Scoped Variables
+//
+// content : Service Compiler Explorer
 
 /////////////////////////////////////////////////////////////
 

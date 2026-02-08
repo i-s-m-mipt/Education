@@ -4,15 +4,13 @@
 
 /////////////////////////////////////////////////////////////
 
-// section : Multi-File Projects
+// section : Project Structure
 
 /////////////////////////////////////////////////////////////
 
-// content : Include Directories
+// content : Compilation, Assembly and Linking
 //
-// content : Compilation and Linking Stages
-//
-// content : Object, Executable and Library Files
+// content : Object and Executable Files
 //
 // content : Multiply Defined and Unresolved External Symbols
 

@@ -10,15 +10,17 @@
 
 // content : Recursive Functions
 //
-// content : Factorial Calculation Algorithm
+// content : Factorials
 //
 // content : Trailing Return Types
 //
-// content : Binomial Coefficient Calculation Algorithm
+// content : Stack Overflow
 //
-// content : Correct Bracket Sequences Problem
+// content : Binomial Coefficients
 //
-// content : Catalan Number Calculation Algorithm
+// content : Catalan Numbers
+//
+// content : Correct Bracket Sequences
 //
 // content : Function std::max
 

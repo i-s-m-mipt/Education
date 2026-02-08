@@ -14,7 +14,7 @@
 //
 // content : Type Alias std::size_t
 //
-// content : Fixed-Width Integer Type Aliases
+// content : Type Aliases std::int16_t, std::int32_t and std::int64_t
 
 //////////////////////////////////////////////////////////////////////
 

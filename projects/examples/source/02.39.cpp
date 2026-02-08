@@ -10,8 +10,6 @@
 
 // content : Function Overloading
 //
-// content : Signatures
-//
 // content : Polymorphism
 
 //////////////////////////////////////////////////////////

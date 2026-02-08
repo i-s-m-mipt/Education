@@ -18,7 +18,7 @@
 //
 // content : Type void
 //
-// content : Uninitialized Memory
+// content : Dereferencing Pointers
 // 
 // content : Operator *
 //

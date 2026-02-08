@@ -12,11 +12,13 @@
 //
 // content : Composition, Aggregation and Association
 //
-// content : Structure Declarations
+// content : Forward Declarations
 //
 // content : Dependency
 //
 // content : Stream std::cout
+//
+// content : Operator <<
 
 /////////////////////////////////////////////////////
 

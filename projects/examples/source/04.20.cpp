@@ -10,7 +10,7 @@
 
 // content : Statements if constexpr and if consteval
 //
-// content : Function std::min
+// content : Functions std::max and std::min
 
 ///////////////////////////////////////////////////////////////////////
 

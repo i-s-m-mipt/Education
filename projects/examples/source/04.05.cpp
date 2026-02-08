@@ -18,8 +18,6 @@
 //
 // content : Parameter Packs Expansion
 //
-// content : Arithmetic Transform Algorithm
-//
 // content : Variadic Expressions
 
 //////////////////////////////////////////////////////////////////////////

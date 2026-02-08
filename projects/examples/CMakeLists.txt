@@ -232,7 +232,7 @@ set(debug
     08.05
     08.07
     08.08
-    08.09
+    08.10
     08.11
     08.12
     08.15
@@ -457,15 +457,15 @@ target_compile_options     (06.11 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
 #############################################################################################
 
-add_executable             (06.18 source/06.18.cpp)
+add_executable             (06.17 source/06.17.cpp)
 
-target_include_directories (06.18 PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
+target_include_directories (06.17 PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
 
-target_compile_options     (06.18 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (06.17 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
-target_link_libraries      (06.18 PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/libstatic.a)
+target_link_libraries      (06.17 PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/libstatic.a)
 
-target_link_libraries      (06.18 PRIVATE ${Boost_LIBRARIES})
+target_link_libraries      (06.17 PRIVATE ${Boost_LIBRARIES})
 
 #############################################################################################
 
@@ -563,7 +563,7 @@ set(release
 
     07.23
     08.06
-    08.10
+    08.09
     08.30
     08.32
     08.33

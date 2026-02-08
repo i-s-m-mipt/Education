@@ -10,6 +10,8 @@
 
 // content : Container std::vector
 //
+// content : Capacity and Size
+//
 // content : Algorithmic Complexities O(1) and O(N)
 //
 // content : Amortized Algorithmic Complexity

@@ -8,8 +8,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-// content : Container Vector
-//
 // content : Special Member Functions
 //
 // content : Container std::initializer_list
@@ -27,8 +25,6 @@
 // content : Self-Assignment Problem
 //
 // content : Pattern Copy and Swap
-//
-// content : Function swap
 //
 // content : Generating Special Member Functions
 //

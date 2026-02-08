@@ -10,6 +10,8 @@
 
 // content : Curiously Recurring Template Pattern
 //
+// content : Virtual Functions Emulation
+//
 // content : Pattern Mixin
 //
 // content : Mixin-Based Patterns

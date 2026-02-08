@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////////
 
-// section : Multi-File Projects
+// section : Project Structure
 
 /////////////////////////////////////////////////
 
@@ -32,9 +32,9 @@
 //
 // content : Declaration using
 //
-// content : Namespace std::literals
-//
 // content : Operator ""s
+//
+// content : Namespace std::literals
 
 /////////////////////////////////////////////////
 

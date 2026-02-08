@@ -16,9 +16,9 @@
 //
 // content : Type Modifiers short and long
 //
-// content : Literal Suffixes
+// content : Literal Suffixes l and ll
 //
-// content : Hungarian Notation
+// content : Hungarian Naming Convention
 //
 // content : Overflow Problem
 

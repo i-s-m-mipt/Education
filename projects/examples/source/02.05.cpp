@@ -12,13 +12,17 @@
 //
 // content : Type Modifiers signed and unsigned
 //
-// content : Two's Complement
+// content : Literal Suffix u
 //
 // content : Type Trait std::is_same
 //
 // content : Comparing Signed and Unsigned Numbers
 //
+// content : Two's Complement
+//
 // content : Functions std::cmp_less and std::cmp_equal
+//
+// content : Suppressing Compiler Warnings
 //
 // content : Directive #pragma
 

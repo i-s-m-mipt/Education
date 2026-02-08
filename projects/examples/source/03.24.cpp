@@ -12,11 +12,9 @@
 //
 // content : Function std::any_cast
 //
-// content : String Literals
+// content : Operator ""s
 //
 // content : Namespace std::literals
-//
-// content : Function equal
 
 ///////////////////////////////////////////////////////////////
 

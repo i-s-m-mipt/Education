@@ -8,7 +8,9 @@
 
 ////////////////////////////////////////////////////////
 
-// content : Standard Library
+// content : Standard Library Overview
+//
+// content : Using Libraries
 //
 // content : Directive #include
 //
@@ -16,11 +18,13 @@
 //
 // content : Declaration using
 //
-// content : Comments
+// content : Function main
 //
-// content : Code Documentation
+// content : Naming Conventions
 //
-// content : Utility Doxygen
+// content : Comments and Documentation
+//
+// content : Service Doxygen
 
 ////////////////////////////////////////////////////////
 
@@ -77,6 +81,10 @@ int main()
 //  ----------------------------------------------------
 
 	assert(std::size(vector) == 6 && vector.at(5) == 1);
+
+//  ----------------------------------------------------
+
+	return 0;
 }
 
 ////////////////////////////////////////////////////////

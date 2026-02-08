@@ -18,9 +18,11 @@
 //
 // content : Access Specifiers public and private
 //
-// content : Default, Used-Defined and Delegating Constructors
+// content : Default, User-Defined and Delegating Constructors
 //
-// content : Initializer Lists
+// content : Initialization Lists
+//
+// content : Data Members Initialization Order
 //
 // content : The Most Vexing Parse
 //

@@ -8,21 +8,25 @@
 
 /////////////////////////////////////////////////////////////
 
+// content : Upcasting Type Conversions
+//
+// content : Static and Dynamic Types
+//
+// content : Slicing Objects
+//
 // content : Dynamic Polymorphism
 //
 // content : Virtual Functions
 //
-// content : Function Specifiers virtual and override
+// content : Function Specifier virtual
 //
 // content : Overriding Functions
 //
-// content : Final Classes
+// content : Function Specifier override
 //
 // content : Function and Class Specifier final
 //
-// content : Upcasting Type Conversions
-//
-// content : Slicing Objects
+// content : Range-Based Statement for
 //
 // content : Virtual Destructors
 

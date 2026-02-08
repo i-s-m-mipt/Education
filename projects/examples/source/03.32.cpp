@@ -10,9 +10,7 @@
 
 // content : Rational Arithmetic
 //
-// content : Type Rational
-//
-// content : User-Defined Implicit and Explicit Type Conversions
+// content : User-Defined Type Conversions
 //
 // content : Function Specifier explicit
 //
@@ -30,7 +28,9 @@
 //
 // content : Operators >> and <<
 //
-// content : Streams std::istream, std::ostream and std::stringstream
+// content : Streams std::istream and std::ostream
+//
+// content : Stream std::stringstream
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 

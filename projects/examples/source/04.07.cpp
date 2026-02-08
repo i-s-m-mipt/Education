@@ -8,10 +8,6 @@
 
 ////////////////////////////////////////////////////////////////
 
-// content : Type Node
-//
-// content : Binary Tree Traverse Algorithm
-//
 // content : Operator ->*
 //
 // content : Pointers to Data Members

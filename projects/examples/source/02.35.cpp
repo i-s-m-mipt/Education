@@ -8,7 +8,7 @@
 
 ////////////////////////////////////////////////////////////////////
 
-// content : Reference Semantics
+// content : Value, Pointer ans Lvalue Reference Semantics
 //
 // content : Wrapper std::reference_wrapper
 

@@ -12,8 +12,6 @@
 //
 // content : Function Specifier inline
 //
-// content : Function max
-//
 // content : Attribute [[noinline]]
 //
 // content : Special Memory

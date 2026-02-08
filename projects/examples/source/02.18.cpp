@@ -10,6 +10,10 @@
 
 // content : Statement switch
 //
+// content : Labels case and default
+//
+// content : Statement break
+//
 // content : Attributes [[fallthrough]], [[likely]] and [[unlikely]]
 
 ////////////////////////////////////////////////////////////////////

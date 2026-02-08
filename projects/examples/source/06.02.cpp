@@ -4,15 +4,19 @@
 
 ///////////////////////////////////////////////////////////////////
 
-// section : Preprocessor Directives
+// section : Translation Process
 
 ///////////////////////////////////////////////////////////////////
 
-// content : Program Building Stages
+// content : Translation Process
 //
-// content : Preprocessing Stage
+// content : Preprocessing
+//
+// content : Translation Units
 //
 // content : Preprocessor Directives
+//
+// content : Using Libraries
 //
 // content : Directive #include
 //
@@ -20,15 +24,19 @@
 //
 // content : Directives #define and #undef
 //
-// content : Multi-Line Macros
+// content : Operators \, ## and #
 //
-// content : Operators ## and #
+// content : Side Effects
+//
+// content : Runtime Assertions
 //
 // content : Macro assert
 //
 // content : Conditional Compilation
 //
 // content : Directives #if, #else and #endif
+//
+// content : Suppressing Compiler Warnings
 //
 // content : Directive #pragma
 

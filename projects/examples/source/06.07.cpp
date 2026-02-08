@@ -4,17 +4,17 @@
 
 //////////////////////////////////////////
 
-// section : Multi-File Projects
+// section : Project Structure
 
 //////////////////////////////////////////
 
 // content : Source Files
 //
-// content : Translation Units
+// content : Search Directories
 //
-// content : Internal and External Linkage
+// content : Internal and External Linking
 //
-// content : Anonymous Namespaces
+// content : Unnamed Namespaces
 //
 // content : Declaration namespace
 

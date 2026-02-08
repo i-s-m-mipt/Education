@@ -8,6 +8,8 @@
 
 ////////////////////////////////////////////////////////////
 
+// content : Operator sizeof
+//
 // content : Function std::size
 //
 // content : Operator []
