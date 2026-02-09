@@ -8,7 +8,7 @@
 
 /////////////////////////////////////////////////////////
 
-// content : Iterator Guarantees
+// content : Iterator Invalidation
 //
 // content : Standard Library Debug Mode
 

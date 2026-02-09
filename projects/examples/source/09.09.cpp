@@ -13,6 +13,8 @@
 // content : Move Semantics
 //
 // content : Function std::make_unique
+//
+// content : Pointer std::auto_ptr
 
 ///////////////////////////////////////////////////////////////////////
 
