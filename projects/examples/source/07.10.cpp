@@ -18,6 +18,20 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+auto test(int x) -> std::expected < int, std::string >
+{
+    if (x > 0)
+	{
+		return x;
+	}
+	else
+	{
+		return std::unexpected("error");
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 int main()
 {
     std::expected < int, std::string > expected_1 = 1;
@@ -35,6 +49,12 @@ int main()
     assert(expected_1.error_or("bbbbb") == "bbbbb");
 
     assert(expected_2.error_or("bbbbb") == "aaaaa");
+
+//  -------------------------------------------------------------------------
+
+    assert(test(0).has_value() == 0);
+
+	assert(test(1).has_value() == 1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
