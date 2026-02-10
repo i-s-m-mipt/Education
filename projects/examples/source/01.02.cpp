@@ -16,7 +16,7 @@
 //
 // content : Tools Snap and APT
 //
-// content : Code Editor Visual Studio Code
+// content : Environment Visual Studio Code
 //
 // content : Extensions and C/C++ Configurations
 //
