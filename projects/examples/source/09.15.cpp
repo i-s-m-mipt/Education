@@ -38,6 +38,10 @@ public :
 	{
 	public :
 
+		using iterator_category = std::forward_iterator_tag;
+
+	//  -------------------------------------------------------------------
+
 		Iterator(std::shared_ptr < Node > node = nullptr) : m_node(node) {}
 
 	//  -------------------------------------------------------------------
@@ -65,7 +69,7 @@ public :
 		auto & operator* () const { return  m_node->x; }
 
 		auto   operator->() const { return &m_node->x; }
-	
+
 	//  -------------------------------------------------------------------
 
 		friend auto operator==(Iterator const & lhs, Iterator const & rhs)

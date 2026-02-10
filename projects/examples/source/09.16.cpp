@@ -39,6 +39,10 @@ public :
 	{
 	public :
 
+		using iterator_category = std::forward_iterator_tag;
+
+	//  -------------------------------------------------------------------
+
 		Iterator(std::shared_ptr < Node > node = nullptr) : m_node(node) {}
 
 	//  -------------------------------------------------------------------
