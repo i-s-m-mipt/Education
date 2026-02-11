@@ -1,5 +1,17 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+// chapter : Memory Management
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+// section : Iterator Classification
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+// content : Library Boost.Iterator
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <iterator>
 #include <memory>
 
@@ -26,6 +38,10 @@ public :
 	class Iterator : public boost::iterator_facade < Iterator, T, boost::forward_traversal_tag >
 	{
 	public :
+
+		using iterator_category = std::forward_iterator_tag;
+
+	//  -------------------------------------------------------------------
 
 		Iterator(std::shared_ptr < Node > node = nullptr) : m_node(node) {}
 
@@ -74,12 +90,12 @@ public :
 		if (m_head)
 		{
 			auto tail = m_head;
-			
-			while (tail->next) 
+
+			while (tail->next)
 			{
 				tail = tail->next;
-			} 
-			
+			}
+
 			tail->next = node;
 		}
 		else

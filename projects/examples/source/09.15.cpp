@@ -1,5 +1,21 @@
 ///////////////////////////////////////////////////////////////////////////////////
 
+// chapter : Memory Management
+
+///////////////////////////////////////////////////////////////////////////////////
+
+// section : Iterator Classification
+
+///////////////////////////////////////////////////////////////////////////////////
+
+// content : List Iterators
+//
+// content : Operator ->
+//
+// content : Range-Based Statement for
+
+///////////////////////////////////////////////////////////////////////////////////
+
 #include <iterator>
 #include <memory>
 
@@ -9,10 +25,10 @@ template < typename T > class List
 {
 private :
 
-	struct Node 
+	struct Node
 	{ 
 		T x = T();
-		
+
 		std::shared_ptr < Node > next;
 	};
 	
@@ -22,25 +38,29 @@ public :
 	{
 	public :
 
+		using iterator_category = std::forward_iterator_tag;
+
+	//  -------------------------------------------------------------------
+
 		Iterator(std::shared_ptr < Node > node = nullptr) : m_node(node) {}
 
 	//  -------------------------------------------------------------------
 
-		auto const operator++(int) 
-		{ 
+		auto const operator++(int)
+		{
 			auto x = *this;
-			
+
 			m_node = m_node->next;
-			
+
 			return x;
 		}
 
 	//  -------------------------------------------------------------------
 
-		auto & operator++() 
-		{ 
+		auto & operator++()
+		{
 			m_node = m_node->next;
-			
+
 			return *this;
 		}
 
@@ -49,11 +69,11 @@ public :
 		auto & operator* () const { return  m_node->x; }
 
 		auto   operator->() const { return &m_node->x; }
-	
+
 	//  -------------------------------------------------------------------
 
 		friend auto operator==(Iterator const & lhs, Iterator const & rhs)
-		{ 
+		{
 			return lhs.m_node == rhs.m_node;
 		}
 
@@ -65,7 +85,7 @@ public :
 //  -----------------------------------------------------------------------
 
 	auto begin() const { return Iterator(m_head); }
-	
+
 	auto end  () const { return Iterator(      ); }
 
 //  -----------------------------------------------------------------------
@@ -77,12 +97,12 @@ public :
 		if (m_head)
 		{
 			auto tail = m_head;
-			
+
 			while (tail->next) 
 			{
 				tail = tail->next;
-			} 
-			
+			}
+
 			tail->next = node;
 		}
 		else

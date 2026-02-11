@@ -10,6 +10,8 @@
 
 // content : Exception Handling
 //
+// content : Zero-Overhead Principle
+//
 // content : Statement throw
 //
 // content : User-Defined Exceptions
@@ -32,7 +34,7 @@
 //
 // content : Function std::current_exception
 //
-// content : Zero-Overhead Principle
+// content : Pointer std::exception_ptr
 
 //////////////////////////////////////////////////////////////
 
@@ -131,10 +133,18 @@ int main()
 	{
 		test_v3();
 	}
+	catch (std::runtime_error const & exception)
+	{
+		std::cerr << "main : " << exception.what() << '\n';
+	}
 	catch (std::exception const & exception)
 	{
 		std::cerr << "main : " << exception.what() << '\n';
 	}
+//	catch (std::runtime_error const & exception) // error
+//	{
+//		std::cerr << "main : " << exception.what() << '\n';
+//	}
 	catch (...)
 	{
 		std::cerr << "main : unknown exception\n";

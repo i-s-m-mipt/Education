@@ -16,11 +16,13 @@
 //
 // content : Tools Snap and APT
 //
-// content : Code Editor Visual Studio Code
+// content : Environment Visual Studio Code
 //
 // content : Extensions and C/C++ Configurations
 //
 // content : GNU Compiler Collection
+//
+// content : Warnings, Errors and Optimizations
 //
 // content : Options -std=c++23, -O0 and -O3
 //

@@ -550,7 +550,7 @@ Method, для управления поведением игровых объе
 
 \section{06. Projects and Libraries}
 
-{\large \textbf{06.01} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.08.cpp}{06.08}\,)}}
+{\large \textbf{06.01} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.05.hpp}{06.05}\,)}}
 
 \bigskip
 
@@ -580,7 +580,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{06.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/education.sh}{06.17}\,)}}
+{\large \textbf{06.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/education.sh}{education.sh}\,)}}
 
 \bigskip
 
@@ -588,11 +588,11 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{06.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.18.cpp}{06.18}\,)}}
+{\large \textbf{06.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.17.cpp}{06.17}\,)}}
 
 \bigskip
 
-Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.18.cpp}{\texttt{06.18}} таким образом, чтобы пользователь мог указывать версию динамической библиотеки и импортировать из нее необходимую функцию во время выполнения программы без прерывания работы и повторной сборки исполняемого файла. Реализуйте две динамические библиотеки с разными названиями. Реализуйте в библиотеках функции \lstinline{test} с одинаковыми сигнатурами и разными реализациями. Реализуйте в функции \lstinline{main} исполняемого файла возможность для пользователя указать версию библиотеки перед импортом функции \lstinline{test}. Используйте стандартный поток \lstinline{std::cin} для ввода через терминал названия файла динамической библиотеки. Используйте библиотеку \href{https://www.boost.org/doc/libs/latest/doc/html/boost_dll.html}{Boost.DLL} для импорта функций \lstinline{test} из динамических библиотек. Используйте систему автоматизации сборки CMake для сборки библиотек и исполняемого файла.
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.17.cpp}{\texttt{06.17}} таким образом, чтобы пользователь мог указывать версию динамической библиотеки и импортировать из нее необходимую функцию во время выполнения программы без прерывания работы и повторной сборки исполняемого файла. Реализуйте две динамические библиотеки с разными названиями. Реализуйте в библиотеках функции \lstinline{test} с одинаковыми сигнатурами и разными реализациями. Реализуйте в функции \lstinline{main} исполняемого файла возможность для пользователя указать версию библиотеки перед импортом функции \lstinline{test}. Используйте стандартный поток \lstinline{std::cin} для ввода через терминал названия файла динамической библиотеки. Используйте библиотеку \href{https://www.boost.org/doc/libs/latest/doc/html/boost_dll.html}{Boost.DLL} для импорта функций \lstinline{test} из динамических библиотек. Используйте систему автоматизации сборки CMake для сборки библиотек и исполняемого файла.
 
 
 
@@ -664,7 +664,7 @@ Method, для управления поведением игровых объе
 
 \section{08. Number Processing}
 
-{\large \textbf{08.01} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/08.10.cpp}{08.10}\,)} \texttt{//} H. Sutter, Exceptional C\texttt{++} Style}
+{\large \textbf{08.01} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/08.09.cpp}{08.09}\,)} \texttt{//} H. Sutter, Exceptional C\texttt{++} Style}
 
 \bigskip
 
@@ -704,7 +704,7 @@ Method, для управления поведением игровых объе
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 5.00in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 15.00in\enlargethispage{100in}
 
 \section{09. Memory Management}
 
@@ -713,6 +713,48 @@ Method, для управления поведением игровых объе
 \bigskip
 
 Реализуйте класс \lstinline{Tracer} для представления трассировщика вызовов функций. Реализуйте в классе \lstinline{Tracer} пользовательский конструктор по умолчанию и пользовательский деструктор, которые будут выводить парные сообщения. Используйте паттерн RAII. Предполагайте, что пользователь самостоятельно создает экземпляр класса \lstinline{Tracer} в начале каждой собственной функции. Используйте стандартный поток \lstinline{std::cout} для вывода через терминал всех сообщений. Используйте стандартную утилиту \lstinline{std::source_location} для вывода дополнительной информации в сообщениях. Реализуйте функциональный макрос \lstinline{trace} по аналогии со стандартным макросом \lstinline{assert}, который позволит отключить всю трассировку при определении макроса \lstinline{NDEBUG}.
+
+\bigskip
+
+{\large \textbf{09.02} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.06.cpp}{09.06}\,)}}
+
+\bigskip
+
+Реализуйте класс \lstinline{Tree} для представления бинарного дерева. Реализуйте структуру \lstinline{Node} для представления узлов бинарного дерева как публичную вложенную структуру в классе \lstinline{Tree}. Реализуйте в структуре \lstinline{Node} поле типа \lstinline{int} для хранения значения текущего узла дерева, два стандартных указателя \lstinline{std::shared_ptr} для хранения адресов правого и левого дочерних узлов и стандартный указатель \lstinline{std::weak_ptr} для хранения адреса родительского узла. Реализуйте в классе \lstinline{Tree} публичный стандартный  указатель \lstinline{std::shared_ptr} для хранения адреса корневого узла дерева. Реализуйте в классе \lstinline{Tree} публичные функции-члены \lstinline{traverse_v1} и \lstinline{traverse_v2} для вывода значений всех текущих узлов дерева в окно терминала через стандартный поток \lstinline{std::cout} при обходе дерева алгоритмами поиска в ширину и поиска в глубину соответственно. Сконструируйте в функции \lstinline{main} экземпляр класса \lstinline{Tree} таким образом, чтобы дерево содержало корневой узел, два дочерних узла на промежуточном уровне и четыре дочерних узла на последнем уровне. Продемонстрируйте отсутствие неразрывных ассоциативных связей между узлами дерева и корректную работу деструкторов узлов.
+
+\bigskip
+
+{\large \textbf{09.03} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.09.cpp}{09.09}\,)}}
+
+\bigskip
+
+Доработайте примеры \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.01.cpp}{\texttt{05.01}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.03.cpp}{\texttt{05.03}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.09.cpp}{\texttt{05.09}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.10.cpp}{\texttt{05.10}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.13.cpp}{\texttt{05.13}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.15.cpp}{\texttt{05.15}} таким образом, чтобы реализации использовали стандартные интеллектуальные указатели вместо обычных указателей. Используйте стандартные указатели \lstinline{std::shared_ptr} и \lstinline{std::unique_ptr}. Не используйте стандартный указатель \lstinline{std::weak_ptr}. Подумайте над тем, какой стандартный интеллектуальный указатель будет уместно использовать в каждом из примеров.
+
+\bigskip
+
+{\large \textbf{09.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.11.cpp}{09.11}\,)}}
+
+\bigskip
+
+Доработайте Ваше предыдущее решение задачи 04.01 таким образом, чтобы реализация использовала итераторы вместо индексов. Реализуйте передачу коллекции элементов в алгоритм сортировки через передачу по значению двух итераторов начала и конца данной коллекции. Используйте полуоткрытые диапазоны. Предполагайте, что элементы коллекции могут храниться в любом контейнере, который владеет итераторами произ-
+
+вольного доступа. Используйте стандартные функции \lstinline{std::distance}, \lstinline{std::advance}, \lstinline{std::next} и \lstinline{std::prev}.
+
+\bigskip
+
+{\large \textbf{09.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.15.cpp}{09.15}\,)}}
+
+\bigskip
+
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.15.cpp}{\texttt{09.15}} таким образом, чтобы реализация использовала двунаправленные итераторы для обхода узлов списка как двусвязного. Реализуйте в структуре \lstinline{Node} стандартный указатель \lstinline{std::weak_ptr} для хранения адреса предыдущего узла списка. Реализуйте в классе \lstinline{Iterator} перегруженные операторы префиксного и постфиксного декремента. Доработайте в классе \lstinline{List} текущую реализацию функции-члена \lstinline{push_back}.
+
+\bigskip
+
+{\large \textbf{09.06} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.16.cpp}{09.16}\,)}}
+
+\bigskip
+
+Реализуйте алгоритм вычисления чисел ряда Фибоначчи на основе однонаправленного итератора. Реализуйте класс \lstinline{Iterator} для представления однонаправленного итератора. Реализуйте в классе \lstinline{Iterator} два приватных поля типа \lstinline{int} для хранения двух смежных чисел ряда Фибоначчи. Реализуйте в классе \lstinline{Iterator} конструктор по умолчанию, перегруженные операторы префиксного и постфиксного инкремента, разыменования и сравнения на равенство. Реализуйте операторы инкремента таким образом, чтобы они вычисляли следующие два смежных числа ряда Фибоначчи на основе двух текущих известных чисел ряда Фибоначчи, а оператор разыменования таким образом, чтобы он возвращал последнее вычисленное число ряда Фибоначчи.
 
 
 
