@@ -95,8 +95,6 @@ void test_v4(benchmark::State & state)
 
         benchmark::DoNotOptimize(vector);
     }
-
-    state.SetComplexityN(state.range(0));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
