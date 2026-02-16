@@ -1,6 +1,6 @@
 ##############################################################################################
 
-# sudo snap install --classic code
+# sudo snap refresh && sudo snap install --classic code
 #
 # sudo apt update && sudo apt upgrade -y
 #
@@ -12,7 +12,7 @@
 #
 # sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
 #
-# sudo apt install git cmake gdb valgrind kcachegrind
+# sudo apt install git cmake gdb valgrind kcachegrind linux-tools-common linux-tools-generic
 #
 # sudo apt install python3 python3-dev libicu-dev libtbb-dev
 
@@ -72,7 +72,9 @@
 #
 # mkdir -p output && cd "$_"
 #
-# cmake -DBENCHMARK_DOWNLOAD_DEPENDENCIES=on .. && cmake --build . --config Release
+# cmake -DBENCHMARK_DOWNLOAD_DEPENDENCIES=on -DCMAKE_BUILD_TYPE=Release ..
+#
+# cmake --build . --config Release
 #
 # sudo cmake --install .
 
