@@ -1,7 +1,29 @@
-// content : Type Alias std::int8_t
+////////////////////////////////////////////////////////////////////////////////
+
+// chapter : Memory Management
 
 ////////////////////////////////////////////////////////////////////////////////
 
+// section : Dynamic Memory
+
+////////////////////////////////////////////////////////////////////////////////
+
+// content : Memory Access Granularity
+//
+// content : Memory Alignment
+//
+// content : Type Alias std::int8_t
+//
+// content : Operator alignof
+//
+// content : Type Specifier alignas
+//
+// content : Alignment Microbenchmarking
+
+////////////////////////////////////////////////////////////////////////////////
+
+#include <bit>
+#include <cstddef>
 #include <cstdint>
 #include <vector>
 
@@ -58,9 +80,17 @@ int main()
 
 	static_assert(sizeof(Entity_v2) ==  8 && alignof(Entity_v2) == 4);
 
-//  ------------------------------------------------------------------
+//  ------------------------------------------------------------------------
 
-    benchmark::RunSpecifiedBenchmarks();
+    [[maybe_unused]] char array[5]{ 1, 2, 3, 4, 5 };
+
+//  ------------------------------------------------------------------------
+
+//  [[maybe_unused]] auto x = *std::bit_cast < int * > (array + 1); // error
+
+//  ------------------------------------------------------------------------
+
+    //benchmark::RunSpecifiedBenchmarks();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
