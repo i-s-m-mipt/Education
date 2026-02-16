@@ -12,7 +12,9 @@
 #
 # sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
 #
-# sudo apt install git cmake gdb valgrind kcachegrind linux-tools-common linux-tools-generic
+# sudo apt install git cmake gdb valgrind kcachegrind 
+#
+# sudo apt install linux-tools-common util-linux linux-tools-generic htop procps
 #
 # sudo apt install python3 python3-dev libicu-dev libtbb-dev
 
