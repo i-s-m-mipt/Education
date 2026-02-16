@@ -10,7 +10,7 @@
 
 // content : Wrapper std::optional
 //
-// content : Tag std::nullopt
+// content : Object std::nullopt
 //
 // content : Function std::make_optional
 //
