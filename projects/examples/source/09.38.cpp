@@ -8,15 +8,15 @@
 
 /////////////////////////////////////////////////////////////////////////
 
+// content : Polymorphic Resources and Allocators
+//
 // content : Algorithm std::ranges::fill
 //
-// content : Polymorphic Allocators
-//
-// content : Namespace std::pmr
-//
-// content : Monotonic Buffer Resources
+// content : Resource std::pmr::monotonic_buffer_resource
 //
 // content : Function std::data
+//
+// content : Container std::pmr::vector
 //
 // content : Operator ""sv
 
