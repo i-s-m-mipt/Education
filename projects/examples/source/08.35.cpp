@@ -10,11 +10,17 @@
 
 // content : Durations
 //
+// content : Type std::chrono::duration
+//
 // content : Compile-Time Rational Arithmetic
 //
 // content : Type std::ratio
 //
+// content : Type Aliases std::chrono::seconds and std::chrono::milliseconds 
+//
 // content : Duration Type Conversions
+//
+// content : Function std::chrono::duration_cast
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -30,11 +36,11 @@ int main()
 
 //  --------------------------------------------------------------------------------------
 
-	std::chrono::milliseconds duration_2(2'000);
+	std::chrono::seconds duration_2(2);
 
 //  --------------------------------------------------------------------------------------
 
-	assert(std::chrono::microseconds(duration_1).count() == 1'000'000);
+	assert(std::chrono::milliseconds(duration_2).count() == 2'000);
 
 //  --------------------------------------------------------------------------------------
 

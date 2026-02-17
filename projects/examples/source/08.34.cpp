@@ -10,13 +10,15 @@
 
 // content : Chrono Management
 //
-// content : Namespace std::chrono
+// content : Clocks
+//
+// content : Clock std::chrono::system_clock
 //
 // content : Epochs and Periods
 //
 // content : Unix Epoch
 //
-// content : System and Steady Clocks
+// content : Clock std::chrono::steady_clock
 
 //////////////////////////////////////////////////////
 

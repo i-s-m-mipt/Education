@@ -10,7 +10,11 @@
 
 // content : Calendars
 //
-// content : Years, Months, Days, Hours, Minutes and Seconds
+// content : Type std::chrono::year_month_day
+//
+// content : Type std::chrono::year_month_weekday
+//
+// content : Type std::chrono::hh_mm_ss
 
 //////////////////////////////////////////////////////////////////
 

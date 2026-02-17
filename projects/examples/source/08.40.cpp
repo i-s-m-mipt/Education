@@ -10,7 +10,7 @@
 
 // content : Time Zones
 //
-// content : Standards UTC, CET and MSK
+// content : Type std::chrono::zoned_time
 
 //////////////////////////////////////////////////////////
 

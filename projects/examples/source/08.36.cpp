@@ -10,9 +10,17 @@
 
 // content : Time Points
 //
-// content : Function std::time
+// content : Type std::chrono::time_point
+//
+// content : Function std::chrono::floor
+//
+// content : Type Alias std::chrono::days
+//
+// content : Formatting Date and Time
 //
 // content : Unix Time
+//
+// content : Function std::time
 //
 // content : Y2038 Problem
 
