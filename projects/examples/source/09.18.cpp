@@ -16,7 +16,7 @@
 //
 // content : Memory Mappings
 //
-// content : Tools htop and pmap
+// content : Tools pgrep and pmap
 //
 // content : Page Tables
 //
@@ -26,7 +26,7 @@
 
 ///////////////////////////////////////////////////////
 
-// support : pmap <PID>
+// support : pmap -x $(pgrep 09.18)
 
 ///////////////////////////////////////////////////////
 

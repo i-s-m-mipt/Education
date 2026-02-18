@@ -12,7 +12,27 @@
 //
 // content : Library Google.Benchmark
 //
+// content : Disabling CPU Frequency Scaling
+//
+// content : Disabling Address Space Layout Randomization
+//
+// content : Setting Task Affinity
+//
+// content : Setting Task Scheduling Algorithm
+//
+// content : Preemptive and Cooperative Multitasking
+//
+// content : Round Robin and FIFO Algorithms
+//
+// content : Tools cpupower, setarch, taskset and chrt
+//
 // content : Algorithms std::ranges::iota and std::ranges::lower_bound
+
+////////////////////////////////////////////////////////////////////////////////
+
+// support : sudo cpupower frequency-set -d 5.0GHz -u 5.0GHz
+//
+// support : sudo setarch $(uname -m) -R taskset -c 0 chrt -f 99 ./07.23
 
 ////////////////////////////////////////////////////////////////////////////////
 
