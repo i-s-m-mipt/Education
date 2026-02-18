@@ -14,7 +14,7 @@
 #
 # sudo apt install git cmake gdb valgrind kcachegrind 
 #
-# sudo apt install linux-tools-common util-linux linux-tools-generic htop procps
+# sudo apt install linux-tools-common util-linux linux-tools-generic procps
 #
 # sudo apt install python3 python3-dev libicu-dev libtbb-dev
 
