@@ -153,13 +153,13 @@ template < typename D, typename T, typename ... Ts > class Handler
 public :
 
     Handler(T x) 
-    { 
-        std::construct_at(derived().template get_type < T > (), std::move(x));
+    {
+        new (derived().template get_type < T > ()) T(std::move(x));
             
         derived().m_index = s_index;
     }
 
-//  ------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------
 
     auto & operator=(T x)
     {
@@ -171,7 +171,7 @@ public :
         {
             derived().destroy();
                 
-            std::construct_at(derived().template get_type < T > (), std::move(x));
+            new (derived().template get_type < T > ()) T(std::move(x));
                 
             derived().m_index = s_index;
         }
@@ -185,7 +185,7 @@ protected :
 
    ~Handler() = default;
 
-//  ------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------
 
     void destroy()
     {
@@ -195,7 +195,7 @@ protected :
         }
     }
 
-//  ------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------
 
     constexpr static auto s_index = index_v < Deque < Ts ... > , T > + 1;
 
