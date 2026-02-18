@@ -20,7 +20,7 @@
 //
 // content : Automatic Objects
 //
-// content : Command ulimit
+// content : Tool ulimit
 //
 // content : Segmentation Fault
 

@@ -24,7 +24,7 @@
 //
 // content : Round Robin and FIFO Algorithms
 //
-// content : Tools cpupower, setarch, taskset and chrt
+// content : Tools cpupower, uname, setarch, taskset and chrt
 //
 // content : Algorithms std::ranges::iota and std::ranges::lower_bound
 

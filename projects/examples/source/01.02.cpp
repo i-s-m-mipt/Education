@@ -12,7 +12,7 @@
 //
 // content : GNU Linux Distribution Ubuntu
 //
-// content : Commands pwd, ls, cd, man and sudo
+// content : Tools pwd, ls, cd and sudo
 //
 // content : Tools Snap and APT
 //
