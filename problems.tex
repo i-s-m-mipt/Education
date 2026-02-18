@@ -344,7 +344,7 @@
 
 Реализуйте систему внешнего тестирования приватных функций-членов некоторого класса. Реализуйте класс \lstinline{Entity}. Реализуйте в классе \lstinline{Entity} приватные функции-члены \lstinline{test_v1} и \lstinline{test_v2}, которые необходимо протестировать. Вспомните о первом принципе SOLID - принципе единственности ответственности. Реализуйте 
 
-дружественные для класса \lstinline{Entity} классы \lstinline{Tester_v1} и \lstinline{Tester_v2} для представления тестировщиков функций-членов \lstinline{test_v1} и \lstinline{test_v2} класса \lstinline{Entity} соответственно, чтобы получить прямой доступ к приватной секции класса \lstinline{Entity} и устранить использование публичного интерфейса класса \lstinline{Entity}. Используйте паттерн Attorney\,-\,Client для ограничения доступа классов \lstinline{Tester_v1} и \lstinline{Tester_v2} к приватной секции класса \lstinline{Entity}.
+дружественные для класса \lstinline{Entity} классы \lstinline{Tester_v1} и \lstinline{Tester_v2} для представления тестировщиков функций-членов \lstinline{test_v1} и \lstinline{test_v2} класса \lstinline{Entity} соответственно, чтобы получить прямой доступ к приватной секции класса \lstinline{Entity} и избежать использования публичного интерфейса класса \lstinline{Entity}. Используйте паттерн Attorney\,-\,Client для ограничения доступа классов \lstinline{Tester_v1} и \lstinline{Tester_v2} к приватной секции класса \lstinline{Entity}.
 
 \bigskip
 
@@ -390,9 +390,7 @@
 
 Реализуйте класс \lstinline{IPv4} для представления IP адресов в стандарте IPv4. Реализуйте~в~классе~\lstinline{IPv4}~приватный 
 
-стандартный контейнер \lstinline{std::array} из четырех элементов стандартного типа \lstinline{std::uint8_t} для хранения IP 
-
-адресов. Реализуйте в классе \lstinline{IPv4} перегруженные операторы префиксного и постфиксного инкремента и декремента IP адресов. Реализуйте дружественные для класса \lstinline{IPv4} перегруженные операторы сравнения, ввода и вывода IP адресов. Используйте стандартный поток \lstinline{std::stringstream} для ввода через строку IP адресов в формате четырех целых чисел от 0 до 255 включительно, разделенных точками. Используйте стандартный поток \lstinline{std::stringstream} для вывода через строку IP адресов в формате, который использовался для ввода.
+стандартный контейнер \lstinline{std::array} с четырьмя элементами стандартного типа \lstinline{std::uint8_t} для хранения IP адресов. Реализуйте в классе \lstinline{IPv4} перегруженные операторы префиксного и постфиксного инкремента и декремента IP адресов. Реализуйте дружественные для класса \lstinline{IPv4} перегруженные операторы сравнения, ввода и вывода IP адресов. Используйте стандартный поток \lstinline{std::stringstream} для ввода через строку IP адресов в формате четырех целых чисел от 0 до 255 включительно, разделенных точками. Используйте стандартный поток \lstinline{std::stringstream} для вывода через строку IP адресов в формате, который использовался для ввода.
 
 \bigskip
 
@@ -466,7 +464,11 @@
 
 \bigskip
 
-Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.21.cpp}{\texttt{04.21}} таким образом, чтобы пользователь мог вычитать, умножать и делить дроби на этапе компиляции. Реализуйте шаблоны структур \lstinline{Sub}, \lstinline{Mul} и \lstinline{Div} по аналогии с шаблоном структуры \lstinline{Sum} для представления операций вычитания, умножения и деления дробей соответственно. Используйте в структурах \lstinline{Sub} и \lstinline{Div} структуры \lstinline{Sum} и \lstinline{Mul} соответственно для устранения дублирования кода. Реализуйте в структурах \lstinline{Sum} и \lstinline{Mul} алгоритмы сокращения дробей. Используйте стандартную функцию \lstinline{std::gcd}. Реализуйте в структуре \lstinline{Div} статическое утверждение \lstinline{static_assert} для проверки деления на ноль при вычислениях на этапе компиляции. Реализуйте шаблоны псевдонимов для сокращения записей обращений к псевдонимам типов в шаблонах структур \lstinline{Sub}, \lstinline{Mul} и \lstinline{Div} по аналогии с шаблоном псевдонима \lstinline{sum}. Реализуйте шаблон перегруженного оператора вычитания интервалов со спецификатором \lstinline{constexpr}, используя внутри него шаблон перегру-
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.21.cpp}{\texttt{04.21}} таким образом, чтобы пользователь мог вычитать, умножать и делить дроби на этапе компиляции. Реализуйте шаблоны структур \lstinline{Sub}, \lstinline{Mul} и \lstinline{Div} по аналогии с шаблоном структуры \lstinline{Sum} для представления операций вычитания, умножения и деления дробей соответственно. Используйте структуры \lstinline{Sum} 
+
+и \lstinline{Mul} в структурах \lstinline{Sub} и \lstinline{Div} соответственно во избежание дублирования реализаций. Реализуйте в структурах 
+
+\lstinline{Sum} и \lstinline{Mul} алгоритмы сокращения дробей. Используйте стандартную функцию \lstinline{std::gcd}. Реализуйте в структуре \lstinline{Div} статическое утверждение \lstinline{static_assert} для проверки деления на ноль при вычислениях на этапе компиляции. Реализуйте шаблоны псевдонимов для сокращения записей обращений к псевдонимам типов в шаблонах структур \lstinline{Sub}, \lstinline{Mul} и \lstinline{Div} по аналогии с шаблоном псевдонима \lstinline{sum}. Реализуйте шаблон перегруженного оператора вычитания интервалов со спецификатором \lstinline{constexpr}, используя внутри него шаблон перегру-
 
 женного\,оператора\,сложения\,интервалов.\,Реализуйте\,тесты\,на\,основе\,статических\,утверждений\,\lstinline{static_assert}.
 
@@ -500,7 +502,7 @@
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 8.80in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 9.00in\enlargethispage{100in}
 
 \section{05. Software Design Patterns}
 
@@ -508,7 +510,7 @@
 
 \bigskip
 
-Реализуйте такую разновидность паттерна Builder, которая позволяет выполнять поэтапное создание составного объекта следующим образом: \lstinline{auto person = builder.name("Ivan").age(25).grade(10).get()}, где \lstinline{person} является указателем на экземпляр класса \lstinline{Person}, а \lstinline{builder} является экземпляром класса \lstinline{Builder}. Реализуйте класс \lstinline{Person} для представления составного объекта. Реализуйте класс \lstinline{Builder} для представления процесса создания составного объекта. Реализуйте в классе \lstinline{Builder} конструктор по умолчанию для создания составного объекта в начальном состоянии. Реализуйте в классе \lstinline{Builder} публичные функции-члены для создания составного объекта и публичную функцию-член \lstinline{get} для получения указателя на составной объект.
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.01.cpp}{\texttt{05.01}} таким образом, чтобы пользователь мог выполнять поэтапное создание составного объекта следующим образом: \lstinline{auto person = builder.name("Ivan").age(25).grade(10).get()}, где \lstinline{person} является указателем на экземпляр класса \lstinline{Person}, а \lstinline{builder} является экземпляром класса \lstinline{Builder}. Реализуйте класс \lstinline{Person} для представления составного объекта. Реализуйте класс \lstinline{Builder} для представления процесса создания составного объекта. Реализуйте в классе \lstinline{Builder} конструктор по умолчанию для создания составного объекта в начальном состоянии. Реализуйте в классе \lstinline{Builder} публичные функции-члены для создания составного объекта и публичную функцию-член \lstinline{get} для получения указателя на составной объект.
 
 \bigskip
 
@@ -516,7 +518,7 @@
 
 \bigskip
 
-Реализуйте такую разновидность паттерна Decorator, которая основана на шаблоне. Реализуйте шаблон производного класса \lstinline{Decorator}, который является наследником интерфейса класса \lstinline{Entity} и наследником реализации собственного параметра шаблона. Используйте класс \lstinline{Entity} как виртуальный базовый класс, чтобы предотвратить неоднозначности выбора. Устраните в классе \lstinline{Decorator} конструктор и ссылку на класс \lstinline{Entity}.
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.10.cpp}{\texttt{05.10}} таким образом, чтобы реализация использовала шаблон класса вместо ссылки. Реализуйте шаблон производного класса \lstinline{Decorator}, который является наследником интерфейса класса \lstinline{Entity} и наследником реализации собственного параметра шаблона. Используйте класс \lstinline{Entity} как виртуальный базовый класс. Удалите в классе \lstinline{Decorator} пользовательский конструктор и ссылку на экземпляр класса \lstinline{Entity}.
 
 \bigskip
 
@@ -534,7 +536,9 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-Реализуйте такую разновидность паттерна Strategy, которая основана на статическом полиморфизме. Устраните класс \lstinline{Strategy}. Реализуйте шаблон производного класса \lstinline{Entity}, который является наследником реализации собственного параметра шаблона. Устраните в классе \lstinline{Entity} конструктор и ссылку на класс \lstinline{Strategy}.
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.15.cpp}{\texttt{05.15}} таким образом, чтобы реализация использовала статический полиморфизм вместо динамического полиморфизма. Удалите класс \lstinline{Strategy} и наследование от него всех остальных классов. Реа- 
+
+лизуйте шаблон производного класса \lstinline{Entity}, который является наследником реализации собственного пара- метра\,шаблона.\,Удалите\,в\,классе\,\lstinline{Entity}\,пользовательский\,конструктор\,и\,ссылку\,на\,экземпляр\,класса\,\lstinline{Strategy}.
 
 \bigskip
 
@@ -660,7 +664,7 @@ Method, для управления поведением игровых объе
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 11.45in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 11.60in\enlargethispage{100in}
 
 \section{08. Number Processing}
 
@@ -676,7 +680,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/08.15.cpp}{\texttt{08.15}} таким образом, чтобы пользователь мог брать остаток от деления, возводить в степень и вычислять абсолютное значение длинных чисел. Реализуйте в классе \lstinline{Integer} перегруженный оператор взятия остатка от деления с присваиванием. Реализуйте дружественный для класса \lstinline{Integer} перегруженный оператор взятия остатка от деления. Реализуйте в классе \lstinline{Integer} публичную функцию-член \lstinline{pow} для возведения длинного числа в целую степень типа \lstinline{unsigned int}. Реализуйте в классе \lstinline{Integer} публичные функции- члены \lstinline{sign} и \lstinline{abs} для получения знака и вычисления абсолютного значения длинного числа соответственно.
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/08.15.cpp}{\texttt{08.15}} таким образом, чтобы пользователь мог брать остаток от деления, возводить в степень и вычислять абсолютное значение длинных чисел. Реализуйте в классе \lstinline{Integer} перегруженный оператор взятия остатка от деления с присваиванием. Реализуйте дружественный для класса \lstinline{Integer} перегруженный оператор взятия остатка от деления. Реализуйте дружественную для класса \lstinline{Integer} функцию \lstinline{pow} для возведения длинного числа в целую степень типа \lstinline{unsigned int}. Реализуйте в классе \lstinline{Integer} публичные функции- члены \lstinline{sign} и \lstinline{abs} для получения знака и вычисления абсолютного значения длинного числа соответственно.
 
 \bigskip
 
@@ -684,7 +688,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-Реализуйте алгоритмы вычисления целой части двоичного логарифма положительных чисел типа \lstinline{int} и типа \lstinline{float}. Предполагайте, что оба этих типа имеют размер 4 байта. Используйте значения типа \lstinline{unsigned int} для выполнения побитовых операций. Используйте оператор \lstinline{static_cast} для явного преобразования числа типа \lstinline{int} к значению типа \lstinline{unsigned int} и объединение \lstinline{union} для явного преобразования числа типа \lstinline{float} к значению типа \lstinline{unsigned int}. Используйте цикл \lstinline{while} и оператор побитового сдвига вправо для поиска старшего ненулевого бита в значении типа \lstinline{unsigned int}. Рассматривайте представление числа типа \lstinline{float} в соответствии со стандартом IEEE 754. Рассматривайте как нормализованные, так и денормализованные числа типа \lstinline{float}. Учитывайте, что экспонента числа типа \lstinline{float} имеет смещение на 127, которое обеспечивает хранение отрицательных степеней без знакового бита. Учитывайте, что максимальное значение экспоненты числа типа \lstinline{float} используется для представления значения бесконечности inf и неопределенного значения\,nan.
+Реализуйте алгоритмы вычисления целой части двоичного логарифма положительных чисел типа \lstinline{int} и типа \lstinline{float}. Предполагайте, что оба этих типа имеют размер 4 байта. Используйте значения типа \lstinline{unsigned int} для выполнения побитовых операций. Используйте оператор \lstinline{static_cast} для явного преобразования числа типа \lstinline{int} к значению типа \lstinline{unsigned int} и объединение \lstinline{union} для явного преобразования числа типа \lstinline{float} к значению типа \lstinline{unsigned int}. Используйте цикл \lstinline{while} и оператор побитового сдвига вправо для поиска старшего ненулевого бита в значении типа \lstinline{unsigned int}. Рассматривайте представление числа типа \lstinline{float} в соответствии со стандартом IEEE 754. Рассматривайте как нормализованные, так и денормализованные числа типа \lstinline{float}. Учитывайте, что экспонента числа типа \lstinline{float} имеет смещение на 127, которое обеспечивает хранение отрицательных степеней без знакового бита. Учитывайте, что максимальное значение экспоненты числа типа \lstinline{float} используется для представления значения бесконечности inf и неопределенного значения\,nan. Рассмотрите представление чисел с плавающей точкой в памяти компьютера, используя данную \href{https://cs357.cs.illinois.edu/textbook/assets/slides/94-Floating-Point.pdf}{презентацию}.
 
 \bigskip
 
@@ -704,7 +708,7 @@ Method, для управления поведением игровых объе
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 15.00in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 20.00in\enlargethispage{100in}
 
 \section{09. Memory Management}
 
@@ -728,7 +732,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-Доработайте примеры \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.01.cpp}{\texttt{05.01}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.03.cpp}{\texttt{05.03}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.09.cpp}{\texttt{05.09}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.10.cpp}{\texttt{05.10}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.13.cpp}{\texttt{05.13}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.15.cpp}{\texttt{05.15}} таким образом, чтобы реализации использовали стандартные интеллектуальные указатели вместо обычных указателей. Используйте стандартные указатели \lstinline{std::shared_ptr} и \lstinline{std::unique_ptr}. Не используйте стандартный указатель \lstinline{std::weak_ptr}. Подумайте над тем, какой стандартный интеллектуальный указатель будет уместно использовать в каждом из примеров.
+Доработайте примеры \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.01.cpp}{\texttt{05.01}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.03.cpp}{\texttt{05.03}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.04.cpp}{\texttt{05.04}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.09.cpp}{\texttt{05.09}} и \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/05.13.cpp}{\texttt{05.13}} таким образом, чтобы реализации использовали стандартные интеллектуальные указатели вместо обычных указателей. Используйте стандартные указатели \lstinline{std::shared_ptr} и \lstinline{std::unique_ptr}. Не используйте стандартный указатель \lstinline{std::weak_ptr}. Подумайте над тем, какой стандартный интеллектуальный указатель будет уместно использовать в каждом из примеров.
 
 \bigskip
 
@@ -746,7 +750,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.15.cpp}{\texttt{09.15}} таким образом, чтобы реализация использовала двунаправленные итераторы для обхода узлов списка как двусвязного. Реализуйте в структуре \lstinline{Node} стандартный указатель \lstinline{std::weak_ptr} для хранения адреса предыдущего узла списка. Реализуйте в классе \lstinline{Iterator} перегруженные операторы префиксного и постфиксного декремента. Доработайте в классе \lstinline{List} текущую реализацию функции-члена \lstinline{push_back}.
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.15.cpp}{\texttt{09.15}} таким образом, чтобы реализация использовала двунаправленные итераторы вместо однонаправленных итераторов. Реализуйте в структуре \lstinline{Node} стандартный указатель \lstinline{std::weak_ptr} для хранения адреса предыдущего узла списка. Реализуйте в классе \lstinline{Iterator} перегруженные операторы префиксного и постфиксного декремента. Доработайте в классе \lstinline{List} текущую реализацию функции-члена \lstinline{push_back}.
 
 \bigskip
 
@@ -755,6 +759,38 @@ Method, для управления поведением игровых объе
 \bigskip
 
 Реализуйте алгоритм вычисления чисел ряда Фибоначчи на основе однонаправленного итератора. Реализуйте класс \lstinline{Iterator} для представления однонаправленного итератора. Реализуйте в классе \lstinline{Iterator} два приватных поля типа \lstinline{int} для хранения двух смежных чисел ряда Фибоначчи. Реализуйте в классе \lstinline{Iterator} конструктор по умолчанию, перегруженные операторы префиксного и постфиксного инкремента, разыменования и сравнения на равенство. Реализуйте операторы инкремента таким образом, чтобы они вычисляли следующие два смежных числа ряда Фибоначчи на основе двух текущих известных чисел ряда Фибоначчи, а оператор разыменования таким образом, чтобы он возвращал последнее вычисленное число ряда Фибоначчи.
+
+\bigskip
+
+{\large \textbf{09.07} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.21.cpp}{09.21}\,)} \texttt{//} H. Sutter, Exceptional C\texttt{++}}
+
+\bigskip
+
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.09.hpp}{\texttt{06.09}} таким образом, чтобы реализация повторно использовала однократно выделенную неинициализированную память для хранения деталей реализации основного класса вместо многократного выделения и освобождения памяти. Определите накладные расходы и влияние на производительность оригинального паттерна Pimpl. Реализуйте в классе \lstinline{Entity} приватный стандартный контейнер \lstinline{std::array} со спецификатором \lstinline{alignas(std::max_align_t)} и шестнадцатью элементами стандартного типа \lstinline{std::byte} для хранения экземпляра класса \lstinline{Implementation}. Реализуйте в конструкторе класса \lstinline{Entity} два статических утверждения \lstinline{static_assert} для проверки размера и выравнивания класса \lstinline{Implementation}. Используйте размещающую версию оператора \lstinline{new} в конструкторе класса \lstinline{Entity}. Используйте стандартную функцию \lstinline{std::destroy_at} в деструкторе класса \lstinline{Entity}. Реализуйте в классе \lstinline{Entity} константную и неконстантную публичные функции-члены \lstinline{get} для получения отмытого указателя на экземпляр класса~\lstinline{Implementation}.~Ис-
+
+пользуйте стандартные функции \lstinline{std::bit_cast} и \lstinline{std::launder} в обеих функциях-членах \lstinline{get} класса \lstinline{Entity}.
+
+\bigskip
+
+{\large \textbf{09.08} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.23.cpp}{09.23}\,)}}
+
+\bigskip
+
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.23.cpp}{\texttt{09.23}} таким образом, чтобы пользователь мог обслуживать память встроенных динамических массивов с помощью перегруженных функций выделения и освобождения памяти. Реализуйте в классе \lstinline{Entity} публичные статические функции-члены \lstinline{operator new[]} и \lstinline{operator delete[]} для выделения и освобождения памяти встроенных динамических массивов. Реализуйте в классе \lstinline{Entity} публичные статические функции-члены \lstinline{operator new}, \lstinline{operator delete}, \lstinline{operator new[]} и \lstinline{operator delete[]} для выделения и освобождения памяти встроенных динамических массивов без генерации исключений, которые имеют дополнительный второй параметр стандартного типа \lstinline{std::nothrow_t}, передаваемый с помощью константной lvalue\,-\,ссылки. Реализуйте в классе \lstinline{Client} все необходимые дополнительные публичные объявления \lstinline{using}.
+
+\bigskip
+
+{\large \textbf{09.09} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.35.cpp}{09.35}\,)}}
+
+\bigskip
+
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.35.cpp}{\texttt{09.35}} таким образом, чтобы пользователь мог выбирать алгоритм поиска свободных блоков памяти. Реализуйте в классе \lstinline{Allocator} приватную функцию-член \lstinline{find_first} для представления алгоритма поиска первого подходящего свободного блока памяти. Реализуйте в классе \lstinline{Allocator} приватную функцию-член \lstinline{find_best} для представления алгоритма поиска лучшего подходящего свободного блока памяти. Реализуйте в конструкторе класса \lstinline{Allocator} дополнительный параметр для выбора алгоритм поиска свободных блоков памяти. Сравните среднее время работы аллокатора, использующего первый алгоритм поиска свободных блоков памяти, и среднее время работы того же аллокатора, использующего второй алгоритм поиска, в полностью одинаковых тестах. Используйте микробенчмарки на основе библиотеки \href{https://github.com/google/benchmark}{Google.Benchmark}.
+
+\bigskip
+
+{\large \textbf{09.10} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.37.cpp}{09.37}\,)}}
+
+\bigskip
 
 
 
