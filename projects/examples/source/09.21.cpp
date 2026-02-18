@@ -16,7 +16,7 @@
 //
 // content : Reusable Memory
 //
-// content : Explicit Destructors
+// content : Function std::destroy_at
 
 ////////////////////////////////////////////////////////
 
@@ -69,7 +69,7 @@ int main()
 
 //  ---------------------------------------------
 
-	entities[0].~Entity();
+	std::destroy_at(&entities[0]);
 
 //  ---------------------------------------------
 
@@ -79,7 +79,7 @@ int main()
 
 	for (auto i = 0uz; i < size; ++i)
 	{
-		entities[i].~Entity();
+		std::destroy_at(&entities[i]);
 	}
 
 //  ---------------------------------------------

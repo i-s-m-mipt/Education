@@ -191,7 +191,7 @@ protected :
     {
         if (derived().m_index == s_index) 
         {
-            derived().template get_type < T > ()->~T();
+            std::destroy_at(derived().template get_type < T > ());
         }
     }
 
