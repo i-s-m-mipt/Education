@@ -17,8 +17,6 @@
 // content : Function std::data
 //
 // content : Container std::pmr::vector
-//
-// content : Operator ""sv
 
 /////////////////////////////////////////////////////////////////////////
 
@@ -26,12 +24,7 @@
 #include <array>
 #include <cassert>
 #include <memory_resource>
-#include <string_view>
 #include <vector>
-
-/////////////////////////////////////////////////////////////////////////
-
-using namespace std::literals;
 
 /////////////////////////////////////////////////////////////////////////
 
@@ -66,7 +59,7 @@ int main()
 
     for (auto i = 0uz; i < size; ++i)
     {
-        assert(array[i] == "abcdefghijklmnopqrstuvwxyz______"sv[i]);
+        assert(array[i] == "abcdefghijklmnopqrstuvwxyz______"[i]);
     }
 }
 
