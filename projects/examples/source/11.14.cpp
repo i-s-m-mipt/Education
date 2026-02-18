@@ -5,6 +5,7 @@
 #include <cassert>
 #include <cstddef>
 #include <memory>
+#include <new>
 #include <print>
 #include <string>
 #include <type_traits>
@@ -136,7 +137,7 @@ protected :
 
     template < typename T > auto get_type() const
     {
-        return std::bit_cast < T * > (std::begin(m_array));
+        return std::launder(std::bit_cast < T * > (std::begin(m_array)));
     }
 
 //  ---------------------------------------------------------------------------------------------
