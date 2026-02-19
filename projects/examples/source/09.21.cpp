@@ -69,9 +69,9 @@ int main()
 
 //  ----------------------------------------------------------------------------
 
-	auto entity_1 = new (storage) Entity(1);
+	[[maybe_unused]] auto entity_1 = new (storage) Entity(1);
 
-	auto entity_2 = new (storage) Entity(2);
+	[[maybe_unused]] auto entity_2 = new (storage) Entity(2);
 
 //  ----------------------------------------------------------------------------
 
