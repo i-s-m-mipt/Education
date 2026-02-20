@@ -125,9 +125,7 @@ public :
         {
             auto x = *this;
 
-            m_x += m_y;
-
-            std::swap(m_x, m_y);
+            step();
 
             return x;
         }
@@ -136,9 +134,7 @@ public :
 
         auto & operator++() 
         {
-            m_x += m_y;
-
-            std::swap(m_x, m_y);
+            step();
 
             return *this;
         }
@@ -158,6 +154,15 @@ public :
 		}
 
     private :
+
+        void step()
+        {
+            m_x += m_y;
+
+            std::swap(m_x, m_y);
+        }
+
+    //  ------------------------------------------------------------------
 
         int m_x = 1, m_y = 1;
     };
