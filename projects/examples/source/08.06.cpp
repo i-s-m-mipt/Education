@@ -8,7 +8,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-// content : Bit Field Microbenchmarking
+// content : Bit Fields Microbenchmarking
 //
 // content : Type Alias std::uint32_t
 
