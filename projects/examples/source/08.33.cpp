@@ -8,7 +8,9 @@
 
 /////////////////////////////////////////////////////////
 
-// content : Branch Predictor Microbenchmarking
+// content : Microbenchmarking
+//
+// content : Dynamic Branch Prediction
 //
 // content : Distribution std::uniform_int_distribution
 

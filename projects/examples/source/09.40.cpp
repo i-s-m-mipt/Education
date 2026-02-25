@@ -8,7 +8,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Containers with Allocators Microbenchmarking
+// content : Microbenchmarking
 //
 // content : Containers std::list and std::pmr::list
 //
@@ -71,7 +71,7 @@ void test_v3(benchmark::State & state)
 
         std::pmr::list < int > list(allocator);
 
-        for (auto i = 0uz; i < 1'000; ++i) 
+        for (auto i = 0uz; i < 1'000; ++i)
         {
             list.push_back(1);
         }
@@ -94,9 +94,9 @@ void test_v4(benchmark::State & state)
 
         std::pmr::list < int > list(allocator);
 
-        for (auto i = 0uz; i < 1'000; ++i) 
+        for (auto i = 0uz; i < 1'000; ++i)
         {
-            list.push_back(1);    
+            list.push_back(1);
         }
 
         benchmark::DoNotOptimize(list);
