@@ -12,7 +12,7 @@
 //
 // content : Container std::queue
 //
-// content : First In First Out
+// content : First In First Out Algorithm
 
 ///////////////////////////////////////////////////////////////////
 

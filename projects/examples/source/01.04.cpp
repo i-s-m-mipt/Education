@@ -22,7 +22,7 @@
 //
 // content : Naming Conventions
 //
-// content : Comments and Documentation
+// content : Single-Line and Multi-Line Comments
 //
 // content : Service Doxygen
 

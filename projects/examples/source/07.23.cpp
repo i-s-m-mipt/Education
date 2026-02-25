@@ -12,13 +12,13 @@
 //
 // content : Library Google.Benchmark
 //
-// content : Disabling CPU Frequency Scaling
+// content : Disabling Frequency Scalings
 //
-// content : Disabling Address Space Layout Randomization
+// content : Disabling Address Space Layout Randomizations
 //
-// content : Setting Task Affinity
+// content : Setting Task Affinities
 //
-// content : Setting Task Scheduling Algorithm
+// content : Setting Task Scheduling Algorithms
 //
 // content : Preemptive and Cooperative Multitasking
 //

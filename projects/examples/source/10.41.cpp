@@ -12,7 +12,7 @@
 //
 // content : Containers std::map and std::multimap
 //
-// content : Emplacing Constructors
+// content : In-Place Constructors
 //
 // content : Object std::piecewise_construct
 //

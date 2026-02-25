@@ -16,7 +16,7 @@
 //
 // content : Type Alias std::chrono::days
 //
-// content : Formatting Date and Time
+// content : Formatting Dates and Times
 //
 // content : Unix Time
 //
