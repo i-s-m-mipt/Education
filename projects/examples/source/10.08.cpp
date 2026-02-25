@@ -1,5 +1,19 @@
 //////////////////////////////////////////////////////////////////
 
+// chapter : Data Structures
+
+//////////////////////////////////////////////////////////////////
+
+// section : Sequential Containers
+
+//////////////////////////////////////////////////////////////////
+
+// content : Double-Ended Queues
+//
+// content : Container std::deque
+
+//////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <deque>
 #include <iterator>
@@ -22,6 +36,13 @@ int main()
 			std::random_access_iterator_tag 
 		> 
 	);
+
+//  --------------------------------------------------------------
+
+	static_assert
+    (
+        !std::contiguous_iterator < decltype(deque)::iterator >
+    );
 
 //  --------------------------------------------------------------
 

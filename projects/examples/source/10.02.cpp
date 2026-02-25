@@ -1,5 +1,23 @@
 /////////////////////////////////////////////////////////////////////
 
+// chapter : Data Structures
+
+/////////////////////////////////////////////////////////////////////
+
+// section : Sequential Containers
+
+/////////////////////////////////////////////////////////////////////
+
+// content : Sequential Containers
+//
+// content : Dynamic Arrays
+//
+// content : Container std::vector
+//
+// content : Random Access Iterators
+
+/////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <concepts>
 #include <iterator>
@@ -16,12 +34,12 @@ int main()
 
     static_assert
 	(
-		std::is_same_v 
-		< 
+		std::is_same_v
+		<
 			decltype(vector)::iterator::iterator_category,
-			
-			std::random_access_iterator_tag 
-		> 
+
+			std::random_access_iterator_tag
+		>
 	);
 
 //  -----------------------------------------------------------------
