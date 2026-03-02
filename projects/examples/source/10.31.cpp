@@ -1,54 +1,70 @@
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////
 
 // chapter : Data Structures
 
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////
 
 // section : Nested Containers
 
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////
 
-// content : Multidimensional Containers
+// content : Microbenchmarking
 //
-// content : Library Boost.MultiArray
+// content : Row-Major and Column-Major Orders
 
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////
 
-#include <boost/multi_array.hpp>
+// support : lscpu | grep L1d
 
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////
+
+#include <vector>
+
+//////////////////////////////////////////////
+
+#include <benchmark/benchmark.h>
+
+//////////////////////////////////////////////
+
+void test(benchmark::State & state)
+{
+    auto size = 32'768uz / sizeof(int);
+
+    std::vector < std::vector < int > > vector
+    (
+        size, std::vector < int > (size, 0)
+    );
+
+    for (auto element : state)
+    {
+        for (auto i = 0uz; i < size; ++i)
+        {
+            for (auto j = 0uz; j < size; ++j)
+            {
+                if (state.range(0) == 1)
+                {
+                    vector[i][j] = 1;
+                }
+                else
+                {
+                    vector[j][i] = 1;
+                }
+            }
+        }
+
+        benchmark::DoNotOptimize(vector);
+    }
+}
+
+//////////////////////////////////////////////
+
+BENCHMARK(test)->Arg(1)->Arg(2);
+
+//////////////////////////////////////////////
 
 int main()
 {
-	auto size = 5uz;
-
-//  -------------------------------------------------------------------
-
-	boost::multi_array < int, 2 > array(boost::extents[size][size]);
-
-//  -------------------------------------------------------------------
-
-	for (auto i = 0uz; i < size; ++i)
-	{
-		for (auto j = 0uz; j < size; ++j)
-		{
-			array[i][j] = j + 1;
-		}
-	}
-
-//  -------------------------------------------------------------------
-
-	using range_t = boost::multi_array_types::index_range;
-
-//  -------------------------------------------------------------------
-
-	auto view = array[boost::indices[range_t(0, 2)][range_t(0, 5, 2)]];
-
-//  -------------------------------------------------------------------
-
-	assert(view[0][0] == 1 && view[0][1] == 3 && view[0][2] == 5);
-
-	assert(view[1][0] == 1 && view[1][1] == 3 && view[1][2] == 5);
+    benchmark::RunSpecifiedBenchmarks();
 }
 
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////

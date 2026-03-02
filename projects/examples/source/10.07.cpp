@@ -1,43 +1,60 @@
-///////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 // chapter : Data Structures
 
-///////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 // section : Sequential Containers
 
-///////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-// content : Lazy Loading Optimization
+// content : Double-Ended Queues
+//
+// content : Container std::deque
 
-///////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-#include <memory>
+#include <cassert>
+#include <deque>
+#include <iterator>
+#include <type_traits>
 
-///////////////////////////////////////////////
-
-class Entity
-{
-public :
-
-	void load()
-	{
-		if (!m_x)
-		{
-			m_x = std::make_unique < int > (1);
-		}
-	}
-
-private :
-
-	std::unique_ptr < int > m_x;
-};
-
-///////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Entity().load();
+    std::deque < int > deque = { 1, 2, 3, 4, 5 };
+
+//  --------------------------------------------------------------
+
+    static_assert
+	(
+		std::is_same_v 
+		< 
+			decltype(deque)::iterator::iterator_category,
+			
+			std::random_access_iterator_tag 
+		> 
+	);
+
+//  --------------------------------------------------------------
+
+	static_assert
+    (
+        !std::contiguous_iterator < decltype(deque)::iterator >
+    );
+
+//  --------------------------------------------------------------
+
+	deque.erase(deque.insert(std::next(std::begin(deque), 0), 1));
+
+	deque.erase(deque.insert(std::next(std::begin(deque), 2), 1));
+
+	deque.erase(deque.insert(std::next(std::begin(deque), 5), 1));
+
+//  --------------------------------------------------------------
+
+    assert(deque.at(0) == 1);
 }
 
-///////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////

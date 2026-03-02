@@ -1,160 +1,121 @@
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 // chapter : Data Structures
 
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 // section : Nested Containers
 
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-// content : Matrices and Determinants
-//
-// content : Library Boost.UBLAS
-//
-// content : Minors and LU Factorization Methods
-//
-// content : Microbenchmarking
+// content : Nested and Multidimensional Containers
 
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
+#include <cassert>
 #include <cstddef>
-#include <random>
+#include <iterator>
+#include <vector>
 
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-#include <boost/numeric/ublas/lu.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/multi_array.hpp>
 
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-#include <benchmark/benchmark.h>
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-auto determinant_v1(boost::numeric::ublas::matrix < double > const & matrix) -> double
+template < std::size_t D > void fill_v1(auto const & container, auto iterator)
 {
-    if (auto size = matrix.size1(); size > 1)
-    {
-        auto determinant = 0.0;
-    
-        for (auto i = 0uz; i < size; ++i)
-        {
-            boost::numeric::ublas::matrix < double > minor(size - 1, size - 1);
+	*iterator = std::size(container);
 
-            for (auto j = 1uz; j < size; ++j)
-            {
-                for (auto k = 0uz, l = 0uz; k < size; ++k)
-                {
-                    if (k != i) 
-                    {
-                        minor(j - 1, l++) = matrix(j, k);
-                    }
-                }
-            }
-
-            determinant += (i % 2 ? -1 : +1) * matrix(0, i) * determinant_v1(minor);
-        }
-
-        return determinant;
-    }
-    else
-    {
-        return matrix(0, 0);
-    }
+	if constexpr (D > 1)
+	{
+		fill_v1 < D - 1 > (*std::begin(container), ++iterator);
+	}
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-auto determinant_v2(boost::numeric::ublas::matrix < double > matrix)
+template < std::size_t D > void fill_v2(auto const & container, auto iterator)
 {
-    if (auto size = matrix.size1(); size > 1)
-    {    
-        boost::numeric::ublas::permutation_matrix <> permutation(size);
-
-        if (!boost::numeric::ublas::lu_factorize(matrix, permutation))
-        {
-            auto determinant = 1.0;
-
-            for (auto i = 0uz; i < size; ++i)
-            {
-                if (permutation(i) != i) 
-                {
-                    determinant *= -1;
-                }
-
-                determinant *= matrix(i, i);
-            }
-
-            return determinant;
-        }
-        else 
-        {
-            return 0.0;
-        }
-    }
-    else
-    {
-        return matrix(0, 0);
-    }
+	if constexpr (D > 1)
+	{
+		for (auto const & element : container) 
+		{
+			fill_v2 < D - 1 > (element, (iterator++)->begin());
+		}
+	}
+	else
+	{
+		for (auto const & element : container) 
+		{
+			*iterator++ = element;
+		}
+	}
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-auto make_matrix(std::size_t size)
+template < typename T, std::size_t D > auto make_array(auto const & container)
 {
-    boost::numeric::ublas::matrix < double > matrix(size, size);
+	std::vector < typename boost::multi_array < T, D > ::index > sizes(D, 0);
 
-    std::uniform_real_distribution distribution(0.0, 1.0);
+	fill_v1 < D > (container, std::begin(sizes));
+	
+	boost::multi_array < T, D > array(sizes);
+	
+	fill_v2 < D > (container, std::begin(array));
 
-    std::default_random_engine engine;
-
-    for (auto i = 0uz; i < matrix.size1(); ++i)
-    {
-        for (auto j = 0uz; j < matrix.size2(); ++j)
-        {
-            matrix(i, j) = distribution(engine);
-        }
-    }
-
-    return matrix;
+	return array;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
-
-void test_v1(benchmark::State & state)
-{
-    auto matrix = make_matrix(state.range(0));
-
-    for (auto element : state)
-    {
-		benchmark::DoNotOptimize(determinant_v1(matrix));
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-void test_v2(benchmark::State & state)
-{
-    auto matrix = make_matrix(state.range(0));
-    
-    for (auto element : state)
-    {
-		benchmark::DoNotOptimize(determinant_v2(matrix));
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-BENCHMARK(test_v1)->DenseRange(1, 9, 1);
-
-BENCHMARK(test_v2)->DenseRange(1, 9, 1);
-
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	benchmark::RunSpecifiedBenchmarks();
+	auto size = 5uz;
+
+//  ----------------------------------------------------------
+
+	std::vector < std::vector < std::vector < int > > > vector
+	(
+		size, std::vector < std::vector < int > > 
+		(
+			size, std::vector < int > 
+			(
+				size, 0
+			)
+		)
+	);
+
+//  ----------------------------------------------------------
+
+	for (auto i = 0uz; i < size; ++i)
+	{
+		for (auto j = 0uz; j < size; ++j)
+		{
+			for (auto k = 0uz; k < size; ++k)
+			{
+				vector[i][j][k] = k + 1;
+			}
+		}
+	}
+
+//  ----------------------------------------------------------
+
+	auto array = make_array < int, 3 > (vector);
+
+//  ----------------------------------------------------------
+
+	for (auto i = 0uz; i < size; ++i)
+	{
+		for (auto j = 0uz; j < size; ++j)
+		{
+			for (auto k = 0uz; k < size; ++k)
+			{
+				assert(array[i][j][k] == vector[i][j][k]);
+			}
+		}
+	}
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////

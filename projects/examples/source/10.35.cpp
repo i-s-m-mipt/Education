@@ -1,70 +1,77 @@
-//////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 // chapter : Data Structures
 
-//////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 // section : Nested Containers
 
-//////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-// content : Microbenchmarking
+// content : Numeric Arrays
 //
-// content : Row-Major and Column-Major Orders
+// content : Container std::valarray
+//
+// content : Wrapper std::slice
 
-//////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-// support : lscpu | grep L1d
+#include <cassert>
+#include <cstddef>
+#include <iterator>
+#include <valarray>
 
-//////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-#include <vector>
-
-//////////////////////////////////////////////
-
-#include <benchmark/benchmark.h>
-
-//////////////////////////////////////////////
-
-void test(benchmark::State & state)
+auto equal(std::valarray < int > const & x, std::valarray < int > const & y)
 {
-    auto size = 32'768uz / sizeof(int);
-
-    std::vector < std::vector < int > > vector
-    (
-        size, std::vector < int > (size, 0)
-    );
-
-    for (auto element : state)
+    if (auto size = std::size(x); size == std::size(y))
     {
         for (auto i = 0uz; i < size; ++i)
         {
-            for (auto j = 0uz; j < size; ++j)
+            if (x[i] != y[i])
             {
-                if (state.range(0) == 1)
-                {
-                    vector[i][j] = 1;
-                }
-                else
-                {
-                    vector[j][i] = 1;
-                }
+                return false;
             }
         }
-
-        benchmark::DoNotOptimize(vector);
     }
+    else
+    {
+        return false;
+    }
+
+    return true;
 }
 
-//////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-BENCHMARK(test)->Arg(1)->Arg(2);
-
-//////////////////////////////////////////////
-
-int main()
+int main() 
 {
-    benchmark::RunSpecifiedBenchmarks();
+    std::valarray < int > x = { 1, 2, 3, 4, 5 };
+    
+    std::valarray < int > y = { 1, 2, 3 };
+
+//  -------------------------------------------------------------------------
+
+    assert(equal(x[std::valarray < std::size_t > ({ 0, 1, 2 })], y));
+
+//  -------------------------------------------------------------------------
+
+    assert(equal(x[std::slice(0, 3, 1)], y));
+
+//  -------------------------------------------------------------------------
+
+    assert(equal(x[x < 4], y));
+
+//  -------------------------------------------------------------------------
+
+    assert(equal(x + y, std::valarray < int > ({ 2, 4, 6, 4, 5 })));
+
+    assert(equal(x - y, std::valarray < int > ({ 0, 0, 0, 4, 5 })));
+
+    assert(equal(x * y, std::valarray < int > ({ 1, 4, 9, 0, 0 })));
+
+//  assert(equal(x / y, std::valarray < int > ({ 1, 1, 1, 0, 0 }))); // error
 }
 
-//////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
