@@ -83,7 +83,7 @@ auto find(std::vector < int > const & vector_1, std::vector < int > const & vect
 
 int main()
 {
-	assert(find({ 1, 2, 3, 4, 5 }, { 1, 2, 3 }) == std::vector < int > ({ 1, 2, 3 }));
+	assert(find({ 1, 2, 3, 4, 5 }, { 1, 3, 5 }) == std::vector < int > ({ 1, 3, 5 }));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
