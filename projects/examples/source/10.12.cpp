@@ -52,12 +52,12 @@ private :
 
 void test_v1(benchmark::State & state) 
 {
+    auto const size = 100'000uz;
+
+    std::array < int, size > array = {};
+
     for (auto element : state)
     {
-        auto const size = 100'000uz;
-
-        std::array < int, size > array = {};
-
         for (auto i = 0uz; i < size; ++i)
         {
             array[i] = size - i;
@@ -77,12 +77,12 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state) 
 {
+    auto size = 100'000uz;
+
+    std::vector < int > vector(size, 0);
+
     for (auto element : state)
     {
-        auto size = 100'000uz;
-
-        std::vector < int > vector(size, 0);
-
         for (auto i = 0uz; i < size; ++i)
         {
             vector[i] = size - i;
@@ -102,12 +102,12 @@ void test_v2(benchmark::State & state)
 
 void test_v3(benchmark::State & state) 
 {
+    auto size = 100'000uz;
+
+    std::deque < int > deque(size, 0);
+
     for (auto element : state)
     {
-        auto size = 100'000uz;
-
-        std::deque < int > deque(size, 0);
-
         for (auto i = 0uz; i < size; ++i)
         {
             deque[i] = size - i;
@@ -127,12 +127,12 @@ void test_v3(benchmark::State & state)
 
 void test_v4(benchmark::State & state) 
 {
+    auto size = 100'000uz;
+
+    std::list < int > list(size, 0);
+
     for (auto element : state)
     {
-        auto size = 100'000uz;
-
-        std::list < int > list(size, 0);
-
         for (auto x = 0; auto & element : list)
         {
             element = size + 1 - ++x;
@@ -152,12 +152,12 @@ void test_v4(benchmark::State & state)
 
 void test_v5(benchmark::State & state) 
 {
+    auto size = 100'000uz;
+
+    std::forward_list < int > list(size, 0);
+
     for (auto element : state)
     {
-        auto size = 100'000uz;
-
-        std::forward_list < int > list(size, 0);
-
         for (auto x = 0; auto & element : list)
         {
             element = size + 1 - ++x;
