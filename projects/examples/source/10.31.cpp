@@ -10,11 +10,13 @@
 
 // content : Microbenchmarking
 //
+// content : Tool lscpu
+//
 // content : Row-Major and Column-Major Orders
 
 //////////////////////////////////////////////
 
-// support : lscpu | grep L1d
+// support : lscpu
 
 //////////////////////////////////////////////
 
