@@ -128,7 +128,9 @@ void test_v1(benchmark::State & state)
 
     for (auto element : state)
     {
-		benchmark::DoNotOptimize(determinant_v1(matrix));
+        auto determinant = determinant_v1(matrix);
+
+		benchmark::DoNotOptimize(determinant);
     }
 }
 
@@ -140,7 +142,9 @@ void test_v2(benchmark::State & state)
     
     for (auto element : state)
     {
-		benchmark::DoNotOptimize(determinant_v2(matrix));
+        auto determinant = determinant_v2(matrix);
+
+		benchmark::DoNotOptimize(determinant);
     }
 }
 

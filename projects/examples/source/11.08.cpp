@@ -27,14 +27,16 @@
 
 void test(benchmark::State & state)
 {
+	auto volatile x = 1, y = 2;
+
 	auto function_1 = [](auto x, auto y) __attribute__((noinline)) { return x + y; };
 
 	std::function < int(int, int) > function_2 = function_1;
 
-	auto volatile x = 1, y = 2, z = 0;
-
     for (auto element : state)
     {
+		auto z = 0;
+
         if (state.range(0) == 1) { z = function_1(x, y); }
 
 		if (state.range(0) == 2) { z = function_2(x, y); }

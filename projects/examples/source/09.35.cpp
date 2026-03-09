@@ -287,6 +287,8 @@ void test_v1(benchmark::State & state)
         { 
             allocator.deallocate(vector[i]);
         }
+
+        benchmark::DoNotOptimize(vector);
 	}
 }
 
@@ -327,6 +329,8 @@ void test_v2(benchmark::State & state)
         {
             operator delete(vector[i].first, vector[i].second);
         }
+
+        benchmark::DoNotOptimize(vector);
 	}
 }
 

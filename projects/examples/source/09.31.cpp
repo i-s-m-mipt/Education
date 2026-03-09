@@ -140,6 +140,8 @@ void test_v1(benchmark::State & state)
 		{
 			allocator.deallocate(vector[std::size(vector) - 1 - i]);
 		}
+
+		benchmark::DoNotOptimize(vector);
 	}
 }
 
@@ -162,6 +164,8 @@ void test_v2(benchmark::State & state)
 		{
 			operator delete(vector[std::size(vector) - 1 - i], mb);
 		}
+
+		benchmark::DoNotOptimize(vector);
 	}
 }
 

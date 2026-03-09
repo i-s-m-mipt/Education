@@ -84,14 +84,18 @@ void test_v1(benchmark::State & state)
 {
 	auto kb = 1'024uz;
 
+	std::vector < void * > vector(kb, nullptr);
+
 	for (auto element : state)
 	{
 		Allocator < 1'024 * 1'024 > allocator;
 
 		for (auto i = 0uz; i < kb; ++i)
 		{
-			benchmark::DoNotOptimize(allocator.allocate(kb));
+			vector[i] = allocator.allocate(kb);
 		}
+
+		benchmark::DoNotOptimize(vector);
 	}
 }
 
@@ -114,6 +118,8 @@ void test_v2(benchmark::State & state)
 		{
 			operator delete(vector[i]);
 		}
+
+		benchmark::DoNotOptimize(vector);
 	}
 }
 

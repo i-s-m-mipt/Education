@@ -39,11 +39,11 @@ void test(benchmark::State & state)
         {
             if (distribution(engine) <= state.range(0))
             {
-                x += std::pow(std::cos(i), 2);
+                x += std::pow(std::sin(i), 2);
             }
             else
             {
-                x += std::pow(std::sin(i), 2);
+                x += std::pow(std::cos(i), 2);
             }
         }
 
