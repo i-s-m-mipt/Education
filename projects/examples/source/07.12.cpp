@@ -14,6 +14,8 @@
 //
 // content : Function Try Blocks
 //
+// content : Non-Throwing Functions
+//
 // content : Function Specifier noexcept
 //
 // content : Operator noexcept

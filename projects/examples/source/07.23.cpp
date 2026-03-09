@@ -127,7 +127,9 @@ void test_v5(benchmark::State & state)
 
     for (auto element : state) 
     {
-        benchmark::DoNotOptimize(std::ranges::lower_bound(vector, 0));
+        auto iterator = std::ranges::lower_bound(vector, 0);
+
+        benchmark::DoNotOptimize(iterator);
     }
 
     state.SetComplexityN(state.range(0));

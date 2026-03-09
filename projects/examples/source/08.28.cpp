@@ -10,7 +10,7 @@
 
 // content : Random Numbers
 //
-// content : Non-deterministic Entropy Sources
+// content : Non-Deterministic Entropy Sources
 //
 // content : Utility std::random_device
 //
