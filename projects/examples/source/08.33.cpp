@@ -27,6 +27,8 @@
 
 void test(benchmark::State & state) 
 {
+    auto argument = state.range(0);
+
     std::uniform_int_distribution distribution(1, 1'000);
 
     std::default_random_engine engine;
@@ -37,7 +39,7 @@ void test(benchmark::State & state)
 
         for (auto i = 0uz; i < 1'000; ++i)
         {
-            if (distribution(engine) <= state.range(0))
+            if (distribution(engine) <= argument)
             {
                 x += std::pow(std::sin(i), 2);
             }

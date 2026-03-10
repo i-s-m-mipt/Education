@@ -107,15 +107,17 @@ private :
 
 void test(benchmark::State & state)
 {
+    auto argument = state.range(0);
+
     auto concurrency = std::max(std::thread::hardware_concurrency(), 2u);
 
     std::vector < std::future < double > > futures(concurrency);
 
     std::shared_ptr < Task > task;
     
-    if (state.range(0) == 1) { task = std::make_shared < Task_v1 > (); }
+    if (argument == 1) { task = std::make_shared < Task_v1 > (); }
 
-    if (state.range(0) == 2) { task = std::make_shared < Task_v2 > (); }
+    if (argument == 2) { task = std::make_shared < Task_v2 > (); }
 
     std::barrier <> barrier(concurrency + 1);
 

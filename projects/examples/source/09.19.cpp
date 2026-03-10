@@ -47,6 +47,8 @@ struct alignas(8) Entity_v4 { std::int8_t x = 0; };
 
 void test(benchmark::State & state)
 {
+    auto argument = state.range(0);
+
 	auto size = 1'000'000uz;
 
 	std::vector < Entity_v3 > entities_v3(size);
@@ -57,9 +59,9 @@ void test(benchmark::State & state)
     {
 		for (auto i = 0uz; i < size; ++i)
         {
-            if (state.range(0) == 1) { entities_v3[i].x = 1; }
+            if (argument == 1) { entities_v3[i].x = 1; }
 
-            if (state.range(0) == 2) { entities_v4[i].x = 1; }
+            if (argument == 2) { entities_v4[i].x = 1; }
         }
 
         benchmark::DoNotOptimize(entities_v3);

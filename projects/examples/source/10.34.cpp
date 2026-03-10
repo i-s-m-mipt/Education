@@ -124,7 +124,9 @@ auto make_matrix(std::size_t size)
 
 void test_v1(benchmark::State & state)
 {
-    auto matrix = make_matrix(state.range(0));
+    auto argument = state.range(0);
+
+    auto matrix = make_matrix(argument);
 
     for (auto element : state)
     {
@@ -138,7 +140,9 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state)
 {
-    auto matrix = make_matrix(state.range(0));
+    auto argument = state.range(0);
+
+    auto matrix = make_matrix(argument);
     
     for (auto element : state)
     {

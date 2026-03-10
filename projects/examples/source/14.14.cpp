@@ -25,13 +25,15 @@ void calculate(double & x)
 
 void test(benchmark::State & state)
 {
+    auto argument = state.range(0);
+
     std::vector < double > vector(1'000'000, 1.0);
 
     auto begin = std::begin(vector), end = std::end(vector);
 
     for (auto element : state)
     {
-        switch (state.range(0))
+        switch (argument)
         {
             case 1 : { std::for_each(std::execution::seq,       begin, end, calculate); break; }
 

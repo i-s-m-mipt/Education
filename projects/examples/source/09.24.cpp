@@ -22,9 +22,11 @@
 
 void test(benchmark::State & state)
 {
+    auto argument = state.range(0);
+
     for (auto element : state)
     {
-        operator delete(operator new(state.range(0)), state.range(0));
+        operator delete(operator new(argument), argument);
     }
 }
 

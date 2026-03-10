@@ -94,9 +94,11 @@ void test_v2(benchmark::State & state)
 
 void test_v3(benchmark::State & state) 
 {
+    auto argument = state.range(0);
+
     for (auto element : state) 
     {
-        std::vector < int > vector(state.range(0), 0);
+        std::vector < int > vector(argument, 0);
 
         benchmark::DoNotOptimize(vector);
     }
@@ -106,11 +108,15 @@ void test_v3(benchmark::State & state)
 
 void test_v4(benchmark::State & state)
 {
+    auto argument_1 = state.range(0);
+    
+    auto argument_2 = state.range(1);
+
     for (auto element : state) 
     {
         std::vector < std::vector < int > > vector
         (
-            state.range(0), std::vector < int > (state.range(1), 0)
+            argument_1, std::vector < int > (argument_2, 0)
         );
 
         benchmark::DoNotOptimize(vector);
@@ -121,7 +127,9 @@ void test_v4(benchmark::State & state)
 
 void test_v5(benchmark::State & state)
 {
-    std::vector < int > vector(state.range(0), 0);
+    auto argument = state.range(0);
+
+    std::vector < int > vector(argument, 0);
 
     std::ranges::iota(vector, 1);
 
@@ -132,7 +140,7 @@ void test_v5(benchmark::State & state)
         benchmark::DoNotOptimize(iterator);
     }
 
-    state.SetComplexityN(state.range(0));
+    state.SetComplexityN(argument);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
