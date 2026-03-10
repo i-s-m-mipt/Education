@@ -16,15 +16,15 @@ struct Entity
 
 int main()
 {
-    std::vector < Entity > entities = { { 1 }, { 2 }, { 3 }, { 4 }, { 5 } };
+    std::vector < Entity > entities = { { 5 }, { 4 }, { 3 }, { 2 }, { 1 } };
 
 //  ------------------------------------------------------------------------
 
-	std::ranges::sort(entities, std::greater(), &Entity::x);
+	std::ranges::sort(entities, std::less(), &Entity::x);
 
 //  ------------------------------------------------------------------------
 
-	assert(std::ranges::is_sorted(entities, std::greater(), &Entity::x));
+	assert(std::ranges::is_sorted(entities, std::less(), &Entity::x));
 }
 
 ////////////////////////////////////////////////////////////////////////////

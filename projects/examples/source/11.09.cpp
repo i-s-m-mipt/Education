@@ -21,11 +21,11 @@
 
 int main()
 {
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+	std::vector < int > vector = { 5, 4, 3, 2, 1 };
 
 //  -----------------------------------------------------------
 
-	auto lambda = [](auto lhs, auto rhs){ return lhs > rhs; };
+	auto lambda = [](auto lhs, auto rhs){ return lhs < rhs; };
 
 //  -----------------------------------------------------------
 
@@ -37,7 +37,7 @@ int main()
 
 //  -----------------------------------------------------------
 
-	std::set < int, decltype(lambda) > set = { 1, 2, 3, 4, 5 };
+	std::set < int, decltype(lambda) > set = { 5, 4, 3, 2, 1 };
 
 //  -----------------------------------------------------------
 

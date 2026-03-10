@@ -16,9 +16,11 @@
 //
 // content : Amortized Algorithmic Complexity
 //
-// content : Algorithm std::ranges::is_sorted
+// content : Algorithm std::ranges::sort
 //
 // content : Policy std::less
+//
+// content : Algorithm std::ranges::is_sorted
 
 ////////////////////////////////////////////////////////
 
@@ -31,11 +33,15 @@
 
 int main()
 {
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+	std::vector < int > vector = { 5, 4, 3, 2, 1 };
 
 //  ----------------------------------------------------
 
-	vector.push_back(vector.back() + 1);
+	vector.push_back(1);
+
+//  ----------------------------------------------------
+
+	std::ranges::sort(vector, std::less());
 
 //  ----------------------------------------------------
 
