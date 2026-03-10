@@ -17,6 +17,8 @@
 // content : Containers std::set and std::multiset
 //
 // content : Strict Weak Ordering
+//
+// content : Irreflexivity, Transitivity and Equivalence
 
 /////////////////////////////////////////////////////////////////
 
