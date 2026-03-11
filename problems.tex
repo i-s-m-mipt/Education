@@ -302,7 +302,7 @@
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 23.70in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 26.90in\enlargethispage{100in}
 
 \section{03. Object\,-\,Oriented Programming}
 
@@ -380,8 +380,10 @@
 
 \bigskip
 
-|
+Реализуйте систему отложенного глубокого копирования строки при выполнении операции записи. Реализуйте класс \lstinline{String} для представления строки. Реализуйте структуру \lstinline{Data} для представления хранилища строки с подсчетом ссылок как приватную вложенную структуру в классе \lstinline{String}. Реализуйте в структуре \lstinline{Data} стандартную строку \lstinline{std::string} для хранения символов строки и поле стандартного типа \lstinline{std::size_t} для хранения значения счетчика ссылок с начальным значением единица. Реализуйте в классе \lstinline{String} приватный указатель типа \lstinline{Data *} для хранения адреса хранилища строки. Реализуйте в классе \lstinline{String} приватную функцию-член \lstinline{copy} для создания копии хранилища строки для текущего экземпляра класса \lstinline{String}, если значение счетчика ссылок оригинального хранилища строки больше единицы. Декрементируйте значение счетчика ссылок оригинального хранилища строки при создании копии. Реализуйте в классе \lstinline{String} пользовательский и копирующий конструкторы, деструктор и копирующий оператор присваивания. Инкрементируйте значение счетчика ссылок нового хранилища строки в копирующем конструкторе и копирующем операторе присваивания. Декрементируйте значение счетчика ссылок старого хранилища строки в деструкторе и копирующем операторе присваивания. Создавайте новое хранилище строки в пользовательском конструкторе. Уничтожайте старое хранилище строки при обнулении значения его счетчика ссылок. Используйте операторы \lstinline{new} и \lstinline{delete} для динамического выделения и освобождения памяти хранилищ строк. Реализуйте в классе \lstinline{String} публичные функции-члены \lstinline{get} и \lstinline{set} для выполнения операций чтения и записи соответственно. Используйте функцию-член \lstinline{copy} класса 
 
+\lstinline{String} в функции-члене \lstinline{set} класса \lstinline{String} для глубокого копирования перед выполнением операции записи.
+ 
 \bigskip
 
 {\large \textbf{03.09} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/03.32.cpp}{03.32}\,)} \texttt{//} M. Bancila, The Modern C\texttt{++} Challenge}
@@ -708,7 +710,7 @@ Method, для управления поведением игровых объе
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 20.00in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 21.50in\enlargethispage{100in}
 
 \section{09. Memory Management}
 
@@ -790,29 +792,21 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-|
+Доработайте примеры \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.29.cpp}{\texttt{09.29}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.31.cpp}{\texttt{09.31}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.33.cpp}{\texttt{09.33}} и \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.35.cpp}{\texttt{09.35}} таким образом, чтобы реализации использовали наследование интерфейсов от общего абстрактного базового класса вместо дублирования интерфейсов в отдельных самостоятельных классах. Реализуйте абстрактный базовый класс \lstinline{Allocator} для представления интерфейса аллокаторов. Реализуйте в классе \lstinline{Allocator} виртуальный деструктор и публичные чисто виртуальные функции-члены \lstinline{allocate} и \lstinline{deallocate} для выделения и освобождения памяти соответственно. Реализуйте в классе \lstinline{Allocator} защищенный шаблон функции-члена \lstinline{get} для получения указателя на объект стандартного типа \lstinline{std::byte} или пользовательских типов \lstinline{Header} или \lstinline{Node}. Реализуйте четыре производных класса аллокаторов для представления различных методов выделения и освобождения памяти, которые являются наследниками интерфейса класса \lstinline{Allocator}. Продемонстрируйте использование полиморфных аллокаторов.
 
-\newpage\thispagestyle{empty}\pdfpageheight = 10.00in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 7.80in\enlargethispage{100in}
 
 \section{10. Data Structures}
 
-{\large \textbf{10.01} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.04.cpp}{10.04}\,)}}
+{\large \textbf{10.01} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.07.cpp}{10.07}\,)}}
 
 \bigskip
 
-Исследуйте систему автоматического увеличения емкости памяти стандартного контейнера \lstinline{std::vector}. Определите коэффициент умножения емкости памяти контейнера в случае нехватки свободных ячеек памяти. Реализуйте тесты для отслеживания изменений емкости памяти контейнера в процессе вставки новых элементов.
+Исследуйте систему автоматического увеличения емкости памяти стандартного контейнера \lstinline{std::vector}. Определите коэффициент умножения емкости памяти контейнера в случае нехватки свободных ячеек памяти. Реализуйте тесты для отслеживания изменений емкости памяти контейнера в процессе вставки новых элементов. Исследуйте систему автоматического увеличения емкости памяти стандартного контейнера \lstinline{std::deque}. Определите размер страниц непрерывной памяти, используемых для хранения групп смежных элементов контейнера. Реализуйте тесты для отслеживания адресов элементов контейнера в процессе вставки новых элементов.
 
 \bigskip
 
-{\large \textbf{10.02} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.07.cpp}{10.07}\,)}}
-
-\bigskip
-
-Исследуйте систему автоматического увеличения емкости памяти стандартного контейнера \lstinline{std::deque}. Определите размер страниц непрерывной памяти, используемых для хранения групп смежных элементов контейнера. Реализуйте тесты для отслеживания адресов элементов контейнера в процессе вставки новых элементов.
-
-\bigskip
-
-{\large \textbf{10.03} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.17.cpp}{10.17}\,)}}
+{\large \textbf{10.02} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.17.cpp}{10.17}\,)}}
 
 \bigskip
 
@@ -820,7 +814,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{10.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.29.cpp}{10.29}\,)} \texttt{//} M. Bancila, The Modern C\texttt{++} Challenge}
+{\large \textbf{10.03} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.29.cpp}{10.29}\,)} \texttt{//} M. Bancila, The Modern C\texttt{++} Challenge}
 
 \bigskip
 
@@ -828,19 +822,19 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{10.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.30.cpp}{10.30}\,)}}
-
-\bigskip
-
-Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.30.cpp}{\texttt{10.30}} таким образом, чтобы реализация использовала алгоритм поиска непрерывной наибольшей общей подстроки вместо алгоритма поиска составной наибольшей общей подпоследовательности.
-
-\bigskip
-
-{\large \textbf{10.06} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.34.cpp}{10.34}\,)}}
+{\large \textbf{10.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.34.cpp}{10.34}\,)}}
 
 \bigskip
 
 Реализуйте алгоритм вычисления N\,-\,ого числа ряда Фибоначчи на основе метода матричной экспоненциации. Используйте тип \lstinline{boost::numeric::ublas::matrix} для осуществления вычислений с матрицами. Реализуйте алгоритм быстрого возведения начальной матрицы в степень N. Используйте тип \lstinline{usigned long long int} для значений элементов матриц. Обоснуйте алгоритмическую сложность реализованного алгоритма и сравните ее с алгоритмической сложностью других известных Вам алгоритмов вычисления N\,-\,ого числа ряда Фибоначчи.
+
+\bigskip
+
+{\large \textbf{10.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.45.cpp}{10.45}\,)}}
+
+\bigskip
+
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.45.cpp}{\texttt{10.45}} таким образом, чтобы пользователь мог исследовать девять хэш-функций, приведенных в данной \href{https://www.partow.net/programming/hashfunctions/#AvailableHashFunctions}{статье}. Постройте графики зависимости количества возникающих коллизий от количества хэшируемых строк. Обоснуйте форму полученных зависимостей. Определите лучшие и худшие хэш-функции данного набора. Выполните сборку решения с флагами -O3 и -m32 из-за особенностей некоторых хэш-функций.
 
 
 
@@ -852,7 +846,9 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-Реализуйте функцию, которая возвращает указатель на саму себя так, чтобы можно было написать следующее: \lstinline{Wrapper function = test(); (*function)();} Используйте класс с перегруженным оператором приведения.
+Реализуйте функцию, которая возвращает указатель на себя таким образом, чтобы следующий код работал: \lstinline{Wrapper function = test(); (*function)();} Реализуйте класс \lstinline{Wrapper} для представления оболочки вок- 
+
+руг указателя на функцию \lstinline{test}. Реализуйте в классе \lstinline{Wrapper} перегруженный оператор преобразования типа.
 
 \bigskip
 
@@ -860,15 +856,15 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-Сравните среднее время вызова лямбда\,-\,функции, сохраненной в переменной с местозаменителем типа \lstinline{auto}, и среднее время вызова той же самой лямбда\,-\,функции, сохраненной в стандартной оболочке \lstinline{std::function}.
+Сравните среднее время вызова свободной функции, нестатической функции-члена класса, переопределенной виртуальной функции-члена класса, функционального объекта, лямбда\,-\,функции, сохраненной в переменной с местозаменителем типа \lstinline{auto} и лямбда\,-\,функции, сохраненной в стандартной оболочке \lstinline{std::function}. Реализуйте одинаковые условия вызова во всех случаях. Используйте нестандартный атрибут \lstinline{noinline} для предотвращения встраивания функций. Используйте микробенчмарки на основе библиотеки \href{https://github.com/google/benchmark}{Google.Benchmark}.
 
 \bigskip
 
-{\large \textbf{11.03} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/11.27.cpp}{11.27}\,)}}
+{\large \textbf{11.03} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/11.09.cpp}{11.09}\,)}}
 
 \bigskip
 
-Реализуйте алгоритм решения задачи коммивояжера для полносвязного графа, содержащего 10 вершин. Используйте тип \lstinline{int} для значений весов ребер графа. Инициализируйте веса всех ребер графа случайными значениями от 1 до 10. Используйте стандартный двумерный контейнер \lstinline{std::vector} в качестве симметричной относительно главной диагонали матрицы инцидентности для хранения весов ребер графа. Используйте стандартный алгоритм \lstinline{std::next_permutation} для перебора всех перестановок последовательности обхода вершин, включающей в себя каждую вершину графа только один раз. Учтите, что обход вершин графа должен завершаться в начальной вершине. Используйте стандартный поток \lstinline{std::cout} для вывода через терминал матрицы инцидентности, оптимальной последовательности обхода вершин, а также ее суммарной стоимости.
+Доработайте Ваше предыдущее решение задачи 09.04 таким образом, чтобы пользователь мог передавать собственный компаратор в алгоритм сортировки для сравнения элементов. Используйте шаблоны функций. Продемонстрируйте передачу в алгоритм сортировки пользовательской свободной функцией, стандартного функционального объекта \lstinline{std::less} и пользовательской лямбда-функции в роли собственных компараторов. 
 
 
 
