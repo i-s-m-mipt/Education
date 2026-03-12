@@ -36,22 +36,42 @@ public :
     {
         auto node = std::make_shared < Node > (std::make_shared < T > (x), nullptr);
 
-        auto expected = m_head.load();
+        auto expected = m_head.load(std::memory_order::relaxed);
 
         do
         {
             node->next = expected;
         }
-        while (!m_head.compare_exchange_weak(expected, node));
+        while 
+        (
+            !m_head.compare_exchange_weak
+            (
+                expected, node, 
+
+                std::memory_order::release, 
+
+                std::memory_order::relaxed
+            )
+        );
     }
 
 //  --------------------------------------------------------------------------------
 
     auto top_and_pop()
     {
-        auto head = m_head.load();
+        auto head = m_head.load(std::memory_order::relaxed);
 
-        while (head && !m_head.compare_exchange_weak(head, head->next.load()));
+        while 
+        (
+            head && !m_head.compare_exchange_weak
+            (
+                head, head->next.load(std::memory_order::relaxed),
+
+                std::memory_order::acquire,
+
+                std::memory_order::relaxed
+            )
+        );
 
         if (head)
         {

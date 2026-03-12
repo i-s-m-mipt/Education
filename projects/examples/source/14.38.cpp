@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 #include <atomic>
 #include <cstddef>
@@ -7,11 +7,11 @@
 #include <thread>
 #include <tuple>
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 #include <boost/noncopyable.hpp>
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 template < typename T > class Stack : private boost::noncopyable
 {
@@ -31,18 +31,28 @@ public :
         while (top_and_pop_v3());
     }
 
-//  --------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
     void push(T x)
     {
         auto node = new Node(std::make_shared < T > (x), nullptr);
 
-        node->next = m_head.load();
+        node->next = m_head.load(std::memory_order::relaxed);
 
-        while (!m_head.compare_exchange_weak(node->next, node));
+        while
+        (
+            !m_head.compare_exchange_weak
+            (
+                node->next, node, 
+
+                std::memory_order::release, 
+
+                std::memory_order::relaxed
+            )
+        );
     }
 
-//  --------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
 //  void top_and_pop_v1(T & x) // error
 //	{
@@ -53,7 +63,7 @@ public :
 //		x = head->x;
 //	}
 
-//  --------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
 //  auto top_and_pop_v2() // error
 //  {
@@ -64,15 +74,25 @@ public :
 //      return head ? head->x : std::shared_ptr < T > ();
 //  }
 
-//  --------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
     auto top_and_pop_v3()
     {
-        ++m_counter;
+        m_counter.fetch_add(1, std::memory_order::relaxed);
 
-        auto head = m_head.load();
+        auto head = m_head.load(std::memory_order::relaxed);
 
-        while (head && !m_head.compare_exchange_weak(head, head->next));
+        while 
+        (
+            head && !m_head.compare_exchange_weak
+            (
+                head, head->next,
+
+                std::memory_order::acquire,
+
+                std::memory_order::relaxed
+            )
+        );
 
         std::shared_ptr < T > x;
 
@@ -90,11 +110,11 @@ private :
 
     void try_clear(Node * head)
     {
-        if (m_counter == 1)
+        if (m_counter.load(std::memory_order::relaxed) == 1)
         {
             auto tail = m_tail.exchange(nullptr);
 
-            if (!--m_counter)
+            if (!(m_counter.fetch_sub(1, std::memory_order::relaxed) - 1))
             {
                 clear(tail);
             }
@@ -109,11 +129,11 @@ private :
         {
             save_node(head);
 
-            --m_counter;
+            m_counter.fetch_sub(1, std::memory_order::relaxed);
         }
     }
 
-//  --------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
     void clear(Node * nodes) const
     {
@@ -127,7 +147,7 @@ private :
         }
     }
 
-//  --------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
     void save_nodes(Node * nodes)
     {
@@ -141,7 +161,7 @@ private :
         save_nodes(nodes, end);
     }
 
-//  --------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
     void save_nodes(Node * begin, Node * end)
     {
@@ -150,28 +170,28 @@ private :
         while (!m_tail.compare_exchange_weak(end->next, begin));
     }
 
-//  --------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
     void save_node(Node * node)
     {
         save_nodes(node, node);
     }
 
-//  --------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
     std::atomic < Node * > m_head = nullptr, m_tail = nullptr;
 
     std::atomic < std::size_t > m_counter = 0;
 };
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 void top_and_pop(Stack < int > & stack)
 {
     std::ignore = stack.top_and_pop_v3();
 }
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -192,4 +212,4 @@ int main()
     }
 }
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
