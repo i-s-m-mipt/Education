@@ -423,6 +423,7 @@ set(debug
     14.36
     14.37
     14.38
+    14.39
 )
 
 #############################################################################################
@@ -618,6 +619,8 @@ target_link_libraries      (10.45 PRIVATE Python::Python)
 add_executable             (14.29 source/14.29.cpp)
 
 target_compile_options     (14.29 PRIVATE -Wall -Wextra -Wpedantic -O3)
+
+target_link_libraries      (14.29 PRIVATE benchmark::benchmark)
 
 target_link_libraries      (14.29 PRIVATE TBB::tbb)
 
