@@ -59,9 +59,12 @@ void test(benchmark::State & state)
     {
 		for (auto i = 0uz; i < size; ++i)
         {
-            if (argument == 1) { entities_v3[i].x = 1; }
+            switch (argument)
+            {
+                case 1 : { entities_v3[i].x = 1; break; }
 
-            if (argument == 2) { entities_v4[i].x = 1; }
+                case 2 : { entities_v4[i].x = 1; break; }
+            }
         }
 
         benchmark::DoNotOptimize(entities_v3);

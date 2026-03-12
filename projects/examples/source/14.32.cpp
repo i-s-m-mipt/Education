@@ -138,10 +138,13 @@ void test(benchmark::State & state)
     std::vector < std::future < double > > futures(concurrency);
 
     std::shared_ptr < Task > task;
-    
-    if (argument == 1) { task = std::make_shared < Task_v1 > (concurrency); }
 
-    if (argument == 2) { task = std::make_shared < Task_v2 > (concurrency); }
+    switch (argument)
+    {
+        case 1 : { task = std::make_shared < Task_v1 > (concurrency); break; }
+
+        case 2 : { task = std::make_shared < Task_v2 > (concurrency); break; }
+    }
 
     std::barrier <> barrier(concurrency + 1);
 

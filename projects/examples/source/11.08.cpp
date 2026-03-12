@@ -39,9 +39,12 @@ void test(benchmark::State & state)
     {
 		auto z = 0;
 
-        if (argument == 1) { z = function_1(x, y); }
+		switch (argument)
+		{
+			case 1 : { z = function_1(x, y); break; }
 
-		if (argument == 2) { z = function_2(x, y); }
+			case 2 : { z = function_2(x, y); break; }
+		}
 
 		benchmark::DoNotOptimize(z);
     }
