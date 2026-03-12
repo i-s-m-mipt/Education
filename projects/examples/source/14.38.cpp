@@ -1,6 +1,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 #include <atomic>
+#include <cstddef>
 #include <functional>
 #include <memory>
 #include <thread>
@@ -25,9 +26,16 @@ private :
 
 public :
 
+   ~Stack()
+    {
+        while (top_and_pop_v3());
+    }
+
+//  --------------------------------------------------------------------
+
     void push(T x)
     {
-        Node * node = new Node(std::make_shared < T > (x), nullptr);
+        auto node = new Node(std::make_shared < T > (x), nullptr);
 
         node->next = m_head.load();
 
@@ -38,7 +46,7 @@ public :
 
 //  void top_and_pop_v1(T & x) // error
 //	{
-//		Node * head = m_head.load();
+//		auto head = m_head.load();
 //
 //		while (!m_head.compare_exchange_weak(head, head->next));
 //
@@ -49,7 +57,7 @@ public :
 
 //  auto top_and_pop_v2() // error
 //  {
-//      Node * head = m_head.load();
+//      auto head = m_head.load();
 //
 //      while (head && !m_head.compare_exchange_weak(head, head->next));
 //
@@ -62,7 +70,7 @@ public :
     {
         ++m_counter;
 
-        Node * head = m_head.load();
+        auto head = m_head.load();
 
         while (head && !m_head.compare_exchange_weak(head, head->next));
 
@@ -84,7 +92,7 @@ private :
     {
         if (m_counter == 1)
         {
-            Node * tail = m_tail.exchange(nullptr);
+            auto tail = m_tail.exchange(nullptr);
 
             if (!--m_counter)
             {
