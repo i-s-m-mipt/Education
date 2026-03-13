@@ -1,45 +1,53 @@
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 // chapter : Number Processing
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 // section : Chrono Management
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-// content : Time Zones
+// content : Calendars
 //
-// content : Type std::chrono::zoned_time
+// content : Type std::chrono::year_month_day
+//
+// content : Type std::chrono::year_month_weekday
+//
+// content : Type std::chrono::hh_mm_ss
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 #include <chrono>
 #include <print>
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 int main()
 {
-	auto now_1 = std::chrono::system_clock::now();
+    auto now_1 = std::chrono::system_clock::now();
 
-//  ------------------------------------------------------
+    auto now_2 = std::chrono::floor < std::chrono::days > (now_1);
 
-	std::chrono::zoned_time now_2("Europe/London", now_1);
+//  --------------------------------------------------------------
 
-	std::chrono::zoned_time now_3("Europe/Berlin", now_1);
+    std::chrono::year_month_day date(now_2);
 
-	std::chrono::zoned_time now_4("Europe/Moscow", now_1);
+//  --------------------------------------------------------------
 
-//  ------------------------------------------------------
+    auto wday = std::chrono::year_month_weekday(now_2).weekday();
 
-	std::print("main : now_1 = {}\n", now_1);
+//  --------------------------------------------------------------
 
-	std::print("main : now_2 = {}\n", now_2);
+	std::chrono::hh_mm_ss time(now_1 - now_2);
 
-	std::print("main : now_3 = {}\n", now_3);
+//  --------------------------------------------------------------
 
-	std::print("main : now_4 = {}\n", now_4);
+    std::print("main : date = {}\n", date);
+
+    std::print("main : wday = {}\n", wday);
+
+	std::print("main : time = {}\n", time);
 }
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
