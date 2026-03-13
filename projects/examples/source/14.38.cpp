@@ -69,9 +69,9 @@ public :
 //  {
 //      auto head = m_head.load();
 //
-//      while (!m_head.compare_exchange_weak(head, head->next));
+//      while (head && !m_head.compare_exchange_weak(head, head->next));
 //
-//      return head->x;
+//      return head ? head->x : std::shared_ptr < T > ();
 //  }
 
 //  ----------------------------------------------------------------------
@@ -82,9 +82,9 @@ public :
 
         auto head = m_head.load(std::memory_order::relaxed);
 
-        while
+        while 
         (
-            !m_head.compare_exchange_weak
+            head && !m_head.compare_exchange_weak
             (
                 head, head->next,
 
@@ -96,7 +96,10 @@ public :
 
         std::shared_ptr < T > x;
 
-        x.swap(head->x);
+        if (head)
+        {
+            x.swap(head->x);
+        }
 
         try_clear(head);
 

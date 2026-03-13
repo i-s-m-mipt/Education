@@ -61,9 +61,9 @@ public :
     {
         auto head = m_head.load(std::memory_order::relaxed);
 
-        while
+        while 
         (
-            !m_head.compare_exchange_weak
+            head && !m_head.compare_exchange_weak
             (
                 head, head->next.load(std::memory_order::relaxed),
 
@@ -73,9 +73,14 @@ public :
             )
         );
 
-        head->next = std::shared_ptr < Node > ();
+        if (head)
+        {
+            head->next = std::shared_ptr < Node > ();
 
-        return head->x;
+            return head->x;
+        }
+
+        return std::shared_ptr < T > ();
     }
 
 private :
