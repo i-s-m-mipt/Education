@@ -32,6 +32,13 @@ template < typename T > class Stack_v1 : private boost::noncopyable
 {
 public :
 
+    Stack_v1(std::size_t capacity)
+    {
+        m_vector.reserve(capacity);
+    }
+
+//  --------------------------------------------------
+
     void push(T x)
     {
         std::scoped_lock < std::mutex > lock(m_mutex);
@@ -426,7 +433,7 @@ void test(benchmark::State & state)
 
     auto size = concurrency * 1'000;
 
-    Stack_v1 < int > stack_v1;
+    Stack_v1 < int > stack_v1(2 * size);
 
     Stack_v2 < int > stack_v2;
 
