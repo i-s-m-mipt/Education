@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <atomic>
 #include <barrier>
-#include <chrono>
 #include <cstddef>
 #include <functional>
 #include <future>
@@ -19,27 +18,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////
 
-template < typename D = std::chrono::duration < double > > class Timer
-{
-public :
-
-	Timer() : m_begin(clock_t::now()) {}
-
-//  -----------------------------------------------------------------------
-
-	auto elapsed() const
-	{
-		return std::chrono::duration_cast < D > (clock_t::now() - m_begin);
-	}
-
-private :
-
-    using clock_t = std::chrono::steady_clock;
-
-//  -----------------------------------------------------------------------
-	
-	clock_t::time_point m_begin;
-};
+#include "08.39.hpp"
 
 /////////////////////////////////////////////////////////////////////////////////
 

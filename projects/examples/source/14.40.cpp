@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <atomic>
 #include <barrier>
-#include <chrono>
 #include <cstddef>
 #include <functional>
 #include <future>
@@ -22,6 +21,10 @@
 ////////////////////////////////////////////////////////////////////////////////////
 
 #include <benchmark/benchmark.h>
+
+////////////////////////////////////////////////////////////////////////////////////
+
+#include "08.39.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -288,30 +291,6 @@ private :
 ////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T > using Stack_v4 = boost::lockfree::stack < T > ;
-
-////////////////////////////////////////////////////////////////////////////////////
-
-template < typename D = std::chrono::duration < double > > class Timer
-{
-public :
-
-	Timer() : m_begin(clock_t::now()) {}
-
-//  -----------------------------------------------------------------------
-
-	auto elapsed() const
-	{
-		return std::chrono::duration_cast < D > (clock_t::now() - m_begin);
-	}
-
-private :
-
-    using clock_t = std::chrono::steady_clock;
-
-//  -----------------------------------------------------------------------
-	
-	clock_t::time_point m_begin;
-};
 
 ////////////////////////////////////////////////////////////////////////////////////
 
