@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename C = std::vector < T > >  class Stack
+template < typename T, typename C = std::vector < T > > class Stack
 {
 public :
 

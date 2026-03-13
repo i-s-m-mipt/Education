@@ -42,13 +42,13 @@ public :
         {
             node->next = expected;
         }
-        while 
+        while
         (
             !m_head.compare_exchange_weak
             (
-                expected, node, 
+                expected, node,
 
-                std::memory_order::release, 
+                std::memory_order::release,
 
                 std::memory_order::relaxed
             )
@@ -61,9 +61,9 @@ public :
     {
         auto head = m_head.load(std::memory_order::relaxed);
 
-        while 
+        while
         (
-            head && !m_head.compare_exchange_weak
+            !m_head.compare_exchange_weak
             (
                 head, head->next.load(std::memory_order::relaxed),
 
@@ -73,14 +73,9 @@ public :
             )
         );
 
-        if (head)
-        {
-            head->next = std::shared_ptr < Node > ();
+        head->next = std::shared_ptr < Node > ();
 
-            return head->x;
-        }
-
-        return std::shared_ptr < T > ();
+        return head->x;
     }
 
 private :
@@ -106,7 +101,7 @@ int main()
     Stack < int > stack;
 
 //  -----------------------------------------------------------------------------
-    
+
     stack.push(1);
 
     stack.push(2);
