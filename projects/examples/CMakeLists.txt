@@ -587,6 +587,7 @@ set(release
     14.32
     14.35
     14.40
+    14.41
 )
 
 #############################################################################################
@@ -626,5 +627,17 @@ target_link_libraries      (14.29 PRIVATE benchmark::benchmark)
 target_link_libraries      (14.29 PRIVATE TBB::tbb)
 
 target_link_libraries      (14.29 PRIVATE /usr/lib/gcc/x86_64-linux-gnu/13/libatomic.a)
+
+#############################################################################################
+
+add_executable             (14.42 source/14.42.cpp)
+
+target_compile_options     (14.42 PRIVATE -Wall -Wextra -Wpedantic -O3)
+
+target_link_libraries      (14.42 PRIVATE benchmark::benchmark)
+
+target_link_libraries      (14.42 PRIVATE TBB::tbb)
+
+target_link_libraries      (14.42 PRIVATE -ltcmalloc)
 
 #############################################################################################
