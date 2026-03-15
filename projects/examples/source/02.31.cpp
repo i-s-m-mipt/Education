@@ -18,7 +18,7 @@
 //
 // content : Algorithm std::ranges::sort
 //
-// content : Policy std::less
+// content : Functor std::less
 //
 // content : Algorithm std::ranges::is_sorted
 

@@ -12,7 +12,7 @@
 //
 // content : Java String Hash Algorithm
 //
-// content : Policy std::hash
+// content : Functor std::hash
 
 ////////////////////////////////////////////////////////
 

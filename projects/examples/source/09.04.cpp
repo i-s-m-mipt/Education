@@ -8,7 +8,7 @@
 
 ////////////////////////////////////////////////////////////////////////////
 
-// content : Policy std::default_delete
+// content : Functor std::default_delete
 //
 // content : Pointer Arithmetic
 
