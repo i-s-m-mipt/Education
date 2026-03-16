@@ -17,14 +17,14 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 
-enum class State : std::uint8_t 
-{ 
-	slow, fast 
+enum class State : std::uint8_t
+{
+	slow, fast
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 
-struct Entity 
+struct Entity
 {
 	State state = State::slow;
 };
@@ -47,7 +47,7 @@ public :
 private :
 
 	Entity & m_entity;
-	
+
 	State m_state = State::slow;
 };
 
