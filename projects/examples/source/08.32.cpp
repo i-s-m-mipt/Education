@@ -10,7 +10,7 @@
 
 // content : W.L.Putnam Mathematical Competition Problem
 //
-// content : Vector Product
+// content : Vector Product Algorithm
 //
 // content : Operator *
 //
