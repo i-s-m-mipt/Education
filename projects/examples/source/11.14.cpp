@@ -143,8 +143,6 @@ protected :
 
     Storage() = default;
 
-   ~Storage() = default;
-
 //  ---------------------------------------------------------------------------------------------
 
     template < typename T > auto get_type() const
@@ -196,8 +194,6 @@ protected :
 
     Handler() = default;
 
-   ~Handler() = default;
-
 //  ---------------------------------------------------------------------
 
     void destroy()
@@ -222,16 +218,16 @@ private :
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename ... Ts > class Variant 
-: 
-    private Storage           < Ts ... > , 
+template < typename ... Ts > class Variant
+:
+    private Storage           < Ts ... > ,
 
     private Handler < Variant < Ts ... > , Ts, Ts ... > ...
 {
 public :
 
-    Variant() 
-    { 
+    Variant()
+    {
         *this = front < Deque < Ts ... > > ();
     }
 
@@ -255,8 +251,8 @@ public :
 
 //  -------------------------------------------------------------------------------------------
 
-   ~Variant() 
-    { 
+   ~Variant()
+    {
         destroy();
     }
 

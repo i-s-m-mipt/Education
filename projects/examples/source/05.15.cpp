@@ -31,25 +31,25 @@ public :
 
 /////////////////////////////////////////////////////////
 
-class Client : public Strategy
+class Slow : public Strategy
 {
 public :
 
     void test() const override
     {
-        std::print("Client::test\n");
+        std::print("Slow::test\n");
     }
 };
 
 /////////////////////////////////////////////////////////
 
-class Server : public Strategy
+class Fast : public Strategy
 {
 public :
 
     void test() const override
     {
-        std::print("Server::test\n");
+        std::print("Fast::test\n");
     }
 };
 
@@ -77,17 +77,17 @@ private :
 
 int main()
 {
-    Strategy * strategy = new Client;
+    Strategy * strategy = new Slow;
 
-//  ---------------------------------
+//  -------------------------------
 
     Entity entity(*strategy);
 
-//  ---------------------------------
+//  -------------------------------
 
     entity.test();
 
-//  ---------------------------------
+//  -------------------------------
 
     delete strategy;
 }
