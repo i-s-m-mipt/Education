@@ -69,15 +69,13 @@ template < typename ... Is > auto cartesian(std::pair < Is, Is > ... pairs)
 		static_cast < std::size_t > (std::distance(pairs.first, pairs.second))... 
 	};
 
-	auto lambda = [&tuples](auto ... pairs){ tuples.emplace_back(pairs...); };
+	auto lambda = [&tuples](auto ... xs){ tuples.emplace_back(xs...); };
 
 	do
 	{
 		invoke
 		(
-			lambda, std::tie(pairs...), steps,
-
-			std::make_index_sequence < sizeof...(pairs) > ()
+			lambda, std::tie(pairs...), steps, std::make_index_sequence < sizeof...(pairs) > ()
 		);
 	} 
 	while (next(steps, sizes));
