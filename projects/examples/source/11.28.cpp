@@ -12,7 +12,7 @@
 //
 // content : Library Boost.Graph
 //
-// content : Adjacency Lists and Incidence Matrices
+// content : Adjacency Lists and Matrices
 //
 // content : Vertices and Edges
 //
