@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include <algorithm>
-#include <atomic>
 #include <barrier>
 #include <functional>
 #include <future>
 #include <memory>
+#include <new>
 #include <ranges>
 #include <thread>
 #include <vector>
@@ -24,82 +24,39 @@ class Task
 {
 public :
 
-    virtual ~Task() = default;
-
-//  ------------------------------------------
-
     auto operator()(std::barrier <> & barrier)
     {
+        auto kb = 1'024uz;
+
+        std::vector < void * > vector(kb, nullptr);
+
         barrier.arrive_and_wait();
 
         Timer timer;
 
-        test();
+		for (auto i = 0uz; i < kb; ++i)
+		{
+			vector[i] = operator new(kb);
+		}
+
+		for (auto i = 0uz; i < kb; ++i)
+		{
+			operator delete(vector[i], kb);
+		}
 
         return timer.elapsed().count();
     }
-
-//  ------------------------------------------
-
-    virtual void test() = 0;
-};
-
-//////////////////////////////////////////////////////////////////////////////
-
-class Task_v1 : public Task
-{
-public :
-
-    void test() override
-    {
-        for (auto i = 0uz; i < 1'000'000; ++i)
-        {
-            m_x.store(1, std::memory_order::seq_cst);
-        }
-    }
-
-private :
-
-    std::atomic < int > m_x = 0;
-};
-
-//////////////////////////////////////////////////////////////////////////////
-
-class Task_v2 : public Task
-{
-public :
-
-    void test() override
-    {
-        for (auto i = 0uz; i < 1'000'000; ++i)
-        {
-            m_x.store(1, std::memory_order::relaxed);
-        }
-    }
-
-private :
-
-    std::atomic < int > m_x = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////////
 
 void test(benchmark::State & state)
 {
-    auto argument = state.range(0);
-
     auto concurrency = std::max(std::thread::hardware_concurrency(), 2u);
 
     std::vector < std::future < double > > futures(concurrency);
 
-    std::shared_ptr < Task > task;
-
-    switch (argument)
-    {
-        case 1 : { task = std::make_shared < Task_v1 > (); break; }
-
-        case 2 : { task = std::make_shared < Task_v2 > (); break; }
-    }
+    auto task = std::make_shared < Task > ();
 
     std::barrier <> barrier(concurrency + 1);
 
@@ -130,7 +87,7 @@ void test(benchmark::State & state)
 
 //////////////////////////////////////////////////////////////////////////////
 
-BENCHMARK(test)->Arg(1)->Arg(2);
+BENCHMARK(test);
 
 //////////////////////////////////////////////////////////////////////////////
 

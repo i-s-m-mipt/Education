@@ -1,39 +1,10 @@
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 #include <atomic>
-#include <mutex>
-#include <print>
+#include <cassert>
 #include <thread>
 
-//////////////////////////////////////////////////////////////////////////////////////
-
-class Spinlock
-{
-public :
-
-    void lock() // support : compiler-explorer.com
-    {
-        auto expected = false;
-
-        while (!m_x.compare_exchange_weak(expected, true, std::memory_order::acquire))
-        {
-            expected = false;
-        }
-    }
-
-//  ----------------------------------------------------------------------------------
-
-    void unlock()
-    {
-        m_x.store(false, std::memory_order::release);
-    }
-
-private :
-
-    std::atomic < bool > m_x = false;
-};
-
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 class Entity
 {
@@ -41,30 +12,29 @@ public :
 
     void test_v1()
     {
-        std::scoped_lock < Spinlock > lock(m_spinlock);
+        m_x.store(true, std::memory_order::relaxed);
 
-        ++m_x;
+        m_y.store(true, std::memory_order::release);
     }
 
-//  ----------------------------------------------------
+//  ------------------------------------------------------
 
-    void test_v2() const
+    void test_v2()
     {
-        std::scoped_lock < Spinlock > lock(m_spinlock);
+        while (m_y.load(std::memory_order::acquire) == 0)
+        {
+            std::this_thread::yield();
+        }
 
-        std::print("Entity::test_v2 : m_x = {}\n", m_x);
+        assert(m_x.load(std::memory_order::relaxed) == 1);
     }
 
 private :
 
-    int m_x = 0;
-
-//  ----------------------------------------------------
-
-    mutable Spinlock m_spinlock;
+    std::atomic < bool > m_x = false, m_y = false;
 };
 
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 int main()
 {
@@ -77,4 +47,4 @@ int main()
     std::jthread jthread_2(&Entity::test_v2, &entity);
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////

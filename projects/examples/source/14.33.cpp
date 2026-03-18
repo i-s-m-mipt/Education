@@ -1,50 +1,166 @@
-//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
+#include <algorithm>
 #include <atomic>
-#include <cassert>
+#include <barrier>
+#include <cstddef>
+#include <functional>
+#include <future>
+#include <memory>
+#include <new>
+#include <ranges>
 #include <thread>
+#include <vector>
 
-//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
-class Entity
+#include <benchmark/benchmark.h>
+
+/////////////////////////////////////////////////////////////////////////////////
+
+#include "08.39.hpp"
+
+/////////////////////////////////////////////////////////////////////////////////
+
+class Task
 {
 public :
 
-    void test_v1()
-    {
-        m_x.store(true, std::memory_order::seq_cst);
+    virtual ~Task() = default;
 
-        m_y.store(true, std::memory_order::seq_cst);
+//  -------------------------------------------------------------
+
+    auto operator()(std::barrier <> & barrier, std::size_t index)
+    {
+        barrier.arrive_and_wait();
+
+        Timer timer;
+
+        test(index);
+
+        return timer.elapsed().count();
     }
 
-//  ------------------------------------------------------
+//  -------------------------------------------------------------
 
-    void test_v2()
+    virtual void test(std::size_t index) = 0;
+};
+
+/////////////////////////////////////////////////////////////////////////////////
+
+class Task_v1 : public Task
+{
+public :
+
+    Task_v1(std::size_t size) : m_entities(size) {}
+
+//  -----------------------------------------------
+
+    void test(std::size_t index) override
     {
-        while (m_y.load(std::memory_order::seq_cst) == 0)
+        for (auto i = 0uz; i < 1'000'000; ++i)
         {
-            std::this_thread::yield();
+            m_entities.at(index).x.store(1);
         }
-
-        assert(m_x.load(std::memory_order::seq_cst) == 1);
     }
 
 private :
 
-    std::atomic < bool > m_x = false, m_y = false;
+    struct Entity
+    {
+        std::atomic < int > x = 0;
+    };
+
+//  -----------------------------------------------
+
+    std::vector < Entity > m_entities;
 };
 
-//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+
+class Task_v2 : public Task
+{
+public :
+
+    Task_v2(std::size_t size) : m_entities(size) {}
+
+//  -------------------------------------------------------------------
+
+    void test(std::size_t index) override
+    {
+        for (auto i = 0uz; i < 1'000'000; ++i)
+        {
+            m_entities.at(index).x.store(1);
+        }
+    }
+
+private :
+
+    struct alignas(std::hardware_constructive_interference_size) Entity
+    {
+        std::atomic < int > x = 0;
+    };
+
+//  -------------------------------------------------------------------
+
+    std::vector < Entity > m_entities;
+};
+
+/////////////////////////////////////////////////////////////////////////////////
+
+void test(benchmark::State & state)
+{
+    auto argument = state.range(0);
+
+    auto concurrency = std::max(std::thread::hardware_concurrency(), 2u);
+
+    std::vector < std::future < double > > futures(concurrency);
+
+    std::shared_ptr < Task > task;
+
+    switch (argument)
+    {
+        case 1 : { task = std::make_shared < Task_v1 > (concurrency); break; }
+
+        case 2 : { task = std::make_shared < Task_v2 > (concurrency); break; }
+    }
+
+    std::barrier <> barrier(concurrency + 1);
+
+    auto lambda = [](auto & future){ return future.get(); };
+	
+    for (auto element : state)
+    {
+        for (auto i = 0uz; i < concurrency; ++i)
+        {
+            futures[i] = std::async
+            (
+                std::launch::async, &Task::operator(), task, std::ref(barrier), i
+            );
+        }
+        
+        barrier.arrive_and_wait();
+
+        auto time = *std::ranges::fold_left_first
+        (
+            std::ranges::views::transform(futures, lambda), std::plus()
+        );
+
+        state.SetIterationTime(time / concurrency);
+
+		benchmark::DoNotOptimize(*task);
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+
+BENCHMARK(test)->Arg(1)->Arg(2);
+
+/////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Entity entity;
-
-//  --------------------------------------------------
-
-    std::jthread jthread_1(&Entity::test_v1, &entity);
-
-    std::jthread jthread_2(&Entity::test_v2, &entity);
+    benchmark::RunSpecifiedBenchmarks();
 }
 
-//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////

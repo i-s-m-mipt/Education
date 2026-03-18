@@ -18,12 +18,7 @@ public :
 
     void test() const
     {
-        trace(); 
-        
-        while (!m_x)
-        {
-            std::this_thread::yield();
-        }
+        trace(); m_x.wait(false);
 
         trace(); 
     }
@@ -33,6 +28,8 @@ public :
     void release() const
     {
         m_x = true;
+
+        m_x.notify_all();
     }
 
 private :

@@ -1,10 +1,10 @@
-///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 #include <atomic>
 #include <cassert>
 #include <thread>
 
-///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 class Entity
 {
@@ -12,21 +12,21 @@ public :
 
     void test_v1()
     {
-        m_x.store(true, std::memory_order::relaxed);
+        m_x.store(true, std::memory_order::seq_cst);
 
-        m_y.store(true, std::memory_order::relaxed);
+        m_y.store(true, std::memory_order::seq_cst);
     }
 
-//  ---------------------------------------------------------------
+//  ------------------------------------------------------
 
     void test_v2()
     {
-        while (m_y.load(std::memory_order::relaxed) == 0)
+        while (m_y.load(std::memory_order::seq_cst) == 0)
         {
             std::this_thread::yield();
         }
 
-    //  assert(m_x.load(std::memory_order::relaxed) == 1); // error
+        assert(m_x.load(std::memory_order::seq_cst) == 1);
     }
 
 private :
@@ -34,7 +34,7 @@ private :
     std::atomic < bool > m_x = false, m_y = false;
 };
 
-///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 int main()
 {
@@ -47,4 +47,4 @@ int main()
     std::jthread jthread_2(&Entity::test_v2, &entity);
 }
 
-///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////

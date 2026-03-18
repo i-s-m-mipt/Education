@@ -1,215 +1,80 @@
-//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 #include <atomic>
-#include <cstddef>
-#include <functional>
-#include <memory>
+#include <mutex>
+#include <print>
 #include <thread>
-#include <tuple>
 
-//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/noncopyable.hpp>
-
-//////////////////////////////////////////////////////////////////////////
-
-template < typename T > class Stack : private boost::noncopyable
+class Spinlock
 {
-private :
-
-    struct Node
-    {
-        std::shared_ptr < T > x;
-
-        Node * next = nullptr;
-    };
-
 public :
 
-   ~Stack()
+    void lock() // support : compiler-explorer.com
     {
-        while (top_and_pop_v3());
-    }
+        auto expected = false;
 
-//  ----------------------------------------------------------------------
-
-    void push(T x)
-    {
-        auto node = new Node(std::make_shared < T > (x), nullptr);
-
-        node->next = m_head.load(std::memory_order::relaxed);
-
-        while
-        (
-            !m_head.compare_exchange_weak
-            (
-                node->next, node, 
-
-                std::memory_order::release, 
-
-                std::memory_order::relaxed
-            )
-        );
-    }
-
-//  ----------------------------------------------------------------------
-
-//  void top_and_pop_v1(T & x) // error
-//	{
-//		auto head = m_head.load();
-//
-//		while (!m_head.compare_exchange_weak(head, head->next));
-//
-//		x = head->x;
-//	}
-
-//  ----------------------------------------------------------------------
-
-//  auto top_and_pop_v2() // error
-//  {
-//      auto head = m_head.load();
-//
-//      while (head && !m_head.compare_exchange_weak(head, head->next));
-//
-//      return head ? head->x : std::shared_ptr < T > ();
-//  }
-
-//  ----------------------------------------------------------------------
-
-    auto top_and_pop_v3()
-    {
-        m_counter.fetch_add(1, std::memory_order::relaxed);
-
-        auto head = m_head.load(std::memory_order::relaxed);
-
-        while 
-        (
-            head && !m_head.compare_exchange_weak
-            (
-                head, head->next,
-
-                std::memory_order::acquire,
-
-                std::memory_order::relaxed
-            )
-        );
-
-        std::shared_ptr < T > x;
-
-        if (head)
+        while (!m_x.compare_exchange_weak(expected, true, std::memory_order::acquire))
         {
-            x.swap(head->x);
+            expected = false;
         }
+    }
 
-        try_clear(head);
+//  ----------------------------------------------------------------------------------
 
-        return x;
+    void unlock()
+    {
+        m_x.store(false, std::memory_order::release);
     }
 
 private :
 
-    void try_clear(Node * head)
-    {
-        if (m_counter.load(std::memory_order::relaxed) == 1)
-        {
-            auto tail = m_tail.exchange(nullptr);
-
-            if (!(m_counter.fetch_sub(1, std::memory_order::relaxed) - 1))
-            {
-                clear(tail);
-            }
-            else if (tail)
-            {
-                save_nodes(tail);
-            }
-
-            delete head;
-        }
-        else
-        {
-            save_node(head);
-
-            m_counter.fetch_sub(1, std::memory_order::relaxed);
-        }
-    }
-
-//  ----------------------------------------------------------------------
-
-    void clear(Node * nodes) const
-    {
-        while (nodes)
-        {
-            auto next = nodes->next;
-
-            delete nodes;
-
-            nodes = next;
-        }
-    }
-
-//  ----------------------------------------------------------------------
-
-    void save_nodes(Node * nodes)
-    {
-        auto end = nodes;
-
-        while(auto next = end->next)
-        {
-            end = next;
-        }
-
-        save_nodes(nodes, end);
-    }
-
-//  ----------------------------------------------------------------------
-
-    void save_nodes(Node * begin, Node * end)
-    {
-        end->next = m_tail;
-
-        while (!m_tail.compare_exchange_weak(end->next, begin));
-    }
-
-//  ----------------------------------------------------------------------
-
-    void save_node(Node * node)
-    {
-        save_nodes(node, node);
-    }
-
-//  ----------------------------------------------------------------------
-
-    std::atomic < Node * > m_head = nullptr, m_tail = nullptr;
-
-    std::atomic < std::size_t > m_counter = 0;
+    std::atomic < bool > m_x = false;
 };
 
-//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
-void top_and_pop(Stack < int > & stack)
+class Entity
 {
-    std::ignore = stack.top_and_pop_v3();
-}
+public :
 
-//////////////////////////////////////////////////////////////////////////
+    void test_v1()
+    {
+        std::scoped_lock < Spinlock > lock(m_spinlock);
+
+        ++m_x;
+    }
+
+//  ----------------------------------------------------
+
+    void test_v2() const
+    {
+        std::scoped_lock < Spinlock > lock(m_spinlock);
+
+        std::print("Entity::test_v2 : m_x = {}\n", m_x);
+    }
+
+private :
+
+    int m_x = 0;
+
+//  ----------------------------------------------------
+
+    mutable Spinlock m_spinlock;
+};
+
+//////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Stack < int > stack;
+    Entity entity;
 
-//  ---------------------------------------------------------
-    
-    stack.push(1);
+//  --------------------------------------------------
 
-    stack.push(2);
+    std::jthread jthread_1(&Entity::test_v1, &entity);
 
-//  ---------------------------------------------------------
-
-    {
-        std::jthread jthread_1(top_and_pop, std::ref(stack));
-
-        std::jthread jthread_2(top_and_pop, std::ref(stack));
-    }
+    std::jthread jthread_2(&Entity::test_v2, &entity);
 }
 
-//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
