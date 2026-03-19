@@ -1,42 +1,208 @@
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 // section : Rvalue References
 
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-// content : Extending Temporary Objects Lifetime
+// content : Special Member Functions
+//
+// content : Container std::initializer_list
+//
+// content : Algorithm std::ranges::copy
+//
+// content : Deep and Shallow Copy
+//
+// content : Copy and Move Constructors
+//
+// content : Function std::exchange
+//
+// content : Copy and Move Operators =
+//
+// content : Self-Assignment Problem
+//
+// content : Pattern Copy and Swap
+//
+// content : Generating Special Member Functions
+//
+// content : Rules of 0, 3, 4 and 5
 
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
+#include <algorithm>
+#include <cstddef>
+#include <initializer_list>
+#include <iterator>
+#include <print>
+#include <utility>
 
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+class Vector
+{
+public :
+
+	Vector() : m_array(nullptr), m_size(0)
+	{
+		std::print("Vector:: Vector (1)\n");
+	}
+
+//  --------------------------------------------------------------------------------
+
+	Vector(std::initializer_list < int > list) : m_size(std::size(list))
+	{
+		std::print("Vector:: Vector (2)\n");
+
+		m_array = m_size ? new int[m_size]{} : nullptr;
+
+		std::ranges::copy(list, m_array);
+	}
+
+//  --------------------------------------------------------------------------------
+
+	Vector(Vector const & other) : m_size(other.m_size)
+	{
+		std::print("Vector:: Vector (3)\n");
+
+		m_array = m_size ? new int[m_size]{} : nullptr;
+
+		std::ranges::copy(other.m_array, other.m_array + other.m_size, m_array);
+	}
+
+//  --------------------------------------------------------------------------------
+
+	Vector(Vector && other)
+	:
+		m_array(std::exchange(other.m_array, nullptr)),
+
+		m_size (std::exchange(other.m_size,  0      ))
+	{
+		std::print("Vector:: Vector (4)\n");
+	}
+
+//  --------------------------------------------------------------------------------
+
+   ~Vector()
+	{
+		std::print("Vector::~Vector\n");
+
+		delete[] m_array;
+	}
+	
+//  --------------------------------------------------------------------------------
+
+//	auto & operator=(Vector const & other) // error
+//	{
+//		std::print("Vector::operator= (1)\n");
+//
+//		if (this != &other)
+//		{
+//			delete[] m_array;
+//
+//			m_array = (m_size = other.m_size) ? new int[m_size]{} : nullptr;
+//
+//			std::ranges::copy(other.m_array, other.m_array + other.m_size, m_array);
+//		}
+//
+//		return *this;
+//	}
+
+//  --------------------------------------------------------------------------------
+
+//	auto & operator=(Vector const & other) // bad
+//	{
+//		std::print("Vector::operator= (2)\n");
+//
+//		if (this != &other)
+//		{
+//			auto array = other.m_size ? new int[other.m_size]{} : nullptr;
+//
+//			std::ranges::copy(other.m_array, other.m_array + other.m_size, array);
+//
+//			delete[] std::exchange(m_array, array);
+//
+//			m_size = other.m_size;
+//		}
+//
+//		return *this;
+//	}
+
+//  --------------------------------------------------------------------------------
+
+//	auto & operator=(Vector && other) // bad
+//	{
+//		std::print("Vector::operator= (3)\n");
+//
+//		if (this != &other)
+//		{
+//			delete[] m_array;
+//
+//			m_array = std::exchange(other.m_array, nullptr);
+//
+//			m_size  = std::exchange(other.m_size,  0      );
+//		}
+//
+//		return *this;
+//	}
+
+//  --------------------------------------------------------------------------------
+
+	auto & operator=(Vector other)
+	{
+		std::print("Vector::operator= (4)\n");
+
+		swap(other);
+
+		return *this;
+	}
+
+//  --------------------------------------------------------------------------------
+
+	void swap(Vector & other)
+	{
+		std::swap(m_array, other.m_array);
+
+		std::swap(m_size,  other.m_size );
+	}
+
+private :
+
+	int * m_array = nullptr;
+
+	std::size_t m_size = 0;
+};
+
+////////////////////////////////////////////////////////////////////////////////////
+
+void swap(Vector & lhs, Vector & rhs)
+{
+	lhs.swap(rhs);
+}
+
+////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	auto x = 1.0;
+	Vector vector_1;
 
-//  ----------------------------------------------
+	Vector vector_2 = { 1, 2, 3, 4, 5 };
 
-//	[[maybe_unused]] int       &  y1 = x; // error
+	Vector vector_3 = vector_2;
 
-	[[maybe_unused]] int const &  y2 = x;
+	Vector vector_4 = std::move(vector_3);
 
-	[[maybe_unused]] int       && y3 = x;
+//  --------------------------------------
 
-	[[maybe_unused]] int const && y4 = x;
+	vector_3 = vector_2;
 
-//  ----------------------------------------------
+	vector_4 = std::move(vector_3);
 
-	assert(&y2 != &y3);
+//  --------------------------------------
 
-	assert(&y2 != &y4);
-
-	assert(&y3 != &y4);
+	swap(vector_1, vector_2);
 }
 
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////

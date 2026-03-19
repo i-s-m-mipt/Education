@@ -1,65 +1,79 @@
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 // section : Operator Overloading
 
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-// content : Ordering std::weak_ordering
+// content : Constant and Non-Constant Operators []
+//
+// content : Constancy Type Conversions
+//
+// content : Operator const_cast
 
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <compare>
+#include <cstddef>
+#include <initializer_list>
+#include <print>
+#include <vector>
 
-//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-class Entity
+class Vector 
 {
 public :
 
-    Entity(int x, int y) : m_x(x), m_y(y) {}
+    Vector(std::initializer_list < int > list) : m_vector(list) {}
 
-//  ----------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
-    auto operator<=>(Entity const & other) const
+    auto const & operator[](std::size_t index) const 
     {
-        if (m_x < other.m_x) { return std::weak_ordering::less;    }
+        std::print("Vector::operator[] (1)\n");
 
-        if (m_x > other.m_x) { return std::weak_ordering::greater; }
+        return m_vector[index];
+    }
 
-        return std::weak_ordering::equivalent;
+//  --------------------------------------------------------------------------------
+
+    auto & operator[](std::size_t index)
+    {
+        std::print("Vector::operator[] (2)\n");
+
+        return const_cast < int & > (static_cast < Vector const & > (*this)[index]);
     }
 
 private :
 
-    int m_x = 0, m_y = 0;
+    std::vector < int > m_vector;
 };
 
-//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Entity entity_1(1, 1);
-    
-    Entity entity_2(2, 2);
+    auto const x = 1, & y = x;
 
-    Entity entity_3(2, 3);
+//  ----------------------------------
 
-//  ------------------------------------------------------------------
+    ++(const_cast < int & > (y));
 
-    assert((entity_1 <=> entity_2) <  0);
+//  ----------------------------------
 
-    assert((entity_2 <=> entity_3) == 0);
+    assert(x == 2);
 
-    assert((entity_2 <=> entity_1) >  0);
+//  ----------------------------------
 
-//  ------------------------------------------------------------------
+    Vector vector = { 1, 2, 3, 4, 5 };
 
-    assert((entity_2 <=> entity_3) == std::weak_ordering::equivalent);
+//  ----------------------------------
+
+    assert(vector[0] == 1);
 }
 
-//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////

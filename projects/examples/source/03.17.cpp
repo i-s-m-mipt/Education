@@ -1,110 +1,100 @@
-/////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-/////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 // section : Dynamic Polymorphism
 
-/////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-// content : Pure Virtual Functions
+// content : Virtual Pointers and Tables
 //
-// content : External Member Function Definitions
-//
-// content : Abstraction
-//
-// content : Abstract Base Classes
+// content : Dynamic Polymorphism Memory and Time Overheads
 
-/////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 #include <print>
-#include <vector>
 
-/////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-class Entity
+class Entity_v1
 {
-public :
+private : 
 
-    virtual ~Entity() = default;
-
-//  -----------------------------------------
-
-    virtual void test_v1() const = 0;
-
-//  -----------------------------------------
-
-//	virtual void test_v2() const = 0 // error
-//	{
-//		std::print("Entity::test_v2\n");
-//	}
+	void * m_x = nullptr;
 };
 
-/////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-void Entity::test_v1() const
+class Client_v1 : public Entity_v1
 { 
-	std::print("Entity::test_v1\n");
-}
-
-/////////////////////////////////////////////////
-
-class Client : public Entity
-{
-public :
-
-    void test_v1() const override 
-	{ 
-		std::print("Client::test_v1\n");
-		
-		Entity::test_v1();
-	}
+private : 
+	
+	void * m_y = nullptr;
 };
 
-/////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-class Server : public Entity
-{
+class Entity_v2
+{ 
 public :
 
-    void test_v1() const override 
+	virtual ~Entity_v2() = default;
+
+//  ------------------------------------
+
+	virtual void test() const
 	{ 
-		std::print("Server::test_v1\n");
-		
-		Entity::test_v1();
+		std::print("Entity_v2::test\n");
 	}
+
+private : 
+
+	void * m_x = nullptr;
 };
 
-/////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+class Client_v2 : public Entity_v2
+{
+public:
+
+	void test() const override
+	{ 
+		std::print("Client_v2::test\n");
+	}
+
+private : 
+	
+	void * m_y = nullptr;
+};
+
+///////////////////////////////////////////////////////////
 
 int main()
 {
-    std::vector < Entity * > entities;
+	static_assert(sizeof(Entity_v1) == 1 * sizeof(void *));
 
-//  ----------------------------------
+	static_assert(sizeof(Client_v1) == 2 * sizeof(void *));
 
-    entities.push_back(new Client);
+//  -------------------------------------------------------
 
-    entities.push_back(new Server);
+	static_assert(sizeof(Entity_v2) == 2 * sizeof(void *));
 
-//  ----------------------------------
+	static_assert(sizeof(Client_v2) == 3 * sizeof(void *));
 
-    for (auto entity : entities)
-    {
-        entity->test_v1();
-    }
+//  -------------------------------------------------------
 
-//  ----------------------------------
+	Entity_v2 * entity_v2 = new Client_v2;
 
-    for (auto entity : entities)
-    {
-        delete entity;
-    }
+//  -------------------------------------------------------
 
-//  ----------------------------------
+	entity_v2->test(); // support : compiler-explorer.com
 
-//	Entity entity; // error
+//  -------------------------------------------------------
+
+	delete entity_v2;
 }
 
-/////////////////////////////////////////////////
+///////////////////////////////////////////////////////////

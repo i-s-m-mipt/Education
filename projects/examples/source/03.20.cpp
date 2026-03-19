@@ -1,75 +1,57 @@
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 // section : Dynamic Polymorphism
 
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
-// content : Covariant Return Types
+// content : Runtime Type Identification
+//
+// content : Operator typeid
 
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 #include <print>
 
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
-class Entity_v1 
-{ 
-public :
-
-	virtual ~Entity_v1() = default;
-};
-
-//////////////////////////////////////////////////
-
-class Client_v1 : public Entity_v1 {};
-
-//////////////////////////////////////////////////
-
-class Entity_v2 
+class Entity 
 {
 public :
 
-	virtual ~Entity_v2() = default;
-
-//  ----------------------------------------------
-
-	virtual Entity_v1 * make_entity_v1() const
-	{ 
-		std::print("Entity_v2::make_entity_v1\n");
-
-		return new Entity_v1;
-	}
+	virtual ~Entity() = default;
 };
 
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
-class Client_v2 : public Entity_v2
-{
-public :
+class Client : public Entity {};
 
-	Client_v1 * make_entity_v1() const override 
-	{ 
-		std::print("Client_v2::make_entity_v1\n");
-
-		return new Client_v1;
-	}
-};
-
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Entity_v2 * entity_v2 = new Client_v2;
+	auto x = 1, & y = x;
 
-//  --------------------------------------
+//  --------------------------------------------------------------------
+		
+	Entity * entity = new Client;
 
-	delete entity_v2->make_entity_v1();
+//  --------------------------------------------------------------------
 
-	delete entity_v2;
+	std::print("main : typeid(      x) = {}\n", typeid(      x).name());
+
+	std::print("main : typeid(      y) = {}\n", typeid(      y).name());
+
+	std::print("main : typeid( entity) = {}\n", typeid( entity).name());
+
+	std::print("main : typeid(*entity) = {}\n", typeid(*entity).name());
+
+//  --------------------------------------------------------------------
+
+	delete entity;
 }
 
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////

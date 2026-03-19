@@ -1,139 +1,110 @@
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
 // section : Dynamic Polymorphism
 
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
-// content : Upcasting Type Conversions
+// content : Pure Virtual Functions
 //
-// content : Static and Dynamic Types
+// content : External Member Function Definitions
 //
-// content : Slicing Objects
+// content : Abstraction
 //
-// content : Dynamic Polymorphism
-//
-// content : Virtual Functions
-//
-// content : Function Specifier virtual
-//
-// content : Overriding Functions
-//
-// content : Function Specifier override
-//
-// content : Function and Class Specifier final
-//
-// content : Range-Based Statement for
-//
-// content : Virtual Destructors
+// content : Abstract Base Classes
 
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
 #include <print>
 #include <vector>
 
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
-class Entity 
+class Entity
 {
 public :
 
-// ~Entity() = default; // error
+    virtual ~Entity() = default;
 
-//  ------------------------------------
+//  -----------------------------------------
 
-	virtual ~Entity()
-	{
-		std::print("Entity::~Entity\n");
-	}
+    virtual void test_v1() const = 0;
 
-//  ------------------------------------
+//  -----------------------------------------
 
-	virtual void test() const
-	{ 
-		std::print("Entity::test\n");
-	}
+//	virtual void test_v2() const = 0 // error
+//	{
+//		std::print("Entity::test_v2\n");
+//	}
 };
 
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
+
+void Entity::test_v1() const
+{ 
+	std::print("Entity::test_v1\n");
+}
+
+/////////////////////////////////////////////////
 
 class Client : public Entity
 {
 public :
 
-   ~Client() override
-	{
-		std::print("Client::~Client\n");
-	}
-
-//  ------------------------------------
-
-	void test() const override final
+    void test_v1() const override 
 	{ 
-		std::print("Client::test\n");
+		std::print("Client::test_v1\n");
+		
+		Entity::test_v1();
 	}
 };
 
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
-class Server final : public Entity 
+class Server : public Entity
 {
-public:
+public :
 
-   ~Server() override
-	{
-		std::print("Server::~Server\n");
+    void test_v1() const override 
+	{ 
+		std::print("Server::test_v1\n");
+		
+		Entity::test_v1();
 	}
 };
 
-/////////////////////////////////////////////////////////////
-
-class Router : private Entity {};
-
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
 int main()
 {
-//  std::vector < Client > clients; // bad
+    std::vector < Entity * > entities;
 
-//  std::vector < Server > servers; // bad
+//  ----------------------------------
 
-//  std::vector < Router > routers; // bad
+    entities.push_back(new Client);
 
-//  ---------------------------------------------------------
+    entities.push_back(new Server);
 
-	[[maybe_unused]] Entity * entity_1 = new Client;
-
-	[[maybe_unused]] Entity * entity_2 = new Server;
-
-//	[[maybe_unused]] Entity * entity_3 = new Router; // error
-
-//  ---------------------------------------------------------
-
-	std::vector < Entity * > entities;
-
-//  ---------------------------------------------------------
-
-    entities.push_back(entity_1);
-
-	entities.push_back(entity_2);
-
-//  ---------------------------------------------------------
+//  ----------------------------------
 
     for (auto entity : entities)
     {
-        entity->test();
+        entity->test_v1();
     }
 
-//  ---------------------------------------------------------
+//  ----------------------------------
 
     for (auto entity : entities)
     {
         delete entity;
     }
+
+//  ----------------------------------
+
+//	Entity entity; // error
 }
 
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////

@@ -1,59 +1,83 @@
-////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 // section : Rvalue References
 
-////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
-// content : Copy and Move Semantics
+// content : Copy Elision
 //
-// content : Function std::move
+// content : Return Value Optimization
+//
+// content : Named Return Value Optimization
+//
+// content : Preventing Optimizations
 
-////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 #include <print>
 #include <utility>
 
-////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
-struct Entity {};
+class Entity
+{
+public :
 
-////////////////////////////////////////////////////////
+	Entity(               ) { std::print("Entity:: Entity (1)\n"); }
 
-void test(Entity       & ) { std::print("test (1)\n"); }
+	Entity(Entity const & ) { std::print("Entity:: Entity (2)\n"); }
 
-void test(Entity const & ) { std::print("test (2)\n"); }
+	Entity(Entity       &&) { std::print("Entity:: Entity (3)\n"); }
 
-void test(Entity       &&) { std::print("test (3)\n"); }
+   ~Entity(               ) { std::print("Entity::~Entity    \n"); }
+};
 
-void test(Entity const &&) { std::print("test (4)\n"); }
+////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////
+auto make_entity_v1() 
+{
+	std::print("make_entity_v1\n");
+
+	return Entity(); 
+}
+
+////////////////////////////////////////////////////////////////////
+
+auto make_entity_v2()
+{
+	std::print("make_entity_v2\n");
+
+	Entity entity;
+
+//	return std::move(entity); // error
+	
+	return entity;
+}
+
+////////////////////////////////////////////////////////////////////
+
+auto make_entity_v3(Entity entity)
+{
+	std::print("make_entity_v3\n");
+
+	return entity;
+}
+
+////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Entity       entity_1;
+    [[maybe_unused]] auto entity_1 = make_entity_v1();
+	
+	[[maybe_unused]] auto entity_2 = make_entity_v2();
 
-	Entity const entity_2;
+//  ----------------------------------------------------------
 
-//  ---------------------------------
-
-	test(entity_1);
-
-	test(entity_2);
-
-//  ---------------------------------
-
-	test(std::move(entity_1));
-
-//	test(std::move(entity_2)); // bad
-
-//  ---------------------------------
-
-	test(Entity());
+	[[maybe_unused]] auto entity_3 = make_entity_v3(Entity());
 }
 
-////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////

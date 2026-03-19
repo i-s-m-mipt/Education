@@ -1,89 +1,103 @@
-////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 // section : Operator Overloading
 
-////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-// content : Operator <=>
-//
-// content : Ordering std::strong_ordering
-//
-// content : Rewritten Expressions
+// content : Virtual Operators >> and <<
 
-////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <compare>
+#include <istream>
+#include <ostream>
+#include <sstream>
 
-////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
 public :
 
-    Entity(int x, int y) : m_x(x), m_y(y) {}
+    virtual ~Entity() = default;
 
-//  --------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
-    auto operator<=>(Entity const & other) const
-    { 
-        auto comparison = m_x <=> other.m_x;
-
-        if (comparison != std::strong_ordering::equal)
-        {
-            return comparison;
-        }
-
-        return m_y <=> other.m_y;
+    friend auto & operator>>(std::istream & stream, Entity & entity)
+    {
+        return entity.get(stream.ignore()).ignore();
     }
 
-//  --------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
-    auto operator== (Entity const & other) const
+    friend auto & operator<<(std::ostream & stream, Entity const & entity)
+    {        
+        return entity.put(stream << "{ ") << " }";
+    }
+
+protected :
+
+    virtual std::istream & get(std::istream & stream)       { return stream >> m_x; }
+
+    virtual std::ostream & put(std::ostream & stream) const { return stream << m_x; }
+
+private :
+
+    int m_x = 0;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+class Client : public Entity 
+{
+public :
+
+    std::istream & get(std::istream & stream) override
     {
-        return m_x == other.m_x && m_y == other.m_y;
+        return Entity::get(stream).ignore() >> m_y;
+    }
+
+//  --------------------------------------------------------
+
+    std::ostream & put(std::ostream & stream) const override
+    { 
+        return Entity::put(stream) << ", " << m_y;
     }
 
 private :
 
-    int m_x = 0, m_y = 0;
+    int m_y = 0;
 };
 
-////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Entity entity_1(1, 1);
+    std::stringstream stream_1("{ 1, 1 }");
 
-    Entity entity_2(2, 2);
+    std::stringstream stream_2;
 
-//  ------------------------------------------------------------------------
+//  -----------------------------------------
+    
+    Entity * entity = new Client;
 
-    assert((entity_1 <=> entity_2) <  0);
+//  -----------------------------------------
 
-    assert((entity_2 <=> entity_2) == 0);
+    stream_1 >> *entity;
 
-    assert((entity_2 <=> entity_1) >  0);
+    stream_2 << *entity;
 
-//  ------------------------------------------------------------------------
+//  -----------------------------------------
 
-    assert((entity_1 <   entity_2) == 1); // support : compiler-explorer.com
+    delete entity;
 
-    assert((entity_1 >   entity_2) == 0);
+//  -----------------------------------------
 
-    assert((entity_1 <=  entity_2) == 1);
-
-    assert((entity_1 >=  entity_2) == 0);
-
-//  ------------------------------------------------------------------------
-
-    assert((entity_1 ==  entity_2) == 0); // support : compiler-explorer.com
-
-    assert((entity_1 !=  entity_2) == 1);
+    assert(stream_2.str() == stream_1.str());
 }
 
-////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////

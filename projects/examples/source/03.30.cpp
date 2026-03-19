@@ -1,208 +1,113 @@
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-// section : Rvalue References
+// section : Operator Overloading
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-// content : Special Member Functions
+// content : Rational Arithmetic
 //
-// content : Container std::initializer_list
-//
-// content : Algorithm std::ranges::copy
-//
-// content : Deep and Shallow Copy
-//
-// content : Copy and Move Constructors
-//
-// content : Function std::exchange
-//
-// content : Copy and Move Operators =
-//
-// content : Self-Assignment Problem
-//
-// content : Pattern Copy and Swap
-//
-// content : Generating Special Member Functions
-//
-// content : Rules of 0, 3, 4 and 5
+// content : Library Boost.Rational
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-#include <algorithm>
-#include <cstddef>
-#include <initializer_list>
-#include <iterator>
-#include <print>
-#include <utility>
+#include <cassert>
+#include <cmath>
+#include <sstream>
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-class Vector
+#include <boost/rational.hpp>
+
+//////////////////////////////////////////////////////////
+
+auto equal(double x, double y, double epsilon = 1e-6)
 {
-public :
-
-	Vector() : m_array(nullptr), m_size(0)
-	{
-		std::print("Vector:: Vector (1)\n");
-	}
-
-//  --------------------------------------------------------------------------------
-
-	Vector(std::initializer_list < int > list) : m_size(std::size(list))
-	{
-		std::print("Vector:: Vector (2)\n");
-
-		m_array = m_size ? new int[m_size]{} : nullptr;
-
-		std::ranges::copy(list, m_array);
-	}
-
-//  --------------------------------------------------------------------------------
-
-	Vector(Vector const & other) : m_size(other.m_size)
-	{
-		std::print("Vector:: Vector (3)\n");
-
-		m_array = m_size ? new int[m_size]{} : nullptr;
-
-		std::ranges::copy(other.m_array, other.m_array + other.m_size, m_array);
-	}
-
-//  --------------------------------------------------------------------------------
-
-	Vector(Vector && other)
-	:
-		m_array(std::exchange(other.m_array, nullptr)),
-
-		m_size (std::exchange(other.m_size,  0      ))
-	{
-		std::print("Vector:: Vector (4)\n");
-	}
-
-//  --------------------------------------------------------------------------------
-
-   ~Vector()
-	{
-		std::print("Vector::~Vector\n");
-
-		delete[] m_array;
-	}
-	
-//  --------------------------------------------------------------------------------
-
-//	auto & operator=(Vector const & other) // error
-//	{
-//		std::print("Vector::operator= (1)\n");
-//
-//		if (this != &other)
-//		{
-//			delete[] m_array;
-//
-//			m_array = (m_size = other.m_size) ? new int[m_size]{} : nullptr;
-//
-//			std::ranges::copy(other.m_array, other.m_array + other.m_size, m_array);
-//		}
-//
-//		return *this;
-//	}
-
-//  --------------------------------------------------------------------------------
-
-//	auto & operator=(Vector const & other) // bad
-//	{
-//		std::print("Vector::operator= (2)\n");
-//
-//		if (this != &other)
-//		{
-//			auto array = other.m_size ? new int[other.m_size]{} : nullptr;
-//
-//			std::ranges::copy(other.m_array, other.m_array + other.m_size, array);
-//
-//			delete[] std::exchange(m_array, array);
-//
-//			m_size = other.m_size;
-//		}
-//
-//		return *this;
-//	}
-
-//  --------------------------------------------------------------------------------
-
-//	auto & operator=(Vector && other) // bad
-//	{
-//		std::print("Vector::operator= (3)\n");
-//
-//		if (this != &other)
-//		{
-//			delete[] m_array;
-//
-//			m_array = std::exchange(other.m_array, nullptr);
-//
-//			m_size  = std::exchange(other.m_size,  0      );
-//		}
-//
-//		return *this;
-//	}
-
-//  --------------------------------------------------------------------------------
-
-	auto & operator=(Vector other)
-	{
-		std::print("Vector::operator= (4)\n");
-
-		swap(other);
-
-		return *this;
-	}
-
-//  --------------------------------------------------------------------------------
-
-	void swap(Vector & other)
-	{
-		std::swap(m_array, other.m_array);
-
-		std::swap(m_size,  other.m_size );
-	}
-
-private :
-
-	int * m_array = nullptr;
-
-	std::size_t m_size = 0;
-};
-
-////////////////////////////////////////////////////////////////////////////////////
-
-void swap(Vector & lhs, Vector & rhs)
-{
-	lhs.swap(rhs);
+	return std::abs(x - y) < epsilon;
 }
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 int main()
 {
-	Vector vector_1;
+    boost::rational < int > x = 1, y(2, 1);
 
-	Vector vector_2 = { 1, 2, 3, 4, 5 };
+//  ------------------------------------------------------
 
-	Vector vector_3 = vector_2;
+	assert(equal(boost::rational_cast < double > (x), 1));
 
-	Vector vector_4 = std::move(vector_3);
+//  ------------------------------------------------------
 
-//  --------------------------------------
+	assert((x += y) == boost::rational < int > (+3, 1));
+	
+	assert((x -= y) == boost::rational < int > (+1, 1));
 
-	vector_3 = vector_2;
+	assert((x *= y) == boost::rational < int > (+2, 1));
 
-	vector_4 = std::move(vector_3);
+	assert((x /= y) == boost::rational < int > (+1, 1));
 
-//  --------------------------------------
+//  ------------------------------------------------------
 
-	swap(vector_1, vector_2);
+	assert((x ++  ) == boost::rational < int > (+1, 1));
+
+	assert((x --  ) == boost::rational < int > (+2, 1));
+
+	assert((  ++ y) == boost::rational < int > (+3, 1));
+
+	assert((  -- y) == boost::rational < int > (+2, 1));
+
+//  ------------------------------------------------------
+
+	assert((x +  y) == boost::rational < int > (+3, 1));
+
+	assert((x -  y) == boost::rational < int > (-1, 1));
+
+	assert((x *  y) == boost::rational < int > (+2, 1));
+
+	assert((x /  y) == boost::rational < int > (+1, 2));
+
+//  ------------------------------------------------------
+
+	assert((x += 1) == boost::rational < int > (+2, 1));
+
+	assert((x +  1) == boost::rational < int > (+3, 1));
+
+	assert((1 +  y) == boost::rational < int > (+3, 1));
+
+	assert((1 +  1) == boost::rational < int > (+2, 1));
+
+//  ------------------------------------------------------
+
+	assert((x <  y) == 0);
+
+	assert((x >  y) == 0);
+
+	assert((x <= y) == 1);
+
+	assert((x >= y) == 1);
+
+	assert((x == y) == 1);
+
+	assert((x != y) == 0);
+
+//  ------------------------------------------------------
+
+	std::stringstream stream_1("1/2");
+
+	std::stringstream stream_2;
+
+//  ------------------------------------------------------
+
+	stream_1 >> x;
+
+	stream_2 << x;
+
+//  ------------------------------------------------------
+
+	assert(stream_2.str() == stream_1.str());
 }
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////

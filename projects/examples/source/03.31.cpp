@@ -1,83 +1,89 @@
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
-// section : Rvalue References
+// section : Operator Overloading
 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
-// content : Copy Elision
+// content : Operator <=>
 //
-// content : Return Value Optimization
+// content : Ordering std::strong_ordering
 //
-// content : Named Return Value Optimization
-//
-// content : Preventing Optimizations
+// content : Rewritten Expressions
 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
-#include <print>
-#include <utility>
+#include <cassert>
+#include <compare>
 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
 public :
 
-	Entity(               ) { std::print("Entity:: Entity (1)\n"); }
+    Entity(int x, int y) : m_x(x), m_y(y) {}
 
-	Entity(Entity const & ) { std::print("Entity:: Entity (2)\n"); }
+//  --------------------------------------------------
 
-	Entity(Entity       &&) { std::print("Entity:: Entity (3)\n"); }
+    auto operator<=>(Entity const & other) const
+    { 
+        auto comparison = m_x <=> other.m_x;
 
-   ~Entity(               ) { std::print("Entity::~Entity    \n"); }
+        if (comparison != std::strong_ordering::equal)
+        {
+            return comparison;
+        }
+
+        return m_y <=> other.m_y;
+    }
+
+//  --------------------------------------------------
+
+    auto operator== (Entity const & other) const
+    {
+        return m_x == other.m_x && m_y == other.m_y;
+    }
+
+private :
+
+    int m_x = 0, m_y = 0;
 };
 
-////////////////////////////////////////////////////////////////////
-
-auto make_entity_v1() 
-{
-	std::print("make_entity_v1\n");
-
-	return Entity(); 
-}
-
-////////////////////////////////////////////////////////////////////
-
-auto make_entity_v2()
-{
-	std::print("make_entity_v2\n");
-
-	Entity entity;
-
-//	return std::move(entity); // error
-	
-	return entity;
-}
-
-////////////////////////////////////////////////////////////////////
-
-auto make_entity_v3(Entity entity)
-{
-	std::print("make_entity_v3\n");
-
-	return entity;
-}
-
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    [[maybe_unused]] auto entity_1 = make_entity_v1();
-	
-	[[maybe_unused]] auto entity_2 = make_entity_v2();
+    Entity entity_1(1, 1);
 
-//  ----------------------------------------------------------
+    Entity entity_2(2, 2);
 
-	[[maybe_unused]] auto entity_3 = make_entity_v3(Entity());
+//  ------------------------------------------------------------------------
+
+    assert((entity_1 <=> entity_2) <  0);
+
+    assert((entity_2 <=> entity_2) == 0);
+
+    assert((entity_2 <=> entity_1) >  0);
+
+//  ------------------------------------------------------------------------
+
+    assert((entity_1 <   entity_2) == 1); // support : compiler-explorer.com
+
+    assert((entity_1 >   entity_2) == 0);
+
+    assert((entity_1 <=  entity_2) == 1);
+
+    assert((entity_1 >=  entity_2) == 0);
+
+//  ------------------------------------------------------------------------
+
+    assert((entity_1 ==  entity_2) == 0); // support : compiler-explorer.com
+
+    assert((entity_1 !=  entity_2) == 1);
 }
 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////

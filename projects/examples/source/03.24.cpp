@@ -1,65 +1,42 @@
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-// section : Dynamic Polymorphism
+// section : Rvalue References
 
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-// content : Wrapper std::any
-//
-// content : Function std::any_cast
-//
-// content : Operator ""s
-//
-// content : Namespace std::literals
+// content : Extending Temporary Objects Lifetime
 
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-#include <any>
 #include <cassert>
-#include <cmath>
-#include <string>
 
-///////////////////////////////////////////////////////////////
-
-using namespace std::literals;
-
-///////////////////////////////////////////////////////////////
-
-auto equal(double x, double y, double epsilon = 1e-6)
-{
-	return std::abs(x - y) < epsilon;
-}
-
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
 int main()
 {
-	std::any any;
+	auto x = 1.0;
 
-//  -----------------------------------------------------------
+//  ----------------------------------------------
 
-	if (any = 1; any.type() == typeid(int))
-	{
-		assert(std::any_cast < int > (any) == 1);
-	}
+//	[[maybe_unused]] int       &  y1 = x; // error
 
-//  -----------------------------------------------------------
+	[[maybe_unused]] int const &  y2 = x;
 
-	if (any = 2.0; any.type() == typeid(double))
-	{
-		assert(equal(std::any_cast < double > (any), 2.0));
-	}
+	[[maybe_unused]] int       && y3 = x;
 
-//  -----------------------------------------------------------
+	[[maybe_unused]] int const && y4 = x;
 
-	if (any = "aaaaa"s; any.type() == typeid(std::string))
-	{
-		assert(std::any_cast < std::string > (any) == "aaaaa");
-	}
+//  ----------------------------------------------
+
+	assert(&y2 != &y3);
+
+	assert(&y2 != &y4);
+
+	assert(&y3 != &y4);
 }
 
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////

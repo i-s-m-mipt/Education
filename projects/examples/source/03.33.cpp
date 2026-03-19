@@ -1,113 +1,72 @@
-//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 // section : Operator Overloading
 
-//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
-// content : Rational Arithmetic
-//
-// content : Library Boost.Rational
+// content : Ordering std::partial_ordering
 
-//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <cmath>
-#include <sstream>
+#include <compare>
 
-//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
-#include <boost/rational.hpp>
-
-//////////////////////////////////////////////////////////
-
-auto equal(double x, double y, double epsilon = 1e-6)
+class Entity
 {
-	return std::abs(x - y) < epsilon;
-}
+public :
 
-//////////////////////////////////////////////////////////
+    Entity(int x, int y) : m_x(x), m_y(y) {}
+
+//  -------------------------------------------------------------------
+
+    auto operator<=>(Entity const & other) const
+    {
+        if (m_x == 0 || other.m_x == 0)           
+        { 
+            return std::partial_ordering::unordered;
+        }
+
+        if (m_x < other.m_x) { return std::partial_ordering::less;    }
+
+        if (m_x > other.m_x) { return std::partial_ordering::greater; }
+
+        return std::partial_ordering::equivalent;
+    }
+
+private :
+
+    int m_x = 0, m_y = 0;
+};
+
+////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    boost::rational < int > x = 1, y(2, 1);
+    Entity entity_1(1, 1);
+    
+    Entity entity_2(2, 2);
 
-//  ------------------------------------------------------
+    Entity entity_3(2, 3);
 
-	assert(equal(boost::rational_cast < double > (x), 1));
+    Entity entity_4(0, 4);
 
-//  ------------------------------------------------------
+//  --------------------------------------------------------------------
 
-	assert((x += y) == boost::rational < int > (+3, 1));
-	
-	assert((x -= y) == boost::rational < int > (+1, 1));
+    assert((entity_1 <=> entity_2) <  0);
 
-	assert((x *= y) == boost::rational < int > (+2, 1));
+    assert((entity_2 <=> entity_3) == 0);
 
-	assert((x /= y) == boost::rational < int > (+1, 1));
+    assert((entity_2 <=> entity_1) >  0);
 
-//  ------------------------------------------------------
+//  --------------------------------------------------------------------
 
-	assert((x ++  ) == boost::rational < int > (+1, 1));
-
-	assert((x --  ) == boost::rational < int > (+2, 1));
-
-	assert((  ++ y) == boost::rational < int > (+3, 1));
-
-	assert((  -- y) == boost::rational < int > (+2, 1));
-
-//  ------------------------------------------------------
-
-	assert((x +  y) == boost::rational < int > (+3, 1));
-
-	assert((x -  y) == boost::rational < int > (-1, 1));
-
-	assert((x *  y) == boost::rational < int > (+2, 1));
-
-	assert((x /  y) == boost::rational < int > (+1, 2));
-
-//  ------------------------------------------------------
-
-	assert((x += 1) == boost::rational < int > (+2, 1));
-
-	assert((x +  1) == boost::rational < int > (+3, 1));
-
-	assert((1 +  y) == boost::rational < int > (+3, 1));
-
-	assert((1 +  1) == boost::rational < int > (+2, 1));
-
-//  ------------------------------------------------------
-
-	assert((x <  y) == 0);
-
-	assert((x >  y) == 0);
-
-	assert((x <= y) == 1);
-
-	assert((x >= y) == 1);
-
-	assert((x == y) == 1);
-
-	assert((x != y) == 0);
-
-//  ------------------------------------------------------
-
-	std::stringstream stream_1("1/2");
-
-	std::stringstream stream_2;
-
-//  ------------------------------------------------------
-
-	stream_1 >> x;
-
-	stream_2 << x;
-
-//  ------------------------------------------------------
-
-	assert(stream_2.str() == stream_1.str());
+    assert((entity_1 <=> entity_4) == std::partial_ordering::unordered);
 }
 
-//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////

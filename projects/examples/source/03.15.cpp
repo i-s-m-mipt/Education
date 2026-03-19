@@ -1,66 +1,139 @@
-///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
-// section : Object Relations
+// section : Dynamic Polymorphism
 
-///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
-// content : Empty Classes
+// content : Upcasting Type Conversions
 //
-// content : Attribute [[no_unique_address]]
+// content : Static and Dynamic Types
 //
-// content : Empty Base Optimization
+// content : Slicing Objects
+//
+// content : Dynamic Polymorphism
+//
+// content : Virtual Functions
+//
+// content : Function Specifier virtual
+//
+// content : Overriding Functions
+//
+// content : Function Specifier override
+//
+// content : Function and Class Specifier final
+//
+// content : Range-Based Statement for
+//
+// content : Virtual Destructors
 
-///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
-// support : Boost.CompressedPair
+#include <print>
+#include <vector>
 
-///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
-class Entity_v1 {};
+class Entity 
+{
+public :
 
-///////////////////////////////////////////////////////////////////////////////////////
+// ~Entity() = default; // error
 
-class Entity_v2 { public : char x = '\0';                       Entity_v1 entity_v1; };
+//  ------------------------------------
 
-class Entity_v3 { public : char x = '\0'; [[no_unique_address]] Entity_v1 entity_v1; };
+	virtual ~Entity()
+	{
+		std::print("Entity::~Entity\n");
+	}
 
-///////////////////////////////////////////////////////////////////////////////////////
+//  ------------------------------------
 
-class Client_v1 : public 		 Entity_v1 {};
+	virtual void test() const
+	{ 
+		std::print("Entity::test\n");
+	}
+};
 
-class Client_v2 : public virtual Entity_v1 {};
+/////////////////////////////////////////////////////////////
 
-class Server_v1 : public 		 Entity_v1 {};
+class Client : public Entity
+{
+public :
 
-class Server_v2 : public virtual Entity_v1 {};
+   ~Client() override
+	{
+		std::print("Client::~Client\n");
+	}
 
-///////////////////////////////////////////////////////////////////////////////////////
+//  ------------------------------------
 
-class Router_v1 : public Client_v1, public Server_v1 {};
+	void test() const override final
+	{ 
+		std::print("Client::test\n");
+	}
+};
 
-class Router_v2 : public Client_v2, public Server_v2 {};
+/////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////
+class Server final : public Entity 
+{
+public:
+
+   ~Server() override
+	{
+		std::print("Server::~Server\n");
+	}
+};
+
+/////////////////////////////////////////////////////////////
+
+class Router : private Entity {};
+
+/////////////////////////////////////////////////////////////
 
 int main()
 {
-	static_assert(sizeof(Entity_v1) == 1);
+//  std::vector < Client > clients; // bad
 
-//  --------------------------------------
+//  std::vector < Server > servers; // bad
 
-	static_assert(sizeof(Entity_v2) == 2);
+//  std::vector < Router > routers; // bad
 
-	static_assert(sizeof(Entity_v3) == 1);
+//  ---------------------------------------------------------
 
-//  --------------------------------------
+	[[maybe_unused]] Entity * entity_1 = new Client;
 
-	static_assert(sizeof(Router_v1) == 2);
+	[[maybe_unused]] Entity * entity_2 = new Server;
 
-	static_assert(sizeof(Router_v2) != 1);
+//	[[maybe_unused]] Entity * entity_3 = new Router; // error
+
+//  ---------------------------------------------------------
+
+	std::vector < Entity * > entities;
+
+//  ---------------------------------------------------------
+
+    entities.push_back(entity_1);
+
+	entities.push_back(entity_2);
+
+//  ---------------------------------------------------------
+
+    for (auto entity : entities)
+    {
+        entity->test();
+    }
+
+//  ---------------------------------------------------------
+
+    for (auto entity : entities)
+    {
+        delete entity;
+    }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
