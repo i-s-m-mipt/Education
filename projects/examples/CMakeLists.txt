@@ -431,7 +431,6 @@ set(debug
     14.26
     14.27
     14.28
-    14.30
     14.31
     14.32
     14.34
@@ -620,7 +619,6 @@ set(release
     14.36
     14.41
     14.42
-    14.43
 )
 
 #############################################################################################
@@ -648,6 +646,18 @@ target_compile_options     (10.41 PRIVATE -Wall -Wextra -Wpedantic -O3)
 target_link_libraries      (10.41 PRIVATE ${Boost_LIBRARIES})
 
 target_link_libraries      (10.41 PRIVATE Python::Python)
+
+#############################################################################################
+
+add_executable             (14.30 source/14.30.cpp)
+
+target_compile_options     (14.30 PRIVATE -Wall -Wextra -Wpedantic -O0)
+
+target_link_libraries      (14.30 PRIVATE benchmark::benchmark)
+
+target_link_libraries      (14.30 PRIVATE TBB::tbb)
+
+target_link_libraries      (14.30 PRIVATE /usr/lib/gcc/x86_64-linux-gnu/13/libatomic.a)
 
 #############################################################################################
 

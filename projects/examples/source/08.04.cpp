@@ -24,8 +24,6 @@ struct Timestamp
 
     unsigned int month  : 4 = 0;
 
-    unsigned int dummy  : 6 = 0; 
-
     unsigned int year       = 0;
 };
 

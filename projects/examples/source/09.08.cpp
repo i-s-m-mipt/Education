@@ -29,12 +29,16 @@ class Controller : private boost::noncopyable
 {
 public :
 
+    virtual ~Controller() = default;
+
+//  --------------------------------
+
     void increase()
     {
         ++m_counter;
     }
 
-//  --------------------------
+//  --------------------------------
 
     void decrease()
     {
@@ -52,7 +56,7 @@ private :
 
     virtual void clear() = 0;
 
-//  --------------------------
+//  --------------------------------
 
     std::size_t m_counter = 0;
 };
