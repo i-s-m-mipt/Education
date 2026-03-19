@@ -1,81 +1,77 @@
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 // chapter : Algorithms and Ranges
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 // section : Lambda Expressions
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
-// content : Any-Based Pattern Visitor
+// content : Variant-Based Pattern Visitor
 //
-// content : Type std::type_index
-//
-// content : Container std::unordered_map
+// content : Function std::visit
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
-#include <any>
-#include <functional>
-#include <iterator>
 #include <print>
-#include <string>
-#include <typeindex>
-#include <unordered_map>
-#include <utility>
-#include <vector>
+#include <variant>
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
-using namespace std::literals;
+class Client 
+{ 
+public : 
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+    void test() const 
+    { 
+        std::print("Client::test\n"); 
+    } 
+};
 
-template < typename T > class Visitor
+///////////////////////////////////////////////////////////////////
+
+class Server 
+{ 
+public : 
+
+    void test() const 
+    { 
+        std::print("Server::test\n"); 
+    } 
+};
+
+///////////////////////////////////////////////////////////////////
+
+using entity_t = std::variant < Client, Server > ;
+
+///////////////////////////////////////////////////////////////////
+
+class Visitor_v1
 {
 public :
 
-    void operator()(std::any const & any) const
-    {
-        std::print("Visitor::operator() : any = {}\n", std::any_cast < T > (any));
-    }
+    void operator()(Client const & client) const { client.test(); }
+
+    void operator()(Server const & server) const { server.test(); }
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+template < typename ... Bs > class Visitor_v2 : public Bs ... 
+{ 
+public :
+
+    using Bs::operator()...;
+};
+
+///////////////////////////////////////////////////////////////////
 
 int main()
-{
-    using alias_1 = int;
+{ 
+    std::visit(             Visitor_v1   (), entity_t(Client()));
 
-    using alias_2 = double;
-
-    using alias_3 = std::string;
-
-//  -------------------------------------------------------------------------------------------
-
-    std::unordered_map < std::type_index, std::function < void(std::any const &) > > visitors =
-    {
-        std::make_pair(std::type_index(typeid(alias_1)), Visitor < alias_1 > ()),
-
-        std::make_pair(std::type_index(typeid(alias_2)), Visitor < alias_2 > ()),
-        
-        std::make_pair(std::type_index(typeid(alias_3)), Visitor < alias_3 > ())
-    };
-
-//  -------------------------------------------------------------------------------------------
-
-    for (auto const & any : std::vector < std::any > ({ 1, 2.0, "aaaaa"s })) 
-    {
-        std::type_index type_index(any.type());
-
-    //  ------------------------------------------------------------------------------
-
-        if (auto iterator = visitors.find(type_index); iterator != std::end(visitors))
-        {
-            iterator->second(any);
-        }
-    }
+    std::visit(Visitor_v2 < Visitor_v1 > (), entity_t(Client()));
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////

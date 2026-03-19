@@ -1,97 +1,52 @@
-///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Algorithms and Ranges
 
-///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 // section : Ranges and Views
 
-///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Views
+// content : Algorithm std::ranges::max_element
 //
-// content : View std::ranges::views::iota
+// content : Dangling Iterators
 //
-// content : View std::ranges::views::istream
-//
-// content : View std::ranges::views::split
-//
-// content : View std::ranges::views::transform
-//
-// content : View std::ranges::views::all
-//
-// content : View std::ranges::views::take
-//
-// content : Concept std::ranges::view
-//
-// content : Type Alias std::ranges::range_value_t
+// content : Type std::ranges::dangling
 
-///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <algorithm>
 #include <cassert>
 #include <ranges>
-#include <sstream>
-#include <string>
+#include <type_traits>
 #include <vector>
 
-///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
-using namespace std::literals;
+auto   make_vector_v1() {        std::vector < int > vector = { 1, 2, 3, 4, 5 }; return vector; }
 
-///////////////////////////////////////////////////////////////////////////////////////
+auto & make_vector_v2() { static std::vector < int > vector = { 1, 2, 3, 4, 5 }; return vector; }
 
-template < std::ranges::view V > auto make_vector(V view) 
-{
-    std::vector < std::ranges::range_value_t < V > > vector;
-
-    if constexpr (std::ranges::sized_range < V > )
-    {
-        vector.reserve(std::size(view));
-    }
-
-    std::ranges::copy(view, std::back_inserter(vector));
-
-    return vector;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    for ([[maybe_unused]] auto element : std::ranges::views::iota(1, 5));
+	auto iterator_1 = std::ranges::max_element(make_vector_v1());
+
+	auto iterator_2 = std::ranges::max_element(make_vector_v2());
 
 //  -----------------------------------------------------------------------------------
 
-    std::stringstream stream("1 2 3 4 5 a");
+	static_assert(std::is_same_v < decltype(iterator_1), std::ranges::dangling > == 1);
+
+	static_assert(std::is_same_v < decltype(iterator_2), std::ranges::dangling > == 0);
 
 //  -----------------------------------------------------------------------------------
 
-    for ([[maybe_unused]] auto element : std::ranges::views::istream < int > (stream));
+//	assert(*iterator_1 == 5); // error
 
-//  -----------------------------------------------------------------------------------
-
-    for ([[maybe_unused]] auto element : std::ranges::views::split("1 2 3 4 5"s, ' '));
-
-//  -----------------------------------------------------------------------------------
-
-    std::vector < int > vector = { 3, 2, 1, 4, 5 };
-
-//  -----------------------------------------------------------------------------------
-
-    auto lambda = [](auto x){ return x; };
-
-//  -----------------------------------------------------------------------------------
-
-    auto view = std::ranges::views::transform(std::ranges::views::all(vector), lambda);
-
-//  -----------------------------------------------------------------------------------
-
-    std::ranges::sort(std::ranges::views::take(vector, 3));
-
-//  -----------------------------------------------------------------------------------
-
-    assert(make_vector(view) == std::vector < int > ({ 1, 2, 3, 4, 5 }));
+	assert(*iterator_2 == 5);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////

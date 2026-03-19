@@ -1,124 +1,50 @@
-////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Algorithms and Ranges
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
 // section : Ranges and Views
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Cartesian Product Algorithm
+// content : Types std::make_index_sequence and std::index_sequence
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
 #include <cstddef>
-#include <iterator>
+#include <print>
+#include <string>
 #include <tuple>
 #include <utility>
-#include <vector>
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
-auto next(std::vector < std::size_t > & steps, std::vector < std::size_t > const & sizes)
+using namespace std::literals;
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template < std::size_t ... Is > void show(auto && tuple, std::index_sequence < Is ... > )
 {
-	auto has_next = false;
+    std::print("show : tuple = {{ ");
 
-	for (auto i = std::ssize(steps) - 1; i >= 0; --i)
-	{
-		++steps[i];
+    (..., (std::print("{} ", std::get < Is > (tuple))));
 
-		if (steps[i] == sizes[i])
-		{
-			steps[i] = 0;
-		}
-		else
-		{
-			has_next = true;
-
-			break;
-		}
-	}
-
-	return has_next;
+    std::print("}}\n");
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
-template < std::size_t ... Is > void invoke
-(
-	auto && f, auto && tuple, std::vector < std::size_t > const & steps,
-
-	std::index_sequence < Is ... >
-)
+template < typename ... Ts > void show(const std::tuple < Ts ... > & tuple)
 {
-	f(*std::next(std::get < Is > (tuple).first, steps[Is])...);
+    show(tuple, std::make_index_sequence < sizeof...(Ts) > ());
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-template < typename ... Is > auto cartesian(std::pair < Is, Is > ... pairs)
-{
-	std::vector < std::tuple < typename std::iterator_traits < Is > ::value_type ... > > tuples;
-
-	std::vector < std::size_t > steps(sizeof...(pairs), 0);
-
-	std::vector < std::size_t > sizes = 
-	{ 
-		static_cast < std::size_t > (std::distance(pairs.first, pairs.second))... 
-	};
-
-	auto lambda = [&tuples](auto ... xs){ tuples.emplace_back(xs...); };
-
-	do
-	{
-		invoke
-		(
-			lambda, std::tie(pairs...), steps, std::make_index_sequence < sizeof...(pairs) > ()
-		);
-	} 
-	while (next(steps, sizes));
-
-	return tuples;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::vector < int > vector_1 = { 1, 2, 3, 4, 5 };
-
-	std::vector < int > vector_2 = { 1, 2, 3 };
-
-//  -------------------------------------------------------------
-
-	auto tuples = cartesian
-	(	
-		std::make_pair(std::begin(vector_1), std::end(vector_1)),
-
-		std::make_pair(std::begin(vector_2), std::end(vector_2))
-	);
-
-//  -------------------------------------------------------------
-
-	auto size = std::size(vector_2);
-
-//  -------------------------------------------------------------
-
-	for (auto i = 0uz; i < std::size(vector_1); ++i)
-	{
-		for (auto j = 0uz; j < size; ++j)
-		{
-			auto tuple = tuples[i * size + j];
-
-		//  ----------------------------------------------
-
-			assert(std::get < 0 > (tuple) == vector_1[i]);
-
-			assert(std::get < 1 > (tuple) == vector_2[j]);
-		}
-	}
+    show(std::make_tuple(1, 2.0, "aaaaa"));
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////

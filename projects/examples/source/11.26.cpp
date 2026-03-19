@@ -1,50 +1,97 @@
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Algorithms and Ranges
 
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 // section : Ranges and Views
 
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
-// content : Types std::make_index_sequence and std::index_sequence
+// content : Views
+//
+// content : View std::ranges::views::iota
+//
+// content : View std::ranges::views::istream
+//
+// content : View std::ranges::views::split
+//
+// content : View std::ranges::views::transform
+//
+// content : View std::ranges::views::all
+//
+// content : View std::ranges::views::take
+//
+// content : Concept std::ranges::view
+//
+// content : Type Alias std::ranges::range_value_t
 
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
-#include <cstddef>
-#include <print>
+#include <algorithm>
+#include <cassert>
+#include <ranges>
+#include <sstream>
 #include <string>
-#include <tuple>
-#include <utility>
+#include <vector>
 
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 using namespace std::literals;
 
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
-template < std::size_t ... Is > void show(auto && tuple, std::index_sequence < Is ... > )
+template < std::ranges::view V > auto make_vector(V view) 
 {
-    std::print("show : tuple = {{ ");
+    std::vector < std::ranges::range_value_t < V > > vector;
 
-    (..., (std::print("{} ", std::get < Is > (tuple))));
+    if constexpr (std::ranges::sized_range < V > )
+    {
+        vector.reserve(std::size(view));
+    }
 
-    std::print("}}\n");
+    std::ranges::copy(view, std::back_inserter(vector));
+
+    return vector;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
-
-template < typename ... Ts > void show(const std::tuple < Ts ... > & tuple)
-{
-    show(tuple, std::make_index_sequence < sizeof...(Ts) > ());
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    show(std::make_tuple(1, 2.0, "aaaaa"));
+    for ([[maybe_unused]] auto element : std::ranges::views::iota(1, 5));
+
+//  -----------------------------------------------------------------------------------
+
+    std::stringstream stream("1 2 3 4 5 a");
+
+//  -----------------------------------------------------------------------------------
+
+    for ([[maybe_unused]] auto element : std::ranges::views::istream < int > (stream));
+
+//  -----------------------------------------------------------------------------------
+
+    for ([[maybe_unused]] auto element : std::ranges::views::split("1 2 3 4 5"s, ' '));
+
+//  -----------------------------------------------------------------------------------
+
+    std::vector < int > vector = { 3, 2, 1, 4, 5 };
+
+//  -----------------------------------------------------------------------------------
+
+    auto lambda = [](auto x){ return x; };
+
+//  -----------------------------------------------------------------------------------
+
+    auto view = std::ranges::views::transform(std::ranges::views::all(vector), lambda);
+
+//  -----------------------------------------------------------------------------------
+
+    std::ranges::sort(std::ranges::views::take(vector, 3));
+
+//  -----------------------------------------------------------------------------------
+
+    assert(make_vector(view) == std::vector < int > ({ 1, 2, 3, 4, 5 }));
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////

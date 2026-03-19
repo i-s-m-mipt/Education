@@ -1,128 +1,85 @@
-///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 // chapter : Algorithms and Ranges
 
-///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 // section : Lambda Expressions
 
-///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
-// content : Pattern Visitor
-//
-// content : Double Dispatching
+// content : Pattern Command
 
-///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
-#include <memory>
-#include <print>
+#include <cassert>
+#include <cstdint>
 
-///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
-class Visitor
+enum class State : std::uint8_t
+{
+	slow, fast
+};
+
+///////////////////////////////////////////////////////////////////////////////
+
+struct Entity
+{
+	State state = State::slow;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+
+class Command
 {
 public :
 
-    virtual ~Visitor() = default;
+	Command(Entity & entity, State state) : m_entity(entity), m_state(state) {}
 
-//  ----------------------------------------------------------
+//  ---------------------------------------------------------------------------
 
-    virtual void visit(class Client const * client) const = 0;
-    
-    virtual void visit(class Server const * server) const = 0;
+	void operator()() const
+	{
+		m_entity.state = m_state;
+	}
+
+private :
+
+	Entity & m_entity;
+
+	State m_state = State::slow;
 };
 
-///////////////////////////////////////////////////////////////////////
-
-class Entity
-{
-public :
-
-    virtual ~Entity() = default;
-
-//  -------------------------------------------------------
-
-    virtual void test() const = 0;
-
-//  -------------------------------------------------------
-
-    virtual void invoke(Visitor const & visitor) const = 0;
-};
-
-///////////////////////////////////////////////////////////////////////
-
-class Client : public Entity 
-{
-public :
-
-    void test() const override 
-    { 
-        std::print("Client::test\n");
-    }
-
-//  ---------------------------------------------------
-
-    void invoke(Visitor const & visitor) const override
-    { 
-        visitor.visit(this);
-    }
-};
-
-///////////////////////////////////////////////////////////////////////
-
-class Server : public Entity
-{
-public :
-
-    void test() const override 
-    { 
-        std::print("Server::test\n");
-    }
-
-//  ---------------------------------------------------
-
-    void invoke(Visitor const & visitor) const override
-    {
-        visitor.visit(this);
-    }
-};
-
-///////////////////////////////////////////////////////////////////////
-
-class Router : public Visitor
-{
-public :
-
-    void visit(Client const * client) const override 
-    { 
-        std::print("Router::visit (1)\n");
-
-        client->test();
-    }
-
-//  ------------------------------------------------
-
-    void visit(Server const * server) const override 
-    {
-        std::print("Router::visit (2)\n");
-
-        server->test();
-    }
-};
-
-///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::shared_ptr < Entity > entity = std::make_shared < Client > ();
+	Entity entity(State::slow);
 
-//  -------------------------------------------------------------------
+//  ---------------------------------------------------------
 
-    Router router;
+	Command command(entity, State::fast);
 
-//  -------------------------------------------------------------------
+//  ---------------------------------------------------------
 
-    entity->invoke(router);
+	command();
+
+//  ---------------------------------------------------------
+
+	assert(entity.state == State::fast);
+
+//  ---------------------------------------------------------
+
+	auto lambda = [&entity](){ entity.state = State::slow; };
+
+//  ---------------------------------------------------------
+
+	lambda();
+
+//  ---------------------------------------------------------
+
+	assert(entity.state == State::slow);
 }
 
-///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////

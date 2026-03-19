@@ -1,63 +1,56 @@
-///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Algorithms and Ranges
 
-///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 // section : Ranges and Views
 
-///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-// content : Ranges
+// content : Range-Based Statement for
 //
-// content : Concept std::ranges::range
-//
-// content : Concept std::ranges::sized_range
-//
-// content : Concept std::ranges::forward_range
-//
-// content : Concept std::ranges::bidirectional_range
-//
-// content : Concept std::ranges::random_access_range
+// content : Structured Bindings
 
-///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-#include <forward_list>
-#include <list>
-#include <ranges>
+#include <map>
 #include <vector>
 
-///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > class Vector : private std::vector < T >
+int main()
 {
-public :
+	int array[5]{};
 
-    using std::vector < T > ::begin;
+//  ---------------------------------------------------------------------------------
 
-	using std::vector < T > ::  end;
+	for (auto x = 0; auto & element : array) // support : cppinsights.io
+	{
+		element = ++x;
+	}
 
-	using std::vector < T > :: size;
-};
+//  ---------------------------------------------------------------------------------
 
-///////////////////////////////////////////////////////////////////////////////////
+	std::vector < int > vector(5, 0);
 
-static_assert(std::ranges::      range < Vector < int > > );
+//  ---------------------------------------------------------------------------------
 
-static_assert(std::ranges::sized_range < Vector < int > > );
+	for (auto x = 0; auto & element : vector)
+	{
+		element = ++x;
+	}
 
-///////////////////////////////////////////////////////////////////////////////////
+//  ---------------------------------------------------------------------------------
 
-static_assert(std::ranges::        sized_range < std::forward_list < int > > == 0);
+	std::map < int, int > map = { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 } };
 
-static_assert(std::ranges::      forward_range < std::forward_list < int > > == 1);
+//  ---------------------------------------------------------------------------------
 
-static_assert(std::ranges::bidirectional_range < std::        list < int > > == 1);
+	for (auto x = 0; auto & [first, second] : map)
+	{
+		second = ++x;
+	}
+}
 
-static_assert(std::ranges::random_access_range < std::      vector < int > > == 1);
-
-///////////////////////////////////////////////////////////////////////////////////
-
-int main() {}
-
-///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
