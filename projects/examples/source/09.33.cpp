@@ -1,284 +1,151 @@
-///////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-///////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 // section : Advanced Allocators
 
-///////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : List Allocator
+// content : Arena Allocator Adapter
 
-///////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
 #include <cstddef>
+#include <memory>
 #include <new>
 #include <print>
 #include <vector>
 
-///////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/noncopyable.hpp>
 
-///////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <benchmark/benchmark.h>
-
-///////////////////////////////////////////////////////////////////////////////////////
-
-class Allocator : private boost::noncopyable
+class Arena : private boost::noncopyable
 {
 public :
 
-	Allocator(std::size_t size, std::size_t step) : m_size(size), m_step(step)
+	Arena(std::size_t size) : m_size(size)
 	{
-		assert(m_size % m_step == 0 && m_step >= sizeof(Node));
+		m_begin = operator new(m_size, std::align_val_t(s_alignment));
+	}
 
-		resize();
+//  ------------------------------------------------------------------------------
+
+   ~Arena()
+	{
+		operator delete(m_begin, m_size, std::align_val_t(s_alignment));
+	}
+
+//  ------------------------------------------------------------------------------
+
+	auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
+	{
+		void * begin = get_byte(m_begin) + m_offset;
+
+		auto free = m_size - m_offset;
+
+		if (begin = std::align(alignment, size, begin, free); begin)
+		{
+			m_offset = m_size - free + size;
 			
-		m_begin = m_head;
-	}
-
-//  -----------------------------------------------------------------------------------
-
-   ~Allocator()
-	{
-		for (auto list : m_lists) 
-		{
-			operator delete(list, m_size, std::align_val_t(s_alignment));
-		}
-	}
-
-//  -----------------------------------------------------------------------------------
-
-	auto allocate() -> void *
-	{
-		if (!m_head)
-		{
-			if (m_offset == std::size(m_lists))
-			{
-				resize();
-			}
-			else 
-			{
-				m_head = get_node(m_lists[++m_offset - 1]);
-			}
-		}
-
-		auto node = m_head;
-
-		if (!node->next)
-		{
-			auto next = get_byte(node) + m_step;
-
-			if (next != get_byte(m_lists[m_offset - 1]) + m_size)
-			{
-				m_head = get_node(next);
-				
-				m_head->next = nullptr;
-			}
-			else 
-			{
-				m_head = m_head->next;
-			}
+			return begin;
 		}
 		else 
 		{
-			m_head = m_head->next;
+			return nullptr;
 		}
-
-		return node;
 	}
 
-//  -----------------------------------------------------------------------------------
+    void deallocate(void *, std::size_t) const {}
 
-	void deallocate(void * x)
-	{
-		auto node = get_node(x);
-		
-		node->next = m_head;
-		
-		m_head = node;
-	}
-
-//  -----------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------
 
 	void show() const
-	{ 
-		std::print("Allocator::show : ");
-
+	{
 		std::print
 		(
-			"m_size = {} m_step = {} m_begin = {:018} m_head = {:018} m_offset = {}\n",
+			"Arena::show : m_size = {} m_begin = {:018} m_offset = {:0>4}\n",
 
-			m_size, m_step, m_begin, static_cast < void * > (m_head), m_offset
+			m_size, m_begin, m_offset
 		);
 	}
 
 private :
-
-	struct Node 
-	{ 
-		Node * next = nullptr;
-	};
-
-//  -----------------------------------------------------------------------------------
 
 	auto get_byte(void * x) const -> std::byte *
 	{
 		return static_cast < std::byte * > (x);
 	}
 
-//  -----------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------
 
-	auto get_node(void * x) const -> Node *
-	{ 
-		return static_cast < Node * > (x);
-	}
-
-//  -----------------------------------------------------------------------------------
-
-	void resize()
-	{
-		m_head = get_node(operator new(m_size, std::align_val_t(s_alignment)));
-
-		m_head->next = nullptr;
-		
-		++m_offset;
-		
-		m_lists.push_back(m_head);
-	}
-
-//  -----------------------------------------------------------------------------------
-
-	std::size_t m_size = 0, m_step = 0, m_offset = 0;
+	std::size_t m_size = 0, m_offset = 0;
 
 	void * m_begin = nullptr;
-	
-	Node * m_head  = nullptr;
 
-	std::vector < void * > m_lists;
-
-//  -----------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------
 
 	static inline auto s_alignment = alignof(std::max_align_t);
 };
 
-///////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-void test_v1(benchmark::State & state)
+template < typename T > class Allocator
 {
-	auto kb = 1'024uz, mb = kb * kb, gb = kb * kb * kb;
+public :
 
-	std::vector < void * > vector(kb, nullptr);
+    using value_type = T;
 
-	for (auto element : state)
-	{
-		Allocator allocator(gb, mb);
+//  --------------------------------------------------------------------------------------------
 
-		for (auto i = 0uz; i < kb; ++i)
-		{ 
-			vector[i] = allocator.allocate();
-		}
+    Allocator(Arena & arena) : m_arena(&arena) {}
 
-		for (auto i = 0uz; i < kb; i += 2)
-		{ 
-			allocator.deallocate(vector[i]);
-		}
+//  --------------------------------------------------------------------------------------------
 
-		for (auto i = 0uz; i < kb; i += 2)
-		{ 
-			vector[i] = allocator.allocate();
-		}
+    template < typename U > Allocator(Allocator < U > const & other) : m_arena(other.m_arena) {}
 
-		for (auto i = 0uz; i < kb; ++i)
-		{ 
-			allocator.deallocate(vector[i]);
-		}
+//  --------------------------------------------------------------------------------------------
 
-		benchmark::DoNotOptimize(vector);
-	}
-}
+    auto allocate(std::size_t size) const
+    { 
+        return static_cast < T * > (m_arena->allocate(size * sizeof(T), alignof(T)));
+    }
 
-///////////////////////////////////////////////////////////////////////////////////////
+//  --------------------------------------------------------------------------------------------
 
-void test_v2(benchmark::State & state)
-{
-	auto kb = 1'024uz, mb = kb * kb;
+    void deallocate(T * x, std::size_t size) const
+    {
+        m_arena->deallocate(x, size * sizeof(T));
+    }
 
-	std::vector < void * > vector(kb, nullptr);
+private :
 
-	for (auto element : state)
-	{
-		for (auto i = 0uz; i < kb; ++i)
-		{ 
-			vector[i] = operator new(mb);
-		}
+    Arena * m_arena = nullptr;
+};
 
-		for (auto i = 0uz; i < kb; i += 2)
-		{
-			operator delete(vector[i], mb);
-		}
-
-		for (auto i = 0uz; i < kb; i += 2)
-		{
-			vector[i] = operator new(mb);
-		}
-
-		for (auto i = 0uz; i < kb; ++i)
-		{ 
-			operator delete(vector[i], mb);
-		}
-
-		benchmark::DoNotOptimize(vector);
-	}
-}
-
-///////////////////////////////////////////////////////////////////////////////////////
-
-BENCHMARK(test_v1);
-
-BENCHMARK(test_v2);
-
-///////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Allocator allocator(32, 8);
+	Arena arena(1'024);
 
-//  ------------------------------------------------
-	
-	allocator.show();          allocator.allocate(); 
-	
-	allocator.show(); auto x = allocator.allocate(); 
-	
-	allocator.show(); auto y = allocator.allocate(); 
-	
-	allocator.show();          allocator.allocate(); 
-	
-	allocator.show();          allocator.allocate();
+//  ----------------------------------------------------------------------------
 
-//  ------------------------------------------------
+    Allocator < int > allocator(arena);
+
+//  ----------------------------------------------------------------------------
+
+    std::vector < int, Allocator < int > > vector({ 1, 2, 3, 4, 5 }, allocator);
+
+//  ----------------------------------------------------------------------------
+
+    arena.show(); vector.push_back(1);
 	
-	allocator.show(); allocator.deallocate(x);
-	
-	allocator.show(); allocator.deallocate(y);
-
-//  ------------------------------------------------
-	
-	allocator.show(); auto z = allocator.allocate();
-	
-	allocator.show();
-
-//  ------------------------------------------------
-
-	assert(z == y);
-
-//  ------------------------------------------------
-
-	benchmark::RunSpecifiedBenchmarks();
+    arena.show();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,61 +1,38 @@
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // section : Dynamic Memory
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-// content : Virtual and Physical Address Spaces
+// content : Memory Access Granularity
 //
-// content : Kernel and User Spaces
+// content : Memory Alignment
 //
-// content : Stack, Heap, Data, BSS and Text Segments
+// content : Type Alias std::int8_t
 //
-// content : Memory Mappings
-//
-// content : Tools pgrep and pmap
-//
-// content : Page Tables
-//
-// content : Memory Management Unit
-//
-// content : Segmentation and Page Faults
+// content : Operator alignof
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-// support : pmap -x $(pgrep 09.18)
+#include <cstdint>
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-#include <iostream>
-#include <print>
+struct Entity_v1 { std::int8_t x = 0; std::int32_t y = 0; std::int16_t z = 0; };
 
-///////////////////////////////////////////////////////
+struct Entity_v2 { std::int8_t x = 0; std::int16_t y = 0; std::int32_t z = 0; };
 
-int main() 
+////////////////////////////////////////////////////////////////////////////////
+
+int main()
 {
-    auto const size = 100'000uz;
+	static_assert(sizeof(Entity_v1) == 12 && alignof(Entity_v1) == 4);
 
-//  ---------------------------------------------------
-
-    [[maybe_unused]]        int array_1[size]{};
-
-    [[maybe_unused]] static int array_2[size]{};
-
-//  ---------------------------------------------------
-
-	auto array_3 = new int[100'000'000]{};
-
-//  ---------------------------------------------------
-
-	std::print("main : enter char : "); std::cin.get();
-
-//  ---------------------------------------------------
-
-    delete[] array_3;
+	static_assert(sizeof(Entity_v2) ==  8 && alignof(Entity_v2) == 4);
 }
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
