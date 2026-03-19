@@ -1,113 +1,61 @@
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 // chapter : Number Processing
 
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
-// section : Random Numbers
+// section : Chrono Management
 
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
-// content : W.L.Putnam Mathematical Competition Problem
+// content : Time Points
 //
-// content : Vector Product Algorithm
+// content : Type std::chrono::time_point
 //
-// content : Operator *
+// content : Function std::chrono::floor
 //
-// content : Barycentric Coordinate Method
+// content : Type Alias std::chrono::days
+//
+// content : Formatting Dates and Times
+//
+// content : Unix Time
+//
+// content : Function std::time
+//
+// content : Y2038 Problem
 
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <cmath>
-#include <numbers>
-#include <random>
+#include <chrono>
+#include <ctime>
+#include <print>
 
-///////////////////////////////////////////////////////////////////////////
-
-struct Vector 
-{ 
-	double x = 0, y = 0, z = 0;
-};
-
-///////////////////////////////////////////////////////////////////////////
-
-auto operator*(Vector const & a, Vector const & b)
-{
-	return Vector
-	( 
-		a.y * b.z - a.z * b.y,
-
-	   -a.x * b.z + a.z * b.x,
-
-		a.x * b.y - a.y * b.x 
-	);
-}
-
-///////////////////////////////////////////////////////////////////////////
-
-auto equal(double x, double y, double epsilon = 1e-6)
-{
-	return std::abs(x - y) < epsilon;
-}
-
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	auto size = 100'000'000uz;
+	std::chrono::time_point < std::chrono::system_clock > epoch;
 
-//  -----------------------------------------------------------------------
+//  ------------------------------------------------------------------------
 
-	std::uniform_real_distribution distribution(0.0, 2 * std::numbers::pi);
+	auto now = std::chrono::system_clock::now();
 
-//  -----------------------------------------------------------------------
+//  ------------------------------------------------------------------------
 
-	std::default_random_engine engine;
+	std::print("main : now = {:%Y %B %d %H:%M:%S %Z}\n", now);
 
-//  -----------------------------------------------------------------------
+//  ------------------------------------------------------------------------
 
-	Vector PA(0, -1, 0);
+	auto delta = std::chrono::floor < std::chrono::days > (now - epoch);
 
-//  -----------------------------------------------------------------------
+//  ------------------------------------------------------------------------
 
-	auto counter = 0uz;
+	std::print("main : delta = {} (days)\n", delta.count());
 
-//  -----------------------------------------------------------------------
+//  ------------------------------------------------------------------------
 
-	for (auto i = 0uz; i < size; ++i)
-	{
-		auto w_B = distribution(engine);
-		
-		auto w_C = distribution(engine);
-
-	//  -----------------------------------------------------
-
-		Vector PB(std::cos(w_B), std::sin(w_B), 0);
-
-		Vector PC(std::cos(w_C), std::sin(w_C), 0);
-
-	//  -----------------------------------------------------
-
-		auto alpha_1 = (PA * PB).z;
-		
-		auto alpha_2 = (PB * PC).z;
-		
-		auto alpha_3 = (PC * PA).z;
-
-	//  -----------------------------------------------------
-
-		counter +=
-		(
-			(alpha_1 >= 0 && alpha_2 >= 0 && alpha_3 >= 0) ||
-			
-			(alpha_1 <= 0 && alpha_2 <= 0 && alpha_3 <= 0)
-		);
-	}
-
-//  -----------------------------------------------------------------------
-
-	assert(equal(1.0 * counter / size, 0.250, 1e-3));
+	assert(std::chrono::system_clock::to_time_t(now) == std::time(nullptr));
 }
 
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////

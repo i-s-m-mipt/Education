@@ -1,67 +1,87 @@
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Number Processing
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
-// section : Random Numbers
+// section : Chrono Management
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
-// content : Microbenchmarking
-//
-// content : Dynamic Branch Prediction
-//
-// content : Distribution std::uniform_int_distribution
+// content : Timing
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
+#include <cassert>
+#include <chrono>
 #include <cmath>
-#include <random>
+#include <cstddef>
+#include <print>
+#include <string>
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
-#include <benchmark/benchmark.h>
-
-/////////////////////////////////////////////////////////
-
-void test(benchmark::State & state) 
+template < typename D = std::chrono::duration < double > > class Timer
 {
-    auto argument = state.range(0);
+public :
 
-    std::uniform_int_distribution distribution(1, 1'000);
+	Timer(std::string const & scope) : m_scope(scope), m_begin(clock_t::now()) {}
 
-    std::default_random_engine engine;
+//  -----------------------------------------------------------------------------
 
-    for (auto element : state)
-    {
-        auto x = 0.0;
+   ~Timer()
+	{
+		std::print("{} : {:.6f}\n", m_scope, elapsed().count());
+	}
 
-        for (auto i = 0uz; i < 1'000; ++i)
-        {
-            if (distribution(engine) <= argument)
-            {
-                x += std::pow(std::sin(i), 2);
-            }
-            else
-            {
-                x += std::pow(std::cos(i), 2);
-            }
-        }
+//  -----------------------------------------------------------------------------
 
-        benchmark::DoNotOptimize(x);
-    }
+	auto elapsed() const
+	{
+		return std::chrono::duration_cast < D > (clock_t::now() - m_begin);
+	}
+
+private :
+
+	using clock_t = std::chrono::steady_clock;
+
+//  -----------------------------------------------------------------------------
+
+	std::string m_scope;
+
+	clock_t::time_point m_begin;
+};
+
+/////////////////////////////////////////////////////////////////////////////////
+
+auto calculate(std::size_t size)
+{
+	auto x = 0.0;
+
+	for (auto i = 0uz; i < size; ++i)
+	{
+		x += std::pow(std::sin(i), 2) + std::pow(std::cos(i), 2);
+	}
+
+	return x;
 }
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
-BENCHMARK(test)->DenseRange(0, 1'000, 50);
+auto equal(double x, double y, double epsilon = 1e-6)
+{
+	return std::abs(x - y) < epsilon;
+}
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    benchmark::RunSpecifiedBenchmarks();
+	Timer timer("main : timer");
+
+//  -----------------------------------------------
+
+	assert(equal(calculate(1'000'000), 1'000'000));
 }
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////

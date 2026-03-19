@@ -1,61 +1,53 @@
-////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 // chapter : Number Processing
 
-////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 // section : Chrono Management
 
-////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-// content : Time Points
+// content : Calendars
 //
-// content : Type std::chrono::time_point
+// content : Type std::chrono::year_month_day
 //
-// content : Function std::chrono::floor
+// content : Type std::chrono::year_month_weekday
 //
-// content : Type Alias std::chrono::days
-//
-// content : Formatting Dates and Times
-//
-// content : Unix Time
-//
-// content : Function std::time
-//
-// content : Y2038 Problem
+// content : Type std::chrono::hh_mm_ss
 
-////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-#include <cassert>
 #include <chrono>
-#include <ctime>
 #include <print>
 
-////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::chrono::time_point < std::chrono::system_clock > epoch;
+    auto now_1 = std::chrono::system_clock::now();
 
-//  ------------------------------------------------------------------------
+    auto now_2 = std::chrono::floor < std::chrono::days > (now_1);
 
-	auto now = std::chrono::system_clock::now();
+//  --------------------------------------------------------------
 
-//  ------------------------------------------------------------------------
+    std::chrono::year_month_day date(now_2);
 
-	std::print("main : now = {:%Y %B %d %H:%M:%S %Z}\n", now);
+//  --------------------------------------------------------------
 
-//  ------------------------------------------------------------------------
+    auto wday = std::chrono::year_month_weekday(now_2).weekday();
 
-	auto delta = std::chrono::floor < std::chrono::days > (now - epoch);
+//  --------------------------------------------------------------
 
-//  ------------------------------------------------------------------------
+	std::chrono::hh_mm_ss time(now_1 - now_2);
 
-	std::print("main : delta = {} (days)\n", delta.count());
+//  --------------------------------------------------------------
 
-//  ------------------------------------------------------------------------
+    std::print("main : date = {}\n", date);
 
-	assert(std::chrono::system_clock::to_time_t(now) == std::time(nullptr));
+    std::print("main : wday = {}\n", wday);
+
+	std::print("main : time = {}\n", time);
 }
 
-////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////

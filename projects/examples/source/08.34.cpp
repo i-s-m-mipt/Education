@@ -1,56 +1,95 @@
-//////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Number Processing
 
-//////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 // section : Chrono Management
 
-//////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-// content : Chrono Management
+// content : Timing
 //
-// content : Clocks
+// content : Library Boost.Timer
 //
-// content : Clock std::chrono::system_clock
-//
-// content : Epochs and Periods
-//
-// content : Unix Epoch
-//
-// content : Clock std::chrono::steady_clock
+// content : Type Alias std::chrono::nanoseconds
 
-//////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <chrono>
+#include <cmath>
+#include <cstddef>
 #include <print>
+#include <string>
 
-//////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+#include <boost/timer/timer.hpp>
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+template < typename D = std::chrono::duration < double > > class Timer
+{
+public :
+
+	Timer(std::string const & scope) : m_scope(scope) {}
+
+//  ---------------------------------------------------------------------------------
+
+   ~Timer() 
+	{
+		std::print("{} : {:.6f}\n", m_scope, elapsed().count());
+	}
+
+//  ---------------------------------------------------------------------------------
+
+	auto elapsed() const
+	{
+		return std::chrono::duration_cast < D > (duration_t(m_timer.elapsed().wall));
+	}
+
+private :
+
+	using duration_t = std::chrono::nanoseconds;
+
+//  ---------------------------------------------------------------------------------
+
+	std::string m_scope;
+	
+	boost::timer::cpu_timer m_timer;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+auto calculate(std::size_t size)
+{
+	auto x = 0.0;
+
+	for (auto i = 0uz; i < size; ++i)
+	{
+		x += std::pow(std::sin(i), 2) + std::pow(std::cos(i), 2);
+	}
+
+	return x;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+auto equal(double x, double y, double epsilon = 1e-6)
+{
+	return std::abs(x - y) < epsilon;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::chrono::system_clock::time_point epoch;
+    Timer timer("main : timer");
 
-//  --------------------------------------------------
+//  -----------------------------------------------
 
-    std::print("main : epoch = {}\n", epoch);
-
-//  --------------------------------------------------
-
-    std::chrono::system_clock::period ratio;
-
-//  --------------------------------------------------
-
-    assert(ratio.num == 1);
-
-	assert(ratio.den == 1'000'000'000);
-
-//  --------------------------------------------------
-
-    assert(std::chrono::system_clock::is_steady == 0);
-
-    assert(std::chrono::steady_clock::is_steady == 1);
+	assert(equal(calculate(1'000'000), 1'000'000));
 }
 
-//////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////

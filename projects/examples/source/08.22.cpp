@@ -1,83 +1,86 @@
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Number Processing
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 // section : Floating-Point Numbers
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Comparing Floating-Point Numbers
+// content : Numerical Methods
 //
-// content : D.E.Knuth Implementation
+// content : Derivatives
+//
+// content : Special Mathematical Functions
+//
+// content : Library Boost.Math
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <algorithm>
 #include <cassert>
-#include <cmath>
 #include <limits>
+#include <string>
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
-auto equal_v1(double x, double y)
+#include <boost/math/constants/constants.hpp>
+#include <boost/math/special_functions/gamma.hpp>
+#include <boost/multiprecision/cpp_bin_float.hpp>
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename T > auto derivative(auto && f, T x, T dx = 1e-9)
 {
-	return std::abs(x - y) < std::numeric_limits < double > ::epsilon();
+    auto a = f(x + 1 * dx) - f(x - 1 * dx);
+
+    auto b = f(x + 2 * dx) - f(x - 2 * dx);
+
+    auto c = f(x + 3 * dx) - f(x - 3 * dx);
+
+    return (15 * a / 2 - 6 * b / 4 + 1 * c / 6) / (10 * dx);
 }
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
-auto equal_v2(double x, double y, double epsilon = 1e-6)
+auto calculate_v1(boost::multiprecision::cpp_bin_float_100 const & x)
 {
-	return std::abs(x - y) < epsilon;
+    return boost::multiprecision::sin(x);
 }
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
-auto equal_v3(double x, double y, double scale)
+auto calculate_v2(boost::multiprecision::cpp_bin_float_100 const & x)
 {
-	return std::abs(x - y) < std::max(std::abs(x), std::abs(y)) * scale;
+    return boost::math::gamma_p(2.0, x);
 }
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
-auto equal_v4(double x, double y, double scale, double epsilon = 1e-6)
+template < typename T > auto equal(T x, T y, T epsilon = std::numeric_limits < T > ::epsilon())
 {
-	return std::abs(x - y) < epsilon ? true : equal_v3(x, y, scale);
+	return boost::multiprecision::abs(x - y) < epsilon;
 }
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    assert(equal_v1(1.0, 1.0));
+    using float_100_t = boost::multiprecision::cpp_bin_float_100;
 
-//  -------------------------------------------------------------------
+//  ----------------------------------------------------------------------------------------------
 
-	assert(equal_v2(1e+0, 1e+0 + 1e-6) == 1);
-	
-//	assert(equal_v2(1e+3, 1e+3 + 1e-3) == 0); // bad
+    float_100_t x = boost::math::constants::pi < float_100_t > () / 2;
 
-//  -------------------------------------------------------------------
+    float_100_t y = 0;
 
-	assert(equal_v3(1e-6, 1e-9,        1e-6) == 0);
+    float_100_t z = boost::math::gamma_p_derivative(2.0, x);
 
-	assert(equal_v3(1e+3, 1e+3 + 1e-3, 1e-6) == 1);
+//  ----------------------------------------------------------------------------------------------
 
-//  -------------------------------------------------------------------
+    assert(equal(derivative(calculate_v1, x), y));
 
-	auto x = 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1;
-
-//  -------------------------------------------------------------------
-
-    assert(equal_v3(x,       1.0, 1e-6) == 1);
-
-// 	assert(equal_v3(x - 1.0, 0.0, 1e-6) == 0); // bad
-
-//  -------------------------------------------------------------------
-
-	assert(equal_v4(x - 1.0, 0.0, 1e-6) == 1);
+    assert(equal(derivative(calculate_v2, x), z, float_100_t("0." + std::string(55, '0') + '1')));
 }
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////

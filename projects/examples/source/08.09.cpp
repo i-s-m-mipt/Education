@@ -1,73 +1,48 @@
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 
 // chapter : Number Processing
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 
 // section : Bitwise Operators
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 
-// content : Reinterpreting Bits
+// content : Little and Big Endian Byte Orders
 //
-// content : Operator reinterpret_cast
+// content : Type std::endian
 //
-// content : Type Punning
-//
-// content : Strict Aliasing Rule
-//
-// content : Type Alias std::uint64_t
-//
-// content : Function std::memcpy
-//
-// content : Function std::bit_cast
+// content : Function std::to_integer
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 
 #include <bit>
 #include <cassert>
-#include <cstdint>
-#include <cstring>
-#include <type_traits>
+#include <cstddef>
 
-////////////////////////////////////////////////////////////////////
-
-template < typename T2, typename T1 > T2 bit_cast(T1 const & source)
-{
-    static_assert(sizeof(T1) == sizeof(T2));
- 
-    T2 destination;
-
-    std::memcpy(&destination, &source, sizeof(T2));
-
-    return destination;
-}
-
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 
 int main()
 {
-    auto x = 1.0;
+    assert(std::endian::native == std::endian::little);
 
-//  -------------------------------------------------
+//  ---------------------------------------------------
 
-    [[maybe_unused]] std::uint64_t y = 0, z = 0;
+    auto x = 0x01020304;
 
-//  -------------------------------------------------
+//  ---------------------------------------------------
 
-    *reinterpret_cast < char   * > (&y) = 0;
+    auto byte = std::bit_cast < std::byte * > (&x);
 
-//  *reinterpret_cast < double * > (&y) = x; // error
+//  ---------------------------------------------------
 
-//  -------------------------------------------------
+    assert(std::to_integer < int > (*(byte + 0)) == 4);
 
-    y =      bit_cast < std::uint64_t > (x);
+    assert(std::to_integer < int > (*(byte + 1)) == 3);
 
-    z = std::bit_cast < std::uint64_t > (x);
+    assert(std::to_integer < int > (*(byte + 2)) == 2);
 
-//  -------------------------------------------------
-
-    assert(y == z);
+    assert(std::to_integer < int > (*(byte + 3)) == 1);
 }
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////

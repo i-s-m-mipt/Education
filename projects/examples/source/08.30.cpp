@@ -1,71 +1,56 @@
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
 // chapter : Number Processing
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
-// section : Random Numbers
+// section : Chrono Management
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
-// content : Monte-Carlo Methods
+// content : Chrono Management
 //
-// content : Number Pi
+// content : Clocks
 //
-// content : Distribution std::uniform_real_distribution
+// content : Clock std::chrono::system_clock
 //
-// content : Engine std::default_random_engine
+// content : Epochs and Periods
+//
+// content : Unix Epoch
+//
+// content : Clock std::chrono::steady_clock
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
 #include <cassert>
-#include <cmath>
-#include <random>
+#include <chrono>
+#include <print>
 
-//////////////////////////////////////////////////////////
-
-auto equal(double x, double y, double epsilon = 1e-6)
-{
-	return std::abs(x - y) < epsilon;
-}
-
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
 int main()
 {
-    auto size = 100'000'000uz;
+    std::chrono::system_clock::time_point epoch;
 
-//  ------------------------------------------------------
+//  --------------------------------------------------
 
-	std::uniform_real_distribution distribution(0.0, 1.0);
+    std::print("main : epoch = {}\n", epoch);
 
-//  ------------------------------------------------------
+//  --------------------------------------------------
 
-	std::default_random_engine engine;
+    std::chrono::system_clock::period ratio;
 
-//  ------------------------------------------------------
+//  --------------------------------------------------
 
-	auto counter = 0uz;
+    assert(ratio.num == 1);
 
-//  ------------------------------------------------------
+	assert(ratio.den == 1'000'000'000);
 
-	for (auto i = 0uz; i < size; ++i)
-	{
-		auto x = distribution(engine);
-		
-		auto y = distribution(engine);
-	
-	//  ------------------------------
+//  --------------------------------------------------
 
-		if (x * x + y * y < 1)
-		{
-			++counter;
-		}
-	}
+    assert(std::chrono::system_clock::is_steady == 0);
 
-//  ------------------------------------------------------
-
-	assert(equal(4.0 * counter / size, 3.141, 1e-3));
+    assert(std::chrono::steady_clock::is_steady == 1);
 }
 
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////

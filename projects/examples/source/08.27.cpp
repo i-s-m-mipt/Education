@@ -1,79 +1,71 @@
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 // chapter : Number Processing
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-// section : Floating-Point Numbers
+// section : Random Numbers
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-// content : Discrete Fourier Transformation Algorithm
+// content : Monte-Carlo Methods
 //
-// content : Function std::exp
+// content : Number Pi
+//
+// content : Distribution std::uniform_real_distribution
+//
+// content : Engine std::default_random_engine
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <cmath>
-#include <complex>
-#include <numbers>
-#include <vector>
+#include <random>
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-using namespace std::literals;
-
-///////////////////////////////////////////////////////////////////////////////////////////
-
-using signal_t = std::vector < std::complex < double > > ;
-
-///////////////////////////////////////////////////////////////////////////////////////////
-
-auto transform(signal_t const & signal_1)
+auto equal(double x, double y, double epsilon = 1e-6)
 {
-    auto size = std::size(signal_1);
-
-    signal_t signal_2(size, signal_t::value_type(0));
-    
-    for (auto i = 0uz; i < size; ++i) 
-    {
-        for (auto j = 0uz; j < size; ++j) 
-        {
-            signal_2[i] += signal_1[j] * std::exp(-2i * (std::numbers::pi * i * j / size));
-        }
-    }
-
-    return signal_2;
+	return std::abs(x - y) < epsilon;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
-
-auto equal(std::complex < double > x, std::complex < double > y, double epsilon = 1e-6)
-{
-    return 
-    (
-        std::abs(std::real(x) - std::real(y)) < epsilon &&
-        
-        std::abs(std::imag(y) - std::imag(y)) < epsilon
-    );
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 int main()
 {
-    auto signal = transform({ 0.0 + 0.0i, 0.0 + 1.0i, 1.0 + 0.0i, 1.0 + 1.0i });
+    auto size = 100'000'000uz;
 
-//  ----------------------------------------------------------------------------
+//  ------------------------------------------------------
 
-    assert(equal(signal.at(0), +2.0 + 2.0i));
+	std::uniform_real_distribution distribution(0.0, 1.0);
 
-    assert(equal(signal.at(1), -1.0 + 1.0i));
+//  ------------------------------------------------------
 
-    assert(equal(signal.at(2), +0.0 - 2.0i));
+	std::default_random_engine engine;
 
-    assert(equal(signal.at(3), -1.0 - 1.0i));
+//  ------------------------------------------------------
+
+	auto counter = 0uz;
+
+//  ------------------------------------------------------
+
+	for (auto i = 0uz; i < size; ++i)
+	{
+		auto x = distribution(engine);
+		
+		auto y = distribution(engine);
+	
+	//  ------------------------------
+
+		if (x * x + y * y < 1)
+		{
+			++counter;
+		}
+	}
+
+//  ------------------------------------------------------
+
+	assert(equal(4.0 * counter / size, 3.141, 1e-3));
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
