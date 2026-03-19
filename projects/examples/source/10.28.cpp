@@ -1,38 +1,72 @@
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 // chapter : Data Structures
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 // section : Nested Containers
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
-// content : Nested Container std::array
+// content : Row-Major and Column-Major Orders
+//
+// content : Tool lscpu
+//
+// content : Microbenchmarking
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
-#include <array>
+// support : lscpu
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+
+#include <vector>
+
+/////////////////////////////////////////////////////////
+
+#include <benchmark/benchmark.h>
+
+/////////////////////////////////////////////////////////
+
+void test(benchmark::State & state)
+{
+    auto argument = state.range(0);
+
+    auto size = 32'768uz / sizeof(int);
+
+    std::vector < std::vector < int > > vector
+    (
+        size, std::vector < int > (size, 0)
+    );
+
+    for (auto element : state)
+    {
+        for (auto i = 0uz; i < size; ++i)
+        {
+            for (auto j = 0uz; j < size; ++j)
+            {
+                switch (argument)
+                {
+                    case 1 : { vector[i][j] = 1; break; }
+
+                    case 2 : { vector[j][i] = 1; break; }
+                }
+            }
+        }
+
+        benchmark::DoNotOptimize(vector);
+    }
+}
+
+/////////////////////////////////////////////////////////
+
+BENCHMARK(test)->Arg(1)->Arg(2);
+
+/////////////////////////////////////////////////////////
 
 int main()
 {
-    auto const size = 5uz;
-
-//  ----------------------------------------------------------
-
-	std::array < std::array < int, size > , size > array = {};
-
-//  ----------------------------------------------------------
-
-	for (auto i = 0uz; i < size; ++i)
-	{
-		for (auto j = 0uz; j < size; ++j)
-		{
-			array[i][j] = j + 1;
-		}
-	}
+    benchmark::RunSpecifiedBenchmarks();
 }
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////

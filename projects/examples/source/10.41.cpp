@@ -1,89 +1,119 @@
-/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 // chapter : Data Structures
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-// section : Associative Containers
+// section : Hashing Containers
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-// content : Associative Containers
+// content : D.E.Knuth String Hash Algorithm
 //
-// content : Containers std::map and std::multimap
-//
-// content : In-Place Constructors
-//
-// content : Object std::piecewise_construct
-//
-// content : Function std::forward_as_tuple
-//
-// content : Microbenchmarking
+// content : Collisions
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-#include <map>
+#include <cstddef>
+#include <cstdint>
+#include <iostream>
+#include <random>
+#include <set>
 #include <string>
-#include <tuple>
-#include <utility>
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-#include <benchmark/benchmark.h>
+#include "08.17.hpp"
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-void test(benchmark::State & state) 
+auto make_strings(std::size_t size_1, std::size_t size_2)
 {
-	auto argument = state.range(0);
+	std::set < std::string > strings;
 
-	std::map < int, std::string > map;
+	std::string string(size_2, '_');
 
-	map[1] = "aaaaa";
+	std::uniform_int_distribution distribution(97, 122);
 
-    for (auto element : state)
+	std::default_random_engine engine;
+    
+	while (std::size(strings) < size_1)
     {
-        switch (argument)
+        for (auto & element : string) 
 		{
-			case 1 : { map.emplace(std::make_pair(1, std::string(1'000, 'a'))); break; }
-
-			case 2 : { map.emplace(               1, std::string(1'000, 'a') ); break; }
-
-		//	case 3 : { map.emplace(               1,             1'000, 'a'  ); break; } // error
-
-			case 4 :
-			{
-				map.emplace
-				(
-					std::piecewise_construct,
-
-					std::forward_as_tuple(1),
-
-					std::forward_as_tuple(1'000, 'a')
-				);
-
-				break;
-			}
-
-			case 5 :
-			{
-				map.try_emplace(1, 1'000, 'a');
-			}
+			element = distribution(engine);
 		}
 
-        benchmark::DoNotOptimize(map);
+		strings.insert(string);
     }
+
+	return strings;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-BENCHMARK(test)->Arg(1)->Arg(2)->Arg(4)->Arg(5);
+auto hash(std::string const & string) -> std::size_t
+{
+	std::uint32_t seed = std::size(string);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+	for (auto element : string)
+	{
+		seed = seed << 5 ^ seed >> 27 ^ element;
+	}
+
+	return seed;
+}
+
+//////////////////////////////////////////////////////////////////////////
 
 int main()
-{
-	benchmark::RunSpecifiedBenchmarks();
+{	
+	std::set < std::size_t > hashes;
+
+//  ----------------------------------------------------------------------
+
+	std::string points;
+
+//  ----------------------------------------------------------------------
+
+	for (auto i = 0uz; auto const & string : make_strings(1'000'000, 10))
+	{
+		hashes.insert(hash(string));
+
+	//  ----------------------------------------------------
+			
+		if (i++ % 1'000 == 0)
+		{
+			points += i == 1 ? "" : ",";
+
+			points += std::to_string(i - 1) + ',';
+
+			points += std::to_string(i - std::size(hashes));
+		}
+	}
+
+//  ----------------------------------------------------------------------
+		
+	Python python;
+
+//  ----------------------------------------------------------------------
+
+	try
+	{
+		auto const & local = python.local();
+
+	//  ------------------------------------------------------------------
+
+		boost::python::exec("from script import make_plot", local, local);
+
+	//  ------------------------------------------------------------------
+
+		local["make_plot"](points.c_str(), "hash");
+	}
+	catch (boost::python::error_already_set const &)
+	{
+		std::cerr << "main : " << Python::exception() << '\n';
+	}
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////

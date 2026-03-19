@@ -8,32 +8,48 @@
 
 ///////////////////////////////////////////////////////////////
 
-// content : Functions std::size and std::ssize
+// content : Doubly Linked Lists
+//
+// content : Container std::list
+//
+// content : Bidirectional Iterators
 
 ///////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <iterator>
+#include <list>
+#include <type_traits>
 
 ///////////////////////////////////////////////////////////////
 
 int main()
 {
-    int array[5]{ 1, 2, 3, 4, 5 };
+    std::list < int > list = { 1, 2, 3, 4, 5 };
 
 //  -----------------------------------------------------------
 
-//	assert(array.size() == 5); // error
+	static_assert
+	(
+		std::is_same_v 
+		< 
+			decltype(list)::iterator::iterator_category,
+			
+			std::bidirectional_iterator_tag 
+		> 
+	);
+
+//  -----------------------------------------------------------
+		
+	list.erase(list.insert(std::next(std::begin(list), 0), 1));
+
+	list.erase(list.insert(std::next(std::begin(list), 2), 1));
+
+	list.erase(list.insert(std::next(std::begin(list), 5), 1));
 
 //  -----------------------------------------------------------
 
-	assert(std::size(array) == 5);
-
-//  -----------------------------------------------------------
-
-//	for (auto i = std:: size(array) - 1; i >= 0; --i); // error
-
-	for (auto i = std::ssize(array) - 1; i >= 0; --i);
+//  assert(list.at(0) == 1); // error
 }
 
 ///////////////////////////////////////////////////////////////

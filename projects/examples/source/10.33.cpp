@@ -1,121 +1,77 @@
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 // chapter : Data Structures
 
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 // section : Nested Containers
 
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-// content : Nested and Multidimensional Containers
+// content : Numeric Arrays
+//
+// content : Container std::valarray
+//
+// content : Wrapper std::slice
 
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <cstddef>
 #include <iterator>
-#include <vector>
+#include <valarray>
 
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-#include <boost/multi_array.hpp>
-
-//////////////////////////////////////////////////////////////////////////////
-
-template < std::size_t D > void fill_v1(auto const & container, auto iterator)
+auto equal(std::valarray < int > const & x, std::valarray < int > const & y)
 {
-	*iterator = std::size(container);
+    if (auto size = std::size(x); size == std::size(y))
+    {
+        for (auto i = 0uz; i < size; ++i)
+        {
+            if (x[i] != y[i])
+            {
+                return false;
+            }
+        }
+    }
+    else
+    {
+        return false;
+    }
 
-	if constexpr (D > 1)
-	{
-		fill_v1 < D - 1 > (*std::begin(container), ++iterator);
-	}
+    return true;
 }
 
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-template < std::size_t D > void fill_v2(auto const & container, auto iterator)
+int main() 
 {
-	if constexpr (D > 1)
-	{
-		for (auto const & element : container) 
-		{
-			fill_v2 < D - 1 > (element, (iterator++)->begin());
-		}
-	}
-	else
-	{
-		for (auto const & element : container) 
-		{
-			*iterator++ = element;
-		}
-	}
+    std::valarray < int > x = { 1, 2, 3, 4, 5 };
+    
+    std::valarray < int > y = { 1, 2, 3 };
+
+//  -------------------------------------------------------------------------
+
+    assert(equal(x[std::valarray < std::size_t > ({ 0, 1, 2 })], y));
+
+//  -------------------------------------------------------------------------
+
+    assert(equal(x[std::slice(0, 3, 1)], y));
+
+//  -------------------------------------------------------------------------
+
+    assert(equal(x[x < 4], y));
+
+//  -------------------------------------------------------------------------
+
+    assert(equal(x + y, std::valarray < int > ({ 2, 4, 6, 4, 5 })));
+
+    assert(equal(x - y, std::valarray < int > ({ 0, 0, 0, 4, 5 })));
+
+    assert(equal(x * y, std::valarray < int > ({ 1, 4, 9, 0, 0 })));
+
+//  assert(equal(x / y, std::valarray < int > ({ 1, 1, 1, 0, 0 }))); // error
 }
 
-//////////////////////////////////////////////////////////////////////////////
-
-template < typename T, std::size_t D > auto make_array(auto const & container)
-{
-	std::vector < typename boost::multi_array < T, D > ::index > sizes(D, 0);
-
-	fill_v1 < D > (container, std::begin(sizes));
-	
-	boost::multi_array < T, D > array(sizes);
-	
-	fill_v2 < D > (container, std::begin(array));
-
-	return array;
-}
-
-//////////////////////////////////////////////////////////////////////////////
-
-int main()
-{
-	auto size = 5uz;
-
-//  ----------------------------------------------------------
-
-	std::vector < std::vector < std::vector < int > > > vector
-	(
-		size, std::vector < std::vector < int > > 
-		(
-			size, std::vector < int > 
-			(
-				size, 0
-			)
-		)
-	);
-
-//  ----------------------------------------------------------
-
-	for (auto i = 0uz; i < size; ++i)
-	{
-		for (auto j = 0uz; j < size; ++j)
-		{
-			for (auto k = 0uz; k < size; ++k)
-			{
-				vector[i][j][k] = k + 1;
-			}
-		}
-	}
-
-//  ----------------------------------------------------------
-
-	auto array = make_array < int, 3 > (vector);
-
-//  ----------------------------------------------------------
-
-	for (auto i = 0uz; i < size; ++i)
-	{
-		for (auto j = 0uz; j < size; ++j)
-		{
-			for (auto k = 0uz; k < size; ++k)
-			{
-				assert(array[i][j][k] == vector[i][j][k]);
-			}
-		}
-	}
-}
-
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////

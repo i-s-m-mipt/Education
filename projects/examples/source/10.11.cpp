@@ -1,73 +1,174 @@
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
 // chapter : Data Structures
 
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
 // section : Sequential Containers
 
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
-// content : Singly Linked Lists
-//
-// content : Container std::forward_list
-//
-// content : Forward Iterators
+// content : Microbenchmarking
 
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
-#include <cassert>
+#include <algorithm>
+#include <array>
+#include <deque>
 #include <forward_list>
-#include <iterator>
-#include <type_traits>
+#include <list>
+#include <vector>
 
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
-void erase(auto & list, auto iterator)
+#include <benchmark/benchmark.h>
+
+////////////////////////////////////////////////////////
+
+#include "08.35.hpp"
+
+////////////////////////////////////////////////////////
+
+void test_v1(benchmark::State & state) 
 {
-    auto previous = list.before_begin();
+    auto const size = 100'000uz;
 
-    while (std::next(previous) != iterator)
+    std::array < int, size > array = {};
+
+    for (auto element : state)
     {
-        ++previous;
-    }
+        for (auto i = 0uz; i < size; ++i)
+        {
+            array[i] = size - i;
+        }
 
-    list.erase_after(previous);
+        Timer timer;
+
+        std::ranges::sort(array);
+
+        state.SetIterationTime(timer.elapsed().count());
+
+        benchmark::DoNotOptimize(array);
+    }
 }
 
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+
+void test_v2(benchmark::State & state) 
+{
+    auto size = 100'000uz;
+
+    std::vector < int > vector(size, 0);
+
+    for (auto element : state)
+    {
+        for (auto i = 0uz; i < size; ++i)
+        {
+            vector[i] = size - i;
+        }
+
+        Timer timer;
+
+        std::ranges::sort(vector);
+
+        state.SetIterationTime(timer.elapsed().count());
+
+        benchmark::DoNotOptimize(vector);
+    }
+}
+
+////////////////////////////////////////////////////////
+
+void test_v3(benchmark::State & state) 
+{
+    auto size = 100'000uz;
+
+    std::deque < int > deque(size, 0);
+
+    for (auto element : state)
+    {
+        for (auto i = 0uz; i < size; ++i)
+        {
+            deque[i] = size - i;
+        }
+
+        Timer timer;
+
+        std::ranges::sort(deque);
+
+        state.SetIterationTime(timer.elapsed().count());
+
+        benchmark::DoNotOptimize(deque);
+    }
+}
+
+////////////////////////////////////////////////////////
+
+void test_v4(benchmark::State & state) 
+{
+    auto size = 100'000uz;
+
+    std::list < int > list(size, 0);
+
+    for (auto element : state)
+    {
+        for (auto x = 0; auto & element : list)
+        {
+            element = size + 1 - ++x;
+        }
+
+        Timer timer;
+
+        list.sort();
+
+        state.SetIterationTime(timer.elapsed().count());
+
+        benchmark::DoNotOptimize(list);
+    }
+}
+
+////////////////////////////////////////////////////////
+
+void test_v5(benchmark::State & state) 
+{
+    auto size = 100'000uz;
+
+    std::forward_list < int > list(size, 0);
+
+    for (auto element : state)
+    {
+        for (auto x = 0; auto & element : list)
+        {
+            element = size + 1 - ++x;
+        }
+
+        Timer timer;
+
+        list.sort();
+
+        state.SetIterationTime(timer.elapsed().count());
+        
+        benchmark::DoNotOptimize(list);
+    }
+}
+
+////////////////////////////////////////////////////////
+
+BENCHMARK(test_v1);
+
+BENCHMARK(test_v2);
+
+BENCHMARK(test_v3);
+
+BENCHMARK(test_v4);
+
+BENCHMARK(test_v5);
+
+////////////////////////////////////////////////////////
 
 int main()
 {
-    std::forward_list < int > list = { 1, 2, 3, 4, 5 };
-
-//  -----------------------------------------------------------------------
-
-    static_assert
-    (
-        std::is_same_v 
-        < 
-            decltype(list)::iterator::iterator_category,
-            
-            std::forward_iterator_tag 
-        > 
-    );
-
-//  -----------------------------------------------------------------------
-
-//  assert(std::size(list) == 5); // error
-
-//  -----------------------------------------------------------------------
-
-    ::erase(list, list.insert_after(std::next(list.before_begin(), 0), 1));
-
-	::erase(list, list.insert_after(std::next(list.before_begin(), 2), 1));
-
-	::erase(list, list.insert_after(std::next(list.before_begin(), 5), 1));
-
-//  -----------------------------------------------------------------------
-
-//  assert(list.at(0) == 1); // error
+    benchmark::RunSpecifiedBenchmarks();
 }
 
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////

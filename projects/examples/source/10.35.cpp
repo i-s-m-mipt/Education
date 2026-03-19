@@ -1,77 +1,67 @@
-/////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Data Structures
 
-/////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
-// section : Nested Containers
+// section : Associative Containers
 
-/////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Numeric Arrays
-//
-// content : Container std::valarray
-//
-// content : Wrapper std::slice
+// content : Microbenchmarking
 
-/////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
-#include <cstddef>
 #include <iterator>
-#include <valarray>
+#include <set>
+#include <utility>
 
-/////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
-auto equal(std::valarray < int > const & x, std::valarray < int > const & y)
+#include <benchmark/benchmark.h>
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+void test(benchmark::State & state)
 {
-    if (auto size = std::size(x); size == std::size(y))
-    {
-        for (auto i = 0uz; i < size; ++i)
-        {
-            if (x[i] != y[i])
-            {
-                return false;
-            }
-        }
-    }
-    else
-    {
-        return false;
-    }
+	auto argument = state.range(0);
 
-    return true;
+    for (auto element : state)
+    {
+        std::set < int > set;
+
+		auto iterator = std::begin(set);
+
+		for (auto i = 1'000; i > 0; --i)
+		{
+			switch (argument)
+			{
+				case 1 :
+				{
+					set.insert(i);
+
+					break;
+				}
+
+				case 2 : { set.insert(iterator, i); iterator = std::begin(set); break; }
+
+				case 3 : { set.insert(iterator, i); iterator = std::end  (set); break; }
+			}
+		}
+
+		benchmark::DoNotOptimize(set);
+    }
 }
 
-/////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
-int main() 
+BENCHMARK(test)->Arg(1)->Arg(2)->Arg(3);
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+int main()
 {
-    std::valarray < int > x = { 1, 2, 3, 4, 5 };
-    
-    std::valarray < int > y = { 1, 2, 3 };
-
-//  -------------------------------------------------------------------------
-
-    assert(equal(x[std::valarray < std::size_t > ({ 0, 1, 2 })], y));
-
-//  -------------------------------------------------------------------------
-
-    assert(equal(x[std::slice(0, 3, 1)], y));
-
-//  -------------------------------------------------------------------------
-
-    assert(equal(x[x < 4], y));
-
-//  -------------------------------------------------------------------------
-
-    assert(equal(x + y, std::valarray < int > ({ 2, 4, 6, 4, 5 })));
-
-    assert(equal(x - y, std::valarray < int > ({ 0, 0, 0, 4, 5 })));
-
-    assert(equal(x * y, std::valarray < int > ({ 1, 4, 9, 0, 0 })));
-
-//  assert(equal(x / y, std::valarray < int > ({ 1, 1, 1, 0, 0 }))); // error
+    benchmark::RunSpecifiedBenchmarks();
 }
 
-/////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////

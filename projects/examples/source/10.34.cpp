@@ -1,168 +1,93 @@
-//////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
 // chapter : Data Structures
 
-//////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-// section : Nested Containers
+// section : Associative Containers
 
-//////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-// content : Matrices and Determinants
+// content : Balanced Binary Search Trees
 //
-// content : Library Boost.UBLAS
+// content : Red-Black Trees
 //
-// content : Minors and LU Factorization Methods
+// content : Sets
 //
-// content : Microbenchmarking
+// content : Containers std::set and std::multiset
+//
+// content : Strict Weak Ordering
+//
+// content : Irreflexivity, Transitivity and Equivalence
 
-//////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-#include <cstddef>
-#include <random>
+// support : www.cs.usfca.edu/~galles/visualization/RedBlack.html
 
-//////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-#include <boost/numeric/ublas/lu.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
+#include <algorithm>
+#include <cassert>
+#include <iterator>
+#include <set>
+#include <type_traits>
+#include <utility>
 
-//////////////////////////////////////////////////////////////////////////////////////
-
-#include <benchmark/benchmark.h>
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-auto determinant_v1(boost::numeric::ublas::matrix < double > const & matrix) -> double
-{
-    if (auto size = matrix.size1(); size > 1)
-    {
-        auto determinant = 0.0;
-    
-        for (auto i = 0uz; i < size; ++i)
-        {
-            boost::numeric::ublas::matrix < double > minor(size - 1, size - 1);
-
-            for (auto j = 1uz; j < size; ++j)
-            {
-                for (auto k = 0uz, l = 0uz; k < size; ++k)
-                {
-                    if (k != i) 
-                    {
-                        minor(j - 1, l++) = matrix(j, k);
-                    }
-                }
-            }
-
-            determinant += (i % 2 ? -1 : +1) * matrix(0, i) * determinant_v1(minor);
-        }
-
-        return determinant;
-    }
-    else
-    {
-        return matrix(0, 0);
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-auto determinant_v2(boost::numeric::ublas::matrix < double > matrix)
-{
-    if (auto size = matrix.size1(); size > 1)
-    {    
-        boost::numeric::ublas::permutation_matrix <> permutation(size);
-
-        if (!boost::numeric::ublas::lu_factorize(matrix, permutation))
-        {
-            auto determinant = 1.0;
-
-            for (auto i = 0uz; i < size; ++i)
-            {
-                if (permutation(i) != i) 
-                {
-                    determinant *= -1;
-                }
-
-                determinant *= matrix(i, i);
-            }
-
-            return determinant;
-        }
-        else 
-        {
-            return 0.0;
-        }
-    }
-    else
-    {
-        return matrix(0, 0);
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-auto make_matrix(std::size_t size)
-{
-    boost::numeric::ublas::matrix < double > matrix(size, size);
-
-    std::uniform_real_distribution distribution(0.0, 1.0);
-
-    std::default_random_engine engine;
-
-    for (auto i = 0uz; i < matrix.size1(); ++i)
-    {
-        for (auto j = 0uz; j < matrix.size2(); ++j)
-        {
-            matrix(i, j) = distribution(engine);
-        }
-    }
-
-    return matrix;
-}
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-void test_v1(benchmark::State & state)
-{
-    auto argument = state.range(0);
-
-    auto matrix = make_matrix(argument);
-
-    for (auto element : state)
-    {
-        auto determinant = determinant_v1(matrix);
-
-		benchmark::DoNotOptimize(determinant);
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-void test_v2(benchmark::State & state)
-{
-    auto argument = state.range(0);
-
-    auto matrix = make_matrix(argument);
-    
-    for (auto element : state)
-    {
-        auto determinant = determinant_v2(matrix);
-
-		benchmark::DoNotOptimize(determinant);
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-BENCHMARK(test_v1)->DenseRange(1, 9, 1);
-
-BENCHMARK(test_v2)->DenseRange(1, 9, 1);
-
-//////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
 int main()
 {
-	benchmark::RunSpecifiedBenchmarks();
+	std::set < int > set = { 5, 4, 3, 2, 1 };
+
+//  ----------------------------------------------------------
+	
+    static_assert
+    (
+        std::is_same_v 
+        < 
+            decltype(set)::iterator::iterator_category, 
+                
+            std::bidirectional_iterator_tag 
+        > 
+    );
+
+//  ----------------------------------------------------------
+		
+	assert(std::ranges::is_sorted(set));
+
+//  ----------------------------------------------------------
+
+	assert(set.contains(1) == (set.find(1) != std::end(set)));
+
+//  ----------------------------------------------------------
+
+	assert(set.erase(1) == 1 && set.insert(1).second);
+
+//  ----------------------------------------------------------
+
+	auto begin = std::begin(set);
+
+//  ----------------------------------------------------------
+
+	assert(set.lower_bound(1) == std::next(begin, 0));
+		
+	assert(set.upper_bound(1) == std::next(begin, 1));
+
+//  ----------------------------------------------------------
+
+//	*begin = 2; // error
+
+//  ----------------------------------------------------------
+
+	auto node = set.extract(1);
+
+//  ----------------------------------------------------------
+		
+	node.value() = 2;
+
+//  ----------------------------------------------------------
+		
+	set.insert(std::move(node));
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
