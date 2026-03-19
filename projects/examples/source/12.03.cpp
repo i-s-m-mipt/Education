@@ -1,61 +1,57 @@
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////
 
-// support : locale -a
+// support : en.wikipedia.org/wiki/ASCII
+//
+// support : en.wikipedia.org/wiki/Windows-1251
+//
+// support : en.wikipedia.org/wiki/Windows-1252
 
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////
 
-#include <cassert>
-#include <chrono>
-#include <cstring>
-#include <ctime>
-#include <locale>
-#include <sstream>
+#include <iostream>
+#include <print>
 
-////////////////////////////////////////////////////////////////////////////////////////////
-
-auto make_timestamp(std::locale const & locale, std::time_t time = 0)
-{
-	std::stringstream stream;
-
-	stream.imbue(locale);
-
-	auto timestamp = std::gmtime(&time);
-
-	auto format = "%X %x";
-
-	std::use_facet < std::time_put < char > > (locale).put
-	(
-		stream, stream, ' ', timestamp, format, format + std::strlen(format)
-	);
-
-	return stream.str();
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////
 
 int main()
-{
-	std::locale locale_1("en_US.utf8"); 
+{	
+	auto x1 =   'a'; 
+	
+	auto x2 =  L'a';
+	
+	auto x3 = u8'a';
+	
+	auto x4 =  u'a';
+	
+	auto x5 =  U'a';
 
-    std::locale locale_2("ru_RU.utf8");
+//  --------------------------------------------
 
-//  ----------------------------------------------------------------------------------------
+	static_assert(sizeof(x1) == 1);
 
-	assert((std::use_facet < std::  numpunct < char > > (locale_1).thousands_sep()) == ',');
+	static_assert(sizeof(x2) == 4);
 
-    assert((std::use_facet < std::  numpunct < char > > (locale_2).thousands_sep()) == ' ');
+	static_assert(sizeof(x3) == 1);
 
-//  ----------------------------------------------------------------------------------------
+	static_assert(sizeof(x4) == 2);
 
-	assert((std::use_facet < std::moneypunct < char > > (locale_1).curr_symbol  ()) == "$");
+	static_assert(sizeof(x5) == 4);
 
-    assert((std::use_facet < std::moneypunct < char > > (locale_2).curr_symbol  ()) == "₽");
+//  --------------------------------------------
 
-//  ----------------------------------------------------------------------------------------
+	std::print("main : x1 = {}\n", x1);
 
-	assert(make_timestamp(locale_1) == "12:00:00 AM 01/01/1970");
+//	std::print("main : x2 = {}\n", x2); // error
 
-	assert(make_timestamp(locale_2) == "00:00:00 01.01.1970"   );
+//	std::print("main : x3 = {}\n", x3); // error
+
+//	std::print("main : x4 = {}\n", x4); // error
+
+//	std::print("main : x5 = {}\n", x5); // error
+	
+//  --------------------------------------------
+
+	std::wcout << "main : x2 = " << x2 << '\n';
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////

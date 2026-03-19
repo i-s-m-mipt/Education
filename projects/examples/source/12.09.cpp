@@ -1,61 +1,59 @@
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
+#include <array>
 #include <cassert>
-#include <cctype>
-#include <cstddef>
+#include <cstring>
+#include <sstream>
 #include <string>
+#include <type_traits>
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
-class Traits : public std::char_traits < char > 
-{
-public :
+using namespace std::literals;
 
-    static auto eq(char x, char y) { return std::tolower(x) == std::tolower(y); }
-
-    static auto lt(char x, char y) { return std::tolower(x) <  std::tolower(y); }
-
-//  -----------------------------------------------------------------------------------
-
-    static auto compare(char const * string_1, char const * string_2, std::size_t size)
-    {
-        for (auto i = 0uz; i < size; ++i)
-        {
-            if (!eq(string_1[i], string_2[i])) 
-            {
-                return lt(string_1[i], string_2[i]) ? -1 : +1;
-            }
-        }
-
-        return 0;
-    }
-
-//  -----------------------------------------------------------------------------------
-
-    static auto find(char const * string, std::size_t size, char x) -> char const *
-    {
-        for (auto i = 0uz; i < size; ++i)
-        {
-            if (eq(string[i], x)) 
-            {
-                return &string[i];
-            }
-        }
-
-        return nullptr;
-    }
-};
-
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    assert
-    (
-        (std::basic_string < char, Traits > ("aaaaa")) == 
+    [[maybe_unused]] char array_1[5]{ 'a', 'a', 'a', 'a', 'a' };
+
+    [[maybe_unused]] char array_2[6]{ 'a', 'a', 'a', 'a', 'a', '\0' };
+
+//  ------------------------------------------------------------------
+
+    std::array < char, 1'000 > array_3 = {};
+
+//  ------------------------------------------------------------------
+
+    auto string = "aaaaa";
+
+//  ------------------------------------------------------------------
+
+    static_assert(std::is_same_v < decltype(string), const char * > );
+
+//  ------------------------------------------------------------------
+
+    assert(std::strlen("aaaaa"s.c_str()) == 5);
+
+//  ------------------------------------------------------------------
+
+    std::stringstream stream_1("aaaaa");
+
+    std::stringstream stream_2;
+
+//  ------------------------------------------------------------------
+
+    auto begin = std::begin(array_3);
         
-        (std::basic_string < char, Traits > ("AAAAA"))
-    );
+//  ------------------------------------------------------------------
+    
+    stream_1.getline(begin, std::size(array_3));
+
+    stream_2 << begin;
+
+//  ------------------------------------------------------------------
+
+    assert(stream_2.str() == stream_1.str());
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
