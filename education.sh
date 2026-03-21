@@ -8,7 +8,7 @@
 #
 # sudo apt update
 #
-# sudo apt install g++-14
+# sudo apt install g++-14 g++-14-multilib
 #
 # sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
 #
@@ -33,6 +33,8 @@
 # sudo apt update
 #
 # sudo apt install autotools-dev build-essential libboost-all-dev libbz2-dev
+#
+# sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
 #
 # ./bootstrap.sh
 #
