@@ -47,19 +47,17 @@ protected :
 
 class Client : private Entity < Client >
 {
-private :
-
-	using base_t = Entity < Client > ;
-
 public :
 
 	Client() { std::print("Client:: Client\n"); }
 
    ~Client() { std::print("Client::~Client\n"); }
 
-//  ----------------------------------------------------
+//  ---------------------------------------------
 
-    using base_t::operator new, base_t::operator delete;
+    using Entity < Client > ::operator new;
+
+	using Entity < Client > ::operator delete;
 };
 
 ///////////////////////////////////////////////////////////////////
