@@ -1,5 +1,23 @@
 //////////////////////////////////////////////////////////////////////
 
+// chapter : String Processing
+
+//////////////////////////////////////////////////////////////////////
+
+// section : Basic Strings and Views
+
+//////////////////////////////////////////////////////////////////////
+
+// content : String Literals
+//
+// content : Null-Terminated Strings
+//
+// content : Operator ""s
+//
+// content : Namespace std::literals
+
+//////////////////////////////////////////////////////////////////////
+
 #include <array>
 #include <cassert>
 #include <cstring>
@@ -29,7 +47,7 @@ int main()
 
 //  ------------------------------------------------------------------
 
-    static_assert(std::is_same_v < decltype(string), const char * > );
+    static_assert(std::is_same_v < decltype(string), char const * > );
 
 //  ------------------------------------------------------------------
 

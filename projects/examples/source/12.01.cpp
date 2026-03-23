@@ -1,35 +1,43 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+// chapter : String Processing
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+// section : Character Encodings
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+// content : Text Data Localization
+//
+// content : Locales and Facets
+//
+// content : Container std::locale
+//
+// content : Classic C Locale
+//
+// content : Function std::use_facet
+//
+// content : Facet std::numpunct
+//
+// content : Facet std::moneypunct
+//
+// content : C-Style Locales
+//
+// content : Function std::setlocale
+//
+// content : Macro LC_ALL
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+// support : sudo locale-gen ru_RU.utf8
+//
 // support : locale -a
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <chrono>
-#include <cstring>
-#include <ctime>
 #include <locale>
-#include <sstream>
-
-////////////////////////////////////////////////////////////////////////////////////////////
-
-auto make_timestamp(std::locale const & locale, std::time_t time = 0)
-{
-	std::stringstream stream;
-
-	stream.imbue(locale);
-
-	auto timestamp = std::gmtime(&time);
-
-	auto format = "%X %x";
-
-	std::use_facet < std::time_put < char > > (locale).put
-	(
-		stream, stream, ' ', timestamp, format, format + std::strlen(format)
-	);
-
-	return stream.str();
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -53,9 +61,7 @@ int main()
 
 //  ----------------------------------------------------------------------------------------
 
-	assert(make_timestamp(locale_1) == "12:00:00 AM 01/01/1970");
-
-	assert(make_timestamp(locale_2) == "00:00:00 01.01.1970"   );
+//	std::setlocale(LC_ALL, "en_US.utf8"); // bad
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
