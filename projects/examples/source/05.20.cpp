@@ -20,7 +20,10 @@ template < typename D > class Controller
 {
 public :
 
-	static inline auto s_counter = 0uz;
+	static auto get()
+	{
+		return s_counter;
+	}
 
 protected :
 
@@ -31,6 +34,10 @@ protected :
 	Controller(Controller < D >       &&) { ++s_counter; }
 
    ~Controller(                         ) { --s_counter; }
+
+private :
+
+	static inline auto s_counter = 0uz;
 };
 
 //////////////////////////////////////////////////////////
@@ -45,21 +52,21 @@ int main()
 {
 	Entity_v1 entity_v1;
 
-//  --------------------------------------------------
+//  ----------------------------------------------
 
-	assert(Controller < Entity_v1 > ::s_counter == 1);
+	assert(Controller < Entity_v1 > ::get() == 1);
 
-	assert(Controller < Entity_v2 > ::s_counter == 0);
+	assert(Controller < Entity_v2 > ::get() == 0);
 
-//  --------------------------------------------------
+//  ----------------------------------------------
 
 	Entity_v2 entity_v2;
 
-//  --------------------------------------------------
+//  ----------------------------------------------
 
-	assert(Controller < Entity_v1 > ::s_counter == 1);
+	assert(Controller < Entity_v1 > ::get() == 1);
 
-	assert(Controller < Entity_v2 > ::s_counter == 1);
+	assert(Controller < Entity_v2 > ::get() == 1);
 }
 
 //////////////////////////////////////////////////////////
