@@ -27,7 +27,7 @@ private :
 //
 //          if (!s_x)
 //          {
-//              s_x = std::make_unique < int > (1);
+//              s_x = std::make_shared < int > (1);
 //          }
 //      }
 //  }
@@ -36,12 +36,12 @@ private :
 
     void initialize_v2()
     {
-        s_x = std::make_unique < int > (1);
+        s_x = std::make_shared < int > (1);
     }
 
 //  ---------------------------------------------------------
 
-    static inline std::unique_ptr < int > s_x;
+    static inline std::shared_ptr < int > s_x;
 
 //  ---------------------------------------------------------
 
