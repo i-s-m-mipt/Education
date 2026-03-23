@@ -47,7 +47,7 @@ int main()
 
 //  -------------------------------------------------------------------------
 
-	auto lambda = [&engine, &distribution](){ return distribution(engine); };
+	auto lambda = [&distribution, &engine](){ return distribution(engine); };
 
 //  -------------------------------------------------------------------------
 
