@@ -88,7 +88,7 @@ void test_v4(benchmark::State & state)
 {
     for (auto element : state)
     {
-        std::array < std::byte, 32'000 > array = {};
+        std::array < std::byte, 32'768 > array = {};
 
         std::pmr::monotonic_buffer_resource resource(std::data(array), std::size(array));
 
