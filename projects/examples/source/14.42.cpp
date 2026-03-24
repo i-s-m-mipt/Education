@@ -26,7 +26,7 @@ public :
 
     auto operator()(std::barrier <> & barrier)
     {
-        auto kb = 1'024uz;
+        auto kb = 1uz << 10;
 
         std::vector < void * > vector(kb, nullptr);
 
