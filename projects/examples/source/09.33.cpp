@@ -51,10 +51,10 @@ public :
 		if (begin = std::align(alignment, size, begin, free); begin)
 		{
 			m_offset = m_size - free + size;
-			
+
 			return begin;
 		}
-		else 
+		else
 		{
 			return nullptr;
 		}
@@ -113,7 +113,7 @@ public :
 //  --------------------------------------------------------------------------------------------
 
     auto allocate(std::size_t size) const
-    { 
+    {
         return static_cast < T * > (m_arena->allocate(size * sizeof(T), alignof(T)));
     }
 
@@ -135,18 +135,22 @@ int main()
 {
 	Arena arena(1'024);
 
-//  ----------------------------------------------------------------------------
+//  ---------------------------------------------------------
 
     Allocator < int > allocator(arena);
 
-//  ----------------------------------------------------------------------------
+//  ---------------------------------------------------------
 
-    std::vector < int, Allocator < int > > vector({ 1, 2, 3, 4, 5 }, allocator);
+    std::vector < int, Allocator < int > > vector(allocator);
 
-//  ----------------------------------------------------------------------------
+//  ---------------------------------------------------------
+
+	vector = { 1, 2, 3, 4, 5 };
+
+//  ---------------------------------------------------------
 
     arena.show(); vector.push_back(1);
-	
+
     arena.show();
 }
 
