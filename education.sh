@@ -12,7 +12,7 @@
 #
 # sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
 #
-# sudo apt install git cmake gdb valgrind kcachegrind 
+# sudo apt install git cmake gdb valgrind kcachegrind htop
 #
 # sudo apt install linux-tools-common coreutils util-linux linux-tools-generic procps
 #
