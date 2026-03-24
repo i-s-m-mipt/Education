@@ -23,6 +23,8 @@
 // content : Tool ulimit
 //
 // content : Segmentation Fault
+//
+// content : Bitwise Shifts
 
 ///////////////////////////////////////////////////////////
 
@@ -39,8 +41,8 @@ int main()
 	[[maybe_unused]] int array_3[ ]{ 1, 2, 3, 4, 5 };
 
 //	[[maybe_unused]] int array_4[0]{}; // error
-	
-//	[[maybe_unused]] int array_5[1'000'000'000]{}; // error
+
+//	[[maybe_unused]] int array_5[1 << 30]{}; // error
 }
 
 ///////////////////////////////////////////////////////////

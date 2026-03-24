@@ -333,11 +333,11 @@ public :
 
     Task_v1(S & stack) : m_stack(stack) {}
 
-//  --------------------------------------
+//  ----------------------------------------
 
     void test() override
     {
-        for (auto i = 0uz; i < 1'000; ++i)
+        for (auto i = 0uz; i < 1 << 10; ++i)
         {
             m_stack.push(i + 1);
         }
@@ -356,13 +356,13 @@ public :
 
     Task_v2(S & stack) : m_stack(stack) {}
 
-//  --------------------------------------
+//  ----------------------------------------
 
     void test() override
     {
         auto x = 0;
 
-        for (auto i = 0uz; i < 1'000; ++i)
+        for (auto i = 0uz; i < 1 << 10; ++i)
         {
             m_stack.top_and_pop(x);
         }
@@ -385,7 +385,7 @@ public :
 
     void test() override
     {
-        for (auto i = 0uz; i < 1'000; ++i)
+        for (auto i = 0uz; i < 1 << 10; ++i)
         {
             std::ignore = m_stack.top_and_pop();
         }
@@ -404,13 +404,13 @@ public :
 
     Task_v4(S & stack) : m_stack(stack) {}
 
-//  --------------------------------------
+//  ----------------------------------------
 
     void test() override
     {
         auto x = 0;
 
-        for (auto i = 0uz; i < 1'000; ++i)
+        for (auto i = 0uz; i < 1 << 10; ++i)
         {
             m_stack.pop(x);
         }
@@ -431,7 +431,7 @@ void test(benchmark::State & state)
 
     std::vector < std::future < double > > futures(concurrency);
 
-    auto size = concurrency * 1'000;
+    auto size = concurrency * (1 << 10);
 
     Stack_v1 < int > stack_v1(2 * size);
 

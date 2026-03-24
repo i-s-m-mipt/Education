@@ -31,7 +31,7 @@
 
 void test_v1(benchmark::State & state) 
 {
-    auto const size = 100'000uz;
+    auto const size = 1uz << 20;
 
     std::array < int, size > array = {};
 
@@ -56,7 +56,7 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state) 
 {
-    auto size = 100'000uz;
+    auto size = 1uz << 20;
 
     std::vector < int > vector(size, 0);
 
@@ -81,7 +81,7 @@ void test_v2(benchmark::State & state)
 
 void test_v3(benchmark::State & state) 
 {
-    auto size = 100'000uz;
+    auto size = 1uz << 20;
 
     std::deque < int > deque(size, 0);
 
@@ -106,7 +106,7 @@ void test_v3(benchmark::State & state)
 
 void test_v4(benchmark::State & state) 
 {
-    auto size = 100'000uz;
+    auto size = 1uz << 20;
 
     std::list < int > list(size, 0);
 
@@ -131,7 +131,7 @@ void test_v4(benchmark::State & state)
 
 void test_v5(benchmark::State & state) 
 {
-    auto size = 100'000uz;
+    auto size = 1uz << 20;
 
     std::forward_list < int > list(size, 0);
 

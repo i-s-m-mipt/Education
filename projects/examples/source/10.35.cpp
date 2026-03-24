@@ -32,7 +32,7 @@ void test(benchmark::State & state)
 
 		auto iterator = std::begin(set);
 
-		for (auto i = 1'000; i > 0; --i)
+		for (auto i = 1 << 10; i > 0; --i)
 		{
 			switch (argument)
 			{

@@ -31,7 +31,7 @@ auto equal(double x, double y, double epsilon = 1e-6)
 
 int main()
 {
-    std::array < char, 1'000 > array = {};
+    std::array < char, 1 << 10 > array = {};
 
 //  ------------------------------------------------------------
 

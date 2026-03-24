@@ -104,7 +104,7 @@ void sort(std::vector < int > & vector)
 
 int main()
 {
-	auto size = 1'000uz;
+	auto size = 1uz << 10;
 
 //  ---------------------------------------
 

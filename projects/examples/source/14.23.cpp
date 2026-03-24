@@ -120,7 +120,7 @@ public :
 
             return x;
         }
-        
+
         return nullptr;
     }
 
@@ -138,7 +138,7 @@ public :
 
             return true;
         }
-        
+
         return false;
     }
 
@@ -159,7 +159,7 @@ void produce(Queue < int > & queue)
 {
     std::this_thread::sleep_for(1s);
 
-    for (auto i = 0; i < 1'000; ++i)
+    for (auto i = 0; i < 1 << 10; ++i)
     {
         queue.push(i + 1);
     }
@@ -169,7 +169,7 @@ void produce(Queue < int > & queue)
 
 void consume(Queue < int > & queue)
 {
-    for (auto i = 0; i < 1'000; ++i)
+    for (auto i = 0; i < 1 << 10; ++i)
     {
         assert(*queue.wait_and_pop() == i + 1);
     }

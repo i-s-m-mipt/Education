@@ -55,7 +55,7 @@ auto equal(double x, double y, double epsilon = 1e-6)
 
 int main()
 {
-	auto size = 100'000'000uz;
+	auto size = 1uz << 30;
 
 //  -----------------------------------------------------------------------
 

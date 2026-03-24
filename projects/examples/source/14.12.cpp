@@ -67,7 +67,7 @@ template < typename T > auto reduce(std::ranges::view auto view, T sum)
 
 int main()
 {
-	std::vector < int > vector(1'000, 0);
+	std::vector < int > vector(1 << 10, 0);
 
 //  --------------------------------------------------------------
 
@@ -75,7 +75,7 @@ int main()
 
 //  --------------------------------------------------------------
 
-	assert(reduce(std::ranges::views::all(vector), 0) == 500'500);
+	assert(reduce(std::ranges::views::all(vector), 0) == 524'800);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

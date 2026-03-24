@@ -52,7 +52,7 @@ public :
 
     void test() override
     {
-        for (auto i = 0uz; i < 1'000'000; ++i)
+        for (auto i = 0uz; i < 1 << 10; ++i)
         {
             m_x.store(1, std::memory_order::seq_cst);
         }
@@ -71,7 +71,7 @@ public :
 
     void test() override
     {
-        for (auto i = 0uz; i < 1'000'000; ++i)
+        for (auto i = 0uz; i < 1 << 10; ++i)
         {
             m_x.store(1, std::memory_order::relaxed);
         }

@@ -524,7 +524,7 @@ private :
 
 //  ------------------------------------------------------------------------------------------
 
-	static inline auto s_size = 1'000uz;
+	static inline auto s_size = 1uz << 10;
 
 	static inline auto s_step = std::numeric_limits < digit_t > ::digits10 / 2;
 

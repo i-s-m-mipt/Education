@@ -35,7 +35,7 @@ void test_v1(benchmark::State & state)
     {
         std::list < int > list;
 
-        for (auto i = 0uz; i < 1'000; ++i) 
+        for (auto i = 0uz; i < 1 << 10; ++i) 
         {
             list.push_back(1);
         }
@@ -52,7 +52,7 @@ void test_v2(benchmark::State & state)
     {
         std::pmr::list < int > list;
 
-        for (auto i = 0uz; i < 1'000; ++i) 
+        for (auto i = 0uz; i < 1 << 10; ++i) 
         {
             list.push_back(1);
         }
@@ -73,7 +73,7 @@ void test_v3(benchmark::State & state)
 
         std::pmr::list < int > list(allocator);
 
-        for (auto i = 0uz; i < 1'000; ++i)
+        for (auto i = 0uz; i < 1 << 10; ++i)
         {
             list.push_back(1);
         }
@@ -88,7 +88,7 @@ void test_v4(benchmark::State & state)
 {
     for (auto element : state)
     {
-        std::array < std::byte, 32'768 > array = {};
+        std::array < std::byte, 32 << 10 > array = {};
 
         std::pmr::monotonic_buffer_resource resource(std::data(array), std::size(array));
 
@@ -96,7 +96,7 @@ void test_v4(benchmark::State & state)
 
         std::pmr::list < int > list(allocator);
 
-        for (auto i = 0uz; i < 1'000; ++i)
+        for (auto i = 0uz; i < 1 << 10; ++i)
         {
             list.push_back(1);
         }

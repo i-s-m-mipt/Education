@@ -19,7 +19,7 @@ void test(benchmark::State & state)
 {
     auto argument = state.range(0);
 
-    auto size = 1'000uz;
+    auto size = 1uz << 10;
 
     std::vector <               Entity_v1   > entities_v1_1(size);
 

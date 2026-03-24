@@ -27,7 +27,7 @@ void test(benchmark::State & state)
 {
     auto argument = state.range(0);
 
-    std::vector < double > vector(1'000'000, 1.0);
+    std::vector < double > vector(1 << 10, 1.0);
 
     auto begin = std::begin(vector), end = std::end(vector);
 
