@@ -106,27 +106,6 @@ private :
 
 void test_v1(benchmark::State & state)
 {
-	auto kb = 1'024uz, mb = kb * kb, gb = kb * kb * kb;
-
-	std::vector < void * > vector(kb, nullptr);
-
-	for (auto element : state)
-	{
-		Allocator allocator(gb);
-
-		for (auto i = 0uz; i < kb; ++i)
-		{
-			vector[i] = allocator.allocate(mb);
-		}
-
-		benchmark::DoNotOptimize(vector);
-	}
-}
-
-//////////////////////////////////////////////////////////////////////////////////
-
-void test_v2(benchmark::State & state)
-{
 	auto kb = 1'024uz, mb = kb * kb;
 
 	std::vector < void * > vector(kb, nullptr);
@@ -141,6 +120,27 @@ void test_v2(benchmark::State & state)
 		for (auto i = 0uz; i < kb; ++i)
 		{
 			operator delete(vector[i], mb);
+		}
+
+		benchmark::DoNotOptimize(vector);
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+
+void test_v2(benchmark::State & state)
+{
+	auto kb = 1'024uz, mb = kb * kb, gb = kb * kb * kb;
+
+	std::vector < void * > vector(kb, nullptr);
+
+	for (auto element : state)
+	{
+		Allocator allocator(gb);
+
+		for (auto i = 0uz; i < kb; ++i)
+		{
+			vector[i] = allocator.allocate(mb);
 		}
 
 		benchmark::DoNotOptimize(vector);

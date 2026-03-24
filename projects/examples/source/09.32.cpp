@@ -90,11 +90,14 @@ void test_v1(benchmark::State & state)
 
 	for (auto element : state)
 	{
-		Allocator < 1'024 * 1'024 > allocator;
+		for (auto i = 0uz; i < kb; ++i)
+		{
+			vector[i] = operator new(kb);
+		}
 
 		for (auto i = 0uz; i < kb; ++i)
 		{
-			vector[i] = allocator.allocate(kb);
+			operator delete(vector[i]);
 		}
 
 		benchmark::DoNotOptimize(vector);
@@ -111,14 +114,11 @@ void test_v2(benchmark::State & state)
 
 	for (auto element : state)
 	{
-		for (auto i = 0uz; i < kb; ++i)
-		{
-			vector[i] = operator new(kb);
-		}
+		Allocator < 1'024 * 1'024 > allocator;
 
 		for (auto i = 0uz; i < kb; ++i)
 		{
-			operator delete(vector[i]);
+			vector[i] = allocator.allocate(kb);
 		}
 
 		benchmark::DoNotOptimize(vector);
@@ -141,12 +141,12 @@ int main()
 
 	allocator.show(); allocator.allocate(1, 1);
 
-	allocator.show(); allocator.allocate(2, 2); 
-	
-	allocator.show(); allocator.allocate(4, 4); 
-	
-	allocator.show(); allocator.allocate(8, 8); 
-	
+	allocator.show(); allocator.allocate(2, 2);
+
+	allocator.show(); allocator.allocate(4, 4);
+
+	allocator.show(); allocator.allocate(8, 8);
+
 	allocator.show();
 
 //  -------------------------------------------

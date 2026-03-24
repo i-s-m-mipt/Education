@@ -258,46 +258,6 @@ private :
 
 void test_v1(benchmark::State & state)
 {
-	auto kb = 1'024uz, mb = kb * kb, gb = kb * kb * kb;
-
-    std::uniform_int_distribution distribution(1, 16);
-
-    std::default_random_engine engine;
-
-    std::vector < void * > vector(kb, nullptr);
-
-	for (auto element : state)
-	{
-		Allocator allocator(16 * gb);
-
-		for (auto i = 0uz; i < kb; ++i)
-        { 
-            vector[i] = allocator.allocate(distribution(engine) * mb);
-        }
-
-		for (auto i = 0uz; i < kb; i += 32)
-        { 
-            allocator.deallocate(vector[i]);
-        }
-
-		for (auto i = 0uz; i < kb; i += 32)
-        { 
-            vector[i] = allocator.allocate(distribution(engine) * mb);
-        }
-
-		for (auto i = 0uz; i < kb; ++i)
-        { 
-            allocator.deallocate(vector[i]);
-        }
-
-        benchmark::DoNotOptimize(vector);
-	}
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-void test_v2(benchmark::State & state)
-{
 	auto kb = 1'024uz, mb = kb * kb;
 
     std::uniform_int_distribution distribution(1, 16);
@@ -330,6 +290,46 @@ void test_v2(benchmark::State & state)
 		for (auto i = 0uz; i < kb; ++i) 
         {
             operator delete(vector[i].first, vector[i].second);
+        }
+
+        benchmark::DoNotOptimize(vector);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+void test_v2(benchmark::State & state)
+{
+	auto kb = 1'024uz, mb = kb * kb, gb = kb * kb * kb;
+
+    std::uniform_int_distribution distribution(1, 16);
+
+    std::default_random_engine engine;
+
+    std::vector < void * > vector(kb, nullptr);
+
+	for (auto element : state)
+	{
+		Allocator allocator(16 * gb);
+
+		for (auto i = 0uz; i < kb; ++i)
+        { 
+            vector[i] = allocator.allocate(distribution(engine) * mb);
+        }
+
+		for (auto i = 0uz; i < kb; i += 32)
+        { 
+            allocator.deallocate(vector[i]);
+        }
+
+		for (auto i = 0uz; i < kb; i += 32)
+        { 
+            vector[i] = allocator.allocate(distribution(engine) * mb);
+        }
+
+		for (auto i = 0uz; i < kb; ++i)
+        { 
+            allocator.deallocate(vector[i]);
         }
 
         benchmark::DoNotOptimize(vector);
