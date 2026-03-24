@@ -39,6 +39,10 @@ int main()
 
 //  -----------------------------------------------------
 
+    static_assert(sizeof(std::string) == 32);
+
+//  -----------------------------------------------------
+
     assert(distance(&string_1.front(), &string_1) == 16);
 
     assert(distance(&string_2.front(), &string_2) != 16);
