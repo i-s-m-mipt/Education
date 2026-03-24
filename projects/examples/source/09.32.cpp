@@ -84,7 +84,7 @@ private :
 
 void test_v1(benchmark::State & state)
 {
-	auto kb = 1'024uz;
+	auto kb = 1uz << 10;
 
 	std::vector < void * > vector(kb, nullptr);
 
@@ -108,13 +108,13 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state)
 {
-	auto kb = 1'024uz;
+	auto kb = 1uz << 10;
 
 	std::vector < void * > vector(kb, nullptr);
 
 	for (auto element : state)
 	{
-		Allocator < 1'024 * 1'024 > allocator;
+		Allocator < 1 << 20 > allocator;
 
 		for (auto i = 0uz; i < kb; ++i)
 		{
@@ -135,7 +135,7 @@ BENCHMARK(test_v2);
 
 int main()
 {
-	Allocator < 1'024 > allocator;
+	Allocator < 1 << 10 > allocator;
 
 //  -------------------------------------------
 

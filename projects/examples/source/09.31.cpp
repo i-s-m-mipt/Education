@@ -258,7 +258,7 @@ private :
 
 void test_v1(benchmark::State & state)
 {
-	auto kb = 1'024uz, mb = kb * kb;
+	auto kb = 1uz << 10, mb = 1uz << 20;
 
     std::uniform_int_distribution distribution(1, 16);
 
@@ -271,10 +271,10 @@ void test_v1(benchmark::State & state)
 		for (auto i = 0uz; i < kb; ++i)
         {
             vector[i].second = distribution(engine) * mb;
-            
+
             vector[i].first  = operator new(vector[i].second);
         }
-        
+
 		for (auto i = 0uz; i < kb; i += 32)
         {
             operator delete(vector[i].first, vector[i].second);
@@ -283,10 +283,10 @@ void test_v1(benchmark::State & state)
 		for (auto i = 0uz; i < kb; i += 32)
         {
             vector[i].second = distribution(engine) * mb;
-            
+
             vector[i].first  = operator new(vector[i].second);
-        } 
-        
+        }
+
 		for (auto i = 0uz; i < kb; ++i) 
         {
             operator delete(vector[i].first, vector[i].second);
@@ -300,7 +300,7 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state)
 {
-	auto kb = 1'024uz, mb = kb * kb, gb = kb * kb * kb;
+	auto kb = 1uz << 10, mb = 1uz << 20, gb = 1uz << 30;
 
     std::uniform_int_distribution distribution(1, 16);
 
@@ -313,22 +313,22 @@ void test_v2(benchmark::State & state)
 		Allocator allocator(16 * gb);
 
 		for (auto i = 0uz; i < kb; ++i)
-        { 
+        {
             vector[i] = allocator.allocate(distribution(engine) * mb);
         }
 
 		for (auto i = 0uz; i < kb; i += 32)
-        { 
+        {
             allocator.deallocate(vector[i]);
         }
 
 		for (auto i = 0uz; i < kb; i += 32)
-        { 
+        {
             vector[i] = allocator.allocate(distribution(engine) * mb);
         }
 
 		for (auto i = 0uz; i < kb; ++i)
-        { 
+        {
             allocator.deallocate(vector[i]);
         }
 
@@ -346,28 +346,28 @@ BENCHMARK(test_v2);
 
 int main()
 {
-    Allocator allocator(1'024);
+    Allocator allocator(1 << 10);
 
 //  --------------------------------------------------
-    
-    allocator.show();          allocator.allocate(16); 
-    
-    allocator.show(); auto x = allocator.allocate(16); 
-    
-    allocator.show(); auto y = allocator.allocate(16); 
-    
+
+    allocator.show();          allocator.allocate(16);
+
+    allocator.show(); auto x = allocator.allocate(16);
+
+    allocator.show(); auto y = allocator.allocate(16);
+
     allocator.show();          allocator.allocate(16);
 
 //  --------------------------------------------------
-    
+
     allocator.show(); allocator.deallocate(y);
-    
+
     allocator.show(); allocator.deallocate(x);
 
 //  --------------------------------------------------
-    
+
     allocator.show(); auto z = allocator.allocate(32);
-    
+
     allocator.show();
 
 //  --------------------------------------------------

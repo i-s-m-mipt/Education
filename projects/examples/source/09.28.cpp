@@ -106,7 +106,7 @@ private :
 
 void test_v1(benchmark::State & state)
 {
-	auto kb = 1'024uz, mb = kb * kb;
+	auto kb = 1uz << 10, mb = 1uz << 20;
 
 	std::vector < void * > vector(kb, nullptr);
 
@@ -130,7 +130,7 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state)
 {
-	auto kb = 1'024uz, mb = kb * kb, gb = kb * kb * kb;
+	auto kb = 1uz << 10, mb = 1uz << 20, gb = 1uz << 30;
 
 	std::vector < void * > vector(kb, nullptr);
 
@@ -157,18 +157,18 @@ BENCHMARK(test_v2);
 
 int main()
 {
-	Allocator allocator(1'024);
+	Allocator allocator(1 << 10);
 
 //  -------------------------------------------
 
 	allocator.show(); allocator.allocate(1, 1);
 
-	allocator.show(); allocator.allocate(2, 2); 
-	
-	allocator.show(); allocator.allocate(4, 4); 
-	
-	allocator.show(); allocator.allocate(8, 8); 
-	
+	allocator.show(); allocator.allocate(2, 2);
+
+	allocator.show(); allocator.allocate(4, 4);
+
+	allocator.show(); allocator.allocate(8, 8);
+
 	allocator.show();
 
 //  -------------------------------------------

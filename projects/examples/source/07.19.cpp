@@ -123,7 +123,7 @@ private :
 
 			boost::log::keywords::time_based_rotation = rotation,
 
-			boost::log::keywords::rotation_size = 8 * 1'024 * 1'024
+			boost::log::keywords::rotation_size = 8 << 20
 		);
 
 		sink->locked_backend()->auto_flush();

@@ -93,9 +93,9 @@ auto size(std::filesystem::directory_entry const & entry)
 
     auto i = 0uz;
 
-    while (i++ < 3 && size >= 1'024)
+    while (i++ < 3 && size >= 1 << 10)
     {
-        size /= 1'024;
+        size /= (1 << 10);
     }
 
     return (std::stringstream() << std::format("{: >4}{}", size, array[i - 1])).str();

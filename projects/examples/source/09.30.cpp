@@ -172,14 +172,14 @@ private :
 
 void test_v1(benchmark::State & state)
 {
-	auto kb = 1'024uz, mb = kb * kb;
+	auto kb = 1uz << 10, mb = 1uz << 20;
 
 	std::vector < void * > vector(kb, nullptr);
 
 	for (auto element : state)
 	{
 		for (auto i = 0uz; i < kb; ++i)
-		{ 
+		{
 			vector[i] = operator new(mb);
 		}
 
@@ -206,7 +206,7 @@ void test_v1(benchmark::State & state)
 
 void test_v2(benchmark::State & state)
 {
-	auto kb = 1'024uz, mb = kb * kb, gb = kb * kb * kb;
+	auto kb = 1uz << 10, mb = 1uz << 20, gb = 1uz << 30;
 
 	std::vector < void * > vector(kb, nullptr);
 
@@ -215,22 +215,22 @@ void test_v2(benchmark::State & state)
 		Allocator allocator(gb, mb);
 
 		for (auto i = 0uz; i < kb; ++i)
-		{ 
+		{
 			vector[i] = allocator.allocate();
 		}
 
 		for (auto i = 0uz; i < kb; i += 2)
-		{ 
+		{
 			allocator.deallocate(vector[i]);
 		}
 
 		for (auto i = 0uz; i < kb; i += 2)
-		{ 
+		{
 			vector[i] = allocator.allocate();
 		}
 
 		for (auto i = 0uz; i < kb; ++i)
-		{ 
+		{
 			allocator.deallocate(vector[i]);
 		}
 
@@ -251,27 +251,27 @@ int main()
 	Allocator allocator(32, 8);
 
 //  ------------------------------------------------
-	
-	allocator.show();          allocator.allocate(); 
-	
-	allocator.show(); auto x = allocator.allocate(); 
-	
-	allocator.show(); auto y = allocator.allocate(); 
-	
-	allocator.show();          allocator.allocate(); 
-	
+
+	allocator.show();          allocator.allocate();
+
+	allocator.show(); auto x = allocator.allocate();
+
+	allocator.show(); auto y = allocator.allocate();
+
+	allocator.show();          allocator.allocate();
+
 	allocator.show();          allocator.allocate();
 
 //  ------------------------------------------------
-	
+
 	allocator.show(); allocator.deallocate(x);
-	
+
 	allocator.show(); allocator.deallocate(y);
 
 //  ------------------------------------------------
-	
+
 	allocator.show(); auto z = allocator.allocate();
-	
+
 	allocator.show();
 
 //  ------------------------------------------------
