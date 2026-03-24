@@ -8,7 +8,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-// content : D.E.Knuth String Hash Algorithm
+// content : String Hash Algorithm
 //
 // content : Collisions
 
