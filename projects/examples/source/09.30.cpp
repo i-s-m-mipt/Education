@@ -38,7 +38,7 @@ public :
 	{
 		assert(m_size % m_step == 0 && m_step >= sizeof(Node));
 
-		resize();
+		make_list();
 			
 		m_begin = m_head;
 	}
@@ -61,7 +61,7 @@ public :
 		{
 			if (m_offset == std::size(m_lists))
 			{
-				resize();
+				make_list();
 			}
 			else
 			{
@@ -142,7 +142,7 @@ private :
 
 //  -----------------------------------------------------------------------------------
 
-	void resize()
+	void make_list()
 	{
 		m_head = get_node(operator new(m_size, std::align_val_t(s_alignment)));
 
