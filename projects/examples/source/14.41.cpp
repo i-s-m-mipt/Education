@@ -521,7 +521,7 @@ void test(benchmark::State & state)
 
         auto time = *std::ranges::fold_left_first
         (
-            std::ranges::views::transform(futures, lambda), std::plus()
+            std::views::transform(futures, lambda), std::plus()
         );
 
         state.SetIterationTime(time / concurrency);
