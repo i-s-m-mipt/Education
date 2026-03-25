@@ -12,11 +12,13 @@
 //
 // content : Arithmetic Grammar
 //
+// content : Extended Backus-Naur Form
+//
+// content : Statements, Declarations, Expressions, Terms, Primaries and Tokens
+//
 // content : Recursive Descent Parsers
 //
 // content : Functions std::isalpha, std::isdigit and std::isspace
-//
-// content : Statements, Declarations, Expressions, Terms, Primaries and Tokens
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
