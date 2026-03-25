@@ -215,7 +215,7 @@ private :
 	    while (current && size > current->size)
         {
             previous = current;
-            
+
             current  = current->next;
         }
 

@@ -73,6 +73,8 @@ public :
 		}
 	}
 
+//  -------------------------------------------------------------------------------
+
 	void deallocate(void * x)
 	{
 		auto header = get_header(get_byte(x) - sizeof(header_t));
