@@ -208,7 +208,7 @@
 
 \section{01. Introduction and Overview}
 
-{\large \textbf{01.01} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.07.cpp}{06.07}\,)}} 
+{\large \textbf{01.01} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/06.07.cpp}{06.07}\,)} \texttt{//} Stack Overflow} 
 
 \bigskip
 
@@ -280,7 +280,7 @@
 
 \bigskip
 
-Реализуйте алгоритм вычисления наибольшей длины последовательности Коллатца среди всех последовательностей, начинающихся со значений от 1 до 100. Используйте тип \lstinline{unsigned long long int} для значений последовательностей Коллатца и стандартный тип \lstinline{std::size_t} для их длин. Используйте стандартный контейнер \lstinline{std::vector} для кэширование длин последовательностей Коллатца и оптимизации вычисления длины каждой новой последовательности на основе предыдущих последовательностей. Используйте стандартный поток \lstinline{std::cout} для вывода через терминал наибольшей длины последовательности Коллатца среди рассмот- 
+Реализуйте алгоритм вычисления наибольшей длины последовательности Коллатца среди всех последовательностей, начинающихся со значений от 1 до 100. Используйте тип \lstinline{unsigned long long int} для значений последовательностей Коллатца и стандартный тип \lstinline{std::size_t} для их длин. Используйте стандартный контейнер \lstinline{std::vector} для кэширования длин последовательностей Коллатца и оптимизации вычисления длины каждой новой последовательности на основе предыдущих последовательностей. Используйте стандартный поток \lstinline{std::cout} для вывода через терминал наибольшей длины последовательности Коллатца среди рассмот- 
 
 ренных, а также значения, с которого она начинается. Не сопровождайте Ваше решение данной задачи тестами.
 
@@ -894,15 +894,47 @@ Method, для управления поведением игровых объе
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 5.00in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 8.00in\enlargethispage{100in}
 
 \section{12. String Processing}
 
-{\large \textbf{12.01} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/12.02.cpp}{12.02}\,)}}
+{\large \textbf{12.01} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/12.01.cpp}{12.01}\,)}}
+
+\bigskip
+
+Реализуйте алгоритм конвертации валюты RUB в валюту USD с поддержкой ввода и вывода локализованных обозначений денежных сумм. Используйте стандартные локали \lstinline{std::locale} для настройки потоков ввода и вывода. Используйте русскую локаль \lstinline{ru_RU.utf8} для настройки потока ввода. Используйте американскую локаль \lstinline{en_US.utf8} для настройки потока вывода. Используйте стандартные манипуляторы \lstinline{std::get_money} и \lstinline{std::put_money} для ввода и вывода. Используйте стандартные потоки \lstinline{std::stringstream} для реализации потоков ввода и вывода. Указывайте обозначение валюты RUB до или после указания денежной суммы в RUB.
+
+\bigskip
+
+{\large \textbf{12.02} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/12.09.cpp}{12.09}\,)} \texttt{//} Stack Overflow}
 
 \bigskip
 
 Напишите программу, которая выводит собственный исходный код в окно терминала через стандартный поток \lstinline{std::cout}. Не используйте файловые потоки ввода. Предполагайте, что файл с исходным кодом недоступен.
+
+\bigskip
+
+{\large \textbf{12.03} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/12.11.cpp}{12.11}\,)} \texttt{//} M. Bancila, The Modern C\texttt{++} Challenge}
+
+\bigskip
+
+Реализуйте алгоритм поиска подстроки-палиндрома наибольшей длины. Не используйте полный перебор. Используйте кэширование для уменьшения алгоритмической сложности. Используйте стандартный контейнер \lstinline{std::vector < bool >} для представления линеаризованной таблицы кэширования размера N на N, где N - количество символов в строке. Используйте стандартное представление \lstinline{std::string_view} для оптимизации.
+
+\bigskip
+
+{\large \textbf{12.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/12.18.cpp}{12.18}\,)}}
+
+\bigskip
+
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/12.18.cpp}{\texttt{12.18}} таким образом, чтобы пользователь мог извлечь все адреса электронных почт и их домены из некоторого текста. Используйте упрощенный формат адресов электронных почт. Используйте группу для извлечения доменов. Используйте сырые строковые литералы для реализации текстов для тестов.
+
+\bigskip
+
+{\large \textbf{12.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/12.26.cpp}{12.26}\,)}}
+
+\bigskip
+
+Доработайте примеры \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/12.19.cpp}{\texttt{12.19}} и \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/12.26.cpp}{12.26} таким образом, чтобы пользователь мог брать остаток от деления, возводить в степень и вычислять факториал чисел, а также использовать квадратные и фигурные скобки. Реализуйте грамматический разбор и вычисление выражений на основе бинарного оператора \lstinline{%} для взятия остатка от деления первого операнда на второй, бинарного оператора \lstinline{^} для возведения первого операнда в степень второго и унарного постфиксного оператора \lstinline{!} для вычисления факториала операнда. Не рассматривайте проблемы переполнения и точности типа \lstinline{double} при вычислении факториала чисел. Реализуйте грамматический разбор и вычисление выражений на основе квадратных и фигурных скобок в дополнение к круглым скобкам. Используйте оригинальную \href{https://github.com/Chrinkus/stroustrup-ppp/blob/master/chapter07/ch07_calculator.cpp}{реализацию} рекурсивного калькулятора Бьерна Страуструпа в качестве подсказки.
 
 
 
