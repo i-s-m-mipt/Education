@@ -35,9 +35,11 @@ public :
 
 	virtual ~Entity() = default;
 
-//  -----------------------------------------
+//  ------------------------------------------------------------------
 
-	virtual int test(int x, int y) const = 0;
+	__attribute__((noinline))         int test_v1(int x, int y) const;
+
+	__attribute__((noinline)) virtual int test_v2(int x, int y) const;
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +48,7 @@ class Client : public Entity
 {
 public :
 
-	__attribute__((noinline)) int test(int x, int y) const override;
+	__attribute__((noinline)) int test_v2(int x, int y) const override;
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -55,14 +57,18 @@ class Server : public Entity
 {
 public :
 
-	__attribute__((noinline)) int test(int x, int y) const override;
+	__attribute__((noinline)) int test_v2(int x, int y) const override;
 };
 
 /////////////////////////////////////////////////////////////////////////////////
 
-int Client::test(int x, int y) const { return x + y; }
+int Entity::test_v1(int x, int y) const { return x + y; }
 
-int Server::test(int x, int y) const { return x + y; }
+int Entity::test_v2(int x, int y) const { return x + y; }
+
+int Client::test_v2(int x, int y) const { return x + y; }
+
+int Server::test_v2(int x, int y) const { return x + y; }
 
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -88,17 +94,19 @@ void test(benchmark::State & state)
 
 	auto volatile x = 1, y = 2;
 
+	std::shared_ptr < Entity > entity_1 = std::make_shared < Entity > ();
+
+	std::shared_ptr < Entity > entity_2 = std::make_shared < Client > ();
+
 	std::bernoulli_distribution distribution(0.5);
 
 	std::random_device device;
 
 	std::default_random_engine engine(device());
 
-	std::shared_ptr < Entity > entity = std::make_shared < Client > ();
-
 	if (distribution(engine))
 	{
-		entity = std::make_shared < Server > ();
+		entity_2 = std::make_shared < Server > ();
 	}
 
 	Functor functor;
@@ -113,15 +121,17 @@ void test(benchmark::State & state)
 
 		switch (argument)
 		{
-			case 1 : { z = test        (x, y); break; }
+			case 1 : { z = test             (x, y); break; }
 
-			case 2 : { z = entity->test(x, y); break; }
+			case 2 : { z = entity_1->test_v1(x, y); break; }
 
-			case 3 : { z = functor     (x, y); break; }
+			case 3 : { z = entity_2->test_v2(x, y); break; }
 
-			case 4 : { z = lambda      (x, y); break; }
+			case 4 : { z = functor          (x, y); break; }
 
-			case 5 : { z = function    (x, y); break; }
+			case 5 : { z = lambda           (x, y); break; }
+
+			case 6 : { z = function         (x, y); break; }
 		}
 
 		benchmark::DoNotOptimize(z);
@@ -130,7 +140,7 @@ void test(benchmark::State & state)
 
 /////////////////////////////////////////////////////////////////////////////////
 
-BENCHMARK(test)->Arg(1)->Arg(2)->Arg(3)->Arg(4)->Arg(5);
+BENCHMARK(test)->Arg(1)->Arg(2)->Arg(3)->Arg(4)->Arg(5)->Arg(6);
 
 /////////////////////////////////////////////////////////////////////////////////
 
