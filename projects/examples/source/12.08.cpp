@@ -21,6 +21,7 @@
 #include <cassert>
 #include <cctype>
 #include <cstddef>
+#include <memory>
 #include <string>
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -68,12 +69,17 @@ public :
 
 int main()
 {
-    assert
-    (
-        (std::basic_string < char, Traits > ("aaaaa")) == 
-        
-        (std::basic_string < char, Traits > ("AAAAA"))
-    );
+    using string_t = std::basic_string < char, Traits, std::allocator < char > > ;
+
+//  ------------------------------------------------------------------------------
+
+    assert(string_t("aaaaa") == string_t("AAAAA"));
+
+    assert(string_t("bbbbb") == string_t("BBBBB"));
+
+    assert(string_t("aaaaa") != string_t("bbbbb"));
+
+    assert(string_t("AAAAA") != string_t("BBBBB"));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
