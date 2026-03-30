@@ -10,11 +10,7 @@
 
 // content : Microbenchmarking
 //
-// content : Container std::list
-//
-// content : Container std::pmr::list
-//
-// content : Allocator std::pmr::polymorphic_allocator
+// content : Containers std::list and std::pmr::list
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

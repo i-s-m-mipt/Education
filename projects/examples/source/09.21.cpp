@@ -14,11 +14,15 @@
 //
 // content : Type std::align_val_t
 //
-// content : Operator new
+// content : Placement Operator new
 //
 // content : Memory Laundering
 //
-// content : Functions std::launder and std::destroy_at
+// content : Function std::launder
+//
+// content : Explicit Destructors
+//
+// content : Function std::destroy_at
 
 ////////////////////////////////////////////////////////////////////////////////
 

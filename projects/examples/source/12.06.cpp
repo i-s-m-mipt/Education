@@ -12,7 +12,13 @@
 //
 // content : String std::string
 //
-// content : Functions std::getline and std::ws
+// content : Function std::getline
+//
+// content : Manipulator std::ws
+//
+// content : Object std::string::npos
+//
+// content : Monolith Problem
 //
 // content : Functions std::stoi and std::to_string
 

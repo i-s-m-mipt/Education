@@ -8,9 +8,9 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-// content : Case-Insensitive Strings
+// content : String std::basic_string
 //
-// content : Type std::basic_string
+// content : User-Defined Case-Insensitive Strings
 //
 // content : Utility std::char_traits
 //

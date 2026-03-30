@@ -18,9 +18,7 @@
 //
 // content : Function std::use_facet
 //
-// content : Facet std::numpunct
-//
-// content : Facet std::moneypunct
+// content : Facets std::numpunct and std::moneypunct
 //
 // content : C-Style Locales
 //
