@@ -36,16 +36,16 @@ int main()
 //  ----------------------------------------------------------
 
 	assert(buffer.at(0) == 3);
-	
+
 	assert(buffer.at(1) == 4);
-	
+
 	assert(buffer.at(2) == 5);
 
 //  ----------------------------------------------------------
 
-	boost::circular_buffer < int > ::array_range array_1;
-	
-	boost::circular_buffer < int > ::array_range array_2;
+	decltype(buffer)::array_range array_1;
+
+	decltype(buffer)::array_range array_2;
 
 //  ----------------------------------------------------------
 
