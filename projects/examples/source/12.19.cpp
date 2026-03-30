@@ -57,20 +57,21 @@ public :
 		if (m_has_token) 
 		{ 
 			m_has_token = false;
-			
+
 			return m_token;
 		}
 
 		auto x = '\0'; 
-		
+
 		m_stream >> x;
-		
+
 		switch (x)
 		{
 			case '+' : case '-' : case '*' : case '/' : case '(' : case ')' : case ';' :
 			{
 				return token_t(x);
 			}
+
 			case '0' : case '1' : case '2' : case '3' : case '4' :
 
 			case '5' : case '6' : case '7' : case '8' : case '9' :
@@ -78,17 +79,18 @@ public :
 			case '.' :
 			{
 				m_stream.unget();
-				
+
 				auto y = 0.0; 
-				
+
 				m_stream >> y;
 
 				return token_t(y);
 			}
+
 			default :
 			{
 				std::string string(1, x);
-					
+
 				while (m_stream.get(x) && (std::isalpha(x) || std::isdigit(x)))
 				{
 					string += x;
@@ -109,7 +111,7 @@ public :
 	void put(token_t const & token)
 	{
 		m_token = token;
-		
+
 		m_has_token = true;
 	}
 
@@ -118,7 +120,7 @@ private :
 	std::stringstream m_stream;
 
 	token_t m_token;
-	
+
 	bool m_has_token = false;
 };
 
@@ -133,14 +135,14 @@ public :
 		std::string string;
 
 		std::print("Calculator::test : enter std::string string(s) : \n");
-		
+
 		while (std::getline(std::cin >> std::ws, string))
 		{
 			if (Stream stream(string); !stream.empty())
 			{
 				std::print("Calculator::test : {} = {}\n", string, statement(stream));
 			}
-			else 
+			else
 			{
 				break;
 			}
@@ -160,9 +162,9 @@ private :
 				return declaration(stream);
 			}
 		}
-		
+
 		stream.put(token);
-		
+
 		return expression(stream);
 	}
 
@@ -182,7 +184,7 @@ private :
 	auto expression(Stream & stream) const -> double
 	{
 		auto x = term(stream);
-		
+
 		auto token = stream.get();
 
 		while (true)
@@ -193,10 +195,10 @@ private :
 
 				case '-' : { x -= term(stream); break; }
 
-				default  : 
-				{ 
+				default  :
+				{
 					stream.put(token);
-						
+
 					return x;
 				}
 			}
@@ -210,7 +212,7 @@ private :
 	auto term(Stream & stream) const -> double
 	{
 		auto x = primary(stream);
-		
+
 		auto token = stream.get();
 
 		while (true)
@@ -221,10 +223,10 @@ private :
 
 				case '/' : { x /= primary(stream); break; }
 
-				default  : 
-				{ 
+				default  :
+				{
 					stream.put(token);
-						
+
 					return x;
 				}
 			}
@@ -246,17 +248,18 @@ private :
 				case '(' :
 				{
 					auto x = expression(stream);
-					
+
 					stream.get();
-					
+
 					return x;
 				}
+
 				case '+' : { return      primary(stream); }
-				
+
 				case '-' : { return -1 * primary(stream); }
 			}
 		}
-		
+
 		if (std::holds_alternative < double > (token))
 		{
 			return std::get < double > (token);
