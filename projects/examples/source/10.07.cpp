@@ -46,15 +46,15 @@ int main()
 
 //  --------------------------------------------------------------
 
+    assert(deque.at(0) == 1);
+
+//  --------------------------------------------------------------
+
 	deque.erase(deque.insert(std::next(std::begin(deque), 0), 1));
 
 	deque.erase(deque.insert(std::next(std::begin(deque), 2), 1));
 
 	deque.erase(deque.insert(std::next(std::begin(deque), 5), 1));
-
-//  --------------------------------------------------------------
-
-    assert(deque.at(0) == 1);
 }
 
 //////////////////////////////////////////////////////////////////

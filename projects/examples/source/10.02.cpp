@@ -54,15 +54,15 @@ int main()
 
 //  -----------------------------------------------------------------
 
+	assert(vector.at(0) == 1);
+
+//  -----------------------------------------------------------------
+
 	vector.erase(vector.insert(std::next(std::begin(vector), 0), 1));
 
 	vector.erase(vector.insert(std::next(std::begin(vector), 2), 1));
 
 	vector.erase(vector.insert(std::next(std::begin(vector), 5), 1));
-
-//  -----------------------------------------------------------------
-
-	assert(vector.at(0) == 1);
 
 //  -----------------------------------------------------------------
 

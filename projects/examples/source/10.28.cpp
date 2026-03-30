@@ -32,7 +32,7 @@ void test(benchmark::State & state)
 {
     auto argument = state.range(0);
 
-    auto size = (32uz << 10) / sizeof(int);
+    auto size = 1uz << 10;
 
     std::vector < std::vector < int > > vector
     (

@@ -12,6 +12,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 
+#include <array>
 #include <cassert>
 #include <cstddef>
 #include <iterator>
@@ -57,12 +58,12 @@ template < std::size_t D > void fill_v2(auto const & container, auto iterator)
 
 template < typename T, std::size_t D > auto make_array(auto const & container)
 {
-	std::vector < typename boost::multi_array < T, D > ::index > sizes(D, 0);
+	std::array < typename boost::multi_array < T, D > ::index, D > sizes = {};
 
 	fill_v1 < D > (container, std::begin(sizes));
-	
+
 	boost::multi_array < T, D > array(sizes);
-	
+
 	fill_v2 < D > (container, std::begin(array));
 
 	return array;
