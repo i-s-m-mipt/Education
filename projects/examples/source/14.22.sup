@@ -1,29 +1,25 @@
-///////////////////////////////
+////////////////////////////////////////
 
-Thread 1 : Stack A-B-C; top = A
+Thread 0 :         : stack = { 1, 2, 3 }
 
-Thread 1 : Stack A-B-C; pop
+Thread 1 : top = 1 : stack = { 1, 2, 3 }
 
-Thread 1 : Stack   B-C;
+Thread 1 : pop     : stack = {    2, 3 }
 
-Thread 2 : Stack   B-C; top = B
+Thread 2 : top = 2 : stack = {    2, 3 }
 
-Thread 2 : Stack   B-C; pop
+Thread 2 : pop     : stack = {       3 }
 
-Thread 2 : Stack     C;
+////////////////////////////////////////
 
-///////////////////////////////
+Thread 0 :         : stack = { 1, 2, 3 }
 
-Thread 1 : Stack A-B-C; top = A
+Thread 1 : top = 1 : stack = { 1, 2, 3 }
 
-Thread 2 : Stack A-B-C; top = A
+Thread 2 : top = 1 : stack = { 1, 2, 3 }
 
-Thread 1 : Stack A-B-C; pop
+Thread 1 : pop     : stack = {    2, 3 }
 
-Thread 1 : Stack   B-C;
+Thread 2 : pop     : stack = {       3 }
 
-Thread 2 : Stack   B-C; pop
-
-Thread 2 : Stack     C;
-
-///////////////////////////////
+////////////////////////////////////////
