@@ -16,7 +16,7 @@
 #
 # sudo apt install linux-tools-common coreutils util-linux linux-tools-generic procps
 #
-# sudo apt install python3 python3-dev libicu-dev libtbb-dev
+# sudo apt install python3 python3-dev python3-matplotlib libicu-dev libtbb-dev
 #
 # sudo apt install google-perftools libgoogle-perftools-dev
 
