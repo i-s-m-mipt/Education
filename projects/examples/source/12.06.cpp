@@ -16,9 +16,9 @@
 //
 // content : Manipulator std::ws
 //
-// content : Object std::string::npos
+// content : Index-Based Algorithms
 //
-// content : Monolith Problem
+// content : God Class Problem
 //
 // content : Functions std::stoi and std::to_string
 
