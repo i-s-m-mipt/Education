@@ -1,5 +1,29 @@
 /////////////////////////////////////////////////////////////////////////////////////
 
+// chapter : Streams and Serialization
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+// section : Input-Output Streams
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+// content : Formatting Flags
+//
+// content : Manipulators
+//
+// content : Manipulator std::boolalpha
+//
+// content : Manipulators std::setw, std::right and std::setfill
+//
+// content : Manipulators std::showbase and std::hex
+//
+// content : Manipulators std::setprecision and std::fixed
+//
+// content : Manipulators std::showpos, std::scientific and std::uppercase
+
+/////////////////////////////////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <iomanip>
 #include <ios>
@@ -64,7 +88,7 @@ int main()
 
 //  ---------------------------------------------------------------------------------
 
-    assert(get(stream) == "+1.0E+00");
+    assert(get(stream) == "+1.000000E+00");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////

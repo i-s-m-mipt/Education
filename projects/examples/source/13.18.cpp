@@ -29,7 +29,7 @@ public :
     {
         std::string string;
 
-        std::format_to(std::back_inserter(string), "{} {}", entity.x, entity.string);
+        std::format_to(std::back_inserter(string), "{}, {}", entity.x, entity.string);
 
         return std::formatter < std::string_view > ::format("{ " + string + " }", context);
     }

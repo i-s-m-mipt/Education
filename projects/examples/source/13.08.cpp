@@ -1,5 +1,27 @@
 //////////////////////////////////////////////////////////
 
+// chapter : Streams and Serialization
+
+//////////////////////////////////////////////////////////
+
+// section : Input-Output Streams
+
+//////////////////////////////////////////////////////////
+
+// content : File Streams
+//
+// content : Stream std::fstream
+//
+// content : Open Flags
+//
+// content : Flags std::ios::out and std::ios::in
+//
+// content : Write and Read Positions
+//
+// content : Function std::filesystem::remove
+
+//////////////////////////////////////////////////////////
+
 #include <cassert>
 #include <filesystem>
 #include <fstream>

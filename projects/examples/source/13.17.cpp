@@ -1,5 +1,35 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
+// chapter : Streams and Serialization
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+// section : File Management
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+// content : Iterator std::filesystem::directory_iterator
+//
+// content : Type std::filesystem::directory_entry
+//
+// content : Type std::filesystem::file_status
+//
+// content : Function std::filesystem::is_directory
+//
+// content : Function std::filesystem::is_regular_file
+//
+// content : Function std::filesystem::is_symlink
+//
+// content : Enumeration std::filesystem::perms
+//
+// content : Function std::filesystem::file_size
+//
+// content : Iterator std::filesystem::recursive_directory_iterator
+//
+// content : Clock std::chrono::file_clock
+
+//////////////////////////////////////////////////////////////////////////////////////
+
 // support : ls -la
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -16,21 +46,11 @@
 
 auto make_type(std::filesystem::file_status const & status)
 {
-    if (std::filesystem::is_block_file    (status)) { return 'b'; }
-    
-    if (std::filesystem::is_character_file(status)) { return 'c'; }
+    if (std::filesystem::is_directory   (status)) { return 'd'; }
 
-    if (std::filesystem::is_directory     (status)) { return 'd'; }
+    if (std::filesystem::is_regular_file(status)) { return 'f'; }
 
-    if (std::filesystem::is_fifo          (status)) { return 'p'; }
-
-    if (std::filesystem::is_other         (status)) { return 'o'; }
-
-    if (std::filesystem::is_regular_file  (status)) { return 'f'; }
-
-    if (std::filesystem::is_socket        (status)) { return 's'; }
-
-    if (std::filesystem::is_symlink       (status)) { return 'l'; }
+    if (std::filesystem::is_symlink     (status)) { return 'l'; }
 
     return '?';
 }
@@ -39,13 +59,13 @@ auto make_type(std::filesystem::file_status const & status)
 
 auto make_permissions(std::filesystem::perms permissions) -> std::string
 {
-    auto lambda = [permissions](auto x, auto y) 
+    auto lambda = [permissions](auto x, auto y)
     { 
         return (permissions & x) == std::filesystem::perms::none ? '-' : y;
     };
 
     return
-    { 
+    {
         lambda(std::filesystem::perms::owner_read,  'r'),
 
         lambda(std::filesystem::perms::owner_write, 'w'),
