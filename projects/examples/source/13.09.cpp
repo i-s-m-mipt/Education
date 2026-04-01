@@ -1,14 +1,14 @@
 /////////////////////////////////////////////////////////////////////
 
-// chapter : Streams and Serialization
+// chapter : Streams
 
 /////////////////////////////////////////////////////////////////////
 
-// section : Input-Output Streams
+// section : Streams
 
 /////////////////////////////////////////////////////////////////////
 
-// content : Changing Underlying Buffers
+// content : Underlying Buffers
 //
 // content : Base Class std::streambuf
 
@@ -33,20 +33,14 @@ public :
 
     Adapter(std::string const & path) : m_stream(path, std::ios::out)
     {
-        if (m_stream) 
-        {
-            m_streambuf = std::cout.rdbuf(m_stream.rdbuf());
-        }
+        m_streambuf = std::cout.rdbuf(m_stream.rdbuf());
     }
 
 //  -----------------------------------------------------------------
 
    ~Adapter() 
     { 
-        if (m_streambuf) 
-        {
-            std::cout.rdbuf(m_streambuf);
-        }
+        std::cout.rdbuf(m_streambuf);
     }
 
 private :
