@@ -1,14 +1,14 @@
 /////////////////////////////////////////////////////
 
-// chapter : Object-Oriented Programming
+// chapter : Classes
 
 /////////////////////////////////////////////////////
 
-// section : Object Relations
+// section : Relationships
 
 /////////////////////////////////////////////////////
 
-// content : Object Relations
+// content : Relationships
 //
 // content : Composition, Aggregation and Association
 //
