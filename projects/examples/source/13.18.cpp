@@ -10,8 +10,6 @@
 
 // content : Formats
 //
-// content : Serialization
-//
 // content : Functions std::format and std::format_to
 //
 // content : User-Defined Formatters
