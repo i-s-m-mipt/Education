@@ -1,14 +1,12 @@
 /////////////////////////////////////////////////
 
-// chapter : String Processing
+// chapter : Text Processing
 
 /////////////////////////////////////////////////
 
-// section : Character Encodings
+// section : Encodings
 
 /////////////////////////////////////////////////
-
-// content : Character Encodings
 
 // content : Character Types and Literals
 //
@@ -19,6 +17,8 @@
 // content : Literal Prefixes L, u8, u and U
 //
 // content : Standard ASCII 7-bit
+//
+// content : Encodings
 //
 // content : Multibyte and Wide Encodings
 //

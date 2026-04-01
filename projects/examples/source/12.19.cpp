@@ -1,14 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// chapter : String Processing
+// chapter : Text Processing
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// section : Grammars and Parsers
+// section : Grammars
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Grammars and Parsers
+// content : Grammars
 //
 // content : Arithmetic Grammar
 //
@@ -16,7 +16,11 @@
 //
 // content : Statements, Declarations, Expressions, Terms, Primaries and Tokens
 //
+// content : Parsers
+//
 // content : Recursive Descent Parsers
+//
+// content : Arithmetic Parser
 //
 // content : Functions std::isalpha, std::isdigit and std::isspace
 
