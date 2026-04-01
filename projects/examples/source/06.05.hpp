@@ -1,14 +1,14 @@
 ///////////////////////////////////////////
 
-// chapter : Projects and Libraries
+// chapter : Projects
 
 ///////////////////////////////////////////
 
-// section : Project Structure
+// section : Projects
 
 ///////////////////////////////////////////
 
-// content : Project Structure
+// content : Projects
 //
 // content : Header Files
 //
