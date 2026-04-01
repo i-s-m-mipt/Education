@@ -1,14 +1,14 @@
 ////////////////////////////////////////////////////////
 
-// chapter : Introduction and Overview
+// chapter : Introduction
 
 ////////////////////////////////////////////////////////
 
-// section : Standard Library Overview
+// section : Standard Library
 
 ////////////////////////////////////////////////////////
 
-// content : Standard Library Overview
+// content : Standard Library
 //
 // content : Using Libraries
 //
@@ -22,7 +22,7 @@
 //
 // content : Naming Conventions
 //
-// content : Single-Line and Multi-Line Comments
+// content : Comments
 //
 // content : Service Doxygen
 

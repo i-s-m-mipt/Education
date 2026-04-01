@@ -1,20 +1,20 @@
 //////////////////////////////////////////////////
 
-// chapter : Introduction and Overview
+// chapter : Introduction
 
 //////////////////////////////////////////////////
 
-// section : Developer Tools
+// section : Tools
 
 //////////////////////////////////////////////////
 
-// content : Developer Tools
+// content : Tools
 //
 // content : GNU Linux Distribution Ubuntu
 //
 // content : Tools pwd, ls, cd and sudo
 //
-// content : Tools Snap and APT
+// content : Tools snap and apt
 //
 // content : Environment Visual Studio Code
 //
