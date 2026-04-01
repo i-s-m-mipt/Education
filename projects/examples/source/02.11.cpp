@@ -1,13 +1,15 @@
 ////////////////////////////////////////
 
-// chapter : Basics of Programming
+// chapter : Basics
 
 ////////////////////////////////////////
 
-// section : Operators and Expressions
+// section : Operators
 
 ////////////////////////////////////////
 
+// content : Operators
+//
 // content : Unary and Binary Operators
 //
 // content : Logical Operators
@@ -18,9 +20,7 @@
 //
 // content : Short-Circuit Evaluations
 //
-// content : De Morgan's Rules
-//
-// content : Expressions and Statements
+// content : Expressions
 
 ////////////////////////////////////////
 

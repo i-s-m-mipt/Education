@@ -1,16 +1,18 @@
 //////////////////////////////////////////////
 
-// chapter : Basics of Programming
+// chapter : Basics
 
 //////////////////////////////////////////////
 
-// section : Types and Variables
+// section : Types
 
 //////////////////////////////////////////////
 
 // content : Declarations and Definitions
 //
 // content : Objects and Variables
+//
+// content : Types
 //
 // content : Logical Types and Literals
 //
