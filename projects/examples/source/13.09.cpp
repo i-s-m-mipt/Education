@@ -10,7 +10,7 @@
 
 // content : Underlying Buffers
 //
-// content : Base Class std::streambuf
+// content : Buffer std::streambuf
 
 /////////////////////////////////////////////////////////////////////
 

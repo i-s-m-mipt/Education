@@ -24,7 +24,7 @@
 //
 // content : View std::views::take
 //
-// content : Base Class std::ranges::view_interface
+// content : Utility std::ranges::view_interface
 //
 // content : Concept std::ranges::view
 //

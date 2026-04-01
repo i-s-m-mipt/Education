@@ -16,7 +16,7 @@
 //
 // content : User-Defined Exceptions
 //
-// content : Base Class std::exception
+// content : Exception std::exception
 //
 // content : Attribute [[noreturn]]
 //

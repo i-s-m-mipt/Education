@@ -12,7 +12,7 @@
 //
 // content : Type Traits is_same
 //
-// content : Base Classes std::false_type and std::true_type
+// content : Utilities std::false_type and std::true_type
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 

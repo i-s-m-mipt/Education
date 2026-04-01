@@ -10,7 +10,7 @@
 
 // content : Streams
 //
-// content : Base Class std::ios_base
+// content : Utility std::ios_base
 //
 // content : State Flags
 //
@@ -18,21 +18,21 @@
 //
 // content : Exception std::ios_base::failure
 //
-// content : Base Class std::basic_ios
+// content : Utility std::basic_ios
 //
-// content : Base Class std::basic_streambuf
+// content : Buffer std::basic_streambuf
 //
 // content : Stream Buffers
 //
-// content : Base Class std::basic_istream
+// content : Stream std::basic_istream
 //
 // content : Stream std::cin
 //
-// content : Base Class std::basic_ostream
+// content : Stream std::basic_ostream
 //
 // content : Streams std::cout, std::clog and std::cerr
 //
-// content : Base Class std::basic_iostream
+// content : Stream std::basic_iostream
 
 ////////////////////////////////////////////////////////////
 

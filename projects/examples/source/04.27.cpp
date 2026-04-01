@@ -10,7 +10,7 @@
 
 // content : Type Traits is_integral
 //
-// content : Base Class std::integral_constant
+// content : Utility std::integral_constant
 
 /////////////////////////////////////////////////////////////////////////////////
 
