@@ -1,13 +1,15 @@
 ///////////////////////////////////////////////////////
 
-// chapter : Memory Management
+// chapter : Memory
 
 ///////////////////////////////////////////////////////
 
-// section : Dynamic Memory
+// section : Memory
 
 ///////////////////////////////////////////////////////
 
+// content : Memory
+//
 // content : Virtual and Physical Address Spaces
 //
 // content : Kernel and User Spaces
@@ -20,7 +22,7 @@
 //
 // content : Page Tables
 //
-// content : Memory Management Unit
+// content : Memory Unit
 //
 // content : Segmentation and Page Faults
 
