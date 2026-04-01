@@ -8,17 +8,19 @@
 
 ////////////////////////////////////////
 
+// content : Imperative Programming
+//
 // content : Operators
 //
 // content : Unary and Binary Operators
 //
 // content : Logical Operators
 //
+// content : Short-Circuit Evaluations
+//
 // content : Alternative Representations
 //
 // content : Operator Precedence
-//
-// content : Short-Circuit Evaluations
 //
 // content : Expressions
 
