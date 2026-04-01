@@ -4,11 +4,11 @@
 
 /////////////////////////////////////////////////////
 
-// section : Relationships
+// section : Relations
 
 /////////////////////////////////////////////////////
 
-// content : Relationships
+// content : Relations
 //
 // content : Composition, Aggregation and Association
 //

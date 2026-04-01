@@ -8,8 +8,6 @@
 
 ////////////////////////////////////////////////////////////
 
-// content : Terminations
-//
 // content : Normal and Abnormal Terminations
 //
 // content : Callback Functions
