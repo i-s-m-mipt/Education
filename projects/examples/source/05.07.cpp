@@ -1,14 +1,14 @@
 /////////////////////////////////////////////////////
 
-// chapter : Software Design Patterns
+// chapter : Patterns
 
 /////////////////////////////////////////////////////
 
-// section : Constructional Patterns
+// section : Structural Patterns
 
 /////////////////////////////////////////////////////
 
-// content : Constructional Patterns
+// content : Structural Patterns
 //
 // content : Pattern Adapter
 
