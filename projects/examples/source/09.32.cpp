@@ -8,7 +8,7 @@
 
 //////////////////////////////////////////////////////////////////////////////////
 
-// content : Stack-Based Arena Allocator
+// content : Stack-Based Linear Allocator
 //
 // content : Container std::array
 //
