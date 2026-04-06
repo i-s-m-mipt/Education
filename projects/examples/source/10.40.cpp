@@ -38,7 +38,7 @@ template < typename T > auto hash(T x, auto ... xs)
 	{
 		seed += hash(xs...) * 31;
 	}
-	
+
 	return seed;
 }
 
@@ -56,7 +56,7 @@ auto hash_value(Entity const & entity)
 	auto seed = 0uz;
 
 	boost::hash_combine(seed, entity.x);
-	
+
 	boost::hash_combine(seed, entity.y);
 
 	return seed;

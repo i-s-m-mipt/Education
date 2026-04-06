@@ -101,9 +101,9 @@ int main()
 		std::is_same_v 
 		< 
 			decltype(set)::iterator::iterator_category, 
-				
+
 			std::forward_iterator_tag 
-		> 
+		>
 	);
 
 //  ----------------------------------------------------------------------------

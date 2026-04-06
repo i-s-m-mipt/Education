@@ -11,6 +11,10 @@
 // content : Operators . and ->
 //
 // content : Pointers to Data Members
+//
+// content : Array of Structures
+//
+// content : Structure of Arrays
 
 //////////////////////////////////////////////////////////////////////
 

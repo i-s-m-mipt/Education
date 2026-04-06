@@ -8,11 +8,11 @@
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-// content : Matrices and Determinants
+// content : Determinants
 //
-// content : Library Boost.UBLAS
+// content : Minors
 //
-// content : Minors and LU Factorization Methods
+// content : LU Factorization Method
 //
 // content : Microbenchmarking
 
