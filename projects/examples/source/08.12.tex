@@ -105,60 +105,28 @@
 
 \begin{document}
 
-\newpage\thispagestyle{empty}\pdfpageheight = 4.80in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 2.50in\enlargethispage{100in}
 
-\textbf{Strassen Fast Multiplication Algorithm}
-
-\bigskip
-
-Let $A = $ 
-\begin{Vmatrix}
-\;A_{11} & A_{12}\; \\
-\;A_{21} & A_{22}\;
-\end{Vmatrix}, 
-$B = $ 
-\begin{Vmatrix}
-\;B_{11} & B_{12}\; \\
-\;B_{21} & B_{22}\;
-\end{Vmatrix}, 
-where $A, B \in M\,(\,N \times N\,)$ and $A_{ij}, B_{ij} \in M\,(\,\frac{N}{2} \times \frac{N}{2}\,)$ for $i, j \in \{\,1,\,2\,\}$
+\textbf{Karatsuba Fast Multiplication Algorithm}
 
 \bigskip
 
-Hence, $C = A \times B = $
-\begin{Vmatrix}
-\;A_{11} \times B_{11} + A_{12} \times B_{21} & A_{11} \times B_{12} + A_{12} \times B_{22}\; \\
-\;A_{21} \times B_{11} + A_{22} \times B_{21} & A_{21} \times B_{12} + A_{22} \times B_{22}\;
-\end{Vmatrix} 
-with complexity $O(N^3)$
+Let $x = x_2 \cdot 10^n + x_1$, $y = y_2 \cdot 10^n + y_1$, where $x_i, y_i \in I\,(\,n\,)$ for $i \in \{\,1,\,2\,\}$
 
 \bigskip
 
-Let $C_1 = (A_{11} + A_{22}) \times (B_{11} + B_{22})$
+Hence, $z = x \cdot y = x_2 \cdot y_2 \cdot 10^{2n} + (x_2 \cdot y_1 + x_1 \cdot y_2) \cdot 10^n + x1 \cdot y1$
 
 \bigskip
 
-Let $C_2 = (A_{11} + A_{12}) \times B_{22}$, $C_3 = A_{11} \times (B_{12} - B_{22})$
+$x_2 \cdot y_1 + x_1 \cdot y_2 = (x_2 + x_1) \cdot (y_2 + y_1) - x_1 \cdot y_1 - x_2 \cdot y_2$
 
 \bigskip
 
-Let $C_4 = (A_{21} + A_{22}) \times B_{11}$, $C_5 = A_{22} \times (B_{21} - B_{11})$
+Hence, $z = x \cdot y = x_2 \cdot y_2 \cdot 10^{2n} + ((x_2 + x_1) \cdot (y_2 + y_1) - x_1 \cdot y_1 - x_2 \cdot y_2) \cdot 10^n + x1 \cdot y1$
 
 \bigskip
 
-Let $C_6 = (A_{21} - A_{11}) \times (B_{11} + B_{12})$
-
-\bigskip
-
-Let $C_7 = (A_{12} - A_{22}) \times (B_{21} + B_{22})$
-
-\bigskip
-
-Hence, $C = A \times B = $
-\begin{Vmatrix}
-\; C_1 - C_2 + C_5 + C_7 & C_2 + C_3\; \\
-\; C_4 + C_5 & C_1 + C_3 - C_4 + C_6\;
-\end{Vmatrix} 
-with complexity $O(N^{\log_{2}7})\approx O(N^{2.8}) < O(N^3)$
+Hence, $z = x \cdot y = a \cdot 10^{2n} + (c - b - a) \cdot 10^n + b$, where $a = x_2 \cdot y_2$, $b = x_1 \cdot y_1$, $c = (x_2 + x_1) \cdot (y_2 + y_1)$
 
 \end{document}
