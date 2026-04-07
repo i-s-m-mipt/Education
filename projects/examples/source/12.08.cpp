@@ -12,7 +12,7 @@
 //
 // content : User-Defined Case-Insensitive Strings
 //
-// content : Utility std::char_traits
+// content : Helper std::char_traits
 //
 // content : Function std::tolower
 

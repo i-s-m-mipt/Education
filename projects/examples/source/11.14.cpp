@@ -10,7 +10,7 @@
 
 // content : Any-Based Pattern Visitor
 //
-// content : Type std::type_index
+// content : Helper std::type_index
 //
 // content : Container std::unordered_map
 

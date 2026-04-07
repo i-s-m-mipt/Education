@@ -14,9 +14,9 @@
 //
 // content : User-Defined Formatters
 //
-// content : Type std::formatter
+// content : Helper std::formatter
 //
-// content : Type Alias std::format_context
+// content : Helper std::format_context
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 

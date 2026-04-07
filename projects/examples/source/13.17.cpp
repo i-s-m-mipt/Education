@@ -10,9 +10,9 @@
 
 // content : Iterator std::filesystem::directory_iterator
 //
-// content : Type std::filesystem::directory_entry
+// content : Helper std::filesystem::directory_entry
 //
-// content : Type std::filesystem::file_status
+// content : Helper std::filesystem::file_status
 //
 // content : Function std::filesystem::is_directory
 //

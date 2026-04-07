@@ -12,7 +12,7 @@
 //
 // content : Patterns
 //
-// content : Type std::regex
+// content : Class std::regex
 //
 // content : Service Regular Expressions 101
 //

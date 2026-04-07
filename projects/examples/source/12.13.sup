@@ -1,65 +1,65 @@
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 // chapter : Characters
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 // section : Regular Expressions
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-// content : ECMAScript Grammar
+// content : Grammar ECMAScript
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 . - 1 character, () - character group
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-[0-9] - character class, 1 digit from range [0, 9]
+[0-9] - character class : 1 digit from range [0, 9]
 
-[a-z] - character class, 1 alpha from range [a, z]
+[a-z] - character class : 1 alpha from range [a, z]
 
-[A-Z] - character class, 1 alpha from range [A, Z]
+[A-Z] - character class : 1 alpha from range [A, Z]
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-[:digit:] - character class name, digits
+[:digit:] - character class name : digits
 
-[:alpha:] - character class name, alphas
+[:alpha:] - character class name : alphas
 
-[:alnum:] - character class name, digits and alphas
+[:alnum:] - character class name : digits and alphas
 
-[:space:] - character class name, spaces
+[:space:] - character class name : spaces
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-\. - escape sequence, 1 dot
+\. - escape sequence : 1 dot
 
-\d - escape sequence, 1 digit
+\d - escape sequence : 1 digit
 
-\w - escape sequence, 1 digit, alpha or _
+\w - escape sequence : 1 digit, alpha or _
 
-\s - escape sequence, 1 space
+\s - escape sequence : 1 space
 
-\b - escape sequence, word boundary
+\b - escape sequence : word boundary
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-{n  } - suffix,      n      characters or character groups
+{n  } - suffix :      n      characters or character groups
 
-{n, } - suffix, from n      characters or character groups
+{n, } - suffix : from n      characters or character groups
 
-{n,m} - suffix, from n to m characters or character groups
+{n,m} - suffix : from n to m characters or character groups
 
-?     - suffix, from 0 to 1 characters or character groups
+?     - suffix : from 0 to 1 characters or character groups
 
-*     - suffix, from 0      characters or character groups
+*     - suffix : from 0      characters or character groups
 
-+     - suffix, from 1      characters or character groups
++     - suffix : from 1      characters or character groups
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 | - logical or, ^ - logical negation
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////

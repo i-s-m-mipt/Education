@@ -8,7 +8,7 @@
 
 ////////////////////////////////////////////////////////////////////////////
 
-// content : Type std::time_t
+// content : Type Alias std::time_t
 //
 // content : Imbuing Locales
 //
@@ -18,7 +18,7 @@
 //
 // content : Function std::strlen
 //
-// content : Type std::tm
+// content : Time std::tm
 //
 // content : Function std::get_time
 //

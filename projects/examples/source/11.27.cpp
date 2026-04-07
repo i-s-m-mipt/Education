@@ -10,7 +10,7 @@
 
 // content : Index Sequences
 //
-// content : Types std::make_index_sequence and std::index_sequence
+// content : Helpers std::make_index_sequence and std::index_sequence
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

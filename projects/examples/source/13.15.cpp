@@ -12,7 +12,7 @@
 //
 // content : Paths
 //
-// content : Type std::filesystem::path
+// content : Class std::filesystem::path
 //
 // content : Root Name and Root Directory
 //

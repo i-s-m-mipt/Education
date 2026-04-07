@@ -10,19 +10,19 @@
 
 // content : Streams
 //
-// content : Utility std::ios_base
+// content : Base Class std::ios_base
 //
 // content : State Flags
+//
+// content : Base Class std::basic_ios
 //
 // content : Flags std::ios::eofbit and std::ios::failbit
 //
 // content : Exception std::ios_base::failure
 //
-// content : Utility std::basic_ios
+// content : Stream Buffers
 //
 // content : Buffer std::basic_streambuf
-//
-// content : Stream Buffers
 //
 // content : Stream std::basic_istream
 //

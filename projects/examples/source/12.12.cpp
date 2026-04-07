@@ -10,7 +10,7 @@
 
 // content : Functions std::to_chars and std::from_chars
 //
-// content : Type std::chars_format
+// content : Enumeration std::chars_format
 
 ////////////////////////////////////////////////////////////////
 
