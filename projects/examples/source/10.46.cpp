@@ -4,45 +4,42 @@
 
 ////////////////////////////////////////////////////////
 
-// section : Hash Functions
+// section : Unordered Containers
 
 ////////////////////////////////////////////////////////
 
-// content : Hash Functions
+// content : Biassociative Containers
 //
-// content : Java String Hash Algorithm
-//
-// content : Functor std::hash
+// content : Library Boost.Bimap
 
 ////////////////////////////////////////////////////////
 
-#include <functional>
-#include <string>
-#include <tuple>
+#include <cassert>
 
 ////////////////////////////////////////////////////////
 
-auto hash(std::string const & string)
-{
-	auto seed = 0uz;
-
-	for (auto element : string) 
-	{
-		(seed *= 31) += element;
-	}
-
-	return seed;
-}
+#include <boost/bimap.hpp>
 
 ////////////////////////////////////////////////////////
 
 int main()
 {
-	std::ignore = hash("aaaaa");
+    boost::bimap < int, int > bimap;
 
 //  ----------------------------------------------------
 
-	std::ignore = std::hash < std::string > ()("aaaaa");
+	bimap.insert({ 1, 1 });
+
+//  ----------------------------------------------------
+
+	assert(bimap.left.count(1) == bimap.right.count(1));
+
+//  ----------------------------------------------------
+
+	for (auto const & relation : bimap) 
+	{
+		assert(relation.left == relation.right);
+	}
 }
 
 ////////////////////////////////////////////////////////

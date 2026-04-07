@@ -1,77 +1,168 @@
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Containers
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 // section : Nested Containers
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
-// content : Numeric Arrays
+// content : Determinants
 //
-// content : Container std::valarray
+// content : Minors
 //
-// content : Wrapper std::slice
+// content : LU Factorization Method
+//
+// content : Microbenchmarking
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
 #include <cstddef>
-#include <iterator>
-#include <valarray>
+#include <random>
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
-auto equal(std::valarray < int > const & x, std::valarray < int > const & y)
+#include <boost/numeric/ublas/lu.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+#include <benchmark/benchmark.h>
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+auto determinant_v1(boost::numeric::ublas::matrix < double > const & matrix) -> double
 {
-    if (auto size = std::size(x); size == std::size(y))
+    if (auto size = matrix.size1(); size > 1)
     {
+        auto determinant = 0.0;
+    
         for (auto i = 0uz; i < size; ++i)
         {
-            if (x[i] != y[i])
+            boost::numeric::ublas::matrix < double > minor(size - 1, size - 1);
+
+            for (auto j = 1uz; j < size; ++j)
             {
-                return false;
+                for (auto k = 0uz, l = 0uz; k < size; ++k)
+                {
+                    if (k != i) 
+                    {
+                        minor(j - 1, l++) = matrix(j, k);
+                    }
+                }
             }
+
+            determinant += (i % 2 ? -1 : +1) * matrix(0, i) * determinant_v1(minor);
+        }
+
+        return determinant;
+    }
+    else
+    {
+        return matrix(0, 0);
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+auto determinant_v2(boost::numeric::ublas::matrix < double > matrix)
+{
+    if (auto size = matrix.size1(); size > 1)
+    {    
+        boost::numeric::ublas::permutation_matrix <> permutation(size);
+
+        if (!boost::numeric::ublas::lu_factorize(matrix, permutation))
+        {
+            auto determinant = 1.0;
+
+            for (auto i = 0uz; i < size; ++i)
+            {
+                if (permutation(i) != i) 
+                {
+                    determinant *= -1;
+                }
+
+                determinant *= matrix(i, i);
+            }
+
+            return determinant;
+        }
+        else 
+        {
+            return 0.0;
         }
     }
     else
     {
-        return false;
+        return matrix(0, 0);
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+auto make_matrix(std::size_t size)
+{
+    boost::numeric::ublas::matrix < double > matrix(size, size);
+
+    std::uniform_real_distribution distribution(0.0, 1.0);
+
+    std::default_random_engine engine;
+
+    for (auto i = 0uz; i < matrix.size1(); ++i)
+    {
+        for (auto j = 0uz; j < matrix.size2(); ++j)
+        {
+            matrix(i, j) = distribution(engine);
+        }
     }
 
-    return true;
+    return matrix;
 }
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
-int main() 
+void test_v1(benchmark::State & state)
 {
-    std::valarray < int > x = { 1, 2, 3, 4, 5 };
-    
-    std::valarray < int > y = { 1, 2, 3 };
+    auto argument = state.range(0);
 
-//  -------------------------------------------------------------------------
+    auto matrix = make_matrix(argument);
 
-    assert(equal(x[std::valarray < std::size_t > ({ 0, 1, 2 })], y));
+    for (auto element : state)
+    {
+        auto determinant = determinant_v1(matrix);
 
-//  -------------------------------------------------------------------------
-
-    assert(equal(x[std::slice(0, 3, 1)], y));
-
-//  -------------------------------------------------------------------------
-
-    assert(equal(x[x < 4], y));
-
-//  -------------------------------------------------------------------------
-
-    assert(equal(x + y, std::valarray < int > ({ 2, 4, 6, 4, 5 })));
-
-    assert(equal(x - y, std::valarray < int > ({ 0, 0, 0, 4, 5 })));
-
-    assert(equal(x * y, std::valarray < int > ({ 1, 4, 9, 0, 0 })));
-
-//  assert(equal(x / y, std::valarray < int > ({ 1, 1, 1, 0, 0 }))); // error
+		benchmark::DoNotOptimize(determinant);
+    }
 }
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+
+void test_v2(benchmark::State & state)
+{
+    auto argument = state.range(0);
+
+    auto matrix = make_matrix(argument);
+    
+    for (auto element : state)
+    {
+        auto determinant = determinant_v2(matrix);
+
+		benchmark::DoNotOptimize(determinant);
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+BENCHMARK(test_v1)->DenseRange(1, 9, 1);
+
+BENCHMARK(test_v2)->DenseRange(1, 9, 1);
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+int main()
+{
+	benchmark::RunSpecifiedBenchmarks();
+}
+
+//////////////////////////////////////////////////////////////////////////////////////

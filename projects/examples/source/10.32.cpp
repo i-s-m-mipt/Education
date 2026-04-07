@@ -1,105 +1,98 @@
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Containers
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // section : Nested Containers
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-// content : Determinants
+// content : Matrices
 //
-// content : Minors
+// content : Library Boost.UBLAS
 //
-// content : LU Factorization Method
+// content : Multiplication
 //
 // content : Microbenchmarking
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 #include <cstddef>
 #include <random>
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/numeric/ublas/lu.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/matrix_proxy.hpp>
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 #include <benchmark/benchmark.h>
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-auto determinant_v1(boost::numeric::ublas::matrix < double > const & matrix) -> double
+auto multiply
+(
+    boost::numeric::ublas::matrix < double > const & A,
+
+    boost::numeric::ublas::matrix < double > const & B
+)
+-> boost::numeric::ublas::matrix < double >
 {
-    if (auto size = matrix.size1(); size > 1)
+    if (auto size = A.size1(); size > 64)
     {
-        auto determinant = 0.0;
-    
-        for (auto i = 0uz; i < size; ++i)
-        {
-            boost::numeric::ublas::matrix < double > minor(size - 1, size - 1);
+        auto step = size / 2;
 
-            for (auto j = 1uz; j < size; ++j)
-            {
-                for (auto k = 0uz, l = 0uz; k < size; ++k)
-                {
-                    if (k != i) 
-                    {
-                        minor(j - 1, l++) = matrix(j, k);
-                    }
-                }
-            }
+        boost::numeric::ublas::range range_1(   0, step);
+        
+        boost::numeric::ublas::range range_2(step, size);
 
-            determinant += (i % 2 ? -1 : +1) * matrix(0, i) * determinant_v1(minor);
-        }
+        auto A11 = boost::numeric::ublas::project(A, range_1, range_1);
 
-        return determinant;
+        auto A12 = boost::numeric::ublas::project(A, range_1, range_2);
+
+        auto A21 = boost::numeric::ublas::project(A, range_2, range_1);
+
+        auto A22 = boost::numeric::ublas::project(A, range_2, range_2);
+
+        auto B11 = boost::numeric::ublas::project(B, range_1, range_1);
+
+        auto B12 = boost::numeric::ublas::project(B, range_1, range_2);
+
+        auto B21 = boost::numeric::ublas::project(B, range_2, range_1);
+
+        auto B22 = boost::numeric::ublas::project(B, range_2, range_2);
+
+        auto C1 = multiply(A11 + A22, B11 + B22);
+
+        auto C2 = multiply(A11 + A12, B22), C3 = multiply(A11, B12 - B22);
+
+        auto C4 = multiply(A21 + A22, B11), C5 = multiply(A22, B21 - B11);
+
+        auto C6 = multiply(A21 - A11, B11 + B12);
+
+        auto C7 = multiply(A12 - A22, B21 + B22);
+
+        boost::numeric::ublas::matrix < double > C(size, size);
+
+        boost::numeric::ublas::project(C, range_1, range_1) = C1 - C2 + C5 + C7;
+
+        boost::numeric::ublas::project(C, range_1, range_2) = C2 + C3;
+
+        boost::numeric::ublas::project(C, range_2, range_1) = C4 + C5;
+
+        boost::numeric::ublas::project(C, range_2, range_2) = C1 + C3 - C4 + C6;
+
+        return C;
     }
     else
     {
-        return matrix(0, 0);
+        return boost::numeric::ublas::prod(A, B);
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
-
-auto determinant_v2(boost::numeric::ublas::matrix < double > matrix)
-{
-    if (auto size = matrix.size1(); size > 1)
-    {    
-        boost::numeric::ublas::permutation_matrix <> permutation(size);
-
-        if (!boost::numeric::ublas::lu_factorize(matrix, permutation))
-        {
-            auto determinant = 1.0;
-
-            for (auto i = 0uz; i < size; ++i)
-            {
-                if (permutation(i) != i) 
-                {
-                    determinant *= -1;
-                }
-
-                determinant *= matrix(i, i);
-            }
-
-            return determinant;
-        }
-        else 
-        {
-            return 0.0;
-        }
-    }
-    else
-    {
-        return matrix(0, 0);
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 auto make_matrix(std::size_t size)
 {
@@ -120,49 +113,57 @@ auto make_matrix(std::size_t size)
     return matrix;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state)
 {
     auto argument = state.range(0);
 
-    auto matrix = make_matrix(argument);
+    auto matrix_1 = make_matrix(argument);
+    
+    auto matrix_2 = matrix_1;
+
+    boost::numeric::ublas::matrix < double > matrix_3(argument, argument);
 
     for (auto element : state)
     {
-        auto determinant = determinant_v1(matrix);
+        matrix_3 = boost::numeric::ublas::prod(matrix_1, matrix_2);
 
-		benchmark::DoNotOptimize(determinant);
+		benchmark::DoNotOptimize(matrix_3);
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state)
 {
     auto argument = state.range(0);
 
-    auto matrix = make_matrix(argument);
+    auto matrix_1 = make_matrix(argument);
     
+    auto matrix_2 = matrix_1;
+
+    boost::numeric::ublas::matrix < double > matrix_3(argument, argument);
+
     for (auto element : state)
     {
-        auto determinant = determinant_v2(matrix);
+        matrix_3 = multiply(matrix_1, matrix_2);
 
-		benchmark::DoNotOptimize(determinant);
+		benchmark::DoNotOptimize(matrix_3);
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-BENCHMARK(test_v1)->DenseRange(1, 9, 1);
+BENCHMARK(test_v1)->Arg(2 << 10);
 
-BENCHMARK(test_v2)->DenseRange(1, 9, 1);
+BENCHMARK(test_v2)->Arg(2 << 10);
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
 	benchmark::RunSpecifiedBenchmarks();
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////

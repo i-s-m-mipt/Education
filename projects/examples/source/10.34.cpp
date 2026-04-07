@@ -1,93 +1,77 @@
-/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 // chapter : Containers
 
-/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-// section : Associative Containers
+// section : Nested Containers
 
-/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-// content : Balanced Binary Search Trees
+// content : Numeric Arrays
 //
-// content : Red-Black Trees
+// content : Container std::valarray
 //
-// content : Sets
-//
-// content : Containers std::set and std::multiset
-//
-// content : Strict Weak Ordering
-//
-// content : Irreflexivity, Transitivity and Equivalence
+// content : Helper std::slice
 
-/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-// support : www.cs.usfca.edu/~galles/visualization/RedBlack.html
-
-/////////////////////////////////////////////////////////////////
-
-#include <algorithm>
 #include <cassert>
+#include <cstddef>
 #include <iterator>
-#include <set>
-#include <type_traits>
-#include <utility>
+#include <valarray>
 
-/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-int main()
+auto equal(std::valarray < int > const & x, std::valarray < int > const & y)
 {
-	std::set < int > set = { 5, 4, 3, 2, 1 };
+    if (auto size = std::size(x); size == std::size(y))
+    {
+        for (auto i = 0uz; i < size; ++i)
+        {
+            if (x[i] != y[i])
+            {
+                return false;
+            }
+        }
+    }
+    else
+    {
+        return false;
+    }
 
-//  ----------------------------------------------------------
-	
-    static_assert
-    (
-        std::is_same_v 
-        < 
-            decltype(set)::iterator::iterator_category, 
-                
-            std::bidirectional_iterator_tag 
-        > 
-    );
-
-//  ----------------------------------------------------------
-		
-	assert(std::ranges::is_sorted(set));
-
-//  ----------------------------------------------------------
-
-	assert(set.contains(1) == (set.find(1) != std::end(set)));
-
-//  ----------------------------------------------------------
-
-	assert(set.erase(1) == 1 && set.insert(1).second);
-
-//  ----------------------------------------------------------
-
-	auto begin = std::begin(set);
-
-//  ----------------------------------------------------------
-
-	assert(set.lower_bound(1) == std::next(begin, 0));
-		
-	assert(set.upper_bound(1) == std::next(begin, 1));
-
-//  ----------------------------------------------------------
-
-//	*begin = 2; // error
-
-//  ----------------------------------------------------------
-
-	auto node = set.extract(1);
-
-//  ----------------------------------------------------------
-		
-	node.value() = 2;
-
-//  ----------------------------------------------------------
-		
-	set.insert(std::move(node));
+    return true;
 }
 
-/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+int main() 
+{
+    std::valarray < int > x = { 1, 2, 3, 4, 5 };
+    
+    std::valarray < int > y = { 1, 2, 3 };
+
+//  -------------------------------------------------------------------------
+
+    assert(equal(x[std::valarray < std::size_t > ({ 0, 1, 2 })], y));
+
+//  -------------------------------------------------------------------------
+
+    assert(equal(x[std::slice(0, 3, 1)], y));
+
+//  -------------------------------------------------------------------------
+
+    assert(equal(x[x < 4], y));
+
+//  -------------------------------------------------------------------------
+
+    assert(equal(x + y, std::valarray < int > ({ 2, 4, 6, 4, 5 })));
+
+    assert(equal(x - y, std::valarray < int > ({ 0, 0, 0, 4, 5 })));
+
+    assert(equal(x * y, std::valarray < int > ({ 1, 4, 9, 0, 0 })));
+
+//  assert(equal(x / y, std::valarray < int > ({ 1, 1, 1, 0, 0 }))); // error
+}
+
+/////////////////////////////////////////////////////////////////////////////
