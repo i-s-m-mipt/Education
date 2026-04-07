@@ -10,7 +10,7 @@
 
 // content : Time Zones
 //
-// content : Type std::chrono::zoned_time
+// content : Time std::chrono::zoned_time
 
 //////////////////////////////////////////////////////////
 

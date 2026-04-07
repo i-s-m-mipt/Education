@@ -12,7 +12,7 @@
 //
 // content : Functions operator new and operator delete
 //
-// content : Type std::align_val_t
+// content : Enumeration std::align_val_t
 //
 // content : Placement Operator new
 //

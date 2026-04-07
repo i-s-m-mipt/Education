@@ -10,7 +10,7 @@
 
 // content : Factorials
 //
-// content : Utility std::numeric_limits
+// content : Helper std::numeric_limits
 //
 // content : Overflow Problem
 

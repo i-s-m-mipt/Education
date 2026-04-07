@@ -10,11 +10,11 @@
 
 // content : Random Numbers
 //
-// content : Non-Deterministic Entropy Sources
-//
-// content : Utility std::random_device
-//
 // content : Seeds, Engines and Distributions
+//
+// content : Non-Deterministic Pseudo-Random Entropy Sources
+//
+// content : Engine std::random_device
 //
 // content : Engine std::mt19937_64
 //

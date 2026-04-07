@@ -22,8 +22,6 @@
 //
 // content : Square Roots
 //
-// content : Karatsuba Fast Multiplication Algorithm
-//
 // content : Functions std::ssize, std::isdigit, std::stoll
 //
 // content : Radix Optimization

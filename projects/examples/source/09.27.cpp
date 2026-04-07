@@ -10,7 +10,7 @@
 
 // content : Allocator Traits
 //
-// content : Utility std::allocator_traits
+// content : Helper std::allocator_traits
 
 /////////////////////////////////////////////////////////
 

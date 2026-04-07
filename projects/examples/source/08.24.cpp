@@ -10,7 +10,7 @@
 
 // content : Complex Numbers
 //
-// content : Type std::complex
+// content : Class std::complex
 //
 // content : Operator ""i
 //

@@ -10,7 +10,7 @@
 
 // content : Little and Big Endian Byte Orders
 //
-// content : Type std::endian
+// content : Enumeration std::endian
 //
 // content : Function std::to_integer
 

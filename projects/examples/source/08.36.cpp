@@ -10,11 +10,11 @@
 
 // content : Calendars
 //
-// content : Type std::chrono::year_month_day
+// content : Time std::chrono::year_month_day
 //
-// content : Type std::chrono::year_month_weekday
+// content : Time std::chrono::year_month_weekday
 //
-// content : Type std::chrono::hh_mm_ss
+// content : Time std::chrono::hh_mm_ss
 
 //////////////////////////////////////////////////////////////////
 

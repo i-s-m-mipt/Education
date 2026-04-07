@@ -10,7 +10,7 @@
 
 // content : Backtracing
 //
-// content : Utility std::stacktrace
+// content : Helper std::stacktrace
 
 ///////////////////////////////////////////////////////////////
 

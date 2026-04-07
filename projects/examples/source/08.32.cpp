@@ -12,7 +12,7 @@
 //
 // content : Time Points
 //
-// content : Type std::chrono::time_point
+// content : Time std::chrono::time_point
 //
 // content : Function std::chrono::floor
 //

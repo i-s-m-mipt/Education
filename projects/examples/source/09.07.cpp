@@ -10,7 +10,7 @@
 
 // content : Pointer this
 //
-// content : Utility std::enable_shared_from_this
+// content : Base Class std::enable_shared_from_this
 
 ////////////////////////////////////////////////////////////////////
 

@@ -10,7 +10,7 @@
 
 // content : Iterator Traits
 //
-// content : Utility std::iterator_traits
+// content : Helper std::iterator_traits
 //
 // content : Forward Iterators
 //

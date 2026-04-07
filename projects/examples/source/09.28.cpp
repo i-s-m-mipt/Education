@@ -10,7 +10,7 @@
 
 // content : Linear Allocator
 //
-// content : Type std::max_align_t
+// content : Type Alias std::max_align_t
 //
 // content : Function std::align
 //

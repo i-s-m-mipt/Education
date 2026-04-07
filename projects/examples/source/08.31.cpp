@@ -10,13 +10,13 @@
 
 // content : Durations
 //
-// content : Type std::chrono::duration
+// content : Class std::chrono::duration
 //
 // content : Compile-Time Rational Arithmetic
 //
-// content : Type std::ratio
+// content : Class std::ratio
 //
-// content : Type Aliases std::chrono::seconds and std::chrono::milliseconds 
+// content : Type Aliases std::chrono::seconds and std::chrono::milliseconds
 //
 // content : Duration Type Conversions
 //

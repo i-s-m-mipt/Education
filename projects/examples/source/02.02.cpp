@@ -22,7 +22,7 @@
 //
 // content : Macro assert
 //
-// content : Utility std::numeric_limits
+// content : Helper std::numeric_limits
 //
 // content : Portability Problem
 

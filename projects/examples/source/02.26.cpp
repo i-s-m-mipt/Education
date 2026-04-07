@@ -24,7 +24,7 @@
 //
 // content : Literal nullptr
 //
-// content : Type std::nullptr_t
+// content : Type Alias std::nullptr_t
 
 /////////////////////////////////////////////////////////////////////////
 
