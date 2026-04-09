@@ -235,18 +235,16 @@ public :
 
     Variant(Variant const & other) : Handler < Variant < Ts ... > , Ts, Ts ... > ::Handler()...
     {
-        auto lambda = [this](auto && x){ *this = x; };
+        this->m_array = other.m_array;
 
-        other.visit(lambda);
+        this->m_index = other.m_index;
     }
 
 //  -------------------------------------------------------------------------------------------
 
-    Variant(Variant && other)
+    Variant(Variant && other) : Variant()
     {
-        auto lambda = [this](auto && x){ *this = std::move(x); };
-
-        other.visit(lambda);
+        swap(other);
     }
 
 //  -------------------------------------------------------------------------------------------
@@ -267,18 +265,18 @@ public :
 
 //  -------------------------------------------------------------------------------------------
 
+    using Handler < Variant < Ts ... > , Ts, Ts ... > ::Handler  ...;
+
+    using Handler < Variant < Ts ... > , Ts, Ts ... > ::operator=...;
+
+//  -------------------------------------------------------------------------------------------
+
     void swap(Variant & other)
 	{
         std::swap(this->m_array, other.m_array);
 
 		std::swap(this->m_index, other.m_index);
 	}
-
-//  -------------------------------------------------------------------------------------------
-
-    using Handler < Variant < Ts ... > , Ts, Ts ... > ::Handler  ...;
-
-    using Handler < Variant < Ts ... > , Ts, Ts ... > ::operator=...;
 
 //  -------------------------------------------------------------------------------------------
 

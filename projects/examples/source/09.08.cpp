@@ -102,11 +102,11 @@ public :
 
 //  -----------------------------------------------------
 
-    Shared(Shared < T > const & other) 
-    : 
+    Shared(Shared < T > const & other)
+    :
         m_x(other.m_x), m_controller(other.m_controller)
     {
-        if (m_controller) 
+        if (m_controller)
         {
             m_controller->increase();
         }
@@ -121,12 +121,12 @@ public :
 
 //  -----------------------------------------------------
 
-   ~Shared() 
-    { 
-        if (m_controller) 
+   ~Shared()
+    {
+        if (m_controller)
         {
             m_controller->decrease();
-        } 
+        }
     }
 
 //  -----------------------------------------------------
@@ -134,7 +134,7 @@ public :
     auto & operator=(Shared other)
     {
         swap(other);
-        
+
         return *this;
     }
 
@@ -150,7 +150,7 @@ public :
 private :
 
     T * m_x = nullptr;
-    
+
     Controller * m_controller = nullptr;
 };
 

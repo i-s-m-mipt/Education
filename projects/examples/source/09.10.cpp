@@ -26,50 +26,40 @@ public :
 
     Unique(T * x = nullptr) : m_x(x) {}
 
-//  ---------------------------------------
-        
-    Unique(Unique && other) : Unique() 
-    { 
-        swap(other);
-    }
+//  -------------------------------------------------
 
-//  ---------------------------------------
+    Unique(Unique && other) : m_x(other.release()) {}
 
-   ~Unique() 
-    { 
+//  -------------------------------------------------
+
+   ~Unique()
+    {
         reset();
     }
 
-//  ---------------------------------------
+//  -------------------------------------------------
 
     auto & operator=(Unique && other)
-    { 
+    {
         reset(other.release());
-        
+
         return *this;
     }
 
-//  ---------------------------------------
-
-    void swap(Unique & other)
-    { 
-        std::swap(m_x, other.m_x);
-    }
-
-//  ---------------------------------------
+//  -------------------------------------------------
 
     auto release()
     {
         return std::exchange(m_x, nullptr);
     }
 
-//  ---------------------------------------
+//  -------------------------------------------------
 
-    void reset(T * x = nullptr) 
+    void reset(T * x = nullptr)
     {
         delete std::exchange(m_x, x);
     }
-     
+
 private :
 
     T * m_x = nullptr;
