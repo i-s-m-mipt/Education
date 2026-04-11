@@ -1,83 +1,90 @@
-///////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-#include <atomic>
-#include <print>
-#include <type_traits>
+// chapter : Parallelism
 
-///////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-struct alignas(1 * 8) Entity_v1 { int x = 0; };
+// section : Synchronization
 
-struct alignas(2 * 8) Entity_v2 { int x = 0; };
+/////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////
+// content : Thread Pools
+//
+// content : Library Boost.ASIO
 
-class Entity_v3
+/////////////////////////////////////////////////////////////////////////////////////
+
+#include <cassert>
+#include <cmath>
+#include <cstddef>
+#include <format>
+#include <future>
+#include <iostream>
+#include <syncstream>
+#include <thread>
+#include <utility>
+#include <vector>
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+#include <boost/asio.hpp>
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+auto calculate(std::size_t size)
 {
-public :
+    auto id = std::this_thread::get_id();
 
-    auto & operator=(Entity_v3 const &)
-    {
-        std::print("Entity_v3::operator=\n");
+    std::osyncstream(std::cout) << std::format("calculate : id = {}\n", id);
 
-        return *this;
-    }
-};
+	auto x = 0.0;
 
-///////////////////////////////////////////////////////////////////
+	for (auto i = 0uz; i < size; ++i)
+	{
+		x += std::pow(std::sin(i), 2) + std::pow(std::cos(i), 2);
+	}
 
-class Entity_v4
+	return x;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+auto equal(double x, double y, double epsilon = 1e-6)
 {
-public :
+	return std::abs(x - y) < epsilon;
+}
 
-    virtual ~Entity_v4() = default;
-};
-
-///////////////////////////////////////////////////////////////////
-
-class Entity_v5 {};
-
-///////////////////////////////////////////////////////////////////
-
-class Entity_v6 : public virtual Entity_v5 {};
-
-///////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    static_assert(std::is_trivially_copyable_v < Entity_v1 > == 1);
+    boost::asio::thread_pool pool;
 
-    static_assert(std::is_trivially_copyable_v < Entity_v2 > == 1);
+//  ---------------------------------------------------------------------------------
 
-//  ---------------------------------------------------------------
+    std::vector < std::future < double > > futures(1 << 10);
 
-    static_assert(std::is_trivially_copyable_v < Entity_v3 > == 0);
+//  ---------------------------------------------------------------------------------
 
-    static_assert(std::is_trivially_copyable_v < Entity_v4 > == 0);
+    for (auto & future : futures)
+    {
+        auto lambda = [](){ return calculate(1 << 10); };
 
-    static_assert(std::is_trivially_copyable_v < Entity_v6 > == 0);
+    //  -----------------------------------------------------------------------------
 
-//  ---------------------------------------------------------------
+        future = boost::asio::post(pool, boost::asio::use_future(std::move(lambda)));
+    }
 
-    static_assert(sizeof(Entity_v1) == 1 * 8);
+//  ---------------------------------------------------------------------------------
 
-    static_assert(sizeof(Entity_v2) == 2 * 8);
+    for (auto & future : futures)
+    {
+        assert(equal(future.get(), 1 << 10));
+    }
 
-//  ---------------------------------------------------------------
+//  ---------------------------------------------------------------------------------
 
-#if defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8)
-
-    static_assert(std::atomic < Entity_v1 > ::is_always_lock_free);
-    
-#endif
-
-//  ---------------------------------------------------------------
-
-#if defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_16)
-
-    static_assert(std::atomic < Entity_v2 > ::is_always_lock_free);
-    
-#endif
+    pool.join();
 }
 
-///////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////

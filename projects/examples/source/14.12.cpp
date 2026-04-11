@@ -1,5 +1,21 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+// chapter : Parallelism
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+// section : Threads
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+// content : Parallel Range Reducing Algorithm
+//
+// content : Packaged Tasks
+//
+// content : Wrapper std::packaged_task
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <algorithm>
 #include <cassert>
 #include <functional>
@@ -41,7 +57,7 @@ template < typename T > auto reduce(std::ranges::view auto view, T sum)
 		{
 			auto range = std::ranges::subrange(begin, std::next(begin, step));
 
-			std::packaged_task task { Task < decltype(range) > () };
+			std::packaged_task < T(decltype(range)) > task { Task < decltype(range) > () };
 
 			future = task.get_future();
 			

@@ -1,6 +1,16 @@
 ////////////////////////////////////////////////////////////////////
 
-// support : Hyper-threading
+// chapter : Parallelism
+
+////////////////////////////////////////////////////////////////////
+
+// section : Threads
+
+////////////////////////////////////////////////////////////////////
+
+// content : Hardware Threads
+//
+// content : Function std::thread::hardware_concurrency
 
 ////////////////////////////////////////////////////////////////////
 
@@ -19,13 +29,13 @@ void test(int x)
 
 int main()
 {
-    std::vector < std::jthread > jthreads;
+    std::vector < std::jthread > threads;
 
 //  ----------------------------------------------------------------
 
     for (auto i = 0uz; i < std::thread::hardware_concurrency(); ++i)
     {
-        jthreads.emplace_back(test, i + 1);
+        threads.emplace_back(test, i + 1);
     }
 }
 

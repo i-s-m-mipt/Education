@@ -1,0 +1,128 @@
+\documentclass[a4paper,12pt]{article}
+
+
+
+\usepackage[export]{adjustbox}
+\usepackage[russian]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+
+
+
+\usepackage{amsbsy}
+\usepackage{amscd}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsopn}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amsxtra}
+\usepackage{array}
+\usepackage{ctable}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{latexsym}
+\usepackage{listings}
+\usepackage{makecell}
+\usepackage{ragged2e}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{xcolor}
+
+
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\renewcommand{\arraystretch}{1.5}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\geometry{left   = 0.5cm}
+\geometry{bottom = 0.5cm}
+\geometry{right  = 0.5cm}
+\geometry{top    = 0.5cm}
+
+\parindent = 0pt
+\parskip   = 0pt
+\tolerance = 100
+
+\flushbottom
+
+\definecolor{G}{rgb}{0.00, 0.50, 0.00}
+
+\hypersetup
+{
+    linkcolor  = G,
+    urlcolor   = G,
+    colorlinks = true
+}
+
+\renewenvironment{itemize}
+{
+    \begin{list}{\labelitemi}
+    {
+      \setlength{\topsep}{0pt}
+      \setlength{\partopsep}{0pt}
+      \setlength{\parskip}{0pt}
+      \setlength{\itemsep}{0pt}
+      \setlength{\parsep}{0pt}
+      \setlength{\leftmargin}{14.5pt}
+    }
+}{\end{list}}
+
+\definecolor{B}{rgb}{0.00, 0.00, 0.50}
+
+\lstset
+{
+    backgroundcolor   = \color{white},      % Установка цвета заднего плана  
+    basicstyle        = \ttfamily\color{B}, % Установка размера и цвета шрифта
+    breakatwhitespace = true,               % Установка разрывов на пробелах
+    breaklines        = true,               % Установка переноса длинных строк
+    captionpos        = none,               % Установка позиции имени листинга
+    commentstyle      = \color{B},          % Установка цвета комментариев кода
+    deletekeywords    = {},                 % Установка удаленных ключевых слов  
+    escapeinside      = {\%*}{*)},          % Установка добавления LaTeX в коде  
+    extendedchars     = false,              % Установка дополнительных символов 
+    frame             = L,                  % Установка типа рамки вокруг кода
+    framexleftmargin  = -8pt,               % Установка размера левого отступа
+    keepspaces        = true,               % Установка выравнивания пробелов
+    keywordstyle      = \color{B},          % Установка цвета ключевых слов  
+    language          = C++,                % Установка языка программирования
+    otherkeywords     = {},                 % Установка добавочных ключевых слов   
+    numbers           = none,               % Установка позиции нумерации строк
+    numbersep         = 0pt,                % Установка отступа нумерации строк
+    numberstyle       = \color{black},      % Установка цвета нумерации строк
+    showspaces        = false,              % Установка пробелов символом '_'
+    showstringspaces  = false,              % Установка пробелов символом '_'
+    showtabs          = false,              % Установка табуляторов видимыми
+    stepnumber        = 1,                  % Установка периода нумерации строк
+    stringstyle       = \color{B},          % Установка цвета строковых литералов
+    tabsize           = 2,                  % Установка размера табуляции в коде
+}
+
+
+
+\begin{document}
+
+\newpage\thispagestyle{empty}\pdfpageheight = 2.10in\enlargethispage{100in}
+
+\textbf{Amdahl's Law}
+
+\bigskip
+
+Let $T$ is serial part and $1 - T$ is parallel part
+
+\bigskip
+
+Let $N$ is total number of processors
+
+\bigskip
+
+Let $S$ is theoretical speedup
+
+\bigskip
+
+Hence, $S(N) = 1\,/\,(T + (1\,-\,T)\,/\,N)$ and $\lim{S(N)} = 1\,/\,T$ when $N \rightarrow \infty$
+
+\end{document}

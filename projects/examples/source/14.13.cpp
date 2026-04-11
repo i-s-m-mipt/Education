@@ -1,5 +1,29 @@
 ////////////////////////////////////////////////////
 
+// chapter : Parallelism
+
+////////////////////////////////////////////////////
+
+// section : Threads
+
+////////////////////////////////////////////////////
+
+// content : Thread Launch Synchronization
+//
+// content : Promises
+//
+// content : Wrapper std::promise
+//
+// content : Shared Futures
+//
+// content : Wrapper std::shared_future
+//
+// content : Thread Identification
+//
+// content : Function std::this_thread::get_id
+
+////////////////////////////////////////////////////
+
 #include <chrono>
 #include <future>
 #include <print>

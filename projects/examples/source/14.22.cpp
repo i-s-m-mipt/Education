@@ -1,5 +1,17 @@
 /////////////////////////////////////////////////////////////////////////////////
 
+// chapter : Parallelism
+
+/////////////////////////////////////////////////////////////////////////////////
+
+// section : Synchronization
+
+/////////////////////////////////////////////////////////////////////////////////
+
+// content : Thread-Safe Stacks
+
+/////////////////////////////////////////////////////////////////////////////////
+
 #include <functional>
 #include <memory>
 #include <mutex>
@@ -27,33 +39,27 @@ public :
 
 //  -----------------------------------------------------------------------------
 
-    Stack(Stack && other)
+    Stack(Stack && other) : Stack()
     {
-        std::scoped_lock < std::mutex > lock(other.m_mutex);
-
-        m_container = std::move(other.m_container);
+        swap(other);
     }
 
 //  -----------------------------------------------------------------------------
 
-    auto & operator=(Stack const & other)
-    {
-        std::scoped_lock < std::mutex, std::mutex > lock(m_mutex, other.m_mutex);
+    auto & operator=(Stack other)
+	{
+        swap(other);
 
-        m_container = other.m_container;
-
-        return *this;
-    }
+		return *this;
+	}
 
 //  -----------------------------------------------------------------------------
 
-    auto & operator=(Stack && other)
+    void swap(Stack & other)
     {
         std::scoped_lock < std::mutex, std::mutex > lock(m_mutex, other.m_mutex);
 
-        m_container = std::move(other.m_container);
-
-        return *this;
+        std::swap(m_container, other.m_container);
     }
 
 //  -----------------------------------------------------------------------------
@@ -134,30 +140,58 @@ void top_and_pop_v2(Stack < int > & stack)
 
 /////////////////////////////////////////////////////////////////////////////////
 
+void top_and_pop_v3(Stack < int > & stack)
+{
+    auto x = 0;
+
+    stack.top_and_pop(x);
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+
 int main()
 {
-    Stack < int > stack;
+    Stack < int > stack_1;
 
-//  ---------------------------------------------------------------------
+	Stack < int > stack_2 = stack_1;
+
+	Stack < int > stack_3 = std::move(stack_2);
+
+//  -----------------------------------------------------------------------
+
+	stack_2 = stack_1;
+
+	stack_3 = std::move(stack_2);
+
+//  -----------------------------------------------------------------------
     
-    stack.push(1);
-
-    stack.push(2);
-
-//  ---------------------------------------------------------------------
-
+    for (auto i = 1; i <= 6; ++i)
     {
-//      std::jthread jthread_1(top_and_pop_v1, std::ref(stack)); // error
-
-//      std::jthread jthread_2(top_and_pop_v1, std::ref(stack)); // error
+        stack_1.push(i);
     }
 
-//  ---------------------------------------------------------------------
+//  -----------------------------------------------------------------------
 
     {
-        std::jthread jthread_1(top_and_pop_v2, std::ref(stack));
+//      std::jthread jthread_1(top_and_pop_v1, std::ref(stack_1)); // error
 
-        std::jthread jthread_2(top_and_pop_v2, std::ref(stack));
+//      std::jthread jthread_2(top_and_pop_v1, std::ref(stack_1)); // error
+    }
+
+//  -----------------------------------------------------------------------
+
+    {
+        std::jthread jthread_1(top_and_pop_v2, std::ref(stack_1));
+
+        std::jthread jthread_2(top_and_pop_v2, std::ref(stack_1));
+    }
+
+//  -----------------------------------------------------------------------
+
+    {
+        std::jthread jthread_1(top_and_pop_v3, std::ref(stack_1));
+
+        std::jthread jthread_2(top_and_pop_v3, std::ref(stack_1));
     }
 }
 

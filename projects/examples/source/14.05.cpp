@@ -1,5 +1,27 @@
 //////////////////////////////////////////////////
 
+// chapter : Parallelism
+
+//////////////////////////////////////////////////
+
+// section : Threads
+
+//////////////////////////////////////////////////
+
+// content : Joining and Interrupting Threads
+//
+// content : Thread std::jthread
+//
+// content : Stop Tokens
+//
+// content : Helper std::stop_token
+//
+// content : Callback Functions
+//
+// content : Wrapper std::stop_callback
+
+//////////////////////////////////////////////////
+
 #include <chrono>
 #include <print>
 #include <stop_token>

@@ -1,5 +1,25 @@
 ///////////////////////////////////////////////////////////////////////////////////
 
+// chapter : Parallelism
+
+///////////////////////////////////////////////////////////////////////////////////
+
+// section : Threads
+
+///////////////////////////////////////////////////////////////////////////////////
+
+// content : Parallel Range Reducing Algorithm
+//
+// content : Sequential Partitioning
+//
+// content : View std::ranges::subrange
+//
+// content : Algorithm std::ranges::fold_left_first
+//
+// content : Functor std::plus
+
+///////////////////////////////////////////////////////////////////////////////////
+
 // support : perf stat ./14.09
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -40,13 +60,13 @@ template < typename T > auto reduce(std::ranges::view auto view, T sum)
 		auto step = size / concurrency;
 
 		{
-			std::vector < std::jthread > jthreads(concurrency - 1);
+			std::vector < std::jthread > threads(concurrency - 1);
 
-			for (auto i = 0uz; i < std::size(jthreads); ++i)
+			for (auto i = 0uz; i < std::size(threads); ++i)
 			{
 				auto range = std::ranges::subrange(begin, std::next(begin, step));
 
-				jthreads[i] = std::jthread
+				threads[i] = std::jthread
 				(
 					Task < decltype(range), T > (), range, std::ref(sums[i])
 				);
