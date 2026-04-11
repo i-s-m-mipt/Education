@@ -1,13 +1,59 @@
-////////////////////////////////////
+///////////////////////////////////////////////
 
 // chapter : Parallelism
 
-////////////////////////////////////
+///////////////////////////////////////////////
 
 // section : Processors
 
-////////////////////////////////////
+///////////////////////////////////////////////
 
-// content : Microarchitecture Zen 5
+// content : Chip Pervasive Logic
+//
+// content : Built-In Self-Testing and Boosting
+//
+// content : Interconnections
+//
+// content : Cache L2
+//
+// content : Translation Lookaside Buffers
+//
+// content : Tags
+//
+// content : Back-To-Back
+//
+// content : Instruction Cache L1
+//
+// content : Instruction Fetching and Decoding
+//
+// content : Instruction Pointer
+//
+// content : Predictor
+//
+// content : Microcode ROM and Cache
+//
+// content : Execution Engine
+//
+// content : Scheduler
+//
+// content : Out-of-Order Execution Policy
+//
+// content : Data Cache L1
+//
+// content : Arithmetic Logic Unit
+//
+// content : Integer Regfile
+//
+// content : Load, Store and Reordering Buffers
+//
+// content : Speculative Loads and Stores
+//
+// content : Store-to-Load Forwarding
+//
+// content : Floating Point Unit
+//
+// content : Vector Regfile
+//
+// content : Single Instruction Multiple Data
 
-////////////////////////////////////
+///////////////////////////////////////////////
