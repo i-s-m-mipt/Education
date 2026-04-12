@@ -10,7 +10,7 @@
 
 // content : Memory
 //
-// content : Virtual and Physical Address Spaces
+// content : Virtual and Physical Addresses
 //
 // content : Kernel and User Spaces
 //
@@ -20,11 +20,9 @@
 //
 // content : Tools pgrep and pmap
 //
-// content : Page Tables
+// content : Page Table
 //
-// content : Memory Unit
-//
-// content : Segmentation and Page Faults
+// content : Pages and Frames
 
 ///////////////////////////////////////////////////////
 
