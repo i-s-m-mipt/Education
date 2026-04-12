@@ -18,11 +18,13 @@
 //
 // content : Translation Lookaside Buffers
 //
-// content : Tags
+// content : Tags and Offsets
 //
 // content : Back-To-Back
 //
 // content : Instruction Cache L1
+//
+// content : Decoder
 //
 // content : Instruction Fetching and Decoding
 //
@@ -36,7 +38,7 @@
 //
 // content : Scheduler
 //
-// content : Out-of-Order Execution Policy
+// content : Out-Of-Order Execution Policy
 //
 // content : Data Cache L1
 //
@@ -48,12 +50,16 @@
 //
 // content : Speculative Loads and Stores
 //
-// content : Store-to-Load Forwarding
+// content : Store-To-Load Forwarding
+//
+// content : Cache Coherence Protocol MESI
 //
 // content : Floating Point Unit
 //
+// content : Single Instruction Multiple Data
+//
 // content : Vector Regfile
 //
-// content : Single Instruction Multiple Data
+// content : Simultaneous Multithreading
 
 ///////////////////////////////////////////////

@@ -1,0 +1,59 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+// chapter : Parallelism
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+// section : Processors
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+// content : Virtual and Physical Addresses
+//
+// content : Memory Management Unit
+//
+// content : Translation Lookaside Buffer
+//
+// content : Page Table
+//
+// content : Memory Hierarchy
+//
+// content : Caches L1, L2 and L3
+//
+// content : N-Way Associative Caches
+//
+// content : Tags and Offsets
+//
+// content : Cache Lines
+//
+// content : Random Access Memory
+//
+// content : External Memory
+//
+// content : Cache Replacement Policies
+//
+// content : Inclusive and Exclusive Caches
+//
+// content : Latency and Sizes
+//
+// content : Tool lscpu
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+// support : lscpu
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+L1 Cache : Latency ~ 3 * 10 ^ 0 (cycles) : Latency ~ 1 * 10 ^ 0 (ns) : Size ~ 2 ^ 16 (B) per core
+
+L2 Cache : Latency ~ 1 * 10 ^ 1 (cycles) : Latency ~ 3 * 10 ^ 0 (ns) : Size ~ 2 ^ 20 (B) per core
+
+L3 Cache : Latency ~ 3 * 10 ^ 1 (cycles) : Latency ~ 1 * 10 ^ 1 (ns) : Size ~ 2 ^ 26 (B)
+
+RAM      : Latency ~ 3 * 10 ^ 2 (cycles) : Latency ~ 1 * 10 ^ 2 (ns) : Size ~ 2 ^ 36 (B)
+
+SSD      : Latency ~ 3 * 10 ^ 4 (cycles) : Latency ~ 1 * 10 ^ 4 (ns) : Size ~ 2 ^ 40 (B)
+
+HDD      : Latency ~ 1 * 10 ^ 7 (cycles) : Latency ~ 1 * 10 ^ 7 (ns) : Size ~ 2 ^ 44 (B)
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
