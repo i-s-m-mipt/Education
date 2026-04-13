@@ -8,13 +8,13 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Virtual and Physical Addresses
-//
-// content : Memory Management Unit
+// content : Virtual Addresses
 //
 // content : Translation Lookaside Buffer
 //
 // content : Page Table
+//
+// content : Physical Addresses
 //
 // content : Memory Hierarchy
 //

@@ -10,7 +10,7 @@
 
 // content : Memory
 //
-// content : Virtual and Physical Addresses
+// content : Virtual Addresses
 //
 // content : Kernel and User Spaces
 //
@@ -22,7 +22,7 @@
 //
 // content : Page Table
 //
-// content : Pages and Frames
+// content : Physical Addresses
 
 ///////////////////////////////////////////////////////
 

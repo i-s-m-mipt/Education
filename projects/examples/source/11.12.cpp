@@ -30,7 +30,7 @@ public :
 //  ----------------------------------------------------------
 
     virtual void visit(class Client const * client) const = 0;
-    
+
     virtual void visit(class Server const * server) const = 0;
 };
 
@@ -57,15 +57,15 @@ class Client : public Entity
 {
 public :
 
-    void test() const override 
-    { 
+    void test() const override
+    {
         std::print("Client::test\n");
     }
 
 //  ---------------------------------------------------
 
     void invoke(Visitor const & visitor) const override
-    { 
+    {
         visitor.visit(this);
     }
 };
@@ -77,7 +77,7 @@ class Server : public Entity
 public :
 
     void test() const override 
-    { 
+    {
         std::print("Server::test\n");
     }
 
@@ -95,8 +95,8 @@ class Router : public Visitor
 {
 public :
 
-    void visit(Client const * client) const override 
-    { 
+    void visit(Client const * client) const override
+    {
         std::print("Router::visit (1)\n");
 
         client->test();
@@ -104,7 +104,7 @@ public :
 
 //  ------------------------------------------------
 
-    void visit(Server const * server) const override 
+    void visit(Server const * server) const override
     {
         std::print("Router::visit (2)\n");
 

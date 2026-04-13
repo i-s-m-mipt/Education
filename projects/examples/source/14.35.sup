@@ -46,6 +46,8 @@
 //
 // content : Integer Regfile
 //
+// content : Address Generation Unit
+//
 // content : Load, Store and Reordering Buffers
 //
 // content : Speculative Loads and Stores
