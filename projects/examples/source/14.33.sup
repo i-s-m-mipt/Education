@@ -8,7 +8,9 @@
 
 ///////////////////////////////////////
 
-// content : Cores and Cache L3
+// content : Physical Cores
+//
+// content : Cache L3
 //
 // content : System Management Unit
 //

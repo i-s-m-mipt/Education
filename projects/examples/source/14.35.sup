@@ -18,19 +18,19 @@
 //
 // content : Translation Lookaside Buffers
 //
-// content : Tags and Offsets
-//
-// content : Back-To-Back
+// content : Tags
 //
 // content : Instruction Cache L1
 //
+// content : Register RIP
+//
 // content : Decoder
 //
-// content : Instruction Fetching and Decoding
-//
-// content : Instruction Pointer
+// content : Fetching, Decoding and Renaming
 //
 // content : Predictor
+//
+// content : Branch Target Buffers
 //
 // content : Microcode ROM and Cache
 //
@@ -40,27 +40,27 @@
 //
 // content : Out-Of-Order Execution Policy
 //
+// content : Re-Order Buffer
+//
+// content : Load and Store Buffers
+//
+// content : Memory Order Buffer
+//
+// content : Address Generation Unit
+//
 // content : Data Cache L1
+//
+// content : Cache Coherence Protocol MESI
 //
 // content : Arithmetic Logic Unit
 //
 // content : Integer Regfile
 //
-// content : Address Generation Unit
-//
-// content : Load, Store and Reordering Buffers
-//
-// content : Speculative Loads and Stores
-//
-// content : Store-To-Load Forwarding
-//
-// content : Cache Coherence Protocol MESI
-//
 // content : Floating Point Unit
 //
-// content : Single Instruction Multiple Data
-//
 // content : Vector Regfile
+//
+// content : Single Instruction Multiple Data
 //
 // content : Simultaneous Multithreading
 

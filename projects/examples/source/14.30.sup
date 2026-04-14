@@ -10,8 +10,24 @@
 
 // content : Processors
 //
-// content : Chipsets and Sockets
-//
 // content : Processors AMD Ryzen 9000
+//
+// content : Tool lscpu
+//
+// content : Physical Sockets
+//
+// content : Non-Uniform Memory Access
+//
+// content : NUMA Nodes
+//
+// content : Standart PCI Express
+//
+// content : Tool lspci
+
+//////////////////////////////////////
+
+// support : lscpu
+//
+// support : lspci
 
 //////////////////////////////////////
