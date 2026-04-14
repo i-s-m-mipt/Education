@@ -18,7 +18,9 @@
 //
 // content : Wrapper std::future
 //
-// content : Exception-Safe Functions
+// contetn : Shared Futures
+//
+// content : Wrapper std::shared_future
 //
 // content : Asynchronous and Deferred Execution Policies
 //
