@@ -1,94 +1,91 @@
-
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Streams
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 // section : Serialization
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Format JSON
+// content : Serialization
 //
-// content : Library Nlohmann.JSON
+// content : Functions std::format and std::format_to
+//
+// content : User-Defined Formatters
+//
+// content : Helper std::formatter
+//
+// content : Helper std::format_context
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-// support : Boost.PropertyTree
+// support : Boost.Format
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <filesystem>
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <print>
+#include <format>
+#include <iterator>
 #include <string>
-#include <vector>
+#include <string_view>
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-using namespace std::literals;
+struct Entity 
+{ 
+    int x = 0;
+    
+    std::string string;
+};
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-#include <nlohmann/json.hpp>
+template <> class std::formatter < Entity > : public std::formatter < std::string_view >
+{
+public :
 
-///////////////////////////////////////////////////////////////////
+    auto format(Entity const & entity, std::format_context & context) const
+    {
+        std::string string;
+
+        std::format_to(std::back_inserter(string), "{} {}", entity.x, entity.string);
+
+        return std::formatter < std::string_view > ::format("{ " + string + " }", context);
+    }
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    nlohmann::json json;
+    assert(std::format("{0} {1}", false, true) == "false true");
 
 //  ---------------------------------------------------------------
 
-    auto string = "aaaaa"s;
+    assert(std::format("{:_>8}",  1  ) == "_______1");
+
+    assert(std::format("{:#x}",   1  ) == "0x1"     );
+
+    assert(std::format("{:.6f}",  1.0) == "1.000000");
+
+    assert(std::format("{:+.1E}", 1.0) == "+1.0E+00");
 
 //  ---------------------------------------------------------------
 
-    std::vector < int > vector = { 1, 2, 3, 4, 5 };
+    std::string string;
 
 //  ---------------------------------------------------------------
 
-    json["string"] = string;
-
-    json["vector"] = vector;
+    std::format_to(std::back_inserter(string), "{} {}", 1, 2);
 
 //  ---------------------------------------------------------------
 
-    json["x"]["y"] = 1;
+    assert(string == "1 2");
 
 //  ---------------------------------------------------------------
 
-    auto path = "output.json";
-
-//  ---------------------------------------------------------------
-
-    std::fstream(path, std::ios::out) << std::setw(4) << json;
-
-//  ---------------------------------------------------------------
-
-    std::print("main : enter char : "); std::cin.get();
-
-//  ---------------------------------------------------------------
-
-    json = nlohmann::json::parse(std::fstream(path, std::ios::in));
-
-//  ---------------------------------------------------------------
-
-    assert(json["string"].get < decltype(string) > () == string);
-
-    assert(json["vector"].get < decltype(vector) > () == vector);
-
-//  ---------------------------------------------------------------
-
-    assert(json["x"]["y"].get < int > () == 1);
-
-//  ---------------------------------------------------------------
-
-    std::filesystem::remove(path);
+    assert(std::format("{}", Entity(1, "aaaaa")) == "{ 1 aaaaa }");
 }
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////

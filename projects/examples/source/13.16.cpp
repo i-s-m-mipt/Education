@@ -8,71 +8,93 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 
-// content : Directories
+// content : Filesystem
 //
-// content : Function std::filesystem::create_directory
+// content : Paths
 //
-// content : Directory Attributes
+// content : Class std::filesystem::path
 //
-// content : Function std::filesystem::create_directories
+// content : Root Name and Root Directory
 //
-// content : Function std::filesystem::copy
+// content : Relative, Absolute and Canonical Paths
 //
-// content : Enumeration std::filesystem::copy_options
+// content : Functions std::filesystem::absolute and std::filesystem::canonical
 //
-// content : Function std::filesystem::remove_all
+// content : Function std::filesystem::current_path
+//
+// content : Filenames, Stems ans Extensions
+//
+// content : Functions std::filesystem::exists and std::filesystem::equivalent
+//
+// content : Exception std::filesystem::filesystem_error
 
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <cassert>
+#include <cstddef>
 #include <filesystem>
-#include <fstream>
-#include <ios>
 #include <iostream>
 #include <print>
+#include <string>
+#include <tuple>
+
+///////////////////////////////////////////////////////////////////////////////
+
+auto operator""_p(char const * string, std::size_t size)
+{
+	return std::filesystem::path(std::string(string, size));
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	auto path = std::filesystem::current_path();
+	auto path_1 = "../output/./13.15"_p;
 
-//  ---------------------------------------------------------------------------
+	auto path_2 = std::filesystem::absolute (path_1);
 
-	std::filesystem::create_directory(path / "directory");
+	auto path_3 = std::filesystem::canonical(path_1);
 
-	std::filesystem::create_directory(path / "directory", path);
+	auto path_4 = std::filesystem::current_path();
 
-//  ---------------------------------------------------------------------------
+	auto path_5 = "directory"_p / "stem.extension"_p;
 
-	std::filesystem::create_directories("1/2/3");
+//  -----------------------------------------------------------
 
-//  ---------------------------------------------------------------------------
+	assert(std::filesystem::exists(path_1));
 
-	std::fstream("1/2/3/output.data", std::ios::out);
+//  -----------------------------------------------------------
 
-//  ---------------------------------------------------------------------------
+	assert(path_1.filename() == "13.15");
 
-	std::filesystem::copy("1", "2");
+//  -----------------------------------------------------------
+
+	assert(path_2 != path_3);
+
+//  -----------------------------------------------------------
 		
-	std::filesystem::copy("1", "2", std::filesystem::copy_options::recursive);
+	assert(std::filesystem::equivalent(path_2, path_3));
 
-//  ---------------------------------------------------------------------------
+//  -----------------------------------------------------------
 
-	std::print("main : enter char : "); std::cin.get();
+	try
+	{
+		std::ignore = std::filesystem::canonical(path_5);
+	}
+	catch (std::filesystem::filesystem_error const & exception)
+	{
+		std::cerr << "main : " << exception.what() << '\n';
+	}
 
-//  ---------------------------------------------------------------------------
+//  -----------------------------------------------------------
 
-	std::filesystem::remove_all("1");
-	
-	std::filesystem::remove_all("2");
+	std::print("main : path_2 = {}\n", path_2.string());
 
-//  ---------------------------------------------------------------------------
+	std::print("main : path_3 = {}\n", path_3.string());
 
-	std::filesystem::remove_all(std::filesystem::current_path() / "directory");
+	std::print("main : path_4 = {}\n", path_4.string());
 
-//  ---------------------------------------------------------------------------
-
-//  std::filesystem::remove_all("/"); // bad
+	std::print("main : path_5 = {}\n", path_5.string());
 }
 
 ///////////////////////////////////////////////////////////////////////////////

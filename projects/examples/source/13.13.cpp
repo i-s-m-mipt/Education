@@ -1,59 +1,55 @@
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 // chapter : Streams
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 // section : Iterators
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
-// content : Stream Iterators
+// content : Iterators
 //
-// content : Iterators std::istream_iterator and std::ostream_iterator
+// content : Stream Buffer Iterators
+//
+// content : Input Iterators
+//
+// content : Iterator std::istreambuf_iterator
+//
+// content : Output Iterators
+//
+// content : Iterator std::ostreambuf_iterator
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
-#include <algorithm>
 #include <cassert>
 #include <iterator>
 #include <sstream>
-#include <vector>
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::stringstream stream_1("1 2 3 4 5");
+    std::stringstream stream_1("aaaaa");
 
     std::stringstream stream_2;
 
-//  -------------------------------------------------------------------------
+//  ----------------------------------------------------------
 
-	std::vector < int > vector;
+    std::istreambuf_iterator < char > iterator_1(stream_1);
 
-//  -------------------------------------------------------------------------
+	std::ostreambuf_iterator < char > iterator_2(stream_2);
+    
+//  ----------------------------------------------------------
 
-	std::ranges::copy
-	(
-		std::istream_iterator < int > (stream_1),
+	while (iterator_1 != std::istreambuf_iterator < char > ())
+	{
+		*(iterator_2++) = *(iterator_1++);
+	}
 
-		std::istream_iterator < int > (), 
-			
-		std::back_inserter(vector)
-	);
+//  ----------------------------------------------------------
 
-//  -------------------------------------------------------------------------
-
-	assert(std::ranges::is_sorted(vector));
-
-//  -------------------------------------------------------------------------
-
-	std::ranges::copy(vector, std::ostream_iterator < int > (stream_2, " "));
-
-//  -------------------------------------------------------------------------
-
-	assert(stream_2.str() == "1 2 3 4 5 ");
+	assert(stream_2.str() == stream_1.str());
 }
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////

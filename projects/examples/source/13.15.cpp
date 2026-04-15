@@ -1,100 +1,105 @@
-///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Streams
 
-///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
 
-// section : Filesystem
+// section : Iterators
 
-///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Filesystem
-//
-// content : Paths
-//
-// content : Class std::filesystem::path
-//
-// content : Root Name and Root Directory
-//
-// content : Relative, Absolute and Canonical Paths
-//
-// content : Functions std::filesystem::absolute and std::filesystem::canonical
-//
-// content : Function std::filesystem::current_path
-//
-// content : Filenames, Stems ans Extensions
-//
-// content : Functions std::filesystem::exists and std::filesystem::equivalent
-//
-// content : Exception std::filesystem::filesystem_error
+// content : Comment Removal Algorithm
 
-///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
-#include <cstddef>
 #include <filesystem>
 #include <iostream>
+#include <iterator>
+#include <fstream>
 #include <print>
+#include <sstream>
 #include <string>
-#include <tuple>
 
-///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
 
-auto operator""_p(char const * string, std::size_t size)
+void transform(std::string const & path_1, std::string const & path_2)
 {
-	return std::filesystem::path(std::string(string, size));
+    auto string = (std::stringstream() << std::fstream(path_1, std::ios::in).rdbuf()).str();
+
+    for (auto iterator = std::begin(string); iterator != std::end(string); ++iterator)
+    {
+        if (*iterator == '\'')
+        {
+            do
+            {
+                ++iterator;
+            } 
+            while (!(*iterator == '\'' && *std::prev(iterator) != '\\'));
+        }
+
+        if (*iterator == '\"')
+        {
+            do
+            {
+                ++iterator;
+            } 
+            while (!(*iterator == '\"' && *std::prev(iterator) != '\\'));
+        }
+                
+        if (*iterator == '/') 
+        {
+            if (*std::next(iterator) == '/')
+            {
+                auto end = std::next(iterator, 2);
+
+                while (end != std::end(string) && *end != '\n')
+                {
+                    ++end;
+                }
+
+                iterator = string.erase(iterator, end);
+            }
+            else if (*std::next(iterator) == '*')
+            {
+                auto end = std::next(iterator, 3);
+
+                while (!(*end == '/' && *std::prev(end) == '*'))
+                {
+                    ++end;
+                }
+
+                iterator = string.erase(iterator, ++end);
+            }
+        }
+
+        if (iterator == std::end(string)) 
+        {
+            break;
+        }
+    }
+
+    std::fstream(path_2, std::ios::out) << string;
 }
 
-///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	auto path_1 = "../output/./13.15"_p;
+    auto path_1 = "source.cpp";
 
-	auto path_2 = std::filesystem::absolute (path_1);
+	auto path_2 = "output.cpp";
 
-	auto path_3 = std::filesystem::canonical(path_1);
+//  ---------------------------------------------------
 
-	auto path_4 = std::filesystem::current_path();
+    transform(path_1, path_2);
 
-	auto path_5 = "directory"_p / "stem.extension"_p;
+//  ---------------------------------------------------
 
-//  -----------------------------------------------------------
+    std::print("main : enter char : "); std::cin.get();
 
-	assert(std::filesystem::exists(path_1));
+//  ---------------------------------------------------
 
-//  -----------------------------------------------------------
-
-	assert(path_1.filename() == "13.15");
-
-//  -----------------------------------------------------------
-
-	assert(path_2 != path_3);
-
-//  -----------------------------------------------------------
-		
-	assert(std::filesystem::equivalent(path_2, path_3));
-
-//  -----------------------------------------------------------
-
-	try
-	{
-		std::ignore = std::filesystem::canonical(path_5);
-	}
-	catch (std::filesystem::filesystem_error const & exception)
-	{
-		std::cerr << "main : " << exception.what() << '\n';
-	}
-
-//  -----------------------------------------------------------
-
-	std::print("main : path_2 = {}\n", path_2.string());
-
-	std::print("main : path_3 = {}\n", path_3.string());
-
-	std::print("main : path_4 = {}\n", path_4.string());
-
-	std::print("main : path_5 = {}\n", path_5.string());
+    std::filesystem::remove(path_2);
 }
 
-///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////

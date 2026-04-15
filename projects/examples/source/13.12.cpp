@@ -1,55 +1,55 @@
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 // chapter : Streams
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-// section : Iterators
+// section : Streams
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-// content : Iterators
+// content : Span Streams
 //
-// content : Stream Buffer Iterators
+// content : Stream std::spanstream
 //
-// content : Input Iterators
-//
-// content : Iterator std::istreambuf_iterator
-//
-// content : Output Iterators
-//
-// content : Iterator std::ostreambuf_iterator
+// content : Function std::strcmp
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
+#include <array>
 #include <cassert>
-#include <iterator>
-#include <sstream>
+#include <cstring>
+#include <span>
+#include <spanstream>
+#include <string>
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::stringstream stream_1("aaaaa");
+    std::array < char, 1 << 10 > array_1 = { 'a', 'a', 'a', 'a', 'a', '\0' };
 
-    std::stringstream stream_2;
+    std::array < char, 1 << 10 > array_2 = {};
 
-//  ----------------------------------------------------------
+//  -------------------------------------------------------------------------
 
-    std::istreambuf_iterator < char > iterator_1(stream_1);
+    std::spanstream stream_1(array_1);
 
-	std::ostreambuf_iterator < char > iterator_2(stream_2);
-    
-//  ----------------------------------------------------------
+    std::spanstream stream_2(array_2);
 
-	while (iterator_1 != std::istreambuf_iterator < char > ())
-	{
-		*(iterator_2++) = *(iterator_1++);
-	}
+//  -------------------------------------------------------------------------
 
-//  ----------------------------------------------------------
+    std::string string;
 
-	assert(stream_2.str() == stream_1.str());
+//  -------------------------------------------------------------------------
+
+    stream_1 >> string;
+
+    stream_2 << string << '\0';
+
+//  -------------------------------------------------------------------------
+
+    assert(std::strcmp(stream_2.span().data(), stream_1.span().data()) == 0);
 }
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////

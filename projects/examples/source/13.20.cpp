@@ -1,135 +1,94 @@
-//////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////
 
 // chapter : Streams
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 // section : Serialization
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
-// content : Format PDF
+// content : Format JSON
 //
-// content : Library PDFWriter
+// content : Library Nlohmann.JSON
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
+// support : Boost.PropertyTree
+
+///////////////////////////////////////////////////////////////////
+
+#include <cassert>
 #include <filesystem>
+#include <fstream>
+#include <iomanip>
 #include <iostream>
-#include <memory>
 #include <print>
+#include <string>
+#include <vector>
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
-#include <PDFWriter/AbstractContentContext.h>
-#include <PDFWriter/PageContentContext.h>
-#include <PDFWriter/PDFPage.h>
-#include <PDFWriter/PDFRectangle.h>
-#include <PDFWriter/PDFWriter.h>
+using namespace std::literals;
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
-void add_text(int & line, int delta, PageContentContext & context, PDFWriter & writer)
-{
-    auto font = writer.GetFontForFile("font.ttf");
+#include <nlohmann/json.hpp>
 
-    auto size = 16;
-
-    line -= delta + size;
-
-    AbstractContentContext::TextOptions options(font, size, AbstractContentContext::eGray, 0);
-
-    context.WriteText(delta, line, "Hello, World!", options);
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-void add_image(int & line, int delta, PageContentContext & context)
-{
-    auto height = 380, ppi_1 = 72, ppi_2 = 96;
-
-    auto zoom = 1.0;
-
-    line -= delta + zoom * height * ppi_1 / ppi_2;
-
-    AbstractContentContext::ImageOptions options;
-
-    options.transformationMethod = AbstractContentContext::eMatrix;
-
-    options.matrix[0] = options.matrix[3] = zoom;
-    
-    context.DrawImage(delta, line, "image.jpg", options);
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-void add_graphic(int & line, int delta, PageContentContext & context)
-{
-    auto width = 100, height = 100;
-
-    line -= delta + height;
-
-    AbstractContentContext::GraphicOptions options
-    (
-        AbstractContentContext::eStroke,
-        
-        AbstractContentContext::eRGB,
-
-        AbstractContentContext::ColorValueForName("Red"), 2
-    );
-
-    context.DrawRectangle(delta, line, width, height, options);
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 int main()
 {
-    PDFWriter writer;
+    nlohmann::json json;
 
-//  --------------------------------------------------------------
-    
-    writer.StartPDF("output.pdf", EPDFVersion::ePDFVersionMax);
+//  ---------------------------------------------------------------
 
-//  --------------------------------------------------------------
+    auto string = "aaaaa"s;
 
-    auto page = std::make_shared < PDFPage > ();
+//  ---------------------------------------------------------------
 
-//  --------------------------------------------------------------
+    std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-    auto line = 842, delta = 10;
+//  ---------------------------------------------------------------
 
-//  --------------------------------------------------------------
+    json["string"] = string;
 
-    page->SetMediaBox(PDFRectangle(0, 0, 595, line));
+    json["vector"] = vector;
 
-//  --------------------------------------------------------------
+//  ---------------------------------------------------------------
 
-    auto context = writer.StartPageContentContext(page.get());
+    json["x"]["y"] = 1;
 
-//  --------------------------------------------------------------
+//  ---------------------------------------------------------------
 
-    add_text   (line, delta, *context, writer);
+    auto path = "output.json";
 
-    add_image  (line, delta, *context);
+//  ---------------------------------------------------------------
 
-    add_graphic(line, delta, *context);
+    std::fstream(path, std::ios::out) << std::setw(4) << json;
 
-//  --------------------------------------------------------------
-    
-    writer.EndPageContentContext(context);
-
-    writer.WritePage(page.get());
-
-    writer.EndPDF();
-
-//  --------------------------------------------------------------
+//  ---------------------------------------------------------------
 
     std::print("main : enter char : "); std::cin.get();
 
-//  --------------------------------------------------------------
+//  ---------------------------------------------------------------
 
-    std::filesystem::remove(writer.GetOutputFile().GetFilePath());
+    json = nlohmann::json::parse(std::fstream(path, std::ios::in));
+
+//  ---------------------------------------------------------------
+
+    assert(json["string"].get < decltype(string) > () == string);
+
+    assert(json["vector"].get < decltype(vector) > () == vector);
+
+//  ---------------------------------------------------------------
+
+    assert(json["x"]["y"].get < int > () == 1);
+
+//  ---------------------------------------------------------------
+
+    std::filesystem::remove(path);
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////

@@ -1,91 +1,160 @@
-///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Streams
 
-///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
-// section : Serialization
+// section : Filesystem
 
-///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Serialization
+// content : Iterator std::filesystem::directory_iterator
 //
-// content : Functions std::format and std::format_to
+// content : Helper std::filesystem::directory_entry
 //
-// content : User-Defined Formatters
+// content : Helper std::filesystem::file_status
 //
-// content : Helper std::formatter
+// content : Function std::filesystem::is_directory
 //
-// content : Helper std::format_context
+// content : Function std::filesystem::is_regular_file
+//
+// content : Function std::filesystem::is_symlink
+//
+// content : Enumeration std::filesystem::perms
+//
+// content : Function std::filesystem::file_size
+//
+// content : Iterator std::filesystem::recursive_directory_iterator
+//
+// content : Clock std::chrono::file_clock
 
-///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
-// support : Boost.Format
+// support : ls -la
 
-///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
+#include <array>
+#include <chrono>
+#include <filesystem>
 #include <format>
-#include <iterator>
+#include <print>
+#include <sstream>
 #include <string>
-#include <string_view>
 
-///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
-struct Entity 
-{ 
-    int x = 0;
-    
-    std::string string;
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////
-
-template <> class std::formatter < Entity > : public std::formatter < std::string_view >
+auto make_type(std::filesystem::file_status const & status)
 {
-public :
+    if (std::filesystem::is_directory   (status)) { return 'd'; }
 
-    auto format(Entity const & entity, std::format_context & context) const
+    if (std::filesystem::is_regular_file(status)) { return 'f'; }
+
+    if (std::filesystem::is_symlink     (status)) { return 'l'; }
+
+    return '?';
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+auto make_permissions(std::filesystem::perms permissions) -> std::string
+{
+    auto lambda = [permissions](auto x, auto y)
+    { 
+        return (permissions & x) == std::filesystem::perms::none ? '-' : y;
+    };
+
+    return
     {
-        std::string string;
+        lambda(std::filesystem::perms::owner_read,  'r'),
 
-        std::format_to(std::back_inserter(string), "{} {}", entity.x, entity.string);
+        lambda(std::filesystem::perms::owner_write, 'w'),
 
-        return std::formatter < std::string_view > ::format("{ " + string + " }", context);
+        lambda(std::filesystem::perms::owner_exec,  'x') 
+    };
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+auto size(std::filesystem::path const & path)
+{
+	auto size = 0uz;
+
+	if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
+	{
+		for (auto const & entry : std::filesystem::recursive_directory_iterator(path))
+		{
+			if (!std::filesystem::is_directory(entry.status()))
+			{
+				size += std::filesystem::file_size(entry);
+			}
+		}
+	}
+
+	return size;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+auto size(std::filesystem::directory_entry const & entry)
+{
+    auto size = 0uz;
+
+    if (std::filesystem::is_regular_file(entry.status()))
+    {
+        size = std::filesystem::file_size(entry);
     }
-};
+    else
+    {
+        size = ::size(entry.path());
+    }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+    std::array < char, 4 > array = { 'B', 'K', 'M', 'G' };
+
+    auto i = 0uz;
+
+    while (i++ < 3 && size >= 1 << 10)
+    {
+        size /= (1 << 10);
+    }
+
+    return (std::stringstream() << std::format("{: >4} ({})", size, array[i - 1])).str();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void show(std::filesystem::path const & path)
+{
+	if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
+	{
+        for (auto const & entry : std::filesystem::directory_iterator(path))
+		{
+            std::print
+            (
+                "show : entry : {} | {} | {} | {} | {}\n",
+
+                make_type(entry.status()),
+
+                make_permissions(entry.status().permissions()),
+
+                size(entry),
+
+                std::chrono::floor < std::chrono::seconds >
+                (
+                    std::chrono::file_clock::to_sys(entry.last_write_time())
+                ),
+
+			    entry.path().filename().string()
+            );
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    assert(std::format("{0} {1}", false, true) == "false true");
-
-//  ---------------------------------------------------------------
-
-    assert(std::format("{:_>8}",  1  ) == "_______1");
-
-    assert(std::format("{:#x}",   1  ) == "0x1"     );
-
-    assert(std::format("{:.6f}",  1.0) == "1.000000");
-
-    assert(std::format("{:+.1E}", 1.0) == "+1.0E+00");
-
-//  ---------------------------------------------------------------
-
-    std::string string;
-
-//  ---------------------------------------------------------------
-
-    std::format_to(std::back_inserter(string), "{} {}", 1, 2);
-
-//  ---------------------------------------------------------------
-
-    assert(string == "1 2");
-
-//  ---------------------------------------------------------------
-
-    assert(std::format("{}", Entity(1, "aaaaa")) == "{ 1 aaaaa }");
+	show(std::filesystem::current_path());
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////

@@ -1,44 +1,78 @@
-/////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
 // chapter : Streams
 
-/////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
 // section : Streams
 
-/////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
-// content : String Streams
+// content : Underlying Buffers
 //
-// content : Stream std::stringstream
+// content : Buffer std::streambuf
 
-/////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
-#include <cassert>
-#include <sstream>
+// support : Boost.IOStreams
+
+/////////////////////////////////////////////////////////////////////
+
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <print>
+#include <streambuf>
 #include <string>
 
-/////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+class Adapter
+{
+public :
+
+    Adapter(std::string const & path) : m_stream(path, std::ios::out)
+    {
+        m_streambuf = std::cout.rdbuf(m_stream.rdbuf());
+    }
+
+//  -----------------------------------------------------------------
+
+   ~Adapter() 
+    { 
+        std::cout.rdbuf(m_streambuf);
+    }
+
+private :
+
+    std::fstream m_stream;
+    
+    std::streambuf * m_streambuf = nullptr;
+};
+
+/////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::stringstream stream_1("aaaaa");
+    auto path = "output.data";
 
-	std::stringstream stream_2;
+//  ---------------------------------------------------
 
-//  -----------------------------------------
+    {
+        Adapter adapter(path);
 
-    std::string string;
+    //  ----------------------
 
-//  -----------------------------------------
-	
-    stream_1 >> string;
+        std::cout << "main\n";
+    }
 
-    stream_2 << string;
-	
-//  -----------------------------------------
-	
-	assert(stream_2.str() == stream_1.str());
+//  ---------------------------------------------------
+
+    std::print("main : enter char : "); std::cin.get();
+
+//  ---------------------------------------------------
+
+    std::filesystem::remove(path);
 }
 
-/////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////

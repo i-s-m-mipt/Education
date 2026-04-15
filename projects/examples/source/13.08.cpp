@@ -1,97 +1,58 @@
-//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
 // chapter : Streams
 
-//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
 // section : Streams
 
-//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
-// content : File Streams
+// content : Stream Synchronization
 //
-// content : Stream std::fstream
+// content : C-Style Streams
 //
-// content : Open Flags
+// content : Streams stdin, stdout and stderr
 //
-// content : Flags std::ios::out and std::ios::in
+// content : Function std::print
 //
-// content : Write and Read Positions
-//
-// content : Function std::filesystem::remove
+// content : Function std::ios_base::sync_with_stdio
 
-//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
-#include <cassert>
-#include <filesystem>
-#include <fstream>
-#include <ios>
+#include <cstdio>
 #include <iostream>
-#include <istream>
-#include <ostream>
 #include <print>
-#include <string>
 
-//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
 int main()
 {
-    auto path = "output.data";
+    std::cin.tie(nullptr);
 
-//  ------------------------------------------------------
+//  ----------------------------------------------------
 
-    auto size = 5uz;
+    auto x = 0;
 
-//  ------------------------------------------------------
+//  ----------------------------------------------------
 
-    {
-        std::fstream stream(path, std::ios::out);
+    std::cout << "main : enter int x : "; std::cin >> x;
 
-    //  --------------------------------------------------
+//  ----------------------------------------------------
 
-        for (auto i = 0uz; i < size; ++i)
-        {
-            stream << "aaaaa\n";
-        }
+    std::cout << "main (1)\n"; std::print("main (2)\n");
 
-    //  --------------------------------------------------
+    std::cout << "main (3)\n";
 
-        stream.seekp((size - 1) * (5 + 1), std::ios::beg);
+//  ----------------------------------------------------
 
-    //  --------------------------------------------------
+    std::ios_base::sync_with_stdio(false);
 
-        stream << "bbbbb\n";
-    }
+//  ----------------------------------------------------
 
-//  ------------------------------------------------------
+    std::cout << "main (4)\n"; std::print("main (5)\n");
 
-    std::print("main : enter char : "); std::cin.get();
-
-//  ------------------------------------------------------
-
-    {
-        std::fstream stream(path, std::ios::in);
-
-    //  --------------------------------------------------
-
-        stream.seekg((size - 1) * (5 + 1), std::ios::beg);
-
-    //  --------------------------------------------------
-
-        std::string string;
-
-    //  --------------------------------------------------
-
-        std::getline(stream >> std::ws, string);
-
-    //  --------------------------------------------------
-
-        assert(string == "bbbbb");
-    }
-
-//  ------------------------------------------------------
-
-    std::filesystem::remove(path);
+    std::cout << "main (6)\n";
 }
 
-//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
