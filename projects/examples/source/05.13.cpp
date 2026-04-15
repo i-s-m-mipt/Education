@@ -104,21 +104,21 @@ public :
 
 /////////////////////////////////////////////////
 
-int main() 
+int main()
 {
     Entity entity;
 
 //  ----------------------------
 
     entity.add(new Client);
-    
+
     entity.add(new Server);
 
 //  ----------------------------
-    
-    for (auto i = 0; i < 2; ++i)
+
+    for (auto i = 1; i < 3; ++i)
     {
-        entity.set(i + 1);
+        entity.set(i);
     }
 }
 

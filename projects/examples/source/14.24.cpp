@@ -165,7 +165,7 @@ void produce(Queue < int > & queue)
 {
     std::this_thread::sleep_for(1s);
 
-    for (auto i = 1; i < 1 << 10 + 1; ++i)
+    for (auto i = 1; i < (1 << 10) + 1; ++i)
     {
         queue.push(i);
     }
@@ -175,7 +175,7 @@ void produce(Queue < int > & queue)
 
 void consume(Queue < int > & queue)
 {
-    for (auto i = 1; i < 1 << 10 + 1; ++i)
+    for (auto i = 1; i < (1 << 10) + 1; ++i)
     {
         assert(*queue.top_and_pop_v1() == i);
     }

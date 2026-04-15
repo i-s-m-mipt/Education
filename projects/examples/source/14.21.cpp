@@ -47,28 +47,28 @@ int main()
     {
         std::vector < std::jthread > threads;
 
-    //  ----------------------------------------------------------------
+    //  --------------------------------------------------------------------
 
-        for (auto i = 0uz; i < std::thread::hardware_concurrency(); ++i)
+        for (auto i = 1uz; i < std::thread::hardware_concurrency() + 1; ++i)
         {
-            threads.emplace_back(test_v1, i + 1);
+            threads.emplace_back(test_v1, i);
         }
     }
 
-//  --------------------------------------------------------------------
+//  ------------------------------------------------------------------------
 
     std::print("\n");
 
-//  --------------------------------------------------------------------
+//  ------------------------------------------------------------------------
 
     {
         std::vector < std::jthread > threads;
 
-    //  ----------------------------------------------------------------
+    //  --------------------------------------------------------------------
 
-        for (auto i = 0uz; i < std::thread::hardware_concurrency(); ++i)
+        for (auto i = 1uz; i < std::thread::hardware_concurrency() + 1; ++i)
         {
-            threads.emplace_back(test_v2, i + 1);
+            threads.emplace_back(test_v2, i);
         }
     }
 }
