@@ -12,8 +12,6 @@
 //
 // content : Function std::async
 //
-// content : Waiting For Single Events
-//
 // content : Futures
 //
 // content : Wrapper std::future

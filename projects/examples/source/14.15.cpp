@@ -39,7 +39,18 @@ public :
 
 //  ----------------------------------------------------
 
-    void test_v2()
+//  void test_v2() // bad
+//  {
+//      m_mutex.lock();
+//
+//      ++m_x;
+//
+//      m_mutex.unlock();
+//  }
+
+//  ----------------------------------------------------
+
+    void test_v3()
     {
         std::scoped_lock < std::mutex > lock(m_mutex);
 
@@ -48,11 +59,11 @@ public :
 
 //  ----------------------------------------------------
 
-    void test_v3() const
+    void test_v4() const
     {
         std::scoped_lock < std::mutex > lock(m_mutex);
 
-        std::print("Entity::test_v3 : m_x = {}\n", m_x);
+        std::print("Entity::test_v4 : m_x = {}\n", m_x);
     }
 
 private :
@@ -70,11 +81,11 @@ int main()
 {
     Entity entity;
 
-//  --------------------------------------------------
+//  -------------------------------------------------
 
-    std::jthread jthread_1(&Entity::test_v2, &entity);
+    std::jthread thread_1(&Entity::test_v3, &entity);
 
-    std::jthread jthread_2(&Entity::test_v3, &entity);
+    std::jthread thread_2(&Entity::test_v4, &entity);
 }
 
 ////////////////////////////////////////////////////////

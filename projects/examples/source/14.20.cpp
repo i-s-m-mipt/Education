@@ -10,6 +10,8 @@
 
 // content : Pattern Double-Checked Locking
 //
+// content : Thread-Safe Initialization
+//
 // content : Function std::call_once
 //
 // content : Flag std::once_flag
@@ -77,9 +79,9 @@ void test()
 
 int main()
 {
-    std::jthread jthread_1(test);
+    std::jthread thread_1(test);
 
-    std::jthread jthread_2(test);
+    std::jthread thread_2(test);
 }
 
 /////////////////////////////////////////////////////////////

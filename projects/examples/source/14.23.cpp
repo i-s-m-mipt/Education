@@ -1,16 +1,14 @@
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Parallelism
 
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 // section : Synchronization
 
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-// content : Thread-Safe Queues
-//
-// content : Waiting For Multiple Events
+// content : Thread Launch Synchronization
 //
 // content : Condition Variables
 //
@@ -20,200 +18,94 @@
 //
 // content : Spurious Wakes
 //
-// content : Pattern Single Producer Single Consumer
+// content : Thread Identification
+//
+// content : Function std::this_thread::get_id
 
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
 #include <chrono>
 #include <condition_variable>
-#include <deque>
-#include <memory>
+#include <format>
+#include <iostream>
 #include <mutex>
+#include <syncstream>
 #include <thread>
-#include <utility>
 
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 using namespace std::literals;
 
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename C = std::deque < T > > class Queue
+class Entity
 {
 public :
 
-    Queue() = default;
-
-//  -----------------------------------------------------------------------------
-
-    Queue(Queue const & other)
+    void test() const
     {
-        std::scoped_lock < std::mutex > lock(other.m_mutex);
+        trace();
 
-        m_container = other.m_container;
+        {
+            std::unique_lock < std::mutex > lock(m_mutex);
+
+            while (!m_x)
+            {
+                m_condition.wait(lock);
+            }
+        }
+        
+        trace();
     }
 
-//  -----------------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
-    Queue(Queue && other) : Queue()
-    {
-        swap(other);
-    }
-
-//  -----------------------------------------------------------------------------
-
-    auto & operator=(Queue other)
-	{
-        swap(other);
-
-		return *this;
-	}
-
-//  -----------------------------------------------------------------------------
-
-    void swap(Queue & other)
-    {
-        std::scoped_lock < std::mutex, std::mutex > lock(m_mutex, other.m_mutex);
-
-        std::swap(m_container, other.m_container);
-    }
-
-//  -----------------------------------------------------------------------------
-
-    void push(T x)
+    void release() const
     {
         std::scoped_lock < std::mutex > lock(m_mutex);
 
-        m_container.push_back(x);
+        m_x = true;
 
-        m_condition.notify_one();
-    }
-
-//  -----------------------------------------------------------------------------
-
-    auto wait_and_pop()
-    {
-        std::unique_lock < std::mutex > lock(m_mutex);
-
-        while (std::empty(m_container))
-        {
-            m_condition.wait(lock);
-        }
-
-        auto x = std::make_shared < T > (m_container.front());
-
-        m_container.pop_front();
-
-        return x;
-    }
-
-//  -----------------------------------------------------------------------------
-
-    void wait_and_pop(T & x)
-    {
-        std::unique_lock < std::mutex > lock(m_mutex);
-
-        while (std::empty(m_container))
-        {
-            m_condition.wait(lock);
-        }
-
-        x = m_container.front();
-
-        m_container.pop_front();
-    }
-
-//  -----------------------------------------------------------------------------
-
-    auto try_pop() -> std::shared_ptr < T >
-    {
-        std::scoped_lock < std::mutex > lock(m_mutex);
-
-        if (!std::empty(m_container))
-        {
-            auto x = std::make_shared < T > (m_container.front());
-
-            m_container.pop_front();
-
-            return x;
-        }
-
-        return nullptr;
-    }
-
-//  -----------------------------------------------------------------------------
-
-    auto try_pop(T & x)
-    {
-        std::scoped_lock < std::mutex > lock(m_mutex);
-
-        if (!std::empty(m_container))
-        {
-            x = m_container.front();
-
-            m_container.pop_front();
-
-            return true;
-        }
-
-        return false;
+        m_condition.notify_all();
     }
 
 private :
 
-    C m_container;
+    void trace() const
+    {
+        auto id = std::this_thread::get_id();
 
-//  -----------------------------------------------------------------------------
+        std::osyncstream(std::cout) << std::format("Entity::trace : id = {}\n", id);
+    }
+
+//  --------------------------------------------------------------------------------
+
+    mutable bool m_x = false;
 
     mutable std::mutex m_mutex;
 
     mutable std::condition_variable m_condition;
 };
 
-/////////////////////////////////////////////////////////////////////////////////
-
-void produce(Queue < int > & queue)
-{
-    std::this_thread::sleep_for(1s);
-
-    for (auto i = 0; i < 1 << 10; ++i)
-    {
-        queue.push(i + 1);
-    }
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-
-void consume(Queue < int > & queue)
-{
-    for (auto i = 0; i < 1 << 10; ++i)
-    {
-        assert(*queue.wait_and_pop() == i + 1);
-    }
-}
-
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Queue < int > queue_1;
+    Entity entity;
 
-	Queue < int > queue_2 = queue_1;
+//  ----------------------------------------------
 
-	Queue < int > queue_3 = std::move(queue_2);
+    std::jthread thread_1(&Entity::test, &entity);
 
-//  ---------------------------------------------------
+    std::jthread thread_2(&Entity::test, &entity);
 
-	queue_2 = queue_1;
+//  ----------------------------------------------
 
-	queue_3 = std::move(queue_2);
+    std::this_thread::sleep_for(1s);
 
-//  ---------------------------------------------------
+//  ----------------------------------------------
 
-    std::jthread jthread_1(produce, std::ref(queue_1));
-
-    std::jthread jthread_2(consume, std::ref(queue_1));
+    entity.release();
 }
 
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////

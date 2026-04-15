@@ -51,15 +51,15 @@ void test(std::stop_token token)
 
 int main()
 {
-    std::jthread jthread(test);
+    std::jthread thread(test);
 
-//  -----------------------------------------
+//  ----------------------------------------
 
     std::this_thread::sleep_for(5s);
 
-//  -----------------------------------------
+//  ----------------------------------------
 
-    jthread.get_stop_source().request_stop();
+    thread.get_stop_source().request_stop();
 }
 
 //////////////////////////////////////////////////

@@ -129,7 +129,7 @@ private :
 
     //  --------------------------------------------------
 
-        auto try_pop(Task & task)
+        auto top_and_pop(Task & task)
         {
             std::scoped_lock < std::mutex > lock(m_mutex);
 
@@ -192,7 +192,7 @@ private :
 
         while (!m_flag)
         {
-            if (m_queue.try_pop(task))
+            if (m_queue.top_and_pop(task))
             {
                 task();
             }

@@ -33,13 +33,13 @@ void test_v2() { ++g_y; } // support : compiler-explorer.com
 
 int main()
 {
-    { 
-        std::jthread jthread_1(test_v1);
+    {
+        std::jthread thread_1(test_v1);
 
-        std::jthread jthread_2(test_v2);
-    } 
+        std::jthread thread_2(test_v2);
+    }
 
-//  ------------------------------------ 
+//  -----------------------------------
 
     assert(g_x == 2);
 

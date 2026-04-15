@@ -53,7 +53,7 @@ template < typename T > auto reduce(std::ranges::view auto view, T sum)
 
 		auto step = size / concurrency;
 
-		for (auto & [future, jthread] : futures)
+		for (auto & [future, thread] : futures)
 		{
 			auto range = std::ranges::subrange(begin, std::next(begin, step));
 
@@ -61,7 +61,7 @@ template < typename T > auto reduce(std::ranges::view auto view, T sum)
 
 			future = task.get_future();
 			
-			jthread = std::jthread(std::move(task), range);
+			thread = std::jthread(std::move(task), range);
 
 			std::advance(begin, step);
 		}
@@ -70,7 +70,7 @@ template < typename T > auto reduce(std::ranges::view auto view, T sum)
 
 		sum += Task < decltype(range) > ()(range);
 
-		for (auto & [future, jthread] : futures) 
+		for (auto & [future, thread] : futures) 
 		{
 			sum += future.get();
 		}

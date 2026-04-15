@@ -12,11 +12,11 @@
 
 /////////////////////////////////////////////////////////////////////////////////
 
+#include <cassert>
 #include <functional>
 #include <memory>
 #include <mutex>
 #include <thread>
-#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -91,7 +91,7 @@ public :
 
 //  -----------------------------------------------------------------------------
 
-    auto top_and_pop()
+    auto top_and_pop_v1()
     {
         std::scoped_lock < std::mutex > lock(m_mutex);
 
@@ -104,7 +104,7 @@ public :
 
 //  -----------------------------------------------------------------------------
 
-    void top_and_pop(T & x)
+    void top_and_pop_v2(T & x)
     {
         std::scoped_lock < std::mutex > lock(m_mutex);
 
@@ -124,27 +124,24 @@ private :
 
 /////////////////////////////////////////////////////////////////////////////////
 
-// void top_and_pop_v1(Stack < int > & stack) // error
+// void consume_v1(Stack < int > & stack) // error
 // {
-//     std::ignore = stack.top();
-// 
-//     stack.pop();
+//     for (auto i = 1 << 10; i > 0; --i)
+//     {
+//         assert(stack.top() == i);
+//
+//         stack.pop();
+//     }
 // }
 
 /////////////////////////////////////////////////////////////////////////////////
 
-void top_and_pop_v2(Stack < int > & stack)
+void consume_v2(Stack < int > & stack)
 {
-    std::ignore = stack.top_and_pop();
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-
-void top_and_pop_v3(Stack < int > & stack)
-{
-    auto x = 0;
-
-    stack.top_and_pop(x);
+    for (auto i = 1 << 10; i > 0; --i)
+    {
+        assert(*stack.top_and_pop_v1() == i);
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -157,42 +154,22 @@ int main()
 
 	Stack < int > stack_3 = std::move(stack_2);
 
-//  -----------------------------------------------------------------------
+//  ---------------------------------------------------
 
 	stack_2 = stack_1;
 
 	stack_3 = std::move(stack_2);
 
-//  -----------------------------------------------------------------------
+//  ---------------------------------------------------
     
-    for (auto i = 1; i <= 6; ++i)
+    for (auto i = 1; i < 1 << 10 + 1; ++i)
     {
         stack_1.push(i);
     }
 
-//  -----------------------------------------------------------------------
+//  ---------------------------------------------------
 
-    {
-//      std::jthread jthread_1(top_and_pop_v1, std::ref(stack_1)); // error
-
-//      std::jthread jthread_2(top_and_pop_v1, std::ref(stack_1)); // error
-    }
-
-//  -----------------------------------------------------------------------
-
-    {
-        std::jthread jthread_1(top_and_pop_v2, std::ref(stack_1));
-
-        std::jthread jthread_2(top_and_pop_v2, std::ref(stack_1));
-    }
-
-//  -----------------------------------------------------------------------
-
-    {
-        std::jthread jthread_1(top_and_pop_v3, std::ref(stack_1));
-
-        std::jthread jthread_2(top_and_pop_v3, std::ref(stack_1));
-    }
+    std::jthread thread(consume_v2, std::ref(stack_1));
 }
 
 /////////////////////////////////////////////////////////////////////////////////
