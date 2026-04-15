@@ -10,7 +10,7 @@
 
 // content : Binary Search Algorithm
 //
-// content : Algorithmic Complexity O(log(N))
+// content : Time Complexity O(log(N))
 
 ////////////////////////////////////////////////////////////////////
 

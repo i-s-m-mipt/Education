@@ -12,7 +12,7 @@
 //
 // content : Timsort Algorithm
 //
-// content : Algorithmic Complexities O(N^2) and O(N*log(N))
+// content : Time Complexities O(N^2) and O(N*log(N))
 //
 // content : Cache Lines
 //

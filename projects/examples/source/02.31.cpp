@@ -12,9 +12,9 @@
 //
 // content : Capacity and Size
 //
-// content : Algorithmic Complexities O(1) and O(N)
+// content : Time Complexities O(1) and O(N)
 //
-// content : Amortized Algorithmic Complexity
+// content : Amortized Time Complexity
 //
 // content : Algorithm std::ranges::sort
 //
