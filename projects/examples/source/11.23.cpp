@@ -10,9 +10,9 @@
 
 // content : Algorithms std::ranges::sort and std::ranges::is_sorted
 //
-// content : Projections
-//
 // content : Time Complexity O(N*log(N))
+//
+// content : Projections
 
 ////////////////////////////////////////////////////////////////////////////
 

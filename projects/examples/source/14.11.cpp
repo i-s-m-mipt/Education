@@ -1,18 +1,18 @@
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 // chapter : Parallelism
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 // section : Threads
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-// content : Parallel Range Reducing Algorithm
+// content : Parallel Range Folding Algorithm
 //
 // content : Recursive Partitioning
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 #include <algorithm>
 #include <cassert>
@@ -23,19 +23,19 @@
 #include <ranges>
 #include <vector>
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-template < std::ranges::view V, typename T > auto reduce(V view, T sum) -> T
+template < std::ranges::view V, typename T > auto fold(V view, T sum) -> T
 {
 	auto begin = std::begin(view), end = std::end(view);
 
-	if (auto size = std::distance(begin, end); size > 64)
+	if (auto size = std::distance(begin, end), half = size / 2; size > 16)
 	{
-        std::ranges::subrange range(begin, std::next(begin, size / 2));
+        std::ranges::subrange range(begin, std::next(begin, half));
 
-		auto future = std::async(reduce < decltype(range), T > , range, T());
+		auto future = std::async(fold < decltype(range), T > , range, T());
 
-		sum += reduce(std::ranges::subrange(std::end(range), end), T());
+		sum += fold(std::ranges::subrange(std::end(range), end), T());
 
 		return sum + future.get();
 	}
@@ -45,19 +45,19 @@ template < std::ranges::view V, typename T > auto reduce(V view, T sum) -> T
 	}
 }
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 int main()
 {
 	std::vector < int > vector(1 << 10, 0);
 
-//  ------------------------------------------------------
+//  ----------------------------------------------------
 
 	std::ranges::iota(vector, 1);
 
-//  ------------------------------------------------------
+//  ----------------------------------------------------
 
-	assert(reduce(std::views::all(vector), 0) == 524'800);
+	assert(fold(std::views::all(vector), 0) == 524'800);
 }
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////

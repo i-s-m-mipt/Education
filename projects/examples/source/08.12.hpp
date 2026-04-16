@@ -22,6 +22,10 @@
 //
 // content : Square Roots
 //
+// content : Karatsuba Fast Multiplication Algorithm
+//
+// content : Time Complexity O(N^1.585)
+//
 // content : Functions std::ssize, std::isdigit, std::stoll
 //
 // content : Radix Optimization
@@ -340,20 +344,20 @@ public :
 				if (y * y <= x)
 				{
 					left  = middle + 1;
-					
+
 					digit = std::min(middle, Integer::s_base - 1);
 				}
 				else
 				{
 					right = middle - 1;
-				}				
+				}
 			}
 
 			y.m_digits[i] = digit;
 		}
 
 		y.reduce();
-		
+
 		return y;
 	}
 
@@ -361,39 +365,43 @@ public :
 
 	friend auto multiply(Integer const & x, Integer const & y) -> Integer
 	{
-		if (auto size = std::max(x.m_size, y.m_size); size > 1)
+		if (auto size = std::max(x.m_size, y.m_size), half = size / 2; size > 1)
 		{
-			auto step = size / 2;
+			Integer x1, x2, y1, y2;
 
-			Integer x1, x2;
+			x1.m_size = y1.m_size = half;
 
-			x1.m_size = step;
+			x2.m_size = y2.m_size = size - half;
 
-			x2.m_size = size - step;
+			for (auto i = 0uz, j = 0uz, k = 0uz; i < size; ++i)
+			{
+				if (i < half)
+				{
+					x1.m_digits[j] = x.m_digits[i];
 
-			for (auto i =  0uz; i < step; ++i) { x1.m_digits[i       ] = x.m_digits[i]; }
+					y1.m_digits[j] = y.m_digits[i];
 
-			for (auto i = step; i < size; ++i) { x2.m_digits[i - step] = x.m_digits[i]; }
+					++j;
+				}
+				else
+				{
+					x2.m_digits[k] = x.m_digits[i];
 
-			Integer y1, y2;
+					y2.m_digits[k] = y.m_digits[i];
 
-			y1.m_size = step;
-			
-			y2.m_size = size - step;
-
-			for (auto i =  0uz; i < step; ++i) { y1.m_digits[i       ] = y.m_digits[i]; }
-
-			for (auto i = step; i < size; ++i) { y2.m_digits[i - step] = y.m_digits[i]; }
+					++k;
+				}
+			}
 
 			auto a = multiply(x2, y2);
-			
+
 			auto b = multiply(x1, y1);
-			
+
 			auto c = multiply(x2 + x1, y2 + y1);
 
 			Integer base = Integer::s_base;
 
-			for (auto i = 1uz; i < step; ++i)
+			for (auto i = 1uz; i < half; ++i)
 			{
 				base *= Integer::s_base;
 			}

@@ -8,7 +8,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-// content : Parallel Range Reducing Algorithm
+// content : Parallel Range Folding Algorithm
 //
 // content : Sequential Partitioning
 //
@@ -47,7 +47,7 @@ public :
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > auto reduce(std::ranges::view auto view, T sum)
+template < typename T > auto fold(std::ranges::view auto view, T sum)
 {
     auto begin = std::begin(view), end = std::end(view);
 
@@ -81,7 +81,7 @@ template < typename T > auto reduce(std::ranges::view auto view, T sum)
 
 		sum += *std::ranges::fold_left_first(sums, std::plus());
 	}
-	
+
 	return sum;
 }
 
@@ -91,13 +91,13 @@ int main()
 {
 	std::vector < int > vector(1 << 10, 0);
 
-//  ------------------------------------------------------
+//  ----------------------------------------------------
 
 	std::ranges::iota(vector, 1);
 
-//  ------------------------------------------------------
+//  ----------------------------------------------------
 
-	assert(reduce(std::views::all(vector), 0) == 524'800);
+	assert(fold(std::views::all(vector), 0) == 524'800);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

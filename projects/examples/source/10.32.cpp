@@ -12,12 +12,14 @@
 //
 // content : Library Boost.UBLAS
 //
-// content : Multiplication
+// content : Strassen Fast Multiplication Algorithm
 //
-// content : Microbenchmarking
+// content : Time Complexity O(N^2.807)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <cassert>
+#include <cmath>
 #include <cstddef>
 #include <random>
 
@@ -28,25 +30,17 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <benchmark/benchmark.h>
+using matrix_t = boost::numeric::ublas::matrix < double > ;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-auto multiply
-(
-    boost::numeric::ublas::matrix < double > const & A,
-
-    boost::numeric::ublas::matrix < double > const & B
-)
--> boost::numeric::ublas::matrix < double >
+auto multiply(matrix_t const & A, matrix_t const & B) -> matrix_t
 {
-    if (auto size = A.size1(); size > 64)
+    if (auto size = A.size1(), half = size / 2; size > 64)
     {
-        auto step = size / 2;
-
-        boost::numeric::ublas::range range_1(   0, step);
+        boost::numeric::ublas::range range_1(   0, half);
         
-        boost::numeric::ublas::range range_2(step, size);
+        boost::numeric::ublas::range range_2(half, size);
 
         auto A11 = boost::numeric::ublas::project(A, range_1, range_1);
 
@@ -74,7 +68,7 @@ auto multiply
 
         auto C7 = multiply(A12 - A22, B21 + B22);
 
-        boost::numeric::ublas::matrix < double > C(size, size);
+        matrix_t C(size, size);
 
         boost::numeric::ublas::project(C, range_1, range_1) = C1 - C2 + C5 + C7;
 
@@ -96,7 +90,7 @@ auto multiply
 
 auto make_matrix(std::size_t size)
 {
-    boost::numeric::ublas::matrix < double > matrix(size, size);
+    matrix_t matrix(size, size);
 
     std::uniform_real_distribution distribution(0.0, 1.0);
 
@@ -115,55 +109,36 @@ auto make_matrix(std::size_t size)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void test_v1(benchmark::State & state)
+auto equal(double x, double y, double epsilon = 1e-6)
 {
-    auto argument = state.range(0);
-
-    auto matrix_1 = make_matrix(argument);
-    
-    auto matrix_2 = matrix_1;
-
-    boost::numeric::ublas::matrix < double > matrix_3(argument, argument);
-
-    for (auto element : state)
-    {
-        matrix_3 = boost::numeric::ublas::prod(matrix_1, matrix_2);
-
-		benchmark::DoNotOptimize(matrix_3);
-    }
+	return std::abs(x - y) < epsilon;
 }
-
-////////////////////////////////////////////////////////////////////////////////
-
-void test_v2(benchmark::State & state)
-{
-    auto argument = state.range(0);
-
-    auto matrix_1 = make_matrix(argument);
-    
-    auto matrix_2 = matrix_1;
-
-    boost::numeric::ublas::matrix < double > matrix_3(argument, argument);
-
-    for (auto element : state)
-    {
-        matrix_3 = multiply(matrix_1, matrix_2);
-
-		benchmark::DoNotOptimize(matrix_3);
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-BENCHMARK(test_v1)->Arg(2 << 10);
-
-BENCHMARK(test_v2)->Arg(2 << 10);
 
 ////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	benchmark::RunSpecifiedBenchmarks();
+    auto size = 1uz << 10;
+
+//  --------------------------------------------
+
+	auto A = make_matrix(size), B = A;
+
+//  --------------------------------------------
+
+    auto C1 = boost::numeric::ublas::prod(A, B);
+
+    auto C2 = multiply(A, B);
+
+//  --------------------------------------------
+
+    for (auto i = 0uz; i < size; ++i)
+    {
+        for (auto j = 0uz; j < size; ++j)
+        {
+            assert(equal(C1(i, j), C2(i, j)));
+        }
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

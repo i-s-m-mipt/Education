@@ -10,7 +10,7 @@
 
 // content : Bitwise Operators
 //
-// content : Value Swapping Algorithm
+// content : Value Exchange Algorithm
 
 /////////////////////////////////////////
 

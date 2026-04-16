@@ -8,7 +8,7 @@
 
 ////////////////////////////////////////////
 
-// content : Indian Exponentiating Algorithm
+// content : Indian Exponentiation Algorithm
 //
 // content : Time Complexity O(log(N))
 

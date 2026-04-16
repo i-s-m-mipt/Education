@@ -8,7 +8,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Parallel Range Reducing Algorithm
+// content : Parallel Range Folding Algorithm
 //
 // content : Packaged Tasks
 //
@@ -41,7 +41,7 @@ public :
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > auto reduce(std::ranges::view auto view, T sum)
+template < typename T > auto fold(std::ranges::view auto view, T sum)
 {
 	auto begin = std::begin(view), end = std::end(view);
 
@@ -60,7 +60,7 @@ template < typename T > auto reduce(std::ranges::view auto view, T sum)
 			std::packaged_task < T(decltype(range)) > task { Task < decltype(range) > () };
 
 			future = task.get_future();
-			
+
 			thread = std::jthread(std::move(task), range);
 
 			std::advance(begin, step);
@@ -85,13 +85,13 @@ int main()
 {
 	std::vector < int > vector(1 << 10, 0);
 
-//  ------------------------------------------------------
+//  ----------------------------------------------------
 
 	std::ranges::iota(vector, 1);
 
-//  ------------------------------------------------------
+//  ----------------------------------------------------
 
-	assert(reduce(std::views::all(vector), 0) == 524'800);
+	assert(fold(std::views::all(vector), 0) == 524'800);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

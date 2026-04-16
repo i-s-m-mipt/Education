@@ -10,7 +10,7 @@
 
 // content : Hash Functions
 //
-// content : Java String Hash Algorithm
+// content : Java String Hashing Algorithm
 //
 // content : Functor std::hash
 
