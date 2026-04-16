@@ -111,22 +111,22 @@
 
 \bigskip
 
-Let $x = x_2 \cdot 10^n + x_1$, $y = y_2 \cdot 10^n + y_1$, where $x_i, y_i \in I\,(\,n\,)$ for $i \in \{\,1,\,2\,\}$
+Let $x = x_2 \cdot 10^N + x_1$, $y = y_2 \cdot 10^N + y_1$, where $x_i, y_i \in I\,(\,n\,)$ for $i \in \{\,1,\,2\,\}$
 
 \bigskip
 
-Hence, $z = x \cdot y = x_2 \cdot y_2 \cdot 10^{2n} + (x_2 \cdot y_1 + x_1 \cdot y_2) \cdot 10^n + x1 \cdot y1$
+Hence, $z = x \cdot y = x_2 \cdot y_2 \cdot 10^{2N} + (x_2 \cdot y_1 + x_1 \cdot y_2) \cdot 10^N + x1 \cdot y1$ with time complexity $O(N^2)$
 
 \bigskip
 
-$x_2 \cdot y_1 + x_1 \cdot y_2 = (x_2 + x_1) \cdot (y_2 + y_1) - x_1 \cdot y_1 - x_2 \cdot y_2$
+Let $a = x_2 \cdot y_2$, $b = x_1 \cdot y_1$, $c = (x_2 + x_1) \cdot (y_2 + y_1)$
 
 \bigskip
 
-Hence, $z = x \cdot y = x_2 \cdot y_2 \cdot 10^{2n} + ((x_2 + x_1) \cdot (y_2 + y_1) - x_1 \cdot y_1 - x_2 \cdot y_2) \cdot 10^n + x1 \cdot y1$
+Hence, $x_2 \cdot y_1 + x_1 \cdot y_2 = (x_2 + x_1) \cdot (y_2 + y_1) - x_1 \cdot y_1 - x_2 \cdot y_2 = c - b - a$
 
 \bigskip
 
-Hence, $z = x \cdot y = a \cdot 10^{2n} + (c - b - a) \cdot 10^n + b$, where $a = x_2 \cdot y_2$, $b = x_1 \cdot y_1$, $c = (x_2 + x_1) \cdot (y_2 + y_1)$
+Hence, $z = x \cdot y = a \cdot 10^{2N} + (c - b - a) \cdot 10^N + b$ with time complexity $O(N^{\log_{2}3})\approx O(N^{1.585})$
 
 \end{document}
