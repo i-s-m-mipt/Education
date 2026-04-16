@@ -8,13 +8,15 @@
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-// content : Insertion and Merge Sort Algorithms
+// content : Insertion Sort Algorithm
+//
+// content : Time Complexity O(N^2)
+//
+// content : Merge Sort Algorithm
+//
+// content : Time Complexity O(N*log(N))
 //
 // content : Timsort Algorithm
-//
-// content : Time Complexities O(N^2) and O(N*log(N))
-//
-// content : Cache Lines
 //
 // content : Spatial and Temporal Locality
 //

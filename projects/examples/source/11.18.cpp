@@ -10,6 +10,8 @@
 
 // content : Algorithms
 //
+// content : Unique Random Number Generation Algorithm
+//
 // content : Algorithm std::ranges::shuffle
 
 ///////////////////////////////////////////////////////////////

@@ -12,6 +12,8 @@
 //
 // content : Capacity and Size
 //
+// content : Back Insertion Algorithm
+//
 // content : Time Complexities O(1) and O(N)
 //
 // content : Amortized Time Complexity

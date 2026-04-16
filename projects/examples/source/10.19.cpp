@@ -12,6 +12,8 @@
 //
 // content : Algorithm std::ranges::make_heap
 //
+// content : Time Complexity O(N)
+//
 // content : Algorithm std::ranges::max
 
 /////////////////////////////////////////////////////////////////////////

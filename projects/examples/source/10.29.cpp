@@ -10,6 +10,8 @@
 
 // content : Longest Common Subsequence Algorithm
 //
+// content : Time Complexity O(N*M)
+//
 // content : Algorithm std::ranges::reverse
 
 //////////////////////////////////////////////////////////////////////////////////////
