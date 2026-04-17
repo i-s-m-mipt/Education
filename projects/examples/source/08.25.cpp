@@ -119,15 +119,15 @@ int main()
 
 //  ----------------------------------------------------------------
 
-    auto Y = transform_v1(X);
+    auto Y1 = transform_v1(X);
 
-    auto Z = transform_v2(X);
+    auto Y2 = transform_v2(X);
 
 //  ----------------------------------------------------------------
 
     for (auto i = 0uz; i < std::size(X); ++i)
     {
-        assert(equal(Y[i], Z[i]));
+        assert(equal(Y1[i], Y2[i]));
     }
 }
 

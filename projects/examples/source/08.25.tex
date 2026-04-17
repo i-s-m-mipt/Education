@@ -114,25 +114,25 @@
 \begin{lalign}
     $Y_k = \sum X_n \cdot e^{-\frac{2\pi i}{N}nk}$
 \end{lalign}
-for $n,\,k \in \{\,0,\,\dots,\,N - 1\,\}$ with time complexity $O(N^2)$
+where $X_n,\,Y_k \in \mathbb{C}$ for $n,\,k \in \{\,0,\,...,\,N - 1\,\}$ with time complexity $O(N^2)$
 
 \bigskip
 
 \begin{lalign}
-    $Z_k = \sum X_{2m} \cdot e^{-\frac{2\pi i}{N}(2m)k} + \sum X_{2m+1} \cdot e^{-\frac{2\pi i}{N}(2m+1)k}$
+    $Y_k = \sum X_{2m} \cdot e^{-\frac{2\pi i}{N}(2m)k} + \sum X_{2m+1} \cdot e^{-\frac{2\pi i}{N}(2m+1)k}$
 \end{lalign}
-\,\,\,\,for $m \in \{\,0,\,...,\,\frac{N}{2} - 1\,\}$ and $k \in \{\,0\,,\,\,\dots,\,N - 1\,\}$
+\,\,\,\,for $m \in \{\,0,\,...,\,\frac{N}{2} - 1\,\}$ and $k \in \{\,0\,,\,\,...,\,N - 1\,\}$
 
 \bigskip
 
 \begin{lalign}
-    $Z_k = {\sum X_{2m} \cdot e^{-\frac{2\pi i}{N/2} mk}} + e^{-\frac{2\pi i}{N}k} \cdot \sum X_{2m+1} \cdot e^{-\frac{2\pi i}{N/2} mk}$ for $m \in \{\,0,\,...,\,\frac{N}{2} - 1\,\}$ and $k \in \{\,0\,,\,\,\dots,\,\frac{N}{2} - 1\,\}$
+    $Y_k = {\sum X_{2m} \cdot e^{-\frac{2\pi i}{N/2} mk}} + e^{-\frac{2\pi i}{N}k} \cdot \sum X_{2m+1} \cdot e^{-\frac{2\pi i}{N/2} mk}$ for $m \in \{\,0,\,...,\,\frac{N}{2} - 1\,\}$ and $k \in \{\,0\,,\,\,...,\,\frac{N}{2} - 1\,\}$
 \end{lalign}
 
 \bigskip
 
 \begin{lalign}
-    $Z_k = \sum X_{2m} \cdot e^{-\frac{2\pi i}{N/2}mk} - e^{-\frac{2\pi i}{N}k} \cdot \sum X_{2m+1} \cdot e^{-\frac{2\pi i}{N/2} mk}$ for $m \in \{\,0,\,...,\,\frac{N}{2} - 1\,\}$ and $k \in \{\,\frac{N}{2},\,\dots,\,N - 1\,\}$
+    $Y_k = \sum X_{2m} \cdot e^{-\frac{2\pi i}{N/2}mk} - e^{-\frac{2\pi i}{N}k} \cdot \sum X_{2m+1} \cdot e^{-\frac{2\pi i}{N/2} mk}$ for $m \in \{\,0,\,...,\,\frac{N}{2} - 1\,\}$ and $k \in \{\,\frac{N}{2},\,...,\,N - 1\,\}$
 \end{lalign}
 
 \bigskip
@@ -141,10 +141,10 @@ Let $E_k = \sum X_{2m} \cdot e^{-\frac{2\pi i}{N/2}mk}$, $O_k = \sum X_{2m+1} \c
 
 \bigskip
 
-Hence, $Z_k = E_k + \omega^k \cdot O_k$ for $k \in \{\,0\,,\,\,\dots,\,\frac{N}{2} - 1\,\}$;
+Hence, $Y_k = E_k + \omega^k \cdot O_k$ for $k \in \{\,0\,,\,\,...,\,\frac{N}{2} - 1\,\}$
 
 \bigskip
 
-Hence, $Z_k = E_k - \omega^k \cdot O_k$ for $k \in \{\,\frac{N}{2},\,\dots,\,N - 1\,\}$ with time complexity $O(N \log N)$
+Hence, $Y_k = E_k - \omega^k \cdot O_k$ for $k \in \{\,\frac{N}{2},\,...,\,N - 1\,\}$ with time complexity $O(N \log N)$
 
 \end{document}
