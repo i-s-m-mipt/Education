@@ -832,11 +832,11 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{10.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.41.cpp}{10.41}\,)}}
+{\large \textbf{10.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.42.cpp}{10.42}\,)}}
 
 \bigskip
 
-Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.41.cpp}{\texttt{10.41}} таким образом, чтобы пользователь мог исследовать девять хэш-функций, приведенных в данной \href{https://www.partow.net/programming/hashfunctions/#AvailableHashFunctions}{статье}. Постройте графики зависимости количества возникающих коллизий от количества хэшируемых строк. Обоснуйте форму полученных зависимостей. Определите лучшие и худшие хэш-функции данного набора. Выполните сборку решения с флагами -O3 и -m32 из-за особенностей некоторых хэш-функций.
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.42.cpp}{\texttt{10.42}} таким образом, чтобы пользователь мог исследовать девять хэш-функций, приведенных в данной \href{https://www.partow.net/programming/hashfunctions/#AvailableHashFunctions}{статье}. Постройте графики зависимости количества возникающих коллизий от количества хэшируемых строк. Обоснуйте форму полученных зависимостей. Определите лучшие и худшие хэш-функции данного набора. Выполните сборку решения с флагами -O3 и -m32 из-за особенностей некоторых хэш-функций.
 
 
 
@@ -938,7 +938,7 @@ Method, для управления поведением игровых объе
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 8.00in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 8.60in\enlargethispage{100in}
 
 \section{13. Streams}
 
@@ -946,13 +946,11 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-Реализуйте алгоритм преобразования коллекции восьмибитных беззнаковых целых чисел в строку с их шестнадцатиричными представлениями. Используйте стандартный контейнер \lstinline{std::vector} с элементами стандартного типа \lstinline{std::uint8_t} для хранения коллекции восьмибитных беззнаковых целых чисел. Используйте стандартный поток \lstinline{std::stringstream} для создания необходимой строки. Используйте стандартные манипуляторы \lstinline{std::setw}, \lstinline{right}, \lstinline{std::setfill} и \lstinline{std::hex} для форматирования вывода. Реализуйте~обратный~алго- 
-
-ритм преобразования строки шестнадцатиричных цифр в коллекцию восьмибитных беззнаковых целых чисел. Используйте вычитание символов и побитовые операции для реализации обратного алгоритма преобразования.
+Реализуйте алгоритм преобразования коллекции восьмибитных беззнаковых целых чисел в строку с их шестнадцатиричными представлениями. Используйте стандартный контейнер \lstinline{std::vector} с элементами стандартного типа \lstinline{std::uint8_t} для хранения коллекции восьмибитных беззнаковых целых чисел. Используйте стандартный поток \lstinline{std::stringstream} для создания необходимой строки. Используйте стандартные манипуляторы \lstinline{std::setw}, \lstinline{right}, \lstinline{std::setfill} и \lstinline{std::hex} для форматирования вывода. Реализуйте обратный алгоритм преобразования строки, состоящей из четного количества шестнадцатиричных цифр, в коллекцию восьмибитных беззнаковых целых чисел. Используйте вычитание символов и побитовые операции для реализа- ции обратного алгоритма преобразования. Используйте только шестнадцатиричные цифры в нижнем регистре.  
 
 \bigskip
 
-{\large \textbf{13.02} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/13.08.cpp}{13.08}\,)}}
+{\large \textbf{13.02} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/13.09.cpp}{13.09}\,)}}
 
 \bigskip
 
@@ -960,27 +958,27 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{13.03} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/13.14.cpp}{13.14}\,)}}
+{\large \textbf{13.03} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/13.15.cpp}{13.15}\,)}}
 
 \bigskip
 
-Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/13.14.cpp}{\texttt{13.14}} таким образом, чтобы реализация использовала алгоритм удаления пустых строк и строк, состоящих из пробельных символов, вместо сохранения их в итоговом файле. Реализуйте обработку сырых строковых литералов в алгоритме. Рассмотрите особенности оформления сырых строковых литералов.
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/13.15.cpp}{\texttt{13.15}} таким образом, чтобы реализация использовала алгоритм удаления пустых строк и строк, состоящих из пробельных символов, вместо сохранения их в итоговом файле. Реализуйте обработку сырых строковых литералов в алгоритме. Рассмотрите особенности оформления сырых строковых литералов.
 
 \bigskip
 
-{\large \textbf{13.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/13.17.cpp}{13.17}\,)} \texttt{//} J. Galowicz, C\texttt{++}17 STL Cookbook}
+{\large \textbf{13.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/13.18.cpp}{13.18}\,)} \texttt{//} J. Galowicz, C\texttt{++}17 STL Cookbook}
 
 \bigskip
 
-Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/13.17.cpp}{\texttt{13.17}} таким образом, чтобы реализация использовала алгоритм условного отображения только тех вхождений в директорию, названия которых соответствуют заданному пользователем регулярному выражению, вместо безусловного отображения всех вхождений. Используйте стандартное регулярное выражение \lstinline{std::regex} для реализации алгоритма поиска соответствий. Сравните данное решение~с~утилитой~\lstinline{grep}.
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/13.18.cpp}{\texttt{13.18}} таким образом, чтобы реализация использовала алгоритм условного отображения только тех вхождений в директорию, названия которых соответствуют заданному пользователем регулярному выражению, вместо безусловного отображения всех вхождений. Используйте стандартное регулярное выражение \lstinline{std::regex} для реализации алгоритма поиска соответствий. Сравните данное решение~с~утилитой~\lstinline{grep}.
 
 \bigskip
 
-{\large \textbf{13.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/13.19.cpp}{13.19}\,)}}
+{\large \textbf{13.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/13.20.cpp}{13.20}\,)}}
 
 \bigskip
 
-Реализуйте алгоритм извлечения числа с плавающей точкой из строки, сериализованной в формате JSON. Предполагайте, что расположение числа внутри строки известно. Рассмотрите использование алгоритмов библиотеки \href{https://github.com/nlohmann/json}{Nlohmann.JSON}, алгоритмов других библиотек, стандартной функции \lstinline{std::from_chars}, а также собственных алгоритмов для извлечения числа с плавающей точкой из строки. Используйте тип \lstinline{float} для представления конечного результата. Используйте библиотеку \href{https://github.com/google/benchmark}{Google.Benchmark} для реализации бенчмарков. Постарайтесь добиться наиболее оптимизированного алгоритма, достойного систем высокочастотной торговли.
+Реализуйте алгоритм чтения целого числа и числа с плавающей точкой из строки, сериализованной в формате JSON. Предполагайте, что расположение чисел внутри строки известно. Реализуйте обратный алгоритм записи целого числа и числа с плавающей точкой на известные позиции в строку, сериализованную в формате JSON. Предполагайте, что для количество знаков до и после точки числа с плавающей точкой известно. Используйте тип \lstinline{int} для представления целого числа и тип \lstinline{float} для представления числа с плавающей точкой. Используйте алгоритмы библиотеки \href{https://github.com/nlohmann/json}{Nlohmann.JSON}, алгоритмы других библиотек, стандартные функции \lstinline{std::from_chars} и \lstinline{std::to_chars}, а также собственные алгоритмы. Используйте библиотеку \href{https://github.com/google/benchmark}{Google.Benchmark} для реализации бенчмарков. Постарайтесь реализовать наиболее оптимальные алгоритмы.
 
 
 
