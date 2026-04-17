@@ -82,11 +82,11 @@ auto transform_v2(signal_t const & X) -> signal_t
 
         auto angle = 2 * std::numbers::pi / size;
 
-        for (auto i = 0uz; 2 * i < size; ++i)
+        for (auto i = 0uz, j = half; 2 * i < size; ++i, ++j)
         {
-            Y[i       ] = E[i] + w * O[i];
+            Y[i] = E[i] + w * O[i];
 
-            Y[i + half] = E[i] - w * O[i];
+            Y[j] = E[i] - w * O[i];
 
             w *= signal_t::value_type(std::cos(angle), std::sin(angle));
         }

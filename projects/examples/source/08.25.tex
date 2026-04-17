@@ -111,33 +111,33 @@
 
 \bigskip
 
-\begin{lalign}
-    $Y_k = \sum X_n \cdot e^{-\frac{2\pi i}{N}nk}$
+Let\begin{lalign}
+    $Y_k = \sum_n X_n \cdot e^{-\frac{2\pi i}{N}nk}$
 \end{lalign}
-where $X_n,\,Y_k \in \mathbb{C}$ for $n,\,k \in \{\,0,\,...,\,N - 1\,\}$ with time complexity $O(N^2)$
+where $X_n, Y_k \in \mathbb{C}$ for $n, k \in \{\,0,\,...,\,N - 1\,\}$ with time complexity $O(N^2)$
 
 \bigskip
 
-\begin{lalign}
-    $Y_k = \sum X_{2m} \cdot e^{-\frac{2\pi i}{N}(2m)k} + \sum X_{2m+1} \cdot e^{-\frac{2\pi i}{N}(2m+1)k}$
+Hence,\begin{lalign}
+    $Y_k = \sum_m X_{2m} \cdot e^{-\frac{2\pi i}{N}(2m)k} + \sum_m X_{2m+1} \cdot e^{-\frac{2\pi i}{N}(2m+1)k}$
 \end{lalign}
-\,\,\,\,for $m \in \{\,0,\,...,\,\frac{N}{2} - 1\,\}$ and $k \in \{\,0\,,\,\,...,\,N - 1\,\}$
+\,\,\,for $m \in \{\,0,\,...,\,\frac{N}{2} - 1\,\}$ and $k \in \{\,0\,,\,\,...,\,N - 1\,\}$
 
 \bigskip
 
-\begin{lalign}
-    $Y_k = {\sum X_{2m} \cdot e^{-\frac{2\pi i}{N/2} mk}} + e^{-\frac{2\pi i}{N}k} \cdot \sum X_{2m+1} \cdot e^{-\frac{2\pi i}{N/2} mk}$ for $m \in \{\,0,\,...,\,\frac{N}{2} - 1\,\}$ and $k \in \{\,0\,,\,\,...,\,\frac{N}{2} - 1\,\}$
-\end{lalign}
-
-\bigskip
-
-\begin{lalign}
-    $Y_k = \sum X_{2m} \cdot e^{-\frac{2\pi i}{N/2}mk} - e^{-\frac{2\pi i}{N}k} \cdot \sum X_{2m+1} \cdot e^{-\frac{2\pi i}{N/2} mk}$ for $m \in \{\,0,\,...,\,\frac{N}{2} - 1\,\}$ and $k \in \{\,\frac{N}{2},\,...,\,N - 1\,\}$
+Hence,\begin{lalign}
+    $Y_k = {\sum_m X_{2m} \cdot e^{-\frac{2\pi i}{N/2} mk}} + e^{-\frac{2\pi i}{N}k} \cdot \sum_m X_{2m+1} \cdot e^{-\frac{2\pi i}{N/2} mk}$ for $m \in \{\,0,\,...,\,\frac{N}{2} - 1\,\}$ and $k \in \{\,0\,,\,\,...,\,\frac{N}{2} - 1\,\}$
 \end{lalign}
 
 \bigskip
 
-Let $E_k = \sum X_{2m} \cdot e^{-\frac{2\pi i}{N/2}mk}$, $O_k = \sum X_{2m+1} \cdot e^{-\frac{2\pi i}{N/2} mk}$, $\omega = e^{-\frac{2\pi i}{N}}$
+Hence,\begin{lalign}
+    $Y_k = \sum_m X_{2m} \cdot e^{-\frac{2\pi i}{N/2}mk} - e^{-\frac{2\pi i}{N}k} \cdot \sum_m X_{2m+1} \cdot e^{-\frac{2\pi i}{N/2} mk}$ for $m \in \{\,0,\,...,\,\frac{N}{2} - 1\,\}$ and $k \in \{\,\frac{N}{2},\,...,\,N - 1\,\}$
+\end{lalign}
+
+\bigskip
+
+Let $E_k = \sum_m X_{2m} \cdot e^{-\frac{2\pi i}{N/2}mk}$, $O_k = \sum_m X_{2m+1} \cdot e^{-\frac{2\pi i}{N/2} mk}$, $\omega = e^{-\frac{2\pi i}{N}}$
 
 \bigskip
 
