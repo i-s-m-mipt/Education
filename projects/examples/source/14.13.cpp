@@ -1,87 +1,100 @@
-////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Parallelism
 
-////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 // section : Threads
 
-////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
+// content : Parallel Range Folding Algorithm
+//
 // content : Promises
 //
 // content : Wrapper std::promise
 
-////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <chrono>
+#include <algorithm>
+#include <cassert>
+#include <functional>
 #include <future>
-#include <print>
+#include <iterator>
+#include <numeric>
+#include <ranges>
 #include <thread>
+#include <utility>
+#include <vector>
 
-////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-using namespace std::literals;
-
-////////////////////////////////////////////////////
-
-class Entity
+template < std::ranges::view V, typename T > class Task
 {
 public :
 
-    Entity() : m_future(m_promise.get_future()) {}
-
-//  ------------------------------------------------
-
-    void test() const
-    {
-        trace(); m_future.wait();
-
-        trace();
-    }
-
-//  ------------------------------------------------
-
-    void release() const
-    {
-        m_promise.set_value();
-    }
-
-private :
-
-    void trace() const
-    {
-        auto id = std::this_thread::get_id();
-
-        std::print("Entity::trace : id = {}\n", id);
-    }
-
-//  ------------------------------------------------
-
-    mutable std::promise < void > m_promise;
-
-    mutable std::shared_future < void > m_future;
+	void operator()(V view, std::promise < T > && promise) const
+	{
+		promise.set_value(*std::ranges::fold_left_first(view, std::plus()));
+	}
 };
 
-////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename T > auto fold(std::ranges::view auto view, T sum)
+{
+	auto begin = std::begin(view), end = std::end(view);
+
+	if (auto size = std::distance(begin, end); size > 0) 
+	{
+		auto concurrency = std::max(std::thread::hardware_concurrency(), 2u);
+
+		std::vector < std::pair < std::future < T > , std::jthread > > futures(concurrency - 1);
+
+		auto step = size / concurrency;
+
+		for (auto & [future, thread] : futures)
+		{
+			auto range = std::ranges::subrange(begin, std::next(begin, step));
+
+			std::promise < T > promise;
+
+			future = promise.get_future();
+
+			thread = std::jthread
+			(
+				Task < decltype(range), T > (), range, std::move(promise)
+			);
+
+			std::advance(begin, step);
+		}
+
+		auto range = std::ranges::subrange(begin, end);
+
+		sum += *std::ranges::fold_left_first(range, std::plus());
+
+		for (auto & [future, thread] : futures) 
+		{
+			sum += future.get();
+		}
+	}
+
+	return sum;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Entity entity;
+	std::vector < int > vector(1 << 10, 0);
 
-//  ----------------------------------------------
+//  ----------------------------------------------------
 
-    std::jthread thread_1(&Entity::test, &entity);
+	std::ranges::iota(vector, 1);
 
-    std::jthread thread_2(&Entity::test, &entity);
+//  ----------------------------------------------------
 
-//  ----------------------------------------------
-
-    std::this_thread::sleep_for(1s);
-
-//  ----------------------------------------------
-
-    entity.release();
+	assert(fold(std::views::all(vector), 0) == 524'800);
 }
 
-////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////

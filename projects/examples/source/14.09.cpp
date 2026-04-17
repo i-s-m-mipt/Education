@@ -55,9 +55,9 @@ template < typename T > auto fold(std::ranges::view auto view, T sum)
 	{
 		auto concurrency = std::max(std::thread::hardware_concurrency(), 2u);
 
-		std::vector < T > sums(concurrency, T());
-
 		auto step = size / concurrency;
+
+		std::vector < T > sums(concurrency, T());
 
 		{
 			std::vector < std::jthread > threads(concurrency - 1);
