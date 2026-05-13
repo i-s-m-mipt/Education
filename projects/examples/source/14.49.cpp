@@ -61,7 +61,7 @@ public :
     {
         std::destroy(m_array, m_array + m_size);
 
-        operator delete(m_array, std::align_val_t(s_alignment));
+        operator delete(m_array, sizeof(T) * m_size, std::align_val_t(s_alignment));
     }
 
 //  ------------------------------------------------------------------------------------

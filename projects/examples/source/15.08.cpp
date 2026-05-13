@@ -11,8 +11,8 @@
 //////////////////////////////////////////////////////////////
 
 #include <algorithm>
+#include <array>
 #include <cassert>
-#include <vector>
 
 //////////////////////////////////////////////////////////////
 
@@ -42,13 +42,17 @@ int main()
 
 //  ----------------------------------------------------------
 
-    std::vector < char > vector(1 << 10, 'a');
+    std::array < char, 1 << 10 > array = {};
 
 //  ----------------------------------------------------------
 
-    boost::asio::write(socket, boost::asio::buffer(vector));
+    std::ranges::fill(array, 'a');
 
-    boost::asio::read (socket, boost::asio::buffer(vector));
+//  ----------------------------------------------------------
+
+    boost::asio::write(socket, boost::asio::buffer(array));
+
+    boost::asio::read (socket, boost::asio::buffer(array));
 
 //  ----------------------------------------------------------
 
@@ -56,7 +60,7 @@ int main()
 
 //  ----------------------------------------------------------
 
-    std::ranges::for_each(vector, lambda);
+    std::ranges::for_each(array, lambda);
 }
 
 //////////////////////////////////////////////////////////////

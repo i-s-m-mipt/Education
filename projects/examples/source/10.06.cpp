@@ -16,7 +16,6 @@
 
 /////////////////////////////////////////////////////////////////
 
-#include <array>
 #include <cassert>
 #include <iostream>
 #include <print>
@@ -27,11 +26,7 @@
 
 int main()
 {
-	std::array < bool, 5 > array = {};
-
-//  -------------------------------------------------------------
-
-	static_assert(sizeof(array) == 5);
+	static_assert(sizeof(bool) == 1);
 
 //  -------------------------------------------------------------
 

@@ -35,18 +35,18 @@ public :
 	{
 		assert(m_size % m_step == 0 && m_step >= sizeof(Node));
 
-		make_list();
+		make_array();
 
-		m_begin = m_head;
+		m_array = m_head;
 	}
 
 //  -----------------------------------------------------------------------------------
 
    ~Allocator()
 	{
-		for (auto list : m_lists)
+		for (auto array : m_arrays)
 		{
-			operator delete(list, m_size, std::align_val_t(s_alignment));
+			operator delete(array, m_size, std::align_val_t(s_alignment));
 		}
 	}
 
@@ -56,13 +56,13 @@ public :
 	{
 		if (!m_head)
 		{
-			if (m_offset == std::size(m_lists))
+			if (m_offset == std::size(m_arrays))
 			{
-				make_list();
+				make_array();
 			}
 			else
 			{
-				m_head = get_node(m_lists[++m_offset - 1]);
+				m_head = get_node(m_arrays[++m_offset - 1]);
 			}
 		}
 
@@ -72,7 +72,7 @@ public :
 		{
 			auto next = get_byte(node) + m_step;
 
-			if (next != get_byte(m_lists[m_offset - 1]) + m_size)
+			if (next != get_byte(m_arrays[m_offset - 1]) + m_size)
 			{
 				m_head = get_node(next);
 
@@ -110,9 +110,9 @@ public :
 
 		std::print
 		(
-			"m_size = {} m_step = {} m_begin = {:018} m_head = {:018} m_offset = {}\n",
+			"m_array = {:018} m_size = {} m_step = {} m_offset = {} m_head = {:018}\n",
 
-			m_size, m_step, m_begin, static_cast < void * > (m_head), m_offset
+			m_array, m_size, m_step, m_offset, static_cast < void * > (m_head)
 		);
 	}
 
@@ -139,7 +139,7 @@ private :
 
 //  -----------------------------------------------------------------------------------
 
-	void make_list()
+	void make_array()
 	{
 		m_head = get_node(operator new(m_size, std::align_val_t(s_alignment)));
 
@@ -147,18 +147,18 @@ private :
 
 		++m_offset;
 
-		m_lists.push_back(m_head);
+		m_arrays.push_back(m_head);
 	}
 
 //  -----------------------------------------------------------------------------------
 
+	void * m_array = nullptr;
+
 	std::size_t m_size = 0, m_step = 0, m_offset = 0;
 
-	void * m_begin = nullptr;
+	Node * m_head = nullptr;
 
-	Node * m_head  = nullptr;
-
-	std::vector < void * > m_lists;
+	std::vector < void * > m_arrays;
 
 //  -----------------------------------------------------------------------------------
 

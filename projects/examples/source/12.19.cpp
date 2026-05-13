@@ -142,7 +142,7 @@ public :
 
 		std::print("Calculator::test : enter std::string string(s) : \n");
 
-		while (std::getline(std::cin >> std::ws, string))
+		while (std::getline(std::cin >> std::ws, string, '\n'))
 		{
 			if (Stream stream(string); !stream.empty())
 			{

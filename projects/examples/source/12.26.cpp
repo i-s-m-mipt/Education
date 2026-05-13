@@ -202,7 +202,7 @@ int main()
 
 //  --------------------------------------------------------------
 
-	while (std::getline(std::cin >> std::ws, string))
+	while (std::getline(std::cin >> std::ws, string, '\n'))
 	{
         if (string.front() != ';')
         {

@@ -24,7 +24,6 @@
 #include <iterator>
 #include <locale>
 #include <string>
-#include <vector>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -40,16 +39,16 @@ auto make_string_v1(std::string const & string, std::locale const & locale)
 {
     auto size = std::size(string);
 
-	std::vector < wchar_t > vector(size, L'\0');
+	std::wstring wstring(size, L'\0');
 
 	std::use_facet < std::ctype < wchar_t > > (locale).widen
     (
 		std::data(string),
 
-        std::data(string) + size, std::data(vector)
+        std::data(string) + size, std::data(wstring)
     );
 
-	return std::wstring(std::data(vector), size);
+	return wstring;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,16 +57,16 @@ auto make_string_v2(std::wstring const & wstring, std::locale const & locale)
 {
     auto size = std::size(wstring);
 
-	std::vector < char > vector(size, '\0');
+	std::string string(size, '\0');
 
 	std::use_facet < std::ctype < wchar_t > > (locale).narrow
     (
 		std::data(wstring),
 
-		std::data(wstring) + size, '?', std::data(vector)
+		std::data(wstring) + size, '?', std::data(string)
     );
 
-	return std::string(std::data(vector), size);
+	return string;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////

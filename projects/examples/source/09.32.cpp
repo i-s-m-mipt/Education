@@ -36,7 +36,7 @@ public :
 
 	auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
 	{
-		void * begin = m_begin + m_offset;
+		void * begin = std::begin(m_array) + m_offset;
 
 		auto free = S - m_offset;
 
@@ -56,21 +56,14 @@ public :
 
 	void show() const
 	{
-		std::print
-		(
-			"Allocator::show : S = {} m_begin = {:018} m_offset = {:0>4}\n",
-
-			S, static_cast < void * > (m_begin), m_offset
-		);
+		std::print("Allocator::show : S = {} m_offset = {:0>4}\n", S, m_offset);
 	}
 
 private :
 
-	std::size_t m_offset = 0;
-
     alignas(std::max_align_t) std::array < std::byte, S > m_array = {};
 
-    std::byte * m_begin = std::begin(m_array);
+	std::size_t m_offset = 0;
 
 //  ------------------------------------------------------------------------------
 

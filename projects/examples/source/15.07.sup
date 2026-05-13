@@ -31,12 +31,10 @@
 // content : Simple Mail Transfer Protocol (SMTP)
 //
 // content : Secure SHell (SSH) Protocol
-//
-// content : VLESS Protocol
 
 ////////////////////////////////////////////////////////////////////
 
-L1 : NIC, Ethernet, Wi-Fi, RJ-45, TP, SFP, Fiber, SONET, IXP
+L1 : NIC, Ethernet, Wi-Fi, RJ-45, TP, SFP, Fiber Optic, SDH
 
 L2 : NIC, Ethernet, Wi-Fi, Switches, WAP, MAC, ARP
 
@@ -48,6 +46,6 @@ L5 : Hosts
 
 L6 : Hosts, TLS
 
-L7 : Hosts, DHCP, BGP, DNS, HTTP, Websocket, FTP, SMTP, SSH, VLESS
+L7 : Hosts, DHCP, BGP, DNS, HTTP, Websocket, FTP, SMTP, SSH
 
 ////////////////////////////////////////////////////////////////////

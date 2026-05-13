@@ -26,21 +26,21 @@ public :
 
 	Storage(std::size_t size) : m_size(size)
 	{
-		m_begin = operator new(m_size, std::align_val_t(s_alignment));
+		m_array = operator new(m_size, std::align_val_t(s_alignment));
 	}
 
 //  ------------------------------------------------------------------------------
 
    ~Storage()
 	{
-		operator delete(m_begin, m_size, std::align_val_t(s_alignment));
+		operator delete(m_array, m_size, std::align_val_t(s_alignment));
 	}
 
 //  ------------------------------------------------------------------------------
 
 	auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
 	{
-		void * begin = get_byte(m_begin) + m_offset;
+		void * begin = get_byte(m_array) + m_offset;
 
 		auto free = m_size - m_offset;
 
@@ -66,9 +66,9 @@ public :
 	{
 		std::print
 		(
-			"Storage::show : m_size = {} m_begin = {:018} m_offset = {:0>4}\n",
+			"Storage::show : m_array = {:018} m_size = {} m_offset = {:0>4}\n",
 
-			m_size, m_begin, m_offset
+			m_array, m_size, m_offset
 		);
 	}
 
@@ -81,9 +81,9 @@ private :
 
 //  ------------------------------------------------------------------------------
 
-	std::size_t m_size = 0, m_offset = 0;
+	void * m_array = nullptr;
 
-	void * m_begin = nullptr;
+	std::size_t m_size = 0, m_offset = 0;
 
 //  ------------------------------------------------------------------------------
 

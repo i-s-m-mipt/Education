@@ -35,21 +35,21 @@ public :
 
 	Allocator(std::size_t size) : m_size(size)
 	{
-		m_begin = operator new(m_size, std::align_val_t(s_alignment));
+		m_array = operator new(m_size, std::align_val_t(s_alignment));
 	}
 
 //  -------------------------------------------------------------------------------
 
    ~Allocator()
 	{
-		operator delete(m_begin, m_size, std::align_val_t(s_alignment));
+		operator delete(m_array, m_size, std::align_val_t(s_alignment));
 	}
 
 //  -------------------------------------------------------------------------------
 
 	auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
 	{
-		void * begin = get_byte(m_begin) + m_offset + sizeof(header_t);
+		void * begin = get_byte(m_array) + m_offset + sizeof(header_t);
 
 		auto free = m_size - m_offset - sizeof(header_t);
 
@@ -57,9 +57,9 @@ public :
 		{
 			auto header = get_header(get_byte(begin) - sizeof(header_t));
 
-			*header = std::distance(get_byte(m_begin) + m_offset, get_byte(begin));
+			*header = std::distance(get_byte(m_array) + m_offset, get_byte(begin));
 
-			m_offset = get_byte(begin) - get_byte(m_begin) + size;
+			m_offset = get_byte(begin) - get_byte(m_array) + size;
 
 			return begin;
 		}
@@ -75,7 +75,7 @@ public :
 	{
 		auto header = get_header(get_byte(x) - sizeof(header_t));
 
-		m_offset = get_byte(x) - get_byte(m_begin) - *header;
+		m_offset = get_byte(x) - get_byte(m_array) - *header;
 	}
 
 //  -------------------------------------------------------------------------------
@@ -84,9 +84,9 @@ public :
 	{
 		std::print
 		(
-			"Allocator::show : m_size = {} m_begin = {:018} m_offset = {:0>4}\n",
+			"Allocator::show : m_array = {:018} m_size = {} m_offset = {:0>4}\n",
 
-			m_size, m_begin, m_offset
+			m_array, m_size, m_offset
 		);
 	}
 
@@ -110,9 +110,9 @@ private :
 
 //  -------------------------------------------------------------------------------
 
-	std::size_t m_size = 0, m_offset = 0;
+	void * m_array = nullptr;
 
-	void * m_begin = nullptr;
+	std::size_t m_size = 0, m_offset = 0;
 
 //  -------------------------------------------------------------------------------
 

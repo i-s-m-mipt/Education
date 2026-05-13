@@ -24,7 +24,7 @@
 
 ////////////////////////////////////////////////////////////////////////////
 
-#include <vector>
+#include <array>
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -54,13 +54,13 @@ int main()
 
 //  ------------------------------------------------------------------------
 
-    std::vector < char > vector(1 << 10);
+    std::array < char, 1 << 10 > array = {};
 
 //  ------------------------------------------------------------------------
 
-    boost::asio::read (socket, boost::asio::buffer(vector));
+    boost::asio::read (socket, boost::asio::buffer(array));
 
-    boost::asio::write(socket, boost::asio::buffer(vector));
+    boost::asio::write(socket, boost::asio::buffer(array));
 }
 
 ////////////////////////////////////////////////////////////////////////////

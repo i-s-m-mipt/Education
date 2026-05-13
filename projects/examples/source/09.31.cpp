@@ -43,9 +43,9 @@ public :
     {
         assert(m_size >= sizeof(Node) + 1);
 
-        m_begin = operator new(m_size, std::align_val_t(s_alignment));
+        m_array = operator new(m_size, std::align_val_t(s_alignment));
 
-	    m_head = get_node(m_begin);
+	    m_head = get_node(m_array);
 
         m_head->size = m_size - sizeof(Header);
 
@@ -56,14 +56,14 @@ public :
 
    ~Allocator()
     {
-        operator delete(m_begin, m_size, std::align_val_t(s_alignment));
+        operator delete(m_array, m_size, std::align_val_t(s_alignment));
     }
 
 //  -------------------------------------------------------------------------------------------
 
     auto allocate(std::size_t size) -> void *
     {
-	    void * end = get_byte(m_begin) + sizeof(Header) + size, * next = end;
+	    void * end = get_byte(m_array) + sizeof(Header) + size, * next = end;
 
 	    auto free = 2 * alignof(Header);
 
@@ -150,9 +150,9 @@ public :
     {
         std::print
         (
-            "Chain_Allocator::show : m_size = {} m_begin = {:018} m_head = {:018} ",
+            "Chain_Allocator::show : m_array = {:018} m_size = {} m_head = {:018} ",
 
-            m_size, m_begin, static_cast < void * > (m_head)
+            m_array, m_size, static_cast < void * > (m_head)
         );
 
         if (m_head->next)
@@ -239,11 +239,11 @@ private :
 
 //  -------------------------------------------------------------------------------------------
 
+    void * m_array = nullptr;
+
     std::size_t m_size = 0;
 
-    void * m_begin = nullptr;
-
-    Node * m_head  = nullptr;
+    Node * m_head = nullptr;
 
 //  -------------------------------------------------------------------------------------------
 
