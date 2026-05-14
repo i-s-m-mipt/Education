@@ -7,6 +7,8 @@
 // content : Synchronous Client
 //
 // content : Localhost
+//
+// content : Algorithm std::ranges::fill
 
 //////////////////////////////////////////////////////////////
 

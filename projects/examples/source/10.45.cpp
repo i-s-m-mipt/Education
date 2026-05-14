@@ -54,7 +54,9 @@ using member_t = boost::multi_index::member < C, T, P > ;
 
 using container_t = boost::multi_index::multi_index_container
 <
-	Entity, boost::multi_index::indexed_by
+	Entity,
+
+	boost::multi_index::indexed_by
 	<
 		ONU_t < tag_t < struct ONU_x_tag > , member_t < Entity, int, &Entity::x > > ,
 

@@ -61,10 +61,7 @@ template < typename T > auto fold(std::ranges::view auto view, T sum)
 
 			future = promise.get_future();
 
-			thread = std::jthread
-			(
-				Task < decltype(range), T > (), range, std::move(promise)
-			);
+			thread = std::jthread(Task < decltype(range), T > (), range, std::move(promise));
 
 			std::advance(begin, step);
 		}

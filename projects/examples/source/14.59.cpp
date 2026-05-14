@@ -25,6 +25,10 @@
 
 int main()
 {
+    using shared_memory_t = boost::interprocess::managed_shared_memory;
+
+//  -------------------------------------------------------------------------
+
 	auto path = "output";
 
 //  -------------------------------------------------------------------------
@@ -33,10 +37,7 @@ int main()
 
 //  -------------------------------------------------------------------------
 
-	boost::interprocess::managed_shared_memory storage
-    (
-        boost::interprocess::create_only, path, 1 << 10
-    );
+	shared_memory_t storage(boost::interprocess::create_only, path, 1 << 10);
 
 //  -------------------------------------------------------------------------
 
@@ -46,7 +47,9 @@ int main()
 
         boost::interprocess::allocator
         <
-            int, boost::interprocess::managed_shared_memory::segment_manager
+            int,
+
+            boost::interprocess::managed_shared_memory::segment_manager
         >
     > ;
 
