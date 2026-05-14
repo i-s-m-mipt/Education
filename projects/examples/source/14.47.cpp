@@ -51,9 +51,7 @@ public :
             (
                 pointer.id.compare_exchange_strong
                 (
-                    id,
-
-                    std::this_thread::get_id(),
+                    id, std::this_thread::get_id(),
 
                     std::memory_order::acquire,
 
@@ -162,9 +160,7 @@ private :
         (
             !m_head.compare_exchange_weak
             (
-                node->next,
-
-                node,
+                node->next, node,
 
                 std::memory_order::release,
 
@@ -248,9 +244,7 @@ public :
         (
             !m_head.compare_exchange_weak
             (
-                node->next,
-
-                node,
+                node->next, node,
 
                 std::memory_order::release,
 
@@ -285,9 +279,7 @@ public :
         (
             head && !m_head.compare_exchange_strong
             (
-                head,
-
-                head->next,
+                head, head->next,
 
                 std::memory_order::acquire,
 

@@ -37,9 +37,7 @@ int main()
     (
         std::is_same_v
         <
-            decltype(array)::iterator,
-
-            int *
+            decltype(array)::iterator, int *
         >
     );
 

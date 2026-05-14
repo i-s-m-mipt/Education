@@ -75,7 +75,9 @@ void add_graphic(int & line, int delta, PageContentContext & context)
 
         AbstractContentContext::eRGB,
 
-        AbstractContentContext::ColorValueForName("Red"), 2
+        AbstractContentContext::ColorValueForName("Red"),
+
+        2
     );
 
     context.DrawRectangle(delta, line, width, height, options);

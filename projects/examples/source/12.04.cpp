@@ -43,9 +43,7 @@ auto make_string_v1(std::string const & string, std::locale const & locale)
 
 	std::use_facet < std::ctype < wchar_t > > (locale).widen
     (
-		std::data(string),
-
-        std::data(string) + size, std::data(wstring)
+		std::data(string), std::data(string) + size, std::data(wstring)
     );
 
 	return wstring;
@@ -61,9 +59,7 @@ auto make_string_v2(std::wstring const & wstring, std::locale const & locale)
 
 	std::use_facet < std::ctype < wchar_t > > (locale).narrow
     (
-		std::data(wstring),
-
-		std::data(wstring) + size, '?', std::data(string)
+		std::data(wstring), std::data(wstring) + size, '?', std::data(string)
     );
 
 	return string;
