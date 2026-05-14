@@ -32,9 +32,11 @@
 
 class Operand : public boost::spirit::x3::variant
 <
-    double, boost::spirit::x3::forward_ast < struct Sign > ,
+    double,
 
-            boost::spirit::x3::forward_ast < struct List >
+    boost::spirit::x3::forward_ast < struct Sign > ,
+
+    boost::spirit::x3::forward_ast < struct List >
 >
 {
 public :

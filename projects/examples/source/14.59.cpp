@@ -47,9 +47,7 @@ int main()
 
         boost::interprocess::allocator
         <
-            int,
-
-            boost::interprocess::managed_shared_memory::segment_manager
+            int, boost::interprocess::managed_shared_memory::segment_manager
         >
     > ;
 

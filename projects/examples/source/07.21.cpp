@@ -185,10 +185,7 @@ namespace boost::unit_test::data::monomorphic
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOST_DATA_TEST_CASE
-(
-    Test_v6, Dataset() ^ boost::unit_test::data::make({ 1, 2, 3, 5, 8 }), x, y
-)
+BOOST_DATA_TEST_CASE(Test_v6, Dataset() ^ boost::unit_test::data::make({ 1, 2, 3, 5, 8 }), x, y)
 {
     BOOST_TEST(x == y);
 }

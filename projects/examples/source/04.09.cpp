@@ -48,7 +48,9 @@ template
 <
 	template < typename U > typename C1,
 
-	template < typename U > typename C2, typename T
+	template < typename U > typename C2,
+
+	typename T
 >
 auto copy(C1 < T > const & container)
 {

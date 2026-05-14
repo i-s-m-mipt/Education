@@ -119,11 +119,13 @@ class Controller
 {
 public :
 
-    Controller(Index & producer_index, Index const & consumer_index, index_t size)
+    Controller(index_t size, Index & producer_index, Index const & consumer_index)
     :
+        m_size(size),
+
         m_producer_index(producer_index),
 
-        m_consumer_index(consumer_index), m_size(size)
+        m_consumer_index(consumer_index)
     {}
 
 //  ------------------------------------------------------------------------------
@@ -231,7 +233,7 @@ int main()
 
 //  ----------------------------------------------------------------------------------
 
-    Controller controller(producer_index, consumer_index, size);
+    Controller controller(size, producer_index, consumer_index);
 
 //  ----------------------------------------------------------------------------------
 
