@@ -158,13 +158,13 @@ public :
 
 private :
 
-    Index       & m_producer_index;
-
-    Index const & m_consumer_index;
+    index_t m_size = 0;
 
 //  ------------------------------------------------------------------------------
 
-    index_t m_size = 0;
+    Index       & m_producer_index;
+
+    Index const & m_consumer_index;
 
 //  ------------------------------------------------------------------------------
 

@@ -177,15 +177,12 @@ public :
 
 auto parse(std::string_view view)
 {
-    auto begin = std::begin(view), end = std::end(view);
-
-    using parser::rule_1;
-
-    using boost::spirit::x3::ascii::space;
-
     List list;
 
-    boost::spirit::x3::phrase_parse(begin, end, rule_1, space, list);
+    boost::spirit::x3::phrase_parse
+    (
+        std::begin(view), std::end(view), parser::rule_1, boost::spirit::x3::ascii::space, list
+    );
 
     static Calculator calculator;
 
