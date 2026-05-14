@@ -112,10 +112,7 @@ private :
 
 	[[nodiscard]] static auto make_sink() -> boost::shared_ptr < sink_t >
 	{
-		boost::log::sinks::file::rotation_at_time_interval rotation
-		(
-			boost::posix_time::hours(24)
-		);
+		boost::log::sinks::file::rotation_at_time_interval rotation(boost::posix_time::hours(1));
 
 		auto sink = boost::make_shared < sink_t >
 		(

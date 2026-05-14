@@ -108,25 +108,6 @@ void test_v3(benchmark::State & state)
 
 void test_v4(benchmark::State & state)
 {
-    auto argument_1 = state.range(0);
-
-    auto argument_2 = state.range(1);
-
-    for (auto element : state)
-    {
-        std::vector < std::vector < int > > vector
-        (
-            argument_1, std::vector < int > (argument_2, 0)
-        );
-
-        benchmark::DoNotOptimize(vector);
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////////
-
-void test_v5(benchmark::State & state)
-{
     auto argument = state.range(0);
 
     std::vector < int > vector(argument, 0);
@@ -145,7 +126,7 @@ void test_v5(benchmark::State & state)
 
 //////////////////////////////////////////////////////////////////////////////
 
-void test_v6(benchmark::State & state)
+void test_v5(benchmark::State & state)
 {
     for (auto element : state)
     {
@@ -175,26 +156,11 @@ BENCHMARK(test_v3)->RangeMultiplier(2)->Range(1 << 10, 8 << 10);
 
 //////////////////////////////////////////////////////////////////////////////
 
-BENCHMARK(test_v4)->Args({ 1, 1 });
+BENCHMARK(test_v4)->RangeMultiplier(2)->Range(1 << 10, 1 << 20)->Complexity();
 
 //////////////////////////////////////////////////////////////////////////////
 
-void make_args(::benchmark::Benchmark * benchmark)
-{
-    benchmark->Args({ 1, 1 });
-}
-
-//////////////////////////////////////////////////////////////////////////////
-
-BENCHMARK(test_v4)->Apply(make_args);
-
-//////////////////////////////////////////////////////////////////////////////
-
-BENCHMARK(test_v5)->RangeMultiplier(2)->Range(1 << 10, 1 << 20)->Complexity();
-
-//////////////////////////////////////////////////////////////////////////////
-
-BENCHMARK(test_v6);
+BENCHMARK(test_v5);
 
 //////////////////////////////////////////////////////////////////////////////
 
