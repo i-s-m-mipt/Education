@@ -101,8 +101,8 @@ namespace parser
     auto lambda_2 = [](auto const & context){ boost::spirit::x3::_val(context) += 1'000; };
 
     auto lambda_3 = [](auto const & context)
-    { 
-        boost::spirit::x3::_val(context) += boost::spirit::x3::_attr(context); 
+    {
+        boost::spirit::x3::_val(context) += boost::spirit::x3::_attr(context);
     };
 
 //  ---------------------------------------------------------------------------------------

@@ -20,7 +20,7 @@
 //
 // content : Reducing Load-Store Unit Utilization
 //
-// content : Function __builtin_ia32_pause
+// content : Intrinsic _mm_pause
 //
 // content : Microbenchmarking
 
@@ -39,11 +39,15 @@
 
 ///////////////////////////////////////////////////////////////////////////////////
 
+#include <x86intrin.h>
+
+///////////////////////////////////////////////////////////////////////////////////
+
 #include <benchmark/benchmark.h>
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-#include "08.35.hpp"
+#include "08.36.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -139,7 +143,7 @@ public :
 
             while (m_flag.load(std::memory_order::relaxed))
             {
-                __builtin_ia32_pause();
+                _mm_pause();
             }
         }
     }

@@ -10,6 +10,8 @@
 
 // content : Numerical Methods
 //
+// content : Finite Difference Method
+//
 // content : Derivatives
 //
 // content : Special Mathematical Functions
