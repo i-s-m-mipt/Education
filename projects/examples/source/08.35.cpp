@@ -39,7 +39,7 @@ public :
     {
         std::call_once(s_flag, initialize);
 
-        m_begin = __rdtscp(&m_data);
+        m_begin = __rdtscp(&m_data); // support : https://compiler-explorer.com
     }
 
 //  ---------------------------------------------------------------------------------------
