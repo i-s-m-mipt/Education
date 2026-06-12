@@ -794,7 +794,7 @@ Method, для управления поведением игровых объе
 
 Доработайте примеры \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.28.cpp}{\texttt{09.28}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.29.cpp}{\texttt{09.29}}, \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.30.cpp}{\texttt{09.30}} и \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/09.31.cpp}{\texttt{09.31}} таким образом, чтобы реализации использовали наследование интерфейсов от общего абстрактного базового класса вместо дублирования интерфейсов в отдельных самостоятельных классах. Реализуйте абстрактный базовый класс \lstinline{Allocator} для представления интерфейса аллокаторов. Реализуйте в классе \lstinline{Allocator} виртуальный деструктор и публичные чисто виртуальные функции-члены \lstinline{allocate} и \lstinline{deallocate} для выделения и освобождения памяти соответственно. Реализуйте в классе \lstinline{Allocator} защищенный шаблон функции-члена \lstinline{get} для получения указателя на объект стандартного типа \lstinline{std::byte} или пользовательских типов \lstinline{Header} или \lstinline{Node}. Реализуйте четыре производных класса аллокаторов для представления различных методов выделения и освобождения памяти, которые являются наследниками интерфейса класса \lstinline{Allocator}. Продемонстрируйте использование полиморфных аллокаторов.
 
-\newpage\thispagestyle{empty}\pdfpageheight = 7.80in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 7.40in\enlargethispage{100in}
 
 \section{10. Containers}
 
@@ -806,15 +806,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{10.02}}
-
-\bigskip
-
-Доработайте примеры \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.15.cpp}{\texttt{10.15}} и \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.16.cpp}{\texttt{10.16}} таким образом, чтобы реализации использовали отслеживание минимальных элементов вместо максимальных. Реализуйте в классах \lstinline{Stack} публичные функции-члены \lstinline{min} для получения минимальных элементов. Доработайте в классах \lstinline{Stack} реализации функций-членов \lstinline{push},\,\lstinline{top}\,и\,\lstinline{pop}.
-
-\bigskip
-
-{\large \textbf{10.03} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.30.cpp}{10.30}\,)} \texttt{//} M. Bancila, The Modern C\texttt{++} Challenge}
+{\large \textbf{10.02} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.30.cpp}{10.30}\,)} \texttt{//} M. Bancila, The Modern C\texttt{++} Challenge}
 
 \bigskip
 
@@ -824,11 +816,19 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{10.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.32.cpp}{10.32}\,)}}
+{\large \textbf{10.03} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.32.cpp}{10.32}\,)}}
 
 \bigskip
 
 Реализуйте алгоритм вычисления N\,-\,ого числа ряда Фибоначчи на основе метода матричной экспоненциации. Используйте библиотеку \href{https://www.boost.org/doc/libs/latest/libs/numeric/ublas/doc/}{Boost.UBLAS} для реализации матричных вычислений. Используйте тип \lstinline{usigned long long int} для значений элементов матриц. Реализуйте алгоритм быстрого возведения начальной матрицы в степень N. Обоснуйте алгоритмическую сложность реализованного алгоритма и сравните ее с алгоритмической сложностью всех других известных Вам алгоритмов вычисления N\,-\,ого числа ряда Фибоначчи.
+
+\bigskip
+
+{\large \textbf{10.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.39.cpp}{10.39}\,)}}
+
+\bigskip
+
+?
 
 \bigskip
 
@@ -840,7 +840,7 @@ Method, для управления поведением игровых объе
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 11.80in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 10.20in\enlargethispage{100in}
 
 \section{11. Ranges}
 
@@ -854,15 +854,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{11.02}}
-
-\bigskip
-
-Сравните среднее время вызова свободной функции, нестатической функции-члена класса, переопределенной виртуальной функции-члена класса, функционального объекта, лямбда\,-\,функции, сохраненной в переменной с местозаменителем типа \lstinline{auto} и лямбда\,-\,функции, сохраненной в стандартной оболочке \lstinline{std::function}. Реализуйте одинаковые условия вызова во всех случаях. Используйте нестандартный атрибут \lstinline{noinline} для предотвращения встраивания функций. Используйте\,библиотеку\,\href{https://github.com/google/benchmark}{Google.Benchmark}\,для\,реализации\,бенчмарков.
-
-\bigskip
-
-{\large \textbf{11.03} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/11.10.cpp}{11.10}\,)}}
+{\large \textbf{11.02} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/11.10.cpp}{11.10}\,)}}
 
 \bigskip
 
@@ -870,7 +862,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{11.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/11.13.cpp}{11.13}\,)}}
+{\large \textbf{11.03} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/11.13.cpp}{11.13}\,)}}
 
 \bigskip
 
@@ -878,7 +870,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{11.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/11.26.cpp}{11.26}\,)}}
+{\large \textbf{11.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/11.26.cpp}{11.26}\,)}}
 
 \bigskip
 
@@ -886,7 +878,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{11.06} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/11.29.cpp}{11.29}\,)}}
+{\large \textbf{11.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/11.29.cpp}{11.29}\,)}}
 
 \bigskip
 
@@ -918,7 +910,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-Реализуйте алгоритм поиска подстроки-палиндрома наибольшей длины. Не используйте полный перебор. Используйте кэширование для уменьшения алгоритмической сложности. Используйте стандартный контейнер \lstinline{std::vector < bool >} для представления линеаризованной таблицы кэширования размера N на N, где N - количество символов в строке. Используйте стандартное представление \lstinline{std::string_view} для оптимизации.
+Реализуйте алгоритм поиска подстроки-палиндрома наибольшей длины. Не используйте полный перебор. Используйте кэширование для уменьшения алгоритмической сложности. Используйте стандартный контейнер \lstinline{std::bitset} для представления линеаризованной таблицы кэширования размера N на N, где N - количество символов в строке. Используйте стандартное представление \lstinline{std::string_view}\,для\,оптимизации\,копирования.
 
 \bigskip
 
@@ -970,7 +962,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/13.18.cpp}{\texttt{13.18}} таким образом, чтобы реализация использовала алгоритм условного отображения только тех вхождений в директорию, названия которых соответствуют заданному пользователем регулярному выражению, вместо безусловного отображения всех вхождений. Используйте стандартное регулярное выражение \lstinline{std::regex} для реализации алгоритма поиска соответствий. Сравните данное решение~с~утилитой~\lstinline{grep}.
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/13.18.cpp}{\texttt{13.18}} таким образом, чтобы реализация использовала алгоритм условного отображения только тех вхождений в директорию, названия которых соответствуют заданному пользователем регулярному выражению, вместо безусловного отображения всех вхождений. Используйте стандартное регулярное выражение \lstinline{std::regex} и стандартную функцию \lstinline{std::regex_match} для реализации алгоритма поиска соответствий.
 
 \bigskip
 
@@ -978,52 +970,22 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-Реализуйте алгоритм чтения целого числа и числа с плавающей точкой из строки, сериализованной в формате JSON. Предполагайте, что расположение чисел внутри строки известно. Реализуйте обратный алгоритм записи целого числа и числа с плавающей точкой на известные позиции в строку, сериализованную в формате JSON. Предполагайте, что для количество знаков до и после точки числа с плавающей точкой известно. Используйте тип \lstinline{int} для представления целого числа и тип \lstinline{float} для представления числа с плавающей точкой. Используйте алгоритмы библиотеки \href{https://github.com/nlohmann/json}{Nlohmann.JSON}, алгоритмы других библиотек, стандартные функции \lstinline{std::from_chars} и \lstinline{std::to_chars}, а также собственные алгоритмы. Используйте библиотеку \href{https://github.com/google/benchmark}{Google.Benchmark} для реализации бенчмарков. Постарайтесь реализовать наиболее оптимальные алгоритмы.
+Реализуйте алгоритм чтения целого числа и числа с плавающей точкой из строки, сериализованной в формате JSON. Предполагайте, что расположение чисел внутри строки известно. Реализуйте обратный алгоритм записи целого числа и числа с плавающей точкой на известные позиции в строку, сериализованную в формате JSON. Предполагайте, что все числа положительные, а количество знаков до и после точки числа с плавающей точкой известно. Используйте тип \lstinline{int} для представления целого числа и тип \lstinline{float} для представления числа с плавающей точкой. Используйте алгоритмы библиотеки \href{https://github.com/nlohmann/json}{Nlohmann.JSON}, алгоритмы других библиотек, стандартные функции \lstinline{std::from_chars} и \lstinline{std::to_chars}, а также собственные алгоритмы. Используйте~биб- 
+
+лиотеку \href{https://github.com/google/benchmark}{Google.Benchmark} для реализации бенчмарков. Постарайтесь реализовать все алгоритмы оптимально.
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 5.00in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
 
 \section{14. Parallelism}
 
-{\large \textbf{14.01} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/14.09.cpp}{14.09}\,)}}
-
-\bigskip
-
-Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/14.09.cpp}{\texttt{14.09}} таким образом, чтобы реализация использовала передаваемый пользователем вызываемый объект и применяла его ко всем элементам коллекции вместо вычисления суммы с помощью стандартного функтора \lstinline{std::plus}. Сравните тип возвращаемого результата реализованного параллельного алгоритма с типом возвращаемого результата стандартного алгоритма \lstinline{std::for_each} без политики параллельного выполнения. Обоснуйте причины различия типов возвращаемых результатов указанных алгоритмов.
-
-\bigskip
-
-{\large \textbf{14.02} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/14.10.cpp}{14.10}\,)}}
-
-\bigskip
-
-Реализуйте систему обработки исключений, которые могут быть выброшены функциями, выполняемыми в дополнительных стандартных потоках \lstinline{std::thread}. Используйте обработчик \lstinline{catch} для перехвата всех исключений в функции дополнительного потока. Используйте стандартный указатель \lstinline{std::exception_ptr} для хранения исключения, который будет доступен в функции дополнительного потока и в функции основного потока. Используйте стандартную функцию \lstinline{std::current_exception} для получения указателя на текущее исключение в функции дополнительного потока.\,Используйте\,стандартную\,функцию\,\lstinline{std::rethrow_exception} для повторной генерации, перехвата и обработки сохраненного ранее исключения в функции основного потока.
-
-\bigskip
 
 
-
-
-
-\newpage\thispagestyle{empty}\pdfpageheight = 5.00in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 1.00in\enlargethispage{100in}
 
 \section{15. Networks}
 
-{\large \textbf{15.01} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/15.01.cpp}{15.01}\,)} \texttt{//} M. Bancila, The Modern C\texttt{++} Challenge}
 
-\bigskip
-
-Реализуйте алгоритмы шифрования и дешифрования строк, используя шифр Цезаря со сдвигом вправо на заданное количество символов. Предполагайте, что все строки состоят из строчных букв английского алфавита.
-
-\bigskip
-
-{\large \textbf{15.02} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/15.02.cpp}{15.02}\,)} \texttt{//} M. Bancila, The Modern C\texttt{++} Challenge}
-
-\bigskip
-
-Реализуйте алгоритмы шифрования и дешифрования строк, используя шифр Виженера. Предполагайте, что все строки состоят из строчных букв английского алфавита. Реализуйте алгоритм генерации таблицы Виженера на этапе компиляции. Используйте мгновенную функцию со спецификатором \lstinline{consteval} и стандартный дву- 
-
-мерный контейнер \lstinline{std::array} со спецификатором \lstinline{constexpr} для генерации и хранения таблицы Виженера.  
 
 \end{document}
