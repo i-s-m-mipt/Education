@@ -4,11 +4,7 @@
 
 //////////////////////////////////////////////////
 
-// section : Environment
-
-//////////////////////////////////////////////////
-
-// content : Environment
+// content : Development Environment
 //
 // content : GNU Linux Distribution Ubuntu
 //
@@ -21,6 +17,8 @@
 // content : Extensions and C/C++ Configurations
 //
 // content : GNU Compiler Collection (GCC)
+//
+// content : Tools gcc and g++
 //
 // content : Warnings, Errors and Optimizations
 //
