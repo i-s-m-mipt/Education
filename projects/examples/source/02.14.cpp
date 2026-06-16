@@ -4,10 +4,6 @@
 
 /////////////////////////////////////
 
-// section : Operators
-
-/////////////////////////////////////
-
 // content : Function std::swap
 //
 // content : Value Exchange Algorithm

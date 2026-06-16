@@ -4,10 +4,6 @@
 
 /////////////////////////////////////////////////////////////////////
 
-// section : Statements
-
-/////////////////////////////////////////////////////////////////////
-
 // content : Function std::print
 //
 // content : String Literals
@@ -19,8 +15,6 @@
 // content : Operator >>
 //
 // content : Structured Programming
-//
-// content : Statements
 //
 // content : Selection Statements
 //

@@ -4,17 +4,11 @@
 
 //////////////////////////////////////////////
 
-// section : Types
-
-//////////////////////////////////////////////
-
 // content : Declarations and Definitions
 //
 // content : One Definition Rule (ODR)
 //
-// content : Objects and Variables
-//
-// content : Types
+// content : Types and Variables
 //
 // content : Logical Types and Literals
 //
