@@ -4,10 +4,6 @@
 
 /////////////////////////////////////////////////////////////////
 
-// section : Structures
-
-/////////////////////////////////////////////////////////////////
-
 // content : Object-Oriented Programming (OOP)
 //
 // content : User-Defined Types
@@ -16,11 +12,11 @@
 //
 // content : Declaration struct
 //
+// content : Members, Instances and Objects
+//
 // content : Data Members
 //
 // content : Default, Aggregate and Designated Initialization
-//
-// content : Instances and Objects
 
 /////////////////////////////////////////////////////////////////
 
