@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////////////////////
 
-// content : Lvalue Reference Type Inference
+// content : Reference Type Inference
 //
 // content : Type Placeholder decltype(auto)
 

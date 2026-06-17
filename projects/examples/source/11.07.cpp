@@ -8,7 +8,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Capturing Arguments by Value and Lvalue Reference
+// content : Capturing Arguments by Value and by Reference
 //
 // content : Mutable Captured Arguments
 //

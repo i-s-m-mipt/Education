@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////////
 
-// content : Constant Lvalue References
+// content : Constant References
 //
 // content : Extending Temporary Objects Lifetime
 

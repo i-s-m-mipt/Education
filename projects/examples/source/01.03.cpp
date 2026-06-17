@@ -18,7 +18,7 @@
 //
 // content : Naming Conventions
 //
-// content : Comments
+// content : Comments and Documentation
 //
 // content : Service Doxygen
 

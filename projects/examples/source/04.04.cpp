@@ -10,7 +10,7 @@
 
 // content : Non-Type Template Parameters
 //
-// content : Passing Static Arrays by Lvalue Reference
+// content : Passing Static Arrays by Reference
 //
 // content : Function std::min
 

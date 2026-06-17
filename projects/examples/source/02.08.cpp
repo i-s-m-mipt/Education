@@ -4,13 +4,13 @@
 
 /////////////////////////////////////////////////////////////////
 
+// content : Initialization and Assignment
+//
 // content : Default, Value, Direct, Copy and List Initialization
 //
 // content : Undefined Behavior (UB)
 //
 // content : Uniform Braced Initialization
-//
-// content : Assignment
 
 /////////////////////////////////////////////////////////////////
 

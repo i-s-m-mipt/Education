@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////////////////////////
 
-// content : Dangling Pointers and Lvalue References
+// content : Dangling Pointers and References
 //
 // content : Data and Block Started by Symbol (BSS) Segments
 //
