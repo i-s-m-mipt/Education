@@ -12,8 +12,6 @@
 //
 // content : Functions std::gcd and std::lcm
 //
-// content : Operators
-//
 // content : Operator Overloading
 //
 // content : Operator double

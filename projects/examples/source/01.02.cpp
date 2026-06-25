@@ -4,8 +4,6 @@
 
 //////////////////////////////////////////////////
 
-// content : Development Environment
-//
 // content : GNU Linux Distribution Ubuntu
 //
 // content : Tools pwd, ls, cd and sudo
@@ -26,11 +24,13 @@
 //
 // content : Options -Wall, -Wextra and -Wpedantic
 //
+// content : Program Hello, World!
+//
 // content : Version Control System Git
 //
 // content : Git Client SmartGit
 //
-// content : Project Hosting Service GitHub
+// content : Project Hosting System GitHub
 
 //////////////////////////////////////////////////
 
