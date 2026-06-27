@@ -4,8 +4,6 @@
 
 ///////////////////////////////////////////////////////////
 
-// content : Arrays
-//
 // content : Static Arrays
 //
 // content : Aggregate Initialization

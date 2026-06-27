@@ -8,8 +8,6 @@
 //
 // content : One Definition Rule (ODR)
 //
-// content : Types
-//
 // content : Objects, Variables and Literals
 //
 // content : Logical Types and Literals

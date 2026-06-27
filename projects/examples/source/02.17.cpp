@@ -16,8 +16,6 @@
 //
 // content : Structured Programming
 //
-// content : Selection Statements
-//
 // content : Statement if
 //
 // content : Scoped Variables

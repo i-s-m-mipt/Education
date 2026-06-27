@@ -7,6 +7,8 @@
 // content : Calling Conventions
 //
 // content : Attributes [[cdecl]], [[stdcall]] and [[fastcall]]
+//
+// content : Option -m32
 
 //////////////////////////////////////////////////////////////////////////
 

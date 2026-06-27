@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////////////////////////
 
-// content : Initialization and Assignment
+// content : Assignment and Initialization
 //
 // content : Default, Value, Direct, Copy and List Initialization
 //
