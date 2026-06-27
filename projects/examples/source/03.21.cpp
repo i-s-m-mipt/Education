@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////
 
-// content : RunTime Type Identification (RTTI)
+// content : Portable RunTime Type Identification (RTTI)
 //
 // content : Library Boost.TypeIndex
 

@@ -8,8 +8,6 @@
 //
 // content : Base and Derived Classes
 //
-// content : Inheritance
-//
 // content : Public Inheritance
 //
 // content : Base Class Specifier public
