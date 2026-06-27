@@ -14,6 +14,8 @@
 //
 // content : Extensions and C/C++ Configurations
 //
+// content : Program Hello, World!
+//
 // content : GNU Compiler Collection (GCC)
 //
 // content : Tools gcc and g++
@@ -23,14 +25,6 @@
 // content : Options -std=c++23, -O0 and -O3
 //
 // content : Options -Wall, -Wextra and -Wpedantic
-//
-// content : Program Hello, World!
-//
-// content : Version Control System Git
-//
-// content : Git Client SmartGit
-//
-// content : Project Hosting System GitHub
 
 //////////////////////////////////////////////////
 
