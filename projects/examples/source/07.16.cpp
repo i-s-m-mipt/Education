@@ -4,10 +4,6 @@
 
 /////////////////////////////////////////////
 
-// section : Debugging
-
-/////////////////////////////////////////////
-
 // content : Debugging
 //
 // content : Address Sanitizers
@@ -17,6 +13,8 @@
 // content : Memory Leaks
 //
 // content : Use-After-Free Errors
+//
+// content : Option -fsanitize=address
 
 /////////////////////////////////////////////
 
