@@ -4,60 +4,59 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-// section : Hash Functions
-
-//////////////////////////////////////////////////////////////////////////
-
-// content : Hash Combinations
+// content : Knuth String Hash Algorithm
 //
-// content : Library Boost.ContainerHash
+// content : Collisions
 
 //////////////////////////////////////////////////////////////////////////
 
-#include <functional>
+#include <cstddef>
+#include <cstdint>
+#include <iostream>
 #include <iterator>
+#include <random>
+#include <set>
 #include <string>
-#include <tuple>
-#include <vector>
 
 //////////////////////////////////////////////////////////////////////////
 
-using namespace std::literals;
+#include "08.17.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 
-#include <boost/container_hash/hash.hpp>
-
-//////////////////////////////////////////////////////////////////////////
-
-template < typename T > auto hash(T x, auto ... xs)
+auto make_strings(std::size_t size_1, std::size_t size_2)
 {
-	auto seed = std::hash < T > ()(x);
+	std::set < std::string > strings;
 
-	if constexpr (sizeof...(xs) > 0)
-	{
-		seed += hash(xs...) * 31;
-	}
+	std::string string(size_2, '_');
 
-	return seed;
+	std::uniform_int_distribution distribution(97, 122);
+
+	std::default_random_engine engine;
+
+	while (std::size(strings) < size_1)
+    {
+        for (auto & element : string)
+		{
+			element = distribution(engine);
+		}
+
+		strings.insert(string);
+    }
+
+	return strings;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-struct Entity
+auto hash(std::string const & string) -> std::size_t
 {
-	int x = 0, y = 0;
-};
+	std::uint32_t seed = std::size(string);
 
-//////////////////////////////////////////////////////////////////////////
-
-auto hash_value(Entity const & entity)
-{
-	auto seed = 0uz;
-
-	boost::hash_combine(seed, entity.x);
-
-	boost::hash_combine(seed, entity.y);
+	for (auto element : string)
+	{
+		seed = seed << 5 ^ seed >> 27 ^ element;
+	}
 
 	return seed;
 }
@@ -66,19 +65,52 @@ auto hash_value(Entity const & entity)
 
 int main()
 {
-    std::ignore = hash(1, 2.0, "aaaaa"s);
+	std::set < std::size_t > hashes;
 
 //  ----------------------------------------------------------------------
 
-	std::ignore = boost::hash < Entity > ()(Entity(1, 1));
+	std::string points;
 
 //  ----------------------------------------------------------------------
 
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+	for (auto i = 0uz; auto const & string : make_strings(1 << 20, 10))
+	{
+		hashes.insert(hash(string));
+
+	//  ----------------------------------------------------
+
+		if (i++ % (1 << 10) == 0)
+		{
+			points += i == 1 ? "" : ",";
+
+			points += std::to_string(i - 1) + ',';
+
+			points += std::to_string(i - std::size(hashes));
+		}
+	}
 
 //  ----------------------------------------------------------------------
 
-	std::ignore = boost::hash_range(std::begin(vector), std::end(vector));
+	Python python;
+
+//  ----------------------------------------------------------------------
+
+	try
+	{
+		auto const & local = python.local();
+
+	//  ------------------------------------------------------------------
+
+		boost::python::exec("from script import make_plot", local, local);
+
+	//  ------------------------------------------------------------------
+
+		local["make_plot"](points.c_str(), "hash");
+	}
+	catch (boost::python::error_already_set const &)
+	{
+		std::cerr << "main : " << Python::exception() << '\n';
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

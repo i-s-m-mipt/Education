@@ -1,106 +1,142 @@
-////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Containers
 
-////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-// section : Nested Containers
+// content : Linear Algebra
+//
+// content : Matrices
+//
+// content : Library Boost.UBLAS
+//
+// content : Strassen Fast Multiplication Algorithm
+//
+// content : Time Complexity O(N^2.807)
 
-////////////////////////////////////////////////////////////////////////////////////
-
-// content : Multidimensional Containers
-
-////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
+#include <cmath>
 #include <cstddef>
-#include <iterator>
-#include <vector>
+#include <random>
 
-////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/multi_array.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/matrix_proxy.hpp>
 
-////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-template < std::size_t D > void fill_v1(auto const & container, auto iterator)
+using matrix_t = boost::numeric::ublas::matrix < double > ;
+
+////////////////////////////////////////////////////////////////////////////////
+
+auto multiply(matrix_t const & A, matrix_t const & B) -> matrix_t
 {
-	*iterator = std::size(container);
+    if (auto size = A.size1(), half = size / 2; size > 64)
+    {
+        boost::numeric::ublas::range range_1(   0, half);
 
-	if constexpr (D > 1)
-	{
-		fill_v1 < D - 1 > (*std::begin(container), ++iterator);
-	}
+        boost::numeric::ublas::range range_2(half, size);
+
+        auto A11 = boost::numeric::ublas::project(A, range_1, range_1);
+
+        auto A12 = boost::numeric::ublas::project(A, range_1, range_2);
+
+        auto A21 = boost::numeric::ublas::project(A, range_2, range_1);
+
+        auto A22 = boost::numeric::ublas::project(A, range_2, range_2);
+
+        auto B11 = boost::numeric::ublas::project(B, range_1, range_1);
+
+        auto B12 = boost::numeric::ublas::project(B, range_1, range_2);
+
+        auto B21 = boost::numeric::ublas::project(B, range_2, range_1);
+
+        auto B22 = boost::numeric::ublas::project(B, range_2, range_2);
+
+        auto C1 = multiply(A11 + A22, B11 + B22);
+
+        auto C2 = multiply(A11 + A12, B22), C3 = multiply(A11, B12 - B22);
+
+        auto C4 = multiply(A21 + A22, B11), C5 = multiply(A22, B21 - B11);
+
+        auto C6 = multiply(A21 - A11, B11 + B12);
+
+        auto C7 = multiply(A12 - A22, B21 + B22);
+
+        matrix_t C(size, size);
+
+        boost::numeric::ublas::project(C, range_1, range_1) = C1 - C2 + C5 + C7;
+
+        boost::numeric::ublas::project(C, range_1, range_2) = C2 + C3;
+
+        boost::numeric::ublas::project(C, range_2, range_1) = C4 + C5;
+
+        boost::numeric::ublas::project(C, range_2, range_2) = C1 + C3 - C4 + C6;
+
+        return C;
+    }
+    else
+    {
+        return boost::numeric::ublas::prod(A, B);
+    }
 }
 
-////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-template < std::size_t D > void fill_v2(auto const & container, auto iterator)
+auto make_matrix(std::size_t size)
 {
-	if constexpr (D > 1)
-	{
-		for (auto const & element : container)
-		{
-			fill_v2 < D - 1 > (element, (iterator++)->begin());
-		}
-	}
-	else
-	{
-		for (auto const & element : container)
-		{
-			*iterator++ = element;
-		}
-	}
+    matrix_t matrix(size, size);
+
+    std::uniform_real_distribution distribution(0.0, 1.0);
+
+    std::default_random_engine engine;
+
+    for (auto i = 0uz; i < matrix.size1(); ++i)
+    {
+        for (auto j = 0uz; j < matrix.size2(); ++j)
+        {
+            matrix(i, j) = distribution(engine);
+        }
+    }
+
+    return matrix;
 }
 
-////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, std::size_t D > auto make_array(auto const & container)
+auto equal(double x, double y, double epsilon = 1e-6)
 {
-	std::vector < typename boost::multi_array < T, D > ::index > sizes(D);
-
-	fill_v1 < D > (container, std::begin(sizes));
-
-	boost::multi_array < T, D > array(sizes);
-
-	fill_v2 < D > (container, std::begin(array));
-
-	return array;
+	return std::abs(x - y) < epsilon;
 }
 
-////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	auto size = 5uz;
+    auto size = 1uz << 10;
 
-//  --------------------------------------------------------------------------------
+//  --------------------------------------------
 
-	std::vector < std::vector < int > > vector(size, std::vector < int > (size, 0));
+	auto A = make_matrix(size), B = A;
 
-//  --------------------------------------------------------------------------------
+//  --------------------------------------------
 
-	for (auto i = 0uz; i < size; ++i)
-	{
-		for (auto j = 0uz; j < size; ++j)
-		{
-			vector[i][j] = j + 1;
-		}
-	}
+    auto C1 = boost::numeric::ublas::prod(A, B);
 
-//  --------------------------------------------------------------------------------
+    auto C2 = multiply(A, B);
 
-	auto array = make_array < int, 2 > (vector);
+//  --------------------------------------------
 
-//  --------------------------------------------------------------------------------
-
-	for (auto i = 0uz; i < size; ++i)
-	{
-		for (auto j = 0uz; j < size; ++j)
-		{
-			assert(array[i][j] == vector[i][j]);
-		}
-	}
+    for (auto i = 0uz; i < size; ++i)
+    {
+        for (auto j = 0uz; j < size; ++j)
+        {
+            assert(equal(C1(i, j), C2(i, j)));
+        }
+    }
 }
 
-////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////

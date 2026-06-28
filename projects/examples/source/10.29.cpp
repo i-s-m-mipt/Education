@@ -1,89 +1,59 @@
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Containers
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-// section : Nested Containers
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-// content : Longest Common Subsequence (LCS) Algorithm
+// content : Row-Major and Column-Major Orders
 //
-// content : Time Complexity O(N*M)
-//
-// content : Algorithm std::ranges::reverse
+// content : Microbenchmarking
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-// support : https://www.cs.usfca.edu/~galles/visualization/DPLCS.html
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-#include <algorithm>
-#include <cassert>
-#include <cstddef>
-#include <iterator>
 #include <vector>
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-auto find(std::vector < int > const & vector_1, std::vector < int > const & vector_2)
+#include <benchmark/benchmark.h>
+
+////////////////////////////////////////////////////////////////////////////////////
+
+void test(benchmark::State & state)
 {
-	auto size_1 = std::size(vector_1) + 1;
+    auto argument = state.range(0);
 
-	auto size_2 = std::size(vector_2) + 1;
+    auto size = 1uz << 10;
 
-	std::vector < std::vector < std::size_t > > vector_3
-	(
-		size_1, std::vector < std::size_t > (size_2, 0)
-	);
+    std::vector < std::vector < int > > vector(size, std::vector < int > (size, 0));
 
-	for (auto i = 1uz; i < size_1; ++i)
-	{
-		for (auto j = 1uz; j < size_2; ++j)
-		{
-			if (vector_1[i - 1] == vector_2[j - 1])
-			{
-				vector_3[i][j] = vector_3[i - 1][j - 1] + 1;
-			}
-			else
-			{
-				vector_3[i][j] = std::max(vector_3[i - 1][j], vector_3[i][j - 1]);
-			}
-		}
-	}
+    for (auto element : state)
+    {
+        for (auto i = 0uz; i < size; ++i)
+        {
+            for (auto j = 0uz; j < size; ++j)
+            {
+                switch (argument)
+                {
+                    case 1 : { vector[i][j] = 1; break; }
 
-	std::vector < int > vector_4;
+                    case 2 : { vector[j][i] = 1; break; }
+                }
+            }
+        }
 
-	auto i = std::ssize(vector_1) - 1, j = std::ssize(vector_2) - 1;
-
-	while (i >= 0 && j >= 0)
-	{
-		if (vector_1[i] == vector_2[j])
-		{
-			vector_4.push_back(vector_1[i]);
-
-			--i;
-
-			--j;
-		}
-		else
-		{
-			vector_3[i][j + 1] > vector_3[i + 1][j] ? --i : --j;
-		}
-	}
-
-	std::ranges::reverse(vector_4);
-
-	return vector_4;
+        benchmark::DoNotOptimize(vector);
+    }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+BENCHMARK(test)->Arg(1)->Arg(2);
+
+////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	assert(find({ 1, 2, 3, 4, 5 }, { 1, 3, 5 }) == std::vector < int > ({ 1, 3, 5 }));
+    benchmark::RunSpecifiedBenchmarks();
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////

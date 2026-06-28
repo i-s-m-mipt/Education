@@ -4,60 +4,115 @@
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-// section : Nested Containers
-
-////////////////////////////////////////////////////////////////////////////////////
-
-// content : Row-Major and Column-Major Orders
+// content : Multidimensional Containers
 //
-// content : Microbenchmarking
+// content : Library Boost.MultiArray
 
 ////////////////////////////////////////////////////////////////////////////////////
 
+#include <cassert>
+#include <cstddef>
+#include <iterator>
 #include <vector>
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-#include <benchmark/benchmark.h>
+#include <boost/multi_array.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-void test(benchmark::State & state)
+template < std::size_t D > void fill_v1(auto const & container, auto iterator)
 {
-    auto argument = state.range(0);
+	*iterator = std::size(container);
 
-    auto size = 1uz << 10;
-
-    std::vector < std::vector < int > > vector(size, std::vector < int > (size, 0));
-
-    for (auto element : state)
-    {
-        for (auto i = 0uz; i < size; ++i)
-        {
-            for (auto j = 0uz; j < size; ++j)
-            {
-                switch (argument)
-                {
-                    case 1 : { vector[i][j] = 1; break; }
-
-                    case 2 : { vector[j][i] = 1; break; }
-                }
-            }
-        }
-
-        benchmark::DoNotOptimize(vector);
-    }
+	if constexpr (D > 1)
+	{
+		fill_v1 < D - 1 > (*std::begin(container), ++iterator);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-BENCHMARK(test)->Arg(1)->Arg(2);
+template < std::size_t D > void fill_v2(auto const & container, auto iterator)
+{
+	if constexpr (D > 1)
+	{
+		for (auto const & element : container)
+		{
+			fill_v2 < D - 1 > (element, (iterator++)->begin());
+		}
+	}
+	else
+	{
+		for (auto const & element : container)
+		{
+			*iterator++ = element;
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+
+template < typename T, std::size_t D > auto make_array(auto const & container)
+{
+	std::vector < typename boost::multi_array < T, D > ::index > sizes(D);
+
+	fill_v1 < D > (container, std::begin(sizes));
+
+	boost::multi_array < T, D > array(sizes);
+
+	fill_v2 < D > (container, std::begin(array));
+
+	return array;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    benchmark::RunSpecifiedBenchmarks();
+	auto size = 5uz;
+
+//  --------------------------------------------------------------------------------
+
+	std::vector < std::vector < int > > vector(size, std::vector < int > (size, 0));
+
+//  --------------------------------------------------------------------------------
+
+	for (auto i = 0uz; i < size; ++i)
+	{
+		for (auto j = 0uz; j < size; ++j)
+		{
+			vector[i][j] = j + 1;
+		}
+	}
+
+//  --------------------------------------------------------------------------------
+
+	auto array = make_array < int, 2 > (vector);
+
+//  --------------------------------------------------------------------------------
+
+	for (auto i = 0uz; i < size; ++i)
+	{
+		for (auto j = 0uz; j < size; ++j)
+		{
+			assert(array[i][j] == vector[i][j]);
+		}
+	}
+
+//  --------------------------------------------------------------------------------
+
+	using range_t = boost::multi_array_types::index_range;
+
+//  --------------------------------------------------------------------------------
+
+	auto view = array[boost::indices[range_t(0, 2)][range_t(0, 5, 2)]];
+
+//  --------------------------------------------------------------------------------
+
+	assert(view[0][0] == 1 && view[0][1] == 3 && view[0][2] == 5);
+
+	assert(view[1][0] == 1 && view[1][1] == 3 && view[1][2] == 5);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////

@@ -316,18 +316,17 @@ set(debug
     10.25
     10.26
     10.27
-    10.29
+    10.28
     10.30
-    10.31
+    10.33
     10.34
-    10.35
-    10.38
+    10.37
+    10.39
     10.40
-    10.41
+    10.42
     10.43
     10.44
     10.45
-    10.46
 
     11.01
     11.02
@@ -622,12 +621,12 @@ set(release
     09.35
 
     10.11
-    10.28
+    10.29
+    10.31
     10.32
-    10.33
+    10.35
     10.36
-    10.37
-    10.39
+    10.38
 
     11.09
 
@@ -659,13 +658,13 @@ endforeach()
 
 #############################################################################################
 
-add_executable             (10.42 source/10.42.cpp)
+add_executable             (10.41 source/10.41.cpp)
 
-target_compile_options     (10.42 PRIVATE -Wall -Wextra -Wpedantic -O3)
+target_compile_options     (10.41 PRIVATE -Wall -Wextra -Wpedantic -O3)
 
-target_link_libraries      (10.42 PRIVATE ${Boost_LIBRARIES})
+target_link_libraries      (10.41 PRIVATE ${Boost_LIBRARIES})
 
-target_link_libraries      (10.42 PRIVATE Python::Python)
+target_link_libraries      (10.41 PRIVATE Python::Python)
 
 #############################################################################################
 
