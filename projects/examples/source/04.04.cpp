@@ -6,7 +6,7 @@
 
 // content : Non-Type Template Parameters
 //
-// content : Passing Static Arrays by Reference
+// content : Passing Static Arrays as Arguments
 //
 // content : Function std::min
 
