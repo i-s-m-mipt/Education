@@ -12,7 +12,7 @@
 //
 // content : Time Complexity O(N*log(N))
 //
-// content : Timsort Algorithm
+// content : Hybrid Sort Algorithm
 //
 // content : Amortized Time Complexity
 //
