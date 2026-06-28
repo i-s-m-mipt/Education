@@ -6,7 +6,7 @@
 
 // content : Memory Access Granularity
 //
-// content : Memory Alignment
+// content : Alignment
 //
 // content : Type Alias std::int8_t
 //
