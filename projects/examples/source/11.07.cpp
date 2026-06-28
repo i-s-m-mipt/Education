@@ -4,17 +4,11 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// section : Lambda Expressions
-
-////////////////////////////////////////////////////////////////////////////////////////
-
 // content : Capturing Arguments by Value and by Reference
 //
 // content : Mutable Captured Arguments
 //
 // content : Lambda Expression Specifier mutable
-//
-// content : Capturing Arguments by Copy and Move Semantics
 //
 // content : Capturing Pointer this
 
