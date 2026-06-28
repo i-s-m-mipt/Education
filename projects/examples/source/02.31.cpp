@@ -12,6 +12,8 @@
 //
 // content : Algorithmic Complexity
 //
+// content : Big-O Notation
+//
 // content : Time Complexities O(1) and O(N)
 //
 // content : Amortized Time Complexity
