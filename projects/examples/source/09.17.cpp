@@ -4,13 +4,7 @@
 
 ///////////////////////////////////////////////////////
 
-// section : Memory
-
-///////////////////////////////////////////////////////
-
-// content : Memory
-//
-// content : Virtual Addresses
+// content : Virtual Memory
 //
 // content : Kernel and User Spaces
 //
@@ -19,10 +13,6 @@
 // content : Memory Mappings
 //
 // content : Tools pgrep and pmap
-//
-// content : Page Table
-//
-// content : Physical Addresses
 
 ///////////////////////////////////////////////////////
 
