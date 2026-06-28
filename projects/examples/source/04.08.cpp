@@ -1,86 +1,112 @@
-/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Templates
 
-/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
-// content : Class Templates
+// content : Rational Arithmetic
 //
-// content : External Member Function Definitions
+// content : Instantiating Class Template Friend Functions
 //
-// content : Instantiating Member Functions
+// content : Operator -
 
-/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <utility>
-#include <vector>
+#include <numeric>
 
-/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename C = std::vector < T > > class Stack
+template < typename T > class Rational
 {
 public :
 
-	void push(T x);
+	Rational(T num = 0, T den = 1) : m_num(num), m_den(den)
+	{
+		reduce();
+	}
 
-//  -----------------
+//  ----------------------------------------------------------------------
 
-	auto top() const;
+	auto & operator+=(Rational const & other)
+	{
+		auto lcm = std::lcm(m_den, other.m_den);
 
-//  -----------------
+		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den);
 
-	void pop();
+		m_den = lcm;
+
+		reduce();
+
+		return *this;
+	}
+
+//  ----------------------------------------------------------------------
+
+	auto & operator-=(Rational const & other)
+	{
+		return *this += Rational(other.m_num * -1, other.m_den);
+	}
+
+//  ----------------------------------------------------------------------
+
+	friend auto operator+ (Rational lhs, Rational const & rhs)
+	{
+		return lhs += rhs;
+	}
+
+//  ----------------------------------------------------------------------
+
+	friend auto operator==(Rational const & lhs, Rational const & rhs)
+	{
+		return lhs.m_num * rhs.m_den == rhs.m_num * lhs.m_den;
+	}
 
 private :
 
-	C m_container;
+	void reduce()
+	{
+		if (m_den < 0)
+		{
+			m_num = -m_num;
+
+			m_den = -m_den;
+		}
+
+		auto gcd = std::gcd(m_num, m_den);
+
+		m_num /= gcd;
+
+		m_den /= gcd;
+	}
+
+//  -----------------------------------------------------------------------
+
+	T m_num = 0, m_den = 1;
 };
 
-/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename C > void Stack < T, C > ::push(T x)
+template < typename T > auto operator-(Rational < T > lhs, Rational < T > const & rhs)
 {
-	m_container.push_back(std::move(x));
+	return lhs -= rhs;
 }
 
-/////////////////////////////////////////////////////////////////////
-
-template < typename T, typename C > auto Stack < T, C > ::top() const
-{
-	return m_container.back();
-}
-
-/////////////////////////////////////////////////////////////////////
-
-template < typename T, typename C > void Stack < T, C > ::pop()
-{
-	m_container.pop_back();
-}
-
-/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Stack < int > stack;
+	Rational < int > x = 1;
 
-//  -------------------------
+//  ------------------------------------------------------------
 
-	stack.push(1);
+	assert(x + 1 == Rational < int > (2, 1));
 
-	stack.push(2);
+//	assert(x - 1 == Rational < int > (0, 1)); // error
 
-//  -------------------------
+//  ------------------------------------------------------------
 
-	assert(stack.top() == 2);
-
-//  -------------------------
-
-	stack.pop();
-
-//  -------------------------
-
-	assert(stack.top() == 1);
+	assert(operator- < int > (x, 1) == Rational < int > (0, 1));
 }
 
-/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////

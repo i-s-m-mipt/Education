@@ -1,73 +1,76 @@
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
 // chapter : Templates
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-// content : Operator ->*
+// content : Class Template Specializations
 //
-// content : Pointers to Data Members
+// content : Partial Specializations
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-#include <cassert>
-#include <iterator>
-#include <vector>
+#include <print>
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-template < typename T > struct Node
+template < typename T1, typename T2 > class Entity
 {
-	T x = T();
+public :
 
-	Node * left = nullptr, * right = nullptr;
+	void test() const
+	{
+		std::print("Entity::test (1)\n");
+	}
 };
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-auto traverse(auto node, auto ... nodes)
+template < typename T > class Entity < T, int >
 {
-	return (node ->* ... ->* nodes); // support : https://cppinsights.io
-}
+public :
 
-////////////////////////////////////////////////////////////////////////
+	void test() const
+	{
+		std::print("Entity::test (2)\n");
+	}
+};
+
+//////////////////////////////////////////////////
+
+template < typename T > class Entity < T, T >
+{
+public :
+
+	void test() const
+	{
+		std::print("Entity::test (3)\n");
+	}
+};
+
+//////////////////////////////////////////////////
+
+template <> class Entity < double, double >
+{
+public :
+
+	void test() const
+	{
+		std::print("Entity::test (4)\n");
+	}
+};
+
+//////////////////////////////////////////////////
 
 int main()
 {
-	std::vector < Node < int > > nodes(5);
+	Entity < int,    double > ().test();
 
-//  ---------------------------------------------------------
+	Entity < double, int    > ().test();
 
-	for (auto i = 0uz; i < std::size(nodes); ++i)
-	{
-		nodes[i].x = i + 1;
-	}
+//	Entity < int,    int    > ().test(); // error
 
-//  ---------------------------------------------------------
-
-	Node < int > * node = nullptr;
-
-//  ---------------------------------------------------------
-
-	node 						   = &nodes.at(0);
-
-	node->left          		   = &nodes.at(1);
-
-	node->left->right       	   = &nodes.at(2);
-
-	node->left->right->left    	   = &nodes.at(3);
-
-	node->left->right->left->right = &nodes.at(4);
-
-//  ---------------------------------------------------------
-
-	auto  left = &Node < int > :: left;
-
-	auto right = &Node < int > ::right;
-
-//  ---------------------------------------------------------
-
-	assert(traverse(node, left, right, left, right)->x == 5);
+	Entity < double, double > ().test();
 }
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////

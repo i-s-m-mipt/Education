@@ -1,112 +1,73 @@
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 // chapter : Templates
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
-// content : Rational Arithmetic
+// content : Operator ->*
 //
-// content : Instantiating Friend Functions
-//
-// content : Operator -
+// content : Pointers to Data Members
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <numeric>
+#include <iterator>
+#include <vector>
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
-template < typename T > class Rational
+template < typename T > struct Node
 {
-public :
+	T x = T();
 
-	Rational(T num = 0, T den = 1) : m_num(num), m_den(den)
-	{
-		reduce();
-	}
-
-//  ----------------------------------------------------------------------
-
-	auto & operator+=(Rational const & other)
-	{
-		auto lcm = std::lcm(m_den, other.m_den);
-
-		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den);
-
-		m_den = lcm;
-
-		reduce();
-
-		return *this;
-	}
-
-//  ----------------------------------------------------------------------
-
-	auto & operator-=(Rational const & other)
-	{
-		return *this += Rational(other.m_num * -1, other.m_den);
-	}
-
-//  ----------------------------------------------------------------------
-
-	friend auto operator+ (Rational lhs, Rational const & rhs)
-	{
-		return lhs += rhs;
-	}
-
-//  ----------------------------------------------------------------------
-
-	friend auto operator==(Rational const & lhs, Rational const & rhs)
-	{
-		return lhs.m_num * rhs.m_den == rhs.m_num * lhs.m_den;
-	}
-
-private :
-
-	void reduce()
-	{
-		if (m_den < 0)
-		{
-			m_num = -m_num;
-
-			m_den = -m_den;
-		}
-
-		auto gcd = std::gcd(m_num, m_den);
-
-		m_num /= gcd;
-
-		m_den /= gcd;
-	}
-
-//  -----------------------------------------------------------------------
-
-	T m_num = 0, m_den = 1;
+	Node * left = nullptr, * right = nullptr;
 };
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
-template < typename T > auto operator-(Rational < T > lhs, Rational < T > const & rhs)
+auto traverse(auto node, auto ... nodes)
 {
-	return lhs -= rhs;
+	return (node ->* ... ->* nodes); // support : https://cppinsights.io
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Rational < int > x = 1;
+	std::vector < Node < int > > nodes(5);
 
-//  ------------------------------------------------------------
+//  ---------------------------------------------------------
 
-	assert(x + 1 == Rational < int > (2, 1));
+	for (auto i = 0uz; i < std::size(nodes); ++i)
+	{
+		nodes[i].x = i + 1;
+	}
 
-//	assert(x - 1 == Rational < int > (0, 1)); // error
+//  ---------------------------------------------------------
 
-//  ------------------------------------------------------------
+	Node < int > * node = nullptr;
 
-	assert(operator- < int > (x, 1) == Rational < int > (0, 1));
+//  ---------------------------------------------------------
+
+	node 						   = &nodes.at(0);
+
+	node->left          		   = &nodes.at(1);
+
+	node->left->right       	   = &nodes.at(2);
+
+	node->left->right->left    	   = &nodes.at(3);
+
+	node->left->right->left->right = &nodes.at(4);
+
+//  ---------------------------------------------------------
+
+	auto  left = &Node < int > :: left;
+
+	auto right = &Node < int > ::right;
+
+//  ---------------------------------------------------------
+
+	assert(traverse(node, left, right, left, right)->x == 5);
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
