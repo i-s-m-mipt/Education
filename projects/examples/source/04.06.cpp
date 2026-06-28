@@ -1,73 +1,76 @@
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
 // chapter : Templates
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-// content : Template Template Parameters
+// content : Class Template Specializations
 //
-// content : Class Template Argument Deduction (CTAD)
-//
-// content : Container std::deque
-//
-// content : Deduction Guides
-//
-// content : Functions std::begin and std::end
+// content : Partial Specializations
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-#include <deque>
-#include <iterator>
-#include <vector>
+#include <print>
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-template < typename T, typename C = std::vector < T > > class Stack_v1
+template < typename T1, typename T2 > class Entity
 {
-private :
+public :
 
-	C m_container;
+	void test() const
+	{
+		std::print("Entity::test (1)\n");
+	}
 };
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-template < typename T, template < typename U > typename C = std::vector > class Stack_v2
+template < typename T > class Entity < T, int >
 {
-private :
+public :
 
-	C < T > m_container;
+	void test() const
+	{
+		std::print("Entity::test (2)\n");
+	}
 };
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-template
-<
-	template < typename U > typename C1,
-
-	template < typename U > typename C2,
-
-	typename T
->
-auto copy(C1 < T > const & container)
+template < typename T > class Entity < T, T >
 {
-	return C2(std::begin(container), std::end(container));
-}
+public :
 
-////////////////////////////////////////////////////////////////////////////////////////
+	void test() const
+	{
+		std::print("Entity::test (3)\n");
+	}
+};
+
+//////////////////////////////////////////////////
+
+template <> class Entity < double, double >
+{
+public :
+
+	void test() const
+	{
+		std::print("Entity::test (4)\n");
+	}
+};
+
+//////////////////////////////////////////////////
 
 int main()
 {
-	Stack_v1 < int, std::deque < int > > stack_v1;
+	Entity < int,    double > ().test();
 
-	Stack_v2 < int, std::deque         > stack_v2;
+	Entity < double, int    > ().test();
 
-//  -------------------------------------------------------
+//	Entity < int,    int    > ().test(); // error
 
-	std::vector vector = { 1, 2, 3, 4, 5 };
-
-//  -------------------------------------------------------
-
-	auto deque = copy < std::vector, std::deque > (vector);
+	Entity < double, double > ().test();
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
