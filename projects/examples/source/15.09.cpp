@@ -6,7 +6,7 @@
 
 // content : Synchronous Client
 //
-// content : Portable Operating System Interface (POSIX)
+// content : Standard Portable Operating System Interface (POSIX)
 //
 // content : Stream Sockets
 //
