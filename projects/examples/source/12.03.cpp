@@ -4,10 +4,6 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-// section : Encodings
-
-///////////////////////////////////////////////////////////////////////
-
 // content : Character Types and Literals
 //
 // content : Types char and wchar_t
@@ -17,8 +13,6 @@
 // content : Literal Prefixes L, u8, u and U
 //
 // content : American Standard Code for Information Interchange (ASCII)
-//
-// content : Encodings
 //
 // content : Encodings ASCII 7-bit, CP1251 and CP1252
 //
