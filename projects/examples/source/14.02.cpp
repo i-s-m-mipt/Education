@@ -4,10 +4,6 @@
 
 ///////////////////////////////
 
-// section : Threads
-
-///////////////////////////////
-
 // content : Threads
 //
 // content : Thread std::thread

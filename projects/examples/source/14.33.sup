@@ -4,10 +4,6 @@
 
 /////////////////////////////////////////////////////
 
-// section : Architectures
-
-/////////////////////////////////////////////////////
-
 // content : Chip Pervasive Logic
 //
 // content : Interconnections
@@ -47,6 +43,8 @@
 // content : Vector Regfile
 //
 // content : Single Instruction, Multiple Data (SIMD)
+//
+// content : Logical Cores
 //
 // content : Simultaneous Multithreading
 

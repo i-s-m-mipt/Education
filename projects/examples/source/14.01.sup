@@ -4,11 +4,9 @@
 
 ////////////////////////////////////////////////////
 
-// section : Threads
-
-////////////////////////////////////////////////////
-
-// content : Concurrency and Parallelism
+// content : Parallel Programming
+//
+// content : Concurrency
 //
 // content : Context Switches
 //
