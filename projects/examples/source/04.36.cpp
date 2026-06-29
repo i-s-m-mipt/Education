@@ -4,9 +4,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-// content : Constraints and Concepts
+// content : Concepts, Constraints and Requirements
 //
 // content : Declaration concept
+//
+// content : Conjunctions and Disjunctions
 //
 // content : Concepts same_as
 
