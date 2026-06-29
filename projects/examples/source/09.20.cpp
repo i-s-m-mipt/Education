@@ -4,7 +4,7 @@
 
 ///////////////////////////////////////////////////////////
 
-// content : Handling Memory Errors
+// content : Error Handling
 //
 // content : Function std::set_new_handler
 //

@@ -4,9 +4,9 @@
 
 ///////////////////////////////////////////////////////
 
-// content : Virtual Memory
+// content : Virtual and Physical Memory
 //
-// content : Kernel and User Spaces
+// content : Memory Segments
 //
 // content : Stack, Heap, Data, BSS and Text Segments
 //

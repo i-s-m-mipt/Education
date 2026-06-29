@@ -4,11 +4,9 @@
 
 /////////////////////////////////////////////////////////////////////////
 
-// content : Memory
+// content : Virtual and Physical Memory
 //
 // content : Addresses and Pointers
-//
-// content : Virtual and Physical Addresses
 //
 // content : Operator &
 //
