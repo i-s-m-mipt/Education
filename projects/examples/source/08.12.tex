@@ -3,9 +3,6 @@
 
 
 \usepackage[export]{adjustbox}
-\usepackage[russian]{babel}
-\usepackage[T2A]{fontenc}
-\usepackage[utf8]{inputenc}
 
 
 
@@ -20,11 +17,13 @@
 \usepackage{amsxtra}
 \usepackage{array}
 \usepackage{ctable}
+\usepackage{fontspec}
 \usepackage{geometry}
 \usepackage{hyperref}
 \usepackage{latexsym}
 \usepackage{listings}
 \usepackage{makecell}
+\usepackage{polyglossia}
 \usepackage{ragged2e}
 \usepackage{titlesec}
 \usepackage{tocloft}
@@ -32,7 +31,11 @@
 
 
 
-\renewcommand{\familydefault}{\sfdefault}
+\setmainlanguage{russian}
+
+\setmainfont[Script=Cyrillic, Ligatures=TeX, Scale=0.975]{CMU Sans Serif}
+
+\setmonofont{CMU Typewriter Text}
 
 \renewcommand{\arraystretch}{1.5}
 
@@ -107,7 +110,7 @@
 
 \newpage\thispagestyle{empty}\pdfpageheight = 2.50in\enlargethispage{100in}
 
-\textbf{Karatsuba Fast Multiplication Algorithm}
+\textbf{\large Karatsuba Fast Multiplication Algorithm}
 
 \bigskip
 

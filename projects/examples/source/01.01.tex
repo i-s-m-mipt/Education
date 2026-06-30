@@ -7,9 +7,6 @@
 
 
 \usepackage[export]{adjustbox}
-\usepackage[russian]{babel}
-\usepackage[T2A]{fontenc}
-\usepackage[utf8]{inputenc}
 
 
 
@@ -24,11 +21,13 @@
 \usepackage{amsxtra}
 \usepackage{array}
 \usepackage{ctable}
+\usepackage{fontspec}
 \usepackage{geometry}
 \usepackage{hyperref}
 \usepackage{latexsym}
 \usepackage{listings}
 \usepackage{makecell}
+\usepackage{polyglossia}
 \usepackage{ragged2e}
 \usepackage{titlesec}
 \usepackage{tocloft}
@@ -36,9 +35,13 @@
 
 
 
-\renewcommand{\familydefault}{\sfdefault}
+\setmainlanguage{russian}
 
-\renewcommand{\arraystretch}{1.25}
+\setmainfont[Script=Cyrillic, Ligatures=TeX, Scale=0.975]{CMU Sans Serif}
+
+\setmonofont{CMU Typewriter Text}
+
+\renewcommand{\arraystretch}{1.5}
 
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
@@ -48,6 +51,7 @@
 
 \flushbottom
 
+\definecolor{G}{rgb}{0.00, 0.50, 0.00}
 \definecolor{B}{rgb}{0.00, 0.00, 0.50}
 
 \lstset
@@ -94,9 +98,9 @@
 
 
 
-\begin{frame}{\bf Author of the Course}
+\begin{frame}{\bf Introduction}
 
-    \textbf{\;\;\;\;\,\,\,\,PhD Ivan Sergeevich Makarov}
+    \textbf{\;\;\;\;\;\;\,\,PhD Ivan Sergeevich Makarov}
 
     \bigskip
     
@@ -112,7 +116,7 @@
 
         \item Author of 20 publications in peer\,-\,reviewed scientific journals
     
-        \item Author of 11 reports at international conferences
+        \item Author of 13 reports at international conferences
         
     \end{itemize}
 
@@ -122,10 +126,32 @@
     
 \end{frame}
 
+\begin{frame}{\bf Overview}
+
+    \begin{block}
+    \justifying \textbf{Public Git repository} \href{https://github.com/i-s-m-mipt/Education}{\color{G} Education} \textbf{contains all course materials}
+    \end{block}
+    
+    \begin{itemize}
+
+        \item \href{https://github.com/i-s-m-mipt/Education/blob/master/summary.pdf}{\color{G} summary.pdf}\:\,-- brief description of the course
+
+        \item \href{https://github.com/i-s-m-mipt/Education/blob/master/materials.pdf}{\color{G} materials.pdf} -- curriculum\:of\:the\:course
+
+        \item \href{https://github.com/i-s-m-mipt/Education/blob/master/problems.pdf}{\color{G} problems.pdf}\:\,-- collection of homework assignments
+
+        \item \href{https://github.com/i-s-m-mipt/Education/blob/master/education.sh}{\color{G} education.sh}\;\:-- installation instructions
+
+        \item \href{https://docs.google.com/spreadsheets/d/1MAx4-DoZUrZEB210XJ524e-0OogZRvH7QBorja_tGiw/edit?gid=0#gid=0}{\color{G} Google.Docs}\:\:-- list of all recommended books
+        
+    \end{itemize}
+
+\end{frame}
+
 \begin{frame}{\bf C\texttt{++} Definition}
 
     \begin{block}
-    \justifying C\texttt{++}\;is\;a\;compiled\:general\,-\,purpose\:programming\:language\;based\:on weak static type system. This language supports multiple program- ming\:paradigms\:and\:provides\:both\:low\,-\,level\:and\:high\,-\,level\:features.
+    \justifying C\texttt{++}\;is\;a\;compiled\:general\,-\,purpose\:programming\:language\;based\:on weak static type system. This language supports multiple program- ming\:paradigms\:and\:provides\:both\:low\,-\,level\,and\,high\,-\,level\,features.
     \end{block}
 
     \begin{itemize}
@@ -161,7 +187,7 @@
     \end{itemize}
 
     \begin{block}
-    \justifying The\:first\:commercial\:release\:of\:the\:C\texttt{++}\:language\:was\:on\:14\texttt{/}10\texttt{/}1985.
+    \justifying The\:first\:commercial\:release\:of\:the\:C\texttt{++}\:language\:was\:on\:14.10.1985
     \end{block}
     
 \end{frame}
@@ -191,12 +217,12 @@
     \end{itemize}
 
     \begin{block}
-    \justifying Additional features are provided by libraries such as Boost and Qt.
+    \justifying Additional features are provided by libraries such as Boost and Qt
     \end{block}
     
 \end{frame}
 
-\begin{frame}{\bf C\texttt{++} Use Cases}
+\begin{frame}{\bf C\texttt{++} Solutions}
     
     \begin{itemize}
 
@@ -213,7 +239,7 @@
     \end{itemize}
 
     \begin{block}
-    \justifying The C\texttt{++} language provides both low\,-\,level and high\,-\,level features.
+    \justifying The C\texttt{++} language provides both low\,-\,level and high\,-\,level features
     \end{block}
     
 \end{frame}
@@ -243,62 +269,12 @@
     \end{itemize}
 
     \begin{block}
-    \justifying The\:same\:software\:can\:be\:implemented\:in\:many\:different\:paradigms.
+    \justifying The\:same\:software\:can\:be\:implemented\:in\:many\:different\:paradigms
     \end{block}
     
 \end{frame}
 
-\begin{frame}{\bf Developer Tools}
-
-    \begin{tabular}{|l|l|l|}
-
-        \hline
-
-        \textbf{Tool} & \textbf{Considered} & \textbf{Alternative} \\
-
-        \hline
-        
-        \text{GNU\:Linux\:distribution} & Ubuntu & Fedora\texttt{,}\,Manjaro \\
-
-        \hline
-
-        \text{Environment} & Visual Studio Code & CLion \\
-
-        \hline
-         
-        Toolset\,\texttt{:}\,Compiler & g\texttt{++} from GCC & Clang \\
-
-        \hline
-
-        Toolset\,\texttt{:}\,Builder & CMake & Bazel \\
-
-        \hline 
-
-        Toolset\,\texttt{:}\,Debugger & GDB\texttt{,}\,Valgrind & LLDB \\
-
-        \hline
-
-        Toolset\,\texttt{:}\,Profiler & Google\texttt{.}Benchmark & gperftools \\
-
-        \hline
-
-        \text{Version control system} & Git & no \\
-
-        \hline
-
-        \text{Git client} & SmartGit\texttt{,}\,IDE & GitHub Desktop \\
-
-        \hline
-
-        \text{Project\;hosting service} & GitHub & Bitbucket \\
-
-        \hline
-        
-    \end{tabular}
-    
-\end{frame}
-
-\begin{frame}{\bf References}
+\begin{frame}{\bf Resources}
 
     \begin{itemize}
 
@@ -317,7 +293,7 @@
     \end{itemize}
 
     \begin{block}
-    \justifying The list of all recommended books is available in my \href{https://docs.google.com/spreadsheets/d/1MAx4-DoZUrZEB210XJ524e-0OogZRvH7QBorja_tGiw/edit?usp=sharing}{Google\,-\,sheet}.
+    \justifying The list of all recommended books is available in my \href{https://docs.google.com/spreadsheets/d/1MAx4-DoZUrZEB210XJ524e-0OogZRvH7QBorja_tGiw/edit?usp=sharing}{\color{G} Google.Docs}
     \end{block}
     
 \end{frame}
