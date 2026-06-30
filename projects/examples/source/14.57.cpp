@@ -6,9 +6,11 @@
 
 // content : Inter-Process Communication (IPC)
 //
+// content : Library Boost.Interpocess
+//
 // content : Shared Memory
 //
-// content : Library Boost.Interpocess
+// content : Shared Memory Mappings
 //
 // content : Algorithms std::ranges::fill_n and std::ranges::for_each_n
 //
