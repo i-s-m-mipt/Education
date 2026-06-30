@@ -3,9 +3,6 @@
 
 
 \usepackage[export]{adjustbox}
-\usepackage[russian]{babel}
-\usepackage[T2A]{fontenc}
-\usepackage[utf8]{inputenc}
 
 
 
@@ -20,11 +17,13 @@
 \usepackage{amsxtra}
 \usepackage{array}
 \usepackage{ctable}
+\usepackage{fontspec}
 \usepackage{geometry}
 \usepackage{hyperref}
 \usepackage{latexsym}
 \usepackage{listings}
 \usepackage{makecell}
+\usepackage{polyglossia}
 \usepackage{ragged2e}
 \usepackage{titlesec}
 \usepackage{tocloft}
@@ -32,7 +31,11 @@
 
 
 
-\renewcommand{\familydefault}{\sfdefault}
+\setmainlanguage{russian}
+
+\setmainfont[Script=Cyrillic, Ligatures=TeX, Scale=0.975]{CMU Sans Serif}
+
+\setmonofont{CMU Typewriter Text}
 
 \renewcommand{\arraystretch}{1.5}
 
@@ -138,69 +141,297 @@
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 14.40in\enlargethispage{100in}
+\newpage\thispagestyle{empty}\pdfpageheight = 24.60in\enlargethispage{100in}
 
 
 
-\section{01. Prelude}
+\section{01. Introduction and Environment}
 
-\textbf{Introduction. Environment. Standard Template Library.}
+\begin{itemize}
 
-\section{02. Functions}
+    \item \texttt{01.01} -- \texttt{01.01}\,\texttt{:}\,Introduction. Overview. The C\texttt{++} Programming Language. Programming\:Paradigms.\:Resources.
 
-\textbf{Types. Operators. Statements. Memory. Lvalue References. Functions.}
+    \smallskip
 
-\section{03. Classes}
+    \item \texttt{01.02} -- \texttt{01.03}\,\texttt{:}\,Program Hello, World! Standard Template Library.
+    
+\end{itemize}
 
-\textbf{Structures. Classes. Relations. Dynamic Polymorphism. Rvalue References. Operators.}
+\section{02. Language Core Basics}
 
-\section{04. Templates}
+\begin{itemize}
 
-\textbf{Function and Class Templates. Forwarding References. Constant Expressions. Type Traits. Concepts.}
+    \item \texttt{02.01} -- \texttt{02.07}\,\texttt{:}\,Declarations and Definitions. Objects, Variables and Literals. Types. Type Aliases.
 
-\section{05. Patterns}
+    \smallskip
 
-\textbf{Generative, Structural and Behavioral Patterns. Static Polymorphism.}
+    \item \texttt{02.08} -- \texttt{02.10}\,\texttt{:}\,Initialization. Type Inference. Type Conversions.
 
-\section{06. Translation}
+    \smallskip
 
-\textbf{Preprocessing. Projects. Modules. Libraries.}
+    \item \texttt{02.11} -- \texttt{02.25}\,\texttt{:}\,Imperative and Structured Programming. Operators, Expressions and Statements.
 
-\section{07. Services}
+    \smallskip
 
-\textbf{Errors. Exceptions. Debugging. Logging. Testing. Profiling.}
+    \item \texttt{02.26} -- \texttt{02.35}\,\texttt{:}\,Memory. Addresses and Pointers. Arrays. Lvalue References.
 
-\section{08. Arithmetic}
+    \smallskip
 
-\textbf{Bytes. Long Arithmetic. Floating\,-\,Point and Random Numbers. Time.}
+    \item \texttt{02.36} -- \texttt{02.45}\,\texttt{:}\,Functions. Procedural Programming. Algorithms. Hybrid Sort. Binary Search. Time Complexity.
+    
+\end{itemize}
 
-\section{09. Memory}
+\section{03. Object Oriented Programming}
 
-\textbf{Smart Pointers. Iterators. Memory. Allocators.}
+\begin{itemize}
 
-\section{10. Containers}
+    \item \texttt{03.01} -- \texttt{03.06}\,\texttt{:}\,Object\,-\,Oriented Programming. Structures. Classes. Encapsulation. 
 
-\textbf{Sequential, Nested and Associative Containers. Hash Functions. Unordered Containers.}
+    \smallskip
 
-\section{11. Ranges}
+    \item \texttt{03.07} -- \texttt{03.14}\,\texttt{:}\,Class Relations. Patterns Attorney\,-\,Client and PassKey. Class Hierarchies. Inheritance.
 
-\textbf{Functors. Lambda Expressions. Visitors. Ranges. Algorithms. Graphs.}
+    \smallskip
 
-\section{12. Characters}
+    \item \texttt{03.15} -- \texttt{03.22}\,\texttt{:}\,Dynamic Polymorphism. Abstraction. RunTime Type Identification.
 
-\textbf{Locales. Encodings. Strings. Regular Expressions. Parsers.}
+    \smallskip
 
-\section{13. Streams}
+    \item \texttt{03.23} -- \texttt{03.28}\,\texttt{:}\,Rvalue References. Copy and Move Semantics. Pattern Copy\,-\,And\,-\,Swap.\:Rules\:of\:0,\:3,\:4\:and\:5.
 
-\textbf{Streams. Iterators. Filesystem. Serialization.}
+    \smallskip
 
-\section{14. Parallelism}
+    \item \texttt{03.29} -- \texttt{03.35}\,\texttt{:}\,Operator Overloading. Three\,-\,Way Comparison.
+    
+\end{itemize}
 
-\textbf{Threads. Synchronization. Architectures. Atomics. Pools. Processes.}
+\section{04. Generic Programming}
 
-\section{15. Networks}
+\begin{itemize}
 
-\textbf{Networks. Transmission Control Protocol. Coroutines. Applications. Cryptography.}
+    \item \texttt{04.01} -- \texttt{04.08}\,\texttt{:}\,Generic Programming. Function and Class Templates. Template Specializations. 
+
+    \smallskip
+
+    \item \texttt{04.09} -- \texttt{04.11}\,\texttt{:}\,Variadic Templates. Variadic and Fold Expressions.
+
+    \smallskip
+
+    \item \texttt{04.12} -- \texttt{04.14}\,\texttt{:}\,Forwarding References. Perfect Forwarding. Pattern SFINAE.
+
+    \smallskip
+
+    \item \texttt{04.15} -- \texttt{04.24}\,\texttt{:}\,Type Alias and Variable\:Templates.\:Metaprogramming.\:Constant\:Expressions.\:Tuples.\:Type\:Lists.
+
+    \smallskip
+
+    \item \texttt{04.25} -- \texttt{04.39}\,\texttt{:}\,Type Traits. Metafunctions. Concepts, Constraints and Requirements.
+
+    \smallskip
+    
+\end{itemize}
+
+\section{05. Software Engineering Patterns}
+
+\begin{itemize}
+
+    \item \texttt{05.01} -- \texttt{05.06}\,\texttt{:}\,Patterns Builder, Abstract Factory, Prototype, Singleton and Noncopyable.
+
+    \smallskip
+
+    \item \texttt{05.07} -- \texttt{05.11}\,\texttt{:}\,Patterns Adapter, Bridge, Composite, Decorator and Facade.
+
+    \smallskip
+
+    \item \texttt{05.12} -- \texttt{05.16}\,\texttt{:}\,Patterns Memento,\:Observer,\:State,\,Strategy\,and\,Template\,Method.\,Policy\,-\,Based\,Programming.
+
+    \smallskip
+
+    \item \texttt{05.17} -- \texttt{05.24}\,\texttt{:}\,Static Polymorphism. Curiously Recurring Template Pattern. Pattern Mixin.
+    
+\end{itemize}
+
+\section{06. Projects and Libraries}
+
+\begin{itemize}
+
+    \item \texttt{06.01} -- \texttt{06.04}\,\texttt{:}\,Preprocessing. Translation Units. Preprocessor Directives. Macros.
+
+    \smallskip
+
+    \item \texttt{06.05} -- \texttt{06.11}\,\texttt{:}\,Compilation, Assembly and Linking. Header,\:Source,\:Object\:and\:Executable\:Files.\:Pattern\:Pimpl.
+
+    \smallskip
+
+    \item \texttt{06.12} -- \texttt{06.20}\,\texttt{:}\,Namespaces. Modules. Libraries. Boost Library Collection.
+
+    \smallskip
+    
+\end{itemize}
+
+\section{07. Debugging and Profiling Tools}
+
+\begin{itemize}
+
+    \item \texttt{07.01} -- \texttt{07.10}\,\texttt{:}\,Error Handling. Assertions. Terminations. Error Codes. Enumerations. Unions.
+
+    \smallskip
+
+    \item \texttt{07.11} -- \texttt{07.13}\,\texttt{:}\,Exceptions. Exception Safety Guarantees.
+
+    \smallskip
+
+    \item \texttt{07.14} -- \texttt{07.23}\,\texttt{:}\,Developer Tools. Backtracing, Debugging, Profiling, Logging, Testing and Microbenchmarking.
+    
+\end{itemize}
+
+\section{08. Applied Computations}
+
+\begin{itemize}
+
+    \item \texttt{08.01} -- \texttt{08.09}\,\texttt{:}\,Bits and Bytes. Reflected Binary Gray Code. Bit Fields. 
+
+    \smallskip
+
+    \item \texttt{08.10} -- \texttt{08.18}\,\texttt{:}\,Long Arithmetic. Karatsuba Fast Multiplication. Embedding Python.
+
+    \smallskip
+
+    \item \texttt{08.19} -- \texttt{08.25}\,\texttt{:}\,Floating\,-\,Point Numbers. Numerical\:Methods.\:Statistics.\:Complex\:Numbers.\:Fourier\:Transforms.
+
+    \smallskip
+
+    \item \texttt{08.26} -- \texttt{08.29}\,\texttt{:}\,Random Numbers. Monte\,-\,Carlo Methods.
+
+    \smallskip
+
+    \item \texttt{08.30} -- \texttt{08.39}\,\texttt{:}\,Clocks, Durations and Time Points. Timing. Calendars.
+    
+\end{itemize}
+
+\section{09. Memory Management}
+
+\begin{itemize}
+
+    \item \texttt{09.01} -- \texttt{09.16}\,\texttt{:}\,Pattern RAII. Garbage Collectors. Smart Pointers. Iterators. Iterator Traits.
+
+    \smallskip
+
+    \item \texttt{09.17} -- \texttt{09.25}\,\texttt{:}\,Memory. Memory Segments. Data Alignment. Error Handling. Uninitialized Memory. Optionals.
+
+    \smallskip
+
+    \item \texttt{09.26} -- \texttt{09.35}\,\texttt{:}\,Allocators. Allocator Traits. Polymorphic Resources and Allocators.
+    
+\end{itemize}
+
+\section{10. Programming with Containers}
+
+\begin{itemize}
+
+    \item \texttt{10.01} -- \texttt{10.21}\,\texttt{:}\,Sequential\:Containers.\:Container\:Adapters.\:Heaps.\:Circular\:Buffers.\,Patterns\,Proxy\,and\,Flyweight.
+
+    \smallskip
+
+    \item \texttt{10.22} -- \texttt{10.30}\,\texttt{:}\,Nested and Multidimensional Containers. Dynamic Programming.
+
+    \smallskip
+
+    \item \texttt{10.31} -- \texttt{10.33}\,\texttt{:}\,Linear Algebra. Matrices. Strassen Fast Multiplication. Decomposition Methods.
+
+    \smallskip
+
+    \item \texttt{10.34} -- \texttt{10.38}\,\texttt{:}\,Balanced Binary Search Trees. Sets. Associative Containers.
+
+    \smallskip
+
+    \item \texttt{10.39} -- \texttt{10.45}\,\texttt{:}\,Hash Functions. Hash Tables. Unordered Containers. Multiple Interfaces.
+    
+\end{itemize}
+
+\section{11. Programming with Algorithms}
+
+\begin{itemize}
+
+    \item \texttt{11.01} -- \texttt{11.11}\,\texttt{:}\,Functors and Predicates. Lambda Expressions. Event\,-\,Driven Programming. Pattern\:Command.
+
+    \smallskip
+
+    \item \texttt{11.12} -- \texttt{11.15}\,\texttt{:}\,Pattern Visitor Implementations. Variants.
+
+    \smallskip
+
+    \item \texttt{11.16} -- \texttt{11.28}\,\texttt{:}\,Ranges. Algorithms. Iterator Adapters. Views. Index Sequences.
+
+    \smallskip
+
+    \item \texttt{11.29} -- \texttt{11.33}\,\texttt{:}\,Graphs. Breadth First Search. Depth First Search. Visitors. Dijkstra Shortest Paths.
+    
+\end{itemize}
+
+\section{12. Text Data Processing}
+
+\begin{itemize}
+
+    \item \texttt{12.01} -- \texttt{12.12}\,\texttt{:}\,Locales. Facets. Encodings. Standard Unicode. Encoding Conversions. Strings.
+
+    \smallskip
+
+    \item \texttt{12.13} -- \texttt{12.26}\,\texttt{:}\,Regular Expressions. Grammars. Extended Backus\,-\,Naur Form. Parsers. Abstract Syntax Trees.
+    
+\end{itemize}
+
+\section{13. Input and Output Subsystems}
+
+\begin{itemize}
+
+    \item \texttt{13.01} -- \texttt{13.15}\,\texttt{:}\,Streams. Flags. Manipulators. Synchronization. Buffers. Iterators.
+
+    \smallskip
+
+    \item \texttt{13.16} -- \texttt{13.23}\,\texttt{:}\,Filesystem.\:Serialization.\:Formats.\:Databases.\,Embedding\,PostgreSQL.\,Declarative\,Programming.
+    
+\end{itemize}
+
+\section{14. Parallel Programming}
+
+\begin{itemize}
+
+    \item \texttt{14.01} -- \texttt{14.09}\,\texttt{:}\,Parallel Programming. Concurrency. Threads.
+
+    \smallskip
+
+    \item \texttt{14.10} -- \texttt{14.14}\,\texttt{:}\,Asynchronous Programming. Futures.\:Packaged\:Tasks.\:Promises.\:Algorithms.\:Execution\:Policies.
+
+    \smallskip
+
+    \item \texttt{14.15} -- \texttt{14.27}\,\texttt{:}\,Synchronization. Mutexes. Condition Variables. Semaphores. Latches. Barriers.
+
+    \smallskip
+
+    \item \texttt{14.28} -- \texttt{14.33}\,\texttt{:}\,Architectures. Processors, Chiplets and Cores.
+
+    \smallskip
+
+    \item \texttt{14.34} -- \texttt{14.35}\,\texttt{:}\,Execution Pipelines. Instructions. Memory Management Unit. Memory Hierarchy. Caches.
+
+    \smallskip
+
+    \item \texttt{14.36} -- \texttt{14.46}\,\texttt{:}\,Atomics. Cache Coherence Protocols. Memory Ordering. Spinlocks. 
+
+    \smallskip
+
+    \item \texttt{14.47} -- \texttt{14.52}\,\texttt{:}\,Lock\,-\,Free Programming. Hazard Pointers. Pattern Disruptor. Thread Pools.
+
+    \smallskip
+
+    \item \texttt{14.53} -- \texttt{14.60}\,\texttt{:}\,Processes. Standard POSIX. Inter\,-\,Process Communications. Shared Memory. Synchronization.
+    
+\end{itemize}
+
+\section{15. Distributed Network Systems}
+
+Work in progress ...
 
 
 
