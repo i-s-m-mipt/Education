@@ -8,7 +8,7 @@
 //
 // content : Expression Classification
 //
-// content : Lvalue, Glvalue, Xvalue, Rvalue and Prvalue Expressions
+// content : Lvalue, GLvalue, Xvalue, Rvalue and PRvalue Expressions
 //
 // content : Rvalue References
 
