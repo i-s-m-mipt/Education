@@ -14,7 +14,7 @@
 //
 // content : Type Specifier typename
 //
-// content : Instantiating Function Templates
+// content : Function Template Instantiation
 //
 // content : Two-Phase Template Lookup
 //

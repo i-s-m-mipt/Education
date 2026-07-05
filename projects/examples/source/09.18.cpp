@@ -11,10 +11,13 @@
 // content : Type Alias std::int8_t
 //
 // content : Operator alignof
+//
+// content : Type Trait std::has_unique_object_representations
 
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <cstdint>
+#include <type_traits>
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -29,6 +32,12 @@ int main()
 	static_assert(sizeof(Entity_v1) == 12 && alignof(Entity_v1) == 4);
 
 	static_assert(sizeof(Entity_v2) ==  8 && alignof(Entity_v2) == 4);
+
+//  ------------------------------------------------------------------------
+
+	static_assert(!std::has_unique_object_representations_v < Entity_v1 > );
+
+	static_assert(!std::has_unique_object_representations_v < Entity_v2 > );
 }
 
 ////////////////////////////////////////////////////////////////////////////////

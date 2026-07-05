@@ -10,6 +10,8 @@
 //
 // content : Operator &
 //
+// content : Function std::addressof
+//
 // content : Fundamental Types
 //
 // content : Type void
@@ -37,6 +39,10 @@ int main()
 //  ---------------------------------------------------------------------
 
 	static_assert(std::is_same_v < decltype(y), int * > );
+
+//  ---------------------------------------------------------------------
+
+	assert(&x == std::addressof(x));
 
 //  ---------------------------------------------------------------------
 

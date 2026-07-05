@@ -12,7 +12,7 @@
 //
 // content : Reference Counting
 //
-// content : Plain and Smart Pointers
+// content : Function std::to_address
 
 ///////////////////////////////////////////
 
@@ -50,6 +50,10 @@ int main()
 //  ---------------------------------------
 
 	y.reset(z);
+
+//  ---------------------------------------
+
+	assert(std::to_address(y) == z);
 
 //  ---------------------------------------
 

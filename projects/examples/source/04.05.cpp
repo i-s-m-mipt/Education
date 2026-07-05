@@ -6,7 +6,7 @@
 
 // content : Class Templates
 //
-// content : Instantiating Class Template Member Functions
+// content : Class Template Member Function Instantiation
 //
 // content : External Member Function Definitions
 

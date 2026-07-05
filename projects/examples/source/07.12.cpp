@@ -14,6 +14,8 @@
 //
 // content : Function Specifier noexcept
 //
+// content : Function std::uncaught_exceptions
+//
 // content : Operator noexcept
 //
 // content : Function std::empty
@@ -45,23 +47,23 @@ public :
 		uninitialize();
 	}
 
-//  -----------------------------------------------
+//  ---------------------------------------------
 
    ~Entity() noexcept
 	{
-	//	throw std::runtime_error("error"); // error
+		assert(std::uncaught_exceptions() >= 0);
 
 		uninitialize();
 	}
 
-//  -----------------------------------------------
+//  ---------------------------------------------
 
 	void swap(Entity & other) noexcept
 	{
 		std::swap(m_x, other.m_x);
 	}
 
-//  -----------------------------------------------
+//  ---------------------------------------------
 
 	auto get() const noexcept
 	{
@@ -79,7 +81,7 @@ private :
 		catch (...) {}
 	}
 
-//  -----------------------------------------------
+//  ---------------------------------------------
 
 	int m_x = 0;
 };
