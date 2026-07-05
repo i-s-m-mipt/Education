@@ -4,8 +4,6 @@
 
 /////////////////////////////////////////////////////////////////////
 
-// content : Compound and Nested Requirements
-//
 // content : Concepts totally_ordered
 //
 // content : Concept std::convertible_to

@@ -6,6 +6,8 @@
 
 // content : Parallel Range Folding Algorithm
 //
+// content : Concept std::ranges::view
+//
 // content : Sequential Partitioning
 //
 // content : View std::ranges::subrange

@@ -6,9 +6,7 @@
 
 // content : Expression requires
 //
-// content : Simple and Type Requirements
-//
-// content : Concepts sized_range
+// content : Concepts range and sized_range
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -38,6 +36,18 @@ concept sized_range = range < R > && requires (R range){ std::size(range); };
 
 int main()
 {
+    static_assert(                   range < std::vector < int > > == 1);
+
+    static_assert(                   range < int                 > == 0);
+
+//  ---------------------------------------------------------------------
+
+    static_assert(std::ranges::      range < std::vector < int > > == 1);
+
+    static_assert(std::ranges::      range < int                 > == 0);
+
+//  ---------------------------------------------------------------------
+
     static_assert(             sized_range < std::vector < int > > == 1);
 
     static_assert(             sized_range < int                 > == 0);

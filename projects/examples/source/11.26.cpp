@@ -20,11 +20,9 @@
 //
 // content : View std::views::take
 //
+// content : Function std::ranges::to
+//
 // content : Base Class std::ranges::view_interface
-//
-// content : Concept std::ranges::view
-//
-// content : Type Alias std::ranges::range_value_t
 
 //////////////////////////////////////////////////////////////////////////////////////
 
@@ -68,22 +66,6 @@ private :
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-template < std::ranges::view V > auto make_vector(V view)
-{
-    std::vector < std::ranges::range_value_t < V > > vector;
-
-    if constexpr (std::ranges::sized_range < V > )
-    {
-        vector.reserve(std::size(view));
-    }
-
-    std::ranges::copy(view, std::back_inserter(vector));
-
-    return vector;
-}
-
-//////////////////////////////////////////////////////////////////////////////////////
-
 int main()
 {
     for ([[maybe_unused]] auto element : std::views::iota(1, 5));
@@ -118,11 +100,15 @@ int main()
 
 //  ---------------------------------------------------------------------------
 
-    for ([[maybe_unused]] auto element : View < int > (vector));
+    assert(vector == std::vector < int > ({ 1, 2, 3, 4, 5 }));
 
 //  ---------------------------------------------------------------------------
 
-    assert(make_vector(view) == std::vector < int > ({ 1, 2, 3, 4, 5 }));
+    assert(std::ranges::to < std::vector < int > > (view) == vector);
+
+//  ---------------------------------------------------------------------------
+
+    for ([[maybe_unused]] auto element : View < int > (vector));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////

@@ -12,15 +12,19 @@
 //
 // content : Type Alias std::uint8_t
 //
+// content : Function std::to_underlying
+//
 // content : Unscoped Enumerations
 //
 // content : Declaration enum
 
 //////////////////////////////////////////////////////////////////////////////
 
+#include <cassert>
 #include <cstdint>
 #include <iostream>
 #include <print>
+#include <utility>
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -48,7 +52,15 @@ int main()
 
 //  --------------------------------------------------------------------------
 
-	switch (static_cast < State_v1 > (x))
+//	State_v1 state_v1_1 = x; // error
+
+//  --------------------------------------------------------------------------
+
+	auto state_v1_2 = static_cast < State_v1 > (x);
+
+//  --------------------------------------------------------------------------
+
+	switch (state_v1_2)
 	{
 		case State_v1::slow : { std::print("main : selection (1)\n"); break; }
 
@@ -65,6 +77,14 @@ int main()
 			break;
 		}
 	}
+
+//  --------------------------------------------------------------------------
+
+//	assert(state_v1_2 == x); // error
+
+//  --------------------------------------------------------------------------
+
+	assert(std::to_underlying(state_v1_2) == x);
 }
 
 //////////////////////////////////////////////////////////////////////////////
