@@ -55,7 +55,7 @@ int main()
 
     auto lambda = [&array](boost::system::error_code const &, std::size_t)
     {
-        auto lambda = [](auto x){ assert(x == 'a'); };
+        auto lambda = [](auto x) static { assert(x == 'a'); };
 
         std::ranges::for_each(array, lambda);
     };

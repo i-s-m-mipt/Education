@@ -34,13 +34,13 @@ int main()
 {
     std::vector < std::function < int(int, int) > > functions =
 	{
-		[](auto x, auto y){ return x + y; },
+		[](auto x, auto y) static { return x + y; },
 
-		[](auto x, auto y){ return x - y; },
+		[](auto x, auto y) static { return x - y; },
 
-		[](auto x, auto y){ return x * y; },
+		[](auto x, auto y) static { return x * y; },
 
-		[](auto x, auto y){ return x / y; }
+		[](auto x, auto y) static { return x / y; }
 	};
 
 //  -----------------------------------------------------------
@@ -49,9 +49,9 @@ int main()
 
 //  -----------------------------------------------------------
 
-	auto lambda_1 = [](){ std::print("lambda_1\n"); };
+	auto lambda_1 = []() static { std::print("lambda_1\n"); };
 
-	auto lambda_2 = [](){ std::print("lambda_2\n"); };
+	auto lambda_2 = []() static { std::print("lambda_2\n"); };
 
 //  -----------------------------------------------------------
 

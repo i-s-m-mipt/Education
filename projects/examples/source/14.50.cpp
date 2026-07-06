@@ -225,7 +225,7 @@ void test(benchmark::State & state)
 
     std::barrier <> barrier(concurrency + 1);
 
-    auto lambda = [](auto & future){ return future.get(); };
+    auto lambda = [](auto & future) static { return future.get(); };
 
     for (auto element : state)
     {

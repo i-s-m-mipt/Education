@@ -64,7 +64,7 @@ int main()
 
     for (auto & future : futures)
     {
-        auto lambda = [](){ return calculate(1 << 10); };
+        auto lambda = []() static { return calculate(1 << 10); };
 
     //  -----------------------------------------------------------------------------
 

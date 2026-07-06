@@ -38,9 +38,9 @@ int main()
 
 //  ------------------------------------------------------------
 
-	auto lambda_1 = [](auto x){ return x == 1; };
+	auto lambda_1 = [](auto x) static { return x == 1; };
 
-	auto lambda_2 = [](auto x){ return x == 2; };
+	auto lambda_2 = [](auto x) static { return x == 2; };
 
 //  ------------------------------------------------------------
 
