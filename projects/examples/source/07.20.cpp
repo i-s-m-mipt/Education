@@ -21,6 +21,7 @@
 #include <source_location>
 #include <stdexcept>
 #include <string>
+#include <utility>
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -80,6 +81,11 @@ public :
             case Severity::error : { LOG(ERROR  ) << m_scope << " : " << string; break; }
 
             case Severity::fatal : { LOG(FATAL  ) << m_scope << " : " << string; break; }
+
+			default :
+			{
+				std::unreachable();
+			}
         }
 	}
 
@@ -117,6 +123,11 @@ private :
             case google::LogSeverity::ERROR   : { stream << "error |"; break; }
 
             case google::LogSeverity::FATAL   : { stream << "fatal |"; break; }
+
+			default :
+			{
+				std::unreachable();
+			}
         }
 	}
 

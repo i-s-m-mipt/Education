@@ -170,6 +170,11 @@ private :
             case Severity::error : { stream << " | error"; break; }
 
             case Severity::fatal : { stream << " | fatal"; break; }
+
+			default :
+			{
+				std::unreachable();
+			}
         }
 
 		stream << " | " << record[boost::log::expressions::message];

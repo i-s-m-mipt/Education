@@ -8,6 +8,10 @@
 //
 // content : Declaration enum class
 //
+// content : Expected Undefined Behavior
+//
+// content : Function std::unreachable
+//
 // content : Underlying Types
 //
 // content : Type Alias std::uint8_t
@@ -70,11 +74,7 @@ int main()
 
 		default :
 		{
-			std::print("main : selection (3)\n");
-
-		//  -------------------------------------
-
-			break;
+			std::unreachable();
 		}
 	}
 

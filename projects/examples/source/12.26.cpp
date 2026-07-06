@@ -16,6 +16,7 @@
 #include <print>
 #include <string>
 #include <string_view>
+#include <utility>
 #include <vector>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -129,6 +130,11 @@ public :
             case '+' : { return      x; }
 
             case '-' : { return -1 * x; }
+
+            default :
+			{
+				std::unreachable();
+			}
         }
 
         return x;
@@ -149,6 +155,11 @@ public :
             case '*' : { return x * y; }
 
             case '/' : { return x / y; }
+
+            default :
+			{
+				std::unreachable();
+			}
         }
 
         return x;
