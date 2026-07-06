@@ -29,7 +29,7 @@ template < std::ranges::view V, typename T > class Task
 {
 public :
 
-	void operator()(V view, std::promise < T > && promise) const
+	static void operator()(V view, std::promise < T > && promise)
 	{
 		promise.set_value(*std::ranges::fold_left_first(view, std::plus()));
 	}

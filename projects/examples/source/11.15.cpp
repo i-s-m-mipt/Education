@@ -334,21 +334,21 @@ class Visitor
 {
 public :
 
-    void operator()(int x) const
+    static void operator()(int x)
     {
         std::print("Visitor::operator() : x = {}\n", x);
     }
 
 //  --------------------------------------------------------------
 
-    void operator()(double x) const
+    static void operator()(double x)
     {
         std::print("Visitor::operator() : x = {}\n", x);
     }
 
 //  --------------------------------------------------------------
 
-    void operator()(std::string const & string) const
+    static void operator()(std::string const & string)
     {
         std::print("Visitor::operator() : string = {}\n", string);
     }

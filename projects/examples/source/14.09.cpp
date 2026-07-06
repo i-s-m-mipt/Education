@@ -37,7 +37,7 @@ template < std::ranges::view V, typename T > class Task
 {
 public :
 
-	void operator()(V view, T & sum) const
+	static void operator()(V view, T & sum)
 	{
 		sum = *std::ranges::fold_left_first(view, std::plus());
 	}

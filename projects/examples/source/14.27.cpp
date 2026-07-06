@@ -56,7 +56,7 @@ private :
     {
     public :
 
-        void operator()() const
+        static void operator()()
         {
             std::print("Entity::Callback::operator()\n");
         }

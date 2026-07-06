@@ -29,7 +29,7 @@ template < std::ranges::view V > class Task
 {
 public :
 
-	auto operator()(V view) const
+	static auto operator()(V view)
 	{
 		return *std::ranges::fold_left_first(view, std::plus());
 	}

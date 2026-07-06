@@ -4,7 +4,7 @@
 
 ///////////////////////////////////////////////////////////////////
 
-// content : User-Defined Nested Static Arrays
+// content : Multidimensional Subscript Operator
 
 ///////////////////////////////////////////////////////////////////
 
@@ -16,29 +16,9 @@ template < typename T, std::size_t S1, std::size_t S2 > class Array
 {
 public :
 
-	class View
+	auto & operator[](std::size_t i, std::size_t j) 
 	{
-	public :
-
-		View(T (&array)[S2]) : m_array(array) {}
-
-	//  ----------------------------------------
-
-		auto & operator[](std::size_t index)
-		{
-			return m_array[index];
-		}
-
-	private :
-
-		T (&m_array)[S2];
-	};
-
-//  --------------------------------------------
-
-	auto operator[](std::size_t index)
-	{
-		return View(m_array[index]);
+        return m_array[i][j];
 	}
 
 private :
@@ -62,7 +42,7 @@ int main()
     {
         for (auto j = 0uz; j < size; ++j)
         {
-            array[i][j] = j + 1;
+            array[i, j] = j + 1;
         }
     }
 }

@@ -47,7 +47,7 @@ class Visitor_v1
 {
 public :
 
-    void operator()(Client const & client) const
+    static void operator()(Client const & client)
     {
         client.test();
     }
@@ -59,7 +59,7 @@ class Visitor_v2
 {
 public :
 
-    void operator()(Server const & server) const
+    static void operator()(Server const & server)
     {
         server.test();
     }

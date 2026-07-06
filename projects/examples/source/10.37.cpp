@@ -25,7 +25,7 @@ class Less
 {
 public :
 
-	auto operator()(Entity const & lhs, Entity const & rhs) const
+	static auto operator()(Entity const & lhs, Entity const & rhs)
 	{
 		return lhs.x < rhs.x;
 	}

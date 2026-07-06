@@ -32,7 +32,7 @@ template < typename T > class Visitor
 {
 public :
 
-    void operator()(std::any const & any) const
+    static void operator()(std::any const & any)
     {
         std::print("Visitor::operator() : any = {}\n", std::any_cast < T > (any));
     }

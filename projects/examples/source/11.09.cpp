@@ -72,12 +72,12 @@ class Functor
 {
 public :
 
-	__attribute__((noinline)) auto operator()(int x, int y) const;
+	__attribute__((noinline)) static auto operator()(int x, int y);
 };
 
 /////////////////////////////////////////////////////////////////////////////////
 
-auto Functor::operator()(int x, int y) const
+auto Functor::operator()(int x, int y)
 {
 	return x + y;
 }

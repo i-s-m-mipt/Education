@@ -24,7 +24,7 @@ class Hash
 {
 public :
 
-	auto operator()(Entity const & entity) const
+	static auto operator()(Entity const & entity)
 	{
 		return std::hash < int > ()(entity.x);
 	}
@@ -36,7 +36,7 @@ class Equal
 {
 public :
 
-	auto operator()(Entity const & lhs, Entity const & rhs) const
+	static auto operator()(Entity const & lhs, Entity const & rhs)
 	{
 		return lhs.x == rhs.x;
 	}
