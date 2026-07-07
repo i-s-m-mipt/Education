@@ -1,374 +1,279 @@
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
-// content : Free List Allocator
-//
-// content : Memory Fragmentation Policies
-//
-// content : Wrapper std::pair
-//
-// content : Function std::make_pair
+// content : List Allocator
 //
 // content : Microbenchmarking
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <cstddef>
-#include <memory>
+#include <iterator>
 #include <new>
 #include <print>
-#include <random>
-#include <utility>
 #include <vector>
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 #include <benchmark/benchmark.h>
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 class Allocator
 {
 public :
 
-    Allocator(std::size_t size) : m_size(size)
-    {
-        assert(m_size >= sizeof(Node) + 1);
+	Allocator(std::size_t size, std::size_t step) : m_size(size), m_step(step)
+	{
+		assert(m_size % m_step == 0 && m_step >= sizeof(Node));
 
-        m_array = operator new(m_size, std::align_val_t(s_alignment));
+		make_array();
 
-	    m_head = get_node(m_array);
+		m_array = m_head;
+	}
 
-        m_head->size = m_size - sizeof(Header);
-
-        m_head->next = nullptr;
-    }
-
-//  -------------------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 
    ~Allocator()
-    {
-        operator delete(m_array, m_size, std::align_val_t(s_alignment));
-    }
+	{
+		for (auto array : m_arrays)
+		{
+			operator delete(array, m_size, std::align_val_t(s_alignment));
+		}
+	}
 
-//  -------------------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 
-    auto allocate(std::size_t size) -> void *
-    {
-	    void * end = get_byte(m_array) + sizeof(Header) + size, * next = end;
+	auto allocate() -> void *
+	{
+		if (!m_head)
+		{
+			if (m_offset == std::size(m_arrays))
+			{
+				make_array();
+			}
+			else
+			{
+				m_head = get_node(m_arrays[++m_offset - 1]);
+			}
+		}
 
-	    auto free = 2 * alignof(Header);
+		auto node = m_head;
 
-        if (next = std::align(alignof(Header), sizeof(Header), next, free); next)
-        {
-            auto padding = get_byte(next) - get_byte(end);
+		if (!node->next)
+		{
+			auto next = get_byte(node) + m_step;
 
-            if (auto [current, previous] = find(size + padding); current)
-            {
-                if (current->size >= size + padding + sizeof(Node) + 1)
-                {
-                    auto step = sizeof(Header) + size + padding;
+			if (next != get_byte(m_arrays[m_offset - 1]) + m_size)
+			{
+				m_head = get_node(next);
 
-                    auto node = get_node(get_byte(current) + step);
+				m_head->next = nullptr;
+			}
+			else
+			{
+				m_head = m_head->next;
+			}
+		}
+		else
+		{
+			m_head = m_head->next;
+		}
 
-                    node->size = current->size - step;
+		return node;
+	}
 
-                    node->next = current->next;
+//  -----------------------------------------------------------------------------------
 
-                    current->next = node;
-                }
-                else
-                {
-                    padding += current->size - size - padding;
-                }
+	void deallocate(void * x)
+	{
+		auto node = get_node(x);
 
-                if (!previous)
-                {
-                    m_head = current->next;
-                }
-                else
-                {
-                    previous->next = current->next;
-                }
+		node->next = m_head;
 
-                auto header = get_header(current);
+		m_head = node;
+	}
 
-                header->size = size + padding;
+//  -----------------------------------------------------------------------------------
 
-                return get_byte(current) + sizeof(Header);
-            }
-        }
+	void show() const
+	{
+		std::print("Allocator::show : ");
 
-        return nullptr;
-    }
+		std::print
+		(
+			"m_array = {:018} m_size = {} m_step = {} m_offset = {} m_head = {:018}\n",
 
-//  -------------------------------------------------------------------------------------------
-
-    void deallocate(void * x)
-    {
-        auto node = get_node(get_byte(x) - sizeof(Header));
-
-        Node * previous = nullptr, * current = m_head;
-
-        while (current)
-        {
-            if (node < current)
-            {
-                node->next = current;
-
-                if (!previous)
-                {
-                    m_head = node;
-                }
-                else
-                {
-                    previous->next = node;
-                }
-
-                break;
-            }
-
-            previous = current;
-
-            current  = current->next;
-        }
-
-        merge(previous, node);
-    }
-
-//  -------------------------------------------------------------------------------------------
-
-    void show() const
-    {
-        std::print
-        (
-            "Chain_Allocator::show : m_array = {:018} m_size = {} m_head = {:018} ",
-
-            m_array, m_size, static_cast < void * > (m_head)
-        );
-
-        if (m_head->next)
-        {
-            std::print("m_head->next = {:018}\n", static_cast < void * > (m_head->next));
-        }
-        else
-        {
-            std::print("\n");
-        }
-    }
+			m_array, m_size, m_step, m_offset, static_cast < void * > (m_head)
+		);
+	}
 
 private :
 
-    struct Node
-    {
-        std::size_t size = 0;
+	struct Node
+	{
+		Node * next = nullptr;
+	};
 
-        Node * next = nullptr;
-    };
+//  -----------------------------------------------------------------------------------
 
-//  -------------------------------------------------------------------------------------------
-
-	struct alignas(std::max_align_t) Header
-    {
-        std::size_t size = 0;
-    };
-
-//  -------------------------------------------------------------------------------------------
-
-    auto get_byte(void * x) const -> std::byte *
+	auto get_byte(void * x) const -> std::byte *
 	{
 		return static_cast < std::byte * > (x);
 	}
 
-//  -------------------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 
-    auto get_node(void * x) const -> Node *
+	auto get_node(void * x) const -> Node *
 	{
 		return static_cast < Node * > (x);
 	}
 
-//  -------------------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 
-    auto get_header(void * x) const -> Header *
+	void make_array()
 	{
-		return static_cast < Header * > (x);
+		m_head = get_node(operator new(m_size, std::align_val_t(s_alignment)));
+
+		m_head->next = nullptr;
+
+		++m_offset;
+
+		m_arrays.push_back(m_head);
 	}
 
-//  -------------------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 
-    auto find(std::size_t size) const -> std::pair < Node *, Node * >
-    {
-        Node * current = m_head, * previous = nullptr;
+	void * m_array = nullptr;
 
-	    while (current && size > current->size)
-        {
-            previous = current;
+	std::size_t m_size = 0, m_step = 0, m_offset = 0;
 
-            current  = current->next;
-        }
+	Node * m_head = nullptr;
 
-        return std::make_pair(current, previous);
-    }
+	std::vector < void * > m_arrays;
 
-//  -------------------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 
-	void merge(Node * previous, Node * node) const
-    {
-	    if (node->next && get_byte(node) + sizeof(Header) + node->size == get_byte(node->next))
-	    {
-		    node->size += sizeof(Header) + node->next->size;
-
-		    node->next = node->next->next;
-	    }
-
-	    if (previous && get_byte(previous) + sizeof(Header) + previous->size == get_byte(node))
-	    {
-		    previous->size += sizeof(Header) + node->size;
-
-		    previous->next = node->next;
-	    }
-    }
-
-//  -------------------------------------------------------------------------------------------
-
-    void * m_array = nullptr;
-
-    std::size_t m_size = 0;
-
-    Node * m_head = nullptr;
-
-//  -------------------------------------------------------------------------------------------
-
-    static inline auto s_alignment = alignof(std::max_align_t);
+	static inline auto s_alignment = alignof(std::max_align_t);
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state)
 {
 	auto kb = 1uz << 10, mb = 1uz << 20;
 
-    std::uniform_int_distribution distribution(1, 16);
-
-    std::default_random_engine engine;
-
-    std::vector < std::pair < void *, std::size_t > > vector(kb);
+	std::vector < void * > vector(kb, nullptr);
 
 	for (auto element : state)
 	{
 		for (auto i = 0uz; i < kb; ++i)
-        {
-            vector[i].second = distribution(engine) * mb;
+		{
+			vector[i] = operator new(mb);
+		}
 
-            vector[i].first  = operator new(vector[i].second);
-        }
+		for (auto i = 0uz; i < kb; i += 2)
+		{
+			operator delete(vector[i], mb);
+		}
 
-		for (auto i = 0uz; i < kb; i += 32)
-        {
-            operator delete(vector[i].first, vector[i].second);
-        }
-
-		for (auto i = 0uz; i < kb; i += 32)
-        {
-            vector[i].second = distribution(engine) * mb;
-
-            vector[i].first  = operator new(vector[i].second);
-        }
+		for (auto i = 0uz; i < kb; i += 2)
+		{
+			vector[i] = operator new(mb);
+		}
 
 		for (auto i = 0uz; i < kb; ++i)
-        {
-            operator delete(vector[i].first, vector[i].second);
-        }
+		{
+			operator delete(vector[i], mb);
+		}
 
-        benchmark::DoNotOptimize(vector);
+		benchmark::DoNotOptimize(vector);
 	}
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state)
 {
 	auto kb = 1uz << 10, mb = 1uz << 20, gb = 1uz << 30;
 
-    std::uniform_int_distribution distribution(1, 16);
-
-    std::default_random_engine engine;
-
-    std::vector < void * > vector(kb, nullptr);
+	std::vector < void * > vector(kb, nullptr);
 
 	for (auto element : state)
 	{
-		Allocator allocator(16 * gb);
+		Allocator allocator(gb, mb);
 
 		for (auto i = 0uz; i < kb; ++i)
-        {
-            vector[i] = allocator.allocate(distribution(engine) * mb);
-        }
+		{
+			vector[i] = allocator.allocate();
+		}
 
-		for (auto i = 0uz; i < kb; i += 32)
-        {
-            allocator.deallocate(vector[i]);
-        }
+		for (auto i = 0uz; i < kb; i += 2)
+		{
+			allocator.deallocate(vector[i]);
+		}
 
-		for (auto i = 0uz; i < kb; i += 32)
-        {
-            vector[i] = allocator.allocate(distribution(engine) * mb);
-        }
+		for (auto i = 0uz; i < kb; i += 2)
+		{
+			vector[i] = allocator.allocate();
+		}
 
 		for (auto i = 0uz; i < kb; ++i)
-        {
-            allocator.deallocate(vector[i]);
-        }
+		{
+			allocator.deallocate(vector[i]);
+		}
 
-        benchmark::DoNotOptimize(vector);
+		benchmark::DoNotOptimize(vector);
 	}
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 BENCHMARK(test_v1);
 
 BENCHMARK(test_v2);
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Allocator allocator(1 << 10);
+	Allocator allocator(32, 8);
 
-//  --------------------------------------------------
+//  ------------------------------------------------
 
-    allocator.show();          allocator.allocate(16);
+	allocator.show();          allocator.allocate();
 
-    allocator.show(); auto x = allocator.allocate(16);
+	allocator.show(); auto x = allocator.allocate();
 
-    allocator.show(); auto y = allocator.allocate(16);
+	allocator.show(); auto y = allocator.allocate();
 
-    allocator.show();          allocator.allocate(16);
+	allocator.show();          allocator.allocate();
 
-//  --------------------------------------------------
+	allocator.show();          allocator.allocate();
 
-    allocator.show(); allocator.deallocate(y);
+//  ------------------------------------------------
 
-    allocator.show(); allocator.deallocate(x);
+	allocator.show(); allocator.deallocate(x);
 
-//  --------------------------------------------------
+	allocator.show(); allocator.deallocate(y);
 
-    allocator.show(); auto z = allocator.allocate(32);
+//  ------------------------------------------------
 
-    allocator.show();
+	allocator.show(); auto z = allocator.allocate();
 
-//  --------------------------------------------------
+	allocator.show();
 
-    assert(z == x);
+//  ------------------------------------------------
 
-//  --------------------------------------------------
+	assert(z == y);
 
-    benchmark::RunSpecifiedBenchmarks();
+//  ------------------------------------------------
+
+	benchmark::RunSpecifiedBenchmarks();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////

@@ -1,66 +1,58 @@
-///////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-///////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
-// content : Overloading Functions operator new and operator delete
+// content : Non-Trivial Union Data Members
 
-///////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
-#include <cstddef>
-#include <new>
-#include <print>
+#include <memory>
+#include <string>
 
-///////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
-template < typename D > class Entity
+union Entity
 {
-public :
+	Entity() : string_1() {}
 
-	static auto operator new(std::size_t size) -> void *
-	{
-		std::print("Entity::operator new\n");
+//  ------------------------
 
-		return ::operator new(size);
-	}
+   ~Entity() {}
 
-//  ----------------------------------------------------
+//  ------------------------
 
-	static void operator delete(void * x)
-	{
-		std::print("Entity::operator delete\n");
+	std::string string_1;
 
-		::operator delete(x);
-	}
-
-protected :
-
-    Entity() = default;
+	std::string string_2;
 };
 
-///////////////////////////////////////////////////////////////////
-
-class Client : private Entity < Client >
-{
-public :
-
-	Client() { std::print("Client:: Client\n"); }
-
-   ~Client() { std::print("Client::~Client\n"); }
-
-//  ---------------------------------------------
-
-    using Entity < Client > ::operator new;
-
-	using Entity < Client > ::operator delete;
-};
-
-///////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    delete new Client;
+    Entity entity;
+
+//  -----------------------------------------------------------------
+
+	entity.string_1 = "aaaaa";
+
+//  -----------------------------------------------------------------
+
+	std::destroy_at(&entity.string_1);
+
+//  -----------------------------------------------------------------
+
+	auto string = std::construct_at(&entity.string_2, std::string());
+
+//  -----------------------------------------------------------------
+
+	*string = "aaaaa";
+
+//  -----------------------------------------------------------------
+
+	std::destroy_at(&entity.string_2);
 }
 
-///////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////

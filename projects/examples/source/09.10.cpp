@@ -1,83 +1,68 @@
-/////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-/////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
-// content : Exclusive Ownership
+// content : Pointer std::unique_ptr
+//
+// content : Move Semantics
+//
+// content : Function std::make_unique
+//
+// content : Pointer std::auto_ptr
 
-/////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
+#include <memory>
+#include <print>
 #include <utility>
 
-/////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
-#include <boost/noncopyable.hpp>
-
-/////////////////////////////////////////////////////////////////
-
-template < typename T > class Unique : private boost::noncopyable
+class Entity
 {
 public :
 
-    Unique(T * x = nullptr) : m_x(x) {}
+	virtual ~Entity() = default;
 
-//  -------------------------------------------------
+//  ---------------------------------
 
-    Unique(Unique && other) : m_x(other.release()) {}
-
-//  -------------------------------------------------
-
-   ~Unique()
-    {
-        reset();
-    }
-
-//  -------------------------------------------------
-
-    auto & operator=(Unique && other)
-    {
-        reset(other.release());
-
-        return *this;
-    }
-
-//  -------------------------------------------------
-
-    auto release()
-    {
-        return std::exchange(m_x, nullptr);
-    }
-
-//  -------------------------------------------------
-
-    void reset(T * x = nullptr)
-    {
-        delete std::exchange(m_x, x);
-    }
-
-private :
-
-    T * m_x = nullptr;
+	virtual void test() const
+	{
+		std::print("Entity::test\n");
+	}
 };
 
-/////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
+class Client : public Entity
+{
+public :
+
+	void test() const override
+	{
+		std::print("Client::test\n");
+	}
+};
+
+///////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Unique < int > unique_1;
+	auto client_1 = std::make_unique < Client > ();
 
-    Unique < int > unique_2(new auto(2));
+//	auto client_2 = client_1; // error
 
-//  Unique < int > unique_3 = unique_2; // error
+	auto client_3 = std::move(client_1);
 
-    Unique < int > unique_4 = std::move(unique_2);
+//  -------------------------------------------------------------------
 
-//  ----------------------------------------------
+	std::unique_ptr < Entity > entity = std::make_unique < Client > ();
 
-//  unique_3 = unique_2; // error
+//  -------------------------------------------------------------------
 
-    unique_4 = std::move(unique_2);
+	entity->test();
 }
 
-/////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////

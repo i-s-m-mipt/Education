@@ -1,51 +1,129 @@
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Virtual and Physical Memory
+// content : Iterator Facades
 //
-// content : Memory Segments
-//
-// content : Stack, Heap, Data, BSS and Text Segments
-//
-// content : Memory Mappings
-//
-// content : Tools pgrep and pmap
+// content : Library Boost.Iterator
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-// support : pmap -x $(pgrep 09.17)
+#include <iterator>
+#include <memory>
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <iostream>
-#include <print>
+#include <boost/iterator/iterator_categories.hpp>
+#include <boost/iterator/iterator_facade.hpp>
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename T > class List
+{
+private :
+
+	struct Node
+	{
+		T x = T();
+
+		std::shared_ptr < Node > next;
+	};
+
+public :
+
+	class Iterator : public boost::iterator_facade < Iterator, T, boost::forward_traversal_tag >
+	{
+	public :
+
+		using iterator_category = std::forward_iterator_tag;
+
+	//  -------------------------------------------------------------------
+
+		Iterator(std::shared_ptr < Node > node = nullptr) : m_node(node) {}
+
+	//  -------------------------------------------------------------------
+
+		void increment()
+		{
+			m_node = m_node->next;
+		}
+
+	//  -------------------------------------------------------------------
+
+		auto & dereference() const
+		{
+			return m_node->x;
+		}
+
+	//  -------------------------------------------------------------------
+
+		auto equal(Iterator const & other) const
+		{
+			return m_node == other.m_node;
+		}
+
+	private :
+
+		friend boost::iterator_core_access;
+
+	//  -------------------------------------------------------------------
+
+		std::shared_ptr < Node > m_node;
+	};
+
+//  --------------------------------------------------------------------------------------------
+
+	auto begin() const { return Iterator(m_head); }
+
+	auto end  () const { return Iterator(      ); }
+
+//  --------------------------------------------------------------------------------------------
+
+	void push_back(T x)
+	{
+		auto node = std::make_shared < Node > (x, nullptr);
+
+		if (m_head)
+		{
+			auto tail = m_head;
+
+			while (tail->next)
+			{
+				tail = tail->next;
+			}
+
+			tail->next = node;
+		}
+		else
+		{
+			m_head = node;
+		}
+	}
+
+private :
+
+	std::shared_ptr < Node > m_head;
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    auto const size = 1uz << 20;
+	List < int > list;
 
-//  ---------------------------------------------------
+//  -------------------------------------------------------------------------------
 
-    [[maybe_unused]]        int array_1[size]{};
+	list.push_back(1);
 
-    [[maybe_unused]] static int array_2[size]{};
+//  -------------------------------------------------------------------------------
 
-//  ---------------------------------------------------
+	for (auto iterator = std::begin(list); iterator != std::end(list); ++iterator);
 
-	auto array_3 = new int[1 << 30]{};
+//  -------------------------------------------------------------------------------
 
-//  ---------------------------------------------------
-
-	std::print("main : enter char : "); std::cin.get();
-
-//  ---------------------------------------------------
-
-    delete[] array_3;
+	for ([[maybe_unused]] auto element : list);
 }
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////

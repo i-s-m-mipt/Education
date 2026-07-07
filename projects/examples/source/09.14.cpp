@@ -1,36 +1,41 @@
-/////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-/////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Iterator Invalidation
+// content : Constant Iterators
 //
-// content : Standard Library Debug Mode
+// content : Functions std::cbegin and std::cend
+//
+// content : Reverse Iterators
+//
+// content : Functions std::rbegin and std::rend
+//
+// content : Constant Reverse Iterators
+//
+// content : Functions std::crbegin and std::crend
 
-/////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
 #include <iterator>
 #include <vector>
 
-/////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
 	std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-//  -----------------------------------------------------
+//  ---------------------------------------------------------------------------------------
 
-	auto iterator = std::begin(vector);
+	for (auto iterator = std::  begin(vector); iterator != std::  end(vector); ++iterator);
 
-//  -----------------------------------------------------
+	for (auto iterator = std:: cbegin(vector); iterator != std:: cend(vector); ++iterator);
 
-	vector.push_back(1);
+	for (auto iterator = std:: rbegin(vector); iterator != std:: rend(vector); ++iterator);
 
-//  -----------------------------------------------------
-
-	assert(*iterator == 1); // support : -D_GLIBCXX_DEBUG
+	for (auto iterator = std::crbegin(vector); iterator != std::crend(vector); ++iterator);
 }
 
-/////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////

@@ -1,48 +1,44 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
-// content : Linear Allocator Adapter
+// content : Stack-Based Linear Allocator
+//
+// content : Container std::array
+//
+// content : Microbenchmarking
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
+#include <array>
 #include <cstddef>
+#include <iterator>
 #include <memory>
 #include <new>
 #include <print>
 #include <vector>
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
-class Storage
+#include <benchmark/benchmark.h>
+
+//////////////////////////////////////////////////////////////////////////////////
+
+template < std::size_t S > class Allocator
 {
 public :
 
-	Storage(std::size_t size) : m_size(size)
-	{
-		m_array = operator new(m_size, std::align_val_t(s_alignment));
-	}
-
-//  ------------------------------------------------------------------------------
-
-   ~Storage()
-	{
-		operator delete(m_array, m_size, std::align_val_t(s_alignment));
-	}
-
-//  ------------------------------------------------------------------------------
-
 	auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
 	{
-		void * begin = get_byte(m_array) + m_offset;
+		void * begin = std::begin(m_array) + m_offset;
 
-		auto free = m_size - m_offset;
+		auto free = S - m_offset;
 
 		if (begin = std::align(alignment, size, begin, free); begin)
 		{
-			m_offset = m_size - free + size;
+			m_offset = S - free + size;
 
 			return begin;
 		}
@@ -54,96 +50,94 @@ public :
 
 //  ------------------------------------------------------------------------------
 
-    void deallocate(void *, std::size_t) const {}
-
-//  ------------------------------------------------------------------------------
-
 	void show() const
 	{
-		std::print
-		(
-			"Storage::show : m_array = {:018} m_size = {} m_offset = {:0>4}\n",
-
-			m_array, m_size, m_offset
-		);
+		std::print("Allocator::show : S = {} m_offset = {:0>4}\n", S, m_offset);
 	}
 
 private :
 
-	auto get_byte(void * x) const -> std::byte *
-	{
-		return static_cast < std::byte * > (x);
-	}
+    alignas(std::max_align_t) std::array < std::byte, S > m_array = {};
 
-//  ------------------------------------------------------------------------------
-
-	void * m_array = nullptr;
-
-	std::size_t m_size = 0, m_offset = 0;
+	std::size_t m_offset = 0;
 
 //  ------------------------------------------------------------------------------
 
 	static inline auto s_alignment = alignof(std::max_align_t);
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > class Allocator
+void test_v1(benchmark::State & state)
 {
-public :
+	auto kb = 1uz << 10;
 
-    using value_type = T;
+	std::vector < void * > vector(kb, nullptr);
 
-//  ------------------------------------------------------------------------------------------------
+	for (auto element : state)
+	{
+		for (auto i = 0uz; i < kb; ++i)
+		{
+			vector[i] = operator new(kb);
+		}
 
-    Allocator(Storage & storage) : m_storage(&storage) {}
+		for (auto i = 0uz; i < kb; ++i)
+		{
+			operator delete(vector[i]);
+		}
 
-//  ------------------------------------------------------------------------------------------------
+		benchmark::DoNotOptimize(vector);
+	}
+}
 
-    template < typename U > Allocator(Allocator < U > const & other) : m_storage(other.m_storage) {}
+//////////////////////////////////////////////////////////////////////////////////
 
-//  ------------------------------------------------------------------------------------------------
+void test_v2(benchmark::State & state)
+{
+	auto kb = 1uz << 10;
 
-    auto allocate(std::size_t size) const
-    {
-        return static_cast < T * > (m_storage->allocate(size * sizeof(T), alignof(T)));
-    }
+	std::vector < void * > vector(kb, nullptr);
 
-//  ------------------------------------------------------------------------------------------------
+	for (auto element : state)
+	{
+		Allocator < 1 << 20 > allocator;
 
-    void deallocate(T * x, std::size_t size) const
-    {
-        m_storage->deallocate(x, size * sizeof(T));
-    }
+		for (auto i = 0uz; i < kb; ++i)
+		{
+			vector[i] = allocator.allocate(kb);
+		}
 
-private :
+		benchmark::DoNotOptimize(vector);
+	}
+}
 
-    Storage * m_storage = nullptr;
-};
+//////////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+BENCHMARK(test_v1);
+
+BENCHMARK(test_v2);
+
+//////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Storage storage(1 << 10);
+	Allocator < 1 << 10 > allocator;
 
-//  ---------------------------------------------------------
+//  -------------------------------------------
 
-    Allocator < int > allocator(storage);
+	allocator.show(); allocator.allocate(1, 1);
 
-//  ---------------------------------------------------------
+	allocator.show(); allocator.allocate(2, 2);
 
-    std::vector < int, Allocator < int > > vector(allocator);
+	allocator.show(); allocator.allocate(4, 4);
 
-//  ---------------------------------------------------------
+	allocator.show(); allocator.allocate(8, 8);
 
-	vector = { 1, 2, 3, 4, 5 };
+	allocator.show();
 
-//  ---------------------------------------------------------
+//  -------------------------------------------
 
-    storage.show(); vector.push_back(1);
-
-    storage.show();
+    benchmark::RunSpecifiedBenchmarks();
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////

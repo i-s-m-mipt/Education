@@ -1,134 +1,36 @@
-///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
-// content : List Iterators
+// content : Iterator Invalidation
 //
-// content : Operator ->
-//
-// content : Range-Based Statement for
+// content : Standard Library Debug Mode
 
-///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
+#include <cassert>
 #include <iterator>
-#include <memory>
+#include <vector>
 
-///////////////////////////////////////////////////////////////////////////////////
-
-template < typename T > class List
-{
-private :
-
-	struct Node
-	{
-		T x = T();
-
-		std::shared_ptr < Node > next;
-	};
-
-public :
-
-	class Iterator
-	{
-	public :
-
-		using iterator_category = std::forward_iterator_tag;
-
-	//  -------------------------------------------------------------------
-
-		Iterator(std::shared_ptr < Node > node = nullptr) : m_node(node) {}
-
-	//  -------------------------------------------------------------------
-
-		auto const operator++(int)
-		{
-			auto x = *this;
-
-			m_node = m_node->next;
-
-			return x;
-		}
-
-	//  -------------------------------------------------------------------
-
-		auto & operator++()
-		{
-			m_node = m_node->next;
-
-			return *this;
-		}
-
-	//  -------------------------------------------------------------------
-
-		auto & operator* () const { return  m_node->x; }
-
-		auto   operator->() const { return &m_node->x; }
-
-	//  -------------------------------------------------------------------
-
-		friend auto operator==(Iterator const & lhs, Iterator const & rhs)
-		{
-			return lhs.m_node == rhs.m_node;
-		}
-
-	private :
-
-		std::shared_ptr < Node > m_node;
-	};
-
-//  -----------------------------------------------------------------------
-
-	auto begin() const { return Iterator(m_head); }
-
-	auto end  () const { return Iterator(      ); }
-
-//  -----------------------------------------------------------------------
-
-	void push_back(T x)
-	{
-		auto node = std::make_shared < Node > (x, nullptr);
-
-		if (m_head)
-		{
-			auto tail = m_head;
-
-			while (tail->next)
-			{
-				tail = tail->next;
-			}
-
-			tail->next = node;
-		}
-		else
-		{
-			m_head = node;
-		}
-	}
-
-private :
-
-	std::shared_ptr < Node > m_head;
-};
-
-///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 int main()
 {
-	List < int > list;
+	std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-//  -------------------------------------------------------------------------------
+//  -----------------------------------------------------
 
-	list.push_back(1);
+	auto iterator = std::begin(vector);
 
-//  -------------------------------------------------------------------------------
+//  -----------------------------------------------------
 
-	for (auto iterator = std::begin(list); iterator != std::end(list); ++iterator);
+	vector.push_back(1);
 
-//  -------------------------------------------------------------------------------
+//  -----------------------------------------------------
 
-	for ([[maybe_unused]] auto element : list);
+	assert(*iterator == 1); // support : -D_GLIBCXX_DEBUG
 }
 
-///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////

@@ -1,67 +1,43 @@
-/////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-/////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-// content : Type Specifier alignas
+// content : Memory Access Granularity
 //
-// content : Microbenchmarking
+// content : Data Alignment
+//
+// content : Type Alias std::int8_t
+//
+// content : Operator alignof
+//
+// content : Type Trait std::has_unique_object_representations
 
-/////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 #include <cstdint>
-#include <vector>
+#include <type_traits>
 
-/////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-#include <benchmark/benchmark.h>
+struct Entity_v1 { std::int8_t x = 0; std::int32_t y = 0; std::int16_t z = 0; };
 
-/////////////////////////////////////////////////////////
+struct Entity_v2 { std::int8_t x = 0; std::int16_t y = 0; std::int32_t z = 0; };
 
-struct            Entity_v1 { std::int8_t x = 0; };
-
-struct alignas(8) Entity_v2 { std::int8_t x = 0; };
-
-/////////////////////////////////////////////////////////
-
-void test(benchmark::State & state)
-{
-    auto argument = state.range(0);
-
-	auto size = 1uz << 10;
-
-	std::vector < Entity_v1 > entities_v1(size);
-
-	std::vector < Entity_v2 > entities_v2(size);
-
-    for (auto element : state)
-    {
-		for (auto i = 0uz; i < size; ++i)
-        {
-            switch (argument)
-            {
-                case 1 : { entities_v1[i].x = 1; break; }
-
-                case 2 : { entities_v2[i].x = 1; break; }
-            }
-        }
-
-        benchmark::DoNotOptimize(entities_v1);
-
-        benchmark::DoNotOptimize(entities_v2);
-    }
-}
-
-/////////////////////////////////////////////////////////
-
-BENCHMARK(test)->Arg(1)->Arg(2);
-
-/////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    benchmark::RunSpecifiedBenchmarks();
+	static_assert(sizeof(Entity_v1) == 12 && alignof(Entity_v1) == 4);
+
+	static_assert(sizeof(Entity_v2) ==  8 && alignof(Entity_v2) == 4);
+
+//  ------------------------------------------------------------------------
+
+	static_assert(!std::has_unique_object_representations_v < Entity_v1 > );
+
+	static_assert(!std::has_unique_object_representations_v < Entity_v2 > );
 }
 
-/////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////

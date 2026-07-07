@@ -1,68 +1,76 @@
-///////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-///////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 
-// content : Pointer std::unique_ptr
+// content : Embedded Reference Counting
 //
-// content : Move Semantics
-//
-// content : Function std::make_unique
-//
-// content : Pointer std::auto_ptr
+// content : Library Boost.SmartPointers
 
-///////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 
-#include <memory>
-#include <print>
-#include <utility>
+#include <cassert>
+#include <cstddef>
 
-///////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+
+#include <boost/intrusive_ptr.hpp>
+
+////////////////////////////////////////////////////////////
 
 class Entity
 {
 public :
 
-	virtual ~Entity() = default;
+    auto counter() const
+    {
+        return m_counter;
+    }
 
-//  ---------------------------------
+//  --------------------------------------------------------
 
-	virtual void test() const
-	{
-		std::print("Entity::test\n");
-	}
+    friend void intrusive_ptr_add_ref(Entity const * entity)
+    {
+        ++entity->m_counter;
+    }
+
+//  --------------------------------------------------------
+
+    friend void intrusive_ptr_release(Entity const * entity)
+    {
+        --entity->m_counter;
+
+        if (entity->m_counter == 0) 
+        {
+            delete entity;
+        }
+    }
+
+private :
+
+    mutable std::size_t m_counter = 0;
 };
 
-///////////////////////////////////////////////////////////////////////
-
-class Client : public Entity
-{
-public :
-
-	void test() const override
-	{
-		std::print("Client::test\n");
-	}
-};
-
-///////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 
 int main()
 {
-	auto client_1 = std::make_unique < Client > ();
+    boost::intrusive_ptr < Entity > entity_1(new Entity());
 
-//	auto client_2 = client_1; // error
+//  -------------------------------------------------------
 
-	auto client_3 = std::move(client_1);
+    assert(entity_1->counter() == 1);
 
-//  -------------------------------------------------------------------
+//  -------------------------------------------------------
 
-	std::unique_ptr < Entity > entity = std::make_unique < Client > ();
+	boost::intrusive_ptr < Entity > entity_2 = entity_1;
 
-//  -------------------------------------------------------------------
+//  -------------------------------------------------------
 
-	entity->test();
+	assert(entity_1->counter() == 2);
+
+	assert(entity_2->counter() == 2);
 }
 
-///////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////

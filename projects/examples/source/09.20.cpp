@@ -1,55 +1,67 @@
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
-// content : Error Handling
+// content : Type Specifier alignas
 //
-// content : Function std::set_new_handler
-//
-// content : Callback Functions
-//
-// content : Exception std::bad_alloc
-//
-// content : Object std::nothrow
+// content : Microbenchmarking
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
-#include <cassert>
-#include <iostream>
-#include <new>
-#include <print>
+#include <cstdint>
+#include <vector>
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
-void test()
+#include <benchmark/benchmark.h>
+
+/////////////////////////////////////////////////////////
+
+struct            Entity_v1 { std::int8_t x = 0; };
+
+struct alignas(8) Entity_v2 { std::int8_t x = 0; };
+
+/////////////////////////////////////////////////////////
+
+void test(benchmark::State & state)
 {
-    std::print("test\n");
+    auto argument = state.range(0);
 
-    std::set_new_handler(nullptr);
+	auto size = 1uz << 10;
+
+	std::vector < Entity_v1 > entities_v1(size);
+
+	std::vector < Entity_v2 > entities_v2(size);
+
+    for (auto element : state)
+    {
+		for (auto i = 0uz; i < size; ++i)
+        {
+            switch (argument)
+            {
+                case 1 : { entities_v1[i].x = 1; break; }
+
+                case 2 : { entities_v2[i].x = 1; break; }
+            }
+        }
+
+        benchmark::DoNotOptimize(entities_v1);
+
+        benchmark::DoNotOptimize(entities_v2);
+    }
 }
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+
+BENCHMARK(test)->Arg(1)->Arg(2);
+
+/////////////////////////////////////////////////////////
 
 int main()
 {
-    std::set_new_handler(test);
-
-//  -------------------------------------------------------
-
-    try
-    {
-        new int[1ull << 40]{};
-    }
-    catch (std::bad_alloc const & exception)
-    {
-        std::cerr << "main : " << exception.what() << '\n';
-    }
-
-//  -------------------------------------------------------
-
-    assert(new (std::nothrow) int[1ull << 40]{} == 0);
+    benchmark::RunSpecifiedBenchmarks();
 }
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////

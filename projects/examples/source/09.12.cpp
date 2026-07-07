@@ -1,140 +1,52 @@
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Iterator Traits
+// content : Iterators
 //
-// content : Helper std::iterator_traits
+// content : Functions std::begin and std::end
 //
-// content : Forward Iterators
-//
-// content : Tag std::forward_iterator_tag
-//
-// content : Concept std::forward_iterator
-//
-// content : Bidirectional Iterators
-//
-// content : Tag std::bidirectional_iterator_tag
-//
-// content : Concept std::bidirectional_iterator
-//
-// content : Random Access Iterators
-//
-// content : Tag std::random_access_iterator_tag
-//
-// content : Concept std::random_access_iterator
+// content : Functions std::distance, std::advance, std::next, std::prev and std::iter_swap
 
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <concepts>
 #include <iterator>
 #include <vector>
 
-/////////////////////////////////////////////////////////////////////////////////////////
-
-void advance(auto & iterator, int offset, std::forward_iterator_tag)
-{
-	if (offset > 0)
-	{
-		while (--offset >= 0)
-		{
-			++iterator;
-		}
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-void advance(auto & iterator, int offset, std::bidirectional_iterator_tag)
-{
-	if (offset > 0)
-	{
-		while (--offset >= 0)
-		{
-			++iterator;
-		}
-	}
-	else
-	{
-		while (++offset <= 0)
-		{
-			--iterator;
-		}
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-void advance(auto & iterator, int offset, std::random_access_iterator_tag)
-{
-	iterator += offset;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-template < typename I > void advance_v1(I & iterator, int offset)
-{
-    advance(iterator, offset, typename std::iterator_traits < I > ::iterator_category());
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-void advance_v2(std::forward_iterator auto & iterator, int offset)
-{
-	if (offset > 0)
-	{
-		while (--offset >= 0)
-		{
-			++iterator;
-		}
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-void advance_v2(std::bidirectional_iterator auto & iterator, int offset)
-{
-	if (offset > 0)
-	{
-		while (--offset >= 0)
-		{
-			++iterator;
-		}
-	}
-	else
-	{
-		while (++offset <= 0)
-		{
-			--iterator;
-		}
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-void advance_v2(std::random_access_iterator auto & iterator, int offset)
-{
-	iterator += offset;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
     std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
-//  ------------------------------------------------
+//  ----------------------------------------------------------
 
-	auto iterator = std::begin(vector);
+    auto iterator = std::begin(vector);
 
-//  ------------------------------------------------
+//  ----------------------------------------------------------
 
-	advance_v1(iterator, 1); assert(*iterator == 2);
+    assert(std::distance(iterator, std::end(vector)) == 5);
 
-	advance_v2(iterator, 1); assert(*iterator == 3);
+//  ----------------------------------------------------------
+
+    std::advance(iterator, 2);
+
+//  ----------------------------------------------------------
+
+    assert(*std::next(iterator, 1) == 4);
+
+    assert(*std::prev(iterator, 1) == 2);
+
+//  ----------------------------------------------------------
+
+    std::iter_swap(std::begin(vector), iterator);
+
+//  ----------------------------------------------------------
+
+    assert(vector == std::vector < int > ({ 3, 2, 1, 4, 5 }));
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////

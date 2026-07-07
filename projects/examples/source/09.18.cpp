@@ -1,43 +1,51 @@
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 
-// content : Memory Access Granularity
+// content : Virtual and Physical Memory
 //
-// content : Data Alignment
+// content : Memory Segments
 //
-// content : Type Alias std::int8_t
+// content : Stack, Heap, Data, BSS and Text Segments
 //
-// content : Operator alignof
+// content : Memory Mappings
 //
-// content : Type Trait std::has_unique_object_representations
+// content : Tools pgrep and pmap
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 
-#include <cstdint>
-#include <type_traits>
+// support : pmap -x $(pgrep 09.17)
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 
-struct Entity_v1 { std::int8_t x = 0; std::int32_t y = 0; std::int16_t z = 0; };
+#include <iostream>
+#include <print>
 
-struct Entity_v2 { std::int8_t x = 0; std::int16_t y = 0; std::int32_t z = 0; };
-
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 
 int main()
 {
-	static_assert(sizeof(Entity_v1) == 12 && alignof(Entity_v1) == 4);
+    auto const size = 1uz << 20;
 
-	static_assert(sizeof(Entity_v2) ==  8 && alignof(Entity_v2) == 4);
+//  ---------------------------------------------------
 
-//  ------------------------------------------------------------------------
+    [[maybe_unused]]        int array_1[size]{};
 
-	static_assert(!std::has_unique_object_representations_v < Entity_v1 > );
+    [[maybe_unused]] static int array_2[size]{};
 
-	static_assert(!std::has_unique_object_representations_v < Entity_v2 > );
+//  ---------------------------------------------------
+
+	auto array_3 = new int[1 << 30]{};
+
+//  ---------------------------------------------------
+
+	std::print("main : enter char : "); std::cin.get();
+
+//  ---------------------------------------------------
+
+    delete[] array_3;
 }
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////

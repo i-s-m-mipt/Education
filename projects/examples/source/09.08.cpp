@@ -25,14 +25,14 @@ public :
 
 //  --------------------------------
 
-    void increase()
+    void acquire()
     {
         ++m_counter;
     }
 
 //  --------------------------------
 
-    void decrease()
+    void release()
     {
         if (--m_counter == 0)
         {
@@ -61,7 +61,7 @@ public :
 
     Handler(T * x) : m_x(x)
     {
-        increase();
+        acquire();
     }
 
 private :
@@ -98,7 +98,7 @@ public :
     {
         if (m_controller)
         {
-            m_controller->increase();
+            m_controller->acquire();
         }
     }
 
@@ -115,7 +115,7 @@ public :
     {
         if (m_controller)
         {
-            m_controller->decrease();
+            m_controller->release();
         }
     }
 

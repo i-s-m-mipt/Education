@@ -1,81 +1,149 @@
-///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Memory Management
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Polymorphic Resources and Allocators
-//
-// content : Resource std::pmr::monotonic_buffer_resource
-//
-// content : Upstream Resources
-//
-// content : Function std::pmr::new_delete_resource
-//
-// content : Allocator std::pmr::polymorphic_allocator
-//
-// content : Container std::pmr::vector
+// content : Linear Allocator Adapter
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
 #include <cstddef>
-#include <iterator>
-#include <memory_resource>
+#include <memory>
 #include <new>
+#include <print>
 #include <vector>
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class Storage
+{
+public :
+
+	Storage(std::size_t size) : m_size(size)
+	{
+		m_array = operator new(m_size, std::align_val_t(s_alignment));
+	}
+
+//  ------------------------------------------------------------------------------
+
+   ~Storage()
+	{
+		operator delete(m_array, m_size, std::align_val_t(s_alignment));
+	}
+
+//  ------------------------------------------------------------------------------
+
+	auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
+	{
+		void * begin = get_byte(m_array) + m_offset;
+
+		auto free = m_size - m_offset;
+
+		if (begin = std::align(alignment, size, begin, free); begin)
+		{
+			m_offset = m_size - free + size;
+
+			return begin;
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
+
+//  ------------------------------------------------------------------------------
+
+    void deallocate(void *, std::size_t) const {}
+
+//  ------------------------------------------------------------------------------
+
+	void show() const
+	{
+		std::print
+		(
+			"Storage::show : m_array = {:018} m_size = {} m_offset = {:0>4}\n",
+
+			m_array, m_size, m_offset
+		);
+	}
+
+private :
+
+	auto get_byte(void * x) const -> std::byte *
+	{
+		return static_cast < std::byte * > (x);
+	}
+
+//  ------------------------------------------------------------------------------
+
+	void * m_array = nullptr;
+
+	std::size_t m_size = 0, m_offset = 0;
+
+//  ------------------------------------------------------------------------------
+
+	static inline auto s_alignment = alignof(std::max_align_t);
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename T > class Allocator
+{
+public :
+
+    using value_type = T;
+
+//  ------------------------------------------------------------------------------------------------
+
+    Allocator(Storage & storage) : m_storage(&storage) {}
+
+//  ------------------------------------------------------------------------------------------------
+
+    template < typename U > Allocator(Allocator < U > const & other) : m_storage(other.m_storage) {}
+
+//  ------------------------------------------------------------------------------------------------
+
+    auto allocate(std::size_t size) const
+    {
+        return static_cast < T * > (m_storage->allocate(size * sizeof(T), alignof(T)));
+    }
+
+//  ------------------------------------------------------------------------------------------------
+
+    void deallocate(T * x, std::size_t size) const
+    {
+        m_storage->deallocate(x, size * sizeof(T));
+    }
+
+private :
+
+    Storage * m_storage = nullptr;
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    auto size = 1uz << 10, alignment = alignof(std::max_align_t);
+	Storage storage(1 << 10);
 
-//  -------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------
 
-    auto array = static_cast < std::byte * > (operator new(size, std::align_val_t(alignment)));
+    Allocator < int > allocator(storage);
 
-//  -------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------
 
-    std::pmr::monotonic_buffer_resource resource(array, size, std::pmr::new_delete_resource());
+    std::vector < int, Allocator < int > > vector(allocator);
 
-//  -------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------
 
-    std::pmr::polymorphic_allocator < int > allocator(&resource);
+	vector = { 1, 2, 3, 4, 5 };
 
-//  -------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------
 
-    std::pmr::vector < int > vector(allocator);
+    storage.show(); vector.push_back(1);
 
-//  -------------------------------------------------------------------------------------------
-
-    vector = { 1, 2, 3, 4, 5 };
-
-//  -------------------------------------------------------------------------------------------
-
-    auto index = 0uz;
-
-//  -------------------------------------------------------------------------------------------
-
-    for (auto i = 0uz; i < std::size(vector); ++i, index += sizeof(int))
-    {
-        assert(std::to_integer < int > (array[index]) == vector[i]);
-    }
-
-//  -------------------------------------------------------------------------------------------
-
-    vector.push_back(1);
-
-//  -------------------------------------------------------------------------------------------
-
-    for (auto i = 0uz; i < std::size(vector); ++i, index += sizeof(int))
-    {
-        assert(std::to_integer < int > (array[index]) == vector[i]);
-    }
-
-//  -------------------------------------------------------------------------------------------
-
-    operator delete(array, size, std::align_val_t(alignment));
+    storage.show();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////

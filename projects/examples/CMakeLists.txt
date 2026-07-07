@@ -275,19 +275,20 @@ set(debug
     09.11
     09.12
     09.13
-    09.15
+    09.14
     09.16
     09.17
     09.18
-    09.20
+    09.19
     09.21
     09.22
     09.23
-    09.25
+    09.24
     09.26
     09.27
-    09.33
+    09.28
     09.34
+    09.35
 
     10.01
     10.02
@@ -546,11 +547,11 @@ target_link_libraries      (08.18 PRIVATE Python::Python)
 
 #############################################################################################
 
-add_executable             (09.14 source/09.14.cpp)
+add_executable             (09.15 source/09.15.cpp)
 
-target_compile_options     (09.14 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (09.15 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
-target_compile_definitions (09.14 PRIVATE _GLIBCXX_DEBUG)
+target_compile_definitions (09.15 PRIVATE _GLIBCXX_DEBUG)
 
 #############################################################################################
 
@@ -611,14 +612,14 @@ set(release
     08.34
     08.35
 
-    09.19
-    09.24
-    09.28
+    09.20
+    09.25
     09.29
     09.30
     09.31
     09.32
-    09.35
+    09.33
+    09.36
 
     10.11
     10.29
