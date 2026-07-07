@@ -41,7 +41,7 @@ public :
     {
         --entity->m_counter;
 
-        if (entity->m_counter == 0) 
+        if (entity->m_counter == 0)
         {
             delete entity;
         }
