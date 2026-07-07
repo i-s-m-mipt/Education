@@ -8,9 +8,9 @@
 #
 # sudo apt update
 #
-# sudo apt install g++-14 g++-14-multilib
+# sudo apt install g++-16 g++-16-multilib
 #
-# sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
+# sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-16 116
 #
 # sudo apt install git cmake
 #
