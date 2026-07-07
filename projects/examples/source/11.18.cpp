@@ -13,6 +13,7 @@
 //////////////////////////////////////////////////////////////////
 
 #include <algorithm>
+#include <numeric>
 #include <print>
 #include <random>
 #include <vector>

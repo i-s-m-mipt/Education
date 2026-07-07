@@ -22,7 +22,7 @@
 
 ////////////////////////////////////////////////////////////////////
 
-void test(int x, int * y, int & z)
+void test([[maybe_unused]] int x, int * y, int & z)
 {
 	++x, ++(*y), ++z;
 }
