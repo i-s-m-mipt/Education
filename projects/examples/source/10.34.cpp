@@ -8,6 +8,8 @@
 //
 // content : Red-Black Trees
 //
+// content : Time Complexity O(log(N))
+//
 // content : Sets
 //
 // content : Containers std::set and std::multiset

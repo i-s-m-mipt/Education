@@ -6,6 +6,8 @@
 
 // content : Hash Tables
 //
+// content : Time Complexities O(1) and O(N)
+//
 // content : Unordered Containers
 //
 // content : Containers std::std::unordered_set and std::unordered_multiset
