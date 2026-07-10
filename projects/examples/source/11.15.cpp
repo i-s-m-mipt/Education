@@ -35,7 +35,7 @@ template < typename D > using front = boost::mp11::mp_front < D > ;
 
 template
 <
-    typename T1, typename T2 
+    typename T1, typename T2
 >
 using Comparator = std::integral_constant < bool, sizeof(T1) < sizeof(T2) > ;
 

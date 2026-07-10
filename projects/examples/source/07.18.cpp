@@ -12,10 +12,6 @@
 //
 // content : Flag std::once_flag
 //
-// content : Smart Pointers
-//
-// content : Library Boost.SmartPtr
-//
 // content : Formatting Dates and Times
 //
 // content : Function std::format
@@ -40,9 +36,7 @@
 #include <boost/log/expressions.hpp>
 #include <boost/log/sinks.hpp>
 #include <boost/log/support/date_time.hpp>
-#include <boost/make_shared.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

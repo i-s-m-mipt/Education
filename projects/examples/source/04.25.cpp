@@ -53,7 +53,7 @@ template < typename D, std::size_t I > using at = boost::mp11::mp_at_c < D, I > 
 
 template
 <
-    typename T1, typename T2 
+    typename T1, typename T2
 >
 using Comparator = std::integral_constant < bool, sizeof(T1) < sizeof(T2) > ;
 
