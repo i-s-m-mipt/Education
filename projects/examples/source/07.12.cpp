@@ -1,141 +1,121 @@
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 // chapter : Debugging and Profiling Tools
 
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
-// content : Exception Safety Guarantees
-//
-// content : Exceptions in Constructors and Destructors
-//
-// content : Function Try Blocks
-//
-// content : Non-Throwing Functions
-//
-// content : Function Specifier noexcept
-//
-// content : Function std::uncaught_exceptions
-//
-// content : Operator noexcept
-//
-// content : Function std::empty
+// content : Exception-Safe Interfaces
 
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <print>
-#include <stdexcept>
-#include <type_traits>
-#include <utility>
 #include <vector>
+#include <utility>
 
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
-class Entity
+template < typename T, typename C = std::vector < T > > class Stack
 {
 public :
 
-	Entity(int x) try : m_x(x)
+	void push(T x)
 	{
-		if (m_x < 0)
-		{
-			throw std::runtime_error("error");
-		}
-	}
-	catch (...)
-	{
-		uninitialize();
+		m_container.push_back(std::move(x));
 	}
 
-//  ---------------------------------------------
+//  ----------------------------------------
 
-   ~Entity() noexcept
+	auto top() const
 	{
-		assert(std::uncaught_exceptions() >= 0);
-
-		uninitialize();
+		return m_container.back();
 	}
 
-//  ---------------------------------------------
+//  ----------------------------------------
 
-	void swap(Entity & other) noexcept
+	void pop()
 	{
-		std::swap(m_x, other.m_x);
+		m_container.pop_back();
 	}
 
-//  ---------------------------------------------
+//  ----------------------------------------
 
-	auto get() const noexcept
-	{
-		return m_x;
-	}
+//	auto top_and_pop_v1() // error
+//	{
+//		auto x = top();
+//
+//		pop();
+//
+//		return x;
+//	}
+
+//  ----------------------------------------
+
+	auto top_and_pop_v2()
+    {
+        auto x = new T(top());
+
+        pop();
+
+        return x;
+    }
+
+//  ----------------------------------------
+
+    void top_and_pop_v3(T & x)
+    {
+        x = top();
+
+        pop();
+    }
 
 private :
 
-	void uninitialize() const noexcept
-	{
-		try
-		{
-			std::print("Entity::uninitialize\n");
-		}
-		catch (...) {}
-	}
-
-//  ---------------------------------------------
-
-	int m_x = 0;
+	C m_container;
 };
 
-//////////////////////////////////////////////////////////////////
-
-void test_v1()
-{
-	std::print("test_v1\n");
-}
-
-//////////////////////////////////////////////////////////////////
-
-void test_v2() // support : https://compiler-explorer.com
-{
-    Entity entity_1(1); test_v1();
-
-    Entity entity_2(2); test_v1();
-}
-
-//////////////////////////////////////////////////////////////////
-
-void test_v3() noexcept // support : https://compiler-explorer.com
-{
-    Entity entity_1(1); test_v1();
-
-    Entity entity_2(2); test_v1();
-}
-
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Entity entity_1(1);
+	Stack < int > stack;
 
-	Entity entity_2(2);
+//  -------------------------------------
 
-//  ----------------------------------------------------------
+	stack.push(1);
 
-	entity_1.swap(entity_2);
+	stack.push(2);
 
-//  ----------------------------------------------------------
+	stack.push(3);
 
-	test_v2();
+//  -------------------------------------
 
-    test_v3();
+	assert(stack.top() == 3);
 
-//  ----------------------------------------------------------
+//  -------------------------------------
 
-	static_assert(noexcept(std::declval < Entity > ().get()));
+	stack.pop();
 
-//  ----------------------------------------------------------
+//  -------------------------------------
 
-	assert(std::empty(std::vector < int > ()));
+	int x = 0, * y = nullptr;
+
+//  -------------------------------------
+
+//	x = stack.top_and_pop_v1( ); // error
+
+	y = stack.top_and_pop_v2( );
+
+		stack.top_and_pop_v3(x);
+
+//  -------------------------------------
+
+	assert( x == 1);
+
+	assert(*y == 2);
+
+//  -------------------------------------
+
+	delete y;
 }
 
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////

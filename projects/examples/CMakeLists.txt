@@ -228,11 +228,10 @@ set(debug
     07.10
     07.11
     07.12
-    07.13
+    07.16
     07.17
     07.18
-    07.19
-    07.21
+    07.20
 
     08.01
     08.02
@@ -497,41 +496,41 @@ target_link_libraries      (06.17 PRIVATE ${Boost_LIBRARIES})
 
 #############################################################################################
 
+add_executable             (07.13 source/07.13.cpp)
+
+target_compile_options     (07.13 PRIVATE -Wall -Wextra -Wpedantic -O0 -g)
+
+target_link_libraries      (07.13 PRIVATE -lstdc++exp)
+
+#############################################################################################
+
 add_executable             (07.14 source/07.14.cpp)
 
-target_compile_options     (07.14 PRIVATE -Wall -Wextra -Wpedantic -O0 -g)
-
-target_link_libraries      (07.14 PRIVATE -lstdc++exp)
+target_compile_options     (07.14 PRIVATE -Wall -Wextra -Wpedantic -O0 -ggdb)
 
 #############################################################################################
 
 add_executable             (07.15 source/07.15.cpp)
 
-target_compile_options     (07.15 PRIVATE -Wall -Wextra -Wpedantic -O0 -ggdb)
+target_compile_options     (07.15 PRIVATE -Wall -Wextra -Wpedantic -O0 -g -fsanitize=address)
+
+target_link_options        (07.15 PRIVATE -fsanitize=address)
 
 #############################################################################################
 
-add_executable             (07.16 source/07.16.cpp)
+add_executable             (07.19 source/07.19.cpp)
 
-target_compile_options     (07.16 PRIVATE -Wall -Wextra -Wpedantic -O0 -g -fsanitize=address)
+target_compile_options     (07.19 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
-target_link_options        (07.16 PRIVATE -fsanitize=address)
-
-#############################################################################################
-
-add_executable             (07.20 source/07.20.cpp)
-
-target_compile_options     (07.20 PRIVATE -Wall -Wextra -Wpedantic -O0)
-
-target_link_libraries      (07.20 glog::glog)
+target_link_libraries      (07.19 glog::glog)
 
 #############################################################################################
 
-add_executable             (07.22 source/07.22.cpp)
+add_executable             (07.21 source/07.21.cpp)
 
-target_compile_options     (07.22 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (07.21 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
-target_link_libraries      (07.22 PRIVATE GTest::gtest)
+target_link_libraries      (07.21 PRIVATE GTest::gtest)
 
 #############################################################################################
 
@@ -599,7 +598,7 @@ target_link_libraries      (14.37 PRIVATE /usr/lib/gcc/x86_64-linux-gnu/13/libat
 
 set(release
 
-    07.23
+    07.22
 
     08.05
     08.08

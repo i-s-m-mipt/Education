@@ -1,56 +1,52 @@
-///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 // chapter : Debugging and Profiling Tools
 
-///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-// content : Developer Tools
+// content : Debugging
 //
-// content : Backtracing
+// content : GNU DeBugger (GDB)
 //
-// content : Helper std::stacktrace
+// content : Tool gdb
 //
-// content : Options -g and -lstdc++exp
+// content : Commands run, continue, next, step, break, print and backtrace
+//
+// content : Option -ggdb
 
-///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
+#include <cassert>
 #include <iterator>
-#include <print>
-#include <stacktrace>
+#include <numeric>
+#include <vector>
 
-///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-void test_v1()
+auto find(std::vector < int > const & vector, int x)
 {
-    for (auto const & entry : std::stacktrace::current())
-    {
-        std::print("test_v1 : entry : ");
+	if (auto size = std::size(vector); size > 0)
+	{
+		auto left = 0uz, right = size - 1, middle = 0uz;
 
-        if (auto file = entry.source_file(); !std::empty(file))
-        {
-            std::print("{} : ", file);
-        }
+		while (left < right)
+		{
+			middle = std::midpoint(left, right);
 
-        if (auto line = entry.source_line(); line > 0)
-        {
-            std::print("{:0>3} : ", line);
-        }
+			vector[middle] < x ? left = middle + 1 : right = middle;
+		}
 
-        std::print("{}\n", entry.description());
-    }
+		return vector[left] == x;
+	}
+
+	return false;
 }
 
-///////////////////////////////////////////////////////////////
-
-void test_v2() { test_v1(); }
-
-void test_v3() { test_v2(); }
-
-///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    test_v3();
+	assert(find({ 1, 2, 3, 4, 5 }, 1));
 }
 
-///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////

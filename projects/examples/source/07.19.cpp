@@ -1,47 +1,41 @@
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Debugging and Profiling Tools
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 // content : Logging
 //
-// content : Library Boost.Log
+// content : Library Google.Log
 //
-// content : Function std::call_once
-//
-// content : Flag std::once_flag
-//
-// content : Function std::format
-//
-// content : Formatting Dates and Times
+// content : Operator ""h
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cstddef>
+#include <chrono>
 #include <cstdint>
 #include <exception>
 #include <format>
 #include <mutex>
+#include <ostream>
 #include <source_location>
 #include <stdexcept>
 #include <string>
 #include <utility>
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/log/attributes.hpp>
-#include <boost/log/common.hpp>
-#include <boost/log/core.hpp>
-#include <boost/log/expressions.hpp>
-#include <boost/log/sinks.hpp>
-#include <boost/log/support/date_time.hpp>
-#include <boost/make_shared.hpp>
+using namespace std::literals;
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+
+#include <glog/logging.h>
+
+///////////////////////////////////////////////////////////////////////////////////////////
 
 class Logger : private boost::noncopyable
 {
@@ -52,7 +46,7 @@ public :
 		trace, debug, error, fatal
 	};
 
-//  ---------------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------
 
 	Logger(char const * scope, bool has_trace) : m_scope(scope), m_has_trace(has_trace)
 	{
@@ -64,7 +58,7 @@ public :
 		}
 	}
 
-//  ---------------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------
 
    ~Logger()
 	{
@@ -74,130 +68,87 @@ public :
 		}
 	}
 
-//  ---------------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------
 
 	void put(Severity severity, std::string const & string) const
 	{
-		auto record = s_logger.open_record(boost::log::keywords::severity = severity);
-
-		boost::log::record_ostream(record) << m_scope << " : " << string;
-
-		s_logger.push_record(std::move(record));
-	}
-
-private :
-
-	using sink_t = boost::log::sinks::synchronous_sink < boost::log::sinks::text_file_backend > ;
-
-//  ---------------------------------------------------------------------------------------------
-
-	static void initialize()
-	{
-		s_logger.add_attribute("line",    boost::log::attributes::counter < std::size_t > ());
-
-		s_logger.add_attribute("time",    boost::log::attributes::utc_clock               ());
-
-		s_logger.add_attribute("process", boost::log::attributes::current_process_id      ());
-
-		s_logger.add_attribute("thread",  boost::log::attributes::current_thread_id       ());
-
-		boost::log::core::get()->add_sink(make_sink());
-	}
-
-//  ---------------------------------------------------------------------------------------------
-
-	[[nodiscard]] static auto make_sink() -> boost::shared_ptr < sink_t >
-	{
-		boost::log::sinks::file::rotation_at_time_interval rotation(boost::posix_time::hours(1));
-
-		auto sink = boost::make_shared < sink_t >
-		(
-			boost::log::keywords::file_name = "%y.%m.%d.%H.%M.%S.log",
-
-			boost::log::keywords::time_based_rotation = rotation,
-
-			boost::log::keywords::rotation_size = 8 << 20
-		);
-
-		sink->locked_backend()->auto_flush();
-
-		sink->locked_backend()->set_file_collector
-		(
-			boost::log::sinks::file::make_collector(boost::log::keywords::target = "loggers")
-		);
-
-		sink->set_formatter(&format);
-
-		return sink;
-	}
-
-//  ---------------------------------------------------------------------------------------------
-
-	static void format(boost::log::record_view record, boost::log::formatting_ostream & stream)
-	{
-		auto & attributes = record.attribute_values();
-
-		stream << std::format
-		(
-			"{:0>8}", boost::log::extract_or_throw < std::size_t > (attributes["line"])
-		);
-
-		(
-			boost::log::expressions::stream << " | " <<
-        	(
-            	boost::log::expressions::format_date_time < boost::posix_time::ptime >
-            	(
-                	"time", "%Y %B %d %H:%M:%S.%f UTC"
-            	)
-        	)
-		)
-        (record, stream);
-
-		using pid_t = boost::log::attributes::current_process_id::value_type;
-
-		using tid_t = boost::log::attributes::current_thread_id ::value_type;
-
-		stream << " | " << boost::log::extract_or_throw < pid_t > (attributes["process"]);
-
-		stream << " | " << boost::log::extract_or_throw < tid_t > (attributes["thread" ]);
-
-        switch (boost::log::extract_or_throw < Severity > (attributes["Severity"]))
+		switch (severity)
         {
-			case Severity::trace : { stream << " | trace"; break; }
+            case Severity::trace : { LOG(INFO   ) << m_scope << " : " << string; break; }
 
-            case Severity::debug : { stream << " | debug"; break; }
+            case Severity::debug : { LOG(WARNING) << m_scope << " : " << string; break; }
 
-            case Severity::error : { stream << " | error"; break; }
+            case Severity::error : { LOG(ERROR  ) << m_scope << " : " << string; break; }
 
-            case Severity::fatal : { stream << " | fatal"; break; }
+            case Severity::fatal : { LOG(FATAL  ) << m_scope << " : " << string; break; }
 
 			default :
 			{
 				std::unreachable();
 			}
         }
-
-		stream << " | " << record[boost::log::expressions::message];
 	}
 
-//  ---------------------------------------------------------------------------------------------
+private :
+
+	static void initialize()
+	{
+        FLAGS_log_dir = "loggers";
+
+        FLAGS_log_file_header = false;
+
+        google::InitGoogleLogging("07.20");
+
+        google::EnableLogCleaner(24h);
+
+		google::InstallPrefixFormatter(&format);
+	}
+
+//  -------------------------------------------------------------------------------------
+
+	static void format(std::ostream & stream, google::LogMessage const & message, void *)
+	{
+		stream << std::format("{:0>8}", s_line++) << " | ";
+
+        stream << std::format("{:%Y %B %d %H:%M:%S %Z}", message.time().when()) << " | ";
+
+        stream << message.thread_id() << " | ";
+
+        switch (message.severity())
+        {
+            case google::LogSeverity::INFO    : { stream << "trace |"; break; }
+
+            case google::LogSeverity::WARNING : { stream << "debug |"; break; }
+
+            case google::LogSeverity::ERROR   : { stream << "error |"; break; }
+
+            case google::LogSeverity::FATAL   : { stream << "fatal |"; break; }
+
+			default :
+			{
+				std::unreachable();
+			}
+        }
+	}
+
+//  -------------------------------------------------------------------------------------
 
 	char const * m_scope = nullptr;
 
 	bool m_has_trace = false;
 
-//  ---------------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------
 
     static inline std::once_flag s_flag;
 
-    static inline boost::log::sources::severity_logger_mt < Severity > s_logger;
+    static inline auto s_line = 0uz;
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 #define LOGGER(logger) Logger logger(std::source_location::current().function_name(), true)
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 #define LOGGER_PUT_DEBUG(logger, string) logger.put(Logger::Severity::debug, string)
 
@@ -207,7 +158,7 @@ private :
 
 #define LOGGER_PUT_FATAL(logger, string) logger.put(Logger::Severity::fatal, string)
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v1()
 {
@@ -218,13 +169,13 @@ void test_v1()
 	throw std::runtime_error("error");
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v2() { LOGGER(logger); test_v1(); }
 
 void test_v3() { LOGGER(logger); test_v2(); }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -242,4 +193,4 @@ int main()
 	}
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////

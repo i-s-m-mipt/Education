@@ -1,154 +1,141 @@
-//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 // chapter : Debugging and Profiling Tools
 
-//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-// content : Exceptions
+// content : Exception Safety Guarantees
 //
-// content : Zero-Overhead Principle
+// content : Exceptions in Constructors and Destructors
 //
-// content : Statement throw
+// content : Function Try Blocks
 //
-// content : User-Defined Exceptions
+// content : Non-Throwing Functions
 //
-// content : Exception std::exception
+// content : Function Specifier noexcept
 //
-// content : Attribute [[noreturn]]
+// content : Function std::uncaught_exceptions
 //
-// content : Stack Unwinding
+// content : Operator noexcept
 //
-// content : Statements try and catch
-//
-// content : Stream std::cerr
-//
-// content : Rethrowing Exceptions
-//
-// content : Exception std::runtime_error
-//
-// content : Catch-All Handlers
-//
-// content : Function std::current_exception
-//
-// content : Pointer std::exception_ptr
+// content : Function std::empty
 
-//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-#include <exception>
-#include <iostream>
+#include <cassert>
 #include <print>
 #include <stdexcept>
+#include <type_traits>
+#include <utility>
 #include <vector>
 
-//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-class Exception : public std::exception
+class Entity
 {
 public :
 
-	Exception(int x) : m_x(x) {}
-
-//  -------------------------------------------
-
-	char const * what() const noexcept override
+	Entity(int x) try : m_x(x)
 	{
-		return "exception";
+		if (m_x < 0)
+		{
+			throw std::runtime_error("error");
+		}
+	}
+	catch (...)
+	{
+		uninitialize();
+	}
+
+//  ---------------------------------------------
+
+   ~Entity() noexcept
+	{
+		assert(std::uncaught_exceptions() >= 0);
+
+		uninitialize();
+	}
+
+//  ---------------------------------------------
+
+	void swap(Entity & other) noexcept
+	{
+		std::swap(m_x, other.m_x);
+	}
+
+//  ---------------------------------------------
+
+	auto get() const noexcept
+	{
+		return m_x;
 	}
 
 private :
 
+	void uninitialize() const noexcept
+	{
+		try
+		{
+			std::print("Entity::uninitialize\n");
+		}
+		catch (...) {}
+	}
+
+//  ---------------------------------------------
+
 	int m_x = 0;
 };
 
-//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-[[noreturn]] void test_v1()
+void test_v1()
 {
 	std::print("test_v1\n");
-
-//	auto x = new auto(1); // error
-
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
-
-//	throw 1; // bad
-
-	throw Exception(1);
-
-//	delete x; // error
-
-	std::print("test_v1\n");
 }
 
-//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-void test_v2()
+void test_v2() // support : https://compiler-explorer.com
 {
-	std::print("test_v2\n");
+    Entity entity_1(1); test_v1();
 
-	try
-	{
-		test_v1();
-	}
-	catch (Exception const & exception)
-	{
-		std::cerr << "test_v2 : " << exception.what() << '\n';
-
-	//	throw exception; // error
-
-		throw;
-	}
-
-	std::print("test_v2\n");
+    Entity entity_2(2); test_v1();
 }
 
-//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-void test_v3()
+void test_v3() noexcept // support : https://compiler-explorer.com
 {
-	std::print("test_v3\n");
+    Entity entity_1(1); test_v1();
 
-	try
-	{
-		test_v2();
-	}
-	catch (std::exception const & exception)
-	{
-		std::cerr << "test_v3 : " << exception.what() << '\n';
-
-		throw std::runtime_error("error");
-	}
-
-	std::print("test_v3\n");
+    Entity entity_2(2); test_v1();
 }
 
-//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 int main()
 {
-	try
-	{
-		test_v3();
-	}
-	catch (std::runtime_error const & exception)
-	{
-		std::cerr << "main : " << exception.what() << '\n';
-	}
-	catch (std::exception const & exception)
-	{
-		std::cerr << "main : " << exception.what() << '\n';
-	}
-//	catch (std::runtime_error const & exception) // error
-//	{
-//		std::cerr << "main : " << exception.what() << '\n';
-//	}
-	catch (...)
-	{
-		std::cerr << "main : unknown exception\n";
+	Entity entity_1(1);
 
-	//  ------------------------------------------
+	Entity entity_2(2);
 
-		auto exception = std::current_exception();
-	}
+//  ----------------------------------------------------------
+
+	entity_1.swap(entity_2);
+
+//  ----------------------------------------------------------
+
+	test_v2();
+
+    test_v3();
+
+//  ----------------------------------------------------------
+
+	static_assert(noexcept(std::declval < Entity > ().get()));
+
+//  ----------------------------------------------------------
+
+	assert(std::empty(std::vector < int > ()));
 }
 
-//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////

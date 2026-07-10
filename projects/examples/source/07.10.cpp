@@ -1,56 +1,154 @@
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 // chapter : Debugging and Profiling Tools
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
-// content : Wrappers std::expected and std::unexpected
+// content : Exceptions
+//
+// content : Zero-Overhead Principle
+//
+// content : Statement throw
+//
+// content : User-Defined Exceptions
+//
+// content : Exception std::exception
+//
+// content : Attribute [[noreturn]]
+//
+// content : Stack Unwinding
+//
+// content : Statements try and catch
+//
+// content : Stream std::cerr
+//
+// content : Rethrowing Exceptions
+//
+// content : Exception std::runtime_error
+//
+// content : Catch-All Handlers
+//
+// content : Function std::current_exception
+//
+// content : Pointer std::exception_ptr
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
-#include <cassert>
-#include <expected>
-#include <string>
+#include <exception>
+#include <iostream>
+#include <print>
+#include <stdexcept>
+#include <vector>
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
-auto test(int x) -> std::expected < int, std::string >
+class Exception : public std::exception
 {
-    if (x > 0)
+public :
+
+	Exception(int x) : m_x(x) {}
+
+//  -------------------------------------------
+
+	char const * what() const noexcept override
 	{
-		return x;
+		return "exception";
 	}
-	else
-	{
-		return std::unexpected("error");
-	}
+
+private :
+
+	int m_x = 0;
+};
+
+//////////////////////////////////////////////////////////////
+
+[[noreturn]] void test_v1()
+{
+	std::print("test_v1\n");
+
+//	auto x = new auto(1); // error
+
+	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+
+//	throw 1; // bad
+
+	throw Exception(1);
+
+//	delete x; // error
+
+	std::print("test_v1\n");
 }
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+
+void test_v2()
+{
+	std::print("test_v2\n");
+
+	try
+	{
+		test_v1();
+	}
+	catch (Exception const & exception)
+	{
+		std::cerr << "test_v2 : " << exception.what() << '\n';
+
+	//	throw exception; // error
+
+		throw;
+	}
+
+	std::print("test_v2\n");
+}
+
+//////////////////////////////////////////////////////////////
+
+void test_v3()
+{
+	std::print("test_v3\n");
+
+	try
+	{
+		test_v2();
+	}
+	catch (std::exception const & exception)
+	{
+		std::cerr << "test_v3 : " << exception.what() << '\n';
+
+		throw std::runtime_error("error");
+	}
+
+	std::print("test_v3\n");
+}
+
+//////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::expected < int, std::string > expected_1 = 1;
+	try
+	{
+		test_v3();
+	}
+	catch (std::runtime_error const & exception)
+	{
+		std::cerr << "main : " << exception.what() << '\n';
+	}
+	catch (std::exception const & exception)
+	{
+		std::cerr << "main : " << exception.what() << '\n';
+	}
+//	catch (std::runtime_error const & exception) // error
+//	{
+//		std::cerr << "main : " << exception.what() << '\n';
+//	}
+	catch (...)
+	{
+		std::cerr << "main : unknown exception\n";
 
-    std::expected < int, std::string > expected_2 = std::unexpected("aaaaa");
+	//  ------------------------------------------
 
-//  -------------------------------------------------------------------------
-
-    assert(expected_1.has_value() == 1 && expected_1.value_or(2) == 1);
-
-    assert(expected_2.has_value() == 0 && expected_2.value_or(3) == 3);
-
-//  -------------------------------------------------------------------------
-
-    assert(expected_1.error_or("bbbbb") == "bbbbb");
-
-    assert(expected_2.error_or("bbbbb") == "aaaaa");
-
-//  -------------------------------------------------------------------------
-
-    assert(test(0).has_value() == 0);
-
-	assert(test(1).has_value() == 1);
+		auto exception = std::current_exception();
+	}
 }
 
-/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////

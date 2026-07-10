@@ -1,52 +1,42 @@
-///////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////
 
 // chapter : Debugging and Profiling Tools
 
-///////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////
 
 // content : Debugging
 //
-// content : GNU DeBugger (GDB)
+// content : Address Sanitizers
 //
-// content : Tool gdb
+// content : Heap-Buffer-Overflow Errors
 //
-// content : Commands run, continue, next, step, break, print and backtrace
+// content : Memory Leaks
 //
-// content : Option -ggdb
+// content : Use-After-Free Errors
+//
+// content : Option -fsanitize=address
 
-///////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////
 
 #include <cassert>
-#include <iterator>
-#include <numeric>
-#include <vector>
 
-///////////////////////////////////////////////////////////////////////////
-
-auto find(std::vector < int > const & vector, int x)
-{
-	if (auto size = std::size(vector); size > 0)
-	{
-		auto left = 0uz, right = size - 1, middle = 0uz;
-
-		while (left < right)
-		{
-			middle = std::midpoint(left, right);
-
-			vector[middle] < x ? left = middle + 1 : right = middle;
-		}
-
-		return vector[left] == x;
-	}
-
-	return false;
-}
-
-///////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////
 
 int main()
 {
-	assert(find({ 1, 2, 3, 4, 5 }, 1));
+	auto array = new int[5]{ 1, 2, 3, 4, 5 };
+
+//  -----------------------------------------
+
+	assert(array[5] == 0);
+
+//  -----------------------------------------
+
+//  delete[] array; // error
+
+//  -----------------------------------------
+
+    assert(array[0] == 1);
 }
 
-///////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////

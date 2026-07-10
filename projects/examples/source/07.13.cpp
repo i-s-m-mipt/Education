@@ -1,121 +1,56 @@
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
 // chapter : Debugging and Profiling Tools
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
-// content : Exception-Safe Interfaces
+// content : Developer Tools
+//
+// content : Backtracing
+//
+// content : Helper std::stacktrace
+//
+// content : Options -g and -lstdc++exp
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
-#include <cassert>
-#include <vector>
-#include <utility>
+#include <iterator>
+#include <print>
+#include <stacktrace>
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
-template < typename T, typename C = std::vector < T > > class Stack
+void test_v1()
 {
-public :
-
-	void push(T x)
-	{
-		m_container.push_back(std::move(x));
-	}
-
-//  ----------------------------------------
-
-	auto top() const
-	{
-		return m_container.back();
-	}
-
-//  ----------------------------------------
-
-	void pop()
-	{
-		m_container.pop_back();
-	}
-
-//  ----------------------------------------
-
-//	auto top_and_pop_v1() // error
-//	{
-//		auto x = top();
-//
-//		pop();
-//
-//		return x;
-//	}
-
-//  ----------------------------------------
-
-	auto top_and_pop_v2()
+    for (auto const & entry : std::stacktrace::current())
     {
-        auto x = new T(top());
+        std::print("test_v1 : entry : ");
 
-        pop();
+        if (auto file = entry.source_file(); !std::empty(file))
+        {
+            std::print("{} : ", file);
+        }
 
-        return x;
+        if (auto line = entry.source_line(); line > 0)
+        {
+            std::print("{:0>3} : ", line);
+        }
+
+        std::print("{}\n", entry.description());
     }
+}
 
-//  ----------------------------------------
+///////////////////////////////////////////////////////////////
 
-    void top_and_pop_v3(T & x)
-    {
-        x = top();
+void test_v2() { test_v1(); }
 
-        pop();
-    }
+void test_v3() { test_v2(); }
 
-private :
-
-	C m_container;
-};
-
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
 int main()
 {
-	Stack < int > stack;
-
-//  -------------------------------------
-
-	stack.push(1);
-
-	stack.push(2);
-
-	stack.push(3);
-
-//  -------------------------------------
-
-	assert(stack.top() == 3);
-
-//  -------------------------------------
-
-	stack.pop();
-
-//  -------------------------------------
-
-	int x = 0, * y = nullptr;
-
-//  -------------------------------------
-
-//	x = stack.top_and_pop_v1( ); // error
-
-	y = stack.top_and_pop_v2( );
-
-		stack.top_and_pop_v3(x);
-
-//  -------------------------------------
-
-	assert( x == 1);
-
-	assert(*y == 2);
-
-//  -------------------------------------
-
-	delete y;
+    test_v3();
 }
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
