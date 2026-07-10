@@ -18,14 +18,12 @@
 #include <iterator>
 #include <print>
 #include <random>
-#include <string>
 #include <type_traits>
 #include <utility>
 #include <vector>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/mpl/list.hpp>
 #include <boost/test/data/monomorphic.hpp>
 #include <boost/test/data/size.hpp>
 #include <boost/test/data/test_case.hpp>
@@ -188,17 +186,6 @@ BOOST_DATA_TEST_CASE(Test_v6, Dataset() ^ boost::unit_test::data::make({ 1, 2, 3
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-using list_t = boost::mpl::list < int, std::string > ;
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-BOOST_AUTO_TEST_CASE_TEMPLATE(Test_v7, T, list_t)
-{
-    BOOST_TEST(sizeof(T) == 4);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void test(int x)
 {
     BOOST_TEST(x > 0);
@@ -230,7 +217,7 @@ public :
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-BOOST_FIXTURE_TEST_CASE(Test_v8, Fixture)
+BOOST_FIXTURE_TEST_CASE(Test_v7, Fixture)
 {
     vector.push_back(1); BOOST_TEST(std::size(vector) == 1);
 

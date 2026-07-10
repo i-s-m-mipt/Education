@@ -36,7 +36,7 @@ template < typename D > constexpr auto size_v = Size < D > ::value;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D > constexpr auto is_empty_v = size_v < D > == 0;
+template < typename D > constexpr auto empty_v = size_v < D > == 0;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -55,18 +55,18 @@ template < typename D > using front = typename Front < D > ::type;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename D > struct Push_Front {};
+template < typename D, typename T > struct Push_Front {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > struct Push_Front < T, Deque < Ts ... > >
+template < typename T, typename ... Ts > struct Push_Front < Deque < Ts ... > , T >
 {
     using type = Deque < T, Ts ... > ;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename D > using push_front = typename Push_Front < T, D > ::type;
+template < typename D, typename T > using push_front = typename Push_Front < D, T > ::type;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -107,25 +107,25 @@ template < typename D > using back = typename Back < D > ::type;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename D, bool C = is_empty_v < D > > struct Push_Back {};
+template < typename D, typename T, bool C = empty_v < D > > struct Push_Back {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename D > struct Push_Back < T, D, false >
+template < typename D, typename T > struct Push_Back < D, T, false >
 {
-    using type = push_front < front < D > , typename Push_Back < T, pop_front < D > > ::type > ;
+    using type = push_front < typename Push_Back < pop_front < D > , T > ::type, front < D > > ;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename D > struct Push_Back < T, D, true >
+template < typename D, typename T > struct Push_Back < D, T, true >
 {
-    using type = push_front < T, D > ;
+    using type = push_front < D, T > ;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename D > using push_back = typename Push_Back < T, D > ::type;
+template < typename D, typename T > using push_back = typename Push_Back < D, T > ::type;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -151,19 +151,19 @@ template < typename D > using pop_back = typename Pop_Back < D > ::type;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D, std::size_t I > class Nth : public Nth < pop_front < D > , I - 1 > {};
+template < typename D, std::size_t I > class At : public At < pop_front < D > , I - 1 > {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D > class Nth < D, 0 > : public Front < D > {};
+template < typename D > class At < D, 0 > : public Front < D > {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D, std::size_t I > using nth = typename Nth < D, I > ::type;
+template < typename D, std::size_t I > using at = typename At < D, I > ::type;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D, bool C = is_empty_v < D > > class Max_Type {};
+template < typename D, bool C = empty_v < D > > class Max_Type {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -195,37 +195,67 @@ template < typename D > using max_type = typename Max_Type < D > ::type;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+template < typename D, typename T, std::size_t I = 0, bool C = empty_v < D > > class Index {};
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+template
+<
+    typename D, typename T, std::size_t I
+>
+class Index < D, T, I, false > : public std::conditional_t
+<
+    std::is_same_v < front < D > , T > ,
+
+    std::integral_constant < std::size_t, I > , Index < pop_front < D > , T, I + 1 >
+
+> {};
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename D, typename T, std::size_t I > class Index < D, T, I, true > {};
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename D, typename T > constexpr auto index_v = Index < D, T > ::value;
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 int main()
 {
-    static_assert(size_v < Deque <     > > == 0 && is_empty_v < Deque <     > > == 1);
+    static_assert(size_v < Deque <     > > == 0 && empty_v < Deque <     > > == 1);
 
-    static_assert(size_v < Deque < int > > == 1 && is_empty_v < Deque < int > > == 0);
+    static_assert(size_v < Deque < int > > == 1 && empty_v < Deque < int > > == 0);
 
-//  ------------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------------
 
-    static_assert(std::is_same_v <      front <      Deque < int > > ,         int        > );
+    static_assert(std::is_same_v <      front < Deque < int >       > ,         int        > );
 
-    static_assert(std::is_same_v < push_front < int, Deque < int > > , Deque < int, int > > );
+    static_assert(std::is_same_v < push_front < Deque < int > , int > , Deque < int, int > > );
 
-    static_assert(std::is_same_v <  pop_front <      Deque < int > > , Deque <          > > );
+    static_assert(std::is_same_v <  pop_front < Deque < int >       > , Deque <          > > );
 
-//  ------------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------------
 
-    static_assert(std::is_same_v <       back <      Deque < int > > ,              int   > );
+    static_assert(std::is_same_v <       back < Deque < int >       > ,              int   > );
 
-    static_assert(std::is_same_v <  push_back < int, Deque < int > > , Deque < int, int > > );
+    static_assert(std::is_same_v <  push_back < Deque < int > , int > , Deque < int, int > > );
 
-    static_assert(std::is_same_v <   pop_back <      Deque < int > > , Deque <          > > );
+    static_assert(std::is_same_v <   pop_back < Deque < int >       > , Deque <          > > );
 
-//  ------------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------------
 
-    static_assert(std::is_same_v < nth < Deque < int, int > , 0 > , int > );
+    static_assert(std::is_same_v < at < Deque < int, int > , 0 > , int > );
 
-    static_assert(std::is_same_v < nth < Deque < int, int > , 1 > , int > );
+    static_assert(std::is_same_v < at < Deque < int, int > , 1 > , int > );
 
-//  ------------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------------
 
     static_assert(std::is_same_v < max_type < Deque < int, double > > , double > );
+
+//  -------------------------------------------------------------------------------------------
+
+    static_assert(index_v < Deque < int > , int > == 0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

@@ -12,9 +12,13 @@
 //
 // content : Flag std::once_flag
 //
-// content : Function std::format
+// content : Smart Pointers
+//
+// content : Library Boost.SmartPtr
 //
 // content : Formatting Dates and Times
+//
+// content : Function std::format
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -30,7 +34,6 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/log/attributes.hpp>
 #include <boost/log/common.hpp>
 #include <boost/log/core.hpp>
