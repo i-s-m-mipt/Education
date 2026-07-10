@@ -12,7 +12,7 @@
 //
 // content : Slots and Signals
 //
-// content : Library Boost.Signals
+// content : Library Boost.Signals2
 
 ///////////////////////////////////////////////////////////////
 

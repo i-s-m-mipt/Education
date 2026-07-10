@@ -10,7 +10,7 @@
 //
 // content : Static and Dynamic Libraries
 //
-// content : Library Boost.DLL
+// content : Library Boost.Dll
 //
 // content : Wrapper std::function
 

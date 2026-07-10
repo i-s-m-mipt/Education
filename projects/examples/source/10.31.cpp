@@ -8,7 +8,7 @@
 //
 // content : Matrices
 //
-// content : Library Boost.UBLAS
+// content : Library Boost.Ublas
 //
 // content : Strassen Fast Multiplication Algorithm
 //
