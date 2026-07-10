@@ -1,131 +1,67 @@
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 // chapter : Applied Computations
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-// content : Direct Fourier Transform (DFT) Algorithm
+// content : Monte-Carlo Methods
 //
-// content : Time Complexity O(N^2)
+// content : Number Pi
 //
-// content : Function std::exp
+// content : Distribution std::uniform_real_distribution
 //
-// content : Fast Fourier Transform (FFT) Algorithm
-//
-// content : Cooley-Tukey Algorithm
-//
-// content : Time Complexity O(N*log(N))
+// content : Engine std::default_random_engine
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <cmath>
-#include <complex>
-#include <iterator>
-#include <numbers>
-#include <vector>
+#include <random>
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-using namespace std::literals;
-
-///////////////////////////////////////////////////////////////////////////////////////
-
-using signal_t = std::vector < std::complex < double > > ;
-
-///////////////////////////////////////////////////////////////////////////////////////
-
-auto transform_v1(signal_t const & X)
+auto equal(double x, double y, double epsilon = 1e-6)
 {
-    auto size = std::size(X);
-
-    signal_t Y(size, signal_t::value_type(0));
-
-    for (auto i = 0uz; i < size; ++i)
-    {
-        for (auto j = 0uz; j < size; ++j)
-        {
-            Y[i] += X[j] * std::exp(-2i * (std::numbers::pi * i * j / size));
-        }
-    }
-
-    return Y;
+	return std::abs(x - y) < epsilon;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
-
-auto transform_v2(signal_t const & X) -> signal_t
-{
-    if (auto size = std::size(X), half = size / 2; size > 1)
-    {
-        signal_t E(half, 0);
-
-        signal_t O(half, 0);
-
-        for (auto i = 0uz; 2 * i < size; ++i)
-        {
-            E[i] = X[2 * i + 0];
-
-            O[i] = X[2 * i + 1];
-        }
-
-        E = transform_v2(E);
-
-        O = transform_v2(O);
-
-        signal_t Y(size, 0);
-
-        signal_t::value_type w = 1;
-
-        auto angle = 2 * std::numbers::pi / size;
-
-        for (auto i = 0uz, j = half; 2 * i < size; ++i, ++j)
-        {
-            Y[i] = E[i] + w * O[i];
-
-            Y[j] = E[i] - w * O[i];
-
-            w *= signal_t::value_type(std::cos(angle), std::sin(angle));
-        }
-
-        return Y;
-    }
-    else
-    {
-        return X;
-    }
-}
-
-///////////////////////////////////////////////////////////////////////////////////////
-
-auto equal(std::complex < double > x, std::complex < double > y, double epsilon = 1e-6)
-{
-    return
-    (
-        std::abs(std::real(x) - std::real(y)) < epsilon &&
-
-        std::abs(std::imag(y) - std::imag(y)) < epsilon
-    );
-}
-
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 int main()
 {
-    signal_t X = { 0.0 + 0.0i, 0.0 + 1.0i, 1.0 + 0.0i, 1.0 + 1.0i };
+    auto size = 1uz << 30;
 
-//  ----------------------------------------------------------------
+//  ------------------------------------------------------
 
-    auto Y1 = transform_v1(X);
+	std::uniform_real_distribution distribution(0.0, 1.0);
 
-    auto Y2 = transform_v2(X);
+//  ------------------------------------------------------
 
-//  ----------------------------------------------------------------
+	std::default_random_engine engine;
 
-    for (auto i = 0uz; i < std::size(X); ++i)
-    {
-        assert(equal(Y1[i], Y2[i]));
-    }
+//  ------------------------------------------------------
+
+	auto counter = 0uz;
+
+//  ------------------------------------------------------
+
+	for (auto i = 0uz; i < size; ++i)
+	{
+		auto x = distribution(engine);
+
+		auto y = distribution(engine);
+
+	//  ------------------------------
+
+		if (x * x + y * y < 1)
+		{
+			++counter;
+		}
+	}
+
+//  ------------------------------------------------------
+
+	assert(equal(4.0 * counter / size, 3.141, 1e-3));
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////

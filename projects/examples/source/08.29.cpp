@@ -1,63 +1,50 @@
-///////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Applied Computations
 
-///////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Dynamic Branch Prediction
+// content : Durations
 //
-// content : Microbenchmarking
+// content : Class std::chrono::duration
 //
-// content : Distribution std::uniform_int_distribution
+// content : Compile-Time Rational Arithmetic
+//
+// content : Class std::ratio
+//
+// content : Type Aliases std::chrono::seconds and std::chrono::milliseconds
+//
+// content : Duration Type Conversions
+//
+// content : Function std::chrono::duration_cast
 
-///////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cmath>
-#include <random>
+#include <cassert>
+#include <chrono>
+#include <ratio>
 
-///////////////////////////////////////////////////////////
-
-#include <benchmark/benchmark.h>
-
-///////////////////////////////////////////////////////////
-
-void test(benchmark::State & state)
-{
-    auto argument = state.range(0);
-
-    std::uniform_int_distribution distribution(1, 1 << 10);
-
-    std::default_random_engine engine;
-
-    for (auto element : state)
-    {
-        auto x = 0.0;
-
-        for (auto i = 0uz; i < 1 << 10; ++i)
-        {
-            if (distribution(engine) <= argument)
-            {
-                x += std::pow(std::sin(x), 2);
-            }
-            else
-            {
-                x += std::pow(std::cos(x), 2);
-            }
-        }
-
-        benchmark::DoNotOptimize(x);
-    }
-}
-
-///////////////////////////////////////////////////////////
-
-BENCHMARK(test)->DenseRange(0, 1 << 10, 128);
-
-///////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    benchmark::RunSpecifiedBenchmarks();
+	std::chrono::duration < int, std::ratio < 1, 1'000 > > duration_1(1'000);
+
+//  --------------------------------------------------------------------------------------
+
+	std::chrono::seconds duration_2(2);
+
+//  --------------------------------------------------------------------------------------
+
+	assert(std::chrono::milliseconds(duration_2).count() == 2'000);
+
+//  --------------------------------------------------------------------------------------
+
+	assert(std::chrono::duration_cast < std::chrono::seconds > (duration_1).count() == 1);
+
+//  --------------------------------------------------------------------------------------
+
+	assert(duration_1 + duration_2 == std::chrono::milliseconds(3'000));
 }
 
-///////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////

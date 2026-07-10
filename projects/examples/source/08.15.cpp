@@ -18,7 +18,6 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
-#include <tuple>
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -28,21 +27,13 @@
 
 int main()
 {
-    using uint128_t = boost::multiprecision::uint128_t;
-
-//  ----------------------------------------------------------------------------------------------
-
-    assert(std::numeric_limits < uint128_t > ::digits10 == 38);
-
-//  ----------------------------------------------------------------------------------------------
-
-    assert(std::numeric_limits < uint128_t > ::max() + 1 == 0);
+    assert(std::numeric_limits < boost::multiprecision::uint128_t > ::max() + 1 == 0);
 
 //  ----------------------------------------------------------------------------------------------
 
     try
     {
-        std::ignore = boost::multiprecision::checked_uint128_t(0) - 1;
+        assert(std::numeric_limits < boost::multiprecision::checked_uint128_t > ::max() + 1 == 0);
     }
     catch (std::range_error const & exception)
     {

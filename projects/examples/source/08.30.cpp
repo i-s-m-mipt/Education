@@ -1,50 +1,57 @@
-//////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 // chapter : Applied Computations
 
-//////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
-// content : Clocks
+// content : Time Points
 //
-// content : Clock std::chrono::system_clock
+// content : Time std::chrono::time_point
 //
-// content : Epochs and Periods
+// content : Function std::chrono::floor
 //
-// content : Unix Epoch
+// content : Type Alias std::chrono::days
 //
-// content : Clock std::chrono::steady_clock
+// content : Formatting Dates and Times
+//
+// content : Unix Time
+//
+// content : Function std::time
+//
+// content : Y2038 Problem
 
-//////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <chrono>
+#include <ctime>
 #include <print>
 
-//////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::chrono::system_clock::time_point epoch;
+	std::chrono::time_point < std::chrono::system_clock > epoch;
 
-//  --------------------------------------------------
+//  ------------------------------------------------------------------------
 
-    std::print("main : epoch = {}\n", epoch);
+	auto now = std::chrono::system_clock::now();
 
-//  --------------------------------------------------
+//  ------------------------------------------------------------------------
 
-    std::chrono::system_clock::period ratio;
+	std::print("main : now = {:%Y %B %d %H:%M:%S %Z}\n", now);
 
-//  --------------------------------------------------
+//  ------------------------------------------------------------------------
 
-    assert(ratio.num == 1);
+	auto delta = std::chrono::floor < std::chrono::days > (now - epoch);
 
-	assert(ratio.den == 1'000'000'000);
+//  ------------------------------------------------------------------------
 
-//  --------------------------------------------------
+	std::print("main : delta = {} (days)\n", delta.count());
 
-    assert(std::chrono::system_clock::is_steady == 0);
+//  ------------------------------------------------------------------------
 
-    assert(std::chrono::steady_clock::is_steady == 1);
+	assert(std::chrono::system_clock::to_time_t(now) == std::time(nullptr));
 }
 
-//////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////

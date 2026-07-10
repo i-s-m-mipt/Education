@@ -1,50 +1,78 @@
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Applied Computations
 
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Durations
-//
-// content : Class std::chrono::duration
-//
-// content : Compile-Time Rational Arithmetic
-//
-// content : Class std::ratio
-//
-// content : Type Aliases std::chrono::seconds and std::chrono::milliseconds
-//
-// content : Duration Type Conversions
-//
-// content : Function std::chrono::duration_cast
+// content : Timing
 
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <chrono>
-#include <ratio>
+#include <cmath>
+#include <cstddef>
+#include <print>
 
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename D = std::chrono::duration < double > > class Timer
+{
+public :
+
+	Timer(char const * scope) : m_scope(scope), m_begin(std::chrono::steady_clock::now()) {}
+
+//  -----------------------------------------------------------------------------------------
+
+   ~Timer()
+	{
+		std::print("{} : {:.6f}\n", m_scope, elapsed().count());
+	}
+
+//  -----------------------------------------------------------------------------------------
+
+	auto elapsed() const
+	{
+		return std::chrono::duration_cast < D > (std::chrono::steady_clock::now() - m_begin);
+	}
+
+private :
+
+	char const * m_scope = nullptr;
+
+	std::chrono::steady_clock::time_point m_begin;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+auto calculate(std::size_t size)
+{
+	auto x = 0.0;
+
+	for (auto i = 0uz; i < size; ++i)
+	{
+		x += std::pow(std::sin(x), 2) + std::pow(std::cos(x), 2);
+	}
+
+	return x;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+auto equal(double x, double y, double epsilon = 1e-6)
+{
+	return std::abs(x - y) < epsilon;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::chrono::duration < int, std::ratio < 1, 1'000 > > duration_1(1'000);
+	Timer timer("main : timer");
 
-//  --------------------------------------------------------------------------------------
+//  -------------------------------------------
 
-	std::chrono::seconds duration_2(2);
-
-//  --------------------------------------------------------------------------------------
-
-	assert(std::chrono::milliseconds(duration_2).count() == 2'000);
-
-//  --------------------------------------------------------------------------------------
-
-	assert(std::chrono::duration_cast < std::chrono::seconds > (duration_1).count() == 1);
-
-//  --------------------------------------------------------------------------------------
-
-	assert(duration_1 + duration_2 == std::chrono::milliseconds(3'000));
+	assert(equal(calculate(1 << 20), 1 << 20));
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////

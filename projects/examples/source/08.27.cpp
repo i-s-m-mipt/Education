@@ -1,67 +1,63 @@
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 // chapter : Applied Computations
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-// content : Monte-Carlo Methods
+// content : Dynamic Branch Prediction
 //
-// content : Number Pi
+// content : Microbenchmarking
 //
-// content : Distribution std::uniform_real_distribution
-//
-// content : Engine std::default_random_engine
+// content : Distribution std::uniform_int_distribution
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-#include <cassert>
 #include <cmath>
 #include <random>
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-auto equal(double x, double y, double epsilon = 1e-6)
+#include <benchmark/benchmark.h>
+
+///////////////////////////////////////////////////////////
+
+void test(benchmark::State & state)
 {
-	return std::abs(x - y) < epsilon;
+    auto argument = state.range(0);
+
+    std::uniform_int_distribution distribution(1, 1 << 10);
+
+    std::default_random_engine engine;
+
+    for (auto element : state)
+    {
+        auto x = 0.0;
+
+        for (auto i = 0uz; i < 1 << 10; ++i)
+        {
+            if (distribution(engine) <= argument)
+            {
+                x += std::pow(std::sin(x), 2);
+            }
+            else
+            {
+                x += std::pow(std::cos(x), 2);
+            }
+        }
+
+        benchmark::DoNotOptimize(x);
+    }
 }
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+BENCHMARK(test)->DenseRange(0, 1 << 10, 128);
+
+///////////////////////////////////////////////////////////
 
 int main()
 {
-    auto size = 1uz << 30;
-
-//  ------------------------------------------------------
-
-	std::uniform_real_distribution distribution(0.0, 1.0);
-
-//  ------------------------------------------------------
-
-	std::default_random_engine engine;
-
-//  ------------------------------------------------------
-
-	auto counter = 0uz;
-
-//  ------------------------------------------------------
-
-	for (auto i = 0uz; i < size; ++i)
-	{
-		auto x = distribution(engine);
-
-		auto y = distribution(engine);
-
-	//  ------------------------------
-
-		if (x * x + y * y < 1)
-		{
-			++counter;
-		}
-	}
-
-//  ------------------------------------------------------
-
-	assert(equal(4.0 * counter / size, 3.141, 1e-3));
+    benchmark::RunSpecifiedBenchmarks();
 }
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////

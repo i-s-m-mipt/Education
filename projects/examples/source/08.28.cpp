@@ -1,109 +1,50 @@
-///////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
 // chapter : Applied Computations
 
-///////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
-// content : W.L.Putnam Mathematical Competition Problem
+// content : Clocks
 //
-// content : Vector Product Algorithm
+// content : Clock std::chrono::system_clock
 //
-// content : Operator *
+// content : Epochs and Periods
 //
-// content : Barycentric Coordinate Method
+// content : Unix Epoch
+//
+// content : Clock std::chrono::steady_clock
 
-///////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
 #include <cassert>
-#include <cmath>
-#include <numbers>
-#include <random>
+#include <chrono>
+#include <print>
 
-///////////////////////////////////////////////////////////////////////////
-
-struct Vector
-{
-	double x = 0, y = 0, z = 0;
-};
-
-///////////////////////////////////////////////////////////////////////////
-
-auto operator*(Vector const & a, Vector const & b)
-{
-	return Vector
-	(
-		a.y * b.z - a.z * b.y,
-
-	   -a.x * b.z + a.z * b.x,
-
-		a.x * b.y - a.y * b.x
-	);
-}
-
-///////////////////////////////////////////////////////////////////////////
-
-auto equal(double x, double y, double epsilon = 1e-6)
-{
-	return std::abs(x - y) < epsilon;
-}
-
-///////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
 int main()
 {
-	auto size = 1uz << 30;
+    std::chrono::system_clock::time_point epoch;
 
-//  -----------------------------------------------------------------------
+//  --------------------------------------------------
 
-	std::uniform_real_distribution distribution(0.0, 2 * std::numbers::pi);
+    std::print("main : epoch = {}\n", epoch);
 
-//  -----------------------------------------------------------------------
+//  --------------------------------------------------
 
-	std::default_random_engine engine;
+    std::chrono::system_clock::period ratio;
 
-//  -----------------------------------------------------------------------
+//  --------------------------------------------------
 
-	Vector PA(0, -1, 0);
+    assert(ratio.num == 1);
 
-//  -----------------------------------------------------------------------
+	assert(ratio.den == 1'000'000'000);
 
-	auto counter = 0uz;
+//  --------------------------------------------------
 
-//  -----------------------------------------------------------------------
+    assert(std::chrono::system_clock::is_steady == 0);
 
-	for (auto i = 0uz; i < size; ++i)
-	{
-		auto w_B = distribution(engine);
-
-		auto w_C = distribution(engine);
-
-	//  -----------------------------------------------------
-
-		Vector PB(std::cos(w_B), std::sin(w_B), 0);
-
-		Vector PC(std::cos(w_C), std::sin(w_C), 0);
-
-	//  -----------------------------------------------------
-
-		auto alpha_1 = (PA * PB).z;
-
-		auto alpha_2 = (PB * PC).z;
-
-		auto alpha_3 = (PC * PA).z;
-
-	//  -----------------------------------------------------
-
-		counter +=
-		(
-			(alpha_1 >= 0 && alpha_2 >= 0 && alpha_3 >= 0) ||
-
-			(alpha_1 <= 0 && alpha_2 <= 0 && alpha_3 <= 0)
-		);
-	}
-
-//  -----------------------------------------------------------------------
-
-	assert(equal(1.0 * counter / size, 0.250, 1e-3));
+    assert(std::chrono::steady_clock::is_steady == 1);
 }
 
-///////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////

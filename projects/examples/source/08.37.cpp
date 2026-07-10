@@ -1,49 +1,121 @@
-//////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Applied Computations
 
-//////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-// content : Calendars
+// content : Literal Operators
 //
-// content : Time std::chrono::year_month_day
+// content : Operators ""s
 //
-// content : Time std::chrono::year_month_weekday
+// content : Namespace std::literals
 //
-// content : Time std::chrono::hh_mm_ss
+// content : User-Defined Literal Operators
 
-//////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
+#include <cassert>
 #include <chrono>
-#include <print>
+#include <cmath>
+#include <numbers>
+#include <string>
+#include <type_traits>
 
-//////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+using namespace std::literals;
+
+////////////////////////////////////////////////////////////////////////////////
+
+struct Entity
+{
+	unsigned long long int x = 0;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+auto operator""_E(unsigned long long int x)
+{
+	return Entity(x);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+auto operator""_deg_to_rad(long double x)
+{
+	return x * std::numbers::pi_v < long double > / 180;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+auto pow(int x, int y) -> int
+{
+	return y > 0 ? x * pow(x, y - 1) : 1;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+template < char D, char ... Ds > auto make_integer() -> int
+{
+	auto x = D - '0';
+
+	if constexpr (sizeof...(Ds) > 0)
+	{
+		return x * pow(3, sizeof...(Ds)) + make_integer < Ds... > ();
+	}
+	else
+	{
+		return x;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+template < char ... Ds > auto operator""_b3()
+{
+	return make_integer < Ds... > ();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+auto equal(double x, double y, double epsilon = 1e-6)
+{
+	return std::abs(x - y) < epsilon;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    auto now_1 = std::chrono::system_clock::now();
+	auto string = "aaaaa"s;
 
-    auto now_2 = std::chrono::floor < std::chrono::days > (now_1);
+//  ----------------------------------------------------------------------------
 
-//  --------------------------------------------------------------
+	static_assert(std::is_same_v < decltype(string), std::string > );
 
-    std::chrono::year_month_day date(now_2);
+//  ----------------------------------------------------------------------------
 
-//  --------------------------------------------------------------
+	auto duration = 1s;
 
-    auto wday = std::chrono::year_month_weekday(now_2).weekday();
+//  ----------------------------------------------------------------------------
 
-//  --------------------------------------------------------------
+	static_assert(std::is_same_v < decltype(duration), std::chrono::seconds > );
 
-	std::chrono::hh_mm_ss time(now_1 - now_2);
+//  ----------------------------------------------------------------------------
 
-//  --------------------------------------------------------------
+	auto entity = 1_E;
 
-    std::print("main : date = {}\n", date);
+//  ----------------------------------------------------------------------------
 
-    std::print("main : wday = {}\n", wday);
+	static_assert(std::is_same_v < decltype(entity), Entity > );
 
-	std::print("main : time = {}\n", time);
+//  ----------------------------------------------------------------------------
+
+	assert(equal(90.0_deg_to_rad, std::numbers::pi / 2));
+
+//  ----------------------------------------------------------------------------
+
+	assert(210_b3 == 21);
 }
 
-//////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////

@@ -1,58 +1,131 @@
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Applied Computations
 
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
-// content : Statistics
+// content : Direct Fourier Transformation (DFT) Algorithm
 //
-// content : Library Boost.Accumulators
+// content : Time Complexity O(N^2)
+//
+// content : Function std::exp
+//
+// content : Fast Fourier Transformation (FFT) Algorithm
+//
+// content : Time Complexity O(N*log(N))
+//
+// content : Cooley-Tukey Algorithm
 
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <cmath>
+#include <complex>
+#include <iterator>
+#include <numbers>
+#include <vector>
 
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/accumulators/accumulators.hpp>
-#include <boost/accumulators/statistics/weighted_mean.hpp>
-#include <boost/accumulators/statistics/weighted_variance.hpp>
+using namespace std::literals;
 
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
-auto equal(double x, double y, double epsilon = 1e-6)
+using signal_t = std::vector < std::complex < double > > ;
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+auto transform_v1(signal_t const & X)
 {
-	return std::abs(x - y) < epsilon;
+    auto size = std::size(X);
+
+    signal_t Y(size, signal_t::value_type(0));
+
+    for (auto i = 0uz; i < size; ++i)
+    {
+        for (auto j = 0uz; j < size; ++j)
+        {
+            Y[i] += X[j] * std::exp(-2i * (std::numbers::pi * i * j / size));
+        }
+    }
+
+    return Y;
 }
 
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+
+auto transform_v2(signal_t const & X) -> signal_t
+{
+    if (auto size = std::size(X), half = size / 2; size > 1)
+    {
+        signal_t E(half, 0);
+
+        signal_t O(half, 0);
+
+        for (auto i = 0uz; 2 * i < size; ++i)
+        {
+            E[i] = X[2 * i + 0];
+
+            O[i] = X[2 * i + 1];
+        }
+
+        E = transform_v2(E);
+
+        O = transform_v2(O);
+
+        signal_t Y(size, 0);
+
+        signal_t::value_type w = 1;
+
+        auto angle = 2 * std::numbers::pi / size;
+
+        for (auto i = 0uz, j = half; 2 * i < size; ++i, ++j)
+        {
+            Y[i] = E[i] + w * O[i];
+
+            Y[j] = E[i] - w * O[i];
+
+            w *= signal_t::value_type(std::cos(angle), std::sin(angle));
+        }
+
+        return Y;
+    }
+    else
+    {
+        return X;
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+auto equal(std::complex < double > x, std::complex < double > y, double epsilon = 1e-6)
+{
+    return
+    (
+        std::abs(std::real(x) - std::real(y)) < epsilon &&
+
+        std::abs(std::imag(y) - std::imag(y)) < epsilon
+    );
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    using features_t = boost::accumulators::features
-    <
-        boost::accumulators::tag::weighted_mean,
+    signal_t X = { 0.0 + 0.0i, 0.0 + 1.0i, 1.0 + 0.0i, 1.0 + 1.0i };
 
-        boost::accumulators::tag::weighted_variance
-    > ;
+//  ----------------------------------------------------------------
 
-//  ------------------------------------------------------------------------
+    auto Y1 = transform_v1(X);
 
-    boost::accumulators::accumulator_set < double, features_t, double > set;
+    auto Y2 = transform_v2(X);
 
-//  ------------------------------------------------------------------------
+//  ----------------------------------------------------------------
 
-    for (auto i = 1; i <= 5; ++i)
+    for (auto i = 0uz; i < std::size(X); ++i)
     {
-        set(i, boost::accumulators::weight = i);
+        assert(equal(Y1[i], Y2[i]));
     }
-
-//  ------------------------------------------------------------------------
-
-    assert(equal(boost::accumulators::weighted_mean    (set), 3.666'666));
-
-    assert(equal(boost::accumulators::weighted_variance(set), 1.555'555));
 }
 
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
