@@ -6,7 +6,7 @@
 
 // content : Embedded Reference Counting
 //
-// content : Library Boost.SmartPointers
+// content : Library Boost.SmartPtr
 
 ////////////////////////////////////////////////////////////
 
