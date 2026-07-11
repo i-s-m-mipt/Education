@@ -141,7 +141,7 @@
 
 
 
-\newpage\thispagestyle{empty}\pdfpageheight = 4.20in
+\newpage\thispagestyle{empty}\pdfpageheight = 5.80in
 
 \textbf{\Large 00. Requirements}
 
@@ -203,7 +203,7 @@
 
 \bigskip
 
-\,В случае конфликтов требований в приоритете является выполнение требований, указанных в условиях задач.
+Решения, полученные с использованием технологий генеративного искусственного интеллекта, должны сопровождаться копиями промптов, а также подробными комментариями с описанием выполненных Вами доработок. В случае возникновения конфликтов, требования, приведенные в условиях задач, обладают более высоким приоритетом по сравнению с требованиями, приведенными в данном разделе. Решение каждой задачи будет проверяться вручную мной или моими ассистентами и оцениваться по десятибалльной шкале. Каждое нарушение требований из данного раздела или из условия задачи снижает полученные за решение баллы на 1 при самостоятельной работе и на 2 при использовании технологий генеративного искусственного интеллекта без права на доработку и повторную сдачу. Ваша итоговая оценка будет рассчитываться по формуле S \texttt{/} N с ма- тематическим округлением, где S - сумма Ваших баллов, а N - общее количество задач в домашних заданиях.
 
 
 
@@ -497,7 +497,7 @@
 
 \bigskip
 
-{\large \textbf{04.10} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.35.cpp}{04.35}\,)}}
+{\large \textbf{04.10} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/04.36.cpp}{04.36}\,)}}
 
 \bigskip
 
@@ -591,7 +591,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-Выполните автоматизированную сборку всех примеров из репозитория \href{https://github.com/i-s-m-mipt/Education/tree/master}{Education}. Установите глобально библиотеки \href{https://www.boost.org/}{Boost} версии 1.85, выполнив команды из второго закомментированного блока скрипта \href{https://github.com/i-s-m-mipt/Education/blob/master/education.sh}{education.sh}. Установите систему автоматизации сборки \href{https://cmake.org/}{CMake} версии 3.28 или новее, выполнив команду sudo apt install cmake. Установите глобально дополнительные необходимые библиотеки, указанные в командах \lstinline{find_package} в файле \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/CMakeLists.txt}{CMakeLists.txt} проекта examples из репозитория Education. Используйте любые удобные открытые источники и документации библиотек на \href{https://github.com/}{GitHub} в качестве подкрепления. Обратите внимание, что большинство библиотек собираются и устанавливаются вручную из склонированных локально репозиториев, однако некоторые могут быть установлены через пакетные менеджеры. Например, библиотека \href{https://github.com/uxlfoundation/oneTBB}{TBB} устанавливается командой sudo apt install libtbb-dev. Выполните сборку только тех примеров из репозитория Education, которые используют стандартную библиотеку, Boost, TBB, \href{https://github.com/google/googletest}{Google.Test} или \href{https://github.com/google/benchmark}{Google.Benchmark}. Закомментируйте инструкции сборки остальных примеров в файле CMakeLists.txt проекта examples из репозитория Education. Выполните скрипт education.sh. Приложите в качестве результатов скриншоты терминалов, показывающих содержимое директории libraries и трех директорий output после завершения процесса сборки всех примеров.
+Выполните автоматизированную сборку всех примеров из репозитория \href{https://github.com/i-s-m-mipt/Education/tree/master}{Education}. Установите глобально библиотеки \href{https://www.boost.org/}{Boost} версии 1.90, выполнив команды из второго закомментированного блока скрипта \href{https://github.com/i-s-m-mipt/Education/blob/master/education.sh}{education.sh}. Установите систему автоматизации сборки \href{https://cmake.org/}{CMake} версии 3.28 или новее, выполнив команду sudo apt install cmake. Установите глобально дополнительные необходимые библиотеки, указанные в командах \lstinline{find_package} в файле \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/CMakeLists.txt}{CMakeLists.txt} проекта examples из репозитория Education. Используйте любые удобные открытые источники и документации библиотек на \href{https://github.com/}{GitHub} в качестве подкрепления. Обратите внимание, что большинство библиотек собираются и устанавливаются вручную из склонированных локально репозиториев, однако некоторые могут быть установлены через пакетные менеджеры. Например, библиотека \href{https://github.com/uxlfoundation/oneTBB}{TBB} устанавливается командой sudo apt install libtbb-dev. Выполните сборку только тех примеров из репозитория Education, которые используют стандартную библиотеку, Boost, TBB, \href{https://github.com/google/googletest}{Google.Test} или \href{https://github.com/google/benchmark}{Google.Benchmark}. Закомментируйте инструкции сборки остальных примеров в файле CMakeLists.txt проекта examples из репозитория Education. Выполните скрипт education.sh. Приложите в качестве результатов скриншоты терминалов, показывающих содержимое директории libraries и трех директорий output после завершения процесса сборки всех примеров.
 
 \bigskip
 
@@ -607,7 +607,7 @@ Method, для управления поведением игровых объе
 
 \section{07. Debugging and Profiling Tools}
 
-{\large \textbf{07.01} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.09.cpp}{07.09}\,)}}
+{\large \textbf{07.01} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.08.cpp}{07.08}\,)}}
 
 \bigskip
 
@@ -615,7 +615,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{07.02} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.11.cpp}{07.11}\,)}}
+{\large \textbf{07.02} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.10.cpp}{07.10}\,)}}
 
 \bigskip
 
@@ -623,7 +623,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{07.03} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.12.cpp}{07.12}\,)} \texttt{//} H. Sutter, Exceptional C\texttt{++}}
+{\large \textbf{07.03} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.11.cpp}{07.11}\,)} \texttt{//} H. Sutter, Exceptional C\texttt{++}}
 
 \bigskip
 
@@ -649,7 +649,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{07.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.22.cpp}{07.22}\,)}}
+{\large \textbf{07.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.21.cpp}{07.21}\,)}}
 
 \bigskip
 
@@ -657,7 +657,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{07.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.23.cpp}{07.23}\,)}}
+{\large \textbf{07.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/07.22.cpp}{07.22}\,)}}
 
 \bigskip
 
@@ -695,7 +695,7 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{08.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/08.26.cpp}{08.26}\,)} \texttt{//} M. Bancila, The Modern C\texttt{++} Challenge}
+{\large \textbf{08.04} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/08.24.cpp}{08.24}\,)} \texttt{//} M. Bancila, The Modern C\texttt{++} Challenge}
 
 \bigskip
 
@@ -703,11 +703,11 @@ Method, для управления поведением игровых объе
 
 \bigskip
 
-{\large \textbf{08.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/08.33.cpp}{08.33}\,)}}
+{\large \textbf{08.05} \texttt{(\,\href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/08.31.cpp}{08.31}\,)}}
 
 \bigskip
 
-Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/08.33.cpp}{\texttt{08.33}} таким образом, чтобы пользователь мог проводить серии измерений временных интервалов с последующим усреднением. Реализуйте в классе \lstinline{Timer} публичные функции-члены \lstinline{start} и \lstinline{stop} для запуска и остановки каждого измерения. Реализуйте в классе \lstinline{Timer} приватное поле типа \lstinline{bool} для проверки и обновления состояния таймера в функциях-членах \lstinline{start} и \lstinline{stop}. Реализуйте в классе \lstinline{Timer} приватный стандартный контейнер \lstinline{std::vector} для хранения стандартных интервалов \lstinline{std::chrono::duration} с типом \lstinline{double} в качестве первого параметра шаблона, соответствующих отдельным измерениям. Реализуйте в классе \lstinline{Timer} публичную функцию-член \lstinline{average} для вычисления и получения среднего значения\:времени\:в\:секундах.
+Доработайте пример \href{https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/08.31.cpp}{\texttt{08.31}} таким образом, чтобы пользователь мог проводить серии измерений временных интервалов с последующим усреднением. Реализуйте в классе \lstinline{Timer} публичные функции-члены \lstinline{start} и \lstinline{stop} для запуска и остановки каждого измерения. Реализуйте в классе \lstinline{Timer} приватное поле типа \lstinline{bool} для проверки и обновления состояния таймера в функциях-членах \lstinline{start} и \lstinline{stop}. Реализуйте в классе \lstinline{Timer} приватный стандартный контейнер \lstinline{std::vector} для хранения стандартных интервалов \lstinline{std::chrono::duration} с типом \lstinline{double} в качестве первого параметра шаблона, соответствующих отдельным измерениям. Реализуйте в классе \lstinline{Timer} публичную функцию-член \lstinline{average} для вычисления и получения среднего значения\:времени\:в\:секундах.
 
 
 
