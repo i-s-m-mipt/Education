@@ -26,11 +26,11 @@
 //
 // content : Address Generation Unit (AGU)
 //
-// content : Store Queue (STQ)
+// content : STore Queue (STQ)
 //
 // content : Speculative Stores
 //
-// content : Load Queue (LDQ)
+// content : LoaD Queue (LDQ)
 //
 // content : Store-to-Load Forwarding
 //
