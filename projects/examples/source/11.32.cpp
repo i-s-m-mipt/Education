@@ -1,136 +1,71 @@
-////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Programming with Algorithms
 
-////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-// content : Depth First Search (DFS) Algorithm
+// content : Weighted Graphs
 //
-// content : Time Complexity O(V + E)
+// content : Dijkstra Shortest Paths Algorithm
+//
+// content : Time Complexity O(E*log(V))
 
-////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-// support : https://www.cs.usfca.edu/~galles/visualization/DFS.html
+// support : https://www.cs.usfca.edu/~galles/visualization/Dijkstra.html
 
-////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#include <array>
+#include <cassert>
+#include <iterator>
 
-////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/depth_first_search.hpp>
+#include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/graph/named_function_params.hpp>
 
-////////////////////////////////////////////////////////////////////////////////
-
-class Visitor : public boost::default_dfs_visitor
-{
-public :
-
-    void initialize_vertex(auto vertex, auto const & graph)
-    {
-        std::cout << "Visitor::initialize_vertex : vertex = " << vertex << '\n';
-
-        boost::default_dfs_visitor::initialize_vertex(vertex, graph);
-    }
-
-//  ----------------------------------------------------------------------------
-
-    void start_vertex(auto vertex, auto const & graph)
-    {
-        std::cout << "Visitor::start_vertex : vertex = " << vertex << '\n';
-
-        boost::default_dfs_visitor::start_vertex(vertex, graph);
-    }
-
-//  ----------------------------------------------------------------------------
-
-    void discover_vertex(auto vertex, auto const & graph)
-    {
-        std::cout << "Visitor::discover_vertex : vertex = " << vertex << '\n';
-
-        boost::default_dfs_visitor::discover_vertex(vertex, graph);
-    }
-
-//  ----------------------------------------------------------------------------
-
-    void finish_vertex(auto vertex, auto const & graph)
-    {
-        std::cout << "Visitor::finish_vertex : vertex = " << vertex << '\n';
-
-        boost::default_dfs_visitor::finish_vertex(vertex, graph);
-    }
-
-//  ----------------------------------------------------------------------------
-
-    void examine_edge(auto edge, auto const & graph)
-    {
-        std::cout << "Visitor::examine_edge : edge = " << edge << '\n';
-
-        boost::default_dfs_visitor::examine_edge(edge, graph);
-    }
-
-//  ----------------------------------------------------------------------------
-
-    void tree_edge(auto edge, auto const & graph)
-    {
-        std::cout << "Visitor::tree_edge : edge = " << edge << '\n';
-
-        boost::default_dfs_visitor::tree_edge(edge, graph);
-    }
-
-//  ----------------------------------------------------------------------------
-
-    void back_edge(auto edge, auto const & graph)
-    {
-        std::cout << "Visitor::back_edge : edge = " << edge << '\n';
-
-        boost::default_dfs_visitor::back_edge(edge, graph);
-    }
-
-//  ----------------------------------------------------------------------------
-
-    void forward_or_cross_edge(auto edge, auto const & graph)
-    {
-        std::cout << "Visitor::forward_or_cross_edge : edge = " << edge << '\n';
-
-        boost::default_dfs_visitor::forward_or_cross_edge(edge, graph);
-    }
-
-//  ----------------------------------------------------------------------------
-
-    void finish_edge(auto edge, auto const & graph)
-    {
-        std::cout << "Visitor::finish_edge : edge = " << edge << '\n';
-
-        boost::default_dfs_visitor::finish_edge(edge, graph);
-    }
-};
-
-////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS > graph;
+    using graph_t = boost::adjacency_list
+    <
+        boost::vecS, boost::vecS, boost::directedS,
 
-//  ---------------------------------------------------------------------------
+        boost::no_property, boost::property < boost::edge_weight_t, int >
+    > ;
 
-    boost::add_edge(0, 1, graph);
+//  ---------------------------------------------------------------------------------
 
-    boost::add_edge(1, 2, graph);
+    graph_t graph;
 
-    boost::add_edge(1, 3, graph);
+//  ---------------------------------------------------------------------------------
 
-    boost::add_edge(2, 4, graph);
+    boost::add_edge(0, 1, 1, graph);
 
-    boost::add_edge(3, 4, graph);
+    boost::add_edge(1, 2, 1, graph);
 
-    boost::add_edge(4, 5, graph);
+    boost::add_edge(1, 3, 1, graph);
 
-//  ---------------------------------------------------------------------------
+    boost::add_edge(2, 4, 1, graph);
 
-    boost::depth_first_search(graph, boost::visitor(Visitor()).root_vertex(0));
+    boost::add_edge(3, 4, 1, graph);
+
+    boost::add_edge(4, 5, 1, graph);
+
+//  ---------------------------------------------------------------------------------
+
+	std::array < int, 6 > array = {};
+
+//  ---------------------------------------------------------------------------------
+
+	boost::dijkstra_shortest_paths(graph, 0, boost::distance_map(std::begin(array)));
+
+//  ---------------------------------------------------------------------------------
+
+	assert((array == std::array < int, 6 > ({ 0, 1, 2, 2, 3, 4 })));
 }
 
-////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////

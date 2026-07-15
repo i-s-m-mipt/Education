@@ -4,11 +4,7 @@
 
 ///////////////////////////////////////////////////////////////////
 
-// content : Phases of Translation
-//
 // content : Preprocessing
-//
-// content : Translation Units
 //
 // content : Preprocessor Directives
 //

@@ -6,8 +6,6 @@
 
 // content : Modules
 //
-// content : Header and Source File Overheads
-//
 // content : Module Interface Units
 //
 // content : Declaration module

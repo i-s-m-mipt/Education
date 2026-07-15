@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36">
   <diagram name="Страница — 1" id="VEveGzfzLPNnsSKiKBnb">
-    <mxGraphModel dx="770" dy="453" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="770" dy="453" grid="0" gridSize="10" guides="0" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -56,9 +56,6 @@
         <mxCell id="D9ZIIw_PFDN3URD8yPiD-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;fillColor=#000000;fontFamily=Helvetica;" value="" vertex="1">
           <mxGeometry height="10" width="80" x="360" y="540" as="geometry" />
         </mxCell>
-        <mxCell id="D9ZIIw_PFDN3URD8yPiD-2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Helvetica;" value="&lt;font&gt;1 GB&amp;nbsp;&amp;nbsp;&lt;/font&gt;" vertex="1">
-          <mxGeometry height="20" width="40" x="289" y="160" as="geometry" />
-        </mxCell>
         <mxCell id="D9ZIIw_PFDN3URD8yPiD-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;fillColor=#000000;fontFamily=Helvetica;" value="" vertex="1">
           <mxGeometry height="10" width="80" x="360" y="410" as="geometry" />
         </mxCell>
@@ -82,9 +79,6 @@
         </mxCell>
         <mxCell id="D9ZIIw_PFDN3URD8yPiD-9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;fillColor=#000000;fontFamily=Helvetica;" value="" vertex="1">
           <mxGeometry height="10" width="80" x="360" y="190" as="geometry" />
-        </mxCell>
-        <mxCell id="D9ZIIw_PFDN3URD8yPiD-10" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=0;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;direction=west;fontFamily=Helvetica;" value="" vertex="1">
-          <mxGeometry height="40" width="20" x="330" y="150" as="geometry" />
         </mxCell>
         <mxCell id="_WEbEVUjuKZXciAz7EJF-1" edge="1" parent="1" style="endArrow=blockThin;html=1;rounded=0;endFill=0;endSize=6;" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">

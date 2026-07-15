@@ -26,7 +26,7 @@
 
 // support : sudo cpupower frequency-set -d 5.0GHz -u 5.0GHz
 //
-// support : sudo setarch $(uname -m) -R taskset -c 0 chrt -f 99 ./07.23
+// support : sudo setarch $(uname -m) -R taskset -c 0 chrt -f 99 ./07.22
 
 //////////////////////////////////////////////////////////////////////////////
 

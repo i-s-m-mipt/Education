@@ -1,12 +1,9 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36">
   <diagram name="Страница — 1" id="S_IzX6l6qBvCFPKK4t_y">
-    <mxGraphModel dx="1348" dy="793" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1348" dy="913" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="GgP-nV2CVQ64mw5wIq2N-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=1 1;" value="" vertex="1">
-          <mxGeometry height="80" width="240" x="180" y="180" as="geometry" />
-        </mxCell>
         <mxCell id="p5cIM7SI1FKslKuhm6dL-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" value="&lt;b&gt;&lt;font face=&quot;Helvetica&quot; style=&quot;font-size: 14px;&quot;&gt;Stage 1&lt;/font&gt;&lt;/b&gt;" vertex="1">
           <mxGeometry height="40" width="80" x="680" y="280" as="geometry" />
         </mxCell>

@@ -4,31 +4,11 @@
 
 ////////////////////////////////////////////////////////////
 
-// content : Streams
-//
-// content : Base Class std::ios_base
-//
 // content : State Flags
-//
-// content : Base Class std::basic_ios
 //
 // content : Flags std::ios::eofbit and std::ios::failbit
 //
 // content : Exception std::ios_base::failure
-//
-// content : Stream Buffers
-//
-// content : Buffer std::basic_streambuf
-//
-// content : Stream std::basic_istream
-//
-// content : Stream std::cin
-//
-// content : Stream std::basic_ostream
-//
-// content : Streams std::cout, std::clog and std::cerr
-//
-// content : Stream std::basic_iostream
 
 ////////////////////////////////////////////////////////////
 
