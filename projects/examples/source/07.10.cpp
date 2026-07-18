@@ -28,6 +28,8 @@
 //
 // content : Catch-All Handlers
 //
+// content : Function std::terminate
+//
 // content : Function std::current_exception
 //
 // content : Pointer std::exception_ptr
