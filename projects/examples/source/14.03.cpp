@@ -8,8 +8,6 @@
 //
 // content : Daemon Threads
 //
-// content : Suspending Threads
-//
 // content : Function std::this_thread::sleep_for
 
 /////////////////////////////////////////////////

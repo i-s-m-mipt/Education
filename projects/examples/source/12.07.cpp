@@ -6,7 +6,7 @@
 
 // content : String std::basic_string
 //
-// content : User-Defined Case-Insensitive Strings
+// content : User-Defined Strings
 //
 // content : Helper std::char_traits
 //
