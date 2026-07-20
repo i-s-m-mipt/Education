@@ -196,6 +196,12 @@ cp ../source/{font.ttf,image.jpg,script.py,source.cpp} .
 
 ##############################################################################################
 
+files="../source/02.17.cpp"
+
+g++ -S -std=c++23 -Wall -Wextra -Wpedantic -O0 -masm=intel $files
+
+##############################################################################################
+
 files="../source/06.07.cpp ../source/06.08.cpp"
 
 g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 ../source/06.06.hpp -o ../source/06.06.hpp.gch
