@@ -1,79 +1,204 @@
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-// content : Copy Elision
+// content : Special Member Functions
 //
-// content : Return Value Optimization (RVO)
+// content : Container std::initializer_list
 //
-// content : Named Return Value Optimization (NRVO)
+// content : Algorithm std::ranges::copy
 //
-// content : Preventing Optimizations
+// content : Deep and Shallow Copy
+//
+// content : Copy and Move Constructors
+//
+// content : Function std::exchange
+//
+// content : Copy and Move Operators =
+//
+// content : Self-Assignment Problem
+//
+// content : Pattern Copy-And-Swap (CAS)
+//
+// content : Generating Special Member Functions
+//
+// content : Rules of 0, 3, 4 and 5
 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
+#include <algorithm>
+#include <cstddef>
+#include <initializer_list>
+#include <iterator>
 #include <print>
 #include <utility>
 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-class Entity
+class Vector
 {
 public :
 
-	Entity(               ) { std::print("Entity:: Entity (1)\n"); }
+	Vector()
+	{
+		std::print("Vector:: Vector (1)\n");
+	}
 
-	Entity(Entity const & ) { std::print("Entity:: Entity (2)\n"); }
+//  --------------------------------------------------------------------------------
 
-	Entity(Entity       &&) { std::print("Entity:: Entity (3)\n"); }
+	Vector(std::initializer_list < int > list) : m_size(std::size(list))
+	{
+		std::print("Vector:: Vector (2)\n");
 
-   ~Entity(               ) { std::print("Entity::~Entity    \n"); }
+		m_array = m_size ? new int[m_size]{} : nullptr;
+
+		std::ranges::copy(list, m_array);
+	}
+
+//  --------------------------------------------------------------------------------
+
+	Vector(Vector const & other) : m_size(other.m_size)
+	{
+		std::print("Vector:: Vector (3)\n");
+
+		m_array = m_size ? new int[m_size]{} : nullptr;
+
+		std::ranges::copy(other.m_array, other.m_array + other.m_size, m_array);
+	}
+
+//  --------------------------------------------------------------------------------
+
+	Vector(Vector && other)
+	:
+		m_array(std::exchange(other.m_array, nullptr)),
+
+		m_size (std::exchange(other.m_size,  0      ))
+	{
+		std::print("Vector:: Vector (4)\n");
+	}
+
+//  --------------------------------------------------------------------------------
+
+   ~Vector()
+	{
+		std::print("Vector::~Vector\n");
+
+		delete[] m_array;
+	}
+
+//  --------------------------------------------------------------------------------
+
+//	auto & operator=(Vector const & other) // error
+//	{
+//		std::print("Vector::operator= (1)\n");
+//
+//		if (this != &other)
+//		{
+//			delete[] m_array;
+//
+//			m_array = (m_size = other.m_size) ? new int[m_size]{} : nullptr;
+//
+//			std::ranges::copy(other.m_array, other.m_array + other.m_size, m_array);
+//		}
+//
+//		return *this;
+//	}
+
+//  --------------------------------------------------------------------------------
+
+//	auto & operator=(Vector const & other) // bad
+//	{
+//		std::print("Vector::operator= (2)\n");
+//
+//		if (this != &other)
+//		{
+//			auto array = other.m_size ? new int[other.m_size]{} : nullptr;
+//
+//			std::ranges::copy(other.m_array, other.m_array + other.m_size, array);
+//
+//			delete[] std::exchange(m_array, array);
+//
+//			m_size = other.m_size;
+//		}
+//
+//		return *this;
+//	}
+
+//  --------------------------------------------------------------------------------
+
+//	auto & operator=(Vector && other) // bad
+//	{
+//		std::print("Vector::operator= (3)\n");
+//
+//		if (this != &other)
+//		{
+//			delete[] m_array;
+//
+//			m_array = std::exchange(other.m_array, nullptr);
+//
+//			m_size  = std::exchange(other.m_size,  0      );
+//		}
+//
+//		return *this;
+//	}
+
+//  --------------------------------------------------------------------------------
+
+	auto & operator=(Vector other)
+	{
+		std::print("Vector::operator= (4)\n");
+
+		swap(other);
+
+		return *this;
+	}
+
+//  --------------------------------------------------------------------------------
+
+	void swap(Vector & other)
+	{
+		std::swap(m_array, other.m_array);
+
+		std::swap(m_size,  other.m_size );
+	}
+
+private :
+
+	int * m_array = nullptr;
+
+	std::size_t m_size = 0;
 };
 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-auto make_entity_v1()
+void swap(Vector & lhs, Vector & rhs)
 {
-	std::print("make_entity_v1\n");
-
-	return Entity();
+	lhs.swap(rhs);
 }
 
-////////////////////////////////////////////////////////////////////
-
-auto make_entity_v2()
-{
-	std::print("make_entity_v2\n");
-
-	Entity entity;
-
-//	return std::move(entity); // error
-
-	return entity;
-}
-
-////////////////////////////////////////////////////////////////////
-
-auto make_entity_v3(Entity entity)
-{
-	std::print("make_entity_v3\n");
-
-	return entity;
-}
-
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    [[maybe_unused]] auto entity_1 = make_entity_v1();
+	Vector vector_1;
 
-	[[maybe_unused]] auto entity_2 = make_entity_v2();
+	Vector vector_2 = { 1, 2, 3, 4, 5 };
 
-//  ----------------------------------------------------------
+	Vector vector_3 = vector_2;
 
-	[[maybe_unused]] auto entity_3 = make_entity_v3(Entity());
+	Vector vector_4 = std::move(vector_3);
+
+//  --------------------------------------
+
+	vector_3 = vector_2;
+
+	vector_4 = std::move(vector_3);
+
+//  --------------------------------------
+
+	swap(vector_1, vector_2);
 }
 
-////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////

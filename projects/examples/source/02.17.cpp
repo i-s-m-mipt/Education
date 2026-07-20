@@ -20,13 +20,11 @@
 //
 // content : Scoped Variables
 //
+// content : Assembly Language Representation
+//
 // content : Service Compiler Explorer
 //
-// content : Assembly Language
-
-/////////////////////////////////////////////////////////////////////
-
-// support : g++ -std=c++23 -S 02.17.cpp
+// content : Options -S, -masm=intel and -masm=att
 
 /////////////////////////////////////////////////////////////////////
 

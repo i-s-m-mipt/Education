@@ -9,8 +9,6 @@
 // content : Backtracing
 //
 // content : Helper std::stacktrace
-//
-// content : Options -g and -lstdc++exp
 
 ///////////////////////////////////////////////////////////////
 

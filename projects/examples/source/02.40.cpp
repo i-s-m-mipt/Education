@@ -1,137 +1,49 @@
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
 // chapter : Language Core Basics
 
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-// content : Passing Arguments by Value, by Pointer and by Reference
+// content : Dangling Pointers and References
 //
-// content : View std::span
+// content : Data and Block Started by Symbol (BSS) Segments
 //
-// content : String std::string
+// content : Static Objects
+//
+// content : Storage Class Specifier static
 
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <cstddef>
-#include <iterator>
-#include <print>
-#include <span>
-#include <string>
-#include <vector>
 
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-void test([[maybe_unused]] int x, int * y, int & z)
+// auto   make_integer_v1() { auto x = 1; return &x; } // error
+
+// auto & make_integer_v2() { auto x = 1; return  x; } // error
+
+/////////////////////////////////////////////////////////////////
+
+auto const & make_integer_v3()
 {
-	++x, ++(*y), ++z;
+	static auto x = 0; // support : https://compiler-explorer.com
+
+	return ++x;
 }
 
-////////////////////////////////////////////////////////////////////
-
-void show(int * array, std::size_t size)
-{
-	std::print("show : array = {{ ");
-
-	for (auto i = 0uz; i < size; ++i)
-	{
-		std::print("{} ", array[i]);
-	}
-
-	std::print("}}\n");
-}
-
-////////////////////////////////////////////////////////////////////
-
-void show(std::span < int const > span)
-{
-	std::print("show : span = {{ ");
-
-	for (auto i = 0uz; i < std::size(span); ++i)
-	{
-		std::print("{} ", span[i]);
-	}
-
-	std::print("}}\n");
-}
-
-////////////////////////////////////////////////////////////////////
-
-void show(std::string const & string)
-{
-	std::print("show : string = {{ ");
-
-	for (auto i = 0uz; i < std::size(string); ++i)
-	{
-		std::print("{} ", string[i]);
-	}
-
-	std::print("}}\n");
-}
-
-////////////////////////////////////////////////////////////////////
-
-void show(std::vector < int > const & vector)
-{
-	std::print("show : vector = {{ ");
-
-	for (auto i = 0uz; i < std::size(vector); ++i)
-	{
-		std::print("{} ", vector[i]);
-	}
-
-	std::print("}}\n");
-}
-
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
 int main()
 {
-    auto x = 1, y = 2, z = 3;
+//  assert(*make_integer_v1() == 1); // error
 
-//  -----------------------------------------------
+//	assert( make_integer_v2() == 1); // error
 
-	test(x, &y, z);
+    assert( make_integer_v3() == 1);
 
-//  -----------------------------------------------
+    assert( make_integer_v3() == 2);
 
-	assert(x == 1 && y == 3 && z == 4);
-
-//  -----------------------------------------------
-
-	auto size = 5uz;
-
-//  -----------------------------------------------
-
-	auto array = new int[size]{ 1, 2, 3, 4, 5 };
-
-//  -----------------------------------------------
-
-	show(array, size);
-
-//  -----------------------------------------------
-
-	show(std::span < int const > (array, size));
-
-//  -----------------------------------------------
-
-	delete[] array;
-
-//  -----------------------------------------------
-
-	std::string string = "aaaaa";
-
-//  -----------------------------------------------
-
-	show(string);
-
-//  -----------------------------------------------
-
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
-
-//  -----------------------------------------------
-
-	show(vector);
+    assert( make_integer_v3() == 3);
 }
 
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////

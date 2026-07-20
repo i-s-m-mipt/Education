@@ -21,6 +21,8 @@
 // content : Single, Group and Namespace Exports
 //
 // content : Private Module Fragments
+//
+// content : Options -fmodules-ts and -xc++-system-header
 
 ///////////////////////////////////////////////////////////////////
 

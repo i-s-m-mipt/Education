@@ -1,55 +1,38 @@
-////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-// content : Copy and Move Semantics
-//
-// content : Function std::move
+// content : Extending Temporary Objects Lifetime
 
-////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
-#include <print>
-#include <utility>
+#include <cassert>
 
-////////////////////////////////////////////////////////
-
-struct Entity {};
-
-////////////////////////////////////////////////////////
-
-void test(Entity       & ) { std::print("test (1)\n"); }
-
-void test(Entity const & ) { std::print("test (2)\n"); }
-
-void test(Entity       &&) { std::print("test (3)\n"); }
-
-void test(Entity const &&) { std::print("test (4)\n"); }
-
-////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
 int main()
 {
-	Entity       entity_1;
+	auto x = 1.0;
 
-	Entity const entity_2;
+//  ----------------------------------------------
 
-//  ---------------------------------
+//	[[maybe_unused]] int       &  y1 = x; // error
 
-	test(entity_1);
+	[[maybe_unused]] int const &  y2 = x;
 
-	test(entity_2);
+	[[maybe_unused]] int       && y3 = x;
 
-//  ---------------------------------
+	[[maybe_unused]] int const && y4 = x;
 
-	test(std::move(entity_1));
+//  ----------------------------------------------
 
-//	test(std::move(entity_2)); // bad
+	assert(&y2 != &y3);
 
-//  ---------------------------------
+	assert(&y2 != &y4);
 
-	test(Entity());
+	assert(&y3 != &y4);
 }
 
-////////////////////////////////////////////////////////
+//////////////////////////////////////////////////

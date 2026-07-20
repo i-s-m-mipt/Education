@@ -1,17 +1,23 @@
-//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-// content : Ordering std::weak_ordering
+// content : Three-Way Comparison
+//
+// content : Operator <=>
+//
+// content : Ordering std::strong_ordering
+//
+// content : Rewritten Expressions
 
-//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <compare>
 
-//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 class Entity
 {
@@ -19,15 +25,25 @@ public :
 
     Entity(int x, int y) : m_x(x), m_y(y) {}
 
-//  ----------------------------------------------------------------
+//  --------------------------------------------------
 
     auto operator<=>(Entity const & other) const
     {
-        if (m_x < other.m_x) { return std::weak_ordering::less;    }
+        auto comparison = m_x <=> other.m_x;
 
-        if (m_x > other.m_x) { return std::weak_ordering::greater; }
+        if (comparison != std::strong_ordering::equal)
+        {
+            return comparison;
+        }
 
-        return std::weak_ordering::equivalent;
+        return m_y <=> other.m_y;
+    }
+
+//  --------------------------------------------------
+
+    auto operator== (Entity const & other) const
+    {
+        return m_x == other.m_x && m_y == other.m_y;
     }
 
 private :
@@ -35,7 +51,7 @@ private :
     int m_x = 0, m_y = 0;
 };
 
-//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -43,19 +59,29 @@ int main()
 
     Entity entity_2(2, 2);
 
-    Entity entity_3(2, 3);
-
-//  ------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
     assert((entity_1 <=> entity_2) <  0);
 
-    assert((entity_2 <=> entity_3) == 0);
+    assert((entity_2 <=> entity_2) == 0);
 
     assert((entity_2 <=> entity_1) >  0);
 
-//  ------------------------------------------------------------------
+//  --------------------------------------------------------------------------------
 
-    assert((entity_2 <=> entity_3) == std::weak_ordering::equivalent);
+    assert((entity_1 <   entity_2) == 1); // support : https://compiler-explorer.com
+
+    assert((entity_1 >   entity_2) == 0);
+
+    assert((entity_1 <=  entity_2) == 1);
+
+    assert((entity_1 >=  entity_2) == 0);
+
+//  --------------------------------------------------------------------------------
+
+    assert((entity_1 ==  entity_2) == 0); // support : https://compiler-explorer.com
+
+    assert((entity_1 !=  entity_2) == 1);
 }
 
-//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////

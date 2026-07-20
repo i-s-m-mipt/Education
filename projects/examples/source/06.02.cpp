@@ -31,10 +31,12 @@
 // content : Suppressing Compiler Warnings
 //
 // content : Directive #pragma
+//
+// content : Options -E and -D
 
 ///////////////////////////////////////////////////////////////////
 
-// support : g++ -std=c++23 -E -DNO_TRACE 06.02.cpp
+// support : g++ -E -std=c++23 -DNO_TRACE 06.02.cpp
 
 ///////////////////////////////////////////////////////////////////
 

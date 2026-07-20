@@ -101,10 +101,10 @@ set(debug
     02.34
     02.35
     02.36
+    02.37
     02.38
     02.39
     02.40
-    02.41
     02.42
     02.43
     02.44
@@ -132,7 +132,6 @@ set(debug
     03.20
     03.21
     03.22
-    03.23
     03.24
     03.25
     03.26
@@ -145,6 +144,7 @@ set(debug
     03.33
     03.34
     03.35
+    03.36
 
     04.01
     04.02
@@ -472,11 +472,11 @@ endforeach()
 
 #############################################################################################
 
-add_executable             (02.37 source/02.37.cpp)
+add_executable             (02.41 source/02.41.cpp)
 
-target_compile_options     (02.37 PRIVATE -Wall -Wextra -Wpedantic -O0 -m32)
+target_compile_options     (02.41 PRIVATE -Wall -Wextra -Wpedantic -O0 -m32)
 
-target_link_options        (02.37 PRIVATE -m32)
+target_link_options        (02.41 PRIVATE -m32)
 
 #############################################################################################
 

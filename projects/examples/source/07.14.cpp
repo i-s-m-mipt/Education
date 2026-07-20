@@ -12,7 +12,7 @@
 //
 // content : Commands run, continue, next, step, break, print and backtrace
 //
-// content : Option -ggdb
+// content : Options -g and -ggdb
 
 ///////////////////////////////////////////////////////////////////////////
 

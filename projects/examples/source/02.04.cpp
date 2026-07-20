@@ -1,45 +1,67 @@
-////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 // chapter : Language Core Basics
 
-////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-// content : Arithmetic Types
+// content : Signed and Unsigned Types and Literals
 //
-// content : Floating-Point Types and Literals
+// content : Type Modifiers signed and unsigned
 //
-// content : Types float and double
+// content : Literal Suffix u
 //
-// content : Literal Suffixes f and l
+// content : Type Trait std::is_same
 //
-// content : Standard IEEE 754
+// content : Comparing Signed and Unsigned Numbers
 //
-// content : Sign, Mantissa and Exponent
+// content : Two's Complement
 //
-// content : Precision Problem
+// content : Functions std::cmp_less and std::cmp_equal
+//
+// content : Suppressing Compiler Warnings
+//
+// content : Directive #pragma
 
-////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <limits>
+#include <type_traits>
+#include <utility>
 
-////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    float x = 1.0f; double y = 2.0; long double z = 3.0l;
+    int x = 1; signed int y = 2; unsigned int z = 3u;
 
-//  --------------------------------------------------------
+//  ----------------------------------------------------------------------
 
-	static_assert(sizeof(x) == 4);
+	static_assert(sizeof(x) == sizeof(y));
 
-	static_assert(sizeof(y) == 8);
+	static_assert(sizeof(x) == sizeof(z));
 
-	static_assert(sizeof(z) >= 8);
+//  ----------------------------------------------------------------------
 
-//  --------------------------------------------------------
+	static_assert(std::is_same_v < signed int, int > );
 
-	assert(std::numeric_limits < double > ::digits10 == 15);
+//  ----------------------------------------------------------------------
+
+	assert(std::numeric_limits < unsigned int > ::max() == 4'294'967'295);
+
+	assert(std::numeric_limits < unsigned int > ::min() == 0);
+
+//  ----------------------------------------------------------------------
+
+#pragma GCC diagnostic ignored "-Wsign-compare"
+
+//  ----------------------------------------------------------------------
+
+    assert(1u < -1 && std::cmp_less(-1, 1u) && std::cmp_equal(1, 1u));
+
+//  ----------------------------------------------------------------------
+
+#pragma GCC diagnostic pop
 }
 
-////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////

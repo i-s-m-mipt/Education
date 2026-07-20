@@ -1,87 +1,109 @@
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 // chapter : Object-Oriented Programming
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-// content : Three-Way Comparison
+// content : Rational Arithmetic
 //
-// content : Operator <=>
-//
-// content : Ordering std::strong_ordering
-//
-// content : Rewritten Expressions
+// content : Library Boost.Rational
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <compare>
+#include <cmath>
+#include <sstream>
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-class Entity
+#include <boost/rational.hpp>
+
+//////////////////////////////////////////////////////////
+
+auto equal(double x, double y, double epsilon = 1e-6)
 {
-public :
+	return std::abs(x - y) < epsilon;
+}
 
-    Entity(int x, int y) : m_x(x), m_y(y) {}
-
-//  --------------------------------------------------
-
-    auto operator<=>(Entity const & other) const
-    {
-        auto comparison = m_x <=> other.m_x;
-
-        if (comparison != std::strong_ordering::equal)
-        {
-            return comparison;
-        }
-
-        return m_y <=> other.m_y;
-    }
-
-//  --------------------------------------------------
-
-    auto operator== (Entity const & other) const
-    {
-        return m_x == other.m_x && m_y == other.m_y;
-    }
-
-private :
-
-    int m_x = 0, m_y = 0;
-};
-
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 int main()
 {
-    Entity entity_1(1, 1);
+    boost::rational < int > x = 1, y(2, 1);
 
-    Entity entity_2(2, 2);
+//  ------------------------------------------------------
 
-//  --------------------------------------------------------------------------------
+	assert(equal(boost::rational_cast < double > (x), 1));
 
-    assert((entity_1 <=> entity_2) <  0);
+//  ------------------------------------------------------
 
-    assert((entity_2 <=> entity_2) == 0);
+	assert((x += y) == boost::rational < int > (+3, 1));
 
-    assert((entity_2 <=> entity_1) >  0);
+	assert((x -= y) == boost::rational < int > (+1, 1));
 
-//  --------------------------------------------------------------------------------
+	assert((x *= y) == boost::rational < int > (+2, 1));
 
-    assert((entity_1 <   entity_2) == 1); // support : https://compiler-explorer.com
+	assert((x /= y) == boost::rational < int > (+1, 1));
 
-    assert((entity_1 >   entity_2) == 0);
+//  ------------------------------------------------------
 
-    assert((entity_1 <=  entity_2) == 1);
+	assert((x ++  ) == boost::rational < int > (+1, 1));
 
-    assert((entity_1 >=  entity_2) == 0);
+	assert((x --  ) == boost::rational < int > (+2, 1));
 
-//  --------------------------------------------------------------------------------
+	assert((  ++ y) == boost::rational < int > (+3, 1));
 
-    assert((entity_1 ==  entity_2) == 0); // support : https://compiler-explorer.com
+	assert((  -- y) == boost::rational < int > (+2, 1));
 
-    assert((entity_1 !=  entity_2) == 1);
+//  ------------------------------------------------------
+
+	assert((x +  y) == boost::rational < int > (+3, 1));
+
+	assert((x -  y) == boost::rational < int > (-1, 1));
+
+	assert((x *  y) == boost::rational < int > (+2, 1));
+
+	assert((x /  y) == boost::rational < int > (+1, 2));
+
+//  ------------------------------------------------------
+
+	assert((x += 1) == boost::rational < int > (+2, 1));
+
+	assert((x +  1) == boost::rational < int > (+3, 1));
+
+	assert((1 +  y) == boost::rational < int > (+3, 1));
+
+	assert((1 +  1) == boost::rational < int > (+2, 1));
+
+//  ------------------------------------------------------
+
+	assert((x <  y) == 0);
+
+	assert((x >  y) == 0);
+
+	assert((x <= y) == 1);
+
+	assert((x >= y) == 1);
+
+	assert((x == y) == 1);
+
+	assert((x != y) == 0);
+
+//  ------------------------------------------------------
+
+	std::stringstream stream_1("1/2");
+
+	std::stringstream stream_2;
+
+//  ------------------------------------------------------
+
+	stream_1 >> x;
+
+	stream_2 << x;
+
+//  ------------------------------------------------------
+
+	assert(stream_2.str() == stream_1.str());
 }
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////

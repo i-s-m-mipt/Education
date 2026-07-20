@@ -6,13 +6,15 @@
 
 // content : Libraries
 //
-// content : Boost Library Collection
-//
 // content : Static and Dynamic Libraries
 //
 // content : Library Boost.Dll
 //
 // content : Wrapper std::function
+//
+// content : The Boost C++ Library Collection
+//
+// content : System CMake
 
 ////////////////////////////////////////////////////////////////////////////////
 
