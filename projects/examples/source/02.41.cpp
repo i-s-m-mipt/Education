@@ -8,6 +8,10 @@
 //
 // content : Attributes [[cdecl]], [[stdcall]] and [[fastcall]]
 //
+// content : 32-bit and 64-bit Environments
+//
+// content : Application Binary Interface (ABI)
+//
 // content : Options -m32 and -m64
 
 //////////////////////////////////////////////////////////////////////////

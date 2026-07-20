@@ -67,6 +67,20 @@ public :
 
 ////////////////////////////////////////////////////////////////////
 
+auto test(int x) -> std::variant < int, std::string >
+{
+    if (x > 0)
+	{
+		return x;
+	}
+	else
+	{
+		return "error";
+	}
+}
+
+////////////////////////////////////////////////////////////////////
+
 int main()
 {
     std::variant < int, double, std::string > variant_1 = 1;
@@ -101,7 +115,9 @@ int main()
 
 //  ----------------------------------------------------------------
 
-    assert(std::holds_alternative < int > (variant_3));
+    assert(std::holds_alternative < int > (test(0)) == 0);
+
+	assert(std::holds_alternative < int > (test(1)) == 1);
 }
 
 ////////////////////////////////////////////////////////////////////
