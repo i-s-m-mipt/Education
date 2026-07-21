@@ -225,3 +225,15 @@ g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 -fmodules-ts ../source/06.14.cxx
 g++    -std=c++23 -Wall -Wextra -Wpedantic -O0 -fmodules-ts $files -o 06.16
 
 ##############################################################################################
+
+files="../source/07.17.cpp"
+
+g++    -std=c++23 -Wall -Wextra -Wpedantic -O3                    $files -o 07.17.01
+
+g++    -std=c++23 -Wall -Wextra -Wpedantic -O3 -fprofile-generate $files -o 07.17.02
+
+./07.17.02
+
+g++    -std=c++23 -Wall -Wextra -Wpedantic -O3 -fprofile-use      $files -o 07.17.02
+
+##############################################################################################
