@@ -43,7 +43,7 @@ template < int X > auto const is_prime_v = Is_Prime < X > ::value;
 
 int main()
 {
-	static_assert(is_prime_v < 5 > );
+	static_assert(is_prime_v < 5 > ); // support : https://cppinsights.io
 }
 
 ////////////////////////////////////////////////////////////////////////////////

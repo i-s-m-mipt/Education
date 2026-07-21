@@ -24,7 +24,7 @@ class Entity
 {
 public :
 
-    void test_v1() // support : https://compiler-explorer.com
+    void test_v1()
     {
         m_x.store(1, std::memory_order::relaxed);
 

@@ -34,7 +34,7 @@
 
 int main()
 {
-    auto x = 1, * y = &x;
+    auto x = 1, * y = &x; // support : https://compiler-explorer.com
 
 //  ---------------------------------------------------------------------
 

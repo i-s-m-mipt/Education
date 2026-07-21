@@ -22,9 +22,9 @@ auto reduce_v4(auto ... xs) { return (xs + ... + 0 ); } // support : https://cpp
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-auto transform_reduce(auto ... xs)
+auto transform_reduce(auto ... xs) // support : https://cppinsights.io
 {
-	return (... + (xs * xs)); // support : https://cppinsights.io
+	return (... + (xs * xs));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////

@@ -22,30 +22,34 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-void show_v1()
+void show_v1() // support : https://cppinsights.io
 {
 	std::print("show_v1\n");
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-template < typename T, typename ... Ts > void show_v1(T x, Ts ... xs)
+template
+<
+	typename T, typename ... Ts
+>
+void show_v1(T x, Ts ... xs) // support : https://cppinsights.io
 {
 	std::print("show_v1 : x = {} sizeof...(xs) = {}\n", x, sizeof...(xs));
 
-	show_v1(xs...); // support : https://cppinsights.io
+	show_v1(xs...);
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-void show_v2(auto x)
+void show_v2(auto x) // support : https://cppinsights.io
 {
 	std::print("show_v2 : x = {} ", x);
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-void show_v2(auto x, auto ... xs)
+void show_v2(auto x, auto ... xs) // support : https://cppinsights.io
 {
 	show_v2(x);
 
@@ -61,9 +65,9 @@ void show_v2(auto x, auto ... xs)
 
 //////////////////////////////////////////////////////////////////////////
 
-void transform(auto ... xs)
+void transform(auto ... xs) // support : https://cppinsights.io
 {
-	show_v1(xs * xs...); // support : https://cppinsights.io
+	show_v1(xs * xs...);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -75,7 +79,7 @@ struct Entity
 
 //////////////////////////////////////////////////////////////////////////
 
-auto make_entity(auto ... xs)
+auto make_entity(auto ... xs) // support : https://cppinsights.io
 {
 	return new Entity(xs...);
 }

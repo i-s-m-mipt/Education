@@ -126,7 +126,7 @@ class Spinlock_v4
 {
 public :
 
-    void lock() // support : https://compiler-explorer.com
+    void lock()
     {
         while (true)
         {

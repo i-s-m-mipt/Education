@@ -71,17 +71,17 @@ int main()
 
     assert((entity_1 <   entity_2) == 1); // support : https://compiler-explorer.com
 
-    assert((entity_1 >   entity_2) == 0);
+    assert((entity_1 >   entity_2) == 0); // support : https://compiler-explorer.com
 
-    assert((entity_1 <=  entity_2) == 1);
+    assert((entity_1 <=  entity_2) == 1); // support : https://compiler-explorer.com
 
-    assert((entity_1 >=  entity_2) == 0);
+    assert((entity_1 >=  entity_2) == 0); // support : https://compiler-explorer.com
 
 //  --------------------------------------------------------------------------------
 
     assert((entity_1 ==  entity_2) == 0); // support : https://compiler-explorer.com
 
-    assert((entity_1 !=  entity_2) == 1);
+    assert((entity_1 !=  entity_2) == 1); // support : https://compiler-explorer.com
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
