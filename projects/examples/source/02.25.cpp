@@ -19,7 +19,7 @@ int main()
 
 //  -------------------------------------------------------
 
-	do
+	do // support : https://compiler-explorer.com
 	{
 		std::print("main : enter int x : "); std::cin >> x;
 	}

@@ -65,7 +65,7 @@ int main()
 {
               auto x = 1;
 
-    constexpr auto y = 2; // support : https://compiler-explorer.com
+    constexpr auto y = 2;
 
 //  ------------------------------------------------------------------
 
