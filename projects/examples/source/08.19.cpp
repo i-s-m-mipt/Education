@@ -28,14 +28,14 @@
 
 int main()
 {
-	for (auto i = 1uz; i <= std::numeric_limits < double > ::digits10; ++i)
+	for (auto i = 1uz; i < std::numeric_limits < double > ::digits10 + 1; ++i)
 	{
 		assert(std::format("{:.{}f}", 1.0, i) == "1." + std::string(i, '0'));
 	}
 
 //  -------------------------------------------------------------------------------------
 
-	for (auto i = 0uz; i <= std::numeric_limits < double > ::max_exponent10; ++i)
+	for (auto i = 0uz; i < std::numeric_limits < double > ::max_exponent10 + 1; ++i)
 	{
 		auto string = (i < 10 ? "0" : "") + std::to_string(i);
 

@@ -23,7 +23,7 @@ int main()
 
 //  ----------------------------------------------------
 
-	for (auto i = 1; i <= 100; ++i)
+	for (auto i = 1; i < 101; ++i)
 	{
         if (x < std::numeric_limits < int > ::max() / i)
         {

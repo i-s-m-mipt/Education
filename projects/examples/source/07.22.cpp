@@ -20,7 +20,7 @@
 //
 // content : Tools cpupower, uname, setarch, taskset and chrt
 //
-// content : Algorithms std::ranges::iota and std::ranges::lower_bound
+// content : Algorithm std::ranges::lower_bound
 
 //////////////////////////////////////////////////////////////////////////////
 

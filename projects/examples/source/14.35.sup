@@ -44,6 +44,10 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
+// support : https://people.freebsd.org/~lstewart/articles/cpumemory.pdf
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 L1 Cache : Latency ~ 3 * 10 ^ 0 (cycles) : Latency ~ 1 * 10 ^ 0 (ns) : Size ~ 2 ^ 16 (B) per core
 
 L2 Cache : Latency ~ 1 * 10 ^ 1 (cycles) : Latency ~ 3 * 10 ^ 0 (ns) : Size ~ 2 ^ 20 (B) per core
