@@ -6,6 +6,8 @@
 
 // content : Link-Time Optimization (LTO)
 //
+// content : Options -l and -flto
+//
 // content : Multiply Defined and Unresolved External Symbols
 
 /////////////////////////////////////////////////////////////

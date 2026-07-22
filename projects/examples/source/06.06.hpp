@@ -6,7 +6,7 @@
 
 // content : Precompiled Header Files
 //
-// content : Options -c, -l, and -o
+// content : Options -c and -o
 
 /////////////////////////////////////
 
