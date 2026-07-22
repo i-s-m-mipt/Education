@@ -19,9 +19,9 @@
 
 /////////////////////////////////////////////////////////
 
-struct            Entity_v1 { std::int8_t x = 0; };
+struct             Entity_v1 { int x = 0; };
 
-struct alignas(8) Entity_v2 { std::int8_t x = 0; };
+struct alignas(64) Entity_v2 { int x = 0; };
 
 /////////////////////////////////////////////////////////
 
