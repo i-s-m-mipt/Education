@@ -1,227 +1,204 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Debugging and Profiling Tools
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Testing
+// content : Logging
 //
-// content : Library Boost.Test
+// content : Library Google.Log
 //
-// content : Distribution std::uniform_real_distribution
-//
-// content : Engine std::default_random_engine
+// content : Operator ""h
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-#include <algorithm>
-#include <iterator>
-#include <print>
-#include <random>
-#include <type_traits>
+#include <chrono>
+#include <cstdint>
+#include <exception>
+#include <format>
+#include <mutex>
+#include <ostream>
+#include <source_location>
+#include <stdexcept>
+#include <string>
 #include <utility>
-#include <vector>
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/test/data/monomorphic.hpp>
-#include <boost/test/data/size.hpp>
-#include <boost/test/data/test_case.hpp>
-#include <boost/test/framework.hpp>
-#include <boost/test/parameterized_test.hpp>
-#include <boost/test/test_tools.hpp>
-#include <boost/test/tree/test_unit.hpp>
-#include <boost/test/unit_test_suite.hpp>
+using namespace std::literals;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-BOOST_AUTO_TEST_CASE(Test_v1)
-{
-    std::print("Test_v1\n"); BOOST_TEST(std::max(1, 2) == 1);
+#include <boost/noncopyable.hpp>
 
-    std::print("Test_v1\n"); BOOST_TEST(std::max(1, 2) == 2);
-}
+///////////////////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+#if !defined(GLOG_USE_GLOG_EXPORT)
 
-BOOST_AUTO_TEST_CASE(Test_v2)
-{
-    BOOST_TEST(1e-9 == 2e-9, boost::test_tools::tolerance(1e-6));
-}
+#define GLOG_USE_GLOG_EXPORT
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+#endif
 
-BOOST_AUTO_TEST_CASE(Test_v3)
-{
-    BOOST_TEST("aaaaa" < "bbbbb", boost::test_tools::lexicographic());
-}
+///////////////////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <glog/logging.h>
 
-BOOST_DATA_TEST_CASE
-(
-    Test_v4, boost::unit_test::data::xrange(1, 3, 1) * boost::unit_test::data::xrange(1, 4, 1), x, y
-)
-{
-    std::print("Test_v4 : x = {} y = {}\n", x, y);
+///////////////////////////////////////////////////////////////////////////////////////////
 
-    BOOST_TEST(x > 0); BOOST_TEST(x < 3);
-
-    BOOST_TEST(y > 0); BOOST_TEST(y < 4);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-BOOST_DATA_TEST_CASE
-(
-    Test_v5,
-
-    boost::unit_test::data::xrange(5) ^ boost::unit_test::data::random
-    (
-        (
-            boost::unit_test::data::distribution = std::uniform_real_distribution(0.0, 1.0),
-
-            boost::unit_test::data::seed = 1,
-
-            boost::unit_test::data::engine = std::default_random_engine()
-        )
-    ),
-
-    index, x
-)
-{
-    std::print("Test_v5 : index = {} x = {:.3f}\n", index, x);
-
-    BOOST_TEST(x > 0.5);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class Dataset
+class Logger : private boost::noncopyable
 {
 public :
 
-    class iterator
-    {
-    public :
+	enum class Severity : std::uint8_t
+	{
+		trace, debug, error, fatal
+	};
 
-        using iterator_category = std::forward_iterator_tag;
+//  -------------------------------------------------------------------------------------
 
-    //  ------------------------------------------------------------------
+	Logger(char const * scope, bool has_trace) : m_scope(scope), m_has_trace(has_trace)
+	{
+		std::call_once(s_flag, initialize);
 
-        auto const operator++(int)
-        {
-            auto x = *this;
-
-            step();
-
-            return x;
-        }
-
-    //  ------------------------------------------------------------------
-
-        auto & operator++()
-        {
-            step();
-
-            return *this;
-        }
-
-    //  ------------------------------------------------------------------
-
-        auto operator*() const
-        {
-            return m_y;
-        }
-
-    //  ------------------------------------------------------------------
-
-		friend auto operator==(iterator const & lhs, iterator const & rhs)
+		if (m_has_trace)
 		{
-			return lhs.m_x == rhs.m_x && lhs.m_y == rhs.m_y;
+			put(Severity::trace, "execution ... ");
 		}
+	}
 
-    private :
+//  -------------------------------------------------------------------------------------
 
-        void step()
+   ~Logger()
+	{
+		if (m_has_trace)
+		{
+			put(Severity::trace, "execution complete");
+		}
+	}
+
+//  -------------------------------------------------------------------------------------
+
+	void put(Severity severity, std::string const & string) const
+	{
+		switch (severity)
         {
-            m_x += m_y;
+            case Severity::trace : { LOG(INFO   ) << m_scope << " : " << string; break; }
 
-            std::swap(m_x, m_y);
+            case Severity::debug : { LOG(WARNING) << m_scope << " : " << string; break; }
+
+            case Severity::error : { LOG(ERROR  ) << m_scope << " : " << string; break; }
+
+            case Severity::fatal : { LOG(FATAL  ) << m_scope << " : " << string; break; }
+
+			default :
+			{
+				std::unreachable();
+			}
         }
+	}
 
-    //  ------------------------------------------------------------------
+private :
 
-        int m_x = 1, m_y = 1;
-    };
+	static void initialize()
+	{
+        FLAGS_log_dir = "loggers";
 
-//  ----------------------------------------------------------------------
+        FLAGS_log_file_header = false;
 
-    auto begin() const
-    {
-        return iterator();
-    }
+        google::InitGoogleLogging("07.20");
 
-//  ----------------------------------------------------------------------
+        google::EnableLogCleaner(24h);
 
-    auto size() const
-    {
-        return boost::unit_test::data::BOOST_TEST_DS_INFINITE_SIZE;
-    }
+		google::InstallPrefixFormatter(&format);
+	}
+
+//  -------------------------------------------------------------------------------------
+
+	static void format(std::ostream & stream, google::LogMessage const & message, void *)
+	{
+		stream << std::format("{:0>8}", s_line++) << " | ";
+
+        stream << std::format("{:%Y %B %d %H:%M:%S %Z}", message.time().when()) << " | ";
+
+        stream << message.thread_id() << " | ";
+
+        switch (message.severity())
+        {
+            case google::LogSeverity::INFO    : { stream << "trace |"; break; }
+
+            case google::LogSeverity::WARNING : { stream << "debug |"; break; }
+
+            case google::LogSeverity::ERROR   : { stream << "error |"; break; }
+
+            case google::LogSeverity::FATAL   : { stream << "fatal |"; break; }
+
+			default :
+			{
+				std::unreachable();
+			}
+        }
+	}
+
+//  -------------------------------------------------------------------------------------
+
+	char const * m_scope = nullptr;
+
+	bool m_has_trace = false;
+
+//  -------------------------------------------------------------------------------------
+
+    static inline std::once_flag s_flag;
+
+    static inline auto s_line = 0uz;
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-namespace boost::unit_test::data::monomorphic
+#define LOGGER(logger) Logger logger(std::source_location::current().function_name(), true)
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+#define LOGGER_PUT_DEBUG(logger, string) logger.put(Logger::Severity::debug, string)
+
+#define LOGGER_PUT_TRACE(logger, string) logger.put(Logger::Severity::trace, string)
+
+#define LOGGER_PUT_ERROR(logger, string) logger.put(Logger::Severity::error, string)
+
+#define LOGGER_PUT_FATAL(logger, string) logger.put(Logger::Severity::fatal, string)
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+void test_v1()
 {
-    template <> class is_dataset < Dataset > : public std::true_type {};
+	LOGGER(logger);
+
+	LOGGER_PUT_ERROR(logger, "error");
+
+	throw std::runtime_error("error");
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
-BOOST_DATA_TEST_CASE(Test_v6, Dataset() ^ boost::unit_test::data::make({ 1, 2, 3, 5, 8 }), x, y)
+void test_v2() { LOGGER(logger); test_v1(); }
+
+void test_v3() { LOGGER(logger); test_v2(); }
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+int main()
 {
-    BOOST_TEST(x == y);
+	LOGGER(logger);
+
+//  -----------------------------------------------
+
+	try
+	{
+		test_v3();
+	}
+	catch (std::exception const & exception)
+	{
+		LOGGER_PUT_FATAL(logger, exception.what());
+	}
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void test(int x)
-{
-    BOOST_TEST(x > 0);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-boost::unit_test::test_suite * init_unit_test_suite(int, char **)
-{
-    std::vector < int > vector = { 1, 2, 3, 4, 5 };
-
-    auto generator = BOOST_PARAM_TEST_CASE(&test, std::begin(vector), std::end(vector));
-
-    boost::unit_test::framework::master_test_suite().add(generator);
-
-    boost::unit_test::framework::master_test_suite().p_name.value = "master";
-
-    return nullptr;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class Fixture
-{
-public :
-
-    std::vector < int > vector;
-};
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-BOOST_FIXTURE_TEST_CASE(Test_v7, Fixture)
-{
-    vector.push_back(1); BOOST_TEST(std::size(vector) == 1);
-
-    vector.push_back(1); BOOST_TEST(std::size(vector) == 2);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////

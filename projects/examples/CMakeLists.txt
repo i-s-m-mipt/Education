@@ -229,9 +229,8 @@ set(debug
     07.10
     07.11
     07.12
-    07.16
-    07.18
-    07.20
+    07.19
+    07.21
 
     08.01
     08.02
@@ -525,19 +524,19 @@ target_compile_options     (07.15.02 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
 ################################################################################################
 
-add_executable             (07.19 source/07.19.cpp)
+add_executable             (07.20 source/07.20.cpp)
 
-target_compile_options     (07.19 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (07.20 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
-target_link_libraries      (07.19 glog::glog)
+target_link_libraries      (07.20 glog::glog)
 
 ################################################################################################
 
-add_executable             (07.21 source/07.21.cpp)
+add_executable             (07.22 source/07.22.cpp)
 
-target_compile_options     (07.21 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (07.22 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
-target_link_libraries      (07.21 PRIVATE GTest::gtest)
+target_link_libraries      (07.22 PRIVATE GTest::gtest)
 
 ################################################################################################
 
@@ -605,7 +604,7 @@ target_link_libraries      (14.37 PRIVATE /usr/lib/gcc/x86_64-linux-gnu/13/libat
 
 set(release
 
-    07.22
+    07.23
 
     08.05
     08.08
@@ -661,6 +660,18 @@ foreach(entry IN LISTS release)
     target_link_libraries  (${entry} PRIVATE TBB::tbb)
 
 endforeach()
+
+################################################################################################
+
+add_executable             (07.16 source/07.16.cpp)
+
+target_compile_options     (07.16 PRIVATE -Wall -Wextra -Wpedantic -O3 -g)
+
+################################################################################################
+
+add_executable             (07.17 source/07.17.cpp)
+
+target_compile_options     (07.17 PRIVATE -Wall -Wextra -Wpedantic -O3 -g)
 
 ################################################################################################
 

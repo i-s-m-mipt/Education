@@ -1,78 +1,135 @@
-/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Debugging and Profiling Tools
 
-/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 // content : Profiling
 //
-// content : Profile-Guided Optimization (PGO)
+// content : Hardware Events
 //
-// content : Algorithm std::ranges::iota
+// content : Performance Counters
 //
-// content : Functions std::pow, std::sin and std::cos
-//
-// content : Options -fprofile-generate and -fprofile-use
-//
-// content : Tool time
+// content : Tool perf
 
-/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-// support : time ./07.17.01
+// support : sudo perf record -e cycles -c 1000 -g ./07.17
 //
-// support : time ./07.17.02
+// support : sudo perf annotate --objdump="objdump -M intel" > output.asm
 
-/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
+#include <algorithm>
 #include <cassert>
-#include <cmath>
+#include <cstddef>
+#include <iterator>
 #include <numeric>
+#include <utility>
 #include <vector>
 
-/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-auto calculate(std::vector < int > const & vector, int threshold)
+__attribute__((noinline)) void order
+(
+	std::vector < int > & vector, std::size_t left, std::size_t right
+)
 {
-	auto x = 0.0;
-
-    for (auto i = 0uz; i < 1 << 10; ++i)
+	for (auto i = left + 1; i < right; ++i)
 	{
-        for (auto element : vector)
+		for (auto j = i; j > left; --j)
 		{
-            if (element > threshold)
+			if (vector[j - 1] > vector[j])
 			{
-                x += std::pow(std::sin(x), 2) + std::pow(std::cos(x), 2);
-            }
-			else
-			{
-                ++x;
-            }
-        }
-    }
-
-    return x;
+				std::swap(vector[j], vector[j - 1]);
+			}
+		}
+	}
 }
 
-/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
-auto equal(double x, double y, double epsilon = 1e-6)
+__attribute__((noinline)) void merge
+(
+	std::vector < int > & vector_1, std::size_t left, std::size_t right
+)
 {
-	return std::abs(x - y) < epsilon;
+	auto middle = std::midpoint(left, right), size = right - left;
+
+	std::vector < int > vector_2(size, 0);
+
+	for (auto i = left, j = middle, k = 0uz; k < size; ++k)
+	{
+		if (i < middle && ((j < right && vector_1[i] <= vector_1[j]) || j == right))
+		{
+			vector_2[k] = vector_1[i++];
+		}
+		else
+		{
+			vector_2[k] = vector_1[j++];
+		}
+	}
+
+	for (auto i = 0uz, j = 0uz; j < size; ++j)
+	{
+		vector_1[left + i++] = vector_2[j];
+	}
 }
 
-/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+__attribute__((noinline)) void split
+(
+	std::vector < int > & vector, std::size_t left, std::size_t right
+)
+{
+	if (right - left > 16)
+	{
+		auto middle = std::midpoint(left, right);
+
+		split(vector, left,   middle);
+
+		split(vector, middle, right );
+
+		merge(vector, left,   right );
+	}
+	else
+	{
+		order(vector, left,   right );
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+
+__attribute__((noinline)) void sort(std::vector < int > & vector)
+{
+	split(vector, 0, std::size(vector));
+}
+
+////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::vector < int > vector(1 << 20, 0);
+	auto size = 1uz << 30;
 
-//  -----------------------------------------------------------------
+//  ---------------------------------------
 
-    std::ranges::iota(vector, 1);
+	std::vector < int > vector(size, 0);
 
-//  -----------------------------------------------------------------
+//  ---------------------------------------
 
-	assert(equal(calculate(vector, (1 << 20) - (1 << 10)), 1 << 30));
+	for (auto i = 0uz; i < size; ++i)
+	{
+		vector[i] = size - i;
+	}
+
+//  ---------------------------------------
+
+	sort(vector);
+
+//  ---------------------------------------
+
+	assert(std::ranges::is_sorted(vector));
 }
 
-/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////

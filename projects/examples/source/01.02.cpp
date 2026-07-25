@@ -23,7 +23,7 @@
 // content : C++ Standard, Extensions, Warnings and Optimizations
 //
 // content : Options -std=c++23 and -std=gnu++23
-
+//
 // content : Options -Wall, -Wextra, -Wpedantic, -O0 and -O3
 
 /////////////////////////////////////////////////////////////////

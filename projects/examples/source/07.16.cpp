@@ -26,7 +26,10 @@
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-void order(std::vector < int > & vector, std::size_t left, std::size_t right)
+__attribute__((noinline)) void order
+(
+	std::vector < int > & vector, std::size_t left, std::size_t right
+)
 {
 	for (auto i = left + 1; i < right; ++i)
 	{
@@ -42,7 +45,10 @@ void order(std::vector < int > & vector, std::size_t left, std::size_t right)
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-void merge(std::vector < int > & vector_1, std::size_t left, std::size_t right)
+__attribute__((noinline)) void merge
+(
+	std::vector < int > & vector_1, std::size_t left, std::size_t right
+)
 {
 	auto middle = std::midpoint(left, right), size = right - left;
 
@@ -68,7 +74,10 @@ void merge(std::vector < int > & vector_1, std::size_t left, std::size_t right)
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-void split(std::vector < int > & vector, std::size_t left, std::size_t right)
+__attribute__((noinline)) void split
+(
+	std::vector < int > & vector, std::size_t left, std::size_t right
+)
 {
 	if (right - left > 16)
 	{
@@ -88,7 +97,7 @@ void split(std::vector < int > & vector, std::size_t left, std::size_t right)
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-void sort(std::vector < int > & vector)
+__attribute__((noinline)) void sort(std::vector < int > & vector)
 {
 	split(vector, 0, std::size(vector));
 }
@@ -97,7 +106,7 @@ void sort(std::vector < int > & vector)
 
 int main()
 {
-	auto size = 1uz << 10;
+	auto size = 1uz << 20;
 
 //  ---------------------------------------
 
