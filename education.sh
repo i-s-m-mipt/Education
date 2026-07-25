@@ -224,12 +224,12 @@ g++    -std=c++23 -Wall -Wextra -Wpedantic -O0 -fmodules-ts $files -o 06.16
 
 #################################################################################################
 
-g++    -std=c++23 -Wall -Wextra -Wpedantic -O3                    ../source/07.17.cpp -o 07.17.01
+g++    -std=c++23 -Wall -Wextra -Wpedantic -O3                    ../source/07.18.cpp -o 07.18.01
 
-g++    -std=c++23 -Wall -Wextra -Wpedantic -O3 -fprofile-generate ../source/07.17.cpp -o 07.17.02
+g++    -std=c++23 -Wall -Wextra -Wpedantic -O3 -fprofile-generate ../source/07.18.cpp -o 07.18.02
 
-./07.17.02
+./07.18.02
 
-g++    -std=c++23 -Wall -Wextra -Wpedantic -O3 -fprofile-use      ../source/07.17.cpp -o 07.17.02
+g++    -std=c++23 -Wall -Wextra -Wpedantic -O3 -fprofile-use      ../source/07.18.cpp -o 07.18.02
 
 #################################################################################################
