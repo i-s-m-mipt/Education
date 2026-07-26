@@ -10,9 +10,9 @@
 //
 // content : Functions std::pow, std::sin and std::cos
 //
-// content : Profile-Guided Optimization (PGO)
-//
 // content : Branch Prediction
+//
+// content : Profile-Guided Optimization (PGO)
 //
 // content : Options -fprofile-generate and -fprofile-use
 //
