@@ -4,11 +4,11 @@
 
 ///////////////////////////////////////////////////////////
 
-// content : Dynamic Branch Prediction
-//
-// content : Microbenchmarking
+// content : Branch Prediction
 //
 // content : Distribution std::uniform_int_distribution
+//
+// content : Microbenchmarking
 
 ///////////////////////////////////////////////////////////
 
