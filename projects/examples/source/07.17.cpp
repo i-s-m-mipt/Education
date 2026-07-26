@@ -14,7 +14,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-// support : sudo perf record -e cycles -c 1000 -g ./07.17
+// support : sudo perf record -e cycles -c 1000 ./07.17
 //
 // support : sudo perf annotate --objdump="objdump -M intel" > output.asm
 
