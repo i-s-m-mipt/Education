@@ -9,6 +9,8 @@
 // content : Name Mangling
 //
 // content : Declaration extern "C"
+//
+// content : Tool nm
 
 ////////////////////////////////////////////////////////////
 

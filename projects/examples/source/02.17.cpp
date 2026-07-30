@@ -19,12 +19,6 @@
 // content : Statement if
 //
 // content : Scoped Variables
-//
-// content : Assembly Language Representation
-//
-// content : Service Compiler Explorer
-//
-// content : Options -S, -masm=intel and -masm=att
 
 /////////////////////////////////////////////////////////////////////
 

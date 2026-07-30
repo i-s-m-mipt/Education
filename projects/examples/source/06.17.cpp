@@ -12,6 +12,10 @@
 //
 // content : Wrapper std::function
 //
+// content : Implicit and Explicit Dynamic Linking
+//
+// content : Tools ldd, readelf, grep, ltrace and strace
+//
 // content : The Boost C++ Library Collection
 //
 // content : System CMake
@@ -28,6 +32,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "06.18.hpp"
+
+////////////////////////////////////////////////////////////////////////////////
+
+// support : ldd ./06.17
+//
+// support : readelf -d ./06.17 | grep NEEDED
+//
+// support : ltrace ./06.17
+//
+// support : strace ./06.17
 
 ////////////////////////////////////////////////////////////////////////////////
 

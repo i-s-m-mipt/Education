@@ -6,11 +6,11 @@
 
 // content : Profiling
 //
+// content : Statistical Counters
+//
 // content : Hardware Events
 //
-// content : Performance Counters
-//
-// content : Tool perf
+// content : Tools perf and objdump
 
 ////////////////////////////////////////////////////////////////////////////////////
 
