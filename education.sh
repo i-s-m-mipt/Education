@@ -14,7 +14,7 @@
 #
 # sudo apt install cmake git
 #
-# sudo apt install libc-bin binutils grep ltrace strace
+# sudo apt install binutils grep libc-bin ltrace strace
 #
 # sudo apt install gdb valgrind kcachegrind
 #
@@ -209,6 +209,10 @@ g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 ../source/06.06.hpp -o ../source/
 g++    -std=c++23 -Wall -Wextra -Wpedantic -O0 -flto=auto $files -ltbb -o 06.08
 
 rm ../source/06.06.hpp.gch
+
+#################################################################################################
+
+g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 ../source/06.08.cpp
 
 #################################################################################################
 
