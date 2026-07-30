@@ -14,7 +14,11 @@
 //
 // content : Implicit and Explicit Dynamic Linking
 //
-// content : Tools ldd, readelf, grep, ltrace and strace
+// content : Tools ldd, ltrace and strace
+//
+// content : Executable and Linkable Format (ELF)
+//
+// content : Relocatable, Executable and Shared Object Files
 //
 // content : The Boost C++ Library Collection
 //

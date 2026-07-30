@@ -10,6 +10,14 @@
 //
 // content : One Definition Rule (ODR)
 //
+// content : Internal Linking
+//
+// content : Storage Class Specifier static
+//
+// content : Inline Functions
+//
+// content : Templates
+//
 // content : Explicit Template Instantiation
 //
 // content : Declaration extern
@@ -55,37 +63,36 @@ void test_v2();
 
 ////////////////////////////////////////////
 
-inline void test_v4()
+[[maybe_unused]] static void test_v4()
 {
-    std::print("test_v4\n");
+	std::print("test_v4\n");
 }
 
 ////////////////////////////////////////////
 
-template < typename T > void test_v5()
+inline void test_v5()
 {
-	std::print("test_v5\n");
+    std::print("test_v5\n");
 }
 
 ////////////////////////////////////////////
 
-extern template void test_v5 < int > ();
+template < typename T > void test_v6()
+{
+    std::print("test_v6\n");
+}
 
 ////////////////////////////////////////////
 
-extern int       g_x1;
-
-extern int       g_x2;
-
-extern int const g_x3;
-
-extern int const g_x4;
+extern template void test_v6 < int > ();
 
 ////////////////////////////////////////////
 
-       int const g_x5 = 5;
+[[maybe_unused]] extern int g_x1;
 
-inline int const g_x6 = 6;
+[[maybe_unused]] static int g_x2 = 2;
+
+[[maybe_unused]] inline int g_x3 = 3;
 
 ////////////////////////////////////////////
 
