@@ -10,9 +10,9 @@
 //
 // content : Thread Affinities
 //
-// content : Standard Portable Operating System Interface (POSIX)
+// content : Function pthread_setaffinity_np
 //
-// content : Native Thread Handlers
+// content : Helper cpu_set_t
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -41,7 +41,7 @@ int main()
 
 //  ------------------------------------------------------------------------------------
 
-    std::bitset < CPU_SETSIZE > bitset(0b0000'0000'0000'0001);
+    std::bitset < sizeof(cpu_set_t) * 8 > bitset(0b0000'0000'0000'0001);
 
 //  ------------------------------------------------------------------------------------
 

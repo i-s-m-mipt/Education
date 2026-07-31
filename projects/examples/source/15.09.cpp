@@ -10,6 +10,8 @@
 //
 // content : Stream Sockets
 //
+// content : System Calls socket, connect and close
+//
 // content : Little and Big Endian Byte Orders
 
 ///////////////////////////////////////////////////////////////////////////////////

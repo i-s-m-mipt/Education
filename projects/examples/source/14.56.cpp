@@ -4,15 +4,19 @@
 
 /////////////////////////////////////////////////////////////////
 
+// content : System Interfaces
+//
 // content : Standard Portable Operating System Interface (POSIX)
+//
+// content : System Calls fork, getpid and wait
 //
 // content : Process ID (PID)
 //
 // content : Parent Process ID (PPID)
 //
-// content : Process Priority from 39 to 0
+// content : Process Priority from +39 (low) to  0 (high)
 //
-// content : Process Niceness from -20 to +19
+// content : Process Niceness from -20 (low) to 19 (high)
 //
 // content : Tools ps and htop
 //
