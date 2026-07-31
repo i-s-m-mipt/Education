@@ -13,8 +13,6 @@
 // content : Standard Portable Operating System Interface (POSIX)
 //
 // content : Native Thread Handlers
-//
-// content : Preemptive and Cooperative Multitasking
 
 ////////////////////////////////////////////////////////////////////////////////////////
 

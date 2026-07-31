@@ -5,10 +5,37 @@
 /////////////////////////////////////////////////////////////////
 
 // content : Standard Portable Operating System Interface (POSIX)
+//
+// content : Process ID (PID)
+//
+// content : Parent Process ID (PPID)
+//
+// content : Process Priority from 39 to 0
+//
+// content : Process Niceness from -20 to +19
+//
+// content : Tools ps and htop
+//
+// content : Task Scheduling Algorithms
+//
+// content : Preemptive and Cooperative Multitasking
+//
+// content : Time-Sharing Algorithm
+//
+// content : Tool nice
+
+/////////////////////////////////////////////////////////////////
+
+// support : ps -eo uid,pid,ppid,comm
+//
+// support : htop
+//
+// support : sudo nice -n -20 ./14.56
 
 /////////////////////////////////////////////////////////////////
 
 #include <chrono>
+#include <iostream>
 #include <print>
 #include <thread>
 
@@ -45,6 +72,10 @@ int main()
 
         std::print("main : id = {}\n", id);
     }
+
+//  ------------------------------------------------------
+
+    std::print("main : enter char : "); std::cin.get();
 }
 
 /////////////////////////////////////////////////////////////////

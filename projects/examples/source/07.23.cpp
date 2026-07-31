@@ -18,6 +18,8 @@
 //
 // content : Preemptive and Cooperative Multitasking
 //
+// content : First In First Out (FIFO) Algorithm
+//
 // content : Tools cpupower, uname, setarch, taskset and chrt
 //
 // content : Algorithm std::ranges::lower_bound
