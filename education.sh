@@ -20,7 +20,7 @@
 #
 # sudo apt install coreutils linux-tools-common linux-tools-$(uname -r) util-linux
 #
-# sudo apt install procps
+# sudo apt install procps htop
 #
 # sudo apt install pciutils iputils-ping traceroute iproute2 nmap gawk curl lsof tcpdump telnet
 #
