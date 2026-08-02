@@ -19,6 +19,8 @@
 // content : Spatial and Temporal Locality
 //
 // content : Function std::midpoint
+//
+// content : Function std::inplace_merge
 
 ////////////////////////////////////////////////////////////////////////////////////
 
