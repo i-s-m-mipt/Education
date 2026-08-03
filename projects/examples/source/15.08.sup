@@ -1,0 +1,51 @@
+////////////////////////////////////////////////////////////////////
+
+// chapter : Distributed Network Systems
+
+////////////////////////////////////////////////////////////////////
+
+// content : Open Systems Interconnection (OSI) Model
+//
+// content : Media and Host Layers
+//
+// content : Physical, Data Link and Network Layers
+//
+// content : Ethernet and Wi-Fi Protocols
+//
+// content : Transport, Session, Presentation and Application Layers
+//
+// content : Transmission Control Protocol (TCP)
+//
+// content : User Datagram Protocol (UDP)
+//
+// content : Transport Layer Security (TLS) Protocol
+//
+// content : Domain Name System (DNS)
+//
+// content : HyperText Transfer Protocol (HTTP)
+//
+// content : Websocket Protocol
+//
+// content : File Transfer Protocol (FTP)
+//
+// content : Simple Mail Transfer Protocol (SMTP)
+//
+// content : Secure SHell (SSH) Protocol
+
+////////////////////////////////////////////////////////////////////
+
+L1 : NIC, Ethernet, Wi-Fi, RJ-45, TP, SFP, Fiber Optic, SDH
+
+L2 : NIC, Ethernet, Wi-Fi, Switches, WAP, MAC, ARP
+
+L3 : Routers, IP, IPv4/6, OSPF, ICMP, PAT
+
+L4 : Hosts, Ports, PAT, TCP, UDP
+
+L5 : Hosts
+
+L6 : Hosts, TLS
+
+L7 : Hosts, DHCP, BGP, DNS, HTTP, Websocket, FTP, SMTP, SSH
+
+////////////////////////////////////////////////////////////////////
