@@ -7,8 +7,6 @@
 // content : Curiously Recurring Template Pattern (CRTP)
 //
 // content : Pattern Mixin
-//
-// content : Mixin-Based Patterns
 
 ////////////////////////////////////////////////////////////////
 

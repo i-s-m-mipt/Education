@@ -19,11 +19,11 @@
 
 ////////////////////////////////////////////////////////////////////////
 
-class Memento
+class Entity
 {
 public :
 
-    Memento(int x = 0) : m_states(1, State())
+    Entity(int x = 0) : m_states(1, State())
     {
         save(x);
     }
@@ -102,20 +102,20 @@ private :
 
 int main()
 {
-    Memento memento;
+    Entity entity;
 
-//  --------------------------------------
+//  -------------------------------------
 
     for (auto i = 1; i < 3; ++i)
     {
-        memento.save(i);
+        entity.save(i);
     }
 
-//  --------------------------------------
+//  -------------------------------------
 
-    assert(memento.load_v1(1).get() == 1);
+    assert(entity.load_v1(1).get() == 1);
 
-    assert(memento.load_v2(2).get() == 2);
+    assert(entity.load_v2(2).get() == 2);
 }
 
 ////////////////////////////////////////////////////////////////////////

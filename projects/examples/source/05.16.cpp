@@ -22,7 +22,7 @@ public :
 
 //  ---------------------------------------------------------
 
-	void template_method() const
+	void test() const
 	{
 		test_v1();
 
@@ -76,7 +76,7 @@ int main()
 
 //  -----------------------------
 
-	entity->template_method();
+	entity->test();
 
 //  -----------------------------
 

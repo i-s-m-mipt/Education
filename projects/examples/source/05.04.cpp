@@ -52,11 +52,11 @@ public :
 
 ///////////////////////////////////////////////////////////
 
-class Prototype
+class Factory
 {
 public :
 
-    Prototype()
+    Factory()
     {
         m_entities.push_back(new Client);
 
@@ -65,7 +65,7 @@ public :
 
 //  -------------------------------------------------------
 
-   ~Prototype()
+   ~Factory()
     {
         for (auto entity : m_entities)
         {
@@ -88,7 +88,7 @@ private :
 
 int main()
 {
-    delete Prototype().make_client();
+    delete Factory().make_client();
 }
 
 ///////////////////////////////////////////////////////////

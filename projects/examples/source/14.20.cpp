@@ -6,8 +6,6 @@
 
 // content : Thread-Safe Initialization
 //
-// content : Pattern Double-Checked Locking
-//
 // content : Function std::call_once
 //
 // content : Flag std::once_flag

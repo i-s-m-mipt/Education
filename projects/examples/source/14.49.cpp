@@ -32,6 +32,10 @@ using namespace std::literals;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include <xmmintrin.h>
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 template < typename T > class Storage
 {
 public :
@@ -136,7 +140,7 @@ public :
 
             while ((k = m_consumer_index.get(std::memory_order::acquire)) < j)
             {
-                __builtin_ia32_pause();
+                _mm_pause();
             }
 
             m_cached_consumer_index = k;
@@ -197,7 +201,7 @@ void consume(Storage < int > const & storage, Index const & producer_index, Inde
 
         while ((j = producer_index.get(std::memory_order::acquire)) < i)
         {
-            __builtin_ia32_pause();
+            _mm_pause();
         }
 
         while (i <= j)

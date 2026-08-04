@@ -12,15 +12,15 @@
 
 //////////////////////////////////////////////////////////////////
 
-template < typename T > class RAII : private boost::noncopyable
+template < typename T > class Wrapper : private boost::noncopyable
 {
 public :
 
-	RAII(T x) : m_x(new T(x)) {}
+	Wrapper(T x) : m_x(new T(x)) {}
 
-//  ----------------------------
+//  -------------------------------
 
-   ~RAII()
+   ~Wrapper()
 	{
 		delete m_x;
 	}
@@ -34,7 +34,7 @@ private :
 
 int main()
 {
-    RAII < int > raii(1);
+    Wrapper < int > wrapper(1);
 }
 
 //////////////////////////////////////////////////////////////////

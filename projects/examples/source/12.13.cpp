@@ -6,8 +6,6 @@
 
 // content : Regular Expressions
 //
-// content : Patterns
-//
 // content : Class std::regex
 //
 // content : Service Regular Expressions 101
