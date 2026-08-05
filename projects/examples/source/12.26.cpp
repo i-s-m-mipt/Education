@@ -110,7 +110,7 @@ namespace parser
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-class Calculator
+class Interpreter
 {
 public :
 
@@ -191,9 +191,9 @@ auto parse(std::string_view view)
         std::begin(view), std::end(view), parser::rule_1, boost::spirit::x3::ascii::space, list
     );
 
-    static Calculator calculator;
+    static Interpreter interpreter;
 
-    return calculator(list);
+    return interpreter(list);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -10,6 +10,8 @@
 //
 // content : Statements, Declarations, Expressions, Terms, Primaries and Tokens
 //
+// content : Pattern Interpreter
+//
 // content : Recursive Descent Parsers
 //
 // content : Arithmetic Parser
@@ -126,7 +128,7 @@ private :
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-class Calculator
+class Interpreter
 {
 public :
 
@@ -134,13 +136,13 @@ public :
 	{
 		std::string string;
 
-		std::print("Calculator::test : enter std::string string(s) : \n");
+		std::print("Interpreter::test : enter std::string string(s) : \n");
 
 		while (std::getline(std::cin >> std::ws, string, '\n'))
 		{
 			if (Stream stream(string); !stream.empty())
 			{
-				std::print("Calculator::test : {} = {}\n", string, statement(stream));
+				std::print("Interpreter::test : {} = {}\n", string, statement(stream));
 			}
 			else
 			{
@@ -168,7 +170,7 @@ private :
 		return expression(stream);
 	}
 
-//  ----------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 
 	auto declaration(Stream & stream) -> double
 	{
@@ -179,7 +181,7 @@ private :
 		return m_variables[string];
 	}
 
-//  ----------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 
 	auto expression(Stream & stream) const -> double
 	{
@@ -207,7 +209,7 @@ private :
 		}
 	}
 
-//  ----------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 
 	auto term(Stream & stream) const -> double
 	{
@@ -235,7 +237,7 @@ private :
 		}
 	}
 
-//  ----------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 
 	auto primary(Stream & stream) const -> double
 	{
@@ -268,7 +270,7 @@ private :
 		return m_variables.at(std::get < std::string > (token));
 	}
 
-//  ----------------------------------------------------------------------------------
+//  -----------------------------------------------------------------------------------
 
 	std::unordered_map < std::string, double > m_variables;
 };
@@ -277,7 +279,7 @@ private :
 
 int main()
 {
-	Calculator().test();
+	Interpreter().test();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////

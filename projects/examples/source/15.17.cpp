@@ -14,27 +14,7 @@
 
 ///////////////////////////////////////////////////////////////////
 
-class Client;
-
-///////////////////////////////////////////////////////////////////
-
-class Server
-{
-public :
-
-    void add(std::shared_ptr < Client > client)
-    {
-        m_clients.push_back(client);
-    }
-
-//  ----------------------------------------------------------
-
-    void send(std::shared_ptr < Client > sender, int x) const;
-
-private :
-
-    std::vector < std::shared_ptr < Client > > m_clients;
-};
+class Server;
 
 ///////////////////////////////////////////////////////////////////
 
@@ -46,10 +26,7 @@ public :
 
 //  ---------------------------------------------------------------
 
-    void send(int x)
-    {
-        m_server.lock()->send(shared_from_this(), x);
-    }
+    void send(int x);
 
 //  ---------------------------------------------------------------
 
@@ -65,15 +42,38 @@ private:
 
 ///////////////////////////////////////////////////////////////////
 
-void Server::send(std::shared_ptr < Client > sender, int x) const
+class Server
 {
-    for (auto const & client : m_clients)
+public :
+
+    void add(std::shared_ptr < Client > client)
     {
-        if (client != sender)
+        m_clients.push_back(client);
+    }
+
+//  ---------------------------------------------------------
+
+    void send(std::shared_ptr < Client > sender, int x) const
+    {
+        for (auto const & client : m_clients)
         {
-            client->receive(x);
+            if (client != sender)
+            {
+                client->receive(x);
+            }
         }
     }
+
+private :
+
+    std::vector < std::shared_ptr < Client > > m_clients;
+};
+
+///////////////////////////////////////////////////////////////////
+
+void Client::send(int x)
+{
+    m_server.lock()->send(shared_from_this(), x);
 }
 
 ///////////////////////////////////////////////////////////////////
