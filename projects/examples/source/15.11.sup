@@ -30,7 +30,7 @@
 
 ////////////////////////////////////////////////////////////////////////
 
-// support : sudo tcpdump -e -xx -v tcp port 80
+// support : sudo tcpdump -exxv tcp port 80
 //
 // support : telnet google.com 80
 

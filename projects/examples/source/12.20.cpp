@@ -6,9 +6,9 @@
 
 // content : Advanced Parsers
 //
-// content : Library Boost.Spirit
-//
 // content : Value Parser
+//
+// content : Library Boost.Spirit
 
 ////////////////////////////////////////////////////////////////////////
 

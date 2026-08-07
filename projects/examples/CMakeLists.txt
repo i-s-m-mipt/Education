@@ -501,7 +501,7 @@ add_executable             (07.13 source/07.13.cpp)
 
 target_compile_options     (07.13 PRIVATE -Wall -Wextra -Wpedantic -O0 -g)
 
-target_link_libraries      (07.13 PRIVATE -lstdc++exp)
+target_link_libraries      (07.13 PRIVATE stdc++exp)
 
 ################################################################################################
 

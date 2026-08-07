@@ -20,11 +20,9 @@
 //
 // content : Tools gcc and g++
 //
-// content : C++ Standard, Extensions, Warnings and Optimizations
+// content : Standards, Warnings and Optimizations
 //
-// content : Options -std=c++23 and -std=gnu++23
-//
-// content : Options -Wall, -Wextra, -Wpedantic, -O0 and -O3
+// content : Options -std, -Wall, -Wextra, -Wpedantic, -O0 and -o
 
 /////////////////////////////////////////////////////////////////
 

@@ -9,6 +9,8 @@
 // content : Dijkstra Shortest Paths Algorithm
 //
 // content : Time Complexity O(E*log(V))
+//
+// content : Library Boost.Graph
 
 /////////////////////////////////////////////////////////////////////////////////////
 

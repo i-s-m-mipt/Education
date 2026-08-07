@@ -14,7 +14,7 @@
 //
 // content : Use-After-Free Errors
 //
-// content : Option -fsanitize=address
+// content : Option -fsanitize
 //
 // content : Tool valgrind
 

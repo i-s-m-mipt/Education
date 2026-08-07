@@ -6,7 +6,7 @@
 
 // content : Precompiled Header Files
 //
-// content : Options -c and -o
+// content : Option -c
 
 /////////////////////////////////////
 
@@ -48,7 +48,6 @@
 #include <cwctype>
 #include <deque>
 #include <exception>
-#include <execution>
 #include <expected>
 #include <filesystem>
 #include <format>

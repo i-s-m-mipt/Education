@@ -14,9 +14,9 @@
 //
 // content : Assembly Language Representation
 //
-// content : Service Compiler Explorer
+// content : Options -S and -masm
 //
-// content : Options -S, -masm=intel and -masm=att
+// content : Service Compiler Explorer
 
 //////////////////////////////////////////////////////////////////////
 

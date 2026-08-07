@@ -8,6 +8,8 @@
 //
 // content : Container std::locale
 //
+// content : Tools locale-gen and locale
+//
 // content : Classic C Locale
 //
 // content : Facets
@@ -26,7 +28,7 @@
 
 // support : sudo locale-gen ru_RU.utf8
 //
-// support : locale -a
+// support : locale --all-locales
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 

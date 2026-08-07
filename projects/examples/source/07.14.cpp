@@ -6,13 +6,17 @@
 
 // content : Debugging
 //
+// content : Options -g and -ggdb
+//
 // content : GNU DeBugger (GDB)
 //
 // content : Tool gdb
 //
 // content : Commands run, continue, next, step, break, print and backtrace
-//
-// content : Options -g and -ggdb
+
+///////////////////////////////////////////////////////////////////////////
+
+// support : gdb ./07.14
 
 ///////////////////////////////////////////////////////////////////////////
 

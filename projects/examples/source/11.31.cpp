@@ -7,6 +7,8 @@
 // content : Depth First Search (DFS) Algorithm
 //
 // content : Time Complexity O(V + E)
+//
+// content : Library Boost.Graph
 
 ////////////////////////////////////////////////////////////////////////////////
 

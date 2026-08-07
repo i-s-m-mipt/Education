@@ -6,6 +6,8 @@
 
 // content : Dynamic Libraries
 //
+// content : Library Boost.Dll
+//
 // content : Name Mangling
 //
 // content : Declaration extern "C"
@@ -15,10 +17,6 @@
 // content : Default and Hidden Symbols
 //
 // content : Attribute [[visibility("default")]]
-
-////////////////////////////////////////////////////////////////////
-
-// support : readelf -s libshared.so | grep test_v1
 
 ////////////////////////////////////////////////////////////////////
 

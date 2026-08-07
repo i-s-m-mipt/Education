@@ -18,23 +18,19 @@
 //
 // content : Process Niceness from -20 (low) to 19 (high)
 //
-// content : Tools ps and htop
-//
 // content : Task Scheduling Algorithms
 //
 // content : Preemptive and Cooperative Multitasking
 //
 // content : Time-Sharing Algorithm
 //
-// content : Tool nice
+// content : Tools htop and nice
 
 /////////////////////////////////////////////////////////////////
 
-// support : ps -eo uid,pid,ppid,comm
+// support : htop --user=1000
 //
-// support : htop
-//
-// support : sudo nice -n -20 ./14.56
+// support : sudo nice --adjustment=-20 ./14.56
 
 /////////////////////////////////////////////////////////////////
 

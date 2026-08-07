@@ -18,6 +18,8 @@
 //
 // content : Caches L1, L2 and L3
 //
+// content : Tool lscpu
+//
 // content : N-Way Associative Caches
 //
 // content : Tags and Offsets

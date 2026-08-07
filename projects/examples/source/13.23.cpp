@@ -8,17 +8,19 @@
 //
 // content : System PostgreSQL
 //
+// content : Declarative Programming
+//
 // content : Embedding PostgreSQL
 //
 // content : Library libpqxx
 //
-// content : Declarative Programming
+// content : Tools systemctl and psql
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-// support : sudo systemctl start postgresql
+// support : sudo systemctl reload-or-restart postgresql
 //
-// support : sudo -u postgres psql
+// support : sudo --user postgres psql
 //
 // support : ALTER USER postgres PASSWORD '1234';
 

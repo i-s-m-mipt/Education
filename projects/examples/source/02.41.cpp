@@ -12,7 +12,7 @@
 //
 // content : Application Binary Interface (ABI)
 //
-// content : Options -m32 and -m64
+// content : Option -m32
 
 //////////////////////////////////////////////////////////////////////////
 

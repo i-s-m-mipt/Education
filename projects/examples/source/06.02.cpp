@@ -32,11 +32,7 @@
 //
 // content : Directive #pragma
 //
-// content : Options -E and -D
-
-///////////////////////////////////////////////////////////////////
-
-// support : g++ -E -std=c++23 -DNO_TRACE 06.02.cpp
+// content : Options -E and -DNDEBUG
 
 ///////////////////////////////////////////////////////////////////
 
@@ -74,7 +70,7 @@ FUNCTION(v1) // support : https://compiler-explorer.com
 
 ///////////////////////////////////////////////////////////////////
 
-#if defined(NO_TRACE)
+#if defined(NDEBUG)
 
 #define TRACE(scope, string) ;
 

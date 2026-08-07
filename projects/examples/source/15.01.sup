@@ -58,6 +58,6 @@
 //
 // support : ping -c 4 google.com
 //
-// support : sudo traceroute -T binance.com
+// support : sudo traceroute --tcp binance.com
 
 /////////////////////////////////////////////////////////

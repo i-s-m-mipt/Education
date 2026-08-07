@@ -6,6 +6,8 @@
 
 // content : Synchronous Client
 //
+// content : Library Boost.Asio
+//
 // content : Localhost
 
 //////////////////////////////////////////////////////////////

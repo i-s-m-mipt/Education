@@ -12,6 +12,8 @@
 //
 // content : Lower Triangular and Upper Triangular Matrices
 //
+// content : Library Boost.Ublas
+//
 // content : Microbenchmarking
 
 //////////////////////////////////////////////////////////////////////////////////////
