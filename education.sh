@@ -18,11 +18,11 @@
 #
 # sudo apt install gdb valgrind kcachegrind
 #
-# sudo apt install coreutils linux-tools-common linux-tools-$(uname -r) util-linux
+# sudo apt install coreutils linux-tools-common linux-tools-$(uname --machine)
 #
-# sudo apt install procps htop
+# sudo apt install util-linux procps locales htop
 #
-# sudo apt install pciutils iputils-ping traceroute iproute2 nmap gawk curl lsof tcpdump telnet
+# sudo apt install pciutils iputils-ping traceroute iproute2 gawk nmap curl lsof tcpdump telnet
 #
 # sudo apt install python3 python3-dev python3-matplotlib libicu-dev libtbb-devs
 
@@ -198,7 +198,11 @@ cp ../source/{font.ttf,image.jpg,script.py,source.cpp} .
 
 #################################################################################################
 
-g++ -S -std=c++23 -Wall -Wextra -Wpedantic -O0 -masm=intel ../source/02.12.cpp
+g++ -S -std=c++23 -Wall -Wextra -Wpedantic -O0 -masm=intel ../source/02.12.cpp -o 02.12.asm
+
+#################################################################################################
+
+g++ -E -std=c++23 -Wall -Wextra -Wpedantic -O0 -DNDEBUG    ../source/06.02.cpp -o 06.02.cpp
 
 #################################################################################################
 
@@ -206,7 +210,7 @@ files="../source/06.07.cpp ../source/06.08.cpp"
 
 g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 ../source/06.06.hpp -o ../source/06.06.hpp.gch
 
-g++    -std=c++23 -Wall -Wextra -Wpedantic -O0 -flto=auto $files -ltbb -o 06.08
+g++    -std=c++23 -Wall -Wextra -Wpedantic -O0 -flto=auto $files -o 06.08
 
 rm ../source/06.06.hpp.gch
 
