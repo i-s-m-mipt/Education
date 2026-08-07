@@ -6,9 +6,11 @@
 
 // content : Breadth First Search (BFS) Algorithm
 //
-// content : Time Complexity O(V + E)
-//
 // content : Library Boost.Graph
+//
+// content : Visitors
+//
+// content : Time Complexity O(V + E)
 
 ////////////////////////////////////////////////////////////////////////////////
 

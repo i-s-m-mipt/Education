@@ -11,6 +11,8 @@
 // content : Mutex std::mutex
 //
 // content : Global Interpreter Locker (GIL)
+//
+// content : Python Exceptions
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -65,7 +67,7 @@ public :
 
 	static auto exception()
 	{
-		PyObject * error, * value, * stack;
+		PyObject * error = nullptr, * value = nullptr, * stack = nullptr;
 
 		PyErr_Fetch             (&error, &value, &stack);
 

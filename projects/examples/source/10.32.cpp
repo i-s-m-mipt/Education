@@ -6,13 +6,13 @@
 
 // content : Determinants
 //
+// content : Library Boost.Ublas
+//
 // content : Minors
 //
 // content : Decomposition Methods
 //
-// content : Lower Triangular and Upper Triangular Matrices
-//
-// content : Library Boost.Ublas
+// content : Lower Triangular and Upper Triangular (LU) Factorization
 //
 // content : Microbenchmarking
 

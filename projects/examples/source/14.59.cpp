@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-// content : Managed Shared Memory Allocators
+// content : Interprocess Containers and Allocators
 //
 // content : Library Boost.Interpocess
 

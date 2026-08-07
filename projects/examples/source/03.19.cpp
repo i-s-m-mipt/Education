@@ -6,11 +6,9 @@
 
 // content : Downcasting Type Conversions
 //
-// content : Polymorphic Objects
-//
 // content : Operators static_cast and dynamic_cast
 //
-// content : RunTime Type Identification (RTTI)
+// content : Polymorphic Objects
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 

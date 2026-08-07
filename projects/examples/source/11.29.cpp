@@ -12,7 +12,7 @@
 //
 // content : Vertices and Edges
 //
-// content : Directed and Undirected Graphs
+// content : Directed, Undirected and Weighted Graphs
 
 ///////////////////////////////////////////////////////////////////////////////
 

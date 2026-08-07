@@ -10,11 +10,9 @@
 //
 // content : Statements, Declarations, Expressions, Terms, Primaries and Tokens
 //
-// content : Pattern Interpreter
-//
 // content : Recursive Descent Parsers
 //
-// content : Arithmetic Parser
+// content : Pattern Interpreter
 //
 // content : Functions std::isalpha, std::isdigit and std::isspace
 //

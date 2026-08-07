@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-// content : Managed Shared Memory
+// content : Interprocess Objects and Arrays
 //
 // content : Library Boost.Interpocess
 

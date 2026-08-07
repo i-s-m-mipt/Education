@@ -4,7 +4,7 @@
 
 ////////////////////////////////////////////////////////////
 
-// content : Embedded Reference Counting
+// content : Intrusive Pointers
 //
 // content : Library Boost.SmartPtr
 
