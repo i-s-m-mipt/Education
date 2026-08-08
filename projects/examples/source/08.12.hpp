@@ -23,8 +23,6 @@
 // content : Time Complexity O(N^1.585)
 //
 // content : Functions std::ssize, std::isdigit, std::stoll
-//
-// content : Radix Optimization
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
