@@ -8,7 +8,7 @@
 //
 // content : Enumeration std::memory_order
 //
-// content : Relaxed Memory Model
+// content : Relaxed Memory Ordering
 //
 // content : Store-Store and Load-Load Reorderings
 

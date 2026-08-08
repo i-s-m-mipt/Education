@@ -6,11 +6,11 @@
 
 // content : Lock-Free Programming
 //
-// content : Thread-Safe Lock-Free Stacks
-//
-// content : Hazard Pointers
+// content : Lock-Free Stacks
 //
 // content : Garbage Collectors
+//
+// content : Hazard Pointers
 
 /////////////////////////////////////////////////////////////////////////////////
 

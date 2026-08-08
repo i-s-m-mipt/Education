@@ -6,17 +6,15 @@
 
 // content : Hash Tables
 //
-// content : Time Complexities O(1) and O(N)
-//
-// content : Unordered Containers
-//
-// content : Containers std::std::unordered_set and std::unordered_multiset
-//
-// content : Buckets
-//
 // content : Separate Chaining and Open Addressing Methods
 //
+// content : Time Complexities O(1) and O(N)
+//
 // content : Load Factor and Rehashing
+//
+// content : Unordered Associative Containers
+//
+// content : Container std::unordered_set
 
 /////////////////////////////////////////////////////////////////////////////////
 

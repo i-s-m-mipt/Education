@@ -4,11 +4,11 @@
 
 ///////////////////////////////////////////////////////////
 
-// content : Branch Prediction
+// content : Statement if
+//
+// content : Branch Prediction (B)
 //
 // content : Distribution std::uniform_int_distribution
-//
-// content : Microbenchmarking
 
 ///////////////////////////////////////////////////////////
 

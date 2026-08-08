@@ -8,15 +8,15 @@
 //
 // content : Red-Black Trees
 //
-// content : Time Complexity O(log(N))
-//
-// content : Sets
-//
-// content : Containers std::set and std::multiset
-//
 // content : Strict Weak Ordering
 //
 // content : Irreflexivity, Transitivity and Equivalence
+//
+// content : Time Complexity O(log(N))
+//
+// content : Ordered Associative Containers
+//
+// content : Container std::set
 
 ///////////////////////////////////////////////////////////////////////////////////////
 

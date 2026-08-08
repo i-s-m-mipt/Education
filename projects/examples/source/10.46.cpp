@@ -4,7 +4,7 @@
 
 ////////////////////////////////////////////////////////
 
-// content : Biassociative Containers
+// content : Ordered Biassociative Containers
 //
 // content : Library Boost.Bimap
 

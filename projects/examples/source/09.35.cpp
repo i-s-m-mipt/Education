@@ -4,7 +4,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Polymorphic Resources and Allocators
+// content : Polymorphic Memory Resources
 //
 // content : Resource std::pmr::monotonic_buffer_resource
 //

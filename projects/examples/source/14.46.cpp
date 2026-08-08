@@ -4,19 +4,17 @@
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-// content : Spinlocks
+// content : Spinlocks (B)
 //
 // content : Read-Modify-Write (RMW) Instructions
 //
+// content : Acquire-Release Memory Ordering
+//
 // content : Cache Thrashing
 //
-// content : Cache Coherency Traffic
-//
-// content : Reducing Load-Store Unit Utilization
+// content : Load-Store Unit Utilization
 //
 // content : Intrinsic _mm_pause
-//
-// content : Microbenchmarking
 
 ///////////////////////////////////////////////////////////////////////////////////
 

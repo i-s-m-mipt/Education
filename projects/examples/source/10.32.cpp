@@ -10,11 +10,9 @@
 //
 // content : Minors
 //
-// content : Decomposition Methods
+// content : Decomposition Methods (B)
 //
-// content : Lower Triangular and Upper Triangular (LU) Factorization
-//
-// content : Microbenchmarking
+// content : Lower-Upper (LU) Matrix Factorization
 
 //////////////////////////////////////////////////////////////////////////////////////
 

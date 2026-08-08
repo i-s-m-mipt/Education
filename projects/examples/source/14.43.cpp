@@ -4,7 +4,7 @@
 
 ///////////////////////////////////////////////////////////
 
-// content : Acquire-Release Semantics
+// content : Acquire-Release Memory Ordering
 //
 // content : Store-Release and Load-Acquire Fences
 //

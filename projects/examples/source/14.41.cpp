@@ -8,11 +8,9 @@
 //
 // content : Modified, Exclusive, Shared and Invalid Cache Line States
 //
-// content : False Sharing
+// content : False Sharing (B)
 //
 // content : Object std::hardware_destructive_interference_size
-//
-// content : Microbenchmarking
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

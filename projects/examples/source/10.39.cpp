@@ -4,17 +4,13 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Associative Containers
+// content : Container std::map
 //
-// content : Containers std::map and std::multimap
-//
-// content : In-Place Constructors
+// content : Emplace Constructors (B)
 //
 // content : Object std::piecewise_construct
 //
 // content : Function std::forward_as_tuple
-//
-// content : Microbenchmarking
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
