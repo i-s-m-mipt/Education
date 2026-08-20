@@ -1,126 +1,83 @@
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
-// content : Pattern Bridge
+// content : Pattern Memento
+//
+// content : Version Control System Git
 
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
-#include <print>
+#include <cassert>
+#include <cstddef>
+#include <vector>
 
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
-class Entity_v1
+class Entity
 {
-public :
+private :
 
-    virtual ~Entity_v1() = default;
-
-//  -------------------------------
-
-    virtual void test() const = 0;
-};
-
-////////////////////////////////////////////////////////////////
-
-class Client_v1 : public Entity_v1
-{
-public :
-
-    void test() const override
+    struct Memento
     {
-        std::print("Client_v1::test\n");
-    }
-};
+        int x = 0;
+    };
 
-////////////////////////////////////////////////////////////////
-
-class Client_v2 : public Entity_v1
-{
 public :
 
-    void test() const override
+    Entity(int x = 0) : m_mementos(1, Memento())
     {
-        std::print("Client_v2::test\n");
+        set(x);
     }
-};
 
-////////////////////////////////////////////////////////////////
+//  --------------------------------------------------
 
-class Entity_v2
-{
-public :
-
-    Entity_v2(Entity_v1 & entity_v1) : m_entity_v1(entity_v1) {}
-
-//  ------------------------------------------------------------
-
-    virtual ~Entity_v2() = default;
-
-//  ------------------------------------------------------------
-
-    virtual void test() const = 0;
-
-protected :
-
-    Entity_v1 & m_entity_v1;
-};
-
-////////////////////////////////////////////////////////////////
-
-class Server_v1 : public Entity_v2
-{
-public :
-
-    Server_v1(Entity_v1 & entity_v1) : Entity_v2(entity_v1) {}
-
-//  ----------------------------------------------------------
-
-    void test() const override
+    auto get() const
     {
-        std::print("Server_v1::test\n");
-
-        m_entity_v1.test();
+        return m_mementos.front().x;
     }
-};
 
-////////////////////////////////////////////////////////////////
+//  --------------------------------------------------
 
-class Server_v2 : public Entity_v2
-{
-public :
-
-    Server_v2(Entity_v1 & entity_v1) : Entity_v2(entity_v1) {}
-
-//  ----------------------------------------------------------
-
-    void test() const override
+    void set(int x)
     {
-        std::print("Server_v2::test\n");
+        m_mementos.front().x = x;
 
-        m_entity_v1.test();
+        m_mementos.push_back(m_mementos.front());
     }
+
+//  --------------------------------------------------
+
+    auto & load(std::size_t index)
+    {
+        m_mementos.front() = m_mementos.at(index + 1);
+
+        return *this;
+    }
+
+private :
+
+    std::vector < Memento > m_mementos;
 };
 
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
 int main()
 {
-    Entity_v1 * entity_v1 = new Client_v1;
+    Entity entity;
 
-    Entity_v2 * entity_v2 = new Server_v1(*entity_v1);
+//  ----------------------------------
 
-//  --------------------------------------------------
+    for (auto i = 1; i < 3; ++i)
+    {
+        entity.set(i);
+    }
 
-    entity_v2->test();
+//  ----------------------------------
 
-//  --------------------------------------------------
-
-    delete entity_v2;
-
-    delete entity_v1;
+    assert(entity.load(1).get() == 1);
 }
 
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////

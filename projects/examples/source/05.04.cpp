@@ -1,94 +1,107 @@
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 
-// content : Pattern Prototype
-//
-// content : Virtual Constructors
+// content : Pattern Adapter
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 
-#include <vector>
+#include <print>
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+
+class Client
+{
+public :
+
+	void test() const
+	{
+		std::print("Client::test\n");
+	}
+};
+
+/////////////////////////////////////////////////////
 
 class Entity
 {
 public :
 
-    virtual ~Entity() = default;
+	virtual ~Entity() = default;
 
-//  ----------------------------------
+//  ------------------------------
 
-    virtual Entity * copy() const = 0;
+	virtual void test() const = 0;
 };
 
-///////////////////////////////////////////////////////////
-
-class Client : public Entity
-{
-public :
-
-    Entity * copy() const override
-    {
-        return new Client(*this);
-    }
-};
-
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 
 class Server : public Entity
 {
 public :
 
-    Entity * copy() const override
+    void test() const override
     {
-
-        return new Server(*this);
+        std::print("Server::test\n");
     }
 };
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 
-class Factory
+class Adapter_v1 : public Entity
 {
 public :
 
-    Factory()
-    {
-        m_entities.push_back(new Client);
+	Adapter_v1(Client & client) : m_client(client) {}
 
-        m_entities.push_back(new Server);
-    }
+//  -------------------------------------------------
 
-//  -------------------------------------------------------
-
-   ~Factory()
-    {
-        for (auto entity : m_entities)
-        {
-            delete entity;
-        }
-    }
-
-//  -------------------------------------------------------
-
-    auto make_client() { return m_entities.at(0)->copy(); }
-
-    auto make_server() { return m_entities.at(1)->copy(); }
+	void test() const override
+	{
+		m_client.test();
+	}
 
 private :
 
-    std::vector < Entity * > m_entities;
+	Client & m_client;
 };
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+
+class Adapter_v2 : public Entity, private Client
+{
+public :
+
+	void test() const override
+	{
+		Client::test();
+	}
+};
+
+/////////////////////////////////////////////////////
 
 int main()
 {
-    delete Factory().make_client();
+	Client client;
+
+//  -------------------------------------------
+
+	Entity * entity_1 = new Adapter_v1(client);
+
+	Entity * entity_2 = new Adapter_v2;
+
+//  -------------------------------------------
+
+	entity_1->test();
+
+	entity_2->test();
+
+//  -------------------------------------------
+
+	delete entity_1;
+
+	delete entity_2;
 }
 
-///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////

@@ -1,57 +1,126 @@
-////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
-// content : Pattern Singleton
-//
-// content : Deleted Implementations
-//
-// content : Function Specifier delete
+// content : Pattern Bridge
 
-////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 #include <print>
 
-////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
-class Entity
+class Entity_v1
 {
 public :
 
-    Entity            (Entity const &) = delete;
+    virtual ~Entity_v1() = default;
 
-//  --------------------------------------------
+//  -------------------------------
 
-    Entity & operator=(Entity const &) = delete;
-
-//  --------------------------------------------
-
-    void test() const
-    {
-        std::print("Entity::test\n");
-    }
-
-//  --------------------------------------------
-
-    static auto & get()
-    {
-        static Entity entity;
-
-        return entity;
-    }
-
-private :
-
-    Entity() = default;
+    virtual void test() const = 0;
 };
 
-////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+class Client_v1 : public Entity_v1
+{
+public :
+
+    void test() const override
+    {
+        std::print("Client_v1::test\n");
+    }
+};
+
+////////////////////////////////////////////////////////////////
+
+class Client_v2 : public Entity_v1
+{
+public :
+
+    void test() const override
+    {
+        std::print("Client_v2::test\n");
+    }
+};
+
+////////////////////////////////////////////////////////////////
+
+class Entity_v2
+{
+public :
+
+    Entity_v2(Entity_v1 & entity_v1) : m_entity_v1(entity_v1) {}
+
+//  ------------------------------------------------------------
+
+    virtual ~Entity_v2() = default;
+
+//  ------------------------------------------------------------
+
+    virtual void test() const = 0;
+
+protected :
+
+    Entity_v1 & m_entity_v1;
+};
+
+////////////////////////////////////////////////////////////////
+
+class Server_v1 : public Entity_v2
+{
+public :
+
+    Server_v1(Entity_v1 & entity_v1) : Entity_v2(entity_v1) {}
+
+//  ----------------------------------------------------------
+
+    void test() const override
+    {
+        std::print("Server_v1::test\n");
+
+        m_entity_v1.test();
+    }
+};
+
+////////////////////////////////////////////////////////////////
+
+class Server_v2 : public Entity_v2
+{
+public :
+
+    Server_v2(Entity_v1 & entity_v1) : Entity_v2(entity_v1) {}
+
+//  ----------------------------------------------------------
+
+    void test() const override
+    {
+        std::print("Server_v2::test\n");
+
+        m_entity_v1.test();
+    }
+};
+
+////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Entity::get().test();
+    Entity_v1 * entity_v1 = new Client_v1;
+
+    Entity_v2 * entity_v2 = new Server_v1(*entity_v1);
+
+//  --------------------------------------------------
+
+    entity_v2->test();
+
+//  --------------------------------------------------
+
+    delete entity_v2;
+
+    delete entity_v1;
 }
 
-////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////

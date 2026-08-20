@@ -1,121 +1,86 @@
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
-// content : Behavioral Patterns
+// content : Pattern Template Method
 //
-// content : Pattern Memento
-//
-// content : Version Control System Git
+// content : Non-Virtual Interface (NVI)
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
-#include <cassert>
-#include <cstddef>
-#include <utility>
-#include <vector>
+#include <print>
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
 class Entity
 {
 public :
 
-    Entity(int x = 0) : m_states(1, State())
-    {
-        save(x);
-    }
+	virtual ~Entity() = default;
 
-//  --------------------------------------------------------------------
+//  ---------------------------------------------------------
 
-    auto get() const
-    {
-        return m_states.front().x;
-    }
+	void test() const
+	{
+		test_v1();
 
-//  --------------------------------------------------------------------
+		test_v2();
 
-    void save(int x)
-    {
-        m_states.push_back(State(x));
+		test_v3();
 
-        m_deltas.push_back(m_states.back() - m_states.front());
-
-        m_states.front() = m_states.back();
-    }
-
-//  --------------------------------------------------------------------
-
-    auto & load_v1(std::size_t index)
-    {
-        m_states.front() = m_states.at(index + 1);
-
-        return *this;
-    }
-
-//  --------------------------------------------------------------------
-
-    auto & load_v2(std::size_t index)
-    {
-        State state;
-
-        for (auto i = 0uz; i < index + 1; ++i)
-        {
-            state = state + m_deltas.at(i);
-        }
-
-        m_states.front() = state;
-
-        return *this;
-    }
+		test_v4();
+	}
 
 private :
 
-    struct State { int x = 0; };
+	void test_v1() const { std::print("Entity::test_v1\n"); }
 
-    struct Delta { int x = 0; };
+	void test_v3() const { std::print("Entity::test_v3\n"); }
 
-//  --------------------------------------------------------------------
+//  ---------------------------------------------------------
 
-    friend auto operator-(State const & lhs, State const & rhs) -> Delta
-    {
-        return Delta(lhs.x - rhs.x);
-    }
+	virtual void test_v2() const = 0;
 
-//  --------------------------------------------------------------------
-
-    friend auto operator+(State const & lhs, Delta const & rhs) -> State
-    {
-        return State(lhs.x + rhs.x);
-    }
-
-//  --------------------------------------------------------------------
-
-    std::vector < State > m_states;
-
-    std::vector < Delta > m_deltas;
+	virtual void test_v4() const = 0;
 };
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+
+class Client : public Entity
+{
+private :
+
+	void test_v2() const override { std::print("Client::test_v2\n"); }
+
+	void test_v4() const override { std::print("Client::test_v4\n"); }
+};
+
+//////////////////////////////////////////////////////////////////////
+
+class Server : public Entity
+{
+private :
+
+	void test_v2() const override { std::print("Server::test_v2\n"); }
+
+	void test_v4() const override { std::print("Server::test_v4\n"); }
+};
+
+//////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Entity entity;
+	Entity * entity = new Client;
 
-//  -------------------------------------
+//  -----------------------------
 
-    for (auto i = 1; i < 3; ++i)
-    {
-        entity.save(i);
-    }
+	entity->test();
 
-//  -------------------------------------
+//  -----------------------------
 
-    assert(entity.load_v1(1).get() == 1);
-
-    assert(entity.load_v2(2).get() == 2);
+	delete entity;
 }
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////

@@ -1,71 +1,91 @@
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
-// content : Pattern Facade
+// content : Pattern Strategy
+//
+// content : Policy-Based Programming
 
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 #include <print>
 
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
-class Client
+class Strategy
 {
 public :
 
-    void test_v1() const { std::print("Client::test_v1\n"); }
+    virtual ~Strategy() = default;
 
-    void test_v2() const { std::print("Client::test_v2\n"); }
+//  ------------------------------
+
+    virtual void test() const = 0;
 };
 
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
-class Server
+class Strategy_v1 : public Strategy
 {
 public :
 
-    void test_v1() const { std::print("Server::test_v1\n"); }
-
-    void test_v2() const { std::print("Server::test_v2\n"); }
-};
-
-/////////////////////////////////////////////////////////////
-
-class Facade : private Client, private Server
-{
-public :
-
-    void test_v1() const
+    void test() const override
     {
-        Client::test_v1();
-
-        Server::test_v1();
-    }
-
-//  ----------------------
-
-    void test_v2() const
-    {
-        Client::test_v2();
-
-        Server::test_v2();
+        std::print("Strategy_v1::test\n");
     }
 };
 
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+
+class Strategy_v2 : public Strategy
+{
+public :
+
+    void test() const override
+    {
+        std::print("Strategy_v2::test\n");
+    }
+};
+
+/////////////////////////////////////////////////////////
+
+class Entity
+{
+public :
+
+    Entity(Strategy & strategy) : m_strategy(strategy) {}
+
+//  -----------------------------------------------------
+
+    void test() const
+    {
+        m_strategy.test();
+    }
+
+private :
+
+    Strategy & m_strategy;
+};
+
+/////////////////////////////////////////////////////////
 
 int main()
 {
-    Facade facade;
+    Strategy * strategy = new Strategy_v1;
 
-//  -----------------
+//  --------------------------------------
 
-    facade.test_v1();
+    Entity entity(*strategy);
 
-    facade.test_v2();
+//  --------------------------------------
+
+    entity.test();
+
+//  --------------------------------------
+
+    delete strategy;
 }
 
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////

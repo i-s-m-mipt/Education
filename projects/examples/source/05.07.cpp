@@ -1,43 +1,41 @@
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
-// content : Structural Patterns
-//
-// content : Pattern Adapter
+// content : Pattern Decorator
 
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
 #include <print>
 
-/////////////////////////////////////////////////////
-
-class Client
-{
-public :
-
-	void test() const
-	{
-		std::print("Client::test\n");
-	}
-};
-
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
 class Entity
 {
 public :
 
-	virtual ~Entity() = default;
+    virtual ~Entity() = default;
 
 //  ------------------------------
 
-	virtual void test() const = 0;
+    virtual void test() const = 0;
 };
 
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+
+class Client : public Entity
+{
+public :
+
+    void test() const override
+    {
+        std::print("Client::test\n");
+    }
+};
+
+////////////////////////////////////////////////////
 
 class Server : public Entity
 {
@@ -49,61 +47,45 @@ public :
     }
 };
 
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
-class Adapter_v1 : public Entity
+class Decorator : public Entity
 {
 public :
 
-	Adapter_v1(Client & client) : m_client(client) {}
+    Decorator(Entity & entity) : m_entity(entity) {}
 
-//  -------------------------------------------------
+//  ------------------------------------------------
 
-	void test() const override
-	{
-		m_client.test();
-	}
+    void test() const override
+    {
+        std::print("Decorator::test : ");
+
+        m_entity.test();
+    }
 
 private :
 
-	Client & m_client;
+    Entity & m_entity;
 };
 
-/////////////////////////////////////////////////////
-
-class Adapter_v2 : public Entity, private Client
-{
-public :
-
-	void test() const override
-	{
-		Client::test();
-	}
-};
-
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
 int main()
 {
-	Client client;
+    Entity * entity_1 = new Client;
 
-//  -------------------------------------------
+    Entity * entity_2 = new Decorator(*entity_1);
 
-	Entity * entity_1 = new Adapter_v1(client);
+//  ---------------------------------------------
 
-	Entity * entity_2 = new Adapter_v2;
+    entity_2->test();
 
-//  -------------------------------------------
+//  ---------------------------------------------
 
-	entity_1->test();
+    delete entity_2;
 
-	entity_2->test();
-
-//  -------------------------------------------
-
-	delete entity_1;
-
-	delete entity_2;
+    delete entity_1;
 }
 
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////

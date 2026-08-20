@@ -4,13 +4,9 @@
 
 ////////////////////////////////////////////////////
 
-// content : Creational Patterns
+// content : Dynamic Polymorphism
 //
 // content : Pattern Builder
-
-////////////////////////////////////////////////////
-
-#include <cassert>
 
 ////////////////////////////////////////////////////
 
@@ -53,7 +49,7 @@ protected :
 
 ////////////////////////////////////////////////////
 
-class Builder_Client : public Builder
+class Builder_v1 : public Builder
 {
 public :
 
@@ -64,22 +60,22 @@ public :
 
 ////////////////////////////////////////////////////
 
-class Builder_Server : public Builder
+class Builder_v2 : public Builder
 {
 public :
 
-    void set_x() const override { m_entity->x = 1; }
+    void set_x() const override { m_entity->x = 2; }
 
-    void set_y() const override { m_entity->y = 1; }
+    void set_y() const override { m_entity->y = 2; }
 };
 
 ////////////////////////////////////////////////////
 
 int main()
 {
-    Builder * builder = new Builder_Client;
+    Builder * builder = new Builder_v1;
 
-//  ---------------------------------------
+//  -----------------------------------
 
     delete builder->make_entity();
 

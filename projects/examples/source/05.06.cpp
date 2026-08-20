@@ -1,100 +1,134 @@
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
-// content : Pattern Noncopyable
-//
-// content : Library Boost.Noncopyable
+// content : Pattern Composite
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
-#include <print>
+#include <cassert>
+#include <cstddef>
+#include <vector>
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
-#include <boost/noncopyable.hpp>
-
-////////////////////////////////////////////////////////////////////
-
-class Noncopyable
+class Entity
 {
 public :
 
-    Noncopyable            (Noncopyable const &) = delete;
+    virtual ~Entity() = default;
 
-//  ------------------------------------------------------
+//  -----------------------------
 
-    Noncopyable & operator=(Noncopyable const &) = delete;
-
-protected :
-
-    Noncopyable() = default;
+    virtual int test() const = 0;
 };
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
-class Unique_v1 : private Noncopyable {};
-
-////////////////////////////////////////////////////////////////////
-
-class Unique_v2 : private Noncopyable
+class Client : public Entity
 {
 public :
 
-    Unique_v2() = default;
-
-//  ----------------------------------------------------------------
-
-//  Unique_v2(Unique_v2 const & other) : Noncopyable(other) // error
-//  {
-//      std::print("Unique_v2::Unique_v2 (1)\n");
-//  }
-
-//  ----------------------------------------------------------------
-
-    Unique_v2(Unique_v2 const &) : Noncopyable()
+    int test() const override
     {
-        std::print("Unique_v2::Unique_v2 (2)\n");
-    }
-
-//  ----------------------------------------------------------------
-
-    auto & operator=([[maybe_unused]] Unique_v2 const & other)
-    {
-        std::print("Unique_v2::operator=\n");
-
-    //  Noncopyable::operator=(other); // error
-
-        return *this;
+        return 1;
     }
 };
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
-class Unique_v3 : private boost::noncopyable {};
-
-////////////////////////////////////////////////////////////////////
-
-template < typename U > void test()
+class Server : public Entity
 {
-    U unique_1;
+public :
 
-    U unique_2 = unique_1;
+    int test() const override
+    {
+        return 2;
+    }
+};
 
-      unique_2 = unique_1;
+///////////////////////////////////////////////////////////////////////
+
+class Composite : public Entity
+{
+public :
+
+   ~Composite()
+    {
+        for (auto entity : m_entities)
+        {
+            delete entity;
+        }
+    }
+
+//  ------------------------------------
+
+    void add(Entity * entity)
+    {
+        m_entities.push_back(entity);
+    }
+
+//  ------------------------------------
+
+    int test() const override
+    {
+        auto x = 0;
+
+        for (auto entity : m_entities)
+        {
+            if (entity)
+            {
+                x += entity->test();
+            }
+        }
+
+        return x;
+    }
+
+private :
+
+    std::vector < Entity * > m_entities;
+};
+
+///////////////////////////////////////////////////////////////////////
+
+auto make_composite(std::size_t size_1, std::size_t size_2) -> Entity *
+{
+    auto composite = new Composite;
+
+    for (auto i = 0uz; i < size_1; ++i) { composite->add(new Client); }
+
+    for (auto i = 0uz; i < size_2; ++i) { composite->add(new Server); }
+
+    return composite;
 }
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
 int main()
 {
-//  test < Unique_v1 > (); // error
+    auto composite = new Composite;
 
-    test < Unique_v2 > ();
+//  -----------------------------------------
 
-//  test < Unique_v3 > (); // error
+    for (auto i = 0uz; i < 5; ++i)
+    {
+        composite->add(make_composite(1, 1));
+    }
+
+//  -----------------------------------------
+
+    Entity * entity = composite;
+
+//  -----------------------------------------
+
+    assert(entity->test() == 15);
+
+//  -----------------------------------------
+
+    delete entity;
 }
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////

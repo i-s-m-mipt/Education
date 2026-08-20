@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////
 
-// content : Pattern Factory Method
+// content : Pattern Factory
 
 /////////////////////////////////////////////
 
@@ -17,51 +17,58 @@ public :
 
 /////////////////////////////////////////////
 
-class Client : public Entity
+class Client : public Entity {};
+
+class Server : public Entity {};
+
+/////////////////////////////////////////////
+
+class Factory
 {
 public :
 
-    class Factory
-    {
-    public :
+    virtual ~Factory() = default;
 
-        static auto make_client() -> Entity *
-        {
-            return new Client;
-        }
-    };
+//  -----------------------------------------
 
-private :
-
-    Client() = default;
+    virtual Entity * make_entity() const = 0;
 };
 
 /////////////////////////////////////////////
 
-class Server : public Entity
+class Factory_v1 : public Factory
 {
 public :
 
-    class Factory
+    Entity * make_entity() const override
     {
-    public :
+        return new Client;
+    }
+};
 
-        static auto make_server() -> Entity *
-        {
-            return new Server;
-        }
-    };
+/////////////////////////////////////////////
 
-private :
+class Factory_v2 : public Factory
+{
+public :
 
-    Server() = default;
+    Entity * make_entity() const override
+    {
+        return new Server;
+    }
 };
 
 /////////////////////////////////////////////
 
 int main()
 {
-    delete Client::Factory::make_client();
+    Factory * factory = new Factory_v1;
+
+//  -----------------------------------
+
+    delete factory->make_entity();
+
+    delete factory;
 }
 
 /////////////////////////////////////////////

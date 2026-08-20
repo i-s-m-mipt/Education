@@ -25,8 +25,6 @@ private :
 
 	template < typename T1, typename T2 > static std::false_type test_v2(...);
 
-//  --------------------------------------------------------------------------
-
     template < typename T1, typename T2 > static std:: true_type test_v2
 	(
 		int, decltype(test_v1 < T2 > (std::declval < T1 > ())) = 0

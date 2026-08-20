@@ -1,134 +1,123 @@
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
-// content : Pattern Composite
+// content : Pattern Observer
+//
+// content : Condition Variables
 
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
-#include <cassert>
-#include <cstddef>
+#include <print>
 #include <vector>
 
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+
+class Observer
+{
+public :
+
+    virtual ~Observer() = default;
+
+//  -----------------------------------
+
+    virtual void test(int x) const = 0;
+};
+
+//////////////////////////////////////////////////////
 
 class Entity
 {
 public :
 
-    virtual ~Entity() = default;
-
-//  -----------------------------
-
-    virtual int test() const = 0;
-};
-
-///////////////////////////////////////////////////////////////////////
-
-class Client : public Entity
-{
-public :
-
-    int test() const override
+   ~Entity()
     {
-        return 1;
-    }
-};
-
-///////////////////////////////////////////////////////////////////////
-
-class Server : public Entity
-{
-public :
-
-    int test() const override
-    {
-        return 2;
-    }
-};
-
-///////////////////////////////////////////////////////////////////////
-
-class Composite : public Entity
-{
-public :
-
-   ~Composite()
-    {
-        for (auto entity : m_entities)
+        for (auto observer : m_observers)
         {
-            delete entity;
+            delete observer;
         }
     }
 
-//  ------------------------------------
+//  ---------------------------------------
 
-    void add(Entity * entity)
+    void add(Observer * observer)
     {
-        m_entities.push_back(entity);
+        m_observers.push_back(observer);
     }
 
-//  ------------------------------------
+//  ---------------------------------------
 
-    int test() const override
+    void set(int x)
     {
-        auto x = 0;
+        m_x = x;
 
-        for (auto entity : m_entities)
+        notify_all();
+    }
+
+//  ---------------------------------------
+
+    void notify_all() const
+    {
+        for (auto observer : m_observers)
         {
-            if (entity)
+            if (observer)
             {
-                x += entity->test();
+                observer->test(m_x);
             }
         }
-
-        return x;
     }
 
 private :
 
-    std::vector < Entity * > m_entities;
+    int m_x = 0;
+
+    std::vector < Observer * > m_observers;
 };
 
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 
-auto make_composite(std::size_t size_1, std::size_t size_2) -> Entity *
+class Observer_v1 : public Observer
 {
-    auto composite = new Composite;
+public :
 
-    for (auto i = 0uz; i < size_1; ++i) { composite->add(new Client); }
+    void test(int x) const override
+    {
+        std::print("Observer_v1::test : x = {}\n", x);
+    }
+};
 
-    for (auto i = 0uz; i < size_2; ++i) { composite->add(new Server); }
+//////////////////////////////////////////////////////
 
-    return composite;
-}
+class Observer_v2 : public Observer
+{
+public :
 
-///////////////////////////////////////////////////////////////////////
+    void test(int x) const override
+    {
+        std::print("Observer_v2::test : x = {}\n", x);
+    }
+};
+
+//////////////////////////////////////////////////////
 
 int main()
 {
-    auto composite = new Composite;
+    Entity entity;
 
-//  -----------------------------------------
+//  ----------------------------
 
-    for (auto i = 0uz; i < 5; ++i)
+    entity.add(new Observer_v1);
+
+    entity.add(new Observer_v2);
+
+//  ----------------------------
+
+    for (auto i = 1; i < 3; ++i)
     {
-        composite->add(make_composite(1, 1));
+        entity.set(i);
     }
-
-//  -----------------------------------------
-
-    Entity * entity = composite;
-
-//  -----------------------------------------
-
-    assert(entity->test() == 15);
-
-//  -----------------------------------------
-
-    delete entity;
 }
 
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////

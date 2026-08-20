@@ -21,8 +21,6 @@ private :
 
 	template < typename T > static std::false_type test(...);
 
-//  ------------------------------------------------------------------------------
-
     template < typename T > static std:: true_type test
 	(
 		int, decltype(dynamic_cast < void * > (std::declval < T * > ())) = nullptr

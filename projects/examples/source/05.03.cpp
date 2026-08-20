@@ -1,74 +1,91 @@
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-// content : Pattern Abstract Factory
+// content : Pattern Prototype
 
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+#include <vector>
+
+///////////////////////////////////////////////////////////
 
 class Entity
 {
 public :
 
     virtual ~Entity() = default;
+
+//  ----------------------------------
+
+    virtual Entity * copy() const = 0;
 };
 
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-class Client : public Entity {};
+class Client : public Entity
+{
+public :
 
-class Server : public Entity {};
+    Entity * copy() const override
+    {
+        return new Client(*this);
+    }
+};
 
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+class Server : public Entity
+{
+public :
+
+    Entity * copy() const override
+    {
+        return new Server(*this);
+    }
+};
+
+///////////////////////////////////////////////////////////
 
 class Factory
 {
 public :
 
-    virtual ~Factory() = default;
-
-//  -----------------------------------------
-
-    virtual Entity * make_entity() const = 0;
-};
-
-/////////////////////////////////////////////
-
-class Factory_Client : public Factory
-{
-public :
-
-    Entity * make_entity() const override
+    Factory()
     {
-        return new Client;
+        m_entities.push_back(new Client);
+
+        m_entities.push_back(new Server);
     }
-};
 
-/////////////////////////////////////////////
+//  -------------------------------------------------------
 
-class Factory_Server : public Factory
-{
-public :
-
-    Entity * make_entity() const override
+   ~Factory()
     {
-        return new Server;
+        for (auto entity : m_entities)
+        {
+            delete entity;
+        }
     }
+
+//  -------------------------------------------------------
+
+    auto make_client() { return m_entities.at(0)->copy(); }
+
+    auto make_server() { return m_entities.at(1)->copy(); }
+
+private :
+
+    std::vector < Entity * > m_entities;
 };
 
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 int main()
 {
-    Factory * factory = new Factory_Client;
-
-//  ---------------------------------------
-
-    delete factory->make_entity();
-
-    delete factory;
+    delete Factory().make_client();
 }
 
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////
