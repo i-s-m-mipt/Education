@@ -12,7 +12,7 @@
 
 //////////////////////////////////////////////////////////////
 
-class Entity
+class Server
 {
 private :
 
@@ -20,9 +20,9 @@ private :
 
 //  ----------------------------------------------------------
 
-    static void test_v1() { std::print("Entity::test_v1\n"); }
+    static void test_v1() { std::print("Server::test_v1\n"); }
 
-    static void test_v2() { std::print("Entity::test_v2\n"); }
+    static void test_v2() { std::print("Server::test_v2\n"); }
 };
 
 //////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ private :
     {
         std::print("Attorney::test_v1\n");
 
-        Entity::test_v1();
+        Server::test_v1();
     }
 
 //  --------------------------------------

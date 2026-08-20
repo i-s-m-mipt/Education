@@ -4,7 +4,7 @@
 
 ////////////////////////////////////////////////////////////////////
 
-// content : Pattern PassKey
+// content : Pattern Passkey
 //
 // content : Default Implementations
 //
@@ -22,7 +22,7 @@ class Key_v2 { private :                      Key_v2() = default; };
 
 ////////////////////////////////////////////////////////////////////
 
-class Entity
+class Server
 {
 private :
 
@@ -30,9 +30,9 @@ private :
 
 //  --------------------------------------------------------------
 
-    static void test(Key_v1) { std::print("Entity::test (1)\n"); }
+    static void test(Key_v1) { std::print("Server::test (1)\n"); }
 
-    static void test(Key_v2) { std::print("Entity::test (2)\n"); }
+    static void test(Key_v2) { std::print("Server::test (2)\n"); }
 };
 
 ////////////////////////////////////////////////////////////////////
@@ -43,9 +43,9 @@ public :
 
     static void test()
     {
-        Entity::test(Key_v1());
+        Server::test(Key_v1());
 
-    //  Entity::test(Key_v2()); // error
+    //  Server::test(Key_v2()); // error
     }
 };
 
