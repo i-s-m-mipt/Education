@@ -1,86 +1,102 @@
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
-// content : Pattern Singleton
+// content : Pattern Inverted Mixin
 
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
-#include <print>
+#include <cassert>
 
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
-#include <boost/noncopyable.hpp>
-
-////////////////////////////////////////////////////////////////////
-
-template < typename D > class Singleton : private boost::noncopyable
+class Entity
 {
 public :
 
-    static auto & get()
+    auto get() const
     {
-        static D d;
-
-		return d;
+        return m_x;
     }
 
-protected :
+//  ----------------
 
-    Singleton() = default;
-};
-
-////////////////////////////////////////////////////////////////////
-
-class Entity_v1 : public Singleton < Entity_v1 >
-{
-public :
-
-	void test() const
-	{
-		std::print("Entity_v1::test\n");
-	}
+    void set(int x)
+    {
+        m_x = x;
+    }
 
 private :
 
-    friend Singleton < Entity_v1 > ;
-
-//  ------------------------------------
-
-	Entity_v1() = default;
+    int m_x = 0;
 };
 
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
-class Entity_v2
+template < typename B > class Undoable : public B
 {
 public :
 
-	void test() const
-	{
-		std::print("Entity_v2::test\n");
-	}
+    void set(int x)
+    {
+        B::set(m_x = B::get());
+    }
+
+//  ---------------------------
+
+    void undo()
+    {
+        B::set(m_x);
+    }
 
 private :
 
-	friend Singleton < Entity_v2 > ;
-
-//  ------------------------------------
-
-	Entity_v2() = default;
+    int m_x = 0;
 };
 
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
+
+template < typename B > class Redoable : public B
+{
+public :
+
+    void set(int x)
+    {
+        B::set(m_x = x);
+    }
+
+//  --------------------
+
+    void redo()
+    {
+        B::set(m_x);
+    }
+
+private :
+
+    int m_x = 0;
+};
+
+/////////////////////////////////////////////////
 
 int main()
 {
-	Entity_v1::get().test();
+    Redoable < Undoable < Entity > > entity;
 
-//  ---------------------------------------
+//  -----------------------------------------
 
-	Singleton < Entity_v2 > ::get().test();
+    for (auto i = 1; i < 3; ++i)
+    {
+        entity.set(i);
+    }
+
+//  -----------------------------------------
+
+    entity.undo(); assert(entity.get() == 1);
+
+    entity.redo(); assert(entity.get() == 2);
 }
 
-////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////

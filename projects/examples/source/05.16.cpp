@@ -1,86 +1,66 @@
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-// content : Pattern Template Method
+// content : Pattern Mixin
 //
-// content : Pattern Non-Virtual Interface (NVI)
+// content : Library Boost.Operators
 
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-#include <print>
+#include <cassert>
 
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+
+#include <boost/operators.hpp>
+
+/////////////////////////////////////////////////////////////////
 
 class Entity
+:
+    private boost::less_than_comparable < Entity > ,
+
+    private boost::          equivalent < Entity >
 {
 public :
 
-	virtual ~Entity() = default;
+    Entity(int x) : m_x(x) {}
 
-//  ---------------------------------------------------------
+//  -------------------------------------------------------------
 
-	void test() const
-	{
-		test_v1();
-
-		test_v2();
-
-		test_v3();
-
-		test_v4();
-	}
+    friend auto operator<(Entity const & lhs, Entity const & rhs)
+    {
+        return lhs.m_x < rhs.m_x;
+    }
 
 private :
 
-	void test_v1() const { std::print("Entity::test_v1\n"); }
-
-	void test_v3() const { std::print("Entity::test_v3\n"); }
-
-//  ---------------------------------------------------------
-
-	virtual void test_v2() const = 0;
-
-	virtual void test_v4() const = 0;
+    int m_x = 0;
 };
 
-//////////////////////////////////////////////////////////////////////
-
-class Client : public Entity
-{
-private :
-
-	void test_v2() const override { std::print("Client::test_v2\n"); }
-
-	void test_v4() const override { std::print("Client::test_v4\n"); }
-};
-
-//////////////////////////////////////////////////////////////////////
-
-class Server : public Entity
-{
-private :
-
-	void test_v2() const override { std::print("Server::test_v2\n"); }
-
-	void test_v4() const override { std::print("Server::test_v4\n"); }
-};
-
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Entity * entity = new Client;
+    Entity entity_1(1);
 
-//  -----------------------------
+    Entity entity_2(2);
 
-	entity->test();
+//  ------------------------------------
 
-//  -----------------------------
+    assert((entity_1 <  entity_2) == 1);
 
-	delete entity;
+    assert((entity_1 >  entity_2) == 0);
+
+    assert((entity_1 <= entity_2) == 1);
+
+    assert((entity_1 >= entity_2) == 0);
+
+    assert((entity_1 == entity_2) == 0);
+
+    assert((entity_1 != entity_2) == 1);
 }
 
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////

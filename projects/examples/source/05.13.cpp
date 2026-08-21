@@ -1,121 +1,107 @@
-/////////////////////////////////////////////////
+//////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-/////////////////////////////////////////////////
+//////////////////////////////////////////
 
-// content : Pattern Observer
+// content : Static Polymorphism
 
-/////////////////////////////////////////////////
+//////////////////////////////////////////
 
 #include <print>
-#include <vector>
 
-/////////////////////////////////////////////////
-
-class Observer
-{
-public :
-
-    virtual ~Observer() = default;
-
-//  -----------------------------------
-
-    virtual void test(int x) const = 0;
-};
-
-/////////////////////////////////////////////////
+//////////////////////////////////////////
 
 class Entity
 {
 public :
 
-   ~Entity()
-    {
-        for (auto observer : m_observers)
-        {
-            delete observer;
-        }
-    }
+	virtual ~Entity() = default;
 
-//  ---------------------------------------
+//  ------------------------------
 
-    void add(Observer * observer)
-    {
-        m_observers.push_back(observer);
-    }
-
-//  ---------------------------------------
-
-    void set(int x)
-    {
-        m_x = x;
-
-        notify_all();
-    }
-
-//  ---------------------------------------
-
-    void notify_all() const
-    {
-        for (auto observer : m_observers)
-        {
-            if (observer)
-            {
-                observer->test(m_x);
-            }
-        }
-    }
-
-private :
-
-    int m_x = 0;
-
-    std::vector < Observer * > m_observers;
+	virtual void test() const = 0;
 };
 
-/////////////////////////////////////////////////
+//////////////////////////////////////////
 
-class Client : public Observer
+class Client_v1 : public Entity
 {
 public :
 
-    void test(int x) const override
-    {
-        std::print("Client::test : x = {}\n", x);
-    }
+	void test() const override
+	{
+		std::print("Client_v1::test\n");
+	}
 };
 
-/////////////////////////////////////////////////
+//////////////////////////////////////////
 
-class Server : public Observer
+class Server_v1 : public Entity
 {
 public :
 
-    void test(int x) const override
-    {
-        std::print("Server::test : x = {}\n", x);
-    }
+	void test() const override
+	{
+		std::print("Server_v1::test\n");
+	}
 };
 
-/////////////////////////////////////////////////
+//////////////////////////////////////////
+
+void test_v1(Entity const & entity)
+{
+	entity.test();
+}
+
+//////////////////////////////////////////
+
+class Client_v2
+{
+public :
+
+	void test() const
+	{
+		std::print("Client_v2::test\n");
+	}
+};
+
+//////////////////////////////////////////
+
+class Server_v2
+{
+public :
+
+	void test() const
+	{
+		std::print("Server_v2::test\n");
+	}
+};
+
+//////////////////////////////////////////
+
+void test_v2(auto const & entity)
+{
+	entity.test();
+}
+
+//////////////////////////////////////////
 
 int main()
 {
-    Entity entity;
+	Entity * entity = new Client_v1;
 
-//  ----------------------------
+//  --------------------------------
 
-    entity.add(new Client);
+	test_v1(*entity);
 
-    entity.add(new Server);
+//  --------------------------------
 
-//  ----------------------------
+	delete entity;
 
-    for (auto i = 1; i < 3; ++i)
-    {
-        entity.set(i);
-    }
+//  --------------------------------
+
+	test_v2(Client_v2());
 }
 
-/////////////////////////////////////////////////
+//////////////////////////////////////////

@@ -1,107 +1,86 @@
-//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
-// content : Static Polymorphism
+// content : Pattern Singleton
 
-//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 #include <print>
 
-//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
-class Entity
+#include <boost/noncopyable.hpp>
+
+////////////////////////////////////////////////////////////////////
+
+template < typename D > class Singleton : private boost::noncopyable
 {
 public :
 
-	virtual ~Entity() = default;
+    static auto & get()
+    {
+        static D d;
 
-//  ------------------------------
+		return d;
+    }
 
-	virtual void test() const = 0;
+protected :
+
+    Singleton() = default;
 };
 
-//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
-class Client_v1 : public Entity
-{
-public :
-
-	void test() const override
-	{
-		std::print("Client_v1::test\n");
-	}
-};
-
-//////////////////////////////////////////
-
-class Server_v1 : public Entity
-{
-public :
-
-	void test() const override
-	{
-		std::print("Server_v1::test\n");
-	}
-};
-
-//////////////////////////////////////////
-
-void test_v1(Entity const & entity)
-{
-	entity.test();
-}
-
-//////////////////////////////////////////
-
-class Client_v2
+class Entity_v1 : public Singleton < Entity_v1 >
 {
 public :
 
 	void test() const
 	{
-		std::print("Client_v2::test\n");
+		std::print("Entity_v1::test\n");
 	}
+
+private :
+
+    friend Singleton < Entity_v1 > ;
+
+//  ------------------------------------
+
+	Entity_v1() = default;
 };
 
-//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
-class Server_v2
+class Entity_v2
 {
 public :
 
 	void test() const
 	{
-		std::print("Server_v2::test\n");
+		std::print("Entity_v2::test\n");
 	}
+
+private :
+
+	friend Singleton < Entity_v2 > ;
+
+//  ------------------------------------
+
+	Entity_v2() = default;
 };
 
-//////////////////////////////////////////
-
-void test_v2(auto const & entity)
-{
-	entity.test();
-}
-
-//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Entity * entity = new Client_v1;
+	Entity_v1::get().test();
 
-//  --------------------------------
+//  ---------------------------------------
 
-	test_v1(*entity);
-
-//  --------------------------------
-
-	delete entity;
-
-//  --------------------------------
-
-	test_v2(Client_v2());
+	Singleton < Entity_v2 > ::get().test();
 }
 
-//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////

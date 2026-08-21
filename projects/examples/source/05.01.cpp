@@ -4,7 +4,7 @@
 
 ////////////////////////////////////////////////////
 
-// content : Dynamic Polymorphism
+// content : Gang of Four Patterns
 //
 // content : Pattern Builder
 

@@ -1,68 +1,86 @@
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
-// content : Mixin-Based Class Instance Controller
+// content : Pattern Facade
+//
+// content : Variadic Base Classes
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
+// support : https://github.com/tdlib/td/blob/master/example/cpp/td_example.cpp
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
-template < typename D > class Controller
+#include <print>
+#include <utility>
+
+///////////////////////////////////////////////////////////////////////////////
+
+class Client
 {
 public :
 
-	static auto counter()
-	{
-		return s_counter;
-	}
+    Client(int) {}
 
-protected :
+//  ---------------------------------------------------------
 
-	Controller(                         ) { ++s_counter; }
+    void test_v1() const { std::print("Client::test_v1\n"); }
 
-	Controller(Controller < D > const & ) { ++s_counter; }
+    void test_v2() const { std::print("Client::test_v2\n"); }
+};
 
-	Controller(Controller < D >       &&) { ++s_counter; }
+///////////////////////////////////////////////////////////////////////////////
 
-   ~Controller(                         ) { --s_counter; }
+class Server
+{
+public :
+
+    Server(int) {}
+
+//  ---------------------------------------------------------
+
+    void test_v1() const { std::print("Server::test_v1\n"); }
+
+    void test_v2() const { std::print("Server::test_v2\n"); }
+};
+
+///////////////////////////////////////////////////////////////////////////////
+
+template < typename ... Bs > class Facade : public Bs ...
+{
+public :
+
+    template
+    <
+        typename ... Ts
+    >
+    Facade(int x, Ts && ... xs) : Bs(std::forward < Ts > (xs))..., m_x(x) {}
+
+//  ------------------------------------------------------------------------
+
+    void test_v1() const { (Bs::test_v1(), ...); }
+
+    void test_v2() const { (Bs::test_v2(), ...); }
 
 private :
 
-	static inline auto s_counter = 0uz;
+    int m_x = 0;
 };
 
-//////////////////////////////////////////////////////////
-
-class Entity_v1 : private Controller < Entity_v1 > {};
-
-class Entity_v2 : private Controller < Entity_v2 > {};
-
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Entity_v1 entity_v1;
+    Facade < Client, Server > facade(1, 1, 1);
 
-//  --------------------------------------------------
+//  ------------------------------------------
 
-	assert(Controller < Entity_v1 > ::counter() == 1);
+    facade.test_v1();
 
-	assert(Controller < Entity_v2 > ::counter() == 0);
-
-//  --------------------------------------------------
-
-	Entity_v2 entity_v2;
-
-//  --------------------------------------------------
-
-	assert(Controller < Entity_v1 > ::counter() == 1);
-
-	assert(Controller < Entity_v2 > ::counter() == 1);
+    facade.test_v2();
 }
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////

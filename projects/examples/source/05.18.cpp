@@ -1,71 +1,68 @@
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-// content : Curiously Recurring Template Pattern (CRTP)
-//
-// content : Pattern Mixin
+// content : Instance Counting
 
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-#include <print>
-#include <vector>
+#include <cassert>
 
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-template < typename D > class Entity
+template < typename D > class Controller
 {
 public :
 
-	void test() const
+	static auto counter()
 	{
-		static_cast < D const * > (this)->test_implementation();
+		return s_counter;
 	}
 
 protected :
 
-	void test_implementation() const
-	{
-		std::print("Entity::test_implementation\n");
-	}
+	Controller(                         ) { ++s_counter; }
+
+	Controller(Controller < D > const & ) { ++s_counter; }
+
+	Controller(Controller < D >       &&) { ++s_counter; }
+
+   ~Controller(                         ) { --s_counter; }
+
+private :
+
+	static inline auto s_counter = 0uz;
 };
 
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
-class Client : public Entity < Client >
-{
-public :
+class Entity_v1 : private Controller < Entity_v1 > {};
 
-	void test_implementation() const
-	{
-		std::print("Client::test_implementation\n");
-	}
-};
+class Entity_v2 : private Controller < Entity_v2 > {};
 
-////////////////////////////////////////////////////////////////
-
-class Server : public Entity < Server > {};
-
-////////////////////////////////////////////////////////////////
-
-template < typename D > void test(Entity < D > const & entity)
-{
-	entity.test();
-}
-
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 int main()
 {
-	test(Client());
+	Entity_v1 entity_v1;
 
-	test(Server());
+//  --------------------------------------------------
 
-//  -------------------------------------------
+	assert(Controller < Entity_v1 > ::counter() == 1);
 
-//	std::vector < Entity * > entities; // error
+	assert(Controller < Entity_v2 > ::counter() == 0);
+
+//  --------------------------------------------------
+
+	Entity_v2 entity_v2;
+
+//  --------------------------------------------------
+
+	assert(Controller < Entity_v1 > ::counter() == 1);
+
+	assert(Controller < Entity_v2 > ::counter() == 1);
 }
 
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////

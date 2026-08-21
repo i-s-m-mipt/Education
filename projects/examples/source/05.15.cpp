@@ -1,91 +1,97 @@
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Software Engineering Patterns
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
-// content : Pattern Strategy
+// content : Pattern Mixin
 //
-// content : Policy-Based Programming
+// content : Barton-Nackman Trick
+//
+// content : Restricted Template Expansion
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
-#include <print>
+#include <cassert>
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
-class Strategy
+template < typename T > class Comparable // support : https://cppinsights.io
 {
 public :
 
-    virtual ~Strategy() = default;
+    friend auto operator> (T const & lhs, T const & rhs) { return  (rhs < lhs); }
 
-//  ------------------------------
+    friend auto operator<=(T const & lhs, T const & rhs) { return !(lhs > rhs); }
 
-    virtual void test() const = 0;
+    friend auto operator>=(T const & lhs, T const & rhs) { return !(lhs < rhs); }
+
+protected :
+
+    Comparable() = default;
 };
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
-class Slow : public Strategy
+template < typename T > class Equivalent
 {
 public :
 
-    void test() const override
+    friend auto operator==(T const & lhs, T const & rhs)
     {
-        std::print("Slow::test\n");
+        return !(lhs < rhs) && !(rhs < lhs);
     }
+
+protected :
+
+    Equivalent() = default;
 };
 
-/////////////////////////////////////////////////////////
-
-class Fast : public Strategy
-{
-public :
-
-    void test() const override
-    {
-        std::print("Fast::test\n");
-    }
-};
-
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 class Entity
+:
+    private Comparable < Entity > ,
+
+    private Equivalent < Entity >
 {
 public :
 
-    Entity(Strategy & strategy) : m_strategy(strategy) {}
+    Entity(int x) : m_x(x) {}
 
-//  -----------------------------------------------------
+//  -------------------------------------------------------------
 
-    void test() const
+    friend auto operator<(Entity const & lhs, Entity const & rhs)
     {
-        m_strategy.test();
+        return lhs.m_x < rhs.m_x;
     }
 
 private :
 
-    Strategy & m_strategy;
+    int m_x = 0;
 };
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    Strategy * strategy = new Slow;
+    Entity entity_1(1);
 
-//  -------------------------------
+    Entity entity_2(2);
 
-    Entity entity(*strategy);
+//  ------------------------------------
 
-//  -------------------------------
+    assert((entity_1 <  entity_2) == 1);
 
-    entity.test();
+    assert((entity_1 >  entity_2) == 0);
 
-//  -------------------------------
+    assert((entity_1 <= entity_2) == 1);
 
-    delete strategy;
+    assert((entity_1 >= entity_2) == 0);
+
+    assert((entity_1 == entity_2) == 0);
+
+    assert((entity_1 != entity_2) == 1);
 }
 
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
