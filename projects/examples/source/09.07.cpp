@@ -1,123 +1,104 @@
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-// chapter : Memory Management
+// chapter : Distributed Network Systems
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-// content : Pointer this
-//
-// content : Base Class std::enable_shared_from_this
+// content : Pattern Mediator
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
-#include <iostream>
 #include <memory>
-#include <tuple>
+#include <print>
+#include <vector>
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-class Entity_v1
+class Mediator;
+
+///////////////////////////////////////////////////////////////////////////
+
+class Client : public std::enable_shared_from_this < Client >
 {
 public :
 
-    auto make_shared()
+    Client(std::shared_ptr < Mediator > mediator) : m_mediator(mediator) {}
+
+//  -----------------------------------------------------------------------
+
+    void send(int x);
+
+//  -----------------------------------------------------------------------
+
+    void receive(int x) const
     {
-        return std::shared_ptr < Entity_v1 > (this);
+        std::print("Client::receive : x = {}\n", x);
     }
+
+private:
+
+    std::weak_ptr < Mediator > m_mediator;
 };
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-class Entity_v2 : private std::enable_shared_from_this < Entity_v2 >
+class Mediator
 {
 public :
 
-    auto make_shared()
+    auto const & clients() const
     {
-        return shared_from_this();
+        return m_clients;
     }
-};
 
-////////////////////////////////////////////////////////////////////
+//  ---------------------------------------------------------
 
-class Entity_v3 : private std::enable_shared_from_this < Entity_v3 >
-{
+    void add(std::shared_ptr < Client > client)
+    {
+        m_clients.push_back(client);
+    }
+
+//  ---------------------------------------------------------
+
+    void send(std::shared_ptr < Client > sender, int x) const
+    {
+        for (auto const & client : m_clients)
+        {
+            if (client != sender)
+            {
+                client->receive(x);
+            }
+        }
+    }
+
 private :
 
-    struct Key {};
-
-public :
-
-    Entity_v3(Key) {}
-
-//  ------------------------------
-
-    auto make_shared()
-    {
-        return shared_from_this();
-    }
-
-//  ------------------------------
-
-    friend auto make_shared();
+    std::vector < std::shared_ptr < Client > > m_clients;
 };
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-auto make_shared()
+void Client::send(int x)
 {
-    return std::make_shared < Entity_v3 > (Entity_v3::Key());
+    m_mediator.lock()->send(shared_from_this(), x);
 }
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    auto entity_v1_1 = std::make_shared < Entity_v1 > ();
+    auto mediator = std::make_shared < Mediator > ();
 
-//  auto entity_v1_2 = entity_v1_1->make_shared(); // error
+//  ----------------------------------------------------------
 
-//  -------------------------------------------------------
-
-//  assert(entity_v1_1.use_count() == 1); // error
-
-//  assert(entity_v1_2.use_count() == 1); // error
-
-//  -------------------------------------------------------
-
-    auto entity_v2_1 = std::make_shared < Entity_v2 > ();
-
-    auto entity_v2_2 = entity_v2_1->make_shared();
-
-//  -------------------------------------------------------
-
-    assert(entity_v2_1.use_count() == 2);
-
-    assert(entity_v2_2.use_count() == 2);
-
-//  -------------------------------------------------------
-
-    try
+    for (auto i = 0uz; i < 3; ++i)
     {
-        std::ignore = Entity_v2().make_shared();
-    }
-    catch (std::bad_weak_ptr const & exception)
-    {
-        std::cerr << "main : " << exception.what() << '\n';
+        mediator->add(std::make_shared < Client > (mediator));
     }
 
-//  -------------------------------------------------------
+//  ----------------------------------------------------------
 
-    auto entity_v3_1 = make_shared();
-
-    auto entity_v3_2 = entity_v3_1->make_shared();
-
-//  -------------------------------------------------------
-
-    assert(entity_v3_1.use_count() == 2);
-
-    assert(entity_v3_2.use_count() == 2);
+    mediator->clients().front()->send(1);
 }
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
