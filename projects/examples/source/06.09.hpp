@@ -6,8 +6,6 @@
 
 // content : Pattern Pimpl
 //
-// content : Interfaces and Implementations
-//
 // content : Compile-Time Dependencies
 
 ////////////////////////////////////////////////

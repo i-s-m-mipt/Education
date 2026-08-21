@@ -6,7 +6,7 @@
 
 // content : Structure Parsers
 //
-// content : Libraries Boost.Fusion and Boost.Spirit
+// content : Library Boost.Spirit
 //
 // content : Heterogeneous Containers
 

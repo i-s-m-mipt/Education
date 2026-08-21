@@ -12,15 +12,15 @@
 
 //////////////////////////////////////////////////////////////////
 
-template < typename T > class Wrapper : private boost::noncopyable
+template < typename T > class Entity : private boost::noncopyable
 {
 public :
 
-	Wrapper(T x) : m_x(new T(x)) {}
+	Entity(T x) : m_x(new T(x)) {}
 
-//  -------------------------------
+//  ------------------------------
 
-   ~Wrapper()
+   ~Entity()
 	{
 		delete m_x;
 	}
@@ -34,7 +34,7 @@ private :
 
 int main()
 {
-    Wrapper < int > wrapper(1);
+    Entity < int > entity(1);
 }
 
 //////////////////////////////////////////////////////////////////

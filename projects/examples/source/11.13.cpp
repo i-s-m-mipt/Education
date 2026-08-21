@@ -4,7 +4,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-// content : Pattern Visitor Implementation #2
+// content : Pattern Visitor
 //
 // content : Function std::visit
 

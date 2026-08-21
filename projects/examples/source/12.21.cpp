@@ -6,7 +6,7 @@
 
 // content : Phrase Parsers
 //
-// content : Libraries Boost.Fusion and Boost.Spirit
+// content : Library Boost.Spirit
 
 /////////////////////////////////////////////////////////////////////////////////////
 

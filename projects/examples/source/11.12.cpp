@@ -4,7 +4,7 @@
 
 ///////////////////////////////////////////////////////////////////////
 
-// content : Pattern Visitor Implementation #1
+// content : Pattern Visitor
 //
 // content : Double Dispatching
 

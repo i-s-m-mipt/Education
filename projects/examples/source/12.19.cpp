@@ -4,15 +4,15 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Arithmetic Grammar
+// content : Grammar of Arithmetic
 //
 // content : Extended Backus-Naur Form (EBNF)
 //
 // content : Statements, Declarations, Expressions, Terms, Primaries and Tokens
 //
-// content : Recursive Descent Parsers
-//
 // content : Pattern Interpreter
+//
+// content : Recursive Descent Parsers
 //
 // content : Functions std::isalpha, std::isdigit and std::isspace
 //
