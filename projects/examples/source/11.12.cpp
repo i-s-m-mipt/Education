@@ -85,13 +85,13 @@ public :
 
 ///////////////////////////////////////////////////////////////////////
 
-class Router : public Visitor
+class Visitor_v1 : public Visitor
 {
 public :
 
     void visit(Client const * client) const override
     {
-        std::print("Router::visit (1)\n");
+        std::print("Visitor_v1::visit (1)\n");
 
         client->test();
     }
@@ -100,7 +100,26 @@ public :
 
     void visit(Server const * server) const override
     {
-        std::print("Router::visit (2)\n");
+        std::print("Visitor_v1::visit (2)\n");
+    }
+};
+
+///////////////////////////////////////////////////////////////////////
+
+class Visitor_v2 : public Visitor
+{
+public :
+
+    void visit(Client const * client) const override
+    {
+        std::print("Visitor_v2::visit (1)\n");
+    }
+
+//  ------------------------------------------------
+
+    void visit(Server const * server) const override
+    {
+        std::print("Visitor_v2::visit (2)\n");
 
         server->test();
     }
@@ -114,11 +133,11 @@ int main()
 
 //  -------------------------------------------------------------------
 
-    Router router;
+    Visitor_v1 visitor_v1;
 
 //  -------------------------------------------------------------------
 
-    entity->invoke(router);
+    entity->invoke(visitor_v1);
 }
 
 ///////////////////////////////////////////////////////////////////////

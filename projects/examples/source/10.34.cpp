@@ -14,7 +14,7 @@
 //
 // content : Time Complexity O(log(N))
 //
-// content : Ordered Associative Containers
+// content : Ordered Containers
 //
 // content : Container std::set
 

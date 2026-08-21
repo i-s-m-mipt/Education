@@ -4,6 +4,10 @@
 
 ////////////////////////////////////////////////////////////////////////////////////
 
+// content : Synchronization
+//
+// content : Synchronization Primitives
+//
 // content : Interprocess Mutexes and Condition Variables
 //
 // content : Library Boost.Interpocess

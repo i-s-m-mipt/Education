@@ -12,7 +12,7 @@
 //
 // content : Load Factor and Rehashing
 //
-// content : Unordered Associative Containers
+// content : Unordered Containers
 //
 // content : Container std::unordered_set
 

@@ -4,7 +4,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-// content : Flat Ordered Associative Containers (B)
+// content : Flat Ordered Containers (B)
 //
 // content : Container std::flat_set
 

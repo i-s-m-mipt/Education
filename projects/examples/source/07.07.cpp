@@ -12,6 +12,8 @@
 //
 // content : Functions std::holds_alternative and std::get
 //
+// content : Pattern Visitor
+//
 // content : Function std::visit
 
 ////////////////////////////////////////////////////////////////////

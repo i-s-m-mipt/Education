@@ -4,9 +4,9 @@
 
 /////////////////////////////////////////////////////////////////////////////////
 
-// content : Lock-Free Programming
+// content : Lockfree Programming
 //
-// content : Lock-Free Stacks
+// content : Lockfree Stacks
 //
 // content : Garbage Collectors
 //

@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////////////////////////////
 
-// content : Underlying Buffers
+// content : Stream Buffers
 //
 // content : Buffer std::streambuf
 

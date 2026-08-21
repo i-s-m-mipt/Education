@@ -4,7 +4,7 @@
 
 //////////////////////////////////////////////////////////////////
 
-// content : Algorithms
+// content : Standard Algorithms
 //
 // content : Unique Random Number Generation Algorithm
 //
