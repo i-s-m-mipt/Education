@@ -89,16 +89,16 @@ class Visitor_v1 : public Visitor
 {
 public :
 
-    void visit(Client const * client) const override
+    void visit([[maybe_unused]] Client const * client) const override
     {
         std::print("Visitor_v1::visit (1)\n");
 
         client->test();
     }
 
-//  ------------------------------------------------
+//  -----------------------------------------------------------------
 
-    void visit(Server const * server) const override
+    void visit([[maybe_unused]] Server const * server) const override
     {
         std::print("Visitor_v1::visit (2)\n");
     }
@@ -110,14 +110,14 @@ class Visitor_v2 : public Visitor
 {
 public :
 
-    void visit(Client const * client) const override
+    void visit([[maybe_unused]] Client const * client) const override
     {
         std::print("Visitor_v2::visit (1)\n");
     }
 
-//  ------------------------------------------------
+//  -----------------------------------------------------------------
 
-    void visit(Server const * server) const override
+    void visit([[maybe_unused]] Server const * server) const override
     {
         std::print("Visitor_v2::visit (2)\n");
 

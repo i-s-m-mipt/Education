@@ -21,11 +21,11 @@ public :
 
     virtual ~State() = default;
 
-//  ---------------------------------------------------
+//  ----------------------------------------------------------
 
-    virtual void to_state_v1(class Entity *) const = 0;
+    virtual void to_state_v1(class Entity * entity) const = 0;
 
-    virtual void to_state_v2(class Entity *) const = 0;
+    virtual void to_state_v2(class Entity * entity) const = 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////

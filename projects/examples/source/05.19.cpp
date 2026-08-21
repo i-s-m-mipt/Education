@@ -41,10 +41,12 @@ public :
 
     void set(int x)
     {
-        B::set(m_x = B::get());
+        m_x = B::get();
+
+        B::set(x);
     }
 
-//  ---------------------------
+//  -------------------
 
     void undo()
     {
@@ -64,10 +66,12 @@ public :
 
     void set(int x)
     {
-        B::set(m_x = x);
+        m_x = x;
+
+        B::set(x);
     }
 
-//  --------------------
+//  ----------------
 
     void redo()
     {
