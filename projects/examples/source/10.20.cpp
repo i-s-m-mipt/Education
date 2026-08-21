@@ -4,7 +4,7 @@
 
 //////////////////////////////////////////////////////////////
 
-// content : Circular Buffers
+// content : Ring Buffers
 //
 // content : Library Boost.CircularBuffer
 

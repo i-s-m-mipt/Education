@@ -6,6 +6,8 @@
 
 // content : Asynchronous Client
 //
+// content : Pattern Chain of Responsibility
+//
 // content : Library Boost.Asio
 
 //////////////////////////////////////////////////////////////////////////
