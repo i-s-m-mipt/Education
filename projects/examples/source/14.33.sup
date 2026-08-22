@@ -4,23 +4,25 @@
 
 /////////////////////////////////////////////////////
 
+// content : Microarchitecture Zen 5
+//
 // content : Chip Pervasive Logic
 //
 // content : Interconnections
 //
 // content : Cache L2
 //
-// content : Tags
+// content : Cache L2 Tags
 //
 // content : Translation Lookaside Buffer (TLB)
 //
 // content : Cache L1I
 //
-// content : Branch Predictor
+// content : Branch Predictors
 //
 // content : Branch Target Buffer (BTB)
 //
-// content : Decoder
+// content : Decoders
 //
 // content : Microcode Read-Only Memory (ROM)
 //
@@ -28,7 +30,7 @@
 //
 // content : Re-Order Buffer (ROB)
 //
-// content : Scheduler
+// content : Schedulers
 //
 // content : Load-Store Unit (LSU)
 //
@@ -36,11 +38,11 @@
 //
 // content : Arithmetic Logic Unit (ALU)
 //
-// content : Integer Regfile
+// content : Integer Regfiles
 //
 // content : Floating Point Unit (FPU)
 //
-// content : Vector Regfile
+// content : Vector Regfiles
 //
 // content : Single Instruction, Multiple Data (SIMD)
 //

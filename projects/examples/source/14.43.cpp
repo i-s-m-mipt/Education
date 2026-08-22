@@ -6,15 +6,13 @@
 
 // content : Acquire-Release Memory Ordering
 //
-// content : Store-Release and Load-Acquire Fences
+// content : Release and Acquire Fences
 //
 // content : Happens-Before and Synchronizes-With Relations
 //
 // content : Total Strong Ordering (TSO)
 //
-// content : Allowed Store-Load Reordering
-//
-// content : Preventing Optimizations
+// content : Unprohibited Store-Load Reordering
 
 ///////////////////////////////////////////////////////////
 

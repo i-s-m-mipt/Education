@@ -12,7 +12,7 @@
 //
 // content : Comparison Operators
 //
-// content : Assembly Language Representation
+// content : Assembly Language Representations
 //
 // content : Options -S and -masm
 //

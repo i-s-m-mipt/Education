@@ -14,7 +14,7 @@
 //
 // content : Standard IEEE 754
 //
-// content : Sign, Mantissa and Exponent
+// content : Sign, Mantissa and Exponent Parts
 //
 // content : Precision Problem
 

@@ -10,7 +10,7 @@
 //
 // content : Relaxed Memory Ordering
 //
-// content : Store-Store and Load-Load Reorderings
+// content : Store-Store and Load-Load Reordering
 
 ///////////////////////////////////////////////////////////////////
 

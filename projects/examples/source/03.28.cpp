@@ -10,7 +10,7 @@
 //
 // content : Algorithm std::ranges::copy
 //
-// content : Deep and Shallow Copy
+// content : Deep and Shallow Copying
 //
 // content : Copy and Move Constructors
 //

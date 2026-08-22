@@ -20,6 +20,8 @@
 //
 // content : Bitwise Shifts
 //
+// content : Operator <<
+//
 // content : Segmentation Fault
 //
 // content : Tool ulimit

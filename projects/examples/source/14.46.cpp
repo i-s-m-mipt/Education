@@ -12,7 +12,7 @@
 //
 // content : Cache Thrashing
 //
-// content : Load-Store Unit Utilization
+// content : Load-Store Unit (LSU) Utilization
 //
 // content : Intrinsic _mm_pause
 
