@@ -4,11 +4,9 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Parallel Algorithms (B)
-//
 // content : Algorithm std::for_each
 //
-// content : Execution Policies
+// content : Execution Policies (B)
 //
 // content : Namespace std::execution
 //

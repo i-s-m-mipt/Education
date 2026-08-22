@@ -4,7 +4,7 @@
 
 ////////////////////////////////////////////////////
 
-// content : Gang of Four Patterns
+// content : Gang Of Four (GOF) Patterns
 //
 // content : Pattern Builder
 

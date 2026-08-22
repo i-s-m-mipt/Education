@@ -4,8 +4,6 @@
 
 //////////////////////////////////////////////////////////////////
 
-// content : Standard Algorithms
-//
 // content : Unique Random Number Generation Algorithm
 //
 // content : Algorithms std::ranges::iota and std::ranges::shuffle

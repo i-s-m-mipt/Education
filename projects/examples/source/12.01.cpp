@@ -4,15 +4,13 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-// content : Locales
+// content : Locales and Facets
 //
 // content : Container std::locale
 //
 // content : Tools locale-gen and locale
 //
 // content : Classic C Locale
-//
-// content : Facets
 //
 // content : Function std::use_facet
 //

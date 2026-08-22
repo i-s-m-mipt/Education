@@ -6,13 +6,13 @@
 
 // content : Relational Databases
 //
-// content : System PostgreSQL
+// content : Embedding Postgres
+//
+// content : Library libpqxx
 //
 // content : Declarative Programming
 //
-// content : Embedding PostgreSQL
-//
-// content : Library libpqxx
+// content : Structured Query Language (SQL)
 //
 // content : Tools systemctl and psql
 
