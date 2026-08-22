@@ -4,7 +4,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-// content : Asynchronous Client
+// content : Asynchronous Clients
 //
 // content : Pattern Chain of Responsibility
 //

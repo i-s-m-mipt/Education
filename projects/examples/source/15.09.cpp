@@ -4,7 +4,7 @@
 
 //////////////////////////////////////////////////////////////
 
-// content : Synchronous Client
+// content : Synchronous Clients
 //
 // content : Library Boost.Asio
 //

@@ -4,7 +4,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-// content : Synchronous Client
+// content : Synchronous Clients
 //
 // content : Standard Portable Operating System Interface (POSIX)
 //
