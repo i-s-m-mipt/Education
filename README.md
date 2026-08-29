@@ -12,3 +12,5 @@ You can start learning by exploring curriculum and lists of examples:
 - [05](explorer/06.md) : list of examples with additional options
 - [07](explorer/07.md) : list of examples with design patterns
 - [08](explorer/08.md) : list of examples with [Google.Benchmark](https://github.com/google/benchmark)
+
+Developed by MIPT Associate Professor, PhD [Ivan Sergeevich Makarov](https://t.me/i_s_m_mipt)
