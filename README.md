@@ -4,11 +4,11 @@ This course provides the foundational knowledge needed by modern engineers to im
 
 You can start by exploring the tables of contents:
 
-- [Materials](explorer/01.md) : curriculum of the course
-- [Contents](explorer/02.md) : index of contents
-- [Standard](explorer/03.md) : index of standard library components
-- [Options](explorer/04.md) : list of examples with compiler options
-- [Libraries](explorer/05.md) : list of examples with additional libraries
-- [Tools](explorer/06.md) : list of examples with additional tools
-- [Patterns](explorer/07.md) : list of examples with design patterns
-- [Benchmarks](explorer/08.md) : list of examples with benchmarks
+- [01](explorer/01.md) : curriculum of the course
+- [02](explorer/02.md) : index of contents
+- [03](explorer/03.md) : index of considered standard library components
+- [04](explorer/04.md) : list of examples with additional options
+- [05](explorer/05.md) : list of examples with additional tools
+- [06](explorer/06.md) : list of examples with additional libraries
+- [07](explorer/07.md) : list of examples with design patterns
+- [08](explorer/08.md) : list of examples with Google.Benchmark library
