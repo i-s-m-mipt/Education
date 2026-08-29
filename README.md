@@ -4,7 +4,7 @@ This course provides the foundational knowledge needed by modern engineers to im
 
 Course materials include 474 examples and 96 problems.
 
-You can start learning by exploring curriculum and lists of examples :
+You can start learning by exploring curriculum of the course and lists of examples :
 
 - [01](explorer/01.md) : curriculum of the course
 - [02](explorer/02.md) : index of contents
