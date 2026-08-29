@@ -1,1 +1,3 @@
 # Software Engineering
+
+This course provides the foundational knowledge needed by modern engineers to implement effective data processing systems. Throughout the course, you'll learn the C++ programming language and its standard library, as well as several additional technologies used in industrial software development. Special attention will be paid to design patterns, profiling methods, and parallel programming. To successfully complete the course, an understanding of basic algorithms and data structures, as well as experience using other programming languages, is recommended.
