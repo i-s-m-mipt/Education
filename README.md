@@ -6,9 +6,9 @@ You can start by exploring the tables of contents:
 
 - [01](explorer/01.md) : curriculum of the course
 - [02](explorer/02.md) : index of contents
-- [03](explorer/03.md) : index of considered standard library components
-- [04](explorer/04.md) : list of examples with additional options
+- [03](explorer/03.md) : index of standard library components
+- [04](explorer/04.md) : list of examples with additional libraries
 - [05](explorer/05.md) : list of examples with additional tools
-- [06](explorer/06.md) : list of examples with additional libraries
+- [05](explorer/06.md) : list of examples with additional options
 - [07](explorer/07.md) : list of examples with design patterns
-- [08](explorer/08.md) : list of examples with Google.Benchmark library
+- [08](explorer/08.md) : list of examples with Google.Benchmark
