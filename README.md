@@ -11,7 +11,7 @@ You can start learning by exploring curriculum of the course and lists of exampl
 - [03](explorer/03.md) : index of STL
 - [04](explorer/04.md) : list of examples with additional libraries
 - [05](explorer/05.md) : list of examples with additional tools
-- [05](explorer/06.md) : list of examples with additional options
+- [06](explorer/06.md) : list of examples with additional options
 - [07](explorer/07.md) : list of examples with design patterns
 - [08](explorer/08.md) : list of examples with microbenchmarks
 
