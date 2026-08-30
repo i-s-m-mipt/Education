@@ -4,7 +4,7 @@ This course will provide you with the applied knowledge needed by modern enginee
 
 Course materials contain 474 examples and 96 problems.
 
-You can start learning by exploring curriculum of the course and lists of examples :
+You can start learning by exploring curriculum of the course and lists of examples:
 
 - [01](explorer/01.md) : curriculum of the course
 - [02](explorer/02.md) : index of contents
