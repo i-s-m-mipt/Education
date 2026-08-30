@@ -1,6 +1,6 @@
 # Software Engineering
 
-The purpose of this course is to provide you with the knowledge that modern software engineers need to implement effective data processing systems. During the course you'll learn the C++ programming language and its standard library, as well as several additional technologies used in industrial software development. Special attention will be paid to design patterns, performance analysis, and parallel programming. Entry requirements for this course include a understanding of basic algorithms and data structures, proficiency in common development tools, and experience in programming with other languages. Here goes!
+The purpose of this course is to provide you with the knowledge that modern software engineers need to implement effective data processing systems. During the course you'll learn the C++ programming language and its standard library, as well as several additional technologies used in industrial software development. Special attention will be paid to design patterns, performance analysis, and parallel programming. Entry requirements for this course include a understanding of basic algorithms and data structures, proficiency in common development tools, and experience in programming with any other languages. Welcome and enjoy!
 
 Course materials contain 474 examples and 96 problems.
 
