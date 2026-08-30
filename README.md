@@ -1,6 +1,6 @@
 # Software Engineering
 
-Hello! This course will provide you with the applied knowledge needed by modern engineers to create effective data processing systems. During the course you'll learn the C++ programming language and its standard library, as well as several additional technologies used in industrial software development. Special attention will be paid to design patterns, performance analysis and parallel programming. The prerequisites for this course include understanding basic algorithms and data structures, being proficient in common development tools, and having experience using other programming languages. Enjoy!
+Hello! This course will provide you with the applied knowledge needed by modern engineers to create effective data processing systems. During the course you'll learn the C++ programming language and its standard library, as well as several additional technologies used in industrial software development. Special attention will be paid to design patterns, performance analysis and parallel programming. The key prerequisites for this course include understanding basic algorithms and data structures, being proficient in common development tools, and having experience using other programming languages.
 
 Course materials contain 474 examples and 96 problems.
 
