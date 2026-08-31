@@ -1,5 +1,7 @@
 # Software Engineering
 
+Developed by Associate Professor and PhD [Ivan Sergeevich Makarov](https://t.me/i_s_m_mipt)
+
 The purpose of this course is to provide you with the knowledge needed by modern software engineers to\
 build effective data processing systems. During the course you’ll learn the C++ programming language\
 and its standard library, as well as several additional technologies used in industrial software development.\
@@ -19,5 +21,3 @@ You can start learning by exploring curriculum of the course and lists of exampl
 - [06](explorer/06.md) : list of examples with additional options
 - [07](explorer/07.md) : list of examples with design patterns
 - [08](explorer/08.md) : list of examples with microbenchmarks
-
-Developed by MIPT Associate Professor, PhD [Ivan Sergeevich Makarov](https://t.me/i_s_m_mipt)
