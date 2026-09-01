@@ -2,12 +2,12 @@
 
 Developed by Associate Professor and PhD [Ivan Sergeevich Makarov](https://t.me/i_s_m_mipt)
 
-The purpose of this course is to provide you with the knowledge needed by modern software engineers to\
-build effective data processing systems. During the course you’ll learn the C++ programming language\
+This course will provide you with the fundamental knowledge needed by modern software engineers to de-\
+velop effective data processing systems. During the course you’ll learn the C++ programming language\
 and its standard library, as well as several additional technologies used in industrial software development.\
-Special attention will be paid to design patterns, performance analysis, and parallel programming. This\
+Special attention will be paid to design patterns, performance profiling, and parallel programming. This\
 course requires an understanding of main algorithms and data structures, proficiency in common develop-\
-ment tools, and experience using any other programming language. I'm glad to see you on my course!
+ment tools, and experience using any other programming language. I'm glad to see you on the course!
 
 Course materials contain 474 examples and 96 problems.
 
