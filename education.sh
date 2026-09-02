@@ -40,7 +40,7 @@
 #
 # sudo apt install autotools-dev build-essential libboost-all-dev libbz2-dev
 #
-# sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
+# sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-16 116
 #
 # ./bootstrap.sh
 #
