@@ -1,6 +1,6 @@
 # Software Engineering
 
-Developed by Associate Professor and Ph.D. [Ivan Sergeevich Makarov](https://t.me/i_s_m_mipt)
+Developed by Associate Professor and Ph.D. [Ivan Makarov](https://t.me/i_s_m_mipt)
 
 This course will provide you with the fundamental knowledge needed by modern software engineers to de-\
 velop effective data processing systems. During the course you’ll learn the C++ programming language\
