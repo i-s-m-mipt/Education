@@ -156,7 +156,7 @@
 #
 # ./configure.py --without-include-namespace
 #
-# sudo make install
+# sudo make -j$(nproc) install
 
 #################################################################################################
 
