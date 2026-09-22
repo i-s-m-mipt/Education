@@ -28,8 +28,6 @@ public :
 
     Noncopyable            (Noncopyable const &) = delete;
 
-//  ------------------------------------------------------
-
     Noncopyable & operator=(Noncopyable const &) = delete;
 
 protected :
