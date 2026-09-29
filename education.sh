@@ -24,7 +24,7 @@
 #
 # sudo apt install pciutils iputils-ping traceroute iproute2 gawk nmap curl lsof tcpdump telnet
 #
-# sudo apt install python3 python3-dev python3-matplotlib libicu-dev libtbb-devs
+# sudo apt install python3 python3-dev python3-matplotlib libicu-dev libtbb-dev
 
 #################################################################################################
 
