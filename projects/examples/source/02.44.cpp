@@ -14,8 +14,6 @@
 //
 // content : Hybrid Sort Algorithm
 //
-// content : Amortized Time Complexity
-//
 // content : Spatial and Temporal Locality
 //
 // content : Function std::midpoint

@@ -7,6 +7,8 @@
 // content : Operators . and ->
 //
 // content : Pointers to Data Members
+//
+// content : Spatial and Temporal Locality
 
 //////////////////////////////////////////////////////////////////////
 
