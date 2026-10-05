@@ -6,7 +6,9 @@
 
 // content : Class Relations
 //
-// content : Composition, Aggregation and Association
+// content : Composition and Aggregation
+//
+// content : Association
 //
 // content : Forward Declarations
 //
@@ -20,6 +22,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <print>
 
 /////////////////////////////////////////////////////
 
@@ -47,13 +50,67 @@ private :
 
 /////////////////////////////////////////////////////
 
-struct Server;
+class Server;
 
 /////////////////////////////////////////////////////
 
-struct Client { Server * server = nullptr; };
+class Client
+{
+public :
 
-struct Server { Client * client = nullptr; };
+	void initialize(Server * server)
+	{
+		m_server = server;
+	}
+
+//  ------------------------------------
+
+	void test_v1() const
+	{
+		std::print("Client::test_v1\n");
+	}
+
+//  ------------------------------------
+
+	void test_v2() const;
+
+private :
+
+	Server * m_server = nullptr;
+};
+
+/////////////////////////////////////////////////////
+
+class Server
+{
+public :
+
+	void initialize(Client * client)
+	{
+		m_client = client;
+	}
+
+//  ------------------------------------
+
+	void test_v1() const
+	{
+		std::print("Server::test_v1\n");
+	}
+
+//  ------------------------------------
+
+	void test_v2() const;
+
+private :
+
+	Client * m_client = nullptr;
+};
+
+/////////////////////////////////////////////////////
+
+void Client::test_v2() const { m_server->test_v1(); }
+
+void Server::test_v2() const { m_client->test_v1(); }
 
 /////////////////////////////////////////////////////
 
@@ -63,23 +120,29 @@ int main()
 
 	Entity entity_2(2);
 
-//  -------------------------
+//  ---------------------------
 
 	assert(Entity::s_x == 1);
 
-//  -------------------------
+//  ---------------------------
 
 	Client client;
 
 	Server server;
 
-//  -------------------------
+//  ---------------------------
 
-	server.client = &client;
+	server.initialize(&client);
 
-	client.server = &server;
+	client.initialize(&server);
 
-//  -------------------------
+//  ---------------------------
+
+	client.test_v2();
+
+	server.test_v2();
+
+//  ---------------------------
 
 	Entity(1).test();
 }
