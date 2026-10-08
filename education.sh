@@ -24,7 +24,11 @@
 #
 # sudo apt install pciutils iputils-ping traceroute iproute2 gawk nmap curl lsof tcpdump telnet
 #
-# sudo apt install python3 python3-dev python3-matplotlib libicu-dev libtbb-dev
+# sudo add-apt-repository ppa:deadsnakes/ppa
+#
+# sudo apt update
+#
+# sudo apt install python3.14 python3.14-dev python3-matplotlib libicu-dev libtbb-dev
 
 #################################################################################################
 
@@ -48,9 +52,9 @@
 #
 # sudo ./b2 $options install
 #
-# ./bootstrap.sh --with-python=python3
+# ./bootstrap.sh --with-python=/usr/bin/python3.14 --with-python-version=3.14
 #
-# sudo ./b2 --with-python $options install
+# sudo ./b2 --with-python python=3.14 $options install
 
 #################################################################################################
 
@@ -60,7 +64,7 @@
 #
 # mkdir -p output && cd "$_"
 #
-# cmake .. && cmake --build . --config Release
+# cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build . -j$(nproc)
 #
 # sudo cmake --install .
 
@@ -72,7 +76,7 @@
 #
 # mkdir -p output && cd "$_"
 #
-# cmake .. && cmake --build . --config Release
+# cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build . -j$(nproc)
 #
 # sudo cmake --install .
 
@@ -86,7 +90,7 @@
 #
 # cmake -DBENCHMARK_DOWNLOAD_DEPENDENCIES=on -DCMAKE_BUILD_TYPE=Release ..
 #
-# cmake --build . --config Release
+# cmake --build . -j$(nproc)
 #
 # sudo cmake --install .
 
@@ -98,7 +102,7 @@
 #
 # mkdir -p output && cd "$_"
 #
-# cmake .. && cmake --build . --config Release
+# cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build . -j$(nproc)
 #
 # sudo cmake --install .
 
@@ -110,7 +114,7 @@
 #
 # mkdir -p output && cd "$_"
 #
-# cmake .. && cmake --build . --config Release
+# cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build . -j$(nproc)
 #
 # sudo cmake --install .
 
@@ -124,9 +128,11 @@
 #
 # sudo apt-get install zlib1g-dev
 #
-# cmake .. -DZIPPER_SHARED_LIB=ON -DZIPPER_BUILD_DEMOS=ON -DZIPPER_BUILD_TESTS=ON
+# cmake -DZIPPER_SHARED_LIB=ON -DZIPPER_BUILD_DEMOS=ON -DZIPPER_BUILD_TESTS=ON \
 #
-# cmake --build . --config Release
+#       -DCMAKE_BUILD_TYPE=Release ..
+#
+# cmake --build . -j$(nproc)
 #
 # sudo cmake --install .
 
@@ -144,7 +150,7 @@
 #
 # mkdir -p output && cd "$_"
 #
-# cmake .. && cmake --build . --config Release
+# cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build . -j$(nproc)
 #
 # sudo cmake --install .
 
@@ -168,7 +174,7 @@ cd projects/library_v1
 
 mkdir -p output && cd "$_"
 
-cmake .. && cmake --build .
+cmake .. && cmake --build . -j$(nproc)
 
 cp libstatic.a ../../../libraries && cd ../../../
 
@@ -178,7 +184,7 @@ cd projects/library_v2
 
 mkdir -p output && cd "$_"
 
-cmake .. && cmake --build .
+cmake .. && cmake --build . -j$(nproc)
 
 cp libshared.so ../../../libraries && cd ../../../
 
@@ -188,7 +194,7 @@ cd projects/examples
 
 mkdir -p output && cd "$_"
 
-cmake .. && cmake --build .
+cmake .. && cmake --build . -j$(nproc)
 
 #################################################################################################
 
