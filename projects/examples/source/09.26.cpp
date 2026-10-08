@@ -74,13 +74,13 @@ public :
     auto & operator=(Optional && other)
     {
         if (this != &other)
-		{
+        {
             uninitialize();
 
             m_x = other.release();
-		}
+        }
 
-		return *this;
+        return *this;
     }
 
 //  ---------------------------------------------------------------------------------------

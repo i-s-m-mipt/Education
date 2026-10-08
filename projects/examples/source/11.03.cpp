@@ -24,9 +24,9 @@
 
 auto make_integer()
 {
-	static auto x = 0;
+    static auto x = 0;
 
-	return ++x;
+    return ++x;
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -35,41 +35,41 @@ class Functor
 {
 public :
 
-	auto operator()()
-	{
-		return ++m_x;
-	}
+    auto operator()()
+    {
+        return ++m_x;
+    }
 
 private :
 
-	int m_x = 0;
+    int m_x = 0;
 };
 
 ///////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::vector < int > vector(5, 0);
+    std::vector < int > vector(5, 0);
 
 //  ----------------------------------------------------------
 
-	std::ranges::generate(vector, make_integer);
+    std::ranges::generate(vector, make_integer);
 
 //  ----------------------------------------------------------
 
-	assert(vector == std::vector < int > ({ 1, 2, 3, 4, 5 }));
+    assert(vector == std::vector < int > ({ 1, 2, 3, 4, 5 }));
 
 //  ----------------------------------------------------------
 
-	std::ranges::fill(vector, 0);
+    std::ranges::fill(vector, 0);
 
 //  ----------------------------------------------------------
 
-	std::ranges::generate(vector, Functor());
+    std::ranges::generate(vector, Functor());
 
 //  ----------------------------------------------------------
 
-	assert(vector == std::vector < int > ({ 1, 2, 3, 4, 5 }));
+    assert(vector == std::vector < int > ({ 1, 2, 3, 4, 5 }));
 }
 
 ///////////////////////////////////////////////////////////////////

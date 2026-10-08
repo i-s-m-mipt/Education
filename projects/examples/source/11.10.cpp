@@ -17,27 +17,27 @@
 
 int main()
 {
-	std::vector < int > vector = { 5, 4, 3, 2, 1 };
+    std::vector < int > vector = { 5, 4, 3, 2, 1 };
 
 //  ------------------------------------------------------------------
 
-	auto lambda = [](auto lhs, auto rhs) static { return lhs < rhs; };
+    auto lambda = [](auto lhs, auto rhs) static { return lhs < rhs; };
 
 //  ------------------------------------------------------------------
 
-	std::ranges::sort(vector, lambda);
+    std::ranges::sort(vector, lambda);
 
 //  ------------------------------------------------------------------
 
-	assert(std::ranges::is_sorted(vector, lambda));
+    assert(std::ranges::is_sorted(vector, lambda));
 
 //  ------------------------------------------------------------------
 
-	std::set < int, decltype(lambda) > set = { 5, 4, 3, 2, 1 };
+    std::set < int, decltype(lambda) > set = { 5, 4, 3, 2, 1 };
 
 //  ------------------------------------------------------------------
 
-	assert(std::ranges::is_sorted(set, lambda));
+    assert(std::ranges::is_sorted(set, lambda));
 }
 
 //////////////////////////////////////////////////////////////////////

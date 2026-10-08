@@ -33,7 +33,7 @@ template < std::size_t ... Is > void show(auto && tuple, std::index_sequence < I
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename ... Ts > void show(const std::tuple < Ts ... > & tuple)
+template < typename ... Ts > void show(std::tuple < Ts ... > const & tuple)
 {
     show(tuple, std::make_index_sequence < sizeof...(Ts) > ());
 }

@@ -16,48 +16,48 @@
 
 union Entity
 {
-	char array_1[1];
+    char array_1[1];
 
-	char array_2[2];
+    char array_2[2];
 
-	char array_3[3];
+    char array_3[3];
 
 //  ----------------
 
-	int x = 0;
+    int x = 0;
 };
 
 /////////////////////////////////////////////////////////////
 
 int main()
 {
-	static_assert(sizeof(Entity) == 4);
+    static_assert(sizeof(Entity) == 4);
 
 //  ---------------------------------------------------------
 
-	Entity entity; // support : https://compiler-explorer.com
+    Entity entity; // support : https://compiler-explorer.com
 
 //  ---------------------------------------------------------
 
-	entity.array_1[0] = 'a';
+    entity.array_1[0] = 'a';
 
 //  ---------------------------------------------------------
 
-	assert(entity.array_1[0] == 'a');
+    assert(entity.array_1[0] == 'a');
 
-//	assert(entity.array_2[0] == 'a'); // bad
+//  assert(entity.array_2[0] == 'a'); // bad
 
-//	assert(entity.array_3[0] == 'a'); // bad
-
-//  ---------------------------------------------------------
-
-	entity.array_1[0] = 0;
-
-	entity.array_3[1] = 1;
+//  assert(entity.array_3[0] == 'a'); // bad
 
 //  ---------------------------------------------------------
 
-//	assert(entity.x == 256); // bad
+    entity.array_1[0] = 0;
+
+    entity.array_3[1] = 1;
+
+//  ---------------------------------------------------------
+
+//  assert(entity.x == 256); // bad
 }
 
 /////////////////////////////////////////////////////////////

@@ -20,32 +20,32 @@
 
 void test(benchmark::State & state)
 {
-	auto argument = state.range(0);
+    auto argument = state.range(0);
 
     for (auto element : state)
     {
         std::set < int > set;
 
-		auto iterator = std::begin(set);
+        auto iterator = std::begin(set);
 
-		for (auto i = 1 << 10; i > 0; --i)
-		{
-			switch (argument)
-			{
-				case 1 :
-				{
-					set.insert(i);
+        for (auto i = 1 << 10; i > 0; --i)
+        {
+            switch (argument)
+            {
+                case 1 :
+                {
+                    set.insert(i);
 
-					break;
-				}
+                    break;
+                }
 
-				case 2 : { set.insert(iterator, i); iterator = std::begin(set); break; }
+                case 2 : { set.insert(iterator, i); iterator = std::begin(set); break; }
 
-				case 3 : { set.insert(iterator, i); iterator = std::end  (set); break; }
-			}
-		}
+                case 3 : { set.insert(iterator, i); iterator = std::end  (set); break; }
+            }
+        }
 
-		benchmark::DoNotOptimize(set);
+        benchmark::DoNotOptimize(set);
     }
 }
 

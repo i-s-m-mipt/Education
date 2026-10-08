@@ -27,23 +27,23 @@ find_package(Boost 1.90 REQUIRED COMPONENTS
     locale
     log
     program_options
-    python312
+    python314
     timer
     unit_test_framework
 )
 
 ################################################################################################
 
-find_package(glog          REQUIRED COMPONENTS)
-find_package(GTest         REQUIRED COMPONENTS)
-find_package(benchmark     REQUIRED COMPONENTS)
-find_package(Python        REQUIRED COMPONENTS Interpreter Development)
-find_package(ICU           REQUIRED COMPONENTS i18n uc)
-find_package(nlohmann_json REQUIRED COMPONENTS)
-find_package(PDFHummus     REQUIRED COMPONENTS)
-find_package(zipper        REQUIRED COMPONENTS)
-find_package(libpqxx       REQUIRED COMPONENTS)
-find_package(TBB           REQUIRED COMPONENTS)
+find_package(glog          REQUIRED      COMPONENTS)
+find_package(GTest         REQUIRED      COMPONENTS)
+find_package(benchmark     REQUIRED      COMPONENTS)
+find_package(Python        REQUIRED 3.14 COMPONENTS Interpreter Development)
+find_package(ICU           REQUIRED      COMPONENTS i18n uc)
+find_package(nlohmann_json REQUIRED      COMPONENTS)
+find_package(PDFHummus     REQUIRED      COMPONENTS)
+find_package(zipper        REQUIRED      COMPONENTS)
+find_package(libpqxx       REQUIRED      COMPONENTS)
+find_package(TBB           REQUIRED      COMPONENTS)
 
 ################################################################################################
 
@@ -593,7 +593,7 @@ target_compile_options     (14.37 PRIVATE -Wall -Wextra -Wpedantic -O0)
 
 target_link_libraries      (14.37 PRIVATE TBB::tbb)
 
-target_link_libraries      (14.37 PRIVATE /usr/lib/gcc/x86_64-linux-gnu/13/libatomic.a)
+target_link_libraries      (14.37 PRIVATE /usr/lib/gcc/x86_64-linux-gnu/16/libatomic.a)
 
 ################################################################################################
 
@@ -688,6 +688,6 @@ target_link_libraries      (14.38 PRIVATE benchmark::benchmark)
 
 target_link_libraries      (14.38 PRIVATE TBB::tbb)
 
-target_link_libraries      (14.38 PRIVATE /usr/lib/gcc/x86_64-linux-gnu/13/libatomic.a)
+target_link_libraries      (14.38 PRIVATE /usr/lib/gcc/x86_64-linux-gnu/16/libatomic.a)
 
 ################################################################################################

@@ -30,36 +30,36 @@ int main()
 //  --------------------------------------------------------------------------------------
 
     static_assert
-	(
-		std::is_same_v
-		<
-			decltype(vector)::iterator::iterator_category, std::random_access_iterator_tag
-		>
-	);
+    (
+        std::is_same_v
+        <
+            decltype(vector)::iterator::iterator_category, std::random_access_iterator_tag
+        >
+    );
 
 //  --------------------------------------------------------------------------------------
 
-	static_assert(std::contiguous_iterator < decltype(vector)::iterator > );
+    static_assert(std::contiguous_iterator < decltype(vector)::iterator > );
 
 //  --------------------------------------------------------------------------------------
 
-	assert(vector.at(0) == 1);
+    assert(vector.at(0) == 1);
 
 //  --------------------------------------------------------------------------------------
 
-	vector.erase(vector.insert(std::next(std::begin(vector), 0), 1));
+    vector.erase(vector.insert(std::next(std::begin(vector), 0), 1));
 
-	vector.erase(vector.insert(std::next(std::begin(vector), 2), 1));
+    vector.erase(vector.insert(std::next(std::begin(vector), 2), 1));
 
-	vector.erase(vector.insert(std::next(std::begin(vector), 5), 1));
-
-//  --------------------------------------------------------------------------------------
-
-	std::vector < std::string > strings;
+    vector.erase(vector.insert(std::next(std::begin(vector), 5), 1));
 
 //  --------------------------------------------------------------------------------------
 
-	strings.emplace(std::begin(strings), 5, 'a');
+    std::vector < std::string > strings;
+
+//  --------------------------------------------------------------------------------------
+
+    strings.emplace(std::begin(strings), 5, 'a');
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////

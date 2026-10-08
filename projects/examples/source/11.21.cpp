@@ -8,8 +8,8 @@
 
 ///////////////////////////////////////////////////////////////
 
-#include <cassert>
 #include <algorithm>
+#include <cassert>
 #include <iterator>
 #include <vector>
 
@@ -17,15 +17,15 @@
 
 int main()
 {
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+    std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
 //  -----------------------------------------------------------
 
-	auto iterator = std::begin(std::ranges::remove(vector, 1));
+    auto iterator = std::begin(std::ranges::remove(vector, 1));
 
 //  -----------------------------------------------------------
 
-	assert(std::size(vector) == 5);
+    assert(std::size(vector) == 5);
 
 //  -----------------------------------------------------------
 
@@ -33,11 +33,11 @@ int main()
 
 //  -----------------------------------------------------------
 
-	vector.erase(iterator, std::end(vector));
+    vector.erase(iterator, std::end(vector));
 
 //  -----------------------------------------------------------
 
-	assert(vector == std::vector < int > ({ 2, 3, 4, 5 }));
+    assert(vector == std::vector < int > ({ 2, 3, 4, 5 }));
 }
 
 ///////////////////////////////////////////////////////////////

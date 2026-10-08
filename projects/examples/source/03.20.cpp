@@ -18,7 +18,7 @@ class Entity
 {
 public :
 
-	virtual ~Entity() = default;
+    virtual ~Entity() = default;
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -29,25 +29,25 @@ class Client : public Entity {};
 
 int main()
 {
-	auto x = 1, & y = x;
+    auto x = 1, & y = x;
 
 //  --------------------------------------------------------------------
 
-	Entity * entity = new Client;
+    Entity * entity = new Client;
 
 //  --------------------------------------------------------------------
 
-	std::print("main : typeid(      x) = {}\n", typeid(      x).name());
+    std::print("main : typeid(      x) = {}\n", typeid(      x).name());
 
-	std::print("main : typeid(      y) = {}\n", typeid(      y).name());
+    std::print("main : typeid(      y) = {}\n", typeid(      y).name());
 
-	std::print("main : typeid( entity) = {}\n", typeid( entity).name());
+    std::print("main : typeid( entity) = {}\n", typeid( entity).name());
 
-	std::print("main : typeid(*entity) = {}\n", typeid(*entity).name());
+    std::print("main : typeid(*entity) = {}\n", typeid(*entity).name());
 
 //  --------------------------------------------------------------------
 
-	delete entity;
+    delete entity;
 }
 
 ////////////////////////////////////////////////////////////////////////

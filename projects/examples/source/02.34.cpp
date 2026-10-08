@@ -24,7 +24,7 @@ int main()
 
 //  ---------------------------------------------------------
 
-	static_assert(std::is_same_v < decltype( x1 ), int   > );
+    static_assert(std::is_same_v < decltype( x1 ), int   > );
 
     static_assert(std::is_same_v < decltype( x2 ), int & > );
 

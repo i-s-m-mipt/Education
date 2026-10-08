@@ -37,19 +37,19 @@ int main()
 
 //  ----------------------------------------------------------------------
 
-	static_assert(sizeof(x) == sizeof(y));
+    static_assert(sizeof(x) == sizeof(y));
 
-	static_assert(sizeof(x) == sizeof(z));
-
-//  ----------------------------------------------------------------------
-
-	static_assert(std::is_same_v < signed int, int > );
+    static_assert(sizeof(x) == sizeof(z));
 
 //  ----------------------------------------------------------------------
 
-	assert(std::numeric_limits < unsigned int > ::max() == 4'294'967'295);
+    static_assert(std::is_same_v < signed int, int > );
 
-	assert(std::numeric_limits < unsigned int > ::min() == 0);
+//  ----------------------------------------------------------------------
+
+    assert(std::numeric_limits < unsigned int > ::max() == 4'294'967'295);
+
+    assert(std::numeric_limits < unsigned int > ::min() == 0);
 
 //  ----------------------------------------------------------------------
 

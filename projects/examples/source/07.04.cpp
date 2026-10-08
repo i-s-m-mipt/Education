@@ -34,7 +34,7 @@
 
 enum class State_v1 : std::uint8_t
 {
-	slow = 0, fast = 1, size
+    slow = 0, fast = 1, size
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -48,43 +48,43 @@ enum class State_v1 : std::uint8_t
 
 int main()
 {
-	auto x = 0;
+    auto x = 0;
 
 //  --------------------------------------------------------------------------
 
-	std::print("main : enter int x : "); std::cin >> x;
+    std::print("main : enter int x : "); std::cin >> x;
 
 //  --------------------------------------------------------------------------
 
-//	State_v1 state_v1_1 = x; // error
+//  State_v1 state_v1_1 = x; // error
 
 //  --------------------------------------------------------------------------
 
-	auto state_v1_2 = static_cast < State_v1 > (x);
+    auto state_v1_2 = static_cast < State_v1 > (x);
 
 //  --------------------------------------------------------------------------
 
-	switch (state_v1_2)
-	{
-		case State_v1::slow : { std::print("main : selection (1)\n"); break; }
+    switch (state_v1_2)
+    {
+        case State_v1::slow : { std::print("main : selection (1)\n"); break; }
 
-		case State_v1::fast : { std::print("main : selection (2)\n"); break; }
+        case State_v1::fast : { std::print("main : selection (2)\n"); break; }
 
-	//  ----------------------------------------------------------------------
+    //  ----------------------------------------------------------------------
 
-		default :
-		{
-			std::unreachable();
-		}
-	}
-
-//  --------------------------------------------------------------------------
-
-//	assert(state_v1_2 == x); // error
+        default :
+        {
+            std::unreachable();
+        }
+    }
 
 //  --------------------------------------------------------------------------
 
-	assert(std::to_underlying(state_v1_2) == x);
+//  assert(state_v1_2 == x); // error
+
+//  --------------------------------------------------------------------------
+
+    assert(std::to_underlying(state_v1_2) == x);
 }
 
 //////////////////////////////////////////////////////////////////////////////

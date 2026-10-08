@@ -130,7 +130,7 @@ void test_v1(benchmark::State & state)
     {
         auto determinant = determinant_v1(matrix);
 
-		benchmark::DoNotOptimize(determinant);
+        benchmark::DoNotOptimize(determinant);
     }
 }
 
@@ -146,7 +146,7 @@ void test_v2(benchmark::State & state)
     {
         auto determinant = determinant_v2(matrix);
 
-		benchmark::DoNotOptimize(determinant);
+        benchmark::DoNotOptimize(determinant);
     }
 }
 
@@ -160,7 +160,7 @@ BENCHMARK(test_v2)->DenseRange(1, 9, 1);
 
 int main()
 {
-	benchmark::RunSpecifiedBenchmarks();
+    benchmark::RunSpecifiedBenchmarks();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////

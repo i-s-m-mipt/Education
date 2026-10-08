@@ -6,7 +6,7 @@
 
 // content : Interprocess Containers and Allocators
 //
-// content : Library Boost.Interpocess
+// content : Library Boost.Interprocess
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -27,19 +27,19 @@ int main()
 
 //  -------------------------------------------------------------------------
 
-	auto path = "memory";
+    auto path = "memory";
 
 //  -------------------------------------------------------------------------
 
-	boost::interprocess::shared_memory_object::remove(path);
+    boost::interprocess::shared_memory_object::remove(path);
 
 //  -------------------------------------------------------------------------
 
-	shared_memory_t storage(boost::interprocess::create_only, path, 1 << 10);
+    shared_memory_t storage(boost::interprocess::create_only, path, 1 << 10);
 
 //  -------------------------------------------------------------------------
 
-	using vector_t = boost::interprocess::vector
+    using vector_t = boost::interprocess::vector
     <
         int,
 
@@ -51,7 +51,7 @@ int main()
 
 //  -------------------------------------------------------------------------
 
-	storage.construct < vector_t > ("vector")(storage.get_segment_manager());
+    storage.construct < vector_t > ("vector")(storage.get_segment_manager());
 
 //  -------------------------------------------------------------------------
 
@@ -71,7 +71,7 @@ int main()
 
 //  -------------------------------------------------------------------------
 
-	boost::interprocess::shared_memory_object::remove(path);
+    boost::interprocess::shared_memory_object::remove(path);
 }
 
 /////////////////////////////////////////////////////////////////////////////

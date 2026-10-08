@@ -37,40 +37,40 @@
 
 void advance(auto & iterator, int offset, std::forward_iterator_tag)
 {
-	if (offset > 0)
-	{
-		while (--offset >= 0)
-		{
-			++iterator;
-		}
-	}
+    if (offset > 0)
+    {
+        while (--offset >= 0)
+        {
+            ++iterator;
+        }
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void advance(auto & iterator, int offset, std::bidirectional_iterator_tag)
 {
-	if (offset > 0)
-	{
-		while (--offset >= 0)
-		{
-			++iterator;
-		}
-	}
-	else
-	{
-		while (++offset <= 0)
-		{
-			--iterator;
-		}
-	}
+    if (offset > 0)
+    {
+        while (--offset >= 0)
+        {
+            ++iterator;
+        }
+    }
+    else
+    {
+        while (++offset <= 0)
+        {
+            --iterator;
+        }
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void advance(auto & iterator, int offset, std::random_access_iterator_tag)
 {
-	iterator += offset;
+    iterator += offset;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -84,40 +84,40 @@ template < typename I > void advance_v1(I & iterator, int offset)
 
 void advance_v2(std::forward_iterator auto & iterator, int offset)
 {
-	if (offset > 0)
-	{
-		while (--offset >= 0)
-		{
-			++iterator;
-		}
-	}
+    if (offset > 0)
+    {
+        while (--offset >= 0)
+        {
+            ++iterator;
+        }
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void advance_v2(std::bidirectional_iterator auto & iterator, int offset)
 {
-	if (offset > 0)
-	{
-		while (--offset >= 0)
-		{
-			++iterator;
-		}
-	}
-	else
-	{
-		while (++offset <= 0)
-		{
-			--iterator;
-		}
-	}
+    if (offset > 0)
+    {
+        while (--offset >= 0)
+        {
+            ++iterator;
+        }
+    }
+    else
+    {
+        while (++offset <= 0)
+        {
+            --iterator;
+        }
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void advance_v2(std::random_access_iterator auto & iterator, int offset)
 {
-	iterator += offset;
+    iterator += offset;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -128,13 +128,13 @@ int main()
 
 //  ------------------------------------------------
 
-	auto iterator = std::begin(vector);
+    auto iterator = std::begin(vector);
 
 //  ------------------------------------------------
 
-	advance_v1(iterator, 1); assert(*iterator == 2);
+    advance_v1(iterator, 1); assert(*iterator == 2);
 
-	advance_v2(iterator, 1); assert(*iterator == 3);
+    advance_v2(iterator, 1); assert(*iterator == 3);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

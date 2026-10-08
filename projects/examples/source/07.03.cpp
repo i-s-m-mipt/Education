@@ -48,7 +48,7 @@ int main()
 
     std::ignore = std::log(+1); assert(errno == 0);
 
-	std::ignore = std::log(-1); assert(errno != 0);
+    std::ignore = std::log(-1); assert(errno != 0);
 
 //  ----------------------------------------------------
 

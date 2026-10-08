@@ -15,28 +15,28 @@
 
 int main()
 {
-	auto x = 0;
+    auto x = 0;
 
 //  --------------------------------------------------------
 
-	while (x > 0) // support : https://compiler-explorer.com
-	{
-		std::print("main : enter int x : "); std::cin >> x;
-	}
+    while (x > 0) // support : https://compiler-explorer.com
+    {
+        std::print("main : enter int x : "); std::cin >> x;
+    }
 
 //  --------------------------------------------------------
 
-	while (true)
-	{
-		std::print("main : enter int x : "); std::cin >> x;
+    while (true)
+    {
+        std::print("main : enter int x : "); std::cin >> x;
 
-	//  ----------------------------------------------------
+    //  ----------------------------------------------------
 
-		if (x == 0)
-		{
-			break;
-		}
-	}
+        if (x == 0)
+        {
+            break;
+        }
+    }
 }
 
 ////////////////////////////////////////////////////////////

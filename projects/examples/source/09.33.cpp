@@ -28,85 +28,85 @@ template < std::size_t S > class Allocator
 {
 public :
 
-	auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
-	{
-		void * begin = std::begin(m_array) + m_offset;
+    auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
+    {
+        void * begin = std::begin(m_array) + m_offset;
 
-		auto free = S - m_offset;
+        auto free = S - m_offset;
 
-		if (begin = std::align(alignment, size, begin, free); begin)
-		{
-			m_offset = S - free + size;
+        if (begin = std::align(alignment, size, begin, free); begin)
+        {
+            m_offset = S - free + size;
 
-			return begin;
-		}
-		else
-		{
-			return nullptr;
-		}
-	}
+            return begin;
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
 
 //  ------------------------------------------------------------------------------
 
-	void show() const
-	{
-		std::print("Allocator::show : S = {} m_offset = {:0>4}\n", S, m_offset);
-	}
+    void show() const
+    {
+        std::print("Allocator::show : S = {} m_offset = {:0>4}\n", S, m_offset);
+    }
 
 private :
 
     alignas(std::max_align_t) std::array < std::byte, S > m_array = {};
 
-	std::size_t m_offset = 0;
+    std::size_t m_offset = 0;
 
 //  ------------------------------------------------------------------------------
 
-	static inline auto s_alignment = alignof(std::max_align_t);
+    static inline auto s_alignment = alignof(std::max_align_t);
 };
 
 //////////////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state)
 {
-	auto kb = 1uz << 10;
+    auto kb = 1uz << 10;
 
-	std::vector < void * > vector(kb, nullptr);
+    std::vector < void * > vector(kb, nullptr);
 
-	for (auto element : state)
-	{
-		for (auto i = 0uz; i < kb; ++i)
-		{
-			vector[i] = operator new(kb);
-		}
+    for (auto element : state)
+    {
+        for (auto i = 0uz; i < kb; ++i)
+        {
+            vector[i] = operator new(kb);
+        }
 
-		for (auto i = 0uz; i < kb; ++i)
-		{
-			operator delete(vector[i]);
-		}
+        for (auto i = 0uz; i < kb; ++i)
+        {
+            operator delete(vector[i]);
+        }
 
-		benchmark::DoNotOptimize(vector);
-	}
+        benchmark::DoNotOptimize(vector);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state)
 {
-	auto kb = 1uz << 10;
+    auto kb = 1uz << 10;
 
-	std::vector < void * > vector(kb, nullptr);
+    std::vector < void * > vector(kb, nullptr);
 
-	for (auto element : state)
-	{
-		Allocator < 1 << 20 > allocator;
+    for (auto element : state)
+    {
+        Allocator < 1 << 20 > allocator;
 
-		for (auto i = 0uz; i < kb; ++i)
-		{
-			vector[i] = allocator.allocate(kb);
-		}
+        for (auto i = 0uz; i < kb; ++i)
+        {
+            vector[i] = allocator.allocate(kb);
+        }
 
-		benchmark::DoNotOptimize(vector);
-	}
+        benchmark::DoNotOptimize(vector);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -119,19 +119,19 @@ BENCHMARK(test_v2);
 
 int main()
 {
-	Allocator < 1 << 10 > allocator;
+    Allocator < 1 << 10 > allocator;
 
 //  -------------------------------------------
 
-	allocator.show(); allocator.allocate(1, 1);
+    allocator.show(); allocator.allocate(1, 1);
 
-	allocator.show(); allocator.allocate(2, 2);
+    allocator.show(); allocator.allocate(2, 2);
 
-	allocator.show(); allocator.allocate(4, 4);
+    allocator.show(); allocator.allocate(4, 4);
 
-	allocator.show(); allocator.allocate(8, 8);
+    allocator.show(); allocator.allocate(8, 8);
 
-	allocator.show();
+    allocator.show();
 
 //  -------------------------------------------
 

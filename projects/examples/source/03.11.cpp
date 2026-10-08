@@ -34,27 +34,27 @@ class Entity
 {
 public :
 
-	Entity(int x) : m_x(x)
-	{
-		std::print("Entity::Entity\n");
-	}
+    Entity(int x) : m_x(x)
+    {
+        std::print("Entity::Entity\n");
+    }
 
 //  ---------------------------------------------------------
 
-	void test_v1() const { std::print("Entity::test_v1\n"); }
+    void test_v1() const { std::print("Entity::test_v1\n"); }
 
-	void test_v2() const { std::print("Entity::test_v2\n"); }
+    void test_v2() const { std::print("Entity::test_v2\n"); }
 
 protected :
 
     void test_v3() const
-	{
-		std::print("Entity::test_v3\n");
-	}
+    {
+        std::print("Entity::test_v3\n");
+    }
 
 private :
 
-	int m_x = 0;
+    int m_x = 0;
 };
 
 /////////////////////////////////////////////////////////////
@@ -63,29 +63,29 @@ class Client : public Entity
 {
 public :
 
-	Client(int x, int y) : Entity(x), m_y(y)
-	{
-		std::print("Client::Client\n");
-	}
+    Client(int x, int y) : Entity(x), m_y(y)
+    {
+        std::print("Client::Client\n");
+    }
 
 //  ----------------------------------------
 
-	void test_v2() const
-	{
-		std::print("Client::test_v2\n");
+    void test_v2() const
+    {
+        std::print("Client::test_v2\n");
 
-	//	test_v2(); // error
+    //  test_v2(); // error
 
-		Entity::test_v2();
-	}
+        Entity::test_v2();
+    }
 
 //  ----------------------------------------
 
-	using Entity::test_v3;
+    using Entity::test_v3;
 
 private :
 
-	int m_y = 0;
+    int m_y = 0;
 };
 
 /////////////////////////////////////////////////////////////
@@ -96,31 +96,31 @@ int main()
 
 //  -------------------------------------------------
 
-	static_assert(sizeof(Entity) == 1 * sizeof(int));
+    static_assert(sizeof(Entity) == 1 * sizeof(int));
 
 //  -------------------------------------------------
 
     entity.test_v1();
 
-	entity.test_v2();
+    entity.test_v2();
 
 //  entity.test_v3(); // error
 
 //  -------------------------------------------------
 
-	Client client(1, 1);
+    Client client(1, 1);
 
 //  -------------------------------------------------
 
-	static_assert(sizeof(Client) == 2 * sizeof(int));
+    static_assert(sizeof(Client) == 2 * sizeof(int));
 
 //  -------------------------------------------------
 
-	client.test_v1();
+    client.test_v1();
 
-	client.test_v2();
+    client.test_v2();
 
-	client.test_v3();
+    client.test_v3();
 }
 
 /////////////////////////////////////////////////////////////

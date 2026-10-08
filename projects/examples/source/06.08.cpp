@@ -47,27 +47,27 @@
 
 int main()
 {
-	test_v1();
+    test_v1();
 
-//	test_v2(); // error
+//  test_v2(); // error
 
-//	test_v3(); // error
+//  test_v3(); // error
 
-	test_v4();
+    test_v4();
 
-	test_v5();
-
-//  -------------------
-
-	test_v6 < int > ();
+    test_v5();
 
 //  -------------------
 
-	assert(g_x1 == 1);
+    test_v6 < int > ();
 
-	assert(g_x2 == 2);
+//  -------------------
 
-	assert(g_x3 == 3);
+    assert(g_x1 == 1);
+
+    assert(g_x2 == 2);
+
+    assert(g_x3 == 3);
 }
 
 //////////////////////////////////////////////////////////////////////////////

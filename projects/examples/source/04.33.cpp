@@ -21,13 +21,13 @@ template < typename B, typename D > class is_base_of
 {
 private :
 
-	static std::false_type test(...);
+    static std::false_type test(...);
 
-	static std:: true_type test(B *);
+    static std:: true_type test(B *);
 
 public :
 
-	constexpr static auto value = decltype(test(std::declval < D * > ()))::value;
+    constexpr static auto value = decltype(test(std::declval < D * > ()))::value;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,19 +50,19 @@ class Server {};
 
 int main()
 {
-	static_assert(     is_base_of_v < Entity, Client > == 1);
+    static_assert(     is_base_of_v < Entity, Client > == 1);
 
-	static_assert(     is_base_of_v < Entity, Server > == 0);
+    static_assert(     is_base_of_v < Entity, Server > == 0);
 
-	static_assert(     is_base_of_v < Client, Client > == 1);
+    static_assert(     is_base_of_v < Client, Client > == 1);
 
 //  ---------------------------------------------------------
 
-	static_assert(std::is_base_of_v < Entity, Client > == 1);
+    static_assert(std::is_base_of_v < Entity, Client > == 1);
 
-	static_assert(std::is_base_of_v < Entity, Server > == 0);
+    static_assert(std::is_base_of_v < Entity, Server > == 0);
 
-	static_assert(std::is_base_of_v < Client, Client > == 1);
+    static_assert(std::is_base_of_v < Client, Client > == 1);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////

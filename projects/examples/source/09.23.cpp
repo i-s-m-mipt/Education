@@ -15,7 +15,7 @@
 
 union Entity
 {
-	Entity() : string_1() {}
+    Entity() : string_1() {}
 
 //  ------------------------
 
@@ -23,9 +23,9 @@ union Entity
 
 //  ------------------------
 
-	std::string string_1;
+    std::string string_1;
 
-	std::string string_2;
+    std::string string_2;
 };
 
 /////////////////////////////////////////////////////////////////////
@@ -36,23 +36,23 @@ int main()
 
 //  -----------------------------------------------------------------
 
-	entity.string_1 = "aaaaa";
+    entity.string_1 = "aaaaa";
 
 //  -----------------------------------------------------------------
 
-	std::destroy_at(&entity.string_1);
+    std::destroy_at(&entity.string_1);
 
 //  -----------------------------------------------------------------
 
-	auto string = std::construct_at(&entity.string_2, std::string());
+    auto string = std::construct_at(&entity.string_2, std::string());
 
 //  -----------------------------------------------------------------
 
-	*string = "aaaaa";
+    *string = "aaaaa";
 
 //  -----------------------------------------------------------------
 
-	std::destroy_at(&entity.string_2);
+    std::destroy_at(&entity.string_2);
 }
 
 /////////////////////////////////////////////////////////////////////

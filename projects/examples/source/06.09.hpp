@@ -42,7 +42,7 @@ public :
 
 private :
 
-	class Implementation;
+    class Implementation;
 
 //  --------------------------------------------
 

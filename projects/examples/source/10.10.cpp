@@ -55,9 +55,9 @@ int main()
 
     ::erase(list, list.insert_after(std::next(list.before_begin(), 0), 1));
 
-	::erase(list, list.insert_after(std::next(list.before_begin(), 2), 1));
+    ::erase(list, list.insert_after(std::next(list.before_begin(), 2), 1));
 
-	::erase(list, list.insert_after(std::next(list.before_begin(), 5), 1));
+    ::erase(list, list.insert_after(std::next(list.before_begin(), 5), 1));
 
 //  ------------------------------------------------------------------------------
 

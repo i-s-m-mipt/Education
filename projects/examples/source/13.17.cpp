@@ -30,41 +30,41 @@
 
 int main()
 {
-	auto path = std::filesystem::current_path();
+    auto path = std::filesystem::current_path();
 
 //  ---------------------------------------------------------------------------
 
-	std::filesystem::create_directory(path / "directory");
+    std::filesystem::create_directory(path / "directory");
 
-	std::filesystem::create_directory(path / "directory", path);
-
-//  ---------------------------------------------------------------------------
-
-	std::filesystem::create_directories("1/2/3");
+    std::filesystem::create_directory(path / "directory", path);
 
 //  ---------------------------------------------------------------------------
 
-	std::fstream("1/2/3/13.17.data", std::ios::out);
+    std::filesystem::create_directories("1/2/3");
 
 //  ---------------------------------------------------------------------------
 
-	std::filesystem::copy("1", "2");
-
-	std::filesystem::copy("1", "2", std::filesystem::copy_options::recursive);
+    std::fstream("1/2/3/13.17.data", std::ios::out);
 
 //  ---------------------------------------------------------------------------
 
-	std::print("main : enter char : "); std::cin.get();
+    std::filesystem::copy("1", "2");
+
+    std::filesystem::copy("1", "2", std::filesystem::copy_options::recursive);
 
 //  ---------------------------------------------------------------------------
 
-	std::filesystem::remove_all("1");
-
-	std::filesystem::remove_all("2");
+    std::print("main : enter char : "); std::cin.get();
 
 //  ---------------------------------------------------------------------------
 
-	std::filesystem::remove_all(std::filesystem::current_path() / "directory");
+    std::filesystem::remove_all("1");
+
+    std::filesystem::remove_all("2");
+
+//  ---------------------------------------------------------------------------
+
+    std::filesystem::remove_all(std::filesystem::current_path() / "directory");
 
 //  ---------------------------------------------------------------------------
 

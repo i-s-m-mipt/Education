@@ -33,21 +33,21 @@ auto calculate(std::size_t size)
 
     std::osyncstream(std::cout) << std::format("calculate : id = {}\n", id);
 
-	auto x = 0.0;
+    auto x = 0.0;
 
-	for (auto i = 0uz; i < size; ++i)
-	{
-		x += std::pow(std::sin(x), 2) + std::pow(std::cos(x), 2);
-	}
+    for (auto i = 0uz; i < size; ++i)
+    {
+        x += std::pow(std::sin(x), 2) + std::pow(std::cos(x), 2);
+    }
 
-	return x;
+    return x;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
-	return std::abs(x - y) < epsilon;
+    return std::abs(x - y) < epsilon;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////

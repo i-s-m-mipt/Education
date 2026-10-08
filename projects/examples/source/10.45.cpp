@@ -25,7 +25,7 @@
 
 struct Entity
 {
-	int x = 0, y = 0;
+    int x = 0, y = 0;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ template < typename T > using tag_t = boost::multi_index::tag < T > ;
 
 template
 <
-	typename C, typename T, T C::*P
+    typename C, typename T, T C::*P
 >
 using member_t = boost::multi_index::member < C, T, P > ;
 
@@ -50,14 +50,14 @@ using member_t = boost::multi_index::member < C, T, P > ;
 
 using container_t = boost::multi_index::multi_index_container
 <
-	Entity,
+    Entity,
 
-	boost::multi_index::indexed_by
-	<
-		ONU_t < tag_t < struct ONU_x_tag > , member_t < Entity, int, &Entity::x > > ,
+    boost::multi_index::indexed_by
+    <
+        ONU_t < tag_t < struct ONU_x_tag > , member_t < Entity, int, &Entity::x > > ,
 
-		HNU_t < tag_t < struct HNU_y_tag > , member_t < Entity, int, &Entity::y > >
-	>
+        HNU_t < tag_t < struct HNU_y_tag > , member_t < Entity, int, &Entity::y > >
+    >
 > ;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,55 +66,55 @@ class Handler
 {
 public :
 
-	Handler(const Entity & entity) : m_entity(entity) {}
+    Handler(Entity const & entity) : m_entity(entity) {}
 
 //  ----------------------------------------------------
 
-	void operator()(Entity & entity) const
-	{
-		entity = m_entity;
-	}
+    void operator()(Entity & entity) const
+    {
+        entity = m_entity;
+    }
 
 private :
 
-	Entity m_entity;
+    Entity m_entity;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	container_t container = { { 1, 1 }, { 2, 2 }, { 3, 3 }, { 4, 4 }, { 5, 5 } };
+    container_t container = { { 1, 1 }, { 2, 2 }, { 3, 3 }, { 4, 4 }, { 5, 5 } };
 
 //  -----------------------------------------------------------------------------
 
-	auto & ONU_x_index = container.get < ONU_x_tag > ();
+    auto & ONU_x_index = container.get < ONU_x_tag > ();
 
 //  -----------------------------------------------------------------------------
 
-	assert(ONU_x_index.lower_bound(1)->x == 1);
+    assert(ONU_x_index.lower_bound(1)->x == 1);
 
-	assert(ONU_x_index.upper_bound(1)->x == 2);
-
-//  -----------------------------------------------------------------------------
-
-	auto & HNU_y_index = container.get < HNU_y_tag > ();
+    assert(ONU_x_index.upper_bound(1)->x == 2);
 
 //  -----------------------------------------------------------------------------
 
-	Handler handler_1(Entity(2, 2));
-
-	Handler handler_2(Entity(1, 1));
+    auto & HNU_y_index = container.get < HNU_y_tag > ();
 
 //  -----------------------------------------------------------------------------
 
-	assert(HNU_y_index.modify(HNU_y_index.find(1), handler_1, handler_2));
+    Handler handler_1(Entity(2, 2));
+
+    Handler handler_2(Entity(1, 1));
 
 //  -----------------------------------------------------------------------------
 
-	assert(HNU_y_index.count(1) == 0);
+    assert(HNU_y_index.modify(HNU_y_index.find(1), handler_1, handler_2));
 
-	assert(HNU_y_index.count(2) == 2);
+//  -----------------------------------------------------------------------------
+
+    assert(HNU_y_index.count(1) == 0);
+
+    assert(HNU_y_index.count(2) == 2);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

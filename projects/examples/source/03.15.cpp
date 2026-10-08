@@ -41,17 +41,17 @@ public :
 
 //  ------------------------------------
 
-	virtual ~Entity()
-	{
-		std::print("Entity::~Entity\n");
-	}
+    virtual ~Entity()
+    {
+        std::print("Entity::~Entity\n");
+    }
 
 //  ------------------------------------
 
-	virtual void test() const
-	{
-		std::print("Entity::test\n");
-	}
+    virtual void test() const
+    {
+        std::print("Entity::test\n");
+    }
 };
 
 /////////////////////////////////////////////////////////////
@@ -61,28 +61,28 @@ class Client : public Entity
 public :
 
    ~Client() override
-	{
-		std::print("Client::~Client\n");
-	}
+    {
+        std::print("Client::~Client\n");
+    }
 
 //  ------------------------------------
 
-	void test() const override final
-	{
-		std::print("Client::test\n");
-	}
+    void test() const override final
+    {
+        std::print("Client::test\n");
+    }
 };
 
 /////////////////////////////////////////////////////////////
 
 class Server final : public Entity
 {
-public:
+public :
 
    ~Server() override
-	{
-		std::print("Server::~Server\n");
-	}
+    {
+        std::print("Server::~Server\n");
+    }
 };
 
 /////////////////////////////////////////////////////////////
@@ -101,21 +101,21 @@ int main()
 
 //  ---------------------------------------------------------
 
-	[[maybe_unused]] Entity * entity_1 = new Client;
+    [[maybe_unused]] Entity * entity_1 = new Client;
 
-	[[maybe_unused]] Entity * entity_2 = new Server;
+    [[maybe_unused]] Entity * entity_2 = new Server;
 
-//	[[maybe_unused]] Entity * entity_3 = new Router; // error
+//  [[maybe_unused]] Entity * entity_3 = new Router; // error
 
 //  ---------------------------------------------------------
 
-	std::vector < Entity * > entities;
+    std::vector < Entity * > entities;
 
 //  ---------------------------------------------------------
 
     entities.push_back(entity_1);
 
-	entities.push_back(entity_2);
+    entities.push_back(entity_2);
 
 //  ---------------------------------------------------------
 

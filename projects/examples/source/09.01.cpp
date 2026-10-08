@@ -16,18 +16,18 @@ template < typename T > class Entity : private boost::noncopyable
 {
 public :
 
-	Entity(T x) : m_x(new T(x)) {}
+    Entity(T x) : m_x(new T(x)) {}
 
 //  ------------------------------
 
    ~Entity()
-	{
-		delete m_x;
-	}
+    {
+        delete m_x;
+    }
 
 private :
 
-	T * m_x = nullptr;
+    T * m_x = nullptr;
 };
 
 //////////////////////////////////////////////////////////////////

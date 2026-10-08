@@ -49,38 +49,38 @@ class Logger : private boost::noncopyable
 {
 public :
 
-	enum class Severity : std::uint8_t
-	{
-		trace, debug, error, fatal
-	};
+    enum class Severity : std::uint8_t
+    {
+        trace, debug, error, fatal
+    };
 
 //  -------------------------------------------------------------------------------------
 
-	Logger(char const * scope, bool has_trace) : m_scope(scope), m_has_trace(has_trace)
-	{
-		std::call_once(s_flag, initialize);
+    Logger(char const * scope, bool has_trace) : m_scope(scope), m_has_trace(has_trace)
+    {
+        std::call_once(s_flag, initialize);
 
-		if (m_has_trace)
-		{
-			put(Severity::trace, "execution ... ");
-		}
-	}
+        if (m_has_trace)
+        {
+            put(Severity::trace, "execution ... ");
+        }
+    }
 
 //  -------------------------------------------------------------------------------------
 
    ~Logger()
-	{
-		if (m_has_trace)
-		{
-			put(Severity::trace, "execution complete");
-		}
-	}
+    {
+        if (m_has_trace)
+        {
+            put(Severity::trace, "execution complete");
+        }
+    }
 
 //  -------------------------------------------------------------------------------------
 
-	void put(Severity severity, std::string const & string) const
-	{
-		switch (severity)
+    void put(Severity severity, std::string const & string) const
+    {
+        switch (severity)
         {
             case Severity::trace : { LOG(INFO   ) << m_scope << " : " << string; break; }
 
@@ -90,17 +90,17 @@ public :
 
             case Severity::fatal : { LOG(FATAL  ) << m_scope << " : " << string; break; }
 
-			default :
-			{
-				std::unreachable();
-			}
+            default :
+            {
+                std::unreachable();
+            }
         }
-	}
+    }
 
 private :
 
-	static void initialize()
-	{
+    static void initialize()
+    {
         FLAGS_log_dir = "loggers";
 
         FLAGS_log_file_header = false;
@@ -109,14 +109,14 @@ private :
 
         google::EnableLogCleaner(24h);
 
-		google::InstallPrefixFormatter(&format);
-	}
+        google::InstallPrefixFormatter(&format);
+    }
 
 //  -------------------------------------------------------------------------------------
 
-	static void format(std::ostream & stream, google::LogMessage const & message, void *)
-	{
-		stream << std::format("{:0>8}", s_line++) << " | ";
+    static void format(std::ostream & stream, google::LogMessage const & message, void *)
+    {
+        stream << std::format("{:0>8}", s_line++) << " | ";
 
         stream << std::format("{:%Y %B %d %H:%M:%S %Z}", message.time().when()) << " | ";
 
@@ -132,18 +132,18 @@ private :
 
             case google::LogSeverity::FATAL   : { stream << "fatal |"; break; }
 
-			default :
-			{
-				std::unreachable();
-			}
+            default :
+            {
+                std::unreachable();
+            }
         }
-	}
+    }
 
 //  -------------------------------------------------------------------------------------
 
-	char const * m_scope = nullptr;
+    char const * m_scope = nullptr;
 
-	bool m_has_trace = false;
+    bool m_has_trace = false;
 
 //  -------------------------------------------------------------------------------------
 
@@ -170,11 +170,11 @@ private :
 
 void test_v1()
 {
-	LOGGER(logger);
+    LOGGER(logger);
 
-	LOGGER_PUT_ERROR(logger, "error");
+    LOGGER_PUT_ERROR(logger, "error");
 
-	throw std::runtime_error("error");
+    throw std::runtime_error("error");
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -187,18 +187,18 @@ void test_v3() { LOGGER(logger); test_v2(); }
 
 int main()
 {
-	LOGGER(logger);
+    LOGGER(logger);
 
 //  -----------------------------------------------
 
-	try
-	{
-		test_v3();
-	}
-	catch (std::exception const & exception)
-	{
-		LOGGER_PUT_FATAL(logger, exception.what());
-	}
+    try
+    {
+        test_v3();
+    }
+    catch (std::exception const & exception)
+    {
+        LOGGER_PUT_FATAL(logger, exception.what());
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////

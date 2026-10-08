@@ -136,10 +136,10 @@ public :
 
     //  ------------------------------------------------------------------
 
-		friend auto operator==(iterator const & lhs, iterator const & rhs)
-		{
-			return lhs.m_x == rhs.m_x && lhs.m_y == rhs.m_y;
-		}
+        friend auto operator==(iterator const & lhs, iterator const & rhs)
+        {
+            return lhs.m_x == rhs.m_x && lhs.m_y == rhs.m_y;
+        }
 
     private :
 

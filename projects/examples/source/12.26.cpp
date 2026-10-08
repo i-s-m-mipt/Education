@@ -138,9 +138,9 @@ public :
             case '-' : { return -1 * x; }
 
             default :
-			{
-				std::unreachable();
-			}
+            {
+                std::unreachable();
+            }
         }
 
         return x;
@@ -163,9 +163,9 @@ public :
             case '/' : { return x / y; }
 
             default :
-			{
-				std::unreachable();
-			}
+            {
+                std::unreachable();
+            }
         }
 
         return x;
@@ -214,17 +214,17 @@ int main()
 
 //  --------------------------------------------------------------
 
-	while (std::getline(std::cin >> std::ws, string, '\n'))
-	{
+    while (std::getline(std::cin >> std::ws, string, '\n'))
+    {
         if (string.front() != ';')
         {
             std::print("main : {} = {}\n", string, parse(string));
         }
-		else
+        else
         {
             break;
         }
-	}
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -27,140 +27,140 @@ class Allocator
 {
 public :
 
-	Allocator(std::size_t size) : m_size(size)
-	{
-		m_array = operator new(m_size, std::align_val_t(s_alignment));
-	}
+    Allocator(std::size_t size) : m_size(size)
+    {
+        m_array = operator new(m_size, std::align_val_t(s_alignment));
+    }
 
 //  -------------------------------------------------------------------------------
 
    ~Allocator()
-	{
-		operator delete(m_array, m_size, std::align_val_t(s_alignment));
-	}
+    {
+        operator delete(m_array, m_size, std::align_val_t(s_alignment));
+    }
 
 //  -------------------------------------------------------------------------------
 
-	auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
-	{
-		void * begin = get_byte(m_array) + m_offset + sizeof(header_t);
+    auto allocate(std::size_t size, std::size_t alignment = s_alignment) -> void *
+    {
+        void * begin = get_byte(m_array) + m_offset + sizeof(header_t);
 
-		auto free = m_size - m_offset - sizeof(header_t);
+        auto free = m_size - m_offset - sizeof(header_t);
 
-		if (begin = std::align(alignment, size, begin, free); begin)
-		{
-			auto header = get_header(get_byte(begin) - sizeof(header_t));
+        if (begin = std::align(alignment, size, begin, free); begin)
+        {
+            auto header = get_header(get_byte(begin) - sizeof(header_t));
 
-			*header = std::distance(get_byte(m_array) + m_offset, get_byte(begin));
+            *header = std::distance(get_byte(m_array) + m_offset, get_byte(begin));
 
-			m_offset = get_byte(begin) - get_byte(m_array) + size;
+            m_offset = get_byte(begin) - get_byte(m_array) + size;
 
-			return begin;
-		}
-		else
-		{
-			return nullptr;
-		}
-	}
-
-//  -------------------------------------------------------------------------------
-
-	void deallocate(void * x)
-	{
-		auto header = get_header(get_byte(x) - sizeof(header_t));
-
-		m_offset = get_byte(x) - get_byte(m_array) - *header;
-	}
+            return begin;
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
 
 //  -------------------------------------------------------------------------------
 
-	void show() const
-	{
-		std::print
-		(
-			"Allocator::show : m_array = {:018} m_size = {} m_offset = {:0>4}\n",
+    void deallocate(void * x)
+    {
+        auto header = get_header(get_byte(x) - sizeof(header_t));
 
-			m_array, m_size, m_offset
-		);
-	}
+        m_offset = get_byte(x) - get_byte(m_array) - *header;
+    }
+
+//  -------------------------------------------------------------------------------
+
+    void show() const
+    {
+        std::print
+        (
+            "Allocator::show : m_array = {:018} m_size = {} m_offset = {:0>4}\n",
+
+            m_array, m_size, m_offset
+        );
+    }
 
 private :
 
-	using header_t = std::uint8_t;
+    using header_t = std::uint8_t;
 
 //  -------------------------------------------------------------------------------
 
-	auto get_byte(void * x) const -> std::byte *
-	{
-		return static_cast < std::byte * > (x);
-	}
+    auto get_byte(void * x) const -> std::byte *
+    {
+        return static_cast < std::byte * > (x);
+    }
 
 //  -------------------------------------------------------------------------------
 
-	auto get_header(void * x) const -> header_t *
-	{
-		return static_cast < header_t * > (x);
-	}
+    auto get_header(void * x) const -> header_t *
+    {
+        return static_cast < header_t * > (x);
+    }
 
 //  -------------------------------------------------------------------------------
 
-	void * m_array = nullptr;
+    void * m_array = nullptr;
 
-	std::size_t m_size = 0, m_offset = 0;
+    std::size_t m_size = 0, m_offset = 0;
 
 //  -------------------------------------------------------------------------------
 
-	static inline auto s_alignment = alignof(std::max_align_t);
+    static inline auto s_alignment = alignof(std::max_align_t);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////
 
 void test_v1(benchmark::State & state)
 {
-	auto kb = 1uz << 10, mb = 1uz << 20;
+    auto kb = 1uz << 10, mb = 1uz << 20;
 
-	std::vector < void * > vector(kb, nullptr);
+    std::vector < void * > vector(kb, nullptr);
 
-	for (auto element : state)
-	{
-		for (auto i = 0uz; i < kb; ++i)
-		{
-			vector[i] = operator new(mb);
-		}
+    for (auto element : state)
+    {
+        for (auto i = 0uz; i < kb; ++i)
+        {
+            vector[i] = operator new(mb);
+        }
 
-		for (auto i = 0uz; i < kb; ++i)
-		{
-			operator delete(vector[std::size(vector) - 1 - i], mb);
-		}
+        for (auto i = 0uz; i < kb; ++i)
+        {
+            operator delete(vector[std::size(vector) - 1 - i], mb);
+        }
 
-		benchmark::DoNotOptimize(vector);
-	}
+        benchmark::DoNotOptimize(vector);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state)
 {
-	auto kb = 1uz << 10, mb = 1uz << 20, gb = 1uz << 30;
+    auto kb = 1uz << 10, mb = 1uz << 20, gb = 1uz << 30;
 
-	std::vector < void * > vector(kb, nullptr);
+    std::vector < void * > vector(kb, nullptr);
 
-	for (auto element : state)
-	{
-		Allocator allocator(2 * gb);
+    for (auto element : state)
+    {
+        Allocator allocator(2 * gb);
 
-		for (auto i = 0uz; i < kb; ++i)
-		{
-			vector[i] = allocator.allocate(mb);
-		}
+        for (auto i = 0uz; i < kb; ++i)
+        {
+            vector[i] = allocator.allocate(mb);
+        }
 
-		for (auto i = 0uz; i < kb; ++i)
-		{
-			allocator.deallocate(vector[std::size(vector) - 1 - i]);
-		}
+        for (auto i = 0uz; i < kb; ++i)
+        {
+            allocator.deallocate(vector[std::size(vector) - 1 - i]);
+        }
 
-		benchmark::DoNotOptimize(vector);
-	}
+        benchmark::DoNotOptimize(vector);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -173,37 +173,37 @@ BENCHMARK(test_v2);
 
 int main()
 {
-	Allocator allocator(1 << 10);
+    Allocator allocator(1 << 10);
 
 //  ----------------------------------------------------
 
-	allocator.show();          allocator.allocate(1, 1);
+    allocator.show();          allocator.allocate(1, 1);
 
-	allocator.show();          allocator.allocate(2, 2);
+    allocator.show();          allocator.allocate(2, 2);
 
-	allocator.show(); auto x = allocator.allocate(4, 4);
+    allocator.show(); auto x = allocator.allocate(4, 4);
 
-	allocator.show(); auto y = allocator.allocate(8, 8);
-
-//  ----------------------------------------------------
-
-	allocator.show(); allocator.deallocate(y);
-
-	allocator.show(); allocator.deallocate(x);
+    allocator.show(); auto y = allocator.allocate(8, 8);
 
 //  ----------------------------------------------------
 
-	allocator.show(); auto z = allocator.allocate(8, 8);
+    allocator.show(); allocator.deallocate(y);
 
-	allocator.show();
-
-//  ----------------------------------------------------
-
-	assert(z == x);
+    allocator.show(); allocator.deallocate(x);
 
 //  ----------------------------------------------------
 
-	benchmark::RunSpecifiedBenchmarks();
+    allocator.show(); auto z = allocator.allocate(8, 8);
+
+    allocator.show();
+
+//  ----------------------------------------------------
+
+    assert(z == x);
+
+//  ----------------------------------------------------
+
+    benchmark::RunSpecifiedBenchmarks();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

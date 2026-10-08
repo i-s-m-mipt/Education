@@ -77,7 +77,7 @@ auto transform_v2(signal_t const & X) -> signal_t
 
         signal_t::value_type w = 1;
 
-        auto angle = 2 * std::numbers::pi / size;
+        auto angle = -2 * std::numbers::pi / size;
 
         for (auto i = 0uz, j = half; 2 * i < size; ++i, ++j)
         {
@@ -85,7 +85,7 @@ auto transform_v2(signal_t const & X) -> signal_t
 
             Y[j] = E[i] - w * O[i];
 
-            w *= signal_t::value_type(std::cos(angle), std::sin(angle));
+            w *= std::exp(signal_t::value_type(0, angle));
         }
 
         return Y;
@@ -104,7 +104,7 @@ auto equal(std::complex < double > x, std::complex < double > y, double epsilon 
     (
         std::abs(std::real(x) - std::real(y)) < epsilon &&
 
-        std::abs(std::imag(y) - std::imag(y)) < epsilon
+        std::abs(std::imag(x) - std::imag(y)) < epsilon
     );
 }
 

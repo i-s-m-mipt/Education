@@ -17,41 +17,41 @@
 
 void show(std::vector < int > const & vector)
 {
-	std::print("show : vector = {{ ");
+    std::print("show : vector = {{ ");
 
-	for (auto element : vector)
-	{
-		std::print("{} ", element);
-	}
+    for (auto element : vector)
+    {
+        std::print("{} ", element);
+    }
 
-	std::print("}}\n");
+    std::print("}}\n");
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::vector < int > vector(5, 0);
+    std::vector < int > vector(5, 0);
 
 //  -------------------------------------------------------------------------
 
-	std::uniform_int_distribution distribution(1, 5);
+    std::uniform_int_distribution distribution(1, 5);
 
 //  -------------------------------------------------------------------------
 
-	std::default_random_engine engine;
+    std::default_random_engine engine;
 
 //  -------------------------------------------------------------------------
 
-	auto lambda = [&distribution, &engine](){ return distribution(engine); };
+    auto lambda = [&distribution, &engine](){ return distribution(engine); };
 
 //  -------------------------------------------------------------------------
 
-	std::ranges::generate(vector, lambda);
+    std::ranges::generate(vector, lambda);
 
 //  -------------------------------------------------------------------------
 
-	show(vector);
+    show(vector);
 }
 
 /////////////////////////////////////////////////////////////////////////////

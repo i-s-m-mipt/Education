@@ -18,17 +18,17 @@ int main()
 
 //  ----------------------------------------------------------
 
-	std::array < std::array < int, size > , size > array = {};
+    std::array < std::array < int, size > , size > array = {};
 
 //  ----------------------------------------------------------
 
-	for (auto i = 0uz; i < size; ++i)
-	{
-		for (auto j = 0uz; j < size; ++j)
-		{
-			array[i][j] = j + 1;
-		}
-	}
+    for (auto i = 0uz; i < size; ++i)
+    {
+        for (auto j = 0uz; j < size; ++j)
+        {
+            array[i][j] = j + 1;
+        }
+    }
 }
 
 //////////////////////////////////////////////////////////////

@@ -9,9 +9,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <iterator>
-#include <fstream>
 #include <print>
 #include <sstream>
 #include <string>
@@ -83,7 +83,7 @@ int main()
 {
     auto path_1 = "source.cpp";
 
-	auto path_2 = "output.cpp";
+    auto path_2 = "output.cpp";
 
 //  ---------------------------------------------------
 

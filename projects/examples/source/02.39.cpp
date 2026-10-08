@@ -24,63 +24,63 @@
 
 void test([[maybe_unused]] int x, int * y, int & z)
 {
-	++x, ++(*y), ++z;
+    ++x, ++(*y), ++z;
 }
 
 ////////////////////////////////////////////////////////////////////
 
 void show(int * array, std::size_t size)
 {
-	std::print("show : array = {{ ");
+    std::print("show : array = {{ ");
 
-	for (auto i = 0uz; i < size; ++i)
-	{
-		std::print("{} ", array[i]);
-	}
+    for (auto i = 0uz; i < size; ++i)
+    {
+        std::print("{} ", array[i]);
+    }
 
-	std::print("}}\n");
+    std::print("}}\n");
 }
 
 ////////////////////////////////////////////////////////////////////
 
 void show(std::span < int const > span)
 {
-	std::print("show : span = {{ ");
+    std::print("show : span = {{ ");
 
-	for (auto i = 0uz; i < std::size(span); ++i)
-	{
-		std::print("{} ", span[i]);
-	}
+    for (auto i = 0uz; i < std::size(span); ++i)
+    {
+        std::print("{} ", span[i]);
+    }
 
-	std::print("}}\n");
+    std::print("}}\n");
 }
 
 ////////////////////////////////////////////////////////////////////
 
 void show(std::string const & string)
 {
-	std::print("show : string = {{ ");
+    std::print("show : string = {{ ");
 
-	for (auto i = 0uz; i < std::size(string); ++i)
-	{
-		std::print("{} ", string[i]);
-	}
+    for (auto i = 0uz; i < std::size(string); ++i)
+    {
+        std::print("{} ", string[i]);
+    }
 
-	std::print("}}\n");
+    std::print("}}\n");
 }
 
 ////////////////////////////////////////////////////////////////////
 
 void show(std::vector < int > const & vector)
 {
-	std::print("show : vector = {{ ");
+    std::print("show : vector = {{ ");
 
-	for (auto i = 0uz; i < std::size(vector); ++i)
-	{
-		std::print("{} ", vector[i]);
-	}
+    for (auto i = 0uz; i < std::size(vector); ++i)
+    {
+        std::print("{} ", vector[i]);
+    }
 
-	std::print("}}\n");
+    std::print("}}\n");
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -91,47 +91,47 @@ int main()
 
 //  -----------------------------------------------
 
-	test(x, &y, z);
+    test(x, &y, z);
 
 //  -----------------------------------------------
 
-	assert(x == 1 && y == 3 && z == 4);
+    assert(x == 1 && y == 3 && z == 4);
 
 //  -----------------------------------------------
 
-	auto size = 5uz;
+    auto size = 5uz;
 
 //  -----------------------------------------------
 
-	auto array = new int[size]{ 1, 2, 3, 4, 5 };
+    auto array = new int[size]{ 1, 2, 3, 4, 5 };
 
 //  -----------------------------------------------
 
-	show(array, size);
+    show(array, size);
 
 //  -----------------------------------------------
 
-	show(std::span < int const > (array, size));
+    show(std::span < int const > (array, size));
 
 //  -----------------------------------------------
 
-	delete[] array;
+    delete[] array;
 
 //  -----------------------------------------------
 
-	std::string string = "aaaaa";
+    std::string string = "aaaaa";
 
 //  -----------------------------------------------
 
-	show(string);
+    show(string);
 
 //  -----------------------------------------------
 
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+    std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
 //  -----------------------------------------------
 
-	show(vector);
+    show(vector);
 }
 
 ////////////////////////////////////////////////////////////////////

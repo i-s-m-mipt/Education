@@ -33,20 +33,20 @@
 
 auto make_timestamp(std::locale const & locale, std::time_t time = 0)
 {
-	std::stringstream stream;
+    std::stringstream stream;
 
-	stream.imbue(locale);
+    stream.imbue(locale);
 
-	auto timestamp = std::gmtime(&time);
+    auto timestamp = std::gmtime(&time);
 
-	auto format = "%X %x";
+    auto format = "%X %x";
 
-	std::use_facet < std::time_put < char > > (locale).put
-	(
-		stream, stream, ' ', timestamp, format, format + std::strlen(format)
-	);
+    std::use_facet < std::time_put < char > > (locale).put
+    (
+        stream, stream, ' ', timestamp, format, format + std::strlen(format)
+    );
 
-	return stream.str();
+    return stream.str();
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -57,27 +57,27 @@ int main()
 
 //  -------------------------------------------------
 
-	std::stringstream stream(make_timestamp(locale));
+    std::stringstream stream(make_timestamp(locale));
 
 //  -------------------------------------------------
 
-	stream.imbue(locale);
+    stream.imbue(locale);
 
 //  -------------------------------------------------
 
-	std::tm tm;
+    std::tm tm;
 
 //  -------------------------------------------------
 
-	stream >> std::get_time(&tm, "%X %x");
+    stream >> std::get_time(&tm, "%X %x");
 
 //  -------------------------------------------------
 
-	assert(timegm(&tm) == 0);
+    assert(timegm(&tm) == 0);
 
 //  -------------------------------------------------
 
-	assert(stream.str() == "00:00:00 01.01.1970");
+    assert(stream.str() == "00:00:00 01.01.1970");
 }
 
 ////////////////////////////////////////////////////////////////////////////

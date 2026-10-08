@@ -18,10 +18,10 @@ import <print>;
 
 namespace library
 {
-	void test_v1()
-	{
-		std::print("library::test_v1\n");
-	}
+    void test_v1()
+    {
+        std::print("library::test_v1\n");
+    }
 }
 
 /////////////////////////////////////////

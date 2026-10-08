@@ -19,40 +19,40 @@
 
 auto bind(auto && f1, auto && f2, auto && f3)
 {
-	return [=] < typename T > (T && x)
-	{
-		return f3
-		(
-			f1(std::forward < T > (x)),
+    return [=] < typename T > (T && x)
+    {
+        return f3
+        (
+            f1(std::forward < T > (x)),
 
-			f2(std::forward < T > (x))
-		);
-	};
+            f2(std::forward < T > (x))
+        );
+    };
 }
 
 ////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+    std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
 //  ------------------------------------------------------------
 
-	auto lambda_1 = [](auto x) static { return x == 1; };
+    auto lambda_1 = [](auto x) static { return x == 1; };
 
-	auto lambda_2 = [](auto x) static { return x == 2; };
-
-//  ------------------------------------------------------------
-
-	auto lambda_3 = bind(lambda_1, lambda_2, std::logical_or());
+    auto lambda_2 = [](auto x) static { return x == 2; };
 
 //  ------------------------------------------------------------
 
-	std::erase_if(vector, lambda_3);
+    auto lambda_3 = bind(lambda_1, lambda_2, std::logical_or());
 
 //  ------------------------------------------------------------
 
-	assert(vector == std::vector < int > ({ 3, 4, 5 }));
+    std::erase_if(vector, lambda_3);
+
+//  ------------------------------------------------------------
+
+    assert(vector == std::vector < int > ({ 3, 4, 5 }));
 }
 
 ////////////////////////////////////////////////////////////////

@@ -22,7 +22,7 @@ int main()
 
 //  ----------------------------------------------------------
 
-	auto z = 3;
+    auto z = 3;
 
 //  ----------------------------------------------------------
 
@@ -38,9 +38,9 @@ int main()
 
 //  ----------------------------------------------------------
 
-	static_assert(std::is_same_v < decltype(z = 1), int & > );
+    static_assert(std::is_same_v < decltype(z = 1), int & > );
 
-	static_assert(std::is_same_v < decltype(x = 1), int   > );
+    static_assert(std::is_same_v < decltype(x = 1), int   > );
 
 //  ----------------------------------------------------------
 
@@ -48,15 +48,15 @@ int main()
 
 //  ----------------------------------------------------------
 
-	x.store(2);
+    x.store(2);
 
 //  ----------------------------------------------------------
 
-	assert(x.exchange(3) == 2);
+    assert(x.exchange(3) == 2);
 
 //  ----------------------------------------------------------
 
-	assert(x.compare_exchange_strong(z, 1) == 1 && x == 1);
+    assert(x.compare_exchange_strong(z, 1) == 1 && x == 1);
 
     assert(x.compare_exchange_strong(z, 2) == 0 && z == 1);
 
@@ -64,55 +64,55 @@ int main()
 
     assert((x +  y) == +3);
 
-	assert((x -  y) == -1);
+    assert((x -  y) == -1);
 
-	assert((x *  y) == +2);
+    assert((x *  y) == +2);
 
-	assert((x /  y) == +0);
+    assert((x /  y) == +0);
 
-	assert((x %  y) == +1);
-
-//  ----------------------------------------------------------
-
-	assert((x += y) == +3);
-
-	assert((x -= y) == +1);
-
-//	assert((x *= y) == +2); // error
-
-//	assert((x /= y) == +1); // error
-
-//	assert((x %= y) == +1); // error
+    assert((x %  y) == +1);
 
 //  ----------------------------------------------------------
 
-	assert(x.fetch_add(1) == 1);
+    assert((x += y) == +3);
 
-	assert(x.fetch_sub(1) == 2);
+    assert((x -= y) == +1);
 
-//  ----------------------------------------------------------
+//  assert((x *= y) == +2); // error
 
-	assert((x ++  ) == +1);
+//  assert((x /= y) == +1); // error
 
-	assert((x --  ) == +2);
-
-	assert((  ++ y) == +3);
-
-	assert((  -- y) == +2);
+//  assert((x %= y) == +1); // error
 
 //  ----------------------------------------------------------
 
-	assert((x <  y) ==  1);
+    assert(x.fetch_add(1) == 1);
 
-	assert((x >  y) ==  0);
+    assert(x.fetch_sub(1) == 2);
 
-	assert((x <= y) ==  1);
+//  ----------------------------------------------------------
 
-	assert((x >= y) ==  0);
+    assert((x ++  ) == +1);
 
-	assert((x == y) ==  0);
+    assert((x --  ) == +2);
 
-	assert((x != y) ==  1);
+    assert((  ++ y) == +3);
+
+    assert((  -- y) == +2);
+
+//  ----------------------------------------------------------
+
+    assert((x <  y) ==  1);
+
+    assert((x >  y) ==  0);
+
+    assert((x <= y) ==  1);
+
+    assert((x >= y) ==  0);
+
+    assert((x == y) ==  0);
+
+    assert((x != y) ==  1);
 }
 
 //////////////////////////////////////////////////////////////

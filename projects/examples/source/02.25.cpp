@@ -19,11 +19,11 @@ int main()
 
 //  -------------------------------------------------------
 
-	do // support : https://compiler-explorer.com
-	{
-		std::print("main : enter int x : "); std::cin >> x;
-	}
-	while (x > 0);
+    do // support : https://compiler-explorer.com
+    {
+        std::print("main : enter int x : "); std::cin >> x;
+    }
+    while (x > 0);
 }
 
 ///////////////////////////////////////////////////////////

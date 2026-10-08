@@ -17,28 +17,28 @@
 
 auto equal_v1(double x, double y)
 {
-	return std::abs(x - y) < std::numeric_limits < double > ::epsilon();
+    return std::abs(x - y) < std::numeric_limits < double > ::epsilon();
 }
 
 ////////////////////////////////////////////////////////////////////////
 
 auto equal_v2(double x, double y, double epsilon = 1e-6)
 {
-	return std::abs(x - y) < epsilon;
+    return std::abs(x - y) < epsilon;
 }
 
 ////////////////////////////////////////////////////////////////////////
 
 auto equal_v3(double x, double y, double scale)
 {
-	return std::abs(x - y) < std::max(std::abs(x), std::abs(y)) * scale;
+    return std::abs(x - y) < std::max(std::abs(x), std::abs(y)) * scale;
 }
 
 ////////////////////////////////////////////////////////////////////////
 
 auto equal_v4(double x, double y, double scale, double epsilon = 1e-6)
 {
-	return std::abs(x - y) < epsilon ? true : equal_v3(x, y, scale);
+    return std::abs(x - y) < epsilon ? true : equal_v3(x, y, scale);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -49,29 +49,29 @@ int main()
 
 //  -------------------------------------------------------------------
 
-	assert(equal_v2(1e+0, 1e+0 + 1e-6) == 1);
+    assert(equal_v2(1e+0, 1e+0 + 1e-6) == 1);
 
-//	assert(equal_v2(1e+3, 1e+3 + 1e-3) == 0); // bad
-
-//  -------------------------------------------------------------------
-
-	assert(equal_v3(1e-6, 1e-9,        1e-6) == 0);
-
-	assert(equal_v3(1e+3, 1e+3 + 1e-3, 1e-6) == 1);
+//  assert(equal_v2(1e+3, 1e+3 + 1e-3) == 0); // bad
 
 //  -------------------------------------------------------------------
 
-	auto x = 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1;
+    assert(equal_v3(1e-6, 1e-9,        1e-6) == 0);
+
+    assert(equal_v3(1e+3, 1e+3 + 1e-3, 1e-6) == 1);
+
+//  -------------------------------------------------------------------
+
+    auto x = 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1;
 
 //  -------------------------------------------------------------------
 
     assert(equal_v3(x,       1.0, 1e-6) == 1);
 
-// 	assert(equal_v3(x - 1.0, 0.0, 1e-6) == 0); // bad
+//  assert(equal_v3(x - 1.0, 0.0, 1e-6) == 0); // bad
 
 //  -------------------------------------------------------------------
 
-	assert(equal_v4(x - 1.0, 0.0, 1e-6) == 1);
+    assert(equal_v4(x - 1.0, 0.0, 1e-6) == 1);
 }
 
 ////////////////////////////////////////////////////////////////////////

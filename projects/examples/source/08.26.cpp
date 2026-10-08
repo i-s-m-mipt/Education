@@ -23,87 +23,87 @@
 
 struct Vector
 {
-	double x = 0, y = 0, z = 0;
+    double x = 0, y = 0, z = 0;
 };
 
 ///////////////////////////////////////////////////////////////////////////
 
 auto operator*(Vector const & a, Vector const & b)
 {
-	return Vector
-	(
-		a.y * b.z - a.z * b.y,
+    return Vector
+    (
+        a.y * b.z - a.z * b.y,
 
-	   -a.x * b.z + a.z * b.x,
+       -a.x * b.z + a.z * b.x,
 
-		a.x * b.y - a.y * b.x
-	);
+        a.x * b.y - a.y * b.x
+    );
 }
 
 ///////////////////////////////////////////////////////////////////////////
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
-	return std::abs(x - y) < epsilon;
+    return std::abs(x - y) < epsilon;
 }
 
 ///////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	auto size = 1uz << 30;
+    auto size = 1uz << 30;
 
 //  -----------------------------------------------------------------------
 
-	std::uniform_real_distribution distribution(0.0, 2 * std::numbers::pi);
+    std::uniform_real_distribution distribution(0.0, 2 * std::numbers::pi);
 
 //  -----------------------------------------------------------------------
 
-	std::default_random_engine engine;
+    std::default_random_engine engine;
 
 //  -----------------------------------------------------------------------
 
-	Vector PA(0, -1, 0);
+    Vector PA(0, -1, 0);
 
 //  -----------------------------------------------------------------------
 
-	auto counter = 0uz;
+    auto counter = 0uz;
 
 //  -----------------------------------------------------------------------
 
-	for (auto i = 0uz; i < size; ++i)
-	{
-		auto w_B = distribution(engine);
+    for (auto i = 0uz; i < size; ++i)
+    {
+        auto w_B = distribution(engine);
 
-		auto w_C = distribution(engine);
+        auto w_C = distribution(engine);
 
-	//  -----------------------------------------------------
+    //  -----------------------------------------------------
 
-		Vector PB(std::cos(w_B), std::sin(w_B), 0);
+        Vector PB(std::cos(w_B), std::sin(w_B), 0);
 
-		Vector PC(std::cos(w_C), std::sin(w_C), 0);
+        Vector PC(std::cos(w_C), std::sin(w_C), 0);
 
-	//  -----------------------------------------------------
+    //  -----------------------------------------------------
 
-		auto alpha_1 = (PA * PB).z;
+        auto alpha_1 = (PA * PB).z;
 
-		auto alpha_2 = (PB * PC).z;
+        auto alpha_2 = (PB * PC).z;
 
-		auto alpha_3 = (PC * PA).z;
+        auto alpha_3 = (PC * PA).z;
 
-	//  -----------------------------------------------------
+    //  -----------------------------------------------------
 
-		counter +=
-		(
-			(alpha_1 >= 0 && alpha_2 >= 0 && alpha_3 >= 0) ||
+        counter +=
+        (
+            (alpha_1 >= 0 && alpha_2 >= 0 && alpha_3 >= 0) ||
 
-			(alpha_1 <= 0 && alpha_2 <= 0 && alpha_3 <= 0)
-		);
-	}
+            (alpha_1 <= 0 && alpha_2 <= 0 && alpha_3 <= 0)
+        );
+    }
 
 //  -----------------------------------------------------------------------
 
-	assert(equal(1.0 * counter / size, 0.250, 1e-3));
+    assert(equal(1.0 * counter / size, 0.250, 1e-3));
 }
 
 ///////////////////////////////////////////////////////////////////////////

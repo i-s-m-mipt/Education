@@ -27,14 +27,14 @@ class Entity
 {
 public :
 
-	Entity(int x) : m_x(x) {}
+    Entity(int x) : m_x(x) {}
 
 //  -------------------------------------------------------------
 
-	auto get() const
-	{
-		return m_x;
-	}
+    auto get() const
+    {
+        return m_x;
+    }
 
 //  -------------------------------------------------------------
 
@@ -57,39 +57,39 @@ public :
 
 private :
 
-	class Cache
-	{
-	public :
+    class Cache
+    {
+    public :
 
-		auto string(Entity const & entity) -> std::string const &
-		{
-			if (m_string.empty())
-			{
-				m_string = std::to_string(entity.m_x);
-			}
+        auto string(Entity const & entity) -> std::string const &
+        {
+            if (m_string.empty())
+            {
+                m_string = std::to_string(entity.m_x);
+            }
 
-			return m_string;
-		}
+            return m_string;
+        }
 
-	//  ---------------------------------------------------------
+    //  ---------------------------------------------------------
 
-		void clear()
-		{
-			m_string.clear();
-		}
+        void clear()
+        {
+            m_string.clear();
+        }
 
-	private :
+    private :
 
-		std::string m_string;
-	};
-
-//  -------------------------------------------------------------
-
-	int m_x = 0;
+        std::string m_string;
+    };
 
 //  -------------------------------------------------------------
 
-	mutable Cache m_cache;
+    int m_x = 0;
+
+//  -------------------------------------------------------------
+
+    mutable Cache m_cache;
 };
 
 /////////////////////////////////////////////////////////////////////////
@@ -100,21 +100,21 @@ int main()
 
 //  ---------------------------------------------------------------------
 
-	assert(entity.get() == 1); // support : https://compiler-explorer.com
+    assert(entity.get() == 1); // support : https://compiler-explorer.com
 
 //  ---------------------------------------------------------------------
 
     assert(entity.make_string() == "1");
 
-	assert(entity.make_string() == "1");
+    assert(entity.make_string() == "1");
 
 //  ---------------------------------------------------------------------
 
-	entity.set(2);
+    entity.set(2);
 
 //  ---------------------------------------------------------------------
 
-	assert(entity.make_string() == "2");
+    assert(entity.make_string() == "2");
 }
 
 /////////////////////////////////////////////////////////////////////////

@@ -15,7 +15,7 @@
 
 struct Entity
 {
-	int x = 0;
+    int x = 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,10 +24,10 @@ class Hash
 {
 public :
 
-	static auto operator()(Entity const & entity)
-	{
-		return std::hash < int > ()(entity.x);
-	}
+    static auto operator()(Entity const & entity)
+    {
+        return std::hash < int > ()(entity.x);
+    }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,17 +36,17 @@ class Equal
 {
 public :
 
-	static auto operator()(Entity const & lhs, Entity const & rhs)
-	{
-		return lhs.x == rhs.x;
-	}
+    static auto operator()(Entity const & lhs, Entity const & rhs)
+    {
+        return lhs.x == rhs.x;
+    }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::unordered_set < Entity, Hash, Equal > entities = { { 1 }, { 2 }, { 3 }, { 4 }, { 5 } };
+    std::unordered_set < Entity, Hash, Equal > entities = { { 1 }, { 2 }, { 3 }, { 4 }, { 5 } };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

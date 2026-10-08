@@ -16,14 +16,14 @@
 
 auto test(int x)
 {
-	return x;
+    return x;
 }
 
 /////////////////////////////////////////////////////////////////
 
 template < typename ... Ts > auto invoke(auto && f, Ts && ... xs)
 {
-	return f(std::forward < Ts > (xs)...);
+    return f(std::forward < Ts > (xs)...);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -42,9 +42,9 @@ public :
 
 int main()
 {
-    assert(		invoke(test, 1) == 1);
+    assert(     invoke(test, 1) == 1);
 
-	assert(std::invoke(test, 1) == 1);
+    assert(std::invoke(test, 1) == 1);
 
 //  ----------------------------------------------------
 

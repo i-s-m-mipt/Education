@@ -33,10 +33,10 @@ template < std::ranges::view V, typename T > class Task
 {
 public :
 
-	static void operator()(V view, T & sum)
-	{
-		sum = *std::ranges::fold_left_first(view, std::plus());
-	}
+    static void operator()(V view, T & sum)
+    {
+        sum = *std::ranges::fold_left_first(view, std::plus());
+    }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,50 +45,50 @@ template < typename T > auto fold(std::ranges::view auto view, T sum)
 {
     auto begin = std::begin(view), end = std::end(view);
 
-	if (auto size = std::distance(begin, end); size > 0)
-	{
-		auto concurrency = std::thread::hardware_concurrency();
+    if (auto size = std::distance(begin, end); size > 0)
+    {
+        auto concurrency = std::thread::hardware_concurrency();
 
-		auto step = size / concurrency;
+        auto step = size / concurrency;
 
-		std::vector < T > sums(concurrency, T());
+        std::vector < T > sums(concurrency, T());
 
-		{
-			std::vector < std::jthread > threads(concurrency - 1);
+        {
+            std::vector < std::jthread > threads(concurrency - 1);
 
-			for (auto i = 0uz; i < std::size(threads); ++i)
-			{
-				auto range = std::ranges::subrange(begin, std::next(begin, step));
+            for (auto i = 0uz; i < std::size(threads); ++i)
+            {
+                auto range = std::ranges::subrange(begin, std::next(begin, step));
 
-				threads[i] = std::jthread(Task < decltype(range), T > (), range, std::ref(sums[i]));
+                threads[i] = std::jthread(Task < decltype(range), T > (), range, std::ref(sums[i]));
 
-				std::advance(begin, step);
-			}
+                std::advance(begin, step);
+            }
 
-			auto range = std::ranges::subrange(begin, end);
+            auto range = std::ranges::subrange(begin, end);
 
-			Task < decltype(range), T > ()(range, sums[concurrency - 1]);
-		}
+            Task < decltype(range), T > ()(range, sums[concurrency - 1]);
+        }
 
-		sum += *std::ranges::fold_left_first(sums, std::plus());
-	}
+        sum += *std::ranges::fold_left_first(sums, std::plus());
+    }
 
-	return sum;
+    return sum;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::vector < int > vector(1 << 10, 0);
+    std::vector < int > vector(1 << 10, 0);
 
 //  ----------------------------------------------------
 
-	std::ranges::iota(vector, 1);
+    std::ranges::iota(vector, 1);
 
 //  ----------------------------------------------------
 
-	assert(fold(std::views::all(vector), 0) == 524'800);
+    assert(fold(std::views::all(vector), 0) == 524'800);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

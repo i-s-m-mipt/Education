@@ -21,7 +21,7 @@
 
 struct Entity
 {
-	int x = 0;
+    int x = 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -32,11 +32,11 @@ int main()
 
 //  ------------------------------------------------------------------------
 
-	std::ranges::sort(entities, std::less(), &Entity::x);
+    std::ranges::sort(entities, std::less(), &Entity::x);
 
 //  ------------------------------------------------------------------------
 
-	assert(std::ranges::is_sorted(entities, std::less(), &Entity::x));
+    assert(std::ranges::is_sorted(entities, std::less(), &Entity::x));
 }
 
 ////////////////////////////////////////////////////////////////////////////

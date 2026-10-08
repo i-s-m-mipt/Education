@@ -31,27 +31,27 @@
 
 int main()
 {
-	std::chrono::time_point < std::chrono::system_clock > epoch;
+    std::chrono::time_point < std::chrono::system_clock > epoch;
 
 //  ------------------------------------------------------------------------
 
-	auto now = std::chrono::system_clock::now();
+    auto now = std::chrono::system_clock::now();
 
 //  ------------------------------------------------------------------------
 
-	std::print("main : now = {:%Y %B %d %H:%M:%S %Z}\n", now);
+    std::print("main : now = {:%Y %B %d %H:%M:%S %Z}\n", now);
 
 //  ------------------------------------------------------------------------
 
-	auto delta = std::chrono::floor < std::chrono::days > (now - epoch);
+    auto delta = std::chrono::floor < std::chrono::days > (now - epoch);
 
 //  ------------------------------------------------------------------------
 
-	std::print("main : delta = {} (days)\n", delta.count());
+    std::print("main : delta = {} (days)\n", delta.count());
 
 //  ------------------------------------------------------------------------
 
-	assert(std::chrono::system_clock::to_time_t(now) == std::time(nullptr));
+    assert(std::chrono::system_clock::to_time_t(now) == std::time(nullptr));
 }
 
 ////////////////////////////////////////////////////////////////////////////

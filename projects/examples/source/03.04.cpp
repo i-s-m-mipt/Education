@@ -35,14 +35,14 @@ public :
 
     auto get() const
     {
-    //	++m_x; // error
+    //  ++m_x; // error
 
         return m_x;
     }
 
 //  -------------------------
 
-//	void set_v1(int x) // bad
+//  void set_v1(int x) // bad
 //  {
 //      m_x = x;
 //  }
@@ -77,7 +77,7 @@ void Entity::test() const
 
 int main()
 {
-	Entity       entity_1(1);
+    Entity       entity_1(1);
 
     Entity const entity_2(2);
 
@@ -89,7 +89,7 @@ int main()
 
 //  ----------------------------
 
-	entity_1.set_v2(2);
+    entity_1.set_v2(2);
 
 //  entity_2.set_v2(3); // error
 

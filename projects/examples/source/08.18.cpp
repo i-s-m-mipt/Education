@@ -25,29 +25,29 @@ int main()
 //  ----------------------------------------------------------------------
 
     try
-	{
-		auto const & local = python.local();
+    {
+        auto const & local = python.local();
 
-	//  ------------------------------------------------------------------
+    //  ------------------------------------------------------------------
 
-		boost::python::exec("from script import factorial", local, local);
+        boost::python::exec("from script import factorial", local, local);
 
-	//  ------------------------------------------------------------------
+    //  ------------------------------------------------------------------
 
-		auto object = local["factorial"](100);
+        auto object = local["factorial"](100);
 
-	//  ------------------------------------------------------------------
+    //  ------------------------------------------------------------------
 
-		auto x = boost::python::extract < std::string > (object)();
+        auto x = boost::python::extract < std::string > (object)();
 
-	//  ------------------------------------------------------------------
+    //  ------------------------------------------------------------------
 
         std::print("main : x = {}\n", x);
-	}
-	catch (boost::python::error_already_set const &)
-	{
-		std::cerr << "main : " << Python::exception() << '\n';
-	}
+    }
+    catch (boost::python::error_already_set const &)
+    {
+        std::cerr << "main : " << Python::exception() << '\n';
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////

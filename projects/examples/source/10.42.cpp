@@ -26,91 +26,91 @@
 
 auto make_strings(std::size_t size_1, std::size_t size_2)
 {
-	std::set < std::string > strings;
+    std::set < std::string > strings;
 
-	std::string string(size_2, '_');
+    std::string string(size_2, '_');
 
-	std::uniform_int_distribution distribution(97, 122);
+    std::uniform_int_distribution distribution(97, 122);
 
-	std::default_random_engine engine;
+    std::default_random_engine engine;
 
-	while (std::size(strings) < size_1)
+    while (std::size(strings) < size_1)
     {
         for (auto & element : string)
-		{
-			element = distribution(engine);
-		}
+        {
+            element = distribution(engine);
+        }
 
-		strings.insert(string);
+        strings.insert(string);
     }
 
-	return strings;
+    return strings;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 auto hash(std::string const & string) -> std::size_t
 {
-	std::uint32_t seed = std::size(string);
+    std::uint32_t seed = std::size(string);
 
-	for (auto element : string)
-	{
-		seed = seed << 5 ^ seed >> 27 ^ element;
-	}
+    for (auto element : string)
+    {
+        seed = seed << 5 ^ seed >> 27 ^ element;
+    }
 
-	return seed;
+    return seed;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::set < std::size_t > hashes;
+    std::set < std::size_t > hashes;
 
 //  ----------------------------------------------------------------------
 
-	std::string points;
+    std::string points;
 
 //  ----------------------------------------------------------------------
 
-	for (auto i = 0uz; auto const & string : make_strings(1 << 20, 10))
-	{
-		hashes.insert(hash(string));
+    for (auto i = 0uz; auto const & string : make_strings(1 << 20, 10))
+    {
+        hashes.insert(hash(string));
 
-	//  ----------------------------------------------------
+    //  ----------------------------------------------------
 
-		if (i++ % (1 << 10) == 0)
-		{
-			points += i == 1 ? "" : ",";
+        if (i++ % (1 << 10) == 0)
+        {
+            points += i == 1 ? "" : ",";
 
-			points += std::to_string(i - 1) + ',';
+            points += std::to_string(i - 1) + ',';
 
-			points += std::to_string(i - std::size(hashes));
-		}
-	}
-
-//  ----------------------------------------------------------------------
-
-	Python python;
+            points += std::to_string(i - std::size(hashes));
+        }
+    }
 
 //  ----------------------------------------------------------------------
 
-	try
-	{
-		auto const & local = python.local();
+    Python python;
 
-	//  ------------------------------------------------------------------
+//  ----------------------------------------------------------------------
 
-		boost::python::exec("from script import make_plot", local, local);
+    try
+    {
+        auto const & local = python.local();
 
-	//  ------------------------------------------------------------------
+    //  ------------------------------------------------------------------
 
-		local["make_plot"](points.c_str(), "hash");
-	}
-	catch (boost::python::error_already_set const &)
-	{
-		std::cerr << "main : " << Python::exception() << '\n';
-	}
+        boost::python::exec("from script import make_plot", local, local);
+
+    //  ------------------------------------------------------------------
+
+        local["make_plot"](points.c_str(), "hash");
+    }
+    catch (boost::python::error_already_set const &)
+    {
+        std::cerr << "main : " << Python::exception() << '\n';
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -14,37 +14,37 @@
 
 struct Expected
 {
-	union
-	{
-		int x, y = 0;
-	};
+    union
+    {
+        int x, y = 0;
+    };
 
 //  -----------------------
 
-	bool has_error = false;
+    bool has_error = false;
 };
 
 ///////////////////////////////////////////////////
 
 auto test(int x)
 {
-	if (x > 0)
-	{
-		return Expected { .x = x, .has_error = 0 };
-	}
-	else
-	{
-		return Expected { .y = x, .has_error = 1 };
-	}
+    if (x > 0)
+    {
+        return Expected { .x = x, .has_error = 0 };
+    }
+    else
+    {
+        return Expected { .y = x, .has_error = 1 };
+    }
 }
 
 ///////////////////////////////////////////////////
 
 int main()
 {
-	assert(test(0).has_error == 1);
+    assert(test(0).has_error == 1);
 
-	assert(test(1).has_error == 0);
+    assert(test(1).has_error == 0);
 }
 
 ///////////////////////////////////////////////////

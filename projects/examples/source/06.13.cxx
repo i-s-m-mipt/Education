@@ -56,14 +56,14 @@ import <print>;
 
 export namespace library
 {
-	void test_v1();
+    void test_v1();
 
 //  -------------------------------------
 
-	void test_v2()
-	{
-		std::print("library::test_v2\n");
-	}
+    void test_v2()
+    {
+        std::print("library::test_v2\n");
+    }
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -74,10 +74,10 @@ export namespace library
 
 namespace library
 {
-	void test_v3()
-	{
-		std::print("library::test_v3\n");
-	}
+    void test_v3()
+    {
+        std::print("library::test_v3\n");
+    }
 }
 
 ///////////////////////////////////////////////////////////////////

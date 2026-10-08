@@ -39,7 +39,7 @@ public :
 
         m_array = operator new(m_size, std::align_val_t(s_alignment));
 
-	    m_head = get_node(m_array);
+        m_head = get_node(m_array);
 
         m_head->size = m_size - sizeof(Header);
 
@@ -57,9 +57,9 @@ public :
 
     auto allocate(std::size_t size) -> void *
     {
-	    void * end = get_byte(m_array) + sizeof(Header) + size, * next = end;
+        void * end = get_byte(m_array) + sizeof(Header) + size, * next = end;
 
-	    auto free = 2 * alignof(Header);
+        auto free = 2 * alignof(Header);
 
         if (next = std::align(alignof(Header), sizeof(Header), next, free); next)
         {
@@ -170,7 +170,7 @@ private :
 
 //  -------------------------------------------------------------------------------------------
 
-	struct alignas(std::max_align_t) Header
+    struct alignas(std::max_align_t) Header
     {
         std::size_t size = 0;
     };
@@ -178,23 +178,23 @@ private :
 //  -------------------------------------------------------------------------------------------
 
     auto get_byte(void * x) const -> std::byte *
-	{
-		return static_cast < std::byte * > (x);
-	}
+    {
+        return static_cast < std::byte * > (x);
+    }
 
 //  -------------------------------------------------------------------------------------------
 
     auto get_node(void * x) const -> Node *
-	{
-		return static_cast < Node * > (x);
-	}
+    {
+        return static_cast < Node * > (x);
+    }
 
 //  -------------------------------------------------------------------------------------------
 
     auto get_header(void * x) const -> Header *
-	{
-		return static_cast < Header * > (x);
-	}
+    {
+        return static_cast < Header * > (x);
+    }
 
 //  -------------------------------------------------------------------------------------------
 
@@ -202,7 +202,7 @@ private :
     {
         Node * current = m_head, * previous = nullptr;
 
-	    while (current && size > current->size)
+        while (current && size > current->size)
         {
             previous = current;
 
@@ -214,21 +214,21 @@ private :
 
 //  -------------------------------------------------------------------------------------------
 
-	void merge(Node * previous, Node * node) const
+    void merge(Node * previous, Node * node) const
     {
-	    if (node->next && get_byte(node) + sizeof(Header) + node->size == get_byte(node->next))
-	    {
-		    node->size += sizeof(Header) + node->next->size;
+        if (node->next && get_byte(node) + sizeof(Header) + node->size == get_byte(node->next))
+        {
+            node->size += sizeof(Header) + node->next->size;
 
-		    node->next = node->next->next;
-	    }
+            node->next = node->next->next;
+        }
 
-	    if (previous && get_byte(previous) + sizeof(Header) + previous->size == get_byte(node))
-	    {
-		    previous->size += sizeof(Header) + node->size;
+        if (previous && get_byte(previous) + sizeof(Header) + previous->size == get_byte(node))
+        {
+            previous->size += sizeof(Header) + node->size;
 
-		    previous->next = node->next;
-	    }
+            previous->next = node->next;
+        }
     }
 
 //  -------------------------------------------------------------------------------------------
@@ -248,7 +248,7 @@ private :
 
 void test_v1(benchmark::State & state)
 {
-	auto kb = 1uz << 10, mb = 1uz << 20;
+    auto kb = 1uz << 10, mb = 1uz << 20;
 
     std::uniform_int_distribution distribution(1, 16);
 
@@ -256,41 +256,41 @@ void test_v1(benchmark::State & state)
 
     std::vector < std::pair < void *, std::size_t > > vector(kb);
 
-	for (auto element : state)
-	{
-		for (auto i = 0uz; i < kb; ++i)
+    for (auto element : state)
+    {
+        for (auto i = 0uz; i < kb; ++i)
         {
             vector[i].second = distribution(engine) * mb;
 
             vector[i].first  = operator new(vector[i].second);
         }
 
-		for (auto i = 0uz; i < kb; i += 32)
+        for (auto i = 0uz; i < kb; i += 32)
         {
             operator delete(vector[i].first, vector[i].second);
         }
 
-		for (auto i = 0uz; i < kb; i += 32)
+        for (auto i = 0uz; i < kb; i += 32)
         {
             vector[i].second = distribution(engine) * mb;
 
             vector[i].first  = operator new(vector[i].second);
         }
 
-		for (auto i = 0uz; i < kb; ++i)
+        for (auto i = 0uz; i < kb; ++i)
         {
             operator delete(vector[i].first, vector[i].second);
         }
 
         benchmark::DoNotOptimize(vector);
-	}
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 void test_v2(benchmark::State & state)
 {
-	auto kb = 1uz << 10, mb = 1uz << 20, gb = 1uz << 30;
+    auto kb = 1uz << 10, mb = 1uz << 20, gb = 1uz << 30;
 
     std::uniform_int_distribution distribution(1, 16);
 
@@ -298,32 +298,32 @@ void test_v2(benchmark::State & state)
 
     std::vector < void * > vector(kb, nullptr);
 
-	for (auto element : state)
-	{
-		Allocator allocator(16 * gb);
+    for (auto element : state)
+    {
+        Allocator allocator(16 * gb);
 
-		for (auto i = 0uz; i < kb; ++i)
+        for (auto i = 0uz; i < kb; ++i)
         {
             vector[i] = allocator.allocate(distribution(engine) * mb);
         }
 
-		for (auto i = 0uz; i < kb; i += 32)
+        for (auto i = 0uz; i < kb; i += 32)
         {
             allocator.deallocate(vector[i]);
         }
 
-		for (auto i = 0uz; i < kb; i += 32)
+        for (auto i = 0uz; i < kb; i += 32)
         {
             vector[i] = allocator.allocate(distribution(engine) * mb);
         }
 
-		for (auto i = 0uz; i < kb; ++i)
+        for (auto i = 0uz; i < kb; ++i)
         {
             allocator.deallocate(vector[i]);
         }
 
         benchmark::DoNotOptimize(vector);
-	}
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

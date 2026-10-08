@@ -18,7 +18,7 @@
 
 template
 <
-	typename T
+    typename T
 >
 class is_function : public std::integral_constant
 <
@@ -36,13 +36,13 @@ int main()
 {
     static_assert(     is_function_v < int(int) > == 1);
 
-	static_assert(     is_function_v < int      > == 0);
+    static_assert(     is_function_v < int      > == 0);
 
 //  ----------------------------------------------------
 
-	static_assert(std::is_function_v < int(int) > == 1);
+    static_assert(std::is_function_v < int(int) > == 1);
 
-	static_assert(std::is_function_v < int      > == 0);
+    static_assert(std::is_function_v < int      > == 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////////

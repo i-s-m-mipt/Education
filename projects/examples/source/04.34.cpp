@@ -19,16 +19,16 @@ template < typename B > class is_polymorphic
 {
 private :
 
-	template < typename T > static std::false_type test(...);
+    template < typename T > static std::false_type test(...);
 
     template < typename T > static std:: true_type test
-	(
-		int, decltype(dynamic_cast < void * > (std::declval < T * > ())) = nullptr
-	);
+    (
+        int, decltype(dynamic_cast < void * > (std::declval < T * > ())) = nullptr
+    );
 
 public :
 
-	constexpr static auto value = decltype(test < B > (1))::value;
+    constexpr static auto value = decltype(test < B > (1))::value;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +41,7 @@ class Entity
 {
 public :
 
-	virtual ~Entity() = default;
+    virtual ~Entity() = default;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -56,19 +56,19 @@ class Server {};
 
 int main()
 {
-	static_assert(     is_polymorphic_v < Entity > == 1);
+    static_assert(     is_polymorphic_v < Entity > == 1);
 
-	static_assert(     is_polymorphic_v < Client > == 1);
+    static_assert(     is_polymorphic_v < Client > == 1);
 
-	static_assert(     is_polymorphic_v < Server > == 0);
+    static_assert(     is_polymorphic_v < Server > == 0);
 
 //  -----------------------------------------------------
 
-	static_assert(std::is_polymorphic_v < Entity > == 1);
+    static_assert(std::is_polymorphic_v < Entity > == 1);
 
-	static_assert(std::is_polymorphic_v < Client > == 1);
+    static_assert(std::is_polymorphic_v < Client > == 1);
 
-	static_assert(std::is_polymorphic_v < Server > == 0);
+    static_assert(std::is_polymorphic_v < Server > == 0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////

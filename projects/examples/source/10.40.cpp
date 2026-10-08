@@ -20,25 +20,25 @@
 
 auto hash(std::string const & string)
 {
-	auto seed = 0uz;
+    auto seed = 0uz;
 
-	for (auto element : string)
-	{
-		(seed *= 31) += element;
-	}
+    for (auto element : string)
+    {
+        (seed *= 31) += element;
+    }
 
-	return seed;
+    return seed;
 }
 
 ////////////////////////////////////////////////////////
 
 int main()
 {
-	std::ignore = hash("aaaaa");
+    std::ignore = hash("aaaaa");
 
 //  ----------------------------------------------------
 
-	std::ignore = std::hash < std::string > ()("aaaaa");
+    std::ignore = std::hash < std::string > ()("aaaaa");
 }
 
 ////////////////////////////////////////////////////////

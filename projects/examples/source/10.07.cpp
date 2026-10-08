@@ -24,16 +24,16 @@ int main()
 //  -------------------------------------------------------------------------------------
 
     static_assert
-	(
-		std::is_same_v
-		<
-			decltype(deque)::iterator::iterator_category, std::random_access_iterator_tag
-		>
-	);
+    (
+        std::is_same_v
+        <
+            decltype(deque)::iterator::iterator_category, std::random_access_iterator_tag
+        >
+    );
 
 //  -------------------------------------------------------------------------------------
 
-	static_assert(!std::contiguous_iterator < decltype(deque)::iterator > );
+    static_assert(!std::contiguous_iterator < decltype(deque)::iterator > );
 
 //  -------------------------------------------------------------------------------------
 
@@ -41,11 +41,11 @@ int main()
 
 //  -------------------------------------------------------------------------------------
 
-	deque.erase(deque.insert(std::next(std::begin(deque), 0), 1));
+    deque.erase(deque.insert(std::next(std::begin(deque), 0), 1));
 
-	deque.erase(deque.insert(std::next(std::begin(deque), 2), 1));
+    deque.erase(deque.insert(std::next(std::begin(deque), 2), 1));
 
-	deque.erase(deque.insert(std::next(std::begin(deque), 5), 1));
+    deque.erase(deque.insert(std::next(std::begin(deque), 5), 1));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

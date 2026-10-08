@@ -46,7 +46,7 @@ template < typename T2, typename T1 > T2 bit_cast(T1 const & source)
 
 struct Entity
 {
-	int x = 0;
+    int x = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////////////

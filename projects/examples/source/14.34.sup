@@ -6,7 +6,7 @@
 
 // content : Execution Pipelines
 //
-// content : Instruction Register (RIP)
+// content : Instruction Pointer (RIP)
 //
 // content : Instruction Fetching
 //

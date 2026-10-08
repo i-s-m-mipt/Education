@@ -32,7 +32,7 @@ int main()
 {
     static_assert(     is_lvalue_reference_v < int    > == 0);
 
-	static_assert(     is_lvalue_reference_v < int &  > == 1);
+    static_assert(     is_lvalue_reference_v < int &  > == 1);
 
     static_assert(     is_lvalue_reference_v < int && > == 0);
 
@@ -40,7 +40,7 @@ int main()
 
     static_assert(std::is_lvalue_reference_v < int    > == 0);
 
-	static_assert(std::is_lvalue_reference_v < int &  > == 1);
+    static_assert(std::is_lvalue_reference_v < int &  > == 1);
 
     static_assert(std::is_lvalue_reference_v < int && > == 0);
 
@@ -48,7 +48,7 @@ int main()
 
     static_assert(     is_rvalue_reference_v < int    > == 0);
 
-	static_assert(     is_rvalue_reference_v < int &  > == 0);
+    static_assert(     is_rvalue_reference_v < int &  > == 0);
 
     static_assert(     is_rvalue_reference_v < int && > == 1);
 
@@ -56,7 +56,7 @@ int main()
 
     static_assert(std::is_rvalue_reference_v < int    > == 0);
 
-	static_assert(std::is_rvalue_reference_v < int &  > == 0);
+    static_assert(std::is_rvalue_reference_v < int &  > == 0);
 
     static_assert(std::is_rvalue_reference_v < int && > == 1);
 }

@@ -20,7 +20,7 @@
 
 __attribute__((noinline)) auto test(int x, int y)
 {
-	return x + y;
+    return x + y;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -29,13 +29,13 @@ class Entity
 {
 public :
 
-	virtual ~Entity() = default;
+    virtual ~Entity() = default;
 
 //  ------------------------------------------------------------------
 
-	__attribute__((noinline))         int test_v1(int x, int y) const;
+    __attribute__((noinline))         int test_v1(int x, int y) const;
 
-	__attribute__((noinline)) virtual int test_v2(int x, int y) const;
+    __attribute__((noinline)) virtual int test_v2(int x, int y) const;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +44,7 @@ class Client : public Entity
 {
 public :
 
-	__attribute__((noinline)) int test_v2(int x, int y) const override;
+    __attribute__((noinline)) int test_v2(int x, int y) const override;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +53,7 @@ class Server : public Entity
 {
 public :
 
-	__attribute__((noinline)) int test_v2(int x, int y) const override;
+    __attribute__((noinline)) int test_v2(int x, int y) const override;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -72,65 +72,65 @@ class Functor
 {
 public :
 
-	__attribute__((noinline)) static auto operator()(int x, int y);
+    __attribute__((noinline)) static auto operator()(int x, int y);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
 auto Functor::operator()(int x, int y)
 {
-	return x + y;
+    return x + y;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
 void test(benchmark::State & state)
 {
-	auto argument = state.range(0);
+    auto argument = state.range(0);
 
-	auto volatile x = 1, y = 2;
+    auto volatile x = 1, y = 2;
 
-	std::shared_ptr < Entity > entity_1 = std::make_shared < Entity > ();
+    std::shared_ptr < Entity > entity_1 = std::make_shared < Entity > ();
 
-	std::shared_ptr < Entity > entity_2 = std::make_shared < Client > ();
+    std::shared_ptr < Entity > entity_2 = std::make_shared < Client > ();
 
-	std::bernoulli_distribution distribution(0.5);
+    std::bernoulli_distribution distribution(0.5);
 
-	std::random_device device;
+    std::random_device device;
 
-	std::default_random_engine engine(device());
+    std::default_random_engine engine(device());
 
-	if (distribution(engine))
-	{
-		entity_2 = std::make_shared < Server > ();
-	}
+    if (distribution(engine))
+    {
+        entity_2 = std::make_shared < Server > ();
+    }
 
-	Functor functor;
+    Functor functor;
 
-	auto lambda = [](auto x, auto y) static __attribute__((noinline)) { return x + y; };
+    auto lambda = [](auto x, auto y) static __attribute__((noinline)) { return x + y; };
 
-	std::function < int(int, int) > function = lambda;
+    std::function < int(int, int) > function = lambda;
 
     for (auto element : state)
     {
-		auto z = 0;
+        auto z = 0;
 
-		switch (argument)
-		{
-			case 1 : { z = test             (x, y); break; }
+        switch (argument)
+        {
+            case 1 : { z = test             (x, y); break; }
 
-			case 2 : { z = entity_1->test_v1(x, y); break; }
+            case 2 : { z = entity_1->test_v1(x, y); break; }
 
-			case 3 : { z = entity_2->test_v2(x, y); break; }
+            case 3 : { z = entity_2->test_v2(x, y); break; }
 
-			case 4 : { z = functor          (x, y); break; }
+            case 4 : { z = functor          (x, y); break; }
 
-			case 5 : { z = lambda           (x, y); break; }
+            case 5 : { z = lambda           (x, y); break; }
 
-			case 6 : { z = function         (x, y); break; }
-		}
+            case 6 : { z = function         (x, y); break; }
+        }
 
-		benchmark::DoNotOptimize(z);
+        benchmark::DoNotOptimize(z);
     }
 }
 

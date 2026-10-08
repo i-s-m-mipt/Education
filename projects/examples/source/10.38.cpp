@@ -16,7 +16,7 @@
 
 struct Entity
 {
-	int x = 0;
+    int x = 0;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -25,21 +25,21 @@ class Less
 {
 public :
 
-	static auto operator()(Entity const & lhs, Entity const & rhs)
-	{
-		return lhs.x < rhs.x;
-	}
+    static auto operator()(Entity const & lhs, Entity const & rhs)
+    {
+        return lhs.x < rhs.x;
+    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::set < Entity, Less > entities = { { 5 }, { 4 }, { 3 }, { 2 }, { 1 } };
+    std::set < Entity, Less > entities = { { 5 }, { 4 }, { 3 }, { 2 }, { 1 } };
 
 //  ---------------------------------------------------------------------------
 
-	assert(std::ranges::is_sorted(entities, Less()));
+    assert(std::ranges::is_sorted(entities, Less()));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

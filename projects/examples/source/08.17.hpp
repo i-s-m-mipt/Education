@@ -10,7 +10,7 @@
 //
 // content : Mutex std::mutex
 //
-// content : Global Interpreter Locker (GIL)
+// content : Global Interpreter Lock (GIL)
 //
 // content : Python Exceptions
 
@@ -21,6 +21,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <mutex>
+#include <optional>
 #include <string>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,70 +35,72 @@ class Python : private boost::noncopyable
 {
 public :
 
-	Python()
-	{
-		std::call_once(s_flag, Py_Initialize);
+    Python()
+    {
+        std::call_once(s_flag, Py_Initialize);
 
-		s_mutex.lock();
+        s_mutex.lock();
 
-		s_state = PyGILState_Ensure();
+        s_state = PyGILState_Ensure();
 
-		m_local = boost::python::import("__main__").attr("__dict__");
+        m_local.emplace(boost::python::import("__main__").attr("__dict__"));
 
-		boost::python::exec("import sys\nsys.path.append(\".\")", m_local, m_local);
-	}
+        boost::python::exec("import sys\nsys.path.append(\".\")", *m_local, *m_local);
+    }
 
 //  ----------------------------------------------------------------------------------------
 
    ~Python()
     {
-		PyGILState_Release(s_state);
+        m_local.reset();
 
-		s_mutex.unlock();
-	}
+        PyGILState_Release(s_state);
 
-//  ----------------------------------------------------------------------------------------
-
-	auto const & local() const
-	{
-		return m_local;
-	}
+        s_mutex.unlock();
+    }
 
 //  ----------------------------------------------------------------------------------------
 
-	static auto exception()
-	{
-		PyObject * error = nullptr, * value = nullptr, * stack = nullptr;
+    auto const & local() const
+    {
+        return *m_local;
+    }
 
-		PyErr_Fetch             (&error, &value, &stack);
+//  ----------------------------------------------------------------------------------------
 
-		PyErr_NormalizeException(&error, &value, &stack);
+    static auto exception()
+    {
+        PyObject * error = nullptr, * value = nullptr, * stack = nullptr;
 
-		boost::python::handle <> handler_1(boost::python::allow_null(value));
+        PyErr_Fetch             (&error, &value, &stack);
 
-		boost::python::handle <> handler_2(error);
+        PyErr_NormalizeException(&error, &value, &stack);
 
-		if (handler_1)
-		{
-			return boost::python::extract < std::string > (boost::python::str(handler_1))();
-		}
-		else
-		{
-			return boost::python::extract < std::string > (boost::python::str(handler_2))();
-		}
-	}
+        boost::python::handle <> handler_1(boost::python::allow_null(value));
+
+        boost::python::handle <> handler_2(error);
+
+        if (handler_1)
+        {
+            return boost::python::extract < std::string > (boost::python::str(handler_1))();
+        }
+        else
+        {
+            return boost::python::extract < std::string > (boost::python::str(handler_2))();
+        }
+    }
 
 private :
 
-	boost::python::api::object m_local;
+    std::optional < boost::python::api::object > m_local;
 
 //  ----------------------------------------------------------------------------------------
 
-	static inline std::once_flag s_flag;
+    static inline std::once_flag s_flag;
 
-	static inline std::mutex s_mutex;
+    static inline std::mutex s_mutex;
 
-	static inline PyGILState_STATE s_state;
+    static inline PyGILState_STATE s_state;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////

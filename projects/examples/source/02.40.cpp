@@ -26,9 +26,9 @@
 
 auto const & make_integer_v3()
 {
-	static auto x = 0; // support : https://compiler-explorer.com
+    static auto x = 0; // support : https://compiler-explorer.com
 
-	return ++x;
+    return ++x;
 }
 
 /////////////////////////////////////////////////////////////////
@@ -37,7 +37,7 @@ int main()
 {
 //  assert(*make_integer_v1() == 1); // error
 
-//	assert( make_integer_v2() == 1); // error
+//  assert( make_integer_v2() == 1); // error
 
     assert( make_integer_v3() == 1);
 

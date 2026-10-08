@@ -28,23 +28,23 @@
 
 int main()
 {
-	std::chrono::duration < int, std::ratio < 1, 1'000 > > duration_1(1'000);
+    std::chrono::duration < int, std::ratio < 1, 1'000 > > duration_1(1'000);
 
 //  --------------------------------------------------------------------------------------
 
-	std::chrono::seconds duration_2(2);
+    std::chrono::seconds duration_2(2);
 
 //  --------------------------------------------------------------------------------------
 
-	assert(std::chrono::milliseconds(duration_2).count() == 2'000);
+    assert(std::chrono::milliseconds(duration_2).count() == 2'000);
 
 //  --------------------------------------------------------------------------------------
 
-	assert(std::chrono::duration_cast < std::chrono::seconds > (duration_1).count() == 1);
+    assert(std::chrono::duration_cast < std::chrono::seconds > (duration_1).count() == 1);
 
 //  --------------------------------------------------------------------------------------
 
-	assert(duration_1 + duration_2 == std::chrono::milliseconds(3'000));
+    assert(duration_1 + duration_2 == std::chrono::milliseconds(3'000));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////

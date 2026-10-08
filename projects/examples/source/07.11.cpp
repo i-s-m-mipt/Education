@@ -35,62 +35,62 @@ class Entity
 {
 public :
 
-	Entity(int x) try : m_x(x)
-	{
-		if (m_x < 0)
-		{
-			throw std::runtime_error("error");
-		}
-	}
-	catch (...)
-	{
-		uninitialize();
-	}
+    Entity(int x) try : m_x(x)
+    {
+        if (m_x < 0)
+        {
+            throw std::runtime_error("error");
+        }
+    }
+    catch (...)
+    {
+        uninitialize();
+    }
 
 //  ---------------------------------------------
 
    ~Entity() noexcept
-	{
-		assert(std::uncaught_exceptions() >= 0);
+    {
+        assert(std::uncaught_exceptions() >= 0);
 
-		uninitialize();
-	}
-
-//  ---------------------------------------------
-
-	void swap(Entity & other) noexcept
-	{
-		std::swap(m_x, other.m_x);
-	}
+        uninitialize();
+    }
 
 //  ---------------------------------------------
 
-	auto get() const noexcept
-	{
-		return m_x;
-	}
+    void swap(Entity & other) noexcept
+    {
+        std::swap(m_x, other.m_x);
+    }
+
+//  ---------------------------------------------
+
+    auto get() const noexcept
+    {
+        return m_x;
+    }
 
 private :
 
-	void uninitialize() const noexcept
-	{
-		try
-		{
-			std::print("Entity::uninitialize\n");
-		}
-		catch (...) {}
-	}
+    void uninitialize() const noexcept
+    {
+        try
+        {
+            std::print("Entity::uninitialize\n");
+        }
+        catch (...) {}
+    }
 
 //  ---------------------------------------------
 
-	int m_x = 0;
+    int m_x = 0;
 };
 
 //////////////////////////////////////////////////////////////////
 
 void test_v1()
 {
-	std::print("test_v1\n");
+    std::print("test_v1\n");
 }
 
 //////////////////////////////////////////////////////////////////
@@ -115,27 +115,27 @@ void test_v3() noexcept // support : https://compiler-explorer.com
 
 int main()
 {
-	Entity entity_1(1);
+    Entity entity_1(1);
 
-	Entity entity_2(2);
-
-//  ----------------------------------------------------------
-
-	entity_1.swap(entity_2);
+    Entity entity_2(2);
 
 //  ----------------------------------------------------------
 
-	test_v2();
+    entity_1.swap(entity_2);
+
+//  ----------------------------------------------------------
+
+    test_v2();
 
     test_v3();
 
 //  ----------------------------------------------------------
 
-	static_assert(noexcept(std::declval < Entity > ().get()));
+    static_assert(noexcept(std::declval < Entity > ().get()));
 
 //  ----------------------------------------------------------
 
-	assert(std::empty(std::vector < int > ()));
+    assert(std::empty(std::vector < int > ()));
 }
 
 //////////////////////////////////////////////////////////////////

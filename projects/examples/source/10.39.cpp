@@ -29,41 +29,41 @@
 
 void test(benchmark::State & state)
 {
-	auto argument = state.range(0);
+    auto argument = state.range(0);
 
-	std::map < int, std::string > map;
+    std::map < int, std::string > map;
 
-	map[1] = "aaaaa";
+    map[1] = "aaaaa";
 
     for (auto element : state)
     {
         switch (argument)
-		{
-			case 1 : { map.emplace(std::make_pair(1, std::string(1 << 10, 'a'))); break; }
+        {
+            case 1 : { map.emplace(std::make_pair(1, std::string(1 << 10, 'a'))); break; }
 
-			case 2 : { map.emplace(               1, std::string(1 << 10, 'a') ); break; }
+            case 2 : { map.emplace(               1, std::string(1 << 10, 'a') ); break; }
 
-		//	case 3 : { map.emplace(               1,             1 << 10, 'a'  ); break; } // error
+        //  case 3 : { map.emplace(               1,             1 << 10, 'a'  ); break; } // error
 
-			case 4 :
-			{
-				map.emplace
-				(
-					std::piecewise_construct,
+            case 4 :
+            {
+                map.emplace
+                (
+                    std::piecewise_construct,
 
-					std::forward_as_tuple(1),
+                    std::forward_as_tuple(1),
 
-					std::forward_as_tuple(1 << 10, 'a')
-				);
+                    std::forward_as_tuple(1 << 10, 'a')
+                );
 
-				break;
-			}
+                break;
+            }
 
-			case 5 :
-			{
-				map.try_emplace(1, 1 << 10, 'a');
-			}
-		}
+            case 5 :
+            {
+                map.try_emplace(1, 1 << 10, 'a');
+            }
+        }
 
         benchmark::DoNotOptimize(map);
     }
@@ -77,7 +77,7 @@ BENCHMARK(test)->Arg(1)->Arg(2)->Arg(4)->Arg(5);
 
 int main()
 {
-	benchmark::RunSpecifiedBenchmarks();
+    benchmark::RunSpecifiedBenchmarks();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

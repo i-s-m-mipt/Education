@@ -35,7 +35,7 @@ template < typename D = std::chrono::duration < double > > class Timer
 {
 public :
 
-	Timer(char const * scope) : m_scope(scope)
+    Timer(char const * scope) : m_scope(scope)
     {
         std::call_once(s_flag, initialize);
 
@@ -45,14 +45,14 @@ public :
 //  ---------------------------------------------------------------------------------------
 
    ~Timer()
-	{
-		std::print("{} : {:.6f}\n", m_scope, elapsed().count());
-	}
+    {
+        std::print("{} : {:.6f}\n", m_scope, elapsed().count());
+    }
 
 //  ---------------------------------------------------------------------------------------
 
-	auto elapsed() const
-	{
+    auto elapsed() const
+    {
         return std::chrono::duration_cast < D >
         (
             std::chrono::nanoseconds
@@ -63,7 +63,7 @@ public :
                 )
             )
         );
-	}
+    }
 
 private :
 
@@ -91,9 +91,9 @@ private :
 
 //  ---------------------------------------------------------------------------------------
 
-	char const * m_scope = nullptr;
+    char const * m_scope = nullptr;
 
-	std::uint64_t m_begin = 0;
+    std::uint64_t m_begin = 0;
 
 //  ---------------------------------------------------------------------------------------
 
@@ -110,32 +110,32 @@ private :
 
 auto calculate(std::size_t size)
 {
-	auto x = 0.0;
+    auto x = 0.0;
 
-	for (auto i = 0uz; i < size; ++i)
-	{
-		x += std::pow(std::sin(x), 2) + std::pow(std::cos(x), 2);
-	}
+    for (auto i = 0uz; i < size; ++i)
+    {
+        x += std::pow(std::sin(x), 2) + std::pow(std::cos(x), 2);
+    }
 
-	return x;
+    return x;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
-	return std::abs(x - y) < epsilon;
+    return std::abs(x - y) < epsilon;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Timer timer("main : timer");
+    Timer timer("main : timer");
 
 //  -------------------------------------------
 
-	assert(equal(calculate(1 << 20), 1 << 20));
+    assert(equal(calculate(1 << 20), 1 << 20));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////

@@ -24,77 +24,77 @@
 
 void show_v1() // support : https://cppinsights.io
 {
-	std::print("show_v1\n");
+    std::print("show_v1\n");
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 template
 <
-	typename T, typename ... Ts
+    typename T, typename ... Ts
 >
 void show_v1(T x, Ts ... xs) // support : https://cppinsights.io
 {
-	std::print("show_v1 : x = {} sizeof...(xs) = {}\n", x, sizeof...(xs));
+    std::print("show_v1 : x = {} sizeof...(xs) = {}\n", x, sizeof...(xs));
 
-	show_v1(xs...);
+    show_v1(xs...);
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 void show_v2(auto x) // support : https://cppinsights.io
 {
-	std::print("show_v2 : x = {} ", x);
+    std::print("show_v2 : x = {} ", x);
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 void show_v2(auto x, auto ... xs) // support : https://cppinsights.io
 {
-	show_v2(x);
+    show_v2(x);
 
-	std::print("sizeof...(xs) = {}\n", sizeof...(xs));
+    std::print("sizeof...(xs) = {}\n", sizeof...(xs));
 
-	show_v2(xs...);
+    show_v2(xs...);
 
-	if (sizeof...(xs) == 1)
-	{
-		std::print("sizeof...(xs) = 0\n");
-	}
+    if (sizeof...(xs) == 1)
+    {
+        std::print("sizeof...(xs) = 0\n");
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 void transform(auto ... xs) // support : https://cppinsights.io
 {
-	show_v1(xs * xs...);
+    show_v1(xs * xs...);
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 struct Entity
 {
-	int x = 0, y = 0;
+    int x = 0, y = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
 
 auto make_entity(auto ... xs) // support : https://cppinsights.io
 {
-	return new Entity(xs...);
+    return new Entity(xs...);
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	show_v1(1, 2.0, "aaaaa");
+    show_v1(1, 2.0, "aaaaa");
 
-	show_v2(1, 2.0, "aaaaa");
+    show_v2(1, 2.0, "aaaaa");
 
 //  -------------------------
 
-	transform(1, 2, 3);
+    transform(1, 2, 3);
 
 //  -------------------------
 

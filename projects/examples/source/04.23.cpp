@@ -33,7 +33,7 @@ using namespace std::literals;
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
-	return std::abs(x - y) < epsilon;
+    return std::abs(x - y) < epsilon;
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -44,7 +44,7 @@ int main()
 
 //  ------------------------------------------------------------------------
 
-	static_assert(std::tuple_size_v < decltype(tuple) > == 3);
+    static_assert(std::tuple_size_v < decltype(tuple) > == 3);
 
 //  ------------------------------------------------------------------------
 

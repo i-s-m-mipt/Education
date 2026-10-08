@@ -12,14 +12,14 @@
 
 template < int X > struct Factorial
 {
-	static inline auto const value = X * Factorial < X - 1 > ::value;
+    static inline auto const value = X * Factorial < X - 1 > ::value;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 
 template <> struct Factorial < 0 >
 {
-	static inline auto const value = 1;
+    static inline auto const value = 1;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

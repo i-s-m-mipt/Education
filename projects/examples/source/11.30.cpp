@@ -116,7 +116,7 @@ public :
 
 int main()
 {
-	boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS > graph;
+    boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS > graph;
 
 //  ---------------------------------------------------------------------------
 

@@ -35,19 +35,19 @@
 
 int main()
 {
-	std::vector < int > vector = { 5, 4, 3, 2, 1 };
+    std::vector < int > vector = { 5, 4, 3, 2, 1 };
 
 //  ----------------------------------------------------
 
-	vector.push_back(1);
+    vector.push_back(1);
 
 //  ----------------------------------------------------
 
-	std::ranges::sort(vector, std::less());
+    std::ranges::sort(vector, std::less());
 
 //  ----------------------------------------------------
 
-	assert(std::ranges::is_sorted(vector, std::less()));
+    assert(std::ranges::is_sorted(vector, std::less()));
 }
 
 ////////////////////////////////////////////////////////

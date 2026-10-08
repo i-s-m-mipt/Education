@@ -32,13 +32,13 @@ int main()
 
     std::print("main : __LINE__ = {}\n", __LINE__);
 
-	std::print("main : __DATE__ = {}\n", __DATE__);
+    std::print("main : __DATE__ = {}\n", __DATE__);
 
-	std::print("main : __TIME__ = {}\n", __TIME__);
+    std::print("main : __TIME__ = {}\n", __TIME__);
 
 //  ---------------------------------------------------
 
-	assert(__func__ == "main"s);
+    assert(__func__ == "main"s);
 
 //  ---------------------------------------------------
 

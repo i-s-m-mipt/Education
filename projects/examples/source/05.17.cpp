@@ -24,7 +24,7 @@ public :
     {
         static D d;
 
-		return d;
+        return d;
     }
 
 protected :
@@ -38,10 +38,10 @@ class Entity_v1 : public Singleton < Entity_v1 >
 {
 public :
 
-	void test() const
-	{
-		std::print("Entity_v1::test\n");
-	}
+    void test() const
+    {
+        std::print("Entity_v1::test\n");
+    }
 
 private :
 
@@ -49,7 +49,7 @@ private :
 
 //  ------------------------------------
 
-	Entity_v1() = default;
+    Entity_v1() = default;
 };
 
 ////////////////////////////////////////////////////////////////////
@@ -58,29 +58,29 @@ class Entity_v2
 {
 public :
 
-	void test() const
-	{
-		std::print("Entity_v2::test\n");
-	}
+    void test() const
+    {
+        std::print("Entity_v2::test\n");
+    }
 
 private :
 
-	friend Singleton < Entity_v2 > ;
+    friend Singleton < Entity_v2 > ;
 
 //  ------------------------------------
 
-	Entity_v2() = default;
+    Entity_v2() = default;
 };
 
 ////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Entity_v1::get().test();
+    Entity_v1::get().test();
 
 //  ---------------------------------------
 
-	Singleton < Entity_v2 > ::get().test();
+    Singleton < Entity_v2 > ::get().test();
 }
 
 ////////////////////////////////////////////////////////////////////

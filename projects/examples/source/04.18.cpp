@@ -10,21 +10,21 @@
 
 template < int X, int D > struct Handler
 {
-	static inline auto const value = X % D != 0 && Handler < X, D - 1 > ::value;
+    static inline auto const value = X % D != 0 && Handler < X, D - 1 > ::value;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 
 template < int X > struct Handler < X, 2 >
 {
-	static inline auto const value = X % 2 != 0;
+    static inline auto const value = X % 2 != 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 
 template < int X > struct Is_Prime
 {
-	static inline auto const value = Handler < X, X / 2 > ::value;
+    static inline auto const value = Handler < X, X / 2 > ::value;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -43,7 +43,7 @@ template < int X > auto const is_prime_v = Is_Prime < X > ::value;
 
 int main()
 {
-	static_assert(is_prime_v < 5 > ); // support : https://cppinsights.io
+    static_assert(is_prime_v < 5 > ); // support : https://cppinsights.io
 }
 
 ////////////////////////////////////////////////////////////////////////////////

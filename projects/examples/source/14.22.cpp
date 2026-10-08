@@ -41,11 +41,11 @@ public :
 //  -----------------------------------------------------------------------------
 
     auto & operator=(Stack other)
-	{
+    {
         swap(other);
 
-		return *this;
-	}
+        return *this;
+    }
 
 //  -----------------------------------------------------------------------------
 
@@ -140,15 +140,15 @@ int main()
 {
     Stack < int > stack_1;
 
-	Stack < int > stack_2 = stack_1;
+    Stack < int > stack_2 = stack_1;
 
-	Stack < int > stack_3 = std::move(stack_2);
+    Stack < int > stack_3 = std::move(stack_2);
 
 //  --------------------------------------------------
 
-	stack_2 = stack_1;
+    stack_2 = stack_1;
 
-	stack_3 = std::move(stack_2);
+    stack_3 = std::move(stack_2);
 
 //  --------------------------------------------------
 

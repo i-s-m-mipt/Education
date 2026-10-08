@@ -48,11 +48,11 @@ public :
 //  -----------------------------------------------------------------------------
 
     auto & operator=(Queue other)
-	{
+    {
         swap(other);
 
-		return *this;
-	}
+        return *this;
+    }
 
 //  -----------------------------------------------------------------------------
 
@@ -149,15 +149,15 @@ int main()
 {
     Queue < int > queue_1;
 
-	Queue < int > queue_2 = queue_1;
+    Queue < int > queue_2 = queue_1;
 
-	Queue < int > queue_3 = std::move(queue_2);
+    Queue < int > queue_3 = std::move(queue_2);
 
 //  --------------------------------------------------
 
-	queue_2 = queue_1;
+    queue_2 = queue_1;
 
-	queue_3 = std::move(queue_2);
+    queue_3 = std::move(queue_2);
 
 //  --------------------------------------------------
 

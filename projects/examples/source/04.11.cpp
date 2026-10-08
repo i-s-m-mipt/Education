@@ -18,56 +18,56 @@
 
 template < typename T > struct Node
 {
-	T x = T();
+    T x = T();
 
-	Node * left = nullptr, * right = nullptr;
+    Node * left = nullptr, * right = nullptr;
 };
 
 ////////////////////////////////////////////////////////////////////////////
 
 auto traverse(auto node, auto ... nodes) // support : https://cppinsights.io
 {
-	return (node ->* ... ->* nodes);
+    return (node ->* ... ->* nodes);
 }
 
 ////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::vector < Node < int > > nodes(5);
+    std::vector < Node < int > > nodes(5);
 
 //  ---------------------------------------------------------
 
-	for (auto i = 0uz; i < std::size(nodes); ++i)
-	{
-		nodes[i].x = i + 1;
-	}
+    for (auto i = 0uz; i < std::size(nodes); ++i)
+    {
+        nodes[i].x = i + 1;
+    }
 
 //  ---------------------------------------------------------
 
-	Node < int > * node = nullptr;
+    Node < int > * node = nullptr;
 
 //  ---------------------------------------------------------
 
-	node 						   = &nodes.at(0);
+    node                           = &nodes.at(0);
 
-	node->left          		   = &nodes.at(1);
+    node->left                     = &nodes.at(1);
 
-	node->left->right       	   = &nodes.at(2);
+    node->left->right              = &nodes.at(2);
 
-	node->left->right->left    	   = &nodes.at(3);
+    node->left->right->left        = &nodes.at(3);
 
-	node->left->right->left->right = &nodes.at(4);
-
-//  ---------------------------------------------------------
-
-	auto  left = &Node < int > :: left;
-
-	auto right = &Node < int > ::right;
+    node->left->right->left->right = &nodes.at(4);
 
 //  ---------------------------------------------------------
 
-	assert(traverse(node, left, right, left, right)->x == 5);
+    auto  left = &Node < int > :: left;
+
+    auto right = &Node < int > ::right;
+
+//  ---------------------------------------------------------
+
+    assert(traverse(node, left, right, left, right)->x == 5);
 }
 
 ////////////////////////////////////////////////////////////////////////////

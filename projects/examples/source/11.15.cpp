@@ -64,6 +64,13 @@ protected :
 
 //  ---------------------------------------------------------------------------------------------
 
+    template < typename T > auto get_type() const
+    {
+        return reinterpret_cast < T const * > (std::begin(m_array));
+    }
+
+//  ---------------------------------------------------------------------------------------------
+
     alignas(Ts...) std::array < std::byte, sizeof(max_type < Deque < Ts ... > > ) > m_array = {};
 
     std::size_t m_index = 0;
@@ -147,16 +154,14 @@ public :
 
     Variant(Variant const & other) : Handler < Variant < Ts ... > , Ts, Ts ... > ::Handler()...
     {
-        this->m_array = other.m_array;
-
-        this->m_index = other.m_index;
+        construct_from(other);
     }
 
 //  -------------------------------------------------------------------------------------------
 
-    Variant(Variant && other) : Variant()
+    Variant(Variant && other)
     {
-        swap(other);
+        construct_from(std::move(other));
     }
 
 //  -------------------------------------------------------------------------------------------
@@ -172,7 +177,7 @@ public :
     {
         swap(other);
 
-		return *this;
+        return *this;
     }
 
 //  -------------------------------------------------------------------------------------------
@@ -184,11 +189,20 @@ public :
 //  -------------------------------------------------------------------------------------------
 
     void swap(Variant & other)
-	{
-        std::swap(this->m_array, other.m_array);
+    {
+        if (this != &other)
+        {
+            Variant variant(std::move(*this));
 
-		std::swap(this->m_index, other.m_index);
-	}
+            destroy();
+
+            construct_from(std::move(other));
+
+            other.destroy();
+
+            other.construct_from(std::move(variant));
+        }
+    }
 
 //  -------------------------------------------------------------------------------------------
 
@@ -214,6 +228,32 @@ public :
 private :
 
     template < typename D, typename U, typename ... Us > friend class Handler;
+
+//  -------------------------------------------------------------------------------------------
+
+    template < typename U > void construct_from(U && other)
+    {
+        auto lambda = [&] < typename T > ()
+        {
+            if (other.template holds_alternative < T > ())
+            {
+                auto pointer = this->template get_type < T > ();
+
+                if constexpr (std::is_lvalue_reference_v < U && > )
+                {
+                    std::construct_at(pointer, *other.template get_type < T > ());
+                }
+                else
+                {
+                    std::construct_at(pointer, std::move(*other.template get_type < T > ()));
+                }
+
+                this->m_index = other.m_index;
+            }
+        };
+
+        (lambda.template operator() < Ts > (), ...);
+    }
 
 //  -------------------------------------------------------------------------------------------
 
@@ -282,8 +322,8 @@ public :
 
    ~Entity()
     {
-		std::print("Entity::~Entity\n");
-	}
+        std::print("Entity::~Entity\n");
+    }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -320,7 +360,7 @@ int main()
 
 //  ----------------------------------------------------------------------
 
-//	std::variant < Entity, int > variant_5; // error
+//  std::variant < Entity, int > variant_5; // error
 
 //  ----------------------------------------------------------------------
 

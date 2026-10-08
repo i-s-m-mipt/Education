@@ -23,25 +23,25 @@ int main()
 
 //  -----------------------------------------------------------------------
 
-	auto array = new int[size * size]{};
+    auto array = new int[size * size]{};
 
 //  -----------------------------------------------------------------------
 
-	std::mdspan mdspan(array, std::extents < std::size_t, size, size > ());
+    std::mdspan mdspan(array, std::extents < std::size_t, size, size > ());
 
 //  -----------------------------------------------------------------------
 
-	for (auto i = 0uz; i < mdspan.extent(0); ++i)
-	{
-		for (auto j = 0uz; j < mdspan.extent(1); ++j)
-		{
-			mdspan[i, j] = j + 1;
-		}
-	}
+    for (auto i = 0uz; i < mdspan.extent(0); ++i)
+    {
+        for (auto j = 0uz; j < mdspan.extent(1); ++j)
+        {
+            mdspan[i, j] = j + 1;
+        }
+    }
 
 //  -----------------------------------------------------------------------
 
-	delete[] array;
+    delete[] array;
 }
 
 ///////////////////////////////////////////////////////////////////////////

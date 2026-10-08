@@ -28,34 +28,34 @@ using namespace std::literals;
 
 template < typename T > auto hash(T x, auto ... xs)
 {
-	auto seed = std::hash < T > ()(x);
+    auto seed = std::hash < T > ()(x);
 
-	if constexpr (sizeof...(xs) > 0)
-	{
-		seed += hash(xs...) * 31;
-	}
+    if constexpr (sizeof...(xs) > 0)
+    {
+        seed += hash(xs...) * 31;
+    }
 
-	return seed;
+    return seed;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 struct Entity
 {
-	int x = 0, y = 0;
+    int x = 0, y = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
 
 auto hash_value(Entity const & entity)
 {
-	auto seed = 0uz;
+    auto seed = 0uz;
 
-	boost::hash_combine(seed, entity.x);
+    boost::hash_combine(seed, entity.x);
 
-	boost::hash_combine(seed, entity.y);
+    boost::hash_combine(seed, entity.y);
 
-	return seed;
+    return seed;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -66,15 +66,15 @@ int main()
 
 //  ----------------------------------------------------------------------
 
-	std::ignore = boost::hash < Entity > ()(Entity(1, 1));
+    std::ignore = boost::hash < Entity > ()(Entity(1, 1));
 
 //  ----------------------------------------------------------------------
 
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+    std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
 //  ----------------------------------------------------------------------
 
-	std::ignore = boost::hash_range(std::begin(vector), std::end(vector));
+    std::ignore = boost::hash_range(std::begin(vector), std::end(vector));
 }
 
 //////////////////////////////////////////////////////////////////////////

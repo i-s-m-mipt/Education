@@ -9,8 +9,8 @@
 ///////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <vector>
 #include <utility>
+#include <vector>
 
 ///////////////////////////////////////////////////////////////////
 
@@ -18,39 +18,39 @@ template < typename T, typename C = std::vector < T > > class Stack
 {
 public :
 
-	void push(T x)
-	{
-		m_container.push_back(std::move(x));
-	}
+    void push(T x)
+    {
+        m_container.push_back(std::move(x));
+    }
 
 //  ----------------------------------------
 
-	auto top() const
-	{
-		return m_container.back();
-	}
+    auto top() const
+    {
+        return m_container.back();
+    }
 
 //  ----------------------------------------
 
-	void pop()
-	{
-		m_container.pop_back();
-	}
+    void pop()
+    {
+        m_container.pop_back();
+    }
 
 //  ----------------------------------------
 
-//	auto top_and_pop_v1() // error
-//	{
-//		auto x = top();
+//  auto top_and_pop_v1() // error
+//  {
+//      auto x = top();
 //
-//		pop();
+//      pop();
 //
-//		return x;
-//	}
+//      return x;
+//  }
 
 //  ----------------------------------------
 
-	auto top_and_pop_v2()
+    auto top_and_pop_v2()
     {
         auto x = new T(top());
 
@@ -70,52 +70,52 @@ public :
 
 private :
 
-	C m_container;
+    C m_container;
 };
 
 ///////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Stack < int > stack;
+    Stack < int > stack;
 
 //  -------------------------------------
 
-	stack.push(1);
+    stack.push(1);
 
-	stack.push(2);
+    stack.push(2);
 
-	stack.push(3);
-
-//  -------------------------------------
-
-	assert(stack.top() == 3);
+    stack.push(3);
 
 //  -------------------------------------
 
-	stack.pop();
+    assert(stack.top() == 3);
 
 //  -------------------------------------
 
-	int x = 0, * y = nullptr;
+    stack.pop();
 
 //  -------------------------------------
 
-//	x = stack.top_and_pop_v1( ); // error
-
-	y = stack.top_and_pop_v2( );
-
-		stack.top_and_pop_v3(x);
+    int x = 0, * y = nullptr;
 
 //  -------------------------------------
 
-	assert( x == 1);
+//  x = stack.top_and_pop_v1( ); // error
 
-	assert(*y == 2);
+    y = stack.top_and_pop_v2( );
+
+        stack.top_and_pop_v3(x);
 
 //  -------------------------------------
 
-	delete y;
+    assert( x == 1);
+
+    assert(*y == 2);
+
+//  -------------------------------------
+
+    delete y;
 }
 
 ///////////////////////////////////////////////////////////////////

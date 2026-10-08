@@ -19,44 +19,44 @@ template < typename T > class Mean
 {
 public :
 
-	void operator()(T x)
-	{
-		m_sum += x;
+    void operator()(T x)
+    {
+        m_sum += x;
 
-		++m_counter;
-	}
+        ++m_counter;
+    }
 
 //  -----------------------------
 
-	auto get() const
-	{
-		return m_sum / m_counter;
-	}
+    auto get() const
+    {
+        return m_sum / m_counter;
+    }
 
 private :
 
-	T m_sum = T();
+    T m_sum = T();
 
-	std::size_t m_counter = 0;
+    std::size_t m_counter = 0;
 };
 
 ///////////////////////////////////////////////////
 
 int main()
 {
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+    std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
 //  -----------------------------------------------
 
-	Mean < decltype(vector)::value_type > mean;
+    Mean < decltype(vector)::value_type > mean;
 
 //  -----------------------------------------------
 
-	mean = std::ranges::for_each(vector, mean).fun;
+    mean = std::ranges::for_each(vector, mean).fun;
 
 //  -----------------------------------------------
 
-	assert(mean.get() == 3);
+    assert(mean.get() == 3);
 }
 
 ///////////////////////////////////////////////////

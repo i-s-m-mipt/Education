@@ -19,21 +19,21 @@
 
 template < typename T > void test_v1(T x) requires std::integral < T >
 {
-	std::print("test_v1 : x = {}\n", x);
+    std::print("test_v1 : x = {}\n", x);
 }
 
 //////////////////////////////////////////////////////////////////////
 
 template < std::integral T > void test_v2(T x)
 {
-	std::print("test_v2 : x = {}\n", x);
+    std::print("test_v2 : x = {}\n", x);
 }
 
 //////////////////////////////////////////////////////////////////////
 
 void test_v3(std::integral auto x)
 {
-	std::print("test_v3 : x = {}\n", x);
+    std::print("test_v3 : x = {}\n", x);
 }
 
 //////////////////////////////////////////////////////////////////////

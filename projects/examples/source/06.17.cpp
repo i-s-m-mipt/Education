@@ -51,32 +51,32 @@
 
 int main()
 {
-	library::test();
+    library::test();
 
 //  ----------------------------------------------------------------------------
 
-	std::vector < std::function < void() > > functions;
+    std::vector < std::function < void() > > functions;
 
 //  ----------------------------------------------------------------------------
 
-	auto path = "libshared.so";
+    auto path = "libshared.so";
 
 //  ----------------------------------------------------------------------------
 
-	functions.push_back(boost::dll::import_symbol < void() > (path, "test_v1"));
+    functions.push_back(boost::dll::import_symbol < void() > (path, "test_v1"));
 
-	functions.push_back(boost::dll::import_symbol < void() > (path, "test_v2"));
-
-//  ----------------------------------------------------------------------------
-
-	for (auto const & function : functions)
-	{
-		function();
-	}
+    functions.push_back(boost::dll::import_symbol < void() > (path, "test_v2"));
 
 //  ----------------------------------------------------------------------------
 
-	boost::dll::import_alias < void() > (path, "test_v3")();
+    for (auto const & function : functions)
+    {
+        function();
+    }
+
+//  ----------------------------------------------------------------------------
+
+    boost::dll::import_alias < void() > (path, "test_v3")();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -109,7 +109,7 @@ auto make_matrix(std::size_t size)
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
-	return std::abs(x - y) < epsilon;
+    return std::abs(x - y) < epsilon;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -120,7 +120,7 @@ int main()
 
 //  --------------------------------------------
 
-	auto A = make_matrix(size), B = A;
+    auto A = make_matrix(size), B = A;
 
 //  --------------------------------------------
 

@@ -20,13 +20,13 @@
 auto test(int x) -> std::optional < int >
 {
     if (x > 0)
-	{
-		return x;
-	}
-	else
-	{
-		return std::nullopt;
-	}
+    {
+        return x;
+    }
+    else
+    {
+        return std::nullopt;
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -55,7 +55,7 @@ int main()
 
     assert(test(0).has_value() == 0);
 
-	assert(test(1).has_value() == 1);
+    assert(test(1).has_value() == 1);
 }
 
 ///////////////////////////////////////////////////////////////////////

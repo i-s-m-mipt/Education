@@ -24,58 +24,58 @@
 
 template
 <
-	typename T, typename C = std::vector < T >
+    typename T, typename C = std::vector < T >
 >
 class Stack_v1 // support : https://cppinsights.io
 {
 private :
 
-	C m_container;
+    C m_container;
 };
 
 /////////////////////////////////////////////////////////////////////////
 
 template
 <
-	typename T, template < typename U > typename C = std::vector
+    typename T, template < typename U > typename C = std::vector
 >
 class Stack_v2 // support : https://cppinsights.io
 {
 private :
 
-	C < T > m_container;
+    C < T > m_container;
 };
 
 /////////////////////////////////////////////////////////////////////////
 
 template
 <
-	template < typename U > typename C1,
+    template < typename U > typename C1,
 
-	template < typename U > typename C2,
+    template < typename U > typename C2,
 
-	typename T
+    typename T
 >
 auto copy(C1 < T > const & container) // support : https://cppinsights.io
 {
-	return C2(std::begin(container), std::end(container));
+    return C2(std::begin(container), std::end(container));
 }
 
 /////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Stack_v1 < int, std::deque < int > > stack_v1;
+    Stack_v1 < int, std::deque < int > > stack_v1;
 
-	Stack_v2 < int, std::deque         > stack_v2;
-
-//  -------------------------------------------------------
-
-	std::vector vector = { 1, 2, 3, 4, 5 };
+    Stack_v2 < int, std::deque         > stack_v2;
 
 //  -------------------------------------------------------
 
-	auto deque = copy < std::vector, std::deque > (vector);
+    std::vector vector = { 1, 2, 3, 4, 5 };
+
+//  -------------------------------------------------------
+
+    auto deque = copy < std::vector, std::deque > (vector);
 }
 
 /////////////////////////////////////////////////////////////////////////

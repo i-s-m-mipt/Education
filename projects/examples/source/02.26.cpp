@@ -38,31 +38,31 @@ int main()
 
 //  ---------------------------------------------------------------------
 
-	static_assert(std::is_same_v < decltype(y), int * > );
+    static_assert(std::is_same_v < decltype(y), int * > );
 
 //  ---------------------------------------------------------------------
 
-	assert(&x == std::addressof(x));
+    assert(&x == std::addressof(x));
 
 //  ---------------------------------------------------------------------
 
-	std::print("main : y = {}\n", static_cast < void * > (y));
+    std::print("main : y = {}\n", static_cast < void * > (y));
 
 //  ---------------------------------------------------------------------
 
-	assert(*y == x);
+    assert(*y == x);
 
 //  ---------------------------------------------------------------------
 
-	[[maybe_unused]] int * z1 = nullptr;
+    [[maybe_unused]] int * z1 = nullptr;
 
 //  ---------------------------------------------------------------------
 
-	static_assert(std::is_same_v < decltype(nullptr), std::nullptr_t > );
+    static_assert(std::is_same_v < decltype(nullptr), std::nullptr_t > );
 
 //  ---------------------------------------------------------------------
 
-//	[[maybe_unused]] int * z2 = 0; // bad
+//  [[maybe_unused]] int * z2 = 0; // bad
 }
 
 /////////////////////////////////////////////////////////////////////////

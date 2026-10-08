@@ -30,17 +30,17 @@
 
 namespace library
 {
-	extern "C" __attribute__((visibility("default"))) void test_v1()
-	{
-		std::print("library::test_v1\n");
-	}
+    extern "C" __attribute__((visibility("default"))) void test_v1()
+    {
+        std::print("library::test_v1\n");
+    }
 
 //  ----------------------------------------------------------------
 
-	extern "C" __attribute__((visibility("default"))) void test_v2()
-	{
-		std::print("library::test_v2\n");
-	}
+    extern "C" __attribute__((visibility("default"))) void test_v2()
+    {
+        std::print("library::test_v2\n");
+    }
 }
 
 ////////////////////////////////////////////////////////////////////

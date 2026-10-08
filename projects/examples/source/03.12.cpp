@@ -20,17 +20,17 @@ class Entity
 {
 public :
 
-	void test_v1() const
-	{
-		std::print("Entity::test_v1\n");
-	}
+    void test_v1() const
+    {
+        std::print("Entity::test_v1\n");
+    }
 
 protected :
 
-	void test_v2() const
-	{
-		std::print("Entity::test_v2\n");
-	}
+    void test_v2() const
+    {
+        std::print("Entity::test_v2\n");
+    }
 };
 
 /////////////////////////////////////////
@@ -39,12 +39,12 @@ class Client_v1 : private Entity
 {
 public :
 
-	void test() const
-	{
-		Entity::test_v1();
+    void test() const
+    {
+        Entity::test_v1();
 
-		Entity::test_v2();
-	}
+        Entity::test_v2();
+    }
 };
 
 /////////////////////////////////////////
@@ -53,47 +53,47 @@ class Client_v2
 {
 public :
 
-	void test() const
-	{
-		m_entity.test_v1();
+    void test() const
+    {
+        m_entity.test_v1();
 
-	//	m_entity.test_v2(); // error
-	}
+    //  m_entity.test_v2(); // error
+    }
 
 private :
 
-	Entity m_entity;
+    Entity m_entity;
 };
 
 /////////////////////////////////////////
 
 int main()
 {
-	Client_v1 client_v1;
+    Client_v1 client_v1;
 
 //  -----------------------------
 
-//	client_v1.test_v1(); // error
+//  client_v1.test_v1(); // error
 
-//	client_v1.test_v2(); // error
-
-//  -----------------------------
-
-	client_v1.test();
+//  client_v1.test_v2(); // error
 
 //  -----------------------------
 
-	Client_v2 client_v2;
+    client_v1.test();
 
 //  -----------------------------
 
-//	client_v2.test_v1(); // error
-
-//	client_v2.test_v2(); // error
+    Client_v2 client_v2;
 
 //  -----------------------------
 
-	client_v2.test();
+//  client_v2.test_v1(); // error
+
+//  client_v2.test_v2(); // error
+
+//  -----------------------------
+
+    client_v2.test();
 }
 
 /////////////////////////////////////////

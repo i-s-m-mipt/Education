@@ -19,9 +19,9 @@
 
 template < typename R > concept range = requires (R range)
 {
-	std::begin(range);
+    std::begin(range);
 
-	std::end  (range);
+    std::end  (range);
 };
 
 /////////////////////////////////////////////////////////////////////////////

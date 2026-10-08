@@ -30,22 +30,22 @@ class Entity
 {
 public :
 
-	Entity(int x) : m_x(x) {}
+    Entity(int x) : m_x(x) {}
 
 //  ----------------------------------
 
-	void test() const
-	{
-		std::cout << "Entity::test\n";
-	}
+    void test() const
+    {
+        std::cout << "Entity::test\n";
+    }
 
 //  ----------------------------------
 
-	static inline auto s_x = 1;
+    static inline auto s_x = 1;
 
 private :
 
-	int m_x = 0;
+    int m_x = 0;
 };
 
 /////////////////////////////////////////////////////
@@ -58,25 +58,25 @@ class Client
 {
 public :
 
-	void initialize(Server * server)
-	{
-		m_server = server;
-	}
+    void initialize(Server * server)
+    {
+        m_server = server;
+    }
 
 //  ------------------------------------
 
-	void test_v1() const
-	{
-		std::print("Client::test_v1\n");
-	}
+    void test_v1() const
+    {
+        std::print("Client::test_v1\n");
+    }
 
 //  ------------------------------------
 
-	void test_v2() const;
+    void test_v2() const;
 
 private :
 
-	Server * m_server = nullptr;
+    Server * m_server = nullptr;
 };
 
 /////////////////////////////////////////////////////
@@ -85,25 +85,25 @@ class Server
 {
 public :
 
-	void initialize(Client * client)
-	{
-		m_client = client;
-	}
+    void initialize(Client * client)
+    {
+        m_client = client;
+    }
 
 //  ------------------------------------
 
-	void test_v1() const
-	{
-		std::print("Server::test_v1\n");
-	}
+    void test_v1() const
+    {
+        std::print("Server::test_v1\n");
+    }
 
 //  ------------------------------------
 
-	void test_v2() const;
+    void test_v2() const;
 
 private :
 
-	Client * m_client = nullptr;
+    Client * m_client = nullptr;
 };
 
 /////////////////////////////////////////////////////
@@ -116,35 +116,35 @@ void Server::test_v2() const { m_client->test_v1(); }
 
 int main()
 {
-	Entity entity_1(1);
+    Entity entity_1(1);
 
-	Entity entity_2(2);
-
-//  ---------------------------
-
-	assert(Entity::s_x == 1);
+    Entity entity_2(2);
 
 //  ---------------------------
 
-	Client client;
-
-	Server server;
+    assert(Entity::s_x == 1);
 
 //  ---------------------------
 
-	server.initialize(&client);
+    Client client;
 
-	client.initialize(&server);
-
-//  ---------------------------
-
-	client.test_v2();
-
-	server.test_v2();
+    Server server;
 
 //  ---------------------------
 
-	Entity(1).test();
+    server.initialize(&client);
+
+    client.initialize(&server);
+
+//  ---------------------------
+
+    client.test_v2();
+
+    server.test_v2();
+
+//  ---------------------------
+
+    Entity(1).test();
 }
 
 /////////////////////////////////////////////////////

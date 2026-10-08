@@ -18,39 +18,39 @@
 
 int main()
 {
-	std::allocator < std::string > allocator;
+    std::allocator < std::string > allocator;
 
 //  -----------------------------------------------------
 
-	std::allocator_traits < decltype(allocator) > traits;
+    std::allocator_traits < decltype(allocator) > traits;
 
 //  -----------------------------------------------------
 
-	auto string = traits.allocate(allocator, 1);
+    auto string = traits.allocate(allocator, 1);
 
 //  -----------------------------------------------------
 
-	assert(string);
+    assert(string);
 
 //  -----------------------------------------------------
 
-	traits.construct(allocator, string, 5, 'a');
+    traits.construct(allocator, string, 5, 'a');
 
 //  -----------------------------------------------------
 
-	assert(*string == "aaaaa");
+    assert(*string == "aaaaa");
 
 //  -----------------------------------------------------
 
-	traits.destroy(allocator, string);
+    traits.destroy(allocator, string);
 
 //  -----------------------------------------------------
 
-	assert(string);
+    assert(string);
 
 //  -----------------------------------------------------
 
-	traits.deallocate(allocator, string, 1);
+    traits.deallocate(allocator, string, 1);
 }
 
 /////////////////////////////////////////////////////////

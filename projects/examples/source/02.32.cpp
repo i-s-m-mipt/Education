@@ -17,19 +17,19 @@
 
 int main()
 {
-	auto x = 1, & y = x; // support : https://compiler-explorer.com
+    auto x = 1, & y = x; // support : https://compiler-explorer.com
 
 //  ---------------------------------------------------------------
 
-	static_assert(std::is_same_v < decltype(y), int & > );
+    static_assert(std::is_same_v < decltype(y), int & > );
 
 //  ---------------------------------------------------------------
 
-	assert(y == x);
+    assert(y == x);
 
 //  ---------------------------------------------------------------
 
-//	[[maybe_unused]] int & z; // error
+//  [[maybe_unused]] int & z; // error
 }
 
 ///////////////////////////////////////////////////////////////////

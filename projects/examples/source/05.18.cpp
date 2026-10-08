@@ -16,24 +16,24 @@ template < typename D > class Controller
 {
 public :
 
-	static auto counter()
-	{
-		return s_counter;
-	}
+    static auto counter()
+    {
+        return s_counter;
+    }
 
 protected :
 
-	Controller(                         ) { ++s_counter; }
+    Controller(                         ) { ++s_counter; }
 
-	Controller(Controller < D > const & ) { ++s_counter; }
+    Controller(Controller < D > const & ) { ++s_counter; }
 
-	Controller(Controller < D >       &&) { ++s_counter; }
+    Controller(Controller < D >       &&) { ++s_counter; }
 
    ~Controller(                         ) { --s_counter; }
 
 private :
 
-	static inline auto s_counter = 0uz;
+    static inline auto s_counter = 0uz;
 };
 
 //////////////////////////////////////////////////////////
@@ -46,23 +46,23 @@ class Entity_v2 : private Controller < Entity_v2 > {};
 
 int main()
 {
-	Entity_v1 entity_v1;
+    Entity_v1 entity_v1;
 
 //  --------------------------------------------------
 
-	assert(Controller < Entity_v1 > ::counter() == 1);
+    assert(Controller < Entity_v1 > ::counter() == 1);
 
-	assert(Controller < Entity_v2 > ::counter() == 0);
-
-//  --------------------------------------------------
-
-	Entity_v2 entity_v2;
+    assert(Controller < Entity_v2 > ::counter() == 0);
 
 //  --------------------------------------------------
 
-	assert(Controller < Entity_v1 > ::counter() == 1);
+    Entity_v2 entity_v2;
 
-	assert(Controller < Entity_v2 > ::counter() == 1);
+//  --------------------------------------------------
+
+    assert(Controller < Entity_v1 > ::counter() == 1);
+
+    assert(Controller < Entity_v2 > ::counter() == 1);
 }
 
 //////////////////////////////////////////////////////////

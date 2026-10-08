@@ -61,8 +61,8 @@ public :
 
    ~Entity()
     {
-		std::print("Entity::~Entity\n");
-	}
+        std::print("Entity::~Entity\n");
+    }
 };
 
 ////////////////////////////////////////////////////////////////////
@@ -70,13 +70,13 @@ public :
 auto test(int x) -> std::variant < int, std::string >
 {
     if (x > 0)
-	{
-		return x;
-	}
-	else
-	{
-		return "error";
-	}
+    {
+        return x;
+    }
+    else
+    {
+        return "error";
+    }
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -103,7 +103,7 @@ int main()
 
 //  ----------------------------------------------------------------
 
-//	std::variant < Entity, int > variant_2; // error
+//  std::variant < Entity, int > variant_2; // error
 
 //  ----------------------------------------------------------------
 
@@ -117,7 +117,7 @@ int main()
 
     assert(std::holds_alternative < int > (test(0)) == 0);
 
-	assert(std::holds_alternative < int > (test(1)) == 1);
+    assert(std::holds_alternative < int > (test(1)) == 1);
 }
 
 ////////////////////////////////////////////////////////////////////

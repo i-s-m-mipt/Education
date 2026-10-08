@@ -10,7 +10,7 @@
 //
 // content : Interprocess Mutexes and Condition Variables
 //
-// content : Library Boost.Interpocess
+// content : Library Boost.Interprocess
 //
 // content : Process Launch Synchronization
 
@@ -124,15 +124,15 @@ int main()
 
 //  -------------------------------------------------------------------------
 
-	auto path = "memory";
+    auto path = "memory";
 
 //  -------------------------------------------------------------------------
 
-	boost::interprocess::shared_memory_object::remove(path);
+    boost::interprocess::shared_memory_object::remove(path);
 
 //  -------------------------------------------------------------------------
 
-	shared_memory_t storage(boost::interprocess::create_only, path, 1 << 10);
+    shared_memory_t storage(boost::interprocess::create_only, path, 1 << 10);
 
 //  -------------------------------------------------------------------------
 
@@ -177,7 +177,7 @@ int main()
 
 //  -------------------------------------------------------------------------
 
-	boost::interprocess::shared_memory_object::remove(path);
+    boost::interprocess::shared_memory_object::remove(path);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////

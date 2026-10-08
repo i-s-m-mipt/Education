@@ -37,91 +37,91 @@
 
 void show(std::unordered_set < std::string > const & set)
 {
-	for (auto i = 0uz; i < set.bucket_count(); ++i)
-	{
-		std::print("show : buckets[{:0>2}] = {{", i);
+    for (auto i = 0uz; i < set.bucket_count(); ++i)
+    {
+        std::print("show : buckets[{:0>2}] = {{", i);
 
-		for (auto iterator = set.begin(i); iterator != set.end(i); ++iterator)
-		{
-			std::print(" {}", *iterator);
-		}
+        for (auto iterator = set.begin(i); iterator != set.end(i); ++iterator)
+        {
+            std::print(" {}", *iterator);
+        }
 
-		std::print("{}}}\n", set.bucket_size(i) > 0 ? " " : "");
-	}
+        std::print("{}}}\n", set.bucket_size(i) > 0 ? " " : "");
+    }
 
-	std::print("\n");
+    std::print("\n");
 }
 
 /////////////////////////////////////////////////////////////////////////////////
 
 auto make_strings(std::size_t size_1, std::size_t size_2)
 {
-	std::set < std::string > strings;
+    std::set < std::string > strings;
 
-	std::string string(size_2, '_');
+    std::string string(size_2, '_');
 
-	std::uniform_int_distribution distribution(97, 122);
+    std::uniform_int_distribution distribution(97, 122);
 
-	std::default_random_engine engine;
+    std::default_random_engine engine;
 
-	while (std::size(strings) < size_1)
+    while (std::size(strings) < size_1)
     {
         for (auto & element : string)
-		{
-			element = distribution(engine);
-		}
+        {
+            element = distribution(engine);
+        }
 
-		strings.insert(string);
+        strings.insert(string);
     }
 
-	return strings;
+    return strings;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
-	return std::abs(x - y) < epsilon;
+    return std::abs(x - y) < epsilon;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	std::unordered_set < std::string > set;
+    std::unordered_set < std::string > set;
 
 //  -----------------------------------------------------------------------------
 
-	static_assert
-	(
-		std::is_same_v
-		<
-			decltype(set)::iterator::iterator_category, std::forward_iterator_tag
-		>
-	);
+    static_assert
+    (
+        std::is_same_v
+        <
+            decltype(set)::iterator::iterator_category, std::forward_iterator_tag
+        >
+    );
 
 //  -----------------------------------------------------------------------------
 
-	show(set); set.rehash(32);
+    show(set); set.rehash(32);
 
-	show(set);
-
-//  -----------------------------------------------------------------------------
-
-	for (auto const & string : make_strings(set.bucket_count(), 5))
-	{
-		set.insert(string);
-	}
+    show(set);
 
 //  -----------------------------------------------------------------------------
 
-	show(set); set.rehash(64);
-
-	show(set);
+    for (auto const & string : make_strings(set.bucket_count(), 5))
+    {
+        set.insert(string);
+    }
 
 //  -----------------------------------------------------------------------------
 
-	assert(equal(set.load_factor(), 1.0 * std::size(set) / set.bucket_count()));
+    show(set); set.rehash(64);
+
+    show(set);
+
+//  -----------------------------------------------------------------------------
+
+    assert(equal(set.load_factor(), 1.0 * std::size(set) / set.bucket_count()));
 }
 
 /////////////////////////////////////////////////////////////////////////////////

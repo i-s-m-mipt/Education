@@ -18,7 +18,7 @@
 
 void test_v1(int x, int y = 0)
 {
-	std::print("test_v1 : x = {} y = {}\n", x, y);
+    std::print("test_v1 : x = {} y = {}\n", x, y);
 }
 
 /////////////////////////////////////////////////////

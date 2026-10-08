@@ -47,7 +47,7 @@
 
 #define FUNCTION(version) void test_##version() \
 {                                               \
-	std::print("{}{}\n", PREFIX, #version);     \
+    std::print("{}{}\n", PREFIX, #version);     \
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -84,9 +84,9 @@ FUNCTION(v1) // support : https://compiler-explorer.com
 
 int main()
 {
-	test_v1();
+    test_v1();
 
-//	test_v2(); // error
+//  test_v2(); // error
 
 //  -----------------------------------------------
 
@@ -94,15 +94,15 @@ int main()
 
 //  -----------------------------------------------
 
-//	assert(SQUARE_v1(x + x) == 3); // error
+//  assert(SQUARE_v1(x + x) == 3); // error
 
-	assert(SQUARE_v2(x + x) == 4);
+    assert(SQUARE_v2(x + x) == 4);
 
 //  -----------------------------------------------
 
-//	assert(SQUARE_v2(++x) == 6 && x == 3); // error
+//  assert(SQUARE_v2(++x) == 6 && x == 3); // error
 
-//	assert(SQUARE_v2(y++) == 6 && y == 4); // error
+//  assert(SQUARE_v2(y++) == 6 && y == 4); // error
 
 //  -----------------------------------------------
 

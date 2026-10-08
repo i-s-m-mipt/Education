@@ -24,106 +24,106 @@ template < typename T > class List
 {
 private :
 
-	struct Node
-	{
-		T x = T();
+    struct Node
+    {
+        T x = T();
 
-		std::shared_ptr < Node > next;
-	};
+        std::shared_ptr < Node > next;
+    };
 
 public :
 
-	class Iterator : public boost::iterator_facade < Iterator, T, boost::forward_traversal_tag >
-	{
-	public :
+    class Iterator : public boost::iterator_facade < Iterator, T, boost::forward_traversal_tag >
+    {
+    public :
 
-		using iterator_category = std::forward_iterator_tag;
+        using iterator_category = std::forward_iterator_tag;
 
-	//  -------------------------------------------------------------------
+    //  -------------------------------------------------------------------
 
-		Iterator(std::shared_ptr < Node > node = nullptr) : m_node(node) {}
+        Iterator(std::shared_ptr < Node > node = nullptr) : m_node(node) {}
 
-	//  -------------------------------------------------------------------
+    //  -------------------------------------------------------------------
 
-		void increment()
-		{
-			m_node = m_node->next;
-		}
+        void increment()
+        {
+            m_node = m_node->next;
+        }
 
-	//  -------------------------------------------------------------------
+    //  -------------------------------------------------------------------
 
-		auto & dereference() const
-		{
-			return m_node->x;
-		}
+        auto & dereference() const
+        {
+            return m_node->x;
+        }
 
-	//  -------------------------------------------------------------------
+    //  -------------------------------------------------------------------
 
-		auto equal(Iterator const & other) const
-		{
-			return m_node == other.m_node;
-		}
+        auto equal(Iterator const & other) const
+        {
+            return m_node == other.m_node;
+        }
 
-	private :
+    private :
 
-		friend boost::iterator_core_access;
+        friend boost::iterator_core_access;
 
-	//  -------------------------------------------------------------------
+    //  -------------------------------------------------------------------
 
-		std::shared_ptr < Node > m_node;
-	};
-
-//  --------------------------------------------------------------------------------------------
-
-	auto begin() const { return Iterator(m_head); }
-
-	auto end  () const { return Iterator(      ); }
+        std::shared_ptr < Node > m_node;
+    };
 
 //  --------------------------------------------------------------------------------------------
 
-	void push_back(T x)
-	{
-		auto node = std::make_shared < Node > (x, nullptr);
+    auto begin() const { return Iterator(m_head); }
 
-		if (m_head)
-		{
-			auto tail = m_head;
+    auto end  () const { return Iterator(      ); }
 
-			while (tail->next)
-			{
-				tail = tail->next;
-			}
+//  --------------------------------------------------------------------------------------------
 
-			tail->next = node;
-		}
-		else
-		{
-			m_head = node;
-		}
-	}
+    void push_back(T x)
+    {
+        auto node = std::make_shared < Node > (x, nullptr);
+
+        if (m_head)
+        {
+            auto tail = m_head;
+
+            while (tail->next)
+            {
+                tail = tail->next;
+            }
+
+            tail->next = node;
+        }
+        else
+        {
+            m_head = node;
+        }
+    }
 
 private :
 
-	std::shared_ptr < Node > m_head;
+    std::shared_ptr < Node > m_head;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	List < int > list;
+    List < int > list;
 
 //  -------------------------------------------------------------------------------
 
-	list.push_back(1);
+    list.push_back(1);
 
 //  -------------------------------------------------------------------------------
 
-	for (auto iterator = std::begin(list); iterator != std::end(list); ++iterator);
+    for (auto iterator = std::begin(list); iterator != std::end(list); ++iterator);
 
 //  -------------------------------------------------------------------------------
 
-	for ([[maybe_unused]] auto element : list);
+    for ([[maybe_unused]] auto element : list);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

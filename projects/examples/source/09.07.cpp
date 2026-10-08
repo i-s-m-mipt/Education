@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 
-// chapter : Distributed Network Systems
+// chapter : Memory Management
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -37,7 +37,7 @@ public :
         std::print("Client::receive : x = {}\n", x);
     }
 
-private:
+private :
 
     std::weak_ptr < Mediator > m_mediator;
 };

@@ -24,24 +24,24 @@ auto reduce_v4(auto ... xs) { return (xs + ... + 0 ); } // support : https://cpp
 
 auto transform_reduce(auto ... xs) // support : https://cppinsights.io
 {
-	return (... + (xs * xs));
+    return (... + (xs * xs));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	assert(reduce_v1(1, 2, 3) == 6);
+    assert(reduce_v1(1, 2, 3) == 6);
 
-	assert(reduce_v2(1, 2, 3) == 6);
+    assert(reduce_v2(1, 2, 3) == 6);
 
-	assert(reduce_v3(1, 2, 3) == 6);
+    assert(reduce_v3(1, 2, 3) == 6);
 
-	assert(reduce_v4(1, 2, 3) == 6);
+    assert(reduce_v4(1, 2, 3) == 6);
 
 //  ----------------------------------------
 
-	assert(transform_reduce(1, 2, 3) == 14);
+    assert(transform_reduce(1, 2, 3) == 14);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////

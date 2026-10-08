@@ -19,17 +19,17 @@ int main()
 
 //  -----------------------------------------------------------
 
-//	assert(array.size() == 5); // error
+//  assert(array.size() == 5); // error
 
 //  -----------------------------------------------------------
 
-	assert(std::size(array) == 5);
+    assert(std::size(array) == 5);
 
 //  -----------------------------------------------------------
 
-//	for (auto i = std:: size(array) - 1; i >= 0; --i); // error
+//  for (auto i = std:: size(array) - 1; i >= 0; --i); // error
 
-	for (auto i = std::ssize(array) - 1; i >= 0; --i);
+    for (auto i = std::ssize(array) - 1; i >= 0; --i);
 }
 
 ///////////////////////////////////////////////////////////////

@@ -35,7 +35,7 @@ class Entity
 {
 public :
 
-	Entity()
+    Entity()
     {
         std::print("Entity:: Entity (1)\n");
     }
@@ -46,22 +46,22 @@ public :
     {
         std::print("Entity:: Entity (2)\n");
 
-    //	m_y = y; // error
+    //  m_y = y; // error
     }
 
 //  ----------------------------------------------
 
-//	Entity(int x, int y) : m_y(y), m_x(x) // error
+//  Entity(int x, int y) : m_y(y), m_x(x) // error
 //  {
 //      std::print("Entity:: Entity (3)\n");
 //  }
 
 //  ----------------------------------------------
 
-	Entity(int x) : Entity(x, 0)
-	{
+    Entity(int x) : Entity(x, 0)
+    {
         std::print("Entity:: Entity (4)\n");
-	}
+    }
 
 //  ----------------------------------------------
 
@@ -83,15 +83,15 @@ int main()
 {
     Entity entity_1;
 
-//	Entity entity_2(); // error
+//  Entity entity_2(); // error
 
-	Entity entity_3(3, 3);
+    Entity entity_3(3, 3);
 
-	Entity entity_4(4);
+    Entity entity_4(4);
 
 //  -----------------------------------
 
-//	assert(entity_1.m_x == 0); // error
+//  assert(entity_1.m_x == 0); // error
 }
 
 //////////////////////////////////////////////////////////////

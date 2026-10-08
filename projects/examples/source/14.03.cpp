@@ -32,7 +32,7 @@ void test_v1()
 
 void test_v2(int * x)
 {
-	std::this_thread::sleep_for(1s);
+    std::this_thread::sleep_for(1s);
 
     ++(*x);
 }
@@ -45,7 +45,7 @@ void test_v3()
 
     std::thread thread(test_v2, &x);
 
-//	thread.detach(); // error
+//  thread.detach(); // error
 
     thread.join();
 }

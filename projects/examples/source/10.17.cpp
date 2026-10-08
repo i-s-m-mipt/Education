@@ -23,27 +23,27 @@
 
 int main()
 {
-	std::queue < int > queue;
+    std::queue < int > queue;
 
 //  ------------------------------------------------
 
-	queue.push(1);
+    queue.push(1);
 
-	queue.push(2);
+    queue.push(2);
 
-	queue.push(3);
-
-//  ------------------------------------------------
-
-	assert(queue.front() == 1 && queue.back() == 3);
+    queue.push(3);
 
 //  ------------------------------------------------
 
-	queue.pop();
+    assert(queue.front() == 1 && queue.back() == 3);
 
 //  ------------------------------------------------
 
-	assert(queue.front() == 2 && queue.back() == 3);
+    queue.pop();
+
+//  ------------------------------------------------
+
+    assert(queue.front() == 2 && queue.back() == 3);
 }
 
 ///////////////////////////////////////////////////////////////////////////

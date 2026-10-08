@@ -37,25 +37,25 @@
 
 int main()
 {
-	std::locale locale_1("en_US.utf8");
+    std::locale locale_1("en_US.utf8");
 
     std::locale locale_2("ru_RU.utf8");
 
 //  ----------------------------------------------------------------------------------------
 
-	assert((std::use_facet < std::  numpunct < char > > (locale_1).thousands_sep()) == ',');
+    assert((std::use_facet < std::  numpunct < char > > (locale_1).thousands_sep()) == ',');
 
     assert((std::use_facet < std::  numpunct < char > > (locale_2).thousands_sep()) == ' ');
 
 //  ----------------------------------------------------------------------------------------
 
-	assert((std::use_facet < std::moneypunct < char > > (locale_1).curr_symbol  ()) == "$");
+    assert((std::use_facet < std::moneypunct < char > > (locale_1).curr_symbol  ()) == "$");
 
     assert((std::use_facet < std::moneypunct < char > > (locale_2).curr_symbol  ()) == "₽");
 
 //  ----------------------------------------------------------------------------------------
 
-//	std::setlocale(LC_ALL, "en_US.utf8"); // bad
+//  std::setlocale(LC_ALL, "en_US.utf8"); // bad
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////

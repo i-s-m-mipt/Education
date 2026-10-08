@@ -21,96 +21,96 @@ template < typename T > class Rational // support : https://cppinsights.io
 {
 public :
 
-	Rational(T num = 0, T den = 1) : m_num(num), m_den(den)
-	{
-		reduce();
-	}
+    Rational(T num = 0, T den = 1) : m_num(num), m_den(den)
+    {
+        reduce();
+    }
 
 //  ----------------------------------------------------------------------
 
-	auto & operator+=(Rational const & other)
-	{
-		auto lcm = std::lcm(m_den, other.m_den);
+    auto & operator+=(Rational const & other)
+    {
+        auto lcm = std::lcm(m_den, other.m_den);
 
-		m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den);
+        m_num = m_num * (lcm / m_den) + other.m_num * (lcm / other.m_den);
 
-		m_den = lcm;
+        m_den = lcm;
 
-		reduce();
+        reduce();
 
-		return *this;
-	}
-
-//  ----------------------------------------------------------------------
-
-	auto & operator-=(Rational const & other)
-	{
-		return *this += Rational(other.m_num * -1, other.m_den);
-	}
+        return *this;
+    }
 
 //  ----------------------------------------------------------------------
 
-	friend auto operator+ (Rational lhs, Rational const & rhs)
-	{
-		return lhs += rhs;
-	}
+    auto & operator-=(Rational const & other)
+    {
+        return *this += Rational(other.m_num * -1, other.m_den);
+    }
 
 //  ----------------------------------------------------------------------
 
-	friend auto operator==(Rational const & lhs, Rational const & rhs)
-	{
-		return lhs.m_num * rhs.m_den == rhs.m_num * lhs.m_den;
-	}
+    friend auto operator+ (Rational lhs, Rational const & rhs)
+    {
+        return lhs += rhs;
+    }
+
+//  ----------------------------------------------------------------------
+
+    friend auto operator==(Rational const & lhs, Rational const & rhs)
+    {
+        return lhs.m_num * rhs.m_den == rhs.m_num * lhs.m_den;
+    }
 
 private :
 
-	void reduce()
-	{
-		if (m_den < 0)
-		{
-			m_num = -m_num;
+    void reduce()
+    {
+        if (m_den < 0)
+        {
+            m_num = -m_num;
 
-			m_den = -m_den;
-		}
+            m_den = -m_den;
+        }
 
-		auto gcd = std::gcd(m_num, m_den);
+        auto gcd = std::gcd(m_num, m_den);
 
-		m_num /= gcd;
+        m_num /= gcd;
 
-		m_den /= gcd;
-	}
+        m_den /= gcd;
+    }
 
 //  ----------------------------------------------------------------------
 
-	T m_num = 0, m_den = 1;
+    T m_num = 0, m_den = 1;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 template
 <
-	typename T
+    typename T
 >
 auto operator-(Rational < T > lhs, Rational < T > const & rhs) // support : https://cppinsights.io
 {
-	return lhs -= rhs;
+    return lhs -= rhs;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Rational < int > x = 1;
+    Rational < int > x = 1;
 
 //  ------------------------------------------------------------
 
-	assert(x + 1 == Rational < int > (2, 1));
+    assert(x + 1 == Rational < int > (2, 1));
 
-//	assert(x - 1 == Rational < int > (0, 1)); // error
+//  assert(x - 1 == Rational < int > (0, 1)); // error
 
 //  ------------------------------------------------------------
 
-	assert(operator- < int > (x, 1) == Rational < int > (0, 1));
+    assert(operator- < int > (x, 1) == Rational < int > (0, 1));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

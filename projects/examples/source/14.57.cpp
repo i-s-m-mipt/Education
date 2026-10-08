@@ -6,7 +6,7 @@
 
 // content : Inter-Process Communication (IPC)
 //
-// content : Library Boost.Interpocess
+// content : Library Boost.Interprocess
 //
 // content : Shared Memory
 //
@@ -40,7 +40,7 @@ int main()
 
 //  ---------------------------------------------------------------------------------------------
 
-	auto path = "memory";
+    auto path = "memory";
 
 //  ---------------------------------------------------------------------------------------------
 

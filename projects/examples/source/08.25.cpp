@@ -22,7 +22,7 @@
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
-	return std::abs(x - y) < epsilon;
+    return std::abs(x - y) < epsilon;
 }
 
 //////////////////////////////////////////////////////////
@@ -33,35 +33,35 @@ int main()
 
 //  ------------------------------------------------------
 
-	std::uniform_real_distribution distribution(0.0, 1.0);
+    std::uniform_real_distribution distribution(0.0, 1.0);
 
 //  ------------------------------------------------------
 
-	std::default_random_engine engine;
+    std::default_random_engine engine;
 
 //  ------------------------------------------------------
 
-	auto counter = 0uz;
+    auto counter = 0uz;
 
 //  ------------------------------------------------------
 
-	for (auto i = 0uz; i < size; ++i)
-	{
-		auto x = distribution(engine);
+    for (auto i = 0uz; i < size; ++i)
+    {
+        auto x = distribution(engine);
 
-		auto y = distribution(engine);
+        auto y = distribution(engine);
 
-	//  ------------------------------
+    //  ------------------------------
 
-		if (x * x + y * y < 1)
-		{
-			++counter;
-		}
-	}
+        if (x * x + y * y < 1)
+        {
+            ++counter;
+        }
+    }
 
 //  ------------------------------------------------------
 
-	assert(equal(4.0 * counter / size, 3.141, 1e-3));
+    assert(equal(4.0 * counter / size, 3.141, 1e-3));
 }
 
 //////////////////////////////////////////////////////////

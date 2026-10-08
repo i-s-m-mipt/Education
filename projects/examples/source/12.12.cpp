@@ -14,15 +14,15 @@
 
 #include <array>
 #include <cassert>
-#include <cmath>
 #include <charconv>
+#include <cmath>
 #include <iterator>
 
 ////////////////////////////////////////////////////////////////
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
-	return std::abs(x - y) < epsilon;
+    return std::abs(x - y) < epsilon;
 }
 
 ////////////////////////////////////////////////////////////////

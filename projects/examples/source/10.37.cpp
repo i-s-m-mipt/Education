@@ -44,7 +44,7 @@ void test_v1(benchmark::State & state)
             case 2 : { for (auto element_2 : set_2) { assert(element_2 > 0); } break; }
         }
 
-		benchmark::DoNotOptimize(set_1);
+        benchmark::DoNotOptimize(set_1);
 
         benchmark::DoNotOptimize(set_2);
     }
@@ -73,7 +73,7 @@ void test_v2(benchmark::State & state)
             case 2 : { set_2.insert(set_2.erase(std::begin(set_2)), 1); break; }
         }
 
-		benchmark::DoNotOptimize(set_1);
+        benchmark::DoNotOptimize(set_1);
 
         benchmark::DoNotOptimize(set_2);
     }

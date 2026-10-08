@@ -26,33 +26,33 @@
 
 int main()
 {
-	std::vector < int > vector_1 = { 1, 2, 3, 4, 5 };
+    std::vector < int > vector_1 = { 1, 2, 3, 4, 5 };
 
-	std::vector < int > vector_2;
-
-//  ----------------------------------------------------------------------------------
-
-	std::ranges::copy(vector_1, std::back_inserter(vector_2));
+    std::vector < int > vector_2;
 
 //  ----------------------------------------------------------------------------------
 
-	assert(vector_2 == vector_1);
+    std::ranges::copy(vector_1, std::back_inserter(vector_2));
 
 //  ----------------------------------------------------------------------------------
 
-	vector_2.clear();
+    assert(vector_2 == vector_1);
 
 //  ----------------------------------------------------------------------------------
 
-	auto lambda = [](auto x) static { return x <= 0; };
+    vector_2.clear();
 
 //  ----------------------------------------------------------------------------------
 
-	std::ranges::copy_if(vector_1, std::back_inserter(vector_2), std::not_fn(lambda));
+    auto lambda = [](auto x) static { return x <= 0; };
 
 //  ----------------------------------------------------------------------------------
 
-	assert(vector_2 == vector_1);
+    std::ranges::copy_if(vector_1, std::back_inserter(vector_2), std::not_fn(lambda));
+
+//  ----------------------------------------------------------------------------------
+
+    assert(vector_2 == vector_1);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////

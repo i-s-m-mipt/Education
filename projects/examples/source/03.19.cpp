@@ -20,7 +20,7 @@ class Entity
 {
 public :
 
-	virtual ~Entity() = default;
+    virtual ~Entity() = default;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,35 +33,35 @@ class Server : public Entity {};
 
 int main()
 {
-	auto x = 1.0;
+    auto x = 1.0;
 
 //  -------------------------------------------------------------------------------------------
 
-	assert(static_cast < int > (x) == 1); // support : https://compiler-explorer.com
+    assert(static_cast < int > (x) == 1); // support : https://compiler-explorer.com
 
 //  -------------------------------------------------------------------------------------------
 
-	Entity * entity = new Client;
+    Entity * entity = new Client;
 
 //  -------------------------------------------------------------------------------------------
 
-	assert( static_cast < Client * > (entity) != 0);
+    assert( static_cast < Client * > (entity) != 0);
 
-//	assert( static_cast < Server * > (entity) != 0); // error
-
-//  -------------------------------------------------------------------------------------------
-
-	assert(dynamic_cast < Client * > (entity) != 0); // support : https://compiler-explorer.com
-
-	assert(dynamic_cast < Server * > (entity) == 0);
+//  assert( static_cast < Server * > (entity) != 0); // error
 
 //  -------------------------------------------------------------------------------------------
 
-	delete entity;
+    assert(dynamic_cast < Client * > (entity) != 0); // support : https://compiler-explorer.com
+
+    assert(dynamic_cast < Server * > (entity) == 0);
 
 //  -------------------------------------------------------------------------------------------
 
-//	assert(dynamic_cast < int > (x) == 1); // error
+    delete entity;
+
+//  -------------------------------------------------------------------------------------------
+
+//  assert(dynamic_cast < int > (x) == 1); // error
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

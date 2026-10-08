@@ -30,17 +30,17 @@
 
 int main()
 {
-	auto lambda_1 = [](){}; // support : https://cppinsights.io
+    auto lambda_1 = [](){}; // support : https://cppinsights.io
 
-	auto lambda_2 = [](auto x) constexpr static noexcept { return x; };
+    auto lambda_2 = [](auto x) constexpr static noexcept { return x; };
 
     auto lambda_3 = [] < typename T > (T x, T y) static { return x < y ? y : x; };
 
 //  ------------------------------------------------------------------------------
 
-	std::print("main : typeid(lambda_1) = {}\n", typeid(lambda_1).name());
+    std::print("main : typeid(lambda_1) = {}\n", typeid(lambda_1).name());
 
-	std::print("main : typeid(lambda_2) = {}\n", typeid(lambda_2).name());
+    std::print("main : typeid(lambda_2) = {}\n", typeid(lambda_2).name());
 
     std::print("main : typeid(lambda_3) = {}\n", typeid(lambda_3).name());
 }

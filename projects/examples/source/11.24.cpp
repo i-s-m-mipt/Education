@@ -20,19 +20,19 @@
 
 int main()
 {
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+    std::vector < int > vector = { 1, 2, 3, 4, 5 };
 
 //  -----------------------------------------------------------
 
-	std::ranges::shuffle(vector, std::default_random_engine());
+    std::ranges::shuffle(vector, std::default_random_engine());
 
 //  -----------------------------------------------------------
 
-	auto iterator = std::next(std::begin(vector), 2);
+    auto iterator = std::next(std::begin(vector), 2);
 
 //  -----------------------------------------------------------
 
-	std::ranges::nth_element(vector, iterator);
+    std::ranges::nth_element(vector, iterator);
 
 //  -----------------------------------------------------------
 

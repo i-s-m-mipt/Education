@@ -33,35 +33,35 @@
 int main()
 {
     std::vector < std::function < int(int, int) > > functions =
-	{
-		[](auto x, auto y) static { return x + y; },
+    {
+        [](auto x, auto y) static { return x + y; },
 
-		[](auto x, auto y) static { return x - y; },
+        [](auto x, auto y) static { return x - y; },
 
-		[](auto x, auto y) static { return x * y; },
+        [](auto x, auto y) static { return x * y; },
 
-		[](auto x, auto y) static { return x / y; }
-	};
-
-//  -----------------------------------------------------------
-
-	boost::signals2::signal < void() > signal;
+        [](auto x, auto y) static { return x / y; }
+    };
 
 //  -----------------------------------------------------------
 
-	auto lambda_1 = []() static { std::print("lambda_1\n"); };
-
-	auto lambda_2 = []() static { std::print("lambda_2\n"); };
+    boost::signals2::signal < void() > signal;
 
 //  -----------------------------------------------------------
 
-	signal.connect(lambda_1);
+    auto lambda_1 = []() static { std::print("lambda_1\n"); };
 
-	signal.connect(lambda_2);
+    auto lambda_2 = []() static { std::print("lambda_2\n"); };
 
 //  -----------------------------------------------------------
 
-	signal();
+    signal.connect(lambda_1);
+
+    signal.connect(lambda_2);
+
+//  -----------------------------------------------------------
+
+    signal();
 }
 
 ///////////////////////////////////////////////////////////////

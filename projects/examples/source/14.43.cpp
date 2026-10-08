@@ -10,7 +10,7 @@
 //
 // content : Happens-Before and Synchronizes-With Relations
 //
-// content : Total Strong Ordering (TSO)
+// content : Total Store Ordering (TSO)
 //
 // content : Unprohibited Store-Load Reordering
 

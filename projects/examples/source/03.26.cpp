@@ -31,25 +31,25 @@ void test(Entity const &&) { std::print("test (4)\n"); }
 
 int main()
 {
-	Entity       entity_1;
+    Entity       entity_1;
 
-	Entity const entity_2;
-
-//  ---------------------------------
-
-	test(entity_1);
-
-	test(entity_2);
+    Entity const entity_2;
 
 //  ---------------------------------
 
-	test(std::move(entity_1));
+    test(entity_1);
 
-//	test(std::move(entity_2)); // bad
+    test(entity_2);
 
 //  ---------------------------------
 
-	test(Entity());
+    test(std::move(entity_1));
+
+//  test(std::move(entity_2)); // bad
+
+//  ---------------------------------
+
+    test(Entity());
 }
 
 ////////////////////////////////////////////////////////

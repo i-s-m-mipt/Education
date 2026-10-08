@@ -17,27 +17,27 @@
 
 auto test(int x)
 {
-	return x;
+    return x;
 }
 
 ////////////////////////////////////////////////////////////////////
 
 auto invoke(int(*function)(int), int x)
 {
-	return function(x);
+    return function(x);
 }
 
 ////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	static_assert(std::is_same_v < decltype( test), int   (int) > );
+    static_assert(std::is_same_v < decltype( test), int   (int) > );
 
-	static_assert(std::is_same_v < decltype(&test), int(*)(int) > );
+    static_assert(std::is_same_v < decltype(&test), int(*)(int) > );
 
 //  ----------------------------------------------------------------
 
-	assert(invoke(test, 1) == 1);
+    assert(invoke(test, 1) == 1);
 }
 
 ////////////////////////////////////////////////////////////////////

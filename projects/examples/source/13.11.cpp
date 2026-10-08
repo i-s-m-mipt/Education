@@ -18,9 +18,9 @@
 
 int main()
 {
-	std::stringstream stream_1("aaaaa");
+    std::stringstream stream_1("aaaaa");
 
-	std::stringstream stream_2;
+    std::stringstream stream_2;
 
 //  -----------------------------------------
 
@@ -34,7 +34,7 @@ int main()
 
 //  -----------------------------------------
 
-	assert(stream_2.str() == stream_1.str());
+    assert(stream_2.str() == stream_1.str());
 }
 
 /////////////////////////////////////////////

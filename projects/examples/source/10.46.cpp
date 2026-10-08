@@ -24,18 +24,18 @@ int main()
 
 //  ----------------------------------------------------
 
-	bimap.insert({ 1, 1 });
+    bimap.insert({ 1, 1 });
 
 //  ----------------------------------------------------
 
-	assert(bimap.left.count(1) == bimap.right.count(1));
+    assert(bimap.left.count(1) == bimap.right.count(1));
 
 //  ----------------------------------------------------
 
-	for (auto const & relation : bimap)
-	{
-		assert(relation.left == relation.right);
-	}
+    for (auto const & relation : bimap)
+    {
+        assert(relation.left == relation.right);
+    }
 }
 
 ////////////////////////////////////////////////////////

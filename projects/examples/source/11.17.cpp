@@ -31,9 +31,9 @@ public :
 
     using std::vector < T > ::begin;
 
-	using std::vector < T > ::  end;
+    using std::vector < T > ::  end;
 
-	using std::vector < T > :: size;
+    using std::vector < T > :: size;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////

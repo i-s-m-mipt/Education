@@ -15,14 +15,14 @@
 
 enum class State : std::uint8_t
 {
-	slow, fast
+    slow, fast
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 
 struct Entity
 {
-	State state = State::slow;
+    State state = State::slow;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -31,51 +31,51 @@ class Command
 {
 public :
 
-	Command(Entity & entity, State state) : m_entity(entity), m_state(state) {}
+    Command(Entity & entity, State state) : m_entity(entity), m_state(state) {}
 
 //  ---------------------------------------------------------------------------
 
-	void operator()() const
-	{
-		m_entity.state = m_state;
-	}
+    void operator()() const
+    {
+        m_entity.state = m_state;
+    }
 
 private :
 
-	Entity & m_entity;
+    Entity & m_entity;
 
-	State m_state = State::slow;
+    State m_state = State::slow;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	Entity entity(State::slow);
+    Entity entity(State::slow);
 
 //  ---------------------------------------------------------
 
-	Command command(entity, State::fast);
+    Command command(entity, State::fast);
 
 //  ---------------------------------------------------------
 
-	command();
+    command();
 
 //  ---------------------------------------------------------
 
-	assert(entity.state == State::fast);
+    assert(entity.state == State::fast);
 
 //  ---------------------------------------------------------
 
-	auto lambda = [&entity](){ entity.state = State::slow; };
+    auto lambda = [&entity](){ entity.state = State::slow; };
 
 //  ---------------------------------------------------------
 
-	lambda();
+    lambda();
 
 //  ---------------------------------------------------------
 
-	assert(entity.state == State::slow);
+    assert(entity.state == State::slow);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

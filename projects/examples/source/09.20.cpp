@@ -29,15 +29,15 @@ void test(benchmark::State & state)
 {
     auto argument = state.range(0);
 
-	auto size = 1uz << 10;
+    auto size = 1uz << 10;
 
-	std::vector < Entity_v1 > entities_v1(size);
+    std::vector < Entity_v1 > entities_v1(size);
 
-	std::vector < Entity_v2 > entities_v2(size);
+    std::vector < Entity_v2 > entities_v2(size);
 
     for (auto element : state)
     {
-		for (auto i = 0uz; i < size; ++i)
+        for (auto i = 0uz; i < size; ++i)
         {
             switch (argument)
             {

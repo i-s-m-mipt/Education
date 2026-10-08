@@ -6,7 +6,7 @@
 
 // content : Interprocess Objects and Arrays
 //
-// content : Library Boost.Interpocess
+// content : Library Boost.Interprocess
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -24,19 +24,19 @@ int main()
 
 //  -------------------------------------------------------------------------
 
-	auto path = "memory";
+    auto path = "memory";
 
 //  -------------------------------------------------------------------------
 
-	boost::interprocess::shared_memory_object::remove(path);
+    boost::interprocess::shared_memory_object::remove(path);
 
 //  -------------------------------------------------------------------------
 
-	shared_memory_t storage(boost::interprocess::create_only, path, 1 << 10);
+    shared_memory_t storage(boost::interprocess::create_only, path, 1 << 10);
 
 //  -------------------------------------------------------------------------
 
-	storage.construct < int > ("x")(1);
+    storage.construct < int > ("x")(1);
 
 //  -------------------------------------------------------------------------
 
@@ -64,7 +64,7 @@ int main()
 
 //  -------------------------------------------------------------------------
 
-	boost::interprocess::shared_memory_object::remove(path);
+    boost::interprocess::shared_memory_object::remove(path);
 }
 
 /////////////////////////////////////////////////////////////////////////////

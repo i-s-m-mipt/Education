@@ -64,13 +64,13 @@ int main()
 
 //  -------------------------------------------------------
 
-	boost::intrusive_ptr < Entity > entity_2 = entity_1;
+    boost::intrusive_ptr < Entity > entity_2 = entity_1;
 
 //  -------------------------------------------------------
 
-	assert(entity_1->counter() == 2);
+    assert(entity_1->counter() == 2);
 
-	assert(entity_2->counter() == 2);
+    assert(entity_2->counter() == 2);
 }
 
 ////////////////////////////////////////////////////////////

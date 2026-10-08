@@ -16,19 +16,19 @@
 
 int main()
 {
-	std::allocator < int > allocator;
+    std::allocator < int > allocator;
 
 //  ---------------------------------
 
-	auto x = allocator.allocate(1);
+    auto x = allocator.allocate(1);
 
 //  ---------------------------------
 
-	*x = 1;
+    *x = 1;
 
 //  ---------------------------------
 
-	allocator.deallocate(x, 1);
+    allocator.deallocate(x, 1);
 }
 
 /////////////////////////////////////

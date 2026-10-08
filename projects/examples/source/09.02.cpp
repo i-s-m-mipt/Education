@@ -23,45 +23,45 @@
 
 int main()
 {
-	std::shared_ptr < int > x(new auto(1));
+    std::shared_ptr < int > x(new auto(1));
 
-	std::shared_ptr < int > y = x;
-
-//  ---------------------------------------
-
-	assert(x.use_count() == 2 && *x == 1);
-
-	assert(y.use_count() == 2 && *y == 1);
+    std::shared_ptr < int > y = x;
 
 //  ---------------------------------------
 
-	y.reset(new auto(2));
+    assert(x.use_count() == 2 && *x == 1);
+
+    assert(y.use_count() == 2 && *y == 1);
 
 //  ---------------------------------------
 
-	assert(x.use_count() == 1 && *x == 1);
-
-	assert(y.use_count() == 1 && *y == 2);
+    y.reset(new auto(2));
 
 //  ---------------------------------------
 
-	auto z = new auto(3);
+    assert(x.use_count() == 1 && *x == 1);
+
+    assert(y.use_count() == 1 && *y == 2);
 
 //  ---------------------------------------
 
-	y.reset(z);
+    auto z = new auto(3);
 
 //  ---------------------------------------
 
-	assert(std::to_address(y) == z);
+    y.reset(z);
 
 //  ---------------------------------------
 
-	assert(y.use_count() == 1 && *y == 3);
+    assert(std::to_address(y) == z);
 
 //  ---------------------------------------
 
-//	delete z; // error
+    assert(y.use_count() == 1 && *y == 3);
+
+//  ---------------------------------------
+
+//  delete z; // error
 }
 
 ///////////////////////////////////////////

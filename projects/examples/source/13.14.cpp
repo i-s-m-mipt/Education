@@ -20,36 +20,36 @@
 
 int main()
 {
-	std::stringstream stream_1("1 2 3 4 5");
+    std::stringstream stream_1("1 2 3 4 5");
 
     std::stringstream stream_2;
 
 //  -------------------------------------------------------------------------
 
-	std::vector < int > vector;
+    std::vector < int > vector;
 
 //  -------------------------------------------------------------------------
 
-	std::ranges::copy
-	(
-		std::istream_iterator < int > (stream_1),
+    std::ranges::copy
+    (
+        std::istream_iterator < int > (stream_1),
 
-		std::istream_iterator < int > (),
+        std::istream_iterator < int > (),
 
-		std::back_inserter(vector)
-	);
-
-//  -------------------------------------------------------------------------
-
-	assert(std::ranges::is_sorted(vector));
+        std::back_inserter(vector)
+    );
 
 //  -------------------------------------------------------------------------
 
-	std::ranges::copy(vector, std::ostream_iterator < int > (stream_2, " "));
+    assert(std::ranges::is_sorted(vector));
 
 //  -------------------------------------------------------------------------
 
-	assert(stream_2.str() == "1 2 3 4 5 ");
+    std::ranges::copy(vector, std::ostream_iterator < int > (stream_2, " "));
+
+//  -------------------------------------------------------------------------
+
+    assert(stream_2.str() == "1 2 3 4 5 ");
 }
 
 /////////////////////////////////////////////////////////////////////////////

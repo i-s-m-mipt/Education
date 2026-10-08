@@ -20,46 +20,46 @@
 
 template
 <
-	typename T, typename C = std::vector < T >
+    typename T, typename C = std::vector < T >
 >
 class Stack // support : https://cppinsights.io
 {
 public :
 
-	void push(T x);
+    void push(T x);
 
 //  -----------------
 
-	auto top() const;
+    auto top() const;
 
 //  -----------------
 
-	void pop();
+    void pop();
 
 private :
 
-	C m_container;
+    C m_container;
 };
 
 /////////////////////////////////////////////////////////////////////
 
 template < typename T, typename C > void Stack < T, C > ::push(T x)
 {
-	m_container.push_back(std::move(x));
+    m_container.push_back(std::move(x));
 }
 
 /////////////////////////////////////////////////////////////////////
 
 template < typename T, typename C > auto Stack < T, C > ::top() const
 {
-	return m_container.back();
+    return m_container.back();
 }
 
 /////////////////////////////////////////////////////////////////////
 
 template < typename T, typename C > void Stack < T, C > ::pop()
 {
-	m_container.pop_back();
+    m_container.pop_back();
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -70,21 +70,21 @@ int main()
 
 //  -------------------------
 
-	stack.push(1);
+    stack.push(1);
 
-	stack.push(2);
-
-//  -------------------------
-
-	assert(stack.top() == 2);
+    stack.push(2);
 
 //  -------------------------
 
-	stack.pop();
+    assert(stack.top() == 2);
 
 //  -------------------------
 
-	assert(stack.top() == 1);
+    stack.pop();
+
+//  -------------------------
+
+    assert(stack.top() == 1);
 }
 
 /////////////////////////////////////////////////////////////////////

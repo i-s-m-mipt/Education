@@ -79,20 +79,20 @@ auto make_permissions(std::filesystem::perms permissions) -> std::string
 
 auto size(std::filesystem::path const & path)
 {
-	auto size = 0uz;
+    auto size = 0uz;
 
-	if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
-	{
-		for (auto const & entry : std::filesystem::recursive_directory_iterator(path))
-		{
-			if (!std::filesystem::is_directory(entry.status()))
-			{
-				size += std::filesystem::file_size(entry);
-			}
-		}
-	}
+    if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
+    {
+        for (auto const & entry : std::filesystem::recursive_directory_iterator(path))
+        {
+            if (!std::filesystem::is_directory(entry.status()))
+            {
+                size += std::filesystem::file_size(entry);
+            }
+        }
+    }
 
-	return size;
+    return size;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -128,10 +128,10 @@ auto size(std::filesystem::directory_entry const & entry)
 
 void show(std::filesystem::path const & path)
 {
-	if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
-	{
+    if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
+    {
         for (auto const & entry : std::filesystem::directory_iterator(path))
-		{
+        {
             std::print
             (
                 "show : entry : {} | {} | {} | {} | {}\n",
@@ -147,17 +147,17 @@ void show(std::filesystem::path const & path)
                     std::chrono::file_clock::to_sys(entry.last_write_time())
                 ),
 
-			    entry.path().filename().string()
+                entry.path().filename().string()
             );
-		}
-	}
+        }
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	show(std::filesystem::current_path());
+    show(std::filesystem::current_path());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////

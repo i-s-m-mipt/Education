@@ -35,14 +35,14 @@ auto make_string_v1(std::string const & string, std::locale const & locale)
 {
     auto size = std::size(string);
 
-	std::wstring wstring(size, L'\0');
+    std::wstring wstring(size, L'\0');
 
-	std::use_facet < std::ctype < wchar_t > > (locale).widen
+    std::use_facet < std::ctype < wchar_t > > (locale).widen
     (
-		std::data(string), std::data(string) + size, std::data(wstring)
+        std::data(string), std::data(string) + size, std::data(wstring)
     );
 
-	return wstring;
+    return wstring;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,21 +51,21 @@ auto make_string_v2(std::wstring const & wstring, std::locale const & locale)
 {
     auto size = std::size(wstring);
 
-	std::string string(size, '\0');
+    std::string string(size, '\0');
 
-	std::use_facet < std::ctype < wchar_t > > (locale).narrow
+    std::use_facet < std::ctype < wchar_t > > (locale).narrow
     (
-		std::data(wstring), std::data(wstring) + size, '?', std::data(string)
+        std::data(wstring), std::data(wstring) + size, '?', std::data(string)
     );
 
-	return string;
+    return string;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	auto locale = boost::locale::generator()(boost::locale::util::get_system_locale());
+    auto locale = boost::locale::generator()(boost::locale::util::get_system_locale());
 
 //  ---------------------------------------------------------------------------------------------
 
@@ -101,7 +101,7 @@ int main()
 
     assert(string_4 == string_2);
 
-	assert(string_5 == string_1);
+    assert(string_5 == string_1);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////

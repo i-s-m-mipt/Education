@@ -8,6 +8,10 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <chrono>
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -16,18 +20,18 @@ template < typename D = std::chrono::duration < double > > class Timer
 {
 public :
 
-	Timer() : m_begin(std::chrono::steady_clock::now()) {}
+    Timer() : m_begin(std::chrono::steady_clock::now()) {}
 
 //  -----------------------------------------------------------------------------------------
 
-	auto elapsed() const
-	{
-		return std::chrono::duration_cast < D > (std::chrono::steady_clock::now() - m_begin);
-	}
+    auto elapsed() const
+    {
+        return std::chrono::duration_cast < D > (std::chrono::steady_clock::now() - m_begin);
+    }
 
 private :
 
-	std::chrono::steady_clock::time_point m_begin;
+    std::chrono::steady_clock::time_point m_begin;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////

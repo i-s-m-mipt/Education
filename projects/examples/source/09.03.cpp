@@ -18,37 +18,37 @@
 
 void test_v1(std::shared_ptr < int > , int)
 {
-	std::print("test_v1\n");
+    std::print("test_v1\n");
 }
 
 ///////////////////////////////////////////////////////////////////////////
 
 [[noreturn]] int test_v2()
 {
-	throw std::runtime_error("error");
+    throw std::runtime_error("error");
 }
 
 ///////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	try
-	{
-	//  test_v1(std::shared_ptr < int > (new auto(1)), test_v2()); // error
-	}
-	catch (...) {}
+    try
+    {
+    //  test_v1(std::shared_ptr < int > (new auto(1)), test_v2()); // error
+    }
+    catch (...) {}
 
 //  -----------------------------------------------------------------------
 
-	auto x = std::make_shared < int > (1);
+    auto x = std::make_shared < int > (1);
 
 //  -----------------------------------------------------------------------
 
-	try
-	{
-		test_v1(std::make_shared < int > (1), test_v2());
-	}
-	catch (...) {}
+    try
+    {
+        test_v1(std::make_shared < int > (1), test_v2());
+    }
+    catch (...) {}
 }
 
 ///////////////////////////////////////////////////////////////////////////

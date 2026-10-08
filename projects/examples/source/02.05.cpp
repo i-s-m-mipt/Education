@@ -31,15 +31,15 @@ int main()
 
 //  --------------------------------------------------------
 
-	static_assert(sizeof(x) == 4);
+    static_assert(sizeof(x) == 4);
 
-	static_assert(sizeof(y) == 8);
+    static_assert(sizeof(y) == 8);
 
-	static_assert(sizeof(z) >= 8);
+    static_assert(sizeof(z) >= 8);
 
 //  --------------------------------------------------------
 
-	assert(std::numeric_limits < double > ::digits10 == 15);
+    assert(std::numeric_limits < double > ::digits10 == 15);
 }
 
 ////////////////////////////////////////////////////////////

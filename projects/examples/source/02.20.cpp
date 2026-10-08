@@ -16,31 +16,31 @@
 
 int main()
 {
-	for (auto i = 0uz; i < 5; ++i) // support : https://compiler-explorer.com
-	{
-		std::print("main : i = {}\n", i);
-	}
+    for (auto i = 0uz; i < 5; ++i) // support : https://compiler-explorer.com
+    {
+        std::print("main : i = {}\n", i);
+    }
 
 //  -------------------------------------------------------------------------
 
-//	for (auto i = 5uz; i >= 0; --i) // error
-//	{
-//		std::print("main : i = {}\n", i);
-//	}
+//  for (auto i = 5uz; i >= 0; --i) // error
+//  {
+//      std::print("main : i = {}\n", i);
+//  }
 
 //  -------------------------------------------------------------------------
 
-	for (auto i = 0uz, j = 0uz; i < 5; ++i, j += 2)
-	{
-		std::print("main : i = {} j = {}\n", i, j);
-	}
+    for (auto i = 0uz, j = 0uz; i < 5; ++i, j += 2)
+    {
+        std::print("main : i = {} j = {}\n", i, j);
+    }
 
 //  -------------------------------------------------------------------------
 
-	for (auto i = 0uz; [[maybe_unused]] auto x = i < 5; ++i)
-	{
-		std::print("main : i = {}\n", i);
-	}
+    for (auto i = 0uz; [[maybe_unused]] auto x = i < 5; ++i)
+    {
+        std::print("main : i = {}\n", i);
+    }
 
 //  -------------------------------------------------------------------------
 
@@ -48,10 +48,10 @@ int main()
 
 //  -------------------------------------------------------------------------
 
-	for (auto i = 0uz; i < 5; ++i) // support : https://compiler-explorer.com
-	{
-		std::print("main : i = {}\n", i);
-	}
+    for (auto i = 0uz; i < 5; ++i) // support : https://compiler-explorer.com
+    {
+        std::print("main : i = {}\n", i);
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////

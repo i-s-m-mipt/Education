@@ -24,22 +24,22 @@ class Entity
 {
 private :
 
-	friend void test();
+    friend void test();
 
 //  ---------------------------------
 
-	friend void Client_v1::test();
+    friend void Client_v1::test();
 
 //  ---------------------------------
 
-	friend Client_v2;
+    friend Client_v2;
 
 //  ---------------------------------
 
-	static void test()
-	{
-		std::print("Entity::test\n");
-	}
+    static void test()
+    {
+        std::print("Entity::test\n");
+    }
 };
 
 /////////////////////////////////////////////////
@@ -54,17 +54,17 @@ void Client_v2::test() { Entity::test(); }
 
 int main()
 {
-//	Entity::test(); // error
+//  Entity::test(); // error
 
 //  ------------------------
 
-	test();
+    test();
 
 //  ------------------------
 
-	Client_v1::test();
+    Client_v1::test();
 
-	Client_v2::test();
+    Client_v2::test();
 }
 
 /////////////////////////////////////////////////

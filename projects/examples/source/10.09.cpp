@@ -27,27 +27,27 @@ int main()
 
 //  ----------------------------------------------------------------------------------------
 
-//	std::ranges::sort(list); // error
+//  std::ranges::sort(list); // error
 
 //  ----------------------------------------------------------------------------------------
 
-	std::vector < std::reference_wrapper < int > > vector(std::begin(list), std::end(list));
+    std::vector < std::reference_wrapper < int > > vector(std::begin(list), std::end(list));
 
 //  ----------------------------------------------------------------------------------------
 
-	std::ranges::sort(vector);
+    std::ranges::sort(vector);
 
 //  ----------------------------------------------------------------------------------------
 
-	assert(std::ranges::is_sorted(list) == 0 && std::ranges::is_sorted(vector));
+    assert(std::ranges::is_sorted(list) == 0 && std::ranges::is_sorted(vector));
 
 //  ----------------------------------------------------------------------------------------
 
-	list.sort();
+    list.sort();
 
 //  ----------------------------------------------------------------------------------------
 
-	assert(std::ranges::is_sorted(list) == 1);
+    assert(std::ranges::is_sorted(list) == 1);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////

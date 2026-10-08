@@ -254,7 +254,7 @@ void test(benchmark::State & state)
 
         state.SetIterationTime(time / concurrency);
 
-		benchmark::DoNotOptimize(*task_1);
+        benchmark::DoNotOptimize(*task_1);
 
         benchmark::DoNotOptimize(*task_2);
     }

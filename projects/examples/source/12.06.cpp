@@ -47,17 +47,17 @@ int main()
 
     std::print("main : string_1 = {}\n", string_1);
 
-//	std::print("main : string_2 = {}\n", string_2); // error
+//  std::print("main : string_2 = {}\n", string_2); // error
 
-//	std::print("main : string_3 = {}\n", string_3); // error
+//  std::print("main : string_3 = {}\n", string_3); // error
 
-//	std::print("main : string_4 = {}\n", string_4); // error
+//  std::print("main : string_4 = {}\n", string_4); // error
 
-//	std::print("main : string_5 = {}\n", string_5); // error
+//  std::print("main : string_5 = {}\n", string_5); // error
 
 //  --------------------------------------------------------
 
-	std::wcout << "main : string_2 = " << string_2 << '\n';
+    std::wcout << "main : string_2 = " << string_2 << '\n';
 
 //  --------------------------------------------------------
 

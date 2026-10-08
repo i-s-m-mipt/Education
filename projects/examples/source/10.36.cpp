@@ -24,14 +24,14 @@ void test_v1(benchmark::State & state)
     {
         std::vector < int > vector;
 
-		for (auto i = 1 << 10; i > 0; --i)
-		{
-			vector.push_back(i);
-		}
+        for (auto i = 1 << 10; i > 0; --i)
+        {
+            vector.push_back(i);
+        }
 
-		std::ranges::sort(vector);
+        std::ranges::sort(vector);
 
-		benchmark::DoNotOptimize(vector);
+        benchmark::DoNotOptimize(vector);
     }
 }
 
@@ -43,12 +43,12 @@ void test_v2(benchmark::State & state)
     {
         std::set < int > set;
 
-		for (auto i = 1 << 10; i > 0; --i)
-		{
-			set.insert(i);
-		}
+        for (auto i = 1 << 10; i > 0; --i)
+        {
+            set.insert(i);
+        }
 
-		benchmark::DoNotOptimize(set);
+        benchmark::DoNotOptimize(set);
     }
 }
 

@@ -24,25 +24,25 @@ int main()
 
 //  -------------------------------------------------------
 
-	for (auto i = 0uz; i < std::size(vector); ++i)
-	{
-		assert(vector[i] == static_cast < int > (i) + 1);
-	}
+    for (auto i = 0uz; i < std::size(vector); ++i)
+    {
+        assert(vector[i] == static_cast < int > (i) + 1);
+    }
 
 //  -------------------------------------------------------
 
-//	assert(vector[5] == 0); // error
+//  assert(vector[5] == 0); // error
 
 //  -------------------------------------------------------
 
-	try
-	{
-		assert(vector.at(5) == 0);
-	}
-	catch (std::out_of_range const & exception)
-	{
-		std::cerr << "main : " << exception.what() << '\n';
-	}
+    try
+    {
+        assert(vector.at(5) == 0);
+    }
+    catch (std::out_of_range const & exception)
+    {
+        std::cerr << "main : " << exception.what() << '\n';
+    }
 }
 
 ///////////////////////////////////////////////////////////

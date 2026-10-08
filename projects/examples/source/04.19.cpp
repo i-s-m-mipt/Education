@@ -36,7 +36,7 @@ consteval auto test_v2(int x) { return x; }
 
 consteval auto factorial_v1(int x) -> int
 {
-	return x > 1 ? x * factorial_v1(x - 1) : 1;
+    return x > 1 ? x * factorial_v1(x - 1) : 1;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -52,7 +52,7 @@ consteval auto factorial_v2(int x)
 
 consteval void test_v3()
 {
-	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+    std::vector < int > vector = { 1, 2, 3, 4, 5 };
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -75,7 +75,7 @@ int main()
 
 //  [[maybe_unused]] constexpr auto z1 = test_v1(x); // error
 
-	[[maybe_unused]] constexpr auto z2 = test_v1(y);
+    [[maybe_unused]] constexpr auto z2 = test_v1(y);
 
 //  ------------------------------------------------------------------
 
@@ -87,13 +87,13 @@ int main()
 
 //  [[maybe_unused]] constexpr auto z5 = test_v2(x); // error
 
-	[[maybe_unused]] constexpr auto z6 = test_v2(y);
+    [[maybe_unused]] constexpr auto z6 = test_v2(y);
 
 //  ------------------------------------------------------------------
 
 //  [[maybe_unused]]           auto z7 = test_v2(x); // error
 
-	[[maybe_unused]]           auto z8 = test_v2(y);
+    [[maybe_unused]]           auto z8 = test_v2(y);
 
 //  ------------------------------------------------------------------
 

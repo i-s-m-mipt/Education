@@ -24,27 +24,27 @@
 
 int main()
 {
-	static_assert(sizeof(bool) == 1);
+    static_assert(sizeof(bool) == 1);
 
 //  ---------------------------------------------------------
 
-	std::vector < bool > vector(1 << 30, false);
+    std::vector < bool > vector(1 << 30, false);
 
 //  ---------------------------------------------------------
 
-	auto x = vector.front();
+    auto x = vector.front();
 
 //  ---------------------------------------------------------
 
-	static_assert(std::is_same_v < decltype(x), bool > == 0);
+    static_assert(std::is_same_v < decltype(x), bool > == 0);
 
 //  ---------------------------------------------------------
 
-	assert(static_cast < bool > (x) == false);
+    assert(static_cast < bool > (x) == false);
 
 //  ---------------------------------------------------------
 
-	std::print("main : enter char : "); std::cin.get();
+    std::print("main : enter char : "); std::cin.get();
 }
 
 /////////////////////////////////////////////////////////////

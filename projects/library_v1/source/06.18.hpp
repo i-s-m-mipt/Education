@@ -14,7 +14,7 @@
 
 namespace library
 {
-	void test();
+    void test();
 }
 
 ///////////////////////////////////

@@ -25,13 +25,13 @@ int main()
 
 //  ------------------------------------------------------------------------------------
 
-	static_assert
-	(
-		std::is_same_v
-		<
-			decltype(list)::iterator::iterator_category, std::bidirectional_iterator_tag
-		>
-	);
+    static_assert
+    (
+        std::is_same_v
+        <
+            decltype(list)::iterator::iterator_category, std::bidirectional_iterator_tag
+        >
+    );
 
 //  ------------------------------------------------------------------------------------
 
@@ -39,11 +39,11 @@ int main()
 
 //  ------------------------------------------------------------------------------------
 
-	list.erase(list.insert(std::next(std::begin(list), 0), 1));
+    list.erase(list.insert(std::next(std::begin(list), 0), 1));
 
-	list.erase(list.insert(std::next(std::begin(list), 2), 1));
+    list.erase(list.insert(std::next(std::begin(list), 2), 1));
 
-	list.erase(list.insert(std::next(std::begin(list), 5), 1));
+    list.erase(list.insert(std::next(std::begin(list), 5), 1));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////

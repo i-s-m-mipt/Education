@@ -60,7 +60,7 @@ XX (b) : Payload : from 46 to MTU (B)
 
 04 (b) : Version : 4 for IPv4
 
-04 (b) : Internet Header Lenght (IHL) : from 5 to 15 (32-bit words)
+04 (b) : Internet Header Length (IHL) : from 5 to 15 (32-bit words)
 
 08 (b) : Type Of Service (TOS) : 0x00 by default
 

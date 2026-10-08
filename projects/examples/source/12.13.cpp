@@ -22,7 +22,7 @@
 
 auto match(std::string const & string)
 {
-	return std::regex_match(string, std::regex(R"(a{5})"));
+    return std::regex_match(string, std::regex(R"(a{5})"));
 }
 
 ///////////////////////////////////////////////////////////
@@ -31,7 +31,7 @@ int main()
 {
     assert(match("aaaaa") == 1);
 
-	assert(match("bbbbb") == 0);
+    assert(match("bbbbb") == 0);
 }
 
 ///////////////////////////////////////////////////////////

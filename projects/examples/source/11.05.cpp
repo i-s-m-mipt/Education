@@ -22,23 +22,23 @@ int main()
 
 //  ------------------------------------------------------------
 
-	std::less < int > less;
+    std::less < int > less;
 
 //  ------------------------------------------------------------
 
-	std::ranges::sort(vector, less);
+    std::ranges::sort(vector, less);
 
 //  ------------------------------------------------------------
 
-	assert(std::ranges::is_sorted(vector, less));
+    assert(std::ranges::is_sorted(vector, less));
 
 //  ------------------------------------------------------------
 
-	std::set < int, std::less < int > > set = { 5, 4, 3, 2, 1 };
+    std::set < int, std::less < int > > set = { 5, 4, 3, 2, 1 };
 
 //  ------------------------------------------------------------
 
-	assert(std::ranges::is_sorted(set, less));
+    assert(std::ranges::is_sorted(set, less));
 }
 
 ////////////////////////////////////////////////////////////////

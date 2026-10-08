@@ -4,7 +4,7 @@
 
 //////////////////////////////////////////////////////////
 
-// content : Sequential Consistent Memory Ordering
+// content : Sequentially Consistent Memory Ordering
 //
 // content : Total Ordering
 //

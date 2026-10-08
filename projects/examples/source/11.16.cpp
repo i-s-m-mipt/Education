@@ -17,36 +17,36 @@
 
 int main()
 {
-	int array[5]{};
+    int array[5]{};
 
 //  ---------------------------------------------------------------------------------
 
-	for (auto x = 0; auto & element : array) // support : https://cppinsights.io
-	{
-		element = ++x;
-	}
+    for (auto x = 0; auto & element : array) // support : https://cppinsights.io
+    {
+        element = ++x;
+    }
 
 //  ---------------------------------------------------------------------------------
 
-	std::vector < int > vector(5, 0);
+    std::vector < int > vector(5, 0);
 
 //  ---------------------------------------------------------------------------------
 
-	for (auto x = 0; auto & element : vector)
-	{
-		element = ++x;
-	}
+    for (auto x = 0; auto & element : vector)
+    {
+        element = ++x;
+    }
 
 //  ---------------------------------------------------------------------------------
 
-	std::map < int, int > map = { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 } };
+    std::map < int, int > map = { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 } };
 
 //  ---------------------------------------------------------------------------------
 
-	for (auto x = 0; auto & [first, second] : map)
-	{
-		second = ++x;
-	}
+    for (auto x = 0; auto & [first, second] : map)
+    {
+        second = ++x;
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////

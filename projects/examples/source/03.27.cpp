@@ -18,9 +18,9 @@ class Entity
 {
 public :
 
-	void test() const &  { std::print("Entity::test (1)\n"); }
+    void test() const &  { std::print("Entity::test (1)\n"); }
 
-	void test() const && { std::print("Entity::test (2)\n"); }
+    void test() const && { std::print("Entity::test (2)\n"); }
 };
 
 ////////////////////////////////////////////////////////////////
@@ -33,9 +33,9 @@ auto & make_entity_v2() { static Entity entity; return entity; }
 
 int main()
 {
-	make_entity_v1().test();
+    make_entity_v1().test();
 
-	make_entity_v2().test();
+    make_entity_v2().test();
 }
 
 ////////////////////////////////////////////////////////////////

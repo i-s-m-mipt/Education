@@ -22,29 +22,29 @@ template < typename T > T pi_v = T(3.141'592'653'589'793'238'462'643'383'279'502
 
 template < typename T > auto area(T radius)
 {
-	return pi_v < T > * radius * radius;
+    return pi_v < T > * radius * radius;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
 auto equal(double x, double y, double epsilon = 1e-6)
 {
-	return std::abs(x - y) < epsilon;
+    return std::abs(x - y) < epsilon;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-	assert(area(1) == 3);
+    assert(area(1) == 3);
 
 //  ----------------------------------------------------------------
 
-	assert(equal(area(1.0), pi_v < double > ));
+    assert(equal(area(1.0), pi_v < double > ));
 
 //  ----------------------------------------------------------------
 
-	assert(equal(pi_v < double > , std::numbers::pi_v < double > ));
+    assert(equal(pi_v < double > , std::numbers::pi_v < double > ));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////

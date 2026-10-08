@@ -17,27 +17,27 @@
 
 int main()
 {
-	std::priority_queue < int > queue;
+    std::priority_queue < int > queue;
 
 //  ----------------------------------
 
-	queue.push(1);
+    queue.push(1);
 
-	queue.push(3);
+    queue.push(3);
 
-	queue.push(2);
-
-//  ----------------------------------
-
-	assert(queue.top() == 3);
+    queue.push(2);
 
 //  ----------------------------------
 
-	queue.pop();
+    assert(queue.top() == 3);
 
 //  ----------------------------------
 
-	assert(queue.top() == 2);
+    queue.pop();
+
+//  ----------------------------------
+
+    assert(queue.top() == 2);
 }
 
 //////////////////////////////////////////
