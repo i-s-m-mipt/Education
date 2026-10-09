@@ -27,23 +27,23 @@ find_package(Boost 1.90 REQUIRED COMPONENTS
     locale
     log
     program_options
-    python314
+    python312
     timer
     unit_test_framework
 )
 
 ################################################################################################
 
-find_package(glog          REQUIRED      COMPONENTS)
-find_package(GTest         REQUIRED      COMPONENTS)
-find_package(benchmark     REQUIRED      COMPONENTS)
-find_package(Python        REQUIRED 3.14 COMPONENTS Interpreter Development)
-find_package(ICU           REQUIRED      COMPONENTS i18n uc)
-find_package(nlohmann_json REQUIRED      COMPONENTS)
-find_package(PDFHummus     REQUIRED      COMPONENTS)
-find_package(zipper        REQUIRED      COMPONENTS)
-find_package(libpqxx       REQUIRED      COMPONENTS)
-find_package(TBB           REQUIRED      COMPONENTS)
+find_package(glog          REQUIRED COMPONENTS)
+find_package(GTest         REQUIRED COMPONENTS)
+find_package(benchmark     REQUIRED COMPONENTS)
+find_package(Python        REQUIRED COMPONENTS Interpreter Development)
+find_package(ICU           REQUIRED COMPONENTS i18n uc)
+find_package(nlohmann_json REQUIRED COMPONENTS)
+find_package(PDFHummus     REQUIRED COMPONENTS)
+find_package(zipper        REQUIRED COMPONENTS)
+find_package(libpqxx       REQUIRED COMPONENTS)
+find_package(TBB           REQUIRED COMPONENTS)
 
 ################################################################################################
 
