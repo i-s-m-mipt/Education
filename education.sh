@@ -24,11 +24,9 @@
 #
 # sudo apt install pciutils iputils-ping traceroute iproute2 gawk nmap curl lsof tcpdump telnet
 #
-# sudo add-apt-repository ppa:deadsnakes/ppa
+# sudo apt install python3 python3-matplotlib
 #
-# sudo apt update
-#
-# sudo apt install python3.14 python3.14-dev python3-matplotlib libicu-dev libtbb-dev
+# sudo apt install python3-dev libicu-dev nlohmann-json3-dev libtbb-dev
 
 #################################################################################################
 
@@ -52,9 +50,9 @@
 #
 # sudo ./b2 $options install
 #
-# ./bootstrap.sh --with-python=/usr/bin/python3.14 --with-python-version=3.14
+# ./bootstrap.sh --with-python=python3
 #
-# sudo ./b2 --with-python python=3.14 $options install
+# sudo ./b2 --with-python $options install
 
 #################################################################################################
 
@@ -91,18 +89,6 @@
 # cmake -DBENCHMARK_DOWNLOAD_DEPENDENCIES=on -DCMAKE_BUILD_TYPE=Release ..
 #
 # cmake --build . -j$(nproc)
-#
-# sudo cmake --install .
-
-#################################################################################################
-
-# git clone https://github.com/nlohmann/json
-#
-# cd json
-#
-# mkdir -p output && cd "$_"
-#
-# cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build . -j$(nproc)
 #
 # sudo cmake --install .
 
