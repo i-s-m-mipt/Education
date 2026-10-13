@@ -208,9 +208,9 @@ public :
 
 //  ------------------------------------------------------------------------------------------
 
-    auto const operator++(int) { auto x = *this; *this += 1; return x; }
+    auto   operator++(int) & { auto x = *this; *this += 1; return x; }
 
-    auto const operator--(int) { auto x = *this; *this -= 1; return x; }
+    auto   operator--(int) & { auto x = *this; *this -= 1; return x; }
 
 //  ------------------------------------------------------------------------------------------
 

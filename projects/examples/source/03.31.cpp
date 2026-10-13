@@ -100,9 +100,9 @@ public :
 
 //  -------------------------------------------------------------------------------------------
 
-    auto const operator++(int) { auto x = *this; *this += 1; return x; }
+    auto   operator++(int) & { auto x = *this; *this += 1; return x; }
 
-    auto const operator--(int) { auto x = *this; *this -= 1; return x; }
+    auto   operator--(int) & { auto x = *this; *this -= 1; return x; }
 
 //  -------------------------------------------------------------------------------------------
 
@@ -269,6 +269,7 @@ int main()
 //  -------------------------------------------------------------------------------
 
     assert((x <  y) == 0);
+
     assert((x >  y) == 0);
 
     assert((x <= y) == 1);

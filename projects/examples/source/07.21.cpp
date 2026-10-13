@@ -109,7 +109,7 @@ public :
 
     //  ------------------------------------------------------------------
 
-        auto const operator++(int)
+        auto operator++(int) &
         {
             auto x = *this;
 
