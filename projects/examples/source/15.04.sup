@@ -16,7 +16,7 @@
 //
 // content : Hosts, Addresses, Ports and Endpoints
 //
-// content : Tools ip, grep, awk, nmap and curl
+// content : Tools ip, arp, grep, awk, nmap and curl
 //
 // content : Address Resolution Protocol (ARP)
 //
@@ -28,7 +28,7 @@
 
 /////////////////////////////////////////////////////////////////////
 
-// support : ip address && ip neighbor
+// support : ip address && arp -a
 //
 // support : sudo nmap -sn $(ip route | grep link | awk '{print $1}')
 //
