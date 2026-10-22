@@ -24,11 +24,11 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-__attribute__((cdecl   )) auto test_v1(int x, int y) { return x + y; }
+[[gnu::cdecl   ]] auto test_v1(int x, int y) { return x + y; }
 
-__attribute__((stdcall )) auto test_v2(int x, int y) { return x + y; }
+[[gnu::stdcall ]] auto test_v2(int x, int y) { return x + y; }
 
-__attribute__((fastcall)) auto test_v3(int x, int y) { return x + y; }
+[[gnu::fastcall]] auto test_v3(int x, int y) { return x + y; }
 
 //////////////////////////////////////////////////////////////////////////
 

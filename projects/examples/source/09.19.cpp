@@ -36,7 +36,7 @@ struct Entity_v2 { std::int16_t x = 0; std::int32_t y = 0; std::int64_t z = 0; }
 
 /////////////////////////////////////////////////////////////////////////////////
 
-struct __attribute__((packed)) Entity_v3
+struct [[gnu::packed]] Entity_v3
 {
     std::int16_t x = 0;
 

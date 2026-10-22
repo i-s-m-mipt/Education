@@ -18,7 +18,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-__attribute__((noinline)) auto test(int x, int y)
+[[gnu::noinline]] auto test(int x, int y)
 {
     return x + y;
 }
@@ -31,11 +31,11 @@ public :
 
     virtual ~Entity() = default;
 
-//  ------------------------------------------------------------------
+//  ----------------------------------------------------------
 
-    __attribute__((noinline))         int test_v1(int x, int y) const;
+    [[gnu::noinline]]         int test_v1(int x, int y) const;
 
-    __attribute__((noinline)) virtual int test_v2(int x, int y) const;
+    [[gnu::noinline]] virtual int test_v2(int x, int y) const;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +44,7 @@ class Client : public Entity
 {
 public :
 
-    __attribute__((noinline)) int test_v2(int x, int y) const override;
+    [[gnu::noinline]] int test_v2(int x, int y) const override;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +53,7 @@ class Server : public Entity
 {
 public :
 
-    __attribute__((noinline)) int test_v2(int x, int y) const override;
+    [[gnu::noinline]] int test_v2(int x, int y) const override;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +72,7 @@ class Functor
 {
 public :
 
-    __attribute__((noinline)) static auto operator()(int x, int y);
+    [[gnu::noinline]] static auto operator()(int x, int y);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////

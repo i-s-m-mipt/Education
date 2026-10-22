@@ -27,14 +27,14 @@ inline auto test_v1(int x, int y)
 
 //////////////////////////////////////////////////////////////////////////
 
-__attribute__((always_inline)) inline auto test_v2(int x, int y)
+[[gnu::always_inline]] inline auto test_v2(int x, int y)
 {
     return x + y;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-__attribute__((noinline)) auto test_v3(int x, int y)
+[[gnu::noinline]] auto test_v3(int x, int y)
 {
     return x + y;
 }
