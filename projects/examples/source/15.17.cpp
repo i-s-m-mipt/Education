@@ -1,96 +1,82 @@
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
-#include <array>
-#include <cstdio>
-#include <format>
-#include <iterator>
+// chapter : Distributed Network Systems
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// content : Domain Name System (DNS)
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
 #include <print>
-#include <regex>
-#include <string>
+#include <string_view>
+#include <vector>
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/asio.hpp>
-#include <boost/noncopyable.hpp>
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
-class Pipe : private boost::noncopyable
-{
-public :
+#include "08.34.hpp"
 
-    Pipe(std::FILE * stream) : m_stream(stream) {}
+//////////////////////////////////////////////////////////////////////////////////////////
 
-//  ----------------------------------------------
-
-   ~Pipe()
-    {
-        pclose(m_stream);
-    }
-
-//  ----------------------------------------------
-
-    auto get() const
-    {
-        return m_stream;
-    }
-
-private :
-
-    std::FILE * m_stream = nullptr;
-};
-
-////////////////////////////////////////////////////////////////////////////////////
-
-int main()
+auto resolve(std::string_view host, std::string_view port)
 {
     boost::asio::io_context io_context;
 
-//  --------------------------------------------------------------------------------
-
     boost::asio::ip::tcp::resolver resolver(io_context);
 
-//  --------------------------------------------------------------------------------
+    std::vector < boost::asio::ip::tcp::endpoint > endpoints;
 
-    for (auto const & result : resolver.resolve("google.com", "https"))
+    for (auto const & result : resolver.resolve(host, port))
     {
-        auto address = result.endpoint().address().to_string();
-
-    //  ----------------------------------------------------------------------------
-
-        Pipe pipe(popen(std::format("nmap {} -p {}", address, 80).c_str(), "r"));
-
-    //  ----------------------------------------------------------------------------
-
-        std::array < char, 1 << 10 > array = {};
-
-    //  ----------------------------------------------------------------------------
-
-        std::string string;
-
-    //  ----------------------------------------------------------------------------
-
-        while (fgets(std::begin(array), std::size(array), pipe.get()))
+        if (auto endpoint = result.endpoint(); endpoint.address().is_v4())
         {
-            string += std::data(array);
+            endpoints.push_back(endpoint);
         }
+    }
 
-    //  ----------------------------------------------------------------------------
+    return endpoints;
+}
 
-        std::smatch matches;
+//////////////////////////////////////////////////////////////////////////////////////////
 
-    //  ----------------------------------------------------------------------------
+void ping(std::vector < boost::asio::ip::tcp::endpoint > const & endpoints)
+{
+    boost::asio::io_context io_context;
 
-        std::regex_search(string, matches, std::regex(R"(([0-9.]+)s)"));
+    for (auto const & endpoint : endpoints)
+    {
+        auto address = endpoint.address().to_string();
 
-    //  ----------------------------------------------------------------------------
+        try
+        {
+            boost::asio::ip::tcp::socket socket(io_context);
 
-        auto latency = std::stod(matches[1]);
+            socket.open(endpoint.protocol());
 
-    //  ----------------------------------------------------------------------------
+            Timer timer;
 
-        std::print("main : address = {}, latency = {:.6f} (s)\n", address, latency);
+            socket.connect(endpoint);
+
+            auto latency = timer.elapsed().count();
+
+            std::print("ping : address = {:15} latency = {:.6f} (s)\n", address, latency);
+        }
+        catch (boost::system::system_error const &)
+        {
+            std::print("ping : address = {:15} latency = inf\n", address);
+        }
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+int main()
+{
+    ping(resolve("google.com", "80"));
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
