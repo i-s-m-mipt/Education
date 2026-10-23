@@ -10,6 +10,8 @@
 //
 // content : Attributes [[always_inline]] and [[noinline]]
 //
+// content : Attributes [[hot]] and [[cold]]
+//
 // content : Special Memory
 //
 // content : Type Qualifier volatile
@@ -27,14 +29,14 @@ inline auto test_v1(int x, int y)
 
 //////////////////////////////////////////////////////////////////////////
 
-[[gnu::always_inline]] inline auto test_v2(int x, int y)
+[[gnu::always_inline, gnu::hot]] inline auto test_v2(int x, int y)
 {
     return x + y;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-[[gnu::noinline]] auto test_v3(int x, int y)
+[[gnu::noinline, gnu::cold]] auto test_v3(int x, int y)
 {
     return x + y;
 }
