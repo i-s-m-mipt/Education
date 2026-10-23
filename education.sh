@@ -26,7 +26,9 @@
 #
 # sudo apt install python3 python3-matplotlib
 #
-# sudo apt install python3-dev libicu-dev nlohmann-json3-dev libtbb-dev
+# sudo apt install python3-dev libicu-dev nlohmann-json3-dev libtbb-dev libssl-dev
+#
+# sudo apt install ca-certificates
 
 #################################################################################################
 
