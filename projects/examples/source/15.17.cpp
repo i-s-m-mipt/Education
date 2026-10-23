@@ -5,6 +5,8 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // content : Domain Name System (DNS)
+//
+// content : Library Boost.Asio
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -24,9 +26,9 @@
 
 auto resolve(std::string_view host, std::string_view port)
 {
-    boost::asio::io_context io_context;
+    boost::asio::io_context context;
 
-    boost::asio::ip::tcp::resolver resolver(io_context);
+    boost::asio::ip::tcp::resolver resolver(context);
 
     std::vector < boost::asio::ip::tcp::endpoint > endpoints;
 
@@ -45,7 +47,7 @@ auto resolve(std::string_view host, std::string_view port)
 
 void ping(std::vector < boost::asio::ip::tcp::endpoint > const & endpoints)
 {
-    boost::asio::io_context io_context;
+    boost::asio::io_context context;
 
     for (auto const & endpoint : endpoints)
     {
@@ -53,7 +55,7 @@ void ping(std::vector < boost::asio::ip::tcp::endpoint > const & endpoints)
 
         try
         {
-            boost::asio::ip::tcp::socket socket(io_context);
+            boost::asio::ip::tcp::socket socket(context);
 
             socket.open(endpoint.protocol());
 

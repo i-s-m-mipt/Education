@@ -1,24 +1,30 @@
-################################################################################################
+##########################################################################################
 
 cmake_minimum_required(VERSION 3.28)
 
-################################################################################################
+##########################################################################################
 
 project(examples VERSION 24.02.06 LANGUAGES CXX)
 
-################################################################################################
+##########################################################################################
 
 set(CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-################################################################################################
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+##########################################################################################
+
+add_compile_options("$<$<COMPILE_LANGUAGE:CXX>:-Wall;-Wextra;-Wpedantic>")
+
+##########################################################################################
 
 set(Boost_USE_STATIC_LIBS    ON)
 
 set(Boost_USE_STATIC_RUNTIME ON)
 
-################################################################################################
+##########################################################################################
 
 find_package(Boost 1.90 REQUIRED COMPONENTS
 
@@ -32,7 +38,7 @@ find_package(Boost 1.90 REQUIRED COMPONENTS
     unit_test_framework
 )
 
-################################################################################################
+##########################################################################################
 
 find_package(glog          REQUIRED COMPONENTS)
 find_package(GTest         REQUIRED COMPONENTS)
@@ -44,8 +50,9 @@ find_package(PDFHummus     REQUIRED COMPONENTS)
 find_package(zipper        REQUIRED COMPONENTS)
 find_package(libpqxx       REQUIRED COMPONENTS)
 find_package(TBB           REQUIRED COMPONENTS)
+find_package(OpenSSL       REQUIRED COMPONENTS SSL Crypto)
 
-################################################################################################
+##########################################################################################
 
 include_directories(        ${Boost_INCLUDE_DIRS})
 include_directories(         ${glog_INCLUDE_DIRS})
@@ -58,7 +65,7 @@ include_directories(       ${zipper_INCLUDE_DIRS})
 include_directories(      ${libpqxx_INCLUDE_DIRS})
 include_directories(          ${TBB_INCLUDE_DIRS})
 
-################################################################################################
+##########################################################################################
 
 set(debug
 
@@ -450,13 +457,13 @@ set(debug
     15.17
 )
 
-################################################################################################
+##########################################################################################
 
 foreach(entry IN LISTS debug)
 
     add_executable         (${entry} source/${entry}.cpp)
 
-    target_compile_options (${entry} PRIVATE -Wall -Wextra -Wpedantic -O0)
+    target_compile_options (${entry} PRIVATE -O0)
 
     target_link_libraries  (${entry} PRIVATE ${Boost_LIBRARIES})
 
@@ -464,139 +471,147 @@ foreach(entry IN LISTS debug)
 
 endforeach()
 
-################################################################################################
+##########################################################################################
 
 add_executable             (02.41 source/02.41.cpp)
 
-target_compile_options     (02.41 PRIVATE -Wall -Wextra -Wpedantic -O0 -m32)
+target_compile_options     (02.41 PRIVATE -O0 -m32)
 
 target_link_options        (02.41 PRIVATE -m32)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (06.11 source/06.10.cpp source/06.11.cpp)
 
-target_compile_options     (06.11 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (06.11 PRIVATE -O0)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (06.17 source/06.17.cpp)
 
 target_include_directories (06.17 PRIVATE ${CMAKE_SOURCE_DIR}/../library_v1/source/)
 
-target_compile_options     (06.17 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (06.17 PRIVATE -O0)
 
 target_link_libraries      (06.17 PRIVATE ${CMAKE_SOURCE_DIR}/../../libraries/libstatic.a)
 
 target_link_libraries      (06.17 PRIVATE ${Boost_LIBRARIES})
 
-################################################################################################
+##########################################################################################
 
 add_executable             (07.13 source/07.13.cpp)
 
-target_compile_options     (07.13 PRIVATE -Wall -Wextra -Wpedantic -O0 -g)
+target_compile_options     (07.13 PRIVATE -O0 -g)
 
 target_link_libraries      (07.13 PRIVATE stdc++exp)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (07.14 source/07.14.cpp)
 
-target_compile_options     (07.14 PRIVATE -Wall -Wextra -Wpedantic -O0 -ggdb)
+target_compile_options     (07.14 PRIVATE -O0 -ggdb)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (07.15.01 source/07.15.cpp)
 
-target_compile_options     (07.15.01 PRIVATE -Wall -Wextra -Wpedantic -O0 -g -fsanitize=address)
+target_compile_options     (07.15.01 PRIVATE -O0 -g -fsanitize=address)
 
 target_link_options        (07.15.01 PRIVATE -fsanitize=address)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (07.15.02 source/07.15.cpp)
 
-target_compile_options     (07.15.02 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (07.15.02 PRIVATE -O0)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (07.20 source/07.20.cpp)
 
-target_compile_options     (07.20 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (07.20 PRIVATE -O0)
 
-target_link_libraries      (07.20 glog::glog)
+target_link_libraries      (07.20 PRIVATE glog::glog)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (07.22 source/07.22.cpp)
 
-target_compile_options     (07.22 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (07.22 PRIVATE -O0)
 
 target_link_libraries      (07.22 PRIVATE GTest::gtest)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (08.18 source/08.18.cpp)
 
-target_compile_options     (08.18 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (08.18 PRIVATE -O0)
 
 target_link_libraries      (08.18 PRIVATE ${Boost_LIBRARIES})
 
 target_link_libraries      (08.18 PRIVATE Python::Python)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (09.15 source/09.15.cpp)
 
-target_compile_options     (09.15 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (09.15 PRIVATE -O0)
 
 target_compile_definitions (09.15 PRIVATE _GLIBCXX_DEBUG)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (12.04 source/12.04.cpp)
 
-target_compile_options     (12.04 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (12.04 PRIVATE -O0)
 
 target_link_libraries      (12.04 PRIVATE ${Boost_LIBRARIES})
 
 target_link_libraries      (12.04 PRIVATE ICU::i18n ICU::uc)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (13.21 source/13.21.cpp)
 
-target_compile_options     (13.21 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (13.21 PRIVATE -O0)
 
 target_link_libraries      (13.21 PRIVATE PDFHummus::PDFWriter)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (13.22 source/13.22.cpp)
 
-target_compile_options     (13.22 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (13.22 PRIVATE -O0)
 
 target_link_libraries      (13.22 PRIVATE zipper::zipper)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (13.23 source/13.23.cpp)
 
-target_compile_options     (13.23 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (13.23 PRIVATE -O0)
 
 target_link_libraries      (13.23 PRIVATE libpqxx::pqxx)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (14.37 source/14.37.cpp)
 
-target_compile_options     (14.37 PRIVATE -Wall -Wextra -Wpedantic -O0)
+target_compile_options     (14.37 PRIVATE -O0)
 
 target_link_libraries      (14.37 PRIVATE TBB::tbb)
 
 target_link_libraries      (14.37 PRIVATE /usr/lib/gcc/x86_64-linux-gnu/16/libatomic.a)
 
-################################################################################################
+##########################################################################################
+
+add_executable             (15.18 source/15.18.cpp)
+
+target_compile_options     (15.18 PRIVATE -O0)
+
+target_link_libraries      (15.18 PRIVATE OpenSSL::SSL OpenSSL::Crypto)
+
+##########################################################################################
 
 set(release
 
@@ -641,13 +656,13 @@ set(release
     14.50
 )
 
-################################################################################################
+##########################################################################################
 
 foreach(entry IN LISTS release)
 
     add_executable         (${entry} source/${entry}.cpp)
 
-    target_compile_options (${entry} PRIVATE -Wall -Wpedantic -Wextra -O3)
+    target_compile_options (${entry} PRIVATE -O3)
 
     target_link_libraries  (${entry} PRIVATE ${Boost_LIBRARIES})
 
@@ -657,33 +672,33 @@ foreach(entry IN LISTS release)
 
 endforeach()
 
-################################################################################################
+##########################################################################################
 
 add_executable             (07.16 source/07.16.cpp)
 
-target_compile_options     (07.16 PRIVATE -Wall -Wextra -Wpedantic -O3 -g)
+target_compile_options     (07.16 PRIVATE -O3 -g)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (07.17 source/07.17.cpp)
 
-target_compile_options     (07.17 PRIVATE -Wall -Wextra -Wpedantic -O3 -g)
+target_compile_options     (07.17 PRIVATE -O3 -g)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (10.42 source/10.42.cpp)
 
-target_compile_options     (10.42 PRIVATE -Wall -Wextra -Wpedantic -O3)
+target_compile_options     (10.42 PRIVATE -O3)
 
 target_link_libraries      (10.42 PRIVATE ${Boost_LIBRARIES})
 
 target_link_libraries      (10.42 PRIVATE Python::Python)
 
-################################################################################################
+##########################################################################################
 
 add_executable             (14.38 source/14.38.cpp)
 
-target_compile_options     (14.38 PRIVATE -Wall -Wextra -Wpedantic -O3)
+target_compile_options     (14.38 PRIVATE -O3)
 
 target_link_libraries      (14.38 PRIVATE benchmark::benchmark)
 
@@ -691,4 +706,4 @@ target_link_libraries      (14.38 PRIVATE TBB::tbb)
 
 target_link_libraries      (14.38 PRIVATE /usr/lib/gcc/x86_64-linux-gnu/16/libatomic.a)
 
-################################################################################################
+##########################################################################################
