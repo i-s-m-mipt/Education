@@ -613,6 +613,14 @@ target_link_libraries      (15.18 PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 
 ##########################################################################################
 
+add_executable             (15.19 source/15.19.cpp)
+
+target_compile_options     (15.19 PRIVATE -O0)
+
+target_link_libraries      (15.19 PRIVATE OpenSSL::SSL OpenSSL::Crypto)
+
+##########################################################################################
+
 set(release
 
     07.23

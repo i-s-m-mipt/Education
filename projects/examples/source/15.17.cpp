@@ -78,7 +78,7 @@ void ping(std::vector < boost::asio::ip::tcp::endpoint > const & endpoints)
 
 int main()
 {
-    ping(resolve("fstream.binance.com", "443"));
+    ping(resolve("stream.binance.com", "443"));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
