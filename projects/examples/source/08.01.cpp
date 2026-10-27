@@ -6,7 +6,7 @@
 
 // content : Bits and Bytes
 //
-// content : Binary, octal, decimal and hexadecimal literals
+// content : Binary, Octal, Decimal and Hexadecimal Literals
 
 /////////////////////////////////////////////////////////////
 

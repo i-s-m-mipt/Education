@@ -12,7 +12,7 @@
 //
 // content : Precision Problem
 //
-// content : Infinity and Not-A-Number (NAN)
+// content : Infinity and Not-a-Number (NaN)
 //
 // content : Quiet and Signaling NANs
 

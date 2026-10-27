@@ -4,7 +4,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-// content : Direct Fourier Transformation (DFT) Algorithm
+// content : Discrete Fourier Transformation (DFT) Algorithm
 //
 // content : Time Complexity O(N^2)
 //

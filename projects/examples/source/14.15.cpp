@@ -6,7 +6,7 @@
 
 // content : Synchronization
 //
-// content : Race Conditions
+// content : Data Races
 //
 // content : Synchronization Primitives
 //

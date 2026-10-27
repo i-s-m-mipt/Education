@@ -9,6 +9,10 @@
 // content : Dangling Iterators
 //
 // content : Helper std::ranges::dangling
+//
+// content : Borrowed Ranges
+//
+// content : Concept std::ranges::borrowed_range
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -6,13 +6,17 @@
 
 // content : Random Numbers
 //
-// content : Seeds, Engines and Distributions
-//
-// content : Non-Deterministic Pseudo-Random Entropy Sources
+// content : Non-Deterministic Entropy Sources
 //
 // content : Engine std::random_device
 //
+// content : Seeds and Engines
+//
+// content : Deterministic Pseudo-Random Number Generators (PRNG)
+//
 // content : Engine std::mt19937_64
+//
+// content : Distributions
 //
 // content : Distribution std::normal_distribution
 //

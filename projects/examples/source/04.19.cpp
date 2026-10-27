@@ -18,9 +18,9 @@
 //
 // content : Static Initialization
 //
-// content : Zero initialization
+// content : Zero Initialization
 //
-// content : Constant initialization
+// content : Constant Initialization
 //
 // content : Dynamic Initialization
 //
