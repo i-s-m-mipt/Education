@@ -24,7 +24,7 @@
 //
 // content : HyperText Transfer Protocol (HTTP)
 //
-// content : Websocket Protocol
+// content : WebSocket Protocol (WS)
 //
 // content : File Transfer Protocol (FTP)
 //
@@ -46,6 +46,6 @@ L5 : Hosts, Handshakes
 
 L6 : Hosts, TLS
 
-L7 : Hosts, DHCP, BGP, DNS, HTTP, Websocket, FTP, SMTP, SSH
+L7 : Hosts, DHCP, BGP, DNS, HTTP, WebSocket, FTP, SMTP, SSH
 
 ////////////////////////////////////////////////////////////////////
