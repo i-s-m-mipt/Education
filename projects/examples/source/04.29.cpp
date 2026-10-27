@@ -6,8 +6,6 @@
 
 // content : Type Traits is_function
 //
-// content : Base Class std::integral_constant
-//
 // content : Type Traits std::is_const and std::is_reference
 
 /////////////////////////////////////////////////////////////////////////////////

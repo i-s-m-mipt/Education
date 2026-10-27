@@ -4,7 +4,13 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-// content : Metaprogramming
+// content : Compile-Time Virtual Machine (CTVM)
+//
+// content : Abstract Syntax Tree (AST)
+//
+// content : Turing Completeness
+//
+// content : Template MetaProgramming (TMP)
 //
 // content : Compile-Time Factorials
 

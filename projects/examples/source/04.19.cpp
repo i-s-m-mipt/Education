@@ -14,11 +14,19 @@
 //
 // content : Compile-Time Factorials
 //
+// content : Transient Allocation Rule
+//
 // content : Static Initialization
 //
-// content : Declaration Specifier constinit
+// content : Zero initialization
+//
+// content : Constant initialization
 //
 // content : Dynamic Initialization
+//
+// content : Static Initialization Order Fiasco
+//
+// content : Declaration Specifier constinit
 
 //////////////////////////////////////////////////////////////////////
 
