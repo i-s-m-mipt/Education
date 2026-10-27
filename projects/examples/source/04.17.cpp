@@ -8,9 +8,9 @@
 //
 // content : Abstract Syntax Tree (AST)
 //
-// content : Turing Completeness
+// content : Metaprogramming
 //
-// content : Template MetaProgramming (TMP)
+// content : Turing Completeness
 //
 // content : Compile-Time Factorials
 
