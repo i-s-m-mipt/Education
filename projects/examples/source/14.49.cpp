@@ -16,8 +16,8 @@
 #include <cassert>
 #include <chrono>
 #include <cstddef>
-#include <cstdint>
 #include <functional>
+#include <iterator>
 #include <memory>
 #include <new>
 #include <print>
@@ -63,6 +63,13 @@ public :
 
 //  ------------------------------------------------------------------------------------
 
+    auto size() const
+    {
+        return m_size;
+    }
+
+//  ------------------------------------------------------------------------------------
+
     auto       & operator[](std::size_t index)       { return m_array[index & m_mask]; }
 
     auto const & operator[](std::size_t index) const { return m_array[index & m_mask]; }
@@ -80,87 +87,70 @@ private :
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-using index_t = std::int64_t;
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class alignas(std::hardware_destructive_interference_size) Index
+struct alignas(std::hardware_destructive_interference_size) Agent
 {
-public :
-
-    auto get(std::memory_order order) const
-    {
-        return m_index.load(order);
-    }
-
-//  ----------------------------------------------------------------------------------
-
-    void set(index_t index, std::memory_order order)
-    {
-        m_index.store(index, order);
-    }
-
-private :
-
-    std::atomic < index_t > m_index = -1;
-
-    std::byte m_padding
-    [
-        std::hardware_destructive_interference_size - sizeof(std::atomic < index_t > )
-    ];
+    std::atomic < std::size_t > size = 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void produce(Storage < int > & storage, Index & producer, Index const & consumer, index_t size)
+void produce(Storage < int > & storage, Agent & producer, Agent const & consumer, std::size_t size)
 {
     std::this_thread::sleep_for(1s);
 
-    index_t p = 0, c = 0, cached_consumer = -1;
+    auto p = 0uz, c = 0uz, cached_c = consumer.size.load(std::memory_order::acquire);
 
-    for (auto i = 1; i < (1 << 10) + 1; ++i)
+    auto storage_size = std::size(storage);
+
+    auto x = 0;
+
+    for (auto i = 0uz; i < size; ++i)
     {
-        p = producer.get(std::memory_order::relaxed) + 1;
+        p = producer.size.load(std::memory_order::relaxed);
 
-        if (p - size > cached_consumer)
+        if (p - cached_c >= storage_size)
         {
-            while ((c = consumer.get(std::memory_order::acquire)) < p - size)
+            while (p - (c = consumer.size.load(std::memory_order::acquire)) >= storage_size)
             {
                 _mm_pause();
             }
 
-            cached_consumer = c;
+            cached_c = c;
         }
 
-        storage[p] = i;
+        storage[p] = ++x;
 
-        producer.set(p, std::memory_order::release);
+        producer.size.store(p + 1, std::memory_order::release);
     }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void consume(Storage < int > const & storage, Index const & producer, Index & consumer)
+void consume(Storage < int > & storage, Agent const & producer, Agent & consumer, std::size_t size)
 {
-    index_t c = 0, p = 0;
+    auto p = 0uz, c = consumer.size.load(std::memory_order::relaxed);
 
-    while (c < 1 << 10)
+    auto x = 0;
+
+    while (size != 0)
     {
         std::print("consume\n");
 
-        while ((p = producer.get(std::memory_order::acquire)) < c)
+        while ((p = producer.size.load(std::memory_order::acquire)) == c)
         {
             _mm_pause();
         }
 
-        while (c <= p)
+        while (c != p && size != 0)
         {
-            auto x = storage[c++];
+            x = storage[c++];
 
             std::print("consume : x = {}\n", x);
+
+            --size;
         }
 
-        consumer.set(c - 1, std::memory_order::release);
+        consumer.size.store(c, std::memory_order::release);
     }
 }
 
@@ -168,11 +158,11 @@ void consume(Storage < int > const & storage, Index const & producer, Index & co
 
 int main()
 {
-    static_assert(std::atomic < index_t > ::is_always_lock_free);
+    static_assert(std::atomic < std::size_t > ::is_always_lock_free);
 
 //  ------------------------------------------------------------------------------------------------
 
-    auto size = 1 << 10;
+    auto size = 1uz << 10;
 
 //  ------------------------------------------------------------------------------------------------
 
@@ -180,15 +170,15 @@ int main()
 
 //  ------------------------------------------------------------------------------------------------
 
-    Index producer;
+    Agent producer;
 
-    Index consumer;
+    Agent consumer;
 
 //  ------------------------------------------------------------------------------------------------
 
     std::jthread thread_1(produce, std::ref(storage), std::ref(producer), std::ref(consumer), size);
 
-    std::jthread thread_2(consume, std::ref(storage), std::ref(producer), std::ref(consumer)      );
+    std::jthread thread_2(consume, std::ref(storage), std::ref(producer), std::ref(consumer), size);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
