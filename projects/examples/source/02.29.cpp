@@ -13,6 +13,12 @@
 // content : Operator Commutativity
 //
 // content : Pointer Arithmetic
+//
+// content : Array-to-Pointer Type Conversions
+//
+// content : Half-Open Ranges
+//
+// content : One-Past-the-End Pointers
 
 ////////////////////////////////////////////////////////////
 

@@ -6,6 +6,8 @@
 
 // content : Implicit, Explicit, Narrow and Wide Type Conversions
 //
+// content : Integral Type Promotions
+//
 // content : Temporary Objects
 //
 // content : C-Style and C++-Style Type Conversions

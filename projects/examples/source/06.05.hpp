@@ -10,7 +10,7 @@
 //
 // content : One Definition Rule (ODR)
 //
-// content : Internal Linking
+// content : Internal Linkage
 //
 // content : Storage Class Specifier static
 //

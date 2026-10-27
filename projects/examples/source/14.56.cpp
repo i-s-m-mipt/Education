@@ -14,9 +14,9 @@
 //
 // content : Parent Process ID (PPID)
 //
-// content : Process Priority from +39 (low) to  0 (high)
+// content : Process Priority from +39 (low) to   0 (high)
 //
-// content : Process Niceness from -20 (low) to 19 (high)
+// content : Process Niceness from +19 (low) to -20 (high)
 //
 // content : Task Scheduling Algorithms
 //

@@ -8,7 +8,7 @@
 //
 // content : Concept std::integral
 //
-// content : Abbreviated Function Templates
+// content : Partial Ordering of Constraints
 
 //////////////////////////////////////////////////////////////////////
 

@@ -10,6 +10,8 @@
 //
 // content : Slicing Objects
 //
+// content : The Liskov Substitution Principle
+//
 // content : Dynamic Polymorphism
 //
 // content : Virtual Functions

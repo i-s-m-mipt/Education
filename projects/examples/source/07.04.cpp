@@ -8,7 +8,7 @@
 //
 // content : Declaration enum class
 //
-// content : Expected Undefined Behavior
+// content : Unreachable Code
 //
 // content : Function std::unreachable
 //

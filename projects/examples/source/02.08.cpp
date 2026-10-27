@@ -8,6 +8,8 @@
 //
 // content : Default, Value, Direct, Copy and List Initialization
 //
+// content : Indeterminate Values
+//
 // content : Undefined Behavior (UB)
 //
 // content : Uniform Braced Initialization

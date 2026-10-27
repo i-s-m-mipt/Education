@@ -4,7 +4,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 
-// content : Internal and External Linking
+// content : Internal and External Linkage
 //
 // content : Multiply Defined and Unresolved External Symbols
 //

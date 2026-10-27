@@ -14,6 +14,8 @@
 //
 // content : Memory Segments
 //
+// content : Storage Duration
+//
 // content : Stack Segment
 //
 // content : Automatic Objects

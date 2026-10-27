@@ -6,6 +6,8 @@
 
 // content : Concepts, Constraints and Requirements
 //
+// content : Simple, Type, Compound and Nested Requirements
+//
 // content : Declaration concept
 //
 // content : Conjunctions and Disjunctions

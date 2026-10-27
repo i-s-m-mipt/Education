@@ -18,7 +18,7 @@
 //
 // content : Function std::filesystem::current_path
 //
-// content : Filenames, Stems ans Extensions
+// content : Filenames, Stems and Extensions
 //
 // content : Functions std::filesystem::exists and std::filesystem::equivalent
 //
