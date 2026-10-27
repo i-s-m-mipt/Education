@@ -1,16 +1,16 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // chapter : Parallel Programming
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // content : Lockfree Queues
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // support : https://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <atomic>
 #include <cassert>
@@ -22,17 +22,16 @@
 #include <new>
 #include <print>
 #include <thread>
-#include <tuple>
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using namespace std::literals;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <xmmintrin.h>
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename T > class Storage
 {
@@ -40,7 +39,7 @@ public :
 
     Storage(std::size_t size) : m_size(size), m_mask(size - 1)
     {
-        assert((m_size & m_mask) == 0);
+        assert(m_size != 0 && (m_size & m_mask) == 0);
 
         m_array = static_cast < T * >
         (
@@ -49,7 +48,7 @@ public :
 
         for (auto i = 0uz; i < m_size; ++i)
         {
-            std::construct_at(&m_array[i], T());
+            std::construct_at(&m_array[i]);
         }
     }
 
@@ -79,11 +78,11 @@ private :
     static inline auto s_alignment = std::hardware_destructive_interference_size;
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using index_t = std::int64_t;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class alignas(std::hardware_destructive_interference_size) Index
 {
@@ -111,136 +110,85 @@ private :
     ];
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class Controller
+void produce(Storage < int > & storage, Index & producer, Index const & consumer, index_t size)
 {
-public :
+    std::this_thread::sleep_for(1s);
 
-    Controller(index_t size, Index & producer_index, Index const & consumer_index)
-    :
-        m_size(size),
+    index_t p = 0, c = 0, cached_consumer = -1;
 
-        m_producer_index(producer_index),
-
-        m_consumer_index(consumer_index)
-    {}
-
-//  ------------------------------------------------------------------------------
-
-    auto get() const
+    for (auto i = 1; i < (1 << 10) + 1; ++i)
     {
-        auto i = m_producer_index.get(std::memory_order::relaxed) + 1;
+        p = producer.get(std::memory_order::relaxed) + 1;
 
-        if (auto j = i - m_size; j > m_cached_consumer_index)
+        if (p - size > cached_consumer)
         {
-            index_t k = 0;
-
-            while ((k = m_consumer_index.get(std::memory_order::acquire)) < j)
+            while ((c = consumer.get(std::memory_order::acquire)) < p - size)
             {
                 _mm_pause();
             }
 
-            m_cached_consumer_index = k;
+            cached_consumer = c;
         }
 
-        return i;
-    }
+        storage[p] = i;
 
-//  ------------------------------------------------------------------------------
-
-    void set(index_t index) const
-    {
-        m_producer_index.set(index, std::memory_order::release);
-    }
-
-private :
-
-    index_t m_size = 0;
-
-//  ------------------------------------------------------------------------------
-
-    Index       & m_producer_index;
-
-    Index const & m_consumer_index;
-
-//  ------------------------------------------------------------------------------
-
-    mutable index_t m_cached_consumer_index = -1;
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-void produce(Storage < int > & storage, Controller const & controller)
-{
-    std::this_thread::sleep_for(1s);
-
-    for (auto i = 1; i < (1 << 10) + 1; ++i)
-    {
-        auto j = controller.get();
-
-        storage[j] = i;
-
-        controller.set(j);
+        producer.set(p, std::memory_order::release);
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void consume(Storage < int > const & storage, Index const & producer_index, Index & consumer_index)
+void consume(Storage < int > const & storage, Index const & producer, Index & consumer)
 {
-    index_t i = 0;
+    index_t c = 0, p = 0;
 
-    while (i < 1 << 10)
+    while (c < 1 << 10)
     {
         std::print("consume\n");
 
-        index_t j = 0;
-
-        while ((j = producer_index.get(std::memory_order::acquire)) < i)
+        while ((p = producer.get(std::memory_order::acquire)) < c)
         {
             _mm_pause();
         }
 
-        while (i <= j)
+        while (c <= p)
         {
-            auto x = storage[i++];
+            auto x = storage[c++];
 
             std::print("consume : x = {}\n", x);
         }
 
-        consumer_index.set(i - 1, std::memory_order::release);
+        consumer.set(c - 1, std::memory_order::release);
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
+    static_assert(std::atomic < index_t > ::is_always_lock_free);
+
+//  ------------------------------------------------------------------------------------------------
+
     auto size = 1 << 10;
 
-//  ----------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------------
 
     Storage < int > storage(size);
 
-//  ----------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------------
 
-    Index producer_index;
+    Index producer;
 
-    Index consumer_index;
+    Index consumer;
 
-//  ----------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------------
 
-    Controller controller(size, producer_index, consumer_index);
+    std::jthread thread_1(produce, std::ref(storage), std::ref(producer), std::ref(consumer), size);
 
-//  ----------------------------------------------------------------------------------
-
-    std::jthread thread_1(produce, std::ref(storage), std::ref(controller));
-
-    std::jthread thread_2
-    (
-        consume, std::ref(storage), std::ref(producer_index), std::ref(consumer_index)
-    );
+    std::jthread thread_2(consume, std::ref(storage), std::ref(producer), std::ref(consumer)      );
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
