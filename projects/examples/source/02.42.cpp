@@ -12,11 +12,11 @@
 //
 // content : Attributes [[hot]] and [[cold]]
 //
+// content : As-If Rule
+//
 // content : Special Memory
 //
 // content : Type Qualifier volatile
-//
-// content : The As-If Rule
 
 //////////////////////////////////////////////////////////////////////////
 

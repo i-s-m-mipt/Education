@@ -10,7 +10,7 @@
 //
 // content : Slicing Objects
 //
-// content : The Liskov Substitution Principle
+// content : Liskov Substitution Principle
 //
 // content : Dynamic Polymorphism
 //

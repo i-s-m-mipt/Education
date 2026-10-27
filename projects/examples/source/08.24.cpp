@@ -12,7 +12,7 @@
 //
 // content : Seeds and Engines
 //
-// content : Deterministic Pseudo-Random Number Generators (PRNG)
+// content : Deterministic Pseudo-Random Number Generator (PRNG)
 //
 // content : Engine std::mt19937_64
 //
