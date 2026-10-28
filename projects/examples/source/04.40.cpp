@@ -33,7 +33,14 @@ template < std::integral T > void test_v2(T x)
 
 void test_v3(std::integral auto x)
 {
-    std::print("test_v3 : x = {}\n", x);
+    std::print("test_v3 (1) : x = {}\n", x);
+}
+
+//////////////////////////////////////////////////////////////////////
+
+void test_v3(std::signed_integral auto x)
+{
+    std::print("test_v3 (2) : x = {}\n", x);
 }
 
 //////////////////////////////////////////////////////////////////////
