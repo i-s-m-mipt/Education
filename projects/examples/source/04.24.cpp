@@ -144,7 +144,7 @@ template < typename T > struct Pop_Back < Deque < T > >
 
 template < typename T, typename ... Ts > struct Pop_Back < Deque < T, Ts ... > >
 {
-    using type = push_front < T, typename Pop_Back < Deque < Ts ... > > ::type > ;
+    using type = push_front < typename Pop_Back < Deque < Ts ... > > ::type, T > ;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
