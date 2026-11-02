@@ -59,11 +59,11 @@ using Comparator = std::integral_constant < bool, sizeof(T1) < sizeof(T2) > ;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D > using max_type = boost::mp11::mp_max_element < D, Comparator > ;
+template < typename D > using max_element = boost::mp11::mp_max_element < D, Comparator > ;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D, typename T > constexpr auto index_v = boost::mp11::mp_find < D, T > ::value;
+template < typename D, typename T > constexpr auto find_v = boost::mp11::mp_find < D, T > ::value;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -97,11 +97,11 @@ int main()
 
 //  -------------------------------------------------------------------------------------------
 
-    static_assert(std::is_same_v < max_type < Deque < int, double > > , double > );
+    static_assert(std::is_same_v < max_element < Deque < int, double > > , double > );
 
 //  -------------------------------------------------------------------------------------------
 
-    static_assert(index_v < Deque < int > , int > == 0);
+    static_assert(find_v < Deque < int > , int > == 0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

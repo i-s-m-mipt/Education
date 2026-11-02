@@ -165,17 +165,17 @@ template < typename D, std::size_t I > using at = typename At < D, I > ::type;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D, bool C = empty_v < D > > class Max_Type {};
+template < typename D, bool C = empty_v < D > > class Max_Element {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D > class Max_Type < D, false >
+template < typename D > class Max_Element < D, false >
 {
 private :
 
     using current_t = front < D > ;
 
-    using max_t = typename Max_Type < pop_front < D > > ::type;
+    using max_t = typename Max_Element < pop_front < D > > ::type;
 
 public :
 
@@ -184,7 +184,7 @@ public :
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D > class Max_Type < D, true >
+template < typename D > class Max_Element < D, true >
 {
 public :
 
@@ -193,11 +193,11 @@ public :
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D > using max_type = typename Max_Type < D > ::type;
+template < typename D > using max_element = typename Max_Element < D > ::type;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D, typename T, std::size_t I = 0, bool C = empty_v < D > > class Index {};
+template < typename D, typename T, std::size_t I = 0, bool C = empty_v < D > > class Find {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -205,21 +205,21 @@ template
 <
     typename D, typename T, std::size_t I
 >
-class Index < D, T, I, false > : public std::conditional_t
+class Find < D, T, I, false > : public std::conditional_t
 <
     std::is_same_v < front < D > , T > ,
 
-    std::integral_constant < std::size_t, I > , Index < pop_front < D > , T, I + 1 >
+    std::integral_constant < std::size_t, I > , Find < pop_front < D > , T, I + 1 >
 
 > {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D, typename T, std::size_t I > class Index < D, T, I, true > {};
+template < typename D, typename T, std::size_t I > class Find < D, T, I, true > {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D, typename T > constexpr auto index_v = Index < D, T > ::value;
+template < typename D, typename T > constexpr auto find_v = Find < D, T > ::value;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -253,11 +253,11 @@ int main()
 
 //  -------------------------------------------------------------------------------------------
 
-    static_assert(std::is_same_v < max_type < Deque < int, double > > , double > );
+    static_assert(std::is_same_v < max_element < Deque < int, double > > , double > );
 
 //  -------------------------------------------------------------------------------------------
 
-    static_assert(index_v < Deque < int > , int > == 0);
+    static_assert(find_v < Deque < int > , int > == 0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

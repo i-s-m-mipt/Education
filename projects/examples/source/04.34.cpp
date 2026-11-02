@@ -23,12 +23,12 @@ private :
 
     template < typename T > static std:: true_type test
     (
-        int, decltype(dynamic_cast < void * > (std::declval < T * > ())) = nullptr
+        decltype(dynamic_cast < void * > (std::declval < T * > ()))
     );
 
 public :
 
-    constexpr static auto value = decltype(test < B > (1))::value;
+    constexpr static auto value = decltype(test < B > (nullptr))::value;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////

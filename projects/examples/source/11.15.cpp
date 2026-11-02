@@ -41,11 +41,11 @@ using Comparator = std::integral_constant < bool, sizeof(T1) < sizeof(T2) > ;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D > using max_type = boost::mp11::mp_max_element < D, Comparator > ;
+template < typename D > using max_element = boost::mp11::mp_max_element < D, Comparator > ;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename D, typename T > constexpr auto index_v = boost::mp11::mp_find < D, T > ::value;
+template < typename D, typename T > constexpr auto find_v = boost::mp11::mp_find < D, T > ::value;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -55,23 +55,23 @@ protected :
 
     Storage() = default;
 
-//  ---------------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------------
 
     template < typename T > auto get_type()
     {
         return reinterpret_cast < T * > (std::begin(m_array));
     }
 
-//  ---------------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------------
 
     template < typename T > auto get_type() const
     {
         return reinterpret_cast < T const * > (std::begin(m_array));
     }
 
-//  ---------------------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------------
 
-    alignas(Ts...) std::array < std::byte, sizeof(max_type < Deque < Ts ... > > ) > m_array = {};
+    alignas(Ts...) std::array < std::byte, sizeof(max_element < Deque < Ts ... > > ) > m_array = {};
 
     std::size_t m_index = 0;
 };
@@ -125,7 +125,7 @@ protected :
 
 //  ------------------------------------------------------------------------------
 
-    constexpr static auto s_index = index_v < Deque < Ts ... > , T > + 1;
+    constexpr static auto s_index = find_v < Deque < Ts ... > , T > + 1;
 
 private :
 
