@@ -38,9 +38,9 @@ private :
 
 //////////////////////////////////////////////////////////
 
-class Entity_v1 : private Controller < Entity_v1 > {};
+class Entity_v1 : public Controller < Entity_v1 > {};
 
-class Entity_v2 : private Controller < Entity_v2 > {};
+class Entity_v2 : public Controller < Entity_v2 > {};
 
 //////////////////////////////////////////////////////////
 
@@ -48,21 +48,21 @@ int main()
 {
     Entity_v1 entity_v1;
 
-//  --------------------------------------------------
+//  ----------------------------------
 
-    assert(Controller < Entity_v1 > ::counter() == 1);
+    assert(Entity_v1::counter() == 1);
 
-    assert(Controller < Entity_v2 > ::counter() == 0);
+    assert(Entity_v2::counter() == 0);
 
-//  --------------------------------------------------
+//  ----------------------------------
 
     Entity_v2 entity_v2;
 
-//  --------------------------------------------------
+//  ----------------------------------
 
-    assert(Controller < Entity_v1 > ::counter() == 1);
+    assert(Entity_v1::counter() == 1);
 
-    assert(Controller < Entity_v2 > ::counter() == 1);
+    assert(Entity_v2::counter() == 1);
 }
 
 //////////////////////////////////////////////////////////
