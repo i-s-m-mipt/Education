@@ -20,13 +20,13 @@
 //
 // content : Side Effects
 //
-// content : Runtime Assertions
-//
-// content : Macro assert
-//
 // content : Conditional Compilation
 //
 // content : Directives #if, #else and #endif
+//
+// content : Runtime Assertions
+//
+// content : Macro assert
 //
 // content : Suppressing Compiler Warnings
 //
