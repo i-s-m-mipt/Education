@@ -18,13 +18,11 @@
 //
 // content : Standard Library Modules
 //
-// content : Header Units
-//
 // content : Single, Group and Namespace Exports
 //
 // content : Private Module Fragments
 //
-// content : Options -fmodules-ts and -xc++-system-header
+// content : Options -fmodules and -fsearch-include-path
 
 ///////////////////////////////////////////////////////////////////
 
@@ -52,7 +50,7 @@ export import library.submodule;
 
 ///////////////////////////////////////////////////////////////////
 
-import <print>;
+import std;
 
 ///////////////////////////////////////////////////////////////////
 

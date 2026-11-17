@@ -214,17 +214,17 @@ g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 ../source/06.08.cpp
 
 #################################################################################################
 
-files="../source/06.15.cpp 06.12.o 06.13.o 06.14.o"
+files="../source/06.15.cpp std.o 06.12.o 06.13.o 06.14.o"
 
-g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 -fmodules-ts -xc++-system-header print
+g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 -fmodules -fsearch-include-path bits/std.cc
 
-g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 -fmodules-ts ../source/06.14.cxx
+g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 -fmodules ../source/06.14.cxx
 
-g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 -fmodules-ts ../source/06.12.cxx
+g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 -fmodules ../source/06.12.cxx
 
-g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 -fmodules-ts ../source/06.13.cxx
+g++ -c -std=c++23 -Wall -Wextra -Wpedantic -O0 -fmodules ../source/06.13.cxx
 
-g++    -std=c++23 -Wall -Wextra -Wpedantic -O0 -fmodules-ts $files -o 06.15
+g++    -std=c++23 -Wall -Wextra -Wpedantic -O0 -fmodules $files -o 06.15
 
 #################################################################################################
 
