@@ -100,7 +100,9 @@ void produce(Storage < int > & storage, Agent & producer, Agent const & consumer
 {
     std::this_thread::sleep_for(1s);
 
-    auto p = 0uz, c = 0uz, cached_c = consumer.size.load(std::memory_order::acquire);
+    auto p = producer.size.load(std::memory_order::relaxed);
+
+    auto c = 0uz, cached_c = consumer.size.load(std::memory_order::acquire);
 
     auto storage_size = std::size(storage);
 
@@ -108,8 +110,6 @@ void produce(Storage < int > & storage, Agent & producer, Agent const & consumer
 
     for (auto i = 0uz; i < size; ++i)
     {
-        p = producer.size.load(std::memory_order::relaxed);
-
         if (p - cached_c >= storage_size)
         {
             while (p - (c = consumer.size.load(std::memory_order::acquire)) >= storage_size)
@@ -122,7 +122,7 @@ void produce(Storage < int > & storage, Agent & producer, Agent const & consumer
 
         storage[p] = ++x;
 
-        producer.size.store(p + 1, std::memory_order::release);
+        producer.size.store(++p, std::memory_order::release);
     }
 }
 
