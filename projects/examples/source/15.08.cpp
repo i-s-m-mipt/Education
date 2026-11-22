@@ -13,6 +13,8 @@
 // content : Tool lsof
 //
 // content : Passive and Active Sockets
+//
+// content : Nagle's Algorithm
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -56,6 +58,10 @@ int main()
 
 //  ------------------------------------------------------------------------
 
+    socket.set_option(boost::asio::ip::tcp::no_delay(true));
+
+//  ------------------------------------------------------------------------
+
     std::array < char, 1 << 10 > array = {};
 
 //  ------------------------------------------------------------------------
@@ -63,6 +69,10 @@ int main()
     boost::asio::read (socket, boost::asio::buffer(array));
 
     boost::asio::write(socket, boost::asio::buffer(array));
+
+//  ------------------------------------------------------------------------
+
+    socket.shutdown(boost::asio::ip::tcp::socket::shutdown_send);
 }
 
 ////////////////////////////////////////////////////////////////////////////
