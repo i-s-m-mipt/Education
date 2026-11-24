@@ -30,12 +30,10 @@ find_package(Boost 1.90 REQUIRED COMPONENTS)
 
 ##########################################################################
 
-include_directories(${Boost_INCLUDE_DIRS})
-
-##########################################################################
-
 add_library            (shared SHARED source/06.20.cpp)
 
 target_compile_options (shared PRIVATE -O0)
+
+target_link_libraries  (shared PRIVATE Boost::headers)
 
 ##########################################################################
