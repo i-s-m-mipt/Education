@@ -1,25 +1,20 @@
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 // chapter : Debugging and Profiling Tools
 
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-// content : Wrapper std::optional
-//
-// content : Object std::nullopt
-//
-// content : Function std::make_optional
-//
-// content : Monadic Operations
+// content : Wrappers std::expected and std::unexpected
 
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <optional>
+#include <expected>
+#include <string>
 
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-auto test(int x) -> std::optional < int >
+auto test(int x) -> std::expected < int, std::string >
 {
     if (x > 0)
     {
@@ -27,37 +22,35 @@ auto test(int x) -> std::optional < int >
     }
     else
     {
-        return std::nullopt;
+        return std::unexpected("error");
     }
 }
 
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::optional < int > optional_1 = 1;
+    std::expected < int, std::string > expected_1 = 1;
 
-    std::optional < int > optional_2 = std::nullopt;
+    std::expected < int, std::string > expected_2 = std::unexpected("aaaaa");
 
-//  -------------------------------------------------------------------
+//  -------------------------------------------------------------------------
 
-    assert(optional_1.has_value() == 1 && optional_1.value_or(2) == 1);
+    assert(expected_1.has_value() == 1 && expected_1.value_or(2) == 1);
 
-    assert(optional_2.has_value() == 0 && optional_2.value_or(3) == 3);
+    assert(expected_2.has_value() == 0 && expected_2.value_or(3) == 3);
 
-//  -------------------------------------------------------------------
+//  -------------------------------------------------------------------------
 
-    assert(optional_1 > optional_2);
+    assert(expected_1.error_or("bbbbb") == "bbbbb");
 
-//  -------------------------------------------------------------------
+    assert(expected_2.error_or("bbbbb") == "aaaaa");
 
-    assert(*std::make_optional < int > (1) == 1);
-
-//  -------------------------------------------------------------------
+//  -------------------------------------------------------------------------
 
     assert(test(0).has_value() == 0);
 
     assert(test(1).has_value() == 1);
 }
 
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////

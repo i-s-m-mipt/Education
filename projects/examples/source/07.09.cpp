@@ -1,56 +1,94 @@
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 // chapter : Debugging and Profiling Tools
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
-// content : Wrappers std::expected and std::unexpected
+// content : Scoped Enumerations
+//
+// content : Declaration enum class
+//
+// content : Unreachable Code
+//
+// content : Function std::unreachable
+//
+// content : Underlying Types
+//
+// content : Type Alias std::uint8_t
+//
+// content : Function std::to_underlying
+//
+// content : Unscoped Enumerations
+//
+// content : Declaration enum
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <expected>
-#include <string>
+#include <cstdint>
+#include <iostream>
+#include <print>
+#include <utility>
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
-auto test(int x) -> std::expected < int, std::string >
+enum class State_v1 : std::uint8_t
 {
-    if (x > 0)
-    {
-        return x;
-    }
-    else
-    {
-        return std::unexpected("error");
-    }
-}
+    trace = 0, debug, error, fatal, size
+};
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+// enum State_v2 : std::uint8_t // bad
+// {
+//     trace = 0, debug, error, fatal, size
+// };
+
+///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::expected < int, std::string > expected_1 = 1;
+    auto x = 0;
 
-    std::expected < int, std::string > expected_2 = std::unexpected("aaaaa");
+//  ---------------------------------------------------------------------------
 
-//  -------------------------------------------------------------------------
+    std::print("main : enter int x : "); std::cin >> x;
 
-    assert(expected_1.has_value() == 1 && expected_1.value_or(2) == 1);
+//  ---------------------------------------------------------------------------
 
-    assert(expected_2.has_value() == 0 && expected_2.value_or(3) == 3);
+//  State_v1 state_v1_1 = x; // error
 
-//  -------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
 
-    assert(expected_1.error_or("bbbbb") == "bbbbb");
+    auto state_v1_2 = static_cast < State_v1 > (x);
 
-    assert(expected_2.error_or("bbbbb") == "aaaaa");
+//  ---------------------------------------------------------------------------
 
-//  -------------------------------------------------------------------------
+    switch (state_v1_2)
+    {
+        case State_v1::trace : { std::print("main : selection (1)\n"); break; }
 
-    assert(test(0).has_value() == 0);
+        case State_v1::debug : { std::print("main : selection (2)\n"); break; }
 
-    assert(test(1).has_value() == 1);
+        case State_v1::error : { std::print("main : selection (3)\n"); break; }
+
+        case State_v1::fatal : { std::print("main : selection (4)\n"); break; }
+
+    //  -----------------------------------------------------------------------
+
+        default :
+        {
+            std::unreachable();
+        }
+    }
+
+//  ---------------------------------------------------------------------------
+
+//  assert(state_v1_2 == x); // error
+
+//  ---------------------------------------------------------------------------
+
+    assert(std::to_underlying(state_v1_2) == x);
 }
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////

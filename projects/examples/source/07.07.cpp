@@ -1,73 +1,25 @@
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
 // chapter : Debugging and Profiling Tools
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
-// content : Wrapper std::variant
+// content : Wrapper std::optional
 //
-// content : Tag std::monostate
+// content : Object std::nullopt
 //
-// content : Metafunction std::variant_size
+// content : Function std::make_optional
 //
-// content : Functions std::holds_alternative and std::get
-//
-// content : Pattern Visitor
-//
-// content : Function std::visit
+// content : Monadic Operations
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
 #include <cassert>
-#include <print>
-#include <string>
-#include <variant>
+#include <optional>
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
-class Visitor
-{
-public :
-
-    static void operator()(int x)
-    {
-        std::print("Visitor::operator() : x = {}\n", x);
-    }
-
-//  --------------------------------------------------------------
-
-    static void operator()(double x)
-    {
-        std::print("Visitor::operator() : x = {}\n", x);
-    }
-
-//  --------------------------------------------------------------
-
-    static void operator()(std::string const & string)
-    {
-        std::print("Visitor::operator() : string = {}\n", string);
-    }
-};
-
-////////////////////////////////////////////////////////////////////
-
-class Entity
-{
-public :
-
-    Entity(int) {}
-
-//  ------------------------------------
-
-   ~Entity()
-    {
-        std::print("Entity::~Entity\n");
-    }
-};
-
-////////////////////////////////////////////////////////////////////
-
-auto test(int x) -> std::variant < int, std::string >
+auto test(int x) -> std::optional < int >
 {
     if (x > 0)
     {
@@ -75,49 +27,37 @@ auto test(int x) -> std::variant < int, std::string >
     }
     else
     {
-        return "error";
+        return std::nullopt;
     }
 }
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::variant < int, double, std::string > variant_1 = 1;
+    std::optional < int > optional_1 = 1;
 
-//  ----------------------------------------------------------------
+    std::optional < int > optional_2 = std::nullopt;
 
-    static_assert(std::variant_size_v < decltype(variant_1) > == 3);
+//  -------------------------------------------------------------------
 
-//  ----------------------------------------------------------------
+    assert(optional_1.has_value() == 1 && optional_1.value_or(2) == 1);
 
-    assert(std::holds_alternative < int > (variant_1));
+    assert(optional_2.has_value() == 0 && optional_2.value_or(3) == 3);
 
-//  ----------------------------------------------------------------
+//  -------------------------------------------------------------------
 
-    assert(std::get < int > (variant_1) == 1);
+    assert(optional_1 > optional_2);
 
-//  ----------------------------------------------------------------
+//  -------------------------------------------------------------------
 
-    std::visit(Visitor(), variant_1);
+    assert(*std::make_optional < int > (1) == 1);
 
-//  ----------------------------------------------------------------
+//  -------------------------------------------------------------------
 
-//  std::variant < Entity, int > variant_2; // error
+    assert(test(0).has_value() == 0);
 
-//  ----------------------------------------------------------------
-
-    std::variant < std::monostate, Entity, int > variant_3;
-
-//  ----------------------------------------------------------------
-
-    (variant_3 = Entity(3)) = 3;
-
-//  ----------------------------------------------------------------
-
-    assert(std::holds_alternative < int > (test(0)) == 0);
-
-    assert(std::holds_alternative < int > (test(1)) == 1);
+    assert(test(1).has_value() == 1);
 }
 
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
